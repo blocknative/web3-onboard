@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Assist Demo</title>
+
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="stylesheet" href="/global.css" />
+    <link rel="stylesheet" href="/bundle.css" />
+  </head>
+
+  <body>
+    <script src="/demo-bundle.js"></script>
+
+    <div>
+      <span>ADDRESS:</span>
+      <span id="address"></span>
+    </div>
+    <div>
+      <span>NETWORK:</span>
+      <span id="network"></span>
+    </div>
+    <div>
+      <span>BALANCE:</span>
+      <span id="balance"></span>
+    </div>
+    <button onclick="window.onboard.selectWallet()" style="margin: 1rem 0;">
+      SELECT WALLET
+    </button>
+    <button
+      onclick="window.onboard.prepareWallet().then(result => console.log('prepareWallet completed:', result))"
+      style="margin: 1rem 0;"
+    >
+      PREPARE WALLET
+    </button>
+  </body>
+</html>
