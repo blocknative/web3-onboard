@@ -23,7 +23,8 @@ const onboard = Onboard.init({
       if (balance) {
         balance.innerHTML = (b && b / 1000000000000000000 + " ETH") || ""
       }
-    }
+    },
+    provider: p => console.log("provider:", p)
   },
   modules: {
     selectWallet: selectWallet({

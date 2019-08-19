@@ -58,10 +58,10 @@ export function validateModal(modal) {
   )
 }
 
-export function validateProviderInterface(providerInterface) {
+export function validateWalletInterface(walletInterface) {
   ow(
-    providerInterface,
-    "provider interface",
+    walletInterface,
+    "wallet interface",
     ow.object.exactShape({
       address: ow.object
         .hasAnyKeys("get", "onChange")

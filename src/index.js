@@ -1,6 +1,13 @@
 import Onboard from "./Onboard.svelte"
 
-import { app, address, network, balance, providerInterface } from "./stores"
+import {
+  app,
+  address,
+  network,
+  balance,
+  walletInterface,
+  provider
+} from "./stores"
 import { validateConfig } from "./validation"
 import { getUserAgent } from "./utilities"
 
@@ -9,6 +16,7 @@ function init(config) {
   getUserAgent()
 
   // validate config
+  // @TODO - put validation back in once api has settled a bit
   // validateConfig(config)
 
   const { subscriptions, ...rest } = config
@@ -33,6 +41,10 @@ function init(config) {
     if (subscriptions.balance) {
       balance.subscribe(subscriptions.balance)
     }
+
+    if (subscriptions.provider) {
+      provider.subscribe(subscriptions.provider)
+    }
   }
 
   return { selectWallet, prepareWallet }
@@ -41,9 +53,9 @@ function init(config) {
 function selectWallet() {
   return new Promise(resolve => {
     app.update(store => ({ ...store, selectWallet: true }))
-    app.subscribe(({ selectWallet }) => {
+    app.subscribe(({ selectWallet, selectWalletCompleted }) => {
       if (selectWallet === false) {
-        resolve()
+        resolve(selectWalletCompleted)
       }
     })
   })
@@ -51,7 +63,7 @@ function selectWallet() {
 
 function prepareWallet() {
   return new Promise(resolve => {
-    providerInterface.subscribe(provider => {
+    walletInterface.subscribe(provider => {
       if (!provider) {
         throw new Error("selectWallet must be called before prepareWallet")
       }
@@ -60,7 +72,7 @@ function prepareWallet() {
     app.update(store => ({ ...store, prepareWallet: true }))
     app.subscribe(({ prepareWallet, prepareWalletCompleted }) => {
       if (prepareWallet === false) {
-        resolve(prepareWalletCompleted ? true : false)
+        resolve(prepareWalletCompleted)
       }
     })
   })

@@ -1,12 +1,14 @@
 import { writable, derived } from "svelte/store"
-import { validateProviderInterface } from "./validation"
+import { validateWalletInterface } from "./validation"
 
 export const app = writable({
   dappId: null,
   networkId: null,
   version: null,
   selectWallet: false,
+  selectWalletCompleted: false,
   prepareWallet: false,
+  prepareWalletCompleted: false,
   modules: null
 })
 
@@ -15,13 +17,7 @@ export let syncingState = false
 export const address = createUserStateStore("address")
 export const network = createUserStateStore("network")
 export const balance = createBalanceStore()
-
-export const onboard = writable({
-  inProgress: false,
-  activeModal: false,
-  completed: false,
-  exited: false
-})
+export const provider = writable(null)
 
 export const state = createState({
   mobileDevice: null,
@@ -32,15 +28,18 @@ export const state = createState({
   connect: null
 })
 
+// make sure state store is updated when any of these change
 address.subscribe(value => state.update({ address: value }))
 network.subscribe(value => state.update({ network: value }))
 balance.subscribe(value => state.update({ balance: value }))
 
+// keep track of intervals that are syncing state so they can be cleared
 let currentSyncerIntervals = []
 
-export const providerInterface = createProviderInterfaceStore(null)
-providerInterface.subscribe(provider => {
-  if (provider) {
+export const walletInterface = createWalletInterfaceStore(null)
+
+walletInterface.subscribe(wallet => {
+  if (wallet) {
     // clear all current intervals if they exist
     currentSyncerIntervals.forEach(
       clearInterval => clearInterval && clearInterval()
@@ -48,12 +47,12 @@ providerInterface.subscribe(provider => {
 
     // start syncing state and save intervals
     currentSyncerIntervals = [
-      address.setStateSyncer(provider.address),
-      network.setStateSyncer(provider.network),
-      balance.setStateSyncer(provider.balance)
+      address.setStateSyncer(wallet.address),
+      network.setStateSyncer(wallet.network),
+      balance.setStateSyncer(wallet.balance)
     ]
 
-    state.update({ connect: provider.connect, walletName: provider.name })
+    state.update({ connect: wallet.connect, walletName: wallet.name })
   }
 })
 
@@ -79,14 +78,14 @@ function createState(initialState) {
   }
 }
 
-function createProviderInterfaceStore(initialState) {
+function createWalletInterfaceStore(initialState) {
   const { subscribe, set } = writable(initialState)
 
   return {
     subscribe,
-    set: providerInterface => {
-      validateProviderInterface(providerInterface)
-      set(providerInterface)
+    set: walletInterface => {
+      validateWalletInterface(walletInterface)
+      set(walletInterface)
     }
   }
 }

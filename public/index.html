@@ -26,7 +26,10 @@
       <span>BALANCE:</span>
       <span id="balance"></span>
     </div>
-    <button onclick="window.onboard.selectWallet()" style="margin: 1rem 0;">
+    <button
+      onclick="window.onboard.selectWallet().then(result => console.log('selectWallet completed:', result))"
+      style="margin: 1rem 0;"
+    >
       SELECT WALLET
     </button>
     <button
