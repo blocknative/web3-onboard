@@ -1,4 +1,42 @@
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  font-family: "Helvetica Neue";
 }
+
+.bn-demo-button {
+  background: #ffffff;
+  font-size: 0.889rem;
+  border: 1px solid #eeeeee;
+  border-radius: 40px;
+  padding: 0.55rem 1.4rem;
+  color: #4a90e2;
+}
+
+.bn-demo-button:hover {
+  cursor: pointer;
+}
+
+.bn-demo-info {
+  display: flex;
+}
+
+.bn-demo-info p {
+  margin: 0.5rem;
+}
+
+.bn-demo-info p:first-of-type {
+  color: #727272;
+}
+
+.bn-demo-info p:last-child {
+  color: #4a4a4a;
+}
+
+/* .bn-styles.bn-custom.bn-modal {
+  background: pink;
+}
+
+.bn-styles.bn-custom.bn-modal-content {
+  background: hotpink;
+} */

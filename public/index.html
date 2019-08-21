@@ -13,28 +13,29 @@
 
   <body>
     <script src="/demo-bundle.js"></script>
-
-    <div>
-      <span>ADDRESS:</span>
-      <span id="address"></span>
+    <div class="bn-demo-info">
+      <p>ADDRESS:</p>
+      <p id="address"></p>
     </div>
-    <div>
-      <span>NETWORK:</span>
-      <span id="network"></span>
+    <div class="bn-demo-info">
+      <p>NETWORK:</p>
+      <p id="network"></p>
     </div>
-    <div>
-      <span>BALANCE:</span>
-      <span id="balance"></span>
+    <div class="bn-demo-info">
+      <p>BALANCE:</p>
+      <p id="balance"></p>
     </div>
     <button
       onclick="window.onboard.selectWallet().then(result => console.log('selectWallet completed:', result))"
       style="margin: 1rem 0;"
+      class="bn-demo-button"
     >
       SELECT WALLET
     </button>
     <button
       onclick="window.onboard.prepareWallet().then(result => console.log('prepareWallet completed:', result))"
       style="margin: 1rem 0;"
+      class="bn-demo-button"
     >
       PREPARE WALLET
     </button>

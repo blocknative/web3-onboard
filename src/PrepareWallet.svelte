@@ -1,6 +1,9 @@
 <script>
   import { fly, fade } from "svelte/transition";
   import { quintOut } from "svelte/easing";
+  import Modal from "./components/Modal.svelte";
+  import ModalHeader from "./components/ModalHeader.svelte";
+  import Button from "./elements/Button.svelte";
   import { blocknative } from "./services";
   import { app, state, syncingState } from "./stores";
   import { validateModal } from "./validation";
@@ -12,57 +15,64 @@
   let pollingInterval;
   let checkingModule;
 
+  // get the prepare wallet modules from the store
   app.subscribe(({ modules: { prepareWallet } }) => {
     modules = prepareWallet;
   });
 
+  // recheck modules if below conditions
   $: if (!activeModal && !checkingModule) {
     checkingModule = true;
 
-    getFirstValidModal(modules).then(result => {
-      activeModal = result.modal;
-      currentModule = result.module;
-
-      if (activeModal) {
-        blocknative.event({
-          eventCode: activeModal.eventCode,
-          categoryCode: "onboard"
-        });
-
-        if (activeModal.action) {
-          activeModal.action().catch(err => {
-            errorMsg = err;
-          });
-        }
-
-        // poll to automatically to check if condition has been met
-        pollingInterval = setInterval(async () => {
-          const result = await invalidState(currentModule, state.get());
-          if (!result) {
-            clearInterval(pollingInterval);
-            activeModal = null;
-            currentModule = null;
-
-            // delayed for animations
-            setTimeout(() => {
-              checkingModule = false;
-            }, 250);
-          }
-        }, 500);
-      } else {
+    // loop through and run each module to check if a modal needs to be shown
+    runModules(modules).then(result => {
+      // no result then user has passed all conditions
+      if (!result) {
         app.update(store => ({
           ...store,
           prepareWallet: false,
           prepareWalletCompleted: true
         }));
 
-        blocknative.event({
-          categoryCode: "onboard",
-          eventCode: "onboardComplete"
-        });
+        // blocknative.event({
+        //   categoryCode: "onboard",
+        //   eventCode: "onboardComplete"
+        // });
 
         checkingModule = false;
+        return;
       }
+
+      activeModal = result.modal;
+      currentModule = result.module;
+
+      // log the event code for this module
+      // blocknative.event({
+      //   eventCode: activeModal.eventCode,
+      //   categoryCode: "onboard"
+      // });
+
+      // run any actions that module require as part of this step
+      if (activeModal.action) {
+        activeModal.action().catch(err => {
+          errorMsg = err.message;
+        });
+      }
+
+      // poll to automatically to check if condition has been met
+      pollingInterval = setInterval(async () => {
+        const result = await invalidState(currentModule, state.get());
+        if (!result) {
+          clearInterval(pollingInterval);
+          activeModal = null;
+          currentModule = null;
+
+          // delayed for animations
+          setTimeout(() => {
+            checkingModule = false;
+          }, 250);
+        }
+      }, 500);
     });
   }
 
@@ -83,7 +93,7 @@
     currentModule = null;
   }
 
-  function getFirstValidModal(modules) {
+  function runModules(modules) {
     return new Promise(async resolve => {
       for (const module of modules) {
         if (syncingState) {
@@ -91,12 +101,13 @@
         }
 
         const isInvalid = await invalidState(module, state.get());
+
         if (isInvalid) {
           return resolve(isInvalid);
         }
       }
 
-      return resolve({});
+      return resolve(false);
     });
   }
 
@@ -126,83 +137,32 @@
 </script>
 
 <style>
-  .bn-onboard-main {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: #fff;
-    border-radius: 2px;
-    border: 1px solid #282828;
-    box-sizing: border-box;
+  .bn-description {
+    color: #727272;
+    font-size: 0.889rem;
+  }
+
+  .bn-button-container {
     display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
-    width: 30rem;
-    height: 20rem;
+    justify-content: end;
   }
 
-  .close {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    padding: 1rem;
-    border: 1px solid gray;
-    border-radius: 50%;
-  }
-
-  .close:hover {
-    cursor: pointer;
-  }
-
-  .bn-loading-spinner {
-    position: fixed;
-    bottom: 1rem;
-    right: 1rem;
-    padding: 1rem;
-    border: 1px solid gray;
-    border-radius: 8px;
-    animation: spin 500ms linear infinite;
-    z-index: 999999999;
-  }
-
-  .bn-prepare-error {
-    color: red;
-  }
-
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
-    }
-
-    to {
-      transform: rotate(360deg);
-    }
+  .bn-error {
+    color: #e2504a;
   }
 </style>
 
-{#if !activeModal}
-  <span class="bn-loading-spinner">...</span>
-{/if}
-
 {#if activeModal}
-  <div
-    transition:fly={{ delay: 150, duration: 300, x: 400, easing: quintOut }}
-    class="bn-onboard-main">
-    {#if activeModal.img}
-      <div>
-        <img src={activeModal.img} alt={activeModal.heading} />
-      </div>
-    {/if}
-    <h2>{activeModal.heading}</h2>
-    <p>{activeModal.description}</p>
-    {#if activeModal.reloadWindow}
-      <button on:click={handleClick}>{activeModal.button}</button>
-    {/if}
+  <Modal closeModal={handleExit}>
+    <ModalHeader icon={activeModal.icon} heading={activeModal.heading} />
+    <p class="bn-description">
+      {@html activeModal.description}
+    </p>
     {#if errorMsg}
-      <span class="bn-prepare-error">{errorMsg}</span>
+      <p class="bn-error" in:fade>{errorMsg}</p>
     {/if}
-    <span on:click={handleExit} class="close">X</span>
-  </div>
+    <div class="bn-button-container">
+      <Button onclick={handleExit}>Dismiss</Button>
+    </div>
+  </Modal>
 {/if}

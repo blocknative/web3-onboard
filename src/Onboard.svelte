@@ -4,10 +4,6 @@
   import { app } from "./stores";
 </script>
 
-<style>
-
-</style>
-
 {#if $app.selectWallet}
   <SelectWallet />
 {/if}

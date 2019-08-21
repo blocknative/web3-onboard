@@ -15,7 +15,7 @@ const onboard = Onboard.init({
     network: n => {
       const network = document.getElementById("network")
       if (network) {
-        network.innerHTML = n || ""
+        network.innerHTML = networkName(Number(n)) || ""
       }
     },
     balance: b => {
@@ -24,7 +24,7 @@ const onboard = Onboard.init({
         balance.innerHTML = (b && b / 1000000000000000000 + " ETH") || ""
       }
     },
-    provider: p => console.log("provider:", p)
+    provider: p => p && console.log("provider:", p)
   },
   modules: {
     selectWallet: selectWallet({
@@ -38,10 +38,29 @@ const onboard = Onboard.init({
     }),
     prepareWallet: prepareWallet({
       networkId: 4,
-      minimumBalance: "900000000000000000"
+      minimumBalance: "200000000000000000"
     }),
     networkId: 4
   }
 })
+
+function networkName(id) {
+  switch (id) {
+    case 1:
+      return "main"
+    case 3:
+      return "ropsten"
+    case 4:
+      return "rinkeby"
+    case 5:
+      return "goerli"
+    case 42:
+      return "kovan"
+    case "localhost":
+      return "localhost"
+    default:
+      return "local"
+  }
+}
 
 window.onboard = onboard

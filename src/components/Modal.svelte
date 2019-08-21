@@ -26,6 +26,7 @@
     padding: 1.33rem;
     position: relative;
     overflow: hidden;
+    max-width: 35.6rem;
   }
 
   .bn-modal-close {
@@ -52,8 +53,8 @@
   }
 </style>
 
-<div transition:fade class="bn-modal">
-  <section class="bn-modal-content">
+<div transition:fade class="bn-custom bn-styles bn-modal">
+  <section class="bn-custom bn-styles bn-modal-content">
     <slot />
     <div class="bn-modal-close" on:click={closeModal}>
       <img src={closeIcon} alt="close" />

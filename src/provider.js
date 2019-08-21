@@ -72,37 +72,39 @@ export function createLegacyProviderInterface(provider) {
 }
 
 export function getProviderName(provider) {
+  if (!provider) return
+
   if (provider.isMetaMask) {
-    return "metamask"
+    return "MetaMask"
   }
 
   if (provider.isDapper) {
-    return "dapper"
+    return "Dapper"
   }
 
   if (provider.currentProvider) {
     if (provider.currentProvider.isMetaMask) {
-      return "metamask"
+      return "MetaMask"
     }
 
     if (provider.currentProvider.isDapper) {
-      return "dapper"
+      return "Dapper"
     }
 
     if (provider.currentProvider.isTrust) {
-      return "trust"
+      return "Trust"
     }
 
     if (provider.currentProvider.isCoinbaseWallet) {
-      return "coinbase"
+      return "Coinbase"
     }
 
     if (provider.currentProvider.isToshi) {
-      return "toshi"
+      return "Toshi"
     }
 
     if (provider.currentProvider.isCipher) {
-      return "cipher"
+      return "Cipher"
     }
 
     if (

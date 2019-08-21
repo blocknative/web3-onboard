@@ -4,6 +4,9 @@
   import { fly, fade } from "svelte/transition";
   import { quintOut } from "svelte/easing";
   import Modal from "./components/Modal.svelte";
+  import ModalHeader from "./components/ModalHeader.svelte";
+  import Button from "./elements/Button.svelte";
+  import IconButton from "./elements/IconButton.svelte";
   import walletIcon from "./assets/icons/icon-wallet.svg";
 
   import {
@@ -16,25 +19,52 @@
 
   let modalData;
   let showWalletDefinition;
+  let showingAllWalletModules;
+
+  let selectedWallet;
+  let walletAlreadyInstalled;
+  let installMessage;
 
   app.subscribe(({ modules: { selectWallet } }) => {
     const moduleType = mobileDevice ? "mobile" : "desktop";
     const { wallets, ...details } = selectWallet;
+
     // get the modules based on device type
-    const walletModules = wallets[moduleType];
+    const allWalletModules = wallets[moduleType];
+
+    // only display first 4 modules
+    const walletModules =
+      allWalletModules.length > 4
+        ? allWalletModules.slice(0, 4)
+        : allWalletModules;
+    const extraWalletModules =
+      allWalletModules.length > 4 && allWalletModules.slice(4);
+
     // set the data to show in the modal
-    modalData = { ...details, walletModules };
+    modalData = { ...details, walletModules, extraWalletModules };
   });
 
   function handleWalletSelect(walletModule) {
-    const wallet = walletModule.wallet({
-      getProviderName,
-      createLegacyProviderInterface,
-      createModernProviderInterface
-    });
+    let wallet;
+    try {
+      wallet = walletModule.wallet({
+        getProviderName,
+        createLegacyProviderInterface,
+        createModernProviderInterface
+      });
+    } catch (err) {
+      throw new Error(err);
+      return;
+    }
 
     if (!wallet.interface) {
-      // @TODO - handle wallet not being installed here
+      selectedWallet = walletModule;
+      walletAlreadyInstalled =
+        wallet.provider && getProviderName(wallet.provider);
+      installMessage = walletModule.installMessage({
+        currentWallet: walletAlreadyInstalled,
+        selectedWallet: selectedWallet.name
+      });
       return;
     }
 
@@ -47,34 +77,20 @@
       selectWalletCompleted: true
     }));
   }
+
+  function closeModal() {
+    modalData = null;
+    app.update(store => ({
+      ...store,
+      selectWallet: false,
+      selectWalletCompleted: false
+    }));
+  }
 </script>
 
 <style>
-  .bn-select-wallet-header {
-    display: flex;
-    align-items: center;
-  }
-
-  .bn-select-wallet-header-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 1.66rem;
-    padding: 0.66rem;
-    border-radius: 30px;
-    background-color: #eeeeee;
-  }
-
-  .bn-select-wallet-header-icon img {
-    height: 100%;
-    width: auto;
-  }
-
-  .bn-select-wallet-header-heading {
-    color: #4a4a4a;
-    font-weight: bold;
-    font-size: 1.33rem;
-    margin: 0 0 0 1rem;
+  a {
+    text-decoration: none;
   }
 
   .bn-select-wallet-description {
@@ -88,48 +104,13 @@
     flex-flow: row wrap;
     align-items: center;
     list-style-type: none;
-    margin: 0;
+    margin-bottom: 0.66rem;
     padding: 0;
-  }
-
-  .bn-wallet {
-    display: flex;
-    align-items: center;
-    padding: 0.66rem 1rem;
-    border-radius: 30px;
-    margin: 0 0.66rem 0.66rem 0;
-    transition: box-shadow 150ms ease-in-out;
-  }
-
-  .bn-wallet:hover {
-    cursor: pointer;
-    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
-  }
-
-  .bn-wallet:active {
-    box-shadow: 0 2px 10px 0 #ffffff;
-  }
-
-  .bn-wallet-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 3rem;
-  }
-
-  .bn-wallet-icon img {
-    width: auto;
-    height: 100%;
-  }
-
-  .bn-wallet-name {
-    margin-left: 0.66rem;
-    font-weight: bold;
-    color: #727272;
   }
 
   .bn-select-wallet-info {
     color: #4a90e2;
+    margin-top: 0.66rem;
   }
 
   .bn-select-wallet-info:hover {
@@ -137,100 +118,117 @@
   }
 
   .bn-select-wallet-definition {
-    max-width: 40rem;
     color: #727272;
     font-size: 0.889rem;
+    margin-bottom: 0;
   }
 
-  /* 
-  .bn-wallet-install {
+  .bn-select-wallet-footer {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    max-width: 15rem;
+    justify-content: space-between;
   }
 
-  .bn-link-button {
-    text-decoration: none;
-    color: black;
-    padding: 1rem;
-    margin: 1rem;
-    border: 1px solid gray;
-    border-radius: 20px;
-    transition: background 150ms ease-in-out;
-  }
-
-  .bn-link-button:hover {
+  :global(.bn-clickable:hover) {
     cursor: pointer;
-    background: gray;
-  } */
+  }
+
+  .bn-info-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  @media only screen and (max-width: 700px) {
+    .bn-wallets li {
+      width: 100%;
+    }
+  }
 </style>
 
 {#if modalData}
-  <Modal
-    closeModal={() => {
-      modalData = null;
-      app.update(store => ({
-        ...store,
-        selectWallet: false,
-        selectWalletCompleted: false
-      }));
-    }}>
+  <Modal {closeModal}>
     <div>
-      <div class="bn-select-wallet-header">
-        <div class="bn-select-wallet-header-icon">
-          <img src={walletIcon} alt="wallet" />
+      <ModalHeader icon={walletIcon} heading={modalData.heading} />
+      {#if !selectedWallet}
+        <p class="bn-select-wallet-description">{modalData.description}</p>
+        <ul class="bn-wallets">
+          {#each modalData.walletModules as wallet}
+            <li in:fade>
+              <IconButton
+                onclick={() => handleWalletSelect(wallet)}
+                iconSrc={wallet.iconSrc}
+                iconSrcSet={wallet.iconSrcSet}
+                text={wallet.name} />
+            </li>
+          {/each}
+
+          {#if modalData.extraWalletModules && !showingAllWalletModules}
+            <Button
+              highlight={true}
+              onclick={() => (showingAllWalletModules = true)}>
+              Show More
+            </Button>
+          {/if}
+
+          {#if showingAllWalletModules}
+            {#each modalData.extraWalletModules as wallet}
+              <li in:fade>
+                <IconButton
+                  onclick={() => handleWalletSelect(wallet)}
+                  iconSrc={wallet.iconSrc}
+                  iconSrcSet={wallet.iconSrcSet}
+                  text={wallet.name} />
+              </li>
+            {/each}
+          {/if}
+        </ul>
+        <div class="bn-info-container">
+          <span
+            class="bn-select-wallet-info"
+            on:click={() => (showWalletDefinition = true)}>
+            What is a wallet?
+          </span>
+          {#if mobileDevice}
+            <Button onclick={closeModal}>Dismiss</Button>
+          {/if}
         </div>
-        <h3 class="bn-select-wallet-header-heading">{modalData.heading}</h3>
-      </div>
-      <p class="bn-select-wallet-description">{modalData.description}</p>
-      <ul class="bn-wallets">
-        {#each modalData.walletModules as wallet}
-          <li class="bn-wallet" on:click={() => handleWalletSelect(wallet)}>
-            <div class="bn-wallet-icon">
-              <img
-                src={wallet.iconSrc}
-                srcset={wallet.iconSrcSet}
-                alt={wallet.name} />
-            </div>
-            <span class="bn-wallet-name">{wallet.name}</span>
-          </li>
-        {/each}
-      </ul>
-      <span
-        class="bn-select-wallet-info"
-        on:click={() => (showWalletDefinition = true)}>
-        What is a wallet?
-      </span>
-      {#if showWalletDefinition}
-        <p in:fade class="bn-select-wallet-definition">
-          Wallets are used to send, receive, and store digital assets like
-          Ethereum. Wallets come in many forms. They are either built into your
-          browser, an extension added to your browser, a piece of hardware
-          plugged into your computer or even an app on your phone. They are
-          hyper secure, and can be used for any other blockchain application you
-          may want to use.
-        </p>
+        {#if showWalletDefinition}
+          <p in:fade class="bn-select-wallet-definition">
+            Wallets are used to send, receive, and store digital assets like
+            Ethereum. Wallets come in many forms. They are either built into
+            your browser, an extension added to your browser, a piece of
+            hardware plugged into your computer or even an app on your phone.
+            They are hyper secure, and can be used for any other blockchain
+            application you may want to use.
+          </p>
+        {/if}
+      {:else}
+        <div class="bn-selected-wallet" in:fade>
+          <IconButton
+            iconSrc={selectedWallet.iconSrc}
+            iconSrcSet={selectedWallet.iconSrcSet}
+            text={selectedWallet.name} />
+
+          {#if installMessage}
+            {@html installMessage}
+          {/if}
+
+          <div class="bn-select-wallet-footer">
+            <a
+              href={selectedWallet.link}
+              rel="noreferrer noopener"
+              target="_blank">
+              <Button>Install {selectedWallet.name}</Button>
+            </a>
+            <Button
+              onclick={() => {
+                selectedWallet = null;
+                walletAlreadyInstalled = null;
+              }}>
+              Back
+            </Button>
+          </div>
+        </div>
       {/if}
     </div>
   </Modal>
 {/if}
-
-<!-- {#if installMessage}
-        <div transition:fade class="bn-wallet-install">
-          <div>{installMessage}</div>
-          <a
-            class="bn-link-button"
-            href={walletInfo.link}
-            target="_blank"
-            rel="noreferrer noopener">
-            Install {walletInfo.name}
-          </a>
-          <div>
-            Hint: if you already have {walletInfo.name} installed, try disabling
-            the {walletInfo.currentProvider} extension and refreshing the page
-            so that we can see it.
-          </div>
-        </div>
-      {/if} -->

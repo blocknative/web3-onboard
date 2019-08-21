@@ -53,7 +53,8 @@ export function validateModal(modal) {
       button: ow.optional.string,
       invalidMsg: ow.optional.string,
       eventCode: ow.string,
-      action: ow.optional.function
+      action: ow.optional.function,
+      icon: ow.optional.string
     })
   )
 }

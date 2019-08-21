@@ -26,7 +26,10 @@ export default [
       }),
       image(),
       svelte({
-        dev: !production
+        dev: !production,
+        css: css => {
+          css.write("public/bundle.css")
+        }
       }),
       resolve({
         browser: true,
