@@ -20,8 +20,8 @@ const onboard = Onboard.init({
     },
     balance: b => {
       const balance = document.getElementById("balance")
-      if (balance) {
-        balance.innerHTML = (b && b / 1000000000000000000 + " ETH") || ""
+      if (balance != null) {
+        balance.innerHTML = b == 0 ? 0 : b / 1000000000000000000 + " ETH"
       }
     },
     provider: p => p && console.log("provider:", p)

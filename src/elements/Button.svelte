@@ -10,6 +10,7 @@
     border: 1px solid #eeeeee;
     border-radius: 40px;
     padding: 0.55rem 1.4rem;
+    margin-top: 0.33rem;
   }
 
   .bn-button:hover {

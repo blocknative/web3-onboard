@@ -10,7 +10,7 @@
     justify-content: center;
     align-items: center;
     position: absolute;
-    z-index: 999;
+    z-index: 10;
     top: 0;
     left: 0;
     width: 100vw;
@@ -26,7 +26,7 @@
     padding: 1.33rem;
     position: relative;
     overflow: hidden;
-    max-width: 35.6rem;
+    max-width: 36rem;
   }
 
   .bn-modal-close {

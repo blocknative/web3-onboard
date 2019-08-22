@@ -13,6 +13,7 @@
     background: #ffffff;
     margin: 0.33rem 0;
     padding: 0;
+    width: 18rem;
   }
 
   .bn-clickable {
@@ -42,7 +43,6 @@
     margin-left: 0.66rem;
     font-weight: bold;
     color: #727272;
-    width: 12rem;
     font-size: 1rem;
     text-align: left;
   }

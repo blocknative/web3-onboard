@@ -64,17 +64,15 @@ export function validateWalletInterface(walletInterface) {
     walletInterface,
     "wallet interface",
     ow.object.exactShape({
+      name: ow.string,
+      connect: ow.optional.function,
       address: ow.object
         .hasAnyKeys("get", "onChange")
         .valuesOfType(ow.function),
       network: ow.object
         .hasAnyKeys("get", "onChange")
         .valuesOfType(ow.function),
-      balance: ow.object
-        .hasAnyKeys("get", "onChange")
-        .valuesOfType(ow.function),
-      connect: ow.optional.function,
-      name: ow.string
+      balance: ow.object.hasAnyKeys("get", "onChange").valuesOfType(ow.function)
     })
   )
 }
