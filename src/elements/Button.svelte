@@ -4,31 +4,18 @@
 </script>
 
 <style>
-  .bn-button {
-    background: #ffffff;
+  button {
+    background: inherit;
     font-size: 0.889rem;
     border: 1px solid #eeeeee;
     border-radius: 40px;
     padding: 0.55rem 1.4rem;
     margin-top: 0.33rem;
-  }
-
-  .bn-button:hover {
     cursor: pointer;
-  }
-
-  .bn-secondary-font-color {
-    color: #727272;
-  }
-
-  .bn-highlight-font-color {
     color: #4a90e2;
   }
 </style>
 
-<button
-  on:click={onclick}
-  class="bn-button bn-secondary-font-color"
-  class:bn-highlight-font-color={highlight}>
+<button on:click={onclick} class="bn-onboard-button">
   <slot />
 </button>

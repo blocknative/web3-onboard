@@ -1,4 +1,5 @@
 <script>
+  import { styles } from "../stores";
   export let iconSrc;
   export let iconSrcSet = null;
   export let onclick = null;
@@ -6,59 +7,57 @@
 </script>
 
 <style>
-  .bn-icon-button {
+  /* .bn-onboard-icon-button */
+  button {
     display: flex;
     align-items: center;
     border: none;
-    background: #ffffff;
     margin: 0.33rem 0;
+    background: inherit;
     padding: 0;
     width: 18rem;
-  }
-
-  .bn-clickable {
     padding: 0.66rem 1rem;
-    transition: box-shadow 150ms ease-in-out;
+    transition: box-shadow 150ms ease-in-out, background 200ms ease-in-out;
     border-radius: 40px;
+    cursor: pointer;
+    color: inherit;
   }
 
-  .bn-clickable:hover {
-    cursor: pointer;
+  button:hover {
     box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
   }
 
-  .bn-icon-button div {
+  div {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 3rem;
   }
 
-  .bn-icon-button div img {
+  img {
     width: auto;
     height: 100%;
   }
 
-  .bn-icon-button span {
+  span {
     margin-left: 0.66rem;
     font-weight: bold;
-    color: #727272;
+    opacity: 0.7;
     font-size: 1rem;
     text-align: left;
   }
 
   @media only screen and (max-width: 700px) {
-    .bn-icon-button {
+    button {
       width: 100%;
-    }
-
-    .bn-clickable {
-      background: #f9f9f9;
     }
   }
 </style>
 
-<button on:click={onclick} class:bn-clickable={onclick} class="bn-icon-button">
+<button
+  on:click={onclick}
+  class="bn-onboard-icon-button"
+  class:bn-onboard-dark-mode-background={$styles.darkMode}>
   <div>
     <img src={iconSrc} srcset={iconSrcSet} alt={text} />
   </div>

@@ -1,11 +1,15 @@
 <script>
   import { fade } from "svelte/transition";
   import closeIcon from "../assets/icons/close.svg";
+  import { styles } from "../stores";
   export let closeModal;
 </script>
 
 <style>
-  .bn-modal {
+  /* === TARGET BY ELEMENT TO ALLOW CUSTOM OVERRIDES TO HAVE ADEQUATE SPECIFICITY ===*/
+
+  /* .bn-onboard-modal */
+  aside {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,7 +22,8 @@
     background: rgba(0, 0, 0, 0.3);
   }
 
-  .bn-modal-content {
+  /* .bn-onboard-modal-content  */
+  section {
     background: #ffffff;
     border-radius: 10px;
     box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.1);
@@ -27,9 +32,11 @@
     position: relative;
     overflow: hidden;
     max-width: 36rem;
+    color: #4a4a4a;
   }
 
-  .bn-modal-close {
+  /* .bn-onboard-modal-content-close  */
+  div {
     height: 0.66rem;
     position: absolute;
     padding: 0.5rem;
@@ -42,22 +49,26 @@
     align-items: center;
   }
 
-  .bn-modal-close:hover {
+  /* .bn-onboard-modal-content-close:hover  */
+  div:hover {
     cursor: pointer;
     background: #eeeeee;
   }
 
-  .bn-modal-close img {
+  /* .bn-onboard-modal-content-close  */
+  img {
     width: auto;
     height: 100%;
   }
 </style>
 
-<div transition:fade class="bn-custom bn-styles bn-modal">
-  <section class="bn-custom bn-styles bn-modal-content">
+<aside transition:fade class="bn-onboard-custom bn-onboard-modal">
+  <section
+    class:bn-onboard-dark-mode={$styles.darkMode}
+    class="bn-onboard-custom bn-onboard-modal-content">
     <slot />
-    <div class="bn-modal-close" on:click={closeModal}>
+    <div class="bn-onboard-modal-content-close" on:click={closeModal}>
       <img src={closeIcon} alt="close" />
     </div>
   </section>
-</div>
+</aside>

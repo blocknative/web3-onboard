@@ -137,31 +137,34 @@
 </script>
 
 <style>
-  .bn-description {
-    color: #727272;
+  /* .bn-onboard-prepare-description */
+  p {
+    opacity: 0.7;
     font-size: 0.889rem;
   }
 
-  .bn-button-container {
-    display: flex;
-    justify-content: end;
+  /* .bn-onboard-prepare-error */
+  span {
+    color: #e2504a;
   }
 
-  .bn-error {
-    color: #e2504a;
+  /* .bn-onboard-prepare-button-container */
+  div {
+    display: flex;
+    justify-content: end;
   }
 </style>
 
 {#if activeModal}
   <Modal closeModal={handleExit}>
     <ModalHeader icon={activeModal.icon} heading={activeModal.heading} />
-    <p class="bn-description">
+    <p class="bn-onboard-prepare-description">
       {@html activeModal.description}
     </p>
     {#if errorMsg}
-      <p class="bn-error" in:fade>{errorMsg}</p>
+      <span class="bn-onboard-prepare-error" in:fade>{errorMsg}</span>
     {/if}
-    <div class="bn-button-container">
+    <div class="bn-onboard-prepare-button-container">
       <Button onclick={handleExit}>Dismiss</Button>
     </div>
   </Modal>

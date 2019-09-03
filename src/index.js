@@ -2,6 +2,7 @@ import Onboard from "./Onboard.svelte"
 
 import {
   app,
+  styles,
   address,
   network,
   balance,
@@ -47,7 +48,7 @@ function init(config) {
     }
   }
 
-  return { selectWallet, prepareWallet }
+  return { selectWallet, prepareWallet, style }
 }
 
 function selectWallet() {
@@ -76,6 +77,11 @@ function prepareWallet() {
       }
     })
   })
+}
+
+function style(options) {
+  // validate styles
+  styles.update(store => ({ ...store, ...options }))
 }
 
 export default { init }

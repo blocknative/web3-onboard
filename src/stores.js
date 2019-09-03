@@ -12,6 +12,10 @@ export const app = writable({
   modules: null
 })
 
+export const styles = writable({
+  darkMode: false
+})
+
 export let syncingState = false
 
 export const address = createUserStateStore("address")
