@@ -2,28 +2,22 @@
   import { styles } from "../stores";
   export let iconSrc;
   export let iconSrcSet = null;
-  export let onclick = null;
   export let text;
 </script>
 
 <style>
-  /* .bn-onboard-icon-button */
+  /* .bn-onboard-icon-display */
   button {
     display: flex;
     align-items: center;
     border: none;
-    margin: 0.33rem 0;
+    margin: 0;
     background: inherit;
+    padding: 0;
     width: 18rem;
-    padding: 0.66rem 1rem;
     transition: box-shadow 150ms ease-in-out, background 200ms ease-in-out;
     border-radius: 40px;
-    cursor: pointer;
     color: inherit;
-  }
-
-  button:hover {
-    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
   }
 
   div {
@@ -54,8 +48,7 @@
 </style>
 
 <button
-  on:click={onclick}
-  class="bn-onboard-icon-button"
+  class="bn-onboard-icon-display"
   class:bn-onboard-dark-mode-background={$styles.darkMode}>
   <div>
     <img src={iconSrc} srcset={iconSrcSet} alt={text} />

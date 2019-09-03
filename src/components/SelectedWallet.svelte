@@ -1,6 +1,6 @@
 <script>
   import Button from "../elements/Button.svelte";
-  import IconButton from "../elements/IconButton.svelte";
+  import IconDisplay from "../elements/IconDisplay.svelte";
   import { fade } from "svelte/transition";
   export let selectedWallet;
   export let onBack;
@@ -15,7 +15,7 @@
 </style>
 
 <div class="bn-onboard-modal-selected-wallet" in:fade>
-  <IconButton
+  <IconDisplay
     iconSrc={selectedWallet.iconSrc}
     iconSrcSet={selectedWallet.iconSrcSet}
     text={selectedWallet.name} />
