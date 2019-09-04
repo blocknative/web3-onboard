@@ -67,7 +67,9 @@
     class:bn-onboard-dark-mode={$styles.darkMode}
     class="bn-onboard-custom bn-onboard-modal-content">
     <slot />
-    <div class="bn-onboard-modal-content-close" on:click={closeModal}>
+    <div
+      class="bn-onboard-custom bn-onboard-modal-content-close"
+      on:click={closeModal}>
       <img src={closeIcon} alt="close" />
     </div>
   </section>

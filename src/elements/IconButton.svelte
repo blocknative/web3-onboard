@@ -59,7 +59,7 @@
 
 <button
   on:click={onclick}
-  class="bn-onboard-icon-button"
+  class="bn-onboard-custom bn-onboard-icon-button"
   class:bn-onboard-dark-mode-background={$styles.darkMode}>
   <div>
     <img src={iconSrc} srcset={iconSrcSet} alt={text} />

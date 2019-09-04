@@ -175,13 +175,15 @@
 {#if activeModal}
   <Modal closeModal={handleExit}>
     <ModalHeader icon={activeModal.icon} heading={activeModal.heading} />
-    <p class="bn-onboard-prepare-description">
+    <p class="bn-onboard-custom bn-onboard-prepare-description">
       {@html activeModal.description}
     </p>
     {#if errorMsg}
-      <span class="bn-onboard-prepare-error" in:fade>{errorMsg}</span>
+      <span class="bn-onboard-custom bn-onboard-prepare-error" in:fade>
+        {errorMsg}
+      </span>
     {/if}
-    <div class="bn-onboard-prepare-button-container">
+    <div class="bn-onboard-custom bn-onboard-prepare-button-container">
       {#if errorMsg}
         <Button onclick={doAction}>Try Again</Button>
       {/if}

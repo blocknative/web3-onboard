@@ -8,13 +8,13 @@
 </script>
 
 <style>
-  div div {
+  footer {
     display: flex;
     justify-content: space-between;
   }
 </style>
 
-<div class="bn-onboard-modal-selected-wallet" in:fade>
+<section class="bn-onboard-custom bn-onboard-modal-selected-wallet" in:fade>
   <IconDisplay
     iconSrc={selectedWallet.iconSrc}
     iconSrcSet={selectedWallet.iconSrcSet}
@@ -24,10 +24,10 @@
     {@html installMessage}
   {/if}
 
-  <div class="bn-onboard-modal-selected-wallet-footer">
+  <footer class="bn-onboard-custom bn-onboard-modal-selected-wallet-footer">
     <a href={selectedWallet.link} rel="noreferrer noopener" target="_blank">
       <Button>Install {selectedWallet.name}</Button>
     </a>
     <Button onclick={onBack}>Back</Button>
-  </div>
-</div>
+  </footer>
+</section>

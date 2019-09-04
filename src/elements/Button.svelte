@@ -20,6 +20,6 @@
   }
 </style>
 
-<button on:click={onclick} class="bn-onboard-button">
+<button on:click={onclick} class="bn-onboard-custom bn-onboard-button">
   <slot />
 </button>

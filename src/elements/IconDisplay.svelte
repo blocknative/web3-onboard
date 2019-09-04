@@ -34,7 +34,7 @@
 </style>
 
 <div
-  class="bn-onboard-icon-display"
+  class="bn-onboard-custom bn-onboard-icon-display"
   class:bn-onboard-dark-mode-background={$styles.darkMode}>
   <img src={iconSrc} srcset={iconSrcSet} alt={text} />
   <span>{text}</span>
