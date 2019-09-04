@@ -3,13 +3,23 @@ export function createModernProviderInterface(provider) {
 
   return {
     address: {
-      onChange: func => {
-        // give the initial value if it exists
-        if (provider.selectedAddress) {
-          func(provider.selectedAddress)
-        }
-        provider.on("accountsChanged", accounts => func(accounts[0]))
+      get: async () => {
+        const unlocked = await provider._metamask.isUnlocked()
+        const enabled = provider._metamask.isEnabled()
+
+        return unlocked && enabled
+          ? Promise.resolve(provider.selectedAddress)
+          : Promise.resolve(undefined)
       }
+
+      // METAMASK BUG NEEDS TO BE FIXED FOR CHROME: https://github.com/MetaMask/metamask-extension/issues/7101
+      // onChange: func => {
+      //   // give the initial value if it exists
+      //   if (provider.selectedAddress) {
+      //     func(provider.selectedAddress)
+      //   }
+      //   provider.on("accountsChanged", accounts => func(accounts[0]))
+      // }
     },
     network: {
       onChange: func => {
@@ -40,7 +50,17 @@ export function createModernProviderInterface(provider) {
           )
         })
     },
-    connect: provider.enable,
+    connect: () =>
+      new Promise((resolve, reject) => {
+        provider
+          .enable()
+          .then(resolve)
+          .catch(() =>
+            reject({
+              message: "This dapp needs access to your account information."
+            })
+          )
+      }),
     name: getProviderName(provider)
   }
 }

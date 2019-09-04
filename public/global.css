@@ -13,6 +13,10 @@ body {
   color: #4a90e2;
 }
 
+.bn-demo-button:focus {
+  outline: none;
+}
+
 .bn-demo-button:hover {
   cursor: pointer;
 }

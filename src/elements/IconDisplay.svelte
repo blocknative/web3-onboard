@@ -7,7 +7,7 @@
 
 <style>
   /* .bn-onboard-icon-display */
-  button {
+  div {
     display: flex;
     align-items: center;
     border: none;
@@ -15,21 +15,13 @@
     background: inherit;
     padding: 0;
     width: 18rem;
-    transition: box-shadow 150ms ease-in-out, background 200ms ease-in-out;
     border-radius: 40px;
     color: inherit;
   }
 
-  div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 3rem;
-  }
-
   img {
     width: auto;
-    height: 100%;
+    height: 3rem;
   }
 
   span {
@@ -39,19 +31,11 @@
     font-size: 1rem;
     text-align: left;
   }
-
-  @media only screen and (max-width: 700px) {
-    button {
-      width: 100%;
-    }
-  }
 </style>
 
-<button
+<div
   class="bn-onboard-icon-display"
   class:bn-onboard-dark-mode-background={$styles.darkMode}>
-  <div>
-    <img src={iconSrc} srcset={iconSrcSet} alt={text} />
-  </div>
+  <img src={iconSrc} srcset={iconSrcSet} alt={text} />
   <span>{text}</span>
-</button>
+</div>

@@ -26,6 +26,10 @@
     box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
   }
 
+  button:focus {
+    outline: none;
+  }
+
   div {
     display: flex;
     justify-content: center;

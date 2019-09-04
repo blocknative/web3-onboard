@@ -14,6 +14,10 @@
     cursor: pointer;
     color: #4a90e2;
   }
+
+  button:focus {
+    outline: none;
+  }
 </style>
 
 <button on:click={onclick} class="bn-onboard-button">

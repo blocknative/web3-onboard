@@ -14,6 +14,7 @@
   let errorMsg;
   let pollingInterval;
   let checkingModule;
+  let actionResolved;
 
   // get the prepare wallet modules from the store
   app.subscribe(({ modules: { prepareWallet } }) => {
@@ -54,18 +55,14 @@
 
       // run any actions that module require as part of this step
       if (activeModal.action) {
-        activeModal.action().catch(err => {
-          errorMsg = err.message;
-        });
+        doAction();
       }
 
       // poll to automatically to check if condition has been met
       pollingInterval = setInterval(async () => {
-        const result = await invalidState(currentModule, state.get());
-        if (!result) {
-          clearInterval(pollingInterval);
-          activeModal = null;
-          currentModule = null;
+        const invalid = await invalidState(currentModule, state.get());
+        if (!invalid && actionResolved !== false) {
+          resetState();
 
           // delayed for animations
           setTimeout(() => {
@@ -74,6 +71,17 @@
         }
       }, 500);
     });
+  }
+
+  function doAction() {
+    actionResolved = false;
+
+    activeModal
+      .action()
+      .then(() => (actionResolved = true))
+      .catch(err => {
+        errorMsg = err.message;
+      });
   }
 
   async function handleClick() {
@@ -87,8 +95,14 @@
   }
 
   function handleExit() {
-    clearInterval(pollingInterval);
     app.update(store => ({ ...store, prepareWallet: false }));
+    resetState();
+  }
+
+  function resetState() {
+    clearInterval(pollingInterval);
+    errorMsg = null;
+    actionResolved = null;
     activeModal = null;
     currentModule = null;
   }
@@ -146,12 +160,15 @@
   /* .bn-onboard-prepare-error */
   span {
     color: #e2504a;
+    font-size: 0.889rem;
+    display: block;
+    margin-bottom: 0.75rem;
   }
 
   /* .bn-onboard-prepare-button-container */
   div {
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
   }
 </style>
 
@@ -165,6 +182,9 @@
       <span class="bn-onboard-prepare-error" in:fade>{errorMsg}</span>
     {/if}
     <div class="bn-onboard-prepare-button-container">
+      {#if errorMsg}
+        <Button onclick={doAction}>Try Again</Button>
+      {/if}
       <Button onclick={handleExit}>Dismiss</Button>
     </div>
   </Modal>

@@ -37,8 +37,8 @@ const onboard = Onboard.init({
       networkId: 4
     }),
     prepareWallet: window.PrepareWallet.defaultModules({
-      networkId: 4,
-      minimumBalance: "200000000000000000"
+      networkId: 4
+      // minimumBalance: "200000000000000000"
     })
   }
 })
