@@ -39,9 +39,9 @@
   div {
     height: 0.66rem;
     position: absolute;
-    padding: 0.5rem;
-    top: 0.5rem;
-    right: 0.5rem;
+    padding: .8rem;
+    top: 1.33rem;
+    right: 1.33rem;
     border-radius: 5px;
     transition: background 200ms ease-in-out;
     display: flex;
@@ -57,8 +57,8 @@
 
   /* .bn-onboard-modal-content-close  */
   img {
-    width: auto;
-    height: 100%;
+    width: 10px;
+    height: 10px;
   }
 </style>
 

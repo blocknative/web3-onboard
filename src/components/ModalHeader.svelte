@@ -16,9 +16,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 1.66rem;
-    height: 1.66rem;
-    padding: 0.66rem;
+    padding: 0.6rem;
     border-radius: 30px;
     background: #eeeeee;
   }
@@ -27,7 +25,7 @@
   h3 {
     font-weight: bold;
     font-size: 1.33rem;
-    margin: 0 0 0 1rem;
+    margin: 0 0 0 .5rem;
   }
 </style>
 
