@@ -153,7 +153,6 @@
 <style>
   /* .bn-onboard-prepare-description */
   p {
-    opacity: 0.7;
     font-size: 0.889rem;
   }
 

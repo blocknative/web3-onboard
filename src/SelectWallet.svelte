@@ -91,7 +91,6 @@
 <style>
   /* .bn-onboard-select-description, .bn-onboard-select-wallet-definition */
   p {
-    opacity: 0.7;
     font-size: 0.889rem;
     margin: 1rem 0 0 0;
   }

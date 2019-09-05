@@ -45,7 +45,6 @@
   span {
     margin-left: 0.66rem;
     font-weight: bold;
-    opacity: 0.7;
     font-size: 1rem;
     text-align: left;
   }
