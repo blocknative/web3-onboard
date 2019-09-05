@@ -1,7 +1,7 @@
 <script>
   import { fade } from "svelte/transition";
   import closeIcon from "../assets/icons/close.svg";
-  import { styles } from "../stores";
+  import { configuration } from "../stores";
   export let closeModal;
 </script>
 
@@ -64,7 +64,7 @@
 
 <aside transition:fade class="bn-onboard-custom bn-onboard-modal">
   <section
-    class:bn-onboard-dark-mode={$styles.darkMode}
+    class:bn-onboard-dark-mode={$configuration.darkMode}
     class="bn-onboard-custom bn-onboard-modal-content">
     <slot />
     <div

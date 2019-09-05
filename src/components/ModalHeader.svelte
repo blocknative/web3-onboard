@@ -1,5 +1,5 @@
 <script>
-  import { styles } from "../stores";
+  import { configuration } from "../stores";
   export let heading;
 </script>
 
@@ -33,7 +33,7 @@
 
 <header class="bn-onboard-custom bn-onboard-modal-content-header">
   <div
-    class:bn-onboard-dark-mode-background={$styles.darkMode}
+    class:bn-onboard-dark-mode-background={$configuration.darkMode}
     class="bn-onboard-custom bn-onboard-modal-content-header-icon">
     <svg
       height="18"

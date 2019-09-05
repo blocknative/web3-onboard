@@ -1,43 +1,57 @@
 import ow from "ow"
 
-export function validateConfig(config) {
+export function validateInit(init) {
   ow(
-    config,
-    "config",
+    init,
+    "Initialization Options",
     ow.object.exactShape({
       networkId: ow.number,
       dappId: ow.string,
       subscriptions: ow.optional.object.exactShape({
         address: ow.optional.function,
         network: ow.optional.function,
-        balance: ow.optional.function
+        balance: ow.optional.function,
+        provider: ow.optional.function
       }),
       modules: ow.object.exactShape({
         selectWallet: ow.object.exactShape({
           heading: ow.string,
           description: ow.string,
           wallets: ow.object.exactShape({
-            mobile: ow.array.nonEmpty.ofType(
+            mobile: ow.optional.array.nonEmpty.ofType(
               ow.object.exactShape({
                 name: ow.string,
-                icon: ow.string,
-                connect: ow.function,
-                link: ow.string,
-                installMessage: ow.function
+                iconSrc: ow.string,
+                iconSrcSet: ow.optional.string,
+                wallet: ow.function,
+                link: ow.optional.string,
+                installMessage: ow.optional.function
               })
             ),
-            desktop: ow.array.nonEmpty.ofType(
+            desktop: ow.optional.array.nonEmpty.ofType(
               ow.object.exactShape({
                 name: ow.string,
-                icon: ow.string,
-                connect: ow.function,
-                link: ow.string,
-                installMessage: ow.function
+                iconSrc: ow.string,
+                iconSrcSet: ow.optional.string,
+                wallet: ow.function,
+                link: ow.optional.string,
+                installMessage: ow.optional.function
               })
             )
           })
-        })
+        }),
+        prepareWallet: ow.array.nonEmpty.ofType(ow.function)
       })
+    })
+  )
+}
+
+export function validateConfig(configuration) {
+  ow(
+    configuration,
+    "config",
+    ow.object.exactShape({
+      darkMode: ow.boolean
     })
   )
 }

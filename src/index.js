@@ -2,25 +2,22 @@ import Onboard from "./Onboard.svelte"
 
 import {
   app,
-  styles,
+  configuration,
   address,
   network,
   balance,
   walletInterface,
   provider
 } from "./stores"
-import { validateConfig } from "./validation"
+import { validateInit, validateConfig } from "./validation"
 import { getUserAgent } from "./utilities"
 
-function init(config) {
-  // get the user agent
+function init(initialization) {
   getUserAgent()
 
-  // validate config
-  // @TODO - put validation back in once api has settled a bit
-  // validateConfig(config)
+  validateInit(initialization)
 
-  const { subscriptions, ...rest } = config
+  const { subscriptions, ...rest } = initialization
 
   app.update(store => ({ ...store, ...rest }))
 
@@ -48,40 +45,49 @@ function init(config) {
     }
   }
 
-  return { selectWallet, prepareWallet, style }
+  return { selectWallet, prepareWallet, config }
 }
 
 function selectWallet() {
   return new Promise(resolve => {
     app.update(store => ({ ...store, selectWallet: true }))
-    app.subscribe(({ selectWallet, selectWalletCompleted }) => {
-      if (selectWallet === false) {
-        resolve(selectWalletCompleted)
+
+    const appUnsubscribe = app.subscribe(
+      ({ selectWallet, selectWalletCompleted }) => {
+        if (selectWallet === false) {
+          appUnsubscribe()
+          resolve(selectWalletCompleted)
+        }
       }
-    })
+    )
   })
 }
 
 function prepareWallet() {
   return new Promise(resolve => {
-    walletInterface.subscribe(provider => {
+    const walletUnsubscribe = walletInterface.subscribe(provider => {
       if (!provider) {
+        walletUnsubscribe()
         throw new Error("selectWallet must be called before prepareWallet")
       }
     })
 
     app.update(store => ({ ...store, prepareWallet: true }))
-    app.subscribe(({ prepareWallet, prepareWalletCompleted }) => {
-      if (prepareWallet === false) {
-        resolve(prepareWalletCompleted)
+
+    const appUnsubscribe = app.subscribe(
+      ({ prepareWallet, prepareWalletCompleted }) => {
+        if (prepareWallet === false) {
+          appUnsubscribe()
+          resolve(prepareWalletCompleted)
+        }
       }
-    })
+    )
   })
 }
 
-function style(options) {
-  // validate styles
-  styles.update(store => ({ ...store, ...options }))
+function config(options) {
+  validateConfig(options)
+  configuration.update(store => ({ ...store, ...options }))
 }
 
 export default { init }

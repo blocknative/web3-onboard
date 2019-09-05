@@ -10,7 +10,7 @@
     color: #ffffff;
   }
 
-  :global(.bn-onboard-custom.bn-onboard-dark-mode-background, .bn-onboard-dark-mode-background:hover) {
+  :global(.bn-onboard-custom.bn-onboard-dark-mode-background-hover:hover, .bn-onboard-custom.bn-onboard-dark-mode-background) {
     background: #0e212a;
   }
 </style>

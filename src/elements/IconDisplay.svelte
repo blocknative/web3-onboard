@@ -1,5 +1,5 @@
 <script>
-  import { styles } from "../stores";
+  import { configuration } from "../stores";
   export let iconSrc;
   export let iconSrcSet = null;
   export let text;
@@ -33,9 +33,7 @@
   }
 </style>
 
-<div
-  class="bn-onboard-custom bn-onboard-icon-display"
-  class:bn-onboard-dark-mode-background={$styles.darkMode}>
+<div class="bn-onboard-custom bn-onboard-icon-display">
   <img src={iconSrc} srcset={iconSrcSet} alt={text} />
   <span>{text}</span>
 </div>

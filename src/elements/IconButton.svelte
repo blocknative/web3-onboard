@@ -1,5 +1,5 @@
 <script>
-  import { styles } from "../stores";
+  import { configuration } from "../stores";
   export let iconSrc;
   export let iconSrcSet = null;
   export let onclick = null;
@@ -60,7 +60,7 @@
 <button
   on:click={onclick}
   class="bn-onboard-custom bn-onboard-icon-button"
-  class:bn-onboard-dark-mode-background={$styles.darkMode}>
+  class:bn-onboard-dark-mode-background-hover={$configuration.darkMode}>
   <div>
     <img src={iconSrc} srcset={iconSrcSet} alt={text} />
   </div>

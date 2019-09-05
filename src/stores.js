@@ -12,7 +12,7 @@ export const app = writable({
   modules: null
 })
 
-export const styles = writable({
+export const configuration = writable({
   darkMode: false
 })
 
