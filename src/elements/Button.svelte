@@ -18,6 +18,9 @@
   button:focus {
     outline: none;
   }
+  button:hover{
+    background: #ECF3FC;
+  }
 </style>
 
 <button on:click={onclick} class="bn-onboard-custom bn-onboard-button">
