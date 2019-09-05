@@ -162,6 +162,10 @@
     font-size: 0.889rem;
     display: block;
     margin-bottom: 0.75rem;
+    background: #0e212a;
+    padding: .5rem;
+    border: 1px solid #e2504a;
+    border-radius: 5px;
   }
 
   /* .bn-onboard-prepare-button-container */

@@ -15,7 +15,7 @@
     margin: 0.33rem 0;
     background: inherit;
     width: 18rem;
-    padding: 0.66rem 1rem;
+    padding: 0.625rem 1.25rem;
     transition: box-shadow 150ms ease-in-out, background 200ms ease-in-out;
     border-radius: 40px;
     cursor: pointer;
@@ -31,15 +31,18 @@
   }
 
   div {
-    display: flex;
     justify-content: center;
     align-items: center;
-    height: 3rem;
+    text-align: center;
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
   }
 
   img {
-    width: auto;
-    height: 100%;
+    max-height: 100%;
+    max-width: 100%;
+    vertical-align: middle;
   }
 
   span {
