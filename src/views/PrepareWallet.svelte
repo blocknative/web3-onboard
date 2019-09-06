@@ -1,12 +1,12 @@
 <script>
   import { fly, fade } from "svelte/transition";
   import { quintOut } from "svelte/easing";
-  import Modal from "./components/Modal.svelte";
-  import ModalHeader from "./components/ModalHeader.svelte";
-  import Button from "./elements/Button.svelte";
-  import { blocknative } from "./services";
-  import { app, state, syncingState } from "./stores";
-  import { validateModal } from "./validation";
+  import Modal from "../components/Modal.svelte";
+  import ModalHeader from "../components/ModalHeader.svelte";
+  import Button from "../elements/Button.svelte";
+  import { blocknative } from "../services";
+  import { app, state, syncingState } from "../stores";
+  import { validateModal } from "../validation";
 
   let activeModal;
   let modules;
@@ -163,7 +163,7 @@
     display: block;
     margin-bottom: 0.75rem;
     background: #0e212a;
-    padding: .5rem;
+    padding: 0.5rem;
     border: 1px solid #e2504a;
     border-radius: 5px;
   }

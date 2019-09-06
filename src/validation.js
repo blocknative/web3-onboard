@@ -21,8 +21,9 @@ export function validateInit(init) {
             mobile: ow.optional.array.nonEmpty.ofType(
               ow.object.exactShape({
                 name: ow.string,
-                iconSrc: ow.string,
+                iconSrc: ow.optional.string,
                 iconSrcSet: ow.optional.string,
+                svg: ow.optional.string,
                 wallet: ow.function,
                 link: ow.optional.string,
                 installMessage: ow.optional.function
@@ -31,8 +32,9 @@ export function validateInit(init) {
             desktop: ow.optional.array.nonEmpty.ofType(
               ow.object.exactShape({
                 name: ow.string,
-                iconSrc: ow.string,
+                iconSrc: ow.optional.string,
                 iconSrcSet: ow.optional.string,
+                svg: ow.optional.string,
                 wallet: ow.function,
                 link: ow.optional.string,
                 installMessage: ow.optional.function

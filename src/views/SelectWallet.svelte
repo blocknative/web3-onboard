@@ -1,20 +1,20 @@
 <script>
-  import { blocknative } from "./services";
-  import { app, state, walletInterface, provider } from "./stores";
+  import { blocknative } from "../services";
+  import { app, state, walletInterface, provider } from "../stores";
   import { fly, fade } from "svelte/transition";
   import { quintOut } from "svelte/easing";
-  import Modal from "./components/Modal.svelte";
-  import ModalHeader from "./components/ModalHeader.svelte";
-  import Wallets from "./components/Wallets.svelte";
-  import SelectedWallet from "./components/SelectedWallet.svelte";
-  import Button from "./elements/Button.svelte";
-  import IconButton from "./elements/IconButton.svelte";
+  import Modal from "../components/Modal.svelte";
+  import ModalHeader from "../components/ModalHeader.svelte";
+  import Wallets from "../components/Wallets.svelte";
+  import SelectedWallet from "../components/SelectedWallet.svelte";
+  import Button from "../elements/Button.svelte";
+  import IconButton from "../elements/IconButton.svelte";
 
   import {
     getProviderName,
     createLegacyProviderInterface,
     createModernProviderInterface
-  } from "./provider";
+  } from "../provider";
 
   const { mobileDevice } = state.get();
 
@@ -120,7 +120,7 @@
       <div class="bn-onboard-custom bn-onboard-select-info-container">
         <span
           class="bn-onboard-custom bn-onboard-select-wallet-info"
-          on:click={() => (showWalletDefinition = true)}>
+          on:click={() => (showWalletDefinition = !showWalletDefinition)}>
           What is a wallet?
         </span>
         {#if mobileDevice}

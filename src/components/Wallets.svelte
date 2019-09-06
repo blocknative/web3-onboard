@@ -19,6 +19,12 @@
     padding: 0;
   }
 
+  div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
   @media only screen and (max-width: 700px) {
     ul li {
       width: 100%;
@@ -38,9 +44,11 @@
   {/each}
 
   {#if modalData.extraWalletModules && !showingAllWalletModules}
-    <Button highlight={true} onclick={() => (showingAllWalletModules = true)}>
-      Show More
-    </Button>
+    <div>
+      <Button highlight={true} onclick={() => (showingAllWalletModules = true)}>
+        Show More
+      </Button>
+    </div>
   {/if}
 
   {#if showingAllWalletModules}
@@ -50,6 +58,7 @@
           onclick={() => handleWalletSelect(wallet)}
           iconSrc={wallet.iconSrc}
           iconSrcSet={wallet.iconSrcSet}
+          svg={wallet.svg}
           text={wallet.name} />
       </li>
     {/each}

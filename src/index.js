@@ -1,4 +1,4 @@
-import Onboard from "./Onboard.svelte"
+import Onboard from "./views/Onboard.svelte"
 
 import {
   app,
