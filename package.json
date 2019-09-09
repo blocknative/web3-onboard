@@ -20,7 +20,8 @@
     "ethers": "^4.0.33",
     "ow": "^0.13.2",
     "sirv-cli": "^0.4.4",
-    "sockette": "^2.0.6"
+    "sockette": "^2.0.6",
+    "svelte-i18n": "^1.1.2-beta"
   },
   "scripts": {
     "build": "rollup -c",

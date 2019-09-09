@@ -29,6 +29,7 @@ const onboard = Onboard.init({
   modules: {
     selectWallet: window.SelectWallet.defaultModules({
       fortmatic: { apiKey: "pk_test_886ADCAB855632AA" },
+      portis: { apiKey: "d7d72646-709a-45ab-aa43-8de5307ae0df" },
       trezor: {
         email: "aaron@flexdapps.com",
         appUrl: "https://flexdapps.com",
@@ -37,8 +38,8 @@ const onboard = Onboard.init({
       networkId: 4
     }),
     prepareWallet: window.PrepareWallet.defaultModules({
-      networkId: 4
-      // minimumBalance: "200000000000000000"
+      networkId: 4,
+      minimumBalance: "20000000000000000"
     })
   }
 })
