@@ -1,4 +1,4 @@
-import BlocknativeApi from "./blocknative-api"
+import BlocknativeApi from "./bn-client-sdk"
 import { app } from "./stores"
 
 export let blocknative
