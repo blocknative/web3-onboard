@@ -70,6 +70,10 @@ export function validateModal(modal) {
       invalidMsg: ow.optional.string,
       eventCode: ow.string,
       action: ow.optional.function,
+      button: ow.optional.object.exactShape({
+        onclick: ow.function,
+        text: ow.string
+      }),
       icon: ow.optional.string
     })
   )

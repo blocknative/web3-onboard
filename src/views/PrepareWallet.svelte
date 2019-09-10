@@ -1,11 +1,16 @@
 <script>
   import { fly, fade } from "svelte/transition";
   import { quintOut } from "svelte/easing";
+
+  import { selectWallet } from "../index";
+
   import Modal from "../components/Modal.svelte";
   import ModalHeader from "../components/ModalHeader.svelte";
+
   import Button from "../elements/Button.svelte";
+
   import { blocknative } from "../services";
-  import { app, state, syncingState } from "../stores";
+  import { app, state, syncingState, configuration } from "../stores";
   import { validateModal } from "../validation";
 
   let activeModal;
@@ -126,7 +131,11 @@
   }
 
   async function invalidState(module, state) {
-    const result = module(state);
+    const result = module({
+      ...state,
+      selectWallet,
+      exitPrepareWallet: handleExit
+    });
 
     if (result) {
       // module returned a promise, so await it for val
@@ -162,7 +171,6 @@
     font-size: 0.889rem;
     display: block;
     margin-bottom: 0.75rem;
-    background: #0e212a;
     padding: 0.5rem;
     border: 1px solid #e2504a;
     border-radius: 5px;
@@ -182,13 +190,23 @@
       {@html activeModal.description}
     </p>
     {#if errorMsg}
-      <span class="bn-onboard-custom bn-onboard-prepare-error" in:fade>
+      <span
+        class:bn-onboard-dark-mode-background={$configuration.darkMode}
+        class="bn-onboard-custom bn-onboard-prepare-error"
+        in:fade>
         {errorMsg}
       </span>
     {/if}
     <div class="bn-onboard-custom bn-onboard-prepare-button-container">
+      {#if activeModal.button}
+        <Button onclick={activeModal.button.onclick}>
+          {activeModal.button.text}
+        </Button>
+      {/if}
       {#if errorMsg}
         <Button onclick={doAction}>Try Again</Button>
+      {:else}
+        <div />
       {/if}
       <Button onclick={handleExit}>Dismiss</Button>
     </div>

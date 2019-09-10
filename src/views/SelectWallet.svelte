@@ -9,6 +9,7 @@
   import SelectedWallet from "../components/SelectedWallet.svelte";
   import Button from "../elements/Button.svelte";
   import IconButton from "../elements/IconButton.svelte";
+  import walletIcon from "../elements/walletIcon";
 
   import {
     getProviderName,
@@ -111,7 +112,7 @@
 
 {#if modalData}
   <Modal {closeModal}>
-    <ModalHeader heading={modalData.heading} />
+    <ModalHeader icon={walletIcon} heading={modalData.heading} />
     {#if !selectedWallet}
       <p class="bn-onboard-custom bn-onboard-select-description">
         {modalData.description}

@@ -48,7 +48,7 @@ function init(initialization) {
   return { selectWallet, prepareWallet, config }
 }
 
-function selectWallet() {
+export function selectWallet() {
   return new Promise(resolve => {
     app.update(store => ({ ...store, selectWallet: true }))
 

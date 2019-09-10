@@ -1,5 +1,3 @@
-// import selectWallet from "./bn-select-wallet"
-// import prepareWallet from "./bn-prepare-wallet"
 import Onboard from "./Onboard"
 
 const onboard = Onboard.init({
@@ -27,17 +25,17 @@ const onboard = Onboard.init({
     provider: p => p && console.log("provider:", p)
   },
   modules: {
-    selectWallet: window.SelectWallet.defaultModules({
-      fortmatic: { apiKey: "pk_test_886ADCAB855632AA" },
-      portis: { apiKey: "d7d72646-709a-45ab-aa43-8de5307ae0df" },
-      trezor: {
+    selectWallet: window.selectWallet({
+      fortmaticInit: { apiKey: "pk_test_886ADCAB855632AA" },
+      portisInit: { apiKey: "d7d72646-709a-45ab-aa43-8de5307ae0df" },
+      trezorInit: {
         email: "aaron@flexdapps.com",
         appUrl: "https://flexdapps.com",
         apiKey: "d5e29c9b9a9d4116a7348113f57770a8"
       },
       networkId: 4
     }),
-    prepareWallet: window.PrepareWallet.defaultModules({
+    prepareWallet: window.prepareWallet({
       networkId: 4,
       minimumBalance: "20000000000000000"
     })

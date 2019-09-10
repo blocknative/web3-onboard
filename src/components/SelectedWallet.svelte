@@ -8,6 +8,10 @@
 </script>
 
 <style>
+  section {
+    color: inherit;
+  }
+
   footer {
     display: flex;
     justify-content: space-between;
