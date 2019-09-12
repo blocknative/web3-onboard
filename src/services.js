@@ -1,11 +1,11 @@
-import BlocknativeApi from "./bn-client-sdk"
+import blocknativeApi from "bn-sdk"
 import { app } from "./stores"
 
 export let blocknative
 
 app.subscribe(({ dappId, networkId }) => {
   if (dappId) {
-    blocknative = BlocknativeApi({
+    blocknative = blocknativeApi({
       dappId,
       networkId
     })
