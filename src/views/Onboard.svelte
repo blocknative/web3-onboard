@@ -2,6 +2,7 @@
   import SelectWallet from "./SelectWallet.svelte";
   import PrepareWallet from "./PrepareWallet.svelte";
   import { app } from "../stores";
+  app.subscribe(console.log);
 </script>
 
 <style>

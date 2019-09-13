@@ -9,15 +9,192 @@ var ow = _interopDefault(require('ow'));
 var transition = require('svelte/transition');
 var bowser = _interopDefault(require('bowser'));
 
+function _typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
+  try {
+    var info = gen[key](arg);
+    var value = info.value;
+  } catch (error) {
+    reject(error);
+    return;
+  }
+
+  if (info.done) {
+    resolve(value);
+  } else {
+    Promise.resolve(value).then(_next, _throw);
+  }
+}
+
+function _asyncToGenerator(fn) {
+  return function () {
+    var self = this,
+        args = arguments;
+    return new Promise(function (resolve, reject) {
+      var gen = fn.apply(self, args);
+
+      function _next(value) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+      }
+
+      function _throw(err) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
+      }
+
+      _next(undefined);
+    });
+  };
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(source, true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(source).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {};
+
+  var target = _objectWithoutPropertiesLoose(source, excluded);
+
+  var key, i;
+
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+      target[key] = source[key];
+    }
+  }
+
+  return target;
+}
+
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();
+}
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+function _iterableToArrayLimit(arr, i) {
+  if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
+    return;
+  }
+
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance");
+}
+
 function validateInit(init) {
   ow(init, "Initialization Options", ow.object.exactShape({
     networkId: ow.number,
     dappId: ow.string,
     subscriptions: ow.optional.object.exactShape({
-      address: ow.optional.function,
-      network: ow.optional.function,
-      balance: ow.optional.function,
-      provider: ow.optional.function
+      address: ow.optional["function"],
+      network: ow.optional["function"],
+      balance: ow.optional["function"],
+      provider: ow.optional["function"]
     }),
     modules: ow.object.exactShape({
       selectWallet: ow.object.exactShape({
@@ -29,57 +206,57 @@ function validateInit(init) {
             iconSrc: ow.optional.string,
             iconSrcSet: ow.optional.string,
             svg: ow.optional.string,
-            wallet: ow.function,
+            wallet: ow["function"],
             link: ow.optional.string,
-            installMessage: ow.optional.function
+            installMessage: ow.optional["function"]
           })),
           desktop: ow.optional.array.nonEmpty.ofType(ow.object.exactShape({
             name: ow.string,
             iconSrc: ow.optional.string,
             iconSrcSet: ow.optional.string,
             svg: ow.optional.string,
-            wallet: ow.function,
+            wallet: ow["function"],
             link: ow.optional.string,
-            installMessage: ow.optional.function
+            installMessage: ow.optional["function"]
           }))
         })
       }),
-      prepareWallet: ow.array.nonEmpty.ofType(ow.function)
+      prepareWallet: ow.array.nonEmpty.ofType(ow["function"])
     })
   }));
 }
 function validateConfig(configuration) {
   ow(configuration, "config", ow.object.exactShape({
-    darkMode: ow.boolean
+    darkMode: ow["boolean"]
   }));
 }
 function validateModal(modal) {
-  ow(modal, "modal", ow.object.exactShape({
+  var _ow$object$exactShape;
+
+  ow(modal, "modal", ow.object.exactShape((_ow$object$exactShape = {
     img: ow.optional.string,
     heading: ow.string,
     description: ow.string,
     button: ow.optional.string,
     invalidMsg: ow.optional.string,
     eventCode: ow.string,
-    action: ow.optional.function,
-    button: ow.optional.object.exactShape({
-      onclick: ow.function,
-      text: ow.string
-    }),
-    icon: ow.optional.string
-  }));
+    action: ow.optional["function"]
+  }, _defineProperty(_ow$object$exactShape, "button", ow.optional.object.exactShape({
+    onclick: ow["function"],
+    text: ow.string
+  })), _defineProperty(_ow$object$exactShape, "icon", ow.optional.string), _ow$object$exactShape)));
 }
 function validateWalletInterface(walletInterface) {
   ow(walletInterface, "wallet interface", ow.object.exactShape({
     name: ow.string,
-    connect: ow.optional.function,
-    address: ow.object.hasAnyKeys("get", "onChange").valuesOfType(ow.function),
-    network: ow.object.hasAnyKeys("get", "onChange").valuesOfType(ow.function),
-    balance: ow.object.hasAnyKeys("get", "onChange").valuesOfType(ow.function)
+    connect: ow.optional["function"],
+    address: ow.object.hasAnyKeys("get", "onChange").valuesOfType(ow["function"]),
+    network: ow.object.hasAnyKeys("get", "onChange").valuesOfType(ow["function"]),
+    balance: ow.object.hasAnyKeys("get", "onChange").valuesOfType(ow["function"])
   }));
 }
 
-const app = store.writable({
+var app = store.writable({
   dappId: null,
   networkId: null,
   version: null,
@@ -89,15 +266,15 @@ const app = store.writable({
   prepareWalletCompleted: false,
   modules: null
 });
-const configuration = store.writable({
+var configuration = store.writable({
   darkMode: false
 });
-let syncingState = false;
-const address = createUserStateStore("address");
-const network = createUserStateStore("network");
-const balance = createBalanceStore();
-const provider = store.writable(null);
-const state = createState({
+var syncingState = false;
+var address = createUserStateStore("address");
+var network = createUserStateStore("network");
+var balance = createBalanceStore();
+var provider = store.writable(null);
+var state = createState({
   mobileDevice: null,
   walletName: null,
   address: null,
@@ -106,22 +283,30 @@ const state = createState({
   connect: null
 }); // make sure state store is updated when any of these change
 
-address.subscribe(value => state.update({
-  address: value
-}));
-network.subscribe(value => state.update({
-  network: value
-}));
-balance.subscribe(value => state.update({
-  balance: value
-})); // keep track of intervals that are syncing state so they can be cleared
+address.subscribe(function (value) {
+  return state.update({
+    address: value
+  });
+});
+network.subscribe(function (value) {
+  return state.update({
+    network: value
+  });
+});
+balance.subscribe(function (value) {
+  return state.update({
+    balance: value
+  });
+}); // keep track of intervals that are syncing state so they can be cleared
 
-let currentSyncerIntervals = [];
-const walletInterface = createWalletInterfaceStore(null);
-walletInterface.subscribe(wallet => {
+var currentSyncerIntervals = [];
+var walletInterface = createWalletInterfaceStore(null);
+walletInterface.subscribe(function (wallet) {
   if (wallet) {
     // clear all current intervals if they exist
-    currentSyncerIntervals.forEach(clearInterval => clearInterval && clearInterval()); // start syncing state and save intervals
+    currentSyncerIntervals.forEach(function (clearInterval) {
+      return clearInterval && clearInterval();
+    }); // start syncing state and save intervals
 
     currentSyncerIntervals = [address.setStateSyncer(wallet.address), network.setStateSyncer(wallet.network), balance.setStateSyncer(wallet.balance)];
     state.update({
@@ -132,50 +317,55 @@ walletInterface.subscribe(wallet => {
 });
 
 function createState(initialState) {
-  let state = initialState;
-  let subscribers = [];
+  var state = initialState;
+  var subscribers = [];
   return {
-    get: () => state,
-    subscribe: func => {
+    get: function get() {
+      return state;
+    },
+    subscribe: function subscribe(func) {
       if (!func) return;
       subscribers.push(func);
-      return () => {
-        subscribers = subscribers.filter(f => f !== func);
+      return function () {
+        subscribers = subscribers.filter(function (f) {
+          return f !== func;
+        });
       };
     },
-    update: newState => {
-      state = { ...state,
-        ...newState
-      };
-      subscribers.forEach(sub => sub(state));
+    update: function update(newState) {
+      state = _objectSpread2({}, state, {}, newState);
+      subscribers.forEach(function (sub) {
+        return sub(state);
+      });
       return state;
     }
   };
 }
 
 function createWalletInterfaceStore(initialState) {
-  const {
-    subscribe,
-    set
-  } = store.writable(initialState);
+  var _writable = store.writable(initialState),
+      subscribe = _writable.subscribe,
+      _set = _writable.set;
+
   return {
-    subscribe,
-    set: walletInterface => {
+    subscribe: subscribe,
+    set: function set(walletInterface) {
       validateWalletInterface(walletInterface);
-      set(walletInterface);
+
+      _set(walletInterface);
     }
   };
 }
 
 function createUserStateStore(parameter) {
-  const {
-    subscribe,
-    set
-  } = store.writable(null);
+  var _writable2 = store.writable(null),
+      subscribe = _writable2.subscribe,
+      set = _writable2.set;
+
   return {
-    subscribe,
-    setStateSyncer: stateSyncer => {
-      if (!stateSyncer || typeof stateSyncer !== "object") {
+    subscribe: subscribe,
+    setStateSyncer: function setStateSyncer(stateSyncer) {
+      if (!stateSyncer || _typeof(stateSyncer) !== "object") {
         throw new Error("setStateSyncer must be called with a valid interface");
       }
 
@@ -185,37 +375,44 @@ function createUserStateStore(parameter) {
       }
 
       if (stateSyncer.get) {
-        const interval = setInterval(() => {
-          stateSyncer.get().then(set).catch(err => {
-            throw new Error(`Error getting ${parameter} from state syncer: ${err}`);
+        var interval = setInterval(function () {
+          stateSyncer.get().then(set)["catch"](function (err) {
+            throw new Error("Error getting ".concat(parameter, " from state syncer: ").concat(err));
           });
         }, 250);
-        return () => clearInterval(interval);
+        return function () {
+          return clearInterval(interval);
+        };
       }
     }
   };
 }
 
 function createBalanceStore() {
-  let stateSyncer;
-  const {
-    subscribe
-  } = store.derived([address, network], ([$address, $network], set) => {
+  var stateSyncer;
+
+  var _derived = store.derived([address, network], function (_ref, set) {
+    var _ref2 = _slicedToArray(_ref, 2),
+        $address = _ref2[0],
+        $network = _ref2[1];
+
     if (stateSyncer) {
-      const syncProm = stateSyncer.get();
+      var syncProm = stateSyncer.get();
       syncingState = syncProm;
-      syncProm.then(result => {
+      syncProm.then(function (result) {
         set(result);
         syncingState = false;
-      }).catch(err => {
-        throw new Error(`Error getting balance from state syncer: ${err}`);
+      })["catch"](function (err) {
+        throw new Error("Error getting balance from state syncer: ".concat(err));
       });
     }
-  });
+  }),
+      subscribe = _derived.subscribe;
+
   return {
-    subscribe,
-    setStateSyncer: syncer => {
-      if (!syncer || typeof syncer !== "object") {
+    subscribe: subscribe,
+    setStateSyncer: function setStateSyncer(syncer) {
+      if (!syncer || _typeof(syncer) !== "object") {
         throw new Error("setStateSyncer must be called with a valid interface");
       }
 
@@ -224,15 +421,15 @@ function createBalanceStore() {
   };
 }
 
-let blocknative;
-app.subscribe(({
-  dappId,
-  networkId
-}) => {
+var blocknative;
+app.subscribe(function (_ref) {
+  var dappId = _ref.dappId,
+      networkId = _ref.networkId;
+
   if (dappId) {
     blocknative = blocknativeApi({
-      dappId,
-      networkId
+      dappId: dappId,
+      networkId: networkId
     });
   }
 });
@@ -1638,69 +1835,43 @@ class SelectedWallet extends internal.SvelteComponent {
 	}
 }
 
-const walletIcon = `
-<svg
-height="18"
-viewBox="0 0 19 18"
-width="19"
-xmlns="http://www.w3.org/2000/svg">
-<g fill="currentColor" fill-rule="evenodd">
-	<path
-		d="m15.7721618.00006623h-13.27469839c-.86762065
-		0-1.48592681.3078086-1.89741046.76113193-.40615823.44745064-.60839063
-		1.04661988-.59978974
-		1.64464107.00029187.005124.00040335.01025653.00033423.01538822v3.66899811c.06682404-.11685776.14162507-.22938827.22533894-.33628895.36778845-.46959466.90812952-.82116145
-		1.61866132-.95623339v-.59093422c0-.55214353.17649657-1.05790163.47278173-1.43388645.29630745-.37596275.72292065-.62513272
-		1.19969088-.62513272h11.23546239c.4765474 0 .9032497.24850764
-		1.199624.62424961.2963743.37574196.4728709.88161045.4728709
-		1.43476956v.4652895c.5235626-.11047728.9266682-.35445897
-		1.2246022-.6733727.4116397-.44060653.6210469-1.03392515.6210469-1.63015804s-.2094072-1.18955151-.6210469-1.63018011c-.4116396-.44060653-1.0238627-.73834765-1.877468-.73834765z" />
-	<path
-		d="m14.6096047 2.57151734h-11.21914267c-.32073002
-		0-.6185428.16561433-.84722564.45769739s-.37782286.70763901-.37782286
-		1.16808814v.53953924c.06265527-.0036172.12640078-.00570319.19125878-.00616921.00518482-.00032924.01037961-.00047727.01557482-.00044383h.01326084
-		13.24215593c.0706652 0
-		.1395281-.00228571.2069226-.00630235v-.52671262c0-.46164746-.1491623-.87711464-.3777561-1.16884264-.2286161-.29175019-.5263622-.45694289-.8473147-.45694289z" />
-	<path
-		d="m18.2706767
-		3.92481203c-.0857195.13278047-.1837832.25906993-.2945478.376829-.495466.52680184-1.2439236.87400468-2.2045296.87400468h-13.26144765c-.93286471
-		0-1.53628777.33766369-1.93268731.8403655s-.57746434
-		1.18877443-.57746434
-		1.87212785v.41252951c.13725808.14817467.29229732.20450824.50016754.23211693.21170276.02811305.46814809.01403459.74212947.02170977h5.25979191c.94146564
-		0 1.67588548.36084271 2.15878435.90341155.48289887.54259078.7188669
-		1.25649138.7188669 1.96738768s-.23596803 1.4247969-.7188669
-		1.9673877c-.48289887.5425689-1.21731871.9033896-2.15878435.9033896h-5.25979191c-.25038458
-		0-.55749953-.0171046-.84908381-.0866198-.13520812-.0322576-.27003744-.0756114-.3932132-.1380653v1.5302318c0
-		1.3201295 1.09561358 2.3983815 2.43697706
-		2.3983815h13.39672254c1.3413635 0 2.4369771-1.078252
-		2.4369771-2.3983815z" />
-	<path
-		d="m0
-		8.79699248c.14260628.06959022.29864665.11050376.44557501.1299645.2753208.03649163.54484912.01335327.79368049.02057717.002302.00003506.00460441.00003506.00690641
-		0h5.25640383c.82827939 0 1.4220972.30156492
-		1.8240727.75248941.40199777.45094634.60569239 1.06221954.60569239
-		1.67601014 0 .6137467-.20369462 1.2250637-.60569239
-		1.6759882-.4019755.4509463-.99579331.7524894-1.8240727.7524894h-5.25640383c-.22831264
-		0-.50846792-.0188259-.74493458-.075238-.23646666-.0563245-.41416197-.1517676-.48734767-.2599728-.00440013-.0047203-.00900883-.0092487-.01387966-.0135722v-4.65860448zm6.42601595
-		1.42288912c-.62979799 0-1.14873693.5024111-1.14873693 1.1218933 0
-		.6211677.51893894 1.128745 1.14873693 1.128745.62984256 0
-		1.14178597-.5082122 1.14178597-1.128745
-		0-.6188692-.51194341-1.1218933-1.14178597-1.1218933z" />
-</g>
-</svg>
-	`;
+var walletIcon = "\n<svg\nheight=\"18\"\nviewBox=\"0 0 19 18\"\nwidth=\"19\"\nxmlns=\"http://www.w3.org/2000/svg\">\n<g fill=\"currentColor\" fill-rule=\"evenodd\">\n\t<path\n\t\td=\"m15.7721618.00006623h-13.27469839c-.86762065\n\t\t0-1.48592681.3078086-1.89741046.76113193-.40615823.44745064-.60839063\n\t\t1.04661988-.59978974\n\t\t1.64464107.00029187.005124.00040335.01025653.00033423.01538822v3.66899811c.06682404-.11685776.14162507-.22938827.22533894-.33628895.36778845-.46959466.90812952-.82116145\n\t\t1.61866132-.95623339v-.59093422c0-.55214353.17649657-1.05790163.47278173-1.43388645.29630745-.37596275.72292065-.62513272\n\t\t1.19969088-.62513272h11.23546239c.4765474 0 .9032497.24850764\n\t\t1.199624.62424961.2963743.37574196.4728709.88161045.4728709\n\t\t1.43476956v.4652895c.5235626-.11047728.9266682-.35445897\n\t\t1.2246022-.6733727.4116397-.44060653.6210469-1.03392515.6210469-1.63015804s-.2094072-1.18955151-.6210469-1.63018011c-.4116396-.44060653-1.0238627-.73834765-1.877468-.73834765z\" />\n\t<path\n\t\td=\"m14.6096047 2.57151734h-11.21914267c-.32073002\n\t\t0-.6185428.16561433-.84722564.45769739s-.37782286.70763901-.37782286\n\t\t1.16808814v.53953924c.06265527-.0036172.12640078-.00570319.19125878-.00616921.00518482-.00032924.01037961-.00047727.01557482-.00044383h.01326084\n\t\t13.24215593c.0706652 0\n\t\t.1395281-.00228571.2069226-.00630235v-.52671262c0-.46164746-.1491623-.87711464-.3777561-1.16884264-.2286161-.29175019-.5263622-.45694289-.8473147-.45694289z\" />\n\t<path\n\t\td=\"m18.2706767\n\t\t3.92481203c-.0857195.13278047-.1837832.25906993-.2945478.376829-.495466.52680184-1.2439236.87400468-2.2045296.87400468h-13.26144765c-.93286471\n\t\t0-1.53628777.33766369-1.93268731.8403655s-.57746434\n\t\t1.18877443-.57746434\n\t\t1.87212785v.41252951c.13725808.14817467.29229732.20450824.50016754.23211693.21170276.02811305.46814809.01403459.74212947.02170977h5.25979191c.94146564\n\t\t0 1.67588548.36084271 2.15878435.90341155.48289887.54259078.7188669\n\t\t1.25649138.7188669 1.96738768s-.23596803 1.4247969-.7188669\n\t\t1.9673877c-.48289887.5425689-1.21731871.9033896-2.15878435.9033896h-5.25979191c-.25038458\n\t\t0-.55749953-.0171046-.84908381-.0866198-.13520812-.0322576-.27003744-.0756114-.3932132-.1380653v1.5302318c0\n\t\t1.3201295 1.09561358 2.3983815 2.43697706\n\t\t2.3983815h13.39672254c1.3413635 0 2.4369771-1.078252\n\t\t2.4369771-2.3983815z\" />\n\t<path\n\t\td=\"m0\n\t\t8.79699248c.14260628.06959022.29864665.11050376.44557501.1299645.2753208.03649163.54484912.01335327.79368049.02057717.002302.00003506.00460441.00003506.00690641\n\t\t0h5.25640383c.82827939 0 1.4220972.30156492\n\t\t1.8240727.75248941.40199777.45094634.60569239 1.06221954.60569239\n\t\t1.67601014 0 .6137467-.20369462 1.2250637-.60569239\n\t\t1.6759882-.4019755.4509463-.99579331.7524894-1.8240727.7524894h-5.25640383c-.22831264\n\t\t0-.50846792-.0188259-.74493458-.075238-.23646666-.0563245-.41416197-.1517676-.48734767-.2599728-.00440013-.0047203-.00900883-.0092487-.01387966-.0135722v-4.65860448zm6.42601595\n\t\t1.42288912c-.62979799 0-1.14873693.5024111-1.14873693 1.1218933 0\n\t\t.6211677.51893894 1.128745 1.14873693 1.128745.62984256 0\n\t\t1.14178597-.5082122 1.14178597-1.128745\n\t\t0-.6188692-.51194341-1.1218933-1.14178597-1.1218933z\" />\n</g>\n</svg>\n\t";
 
 function createModernProviderInterface(provider) {
   provider.autoRefreshOnNetworkChange = false;
   return {
     address: {
-      get: async () => {
-        const unlocked = await provider._metamask.isUnlocked();
+      get: function () {
+        var _get = _asyncToGenerator(
+        /*#__PURE__*/
+        regeneratorRuntime.mark(function _callee() {
+          var unlocked, enabled;
+          return regeneratorRuntime.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  _context.next = 2;
+                  return provider._metamask.isUnlocked();
 
-        const enabled = provider._metamask.isEnabled();
+                case 2:
+                  unlocked = _context.sent;
+                  enabled = provider._metamask.isEnabled();
+                  return _context.abrupt("return", unlocked && enabled ? Promise.resolve(provider.selectedAddress) : Promise.resolve(undefined));
 
-        return unlocked && enabled ? Promise.resolve(provider.selectedAddress) : Promise.resolve(undefined);
-      } // METAMASK BUG NEEDS TO BE FIXED FOR CHROME: https://github.com/MetaMask/metamask-extension/issues/7101
+                case 5:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee);
+        }));
+
+        function get() {
+          return _get.apply(this, arguments);
+        }
+
+        return get;
+      }() // METAMASK BUG NEEDS TO BE FIXED FOR CHROME: https://github.com/MetaMask/metamask-extension/issues/7101
       // onChange: func => {
       //   // give the initial value if it exists
       //   if (provider.selectedAddress) {
@@ -1711,7 +1882,7 @@ function createModernProviderInterface(provider) {
 
     },
     network: {
-      onChange: func => {
+      onChange: function onChange(func) {
         // give the initial value if it exists
         if (provider.networkVersion) {
           func(provider.networkVersion);
@@ -1721,46 +1892,58 @@ function createModernProviderInterface(provider) {
       }
     },
     balance: {
-      get: () => new Promise(resolve => {
-        if (!provider.selectedAddress) {
-          resolve(null);
-          return;
-        }
+      get: function get() {
+        return new Promise(function (resolve) {
+          if (!provider.selectedAddress) {
+            resolve(null);
+            return;
+          }
 
-        provider.sendAsync({
-          method: "eth_getBalance",
-          params: [provider.selectedAddress, "latest"],
-          id: 1
-        }, (e, res) => {
-          resolve(parseInt(res.result, 16));
+          provider.sendAsync({
+            method: "eth_getBalance",
+            params: [provider.selectedAddress, "latest"],
+            id: 1
+          }, function (e, res) {
+            resolve(parseInt(res.result, 16));
+          });
         });
-      })
+      }
     },
-    connect: () => new Promise((resolve, reject) => {
-      provider.enable().then(resolve).catch(() => reject({
-        message: "This dapp needs access to your account information."
-      }));
-    }),
+    connect: function connect() {
+      return new Promise(function (resolve, reject) {
+        provider.enable().then(resolve)["catch"](function () {
+          return reject({
+            message: "This dapp needs access to your account information."
+          });
+        });
+      });
+    },
     name: getProviderName(provider)
   };
 }
 function createLegacyProviderInterface(provider) {
   return {
     address: {
-      get: () => Promise.resolve(provider._address)
+      get: function get() {
+        return Promise.resolve(provider._address);
+      }
     },
     network: {
-      get: () => Promise.resolve(provider._chainId)
+      get: function get() {
+        return Promise.resolve(provider._chainId);
+      }
     },
     balance: {
-      get: () => new Promise(resolve => {
-        provider.sendAsync({
-          method: "eth_getBalance",
-          params: [provider._address, "latest"]
-        }, (e, res) => {
-          resolve(parseInt(res.result, 16));
+      get: function get() {
+        return new Promise(function (resolve) {
+          provider.sendAsync({
+            method: "eth_getBalance",
+            params: [provider._address, "latest"]
+          }, function (e, res) {
+            resolve(parseInt(res.result, 16));
+          });
         });
-      })
+      }
     },
     name: getProviderName(provider)
   };
@@ -2392,14 +2575,16 @@ class SelectWallet extends internal.SvelteComponent {
 }
 
 function selectWallet() {
-  return new Promise(resolve => {
-    app.update(store => ({ ...store,
-      selectWallet: true
-    }));
-    const appUnsubscribe = app.subscribe(({
-      selectWallet,
-      selectWalletCompleted
-    }) => {
+  return new Promise(function (resolve) {
+    app.update(function (store) {
+      return _objectSpread2({}, store, {
+        selectWallet: true
+      });
+    });
+    var appUnsubscribe = app.subscribe(function (_ref) {
+      var selectWallet = _ref.selectWallet,
+          selectWalletCompleted = _ref.selectWalletCompleted;
+
       if (selectWallet === false) {
         appUnsubscribe();
         resolve(selectWalletCompleted);
@@ -2408,20 +2593,21 @@ function selectWallet() {
   });
 }
 function prepareWallet() {
-  return new Promise(resolve => {
-    const walletUnsubscribe = walletInterface.subscribe(provider => {
+  return new Promise(function (resolve) {
+    walletInterface.subscribe(function (provider) {
       if (!provider) {
-        walletUnsubscribe();
         throw new Error("selectWallet must be called before prepareWallet");
       }
     });
-    app.update(store => ({ ...store,
-      prepareWallet: true
-    }));
-    const appUnsubscribe = app.subscribe(({
-      prepareWallet,
-      prepareWalletCompleted
-    }) => {
+    app.update(function (store) {
+      return _objectSpread2({}, store, {
+        prepareWallet: true
+      });
+    });
+    var appUnsubscribe = app.subscribe(function (_ref2) {
+      var prepareWallet = _ref2.prepareWallet,
+          prepareWalletCompleted = _ref2.prepareWalletCompleted;
+
       if (prepareWallet === false) {
         appUnsubscribe();
         resolve(prepareWalletCompleted);
@@ -2431,9 +2617,9 @@ function prepareWallet() {
 }
 function config(options) {
   validateConfig(options);
-  configuration.update(store => ({ ...store,
-    ...options
-  }));
+  configuration.update(function (store) {
+    return _objectSpread2({}, store, {}, options);
+  });
 }
 
 /* src/views/PrepareWallet.svelte generated by Svelte v3.12.1 */
@@ -3138,7 +3324,7 @@ function add_css$9() {
 	internal.append(document.head, style);
 }
 
-// (28:0) {#if $app.selectWallet}
+// (29:0) {#if $app.selectWallet}
 function create_if_block_1$3(ctx) {
 	var current;
 
@@ -3172,7 +3358,7 @@ function create_if_block_1$3(ctx) {
 	};
 }
 
-// (32:0) {#if $app.prepareWallet}
+// (33:0) {#if $app.prepareWallet}
 function create_if_block$5(ctx) {
 	var current;
 
@@ -3295,6 +3481,9 @@ function instance$9($$self, $$props, $$invalidate) {
 
 	internal.component_subscribe($$self, app, $$value => { $app = $$value; $$invalidate('$app', $app); });
 
+	
+  app.subscribe(console.log);
+
 	return { $app };
 }
 
@@ -3307,34 +3496,36 @@ class Onboard extends internal.SvelteComponent {
 }
 
 function getUserAgent() {
-  const browser = bowser.getParser(window.navigator.userAgent);
-  const userAgent = browser.parse().parsedResult;
-  const validBrowser = browser.satisfies({
+  var browser = bowser.getParser(window.navigator.userAgent);
+  var userAgent = browser.parse().parsedResult;
+  var validBrowser = browser.satisfies({
     desktop: {
       chrome: ">49",
       firefox: ">52",
       opera: ">36"
     }
   });
-  app.update(store => ({ ...store,
-    userAgent
-  }));
+  app.update(function (store) {
+    return _objectSpread2({}, store, {
+      userAgent: userAgent
+    });
+  });
   state.update({
     mobileDevice: userAgent.platform.type !== "desktop",
-    validBrowser
+    validBrowser: validBrowser
   });
 }
 
 function init(initialization) {
   getUserAgent();
   validateInit(initialization);
-  const {
-    subscriptions,
-    ...rest
-  } = initialization;
-  app.update(store => ({ ...store,
-    ...rest
-  }));
+
+  var subscriptions = initialization.subscriptions,
+      rest = _objectWithoutProperties(initialization, ["subscriptions"]);
+
+  app.update(function (store) {
+    return _objectSpread2({}, store, {}, rest);
+  });
   new Onboard({
     target: document.body
   }); // register subscriptions
@@ -3358,9 +3549,9 @@ function init(initialization) {
   }
 
   return {
-    selectWallet,
-    prepareWallet,
-    config
+    selectWallet: selectWallet,
+    prepareWallet: prepareWallet,
+    config: config
   };
 }
 
