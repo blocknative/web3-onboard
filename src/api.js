@@ -9,7 +9,7 @@ export function selectWallet() {
       ({ selectWallet, selectWalletCompleted }) => {
         if (selectWallet === false) {
           appUnsubscribe()
-          resolve(selectWalletCompleted)
+          setTimeout(() => resolve(selectWalletCompleted), 500)
         }
       }
     )
@@ -30,7 +30,7 @@ export function prepareWallet() {
       ({ prepareWallet, prepareWalletCompleted }) => {
         if (prepareWallet === false) {
           appUnsubscribe()
-          resolve(prepareWalletCompleted)
+          setTimeout(() => resolve(prepareWalletCompleted), 500)
         }
       }
     )
