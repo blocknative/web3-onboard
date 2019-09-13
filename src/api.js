@@ -18,9 +18,8 @@ export function selectWallet() {
 
 export function prepareWallet() {
   return new Promise(resolve => {
-    const walletUnsubscribe = walletInterface.subscribe(provider => {
+    walletInterface.subscribe(provider => {
       if (!provider) {
-        walletUnsubscribe()
         throw new Error("selectWallet must be called before prepareWallet")
       }
     })
