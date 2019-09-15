@@ -2587,7 +2587,9 @@ function selectWallet() {
 
       if (selectWallet === false) {
         appUnsubscribe();
-        resolve(selectWalletCompleted);
+        setTimeout(function () {
+          return resolve(selectWalletCompleted);
+        }, 500);
       }
     });
   });
@@ -2610,7 +2612,9 @@ function prepareWallet() {
 
       if (prepareWallet === false) {
         appUnsubscribe();
-        resolve(prepareWalletCompleted);
+        setTimeout(function () {
+          return resolve(prepareWalletCompleted);
+        }, 500);
       }
     });
   });
@@ -3324,7 +3328,7 @@ function add_css$9() {
 	internal.append(document.head, style);
 }
 
-// (29:0) {#if $app.selectWallet}
+// (28:0) {#if $app.selectWallet}
 function create_if_block_1$3(ctx) {
 	var current;
 
@@ -3358,7 +3362,7 @@ function create_if_block_1$3(ctx) {
 	};
 }
 
-// (33:0) {#if $app.prepareWallet}
+// (32:0) {#if $app.prepareWallet}
 function create_if_block$5(ctx) {
 	var current;
 
@@ -3480,9 +3484,6 @@ function instance$9($$self, $$props, $$invalidate) {
 	let $app;
 
 	internal.component_subscribe($$self, app, $$value => { $app = $$value; $$invalidate('$app', $app); });
-
-	
-  app.subscribe(console.log);
 
 	return { $app };
 }
