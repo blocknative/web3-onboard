@@ -8,7 +8,6 @@
 
   import Button from "../elements/Button.svelte";
 
-  import { blocknative } from "../services";
   import { app, state, syncingState, configuration } from "../stores";
   import { validateModal } from "../validation";
 
