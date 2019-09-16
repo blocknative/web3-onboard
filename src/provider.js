@@ -45,7 +45,7 @@ export function createModernProviderInterface(provider) {
               id: 1
             },
             (e, res) => {
-              resolve(parseInt(res.result, 16))
+              resolve(String(parseInt(res.result, 16)))
             }
           )
         })
@@ -82,7 +82,7 @@ export function createLegacyProviderInterface(provider) {
               params: [provider._address, "latest"]
             },
             (e, res) => {
-              resolve(parseInt(res.result, 16))
+              resolve(String(parseInt(res.result, 16)))
             }
           )
         })

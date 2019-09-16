@@ -128,35 +128,3 @@ function createUserStateStore(parameter) {
     }
   }
 }
-
-// function createBalanceStore() {
-//   let stateSyncer
-//   const { subscribe } = derived(
-//     [address, network],
-//     ([$address, $network], set) => {
-//       if (stateSyncer) {
-//         const syncProm = stateSyncer.get()
-//         syncingState = syncProm
-//         syncProm
-//           .then(result => {
-//             set(result)
-//             syncingState = false
-//           })
-//           .catch(err => {
-//             throw new Error(`Error getting balance from state syncer: ${err}`)
-//           })
-//       }
-//     }
-//   )
-
-//   return {
-//     subscribe,
-//     setStateSyncer: syncer => {
-//       if (!syncer || typeof syncer !== "object") {
-//         throw new Error("setStateSyncer must be called with a valid interface")
-//       }
-
-//       stateSyncer = syncer
-//     }
-//   }
-// }
