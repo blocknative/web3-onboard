@@ -1,4 +1,5 @@
-import { app, configuration, walletInterface } from "./stores"
+import { get } from "svelte/store"
+import { app, configuration, walletInterface, state } from "./stores"
 import { validateConfig } from "./validation"
 
 export function selectWallet() {
@@ -40,4 +41,8 @@ export function prepareWallet() {
 export function config(options) {
   validateConfig(options)
   configuration.update(store => ({ ...store, ...options }))
+}
+
+export function getState() {
+  return get(state)
 }

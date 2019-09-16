@@ -29,13 +29,15 @@ export const state = createState({
   address: null,
   network: null,
   balance: null,
-  connect: null
+  connect: null,
+  provider: null
 })
 
 // make sure state store is updated when any of these change
 address.subscribe(value => state.update({ address: value }))
 network.subscribe(value => state.update({ network: value }))
 balance.subscribe(value => state.update({ balance: value }))
+provider.subscribe(value => state.update({ provider: value }))
 
 // keep track of intervals that are syncing state so they can be cleared
 let currentSyncerIntervals = []

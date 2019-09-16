@@ -1,6 +1,6 @@
 import Onboard from "./views/Onboard.svelte"
 import { app, address, network, balance, provider } from "./stores"
-import { selectWallet, prepareWallet, config } from "./api"
+import { selectWallet, prepareWallet, config, getState } from "./api"
 import { validateInit } from "./validation"
 import { getUserAgent } from "./utilities"
 
@@ -36,7 +36,7 @@ function init(initialization) {
     }
   }
 
-  return { selectWallet, prepareWallet, config }
+  return { selectWallet, prepareWallet, config, getState }
 }
 
 export default init
