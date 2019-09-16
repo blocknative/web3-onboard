@@ -1,4 +1,3 @@
-import { get } from "svelte/store"
 import { app, configuration, walletInterface, state } from "./stores"
 import { validateConfig } from "./validation"
 
@@ -44,5 +43,5 @@ export function config(options) {
 }
 
 export function getState() {
-  return get(state)
+  return state.get()
 }
