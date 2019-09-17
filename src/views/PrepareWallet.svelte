@@ -8,21 +8,17 @@
 
   import Button from "../elements/Button.svelte";
 
-  import { app, state, syncingState, configuration } from "../stores";
+  import { app, state, configuration } from "../stores";
   import { validateModal } from "../validation";
 
+  export let modules;
+
   let activeModal;
-  let modules;
   let currentModule;
   let errorMsg;
   let pollingInterval;
   let checkingModule;
   let actionResolved;
-
-  // get the prepare wallet modules from the store
-  app.subscribe(({ modules: { prepareWallet } }) => {
-    modules = prepareWallet;
-  });
 
   // recheck modules if below conditions
   $: if (!activeModal && !checkingModule) {
@@ -87,16 +83,6 @@
       });
   }
 
-  async function handleClick() {
-    const result = await invalidState(module, state.get());
-    if (!result) {
-      activeModal = null;
-      currentModule = null;
-    } else {
-      errorMsg = result.modal.invalidMsg;
-    }
-  }
-
   function handleExit() {
     app.update(store => ({ ...store, prepareWallet: false }));
     resetState();
@@ -113,10 +99,6 @@
   function runModules(modules) {
     return new Promise(async resolve => {
       for (const module of modules) {
-        if (syncingState) {
-          await syncingState;
-        }
-
         const isInvalid = await invalidState(module, state.get());
 
         if (isInvalid) {

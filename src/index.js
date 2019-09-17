@@ -22,7 +22,10 @@ function init(initialization) {
   }))
 
   new Onboard({
-    target: document.body
+    target: document.body,
+    props: {
+      onboardingModules: initialization.modules.prepareWallet
+    }
   })
 
   // register subscriptions

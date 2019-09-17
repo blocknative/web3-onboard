@@ -16,8 +16,6 @@ export const configuration = writable({
   darkMode: false
 })
 
-export let syncingState = false
-
 export const address = createUserStateStore("address")
 export const network = createUserStateStore("network")
 export const balance = createUserStateStore("balance")
@@ -121,7 +119,7 @@ function createUserStateStore(parameter) {
                 `Error getting ${parameter} from state syncer: ${err}`
               )
             })
-        }, 250)
+        }, 200)
 
         return () => clearInterval(interval)
       }

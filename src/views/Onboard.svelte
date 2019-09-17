@@ -2,6 +2,8 @@
   import SelectWallet from "./SelectWallet.svelte";
   import PrepareWallet from "./PrepareWallet.svelte";
   import { app } from "../stores";
+
+  export let onboardingModules;
 </script>
 
 <style>
@@ -30,5 +32,5 @@
 {/if}
 
 {#if $app.prepareWallet}
-  <PrepareWallet />
+  <PrepareWallet modules={onboardingModules} />
 {/if}
