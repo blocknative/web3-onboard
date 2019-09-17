@@ -24,10 +24,11 @@
     "babel-plugin-external-helpers": "^6.18.0"
   },
   "dependencies": {
-    "svelte": "^3.0.0",
+    "bn-sdk": "github:blocknative/bn-sdk#master",
     "bowser": "^2.5.2",
-    "bn-sdk": "github:blocknative/bn-client-sdk#package",
     "ow": "^0.13.2",
+    "rollup-plugin-node-globals": "^1.4.0",
+    "svelte": "^3.0.0",
     "svelte-i18n": "^1.1.2-beta"
   },
   "scripts": {

@@ -2,6 +2,7 @@ import svelte from "rollup-plugin-svelte"
 import resolve from "rollup-plugin-node-resolve"
 import babel from "rollup-plugin-babel"
 import commonjs from "rollup-plugin-commonjs"
+import globals from "rollup-plugin-node-globals"
 import json from "rollup-plugin-json"
 import builtins from "rollup-plugin-node-builtins"
 import { terser } from "rollup-plugin-terser"
@@ -12,12 +13,12 @@ export default [
     output: {
       format: "iife",
       name: "onboard",
-      file: "dist/iife/bn-onboard.js",
+      file: "dist/iife/onboard.js",
       esModule: false
     },
     plugins: [
-      svelte(),
       json(),
+      svelte(),
       resolve({
         preferBuiltins: true,
         browser: true,
@@ -25,6 +26,7 @@ export default [
           importee === "svelte" || importee.startsWith("svelte/")
       }),
       commonjs(),
+      globals(),
       babel({ exclude: "node_modules/**" }),
       builtins(),
       terser()
