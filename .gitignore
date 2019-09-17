@@ -1,7 +1,4 @@
 .DS_Store
 node_modules
-public/Onboard.*
-public/demo-bundle.js
-public/bundle.css
-public/bundle.css.map
+dist
 settings.json
