@@ -2,36 +2,18 @@
 
 Client library to onboard users to web3 apps
 
-## Running Locally
-
-- Clone the repo
-- Run `yarn` to install dependencies
-- Run `yarn dev` to start dev server
-- Navigate to `localhost:5000` in your browser
-
 ## Build
 
-- `yarn build`
-
-## Using Onboard in a Dapp
-
-### Importing with Script Tag
-
-- Drag the built Onboard.js file in to your public folder
-- Link to it via a script tag in the body of your HTML
-- Library will be available on the window object: window.Onboard
-
-### Importing with JS Bundler
-
-- Drag the built bundle.js file in to your src folder
-- Import it into the file you would like to use it in: `import Onboard from './Onboard`
+- Clone the repo
+- Run `npm install` to install dependencies
+- `npm run build`
 
 ### Initialize
 
 ```javascript
 const onboard = Onboard({
-  dappId: String,
-  networkId: Number,
+  dappId: String, // Your api key - Head to https://www.blocknative.com/ to get a free key
+  networkId: Number, // The id of the network your dapp runs on
   subscriptions: {
     address: Function, // called when address has changed
     network: Function, // called when network has changed
@@ -47,27 +29,34 @@ const onboard = Onboard({
         desktop: Array // Array of wallet modules for desktop devices
       }
     },
-    prepareWallet: Array // Array of prepare wallet functions
+    prepareWallet: Array // Array of onboarding modules
   }
 })
 ```
 
-#### Initialize With Default Select and Prepare Wallet modules
+#### Quick Start with Default Modules
 
 ```javascript
-const onboard = Onboard.init({
-  // ..... other init params
+import Onboard from 'bn-onboard'
+import { initModules as initWallets } from 'bn-wallet-modules'
+import { initModules as initOnboarding } from 'bn-onboarding-modules'
+
+const onboard = Onboard({
+  dappId: 'Your apiKey here',
+  networkId: 1,
+  subscriptions: {
+    address: address => console.log('address has changed:', address)
+    network: network => console.log('network has changed:', network)
+    balance: balance => console.log('balance has changed:', balance)
+    provider: provider => console.log('provider has changed:', provider)
+  },
   modules: {
-    selectWallet: window.SelectWallet.defaultModules({
-      fortmatic: { apiKey: "pk_test_886ADCAB855632AA" },
-      trezor: {
-        email: "aaron@flexdapps.com",
-        appUrl: "https://flexdapps.com",
-        apiKey: "d5e29c9b9a9d4116a7348113f57770a8"
-      },
+    selectWallet: initWallets({
+      fortmatic: { apiKey: "Your fortmatic key here" },
+      portis: { apiKey: "Your portis key here" },
       networkId: 4
     }),
-    prepareWallet: window.PrepareWallet.defaultModules({
+    prepareWallet: initOnboarding({
       networkId: 4,
       minimumBalance: "200000000000000000"
     })
@@ -77,16 +66,24 @@ const onboard = Onboard.init({
 
 ### Select Wallet
 
+To get a user to select a wallet to use with your dapp call the `selectWallet` function:
+
 ```javascript
 const walletSelected = await onboard.selectWallet()
 // resolves with true if user selected a wallet and provider is good to go
 // resolves with false if user exited from select wallet modal
 ```
 
+This function will show a modal that displays buttons for all of the wallets that you initialized onboard with. It will guide the user through the process of connecting to the wallet that they select. Once the process is successful the function will resolve with `true`. This means that the `provider` subscription will have been called with the provider of the selected wallet and you can go ahead and instantiate contracts.
+
 ### Prepare Wallet
+
+Once a wallet is selected, you will want to make sure that the user's wallet is prepared and ready to transact by calling the `prepareWallet` function:
 
 ```javascript
 const readyToTransact = await onboard.prepareWallet()
 // resolves with true if user is ready to transact
 // resolves with false if user exited before completing all prepare wallet modules
 ```
+
+This function will run through the onboarding modules sequentially, making sure the user has passed the condition contained in each module and eventually resolves with `true` if the user completed the sequence. This means that the user is ready to transact. This function is useful to call before every transaction to make sure that nothing has changed since the last time it was called.
