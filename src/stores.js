@@ -1,4 +1,4 @@
-import { writable, derived } from "svelte/store"
+import { writable } from "svelte/store"
 import { validateWalletInterface } from "./validation"
 
 export const app = writable({
@@ -20,7 +20,7 @@ export let syncingState = false
 
 export const address = createUserStateStore("address")
 export const network = createUserStateStore("network")
-export const balance = createBalanceStore()
+export const balance = createUserStateStore("balance")
 export const provider = writable(null)
 
 export const state = createState({
@@ -29,13 +29,15 @@ export const state = createState({
   address: null,
   network: null,
   balance: null,
-  connect: null
+  connect: null,
+  provider: null
 })
 
 // make sure state store is updated when any of these change
 address.subscribe(value => state.update({ address: value }))
 network.subscribe(value => state.update({ network: value }))
 balance.subscribe(value => state.update({ balance: value }))
+provider.subscribe(value => state.update({ provider: value }))
 
 // keep track of intervals that are syncing state so they can be cleared
 let currentSyncerIntervals = []
@@ -123,38 +125,6 @@ function createUserStateStore(parameter) {
 
         return () => clearInterval(interval)
       }
-    }
-  }
-}
-
-function createBalanceStore() {
-  let stateSyncer
-  const { subscribe } = derived(
-    [address, network],
-    ([$address, $network], set) => {
-      if (stateSyncer) {
-        const syncProm = stateSyncer.get()
-        syncingState = syncProm
-        syncProm
-          .then(result => {
-            set(result)
-            syncingState = false
-          })
-          .catch(err => {
-            throw new Error(`Error getting balance from state syncer: ${err}`)
-          })
-      }
-    }
-  )
-
-  return {
-    subscribe,
-    setStateSyncer: syncer => {
-      if (!syncer || typeof syncer !== "object") {
-        throw new Error("setStateSyncer must be called with a valid interface")
-      }
-
-      stateSyncer = syncer
     }
   }
 }

@@ -1,8 +1,6 @@
 <script>
-  import { blocknative } from "../services";
   import { app, state, walletInterface, provider } from "../stores";
-  import { fly, fade } from "svelte/transition";
-  import { quintOut } from "svelte/easing";
+  import { fade } from "svelte/transition";
   import Modal from "../components/Modal.svelte";
   import ModalHeader from "../components/ModalHeader.svelte";
   import Wallets from "../components/Wallets.svelte";

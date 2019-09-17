@@ -1,70 +1,64 @@
 import svelte from "rollup-plugin-svelte"
 import resolve from "rollup-plugin-node-resolve"
+import babel from "rollup-plugin-babel"
 import commonjs from "rollup-plugin-commonjs"
-import livereload from "rollup-plugin-livereload"
-import image from "rollup-plugin-img"
+import globals from "rollup-plugin-node-globals"
 import json from "rollup-plugin-json"
 import builtins from "rollup-plugin-node-builtins"
-import globals from "rollup-plugin-node-globals"
 import { terser } from "rollup-plugin-terser"
-
-const production = !process.env.ROLLUP_WATCH
 
 export default [
   {
     input: "src/index.js",
     output: {
-      sourcemap: true,
-      format: "umd",
-      name: "Onboard",
-      file: "public/Onboard.js"
-    },
-    plugins: [
-      json({
-        include: "package.json",
-        exclude: ["node_modules"]
-      }),
-      image(),
-      svelte({
-        dev: !production
-      }),
-      resolve({
-        browser: true,
-        dedupe: importee =>
-          importee === "svelte" || importee.startsWith("svelte/"),
-        preferBuiltins: true
-      }),
-      commonjs(),
-      globals(),
-      builtins(),
-
-      !production && livereload("public"),
-      production && terser()
-    ],
-    watch: {
-      clearScreen: false
-    }
-  },
-  {
-    input: "public/demo.js",
-    output: {
       format: "iife",
-      name: "demo",
-      file: "public/demo-bundle.js"
+      name: "onboard",
+      file: "dist/iife/onboard.js",
+      esModule: false
     },
     plugins: [
+      json(),
+      svelte(),
       resolve({
         preferBuiltins: true,
-        browser: true
+        browser: true,
+        dedupe: importee =>
+          importee === "svelte" || importee.startsWith("svelte/")
       }),
       commonjs(),
       globals(),
+      babel({ exclude: "node_modules/**" }),
       builtins(),
-
-      production && terser()
+      terser()
+    ]
+  },
+  {
+    input: "src/index.js",
+    external: [
+      "bowser",
+      "bn-sdk",
+      "ow",
+      "svelte-i18n",
+      "svelte",
+      "svelte/store",
+      "svelte/internal",
+      "svelte/transition"
     ],
-    watch: {
-      clearScreen: false
-    }
+    plugins: [
+      svelte(),
+      json(),
+      commonjs(),
+      babel({ exclude: "node_modules/**" })
+    ],
+    output: [
+      {
+        dir: "dist/esm",
+        format: "esm"
+      },
+      {
+        dir: "dist/cjs",
+        format: "cjs"
+      }
+    ]
   }
 ]

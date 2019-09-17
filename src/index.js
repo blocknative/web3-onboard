@@ -1,15 +1,8 @@
+import blocknativeApi from "bn-sdk"
 import Onboard from "./views/Onboard.svelte"
-
-import {
-  app,
-  configuration,
-  address,
-  network,
-  balance,
-  walletInterface,
-  provider
-} from "./stores"
-import { validateInit, validateConfig } from "./validation"
+import { app, address, network, balance, provider } from "./stores"
+import { selectWallet, prepareWallet, config, getState } from "./api"
+import { validateInit } from "./validation"
 import { getUserAgent } from "./utilities"
 
 function init(initialization) {
@@ -19,9 +12,15 @@ function init(initialization) {
 
   const { subscriptions, ...rest } = initialization
 
-  app.update(store => ({ ...store, ...rest }))
+  app.update(store => ({
+    ...store,
+    ...rest,
+    blocknative: new blocknativeApi({
+      dappId: initialization.dappId,
+      networkId: initialization.networkId
+    })
+  }))
 
-  // mount assist to the DOM
   new Onboard({
     target: document.body
   })
@@ -45,49 +44,7 @@ function init(initialization) {
     }
   }
 
-  return { selectWallet, prepareWallet, config }
+  return { selectWallet, prepareWallet, config, getState }
 }
 
-export function selectWallet() {
-  return new Promise(resolve => {
-    app.update(store => ({ ...store, selectWallet: true }))
-
-    const appUnsubscribe = app.subscribe(
-      ({ selectWallet, selectWalletCompleted }) => {
-        if (selectWallet === false) {
-          appUnsubscribe()
-          resolve(selectWalletCompleted)
-        }
-      }
-    )
-  })
-}
-
-function prepareWallet() {
-  return new Promise(resolve => {
-    const walletUnsubscribe = walletInterface.subscribe(provider => {
-      if (!provider) {
-        walletUnsubscribe()
-        throw new Error("selectWallet must be called before prepareWallet")
-      }
-    })
-
-    app.update(store => ({ ...store, prepareWallet: true }))
-
-    const appUnsubscribe = app.subscribe(
-      ({ prepareWallet, prepareWalletCompleted }) => {
-        if (prepareWallet === false) {
-          appUnsubscribe()
-          resolve(prepareWalletCompleted)
-        }
-      }
-    )
-  })
-}
-
-function config(options) {
-  validateConfig(options)
-  configuration.update(store => ({ ...store, ...options }))
-}
-
-export default { init }
+export default init

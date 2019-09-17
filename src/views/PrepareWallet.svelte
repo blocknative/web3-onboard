@@ -1,15 +1,13 @@
 <script>
-  import { fly, fade } from "svelte/transition";
-  import { quintOut } from "svelte/easing";
+  import { fade } from "svelte/transition";
 
-  import { selectWallet } from "../index";
+  import { selectWallet } from "../api";
 
   import Modal from "../components/Modal.svelte";
   import ModalHeader from "../components/ModalHeader.svelte";
 
   import Button from "../elements/Button.svelte";
 
-  import { blocknative } from "../services";
   import { app, state, syncingState, configuration } from "../stores";
   import { validateModal } from "../validation";
 

@@ -1,33 +1,38 @@
 {
-  "name": "bnc-onboard",
+  "name": "bn-onboard",
   "version": "0.0.1",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "files": [
+    "dist/esm/*",
+    "dist/cjs/*"
+  ],
   "devDependencies": {
-    "npm-run-all": "^4.1.5",
     "rollup": "^1.12.0",
     "rollup-plugin-commonjs": "^10.0.0",
     "rollup-plugin-img": "^1.1.0",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-livereload": "^1.0.0",
     "rollup-plugin-node-builtins": "^2.1.2",
-    "rollup-plugin-node-globals": "^1.4.0",
+    "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-svelte": "^5.0.3",
     "rollup-plugin-terser": "^4.0.4",
-    "svelte": "^3.0.0"
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "babel-eslint": "^7.1.1",
+    "babel-plugin-external-helpers": "^6.18.0"
   },
   "dependencies": {
+    "bn-sdk": "github:blocknative/bn-sdk#master",
     "bowser": "^2.5.2",
-    "ethers": "^4.0.33",
     "ow": "^0.13.2",
-    "sirv-cli": "^0.4.4",
-    "sockette": "^2.0.6",
+    "rollup-plugin-node-globals": "^1.4.0",
+    "svelte": "^3.0.0",
     "svelte-i18n": "^1.1.2-beta"
   },
   "scripts": {
-    "build": "rollup -c",
-    "autobuild": "rollup -c -w",
-    "dev": "run-p start:dev autobuild",
-    "start": "sirv public --single",
-    "start:dev": "sirv public --single --dev"
+    "prepare": "rollup -c",
+    "build": "npm run prepare"
   }
 }
