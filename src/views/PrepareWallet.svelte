@@ -34,10 +34,10 @@
           prepareWalletCompleted: true
         }));
 
-        // blocknative.event({
-        //   categoryCode: "onboard",
-        //   eventCode: "onboardComplete"
-        // });
+        blocknative.event({
+          categoryCode: "onboard",
+          eventCode: "onboardingCompleted"
+        });
 
         checkingModule = false;
         return;
@@ -47,10 +47,10 @@
       currentModule = result.module;
 
       // log the event code for this module
-      // blocknative.event({
-      //   eventCode: activeModal.eventCode,
-      //   categoryCode: "onboard"
-      // });
+      blocknative.event({
+        eventCode: activeModal.eventCode,
+        categoryCode: "onboard"
+      });
 
       // run any actions that module require as part of this step
       if (activeModal.action) {
