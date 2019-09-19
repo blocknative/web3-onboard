@@ -16,6 +16,8 @@ export const configuration = writable({
   darkMode: false
 })
 
+export let syncingState = false
+
 export const address = createUserStateStore("address")
 export const network = createUserStateStore("network")
 export const balance = createUserStateStore("balance")

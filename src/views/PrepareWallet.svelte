@@ -8,7 +8,7 @@
 
   import Button from "../elements/Button.svelte";
 
-  import { app, state, configuration } from "../stores";
+  import { app, state, syncingState, configuration } from "../stores";
   import { validateModal } from "../validation";
 
   export let modules;
@@ -99,6 +99,10 @@
   function runModules(modules) {
     return new Promise(async resolve => {
       for (const module of modules) {
+        if (syncingState) {
+          await syncingState;
+        }
+
         const isInvalid = await invalidState(module, state.get());
 
         if (isInvalid) {
