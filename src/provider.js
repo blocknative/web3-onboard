@@ -68,10 +68,10 @@ export function createModernProviderInterface(provider) {
 export function createLegacyProviderInterface(provider) {
   return {
     address: {
-      get: () => Promise.resolve(provider._address)
+      get: () => Promise.resolve(provider._address || provider.address)
     },
     network: {
-      get: () => Promise.resolve(provider._chainId)
+      get: () => Promise.resolve(provider._chainId || provider.chainId)
     },
     balance: {
       get: () =>
@@ -102,36 +102,23 @@ export function getProviderName(provider) {
     return "Dapper"
   }
 
-  if (provider.currentProvider) {
-    if (provider.currentProvider.isMetaMask) {
-      return "MetaMask"
-    }
+  if (provider.isTrust) {
+    return "Trust"
+  }
 
-    if (provider.currentProvider.isDapper) {
-      return "Dapper"
-    }
+  if (provider.isCoinbaseWallet) {
+    return "Coinbase"
+  }
 
-    if (provider.currentProvider.isTrust) {
-      return "Trust"
-    }
+  if (provider.isToshi) {
+    return "Toshi"
+  }
 
-    if (provider.currentProvider.isCoinbaseWallet) {
-      return "Coinbase"
-    }
+  if (provider.isCipher) {
+    return "Cipher"
+  }
 
-    if (provider.currentProvider.isToshi) {
-      return "Toshi"
-    }
-
-    if (provider.currentProvider.isCipher) {
-      return "Cipher"
-    }
-
-    if (
-      provider.currentProvider.host &&
-      provider.currentProvider.host.indexOf("localhost") !== -1
-    ) {
-      return "localhost"
-    }
+  if (provider.host && provider.host.indexOf("localhost") !== -1) {
+    return "localhost"
   }
 }
