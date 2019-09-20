@@ -12,6 +12,7 @@
   import { validateModal } from "../validation";
 
   export let modules;
+  export let blocknative;
 
   let activeModal;
   let currentModule;

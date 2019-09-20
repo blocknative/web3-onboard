@@ -14,17 +14,19 @@ function init(initialization) {
 
   app.update(store => ({
     ...store,
-    ...rest,
-    blocknative: new blocknativeApi({
-      dappId: initialization.dappId,
-      networkId: initialization.networkId
-    })
+    ...rest
   }))
+
+  const blocknative = blocknativeApi({
+    dappId: initialization.dappId,
+    networkId: initialization.networkId
+  })
 
   new Onboard({
     target: document.body,
     props: {
-      onboardingModules: initialization.modules.prepareWallet
+      onboardingModules: initialization.modules.prepareWallet,
+      blocknative
     }
   })
 
