@@ -10,6 +10,7 @@
 <style>
   section {
     color: inherit;
+    display: block;
   }
 
   footer {
