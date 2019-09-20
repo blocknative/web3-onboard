@@ -1,9 +1,9 @@
-import blocknativeApi from "bn-sdk"
 import Onboard from "./views/Onboard.svelte"
 import { app, address, network, balance, provider } from "./stores"
 import { selectWallet, prepareWallet, config, getState } from "./api"
 import { validateInit } from "./validation"
 import { getUserAgent } from "./utilities"
+import { initializeBlocknative } from "./services"
 
 function init(initialization) {
   getUserAgent()
@@ -11,6 +11,11 @@ function init(initialization) {
   validateInit(initialization)
 
   const { subscriptions, ...rest } = initialization
+
+  const blocknative = initializeBlocknative(
+    initialization.dappId,
+    initialization.networkId
+  )
 
   app.update(store => ({
     ...store,
