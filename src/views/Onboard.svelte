@@ -4,7 +4,6 @@
   import { app } from "../stores";
 
   export let onboardingModules;
-  export let blocknative;
 </script>
 
 <style>
@@ -33,5 +32,5 @@
 {/if}
 
 {#if $app.prepareWallet}
-  <PrepareWallet modules={onboardingModules} {blocknative} />
+  <PrepareWallet modules={onboardingModules} />
 {/if}

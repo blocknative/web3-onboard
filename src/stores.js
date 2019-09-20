@@ -1,4 +1,4 @@
-import { writable } from "svelte/store"
+import { writable, derived } from "svelte/store"
 import Cancelable from "promise-cancelable"
 import { validateWalletInterface } from "./validation"
 import { getBlocknative } from "./services"
@@ -139,20 +139,19 @@ function createBalanceStore() {
   let stateSyncer
   let emitter
 
-  const { subscribe } = derived(
-    [address, network],
-    ([$address, $network], set) => {
-      if (stateSyncer) {
-        syncState(stateSyncer.get, set)
+  const { subscribe } = derived([address, network], ([$address], set) => {
+    if (stateSyncer) {
+      syncState(stateSyncer.get, set)
 
-        emitter = getBlocknative().account($address)
+      if ($address) {
+        emitter = getBlocknative().account($address).emitter
 
         emitter.on("txConfirmed", () => {
           syncState(stateSyncer.get, set)
         })
       }
     }
-  )
+  })
 
   return {
     subscribe,
@@ -169,7 +168,6 @@ function createBalanceStore() {
 function syncState(func, set) {
   const prom = makeQuerablePromise(
     new Cancelable((resolve, reject, onCancel) => {
-      console.log("calling stateSyncer for:", parameter)
       func()
         .then(resolve)
         .catch(reject)
@@ -182,7 +180,10 @@ function syncState(func, set) {
 
   prom
     .then(result => {
-      set(result)
+      if (result) {
+        set(result)
+      }
+
       balanceSyncStatus.syncing = false
     })
     .catch(err => {
@@ -193,11 +194,9 @@ function syncState(func, set) {
 
   timedOut.then(() => {
     if (!prom.isFulfilled()) {
-      console.log("promise timed out")
       prom.cancel()
-
-      balanceSyncStatus.syncing = false
-      balanceSyncStatus.error = `There was a problem getting the ${parameter} of this wallet`
+      balanceSyncStatus.error =
+        "There was a problem getting the balance of this wallet"
     }
   })
 }

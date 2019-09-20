@@ -22,16 +22,10 @@ function init(initialization) {
     ...rest
   }))
 
-  const blocknative = blocknativeApi({
-    dappId: initialization.dappId,
-    networkId: initialization.networkId
-  })
-
   new Onboard({
     target: document.body,
     props: {
-      onboardingModules: initialization.modules.prepareWallet,
-      blocknative
+      onboardingModules: initialization.modules.prepareWallet
     }
   })
 

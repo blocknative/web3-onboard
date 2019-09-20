@@ -2,17 +2,19 @@
   import { fade } from "svelte/transition";
 
   import { selectWallet } from "../api";
+  import { getBlocknative } from "../services";
 
   import Modal from "../components/Modal.svelte";
   import ModalHeader from "../components/ModalHeader.svelte";
 
   import Button from "../elements/Button.svelte";
 
-  import { app, state, syncingState, configuration } from "../stores";
+  import { app, state, balanceSyncStatus, configuration } from "../stores";
   import { validateModal } from "../validation";
 
   export let modules;
-  export let blocknative;
+
+  const blocknative = getBlocknative();
 
   let activeModal;
   let currentModule;
@@ -100,9 +102,9 @@
   function runModules(modules) {
     return new Promise(async resolve => {
       for (const module of modules) {
-        console.log("Syncing state");
-        await Promise.all(Object.values(syncingState));
-        console.log("finished syncing state");
+        if (balanceSyncStatus.syncing) {
+          await balanceSyncStatus.syncing;
+        }
 
         const isInvalid = await invalidState(module, state.get());
 
