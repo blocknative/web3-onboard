@@ -1,5 +1,7 @@
 import { writable } from "svelte/store"
+import Cancelable from "promise-cancelable"
 import { validateWalletInterface } from "./validation"
+import { getBlocknative } from "./services"
 
 export const app = writable({
   dappId: null,
@@ -9,18 +11,22 @@ export const app = writable({
   selectWalletCompleted: false,
   prepareWallet: false,
   prepareWalletCompleted: false,
-  modules: null
+  modules: null,
+  blocknative: null
 })
 
 export const configuration = writable({
   darkMode: false
 })
 
-export let syncingState = false
+export const balanceSyncStatus = {
+  syncing: false,
+  error: false
+}
 
 export const address = createUserStateStore("address")
 export const network = createUserStateStore("network")
-export const balance = createUserStateStore("balance")
+export const balance = createBalanceStore()
 export const provider = writable(null)
 
 export const state = createState({
@@ -127,4 +133,101 @@ function createUserStateStore(parameter) {
       }
     }
   }
+}
+
+function createBalanceStore() {
+  let stateSyncer
+  let emitter
+
+  const { subscribe } = derived(
+    [address, network],
+    ([$address, $network], set) => {
+      if (stateSyncer) {
+        syncState(stateSyncer.get, set)
+
+        emitter = getBlocknative().account($address)
+
+        emitter.on("txConfirmed", () => {
+          syncState(stateSyncer.get, set)
+        })
+      }
+    }
+  )
+
+  return {
+    subscribe,
+    setStateSyncer: syncer => {
+      if (!syncer || typeof syncer !== "object") {
+        throw new Error("setStateSyncer must be called with a valid interface")
+      }
+
+      stateSyncer = syncer
+    }
+  }
+}
+
+function syncState(func, set) {
+  const prom = makeQuerablePromise(
+    new Cancelable((resolve, reject, onCancel) => {
+      console.log("calling stateSyncer for:", parameter)
+      func()
+        .then(resolve)
+        .catch(reject)
+
+      onCancel(resolve)
+    })
+  )
+
+  balanceSyncStatus.syncing = prom
+
+  prom
+    .then(result => {
+      set(result)
+      balanceSyncStatus.syncing = false
+    })
+    .catch(err => {
+      throw new Error(`Error getting balance from state syncer: ${err}`)
+    })
+
+  const timedOut = wait(1000)
+
+  timedOut.then(() => {
+    if (!prom.isFulfilled()) {
+      console.log("promise timed out")
+      prom.cancel()
+
+      balanceSyncStatus.syncing = false
+      balanceSyncStatus.error = `There was a problem getting the ${parameter} of this wallet`
+    }
+  })
+}
+
+function wait(time) {
+  return new Promise(resolve => setTimeout(resolve, time))
+}
+
+function makeQuerablePromise(promise) {
+  let isResolved = false
+  let isRejected = false
+
+  const result = promise.then(
+    function(v) {
+      isResolved = true
+      return v
+    },
+    function(e) {
+      isRejected = true
+      throw e
+    }
+  )
+  result.isFulfilled = function() {
+    return isResolved || isRejected
+  }
+  result.isResolved = function() {
+    return isResolved
+  }
+  result.isRejected = function() {
+    return isRejected
+  }
+  return result
 }

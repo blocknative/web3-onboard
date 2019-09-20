@@ -42,7 +42,8 @@ export default [
       "svelte",
       "svelte/store",
       "svelte/internal",
-      "svelte/transition"
+      "svelte/transition",
+      "promise-cancelable"
     ],
     plugins: [
       svelte(),

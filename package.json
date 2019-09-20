@@ -27,6 +27,7 @@
     "bn-sdk": "github:blocknative/bn-sdk#master",
     "bowser": "^2.5.2",
     "ow": "^0.13.2",
+    "promise-cancelable": "^2.1.1",
     "rollup-plugin-node-globals": "^1.4.0",
     "svelte": "^3.0.0",
     "svelte-i18n": "^1.1.2-beta"

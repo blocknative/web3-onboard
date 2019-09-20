@@ -12,6 +12,7 @@
   import { validateModal } from "../validation";
 
   export let modules;
+  export let blocknative;
 
   let activeModal;
   let currentModule;
@@ -99,9 +100,9 @@
   function runModules(modules) {
     return new Promise(async resolve => {
       for (const module of modules) {
-        if (syncingState) {
-          await syncingState;
-        }
+        console.log("Syncing state");
+        await Promise.all(Object.values(syncingState));
+        console.log("finished syncing state");
 
         const isInvalid = await invalidState(module, state.get());
 
