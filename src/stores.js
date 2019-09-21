@@ -168,11 +168,12 @@ function createBalanceStore() {
 function syncState(func, set) {
   const prom = makeQuerablePromise(
     new Cancelable((resolve, reject, onCancel) => {
-      func()
-        .then(resolve)
-        .catch(reject)
+      func().then(resolve)
 
-      onCancel(resolve)
+      onCancel(() => {
+        balanceSyncStatus.error =
+          "There was a problem getting the balance of this wallet"
+      })
     })
   )
 
@@ -183,20 +184,14 @@ function syncState(func, set) {
       if (result) {
         set(result)
       }
-
-      balanceSyncStatus.syncing = false
     })
-    .catch(err => {
-      throw new Error(`Error getting balance from state syncer: ${err}`)
-    })
+    .catch(() => {})
 
   const timedOut = wait(1000)
 
   timedOut.then(() => {
     if (!prom.isFulfilled()) {
       prom.cancel()
-      balanceSyncStatus.error =
-        "There was a problem getting the balance of this wallet"
     }
   })
 }

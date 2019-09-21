@@ -103,7 +103,7 @@
     return new Promise(async resolve => {
       for (const module of modules) {
         if (balanceSyncStatus.syncing) {
-          await balanceSyncStatus.syncing;
+          await balanceSyncStatus.syncing.catch(() => {});
         }
 
         const isInvalid = await invalidState(module, state.get());
