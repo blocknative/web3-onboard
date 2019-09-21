@@ -141,14 +141,16 @@ function createBalanceStore() {
 
   const { subscribe } = derived([address, network], ([$address], set) => {
     if (stateSyncer) {
-      syncState(stateSyncer.get, set)
-
       if ($address) {
-        emitter = getBlocknative().account($address).emitter
+        syncState(stateSyncer.get, set)
 
+        emitter = getBlocknative().account($address).emitter
         emitter.on("txConfirmed", () => {
           syncState(stateSyncer.get, set)
         })
+      } else {
+        // no address, so set balance back to null
+        set(null)
       }
     }
   })
