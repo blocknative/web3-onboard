@@ -52,6 +52,10 @@ export const walletInterface = createWalletInterfaceStore(null)
 
 walletInterface.subscribe(wallet => {
   if (wallet) {
+    // reset state
+    address.reset()
+    network.reset()
+
     // clear all current intervals if they exist
     currentSyncerIntervals.forEach(
       clearInterval => clearInterval && clearInterval()
@@ -107,6 +111,7 @@ function createUserStateStore(parameter) {
 
   return {
     subscribe,
+    reset: () => set(null),
     setStateSyncer: stateSyncer => {
       if (!stateSyncer || typeof stateSyncer !== "object") {
         throw new Error("setStateSyncer must be called with a valid interface")
