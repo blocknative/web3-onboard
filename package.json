@@ -24,7 +24,7 @@
     "babel-plugin-external-helpers": "^6.18.0"
   },
   "dependencies": {
-    "bn-sdk": "github:blocknative/bn-sdk#master",
+    "bn-sdk": "./bn-sdk-0.0.1.tgz",
     "bowser": "^2.5.2",
     "ow": "^0.13.2",
     "promise-cancelable": "^2.1.1",
