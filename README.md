@@ -52,8 +52,8 @@ const onboard = Onboard({
   },
   modules: {
     selectWallet: initWallets({
-      fortmatic: { apiKey: "Your fortmatic key here" },
-      portis: { apiKey: "Your portis key here" },
+      fortmaticInit: { apiKey: "Your fortmatic key here" },
+      portisInit: { apiKey: "Your portis key here" },
       networkId: 4
     }),
     prepareWallet: initOnboarding({
