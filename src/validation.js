@@ -26,7 +26,8 @@ export function validateInit(init) {
                 svg: ow.optional.string,
                 wallet: ow.function,
                 link: ow.optional.string,
-                installMessage: ow.optional.function
+                installMessage: ow.optional.function,
+                preferred: ow.optional.boolean
               })
             ),
             desktop: ow.optional.array.nonEmpty.ofType(
@@ -37,7 +38,8 @@ export function validateInit(init) {
                 svg: ow.optional.string,
                 wallet: ow.function,
                 link: ow.optional.string,
-                installMessage: ow.optional.function
+                installMessage: ow.optional.function,
+                preferred: ow.optional.boolean
               })
             )
           })
@@ -86,6 +88,7 @@ export function validateWalletInterface(walletInterface) {
     ow.object.exactShape({
       name: ow.string,
       connect: ow.optional.function,
+      disconnect: ow.optional.function,
       address: ow.object
         .hasAnyKeys("get", "onChange")
         .valuesOfType(ow.function),

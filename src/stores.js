@@ -95,10 +95,11 @@ function createState(initialState) {
 }
 
 function createWalletInterfaceStore(initialState) {
-  const { subscribe, set } = writable(initialState)
+  const { subscribe, set, update } = writable(initialState)
 
   return {
     subscribe,
+    update,
     set: walletInterface => {
       validateWalletInterface(walletInterface)
       set(walletInterface)

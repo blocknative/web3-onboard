@@ -31,13 +31,19 @@
     // get the modules based on device type
     const allWalletModules = wallets[moduleType];
 
-    // only display first 4 modules
-    const walletModules =
-      allWalletModules.length > 4
-        ? allWalletModules.slice(0, 4)
-        : allWalletModules;
-    const extraWalletModules =
-      allWalletModules.length > 4 && allWalletModules.slice(4);
+    let walletModules;
+    let extraWalletModules;
+
+    if (allWalletModules.find(wallet => wallet.preferred)) {
+      // if preferred wallets, then split in to preferred and not preferred
+      walletModules = allWalletModules.filter(wallet => wallet.preferred);
+      extraWalletModules = allWalletModules.filter(wallet => !wallet.preferred);
+    } else {
+      // otherwise make the first 4 wallets preferred
+      walletModules = allWalletModules.slice(0, 4);
+      extraWalletModules =
+        allWalletModules.length > 4 && allWalletModules.slice(4);
+    }
 
     // set the data to show in the modal
     modalData = { ...details, walletModules, extraWalletModules };
@@ -67,7 +73,14 @@
       return;
     }
 
-    walletInterface.set(wallet.interface);
+    walletInterface.update(currentInterface => {
+      if (currentInterface && currentInterface.disconnect) {
+        currentInterface.disconnect();
+      }
+
+      return wallet.interface;
+    });
+
     provider.set(wallet.provider);
     modalData = null;
     app.update(store => ({
