@@ -195,10 +195,11 @@ function syncState(func, set) {
     })
     .catch(() => {})
 
-  const timedOut = wait(1000)
+  const timedOut = wait(2000)
 
   timedOut.then(() => {
     if (!prom.isFulfilled()) {
+      console.log("CANCELING GET BALANCE CALL")
       prom.cancel()
     }
   })
