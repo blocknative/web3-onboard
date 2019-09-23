@@ -102,6 +102,10 @@ export function getProviderName(provider) {
     return "Dapper"
   }
 
+  if (provider.isWalletConnect) {
+    return "WalletConnect"
+  }
+
   if (provider.isTrust) {
     return "Trust"
   }
