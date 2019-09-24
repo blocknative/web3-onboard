@@ -1,3 +1,5 @@
 {
-  "presets": [["@babel/env", { "modules": false }]]
+  "presets": [
+    ["@babel/env", { "modules": false, "useBuiltIns": "entry", "corejs": 3 }]
+  ]
 }

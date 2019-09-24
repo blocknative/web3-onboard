@@ -44,7 +44,8 @@ export default [
       "svelte/store",
       "svelte/internal",
       "svelte/transition",
-      "promise-cancelable"
+      "promise-cancelable",
+      "regenerator-runtime/runtime"
     ],
     plugins: [
       svelte(),

@@ -1,3 +1,5 @@
+import "regenerator-runtime/runtime"
+
 import Onboard from "./views/Onboard.svelte"
 import { app, address, network, balance, provider } from "./stores"
 import { selectWallet, prepareWallet, config, getState } from "./api"
@@ -12,10 +14,7 @@ function init(initialization) {
 
   const { subscriptions, ...rest } = initialization
 
-  const blocknative = initializeBlocknative(
-    initialization.dappId,
-    initialization.networkId
-  )
+  initializeBlocknative(initialization.dappId, initialization.networkId)
 
   app.update(store => ({
     ...store,

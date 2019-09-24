@@ -30,6 +30,7 @@
     "bowser": "^2.5.2",
     "ow": "^0.13.2",
     "promise-cancelable": "^2.1.1",
+    "regenerator-runtime": "^0.13.3",
     "svelte": "^3.0.0",
     "svelte-i18n": "^1.1.2-beta"
   },
