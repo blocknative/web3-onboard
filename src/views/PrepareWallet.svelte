@@ -1,5 +1,6 @@
 <script>
   import { fade } from "svelte/transition";
+  import Big from "big.js";
 
   import { selectWallet } from "../api";
   import { getBlocknative } from "../services";
@@ -13,6 +14,8 @@
   import { validateModal } from "../validation";
 
   export let modules;
+
+  Big.NE = -20;
 
   const blocknative = getBlocknative();
 
@@ -120,6 +123,7 @@
   async function invalidState(module, state) {
     const result = module({
       ...state,
+      bigNum: Big,
       selectWallet,
       exitPrepareWallet: handleExit
     });

@@ -18,17 +18,18 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-svelte": "^5.0.3",
     "rollup-plugin-terser": "^4.0.4",
+    "rollup-plugin-node-globals": "^1.4.0",
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "babel-eslint": "^7.1.1",
     "babel-plugin-external-helpers": "^6.18.0"
   },
   "dependencies": {
+    "big.js": "^5.2.2",
     "bn-sdk": "github:blocknative/bn-sdk#master",
     "bowser": "^2.5.2",
     "ow": "^0.13.2",
     "promise-cancelable": "^2.1.1",
-    "rollup-plugin-node-globals": "^1.4.0",
     "svelte": "^3.0.0",
     "svelte-i18n": "^1.1.2-beta"
   },
