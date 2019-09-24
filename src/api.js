@@ -1,4 +1,4 @@
-import { app, configuration, walletInterface, state } from "./stores"
+import { app, walletInterface, state } from "./stores"
 import { validateConfig } from "./validation"
 
 export function selectWallet() {
@@ -18,11 +18,13 @@ export function selectWallet() {
 
 export function prepareWallet() {
   return new Promise(resolve => {
-    walletInterface.subscribe(provider => {
+    const interfaceUnsubscribe = walletInterface.subscribe(provider => {
       if (!provider) {
         throw new Error("selectWallet must be called before prepareWallet")
       }
     })
+
+    interfaceUnsubscribe()
 
     app.update(store => ({ ...store, prepareWallet: true }))
 
@@ -39,7 +41,7 @@ export function prepareWallet() {
 
 export function config(options) {
   validateConfig(options)
-  configuration.update(store => ({ ...store, ...options }))
+  app.update(store => ({ ...store, ...options }))
 }
 
 export function getState() {

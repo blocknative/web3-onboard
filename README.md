@@ -87,3 +87,20 @@ const readyToTransact = await onboard.prepareWallet()
 ```
 
 This function will run through the onboarding modules sequentially, making sure the user has passed the condition contained in each module and eventually resolves with `true` if the user completed the sequence. This means that the user is ready to transact. This function is useful to call before every transaction to make sure that nothing has changed since the last time it was called.
+
+### Config
+
+You can update configuration parameters via the `config` function:
+
+```javascript
+onboard.config({ darkMode: true })
+```
+
+Available parameters that you can edit are:
+
+```javascript
+{
+  darkMode: Boolean, // (default: false)
+  networkId: Number // as set with initialization of onboard
+}
+```

@@ -12,10 +12,7 @@ export const app = writable({
   prepareWallet: false,
   prepareWalletCompleted: false,
   modules: null,
-  blocknative: null
-})
-
-export const configuration = writable({
+  blocknative: null,
   darkMode: false
 })
 
