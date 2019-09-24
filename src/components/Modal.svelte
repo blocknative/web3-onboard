@@ -1,6 +1,6 @@
 <script>
   import { fade } from "svelte/transition";
-  import { configuration } from "../stores";
+  import { app } from "../stores";
   export let closeModal;
 
   let closeHovered;
@@ -70,12 +70,12 @@
 
 <aside transition:fade class="bn-onboard-custom bn-onboard-modal">
   <section
-    class:bn-onboard-dark-mode={$configuration.darkMode}
+    class:bn-onboard-dark-mode={$app.darkMode}
     class="bn-onboard-custom bn-onboard-modal-content">
     <slot />
     <div
       class="bn-onboard-custom bn-onboard-modal-content-close"
-      class:bn-onboard-dark-mode-close-background={$configuration.darkMode}
+      class:bn-onboard-dark-mode-close-background={$app.darkMode}
       on:click={closeModal}
       on:mouseenter={() => (closeHovered = true)}
       on:mouseleave={() => (closeHovered = false)}>
@@ -89,7 +89,7 @@
         viewBox="0 0 47.971 47.971"
         style="enable-background:new 0 0 47.971 47.971; transition: fill 150ms
         ease-in-out;"
-        fill={closeHovered ? ($configuration.darkMode ? '#ffffff' : '#4a4a4a') : '#9B9B9B'}
+        fill={closeHovered ? ($app.darkMode ? '#ffffff' : '#4a4a4a') : '#9B9B9B'}
         xml:space="preserve">
         <g>
           <path

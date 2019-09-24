@@ -1,5 +1,5 @@
 <script>
-  import { configuration } from "../stores";
+  import { app } from "../stores";
   export let highlight = false;
   export let onclick = null;
 </script>
@@ -28,7 +28,7 @@
 <button
   on:click={onclick}
   class="bn-onboard-custom bn-onboard-button"
-  class:bn-onboard-dark-mode-link={$configuration.darkMode}
-  class:bn-onboard-dark-mode-background-hover={$configuration.darkMode}>
+  class:bn-onboard-dark-mode-link={$app.darkMode}
+  class:bn-onboard-dark-mode-background-hover={$app.darkMode}>
   <slot />
 </button>

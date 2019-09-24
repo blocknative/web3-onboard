@@ -1,5 +1,5 @@
 <script>
-  import { configuration } from "../stores";
+  import { app } from "../stores";
   export let heading;
   export let icon;
 </script>
@@ -32,7 +32,7 @@
 
 <header class="bn-onboard-custom bn-onboard-modal-content-header">
   <div
-    class:bn-onboard-dark-mode-background={$configuration.darkMode}
+    class:bn-onboard-dark-mode-background={$app.darkMode}
     class="bn-onboard-custom bn-onboard-modal-content-header-icon">
     {@html icon}
   </div>

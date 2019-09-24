@@ -1,5 +1,5 @@
 <script>
-  import { configuration } from "../stores";
+  import { app } from "../stores";
   export let iconSrc;
   export let iconSrcSet = null;
   export let svg;
@@ -63,7 +63,7 @@
 <button
   on:click={onclick}
   class="bn-onboard-custom bn-onboard-icon-button"
-  class:bn-onboard-dark-mode-background-hover={$configuration.darkMode}>
+  class:bn-onboard-dark-mode-background-hover={$app.darkMode}>
   <div>
     {#if svg}
       {@html svg}

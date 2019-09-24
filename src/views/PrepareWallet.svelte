@@ -10,7 +10,7 @@
 
   import Button from "../elements/Button.svelte";
 
-  import { app, state, balanceSyncStatus, configuration } from "../stores";
+  import { app, state, balanceSyncStatus } from "../stores";
   import { validateModal } from "../validation";
 
   export let modules;
@@ -182,7 +182,7 @@
     </p>
     {#if errorMsg}
       <span
-        class:bn-onboard-dark-mode-background={$configuration.darkMode}
+        class:bn-onboard-dark-mode-background={$app.darkMode}
         class="bn-onboard-custom bn-onboard-prepare-error"
         in:fade>
         {errorMsg}

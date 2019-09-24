@@ -1,5 +1,4 @@
 <script>
-  import { configuration } from "../stores";
   export let iconSrc;
   export let iconSrcSet = null;
   export let text;
