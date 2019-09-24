@@ -153,7 +153,9 @@ function createBalanceStore() {
         emitter = getBlocknative().account($address).emitter
         emitter.on("txConfirmed", () => {
           syncState(stateSyncer.get, set)
+          return false
         })
+        emitter.on("all", () => false)
       } else {
         // no address, so set balance back to null
         set(null)
