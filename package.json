@@ -25,7 +25,7 @@
     "babel-plugin-external-helpers": "^6.18.0"
   },
   "dependencies": {
-    "big.js": "^5.2.2",
+    "bignumber.js": "^9.0.0",
     "bn-sdk": "github:blocknative/bn-sdk#master",
     "bowser": "^2.5.2",
     "ow": "^0.13.2",

@@ -38,7 +38,7 @@ export default [
       "bowser",
       "bn-sdk",
       "ow",
-      "big.js",
+      "bignumber.js",
       "svelte-i18n",
       "svelte",
       "svelte/store",
