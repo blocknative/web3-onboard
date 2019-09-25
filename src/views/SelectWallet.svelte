@@ -1,4 +1,5 @@
 <script>
+  import BigNumber from "bignumber.js";
   import { app, state, walletInterface, provider } from "../stores";
   import { fade } from "svelte/transition";
   import Modal from "../components/Modal.svelte";
@@ -55,7 +56,8 @@
       wallet = walletModule.wallet({
         getProviderName,
         createLegacyProviderInterface,
-        createModernProviderInterface
+        createModernProviderInterface,
+        BigNumber
       });
     } catch (err) {
       throw new Error(err);
