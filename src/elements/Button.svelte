@@ -14,7 +14,9 @@
     margin-top: 0.33rem;
     cursor: pointer;
     color: #4a90e2;
+    font-family: "Helvetica Neue";
     transition: background 150ms ease-in-out;
+    line-height: 1.15;
   }
 
   button:focus {

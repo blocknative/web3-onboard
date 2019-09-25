@@ -152,6 +152,8 @@
   /* .bn-onboard-prepare-description */
   p {
     font-size: 0.889rem;
+    font-family: "Helvetica Neue";
+    margin: 1em 0;
   }
 
   /* .bn-onboard-prepare-error */

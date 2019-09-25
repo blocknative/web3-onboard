@@ -24,9 +24,11 @@
 
   /* .bn-onboard-modal-content-header-heading */
   h3 {
+    font-family: "Helvetica Neue";
     font-weight: bold;
     font-size: 1.33rem;
     margin: 0 0 0 0.5rem;
+    color: #4a4a4a;
   }
 </style>
 

@@ -105,6 +105,7 @@
   p {
     font-size: 0.889rem;
     margin: 1rem 0 0 0;
+    font-family: "Helvetica Neue";
   }
 
   /* .bn-onboard-select-info-container */

@@ -15,8 +15,10 @@
     flex-flow: row wrap;
     align-items: center;
     list-style-type: none;
-    margin-bottom: 0.66rem;
+    margin: 1rem 0 0.66rem 0;
     padding: 0;
+    font-family: "Helvetica Neue";
+    line-height: 1.15;
   }
 
   div {

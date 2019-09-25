@@ -21,6 +21,8 @@
     border-radius: 40px;
     cursor: pointer;
     color: inherit;
+    line-height: 1.15;
+    font-family: "Helvetica Neue";
   }
 
   button:hover {
