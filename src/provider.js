@@ -1,3 +1,5 @@
+import BigNumber from "bignumber.js"
+
 export function createModernProviderInterface(provider) {
   provider.autoRefreshOnNetworkChange = false
 
@@ -45,7 +47,7 @@ export function createModernProviderInterface(provider) {
               id: 1
             },
             (e, res) => {
-              resolve(String(parseInt(res.result, 16)))
+              resolve(BigNumber(res.result).toString())
             }
           )
         })
@@ -82,7 +84,7 @@ export function createLegacyProviderInterface(provider) {
               params: [provider._address, "latest"]
             },
             (e, res) => {
-              resolve(String(parseInt(res.result, 16)))
+              resolve(BigNumber(res.result).toString())
             }
           )
         })
