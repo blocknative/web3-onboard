@@ -11,10 +11,10 @@ export function validateInit(init) {
         address: ow.optional.function,
         network: ow.optional.function,
         balance: ow.optional.function,
-        provider: ow.optional.function
+        wallet: ow.optional.function
       }),
       modules: ow.object.exactShape({
-        selectWallet: ow.object.exactShape({
+        walletSelect: ow.object.exactShape({
           heading: ow.string,
           description: ow.string,
           wallets: ow.object.exactShape({
@@ -44,7 +44,7 @@ export function validateInit(init) {
             )
           })
         }),
-        prepareWallet: ow.array.nonEmpty.ofType(ow.function)
+        walletReady: ow.array.nonEmpty.ofType(ow.function)
       })
     })
   )

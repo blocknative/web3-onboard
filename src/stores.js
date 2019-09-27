@@ -2,18 +2,18 @@ import { writable, derived } from "svelte/store"
 import Cancelable from "promise-cancelable"
 import { validateWalletInterface } from "./validation"
 import { getBlocknative } from "./services"
+import { wait, makeQuerablePromise } from "./utilities"
 
 export const app = writable({
   dappId: null,
   networkId: null,
   version: null,
-  selectWallet: false,
-  selectWalletCompleted: false,
-  prepareWallet: false,
-  prepareWalletCompleted: false,
-  modules: null,
-  blocknative: null,
-  darkMode: false
+  mobileDevice: null,
+  darkMode: false,
+  walletSelectInProgress: false,
+  walletSelectCompleted: false,
+  walletReadyInProgress: false,
+  walletReadyCompleted: false
 })
 
 export const balanceSyncStatus = {
@@ -24,23 +24,24 @@ export const balanceSyncStatus = {
 export const address = createUserStateStore("address")
 export const network = createUserStateStore("network")
 export const balance = createBalanceStore()
-export const provider = writable(null)
-
-export const state = createState({
-  mobileDevice: null,
-  walletName: null,
-  address: null,
-  network: null,
-  balance: null,
-  connect: null,
-  provider: null
+export const wallet = writable({
+  name: null,
+  provider: null,
+  connect: null
 })
 
-// make sure state store is updated when any of these change
-address.subscribe(value => state.update({ address: value }))
-network.subscribe(value => state.update({ network: value }))
-balance.subscribe(value => state.update({ balance: value }))
-provider.subscribe(value => state.update({ provider: value }))
+export const state = derived(
+  [address, network, balance, wallet, app],
+  ([$address, $network, $balance, $wallet, $app]) => {
+    return {
+      address: $address,
+      network: $network,
+      balance: $balance,
+      wallet: $wallet,
+      mobileDevice: $app.mobileDevice
+    }
+  }
+)
 
 // keep track of intervals that are syncing state so they can be cleared
 let currentSyncerIntervals = []
@@ -64,32 +65,8 @@ walletInterface.subscribe(wallet => {
       network.setStateSyncer(wallet.network),
       balance.setStateSyncer(wallet.balance)
     ]
-
-    state.update({ connect: wallet.connect, walletName: wallet.name })
   }
 })
-
-function createState(initialState) {
-  let state = initialState
-  let subscribers = []
-
-  return {
-    get: () => state,
-    subscribe: func => {
-      if (!func) return
-      subscribers.push(func)
-      return () => {
-        subscribers = subscribers.filter(f => f !== func)
-      }
-    },
-    update: newState => {
-      state = { ...state, ...newState }
-      subscribers.forEach(sub => sub(state))
-
-      return state
-    }
-  }
-}
 
 function createWalletInterfaceStore(initialState) {
   const { subscribe, set, update } = writable(initialState)
@@ -198,38 +175,8 @@ function syncState(func, set) {
 
   timedOut.then(() => {
     if (!prom.isFulfilled()) {
-      console.log("CANCELING GET BALANCE CALL")
+      console.log("CANCELING GET BALANCE CALL DUE TO TIMEOUT")
       prom.cancel()
     }
   })
-}
-
-function wait(time) {
-  return new Promise(resolve => setTimeout(resolve, time))
-}
-
-function makeQuerablePromise(promise) {
-  let isResolved = false
-  let isRejected = false
-
-  const result = promise.then(
-    function(v) {
-      isResolved = true
-      return v
-    },
-    function(e) {
-      isRejected = true
-      throw e
-    }
-  )
-  result.isFulfilled = function() {
-    return isResolved || isRejected
-  }
-  result.isResolved = function() {
-    return isResolved
-  }
-  result.isRejected = function() {
-    return isRejected
-  }
-  return result
 }

@@ -35,7 +35,7 @@
 </style>
 
 <ul class="bn-onboard-custom bn-onboard-modal-select-wallets">
-  {#each modalData.walletModules as wallet}
+  {#each modalData.primaryWallets as wallet}
     <li in:fade>
       <IconButton
         onclick={() => handleWalletSelect(wallet)}
@@ -45,7 +45,7 @@
     </li>
   {/each}
 
-  {#if modalData.extraWalletModules && !showingAllWalletModules}
+  {#if modalData.secondaryWallets && !showingAllWalletModules}
     <div>
       <Button highlight={true} onclick={() => (showingAllWalletModules = true)}>
         Show More
@@ -54,7 +54,7 @@
   {/if}
 
   {#if showingAllWalletModules}
-    {#each modalData.extraWalletModules as wallet}
+    {#each modalData.secondaryWallets as wallet}
       <li in:fade>
         <IconButton
           onclick={() => handleWalletSelect(wallet)}

@@ -1,9 +1,11 @@
 <script>
-  import SelectWallet from "./SelectWallet.svelte";
-  import PrepareWallet from "./PrepareWallet.svelte";
+  import WalletSelect from "./WalletSelect.svelte";
+  import WalletReady from "./WalletReady.svelte";
   import { app } from "../stores";
 
-  export let onboardingModules;
+  export let walletSelectModule;
+  export let walletReadyModules;
+  export let walletSelect;
 </script>
 
 <style>
@@ -27,10 +29,10 @@
   }
 </style>
 
-{#if $app.selectWallet}
-  <SelectWallet />
+{#if $app.walletSelectInProgress}
+  <WalletSelect module={walletSelectModule} />
 {/if}
 
-{#if $app.prepareWallet}
-  <PrepareWallet modules={onboardingModules} />
+{#if $app.walletReadyInProgress}
+  <WalletReady modules={walletReadyModules} {walletSelect} />
 {/if}

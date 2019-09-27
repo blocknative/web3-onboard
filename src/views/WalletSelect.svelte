@@ -1,7 +1,10 @@
 <script>
   import BigNumber from "bignumber.js";
-  import { app, state, walletInterface, provider } from "../stores";
+  import { get } from "svelte/store";
   import { fade } from "svelte/transition";
+
+  import { app, walletInterface, wallet } from "../stores";
+
   import Modal from "../components/Modal.svelte";
   import ModalHeader from "../components/ModalHeader.svelte";
   import Wallets from "../components/Wallets.svelte";
@@ -14,64 +17,66 @@
     getProviderName,
     createLegacyProviderInterface,
     createModernProviderInterface
-  } from "../provider";
+  } from "../utilities";
 
-  const { mobileDevice } = state.get();
+  export let module;
 
   let modalData;
   let showWalletDefinition;
-
-  let selectedWallet;
   let walletAlreadyInstalled;
   let installMessage;
 
-  app.subscribe(({ modules: { selectWallet } }) => {
-    const moduleType = mobileDevice ? "mobile" : "desktop";
-    const { wallets, ...details } = selectWallet;
+  let selectedWalletModule;
 
-    // get the modules based on device type
-    const allWalletModules = wallets[moduleType];
+  const { mobileDevice, autoSelectWallet } = get(app);
+  const { wallets, heading, description } = module;
+  const deviceWallets = wallets[mobileDevice ? "mobile" : "desktop"];
 
-    let walletModules;
-    let extraWalletModules;
+  if (autoSelectWallet) {
+    const module = deviceWallets.find(m => m.name === autoSelectWallet);
+    handleWalletSelect(module);
+  }
 
-    if (allWalletModules.find(wallet => wallet.preferred)) {
-      // if preferred wallets, then split in to preferred and not preferred
-      walletModules = allWalletModules.filter(wallet => wallet.preferred);
-      extraWalletModules = allWalletModules.filter(wallet => !wallet.preferred);
-    } else {
-      // otherwise make the first 4 wallets preferred
-      walletModules = allWalletModules.slice(0, 4);
-      extraWalletModules =
-        allWalletModules.length > 4 && allWalletModules.slice(4);
-    }
+  let primaryWallets;
+  let secondaryWallets;
 
-    // set the data to show in the modal
-    modalData = { ...details, walletModules, extraWalletModules };
-  });
+  if (deviceWallets.find(wallet => wallet.preferred)) {
+    // if preferred wallets, then split in to preferred and not preferred
+    primaryWallets = deviceWallets.filter(wallet => wallet.preferred);
+    secondaryWallets = deviceWallets.filter(wallet => !wallet.preferred);
+  } else {
+    // otherwise make the first 4 wallets preferred
+    primaryWallets = deviceWallets.slice(0, 4);
+    secondaryWallets = deviceWallets.length > 4 && deviceWallets.slice(4);
+  }
 
-  function handleWalletSelect(walletModule) {
-    let wallet;
-    try {
-      wallet = walletModule.wallet({
-        getProviderName,
-        createLegacyProviderInterface,
-        createModernProviderInterface,
-        BigNumber
-      });
-    } catch (err) {
-      throw new Error(err);
-      return;
-    }
+  // set the data to show in the modal if wallet hasn't been auto selected
+  modalData = !autoSelectWallet && {
+    heading,
+    description,
+    primaryWallets,
+    secondaryWallets
+  };
 
-    if (!wallet.interface) {
-      selectedWallet = walletModule;
-      walletAlreadyInstalled =
-        wallet.provider && getProviderName(wallet.provider);
-      installMessage = walletModule.installMessage({
+  function handleWalletSelect(module) {
+    const { provider, interface: selectedWalletInterface } = module.wallet({
+      getProviderName,
+      createLegacyProviderInterface,
+      createModernProviderInterface,
+      BigNumber
+    });
+
+    // if no interface then the user does not have the wallet they selected installed or available
+    if (!selectedWalletInterface) {
+      selectedWalletModule = module;
+
+      walletAlreadyInstalled = provider && getProviderName(provider);
+
+      installMessage = module.installMessage({
         currentWallet: walletAlreadyInstalled,
-        selectedWallet: selectedWallet.name
+        selectedWallet: selectedWalletModule.name
       });
+
       return;
     }
 
@@ -80,24 +85,25 @@
         currentInterface.disconnect();
       }
 
-      return wallet.interface;
+      return selectedWalletInterface;
     });
 
-    provider.set(wallet.provider);
-    modalData = null;
-    app.update(store => ({
-      ...store,
-      selectWallet: false,
-      selectWalletCompleted: true
-    }));
+    wallet.set({
+      provider,
+      name: module.name,
+      connect: selectedWalletInterface.connect
+    });
+
+    finish({ completed: true });
   }
 
-  function closeModal() {
+  function finish({ completed }) {
     modalData = null;
+
     app.update(store => ({
       ...store,
-      selectWallet: false,
-      selectWalletCompleted: false
+      walletSelectInProgress: false,
+      walletSelectCompleted: completed
     }));
   }
 </script>
@@ -125,9 +131,9 @@
 </style>
 
 {#if modalData}
-  <Modal {closeModal}>
+  <Modal closeModal={() => finish({ completed: false })}>
     <ModalHeader icon={walletIcon} heading={modalData.heading} />
-    {#if !selectedWallet}
+    {#if !selectedWalletModule}
       <p class="bn-onboard-custom bn-onboard-select-description">
         {modalData.description}
       </p>
@@ -139,7 +145,7 @@
           What is a wallet?
         </span>
         {#if mobileDevice}
-          <Button onclick={closeModal}>Dismiss</Button>
+          <Button onclick={() => finish({ completed: false })}>Dismiss</Button>
         {/if}
       </div>
       {#if showWalletDefinition}
@@ -156,9 +162,9 @@
       {/if}
     {:else}
       <SelectedWallet
-        {selectedWallet}
+        {selectedWalletModule}
         onBack={() => {
-          selectedWallet = null;
+          selectedWalletModule = null;
           walletAlreadyInstalled = null;
         }}
         {installMessage} />

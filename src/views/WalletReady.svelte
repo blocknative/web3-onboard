@@ -1,19 +1,19 @@
 <script>
+  import { get } from "svelte/store";
+
   import { fade } from "svelte/transition";
   import BigNumber from "bignumber.js";
 
-  import { selectWallet } from "../api";
   import { getBlocknative } from "../services";
-
-  import Modal from "../components/Modal.svelte";
-  import ModalHeader from "../components/ModalHeader.svelte";
-
-  import Button from "../elements/Button.svelte";
-
   import { app, state, balanceSyncStatus } from "../stores";
   import { validateModal } from "../validation";
 
+  import Modal from "../components/Modal.svelte";
+  import ModalHeader from "../components/ModalHeader.svelte";
+  import Button from "../elements/Button.svelte";
+
   export let modules;
+  export let walletSelect;
 
   const blocknative = getBlocknative();
 
@@ -34,8 +34,8 @@
       if (!result) {
         app.update(store => ({
           ...store,
-          prepareWallet: false,
-          prepareWalletCompleted: true
+          walletReadyInProgress: false,
+          walletReadyCompleted: true
         }));
 
         blocknative.event({
@@ -63,7 +63,7 @@
 
       // poll to automatically to check if condition has been met
       pollingInterval = setInterval(async () => {
-        const invalid = await invalidState(currentModule, state.get());
+        const invalid = await invalidState(currentModule, get(state));
         if (!invalid && actionResolved !== false) {
           resetState();
 
@@ -88,7 +88,7 @@
   }
 
   function handleExit() {
-    app.update(store => ({ ...store, prepareWallet: false }));
+    app.update(store => ({ ...store, walletReadyInProgress: false }));
     resetState();
   }
 
@@ -107,10 +107,10 @@
           await balanceSyncStatus.syncing.catch(() => {});
         }
 
-        const isInvalid = await invalidState(module, state.get());
+        const modal = await invalidState(module, get(state));
 
-        if (isInvalid) {
-          return resolve(isInvalid);
+        if (modal) {
+          return resolve(modal);
         }
       }
 
@@ -122,8 +122,8 @@
     const result = module({
       ...state,
       BigNumber,
-      selectWallet,
-      exitPrepareWallet: handleExit
+      walletSelect,
+      exit: handleExit
     });
 
     if (result) {

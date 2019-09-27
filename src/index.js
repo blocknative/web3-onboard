@@ -1,30 +1,46 @@
 import "regenerator-runtime/runtime"
 
+import { get } from "svelte/store"
+
 import Onboard from "./views/Onboard.svelte"
-import { app, address, network, balance, provider } from "./stores"
-import { selectWallet, prepareWallet, config, getState } from "./api"
-import { validateInit } from "./validation"
-import { getUserAgent } from "./utilities"
+
+import {
+  app,
+  address,
+  network,
+  balance,
+  wallet,
+  state,
+  walletInterface
+} from "./stores"
+
+import { validateInit, validateConfig } from "./validation"
+import { isMobileDevice } from "./utilities"
 import { initializeBlocknative } from "./services"
 
-function init(initialization) {
-  getUserAgent()
+import { version } from "../package.json"
 
+function init(initialization) {
   validateInit(initialization)
 
-  const { subscriptions, ...rest } = initialization
+  const { subscriptions, dappId, networkId, modules } = initialization
 
-  initializeBlocknative(initialization.dappId, initialization.networkId)
+  initializeBlocknative(dappId, networkId)
 
   app.update(store => ({
     ...store,
-    ...rest
+    dappId,
+    networkId,
+    version,
+    mobileDevice: isMobileDevice()
   }))
 
   new Onboard({
     target: document.body,
     props: {
-      onboardingModules: initialization.modules.prepareWallet
+      walletSelectModule: modules.walletSelect,
+      walletReadyModules: modules.walletReady,
+      walletSelect
     }
   })
 
@@ -42,12 +58,63 @@ function init(initialization) {
       balance.subscribe(subscriptions.balance)
     }
 
-    if (subscriptions.provider) {
-      provider.subscribe(subscriptions.provider)
+    if (subscriptions.wallet) {
+      wallet.subscribe(subscriptions.wallet)
     }
   }
 
-  return { selectWallet, prepareWallet, config, getState }
+  function walletSelect(autoSelectWallet) {
+    return new Promise(resolve => {
+      app.update(store => ({
+        ...store,
+        walletSelectInProgress: true,
+        autoSelectWallet:
+          typeof autoSelectWallet === "string" && autoSelectWallet
+      }))
+
+      const appUnsubscribe = app.subscribe(
+        ({ walletSelectInProgress, walletSelectCompleted }) => {
+          if (walletSelectInProgress === false) {
+            appUnsubscribe()
+            setTimeout(() => resolve(walletSelectCompleted), 500)
+          }
+        }
+      )
+    })
+  }
+
+  function walletReady() {
+    return new Promise(resolve => {
+      if (!get(walletInterface)) {
+        throw new Error("walletSelect must be called before walletReady")
+      }
+
+      app.update(store => ({
+        ...store,
+        walletReadyInProgress: true
+      }))
+
+      const appUnsubscribe = app.subscribe(
+        ({ walletReadyInProgress, walletReadyCompleted }) => {
+          if (walletReadyInProgress === false) {
+            appUnsubscribe()
+            setTimeout(() => resolve(walletReadyCompleted), 500)
+          }
+        }
+      )
+    })
+  }
+
+  function config(options) {
+    validateConfig(options)
+    app.update(store => ({ ...store, ...options }))
+  }
+
+  function getState() {
+    return get(state)
+  }
+
+  return { walletSelect, walletReady, config, getState }
 }
 
 export default init
