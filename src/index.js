@@ -1,6 +1,7 @@
 import "regenerator-runtime/runtime"
-
 import { get } from "svelte/store"
+
+import modules from "./modules"
 
 import Onboard from "./views/Onboard.svelte"
 
@@ -117,4 +118,7 @@ function init(initialization) {
   return { walletSelect, walletReady, config, getState }
 }
 
-export default init
+export default {
+  init,
+  modules
+}

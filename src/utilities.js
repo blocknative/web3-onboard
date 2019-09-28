@@ -156,6 +156,25 @@ export function networkName(id) {
   }
 }
 
+export function networkToId(network) {
+  switch (network) {
+    case "main":
+      return 1
+    case "ropsten":
+      return 3
+    case "rinkeby":
+      return 4
+    case "goerli":
+      return 5
+    case "kovan":
+      return 42
+    case "localhost":
+      return "localhost"
+    default:
+      return "local"
+  }
+}
+
 export function wait(time) {
   return new Promise(resolve => setTimeout(resolve, time))
 }

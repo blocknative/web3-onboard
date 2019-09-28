@@ -4,6 +4,7 @@ import babel from "rollup-plugin-babel"
 import commonjs from "rollup-plugin-commonjs"
 import globals from "rollup-plugin-node-globals"
 import json from "rollup-plugin-json"
+import image from "rollup-plugin-img"
 import builtins from "rollup-plugin-node-builtins"
 import { terser } from "rollup-plugin-terser"
 
@@ -17,6 +18,7 @@ export default [
       esModule: false
     },
     plugins: [
+      image(),
       json(),
       svelte(),
       resolve({
@@ -45,11 +47,15 @@ export default [
       "svelte/internal",
       "svelte/transition",
       "promise-cancelable",
-      "regenerator-runtime/runtime"
+      "regenerator-runtime/runtime",
+      "@portis/web3",
+      "@walletconnect/web3-provider",
+      "fortmatic"
     ],
     plugins: [
       svelte(),
       json(),
+      image(),
       commonjs(),
       babel({ exclude: "node_modules/**" })
     ],
