@@ -28,12 +28,12 @@
 
   let selectedWalletModule;
 
-  const { mobileDevice, autoSelectWallet } = get(app);
+  const { mobileDevice } = get(app);
   const { wallets, heading, description } = module;
   const deviceWallets = wallets[mobileDevice ? "mobile" : "desktop"];
 
-  if (autoSelectWallet) {
-    const module = deviceWallets.find(m => m.name === autoSelectWallet);
+  $: if ($app.autoSelectWallet) {
+    const module = deviceWallets.find(m => m.name === $app.autoSelectWallet);
     handleWalletSelect(module);
   }
 
@@ -51,7 +51,7 @@
   }
 
   // set the data to show in the modal if wallet hasn't been auto selected
-  modalData = !autoSelectWallet && {
+  modalData = !$app.autoSelectWallet && {
     heading,
     description,
     primaryWallets,
@@ -103,7 +103,8 @@
     app.update(store => ({
       ...store,
       walletSelectInProgress: false,
-      walletSelectCompleted: completed
+      walletSelectCompleted: completed,
+      autoSelect: false
     }));
   }
 </script>
