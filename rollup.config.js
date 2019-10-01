@@ -5,7 +5,7 @@ import commonjs from "rollup-plugin-commonjs"
 import globals from "rollup-plugin-node-globals"
 import json from "rollup-plugin-json"
 import image from "rollup-plugin-img"
-import builtins from "rollup-plugin-node-builtins"
+import builtins from "@joseph184/rollup-plugin-node-builtins"
 import { terser } from "rollup-plugin-terser"
 
 export default [
