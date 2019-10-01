@@ -1,4 +1,4 @@
-import blocknativeApi from "bn-sdk"
+import blocknativeApi from "bnc-sdk"
 
 let blocknative
 

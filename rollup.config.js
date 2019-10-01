@@ -38,7 +38,7 @@ export default [
     input: "src/index.js",
     external: [
       "bowser",
-      "bn-sdk",
+      "bnc-sdk",
       "ow",
       "bignumber.js",
       "svelte-i18n",
