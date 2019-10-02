@@ -2,7 +2,7 @@ import connect from "./connect"
 import network from "./network"
 import balance from "./balance"
 
-function init(options) {
+function defaults(options) {
   if (!options || typeof options !== "object") {
     throw new Error("initModules must be called with a valid option object")
   }
@@ -19,7 +19,7 @@ function init(options) {
 }
 
 export default {
-  init,
+  defaults,
   connect,
   network,
   balance

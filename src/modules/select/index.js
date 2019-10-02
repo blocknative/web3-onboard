@@ -7,7 +7,7 @@ import portis from "./wallets/portis"
 import fortmatic from "./wallets/fortmatic"
 import { networkName } from "../../utilities"
 
-function init({
+function defaults({
   heading,
   description,
   networkId,
@@ -51,7 +51,7 @@ function init({
 }
 
 export default {
-  init,
+  defaults,
   metamask,
   dapper,
   walletConnect,
