@@ -174,7 +174,7 @@ The wallet select modules are functions that return a wallet object. The followi
 
 - `metamask`
 - `dapper`
-- `walletConnect`
+- `walletConnect` (requires initialization)
 - `portis` (requires initialization)
 - `fortmatic` (requires initialization)
 
@@ -182,7 +182,7 @@ The wallet select modules are functions that return a wallet object. The followi
 
 - `trust`
 - `coinbase`
-- `walletConnect`
+- `walletConnect` (requires initialization)
 - `portis` (requires initialization)
 - `fortmatic` (requires initialization)
 
@@ -213,6 +213,14 @@ portis({
 fortmatic({
   apiKey: String, // your Portis api key
   network: String //  the name of the network you want to connect to
+})
+```
+
+`walletConnect` Initialization:
+
+```javascript
+fortmatic({
+  infuraKey: String
 })
 ```
 
