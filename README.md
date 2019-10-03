@@ -9,10 +9,10 @@ JavaScript library to easily onboard users to ethereum apps by enabling wallet s
 ## Quick Start with Default Modules
 
 ```javascript
-import { init, modules } from "bn-onboard"
+import Onboard from "bn-onboard"
 
 // initialize onboard
-const onboard = init({
+const onboard = Onboard.init({
   dappId: "Your apiKey here",
   networkId: 1,
   subscriptions: {
@@ -28,7 +28,7 @@ const onboard = init({
   },
   modules: {
     // default wallets that are included: MetaMask, Dapper, Coinbase, Trust, WalletConnect
-    walletSelect: modules.select.defaults({
+    walletSelect: Onboard.modules.select.defaults({
       // if you want fortmatic as a wallet option
       fortmaticInit: { apiKey: "Your fortmatic key here" },
       // if you want portis as a wallet option
@@ -36,7 +36,7 @@ const onboard = init({
       networkId: 4
     }),
     // default ready steps are: connect, network, balance
-    walletReady: modules.ready.defaults({
+    walletReady: Onboard.modules.ready.defaults({
       networkId: 4,
       minimumBalance: "200000000000000000"
     })
@@ -227,13 +227,13 @@ fortmatic({
 #### Example
 
 ```javascript
-import { init, modules } from "bnc-onboard"
+import Onboard from "bnc-onboard"
 
 // PICK AND CHOOSE MODULES
 
-const { portis, dapper, metamask, fortmatic } = modules.select
+const { portis, dapper, metamask, fortmatic } = Onboard.modules.select
 
-const onboard = init({
+const onboard = Onboard.init({
   // ...
   modules: {
     walletSelect: {
@@ -257,10 +257,10 @@ const onboard = init({
 
 // USE ALL OF THE DEFAULT MODULES
 
-const onboard = init({
+const onboard = Onboard.init({
   // ...
   modules: {
-    walletSelect: modules.select.defaults({
+    walletSelect: Onboard.modules.select.defaults({
       portisInit: { apiKey: "Your portis key here" },
       networkId: 4
     }),
@@ -302,13 +302,13 @@ balance(String) //  the minimum balance in wei required to interact with your da
 #### Example
 
 ```javascript
-import { init, modules } from "bnc-onboard"
+import Onboard from "bnc-onboard"
 
 // PICK AND CHOOSE MODULES
 
-const { connect, network, balance } = modules.ready
+const { connect, network, balance } = Onboard.modules.ready
 
-const onboard = init({
+const onboard = Onboard.init({
   // ...
   modules: {
     //....
@@ -320,11 +320,11 @@ const onboard = init({
 
 // USE ALL OF THE DEFAULT MODULES
 
-const onboard = init({
+const onboard = Onboard.init({
   // ...
   modules: {
     // ...
-    walletReady: modules.ready.defaults({
+    walletReady: Onboard.modules.ready.defaults({
       networkId: 1,
       minimumBalance: "400000000000"
     })
