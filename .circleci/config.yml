@@ -1,0 +1,76 @@
+version: 2
+jobs:
+  test:
+    docker:
+      - image: circleci/node:8.15-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-
+      - run: yarn
+      - run: yarn test
+      - run: yarn build
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+  deploy_stage:
+    docker:
+      - image: circleci/node:8.15-browsers
+        user: root
+    steps:
+      - checkout
+      - run: sudo apt update && sudo apt install awscli
+      - run: yarn
+      - run: yarn build
+      - run: sudo npm i -g npm-cli-login
+      - run: NPM_USER=$NPM_USERNAME NPM_EMAIL=$NPM_EMAIL NPM_PASS=$NPM_PASSWORD npm-cli-login
+      - run: npm publish --dry-run
+      - run: gzip -9 ./dist/iife/onboard.js
+      - run: mv ./dist/iife/onboard.js.gz ./dist/iife/onboard.js
+      - run: ls -al
+      - run: echo export VERSION=`awk '/version/{gsub(/("|",)/,"",$2);print $2};' package.json | sed 's/\./-/g'` >> $BASH_ENV
+      - run: mkdir /root/project/deploy-temp
+      - run: mkdir /root/project/deploy-temp/${VERSION}
+      - run: mv /root/project/dist/iife/*.js /root/project/deploy-temp/${VERSION}/
+      - run: aws s3 sync /root/project/deploy-temp/${VERSION}/ s3://staging.onboard.blocknative.com/${VERSION}/ --content-type "text/javascript" --content-encoding "gzip" --cache-control "max-age=31536000" --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
+  deploy_prod:
+    docker:
+      - image: circleci/node:8.15-browsers
+    steps:
+      - checkout
+      - run: sudo apt update && sudo apt install awscli
+      - run: yarn
+      - run: yarn build
+      - run: sudo npm i -g add npm-cli-login
+      - run: NPM_USER=$NPM_USERNAME NPM_EMAIL=$NPM_EMAIL NPM_PASS=$NPM_PASSWORD npm-cli-login
+      - run: npm publish
+      - run: gzip -9 /home/circleci/project/dist/iife/onboard.js
+      - run: mv /home/circleci/project/dist/iife/onboard.js.gz /home/circleci/project/dist/iife/onboard.js
+      - run: ls -al
+      - run: echo export VERSION=`awk '/version/{gsub(/("|",)/,"",$2);print $2};' package.json | sed 's/\./-/g'` >> $BASH_ENV
+      - run: mkdir /home/circleci/project/deploy-temp
+      - run: mkdir /home/circleci/project/deploy-temp/${VERSION}
+      - run: mv /home/circleci/project/dist/iife/*.js /home/circleci/project/deploy-temp/${VERSION}/
+      - run: aws s3 sync /home/circleci/project/deploy-temp/${VERSION}/ s3://onboard.blocknative.com/${VERSION}/ --content-type "text/javascript" --content-encoding "gzip" --cache-control "max-age=31536000" --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
+workflows:
+  version: 2
+  test_build:
+    jobs:
+      - test
+      - deploy_stage:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - develop
+      - deploy_prod:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - master
