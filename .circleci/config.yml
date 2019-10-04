@@ -19,7 +19,7 @@ jobs:
   deploy_stage:
     docker:
       - image: circleci/node:8.15-browsers
-      - user: root
+        user: root
     steps:
       - checkout
       - run: sudo apt update && sudo apt install awscli
@@ -39,7 +39,7 @@ jobs:
   deploy_prod:
     docker:
       - image: circleci/node:8.15-browsers
-      - user: root
+        user: root
     steps:
       - checkout
       - run: sudo apt update && sudo apt install awscli
