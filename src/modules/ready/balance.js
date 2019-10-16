@@ -1,7 +1,7 @@
 function balance(minimum) {
   return ({ balance, BigNumber }) => {
-    // if balance is less than minimum (compare < 1)
-    if (BigNumber(balance).lte(BigNumber(minimum || 0))) {
+    // if balance is less than minimum
+    if (BigNumber(balance).lt(BigNumber(minimum || 0))) {
       return {
         heading: "Get Some ETH",
         description: `Your current account has less than the necessary minimum balance of ${BigNumber(
