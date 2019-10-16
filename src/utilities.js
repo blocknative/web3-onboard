@@ -48,7 +48,7 @@ export function createModernProviderInterface(provider) {
               id: 1
             },
             (e, res) => {
-              resolve(BigNumber(res.result).toString())
+              resolve(BigNumber(res.result).toString(10))
             }
           )
         })
@@ -85,7 +85,7 @@ export function createLegacyProviderInterface(provider) {
               params: [provider._address, "latest"]
             },
             (e, res) => {
-              resolve(BigNumber(res.result).toString())
+              resolve(BigNumber(res.result).toString(10))
             }
           )
         })

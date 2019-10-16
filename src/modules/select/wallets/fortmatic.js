@@ -48,7 +48,7 @@ function fortmatic(options) {
                 res[0]
                   ? BigNumber(res[0].crypto_amount)
                       .times(BigNumber("1000000000000000000"))
-                      .toString()
+                      .toString(10)
                   : null
               )
           }
