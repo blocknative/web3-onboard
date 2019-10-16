@@ -5,6 +5,8 @@ import coinbase from "./wallets/coinbase"
 import trust from "./wallets/trust"
 import portis from "./wallets/portis"
 import fortmatic from "./wallets/fortmatic"
+import authereum from "./wallets/authereum"
+
 import { networkName } from "../../utilities"
 
 function defaults({
@@ -38,6 +40,9 @@ function defaults({
     )
   }
 
+  desktopModules.push(authereum({ network }))
+  mobileModules.push(authereum({ network }))
+
   return {
     heading: heading || "Select a Wallet",
     description:
@@ -58,5 +63,6 @@ export default {
   coinbase,
   trust,
   portis,
-  fortmatic
+  fortmatic,
+  authereum
 }

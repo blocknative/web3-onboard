@@ -50,7 +50,8 @@ export default [
       "regenerator-runtime/runtime",
       "@portis/web3",
       "@walletconnect/web3-provider",
-      "fortmatic"
+      "fortmatic",
+      "authereum"
     ],
     plugins: [
       svelte(),
