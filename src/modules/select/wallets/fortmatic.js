@@ -1,6 +1,6 @@
 import Fortmatic from "fortmatic"
-import { networkToId } from "../../../utilities"
 import fortmaticIcon from "../wallet-icons/icon-fortmatic.svg"
+import { networkName } from "../../../utilities"
 
 function fortmatic(options) {
   if (!options || typeof options !== "object") {
@@ -9,7 +9,7 @@ function fortmatic(options) {
     )
   }
 
-  const { apiKey, network } = options
+  const { apiKey, networkId } = options
 
   if (!apiKey || typeof apiKey !== "string") {
     throw new Error(
@@ -17,9 +17,9 @@ function fortmatic(options) {
     )
   }
 
-  if (!network || typeof network !== "string") {
+  if (!networkId || typeof networkId !== "number") {
     throw new Error(
-      "A network of type string is required to initialize fortmatic module"
+      "A networkId of type number is required to initialize fortmatic module"
     )
   }
 
@@ -27,7 +27,10 @@ function fortmatic(options) {
     name: "Fortmatic",
     iconSrc: fortmaticIcon,
     wallet: ({ BigNumber }) => {
-      const fortmatic = new Fortmatic(apiKey, network)
+      const fortmatic = new Fortmatic(
+        apiKey,
+        networkId === 1 ? undefined : networkName(networkId)
+      )
       const provider = fortmatic.getProvider()
 
       return {
@@ -39,7 +42,7 @@ function fortmatic(options) {
             get: () => Promise.resolve(provider.account)
           },
           network: {
-            get: () => Promise.resolve(networkToId(network))
+            get: () => Promise.resolve(networkId)
           },
           balance: {
             get: () =>

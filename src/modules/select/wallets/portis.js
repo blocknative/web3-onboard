@@ -1,5 +1,6 @@
 import Portis from "@portis/web3"
 
+import { networkName } from "../../../utilities"
 import portisIcon from "../wallet-icons/icon-portis.svg"
 
 function portis(options) {
@@ -7,7 +8,7 @@ function portis(options) {
     throw new Error("An options object is required to initialize portis module")
   }
 
-  const { apiKey, network } = options
+  const { apiKey, networkId } = options
 
   if (!apiKey || typeof apiKey !== "string") {
     throw new Error(
@@ -15,9 +16,9 @@ function portis(options) {
     )
   }
 
-  if (!network || typeof network !== "string") {
+  if (!networkId || typeof networkId !== "number") {
     throw new Error(
-      "A network of type string is required to initialize portis module"
+      "A network of type number is required to initialize portis module"
     )
   }
 
@@ -25,7 +26,7 @@ function portis(options) {
     name: "Portis",
     iconSrc: portisIcon,
     wallet: ({ BigNumber }) => {
-      const portis = new Portis(apiKey, network)
+      const portis = new Portis(apiKey, networkName(networkId))
       const { provider } = portis
 
       return {
