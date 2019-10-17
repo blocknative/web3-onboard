@@ -32,31 +32,30 @@
   const { wallets, heading, description } = module;
   const deviceWallets = wallets[mobileDevice ? "mobile" : "desktop"];
 
-  $: if ($app.autoSelectWallet) {
-    const module = deviceWallets.find(m => m.name === $app.autoSelectWallet);
-    handleWalletSelect(module);
-  }
-
   let primaryWallets;
   let secondaryWallets;
 
-  if (deviceWallets.find(wallet => wallet.preferred)) {
-    // if preferred wallets, then split in to preferred and not preferred
-    primaryWallets = deviceWallets.filter(wallet => wallet.preferred);
-    secondaryWallets = deviceWallets.filter(wallet => !wallet.preferred);
+  $: if ($app.autoSelectWallet) {
+    const module = deviceWallets.find(m => m.name === $app.autoSelectWallet);
+    handleWalletSelect(module);
   } else {
-    // otherwise make the first 4 wallets preferred
-    primaryWallets = deviceWallets.slice(0, 4);
-    secondaryWallets = deviceWallets.length > 4 && deviceWallets.slice(4);
-  }
+    if (deviceWallets.find(wallet => wallet.preferred)) {
+      // if preferred wallets, then split in to preferred and not preferred
+      primaryWallets = deviceWallets.filter(wallet => wallet.preferred);
+      secondaryWallets = deviceWallets.filter(wallet => !wallet.preferred);
+    } else {
+      // otherwise make the first 4 wallets preferred
+      primaryWallets = deviceWallets.slice(0, 4);
+      secondaryWallets = deviceWallets.length > 4 && deviceWallets.slice(4);
+    }
 
-  // set the data to show in the modal if wallet hasn't been auto selected
-  modalData = !$app.autoSelectWallet && {
-    heading,
-    description,
-    primaryWallets,
-    secondaryWallets
-  };
+    modalData = {
+      heading,
+      description,
+      primaryWallets,
+      secondaryWallets
+    };
+  }
 
   function handleWalletSelect(module) {
     const { provider, interface: selectedWalletInterface } = module.wallet({

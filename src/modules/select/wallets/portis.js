@@ -61,7 +61,7 @@ function portis(options) {
                       id: 1
                     },
                     (e, res) => {
-                      resolve(BigNumber(res.result).toString())
+                      resolve(BigNumber(res.result).toString(10))
                     }
                   )
                 }, 1)
