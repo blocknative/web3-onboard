@@ -203,7 +203,7 @@ modules.select.defaults({
 ```javascript
 portis({
   apiKey: String, // your Portis api key
-  network: String //  the name of network you want to connect to
+  networkId: Number //  the networkId of network you want to connect to
 })
 ```
 
@@ -212,14 +212,14 @@ portis({
 ```javascript
 fortmatic({
   apiKey: String, // your Portis api key
-  network: String //  the name of the network you want to connect to
+  networkId: Number //  the networkId of the network you want to connect to
 })
 ```
 
 `walletConnect` Initialization:
 
 ```javascript
-fortmatic({
+walletConnect({
   infuraKey: String
 })
 ```
@@ -242,11 +242,11 @@ const onboard = Onboard.init({
         "Please select the wallet that you would like to use with this Dapp",
       wallets: {
         desktop: [
-          portis({ apiKey: 'sdda-w2-ds3', network: 'main' })
+          portis({ apiKey: 'sdda-w2-ds3', networkId: 1 })
           dapper(),
           metmask(),
         ],
-        mobile: [fortmatic({apiKey: 'sd-3d3-d', network: 'main'})]
+        mobile: [fortmatic({apiKey: 'sd-3d3-d', networkId: 1})]
       }
     }
     //....

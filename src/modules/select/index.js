@@ -7,8 +7,6 @@ import portis from "./wallets/portis"
 import fortmatic from "./wallets/fortmatic"
 import authereum from "./wallets/authereum"
 
-import { networkName } from "../../utilities"
-
 function defaults({
   heading,
   description,
@@ -19,16 +17,15 @@ function defaults({
 }) {
   const desktopModules = [metamask(), dapper()]
   const mobileModules = [coinbase(), trust()]
-  const network = networkName(networkId)
 
   if (portisInit) {
-    desktopModules.push(portis({ ...portisInit, network }))
-    mobileModules.push(portis({ ...portisInit, network }))
+    desktopModules.push(portis({ ...portisInit, networkId }))
+    mobileModules.push(portis({ ...portisInit, networkId }))
   }
 
   if (fortmaticInit) {
-    desktopModules.push(fortmatic({ ...fortmaticInit, network }))
-    mobileModules.push(fortmatic({ ...fortmaticInit, network }))
+    desktopModules.push(fortmatic({ ...fortmaticInit, networkId }))
+    mobileModules.push(fortmatic({ ...fortmaticInit, networkId }))
   }
 
   if (walletConnectInit) {
