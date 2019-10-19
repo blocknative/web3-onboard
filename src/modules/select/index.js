@@ -5,6 +5,7 @@ import coinbase from "./wallets/coinbase"
 import trust from "./wallets/trust"
 import portis from "./wallets/portis"
 import fortmatic from "./wallets/fortmatic"
+import squarelink from "./wallets/squarelink"
 import { networkName } from "../../utilities"
 
 function defaults({
@@ -13,11 +14,17 @@ function defaults({
   networkId,
   fortmaticInit,
   portisInit,
+  squarelinkInit,
   walletConnectInit
 }) {
   const desktopModules = [metamask(), dapper()]
   const mobileModules = [coinbase(), trust()]
   const network = networkName(networkId)
+
+  if (squarelinkInit) {
+    desktopModules.push(squarelink({ ...squarelinkInit, network }))
+    mobileModules.push(squarelink({ ...squarelinkInit, network }))
+  }
 
   if (portisInit) {
     desktopModules.push(portis({ ...portisInit, network }))
@@ -58,5 +65,6 @@ export default {
   coinbase,
   trust,
   portis,
-  fortmatic
+  fortmatic,
+  squarelink
 }

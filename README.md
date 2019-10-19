@@ -33,6 +33,7 @@ const onboard = Onboard.init({
       fortmaticInit: { apiKey: "Your fortmatic key here" },
       // if you want portis as a wallet option
       portisInit: { apiKey: "Your portis key here" },
+      squarelinkInit: { apiKey: "Your squarelink key here" },
       networkId: 4
     }),
     // default ready steps are: connect, network, balance
@@ -175,6 +176,7 @@ The wallet select modules are functions that return a wallet object. The followi
 - `metamask`
 - `dapper`
 - `walletConnect` (requires initialization)
+- `squarelink` (requires initialization)
 - `portis` (requires initialization)
 - `fortmatic` (requires initialization)
 
@@ -183,6 +185,7 @@ The wallet select modules are functions that return a wallet object. The followi
 - `trust`
 - `coinbase`
 - `walletConnect` (requires initialization)
+- `squarelink` (requires initialization)
 - `portis` (requires initialization)
 - `fortmatic` (requires initialization)
 
@@ -193,8 +196,18 @@ modules.select.defaults({
   heading: String, // Override the default heading [optional]
   description: String, // Override the default description [optional]
   networkId: Number, // Required if you want the Portis or Fortmatic modules to be included
+  squarelinkInit: Object, // initialization object for Squarelink module (see below)
   portisInit: Object, // initialization object for Portis module (see below)
   fortmaticInit: Object // initialization object for Fortmatic module (see below)
+})
+```
+
+`squarelink` Initialization:
+
+```javascript
+squarelink({
+  apiKey: String, // your Squarelink api key
+  network: String //  the name of network you want to connect to
 })
 ```
 
@@ -219,7 +232,7 @@ fortmatic({
 `walletConnect` Initialization:
 
 ```javascript
-fortmatic({
+walletConnect({
   infuraKey: String
 })
 ```
@@ -231,7 +244,7 @@ import Onboard from "bnc-onboard"
 
 // PICK AND CHOOSE MODULES
 
-const { portis, dapper, metamask, fortmatic } = Onboard.modules.select
+const { squarelink, portis, dapper, metamask, fortmatic } = Onboard.modules.select
 
 const onboard = Onboard.init({
   // ...
@@ -242,11 +255,12 @@ const onboard = Onboard.init({
         "Please select the wallet that you would like to use with this Dapp",
       wallets: {
         desktop: [
+          squarelink({ apiKey: 'd12345', network: 'main' }),
           portis({ apiKey: 'sdda-w2-ds3', network: 'main' })
           dapper(),
           metmask(),
         ],
-        mobile: [fortmatic({apiKey: 'sd-3d3-d', network: 'main'})]
+        mobile: [fortmatic({ apiKey: 'sd-3d3-d', network: 'main' })]
       }
     }
     //....

@@ -17,6 +17,7 @@ interface selectDefaultsOptions {
   networkId: number
   fortmaticInit?: any
   portisInit?: any
+  squarelinkInit?: any
   walletConnectInit?: any
 }
 
@@ -28,6 +29,7 @@ interface select {
   coinbase: () => any
   trust: () => any
   portis: (options: { apiKey: string; network: string }) => any
+  squarelink: (options: { apiKey: string; network: string }) => any
   fortmatic: (options: { apiKey: string; network: string }) => any
 }
 
