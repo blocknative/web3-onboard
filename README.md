@@ -29,6 +29,8 @@ const onboard = Onboard.init({
   modules: {
     // default wallets that are included: MetaMask, Dapper, Coinbase, Trust, WalletConnect
     walletSelect: Onboard.modules.select.defaults({
+      // if you want squarelink as a wallet option
+      squarelinkInit: { apiKey: "Your squarelink key here" },
       // if you want fortmatic as a wallet option
       fortmaticInit: { apiKey: "Your fortmatic key here" },
       // if you want portis as a wallet option
@@ -176,6 +178,7 @@ The wallet select modules are functions that return a wallet object. The followi
 - `dapper`
 - `walletConnect` (requires initialization)
 - `portis` (requires initialization)
+- `squarelink` (requires initialization)
 - `fortmatic` (requires initialization)
 
 #### Mobile Wallets
@@ -184,6 +187,7 @@ The wallet select modules are functions that return a wallet object. The followi
 - `coinbase`
 - `walletConnect` (requires initialization)
 - `portis` (requires initialization)
+- `squarelink` (requires initialization)
 - `fortmatic` (requires initialization)
 
 `defaults` Initialization:
@@ -192,7 +196,8 @@ The wallet select modules are functions that return a wallet object. The followi
 modules.select.defaults({
   heading: String, // Override the default heading [optional]
   description: String, // Override the default description [optional]
-  networkId: Number, // Required if you want the Portis or Fortmatic modules to be included
+  networkId: Number, // Required if you want the Portis, Squarelink, or Fortmatic modules to be included
+  squarelinkInit: Object, // initialization object for Squarelink module (see below)
   portisInit: Object, // initialization object for Portis module (see below)
   fortmaticInit: Object // initialization object for Fortmatic module (see below)
 })
@@ -207,11 +212,20 @@ portis({
 })
 ```
 
+`squarelink` Initialization:
+
+```javascript
+squarelink({
+  apiKey: String, // your Squarelink api key
+  networkId: Number //  the networkId of the network you want to connect to
+})
+```
+
 `fortmatic` Initialization:
 
 ```javascript
 fortmatic({
-  apiKey: String, // your Portis api key
+  apiKey: String, // your Fortmatic api key
   networkId: Number //  the networkId of the network you want to connect to
 })
 ```
@@ -231,7 +245,7 @@ import Onboard from "bnc-onboard"
 
 // PICK AND CHOOSE MODULES
 
-const { portis, dapper, metamask, fortmatic } = Onboard.modules.select
+const { portis, squarelink, dapper, metamask, fortmatic } = Onboard.modules.select
 
 const onboard = Onboard.init({
   // ...
