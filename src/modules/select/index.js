@@ -37,8 +37,8 @@ function defaults({
     )
   }
 
-  desktopModules.push(authereum({ network }))
-  mobileModules.push(authereum({ network }))
+  desktopModules.push(authereum({ networkId }))
+  mobileModules.push(authereum({ networkId }))
 
   return {
     heading: heading || "Select a Wallet",
