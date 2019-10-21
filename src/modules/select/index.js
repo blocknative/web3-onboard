@@ -19,11 +19,6 @@ function defaults({
   const desktopModules = [metamask(), dapper()]
   const mobileModules = [coinbase(), trust()]
 
-  if (squarelinkInit) {
-    desktopModules.push(squarelink({ ...squarelinkInit, networkId }))
-    mobileModules.push(squarelink({ ...squarelinkInit, networkId }))
-  }
-
   if (portisInit) {
     desktopModules.push(portis({ ...portisInit, networkId }))
     mobileModules.push(portis({ ...portisInit, networkId }))
@@ -41,6 +36,11 @@ function defaults({
     mobileModules.push(
       walletConnect({ infuraKey: walletConnectInit.infuraKey })
     )
+  }
+
+  if (squarelinkInit) {
+    desktopModules.push(squarelink({ ...squarelinkInit, networkId }))
+    mobileModules.push(squarelink({ ...squarelinkInit, networkId }))
   }
 
   return {
