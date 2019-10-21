@@ -1,7 +1,7 @@
 import Authereum from "authereum"
 import authereumIcon from "../wallet-icons/authereum.png"
 
-import { networkToId } from "../../../utilities"
+import { networkName } from "../../../utilities"
 
 function authereum(options) {
   if (!options || typeof options !== "object") {
@@ -10,11 +10,11 @@ function authereum(options) {
     )
   }
 
-  const { network } = options
+  const { networkId } = options
 
-  if (!network || typeof network !== "string") {
+  if (!networkId || typeof networkId !== "number") {
     throw new Error(
-      "A network of type string is required to initialize fortmatic module"
+      "A networkId of type number is required to initialize fortmatic module"
     )
   }
 
@@ -22,7 +22,11 @@ function authereum(options) {
     name: "Authereum",
     iconSrc: authereumIcon,
     wallet: () => {
-      const authereum = new Authereum(network)
+      const authereum = new Authereum({
+        networkName: networkName(networkId),
+        disableNotifications: true
+      })
+
       const provider = authereum.getProvider()
 
       return {
@@ -30,6 +34,7 @@ function authereum(options) {
         interface: {
           name: "Authereum",
           connect: () => provider.enable(),
+          disconnect: () => authereum.logout(),
           loading: () =>
             new Promise(resolve => {
               authereum.on("openPopup", resolve)
@@ -38,7 +43,7 @@ function authereum(options) {
             get: () => authereum.getAccountAddress()
           },
           network: {
-            get: () => Promise.resolve(networkToId(network))
+            get: () => Promise.resolve(networkId)
           },
           balance: {
             get: async () => {
