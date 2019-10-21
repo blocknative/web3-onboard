@@ -256,7 +256,8 @@ const onboard = Onboard.init({
         "Please select the wallet that you would like to use with this Dapp",
       wallets: {
         desktop: [
-          portis({ apiKey: 'sdda-w2-ds3', networkId: 1 })
+          portis({ apiKey: 'sdda-w2-ds3', networkId: 1 }),
+          squarelink({ apiKey: 'sdda-w2-ds3', networkId: 1 }),
           dapper(),
           metmask(),
         ],
