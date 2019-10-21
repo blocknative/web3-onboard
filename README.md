@@ -90,7 +90,7 @@ const options = {
     address: Function, // Called with the current account address of the user [String]
     network: Function, // Called with the current network id the users' wallet is connected to [Number]
     balance: Function, // Called with the current balance in `wei` of the users' current account address [String]
-    wallet: Function // Called with the users' current selected wallet [Object]: {provider: Object, name: String}
+    wallet: Function // Called with the users' current selected wallet [Object]: {provider: Object, name: String, instance: Object (if a sdk wallet)}
   },
   modules: {
     walletSelect: {
@@ -245,7 +245,13 @@ import Onboard from "bnc-onboard"
 
 // PICK AND CHOOSE MODULES
 
-const { portis, squarelink, dapper, metamask, fortmatic } = Onboard.modules.select
+const {
+  portis,
+  squarelink,
+  dapper,
+  metamask,
+  fortmatic
+} = Onboard.modules.select
 
 const onboard = Onboard.init({
   // ...
@@ -256,12 +262,12 @@ const onboard = Onboard.init({
         "Please select the wallet that you would like to use with this Dapp",
       wallets: {
         desktop: [
-          portis({ apiKey: 'sdda-w2-ds3', networkId: 1 }),
-          squarelink({ apiKey: 'sdda-w2-ds3', networkId: 1 }),
+          portis({ apiKey: "sdda-w2-ds3", networkId: 1 }),
+          squarelink({ apiKey: "sdda-w2-ds3", networkId: 1 }),
           dapper(),
-          metmask(),
+          metmask()
         ],
-        mobile: [fortmatic({apiKey: 'sd-3d3-d', networkId: 1})]
+        mobile: [fortmatic({ apiKey: "sd-3d3-d", networkId: 1 })]
       }
     }
     //....
@@ -278,7 +284,7 @@ const onboard = Onboard.init({
     walletSelect: Onboard.modules.select.defaults({
       portisInit: { apiKey: "Your portis key here" },
       networkId: 4
-    }),
+    })
     // ...
   }
 })
