@@ -1,6 +1,5 @@
 import { writable, derived } from "svelte/store"
 import Cancelable from "promise-cancelable"
-import { validateWalletInterface } from "./validation"
 import { getBlocknative } from "./services"
 import { wait, makeQuerablePromise } from "./utilities"
 
@@ -75,7 +74,7 @@ function createWalletInterfaceStore(initialState) {
     subscribe,
     update,
     set: walletInterface => {
-      validateWalletInterface(walletInterface)
+      // validateWalletInterface(walletInterface)
       set(walletInterface)
     }
   }

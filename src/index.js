@@ -15,14 +15,13 @@ import {
   walletInterface
 } from "./stores"
 
-import { validateInit, validateConfig } from "./validation"
 import { isMobileDevice } from "./utilities"
 import { initializeBlocknative } from "./services"
 
 import { version } from "../package.json"
 
 function init(initialization) {
-  validateInit(initialization)
+  // validateInit(initialization)
 
   const { subscriptions, dappId, networkId, modules } = initialization
 
@@ -107,7 +106,7 @@ function init(initialization) {
   }
 
   function config(options) {
-    validateConfig(options)
+    // validateConfig(options)
     app.update(store => ({ ...store, ...options }))
   }
 
