@@ -15,17 +15,18 @@ function fortmatic(options) {
     name: "Fortmatic",
     iconSrc: fortmaticIcon,
     wallet: ({ BigNumber }) => {
-      const fortmatic = new Fortmatic(
+      const instance = new Fortmatic(
         apiKey,
         networkId === 1 ? undefined : networkName(networkId)
       )
-      const provider = fortmatic.getProvider()
+      const provider = instance.getProvider()
 
       return {
         provider,
+        instance,
         interface: {
           name: "Fortmatic",
-          connect: fortmatic.user.login,
+          connect: instance.user.login,
           address: {
             get: () => Promise.resolve(provider.account)
           },
@@ -35,7 +36,7 @@ function fortmatic(options) {
           balance: {
             get: () =>
               provider.account &&
-              fortmatic.user.getBalances().then(res =>
+              instance.user.getBalances().then(res =>
                 res[0]
                   ? BigNumber(res[0].crypto_amount)
                       .times(BigNumber("1000000000000000000"))

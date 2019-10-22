@@ -16,24 +16,25 @@ function portis(options) {
     name: "Portis",
     iconSrc: portisIcon,
     wallet: ({ BigNumber }) => {
-      const portis = new Portis(apiKey, networkName(networkId))
-      const { provider } = portis
+      const instance = new Portis(apiKey, networkName(networkId))
+      const { provider } = instance
 
       return {
         provider,
+        instance,
         interface: {
           name: "Portis",
           connect: provider.enable,
           address: {
             onChange: func => {
-              portis.onLogin(address => {
+              instance.onLogin(address => {
                 func(address)
                 provider.address = address
               })
             }
           },
           network: {
-            get: () => Promise.resolve(portis.config.network.chainId)
+            get: () => Promise.resolve(instance.config.network.chainId)
           },
           balance: {
             get: () =>
