@@ -121,8 +121,8 @@ function createBalanceStore() {
     if (stateSyncer) {
       if ($address) {
         syncState(stateSyncer.get, set)
-
-        emitter = getBlocknative().account($address).emitter
+        const blocknative = getBlocknative()
+        emitter = blocknative.account(blocknative.clientIndex, $address).emitter
         emitter.on("txConfirmed", () => {
           syncState(stateSyncer.get, set)
           return false
