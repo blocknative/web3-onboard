@@ -28,7 +28,7 @@
   "dependencies": {
     "@portis/web3": "^2.0.0-beta.42",
     "@walletconnect/web3-provider": "^1.0.0-beta.36",
-    "authereum": "^0.0.4-beta.14",
+    "authereum": "^0.0.4-beta.24",
     "bignumber.js": "^9.0.0",
     "bnc-sdk": "0.1.1",
     "bowser": "^2.5.2",
