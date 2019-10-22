@@ -2,6 +2,7 @@ import { writable, derived } from "svelte/store"
 import Cancelable from "promise-cancelable"
 import { getBlocknative } from "./services"
 import { wait, makeQuerablePromise } from "./utilities"
+import { validateWalletInterface, validateType } from "./validation"
 
 export const app = writable({
   dappId: null,
@@ -74,7 +75,7 @@ function createWalletInterfaceStore(initialState) {
     subscribe,
     update,
     set: walletInterface => {
-      // validateWalletInterface(walletInterface)
+      validateWalletInterface(walletInterface)
       set(walletInterface)
     }
   }
@@ -87,9 +88,7 @@ function createUserStateStore(parameter) {
     subscribe,
     reset: () => set(null),
     setStateSyncer: stateSyncer => {
-      if (!stateSyncer || typeof stateSyncer !== "object") {
-        throw new Error("setStateSyncer must be called with a valid interface")
-      }
+      validateType({ name: "stateSyncer", value: stateSyncer, type: "object" })
 
       if (stateSyncer.onChange) {
         stateSyncer.onChange(set)
@@ -139,9 +138,7 @@ function createBalanceStore() {
   return {
     subscribe,
     setStateSyncer: syncer => {
-      if (!syncer || typeof syncer !== "object") {
-        throw new Error("setStateSyncer must be called with a valid interface")
-      }
+      validateType({ name: "syncer", value: syncer, type: "object" })
 
       stateSyncer = syncer
     }

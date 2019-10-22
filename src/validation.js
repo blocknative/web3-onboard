@@ -1,56 +1,60 @@
-export function validateInit(init) {
-  if (!init || typeof init !== "object") {
+export function validateType({ name, value, type, optional }) {
+  if (!optional && typeof value === "undefined") {
+    throw new Error(`"${name}" is required`)
+  }
+
+  if (
+    typeof value !== "undefined" &&
+    (type === "array" ? Array.isArray(type) : typeof value !== type)
+  ) {
     throw new Error(
-      `"onboard" must be called with an initialization object, received: ${init}`
+      `"${name}" must be of type: ${type}, received type: ${typeof value} from value: ${value}`
     )
   }
+}
+
+const validSubscriptionKeys = ["address", "network", "balance", "wallet"]
+
+export function validateInit(init) {
+  validateType({ name: "init", value: init, type: "object" })
 
   const { networkId, dappId, subscriptions, modules } = init
 
-  if (!dappId || typeof dappId !== "string") {
-    throw new Error(`"dappId" must be of type string, received: ${dappId}`)
-  }
-
-  if (!networkId || typeof networkId !== "number") {
-    throw new Error(
-      `"networkId" must be of type number, received: ${networkId}`
-    )
-  }
+  validateType({ name: "networkId", value: networkId, type: "number" })
+  validateType({ name: "dappId", value: dappId, type: "string" })
 
   validateSubscriptions(subscriptions)
   validateModules(modules)
 }
 
 function validateSubscriptions(subscriptions) {
+  validateType({
+    name: "subscriptions",
+    value: subscriptions,
+    type: "object",
+    optional: true
+  })
+
   if (subscriptions) {
-    if (typeof subscriptions !== "object") {
-      throw new Error(
-        `"subscriptions" must be of type object, received: ${subscriptions}`
-      )
-    }
-
     Object.keys(subscriptions).forEach(key => {
-      if (!validSubscriptionKey(subscriptions[key])) {
+      if (!validSubscriptionKey(key)) {
         throw new Error(
-          `${key} is not a valid subscription listener, received: ${key}`
+          `${key} is not a valid subscription parameter, must be one of the following keys: ${validSubscriptionKeys}`
         )
       }
 
-      if (subscriptions[key] !== "function") {
-        throw new Error(
-          `subscription listener must be a function, received: ${subscriptions[key]}`
-        )
-      }
+      validateType({
+        name: "subscription parameter",
+        value: subscriptions[key],
+        type: "function",
+        optional: true
+      })
     })
   }
 }
 
 function validateModules(modules) {
-  if (!modules || typeof modules !== "object") {
-    throw new Error(
-      `"onboard" must be called with a modules object, received: ${modules}`
-    )
-  }
+  validateType({ name: "modules", value: modules, type: "object" })
 
   const { walletSelect, walletReady } = modules
 
@@ -59,53 +63,33 @@ function validateModules(modules) {
 }
 
 function validateWalletSelect(walletSelect) {
-  if (!walletSelect || typeof walletSelect !== "object") {
-    throw new Error(
-      `"modules" must have a "walletSelect" object, received: ${walletSelect}`
-    )
-  }
+  validateType({ name: "walletSelect", value: walletSelect, type: "object" })
 
   const { heading, description, wallets } = walletSelect
 
-  if (!heading || typeof heading !== "string") {
-    throw new Error(
-      `"walletSelect" requires a "heading" parameter of type string, received: ${heading}`
-    )
-  }
+  validateType({ name: "heading", value: heading, type: "string" })
+  validateType({ name: "description", value: description, type: "string" })
 
-  if (!description || typeof description !== "string") {
-    throw new Error(
-      `"walletSelect" requires a "description" parameter of type string, received: ${description}`
-    )
-  }
-
-  if (!wallets || typeof wallets !== "object") {
-    throw new Error(
-      `"walletSelect" must have a "wallets" object, received: ${wallets}`
-    )
-  }
+  validateType({ name: "wallets", value: wallets, type: "object" })
 
   const { mobile, desktop } = wallets
 
-  if (mobile) {
-    if (!Array.isArray(mobile) || mobile.length < 1) {
-      throw new Error(
-        `"mobile" must be an array of at least one wallet object, received: ${mobile}`
-      )
-    }
+  validateType({ name: "mobile", value: mobile, type: "array", optional: true })
 
+  if (mobile) {
     mobile.forEach(module => {
       validateWalletModule(module)
     })
   }
 
-  if (desktop) {
-    if (!Array.isArray(desktop) || desktop.length < 1) {
-      throw new Error(
-        `"desktop" must be an array of at least one wallet object, received: ${desktop}`
-      )
-    }
+  validateType({
+    name: "desktop",
+    value: desktop,
+    type: "array",
+    optional: true
+  })
 
+  if (desktop) {
     desktop.forEach(module => {
       validateWalletModule(module)
     })
@@ -124,129 +108,195 @@ function validateWalletModule(module) {
     preferred
   } = module
 
-  if (!name || typeof name !== "string") {
-    throw new Error(
-      `wallet module must have a name property of type string, received: ${name}`
-    )
-  }
-
-  if (!wallet || typeof wallet !== "string") {
-    throw new Error(
-      `wallet module must have a "wallet" property of type string, received: ${wallet}`
-    )
-  }
-
-  if (iconSrc && typeof iconSrc !== "string") {
-    throw new Error(`"iconSrc" must be of type string, received: ${iconSrc}`)
-  }
-
-  if (iconSrcSet && typeof iconSrcSet !== "string") {
-    throw new Error(
-      `"iconSrcSet" must be of type string, received: ${iconSrcSet}`
-    )
-  }
-
-  if (svg && typeof svg !== "string") {
-    throw new Error(`"svg" must be of type string, received: ${svg}`)
-  }
-
-  if (link && typeof link !== "string") {
-    throw new Error(`"link" must be of type string, received: ${link}`)
-  }
-
-  if (installMessage && typeof installMessage !== "function") {
-    throw new Error(
-      `"installMessage" must be of type function, received: ${installMessage}`
-    )
-  }
-
-  if (preferred && typeof preferred !== "boolean") {
-    throw new Error(
-      `"preferred" must be of type boolean, received: ${preferred}`
-    )
-  }
+  validateType({ name: "name", value: name, type: "string" })
+  validateType({ name: "wallet", value: wallet, type: "function" })
+  validateType({
+    name: "iconSrc",
+    value: iconSrc,
+    type: "string",
+    optional: true
+  })
+  validateType({
+    name: "iconSrcSet",
+    value: iconSrcSet,
+    type: "string",
+    optional: true
+  })
+  validateType({ name: "svg", value: svg, type: "string", optional: true })
+  validateType({ name: "link", value: link, type: "string", optional: true })
+  validateType({
+    name: "installMessage",
+    value: installMessage,
+    type: "function",
+    optional: true
+  })
+  validateType({
+    name: "preferred",
+    value: preferred,
+    type: "string",
+    optional: true
+  })
 }
 
 function validateWalletReady(walletReady) {
-  if (!walletReady || typeof walletReady !== "object") {
-    throw new Error(
-      `"modules" must have a "walletReady" object, received: ${walletReady}`
-    )
-  }
-
-  if (!Array.isArray(walletReady) || walletReady.length < 1) {
-    throw new Error(
-      `"walletReady" must be an array of at least one readiness object, received: ${walletReady}`
-    )
-  }
+  validateType({ name: "walletReady", value: walletReady, type: "array" })
 
   walletReady.forEach(module => {
-    if (typeof module !== "function") {
-      throw new Error(
-        `"walletReady" module must be of type function, received: ${module}`
-      )
-    }
+    validateType({
+      name: "walletReady module",
+      value: module,
+      type: "function"
+    })
   })
 }
 
 function validSubscriptionKey(key) {
-  switch (key) {
-    case "address":
-    case "network":
-    case "balance":
-    case "wallet":
-      return true
-    default:
-      return false
-  }
+  return !!validSubscriptionKeys.find(validKey => validKey === key)
 }
 
 export function validateConfig(configuration) {
-  ow(
-    configuration,
-    "config",
-    ow.object.exactShape({
-      darkMode: ow.boolean
-    })
-  )
+  validateType({ name: "configuration", value: configuration, type: "object" })
+
+  const { darkMode } = configuration
+
+  validateType({
+    name: "darkMode",
+    value: darkMode,
+    type: "boolean",
+    optional: true
+  })
 }
 
 export function validateModal(modal) {
-  ow(
-    modal,
-    "modal",
-    ow.object.exactShape({
-      img: ow.optional.string,
-      heading: ow.string,
-      description: ow.string,
-      button: ow.optional.string,
-      invalidMsg: ow.optional.string,
-      eventCode: ow.string,
-      action: ow.optional.function,
-      button: ow.optional.object.exactShape({
-        onclick: ow.function,
-        text: ow.string
-      }),
-      icon: ow.optional.string
-    })
-  )
+  validateType({ name: "modal", value: modal, type: "object" })
+
+  const {
+    img,
+    heading,
+    description,
+    button,
+    invalidMsg,
+    eventCode,
+    action,
+    icon
+  } = modal
+
+  validateType({ name: "img", value: img, type: "string", optional: true })
+  validateType({ name: "heading", value: heading, type: "string" })
+  validateType({ name: "description", value: description, type: "string" })
+  validateType({
+    name: "invalidMsg",
+    value: invalidMsg,
+    type: "string",
+    optional: true
+  })
+  validateType({ name: "eventCode", value: eventCode, type: "string" })
+  validateType({
+    name: "action",
+    value: action,
+    type: "function",
+    optional: true
+  })
+
+  validateType({
+    name: "button",
+    value: button,
+    type: "object",
+    optional: true
+  })
+
+  if (button) {
+    const { onclick, text } = button
+    validateType({ name: "onclick", value: onclick, type: "function" })
+    validateType({ name: "text", value: text, type: "string" })
+  }
+
+  validateType({ name: "icon", value: icon, type: "string", optional: true })
 }
 
 export function validateWalletInterface(walletInterface) {
-  ow(
-    walletInterface,
-    "wallet interface",
-    ow.object.exactShape({
-      name: ow.string,
-      connect: ow.optional.function,
-      disconnect: ow.optional.function,
-      address: ow.object
-        .hasAnyKeys("get", "onChange")
-        .valuesOfType(ow.function),
-      network: ow.object
-        .hasAnyKeys("get", "onChange")
-        .valuesOfType(ow.function),
-      balance: ow.object.hasAnyKeys("get", "onChange").valuesOfType(ow.function)
-    })
-  )
+  validateType({
+    name: "walletInterface",
+    value: walletInterface,
+    type: "object"
+  })
+
+  const {
+    name,
+    connect,
+    disconnect,
+    address,
+    network,
+    balance
+  } = walletInterface
+
+  validateType({ name: "name", value: name, type: "string" })
+  validateType({
+    name: "connect",
+    value: connect,
+    type: "function",
+    optional: true
+  })
+  validateType({
+    name: "disconnect",
+    value: disconnect,
+    type: "function",
+    optional: true
+  })
+
+  validateType({ name: "address", value: address, type: "object" })
+  validateType({
+    name: "address.get",
+    value: address.get,
+    type: "function",
+    optional: true
+  })
+  validateType({
+    name: "address.onChange",
+    value: address.onChange,
+    type: "function",
+    optional: true
+  })
+
+  validateType({ name: "network", value: network, type: "object" })
+  validateType({
+    name: "network.get",
+    value: network.get,
+    type: "function",
+    optional: true
+  })
+  validateType({
+    name: "network.onChange",
+    value: network.onChange,
+    type: "function",
+    optional: true
+  })
+
+  validateType({ name: "balance", value: balance, type: "object" })
+  validateType({
+    name: "balance.get",
+    value: balance.get,
+    type: "function",
+    optional: true
+  })
+  validateType({
+    name: "balance.onChange",
+    value: balance.onChange,
+    type: "function",
+    optional: true
+  })
+}
+
+export function validateDefaultsOptions(options) {
+  validateType({ name: "defaults options", value: options, type: "object" })
+
+  const { networkId, minimumBalance } = options
+
+  validateType({ name: "networkId", value: networkId, type: "number" })
+  validateType({
+    name: "minimumBalance",
+    value: minimumBalance,
+    type: "string",
+    optional: true
+  })
 }
