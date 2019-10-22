@@ -1,26 +1,16 @@
 import Portis from "@portis/web3"
 
 import { networkName } from "../../../utilities"
+import { validateType } from "../../../validation"
 import portisIcon from "../wallet-icons/icon-portis.svg"
 
 function portis(options) {
-  if (!options || typeof options !== "object") {
-    throw new Error("An options object is required to initialize portis module")
-  }
+  validateType({ name: "Portis options", value: options, type: "object" })
 
   const { apiKey, networkId } = options
 
-  if (!apiKey || typeof apiKey !== "string") {
-    throw new Error(
-      "A apiKey of type string is required to initialize portis module"
-    )
-  }
-
-  if (!networkId || typeof networkId !== "number") {
-    throw new Error(
-      "A network of type number is required to initialize portis module"
-    )
-  }
+  validateType({ name: "apiKey", value: apiKey, type: "string" })
+  validateType({ name: "networkId", value: networkId, type: "number" })
 
   return {
     name: "Portis",

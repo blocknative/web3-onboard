@@ -1,27 +1,15 @@
 import Fortmatic from "fortmatic"
 import fortmaticIcon from "../wallet-icons/icon-fortmatic.svg"
 import { networkName } from "../../../utilities"
+import { validateType } from "../../../validation"
 
 function fortmatic(options) {
-  if (!options || typeof options !== "object") {
-    throw new Error(
-      "An options object is required to initialize fortmatic module"
-    )
-  }
+  validateType({ name: "Fortmatic options", value: options, type: "object" })
 
   const { apiKey, networkId } = options
 
-  if (!apiKey || typeof apiKey !== "string") {
-    throw new Error(
-      "A apiKey of type string is required to initialize fortmatic module"
-    )
-  }
-
-  if (!networkId || typeof networkId !== "number") {
-    throw new Error(
-      "A networkId of type number is required to initialize fortmatic module"
-    )
-  }
+  validateType({ name: "apiKey", value: apiKey, type: "string" })
+  validateType({ name: "networkId", value: networkId, type: "number" })
 
   return {
     name: "Fortmatic",
