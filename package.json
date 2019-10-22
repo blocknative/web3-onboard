@@ -32,7 +32,6 @@
     "bnc-sdk": "0.1.1",
     "bowser": "^2.5.2",
     "fortmatic": "^0.8.2",
-    "ow": "^0.13.2",
     "promise-cancelable": "^2.1.1",
     "regenerator-runtime": "^0.13.3",
     "squarelink": "^1.1.3",
