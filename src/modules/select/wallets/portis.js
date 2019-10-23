@@ -25,7 +25,6 @@ function portis(options) {
         interface: {
           name: "Portis",
           connect: provider.enable,
-          disconnect: () => portis.logout(),
           address: {
             onChange: func => {
               instance.onLogin(address => {
