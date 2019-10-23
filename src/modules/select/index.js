@@ -6,6 +6,7 @@ import trust from "./wallets/trust"
 import portis from "./wallets/portis"
 import fortmatic from "./wallets/fortmatic"
 import authereum from "./wallets/authereum"
+import squarelink from "./wallets/squarelink"
 
 function defaults({
   heading,
@@ -13,6 +14,7 @@ function defaults({
   networkId,
   fortmaticInit,
   portisInit,
+  squarelinkInit,
   walletConnectInit
 }) {
   const desktopModules = [metamask(), dapper()]
@@ -35,6 +37,11 @@ function defaults({
     mobileModules.push(
       walletConnect({ infuraKey: walletConnectInit.infuraKey })
     )
+  }
+
+  if (squarelinkInit) {
+    desktopModules.push(squarelink({ ...squarelinkInit, networkId }))
+    mobileModules.push(squarelink({ ...squarelinkInit, networkId }))
   }
 
   desktopModules.push(authereum({ networkId }))
@@ -61,5 +68,6 @@ export default {
   trust,
   portis,
   fortmatic,
-  authereum
+  authereum,
+  squarelink
 }

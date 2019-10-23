@@ -58,7 +58,11 @@
   }
 
   function handleWalletSelect(module) {
-    const { provider, interface: selectedWalletInterface } = module.wallet({
+    const {
+      provider,
+      interface: selectedWalletInterface,
+      instance
+    } = module.wallet({
       getProviderName,
       createLegacyProviderInterface,
       createModernProviderInterface,
@@ -89,6 +93,7 @@
 
     wallet.set({
       provider,
+      instance,
       name: module.name,
       connect: selectedWalletInterface.connect,
       loading: selectedWalletInterface.loading
