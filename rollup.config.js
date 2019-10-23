@@ -39,18 +39,18 @@ export default [
     external: [
       "bowser",
       "bnc-sdk",
-      "ow",
       "bignumber.js",
       "svelte-i18n",
       "svelte",
       "svelte/store",
       "svelte/internal",
       "svelte/transition",
+      "squarelink",
       "promise-cancelable",
       "regenerator-runtime/runtime",
       "@portis/web3",
       "@walletconnect/web3-provider",
-      "fortmatic"
+      "fortmatic",
     ],
     plugins: [
       svelte(),

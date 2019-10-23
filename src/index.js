@@ -15,9 +15,9 @@ import {
   walletInterface
 } from "./stores"
 
-import { validateInit, validateConfig } from "./validation"
 import { isMobileDevice } from "./utilities"
 import { initializeBlocknative } from "./services"
+import { validateInit, validateConfig } from "./validation"
 
 import { version } from "../package.json"
 

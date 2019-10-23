@@ -1,48 +1,40 @@
 import Portis from "@portis/web3"
 
+import { networkName } from "../../../utilities"
+import { validateType } from "../../../validation"
 import portisIcon from "../wallet-icons/icon-portis.svg"
 
 function portis(options) {
-  if (!options || typeof options !== "object") {
-    throw new Error("An options object is required to initialize portis module")
-  }
+  validateType({ name: "Portis options", value: options, type: "object" })
 
-  const { apiKey, network } = options
+  const { apiKey, networkId } = options
 
-  if (!apiKey || typeof apiKey !== "string") {
-    throw new Error(
-      "A apiKey of type string is required to initialize portis module"
-    )
-  }
-
-  if (!network || typeof network !== "string") {
-    throw new Error(
-      "A network of type string is required to initialize portis module"
-    )
-  }
+  validateType({ name: "apiKey", value: apiKey, type: "string" })
+  validateType({ name: "networkId", value: networkId, type: "number" })
 
   return {
     name: "Portis",
     iconSrc: portisIcon,
     wallet: ({ BigNumber }) => {
-      const portis = new Portis(apiKey, network)
-      const { provider } = portis
+      const instance = new Portis(apiKey, networkName(networkId))
+      const { provider } = instance
 
       return {
         provider,
+        instance,
         interface: {
           name: "Portis",
           connect: provider.enable,
           address: {
             onChange: func => {
-              portis.onLogin(address => {
+              instance.onLogin(address => {
                 func(address)
                 provider.address = address
               })
             }
           },
           network: {
-            get: () => Promise.resolve(portis.config.network.chainId)
+            get: () => Promise.resolve(instance.config.network.chainId)
           },
           balance: {
             get: () =>

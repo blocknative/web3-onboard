@@ -140,7 +140,7 @@ export function isMobileDevice() {
 export function networkName(id) {
   switch (id) {
     case 1:
-      return "main"
+      return "mainnet"
     case 3:
       return "ropsten"
     case 4:
@@ -158,7 +158,7 @@ export function networkName(id) {
 
 export function networkToId(network) {
   switch (network) {
-    case "main":
+    case "mainnet":
       return 1
     case "ropsten":
       return 3

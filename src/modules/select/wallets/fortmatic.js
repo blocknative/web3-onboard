@@ -1,50 +1,42 @@
 import Fortmatic from "fortmatic"
-import { networkToId } from "../../../utilities"
 import fortmaticIcon from "../wallet-icons/icon-fortmatic.svg"
+import { networkName } from "../../../utilities"
+import { validateType } from "../../../validation"
 
 function fortmatic(options) {
-  if (!options || typeof options !== "object") {
-    throw new Error(
-      "An options object is required to initialize fortmatic module"
-    )
-  }
+  validateType({ name: "Fortmatic options", value: options, type: "object" })
 
-  const { apiKey, network } = options
+  const { apiKey, networkId } = options
 
-  if (!apiKey || typeof apiKey !== "string") {
-    throw new Error(
-      "A apiKey of type string is required to initialize fortmatic module"
-    )
-  }
-
-  if (!network || typeof network !== "string") {
-    throw new Error(
-      "A network of type string is required to initialize fortmatic module"
-    )
-  }
+  validateType({ name: "apiKey", value: apiKey, type: "string" })
+  validateType({ name: "networkId", value: networkId, type: "number" })
 
   return {
     name: "Fortmatic",
     iconSrc: fortmaticIcon,
     wallet: ({ BigNumber }) => {
-      const fortmatic = new Fortmatic(apiKey, network)
-      const provider = fortmatic.getProvider()
+      const instance = new Fortmatic(
+        apiKey,
+        networkId === 1 ? undefined : networkName(networkId)
+      )
+      const provider = instance.getProvider()
 
       return {
         provider,
+        instance,
         interface: {
           name: "Fortmatic",
-          connect: fortmatic.user.login,
+          connect: instance.user.login,
           address: {
             get: () => Promise.resolve(provider.account)
           },
           network: {
-            get: () => Promise.resolve(networkToId(network))
+            get: () => Promise.resolve(networkId)
           },
           balance: {
             get: () =>
               provider.account &&
-              fortmatic.user.getBalances().then(res =>
+              instance.user.getBalances().then(res =>
                 res[0]
                   ? BigNumber(res[0].crypto_amount)
                       .times(BigNumber("1000000000000000000"))
