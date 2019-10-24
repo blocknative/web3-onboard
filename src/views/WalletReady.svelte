@@ -11,6 +11,7 @@
   import Modal from "../components/Modal.svelte";
   import ModalHeader from "../components/ModalHeader.svelte";
   import Button from "../elements/Button.svelte";
+  import Spinner from "../elements/Spinner.svelte";
 
   export let modules;
   export let walletSelect;
@@ -23,6 +24,7 @@
   let pollingInterval;
   let checkingModule;
   let actionResolved;
+  let loading;
 
   // recheck modules if below conditions
   $: if (!activeModal && !checkingModule) {
@@ -59,6 +61,11 @@
       // run any actions that module require as part of this step
       if (activeModal.action) {
         doAction();
+      }
+
+      if (activeModal.loading) {
+        loading = true;
+        activeModal.loading().then(() => (loading = false));
       }
 
       // poll to automatically to check if condition has been met
@@ -198,6 +205,9 @@
         <Button onclick={doAction}>Try Again</Button>
       {:else}
         <div />
+      {/if}
+      {#if loading}
+        <Spinner />
       {/if}
       <Button onclick={handleExit}>Dismiss</Button>
     </div>

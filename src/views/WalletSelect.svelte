@@ -95,7 +95,8 @@
       provider,
       instance,
       name: module.name,
-      connect: selectedWalletInterface.connect
+      connect: selectedWalletInterface.connect,
+      loading: selectedWalletInterface.loading
     });
 
     finish({ completed: true });

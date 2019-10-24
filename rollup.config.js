@@ -51,6 +51,7 @@ export default [
       "@portis/web3",
       "@walletconnect/web3-provider",
       "fortmatic",
+      "authereum"
     ],
     plugins: [
       svelte(),
