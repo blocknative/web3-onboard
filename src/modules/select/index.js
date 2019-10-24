@@ -5,6 +5,7 @@ import coinbase from "./wallets/coinbase"
 import trust from "./wallets/trust"
 import portis from "./wallets/portis"
 import fortmatic from "./wallets/fortmatic"
+import authereum from "./wallets/authereum"
 import squarelink from "./wallets/squarelink"
 
 function defaults({
@@ -43,6 +44,9 @@ function defaults({
     mobileModules.push(squarelink({ ...squarelinkInit, networkId }))
   }
 
+  desktopModules.push(authereum({ networkId }))
+  mobileModules.push(authereum({ networkId }))
+
   return {
     heading: heading || "Select a Wallet",
     description:
@@ -64,5 +68,6 @@ export default {
   trust,
   portis,
   fortmatic,
+  authereum,
   squarelink
 }
