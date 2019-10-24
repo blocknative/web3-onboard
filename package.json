@@ -40,8 +40,7 @@
     "svelte-i18n": "^1.1.2-beta"
   },
   "scripts": {
-    "prepare": "rollup -c",
-    "build": "npm run prepare",
+    "build": "rollup -c",
     "test": "echo \"TBD\" && exit 0"
   }
 }
