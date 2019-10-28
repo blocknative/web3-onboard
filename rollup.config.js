@@ -32,7 +32,17 @@ export default [
       babel({ exclude: "node_modules/**" }),
       builtins(),
       terser()
-    ]
+    ],
+    moduleContext: id => {
+      const thisAsWindowForModules = [
+        "node_modules/intl-messageformat/lib/core.js",
+        "node_modules/intl-messageformat/lib/compiler.js"
+      ]
+
+      if (thisAsWindowForModules.some(id_ => id.trimRight().endsWith(id_))) {
+        return "window"
+      }
+    }
   },
   {
     input: "src/index.js",
@@ -56,6 +66,16 @@ export default [
       commonjs(),
       babel({ exclude: "node_modules/**" })
     ],
+    moduleContext: id => {
+      const thisAsWindowForModules = [
+        "node_modules/intl-messageformat/lib/core.js",
+        "node_modules/intl-messageformat/lib/compiler.js"
+      ]
+
+      if (thisAsWindowForModules.some(id_ => id.trimRight().endsWith(id_))) {
+        return "window"
+      }
+    },
     output: [
       {
         dir: "dist/esm",
