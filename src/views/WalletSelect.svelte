@@ -37,8 +37,16 @@
 
   $: if ($app.autoSelectWallet) {
     const module = deviceWallets.find(m => m.name === $app.autoSelectWallet);
-    handleWalletSelect(module);
+    if (module) {
+      handleWalletSelect(module);
+    } else {
+      setModalData();
+    }
   } else {
+    setModalData();
+  }
+
+  function setModalData() {
     if (deviceWallets.find(wallet => wallet.preferred)) {
       // if preferred wallets, then split in to preferred and not preferred
       primaryWallets = deviceWallets.filter(wallet => wallet.preferred);
