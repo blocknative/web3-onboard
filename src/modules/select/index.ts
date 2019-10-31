@@ -8,15 +8,22 @@ import fortmatic from "./wallets/fortmatic"
 import authereum from "./wallets/authereum"
 import squarelink from "./wallets/squarelink"
 
-function defaults({
-  heading,
-  description,
-  networkId,
-  fortmaticInit,
-  portisInit,
-  squarelinkInit,
-  walletConnectInit
-}) {
+import { validateSelectDefaultsOptions } from "../../validation"
+import { SelectDefaultsOptions, WalletSelectModule } from "../../interfaces"
+
+function defaults(options: SelectDefaultsOptions): WalletSelectModule {
+  validateSelectDefaultsOptions(options)
+
+  const {
+    heading,
+    description,
+    networkId,
+    fortmaticInit,
+    portisInit,
+    squarelinkInit,
+    walletConnectInit
+  } = options
+
   const desktopModules = [metamask(), dapper()]
   const mobileModules = [coinbase(), trust()]
 

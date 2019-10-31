@@ -1,13 +1,16 @@
 import { networkName } from "../../utilities"
+import { WalletReadyModule, StateAndHelpers } from "../../interfaces"
 
-function network(correctNetwork) {
+function network(correctNetwork: number): WalletReadyModule {
   if (!correctNetwork || typeof correctNetwork !== "number") {
     throw new Error(
       "Network module must be called with a property of value that is of type Number"
     )
   }
 
-  return ({ network, walletSelect, exit }) => {
+  return (stateAndHelpers: StateAndHelpers) => {
+    const { network, walletSelect, exit } = stateAndHelpers
+
     if (network != (correctNetwork || "1")) {
       return {
         heading: "You Must Change Networks",

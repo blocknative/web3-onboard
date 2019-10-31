@@ -1,4 +1,9 @@
-export const extensionInstallMessage = ({ currentWallet, selectedWallet }) => {
+export const extensionInstallMessage = (helpers: {
+  currentWallet: string
+  selectedWallet: string
+}) => {
+  const { currentWallet, selectedWallet } = helpers
+
   if (currentWallet) {
     return `
     <p style="font-size: 0.889rem; font-family: Helvetica Neue; margin: 0.889rem 0;">
@@ -37,7 +42,11 @@ export const extensionInstallMessage = ({ currentWallet, selectedWallet }) => {
   }
 }
 
-export const mobileWalletInstallMessage = ({ selectedWallet }) => {
+export const mobileWalletInstallMessage = (helpers: {
+  selectedWallet: string
+}) => {
+  const { selectedWallet } = helpers
+
   return `
   <p style="font-size: 0.889rem;">
     You'll need to install <b>${selectedWallet}</b> to continue. Click below to install and then load this Dapp with <b>${selectedWallet}</b>.

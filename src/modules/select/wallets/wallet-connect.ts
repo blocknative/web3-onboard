@@ -1,21 +1,19 @@
 import WalletConnectProvider from "@walletconnect/web3-provider"
 
 import walletConnectIcon from "../wallet-icons/icon-walletconnect.svg"
+import { validateType } from "../../../validation"
+import { WalletConnectOptions, WalletModule } from "../../../interfaces"
 
-function walletConnect(options) {
-  if (!options || typeof options !== "object") {
-    throw new Error(
-      "A options object is required to initialize WalletConnect module"
-    )
-  }
+function walletConnect(options: WalletConnectOptions): WalletModule {
+  validateType({
+    name: "WalletConnect Options",
+    value: options,
+    type: "object"
+  })
 
   const { infuraKey } = options
 
-  if (!infuraKey || typeof infuraKey !== "string") {
-    throw new Error(
-      "A infuraKey of type string is required to intialize WalletConnect module"
-    )
-  }
+  validateType({ name: "infuraKey", value: infuraKey, type: "string" })
 
   return {
     name: "WalletConnect",
@@ -46,8 +44,12 @@ function walletConnect(options) {
           disconnect: () => provider.close(),
           address: {
             onChange: func => {
-              provider.send("eth_accounts").then(accounts => func(accounts[0]))
-              provider.on("accountsChanged", accounts => func(accounts[0]))
+              provider
+                .send("eth_accounts")
+                .then((accounts: string[]) => func(accounts[0]))
+              provider.on("accountsChanged", (accounts: string[]) =>
+                func(accounts[0])
+              )
             }
           },
           network: {

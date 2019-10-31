@@ -1,10 +1,11 @@
-<script>
+<script lang="ts">
   import Button from "../elements/Button.svelte";
   import IconDisplay from "../elements/IconDisplay.svelte";
   import { fade } from "svelte/transition";
-  export let selectedWalletModule;
-  export let onBack;
-  export let installMessage;
+  import { WalletModule } from "../interfaces";
+  export let selectedWalletModule: WalletModule;
+  export let onBack: () => void;
+  export let installMessage: string;
 </script>
 
 <style>

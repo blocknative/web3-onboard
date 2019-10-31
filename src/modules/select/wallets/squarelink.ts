@@ -1,33 +1,24 @@
 import Squarelink from "squarelink"
 
 import { networkName, networkToId } from "../../../utilities"
+import { validateType } from "../../../validation"
 import sqlkIcon from "../wallet-icons/icon-squarelink.svg"
+import { SdkWalletOptions, WalletModule, Helpers } from "../../../interfaces"
 
-function squarelink(options) {
-  if (!options || typeof options !== "object") {
-    throw new Error(
-      "An options object is required to initialize squarelink module"
-    )
-  }
+function squarelink(options: SdkWalletOptions): WalletModule {
+  validateType({ name: "Squarelink Options", value: options, type: "object" })
 
   const { apiKey, networkId } = options
 
-  if (!apiKey || typeof apiKey !== "string") {
-    throw new Error(
-      "A apiKey of type string is required to initialize squarelink module"
-    )
-  }
-
-  if (!networkId || typeof networkId !== "number") {
-    throw new Error(
-      "A network of type number is required to initialize squarelink module"
-    )
-  }
+  validateType({ name: "apiKey", value: apiKey, type: "string" })
+  validateType({ name: "networkId", value: networkId, type: "number" })
 
   return {
     name: "Squarelink",
     iconSrc: sqlkIcon,
-    wallet: ({ BigNumber }) => {
+    wallet: (helpers: Helpers) => {
+      const { BigNumber } = helpers
+
       const instance = new Squarelink(apiKey, networkName(networkId), {
         useSync: true
       })
@@ -60,7 +51,7 @@ function squarelink(options) {
                     params: [instance.accounts[0], "latest"],
                     id: 1
                   },
-                  (e, res) => {
+                  (e: any, res: any) => {
                     resolve(BigNumber(res.result).toString(10))
                   }
                 )

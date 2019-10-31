@@ -1,5 +1,6 @@
-<script>
+<script lang="ts">
   import BigNumber from "bignumber.js";
+  import { onDestroy } from "svelte";
   import { get } from "svelte/store";
   import { fade } from "svelte/transition";
 
@@ -19,34 +20,60 @@
     createModernProviderInterface
   } from "../utilities";
 
-  export let module;
+  import {
+    SelectModalData,
+    AppState,
+    WalletModule,
+    WalletSelectModule,
+    WalletInterface
+  } from "../interfaces";
 
-  let modalData;
-  let showWalletDefinition;
-  let walletAlreadyInstalled;
-  let installMessage;
+  export let module: WalletSelectModule = {
+    heading: "",
+    description: "",
+    wallets: {
+      mobile: [],
+      desktop: []
+    }
+  };
 
-  let selectedWalletModule;
+  let modalData: SelectModalData | null;
+  let showWalletDefinition: boolean;
+  let walletAlreadyInstalled: string | undefined;
+  let installMessage: string | undefined;
+
+  let selectedWalletModule: WalletModule;
 
   const { mobileDevice } = get(app);
-  const { wallets, heading, description } = module;
+  const { heading, description, wallets } = module;
   const deviceWallets = wallets[mobileDevice ? "mobile" : "desktop"];
 
-  let primaryWallets;
-  let secondaryWallets;
+  let primaryWallets: WalletModule[];
+  let secondaryWallets: WalletModule[] | undefined;
 
-  $: if ($app.autoSelectWallet) {
-    const module = deviceWallets.find(m => m.name === $app.autoSelectWallet);
-    if (module) {
-      handleWalletSelect(module);
-    } else {
-      setModalData();
-    }
+  let appState: AppState = {
+    dappId: "",
+    networkId: 1,
+    version: "",
+    mobileDevice: false,
+    darkMode: false,
+    autoSelectWallet: "",
+    walletSelectInProgress: true,
+    walletSelectCompleted: false,
+    walletReadyInProgress: false,
+    walletReadyCompleted: false
+  };
+
+  const unsubscribe = app.subscribe((store: AppState) => (appState = store));
+
+  onDestroy(unsubscribe);
+
+  $: if (appState.autoSelectWallet) {
+    const module = deviceWallets.find(
+      (m: WalletModule) => m.name === appState.autoSelectWallet
+    );
+    module && handleWalletSelect(module);
   } else {
-    setModalData();
-  }
-
-  function setModalData() {
     if (deviceWallets.find(wallet => wallet.preferred)) {
       // if preferred wallets, then split in to preferred and not preferred
       primaryWallets = deviceWallets.filter(wallet => wallet.preferred);
@@ -54,7 +81,8 @@
     } else {
       // otherwise make the first 4 wallets preferred
       primaryWallets = deviceWallets.slice(0, 4);
-      secondaryWallets = deviceWallets.length > 4 && deviceWallets.slice(4);
+      secondaryWallets =
+        deviceWallets.length > 4 ? deviceWallets.slice(4) : undefined;
     }
 
     modalData = {
@@ -65,7 +93,7 @@
     };
   }
 
-  function handleWalletSelect(module) {
+  function handleWalletSelect(module: WalletModule) {
     const {
       provider,
       interface: selectedWalletInterface,
@@ -83,15 +111,17 @@
 
       walletAlreadyInstalled = provider && getProviderName(provider);
 
-      installMessage = module.installMessage({
-        currentWallet: walletAlreadyInstalled,
-        selectedWallet: selectedWalletModule.name
-      });
+      installMessage =
+        module.installMessage &&
+        module.installMessage({
+          currentWallet: walletAlreadyInstalled || "unknown",
+          selectedWallet: selectedWalletModule.name
+        });
 
       return;
     }
 
-    walletInterface.update(currentInterface => {
+    walletInterface.update((currentInterface: WalletInterface | null) => {
       if (currentInterface && currentInterface.disconnect) {
         currentInterface.disconnect();
       }
@@ -110,13 +140,13 @@
     finish({ completed: true });
   }
 
-  function finish({ completed }) {
+  function finish(options: { completed: boolean }) {
     modalData = null;
 
     app.update(store => ({
       ...store,
       walletSelectInProgress: false,
-      walletSelectCompleted: completed,
+      walletSelectCompleted: options.completed,
       autoSelect: false
     }));
   }

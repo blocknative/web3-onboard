@@ -1,10 +1,10 @@
-<script>
+<script lang="ts">
   import { app } from "../stores";
-  export let iconSrc;
-  export let iconSrcSet = null;
-  export let svg;
-  export let onclick = null;
-  export let text;
+  export let iconSrc: string;
+  export let iconSrcSet: string;
+  export let svg: string;
+  export let onclick: () => void = () => {};
+  export let text: string;
 </script>
 
 <style>
