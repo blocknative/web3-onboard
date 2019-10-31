@@ -20,6 +20,7 @@
     padding: 0;
     font-family: "Helvetica Neue";
     line-height: 1.15;
+    box-sizing: border-box;
   }
 
   div {
