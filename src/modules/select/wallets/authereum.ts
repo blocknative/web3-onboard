@@ -2,21 +2,15 @@ import Authereum from "authereum"
 import authereumIcon from "../wallet-icons/authereum.png"
 
 import { networkName } from "../../../utilities"
+import { WalletModule } from "../../../interfaces"
+import { validateType } from "../../../validation"
 
-function authereum(options) {
-  if (!options || typeof options !== "object") {
-    throw new Error(
-      "An options object is required to initialize fortmatic module"
-    )
-  }
+function authereum(options: { networkId: number }): WalletModule {
+  validateType({ name: "Authereum Options", value: options, type: "object" })
 
   const { networkId } = options
 
-  if (!networkId || typeof networkId !== "number") {
-    throw new Error(
-      "A networkId of type number is required to initialize fortmatic module"
-    )
-  }
+  validateType({ name: "networkId", value: networkId, type: "number" })
 
   return {
     name: "Authereum",
@@ -36,7 +30,7 @@ function authereum(options) {
           connect: () => provider.enable(),
           disconnect: () => authereum.logout(),
           loading: () =>
-            new Promise(resolve => {
+            new Promise((resolve: () => void) => {
               authereum.on("openPopup", resolve)
             }),
           address: {

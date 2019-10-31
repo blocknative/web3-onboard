@@ -1,7 +1,7 @@
-<script>
-  export let iconSrc;
-  export let iconSrcSet = null;
-  export let text;
+<script lang="ts">
+  export let iconSrc: string;
+  export let iconSrcSet: string;
+  export let text: string;
 </script>
 
 <style>

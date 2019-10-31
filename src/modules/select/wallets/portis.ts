@@ -3,8 +3,9 @@ import Portis from "@portis/web3"
 import { networkName } from "../../../utilities"
 import { validateType } from "../../../validation"
 import portisIcon from "../wallet-icons/icon-portis.svg"
+import { SdkWalletOptions, WalletModule, Helpers } from "../../../interfaces"
 
-function portis(options) {
+function portis(options: SdkWalletOptions): WalletModule {
   validateType({ name: "Portis options", value: options, type: "object" })
 
   const { apiKey, networkId } = options
@@ -15,7 +16,8 @@ function portis(options) {
   return {
     name: "Portis",
     iconSrc: portisIcon,
-    wallet: ({ BigNumber }) => {
+    wallet: (helpers: Helpers) => {
+      const { BigNumber } = helpers
       const instance = new Portis(apiKey, networkName(networkId))
       const { provider } = instance
 
@@ -27,14 +29,14 @@ function portis(options) {
           connect: provider.enable,
           address: {
             onChange: func => {
-              instance.onLogin(address => {
+              instance.onLogin((address: string) => {
                 func(address)
                 provider.address = address
               })
             }
           },
           network: {
-            get: () => Promise.resolve(instance.config.network.chainId)
+            get: () => Promise.resolve(Number(instance.config.network.chainId))
           },
           balance: {
             get: () =>
@@ -52,7 +54,7 @@ function portis(options) {
                       params: [provider.address, "latest"],
                       id: 1
                     },
-                    (e, res) => {
+                    (e: any, res: any) => {
                       resolve(BigNumber(res.result).toString(10))
                     }
                   )

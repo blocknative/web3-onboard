@@ -1,8 +1,6 @@
-import "regenerator-runtime/runtime"
 import { get } from "svelte/store"
 
 import modules from "./modules"
-
 import Onboard from "./views/Onboard.svelte"
 
 import {
@@ -21,14 +19,23 @@ import { validateInit, validateConfig } from "./validation"
 
 import { version } from "../package.json"
 
-function init(initialization) {
+import {
+  Initialization,
+  AppState,
+  API,
+  ConfigOptions,
+  UserState,
+  Wallet
+} from "./interfaces"
+
+function init(initialization: Initialization): API {
   validateInit(initialization)
 
   const { subscriptions, dappId, networkId, modules } = initialization
 
   initializeBlocknative(dappId, networkId)
 
-  app.update(store => ({
+  app.update((store: AppState) => ({
     ...store,
     dappId,
     networkId,
@@ -48,70 +55,76 @@ function init(initialization) {
   // register subscriptions
   if (subscriptions) {
     if (subscriptions.address) {
-      address.subscribe(subscriptions.address)
+      address.subscribe((address: string | null) => {
+        address && subscriptions.address(address)
+      })
     }
 
     if (subscriptions.network) {
-      network.subscribe(subscriptions.network)
+      network.subscribe((networkId: number | null) => {
+        networkId && subscriptions.network(networkId)
+      })
     }
 
     if (subscriptions.balance) {
-      balance.subscribe(subscriptions.balance)
+      balance.subscribe((balance: string) => {
+        balance && subscriptions.balance(balance)
+      })
     }
 
     if (subscriptions.wallet) {
-      wallet.subscribe(subscriptions.wallet)
+      wallet.subscribe((wallet: Wallet) => {
+        wallet.provider && subscriptions.wallet(wallet)
+      })
     }
   }
 
-  function walletSelect(autoSelectWallet) {
+  function walletSelect(autoSelectWallet?: string): Promise<boolean> {
     return new Promise(resolve => {
-      app.update(store => ({
+      app.update((store: AppState) => ({
         ...store,
         walletSelectInProgress: true,
         autoSelectWallet:
           typeof autoSelectWallet === "string" && autoSelectWallet
       }))
 
-      const appUnsubscribe = app.subscribe(
-        ({ walletSelectInProgress, walletSelectCompleted }) => {
-          if (walletSelectInProgress === false) {
-            appUnsubscribe()
-            setTimeout(() => resolve(walletSelectCompleted), 500)
-          }
+      const appUnsubscribe = app.subscribe((store: AppState) => {
+        const { walletSelectInProgress, walletSelectCompleted } = store
+        if (walletSelectInProgress === false) {
+          appUnsubscribe()
+          setTimeout(() => resolve(walletSelectCompleted), 500)
         }
-      )
+      })
     })
   }
 
-  function walletReady() {
+  function walletReady(): Promise<boolean> {
     return new Promise(resolve => {
       if (!get(walletInterface)) {
         throw new Error("walletSelect must be called before walletReady")
       }
 
-      app.update(store => ({
+      app.update((store: AppState) => ({
         ...store,
         walletReadyInProgress: true
       }))
 
-      const appUnsubscribe = app.subscribe(
-        ({ walletReadyInProgress, walletReadyCompleted }) => {
-          if (walletReadyInProgress === false) {
-            appUnsubscribe()
-            setTimeout(() => resolve(walletReadyCompleted), 500)
-          }
+      const appUnsubscribe = app.subscribe((store: AppState) => {
+        const { walletReadyInProgress, walletReadyCompleted } = store
+        if (walletReadyInProgress === false) {
+          appUnsubscribe()
+          setTimeout(() => resolve(walletReadyCompleted), 500)
         }
-      )
+      })
     })
   }
 
-  function config(options) {
+  function config(options: ConfigOptions): void {
     validateConfig(options)
-    app.update(store => ({ ...store, ...options }))
+    app.update((store: AppState) => ({ ...store, ...options }))
   }
 
-  function getState() {
+  function getState(): UserState {
     return get(state)
   }
 

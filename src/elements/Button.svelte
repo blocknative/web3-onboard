@@ -1,7 +1,7 @@
-<script>
+<script lang="ts">
   import { app } from "../stores";
-  export let highlight = false;
-  export let onclick = null;
+  export let highlight: boolean = false;
+  export let onclick: () => void = () => {};
 </script>
 
 <style>

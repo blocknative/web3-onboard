@@ -1,5 +1,10 @@
-function balance(minimum) {
-  return ({ balance, BigNumber }) => {
+import { ReadyModal, StateAndHelpers } from "../../interfaces"
+
+function balance(
+  minimum: string
+): (currentState: StateAndHelpers) => ReadyModal | undefined {
+  return (StateAndHelpers: StateAndHelpers) => {
+    const { balance, BigNumber } = StateAndHelpers
     // if balance is less than minimum
     if (BigNumber(balance).lt(BigNumber(minimum || 0))) {
       return {

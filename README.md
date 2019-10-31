@@ -9,7 +9,7 @@ JavaScript library to easily onboard users to ethereum apps by enabling wallet s
 ## Quick Start with Default Modules
 
 ```javascript
-import Onboard from "bn-onboard"
+import Onboard from "bnc-onboard"
 
 // initialize onboard
 const onboard = Onboard.init({

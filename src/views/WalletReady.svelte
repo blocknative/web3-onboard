@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { get } from "svelte/store";
 
   import { fade } from "svelte/transition";
@@ -13,119 +13,150 @@
   import Button from "../elements/Button.svelte";
   import Spinner from "../elements/Spinner.svelte";
 
-  export let modules;
-  export let walletSelect;
+  import {
+    WalletReadyModule,
+    WalletSelectFunction,
+    AppState,
+    ReadyModal,
+    UserState
+  } from "../interfaces";
+
+  export let modules: WalletReadyModule[] = [];
+  export let walletSelect: WalletSelectFunction;
 
   const blocknative = getBlocknative();
 
-  let activeModal;
-  let currentModule;
-  let errorMsg;
-  let pollingInterval;
-  let checkingModule;
-  let actionResolved;
-  let loading;
+  let activeModal: ReadyModal | undefined = undefined;
+  let currentModule: WalletReadyModule | undefined = undefined;
+  let errorMsg: string;
+  let pollingInterval: any;
+  let checkingModule: boolean = false;
+  let actionResolved: boolean | undefined = undefined;
+  let loading: boolean;
 
   // recheck modules if below conditions
   $: if (!activeModal && !checkingModule) {
     checkingModule = true;
 
     // loop through and run each module to check if a modal needs to be shown
-    runModules(modules).then(result => {
-      // no result then user has passed all conditions
-      if (!result) {
-        app.update(store => ({
-          ...store,
-          walletReadyInProgress: false,
-          walletReadyCompleted: true
-        }));
+    runModules(modules).then(
+      (result: {
+        modal: ReadyModal | undefined;
+        module: WalletReadyModule | undefined;
+      }) => {
+        // no result then user has passed all conditions
+        if (!result.modal) {
+          app.update(store => ({
+            ...store,
+            walletReadyInProgress: false,
+            walletReadyCompleted: true
+          }));
 
+          blocknative.event({
+            categoryCode: "onboard",
+            eventCode: "onboardingCompleted"
+          });
+
+          checkingModule = false;
+          return;
+        }
+
+        activeModal = result.modal;
+        currentModule = result.module;
+
+        // log the event code for this module
         blocknative.event({
-          categoryCode: "onboard",
-          eventCode: "onboardingCompleted"
+          eventCode: activeModal.eventCode,
+          categoryCode: "onboard"
         });
 
-        checkingModule = false;
-        return;
-      }
-
-      activeModal = result.modal;
-      currentModule = result.module;
-
-      // log the event code for this module
-      blocknative.event({
-        eventCode: activeModal.eventCode,
-        categoryCode: "onboard"
-      });
-
-      // run any actions that module require as part of this step
-      if (activeModal.action) {
-        doAction();
-      }
-
-      if (activeModal.loading) {
-        loading = true;
-        activeModal.loading().then(() => (loading = false));
-      }
-
-      // poll to automatically to check if condition has been met
-      pollingInterval = setInterval(async () => {
-        const invalid = await invalidState(currentModule, get(state));
-        if (!invalid && actionResolved !== false) {
-          resetState();
-
-          // delayed for animations
-          setTimeout(() => {
-            checkingModule = false;
-          }, 250);
+        // run any actions that module require as part of this step
+        if (activeModal.action) {
+          doAction();
         }
-      }, 500);
-    });
+
+        if (activeModal.loading) {
+          loading = true;
+          activeModal.loading().then(() => (loading = false));
+        }
+
+        // poll to automatically to check if condition has been met
+        pollingInterval = setInterval(async () => {
+          if (currentModule) {
+            const invalid = await invalidState(currentModule, get(state));
+            if (!invalid && actionResolved !== false) {
+              resetState();
+
+              // delayed for animations
+              setTimeout(() => {
+                checkingModule = false;
+              }, 250);
+            }
+          }
+        }, 500);
+      }
+    );
   }
 
   function doAction() {
     actionResolved = false;
 
-    activeModal
-      .action()
-      .then(() => (actionResolved = true))
-      .catch(err => {
-        errorMsg = err.message;
-      });
+    activeModal &&
+      activeModal.action &&
+      activeModal
+        .action()
+        .then(() => (actionResolved = true))
+        .catch((err: { message: string }) => {
+          errorMsg = err.message;
+        });
   }
 
   function handleExit() {
-    app.update(store => ({ ...store, walletReadyInProgress: false }));
+    app.update((store: AppState) => ({
+      ...store,
+      walletReadyInProgress: false
+    }));
     resetState();
   }
 
   function resetState() {
     clearInterval(pollingInterval);
-    errorMsg = null;
-    actionResolved = null;
-    activeModal = null;
-    currentModule = null;
+    errorMsg = "";
+    actionResolved = undefined;
+    activeModal = undefined;
+    currentModule = undefined;
   }
 
-  function runModules(modules) {
-    return new Promise(async resolve => {
-      for (const module of modules) {
-        if (balanceSyncStatus.syncing) {
-          await balanceSyncStatus.syncing.catch(() => {});
+  function runModules(modules: WalletReadyModule[]) {
+    return new Promise(
+      async (
+        resolve: (result: {
+          modal: ReadyModal | undefined;
+          module: WalletReadyModule | undefined;
+        }) => void
+      ) => {
+        for (const module of modules) {
+          if (balanceSyncStatus.syncing) {
+            await balanceSyncStatus.syncing.catch(() => {});
+            balanceSyncStatus.syncing = null;
+          }
+
+          const result = await invalidState(module, get(state));
+
+          if (result) {
+            return resolve(result);
+          }
         }
 
-        const modal = await invalidState(module, get(state));
-
-        if (modal) {
-          return resolve(modal);
-        }
+        return resolve({ modal: undefined, module: undefined });
       }
-
-      return resolve(false);
-    });
+    );
   }
 
-  async function invalidState(module, state) {
+  async function invalidState(
+    module: WalletReadyModule,
+    state: UserState
+  ): Promise<{ module: WalletReadyModule; modal: ReadyModal } | undefined> {
     const result = module({
       ...state,
       BigNumber,
@@ -134,8 +165,14 @@
     });
 
     if (result) {
-      // module returned a promise, so await it for val
-      if (result.then) {
+      if (isReadyModal(result)) {
+        validateModal(result);
+        return {
+          module,
+          modal: result
+        };
+      } else {
+        // module returned a promise, so await it for val
         const modal = await result;
         if (modal) {
           validateModal(modal);
@@ -145,13 +182,13 @@
           };
         }
       }
-
-      validateModal(result);
-      return {
-        module,
-        modal: result
-      };
     }
+  }
+
+  function isReadyModal(
+    val: ReadyModal | Promise<ReadyModal | undefined>
+  ): val is ReadyModal {
+    return (val as ReadyModal).heading !== undefined;
   }
 </script>
 

@@ -1,11 +1,17 @@
-<script>
+<script lang="ts">
   import WalletSelect from "./WalletSelect.svelte";
   import WalletReady from "./WalletReady.svelte";
   import { app } from "../stores";
 
-  export let walletSelectModule;
-  export let walletReadyModules;
-  export let walletSelect;
+  import {
+    WalletSelectModule,
+    WalletReadyModule,
+    WalletSelectFunction
+  } from "../interfaces";
+
+  export let walletSelectModule: WalletSelectModule;
+  export let walletReadyModules: WalletReadyModule;
+  export let walletSelect: WalletSelectFunction;
 </script>
 
 <style>

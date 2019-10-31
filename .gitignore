@@ -1,4 +1,5 @@
 .DS_Store
 node_modules
-dist
-settings.json
+dist/
+package-lock.json
+.rpt2_cache
