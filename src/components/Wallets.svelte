@@ -1,11 +1,12 @@
-<script>
+<script lang="ts">
   import { fade } from "svelte/transition";
   import Button from "../elements/Button.svelte";
   import IconButton from "../elements/IconButton.svelte";
-  export let modalData;
-  export let handleWalletSelect;
+  import { SelectModalData, WalletModule } from "../interfaces";
+  export let modalData: SelectModalData;
+  export let handleWalletSelect: (wallet: WalletModule) => void;
 
-  let showingAllWalletModules;
+  let showingAllWalletModules: boolean = false;
 </script>
 
 <style>

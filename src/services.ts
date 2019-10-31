@@ -1,8 +1,8 @@
 import blocknativeApi from "bnc-sdk"
 
-let blocknative
+let blocknative: any
 
-export function initializeBlocknative(dappId, networkId) {
+export function initializeBlocknative(dappId: string, networkId: number): any {
   blocknative = blocknativeApi({
     dappId,
     networkId
@@ -11,6 +11,6 @@ export function initializeBlocknative(dappId, networkId) {
   return blocknative
 }
 
-export function getBlocknative() {
+export function getBlocknative(): any {
   return blocknative
 }

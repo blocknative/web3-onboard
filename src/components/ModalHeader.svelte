@@ -1,7 +1,7 @@
-<script>
+<script lang="ts">
   import { app } from "../stores";
-  export let heading;
-  export let icon;
+  export let heading: string;
+  export let icon: string;
 </script>
 
 <style>

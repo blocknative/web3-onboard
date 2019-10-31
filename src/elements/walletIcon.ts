@@ -1,4 +1,4 @@
-const walletIcon = `
+const walletIcon: string = `
 <svg
 height="18"
 viewBox="0 0 19 18"

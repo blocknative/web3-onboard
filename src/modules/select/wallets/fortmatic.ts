@@ -2,8 +2,9 @@ import Fortmatic from "fortmatic"
 import fortmaticIcon from "../wallet-icons/icon-fortmatic.svg"
 import { networkName } from "../../../utilities"
 import { validateType } from "../../../validation"
+import { SdkWalletOptions, WalletModule, Helpers } from "../../../interfaces"
 
-function fortmatic(options) {
+function fortmatic(options: SdkWalletOptions): WalletModule {
   validateType({ name: "Fortmatic options", value: options, type: "object" })
 
   const { apiKey, networkId } = options
@@ -14,7 +15,9 @@ function fortmatic(options) {
   return {
     name: "Fortmatic",
     iconSrc: fortmaticIcon,
-    wallet: ({ BigNumber }) => {
+    wallet: (helpers: Helpers) => {
+      const { BigNumber } = helpers
+
       const instance = new Fortmatic(
         apiKey,
         networkId === 1 ? undefined : networkName(networkId)
@@ -36,7 +39,7 @@ function fortmatic(options) {
           balance: {
             get: () =>
               provider.account &&
-              instance.user.getBalances().then(res =>
+              instance.user.getBalances().then((res: any) =>
                 res[0]
                   ? BigNumber(res[0].crypto_amount)
                       .times(BigNumber("1000000000000000000"))

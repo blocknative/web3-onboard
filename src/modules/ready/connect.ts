@@ -1,6 +1,9 @@
+import { ReadyModal, StateAndHelpers, Wallet } from "../../interfaces"
+
 function connect() {
-  return ({ wallet, address }) => {
-    if (!address) {
+  return (stateAndHelpers: StateAndHelpers): ReadyModal | undefined => {
+    const { wallet, address } = stateAndHelpers
+    if (!address && wallet && wallet.name) {
       return {
         heading: "Login and Authorize Your Wallet",
         description: `This dapp requires access to your wallet, please login and authorize access to your ${wallet.name} accounts to continue.`,

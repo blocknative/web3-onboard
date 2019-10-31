@@ -1,9 +1,9 @@
-<script>
+<script lang="ts">
   import { fade } from "svelte/transition";
   import { app } from "../stores";
-  export let closeModal;
+  export let closeModal: () => void;
 
-  let closeHovered;
+  let closeHovered: boolean;
 </script>
 
 <style>

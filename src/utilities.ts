@@ -1,18 +1,19 @@
 import bowser from "bowser"
 import BigNumber from "bignumber.js"
 
-export function createModernProviderInterface(provider) {
+import {
+  QuerablePromise,
+  WalletInterface,
+  CancelablePromise
+} from "./interfaces"
+
+export function createModernProviderInterface(provider: any): WalletInterface {
   provider.autoRefreshOnNetworkChange = false
 
   return {
     address: {
-      get: async () => {
-        const unlocked = await provider._metamask.isUnlocked()
-        const enabled = provider._metamask.isEnabled()
-
-        return unlocked && enabled
-          ? Promise.resolve(provider.selectedAddress)
-          : Promise.resolve(undefined)
+      get: () => {
+        return Promise.resolve(provider.selectedAddress || null)
       }
 
       // METAMASK BUG NEEDS TO BE FIXED FOR CHROME: https://github.com/MetaMask/metamask-extension/issues/7101
@@ -25,7 +26,7 @@ export function createModernProviderInterface(provider) {
       // }
     },
     network: {
-      onChange: func => {
+      onChange: (func: (val: string | number) => void) => {
         // give the initial value if it exists
         if (provider.networkVersion) {
           func(provider.networkVersion)
@@ -35,7 +36,7 @@ export function createModernProviderInterface(provider) {
     },
     balance: {
       get: () =>
-        new Promise(resolve => {
+        new Promise((resolve: (val: any) => void) => {
           if (!provider.selectedAddress) {
             resolve(null)
             return
@@ -47,28 +48,30 @@ export function createModernProviderInterface(provider) {
               params: [provider.selectedAddress, "latest"],
               id: 1
             },
-            (e, res) => {
-              resolve(BigNumber(res.result).toString(10))
+            (e: any, res: any) => {
+              resolve(new BigNumber(res.result).toString(10))
             }
           )
         })
     },
     connect: () =>
-      new Promise((resolve, reject) => {
-        provider
-          .enable()
-          .then(resolve)
-          .catch(() =>
-            reject({
-              message: "This dapp needs access to your account information."
-            })
-          )
-      }),
-    name: getProviderName(provider)
+      new Promise(
+        (resolve: () => void, reject: (err: { message: string }) => void) => {
+          provider
+            .enable()
+            .then(resolve)
+            .catch(() =>
+              reject({
+                message: "This dapp needs access to your account information."
+              })
+            )
+        }
+      ),
+    name: getProviderName(provider) || "unknown"
   }
 }
 
-export function createLegacyProviderInterface(provider) {
+export function createLegacyProviderInterface(provider: any): WalletInterface {
   return {
     address: {
       get: () => Promise.resolve(provider._address || provider.address)
@@ -78,23 +81,23 @@ export function createLegacyProviderInterface(provider) {
     },
     balance: {
       get: () =>
-        new Promise(resolve => {
+        new Promise((resolve: (val: string | number | null) => void) => {
           provider.sendAsync(
             {
               method: "eth_getBalance",
               params: [provider._address, "latest"]
             },
-            (e, res) => {
-              resolve(BigNumber(res.result).toString(10))
+            (e: any, res: any) => {
+              resolve(new BigNumber(res.result).toString(10))
             }
           )
         })
     },
-    name: getProviderName(provider)
+    name: getProviderName(provider) || "unknown"
   }
 }
 
-export function getProviderName(provider) {
+export function getProviderName(provider: any): string | undefined {
   if (!provider) return
 
   if (provider.isMetaMask) {
@@ -132,12 +135,12 @@ export function getProviderName(provider) {
 
 export function isMobileDevice() {
   const browser = bowser.getParser(window.navigator.userAgent)
-  const userAgent = browser.parse().parsedResult
+  const { type } = browser.getPlatform()
 
-  return userAgent.platform.type !== "desktop"
+  return type !== "desktop"
 }
 
-export function networkName(id) {
+export function networkName(id: number): string {
   switch (id) {
     case 1:
       return "mainnet"
@@ -149,14 +152,12 @@ export function networkName(id) {
       return "goerli"
     case 42:
       return "kovan"
-    case "localhost":
-      return "localhost"
     default:
       return "local"
   }
 }
 
-export function networkToId(network) {
+export function networkToId(network: string): number {
   switch (network) {
     case "mainnet":
       return 1
@@ -168,39 +169,39 @@ export function networkToId(network) {
       return 5
     case "kovan":
       return 42
-    case "localhost":
-      return "localhost"
     default:
-      return "local"
+      return 0
   }
 }
 
-export function wait(time) {
+export function wait(time: number) {
   return new Promise(resolve => setTimeout(resolve, time))
 }
 
-export function makeQuerablePromise(promise) {
+export function makeQuerablePromise(
+  promise: CancelablePromise
+): QuerablePromise {
   let isResolved = false
   let isRejected = false
 
-  const result = promise.then(
-    function(v) {
+  promise.then(
+    function(v: any) {
       isResolved = true
       return v
     },
-    function(e) {
+    function(e: any) {
       isRejected = true
       throw e
     }
   )
-  result.isFulfilled = function() {
+  promise.isFulfilled = function() {
     return isResolved || isRejected
   }
-  result.isResolved = function() {
+  promise.isResolved = function() {
     return isResolved
   }
-  result.isRejected = function() {
+  promise.isRejected = function() {
     return isRejected
   }
-  return result
+  return promise
 }
