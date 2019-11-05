@@ -95,6 +95,9 @@ export interface Helpers {
   createLegacyProviderInterface: (provider: any) => WalletInterface
   createModernProviderInterface: (provider: any) => WalletInterface
   BigNumber: any
+  getAddress: (provider: any) => Promise<string | any>
+  getNetwork: (provider: any) => Promise<number | any>
+  getBalance: (provider: any) => Promise<string | any>
 }
 
 export interface WalletInterface {
@@ -216,7 +219,7 @@ export interface QuerablePromise extends CancelablePromise {
 }
 
 export interface CancelablePromise extends Promise<any> {
-  cancel: () => void
+  cancel: (func: () => void) => void
   isFulfilled: () => boolean
   isResolved: () => boolean
   isRejected: () => boolean

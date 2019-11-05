@@ -41,7 +41,7 @@ export const network: WalletStateSliceStore = createWalletStateSliceStore({
   parameter: "network",
   initialState: null
 })
-export const balance: BalanceStore = createBalanceStore("")
+export const balance: BalanceStore = createBalanceStore(null)
 export const wallet: WritableStore = writable({
   name: null,
   provider: null,
@@ -106,14 +106,14 @@ function createWalletInterfaceStore(
 
 function createWalletStateSliceStore(options: {
   parameter: string
-  initialState: string | number | null
+  initialState: string | number | null | undefined
 }): WalletStateSliceStore {
   const { parameter, initialState } = options
   const { subscribe, set } = writable(initialState)
 
   return {
     subscribe,
-    reset: () => set(initialState),
+    reset: () => set(undefined),
     setStateSyncer: (stateSyncer: StateSyncer) => {
       validateType({ name: "stateSyncer", value: stateSyncer, type: "object" })
 
@@ -155,7 +155,7 @@ function createWalletStateSliceStore(options: {
   }
 }
 
-function createBalanceStore(initialState: string): BalanceStore {
+function createBalanceStore(initialState: string | null): BalanceStore {
   let stateSyncer: StateSyncer
   let emitter
 
@@ -181,7 +181,7 @@ function createBalanceStore(initialState: string): BalanceStore {
         emitter.on("all", () => false)
       } else {
         // no address, so set balance back to null
-        set && set(initialState)
+        set && set(undefined)
       }
     }
   })
@@ -234,7 +234,7 @@ function syncStateWithTimeout(options: {
             "There was a problem getting the balance of this wallet"
         })
       }
-    )
+    ).catch(() => {})
   )
 
   balanceSyncStatus.syncing = prom
@@ -251,7 +251,7 @@ function syncStateWithTimeout(options: {
 
   timedOut.then(() => {
     if (!prom.isFulfilled()) {
-      prom.cancel()
+      prom.cancel(() => {})
     }
   })
 }
