@@ -7,52 +7,91 @@ import {
   CancelablePromise
 } from "./interfaces"
 
+export function getNetwork(provider: any): Promise<number | any> {
+  return new Promise((resolve, reject) => {
+    provider.sendAsync(
+      {
+        method: "net_version",
+        params: [],
+        id: 42
+      },
+      (e: any, res: any) => {
+        e && reject(e)
+        resolve(Number(res && res.result))
+      }
+    )
+  })
+}
+
+export function getAddress(provider: any): Promise<string | any> {
+  return new Promise((resolve, reject) => {
+    provider.sendAsync(
+      {
+        method: "eth_accounts",
+        params: [],
+        id: 42
+      },
+      (e: any, res: any) => {
+        e && reject(e)
+        resolve(res && res.result && res.result[0])
+      }
+    )
+  })
+}
+
+export function getBalance(provider: any): Promise<string | any> {
+  return new Promise(async (resolve, reject) => {
+    const currentAddress = await getAddress(provider)
+
+    if (!currentAddress) {
+      resolve(null)
+      return
+    }
+
+    provider.sendAsync(
+      {
+        method: "eth_getBalance",
+        params: [currentAddress, "latest"],
+        id: 42
+      },
+      (e: any, res: any) => {
+        e && reject(e)
+        resolve(res && res.result && new BigNumber(res.result).toString(10))
+      }
+    )
+  })
+}
+
 export function createModernProviderInterface(provider: any): WalletInterface {
   provider.autoRefreshOnNetworkChange = false
 
+  const onFuncExists = typeof provider.on === "function"
+
   return {
-    address: {
-      get: () => {
-        return Promise.resolve(provider.selectedAddress || null)
-      }
-
-      // METAMASK BUG NEEDS TO BE FIXED FOR CHROME: https://github.com/MetaMask/metamask-extension/issues/7101
-      // onChange: func => {
-      //   // give the initial value if it exists
-      //   if (provider.selectedAddress) {
-      //     func(provider.selectedAddress)
-      //   }
-      //   provider.on("accountsChanged", accounts => func(accounts[0]))
-      // }
-    },
-    network: {
-      onChange: (func: (val: string | number) => void) => {
-        // give the initial value if it exists
-        if (provider.networkVersion) {
-          func(provider.networkVersion)
-        }
-        provider.on("networkChanged", func)
-      }
-    },
-    balance: {
-      get: () =>
-        new Promise((resolve: (val: any) => void) => {
-          if (!provider.selectedAddress) {
-            resolve(null)
-            return
+    address: onFuncExists
+      ? {
+          onChange: func => {
+            // get the initial value
+            getAddress(provider).then(func)
+            provider.on("accountsChanged", (accounts: string[]) =>
+              func(accounts[0])
+            )
           }
-
-          provider.sendAsync(
-            {
-              method: "eth_getBalance",
-              params: [provider.selectedAddress, "latest"],
-              id: 1
-            },
-            (e: any, res: any) => {
-              resolve(new BigNumber(res.result).toString(10))
-            }
-          )
-        })
+        }
+      : {
+          get: () => getAddress(provider)
+        },
+    network: onFuncExists
+      ? {
+          onChange: (func: (val: string | number) => void) => {
+            // get initial value
+            getNetwork(provider).then(func)
+            provider.on("networkChanged", func)
+          }
+        }
+      : { get: () => getNetwork(provider) },
+    balance: {
+      get: () => getBalance(provider)
     },
     connect: () =>
       new Promise(
@@ -74,24 +113,13 @@ export function createModernProviderInterface(provider: any): WalletInterface {
 export function createLegacyProviderInterface(provider: any): WalletInterface {
   return {
     address: {
-      get: () => Promise.resolve(provider._address || provider.address)
+      get: () => getAddress(provider)
     },
     network: {
-      get: () => Promise.resolve(provider._chainId || provider.chainId)
+      get: () => getNetwork(provider)
     },
     balance: {
-      get: () =>
-        new Promise((resolve: (val: string | number | null) => void) => {
-          provider.sendAsync(
-            {
-              method: "eth_getBalance",
-              params: [provider._address, "latest"]
-            },
-            (e: any, res: any) => {
-              resolve(new BigNumber(res.result).toString(10))
-            }
-          )
-        })
+      get: () => getBalance(provider)
     },
     name: getProviderName(provider) || "unknown"
   }
