@@ -17,7 +17,10 @@
   import {
     getProviderName,
     createLegacyProviderInterface,
-    createModernProviderInterface
+    createModernProviderInterface,
+    getAddress,
+    getBalance,
+    getNetwork
   } from "../utilities";
 
   import {
@@ -102,7 +105,10 @@
       getProviderName,
       createLegacyProviderInterface,
       createModernProviderInterface,
-      BigNumber
+      BigNumber,
+      getNetwork,
+      getAddress,
+      getBalance
     });
 
     // if no interface then the user does not have the wallet they selected installed or available
