@@ -56,7 +56,9 @@ function init(initialization: Initialization): API {
   if (subscriptions) {
     if (subscriptions.address) {
       address.subscribe((address: string | null) => {
-        address && subscriptions.address(address)
+        if (address !== null) {
+          subscriptions.address(address)
+        }
       })
     }
 
@@ -68,7 +70,9 @@ function init(initialization: Initialization): API {
 
     if (subscriptions.balance) {
       balance.subscribe((balance: string) => {
-        balance && subscriptions.balance(balance)
+        if (balance !== null) {
+          subscriptions.balance(balance)
+        }
       })
     }
 
