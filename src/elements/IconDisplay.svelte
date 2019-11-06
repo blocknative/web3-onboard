@@ -13,21 +13,20 @@
     margin: 0;
     background: inherit;
     padding: 0;
-    width: 18rem;
+    width: 18em;
     border-radius: 40px;
     color: inherit;
   }
 
   img {
     width: auto;
-    height: 3rem;
+    height: 3em;
   }
 
   span {
-    margin-left: 0.66rem;
+    margin-left: 0.66em;
     font-weight: bold;
     opacity: 0.7;
-    font-size: 1rem;
     text-align: left;
   }
 </style>

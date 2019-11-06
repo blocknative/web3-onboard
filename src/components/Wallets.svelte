@@ -16,7 +16,9 @@
     flex-flow: row wrap;
     align-items: center;
     list-style-type: none;
-    margin: 1rem 0 0.66rem 0;
+    margin: 1em 0 0.66em 0;
+    max-height: 66vh;
+    overflow-y: scroll;
     padding: 0;
     font-family: "Helvetica Neue";
     line-height: 1.15;
