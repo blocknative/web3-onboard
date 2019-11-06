@@ -195,7 +195,7 @@
 <style>
   /* .bn-onboard-prepare-description */
   p {
-    font-size: 0.889rem;
+    font-size: 0.889em;
     font-family: "Helvetica Neue";
     margin: 1em 0;
   }
@@ -203,10 +203,10 @@
   /* .bn-onboard-prepare-error */
   span {
     color: #e2504a;
-    font-size: 0.889rem;
+    font-size: 0.889em;
     display: block;
-    margin-bottom: 0.75rem;
-    padding: 0.5rem;
+    margin-bottom: 0.75em;
+    padding: 0.5em;
     border: 1px solid #e2504a;
     border-radius: 5px;
   }
