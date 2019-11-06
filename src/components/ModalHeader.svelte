@@ -9,7 +9,7 @@
   header {
     display: flex;
     align-items: center;
-    margin-bottom: 0.66rem;
+    margin-bottom: 0.66em;
   }
 
   /* .bn-onboard-modal-content-header-icon */
@@ -17,7 +17,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0.6rem;
+    padding: 0.6em;
     border-radius: 30px;
     background: #eeeeee;
   }
@@ -26,8 +26,8 @@
   h3 {
     font-family: "Helvetica Neue";
     font-weight: bold;
-    font-size: 1.33rem;
-    margin: 0 0 0 0.5rem;
+    font-size: 1.33em;
+    margin: 0 0 0 0.5em;
   }
 </style>
 

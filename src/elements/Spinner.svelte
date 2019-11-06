@@ -2,15 +2,15 @@
   .bn-onboard-loading {
     display: inline-block;
     position: relative;
-    width: 2rem;
-    height: 2rem;
+    width: 2em;
+    height: 2em;
   }
   .bn-onboard-loading div {
     box-sizing: border-box;
     display: block;
     position: absolute;
-    width: 2rem;
-    height: 2rem;
+    width: 2em;
+    height: 2em;
     border: 3px solid #4a90e2;
     border-radius: 50%;
     animation: bn-onboard-loading 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;

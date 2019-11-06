@@ -8,19 +8,25 @@
 
 <style>
   /* === TARGET BY ELEMENT TO ALLOW CUSTOM OVERRIDES TO HAVE ADEQUATE SPECIFICITY ===*/
-
   /* .bn-onboard-modal */
   aside {
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
-    z-index: 10;
+    font-size: 16px;
+    z-index: 99999999;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
     background: rgba(0, 0, 0, 0.3);
+  }
+
+  @media screen and (max-width: 420px) {
+    aside {
+      font-size: 14px;
+    }
   }
 
   /* .bn-onboard-modal-content  */
@@ -31,20 +37,20 @@
     border-radius: 10px;
     box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.1);
     font-family: "Helvetica Neue";
-    padding: 1.33rem;
+    padding: 1.33em;
     position: relative;
     overflow: hidden;
-    max-width: 36rem;
+    max-width: 36em;
     color: #4a4a4a;
   }
 
   /* .bn-onboard-modal-content-close  */
   div {
-    height: 0.66rem;
+    height: 0.66em;
     position: absolute;
-    padding: 0.8rem;
-    top: 1.33rem;
-    right: 1.33rem;
+    padding: 0.8em;
+    top: 1.33em;
+    right: 1.33em;
     border-radius: 5px;
     transition: background 200ms ease-in-out;
     display: flex;

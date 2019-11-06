@@ -161,8 +161,8 @@
 <style>
   /* .bn-onboard-select-description, .bn-onboard-select-wallet-definition */
   p {
-    font-size: 0.889rem;
-    margin: 1rem 0 0 0;
+    font-size: 0.889em;
+    margin: 1em 0 0 0;
     font-family: "Helvetica Neue";
   }
 
@@ -175,7 +175,7 @@
   /* .bn-onboard-select-wallet-info */
   div span {
     color: #4a90e2;
-    margin-top: 0.66rem;
+    margin-top: 0.66em;
     cursor: pointer;
   }
 </style>

@@ -7,11 +7,11 @@
 <style>
   button {
     background: inherit;
-    font-size: 0.889rem;
+    font-size: 0.889em;
     border: 1px solid #4a90e2;
     border-radius: 40px;
-    padding: 0.55rem 1.4rem;
-    margin-top: 0.33rem;
+    padding: 0.55em 1.4em;
+    margin-top: 0.33em;
     cursor: pointer;
     color: #4a90e2;
     font-family: "Helvetica Neue";
