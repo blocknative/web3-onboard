@@ -7,6 +7,8 @@ import portis from "./wallets/portis"
 import fortmatic from "./wallets/fortmatic"
 import authereum from "./wallets/authereum"
 import squarelink from "./wallets/squarelink"
+import opera from "./wallets/opera"
+import operaTouch from "./wallets/opera-touch"
 
 import { validateSelectDefaultsOptions } from "../../validation"
 import { SelectDefaultsOptions, WalletSelectModule } from "../../interfaces"
@@ -24,8 +26,8 @@ function defaults(options: SelectDefaultsOptions): WalletSelectModule {
     walletConnectInit
   } = options
 
-  const desktopModules = [metamask(), dapper()]
-  const mobileModules = [coinbase(), trust()]
+  const desktopModules = [metamask(), dapper(), opera()]
+  const mobileModules = [coinbase(), trust(), operaTouch()]
 
   if (portisInit) {
     desktopModules.push(portis({ ...portisInit, networkId }))
@@ -76,5 +78,7 @@ export default {
   portis,
   fortmatic,
   authereum,
-  squarelink
+  squarelink,
+  opera,
+  operaTouch
 }
