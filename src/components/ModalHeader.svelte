@@ -9,6 +9,7 @@
   header {
     display: flex;
     align-items: center;
+    font-size: inherit;
     margin-bottom: 0.66em;
   }
 
@@ -17,6 +18,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: inherit;
     padding: 0.6em;
     border-radius: 30px;
     background: #eeeeee;

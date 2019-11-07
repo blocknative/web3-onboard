@@ -169,12 +169,14 @@
   /* .bn-onboard-select-info-container */
   div {
     display: flex;
+    font-size: inherit;
     justify-content: space-between;
   }
 
   /* .bn-onboard-select-wallet-info */
   div span {
     color: #4a90e2;
+    font-size: inherit;
     margin-top: 0.66em;
     cursor: pointer;
   }

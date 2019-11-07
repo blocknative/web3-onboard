@@ -11,6 +11,7 @@
     align-items: center;
     border: none;
     margin: 0;
+    font-size: inherit;
     background: inherit;
     padding: 0;
     width: 18em;
@@ -26,6 +27,7 @@
   span {
     margin-left: 0.66em;
     font-weight: bold;
+    font-size: inherit;
     opacity: 0.7;
     text-align: left;
   }
