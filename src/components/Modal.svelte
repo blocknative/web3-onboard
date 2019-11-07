@@ -37,10 +37,11 @@
     border-radius: 10px;
     box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.1);
     font-family: "Helvetica Neue";
+    font-size: inherit;
     padding: 1.33em;
     position: relative;
     overflow: hidden;
-    max-width: 36em;
+    max-width: 37em;
     color: #4a4a4a;
   }
 
@@ -51,6 +52,7 @@
     padding: 0.8em;
     top: 1.33em;
     right: 1.33em;
+    font-size: inherit;
     border-radius: 5px;
     transition: background 200ms ease-in-out;
     display: flex;

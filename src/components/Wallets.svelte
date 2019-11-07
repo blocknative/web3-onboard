@@ -20,7 +20,9 @@
     max-height: 66vh;
     overflow-y: scroll;
     padding: 0;
+    scrollbar-width: none;
     font-family: "Helvetica Neue";
+    font-size: inherit;
     line-height: 1.15;
     box-sizing: border-box;
   }
@@ -28,12 +30,21 @@
   div {
     width: 100%;
     display: flex;
+    font-size: inherit;
     justify-content: center;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
   }
 
   @media only screen and (max-width: 700px) {
     ul li {
       width: 100%;
+    }
+
+    ul {
+      scrollbar-width: unset;
     }
   }
 </style>
