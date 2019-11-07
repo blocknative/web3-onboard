@@ -11,11 +11,13 @@
 <style>
   section {
     color: inherit;
+    font-size: inherit;
     display: block;
   }
 
   footer {
     display: flex;
+    font-size: inherit;
     justify-content: space-between;
   }
 </style>

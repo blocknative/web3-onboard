@@ -15,6 +15,7 @@
     border: none;
     margin: 0.33em 0;
     background: inherit;
+    font-size: inherit;
     width: 18em;
     padding: 0.625em 1.25em;
     transition: box-shadow 150ms ease-in-out, background 200ms ease-in-out;
