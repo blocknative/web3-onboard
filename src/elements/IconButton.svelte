@@ -55,7 +55,7 @@
     text-align: left;
   }
 
-  @media only screen and (max-width: 700px) {
+  @media only screen and (max-width: 450px) {
     button {
       width: 100%;
     }
