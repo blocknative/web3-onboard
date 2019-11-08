@@ -41,7 +41,7 @@
     padding: 1.33em;
     position: relative;
     overflow: hidden;
-    max-width: 36em;
+    max-width: 37em;
     color: #4a4a4a;
   }
 
