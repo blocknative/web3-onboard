@@ -27,6 +27,10 @@
     box-sizing: border-box;
   }
 
+  ul li {
+    padding: 0 0.25em;
+  }
+
   div {
     width: 100%;
     display: flex;
