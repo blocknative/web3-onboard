@@ -16,7 +16,7 @@
     flex-flow: row wrap;
     align-items: center;
     list-style-type: none;
-    margin: 1em 0 0.66em 0;
+    margin: 1em 0;
     max-height: 66vh;
     overflow-y: scroll;
     padding: 0;
@@ -32,13 +32,14 @@
     display: flex;
     font-size: inherit;
     justify-content: center;
+    margin-top: 1em;
   }
 
   ::-webkit-scrollbar {
     display: none;
   }
 
-  @media only screen and (max-width: 700px) {
+  @media only screen and (max-width: 450px) {
     ul li {
       width: 100%;
     }

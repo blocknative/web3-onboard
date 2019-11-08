@@ -162,7 +162,7 @@
   /* .bn-onboard-select-description, .bn-onboard-select-wallet-definition */
   p {
     font-size: 0.889em;
-    margin: 1em 0 0 0;
+    margin: 1.6em 0 0 0;
     font-family: "Helvetica Neue";
   }
 

@@ -10,7 +10,6 @@
     display: flex;
     align-items: center;
     font-size: inherit;
-    margin-bottom: 0.66em;
   }
 
   /* .bn-onboard-modal-content-header-icon */
