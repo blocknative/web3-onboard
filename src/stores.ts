@@ -159,7 +159,7 @@ function createBalanceStore(initialState: string | null): BalanceStore {
   let stateSyncer: StateSyncer
   let emitter
 
-  const { subscribe } = derived([address, network], ([$address], set) => {
+  const { subscribe } = derived([address, network], ([$address]: string[], set: any) => {
     if (stateSyncer && !stateSyncer.onChange) {
       if ($address && stateSyncer.get && set) {
         syncStateWithTimeout({
