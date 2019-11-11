@@ -11,6 +11,7 @@
   /* .bn-onboard-modal */
   aside {
     display: flex;
+    font-family: "Helvetica Neue";
     justify-content: center;
     align-items: center;
     position: absolute;
@@ -53,6 +54,7 @@
     top: 1.33em;
     right: 1.33em;
     font-size: inherit;
+    font-family: inherit;
     border-radius: 5px;
     transition: background 200ms ease-in-out;
     display: flex;
