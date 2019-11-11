@@ -155,7 +155,7 @@ function validateWalletModule(module: WalletModule): never | void {
   validateType({
     name: "preferred",
     value: preferred,
-    type: "string",
+    type: "boolean",
     optional: true
   })
 }
