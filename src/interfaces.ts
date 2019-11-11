@@ -138,13 +138,14 @@ export interface WalletConnectOptions {
 }
 
 export interface SelectDefaultsOptions {
-  heading: string
-  description: string
+  heading?: string
+  description?: string
   networkId: number
-  fortmaticInit: { apiKey: string }
-  portisInit: { apiKey: string }
-  squarelinkInit: { apiKey: string }
-  walletConnectInit: WalletConnectOptions
+  fortmaticInit?: { apiKey: string }
+  portisInit?: { apiKey: string }
+  squarelinkInit?: { apiKey: string }
+  walletConnectInit?: WalletConnectOptions
+  preferredWallets?: string[]
 }
 
 export interface WalletSelectFunction {

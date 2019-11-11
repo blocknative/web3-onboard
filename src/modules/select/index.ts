@@ -23,38 +23,58 @@ function defaults(options: SelectDefaultsOptions): WalletSelectModule {
     fortmaticInit,
     portisInit,
     squarelinkInit,
-    walletConnectInit
+    walletConnectInit,
+    preferredWallets
   } = options
 
-  const desktopModules = [metamask(), dapper(), opera()]
-  const mobileModules = [coinbase(), trust(), operaTouch()]
+  let desktopWallets = [metamask(), dapper(), opera()]
+  let mobileWallets = [coinbase(), trust(), operaTouch()]
 
   if (portisInit) {
-    desktopModules.push(portis({ ...portisInit, networkId }))
-    mobileModules.push(portis({ ...portisInit, networkId }))
+    desktopWallets.push(portis({ ...portisInit, networkId }))
+    mobileWallets.push(portis({ ...portisInit, networkId }))
   }
 
   if (fortmaticInit) {
-    desktopModules.push(fortmatic({ ...fortmaticInit, networkId }))
-    mobileModules.push(fortmatic({ ...fortmaticInit, networkId }))
+    desktopWallets.push(fortmatic({ ...fortmaticInit, networkId }))
+    mobileWallets.push(fortmatic({ ...fortmaticInit, networkId }))
   }
 
   if (walletConnectInit) {
-    desktopModules.push(
+    desktopWallets.push(
       walletConnect({ infuraKey: walletConnectInit.infuraKey })
     )
-    mobileModules.push(
+    mobileWallets.push(
       walletConnect({ infuraKey: walletConnectInit.infuraKey })
     )
   }
 
   if (squarelinkInit) {
-    desktopModules.push(squarelink({ ...squarelinkInit, networkId }))
-    mobileModules.push(squarelink({ ...squarelinkInit, networkId }))
+    desktopWallets.push(squarelink({ ...squarelinkInit, networkId }))
+    mobileWallets.push(squarelink({ ...squarelinkInit, networkId }))
   }
 
-  desktopModules.push(authereum({ networkId }))
-  mobileModules.push(authereum({ networkId }))
+  desktopWallets.push(authereum({ networkId }))
+  mobileWallets.push(authereum({ networkId }))
+
+  //set preferred wallets if provided
+  if (preferredWallets) {
+    desktopWallets = desktopWallets.map(wallet => {
+      if (preferredWallets.includes(wallet.name)) {
+        wallet.preferred = true
+      }
+  
+      return wallet
+    })
+  
+    mobileWallets = mobileWallets.map(wallet => {
+      if (preferredWallets.includes(wallet.name)) {
+        wallet.preferred = true
+      }
+  
+      return wallet
+    })
+  }
 
   return {
     heading: heading || "Select a Wallet",
@@ -62,8 +82,8 @@ function defaults(options: SelectDefaultsOptions): WalletSelectModule {
       description ||
       "Please select the wallet that you would like to use with this dapp:",
     wallets: {
-      mobile: mobileModules,
-      desktop: desktopModules
+      mobile: mobileWallets,
+      desktop: desktopWallets
     }
   }
 }
