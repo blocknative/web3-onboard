@@ -1,3 +1,5 @@
+import "regenerator-runtime/runtime"
+
 import { get } from "svelte/store"
 
 import modules from "./modules"
