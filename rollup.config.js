@@ -98,7 +98,8 @@ export default [
       "@walletconnect/web3-provider",
       "fortmatic",
       "squarelink",
-      "authereum"
+      "authereum",
+      "regenerator-runtime/runtime"
     ]
   }
 ]
