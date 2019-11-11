@@ -1,11 +1,10 @@
 import svelte from "rollup-plugin-svelte"
 import resolve from "rollup-plugin-node-resolve"
-import json from "rollup-plugin-json"
+import json from "@rollup/plugin-json"
 import image from "rollup-plugin-img"
 import commonjs from "rollup-plugin-commonjs"
 import globals from "rollup-plugin-node-globals"
 import builtins from "@joseph184/rollup-plugin-node-builtins"
-import { terser } from "rollup-plugin-terser"
 import typescript from "rollup-plugin-typescript2"
 
 import {
@@ -28,10 +27,9 @@ export default [
   {
     input: "src/onboard.ts",
     output: {
-      sourcemap: true,
       format: "umd",
       name: "onboard",
-      file: "dist/bnc-onboard.js"
+      file: "dist/onboard.umd.js"
     },
     moduleContext: id => {
       const thisAsWindowForModules = [
@@ -58,16 +56,14 @@ export default [
       commonjs(),
       globals(),
       builtins(),
-      typescript(),
-      terser()
+      typescript()
     ]
   },
   {
     input: "src/onboard.ts",
     output: {
-      sourcemap: true,
       format: "es",
-      file: "dist/bnc-onboard.es5.js"
+      file: "dist/onboard.esm.js"
     },
     moduleContext: id => {
       const thisAsWindowForModules = [
