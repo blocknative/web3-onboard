@@ -35,6 +35,7 @@
     width: 100%;
     display: flex;
     font-size: inherit;
+    font-family: inherit;
     justify-content: center;
     margin-top: 1em;
   }
@@ -67,7 +68,7 @@
 
   {#if modalData.secondaryWallets && !showingAllWalletModules}
     <div>
-      <Button highlight={true} onclick={() => (showingAllWalletModules = true)}>
+      <Button onclick={() => (showingAllWalletModules = true)}>
         Show More
       </Button>
     </div>

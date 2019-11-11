@@ -12,12 +12,14 @@
   section {
     color: inherit;
     font-size: inherit;
+    font-family: inherit;
     display: block;
   }
 
   footer {
     display: flex;
     font-size: inherit;
+    font-family: inherit;
     justify-content: space-between;
   }
 </style>

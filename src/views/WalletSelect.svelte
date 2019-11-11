@@ -170,6 +170,7 @@
   div {
     display: flex;
     font-size: inherit;
+    font-family: inherit;
     justify-content: space-between;
   }
 
@@ -177,6 +178,7 @@
   div span {
     color: #4a90e2;
     font-size: inherit;
+    font-family: inherit;
     margin-top: 0.66em;
     cursor: pointer;
   }
