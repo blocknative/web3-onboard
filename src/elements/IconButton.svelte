@@ -41,6 +41,7 @@
     height: 40px;
     width: 40px;
     line-height: 40px;
+    font-family: inherit;
   }
 
   img {
@@ -50,12 +51,14 @@
   }
 
   span {
+    font-size: inherit;
     margin-left: 0.66em;
     font-weight: bold;
     text-align: left;
+    font-family: inherit;
   }
 
-  @media only screen and (max-width: 700px) {
+  @media only screen and (max-width: 450px) {
     button {
       width: 100%;
     }

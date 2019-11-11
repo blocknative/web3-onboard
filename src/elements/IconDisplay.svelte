@@ -12,6 +12,7 @@
     border: none;
     margin: 0;
     font-size: inherit;
+    font-family: inherit;
     background: inherit;
     padding: 0;
     width: 18em;
@@ -28,6 +29,7 @@
     margin-left: 0.66em;
     font-weight: bold;
     font-size: inherit;
+    font-family: inherit;
     opacity: 0.7;
     text-align: left;
   }

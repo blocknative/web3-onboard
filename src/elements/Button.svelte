@@ -1,6 +1,5 @@
 <script lang="ts">
   import { app } from "../stores";
-  export let highlight: boolean = false;
   export let onclick: () => void = () => {};
 </script>
 
@@ -8,6 +7,7 @@
   button {
     background: inherit;
     font-size: 0.889em;
+    font-family: inherit;
     border: 1px solid #4a90e2;
     border-radius: 40px;
     padding: 0.55em 1.4em;

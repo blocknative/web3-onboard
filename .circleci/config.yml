@@ -28,8 +28,8 @@ jobs:
       - run: sudo npm i -g npm-cli-login
       - run: NPM_USER=$NPM_USERNAME NPM_EMAIL=$NPM_EMAIL NPM_PASS=$NPM_PASSWORD npm-cli-login
       - run: npm publish --dry-run
-      - run: gzip -9 ./dist/bnc-onboard.js
-      - run: mv ./dist/bnc-onboard.js.gz ./dist/bnc-onboard.js
+      - run: gzip -9 ./dist/onboard.umd.js
+      - run: mv ./dist/onboard.umd.js.gz ./dist/onboard.umd.js
       - run: ls -al
       - run: echo export VERSION=`awk '/version/{gsub(/("|",)/,"",$2);print $2};' package.json | sed 's/\./-/g'` >> $BASH_ENV
       - run: mkdir /root/project/deploy-temp
@@ -48,8 +48,8 @@ jobs:
       - run: sudo npm i -g add npm-cli-login
       - run: NPM_USER=$NPM_USERNAME NPM_EMAIL=$NPM_EMAIL NPM_PASS=$NPM_PASSWORD npm-cli-login
       - run: npm publish
-      - run: gzip -9 ./dist/bnc-onboard.js
-      - run: mv ./dist/bnc-onboard.js.gz ./dist/bnc-onboard.js
+      - run: gzip -9 ./dist/onboard.umd.js
+      - run: mv ./dist/onboard.umd.js.gz ./dist/onboard.umd.js
       - run: ls -al
       - run: echo export VERSION=`awk '/version/{gsub(/("|",)/,"",$2);print $2};' package.json | sed 's/\./-/g'` >> $BASH_ENV
       - run: mkdir /root/project/deploy-temp

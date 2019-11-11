@@ -155,7 +155,7 @@ function validateWalletModule(module: WalletModule): never | void {
   validateType({
     name: "preferred",
     value: preferred,
-    type: "string",
+    type: "boolean",
     optional: true
   })
 }
@@ -347,7 +347,8 @@ export function validateSelectDefaultsOptions(
     fortmaticInit,
     portisInit,
     squarelinkInit,
-    walletConnectInit
+    walletConnectInit,
+    preferredWallets
   } = options
 
   validateType({
@@ -398,6 +399,13 @@ export function validateSelectDefaultsOptions(
     name: "walletConnectInit",
     value: walletConnectInit,
     type: "object",
+    optional: true
+  })
+
+  validateType({
+    name: "preferredWallets",
+    value: preferredWallets,
+    type: "array",
     optional: true
   })
 }

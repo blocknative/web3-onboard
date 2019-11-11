@@ -16,7 +16,7 @@
     flex-flow: row wrap;
     align-items: center;
     list-style-type: none;
-    margin: 1em 0 0.66em 0;
+    margin: 1em 0;
     max-height: 66vh;
     overflow-y: scroll;
     padding: 0;
@@ -27,18 +27,24 @@
     box-sizing: border-box;
   }
 
+  ul li {
+    padding: 0 0.25em;
+  }
+
   div {
     width: 100%;
     display: flex;
     font-size: inherit;
+    font-family: inherit;
     justify-content: center;
+    margin-top: 1em;
   }
 
   ::-webkit-scrollbar {
     display: none;
   }
 
-  @media only screen and (max-width: 700px) {
+  @media only screen and (max-width: 450px) {
     ul li {
       width: 100%;
     }
@@ -62,7 +68,7 @@
 
   {#if modalData.secondaryWallets && !showingAllWalletModules}
     <div>
-      <Button highlight={true} onclick={() => (showingAllWalletModules = true)}>
+      <Button onclick={() => (showingAllWalletModules = true)}>
         Show More
       </Button>
     </div>

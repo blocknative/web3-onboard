@@ -162,7 +162,7 @@
   /* .bn-onboard-select-description, .bn-onboard-select-wallet-definition */
   p {
     font-size: 0.889em;
-    margin: 1em 0 0 0;
+    margin: 1.6em 0 0 0;
     font-family: "Helvetica Neue";
   }
 
@@ -170,6 +170,7 @@
   div {
     display: flex;
     font-size: inherit;
+    font-family: inherit;
     justify-content: space-between;
   }
 
@@ -177,6 +178,7 @@
   div span {
     color: #4a90e2;
     font-size: inherit;
+    font-family: inherit;
     margin-top: 0.66em;
     cursor: pointer;
   }

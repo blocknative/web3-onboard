@@ -10,7 +10,7 @@
     display: flex;
     align-items: center;
     font-size: inherit;
-    margin-bottom: 0.66em;
+    font-family: inherit;
   }
 
   /* .bn-onboard-modal-content-header-icon */
@@ -19,6 +19,7 @@
     justify-content: center;
     align-items: center;
     font-size: inherit;
+    font-family: inherit;
     padding: 0.6em;
     border-radius: 30px;
     background: #eeeeee;
@@ -26,9 +27,9 @@
 
   /* .bn-onboard-modal-content-header-heading */
   h3 {
-    font-family: "Helvetica Neue";
     font-weight: bold;
     font-size: 1.33em;
+    font-family: inherit;
     margin: 0 0 0 0.5em;
   }
 </style>

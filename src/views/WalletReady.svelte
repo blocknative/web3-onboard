@@ -204,6 +204,7 @@
   span {
     color: #e2504a;
     font-size: 0.889em;
+    font-family: inherit;
     display: block;
     margin-bottom: 0.75em;
     padding: 0.5em;
