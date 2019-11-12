@@ -11,6 +11,7 @@
     align-items: center;
     font-size: inherit;
     font-family: inherit;
+    margin-bottom: 1em;
   }
 
   /* .bn-onboard-modal-content-header-icon */
