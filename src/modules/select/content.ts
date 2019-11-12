@@ -20,7 +20,7 @@ export const extensionInstallMessage = (helpers: {
     and that you have disabled any other browser extension wallets.
     <span
       class="bn-onboard-clickable"
-      style="color: #4a90e2;"
+      style="color: #4a90e2; font-size: 0.889rem; font-family: Helvetica Neue;"
       onclick="window.location.reload();">
       Then refresh the page.
     </span>
@@ -33,7 +33,7 @@ export const extensionInstallMessage = (helpers: {
     the extension and then
     <span
     class="bn-clickable"
-      style="color: #4a90e2;"
+      style="color: #4a90e2; font-size: 0.889rem; font-family: Helvetica Neue;"
       onclick={window.location.reload();}>
       refresh the page.
     </span>

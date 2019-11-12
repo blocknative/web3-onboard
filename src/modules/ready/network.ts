@@ -18,7 +18,7 @@ function network(correctNetwork: number): WalletReadyModule {
           Number(network)
         )}</b> to <b>${networkName(
           Number(correctNetwork)
-        )} network</b> for this Dapp. <br><br> <i>*Some wallets may not support changing networks. If you can not change networks in your wallet you may consider switching to a different wallet.</i>`,
+        )} network</b> for this Dapp. <br><br> <i style="font-size: inherit; font-family: inherit;">*Some wallets may not support changing networks. If you can not change networks in your wallet you may consider switching to a different wallet.</i>`,
         eventCode: "networkFail",
         button: {
           onclick: () => {
