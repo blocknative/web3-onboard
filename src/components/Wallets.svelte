@@ -16,7 +16,7 @@
     flex-flow: row wrap;
     align-items: center;
     list-style-type: none;
-    margin: 1em 0;
+    margin: 1.25em 0;
     max-height: 66vh;
     overflow-y: scroll;
     padding: 0;
@@ -37,7 +37,7 @@
     font-size: inherit;
     font-family: inherit;
     justify-content: center;
-    margin-top: 1em;
+    margin-top: 1.25em;
   }
 
   ::-webkit-scrollbar {

@@ -830,9 +830,9 @@
     xtend "^4.0.1"
 
 "@portis/web3@^2.0.0-beta.42":
-  version "2.0.0-beta.53"
-  resolved "https://registry.yarnpkg.com/@portis/web3/-/web3-2.0.0-beta.53.tgz#c4a5f7be1550c4d4b74953774f17dc3b6787749a"
-  integrity sha512-qyueShziG/SR9V+XJVZdN1rOLjcO799aC/n7g5+UonEZmA1coAG60Vdvge6kxq7BHwalM+sIWjMzP/8V7cHNUg==
+  version "2.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@portis/web3/-/web3-2.0.0-beta.54.tgz#a46f21375bec90bb247f66e9fde776d863a6f25b"
+  integrity sha512-BrhlbEXUEtlJhElXMI32S8q/2hzQpuGNRLsRxEURxonWkDMzK/CjtpKO2ACoJ205Y96lMH4S3xQB0Vuc8dC/WQ==
   dependencies:
     "@portis/web3-provider-engine" "1.1.0"
     ethereumjs-util "5.2.0"
@@ -1763,9 +1763,9 @@ bn.js@4.11.8, bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.11.0, bn.js@^4.
   integrity sha512-ItfYfPLkWHUjckQCk8xC+LwxgK8NYcXywGigJgSwOP8Y2iyWT4f2vsZnoOXTTbo+o5yXmIUJ4gn5538SO5S3gA==
 
 bnc-notify@^0.2.1:
-  version "0.2.7"
-  resolved "https://registry.yarnpkg.com/bnc-notify/-/bnc-notify-0.2.7.tgz#d06e5a7edd4101a3bb05cb318c2d61c73c50888b"
-  integrity sha512-CywzlQVoMAnQSyFVmfRkVWo+px+9fyarMh0DmurLHdmYIeZz592MT6yK3B1Jt+DqvZLxNB+J7daoc6hTvYJObw==
+  version "0.2.8"
+  resolved "https://registry.yarnpkg.com/bnc-notify/-/bnc-notify-0.2.8.tgz#3ad1ccfed5dc31b3ddd2d8a2c3688acd77ca1bb7"
+  integrity sha512-9EFz/SYmuGBbh2d6K7pliLY6gnie8SqwSWc7PoWBFrF3Kf75U0k6f4Rw1WvDrwjMpkgZ5dG9Wal2+cGPBTUStQ==
   dependencies:
     bignumber.js "^9.0.0"
     bnc-sdk "0.2.3"
@@ -1776,6 +1776,13 @@ bnc-sdk@0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-0.2.3.tgz#a93101e180721ce8b9db9e3c23562690f0f6e491"
   integrity sha512-SL7hocmgt982eP09RW3vBKa1OzBXzexHW84QvnJ0LqttuPk83OxRk5qFLn7pX5hC/AE9moPwh41RN53eFHXZ/g==
+  dependencies:
+    sturdy-websocket "^0.1.12"
+
+bnc-sdk@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-1.0.0.tgz#074545c3a33d9999d0118dca3270abe6de96c3c0"
+  integrity sha512-8rTWuh8pZ281vvtQPbND/AKPoYxPbdZxlmsl3GcnY8UfPgx6kCuPqia2OlRBCHx3J0UD0P0EG45xJRH1btEcnw==
   dependencies:
     sturdy-websocket "^0.1.12"
 
@@ -2104,9 +2111,9 @@ copy-descriptor@^0.1.0:
   integrity sha1-Z29us8OZl8LuGsOpJP1hJHSPV40=
 
 core-js-compat@^3.1.1:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/core-js-compat/-/core-js-compat-3.4.0.tgz#2a47c51d3dc026d290018cacd987495f68a47c75"
-  integrity sha512-pgQUcgT2+v9/yxHgMynYjNj7nmxLRXv3UC39rjCjDwpe63ev2rioQTju1PKLYUBbPCQQvZNWvQC8tBJd65q11g==
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/core-js-compat/-/core-js-compat-3.4.1.tgz#e12c5a3ef9fcb50fd9d9a32805bfe674f9139246"
+  integrity sha512-YdeJI26gLc0CQJ9asLE5obEgBz2I0+CIgnoTbS2T0d5IPQw/OCgCIFR527RmpduxjrB3gSEHoGOCTq9sigOyfw==
   dependencies:
     browserslist "^4.7.2"
     semver "^6.3.0"
@@ -2294,9 +2301,9 @@ delegates@^1.0.0:
   integrity sha1-hMbhWbgZBP3KWaDvRM2HDTElD5o=
 
 des.js@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/des.js/-/des.js-1.0.0.tgz#c074d2e2aa6a8a9a07dbd61f9a15c2cd83ec8ecc"
-  integrity sha1-wHTS4qpqipoH29YfmhXCzYPsjsw=
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/des.js/-/des.js-1.0.1.tgz#5382142e1bdc53f85d86d53e5f4aa7deb91e0843"
+  integrity sha512-Q0I4pfFrv2VPd34/vfLrFOoRmlYj3OV50i7fskps1jZWK1kApMWWT9G6RRUeYedLcBDIhnSDaUvJMb3AhUlaEA==
   dependencies:
     inherits "^2.0.1"
     minimalistic-assert "^1.0.0"
@@ -3971,17 +3978,17 @@ miller-rabin@^4.0.0:
     bn.js "^4.0.0"
     brorand "^1.0.1"
 
-mime-db@1.40.0:
-  version "1.40.0"
-  resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.40.0.tgz#a65057e998db090f732a68f6c276d387d4126c32"
-  integrity sha512-jYdeOMPy9vnxEqFRRo6ZvTZ8d9oPb+k18PKoYNYUe2stVEBPPwsln/qWzdbmaIvnhZ9v2P+CuecK+fpUfsV2mA==
+mime-db@1.42.0:
+  version "1.42.0"
+  resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.42.0.tgz#3e252907b4c7adb906597b4b65636272cf9e7bac"
+  integrity sha512-UbfJCR4UAVRNgMpfImz05smAXK7+c+ZntjaA26ANtkXLlOe947Aag5zdIcKQULAiF9Cq4WxBi9jUs5zkA84bYQ==
 
 mime-types@^2.1.12, mime-types@~2.1.19:
-  version "2.1.24"
-  resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.24.tgz#b6f8d0b3e951efb77dedeca194cff6d16f676f81"
-  integrity sha512-WaFHS3MCl5fapm3oLxU4eYDw77IQM2ACcxQ9RIxfaC3ooc6PFuBMGZZsYpvoXS5D5QTWPieo1jjLdAm3TBP3cQ==
+  version "2.1.25"
+  resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.25.tgz#39772d46621f93e2a80a856c53b86a62156a6437"
+  integrity sha512-5KhStqB5xpTAeGqKBAMgwaYMnQik7teQN4IAzC7npDv6kzeU6prfkR67bc87J1kWMPGkoaZSq1npmexMgkmEVg==
   dependencies:
-    mime-db "1.40.0"
+    mime-db "1.42.0"
 
 mimic-response@^1.0.0:
   version "1.0.1"
@@ -4128,9 +4135,9 @@ node-pre-gyp@^0.12.0:
     tar "^4"
 
 node-releases@^1.1.38:
-  version "1.1.39"
-  resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-1.1.39.tgz#c1011f30343aff5b633153b10ff691d278d08e8d"
-  integrity sha512-8MRC/ErwNCHOlAFycy9OPca46fQYUjbJRDcZTHVWIGXIjYLM73k70vv3WkYutVnM4cCo4hE0MqBVVZjP6vjISA==
+  version "1.1.40"
+  resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-1.1.40.tgz#a94facfa8e2d612302601ca1361741d529c4515a"
+  integrity sha512-r4LPcC5b/bS8BdtWH1fbeK88ib/wg9aqmg6/s3ngNLn2Ewkn/8J6Iw3P9RTlfIAdSdvYvQl2thCY5Y+qTAQ2iQ==
   dependencies:
     semver "^6.3.0"
 
@@ -4209,7 +4216,12 @@ object-copy@^0.1.0:
     define-property "^0.2.5"
     kind-of "^3.0.3"
 
-object-inspect@^1.6.0, object-inspect@~1.6.0:
+object-inspect@^1.6.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/object-inspect/-/object-inspect-1.7.0.tgz#f4f6bd181ad77f006b5ece60bd0b6f398ff74a67"
+  integrity sha512-a7pEHdh1xKIAgTySUGgLMx/xwDZskN1Ud6egYYN3EdRW4ZMPNEDUTF+hwy2LUC+Bl+SyLXANnwz/jyh/qutKUw==
+
+object-inspect@~1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/object-inspect/-/object-inspect-1.6.0.tgz#c70b6cbf72f274aab4c34c0c82f5167bf82cf15b"
   integrity sha512-GJzfBZ6DgDAmnuaM3104jR4s1Myxr3Y3zfIyN4z3UdqN69oSRacNK8UhnobDdC+7J2AHCjGwxQubNJfE70SXXQ==
@@ -4835,9 +4847,9 @@ rollup-pluginutils@^2.0.1, rollup-pluginutils@^2.3.1, rollup-pluginutils@^2.3.3,
     estree-walker "^0.6.1"
 
 rollup@^1.12.0:
-  version "1.26.5"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.26.5.tgz#c492c8bb88b661e7952a864e40bdec209aa1aa03"
-  integrity sha512-c6Pv0yWzjYNpy2DIhLFUnyP6e1UTGownr4IfpJcPY/k186RJjpaGGPRwKQ62KCauctG6dgtHt88pw1EGrPRkuA==
+  version "1.27.0"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.27.0.tgz#7afe0da89c967cec5ccea7e919da6c89a1a68666"
+  integrity sha512-yaMna4MJ8LLEHhHl1ilgHakylf0LKeQctDxhngZLQ+W57GnXa5vtH7XKaK8zlAhNEhlWiH5YFVFt+QCDPUmNkw==
   dependencies:
     "@types/estree" "*"
     "@types/node" "*"
@@ -5259,9 +5271,9 @@ svelte-i18n@^1.1.2-beta:
     object-resolve-path "^1.1.1"
 
 svelte@^3.12.1:
-  version "3.13.0"
-  resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.13.0.tgz#a26ee9620b84613049406c4cacb1accf0bf962d1"
-  integrity sha512-BqIH6Q6li72goMRccIGlUqASVTBHf24YJ3mTXz0pDs6vP07o2Lv9bDGZgEPhO+zjO72dWJP5x3dLbGQt71P56g==
+  version "3.14.0"
+  resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.14.0.tgz#c8d27df6a6dcbbe34de8a03c5031f5f899465930"
+  integrity sha512-BYUxQpkS5fODrQyVVRea8ws2mXJXonwrFVjPjaVQuBPSRtidzn55PsuXJHvAZHHpi+vxBZi/Bimrs7exADX7pA==
 
 tape@^4.6.3:
   version "4.11.0"
