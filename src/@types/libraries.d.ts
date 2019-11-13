@@ -1,4 +1,4 @@
-declare module "promise-cancelable" {
+declare module 'promise-cancelable' {
   export default class Cancelable extends Promise<any> {
     constructor(executor: any)
     cancel(func: () => void): any
@@ -7,6 +7,6 @@ declare module "promise-cancelable" {
     isRejected(): any
   }
 }
-declare module "@walletconnect/web3-provider"
-declare module "squarelink"
-declare module "fortmatic"
+declare module '@walletconnect/web3-provider'
+declare module 'squarelink'
+declare module 'fortmatic'

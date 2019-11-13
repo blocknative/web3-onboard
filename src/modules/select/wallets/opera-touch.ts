@@ -1,13 +1,13 @@
-import { extensionInstallMessage } from "../content"
+import { extensionInstallMessage } from '../content'
 
-import operaTouchIcon from "../wallet-icons/icon-opera-touch.png"
-import operaTouchIcon2x from "../wallet-icons/icon-opera-touch@2x.png"
+import operaTouchIcon from '../wallet-icons/icon-opera-touch.png'
+import operaTouchIcon2x from '../wallet-icons/icon-opera-touch@2x.png'
 
-import { WalletModule, Helpers } from "../../../interfaces"
+import { WalletModule, Helpers } from '../../../interfaces'
 
 function operaTouch(): WalletModule {
   return {
-    name: "Opera Touch",
+    name: 'Opera Touch',
     iconSrc: operaTouchIcon,
     iconSrcSet: operaTouchIcon2x,
     wallet: (helpers: Helpers) => {
@@ -25,7 +25,7 @@ function operaTouch(): WalletModule {
             : null
       }
     },
-    link: "https://www.opera.com/mobile/touch",
+    link: 'https://www.opera.com/mobile/touch',
     installMessage: extensionInstallMessage
   }
 }

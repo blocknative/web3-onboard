@@ -1,13 +1,13 @@
-import { ReadyModal, StateAndHelpers, Wallet } from "../../interfaces"
+import { ReadyModal, StateAndHelpers, Wallet } from '../../interfaces'
 
 function connect() {
   return (stateAndHelpers: StateAndHelpers): ReadyModal | undefined => {
     const { wallet, address } = stateAndHelpers
     if (!address && wallet && wallet.name) {
       return {
-        heading: "Login and Authorize Your Wallet",
+        heading: 'Login and Authorize Your Wallet',
         description: `This dapp requires access to your wallet, please login and authorize access to your ${wallet.name} accounts to continue.`,
-        eventCode: "loginFail",
+        eventCode: 'loginFail',
         action: wallet.connect,
         loading: wallet.loading,
         icon: `

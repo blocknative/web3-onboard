@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { app } from "../stores";
-  export let heading: string;
-  export let icon: string;
+  import { app } from '../stores'
+  export let heading: string
+  export let icon: string
 </script>
 
 <style>

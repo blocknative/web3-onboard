@@ -1,7 +1,7 @@
 <script lang="ts">
-  export let iconSrc: string;
-  export let iconSrcSet: string;
-  export let text: string;
+  export let iconSrc: string
+  export let iconSrcSet: string
+  export let text: string
 </script>
 
 <style>

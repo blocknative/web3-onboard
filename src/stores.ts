@@ -1,7 +1,7 @@
-import { writable, derived } from "svelte/store"
-import { getBlocknative } from "./services"
-import { wait, makeQuerablePromise } from "./utilities"
-import { validateWalletInterface, validateType } from "./validation"
+import { writable, derived } from 'svelte/store'
+import { getBlocknative } from './services'
+import { wait, makeQuerablePromise } from './utilities'
+import { validateWalletInterface, validateType } from './validation'
 import {
   WritableStore,
   WalletInterfaceStore,
@@ -9,14 +9,14 @@ import {
   WalletStateSliceStore,
   StateSyncer,
   BalanceStore
-} from "./interfaces"
+} from './interfaces'
 
-const { default: Cancelable } = require("promise-cancelable")
+const { default: Cancelable } = require('promise-cancelable')
 
 export const app: WritableStore = writable({
-  dappId: "",
+  dappId: '',
   networkId: 1,
-  version: "",
+  version: '',
   mobileDevice: false,
   darkMode: false,
   walletSelectInProgress: false,
@@ -30,15 +30,15 @@ export const balanceSyncStatus: {
   error: string
 } = {
   syncing: null,
-  error: ""
+  error: ''
 }
 
 export const address: WalletStateSliceStore = createWalletStateSliceStore({
-  parameter: "address",
+  parameter: 'address',
   initialState: null
 })
 export const network: WalletStateSliceStore = createWalletStateSliceStore({
-  parameter: "network",
+  parameter: 'network',
   initialState: null
 })
 export const balance: BalanceStore = createBalanceStore(null)
@@ -115,21 +115,21 @@ function createWalletStateSliceStore(options: {
     subscribe,
     reset: () => set(undefined),
     setStateSyncer: (stateSyncer: StateSyncer) => {
-      validateType({ name: "stateSyncer", value: stateSyncer, type: "object" })
+      validateType({ name: 'stateSyncer', value: stateSyncer, type: 'object' })
 
       const { get, onChange } = stateSyncer
 
       validateType({
         name: `${parameter}.get`,
         value: get,
-        type: "function",
+        type: 'function',
         optional: true
       })
 
       validateType({
         name: `${parameter}.onChange`,
         value: onChange,
-        type: "function",
+        type: 'function',
         optional: true
       })
 
@@ -160,59 +160,62 @@ function createBalanceStore(initialState: string | null): BalanceStore {
   let emitter: any
   let emitterAddress: String
 
-  const { subscribe } = derived([address, network], ([$address]: string[], set: any) => {
-    if (stateSyncer && !stateSyncer.onChange) {
-      if ($address && stateSyncer.get && set) {
-        syncStateWithTimeout({
-          getState: stateSyncer.get,
-          setState: set,
-          timeout: 2000
-        })
-
-        if (emitterAddress !== $address) {
-          const blocknative = getBlocknative()
-          emitter = blocknative.account(blocknative.clientIndex, $address).emitter
-          emitter.on("txConfirmed", () => {
-            stateSyncer.get &&
-              syncStateWithTimeout({
-                getState: stateSyncer.get,
-                setState: set,
-                timeout: 2000
-              })
-
-            return false
+  const { subscribe } = derived(
+    [address, network],
+    ([$address]: string[], set: any) => {
+      if (stateSyncer && !stateSyncer.onChange) {
+        if ($address && stateSyncer.get && set) {
+          syncStateWithTimeout({
+            getState: stateSyncer.get,
+            setState: set,
+            timeout: 2000
           })
 
-          emitter.on("all", () => false)
+          if (emitterAddress !== $address) {
+            const blocknative = getBlocknative()
+            emitter = blocknative.account(blocknative.clientIndex, $address)
+              .emitter
+            emitter.on('txConfirmed', () => {
+              stateSyncer.get &&
+                syncStateWithTimeout({
+                  getState: stateSyncer.get,
+                  setState: set,
+                  timeout: 2000
+                })
 
-          emitterAddress = $address
+              return false
+            })
+
+            emitter.on('all', () => false)
+
+            emitterAddress = $address
+          }
+        } else {
+          // no address, so set balance back to null
+          set && set(undefined)
         }
-
-      } else {
-        // no address, so set balance back to null
-        set && set(undefined)
       }
     }
-  })
+  )
 
   return {
     subscribe,
     setStateSyncer: (syncer: StateSyncer) => {
-      validateType({ name: "syncer", value: syncer, type: "object" })
+      validateType({ name: 'syncer', value: syncer, type: 'object' })
 
       const { get, onChange } = syncer
 
       validateType({
-        name: "balance.get",
+        name: 'balance.get',
         value: get,
-        type: "function",
+        type: 'function',
         optional: true
       })
 
       validateType({
-        name: "balance.onChange",
+        name: 'balance.onChange',
         value: onChange,
-        type: "function",
+        type: 'function',
         optional: true
       })
 
@@ -240,7 +243,7 @@ function syncStateWithTimeout(options: {
 
         onCancel(() => {
           balanceSyncStatus.error =
-            "There was a problem getting the balance of this wallet"
+            'There was a problem getting the balance of this wallet'
         })
       }
     ).catch(() => {})

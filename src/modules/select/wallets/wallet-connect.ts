@@ -1,22 +1,22 @@
-import WalletConnectProvider from "@walletconnect/web3-provider"
+import WalletConnectProvider from '@walletconnect/web3-provider'
 
-import walletConnectIcon from "../wallet-icons/icon-walletconnect.svg"
-import { validateType } from "../../../validation"
-import { WalletConnectOptions, WalletModule } from "../../../interfaces"
+import walletConnectIcon from '../wallet-icons/icon-walletconnect.svg'
+import { validateType } from '../../../validation'
+import { WalletConnectOptions, WalletModule } from '../../../interfaces'
 
 function walletConnect(options: WalletConnectOptions): WalletModule {
   validateType({
-    name: "WalletConnect Options",
+    name: 'WalletConnect Options',
     value: options,
-    type: "object"
+    type: 'object'
   })
 
   const { infuraKey } = options
 
-  validateType({ name: "infuraKey", value: infuraKey, type: "string" })
+  validateType({ name: 'infuraKey', value: infuraKey, type: 'string' })
 
   return {
-    name: "WalletConnect",
+    name: 'WalletConnect',
     iconSrc: walletConnectIcon,
     wallet: () => {
       const provider = new WalletConnectProvider({
@@ -28,7 +28,7 @@ function walletConnect(options: WalletConnectOptions): WalletModule {
       return {
         provider,
         interface: {
-          name: "WalletConnect",
+          name: 'WalletConnect',
           connect: () =>
             new Promise((resolve, reject) => {
               provider
@@ -37,7 +37,7 @@ function walletConnect(options: WalletConnectOptions): WalletModule {
                 .catch(() =>
                   reject({
                     message:
-                      "This dapp needs access to your account information."
+                      'This dapp needs access to your account information.'
                   })
                 )
             }),
@@ -45,17 +45,17 @@ function walletConnect(options: WalletConnectOptions): WalletModule {
           address: {
             onChange: func => {
               provider
-                .send("eth_accounts")
+                .send('eth_accounts')
                 .then((accounts: string[]) => func(accounts[0]))
-              provider.on("accountsChanged", (accounts: string[]) =>
+              provider.on('accountsChanged', (accounts: string[]) =>
                 func(accounts[0])
               )
             }
           },
           network: {
             onChange: func => {
-              provider.send("eth_chainId").then(func)
-              provider.on("chainChanged", func)
+              provider.send('eth_chainId').then(func)
+              provider.on('chainChanged', func)
             }
           },
           balance: {
@@ -66,9 +66,9 @@ function walletConnect(options: WalletConnectOptions): WalletModule {
                   return
                 }
 
-                provider.send("eth_getBalance", [
+                provider.send('eth_getBalance', [
                   provider.wc._accounts[0],
-                  "latest"
+                  'latest'
                 ])
               })
           }
