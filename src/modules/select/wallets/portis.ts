@@ -1,20 +1,20 @@
-import Portis from "@portis/web3"
+import Portis from '@portis/web3'
 
-import { networkName } from "../../../utilities"
-import { validateType } from "../../../validation"
-import portisIcon from "../wallet-icons/icon-portis.svg"
-import { SdkWalletOptions, WalletModule, Helpers } from "../../../interfaces"
+import { networkName } from '../../../utilities'
+import { validateType } from '../../../validation'
+import portisIcon from '../wallet-icons/icon-portis.svg'
+import { SdkWalletOptions, WalletModule, Helpers } from '../../../interfaces'
 
 function portis(options: SdkWalletOptions): WalletModule {
-  validateType({ name: "Portis options", value: options, type: "object" })
+  validateType({ name: 'Portis options', value: options, type: 'object' })
 
   const { apiKey, networkId } = options
 
-  validateType({ name: "apiKey", value: apiKey, type: "string" })
-  validateType({ name: "networkId", value: networkId, type: "number" })
+  validateType({ name: 'apiKey', value: apiKey, type: 'string' })
+  validateType({ name: 'networkId', value: networkId, type: 'number' })
 
   return {
-    name: "Portis",
+    name: 'Portis',
     iconSrc: portisIcon,
     wallet: (helpers: Helpers) => {
       const { BigNumber } = helpers
@@ -25,7 +25,7 @@ function portis(options: SdkWalletOptions): WalletModule {
         provider,
         instance,
         interface: {
-          name: "Portis",
+          name: 'Portis',
           connect: provider.enable,
           address: {
             onChange: func => {
@@ -50,8 +50,8 @@ function portis(options: SdkWalletOptions): WalletModule {
 
                   provider.sendAsync(
                     {
-                      method: "eth_getBalance",
-                      params: [provider.address, "latest"],
+                      method: 'eth_getBalance',
+                      params: [provider.address, 'latest'],
                       id: 1
                     },
                     (e: any, res: any) => {

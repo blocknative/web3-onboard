@@ -1,19 +1,19 @@
-import Authereum from "authereum"
-import authereumIcon from "../wallet-icons/authereum.png"
+import Authereum from 'authereum'
+import authereumIcon from '../wallet-icons/authereum.png'
 
-import { networkName } from "../../../utilities"
-import { WalletModule } from "../../../interfaces"
-import { validateType } from "../../../validation"
+import { networkName } from '../../../utilities'
+import { WalletModule } from '../../../interfaces'
+import { validateType } from '../../../validation'
 
 function authereum(options: { networkId: number }): WalletModule {
-  validateType({ name: "Authereum Options", value: options, type: "object" })
+  validateType({ name: 'Authereum Options', value: options, type: 'object' })
 
   const { networkId } = options
 
-  validateType({ name: "networkId", value: networkId, type: "number" })
+  validateType({ name: 'networkId', value: networkId, type: 'number' })
 
   return {
-    name: "Authereum",
+    name: 'Authereum',
     iconSrc: authereumIcon,
     wallet: () => {
       const authereum = new Authereum({
@@ -26,12 +26,12 @@ function authereum(options: { networkId: number }): WalletModule {
       return {
         provider,
         interface: {
-          name: "Authereum",
+          name: 'Authereum',
           connect: () => provider.enable(),
           disconnect: () => authereum.logout(),
           loading: () =>
             new Promise((resolve: () => void) => {
-              authereum.on("openPopup", resolve)
+              authereum.on('openPopup', resolve)
             }),
           address: {
             get: () => authereum.getAccountAddress()

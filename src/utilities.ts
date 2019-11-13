@@ -1,17 +1,17 @@
-import bowser from "bowser"
-import BigNumber from "bignumber.js"
+import bowser from 'bowser'
+import BigNumber from 'bignumber.js'
 
 import {
   QuerablePromise,
   WalletInterface,
   CancelablePromise
-} from "./interfaces"
+} from './interfaces'
 
 export function getNetwork(provider: any): Promise<number | any> {
   return new Promise((resolve, reject) => {
     provider.sendAsync(
       {
-        method: "net_version",
+        method: 'net_version',
         params: [],
         id: 42
       },
@@ -27,7 +27,7 @@ export function getAddress(provider: any): Promise<string | any> {
   return new Promise((resolve, reject) => {
     provider.sendAsync(
       {
-        method: "eth_accounts",
+        method: 'eth_accounts',
         params: [],
         id: 42
       },
@@ -50,8 +50,8 @@ export function getBalance(provider: any): Promise<string | any> {
 
     provider.sendAsync(
       {
-        method: "eth_getBalance",
-        params: [currentAddress, "latest"],
+        method: 'eth_getBalance',
+        params: [currentAddress, 'latest'],
         id: 42
       },
       (e: any, res: any) => {
@@ -65,7 +65,7 @@ export function getBalance(provider: any): Promise<string | any> {
 export function createModernProviderInterface(provider: any): WalletInterface {
   provider.autoRefreshOnNetworkChange = false
 
-  const onFuncExists = typeof provider.on === "function"
+  const onFuncExists = typeof provider.on === 'function'
 
   return {
     address: onFuncExists
@@ -73,7 +73,7 @@ export function createModernProviderInterface(provider: any): WalletInterface {
           onChange: func => {
             // get the initial value
             getAddress(provider).then(func)
-            provider.on("accountsChanged", (accounts: string[]) =>
+            provider.on('accountsChanged', (accounts: string[]) =>
               func(accounts[0])
             )
           }
@@ -86,7 +86,7 @@ export function createModernProviderInterface(provider: any): WalletInterface {
           onChange: (func: (val: string | number) => void) => {
             // get initial value
             getNetwork(provider).then(func)
-            provider.on("networkChanged", func)
+            provider.on('networkChanged', func)
           }
         }
       : { get: () => getNetwork(provider) },
@@ -101,12 +101,12 @@ export function createModernProviderInterface(provider: any): WalletInterface {
             .then(resolve)
             .catch(() =>
               reject({
-                message: "This dapp needs access to your account information."
+                message: 'This dapp needs access to your account information.'
               })
             )
         }
       ),
-    name: getProviderName(provider) || "unknown"
+    name: getProviderName(provider) || 'unknown'
   }
 }
 
@@ -121,7 +121,7 @@ export function createLegacyProviderInterface(provider: any): WalletInterface {
     balance: {
       get: () => getBalance(provider)
     },
-    name: getProviderName(provider) || "unknown"
+    name: getProviderName(provider) || 'unknown'
   }
 }
 
@@ -129,35 +129,35 @@ export function getProviderName(provider: any): string | undefined {
   if (!provider) return
 
   if (provider.isMetaMask) {
-    return "MetaMask"
+    return 'MetaMask'
   }
 
   if (provider.isDapper) {
-    return "Dapper"
+    return 'Dapper'
   }
 
   if (provider.isWalletConnect) {
-    return "WalletConnect"
+    return 'WalletConnect'
   }
 
   if (provider.isTrust) {
-    return "Trust"
+    return 'Trust'
   }
 
   if (provider.isCoinbaseWallet) {
-    return "Coinbase"
+    return 'Coinbase'
   }
 
   if (provider.isToshi) {
-    return "Toshi"
+    return 'Toshi'
   }
 
   if (provider.isCipher) {
-    return "Cipher"
+    return 'Cipher'
   }
 
-  if (provider.host && provider.host.indexOf("localhost") !== -1) {
-    return "localhost"
+  if (provider.host && provider.host.indexOf('localhost') !== -1) {
+    return 'localhost'
   }
 }
 
@@ -165,37 +165,37 @@ export function isMobileDevice() {
   const browser = bowser.getParser(window.navigator.userAgent)
   const { type } = browser.getPlatform()
 
-  return type !== "desktop"
+  return type !== 'desktop'
 }
 
 export function networkName(id: number): string {
   switch (id) {
     case 1:
-      return "mainnet"
+      return 'mainnet'
     case 3:
-      return "ropsten"
+      return 'ropsten'
     case 4:
-      return "rinkeby"
+      return 'rinkeby'
     case 5:
-      return "goerli"
+      return 'goerli'
     case 42:
-      return "kovan"
+      return 'kovan'
     default:
-      return "local"
+      return 'local'
   }
 }
 
 export function networkToId(network: string): number {
   switch (network) {
-    case "mainnet":
+    case 'mainnet':
       return 1
-    case "ropsten":
+    case 'ropsten':
       return 3
-    case "rinkeby":
+    case 'rinkeby':
       return 4
-    case "goerli":
+    case 'goerli':
       return 5
-    case "kovan":
+    case 'kovan':
       return 42
     default:
       return 0

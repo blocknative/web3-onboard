@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { fade } from "svelte/transition";
-  import Button from "../elements/Button.svelte";
-  import IconButton from "../elements/IconButton.svelte";
-  import { SelectModalData, WalletModule } from "../interfaces";
-  export let modalData: SelectModalData;
-  export let handleWalletSelect: (wallet: WalletModule) => void;
+  import { fade } from 'svelte/transition'
+  import Button from '../elements/Button.svelte'
+  import IconButton from '../elements/IconButton.svelte'
+  import { SelectModalData, WalletModule } from '../interfaces'
+  export let modalData: SelectModalData
+  export let handleWalletSelect: (wallet: WalletModule) => void
 
-  let showingAllWalletModules: boolean = false;
+  let showingAllWalletModules: boolean = false
 </script>
 
 <style>
@@ -21,7 +21,7 @@
     overflow-y: scroll;
     padding: 0;
     scrollbar-width: none;
-    font-family: "Helvetica Neue";
+    font-family: 'Helvetica Neue';
     font-size: inherit;
     line-height: 1.15;
     box-sizing: border-box;

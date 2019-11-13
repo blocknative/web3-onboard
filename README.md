@@ -9,19 +9,19 @@ JavaScript library to easily onboard users to ethereum apps by enabling wallet s
 ## Quick Start with Default Modules
 
 ```javascript
-import Onboard from "bnc-onboard"
+import Onboard from 'bnc-onboard'
 
 // initialize onboard
 const onboard = Onboard.init({
-  dappId: "Your apiKey here",
+  dappId: 'Your apiKey here',
   networkId: 1,
   subscriptions: {
-    address: address => console.log("user address has changed:", address),
-    network: network => console.log("user network has changed:", network),
-    balance: balance => console.log("user balance has changed:", balance),
+    address: address => console.log('user address has changed:', address),
+    network: network => console.log('user network has changed:', network),
+    balance: balance => console.log('user balance has changed:', balance),
     wallet: wallet =>
       console.log(
-        "a new wallet has been selected by user",
+        'a new wallet has been selected by user',
         wallet.provider,
         wallet.name
       )
@@ -30,17 +30,17 @@ const onboard = Onboard.init({
     // default wallets that are included: MetaMask, Dapper, Coinbase, Trust, WalletConnect
     walletSelect: Onboard.modules.select.defaults({
       // if you want squarelink as a wallet option
-      squarelinkInit: { apiKey: "Your squarelink key here" },
+      squarelinkInit: { apiKey: 'Your squarelink key here' },
       // if you want fortmatic as a wallet option
-      fortmaticInit: { apiKey: "Your fortmatic key here" },
+      fortmaticInit: { apiKey: 'Your fortmatic key here' },
       // if you want portis as a wallet option
-      portisInit: { apiKey: "Your portis key here" },
+      portisInit: { apiKey: 'Your portis key here' },
       networkId: 4
     }),
     // default ready steps are: connect, network, balance
     walletReady: Onboard.modules.ready.defaults({
       networkId: 4,
-      minimumBalance: "200000000000000000"
+      minimumBalance: '200000000000000000'
     })
   }
 })
@@ -241,7 +241,7 @@ walletConnect({
 #### Example
 
 ```javascript
-import Onboard from "bnc-onboard"
+import Onboard from 'bnc-onboard'
 
 // PICK AND CHOOSE MODULES
 
@@ -257,17 +257,17 @@ const onboard = Onboard.init({
   // ...
   modules: {
     walletSelect: {
-      heading: "Select a Wallet",
+      heading: 'Select a Wallet',
       description:
-        "Please select the wallet that you would like to use with this Dapp",
+        'Please select the wallet that you would like to use with this Dapp',
       wallets: {
         desktop: [
-          portis({ apiKey: "sdda-w2-ds3", networkId: 1 }),
-          squarelink({ apiKey: "sdda-w2-ds3", networkId: 1 }),
+          portis({ apiKey: 'sdda-w2-ds3', networkId: 1 }),
+          squarelink({ apiKey: 'sdda-w2-ds3', networkId: 1 }),
           dapper(),
           metmask()
         ],
-        mobile: [fortmatic({ apiKey: "sd-3d3-d", networkId: 1 })]
+        mobile: [fortmatic({ apiKey: 'sd-3d3-d', networkId: 1 })]
       }
     }
     //....
@@ -282,7 +282,7 @@ const onboard = Onboard.init({
   // ...
   modules: {
     walletSelect: Onboard.modules.select.defaults({
-      portisInit: { apiKey: "Your portis key here" },
+      portisInit: { apiKey: 'Your portis key here' },
       networkId: 4
     })
     // ...
@@ -323,7 +323,7 @@ balance(String) //  the minimum balance in wei required to interact with your da
 #### Example
 
 ```javascript
-import Onboard from "bnc-onboard"
+import Onboard from 'bnc-onboard'
 
 // PICK AND CHOOSE MODULES
 
@@ -333,7 +333,7 @@ const onboard = Onboard.init({
   // ...
   modules: {
     //....
-    walletReady: [connect(), network(1), balance("400000000000")]
+    walletReady: [connect(), network(1), balance('400000000000')]
   }
 })
 
@@ -347,7 +347,7 @@ const onboard = Onboard.init({
     // ...
     walletReady: Onboard.modules.ready.defaults({
       networkId: 1,
-      minimumBalance: "400000000000"
+      minimumBalance: '400000000000'
     })
   }
 })
