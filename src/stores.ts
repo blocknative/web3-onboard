@@ -1,4 +1,4 @@
-import { writable, derived } from 'svelte/store'
+import { writable, derived, get } from 'svelte/store'
 import { getBlocknative } from './services'
 import { wait, makeQuerablePromise } from './utilities'
 import { validateWalletInterface, validateType } from './validation'
@@ -168,7 +168,8 @@ function createBalanceStore(initialState: string | null): BalanceStore {
           syncStateWithTimeout({
             getState: stateSyncer.get,
             setState: set,
-            timeout: 2000
+            timeout: 4000,
+            currentBalance: get(balance)
           })
 
           if (emitterAddress !== $address) {
@@ -180,7 +181,8 @@ function createBalanceStore(initialState: string | null): BalanceStore {
                 syncStateWithTimeout({
                   getState: stateSyncer.get,
                   setState: set,
-                  timeout: 2000
+                  timeout: 4000,
+                  currentBalance: get(balance)
                 })
 
               return false
@@ -229,9 +231,10 @@ function createBalanceStore(initialState: string | null): BalanceStore {
 function syncStateWithTimeout(options: {
   getState: () => Promise<string | number | null>
   setState: (newState: string) => void
-  timeout: number
+  timeout: number,
+  currentBalance: string
 }) {
-  const { getState, setState, timeout } = options
+  const { getState, setState, timeout, currentBalance } = options
   const prom = makeQuerablePromise(
     new Cancelable(
       (
@@ -253,7 +256,9 @@ function syncStateWithTimeout(options: {
 
   prom
     .then((result: string) => {
-      if (result) {
+      if (result === currentBalance) {
+        syncStateWithTimeout((options))
+      } else {
         setState(result)
       }
     })
