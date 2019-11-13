@@ -157,7 +157,8 @@ function createWalletStateSliceStore(options: {
 
 function createBalanceStore(initialState: string | null): BalanceStore {
   let stateSyncer: StateSyncer
-  let emitter
+  let emitter: any
+  let emitterAddress: String
 
   const { subscribe } = derived([address, network], ([$address]: string[], set: any) => {
     if (stateSyncer && !stateSyncer.onChange) {
@@ -167,18 +168,26 @@ function createBalanceStore(initialState: string | null): BalanceStore {
           setState: set,
           timeout: 2000
         })
-        const blocknative = getBlocknative()
-        emitter = blocknative.account(blocknative.clientIndex, $address).emitter
-        emitter.on("txConfirmed", () => {
-          stateSyncer.get &&
-            syncStateWithTimeout({
-              getState: stateSyncer.get,
-              setState: set,
-              timeout: 2000
-            })
-          return false
-        })
-        emitter.on("all", () => false)
+
+        if (emitterAddress !== $address) {
+          const blocknative = getBlocknative()
+          emitter = blocknative.account(blocknative.clientIndex, $address).emitter
+          emitter.on("txConfirmed", () => {
+            stateSyncer.get &&
+              syncStateWithTimeout({
+                getState: stateSyncer.get,
+                setState: set,
+                timeout: 2000
+              })
+
+            return false
+          })
+
+          emitter.on("all", () => false)
+
+          emitterAddress = $address
+        }
+
       } else {
         // no address, so set balance back to null
         set && set(undefined)
