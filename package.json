@@ -45,7 +45,7 @@
     "@walletconnect/web3-provider": "^1.0.0-beta.36",
     "authereum": "^0.0.4-beta.26",
     "bignumber.js": "^9.0.0",
-    "bnc-sdk": "0.2.3",
+    "bnc-sdk": "1.0.0",
     "bowser": "^2.5.2",
     "fortmatic": "^0.8.2",
     "promise-cancelable": "^2.1.1",
