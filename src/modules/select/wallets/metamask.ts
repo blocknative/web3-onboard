@@ -1,13 +1,13 @@
-import { extensionInstallMessage } from "../content"
+import { extensionInstallMessage } from '../content'
 
-import metamaskIcon from "../wallet-icons/icon-metamask.png"
-import metamaskIcon2x from "../wallet-icons/icon-metamask@2x.png"
+import metamaskIcon from '../wallet-icons/icon-metamask.png'
+import metamaskIcon2x from '../wallet-icons/icon-metamask@2x.png'
 
-import { WalletModule, Helpers } from "../../../interfaces"
+import { WalletModule, Helpers } from '../../../interfaces'
 
 function metamask(): WalletModule {
   return {
-    name: "MetaMask",
+    name: 'MetaMask',
     iconSrc: metamaskIcon,
     iconSrcSet: metamaskIcon2x,
     wallet: (helpers: Helpers) => {
@@ -24,14 +24,14 @@ function metamask(): WalletModule {
       return {
         provider,
         interface:
-          provider && getProviderName(provider) === "MetaMask"
-            ? typeof provider.enable === "function"
+          provider && getProviderName(provider) === 'MetaMask'
+            ? typeof provider.enable === 'function'
               ? createModernProviderInterface(provider)
               : createLegacyProviderInterface(provider)
             : null
       }
     },
-    link: "https://metamask.io/",
+    link: 'https://metamask.io/',
     installMessage: extensionInstallMessage
   }
 }

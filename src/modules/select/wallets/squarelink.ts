@@ -1,20 +1,20 @@
-import Squarelink from "squarelink"
+import Squarelink from 'squarelink'
 
-import { networkName, networkToId } from "../../../utilities"
-import { validateType } from "../../../validation"
-import sqlkIcon from "../wallet-icons/icon-squarelink.svg"
-import { SdkWalletOptions, WalletModule, Helpers } from "../../../interfaces"
+import { networkName, networkToId } from '../../../utilities'
+import { validateType } from '../../../validation'
+import sqlkIcon from '../wallet-icons/icon-squarelink.svg'
+import { SdkWalletOptions, WalletModule, Helpers } from '../../../interfaces'
 
 function squarelink(options: SdkWalletOptions): WalletModule {
-  validateType({ name: "Squarelink Options", value: options, type: "object" })
+  validateType({ name: 'Squarelink Options', value: options, type: 'object' })
 
   const { apiKey, networkId } = options
 
-  validateType({ name: "apiKey", value: apiKey, type: "string" })
-  validateType({ name: "networkId", value: networkId, type: "number" })
+  validateType({ name: 'apiKey', value: apiKey, type: 'string' })
+  validateType({ name: 'networkId', value: networkId, type: 'number' })
 
   return {
-    name: "Squarelink",
+    name: 'Squarelink',
     iconSrc: sqlkIcon,
     wallet: (helpers: Helpers) => {
       const { BigNumber } = helpers
@@ -29,7 +29,7 @@ function squarelink(options: SdkWalletOptions): WalletModule {
         provider,
         instance,
         interface: {
-          name: "Squarelink",
+          name: 'Squarelink',
           connect: provider.enable,
           address: {
             get: () => Promise.resolve(instance.accounts[0])
@@ -47,8 +47,8 @@ function squarelink(options: SdkWalletOptions): WalletModule {
 
                 provider.sendAsync(
                   {
-                    method: "eth_getBalance",
-                    params: [instance.accounts[0], "latest"],
+                    method: 'eth_getBalance',
+                    params: [instance.accounts[0], 'latest'],
                     id: 1
                   },
                   (e: any, res: any) => {

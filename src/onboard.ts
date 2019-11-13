@@ -1,9 +1,9 @@
-import "regenerator-runtime/runtime"
+import 'regenerator-runtime/runtime'
 
-import { get } from "svelte/store"
+import { get } from 'svelte/store'
 
-import modules from "./modules"
-import Onboard from "./views/Onboard.svelte"
+import modules from './modules'
+import Onboard from './views/Onboard.svelte'
 
 import {
   app,
@@ -13,13 +13,13 @@ import {
   wallet,
   state,
   walletInterface
-} from "./stores"
+} from './stores'
 
-import { isMobileDevice } from "./utilities"
-import { initializeBlocknative } from "./services"
-import { validateInit, validateConfig } from "./validation"
+import { isMobileDevice } from './utilities'
+import { initializeBlocknative } from './services'
+import { validateInit, validateConfig } from './validation'
 
-import { version } from "../package.json"
+import { version } from '../package.json'
 
 import {
   Initialization,
@@ -28,7 +28,7 @@ import {
   ConfigOptions,
   UserState,
   Wallet
-} from "./interfaces"
+} from './interfaces'
 
 function init(initialization: Initialization): API {
   validateInit(initialization)
@@ -91,7 +91,7 @@ function init(initialization: Initialization): API {
         ...store,
         walletSelectInProgress: true,
         autoSelectWallet:
-          typeof autoSelectWallet === "string" && autoSelectWallet
+          typeof autoSelectWallet === 'string' && autoSelectWallet
       }))
 
       const appUnsubscribe = app.subscribe((store: AppState) => {
@@ -107,7 +107,7 @@ function init(initialization: Initialization): API {
   function walletReady(): Promise<boolean> {
     return new Promise(resolve => {
       if (!get(walletInterface)) {
-        throw new Error("walletSelect must be called before walletReady")
+        throw new Error('walletSelect must be called before walletReady')
       }
 
       app.update((store: AppState) => ({

@@ -1,10 +1,10 @@
-import { mobileWalletInstallMessage } from "../content"
-import trustIcon from "../wallet-icons/icon-trust.svg"
-import { WalletModule, Helpers } from "../../../interfaces"
+import { mobileWalletInstallMessage } from '../content'
+import trustIcon from '../wallet-icons/icon-trust.svg'
+import { WalletModule, Helpers } from '../../../interfaces'
 
 function trust(): WalletModule {
   return {
-    name: "Trust",
+    name: 'Trust',
     iconSrc: trustIcon,
     wallet: (helpers: Helpers) => {
       const { getProviderName, createLegacyProviderInterface } = helpers
@@ -14,7 +14,7 @@ function trust(): WalletModule {
       return {
         provider,
         interface:
-          provider && getProviderName(provider) === "Trust"
+          provider && getProviderName(provider) === 'Trust'
             ? createLegacyProviderInterface(provider)
             : null
       }
