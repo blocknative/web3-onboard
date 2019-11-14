@@ -20,7 +20,8 @@ function trust(): WalletModule {
       }
     },
     link: `https://links.trustwalletapp.com/a/key_live_lfvIpVeI9TFWxPCqwU8rZnogFqhnzs4D?&event=openURL&url=${window.location.href}`,
-    installMessage: mobileWalletInstallMessage
+    installMessage: mobileWalletInstallMessage,
+    mobile: true
   }
 }
 

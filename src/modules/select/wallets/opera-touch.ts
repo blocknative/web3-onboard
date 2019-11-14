@@ -26,7 +26,8 @@ function operaTouch(): WalletModule {
       }
     },
     link: 'https://www.opera.com/mobile/touch',
-    installMessage: extensionInstallMessage
+    installMessage: extensionInstallMessage,
+    mobile: true
   }
 }
 

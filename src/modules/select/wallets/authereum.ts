@@ -47,7 +47,9 @@ function authereum(options: { networkId: number }): WalletModule {
           }
         }
       }
-    }
+    },
+    desktop: true,
+    mobile: true
   }
 }
 

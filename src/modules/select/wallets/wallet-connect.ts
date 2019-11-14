@@ -74,7 +74,9 @@ function walletConnect(options: WalletConnectOptions): WalletModule {
           }
         }
       }
-    }
+    },
+    desktop: true,
+    mobile: true
   }
 }
 

@@ -8,8 +8,8 @@
     "blocknative",
     "wallet"
   ],
-  "main": "dist/onboard.umd.js",
-  "module": "dist/onboard.esm.js",
+  "main": "dist/cjs/onboard.js",
+  "module": "dist/esm/onboard.js",
   "typings": "dist/src/onboard.d.ts",
   "files": [
     "dist"
@@ -29,6 +29,7 @@
     "@rollup/plugin-json": "^4.0.0",
     "@types/node": "^12.12.3",
     "babel-plugin-external-helpers": "^6.18.0",
+    "rimraf": "^3.0.0",
     "rollup": "^1.12.0",
     "rollup-plugin-commonjs": "^10.0.0",
     "rollup-plugin-img": "^1.1.0",
@@ -52,7 +53,7 @@
     "regenerator-runtime": "^0.13.3"
   },
   "scripts": {
-    "build": "rollup -c && babel dist/onboard.esm.js --out-file dist/onboard.esm.js && babel dist/onboard.umd.js --out-file dist/onboard.umd.js --minified",
+    "build": "rimraf dist && rollup -c && babel dist/cjs --out-dir dist/cjs && babel dist/esm --out-dir dist/esm",
     "test": "echo \"TBD\" && exit 0"
   }
 }

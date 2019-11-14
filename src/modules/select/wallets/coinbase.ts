@@ -20,7 +20,8 @@ function coinbase(): WalletModule {
       }
     },
     link: 'https://go.cb-w.com/',
-    installMessage: mobileWalletInstallMessage
+    installMessage: mobileWalletInstallMessage,
+    mobile: true
   }
 }
 

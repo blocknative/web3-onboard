@@ -22,7 +22,8 @@ function dapper(): WalletModule {
       }
     },
     link: 'https://www.meetdapper.com/',
-    installMessage: extensionInstallMessage
+    installMessage: extensionInstallMessage,
+    desktop: true
   }
 }
 

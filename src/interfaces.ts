@@ -1,6 +1,6 @@
 export interface Initialization {
-  networkId: number
   dappId: string
+  networkId: number
   subscriptions: Subscriptions
   modules: Modules
 }
@@ -21,10 +21,7 @@ interface Modules {
 export interface WalletSelectModule {
   heading: string
   description: string
-  wallets: {
-    mobile: WalletModule[]
-    desktop: WalletModule[]
-  }
+  wallets: WalletModule[]
 }
 
 export interface WalletReadyModule {
@@ -88,6 +85,8 @@ export interface WalletModule {
     selectedWallet: string
   }) => string
   preferred?: boolean
+  desktop?: boolean
+  mobile?: boolean
 }
 
 export interface Helpers {
@@ -137,15 +136,12 @@ export interface WalletConnectOptions {
   infuraKey: string
 }
 
-export interface SelectDefaultsOptions {
-  heading?: string
-  description?: string
-  networkId: number
-  fortmaticInit?: { apiKey: string }
-  portisInit?: { apiKey: string }
-  squarelinkInit?: { apiKey: string }
-  walletConnectInit?: WalletConnectOptions
-  preferredWallets?: string[]
+export interface WalletInit {
+  name: string
+  preferred?: boolean
+  apiKey?: string
+  infuraKey?: string
+  networkId?: number
 }
 
 export interface WalletSelectFunction {

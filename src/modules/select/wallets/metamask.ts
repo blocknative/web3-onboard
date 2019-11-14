@@ -32,7 +32,8 @@ function metamask(): WalletModule {
       }
     },
     link: 'https://metamask.io/',
-    installMessage: extensionInstallMessage
+    installMessage: extensionInstallMessage,
+    desktop: true
   }
 }
 

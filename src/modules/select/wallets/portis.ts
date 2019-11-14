@@ -63,7 +63,9 @@ function portis(options: SdkWalletOptions): WalletModule {
           }
         }
       }
-    }
+    },
+    desktop: true,
+    mobile: true
   }
 }
 

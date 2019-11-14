@@ -7,8 +7,7 @@ import {
   ConfigOptions,
   ReadyModal,
   WalletInterface,
-  ReadyDefaultsOptions,
-  SelectDefaultsOptions
+  ReadyDefaultsOptions
 } from './interfaces'
 
 const validSubscriptionKeys = ['address', 'network', 'balance', 'wallet']
@@ -55,16 +54,12 @@ function invalidParams(
 export function validateInit(init: Initialization): never | void {
   validateType({ name: 'init', value: init, type: 'object' })
 
-  const { networkId, dappId, subscriptions, modules, ...otherParams } = init
+  const { dappId, networkId, subscriptions, modules, ...otherParams } = init
 
-  invalidParams(
-    otherParams,
-    ['networkId', 'dappId', 'subscriptions', 'modules'],
-    'init'
-  )
+  invalidParams(otherParams, ['dappId', 'subscriptions', 'modules'], 'init')
 
-  validateType({ name: 'networkId', value: networkId, type: 'number' })
   validateType({ name: 'dappId', value: dappId, type: 'string' })
+  validateType({ name: 'networkId', value: networkId, type: 'number' })
 
   validateSubscriptions(subscriptions)
   validateModules(modules)
@@ -126,37 +121,11 @@ function validateWalletSelect(walletSelect: WalletSelectModule): never | void {
   validateType({ name: 'heading', value: heading, type: 'string' })
   validateType({ name: 'description', value: description, type: 'string' })
 
-  validateType({ name: 'wallets', value: wallets, type: 'object' })
+  validateType({ name: 'wallets', value: wallets, type: 'array' })
 
-  const { mobile, desktop, ...restParams } = wallets
-
-  invalidParams(restParams, ['mobile', 'desktop'], 'wallets')
-
-  validateType({
-    name: 'mobile',
-    value: mobile,
-    type: 'array',
-    optional: true
+  wallets.forEach((module: WalletModule) => {
+    validateWalletModule(module)
   })
-
-  if (mobile) {
-    mobile.forEach((module: WalletModule) => {
-      validateWalletModule(module)
-    })
-  }
-
-  validateType({
-    name: 'desktop',
-    value: desktop,
-    type: 'array',
-    optional: true
-  })
-
-  if (desktop) {
-    desktop.forEach((module: WalletModule) => {
-      validateWalletModule(module)
-    })
-  }
 }
 
 function validateWalletModule(module: WalletModule): never | void {
@@ -169,6 +138,8 @@ function validateWalletModule(module: WalletModule): never | void {
     link,
     installMessage,
     preferred,
+    desktop,
+    mobile,
     ...otherParams
   } = module
 
@@ -212,6 +183,18 @@ function validateWalletModule(module: WalletModule): never | void {
   validateType({
     name: 'preferred',
     value: preferred,
+    type: 'boolean',
+    optional: true
+  })
+  validateType({
+    name: 'desktop',
+    value: desktop,
+    type: 'boolean',
+    optional: true
+  })
+  validateType({
+    name: 'mobile',
+    value: mobile,
     type: 'boolean',
     optional: true
   })
@@ -259,6 +242,7 @@ export function validateModal(modal: ReadyModal): never | void {
     invalidMsg,
     eventCode,
     action,
+    loading,
     icon,
     ...otherParams
   } = modal
@@ -292,6 +276,13 @@ export function validateModal(modal: ReadyModal): never | void {
     name: 'action',
     value: action,
     type: 'function',
+    optional: true
+  })
+
+  validateType({
+    name: 'loading',
+    value: loading,
+    type: 'object',
     optional: true
   })
 
@@ -412,94 +403,6 @@ export function validateReadyDefaultsOptions(
     name: 'minimumBalance',
     value: minimumBalance,
     type: 'string',
-    optional: true
-  })
-}
-
-export function validateSelectDefaultsOptions(
-  options: SelectDefaultsOptions
-): never | void {
-  validateType({
-    name: 'select defaults options',
-    value: options,
-    type: 'object'
-  })
-
-  const {
-    heading,
-    description,
-    networkId,
-    fortmaticInit,
-    portisInit,
-    squarelinkInit,
-    walletConnectInit,
-    preferredWallets,
-    ...otherParams
-  } = options
-
-  invalidParams(
-    otherParams,
-    [
-      'heading',
-      'description',
-      'networkId',
-      'fortmaticInit',
-      'portisInit',
-      'squarelinkInit',
-      'walletConnectInit',
-      'preferredWallets'
-    ],
-    'options'
-  )
-
-  validateType({
-    name: 'heading',
-    value: heading,
-    type: 'string',
-    optional: true
-  })
-
-  validateType({
-    name: 'description',
-    value: description,
-    type: 'string',
-    optional: true
-  })
-
-  validateType({ name: 'networkId', value: networkId, type: 'number' })
-
-  validateType({
-    name: 'fortmaticInit',
-    value: fortmaticInit,
-    type: 'object',
-    optional: true
-  })
-
-  validateType({
-    name: 'portisInit',
-    value: portisInit,
-    type: 'object',
-    optional: true
-  })
-
-  validateType({
-    name: 'squarelinkInit',
-    value: squarelinkInit,
-    type: 'object',
-    optional: true
-  })
-
-  validateType({
-    name: 'walletConnectInit',
-    value: walletConnectInit,
-    type: 'object',
-    optional: true
-  })
-
-  validateType({
-    name: 'preferredWallets',
-    value: preferredWallets,
-    type: 'array',
     optional: true
   })
 }

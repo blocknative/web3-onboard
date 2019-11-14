@@ -26,7 +26,8 @@ function opera(): WalletModule {
       }
     },
     link: 'https://www.opera.com/',
-    installMessage: extensionInstallMessage
+    installMessage: extensionInstallMessage,
+    desktop: true
   }
 }
 
