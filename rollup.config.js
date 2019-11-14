@@ -97,7 +97,7 @@ export default [
       '@portis/web3',
       '@walletconnect/web3-provider',
       'fortmatic',
-      'squarelink',
+      // 'squarelink',
       'authereum',
       'regenerator-runtime/runtime'
     ]
