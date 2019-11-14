@@ -14,7 +14,7 @@ function network(correctNetwork: number): WalletReadyModule {
     if (network != (correctNetwork || '1')) {
       return {
         heading: 'You Must Change Networks',
-        description: `Blockchain applications have different networks they can work on. Think of this like making sure you're on Netflix vs Hulu to watch your favorite show. We've detected that you need to switch your wallet's network from <b>${networkName(
+        description: `We've detected that you need to switch your wallet's network from <b>${networkName(
           Number(network)
         )}</b> to <b>${networkName(
           Number(correctNetwork)
