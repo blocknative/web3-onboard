@@ -260,6 +260,7 @@ export function validateModal(modal: ReadyModal): never | void {
     eventCode,
     action,
     icon,
+    loading,
     ...otherParams
   } = modal
 
@@ -291,6 +292,13 @@ export function validateModal(modal: ReadyModal): never | void {
   validateType({
     name: 'action',
     value: action,
+    type: 'function',
+    optional: true
+  })
+
+  validateType({
+    name: 'loading',
+    value: loading,
     type: 'function',
     optional: true
   })
