@@ -299,7 +299,7 @@ export function validateModal(modal: ReadyModal): never | void {
   validateType({
     name: 'loading',
     value: loading,
-    type: 'object',
+    type: 'function',
     optional: true
   })
 
