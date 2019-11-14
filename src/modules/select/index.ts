@@ -6,7 +6,7 @@ import trust from './wallets/trust'
 import portis from './wallets/portis'
 import fortmatic from './wallets/fortmatic'
 import authereum from './wallets/authereum'
-import squarelink from './wallets/squarelink'
+// import squarelink from './wallets/squarelink'
 import opera from './wallets/opera'
 import operaTouch from './wallets/opera-touch'
 
@@ -22,7 +22,7 @@ function defaults(options: SelectDefaultsOptions): WalletSelectModule {
     networkId,
     fortmaticInit,
     portisInit,
-    squarelinkInit,
+    // squarelinkInit,
     walletConnectInit,
     preferredWallets
   } = options
@@ -49,10 +49,10 @@ function defaults(options: SelectDefaultsOptions): WalletSelectModule {
     )
   }
 
-  if (squarelinkInit) {
-    desktopWallets.push(squarelink({ ...squarelinkInit, networkId }))
-    mobileWallets.push(squarelink({ ...squarelinkInit, networkId }))
-  }
+  // if (squarelinkInit) {
+  //   desktopWallets.push(squarelink({ ...squarelinkInit, networkId }))
+  //   mobileWallets.push(squarelink({ ...squarelinkInit, networkId }))
+  // }
 
   desktopWallets.push(authereum({ networkId }))
   mobileWallets.push(authereum({ networkId }))
@@ -98,7 +98,7 @@ export default {
   portis,
   fortmatic,
   authereum,
-  squarelink,
+  // squarelink,
   opera,
   operaTouch
 }

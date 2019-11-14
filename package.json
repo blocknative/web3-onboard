@@ -49,8 +49,7 @@
     "bowser": "^2.5.2",
     "fortmatic": "^0.8.2",
     "promise-cancelable": "^2.1.1",
-    "regenerator-runtime": "^0.13.3",
-    "squarelink": "^1.1.3"
+    "regenerator-runtime": "^0.13.3"
   },
   "scripts": {
     "build": "rollup -c && babel dist/onboard.esm.js --out-file dist/onboard.esm.js && babel dist/onboard.umd.js --out-file dist/onboard.umd.js --minified",
