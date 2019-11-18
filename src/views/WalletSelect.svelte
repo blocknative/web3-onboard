@@ -24,7 +24,7 @@
   } from '../utilities'
 
   import {
-    SelectModalData,
+    WalletSelectModalData,
     AppState,
     WalletModule,
     WalletSelectModule,
@@ -37,7 +37,7 @@
     wallets: []
   }
 
-  let modalData: SelectModalData | null
+  let modalData: WalletSelectModalData | null
   let showWalletDefinition: boolean
   let walletAlreadyInstalled: string | undefined
   let installMessage: string | undefined
@@ -62,8 +62,8 @@
     autoSelectWallet: '',
     walletSelectInProgress: true,
     walletSelectCompleted: false,
-    walletReadyInProgress: false,
-    walletReadyCompleted: false
+    walletCheckInProgress: false,
+    walletCheckCompleted: false
   }
 
   const unsubscribe = app.subscribe((store: AppState) => (appState = store))

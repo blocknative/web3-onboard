@@ -21,8 +21,8 @@ export const app: WritableStore = writable({
   darkMode: false,
   walletSelectInProgress: false,
   walletSelectCompleted: false,
-  walletReadyInProgress: false,
-  walletReadyCompleted: false
+  walletCheckInProgress: false,
+  walletCheckCompleted: false
 })
 
 export const balanceSyncStatus: {
@@ -231,7 +231,7 @@ function createBalanceStore(initialState: string | null): BalanceStore {
 function syncStateWithTimeout(options: {
   getState: () => Promise<string | number | null>
   setState: (newState: string) => void
-  timeout: number,
+  timeout: number
   currentBalance: string
 }) {
   const { getState, setState, timeout, currentBalance } = options
@@ -257,7 +257,7 @@ function syncStateWithTimeout(options: {
   prom
     .then((result: string) => {
       if (result === currentBalance) {
-        syncStateWithTimeout((options))
+        syncStateWithTimeout(options)
       } else {
         setState(result)
       }

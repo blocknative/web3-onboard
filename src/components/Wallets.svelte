@@ -2,8 +2,8 @@
   import { fade } from 'svelte/transition'
   import Button from '../elements/Button.svelte'
   import IconButton from '../elements/IconButton.svelte'
-  import { SelectModalData, WalletModule } from '../interfaces'
-  export let modalData: SelectModalData
+  import { WalletSelectModalData, WalletModule } from '../interfaces'
+  export let modalData: WalletSelectModalData
   export let handleWalletSelect: (wallet: WalletModule) => void
 
   let showingAllWalletModules: boolean = false

@@ -1,23 +1,23 @@
 import { networkName } from '../../utilities'
-import { WalletReadyModule, StateAndHelpers } from '../../interfaces'
+import { validateType } from '../../validation'
+import { WalletCheckModule, StateAndHelpers } from '../../interfaces'
 
-function network(correctNetwork: number): WalletReadyModule {
-  if (!correctNetwork || typeof correctNetwork !== 'number') {
-    throw new Error(
-      'Network module must be called with a property of value that is of type Number'
-    )
-  }
+function network(options: { networkId: number }): WalletCheckModule | never {
+  validateType({ name: 'network options', value: options, type: 'object' })
+
+  const { networkId } = options
+  validateType({ name: 'networkId', value: networkId, type: 'number' })
 
   return (stateAndHelpers: StateAndHelpers) => {
     const { network, walletSelect, exit } = stateAndHelpers
 
-    if (network != (correctNetwork || '1')) {
+    if (network != networkId) {
       return {
         heading: 'You Must Change Networks',
         description: `We've detected that you need to switch your wallet's network from <b>${networkName(
-          Number(network)
+          network
         )}</b> to <b>${networkName(
-          Number(correctNetwork)
+          networkId
         )} network</b> for this Dapp. <br><br> <i style="font-size: inherit; font-family: inherit;">*Some wallets may not support changing networks. If you can not change networks in your wallet you may consider switching to a different wallet.</i>`,
         eventCode: 'networkFail',
         button: {

@@ -1,9 +1,12 @@
 import { WalletInit } from '../../interfaces'
+import { validateWalletInit } from '../../validation'
 
-function wallets(wallets: WalletInit[]) {
+function wallets(walletInit: WalletInit[]) {
+  validateWalletInit(walletInit)
+
   return Promise.all(
-    wallets.map((wallet: WalletInit) => {
-      const { name, ...initParams } = wallet
+    walletInit.map((init: WalletInit) => {
+      const { name, ...initParams } = init
 
       return getModule(name).then((module: any) => module.default(initParams))
     })

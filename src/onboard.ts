@@ -49,7 +49,7 @@ function init(initialization: Initialization): API {
     target: document.body,
     props: {
       walletSelectModule: modules.walletSelect,
-      walletReadyModules: modules.walletReady,
+      walletCheckModules: modules.walletCheck,
       walletSelect
     }
   })
@@ -104,22 +104,22 @@ function init(initialization: Initialization): API {
     })
   }
 
-  function walletReady(): Promise<boolean> {
+  function walletCheck(): Promise<boolean> {
     return new Promise(resolve => {
       if (!get(walletInterface)) {
-        throw new Error('walletSelect must be called before walletReady')
+        throw new Error('walletSelect must be called before walletCheck')
       }
 
       app.update((store: AppState) => ({
         ...store,
-        walletReadyInProgress: true
+        walletCheckInProgress: true
       }))
 
       const appUnsubscribe = app.subscribe((store: AppState) => {
-        const { walletReadyInProgress, walletReadyCompleted } = store
-        if (walletReadyInProgress === false) {
+        const { walletCheckInProgress, walletCheckCompleted } = store
+        if (walletCheckInProgress === false) {
           appUnsubscribe()
-          setTimeout(() => resolve(walletReadyCompleted), 500)
+          setTimeout(() => resolve(walletCheckCompleted), 500)
         }
       })
     })
@@ -134,7 +134,7 @@ function init(initialization: Initialization): API {
     return get(state)
   }
 
-  return { walletSelect, walletReady, config, getState }
+  return { walletSelect, walletCheck, config, getState }
 }
 
 export default {

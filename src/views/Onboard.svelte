@@ -1,17 +1,17 @@
 <script lang="ts">
-  import WalletSelect from "./WalletSelect.svelte";
-  import WalletReady from "./WalletReady.svelte";
-  import { app } from "../stores";
+  import WalletSelect from './WalletSelect.svelte'
+  import WalletCheck from './WalletCheck.svelte'
+  import { app } from '../stores'
 
   import {
     WalletSelectModule,
-    WalletReadyModule,
+    WalletCheckModule,
     WalletSelectFunction
-  } from "../interfaces";
+  } from '../interfaces'
 
-  export let walletSelectModule: WalletSelectModule;
-  export let walletReadyModules: WalletReadyModule;
-  export let walletSelect: WalletSelectFunction;
+  export let walletSelectModule: WalletSelectModule
+  export let walletCheckModules: WalletCheckModule
+  export let walletSelect: WalletSelectFunction
 </script>
 
 <style>
@@ -39,6 +39,6 @@
   <WalletSelect module={walletSelectModule} />
 {/if}
 
-{#if $app.walletReadyInProgress}
-  <WalletReady modules={walletReadyModules} {walletSelect} />
+{#if $app.walletCheckInProgress}
+  <WalletCheck modules={walletCheckModules} {walletSelect} />
 {/if}

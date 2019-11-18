@@ -15,7 +15,7 @@ export interface Subscriptions {
 
 interface Modules {
   walletSelect: WalletSelectModule
-  walletReady: WalletReadyModule[]
+  walletCheck: WalletCheckModule[]
 }
 
 export interface WalletSelectModule {
@@ -24,14 +24,14 @@ export interface WalletSelectModule {
   wallets: WalletModule[]
 }
 
-export interface WalletReadyModule {
+export interface WalletCheckModule {
   (stateAndHelpers: StateAndHelpers):
-    | ReadyModal
+    | WalletCheckModal
     | undefined
-    | Promise<ReadyModal | undefined>
+    | Promise<WalletCheckModal | undefined>
 }
 
-export interface ReadyModal {
+export interface WalletCheckModal {
   img?: string
   heading: string
   description: string
@@ -46,7 +46,7 @@ export interface ReadyModal {
   icon?: string
 }
 
-export interface SelectModalData {
+export interface WalletSelectModalData {
   heading: string
   description: string
   primaryWallets: WalletModule[]
@@ -122,11 +122,6 @@ export interface Wallet {
   loading?: () => Promise<undefined>
 }
 
-export interface ReadyDefaultsOptions {
-  networkId: number
-  minimumBalance?: string
-}
-
 export interface SdkWalletOptions {
   apiKey: string
   networkId: number
@@ -144,11 +139,17 @@ export interface WalletInit {
   networkId?: number
 }
 
+export interface WalletCheckInit {
+  name: string
+  networkId?: number
+  minimumBalance?: string
+}
+
 export interface WalletSelectFunction {
   (autoSelectWallet?: string): Promise<boolean>
 }
 
-interface WalletReady {
+interface WalletCheck {
   (): Promise<boolean>
 }
 
@@ -166,7 +167,7 @@ export interface ConfigOptions {
 
 export interface API {
   walletSelect: WalletSelectFunction
-  walletReady: WalletReady
+  walletCheck: WalletCheck
   config: Config
   getState: GetState
 }
@@ -205,8 +206,8 @@ export interface AppState {
   autoSelectWallet: string
   walletSelectInProgress: boolean
   walletSelectCompleted: boolean
-  walletReadyInProgress: boolean
-  walletReadyCompleted: boolean
+  walletCheckInProgress: boolean
+  walletCheckCompleted: boolean
 }
 
 export interface QuerablePromise extends CancelablePromise {

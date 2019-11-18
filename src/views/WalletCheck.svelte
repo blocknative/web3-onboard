@@ -1,105 +1,105 @@
 <script lang="ts">
-  import { get } from "svelte/store";
+  import { get } from 'svelte/store'
 
-  import { fade } from "svelte/transition";
-  import BigNumber from "bignumber.js";
+  import { fade } from 'svelte/transition'
+  import BigNumber from 'bignumber.js'
 
-  import { getBlocknative } from "../services";
-  import { app, state, balanceSyncStatus } from "../stores";
-  import { validateModal } from "../validation";
+  import { getBlocknative } from '../services'
+  import { app, state, balanceSyncStatus } from '../stores'
+  import { validateModal } from '../validation'
 
-  import Modal from "../components/Modal.svelte";
-  import ModalHeader from "../components/ModalHeader.svelte";
-  import Button from "../elements/Button.svelte";
-  import Spinner from "../elements/Spinner.svelte";
+  import Modal from '../components/Modal.svelte'
+  import ModalHeader from '../components/ModalHeader.svelte'
+  import Button from '../elements/Button.svelte'
+  import Spinner from '../elements/Spinner.svelte'
 
   import {
-    WalletReadyModule,
+    WalletCheckModule,
     WalletSelectFunction,
     AppState,
-    ReadyModal,
+    WalletCheckModal,
     UserState
-  } from "../interfaces";
+  } from '../interfaces'
 
-  export let modules: WalletReadyModule[] = [];
-  export let walletSelect: WalletSelectFunction;
+  export let modules: WalletCheckModule[] = []
+  export let walletSelect: WalletSelectFunction
 
-  const blocknative = getBlocknative();
+  const blocknative = getBlocknative()
 
-  let activeModal: ReadyModal | undefined = undefined;
-  let currentModule: WalletReadyModule | undefined = undefined;
-  let errorMsg: string;
-  let pollingInterval: any;
-  let checkingModule: boolean = false;
-  let actionResolved: boolean | undefined = undefined;
-  let loading: boolean;
+  let activeModal: WalletCheckModal | undefined = undefined
+  let currentModule: WalletCheckModule | undefined = undefined
+  let errorMsg: string
+  let pollingInterval: any
+  let checkingModule: boolean = false
+  let actionResolved: boolean | undefined = undefined
+  let loading: boolean
 
   // recheck modules if below conditions
   $: if (!activeModal && !checkingModule) {
-    checkingModule = true;
+    checkingModule = true
 
     // loop through and run each module to check if a modal needs to be shown
     runModules(modules).then(
       (result: {
-        modal: ReadyModal | undefined;
-        module: WalletReadyModule | undefined;
+        modal: WalletCheckModal | undefined
+        module: WalletCheckModule | undefined
       }) => {
         // no result then user has passed all conditions
         if (!result.modal) {
           app.update(store => ({
             ...store,
-            walletReadyInProgress: false,
-            walletReadyCompleted: true
-          }));
+            walletCheckInProgress: false,
+            walletCheckCompleted: true
+          }))
 
           blocknative.event({
-            categoryCode: "onboard",
-            eventCode: "onboardingCompleted"
-          });
+            categoryCode: 'onboard',
+            eventCode: 'onboardingCompleted'
+          })
 
-          checkingModule = false;
-          return;
+          checkingModule = false
+          return
         }
 
-        activeModal = result.modal;
-        currentModule = result.module;
+        activeModal = result.modal
+        currentModule = result.module
 
         // log the event code for this module
         blocknative.event({
           eventCode: activeModal.eventCode,
-          categoryCode: "onboard"
-        });
+          categoryCode: 'onboard'
+        })
 
         // run any actions that module require as part of this step
         if (activeModal.action) {
-          doAction();
+          doAction()
         }
 
         if (activeModal.loading) {
-          loading = true;
-          activeModal.loading().then(() => (loading = false));
+          loading = true
+          activeModal.loading().then(() => (loading = false))
         }
 
         // poll to automatically to check if condition has been met
         pollingInterval = setInterval(async () => {
           if (currentModule) {
-            const invalid = await invalidState(currentModule, get(state));
+            const invalid = await invalidState(currentModule, get(state))
             if (!invalid && actionResolved !== false) {
-              resetState();
+              resetState()
 
               // delayed for animations
               setTimeout(() => {
-                checkingModule = false;
-              }, 250);
+                checkingModule = false
+              }, 250)
             }
           }
-        }, 500);
+        }, 500)
       }
-    );
+    )
   }
 
   function doAction() {
-    actionResolved = false;
+    actionResolved = false
 
     activeModal &&
       activeModal.action &&
@@ -107,88 +107,90 @@
         .action()
         .then(() => (actionResolved = true))
         .catch((err: { message: string }) => {
-          errorMsg = err.message;
-        });
+          errorMsg = err.message
+        })
   }
 
   function handleExit() {
     app.update((store: AppState) => ({
       ...store,
-      walletReadyInProgress: false
-    }));
-    resetState();
+      walletCheckInProgress: false
+    }))
+    resetState()
   }
 
   function resetState() {
-    clearInterval(pollingInterval);
-    errorMsg = "";
-    actionResolved = undefined;
-    activeModal = undefined;
-    currentModule = undefined;
+    clearInterval(pollingInterval)
+    errorMsg = ''
+    actionResolved = undefined
+    activeModal = undefined
+    currentModule = undefined
   }
 
-  function runModules(modules: WalletReadyModule[]) {
+  function runModules(modules: WalletCheckModule[]) {
     return new Promise(
       async (
         resolve: (result: {
-          modal: ReadyModal | undefined;
-          module: WalletReadyModule | undefined;
+          modal: WalletCheckModal | undefined
+          module: WalletCheckModule | undefined
         }) => void
       ) => {
         for (const module of modules) {
           if (balanceSyncStatus.syncing) {
-            await balanceSyncStatus.syncing.catch(() => {});
-            balanceSyncStatus.syncing = null;
+            await balanceSyncStatus.syncing.catch(() => {})
+            balanceSyncStatus.syncing = null
           }
 
-          const result = await invalidState(module, get(state));
+          const result = await invalidState(module, get(state))
 
           if (result) {
-            return resolve(result);
+            return resolve(result)
           }
         }
 
-        return resolve({ modal: undefined, module: undefined });
+        return resolve({ modal: undefined, module: undefined })
       }
-    );
+    )
   }
 
   async function invalidState(
-    module: WalletReadyModule,
+    module: WalletCheckModule,
     state: UserState
-  ): Promise<{ module: WalletReadyModule; modal: ReadyModal } | undefined> {
+  ): Promise<
+    { module: WalletCheckModule; modal: WalletCheckModal } | undefined
+  > {
     const result = module({
       ...state,
       BigNumber,
       walletSelect,
       exit: handleExit
-    });
+    })
 
     if (result) {
-      if (isReadyModal(result)) {
-        validateModal(result);
+      if (isCheckModal(result)) {
+        validateModal(result)
         return {
           module,
           modal: result
-        };
+        }
       } else {
         // module returned a promise, so await it for val
-        const modal = await result;
+        const modal = await result
         if (modal) {
-          validateModal(modal);
+          validateModal(modal)
           return {
             module,
             modal
-          };
+          }
         }
       }
     }
   }
 
-  function isReadyModal(
-    val: ReadyModal | Promise<ReadyModal | undefined>
-  ): val is ReadyModal {
-    return (val as ReadyModal).heading !== undefined;
+  function isCheckModal(
+    val: WalletCheckModal | Promise<WalletCheckModal | undefined>
+  ): val is WalletCheckModal {
+    return (val as WalletCheckModal).heading !== undefined
   }
 </script>
 
@@ -196,7 +198,7 @@
   /* .bn-onboard-prepare-description */
   p {
     font-size: 0.889em;
-    font-family: "Helvetica Neue";
+    font-family: 'Helvetica Neue';
     margin: 1em 0;
   }
 
