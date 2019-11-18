@@ -243,7 +243,6 @@ export function validateModal(modal: WalletCheckModal): never | void {
     invalidMsg,
     eventCode,
     action,
-    loading,
     icon,
     loading,
     ...otherParams
