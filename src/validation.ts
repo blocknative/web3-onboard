@@ -245,6 +245,7 @@ export function validateModal(modal: WalletCheckModal): never | void {
     action,
     loading,
     icon,
+    loading,
     ...otherParams
   } = modal
 
@@ -283,7 +284,7 @@ export function validateModal(modal: WalletCheckModal): never | void {
   validateType({
     name: 'loading',
     value: loading,
-    type: 'object',
+    type: 'function',
     optional: true
   })
 
