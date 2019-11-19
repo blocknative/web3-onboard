@@ -5,6 +5,7 @@
   import { fade } from 'svelte/transition'
 
   import { app, walletInterface, wallet } from '../stores'
+  import { validateWalletModule } from '../validation'
 
   import Modal from '../components/Modal.svelte'
   import ModalHeader from '../components/ModalHeader.svelte'
@@ -20,7 +21,8 @@
     createModernProviderInterface,
     getAddress,
     getBalance,
-    getNetwork
+    getNetwork,
+    isPromise
   } from '../utilities'
 
   import {
@@ -45,13 +47,12 @@
   let selectedWalletModule: WalletModule
 
   const { mobileDevice } = get(app)
-  const { heading, description, wallets } = module
-  const deviceWallets = wallets.filter(
-    wallet => wallet[mobileDevice ? 'mobile' : 'desktop']
-  )
+  let { heading, description, wallets } = module
 
   let primaryWallets: WalletModule[]
   let secondaryWallets: WalletModule[] | undefined
+
+  let loadingWallet: string | undefined = undefined
 
   let appState: AppState = {
     dappId: '',
@@ -67,40 +68,54 @@
   }
 
   const unsubscribe = app.subscribe((store: AppState) => (appState = store))
-
   onDestroy(unsubscribe)
 
-  $: if (appState.autoSelectWallet) {
-    const module = deviceWallets.find(
-      (m: WalletModule) => m.name === appState.autoSelectWallet
-    )
-    module && handleWalletSelect(module)
-  } else {
-    if (deviceWallets.find(wallet => wallet.preferred)) {
-      // if preferred wallets, then split in to preferred and not preferred
-      primaryWallets = deviceWallets.filter(wallet => wallet.preferred)
-      secondaryWallets = deviceWallets.filter(wallet => !wallet.preferred)
-    } else {
-      // otherwise make the first 4 wallets preferred
-      primaryWallets = deviceWallets.slice(0, 4)
-      secondaryWallets =
-        deviceWallets.length > 4 ? deviceWallets.slice(4) : undefined
+  renderWalletSelect()
+
+  async function renderWalletSelect() {
+    if (isPromise(wallets)) {
+      wallets = await wallets
+      wallets.forEach(validateWalletModule)
     }
 
-    modalData = {
-      heading,
-      description,
-      primaryWallets,
-      secondaryWallets
+    const deviceWallets = (wallets as WalletModule[]).filter(
+      wallet => wallet[mobileDevice ? 'mobile' : 'desktop']
+    )
+
+    if (appState.autoSelectWallet) {
+      const module = deviceWallets.find(
+        (m: WalletModule) => m.name === appState.autoSelectWallet
+      )
+      module && handleWalletSelect(module)
+    } else {
+      if (deviceWallets.find(wallet => wallet.preferred)) {
+        // if preferred wallets, then split in to preferred and not preferred
+        primaryWallets = deviceWallets.filter(wallet => wallet.preferred)
+        secondaryWallets = deviceWallets.filter(wallet => !wallet.preferred)
+      } else {
+        // otherwise make the first 4 wallets preferred
+        primaryWallets = deviceWallets.slice(0, 4)
+        secondaryWallets =
+          deviceWallets.length > 4 ? deviceWallets.slice(4) : undefined
+      }
+
+      modalData = {
+        heading,
+        description,
+        primaryWallets,
+        secondaryWallets
+      }
     }
   }
 
-  function handleWalletSelect(module: WalletModule) {
+  async function handleWalletSelect(module: WalletModule) {
+    loadingWallet = module.name
+
     const {
       provider,
       interface: selectedWalletInterface,
       instance
-    } = module.wallet({
+    } = await module.wallet({
       getProviderName,
       createLegacyProviderInterface,
       createModernProviderInterface,
@@ -109,6 +124,8 @@
       getAddress,
       getBalance
     })
+
+    loadingWallet = undefined
 
     // if no interface then the user does not have the wallet they selected installed or available
     if (!selectedWalletInterface) {
@@ -190,7 +207,7 @@
       <p class="bn-onboard-custom bn-onboard-select-description">
         {modalData.description}
       </p>
-      <Wallets {modalData} {handleWalletSelect} />
+      <Wallets {modalData} {handleWalletSelect} {loadingWallet} />
       <div class="bn-onboard-custom bn-onboard-select-info-container">
         <span
           class="bn-onboard-custom bn-onboard-select-wallet-info"

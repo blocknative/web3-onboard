@@ -5,6 +5,7 @@
   import { WalletSelectModalData, WalletModule } from '../interfaces'
   export let modalData: WalletSelectModalData
   export let handleWalletSelect: (wallet: WalletModule) => void
+  export let loadingWallet: string | undefined
 
   let showingAllWalletModules: boolean = false
 </script>
@@ -62,7 +63,8 @@
         onclick={() => handleWalletSelect(wallet)}
         iconSrc={wallet.iconSrc}
         iconSrcSet={wallet.iconSrcSet}
-        text={wallet.name} />
+        text={wallet.name}
+        {loadingWallet} />
     </li>
   {/each}
 
@@ -82,7 +84,8 @@
           iconSrc={wallet.iconSrc}
           iconSrcSet={wallet.iconSrcSet}
           svg={wallet.svg}
-          text={wallet.name} />
+          text={wallet.name}
+          {loadingWallet} />
       </li>
     {/each}
   {/if}

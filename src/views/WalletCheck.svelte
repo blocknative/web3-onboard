@@ -6,7 +6,8 @@
 
   import { getBlocknative } from '../services'
   import { app, state, balanceSyncStatus } from '../stores'
-  import { validateModal } from '../validation'
+  import { validateModal, validateWalletCheckModule } from '../validation'
+  import { isPromise } from '../utilities'
 
   import Modal from '../components/Modal.svelte'
   import ModalHeader from '../components/ModalHeader.svelte'
@@ -21,7 +22,7 @@
     UserState
   } from '../interfaces'
 
-  export let modules: WalletCheckModule[] = []
+  export let modules: WalletCheckModule[] | Promise<WalletCheckModule[]> = []
   export let walletSelect: WalletSelectFunction
 
   const blocknative = getBlocknative()
@@ -36,7 +37,16 @@
 
   // recheck modules if below conditions
   $: if (!activeModal && !checkingModule) {
+    renderModule()
+  }
+
+  async function renderModule() {
     checkingModule = true
+
+    if (isPromise(modules)) {
+      modules = await modules
+      modules.forEach(validateWalletCheckModule)
+    }
 
     // loop through and run each module to check if a modal needs to be shown
     runModules(modules).then(

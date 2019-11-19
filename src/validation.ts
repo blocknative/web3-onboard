@@ -55,12 +55,25 @@ function invalidParams(
 export function validateInit(init: Initialization): never | void {
   validateType({ name: 'init', value: init, type: 'object' })
 
-  const { dappId, networkId, subscriptions, modules, ...otherParams } = init
+  const {
+    dappId,
+    networkId,
+    subscriptions,
+    modules,
+    darkMode,
+    ...otherParams
+  } = init
 
   invalidParams(otherParams, ['dappId', 'subscriptions', 'modules'], 'init')
 
   validateType({ name: 'dappId', value: dappId, type: 'string' })
   validateType({ name: 'networkId', value: networkId, type: 'number' })
+  validateType({
+    name: 'darkMode',
+    value: darkMode,
+    type: 'boolean',
+    optional: true
+  })
 
   validateSubscriptions(subscriptions)
   validateModules(modules)
@@ -96,7 +109,7 @@ function validateSubscriptions(subscriptions: Subscriptions): never | void {
 
 function validateModules(modules: {
   walletSelect: WalletSelectModule
-  walletCheck: WalletCheckModule[]
+  walletCheck: WalletCheckModule[] | Promise<WalletCheckModule[]>
 }): never | void {
   validateType({ name: 'modules', value: modules, type: 'object' })
 
@@ -122,14 +135,16 @@ function validateWalletSelect(walletSelect: WalletSelectModule): never | void {
   validateType({ name: 'heading', value: heading, type: 'string' })
   validateType({ name: 'description', value: description, type: 'string' })
 
-  validateType({ name: 'wallets', value: wallets, type: 'array' })
-
-  wallets.forEach((module: WalletModule) => {
-    validateWalletModule(module)
-  })
+  if (Array.isArray(wallets)) {
+    wallets.forEach(validateWalletModule)
+  } else if (!wallets.then) {
+    throw new Error(
+      `wallets parameter must be a promise or an array of wallet modules.`
+    )
+  }
 }
 
-function validateWalletModule(module: WalletModule): never | void {
+export function validateWalletModule(module: WalletModule): never | void {
   const {
     name,
     iconSrc,
@@ -201,15 +216,23 @@ function validateWalletModule(module: WalletModule): never | void {
   })
 }
 
-function validateWalletCheck(walletCheck: WalletCheckModule[]): never | void {
-  validateType({ name: 'walletCheck', value: walletCheck, type: 'array' })
+function validateWalletCheck(
+  walletCheck: WalletCheckModule[] | Promise<WalletCheckModule[]>
+): never | void {
+  if (Array.isArray(walletCheck)) {
+    walletCheck.forEach(validateWalletCheckModule)
+  } else if (!walletCheck.then) {
+    throw new Error(
+      'check must be an array of wallet check modules or a promise.'
+    )
+  }
+}
 
-  walletCheck.forEach((module: WalletCheckModule) => {
-    validateType({
-      name: 'walletCheck module',
-      value: module,
-      type: 'function'
-    })
+export function validateWalletCheckModule(module: WalletCheckModule) {
+  validateType({
+    name: 'walletCheck module',
+    value: module,
+    type: 'function'
   })
 }
 

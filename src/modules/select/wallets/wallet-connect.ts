@@ -1,5 +1,3 @@
-import WalletConnectProvider from '@walletconnect/web3-provider'
-
 import walletConnectIcon from '../wallet-icons/icon-walletconnect.svg'
 import { validateType } from '../../../validation'
 import { WalletConnectOptions, WalletModule } from '../../../interfaces'
@@ -11,19 +9,32 @@ function walletConnect(options: WalletConnectOptions): WalletModule {
     type: 'object'
   })
 
-  const { infuraKey } = options
+  const { infuraKey, preferred } = options
 
   validateType({ name: 'infuraKey', value: infuraKey, type: 'string' })
+  validateType({
+    name: 'preferred',
+    value: preferred,
+    type: 'boolean',
+    optional: true
+  })
+
+  let provider: any
 
   return {
     name: 'WalletConnect',
     iconSrc: walletConnectIcon,
-    wallet: () => {
-      const provider = new WalletConnectProvider({
-        infuraId: infuraKey
-      })
+    wallet: async () => {
+      if (!provider) {
+        const { default: WalletConnectProvider } = await import(
+          '@walletconnect/web3-provider'
+        )
+        const provider = new WalletConnectProvider({
+          infuraId: infuraKey
+        })
 
-      provider.autoRefreshOnNetworkChange = false
+        provider.autoRefreshOnNetworkChange = false
+      }
 
       return {
         provider,
@@ -76,7 +87,7 @@ function walletConnect(options: WalletConnectOptions): WalletModule {
       }
     },
     desktop: true,
-    mobile: true
+    preferred
   }
 }
 

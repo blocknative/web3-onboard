@@ -237,3 +237,10 @@ export function makeQuerablePromise(
   }
   return promise
 }
+
+export function isPromise(val: any): val is Promise<any> {
+  if ((val as Promise<any>) instanceof Promise) {
+    return true
+  }
+  return false
+}

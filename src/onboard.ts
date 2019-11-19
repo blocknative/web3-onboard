@@ -33,7 +33,7 @@ import {
 function init(initialization: Initialization): API {
   validateInit(initialization)
 
-  const { subscriptions, dappId, networkId, modules } = initialization
+  const { subscriptions, dappId, networkId, modules, darkMode } = initialization
 
   initializeBlocknative(dappId, networkId)
 
@@ -42,7 +42,8 @@ function init(initialization: Initialization): API {
     dappId,
     networkId,
     version,
-    mobileDevice: isMobileDevice()
+    mobileDevice: isMobileDevice(),
+    darkMode
   }))
 
   new Onboard({
@@ -96,6 +97,7 @@ function init(initialization: Initialization): API {
 
       const appUnsubscribe = app.subscribe((store: AppState) => {
         const { walletSelectInProgress, walletSelectCompleted } = store
+
         if (walletSelectInProgress === false) {
           appUnsubscribe()
           setTimeout(() => resolve(walletSelectCompleted), 500)

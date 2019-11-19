@@ -1,16 +1,25 @@
 import { extensionInstallMessage } from '../content'
+import { WalletModule, Helpers } from '../../../interfaces'
+import { validateType } from '../../../validation'
 
 import metamaskIcon from '../wallet-icons/icon-metamask.png'
 import metamaskIcon2x from '../wallet-icons/icon-metamask@2x.png'
 
-import { WalletModule, Helpers } from '../../../interfaces'
+function metamask(options: { preferred?: boolean } = {}): WalletModule {
+  const { preferred } = options
 
-function metamask(): WalletModule {
+  validateType({
+    name: 'preferred',
+    value: preferred,
+    type: 'boolean',
+    optional: true
+  })
+
   return {
     name: 'MetaMask',
     iconSrc: metamaskIcon,
     iconSrcSet: metamaskIcon2x,
-    wallet: (helpers: Helpers) => {
+    wallet: async (helpers: Helpers) => {
       const {
         getProviderName,
         createModernProviderInterface,
@@ -33,7 +42,8 @@ function metamask(): WalletModule {
     },
     link: 'https://metamask.io/',
     installMessage: extensionInstallMessage,
-    desktop: true
+    desktop: true,
+    preferred
   }
 }
 

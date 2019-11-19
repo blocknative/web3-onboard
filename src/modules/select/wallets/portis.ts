@@ -1,5 +1,3 @@
-import Portis from '@portis/web3'
-
 import { networkName } from '../../../utilities'
 import { validateType } from '../../../validation'
 import portisIcon from '../wallet-icons/icon-portis.svg'
@@ -8,18 +6,31 @@ import { SdkWalletOptions, WalletModule, Helpers } from '../../../interfaces'
 function portis(options: SdkWalletOptions): WalletModule {
   validateType({ name: 'Portis options', value: options, type: 'object' })
 
-  const { apiKey, networkId } = options
+  const { apiKey, networkId, preferred } = options
 
   validateType({ name: 'apiKey', value: apiKey, type: 'string' })
   validateType({ name: 'networkId', value: networkId, type: 'number' })
+  validateType({
+    name: 'preferred',
+    value: preferred,
+    type: 'boolean',
+    optional: true
+  })
+
+  let instance: any
+  let provider: any
 
   return {
     name: 'Portis',
     iconSrc: portisIcon,
-    wallet: (helpers: Helpers) => {
+    wallet: async (helpers: Helpers) => {
+      if (!instance) {
+        const { default: Portis } = await import('@portis/web3')
+        instance = new Portis(apiKey, networkName(networkId))
+        provider = instance.provider
+      }
+
       const { BigNumber } = helpers
-      const instance = new Portis(apiKey, networkName(networkId))
-      const { provider } = instance
 
       return {
         provider,
@@ -65,7 +76,8 @@ function portis(options: SdkWalletOptions): WalletModule {
       }
     },
     desktop: true,
-    mobile: true
+    mobile: true,
+    preferred
   }
 }
 

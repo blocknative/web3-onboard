@@ -1,5 +1,3 @@
-import Squarelink from 'squarelink'
-
 import { networkName, networkToId } from '../../../utilities'
 import { validateType } from '../../../validation'
 import sqlkIcon from '../wallet-icons/icon-squarelink.svg'
@@ -8,22 +6,35 @@ import { SdkWalletOptions, WalletModule, Helpers } from '../../../interfaces'
 function squarelink(options: SdkWalletOptions): WalletModule {
   validateType({ name: 'Squarelink Options', value: options, type: 'object' })
 
-  const { apiKey, networkId } = options
+  const { apiKey, networkId, preferred } = options
 
   validateType({ name: 'apiKey', value: apiKey, type: 'string' })
   validateType({ name: 'networkId', value: networkId, type: 'number' })
+  validateType({
+    name: 'preferred',
+    value: preferred,
+    type: 'boolean',
+    optional: true
+  })
+
+  let instance: any
+  let provider: any
 
   return {
     name: 'Squarelink',
     iconSrc: sqlkIcon,
-    wallet: (helpers: Helpers) => {
+    wallet: async (helpers: Helpers) => {
+      if (!instance) {
+        const { default: Squarelink } = await import('squarelink')
+
+        instance = new Squarelink(apiKey, networkName(networkId), {
+          useSync: true
+        })
+
+        provider = instance.getProviderSync()
+      }
+
       const { BigNumber } = helpers
-
-      const instance = new Squarelink(apiKey, networkName(networkId), {
-        useSync: true
-      })
-
-      const provider = instance.getProviderSync()
 
       return {
         provider,
@@ -61,7 +72,8 @@ function squarelink(options: SdkWalletOptions): WalletModule {
       }
     },
     desktop: true,
-    mobile: true
+    mobile: true,
+    preferred
   }
 }
 

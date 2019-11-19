@@ -3,6 +3,7 @@ export interface Initialization {
   networkId: number
   subscriptions: Subscriptions
   modules: Modules
+  darkMode?: boolean
 }
 
 export interface Subscriptions {
@@ -15,13 +16,13 @@ export interface Subscriptions {
 
 interface Modules {
   walletSelect: WalletSelectModule
-  walletCheck: WalletCheckModule[]
+  walletCheck: WalletCheckModule[] | Promise<WalletCheckModule[]>
 }
 
 export interface WalletSelectModule {
   heading: string
   description: string
-  wallets: WalletModule[]
+  wallets: WalletModule[] | Promise<WalletModule[]>
 }
 
 export interface WalletCheckModule {
@@ -74,11 +75,11 @@ export interface WalletModule {
   svg?: string
   wallet: (
     helpers: Helpers
-  ) => {
+  ) => Promise<{
     provider: any | undefined
     interface: WalletInterface | null
     instance?: any
-  }
+  }>
   link?: string
   installMessage?: (wallets: {
     currentWallet: string
@@ -125,10 +126,12 @@ export interface Wallet {
 export interface SdkWalletOptions {
   apiKey: string
   networkId: number
+  preferred?: boolean
 }
 
 export interface WalletConnectOptions {
   infuraKey: string
+  preferred?: boolean
 }
 
 export interface WalletInit {

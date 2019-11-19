@@ -1,10 +1,12 @@
 <script lang="ts">
-  import { app } from "../stores";
-  export let iconSrc: string;
-  export let iconSrcSet: string;
-  export let svg: string;
-  export let onclick: () => void = () => {};
-  export let text: string;
+  import Spinner from './Spinner.svelte'
+  import { app } from '../stores'
+  export let iconSrc: string
+  export let iconSrcSet: string
+  export let svg: string
+  export let onclick: () => void = () => {}
+  export let text: string
+  export let loadingWallet: string | undefined
 </script>
 
 <style>
@@ -23,7 +25,7 @@
     cursor: pointer;
     color: inherit;
     line-height: 1.15;
-    font-family: "Helvetica Neue";
+    font-family: 'Helvetica Neue';
   }
 
   button:hover {
@@ -35,6 +37,7 @@
   }
 
   div {
+    display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -70,7 +73,9 @@
   class="bn-onboard-custom bn-onboard-icon-button"
   class:bn-onboard-dark-mode-background-hover={$app.darkMode}>
   <div>
-    {#if svg}
+    {#if loadingWallet === text}
+      <Spinner />
+    {:else if svg}
       {@html svg}
     {:else}
       <img src={iconSrc} srcset={iconSrcSet} alt={text} />
