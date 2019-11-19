@@ -2,7 +2,6 @@ import 'regenerator-runtime/runtime'
 
 import { get } from 'svelte/store'
 
-import modules from './modules'
 import Onboard from './views/Onboard.svelte'
 
 import {
@@ -30,10 +29,12 @@ import {
   Wallet
 } from './interfaces'
 
+export { default as modules } from './modules'
+
 function init(initialization: Initialization): API {
   validateInit(initialization)
 
-  const { subscriptions, dappId, networkId, modules } = initialization
+  const { subscriptions, dappId, networkId, modules, darkMode } = initialization
 
   initializeBlocknative(dappId, networkId)
 
@@ -42,14 +43,15 @@ function init(initialization: Initialization): API {
     dappId,
     networkId,
     version,
-    mobileDevice: isMobileDevice()
+    mobileDevice: isMobileDevice(),
+    darkMode
   }))
 
   new Onboard({
     target: document.body,
     props: {
       walletSelectModule: modules.walletSelect,
-      walletReadyModules: modules.walletReady,
+      walletCheckModules: modules.walletCheck,
       walletSelect
     }
   })
@@ -96,6 +98,7 @@ function init(initialization: Initialization): API {
 
       const appUnsubscribe = app.subscribe((store: AppState) => {
         const { walletSelectInProgress, walletSelectCompleted } = store
+
         if (walletSelectInProgress === false) {
           appUnsubscribe()
           setTimeout(() => resolve(walletSelectCompleted), 500)
@@ -104,22 +107,22 @@ function init(initialization: Initialization): API {
     })
   }
 
-  function walletReady(): Promise<boolean> {
+  function walletCheck(): Promise<boolean> {
     return new Promise(resolve => {
       if (!get(walletInterface)) {
-        throw new Error('walletSelect must be called before walletReady')
+        throw new Error('walletSelect must be called before walletCheck')
       }
 
       app.update((store: AppState) => ({
         ...store,
-        walletReadyInProgress: true
+        walletCheckInProgress: true
       }))
 
       const appUnsubscribe = app.subscribe((store: AppState) => {
-        const { walletReadyInProgress, walletReadyCompleted } = store
-        if (walletReadyInProgress === false) {
+        const { walletCheckInProgress, walletCheckCompleted } = store
+        if (walletCheckInProgress === false) {
           appUnsubscribe()
-          setTimeout(() => resolve(walletReadyCompleted), 500)
+          setTimeout(() => resolve(walletCheckCompleted), 500)
         }
       })
     })
@@ -134,10 +137,7 @@ function init(initialization: Initialization): API {
     return get(state)
   }
 
-  return { walletSelect, walletReady, config, getState }
+  return { walletSelect, walletCheck, config, getState }
 }
 
-export default {
-  init,
-  modules
-}
+export default init

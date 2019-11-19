@@ -12,10 +12,10 @@
     position: absolute;
     width: 2em;
     height: 2em;
-    border: 3px solid #4a90e2;
+    border: 3px solid;
     border-radius: 50%;
     animation: bn-onboard-loading 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border-color: #4a90e2 transparent transparent transparent;
+    border-color: currentColor transparent transparent transparent;
   }
   .bn-onboard-loading div:nth-child(1) {
     animation-delay: -0.45s;

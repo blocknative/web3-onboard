@@ -1,8 +1,9 @@
 export interface Initialization {
-  networkId: number
   dappId: string
+  networkId: number
   subscriptions: Subscriptions
   modules: Modules
+  darkMode?: boolean
 }
 
 export interface Subscriptions {
@@ -15,26 +16,23 @@ export interface Subscriptions {
 
 interface Modules {
   walletSelect: WalletSelectModule
-  walletReady: WalletReadyModule[]
+  walletCheck: WalletCheckModule[] | Promise<WalletCheckModule[]>
 }
 
 export interface WalletSelectModule {
   heading: string
   description: string
-  wallets: {
-    mobile: WalletModule[]
-    desktop: WalletModule[]
-  }
+  wallets: WalletModule[] | Promise<WalletModule[]>
 }
 
-export interface WalletReadyModule {
+export interface WalletCheckModule {
   (stateAndHelpers: StateAndHelpers):
-    | ReadyModal
+    | WalletCheckModal
     | undefined
-    | Promise<ReadyModal | undefined>
+    | Promise<WalletCheckModal | undefined>
 }
 
-export interface ReadyModal {
+export interface WalletCheckModal {
   img?: string
   heading: string
   description: string
@@ -49,7 +47,7 @@ export interface ReadyModal {
   icon?: string
 }
 
-export interface SelectModalData {
+export interface WalletSelectModalData {
   heading: string
   description: string
   primaryWallets: WalletModule[]
@@ -77,17 +75,19 @@ export interface WalletModule {
   svg?: string
   wallet: (
     helpers: Helpers
-  ) => {
+  ) => Promise<{
     provider: any | undefined
     interface: WalletInterface | null
     instance?: any
-  }
+  }>
   link?: string
   installMessage?: (wallets: {
     currentWallet: string
     selectedWallet: string
   }) => string
   preferred?: boolean
+  desktop?: boolean
+  mobile?: boolean
 }
 
 export interface Helpers {
@@ -123,36 +123,36 @@ export interface Wallet {
   loading?: () => Promise<undefined>
 }
 
-export interface ReadyDefaultsOptions {
-  networkId: number
-  minimumBalance?: string
-}
-
 export interface SdkWalletOptions {
   apiKey: string
   networkId: number
+  preferred?: boolean
 }
 
 export interface WalletConnectOptions {
   infuraKey: string
+  preferred?: boolean
 }
 
-export interface SelectDefaultsOptions {
-  heading?: string
-  description?: string
-  networkId: number
-  fortmaticInit?: { apiKey: string }
-  portisInit?: { apiKey: string }
-  squarelinkInit?: { apiKey: string }
-  walletConnectInit?: WalletConnectOptions
-  preferredWallets?: string[]
+export interface WalletInit {
+  name: string
+  preferred?: boolean
+  apiKey?: string
+  infuraKey?: string
+  networkId?: number
+}
+
+export interface WalletCheckInit {
+  name: string
+  networkId?: number
+  minimumBalance?: string
 }
 
 export interface WalletSelectFunction {
   (autoSelectWallet?: string): Promise<boolean>
 }
 
-interface WalletReady {
+interface WalletCheck {
   (): Promise<boolean>
 }
 
@@ -170,7 +170,7 @@ export interface ConfigOptions {
 
 export interface API {
   walletSelect: WalletSelectFunction
-  walletReady: WalletReady
+  walletCheck: WalletCheck
   config: Config
   getState: GetState
 }
@@ -209,8 +209,8 @@ export interface AppState {
   autoSelectWallet: string
   walletSelectInProgress: boolean
   walletSelectCompleted: boolean
-  walletReadyInProgress: boolean
-  walletReadyCompleted: boolean
+  walletCheckInProgress: boolean
+  walletCheckCompleted: boolean
 }
 
 export interface QuerablePromise extends CancelablePromise {

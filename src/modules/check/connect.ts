@@ -1,7 +1,7 @@
-import { ReadyModal, StateAndHelpers, Wallet } from '../../interfaces'
+import { WalletCheckModal, StateAndHelpers } from '../../interfaces'
 
 function connect() {
-  return (stateAndHelpers: StateAndHelpers): ReadyModal | undefined => {
+  return (stateAndHelpers: StateAndHelpers): WalletCheckModal | undefined => {
     const { wallet, address } = stateAndHelpers
     if (!address && wallet && wallet.name) {
       return {
