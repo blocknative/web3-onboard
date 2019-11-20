@@ -31,7 +31,14 @@ import {
 
 export { default as modules } from './modules'
 
+let onboard: any
+
 function init(initialization: Initialization): API {
+  if (onboard) {
+    console.warn('onboard has already been initialized')
+    onboard.$destroy()
+  }
+
   validateInit(initialization)
 
   const { subscriptions, dappId, networkId, modules, darkMode } = initialization
@@ -47,7 +54,7 @@ function init(initialization: Initialization): API {
     darkMode
   }))
 
-  new Onboard({
+  onboard = new Onboard({
     target: document.body,
     props: {
       walletSelectModule: modules.walletSelect,
