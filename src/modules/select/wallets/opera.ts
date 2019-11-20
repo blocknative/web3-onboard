@@ -1,16 +1,25 @@
 import { extensionInstallMessage } from '../content'
+import { WalletModule, Helpers } from '../../../interfaces'
+import { validateType } from '../../../validation'
 
 import operaIcon from '../wallet-icons/icon-opera.png'
 import operaIcon2x from '../wallet-icons/icon-opera@2x.png'
 
-import { WalletModule, Helpers } from '../../../interfaces'
+function opera(options: { preferred?: boolean } = {}): WalletModule {
+  const { preferred } = options
 
-function opera(): WalletModule {
+  validateType({
+    name: 'preferred',
+    value: preferred,
+    type: 'boolean',
+    optional: true
+  })
+
   return {
     name: 'Opera',
     iconSrc: operaIcon,
     iconSrcSet: operaIcon2x,
-    wallet: (helpers: Helpers) => {
+    wallet: async (helpers: Helpers) => {
       const { getProviderName, createModernProviderInterface } = helpers
 
       const provider =
@@ -26,7 +35,9 @@ function opera(): WalletModule {
       }
     },
     link: 'https://www.opera.com/',
-    installMessage: extensionInstallMessage
+    installMessage: extensionInstallMessage,
+    desktop: true,
+    preferred
   }
 }
 

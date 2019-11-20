@@ -156,6 +156,10 @@ export function getProviderName(provider: any): string | undefined {
     return 'Cipher'
   }
 
+  if (provider.isOpera) {
+    return 'Opera'
+  }
+
   if (provider.host && provider.host.indexOf('localhost') !== -1) {
     return 'localhost'
   }
@@ -232,4 +236,11 @@ export function makeQuerablePromise(
     return isRejected
   }
   return promise
+}
+
+export function isPromise(val: any): val is Promise<any> {
+  if ((val as Promise<any>) instanceof Promise) {
+    return true
+  }
+  return false
 }

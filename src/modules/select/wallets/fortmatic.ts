@@ -1,4 +1,3 @@
-import Fortmatic from 'fortmatic'
 import fortmaticIcon from '../wallet-icons/icon-fortmatic.svg'
 import { networkName } from '../../../utilities'
 import { validateType } from '../../../validation'
@@ -7,22 +6,35 @@ import { SdkWalletOptions, WalletModule, Helpers } from '../../../interfaces'
 function fortmatic(options: SdkWalletOptions): WalletModule {
   validateType({ name: 'Fortmatic options', value: options, type: 'object' })
 
-  const { apiKey, networkId } = options
+  const { apiKey, networkId, preferred } = options
 
   validateType({ name: 'apiKey', value: apiKey, type: 'string' })
   validateType({ name: 'networkId', value: networkId, type: 'number' })
+  validateType({
+    name: 'preferred',
+    value: preferred,
+    type: 'boolean',
+    optional: true
+  })
+
+  let instance: any
+  let provider: any
 
   return {
     name: 'Fortmatic',
     iconSrc: fortmaticIcon,
-    wallet: (helpers: Helpers) => {
-      const { BigNumber } = helpers
+    wallet: async (helpers: Helpers) => {
+      if (!instance) {
+        const { default: Fortmatic } = await import('fortmatic')
 
-      const instance = new Fortmatic(
-        apiKey,
-        networkId === 1 ? undefined : networkName(networkId)
-      )
-      const provider = instance.getProvider()
+        instance = new Fortmatic(
+          apiKey,
+          networkId === 1 ? undefined : networkName(networkId)
+        )
+        provider = instance.getProvider()
+      }
+
+      const { BigNumber } = helpers
 
       return {
         provider,
@@ -49,7 +61,10 @@ function fortmatic(options: SdkWalletOptions): WalletModule {
           }
         }
       }
-    }
+    },
+    desktop: true,
+    mobile: true,
+    preferred
   }
 }
 

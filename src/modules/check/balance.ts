@@ -1,16 +1,27 @@
-import { ReadyModal, StateAndHelpers } from '../../interfaces'
+import { WalletCheckModal, StateAndHelpers } from '../../interfaces'
+import { validateType } from '../../validation'
 
-function balance(
-  minimum: string
-): (currentState: StateAndHelpers) => ReadyModal | undefined {
+function balance(options: {
+  minimumBalance: string
+}): (currentState: StateAndHelpers) => WalletCheckModal | undefined {
+  validateType({ name: 'balance options', value: options, type: 'object' })
+
+  const { minimumBalance } = options
+
+  validateType({
+    name: 'minimumBalance',
+    value: minimumBalance,
+    type: 'string'
+  })
+
   return (StateAndHelpers: StateAndHelpers) => {
     const { balance, BigNumber } = StateAndHelpers
     // if balance is less than minimum
-    if (BigNumber(balance).lt(BigNumber(minimum || 0))) {
+    if (BigNumber(balance).lt(BigNumber(minimumBalance || 0))) {
       return {
         heading: 'Get Some ETH',
         description: `Your current account has less than the necessary minimum balance of ${BigNumber(
-          minimum
+          minimumBalance
         )
           .div(BigNumber('1000000000000000000'))
           .toString(10)} ETH.`,

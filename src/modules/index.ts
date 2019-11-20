@@ -1,7 +1,7 @@
 import select from './select'
-import ready from './ready'
+import check from './check'
 
 export default {
   select,
-  ready
+  check
 }
