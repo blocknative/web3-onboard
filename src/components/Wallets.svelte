@@ -63,6 +63,7 @@
         onclick={() => handleWalletSelect(wallet)}
         iconSrc={wallet.iconSrc}
         iconSrcSet={wallet.iconSrcSet}
+        svg={wallet.svg}
         text={wallet.name}
         {loadingWallet} />
     </li>
