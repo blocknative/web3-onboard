@@ -33,17 +33,15 @@ export interface WalletCheckModule {
 }
 
 export interface WalletCheckModal {
-  img?: string
   heading: string
   description: string
   button?: {
     onclick: () => void
     text: string
   }
-  invalidMsg?: string
   eventCode: string
   action?: () => Promise<{ message: string } | undefined>
-  loading?: () => Promise<undefined>
+  loading?: Promise<undefined>
   icon?: string
 }
 
@@ -104,7 +102,7 @@ export interface WalletInterface {
   name: string
   connect?: () => Promise<{ message: string } | undefined>
   disconnect?: () => void
-  loading?: () => Promise<undefined>
+  loading?: Promise<undefined>
   address: StateSyncer
   network: StateSyncer
   balance: StateSyncer
@@ -120,7 +118,7 @@ export interface Wallet {
   provider: any
   instance?: any
   connect?: () => Promise<{ message: string } | undefined>
-  loading?: () => Promise<undefined>
+  loading?: Promise<undefined>
 }
 
 export interface SdkWalletOptions {
