@@ -259,11 +259,9 @@ export function validateModal(modal: WalletCheckModal): never | void {
   validateType({ name: 'modal', value: modal, type: 'object' })
 
   const {
-    img,
     heading,
     description,
     button,
-    invalidMsg,
     eventCode,
     action,
     icon,
@@ -273,28 +271,12 @@ export function validateModal(modal: WalletCheckModal): never | void {
 
   invalidParams(
     otherParams,
-    [
-      'img',
-      'heading',
-      'description',
-      'button',
-      'invalidMsg',
-      'eventCode',
-      'action',
-      'icon'
-    ],
+    ['heading', 'description', 'button', 'eventCode', 'action', 'icon'],
     'modal'
   )
 
-  validateType({ name: 'img', value: img, type: 'string', optional: true })
   validateType({ name: 'heading', value: heading, type: 'string' })
   validateType({ name: 'description', value: description, type: 'string' })
-  validateType({
-    name: 'invalidMsg',
-    value: invalidMsg,
-    type: 'string',
-    optional: true
-  })
   validateType({ name: 'eventCode', value: eventCode, type: 'string' })
   validateType({
     name: 'action',
@@ -306,7 +288,7 @@ export function validateModal(modal: WalletCheckModal): never | void {
   validateType({
     name: 'loading',
     value: loading,
-    type: 'function',
+    type: 'object',
     optional: true
   })
 
