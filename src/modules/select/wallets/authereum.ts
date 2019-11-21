@@ -37,10 +37,9 @@ function authereum(options: {
           name: 'Authereum',
           connect: () => provider.enable(),
           disconnect: () => authereum.logout(),
-          loading: () =>
-            new Promise((resolve: () => void) => {
-              authereum.on('openPopup', resolve)
-            }),
+          loading: new Promise((resolve: () => void) => {
+            authereum.on('openPopup', resolve)
+          }),
           address: {
             get: () => authereum.getAccountAddress()
           },

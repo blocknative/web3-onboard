@@ -87,7 +87,7 @@
 
         if (activeModal.loading) {
           loading = true
-          activeModal.loading().then(() => (loading = false))
+          activeModal.loading.then(() => (loading = false))
         }
 
         // poll to automatically to check if condition has been met
