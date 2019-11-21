@@ -40,7 +40,8 @@ function walletConnect(options: WalletConnectOptions): WalletModule {
         const { default: WalletConnectProvider } = await import(
           '@walletconnect/web3-provider'
         )
-        const provider = new WalletConnectProvider({
+
+        provider = new WalletConnectProvider({
           infuraId: infuraKey
         })
 
@@ -63,7 +64,10 @@ function walletConnect(options: WalletConnectOptions): WalletModule {
                   })
                 )
             }),
-          disconnect: () => provider.close(),
+          disconnect: () => {
+            provider.close()
+            provider = undefined
+          },
           address: {
             onChange: func => {
               provider
