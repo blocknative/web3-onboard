@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { fade } from "svelte/transition";
-  import { app } from "../stores";
-  export let closeModal: () => void;
+  import { fade } from 'svelte/transition'
+  import { app } from '../stores'
+  export let closeModal: () => void
 
-  let closeHovered: boolean;
+  let closeHovered: boolean
 </script>
 
 <style>
@@ -11,12 +11,12 @@
   /* .bn-onboard-modal */
   aside {
     display: flex;
-    font-family: "Helvetica Neue";
+    font-family: 'Helvetica Neue';
     justify-content: center;
     align-items: center;
     position: absolute;
     font-size: 16px;
-    z-index: 99999999;
+    z-index: 99;
     top: 0;
     left: 0;
     width: 100vw;
@@ -37,7 +37,7 @@
     background: #ffffff;
     border-radius: 10px;
     box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.1);
-    font-family: "Helvetica Neue";
+    font-family: 'Helvetica Neue';
     font-size: inherit;
     padding: 1.33em;
     position: relative;
