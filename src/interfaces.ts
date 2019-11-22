@@ -158,7 +158,8 @@ interface GetState {
 }
 
 export interface ConfigOptions {
-  darkMode: boolean
+  darkMode?: boolean
+  networkId?: number
 }
 
 export interface API {
