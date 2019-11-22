@@ -57,7 +57,8 @@ export const state = derived(
       network: $network,
       balance: $balance,
       wallet: $wallet,
-      mobileDevice: $app.mobileDevice
+      mobileDevice: $app.mobileDevice,
+      appNetworkId: $app.networkId
     }
   }
 )

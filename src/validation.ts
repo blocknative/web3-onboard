@@ -59,12 +59,24 @@ export function validateInit(init: Initialization): never | void {
     dappId,
     networkId,
     subscriptions,
-    modules,
+    walletSelect,
+    walletCheck,
     darkMode,
     ...otherParams
   } = init
 
-  invalidParams(otherParams, ['dappId', 'subscriptions', 'modules'], 'init')
+  invalidParams(
+    otherParams,
+    [
+      'dappId',
+      'networkId',
+      'subscriptions',
+      'walletSelect',
+      'walletCheck',
+      'darkMode'
+    ],
+    'init'
+  )
 
   validateType({ name: 'dappId', value: dappId, type: 'string' })
   validateType({ name: 'networkId', value: networkId, type: 'number' })
@@ -75,11 +87,6 @@ export function validateInit(init: Initialization): never | void {
     optional: true
   })
 
-  validateSubscriptions(subscriptions)
-  validateModules(modules)
-}
-
-function validateSubscriptions(subscriptions: Subscriptions): never | void {
   validateType({
     name: 'subscriptions',
     value: subscriptions,
@@ -88,37 +95,64 @@ function validateSubscriptions(subscriptions: Subscriptions): never | void {
   })
 
   if (subscriptions) {
-    Object.keys(subscriptions).forEach((key: string) => {
-      if (!validSubscriptionKey(key)) {
-        throw new Error(
-          `${key} is not a valid subscription parameter, must be one of the following keys: ${validSubscriptionKeys.join(
-            ', '
-          )}`
-        )
-      }
+    validateSubscriptions(subscriptions)
+  }
 
-      validateType({
-        name: 'subscription parameter',
-        value: subscriptions[key],
-        type: 'function',
-        optional: true
-      })
-    })
+  validateType({
+    name: 'walletSelect',
+    value: walletSelect,
+    type: 'object',
+    optional: true
+  })
+
+  if (walletSelect) {
+    validateWalletSelect(walletSelect)
+  }
+
+  validateType({
+    name: 'walletCheck',
+    value: walletCheck,
+    type: 'object',
+    optional: true
+  })
+
+  if (walletCheck) {
+    validateWalletCheck(walletCheck)
   }
 }
 
-function validateModules(modules: {
-  walletSelect: WalletSelectModule
-  walletCheck: WalletCheckModule[] | Promise<WalletCheckModule[]>
-}): never | void {
-  validateType({ name: 'modules', value: modules, type: 'object' })
+function validateSubscriptions(subscriptions: Subscriptions): never | void {
+  const { address, network, balance, wallet, ...otherParams } = subscriptions
 
-  const { walletSelect, walletCheck, ...otherParams } = modules
+  invalidParams(otherParams, validSubscriptionKeys, 'subscriptions')
 
-  invalidParams(otherParams, ['walletSelect', 'walletCheck'], 'modules')
+  validateType({
+    name: 'subscriptions.address',
+    value: address,
+    type: 'function',
+    optional: true
+  })
 
-  validateWalletSelect(walletSelect)
-  validateWalletCheck(walletCheck)
+  validateType({
+    name: 'subscriptions.network',
+    value: network,
+    type: 'function',
+    optional: true
+  })
+
+  validateType({
+    name: 'subscriptions.balance',
+    value: balance,
+    type: 'function',
+    optional: true
+  })
+
+  validateType({
+    name: 'subscriptions.wallet',
+    value: wallet,
+    type: 'function',
+    optional: true
+  })
 }
 
 function validateWalletSelect(walletSelect: WalletSelectModule): never | void {
@@ -132,100 +166,153 @@ function validateWalletSelect(walletSelect: WalletSelectModule): never | void {
     'walletSelect'
   )
 
-  validateType({ name: 'heading', value: heading, type: 'string' })
-  validateType({ name: 'description', value: description, type: 'string' })
+  validateType({
+    name: 'heading',
+    value: heading,
+    type: 'string',
+    optional: true
+  })
+  validateType({
+    name: 'description',
+    value: description,
+    type: 'string',
+    optional: true
+  })
 
   if (Array.isArray(wallets)) {
-    wallets.forEach(validateWalletModule)
-  } else if (!wallets.then) {
-    throw new Error(
-      `wallets parameter must be a promise or an array of wallet modules.`
-    )
+    wallets.forEach(validateWallet)
   }
 }
 
-export function validateWalletModule(module: WalletModule): never | void {
-  const {
-    name,
-    iconSrc,
-    iconSrcSet,
-    svg,
-    wallet,
-    link,
-    installMessage,
-    preferred,
-    desktop,
-    mobile,
-    ...otherParams
-  } = module
+export function isWalletModule(obj: any): obj is WalletModule {
+  return (obj as WalletModule).wallet !== undefined
+}
 
-  invalidParams(
-    otherParams,
-    [
-      'name',
-      'iconSrc',
-      'iconSrcSet',
-      'svg',
-      'wallet',
-      'link',
-      'installMessage',
-      'preferred'
-    ],
-    'module'
-  )
+export function isWalletInit(obj: any): obj is WalletInit {
+  return (obj as WalletInit).walletName !== undefined
+}
 
-  validateType({ name: 'name', value: name, type: 'string' })
-  validateType({ name: 'wallet', value: wallet, type: 'function' })
+export function validateWallet(obj: WalletModule | WalletInit): never | void {
   validateType({
-    name: 'iconSrc',
-    value: iconSrc,
-    type: 'string',
-    optional: true
+    name: 'selectWallet.wallets item',
+    value: obj,
+    type: 'object'
   })
-  validateType({
-    name: 'iconSrcSet',
-    value: iconSrcSet,
-    type: 'string',
-    optional: true
-  })
-  validateType({ name: 'svg', value: svg, type: 'string', optional: true })
-  validateType({ name: 'link', value: link, type: 'string', optional: true })
-  validateType({
-    name: 'installMessage',
-    value: installMessage,
-    type: 'function',
-    optional: true
-  })
-  validateType({
-    name: 'preferred',
-    value: preferred,
-    type: 'boolean',
-    optional: true
-  })
-  validateType({
-    name: 'desktop',
-    value: desktop,
-    type: 'boolean',
-    optional: true
-  })
-  validateType({
-    name: 'mobile',
-    value: mobile,
-    type: 'boolean',
-    optional: true
-  })
+
+  if (isWalletModule(obj)) {
+    const {
+      name,
+      iconSrc,
+      iconSrcSet,
+      svg,
+      wallet,
+      link,
+      installMessage,
+      preferred,
+      desktop,
+      mobile,
+      ...otherParams
+    } = obj
+
+    invalidParams(
+      otherParams,
+      [
+        'name',
+        'iconSrc',
+        'iconSrcSet',
+        'svg',
+        'wallet',
+        'link',
+        'installMessage',
+        'preferred',
+        'desktop',
+        'mobile'
+      ],
+      'selectWallets.wallets item'
+    )
+
+    validateType({ name: 'name', value: name, type: 'string' })
+    validateType({ name: 'wallet', value: wallet, type: 'function' })
+
+    validateType({
+      name: 'iconSrc',
+      value: iconSrc,
+      type: 'string',
+      optional: true
+    })
+
+    validateType({
+      name: 'iconSrcSet',
+      value: iconSrcSet,
+      type: 'string',
+      optional: true
+    })
+
+    validateType({ name: 'svg', value: svg, type: 'string', optional: true })
+    validateType({ name: 'link', value: link, type: 'string', optional: true })
+
+    validateType({
+      name: 'installMessage',
+      value: installMessage,
+      type: 'function',
+      optional: true
+    })
+
+    validateType({
+      name: 'preferred',
+      value: preferred,
+      type: 'boolean',
+      optional: true
+    })
+
+    validateType({
+      name: 'desktop',
+      value: desktop,
+      type: 'boolean',
+      optional: true
+    })
+
+    validateType({
+      name: 'mobile',
+      value: mobile,
+      type: 'boolean',
+      optional: true
+    })
+
+    return
+  }
+
+  validateWalletInit(obj)
+}
+
+export function isWalletCheckModule(obj: any): obj is WalletCheckModule {
+  return typeof obj === 'function'
 }
 
 function validateWalletCheck(
-  walletCheck: WalletCheckModule[] | Promise<WalletCheckModule[]>
+  walletCheck: Array<WalletCheckModule | WalletCheckInit>
 ): never | void {
-  if (Array.isArray(walletCheck)) {
-    walletCheck.forEach(validateWalletCheckModule)
-  } else if (!walletCheck.then) {
-    throw new Error(
-      'check must be an array of wallet check modules or a promise.'
-    )
-  }
+  validateType({ name: 'walletCheck', value: walletCheck, type: 'array' })
+  walletCheck.forEach(check => {
+    if (isWalletCheckModule(check)) {
+      validateWalletCheckModule(check)
+    } else {
+      validateType({ name: 'walletCheck item', value: check, type: 'object' })
+      const { checkName, minimumBalance, ...otherParams } = check
+      invalidParams(
+        otherParams,
+        ['checkName', 'minimumBalance'],
+        'walletCheck item'
+      )
+      validateType({ name: 'checkName', value: checkName, type: 'string' })
+      validateType({
+        name: 'minimumBalance',
+        value: minimumBalance,
+        type: 'string',
+        optional: true
+      })
+    }
+  })
 }
 
 export function validateWalletCheckModule(module: WalletCheckModule) {
@@ -234,10 +321,6 @@ export function validateWalletCheckModule(module: WalletCheckModule) {
     value: module,
     type: 'function'
   })
-}
-
-function validSubscriptionKey(key: string): boolean {
-  return !!validSubscriptionKeys.find((validKey: string) => validKey === key)
 }
 
 export function validateConfig(configuration: ConfigOptions): never | void {
@@ -402,17 +485,13 @@ export function validateWalletCheckInit(
 
   walletCheckInit.forEach(init => {
     validateType({ name: 'walletCheckInit', value: init, type: 'object' })
+
     validateType({
-      name: 'walletCheckInit.name',
-      value: init.name,
+      name: 'walletCheckInit.checkName',
+      value: init.checkName,
       type: 'string'
     })
-    validateType({
-      name: 'walletCheckInit.networkId',
-      value: init.networkId,
-      type: 'number',
-      optional: true
-    })
+
     validateType({
       name: 'walletCheckInit.minimumBalance',
       value: init.minimumBalance,
@@ -422,43 +501,55 @@ export function validateWalletCheckInit(
   })
 }
 
-export function validateWalletInit(walletInit: WalletInit[]): void | never {
+export function validateWalletInit(walletInit: WalletInit): void | never {
+  validateType({ name: 'walletInit', value: walletInit, type: 'object' })
+
+  const {
+    walletName,
+    apiKey,
+    networkId,
+    infuraKey,
+    preferred,
+    ...otherParams
+  } = walletInit
+
+  invalidParams(
+    otherParams,
+    ['walletName', 'apiKey', 'networkId', 'infuraKey', 'preferred'],
+    'walletInitObject'
+  )
+
   validateType({
-    name: 'walletInit',
-    value: walletInit,
-    type: 'array'
+    name: 'walletInit.walletName',
+    value: walletName,
+    type: 'string'
   })
 
-  walletInit.forEach(init => {
-    validateType({ name: 'walletInit', value: init, type: 'object' })
-    validateType({
-      name: 'walletInit.name',
-      value: init.name,
-      type: 'string'
-    })
-    validateType({
-      name: 'walletInit.apiKey',
-      value: init.apiKey,
-      type: 'string',
-      optional: true
-    })
-    validateType({
-      name: 'walletInit.networkId',
-      value: init.networkId,
-      type: 'number',
-      optional: true
-    })
-    validateType({
-      name: 'walletInit.infuraKey',
-      value: init.infuraKey,
-      type: 'string',
-      optional: true
-    })
-    validateType({
-      name: 'walletInit.preferred',
-      value: init.preferred,
-      type: 'boolean',
-      optional: true
-    })
+  validateType({
+    name: 'walletInit.apiKey',
+    value: apiKey,
+    type: 'string',
+    optional: true
+  })
+
+  validateType({
+    name: 'walletInit.networkId',
+    value: networkId,
+    type: 'number',
+    optional: true
+  })
+
+  validateType({
+    name: 'walletInit.infuraKey',
+    value: infuraKey,
+    type: 'string',
+    optional: true
+  })
+
+  validateType({
+    name: 'walletInit.preferred',
+    value: preferred,
+    type: 'boolean',
+    optional: true
   })
 }

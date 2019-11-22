@@ -29,7 +29,7 @@ import {
   Wallet
 } from './interfaces'
 
-export { default as modules } from './modules'
+import initializeModules from './modules'
 
 let onboard: any
 
@@ -41,7 +41,7 @@ function init(initialization: Initialization): API {
 
   validateInit(initialization)
 
-  const { subscriptions, dappId, networkId, modules, darkMode } = initialization
+  const { subscriptions, dappId, networkId, darkMode } = initialization
 
   initializeBlocknative(dappId, networkId)
 
@@ -54,11 +54,17 @@ function init(initialization: Initialization): API {
     darkMode
   }))
 
+  const initializedModules = initializeModules(
+    networkId,
+    initialization.walletSelect,
+    initialization.walletCheck
+  )
+
   onboard = new Onboard({
     target: document.body,
     props: {
-      walletSelectModule: modules.walletSelect,
-      walletCheckModules: modules.walletCheck,
+      walletSelectModule: initializedModules.walletSelect,
+      walletCheckModules: initializedModules.walletCheck,
       walletSelect
     }
   })
