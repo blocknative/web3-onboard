@@ -196,6 +196,7 @@ export interface WalletStateSliceStore {
 export interface BalanceStore {
   subscribe: (subscriber: (store: any) => void) => () => void
   setStateSyncer: (stateSyncer: StateSyncer) => number | undefined
+  reset: () => void
 }
 
 export interface AppState {

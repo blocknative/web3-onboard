@@ -72,6 +72,7 @@ export const walletInterface: WalletInterfaceStore = createWalletInterfaceStore(
 walletInterface.subscribe((walletInterface: WalletInterface | null) => {
   if (walletInterface) {
     // reset state
+    balance.reset()
     address.reset()
     network.reset()
 
@@ -159,13 +160,14 @@ function createBalanceStore(initialState: string | null): BalanceStore {
   let stateSyncer: StateSyncer
   let emitter: any
   let emitterAddress: String
+  let cancel: () => void = () => {}
 
   const { subscribe } = derived(
     [address, network],
-    ([$address]: string[], set: any) => {
+    ([$address, $network]: string[], set: any) => {
       if (stateSyncer && !stateSyncer.onChange) {
-        if ($address && stateSyncer.get && set) {
-          syncStateWithTimeout({
+        if ($address && $network && stateSyncer.get && set) {
+          cancel = syncStateWithTimeout({
             getState: stateSyncer.get,
             setState: set,
             timeout: 4000,
@@ -177,13 +179,14 @@ function createBalanceStore(initialState: string | null): BalanceStore {
             emitter = blocknative.account(blocknative.clientIndex, $address)
               .emitter
             emitter.on('txConfirmed', () => {
-              stateSyncer.get &&
-                syncStateWithTimeout({
+              if (stateSyncer.get) {
+                cancel = syncStateWithTimeout({
                   getState: stateSyncer.get,
                   setState: set,
-                  timeout: 4000,
+                  timeout: 1500,
                   currentBalance: get(balance)
                 })
+              }
 
               return false
             })
@@ -224,9 +227,12 @@ function createBalanceStore(initialState: string | null): BalanceStore {
       stateSyncer = syncer
 
       return undefined
-    }
+    },
+    reset: cancel
   }
 }
+
+let timesTried: number = 0
 
 function syncStateWithTimeout(options: {
   getState: () => Promise<string | number | null>
@@ -234,41 +240,51 @@ function syncStateWithTimeout(options: {
   timeout: number
   currentBalance: string
 }) {
-  const { getState, setState, timeout, currentBalance } = options
-  const prom = makeQuerablePromise(
-    new Cancelable(
-      (
-        resolve: (val: string | number | null) => void,
-        reject: (err: any) => void,
-        onCancel: (callback: () => void) => void
-      ) => {
-        getState().then(resolve)
+  if (timesTried < 4) {
+    timesTried++
 
-        onCancel(() => {
-          balanceSyncStatus.error =
-            'There was a problem getting the balance of this wallet'
-        })
-      }
-    ).catch(() => {})
-  )
+    const { getState, setState, timeout, currentBalance } = options
+    const prom = makeQuerablePromise(
+      new Cancelable(
+        (
+          resolve: (val: string | number | null) => void,
+          reject: (err: any) => void,
+          onCancel: (callback: () => void) => void
+        ) => {
+          getState().then(resolve)
 
-  balanceSyncStatus.syncing = prom
+          onCancel(() => {
+            balanceSyncStatus.error =
+              'There was a problem getting the balance of this wallet'
+          })
+        }
+      ).catch(() => {})
+    )
 
-  prom
-    .then((result: string) => {
-      if (result === currentBalance) {
-        syncStateWithTimeout(options)
-      } else {
-        setState(result)
+    balanceSyncStatus.syncing = prom
+
+    prom
+      .then(async (result: string) => {
+        if (result === currentBalance) {
+          await wait(150)
+          syncStateWithTimeout(options)
+        } else {
+          setState(result)
+        }
+      })
+      .catch(() => {})
+
+    const timedOut = wait(timeout)
+
+    timedOut.then(() => {
+      if (!prom.isFulfilled()) {
+        prom.cancel(() => {})
       }
     })
-    .catch(() => {})
 
-  const timedOut = wait(timeout)
-
-  timedOut.then(() => {
-    if (!prom.isFulfilled()) {
-      prom.cancel(() => {})
-    }
-  })
+    return () => prom.cancel(() => {})
+  } else {
+    timesTried = 0
+    return () => {}
+  }
 }
