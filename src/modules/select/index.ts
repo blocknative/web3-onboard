@@ -1,19 +1,49 @@
-import { WalletInit } from '../../interfaces'
-import { validateWalletInit } from '../../validation'
+import { WalletInit, WalletModule } from '../../interfaces'
+import { isWalletInit } from '../../validation'
 
-function wallets(walletInit: WalletInit[]) {
-  validateWalletInit(walletInit)
+const defaultWalletNames = [
+  'metamask',
+  'dapper',
+  'coinbase',
+  'trust',
+  'authereum',
+  'opera',
+  'operaTouch'
+]
+
+function select(
+  wallets: Array<WalletInit | WalletModule> | undefined,
+  networkId: number
+) {
+  if (wallets) {
+    return Promise.all(
+      wallets.map(wallet => {
+        if (isWalletInit(wallet)) {
+          const { walletName, ...initParams } = wallet
+          const module = getModule(walletName)
+
+          return (
+            module &&
+            module.then((m: any) => m.default({ ...initParams, networkId }))
+          )
+        }
+
+        return Promise.resolve(wallet)
+      })
+    )
+  }
 
   return Promise.all(
-    walletInit.map((init: WalletInit) => {
-      const { name, ...initParams } = init
-
-      return getModule(name).then((module: any) => module.default(initParams))
+    defaultWalletNames.map(walletName => {
+      const module = getModule(walletName)
+      if (module) {
+        return module.then((m: any) => m.default({ networkId }))
+      }
     })
   )
 }
 
-function getModule(name: string): Promise<any> {
+function getModule(name: string): Promise<any> | undefined {
   switch (name) {
     case 'metamask':
       return import('./wallets/metamask')
@@ -38,8 +68,8 @@ function getModule(name: string): Promise<any> {
     case 'operaTouch':
       return import('./wallets/opera-touch')
     default:
-      return Promise.reject('invalid wallet name')
+      return
   }
 }
 
-export default wallets
+export default select

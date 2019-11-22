@@ -5,7 +5,6 @@
   import { fade } from 'svelte/transition'
 
   import { app, walletInterface, wallet } from '../stores'
-  import { validateWalletModule } from '../validation'
 
   import Modal from '../components/Modal.svelte'
   import ModalHeader from '../components/ModalHeader.svelte'
@@ -73,10 +72,7 @@
   renderWalletSelect()
 
   async function renderWalletSelect() {
-    if (isPromise(wallets)) {
-      wallets = await wallets
-      wallets.forEach(validateWalletModule)
-    }
+    wallets = await wallets
 
     const deviceWallets = (wallets as WalletModule[]).filter(
       wallet => wallet[mobileDevice ? 'mobile' : 'desktop']

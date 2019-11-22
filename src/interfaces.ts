@@ -2,7 +2,8 @@ export interface Initialization {
   dappId: string
   networkId: number
   subscriptions: Subscriptions
-  modules: Modules
+  walletSelect: WalletSelectModule
+  walletCheck: Array<WalletCheckModule | WalletCheckInit>
   darkMode?: boolean
 }
 
@@ -11,18 +12,12 @@ export interface Subscriptions {
   network: (networkId: number) => void
   balance: (balance: string) => void
   wallet: (wallet: Wallet) => void
-  [Key: string]: (val: any) => void
-}
-
-interface Modules {
-  walletSelect: WalletSelectModule
-  walletCheck: WalletCheckModule[] | Promise<WalletCheckModule[]>
 }
 
 export interface WalletSelectModule {
   heading: string
   description: string
-  wallets: WalletModule[] | Promise<WalletModule[]>
+  wallets: Array<WalletModule | WalletInit>
 }
 
 export interface WalletCheckModule {
@@ -58,6 +53,7 @@ export interface UserState {
   balance: string
   wallet: Wallet | null
   mobileDevice: boolean
+  appNetworkId: number
 }
 
 export interface StateAndHelpers extends UserState {
@@ -133,7 +129,7 @@ export interface WalletConnectOptions {
 }
 
 export interface WalletInit {
-  name: string
+  walletName: string
   preferred?: boolean
   apiKey?: string
   infuraKey?: string
@@ -141,8 +137,7 @@ export interface WalletInit {
 }
 
 export interface WalletCheckInit {
-  name: string
-  networkId?: number
+  checkName: string
   minimumBalance?: string
 }
 
