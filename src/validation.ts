@@ -326,14 +326,21 @@ export function validateWalletCheckModule(module: WalletCheckModule) {
 export function validateConfig(configuration: ConfigOptions): never | void {
   validateType({ name: 'configuration', value: configuration, type: 'object' })
 
-  const { darkMode, ...otherParams } = configuration
+  const { darkMode, networkId, ...otherParams } = configuration
 
-  invalidParams(otherParams, ['darkMode'], 'configuration')
+  invalidParams(otherParams, ['darkMode', 'networkId'], 'configuration')
 
   validateType({
     name: 'darkMode',
     value: darkMode,
     type: 'boolean',
+    optional: true
+  })
+
+  validateType({
+    name: 'networkId',
+    value: networkId,
+    type: 'number',
     optional: true
   })
 }
