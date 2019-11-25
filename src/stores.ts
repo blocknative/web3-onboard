@@ -1,4 +1,5 @@
 import { writable, derived, get } from 'svelte/store'
+import debounce from 'lodash.debounce'
 import { getBlocknative } from './services'
 import { wait, makeQuerablePromise } from './utilities'
 import { validateWalletInterface, validateType } from './validation'
@@ -171,26 +172,32 @@ function createBalanceStore(initialState: string | null): BalanceStore {
           cancel = syncStateWithTimeout({
             getState: stateSyncer.get,
             setState: set,
-            timeout: 4000,
+            timeout: 2000,
             currentBalance: get(balance)
           })
 
           if (emitterAddress !== $address) {
             const blocknative = getBlocknative()
+
             emitter = blocknative.account(blocknative.clientIndex, $address)
               .emitter
-            emitter.on('txConfirmed', () => {
-              if (stateSyncer.get) {
-                cancel = syncStateWithTimeout({
-                  getState: stateSyncer.get,
-                  setState: set,
-                  timeout: 1500,
-                  currentBalance: get(balance)
-                })
-              }
 
-              return false
-            })
+            emitter.on(
+              'txConfirmed',
+              debounce(() => {
+                if (stateSyncer.get) {
+                  cancel = syncStateWithTimeout({
+                    getState: stateSyncer.get,
+                    setState: set,
+                    timeout: 2000,
+                    currentBalance: get(balance),
+                    pollStart: Date.now()
+                  })
+                }
+
+                return false
+              }, 500)
+            )
 
             emitter.on('all', () => false)
 
@@ -233,59 +240,56 @@ function createBalanceStore(initialState: string | null): BalanceStore {
   }
 }
 
-let timesTried: number = 0
-
 function syncStateWithTimeout(options: {
   getState: () => Promise<string | number | null>
   setState: (newState: string) => void
   timeout: number
   currentBalance: string
+  pollStart?: number
 }) {
-  if (timesTried < 4) {
-    timesTried++
+  const { getState, setState, timeout, currentBalance, pollStart } = options
 
-    const { getState, setState, timeout, currentBalance } = options
-    const prom = makeQuerablePromise(
-      new Cancelable(
-        (
-          resolve: (val: string | number | null) => void,
-          reject: (err: any) => void,
-          onCancel: (callback: () => void) => void
-        ) => {
-          getState().then(resolve)
-
-          onCancel(() => {
-            balanceSyncStatus.error =
-              'There was a problem getting the balance of this wallet'
-          })
-        }
-      ).catch(() => {})
-    )
-
-    balanceSyncStatus.syncing = prom
-
-    prom
-      .then(async (result: string) => {
-        if (result === currentBalance) {
-          await wait(150)
-          syncStateWithTimeout(options)
-        } else {
-          setState(result)
-        }
-      })
-      .catch(() => {})
-
-    const timedOut = wait(timeout)
-
-    timedOut.then(() => {
-      if (!prom.isFulfilled()) {
-        prom.cancel(() => {})
-      }
-    })
-
-    return () => prom.cancel(() => {})
-  } else {
-    timesTried = 0
+  if (pollStart && Date.now() - pollStart > 25000) {
     return () => {}
   }
+
+  const prom = makeQuerablePromise(
+    new Cancelable(
+      (
+        resolve: (val: string | number | null) => void,
+        reject: (err: any) => void,
+        onCancel: (callback: () => void) => void
+      ) => {
+        getState().then(resolve)
+
+        onCancel(() => {
+          balanceSyncStatus.error =
+            'There was a problem getting the balance of this wallet'
+        })
+      }
+    ).catch(() => {})
+  )
+
+  balanceSyncStatus.syncing = prom
+
+  prom
+    .then(async (result: string) => {
+      if (result === currentBalance && pollStart) {
+        await wait(350)
+        syncStateWithTimeout(options)
+      } else {
+        setState(result)
+      }
+    })
+    .catch(() => {})
+
+  const timedOut = wait(timeout)
+
+  timedOut.then(() => {
+    if (!prom.isFulfilled()) {
+      prom.cancel(() => {})
+    }
+  })
+
+  return () => prom.cancel(() => {})
 }
