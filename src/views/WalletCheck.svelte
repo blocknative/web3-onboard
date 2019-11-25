@@ -34,6 +34,7 @@
   let checkingModule: boolean = false
   let actionResolved: boolean | undefined = undefined
   let loading: boolean = false
+  let loadingModal: boolean = false
 
   // recheck modules if below conditions
   $: if (!activeModal && !checkingModule) {
@@ -122,11 +123,11 @@
   }
 
   function handleExit() {
+    resetState()
     app.update((store: AppState) => ({
       ...store,
       walletCheckInProgress: false
     }))
-    resetState()
   }
 
   function resetState() {
@@ -138,6 +139,7 @@
   }
 
   function runModules(modules: WalletCheckModule[]) {
+    loadingModal = true
     return new Promise(
       async (
         resolve: (result: {
@@ -154,10 +156,12 @@
           const result = await invalidState(module, get(state))
 
           if (result) {
+            loadingModal = false
             return resolve(result)
           }
         }
 
+        loadingModal = false
         return resolve({ modal: undefined, module: undefined })
       }
     )
@@ -231,8 +235,14 @@
   }
 </style>
 
-<Modal closeModal={handleExit} closeable={!!activeModal}>
-  {#if activeModal}
+{#if loadingModal}
+  <Modal closeable={false}>
+    <Spinner />
+  </Modal>
+{/if}
+
+{#if activeModal}
+  <Modal closeModal={handleExit}>
     <ModalHeader icon={activeModal.icon} heading={activeModal.heading} />
     <p class="bn-onboard-custom bn-onboard-prepare-description">
       {@html activeModal.description}
@@ -261,7 +271,5 @@
       {/if}
       <Button onclick={handleExit}>Dismiss</Button>
     </div>
-  {:else}
-    <Spinner />
-  {/if}
-</Modal>
+  </Modal>
+{/if}
