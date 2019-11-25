@@ -857,9 +857,9 @@
   integrity sha512-ijGqzZt/b7BfzcK9vTrS6MFljQRPn5BFWOx8oE0GYxribu6uV+aA9zZuXI1zc/etK9E8nrgdoF2+LgUw7+9tJQ==
 
 "@types/node@*", "@types/node@^12.12.3":
-  version "12.12.12"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.12.tgz#529bc3e73dbb35dd9e90b0a1c83606a9d3264bdb"
-  integrity sha512-MGuvYJrPU0HUwqF7LqvIj50RZUX23Z+m583KBygKYUZLlZ88n6w28XRNJRJgsHukLEnLz6w6SvxZoLgbr5wLqQ==
+  version "12.12.14"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.14.tgz#1c1d6e3c75dba466e0326948d56e8bd72a1903d2"
+  integrity sha512-u/SJDyXwuihpwjXy7hOOghagLEV1KdAST6syfnOk6QZAMzZuWZqXy5aYYZbh8Jdpd4escVFP0MvftHNDb9pruA==
 
 "@types/resolve@0.0.8":
   version "0.0.8"
@@ -1089,16 +1089,16 @@ atob@^2.1.1:
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
 authereum@^0.0.4-beta.26:
-  version "0.0.4-beta.49"
-  resolved "https://registry.yarnpkg.com/authereum/-/authereum-0.0.4-beta.49.tgz#4ad75fcc9b360b8a53dfa45cd806d821165d2d6b"
-  integrity sha512-TKItUVxzaWTjCIAxTucxiqHLAb52+au6veB4yDxrYdULcEmSpEyRx6CHX9tnUdsEANp9Xqk695wiz32II/RfRg==
+  version "0.0.4-beta.53"
+  resolved "https://registry.yarnpkg.com/authereum/-/authereum-0.0.4-beta.53.tgz#ae69b404c39fb0772de5b624202555d5c12e1064"
+  integrity sha512-EL9ugU8DKkekVGrLuSSj6EdmXia41ANMIst5vdFokKPBtOXs+TDstCRm3xKirrmzEw+emgTZr1S/yxsi5nr+HA==
   dependencies:
     bnc-notify "^0.2.1"
     ethereum-private-key-to-address "0.0.3"
     ethers "^4.0.36"
     eventemitter3 "^4.0.0"
+    moment "^2.24.0"
     penpal "^4.1.1"
-    pify "^4.0.1"
     rollup-plugin-commonjs "^10.1.0"
     store "^2.0.12"
     web3-provider-engine "^15.0.3"
@@ -1748,10 +1748,10 @@ bnc-sdk@0.2.3:
   dependencies:
     sturdy-websocket "^0.1.12"
 
-bnc-sdk@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-1.0.1.tgz#9df231d04621e69facbc2932491f76c9c915bacd"
-  integrity sha512-oswBnsBqMgcz0d8M9JgERvMqdvCcr8A47jATVQGxIUeg++FwTH3bBiSKalNLRLCNNJ2GEr/DJOCycDd/by0jQg==
+bnc-sdk@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-1.0.2.tgz#c06acb9f514663f218e305d222faef223bfbb650"
+  integrity sha512-MfP99PhZnyDO7ANiryLr6HpHVlUMPV18LmvK1WD24bwbUp4IQF92TRqlEx5x3BNR6uzM7q87qKgyaQ5CYy79sg==
   dependencies:
     sturdy-websocket "^0.1.12"
 
@@ -3948,6 +3948,11 @@ mkdirp@^0.5.0, mkdirp@^0.5.1:
   integrity sha1-MAV0OOrGz3+MR2fzhkjWaX11yQM=
   dependencies:
     minimist "0.0.8"
+
+moment@^2.24.0:
+  version "2.24.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
+  integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
 
 ms@2.0.0:
   version "2.0.0"
