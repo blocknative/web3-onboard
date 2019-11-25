@@ -33,7 +33,7 @@
   let pollingInterval: any
   let checkingModule: boolean = false
   let actionResolved: boolean | undefined = undefined
-  let loading: boolean
+  let loading: boolean = false
 
   // recheck modules if below conditions
   $: if (!activeModal && !checkingModule) {
@@ -231,8 +231,8 @@
   }
 </style>
 
-{#if activeModal}
-  <Modal closeModal={handleExit}>
+<Modal closeModal={handleExit} closeable={!!activeModal}>
+  {#if activeModal}
     <ModalHeader icon={activeModal.icon} heading={activeModal.heading} />
     <p class="bn-onboard-custom bn-onboard-prepare-description">
       {@html activeModal.description}
@@ -261,5 +261,7 @@
       {/if}
       <Button onclick={handleExit}>Dismiss</Button>
     </div>
-  </Modal>
-{/if}
+  {:else}
+    <Spinner />
+  {/if}
+</Modal>
