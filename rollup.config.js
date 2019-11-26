@@ -30,16 +30,6 @@ export default {
     },
     { format: 'cjs', dir: 'dist/cjs/' }
   ],
-  moduleContext: id => {
-    const thisAsWindowForModules = [
-      'node_modules/intl-messageformat/lib/core.js',
-      'node_modules/intl-messageformat/lib/compiler.js'
-    ]
-
-    if (thisAsWindowForModules.some(id_ => id.trimRight().endsWith(id_))) {
-      return 'window'
-    }
-  },
   plugins: [
     json(),
     image(),
@@ -64,6 +54,7 @@ export default {
     'fortmatic',
     'squarelink',
     'authereum',
+    'lodash.debounce',
     'regenerator-runtime/runtime'
   ]
 }

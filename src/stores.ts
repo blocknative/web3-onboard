@@ -1,5 +1,4 @@
 import { writable, derived, get } from 'svelte/store'
-import debounce from 'lodash.debounce'
 import { getBlocknative } from './services'
 import { wait, makeQuerablePromise } from './utilities'
 import { validateWalletInterface, validateType } from './validation'
@@ -13,6 +12,7 @@ import {
 } from './interfaces'
 
 const { default: Cancelable } = require('promise-cancelable')
+const debounce = require('lodash.debounce')
 
 export const app: WritableStore = writable({
   dappId: '',
