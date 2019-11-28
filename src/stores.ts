@@ -1,6 +1,7 @@
-import { writable, derived, get } from 'svelte/store'
 import { getBlocknative } from './services'
-import { wait, makeQuerablePromise } from './utilities'
+import { writable, derived, get } from 'svelte/store'
+import debounce from 'lodash.debounce'
+import { wait, makeQueryablePromise, makeCancelable } from './utilities'
 import { validateWalletInterface, validateType } from './validation'
 import {
   WritableStore,
@@ -8,11 +9,9 @@ import {
   WalletInterface,
   WalletStateSliceStore,
   StateSyncer,
-  BalanceStore
+  BalanceStore,
+  QueryablePromise
 } from './interfaces'
-
-const { default: Cancelable } = require('promise-cancelable')
-const debounce = require('lodash.debounce')
 
 export const app: WritableStore = writable({
   dappId: '',
@@ -27,7 +26,7 @@ export const app: WritableStore = writable({
 })
 
 export const balanceSyncStatus: {
-  syncing: null | Promise<undefined>
+  syncing: null | QueryablePromise
   error: string
 } = {
   syncing: null,
@@ -253,22 +252,7 @@ function syncStateWithTimeout(options: {
     return () => {}
   }
 
-  const prom = makeQuerablePromise(
-    new Cancelable(
-      (
-        resolve: (val: string | number | null) => void,
-        reject: (err: any) => void,
-        onCancel: (callback: () => void) => void
-      ) => {
-        getState().then(resolve)
-
-        onCancel(() => {
-          balanceSyncStatus.error =
-            'There was a problem getting the balance of this wallet'
-        })
-      }
-    ).catch(() => {})
-  )
+  const prom = makeCancelable(getState())
 
   balanceSyncStatus.syncing = prom
 
@@ -286,10 +270,8 @@ function syncStateWithTimeout(options: {
   const timedOut = wait(timeout)
 
   timedOut.then(() => {
-    if (!prom.isFulfilled()) {
-      prom.cancel(() => {})
-    }
+    prom.cancel()
   })
 
-  return () => prom.cancel(() => {})
+  return () => prom.cancel()
 }
