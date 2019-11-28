@@ -1,6 +1,5 @@
 <script lang="ts">
   import BigNumber from 'bignumber.js'
-  import { onDestroy } from 'svelte'
   import { get } from 'svelte/store'
   import { fade } from 'svelte/transition'
 
@@ -53,25 +52,11 @@
 
   let loadingWallet: string | undefined = undefined
 
-  let appState: AppState = {
-    dappId: '',
-    networkId: 1,
-    version: '',
-    mobileDevice: false,
-    darkMode: false,
-    autoSelectWallet: '',
-    walletSelectInProgress: true,
-    walletSelectCompleted: false,
-    walletCheckInProgress: false,
-    walletCheckCompleted: false
-  }
-
-  const unsubscribe = app.subscribe((store: AppState) => (appState = store))
-  onDestroy(unsubscribe)
-
   renderWalletSelect()
 
   async function renderWalletSelect() {
+    const appState = get(app)
+
     wallets = await wallets
 
     const deviceWallets = (wallets as WalletModule[]).filter(
@@ -82,7 +67,10 @@
       const module = deviceWallets.find(
         (m: WalletModule) => m.name === appState.autoSelectWallet
       )
-      module && handleWalletSelect(module)
+
+      app.update(store => ({ ...store, autoSelectWallet: '' }))
+
+      module ? handleWalletSelect(module) : finish({ completed: false })
     } else {
       if (deviceWallets.find(wallet => wallet.preferred)) {
         // if preferred wallets, then split in to preferred and not preferred
@@ -105,6 +93,13 @@
   }
 
   async function handleWalletSelect(module: WalletModule) {
+    const currentWalletInterface = get(walletInterface)
+
+    if (currentWalletInterface && currentWalletInterface.name === module.name) {
+      finish({ completed: true })
+      return
+    }
+
     loadingWallet = module.name
 
     const {
@@ -201,7 +196,7 @@
     <ModalHeader icon={walletIcon} heading={modalData.heading} />
     {#if !selectedWalletModule}
       <p class="bn-onboard-custom bn-onboard-select-description">
-        {modalData.description}
+        {@html modalData.description}
       </p>
       <Wallets {modalData} {handleWalletSelect} {loadingWallet} />
       <div class="bn-onboard-custom bn-onboard-select-info-container">

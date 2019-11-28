@@ -24,32 +24,33 @@ function authereum(options: {
     iconSrc: authereumIcon,
     wallet: async () => {
       const { default: Authereum } = await import('authereum')
-      const authereum = new Authereum({
+      const instance = new Authereum({
         networkName: networkName(networkId),
         disableNotifications: true
       })
 
-      const provider = authereum.getProvider()
+      const provider = instance.getProvider()
 
       return {
         provider,
+        instance,
         interface: {
           name: 'Authereum',
           connect: () => provider.enable(),
-          disconnect: () => authereum.logout(),
+          disconnect: () => instance.logout(),
           loading: new Promise((resolve: () => void) => {
-            authereum.on('openPopup', resolve)
+            instance.on('openPopup', resolve)
           }),
           address: {
-            get: () => authereum.getAccountAddress()
+            get: () => instance.getAccountAddress()
           },
           network: {
             get: () => Promise.resolve(networkId)
           },
           balance: {
             get: async () => {
-              const loggedIn = await authereum.isAuthenticated()
-              return loggedIn && authereum.getBalance()
+              const loggedIn = await instance.isAuthenticated()
+              return loggedIn && instance.getBalance()
             }
           }
         }

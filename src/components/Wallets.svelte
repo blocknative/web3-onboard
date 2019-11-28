@@ -69,7 +69,7 @@
     </li>
   {/each}
 
-  {#if modalData.secondaryWallets && !showingAllWalletModules}
+  {#if modalData.secondaryWallets && modalData.secondaryWallets.length && !showingAllWalletModules}
     <div>
       <Button onclick={() => (showingAllWalletModules = true)}>
         Show More
