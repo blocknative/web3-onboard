@@ -30,23 +30,19 @@ function walletConnect(options: WalletConnectOptions): WalletModule {
     optional: true
   })
 
-  let provider: any
-
   return {
     name: 'WalletConnect',
     svg: walletConnectIcon,
     wallet: async () => {
-      if (!provider) {
-        const { default: WalletConnectProvider } = await import(
-          '@walletconnect/web3-provider'
-        )
+      const { default: WalletConnectProvider } = await import(
+        '@walletconnect/web3-provider'
+      )
 
-        provider = new WalletConnectProvider({
-          infuraId: infuraKey
-        })
+      const provider = new WalletConnectProvider({
+        infuraId: infuraKey
+      })
 
-        provider.autoRefreshOnNetworkChange = false
-      }
+      provider.autoRefreshOnNetworkChange = false
 
       return {
         provider,
@@ -64,10 +60,6 @@ function walletConnect(options: WalletConnectOptions): WalletModule {
                   })
                 )
             }),
-          disconnect: () => {
-            provider.close()
-            provider = undefined
-          },
           address: {
             onChange: func => {
               provider

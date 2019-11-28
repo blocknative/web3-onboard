@@ -20,18 +20,13 @@ function portis(options: SdkWalletOptions): WalletModule {
     optional: true
   })
 
-  let instance: any
-  let provider: any
-
   return {
     name: 'Portis',
     svg: portisIcon,
     wallet: async (helpers: Helpers) => {
-      if (!instance) {
-        const { default: Portis } = await import('@portis/web3')
-        instance = new Portis(apiKey, networkName(networkId))
-        provider = instance.provider
-      }
+      const { default: Portis } = await import('@portis/web3')
+      const instance = new Portis(apiKey, networkName(networkId))
+      const provider = instance.provider
 
       const { BigNumber } = helpers
 

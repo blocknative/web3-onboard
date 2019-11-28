@@ -29,22 +29,17 @@ function squarelink(options: SdkWalletOptions): WalletModule {
     optional: true
   })
 
-  let instance: any
-  let provider: any
-
   return {
     name: 'Squarelink',
     svg: sqlkIcon,
     wallet: async (helpers: Helpers) => {
-      if (!instance) {
-        const { default: Squarelink } = await import('squarelink')
+      const { default: Squarelink } = await import('squarelink')
 
-        instance = new Squarelink(apiKey, networkName(networkId), {
-          useSync: true
-        })
+      const instance = new Squarelink(apiKey, networkName(networkId), {
+        useSync: true
+      })
 
-        provider = instance.getProviderSync()
-      }
+      const provider = instance.getProviderSync()
 
       const { BigNumber } = helpers
 

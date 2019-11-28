@@ -30,22 +30,17 @@ function fortmatic(options: SdkWalletOptions): WalletModule {
     optional: true
   })
 
-  let instance: any
-  let provider: any
-
   return {
     name: 'Fortmatic',
     svg: fortmaticIcon,
     wallet: async (helpers: Helpers) => {
-      if (!instance) {
-        const { default: Fortmatic } = await import('fortmatic')
+      const { default: Fortmatic } = await import('fortmatic')
 
-        instance = new Fortmatic(
-          apiKey,
-          networkId === 1 ? undefined : networkName(networkId)
-        )
-        provider = instance.getProvider()
-      }
+      const instance = new Fortmatic(
+        apiKey,
+        networkId === 1 ? undefined : networkName(networkId)
+      )
+      const provider = instance.getProvider()
 
       const { BigNumber } = helpers
 
