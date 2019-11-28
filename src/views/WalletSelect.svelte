@@ -105,6 +105,13 @@
   }
 
   async function handleWalletSelect(module: WalletModule) {
+    const currentWalletInterface = get(walletInterface)
+
+    if (currentWalletInterface && currentWalletInterface.name === module.name) {
+      finish({ completed: true })
+      return
+    }
+
     loadingWallet = module.name
 
     const {
