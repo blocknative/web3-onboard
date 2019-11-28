@@ -201,7 +201,7 @@
     <ModalHeader icon={walletIcon} heading={modalData.heading} />
     {#if !selectedWalletModule}
       <p class="bn-onboard-custom bn-onboard-select-description">
-        {modalData.description}
+        {@html modalData.description}
       </p>
       <Wallets {modalData} {handleWalletSelect} {loadingWallet} />
       <div class="bn-onboard-custom bn-onboard-select-info-container">
