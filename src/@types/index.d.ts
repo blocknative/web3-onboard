@@ -1,3 +1,10 @@
+declare module 'fortmatic'
+declare module 'squarelink'
+declare module '@walletconnect/web3-provider'
+
+declare module '*.png'
+declare module '*.svg'
+
 declare module 'svelte-i18n' {
   interface Options {
     fallback: string

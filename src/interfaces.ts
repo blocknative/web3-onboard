@@ -208,14 +208,11 @@ export interface AppState {
   walletCheckCompleted: boolean
 }
 
-export interface QuerablePromise extends CancelablePromise {
-  isFulfilled: () => boolean
-  isResolved: () => boolean
-  isRejected: () => boolean
+export interface CancelablePromise extends Promise<any> {
+  cancel: () => void
 }
 
-export interface CancelablePromise extends Promise<any> {
-  cancel: (func: () => void) => void
+export interface QueryablePromise extends CancelablePromise {
   isFulfilled: () => boolean
   isResolved: () => boolean
   isRejected: () => boolean

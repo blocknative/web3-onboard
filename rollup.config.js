@@ -42,13 +42,14 @@ export default {
         importee === 'svelte' || importee.startsWith('svelte/')
     }),
     commonjs(),
-    typescript()
+    typescript({
+      clean: true
+    })
   ],
   external: [
     'bowser',
     'bnc-sdk',
     'bignumber.js',
-    'promise-cancelable',
     '@portis/web3',
     '@walletconnect/web3-provider',
     'fortmatic',

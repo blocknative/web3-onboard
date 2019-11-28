@@ -149,7 +149,10 @@
       ) => {
         for (const module of modules) {
           if (balanceSyncStatus.syncing) {
-            await balanceSyncStatus.syncing.catch(() => {})
+            try {
+              await balanceSyncStatus.syncing
+            } catch (error) {}
+
             balanceSyncStatus.syncing = null
           }
 

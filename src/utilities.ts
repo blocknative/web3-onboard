@@ -1,11 +1,7 @@
 import bowser from 'bowser'
 import BigNumber from 'bignumber.js'
 
-import {
-  QuerablePromise,
-  WalletInterface,
-  CancelablePromise
-} from './interfaces'
+import { WalletInterface, QueryablePromise } from './interfaces'
 
 export function getNetwork(provider: any): Promise<number | any> {
   return new Promise((resolve, reject) => {
@@ -210,22 +206,36 @@ export function wait(time: number) {
   return new Promise(resolve => setTimeout(resolve, time))
 }
 
-export function makeQuerablePromise(
-  promise: CancelablePromise
-): QuerablePromise {
+export function makeCancelable(promise: any) {
+  let rejectFn: any
+
+  const wrappedPromise: any = new Promise((resolve, reject) => {
+    rejectFn = reject
+
+    promise.then(resolve).catch(reject)
+  })
+
+  wrappedPromise.cancel = () => {
+    rejectFn('poop')
+  }
+
+  return wrappedPromise
+}
+
+export function makeQueryablePromise(promise: any): QueryablePromise {
   let isResolved = false
   let isRejected = false
 
-  promise.then(
-    function(v: any) {
-      isResolved = true
-      return v
-    },
-    function(e: any) {
-      isRejected = true
-      throw e
-    }
-  )
+  promise.then(function(v: any) {
+    isResolved = true
+    return v
+  })
+
+  promise.catch(() => {
+    console.log('caught 2')
+    isRejected = true
+  })
+
   promise.isFulfilled = function() {
     return isResolved || isRejected
   }
