@@ -14,7 +14,7 @@ import {
   walletInterface
 } from './stores'
 
-import { isMobileDevice } from './utilities'
+import { getDeviceInfo } from './utilities'
 import { initializeBlocknative } from './services'
 import { validateInit, validateConfig } from './validation'
 
@@ -45,12 +45,15 @@ function init(initialization: Initialization): API {
 
   initializeBlocknative(dappId, networkId)
 
+  const { os, isMobile } = getDeviceInfo()
+
   app.update((store: AppState) => ({
     ...store,
     dappId,
     networkId,
     version,
-    mobileDevice: isMobileDevice(),
+    mobileDevice: isMobile,
+    os,
     darkMode
   }))
 

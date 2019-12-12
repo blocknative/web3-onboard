@@ -37,7 +37,9 @@ function opera(options: { preferred?: boolean } = {}): WalletModule {
     link: 'https://www.opera.com/',
     installMessage: extensionInstallMessage,
     desktop: true,
-    preferred
+    mobile: true,
+    preferred,
+    osExclusions: ['iOS']
   }
 }
 
