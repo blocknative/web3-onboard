@@ -1,24 +1,24 @@
 import { extensionInstallMessage } from '../content'
 import { WalletModule, Helpers } from '../../../interfaces'
-import { validateType } from '../../../validation'
 
 import operaTouchIcon from '../wallet-icons/icon-opera-touch.png'
 import operaTouchIcon2x from '../wallet-icons/icon-opera-touch@2x.png'
 
-function operaTouch(options: { preferred?: boolean } = {}): WalletModule {
-  const { preferred } = options
-
-  validateType({
-    name: 'preferred',
-    value: preferred,
-    type: 'boolean',
-    optional: true
-  })
+function operaTouch(
+  options: {
+    preferred?: boolean
+    label?: string
+    iconSrc?: string
+    svg?: string
+  } = {}
+): WalletModule {
+  const { preferred, label, iconSrc, svg } = options
 
   return {
-    name: 'Opera Touch',
-    iconSrc: operaTouchIcon,
-    iconSrcSet: operaTouchIcon2x,
+    name: label || 'Opera Touch',
+    iconSrc: iconSrc || operaTouchIcon,
+    iconSrcSet: iconSrc || operaTouchIcon2x,
+    svg,
     wallet: async (helpers: Helpers) => {
       const { getProviderName, createModernProviderInterface } = helpers
 
@@ -37,7 +37,8 @@ function operaTouch(options: { preferred?: boolean } = {}): WalletModule {
     link: 'https://www.opera.com/mobile/touch',
     installMessage: extensionInstallMessage,
     mobile: true,
-    preferred
+    preferred,
+    osExclusions: ['Android']
   }
 }
 

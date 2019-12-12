@@ -1,24 +1,24 @@
 import { extensionInstallMessage } from '../content'
 import { WalletModule, Helpers } from '../../../interfaces'
-import { validateType } from '../../../validation'
 
 import dapperIcon from '../wallet-icons/icon-dapper.png'
 import dapperIcon2x from '../wallet-icons/icon-dapper@2x.png'
 
-function dapper(options: { preferred?: boolean } = {}): WalletModule {
-  const { preferred } = options
-
-  validateType({
-    name: 'preferred',
-    value: preferred,
-    type: 'boolean',
-    optional: true
-  })
+function dapper(
+  options: {
+    preferred?: boolean
+    label?: string
+    iconSrc?: string
+    svg?: string
+  } = {}
+): WalletModule {
+  const { preferred, label, iconSrc, svg } = options
 
   return {
-    name: 'Dapper',
-    iconSrc: dapperIcon,
-    iconSrcSet: dapperIcon2x,
+    name: label || 'Dapper',
+    iconSrc: iconSrc || dapperIcon,
+    iconSrcSet: iconSrc || dapperIcon2x,
+    svg,
     wallet: async (helpers: Helpers) => {
       const { createModernProviderInterface, getProviderName } = helpers
       const provider = (window as any).ethereum

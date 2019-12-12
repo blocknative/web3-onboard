@@ -1,27 +1,20 @@
 import authereumIcon from '../wallet-icons/authereum.png'
 import { networkName } from '../../../utilities'
 import { WalletModule } from '../../../interfaces'
-import { validateType } from '../../../validation'
 
 function authereum(options: {
   networkId: number
   preferred?: boolean
+  label?: string
+  iconSrc?: string
+  svg?: string
 }): WalletModule {
-  validateType({ name: 'Authereum Options', value: options, type: 'object' })
-
-  const { networkId, preferred } = options
-
-  validateType({ name: 'networkId', value: networkId, type: 'number' })
-  validateType({
-    name: 'preferred',
-    value: preferred,
-    type: 'boolean',
-    optional: true
-  })
+  const { networkId, preferred, label, iconSrc, svg } = options
 
   return {
-    name: 'Authereum',
-    iconSrc: authereumIcon,
+    name: label || 'Authereum',
+    svg,
+    iconSrc: iconSrc || authereumIcon,
     wallet: async () => {
       const { default: Authereum } = await import('authereum')
       const instance = new Authereum({

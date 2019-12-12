@@ -44,7 +44,7 @@
 
   let selectedWalletModule: WalletModule
 
-  const { mobileDevice } = get(app)
+  const { mobileDevice, os } = get(app)
   let { heading, description, wallets } = module
 
   let primaryWallets: WalletModule[]
@@ -59,9 +59,12 @@
 
     wallets = await wallets
 
-    const deviceWallets = (wallets as WalletModule[]).filter(
-      wallet => wallet[mobileDevice ? 'mobile' : 'desktop']
-    )
+    const deviceWallets = (wallets as WalletModule[])
+      .filter(wallet => wallet[mobileDevice ? 'mobile' : 'desktop'])
+      .filter(wallet => {
+        const { osExclusions = [] } = wallet
+        return !osExclusions.includes(os)
+      })
 
     if (appState.autoSelectWallet) {
       const module = deviceWallets.find(

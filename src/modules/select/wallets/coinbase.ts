@@ -1,20 +1,22 @@
 import { mobileWalletInstallMessage } from '../content'
 import { WalletModule, Helpers } from '../../../interfaces'
-import { validateType } from '../../../validation'
 
-function coinbase(options: { preferred?: boolean } = {}): WalletModule {
-  const { preferred } = options
-  validateType({
-    name: 'preferred',
-    value: preferred,
-    type: 'boolean',
-    optional: true
-  })
+function coinbase(
+  options: {
+    preferred?: boolean
+    label?: string
+    iconSrc?: string
+    svg?: string
+  } = {}
+): WalletModule {
+  const { preferred, label, iconSrc, svg } = options
 
   return {
-    name: 'Coinbase',
+    name: label || 'Coinbase',
     iconSrc:
+      iconSrc ||
       'https://cdn-images-1.medium.com/max/1200/1*7ywNS48PnonfsvvMu1tTsA.png',
+    svg,
     wallet: async (helpers: Helpers) => {
       const { getProviderName, createLegacyProviderInterface } = helpers
       const provider =

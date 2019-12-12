@@ -1,5 +1,4 @@
 import { networkName, networkToId } from '../../../utilities'
-import { validateType } from '../../../validation'
 import { SdkWalletOptions, WalletModule, Helpers } from '../../../interfaces'
 
 const sqlkIcon = `
@@ -16,22 +15,12 @@ const sqlkIcon = `
 `
 
 function squarelink(options: SdkWalletOptions): WalletModule {
-  validateType({ name: 'Squarelink Options', value: options, type: 'object' })
-
-  const { apiKey, networkId, preferred } = options
-
-  validateType({ name: 'apiKey', value: apiKey, type: 'string' })
-  validateType({ name: 'networkId', value: networkId, type: 'number' })
-  validateType({
-    name: 'preferred',
-    value: preferred,
-    type: 'boolean',
-    optional: true
-  })
+  const { apiKey, networkId, preferred, label, iconSrc, svg } = options
 
   return {
-    name: 'Squarelink',
-    svg: sqlkIcon,
+    name: label || 'Squarelink',
+    svg: svg || sqlkIcon,
+    iconSrc,
     wallet: async (helpers: Helpers) => {
       const { default: Squarelink } = await import('squarelink')
 

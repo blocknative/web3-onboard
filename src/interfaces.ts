@@ -82,6 +82,7 @@ export interface WalletModule {
   preferred?: boolean
   desktop?: boolean
   mobile?: boolean
+  osExclusions?: Array<string>
 }
 
 export interface Helpers {
@@ -121,11 +122,17 @@ export interface SdkWalletOptions {
   apiKey: string
   networkId: number
   preferred?: boolean
+  label?: string
+  iconSrc?: string
+  svg?: string
 }
 
 export interface WalletConnectOptions {
   infuraKey: string
   preferred?: boolean
+  label?: string
+  iconSrc?: string
+  svg?: string
 }
 
 export interface WalletInit {
@@ -134,6 +141,9 @@ export interface WalletInit {
   apiKey?: string
   infuraKey?: string
   networkId?: number
+  label?: string
+  iconSrc?: string
+  svg?: string
 }
 
 export interface WalletCheckInit {
@@ -200,6 +210,7 @@ export interface AppState {
   networkId: number
   version: string
   mobileDevice: boolean
+  os: string
   darkMode: boolean
   autoSelectWallet: string
   walletSelectInProgress: boolean
