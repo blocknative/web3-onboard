@@ -1,24 +1,24 @@
 import { extensionInstallMessage } from '../content'
 import { WalletModule, Helpers } from '../../../interfaces'
-import { validateType } from '../../../validation'
 
 import metamaskIcon from '../wallet-icons/icon-metamask.png'
 import metamaskIcon2x from '../wallet-icons/icon-metamask@2x.png'
 
-function metamask(options: { preferred?: boolean } = {}): WalletModule {
-  const { preferred } = options
-
-  validateType({
-    name: 'preferred',
-    value: preferred,
-    type: 'boolean',
-    optional: true
-  })
+function metamask(
+  options: {
+    preferred?: boolean
+    label?: string
+    iconSrc?: string
+    svg?: string
+  } = {}
+): WalletModule {
+  const { preferred, label, iconSrc, svg } = options
 
   return {
-    name: 'MetaMask',
-    iconSrc: metamaskIcon,
-    iconSrcSet: metamaskIcon2x,
+    name: label || 'MetaMask',
+    iconSrc: iconSrc || metamaskIcon,
+    iconSrcSet: iconSrc || metamaskIcon2x,
+    svg,
     wallet: async (helpers: Helpers) => {
       const {
         getProviderName,

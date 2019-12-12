@@ -1,6 +1,5 @@
 import { mobileWalletInstallMessage } from '../content'
 import { WalletModule, Helpers } from '../../../interfaces'
-import { validateType } from '../../../validation'
 
 const trustIcon = `
   <svg height="40" 
@@ -12,19 +11,20 @@ const trustIcon = `
   </svg>
 `
 
-function trust(options: { preferred?: boolean } = {}): WalletModule {
-  const { preferred } = options
-
-  validateType({
-    name: 'preferred',
-    value: preferred,
-    type: 'boolean',
-    optional: true
-  })
+function trust(
+  options: {
+    preferred?: boolean
+    label?: string
+    iconSrc?: string
+    svg?: string
+  } = {}
+): WalletModule {
+  const { preferred, label, iconSrc, svg } = options
 
   return {
-    name: 'Trust',
-    svg: trustIcon,
+    name: label || 'Trust',
+    svg: svg || trustIcon,
+    iconSrc,
     wallet: async (helpers: Helpers) => {
       const { getProviderName, createLegacyProviderInterface } = helpers
       const provider =

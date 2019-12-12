@@ -1,5 +1,4 @@
 import { networkName } from '../../../utilities'
-import { validateType } from '../../../validation'
 import { SdkWalletOptions, WalletModule, Helpers } from '../../../interfaces'
 
 const fortmaticIcon = `
@@ -17,22 +16,12 @@ const fortmaticIcon = `
 `
 
 function fortmatic(options: SdkWalletOptions): WalletModule {
-  validateType({ name: 'Fortmatic options', value: options, type: 'object' })
-
-  const { apiKey, networkId, preferred } = options
-
-  validateType({ name: 'apiKey', value: apiKey, type: 'string' })
-  validateType({ name: 'networkId', value: networkId, type: 'number' })
-  validateType({
-    name: 'preferred',
-    value: preferred,
-    type: 'boolean',
-    optional: true
-  })
+  const { apiKey, networkId, preferred, label, iconSrc, svg } = options
 
   return {
-    name: 'Fortmatic',
-    svg: fortmaticIcon,
+    name: label || 'Fortmatic',
+    svg: svg || fortmaticIcon,
+    iconSrc,
     wallet: async (helpers: Helpers) => {
       const { default: Fortmatic } = await import('fortmatic')
 

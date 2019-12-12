@@ -1,24 +1,24 @@
 import { extensionInstallMessage } from '../content'
 import { WalletModule, Helpers } from '../../../interfaces'
-import { validateType } from '../../../validation'
 
 import operaIcon from '../wallet-icons/icon-opera.png'
 import operaIcon2x from '../wallet-icons/icon-opera@2x.png'
 
-function opera(options: { preferred?: boolean } = {}): WalletModule {
-  const { preferred } = options
-
-  validateType({
-    name: 'preferred',
-    value: preferred,
-    type: 'boolean',
-    optional: true
-  })
+function opera(
+  options: {
+    preferred?: boolean
+    label?: string
+    iconSrc?: string
+    svg?: string
+  } = {}
+): WalletModule {
+  const { preferred, label, iconSrc, svg } = options
 
   return {
-    name: 'Opera',
-    iconSrc: operaIcon,
-    iconSrcSet: operaIcon2x,
+    name: label || 'Opera',
+    iconSrc: iconSrc || operaIcon,
+    iconSrcSet: iconSrc || operaIcon2x,
+    svg,
     wallet: async (helpers: Helpers) => {
       const { getProviderName, createModernProviderInterface } = helpers
 

@@ -121,11 +121,17 @@ export interface SdkWalletOptions {
   apiKey: string
   networkId: number
   preferred?: boolean
+  label?: string
+  iconSrc?: string
+  svg?: string
 }
 
 export interface WalletConnectOptions {
   infuraKey: string
   preferred?: boolean
+  label?: string
+  iconSrc?: string
+  svg?: string
 }
 
 export interface WalletInit {
@@ -134,6 +140,9 @@ export interface WalletInit {
   apiKey?: string
   infuraKey?: string
   networkId?: number
+  label?: string
+  iconSrc?: string
+  svg?: string
 }
 
 export interface WalletCheckInit {
