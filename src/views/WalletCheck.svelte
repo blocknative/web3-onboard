@@ -126,7 +126,8 @@
     resetState()
     app.update((store: AppState) => ({
       ...store,
-      walletCheckInProgress: false
+      walletCheckInProgress: false,
+      walletCheckCompleted: false
     }))
   }
 
