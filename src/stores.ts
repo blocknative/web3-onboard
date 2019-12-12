@@ -18,6 +18,7 @@ export const app: WritableStore = writable({
   networkId: 1,
   version: '',
   mobileDevice: false,
+  os: '',
   darkMode: false,
   walletSelectInProgress: false,
   walletSelectCompleted: false,

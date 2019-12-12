@@ -37,7 +37,9 @@ function opera(
     link: 'https://www.opera.com/',
     installMessage: extensionInstallMessage,
     desktop: true,
-    preferred
+    mobile: true,
+    preferred,
+    osExclusions: ['iOS']
   }
 }
 

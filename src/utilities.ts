@@ -161,11 +161,15 @@ export function getProviderName(provider: any): string | undefined {
   }
 }
 
-export function isMobileDevice() {
+export function getDeviceInfo() {
   const browser = bowser.getParser(window.navigator.userAgent)
+  const { name } = browser.getOS()
   const { type } = browser.getPlatform()
 
-  return type !== 'desktop'
+  return {
+    isMobile: type !== 'desktop',
+    os: name
+  }
 }
 
 export function networkName(id: number): string {

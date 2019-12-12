@@ -82,6 +82,7 @@ export interface WalletModule {
   preferred?: boolean
   desktop?: boolean
   mobile?: boolean
+  osExclusions?: Array<string>
 }
 
 export interface Helpers {
@@ -209,6 +210,7 @@ export interface AppState {
   networkId: number
   version: string
   mobileDevice: boolean
+  os: string
   darkMode: boolean
   autoSelectWallet: string
   walletSelectInProgress: boolean

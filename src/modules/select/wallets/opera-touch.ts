@@ -37,7 +37,8 @@ function operaTouch(
     link: 'https://www.opera.com/mobile/touch',
     installMessage: extensionInstallMessage,
     mobile: true,
-    preferred
+    preferred,
+    osExclusions: ['Android']
   }
 }
 
