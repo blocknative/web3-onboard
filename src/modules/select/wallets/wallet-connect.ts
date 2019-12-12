@@ -1,4 +1,3 @@
-import { validateType } from '../../../validation'
 import { WalletConnectOptions, WalletModule } from '../../../interfaces'
 
 const walletConnectIcon = `
@@ -14,25 +13,12 @@ const walletConnectIcon = `
 `
 
 function walletConnect(options: WalletConnectOptions): WalletModule {
-  validateType({
-    name: 'WalletConnect Options',
-    value: options,
-    type: 'object'
-  })
-
-  const { infuraKey, preferred } = options
-
-  validateType({ name: 'infuraKey', value: infuraKey, type: 'string' })
-  validateType({
-    name: 'preferred',
-    value: preferred,
-    type: 'boolean',
-    optional: true
-  })
+  const { infuraKey, preferred, label, iconSrc, svg } = options
 
   return {
-    name: 'WalletConnect',
-    svg: walletConnectIcon,
+    name: label || 'WalletConnect',
+    svg: svg || walletConnectIcon,
+    iconSrc,
     wallet: async () => {
       const { default: WalletConnectProvider } = await import(
         '@walletconnect/web3-provider'

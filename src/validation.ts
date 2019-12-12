@@ -517,12 +517,24 @@ export function validateWalletInit(walletInit: WalletInit): void | never {
     networkId,
     infuraKey,
     preferred,
+    label,
+    iconSrc,
+    svg,
     ...otherParams
   } = walletInit
 
   invalidParams(
     otherParams,
-    ['walletName', 'apiKey', 'networkId', 'infuraKey', 'preferred'],
+    [
+      'walletName',
+      'apiKey',
+      'networkId',
+      'infuraKey',
+      'preferred',
+      'label',
+      'iconSrc',
+      'svg'
+    ],
     'walletInitObject'
   )
 
@@ -557,6 +569,25 @@ export function validateWalletInit(walletInit: WalletInit): void | never {
     name: 'walletInit.preferred',
     value: preferred,
     type: 'boolean',
+    optional: true
+  })
+
+  validateType({
+    name: 'walletInit.label',
+    value: label,
+    type: 'string',
+    optional: true
+  })
+  validateType({
+    name: 'walletInit.iconSrc',
+    value: iconSrc,
+    type: 'string',
+    optional: true
+  })
+  validateType({
+    name: 'walletInit.svg',
+    value: svg,
+    type: 'string',
     optional: true
   })
 }
