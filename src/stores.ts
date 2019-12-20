@@ -204,7 +204,7 @@ function createBalanceStore(initialState: string | null): BalanceStore {
 
             emitterAddress = $address
           }
-        } else {
+        } else if (emitterAddress && !$address) {
           // no address, so set balance back to null
           set && set(undefined)
         }
