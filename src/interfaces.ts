@@ -76,7 +76,7 @@ export interface WalletModule {
   }>
   link?: string
   installMessage?: (wallets: {
-    currentWallet: string
+    currentWallet: string | undefined
     selectedWallet: string
   }) => string
   preferred?: boolean
@@ -96,7 +96,7 @@ export interface Helpers {
 }
 
 export interface WalletInterface {
-  name: string
+  name: string | undefined
   connect?: () => Promise<{ message: string } | undefined>
   disconnect?: () => void
   loading?: Promise<undefined>
