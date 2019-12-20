@@ -102,7 +102,7 @@ export function createModernProviderInterface(provider: any): WalletInterface {
             )
         }
       ),
-    name: getProviderName(provider) || 'unknown'
+    name: getProviderName(provider)
   }
 }
 
@@ -117,7 +117,7 @@ export function createLegacyProviderInterface(provider: any): WalletInterface {
     balance: {
       get: () => getBalance(provider)
     },
-    name: getProviderName(provider) || 'unknown'
+    name: getProviderName(provider)
   }
 }
 

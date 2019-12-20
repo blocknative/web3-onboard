@@ -130,7 +130,7 @@
       installMessage =
         module.installMessage &&
         module.installMessage({
-          currentWallet: walletAlreadyInstalled || 'unknown',
+          currentWallet: walletAlreadyInstalled,
           selectedWallet: selectedWalletModule.name
         })
 
