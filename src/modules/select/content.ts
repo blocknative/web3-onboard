@@ -1,5 +1,5 @@
 export const extensionInstallMessage = (helpers: {
-  currentWallet: string
+  currentWallet: string | undefined
   selectedWallet: string
 }) => {
   const { currentWallet, selectedWallet } = helpers
@@ -29,8 +29,7 @@ export const extensionInstallMessage = (helpers: {
   } else {
     return `
     <p style="font-size: 0.889rem; font-family: Helvetica Neue; margin: 0.889rem 0;">
-    You'll need to install <b>${selectedWallet}</b> to continue. Install
-    the extension and then
+    You'll need to install <b>${selectedWallet}</b> to continue. Once you have it installed, go ahead and
     <span
     class="bn-clickable"
       style="color: #4a90e2; font-size: 0.889rem; font-family: Helvetica Neue;"
