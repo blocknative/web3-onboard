@@ -55,6 +55,7 @@ export default {
     'fortmatic',
     'squarelink',
     'authereum',
+    '@toruslabs/torus-embed',
     'lodash.debounce',
     'regenerator-runtime/runtime'
   ]

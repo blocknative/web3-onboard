@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "@portis/web3": "^2.0.0-beta.42",
+    "@toruslabs/torus-embed": "^0.2.11",
     "@walletconnect/web3-provider": "^1.0.0-beta.36",
     "authereum": "^0.0.4-beta.26",
     "bignumber.js": "^9.0.0",

@@ -7,6 +7,7 @@ const defaultWalletNames = [
   'coinbase',
   'trust',
   'authereum',
+  'torus',
   'opera',
   'operaTouch'
 ]
@@ -67,6 +68,8 @@ function getModule(name: string): Promise<any> | undefined {
       return import('./wallets/opera')
     case 'operaTouch':
       return import('./wallets/opera-touch')
+    case 'torus':
+      return import('./wallets/torus')
     default:
       return
   }

@@ -135,6 +135,20 @@ export interface WalletConnectOptions {
   svg?: string
 }
 
+export interface TorusOptions {
+  networkId: number
+  chainId?: number
+  loginMethod?: 'google' | 'facebook' | 'twitch' | 'reddit' | 'discord'
+  buildEnv?: 'production' | 'development' | 'staging' | 'testing'
+  showTorusButton?: boolean
+  buttonPosition?: 'top-left' | 'top-right' | 'bottom-right' | 'bottom-left'
+  enableLogging?: boolean
+  preferred?: boolean
+  label?: string
+  iconSrc?: string
+  svg?: string
+}
+
 export interface WalletInit {
   walletName: string
   preferred?: boolean

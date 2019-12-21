@@ -148,6 +148,10 @@ export function getProviderName(provider: any): string | undefined {
     return 'Toshi'
   }
 
+  if (provider.isTorus) {
+    return 'Torus'
+  }
+
   if (provider.isCipher) {
     return 'Cipher'
   }
