@@ -17,7 +17,7 @@ export interface Subscriptions {
 export interface WalletSelectModule {
   heading: string
   description: string
-  wallets: Array<WalletModule | WalletInit>
+  wallets: Array<WalletModule | WalletInitOptions>
 }
 
 export interface WalletCheckModule {
@@ -118,46 +118,36 @@ export interface Wallet {
   loading?: Promise<undefined>
 }
 
-export interface SdkWalletOptions {
-  apiKey: string
+export interface CommonWalletOptions {
   networkId: number
   preferred?: boolean
   label?: string
   iconSrc?: string
   svg?: string
+}
+
+export interface SdkWalletOptions {
+  apiKey: string
 }
 
 export interface WalletConnectOptions {
   infuraKey: string
-  preferred?: boolean
-  label?: string
-  iconSrc?: string
-  svg?: string
 }
 
 export interface TorusOptions {
-  networkId: number
-  chainId?: number
   loginMethod?: 'google' | 'facebook' | 'twitch' | 'reddit' | 'discord'
   buildEnv?: 'production' | 'development' | 'staging' | 'testing'
   showTorusButton?: boolean
   buttonPosition?: 'top-left' | 'top-right' | 'bottom-right' | 'bottom-left'
   enableLogging?: boolean
-  preferred?: boolean
-  label?: string
-  iconSrc?: string
-  svg?: string
 }
 
-export interface WalletInit {
+export interface WalletInitOptions
+  extends CommonWalletOptions,
+    SdkWalletOptions,
+    WalletConnectOptions,
+    TorusOptions {
   walletName: string
-  preferred?: boolean
-  apiKey?: string
-  infuraKey?: string
-  networkId?: number
-  label?: string
-  iconSrc?: string
-  svg?: string
 }
 
 export interface WalletCheckInit {

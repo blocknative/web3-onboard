@@ -1,5 +1,10 @@
 import { networkName, networkToId } from '../../../utilities'
-import { SdkWalletOptions, WalletModule, Helpers } from '../../../interfaces'
+import {
+  SdkWalletOptions,
+  CommonWalletOptions,
+  WalletModule,
+  Helpers
+} from '../../../interfaces'
 
 const sqlkIcon = `
   <svg width="88px" height="88px" viewBox="0 0 88 88" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -14,7 +19,9 @@ const sqlkIcon = `
   </svg>
 `
 
-function squarelink(options: SdkWalletOptions): WalletModule {
+function squarelink(
+  options: SdkWalletOptions & CommonWalletOptions
+): WalletModule {
   const { apiKey, networkId, preferred, label, iconSrc, svg } = options
 
   return {

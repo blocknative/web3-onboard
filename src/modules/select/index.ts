@@ -1,4 +1,4 @@
-import { WalletInit, WalletModule } from '../../interfaces'
+import { WalletModule, WalletInitOptions } from '../../interfaces'
 import { isWalletInit } from '../../validation'
 
 const defaultWalletNames = [
@@ -13,7 +13,7 @@ const defaultWalletNames = [
 ]
 
 function select(
-  wallets: Array<WalletInit | WalletModule> | undefined,
+  wallets: Array<WalletInitOptions | WalletModule> | undefined,
   networkId: number
 ) {
   if (wallets) {

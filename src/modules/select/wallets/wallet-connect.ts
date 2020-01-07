@@ -1,4 +1,8 @@
-import { WalletConnectOptions, WalletModule } from '../../../interfaces'
+import {
+  WalletConnectOptions,
+  WalletModule,
+  CommonWalletOptions
+} from '../../../interfaces'
 
 const walletConnectIcon = `
   <svg 
@@ -12,7 +16,9 @@ const walletConnectIcon = `
   </svg>
 `
 
-function walletConnect(options: WalletConnectOptions): WalletModule {
+function walletConnect(
+  options: WalletConnectOptions & CommonWalletOptions
+): WalletModule {
   const { infuraKey, preferred, label, iconSrc, svg } = options
 
   return {

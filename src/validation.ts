@@ -7,7 +7,7 @@ import {
   ConfigOptions,
   WalletCheckModal,
   WalletInterface,
-  WalletInit,
+  WalletInitOptions,
   WalletCheckInit
 } from './interfaces'
 
@@ -188,11 +188,13 @@ export function isWalletModule(obj: any): obj is WalletModule {
   return (obj as WalletModule).wallet !== undefined
 }
 
-export function isWalletInit(obj: any): obj is WalletInit {
-  return (obj as WalletInit).walletName !== undefined
+export function isWalletInit(obj: any): obj is WalletInitOptions {
+  return (obj as WalletInitOptions).walletName !== undefined
 }
 
-export function validateWallet(obj: WalletModule | WalletInit): never | void {
+export function validateWallet(
+  obj: WalletModule | WalletInitOptions
+): never | void {
   validateType({
     name: 'selectWallet.wallets item',
     value: obj,
@@ -508,7 +510,9 @@ export function validateWalletCheckInit(
   })
 }
 
-export function validateWalletInit(walletInit: WalletInit): void | never {
+export function validateWalletInit(
+  walletInit: WalletInitOptions
+): void | never {
   validateType({ name: 'walletInit', value: walletInit, type: 'object' })
 
   const {
@@ -520,6 +524,11 @@ export function validateWalletInit(walletInit: WalletInit): void | never {
     label,
     iconSrc,
     svg,
+    buildEnv,
+    buttonPosition,
+    enableLogging,
+    loginMethod,
+    showTorusButton,
     ...otherParams
   } = walletInit
 
@@ -533,7 +542,12 @@ export function validateWalletInit(walletInit: WalletInit): void | never {
       'preferred',
       'label',
       'iconSrc',
-      'svg'
+      'svg',
+      'buildEnv',
+      'buttonPosition',
+      'enableLogging',
+      'loginMethod',
+      'showTorusButton'
     ],
     'walletInitObject'
   )
@@ -588,6 +602,36 @@ export function validateWalletInit(walletInit: WalletInit): void | never {
     name: 'walletInit.svg',
     value: svg,
     type: 'string',
+    optional: true
+  })
+  validateType({
+    name: 'walletInit.buildEnv',
+    value: buildEnv,
+    type: 'string',
+    optional: true
+  })
+  validateType({
+    name: 'walletInit.buttonPosition',
+    value: buttonPosition,
+    type: 'string',
+    optional: true
+  })
+  validateType({
+    name: 'walletInit.enableLogging',
+    value: enableLogging,
+    type: 'boolean',
+    optional: true
+  })
+  validateType({
+    name: 'walletInit.loginMethod',
+    value: loginMethod,
+    type: 'string',
+    optional: true
+  })
+  validateType({
+    name: 'walletInit.showTorusButton',
+    value: showTorusButton,
+    type: 'boolean',
     optional: true
   })
 }

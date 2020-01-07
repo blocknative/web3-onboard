@@ -1,14 +1,8 @@
 import authereumIcon from '../wallet-icons/authereum.png'
 import { networkName } from '../../../utilities'
-import { WalletModule } from '../../../interfaces'
+import { WalletModule, CommonWalletOptions } from '../../../interfaces'
 
-function authereum(options: {
-  networkId: number
-  preferred?: boolean
-  label?: string
-  iconSrc?: string
-  svg?: string
-}): WalletModule {
+function authereum(options: CommonWalletOptions): WalletModule {
   const { networkId, preferred, label, iconSrc, svg } = options
 
   return {

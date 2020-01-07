@@ -1,6 +1,10 @@
 import Torus from '@toruslabs/torus-embed'
 import { networkName } from '../../../utilities'
-import { TorusOptions, WalletModule, Helpers } from '../../../interfaces'
+import {
+  TorusOptions,
+  CommonWalletOptions,
+  WalletModule
+} from '../../../interfaces'
 
 //import torusIcon from '../wallet-icons/icon-torus.png'
 
@@ -175,10 +179,9 @@ dGljYzpjb3B5cmlnaHQAQ29weXJpZ2h0IEFwcGxlIEluYy4sIDIwMTlYSzXXAAAAF3RFWHRpY2M6
 ZGVzY3JpcHRpb24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
 </svg>`
 
-function torus(options: TorusOptions): WalletModule {
+function torus(options: TorusOptions & CommonWalletOptions): WalletModule {
   const {
     networkId,
-    chainId,
     preferred,
     label,
     iconSrc,
@@ -194,7 +197,7 @@ function torus(options: TorusOptions): WalletModule {
     name: label || 'Torus',
     svg: svg || torusIcon,
     iconSrc,
-    wallet: async (helpers: Helpers) => {
+    wallet: async () => {
       const instance = new Torus({
         buttonPosition: buttonPosition // default: bottom-left
       })
@@ -204,15 +207,13 @@ function torus(options: TorusOptions): WalletModule {
         enableLogging: enableLogging, // default: false
         network: {
           host: networkName(networkId), // default: mainnet
-          chainId: chainId, // default: 1
+          chainId: networkId, // default: 1
           networkName: `${networkName(networkId)} Network` // default: Main Ethereum Network
         },
         showTorusButton: showTorusButton // default: true
       })
 
       const provider = instance.provider
-
-      const { BigNumber } = helpers
 
       return {
         provider,
@@ -221,7 +222,7 @@ function torus(options: TorusOptions): WalletModule {
           name: 'Torus',
           connect: async () => {
             let result = await instance.login({ verifier: loginMethod })
-            return Promise.resolve({ message: result[0] })
+            return { message: result[0] }
           },
           disconnect: () => instance.logout(),
           address: {
@@ -239,7 +240,7 @@ function torus(options: TorusOptions): WalletModule {
                     if (err) {
                       reject(`Error while checking Balance: ${err}`)
                     } else {
-                      resolve(BigNumber(data.c[0]).toString())
+                      resolve(data.toString(10))
                     }
                   }
                 )
