@@ -156,6 +156,10 @@ export function getProviderName(provider: any): string | undefined {
     return 'Opera'
   }
 
+  if (provider.isStatus) {
+    return 'Status'
+  }
+
   if (provider.host && provider.host.indexOf('localhost') !== -1) {
     return 'localhost'
   }
