@@ -147,7 +147,7 @@ function createWalletStateSliceStore(options: {
           get()
             .then(set)
             .catch((err: any) => {
-              throw new Error(
+              console.warn(
                 `Error getting ${parameter} from state syncer: ${err}`
               )
             })

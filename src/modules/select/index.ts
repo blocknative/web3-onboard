@@ -8,7 +8,8 @@ const defaultWalletNames = [
   'trust',
   'authereum',
   'opera',
-  'operaTouch'
+  'operaTouch',
+  'status'
 ]
 
 function select(
@@ -67,6 +68,8 @@ function getModule(name: string): Promise<any> | undefined {
       return import('./wallets/opera')
     case 'operaTouch':
       return import('./wallets/opera-touch')
+    case 'status':
+      return import('./wallets/status')
     default:
       return
   }
