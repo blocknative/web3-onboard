@@ -75,7 +75,6 @@ export interface WalletModule {
     instance?: any
   }>
   link?: string
-  url?: string
   installMessage?: (wallets: {
     currentWallet: string | undefined
     selectedWallet: string
