@@ -69,6 +69,7 @@ function squarelink(options: SdkWalletOptions): WalletModule {
     },
     desktop: true,
     mobile: true,
+    url: 'https://app.squarelink.com/',
     preferred
   }
 }
