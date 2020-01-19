@@ -171,7 +171,7 @@ export function getDeviceInfo() {
   const { type } = browser.getPlatform()
 
   return {
-    isMobile: type !== 'desktop',
+    isMobile: type ? type !== 'desktop' : window.innerWidth < 600,
     os: name
   }
 }
