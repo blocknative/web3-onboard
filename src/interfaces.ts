@@ -223,9 +223,3 @@ export interface AppState {
 export interface CancelablePromise extends Promise<any> {
   cancel: () => void
 }
-
-export interface QueryablePromise extends CancelablePromise {
-  isFulfilled: () => boolean
-  isResolved: () => boolean
-  isRejected: () => boolean
-}
