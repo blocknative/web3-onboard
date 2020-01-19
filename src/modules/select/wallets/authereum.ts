@@ -51,6 +51,7 @@ function authereum(options: {
     },
     desktop: true,
     mobile: true,
+    url: 'https://accounts.authereum.org/',
     preferred
   }
 }

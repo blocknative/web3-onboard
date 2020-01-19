@@ -49,6 +49,7 @@ export const wallet: WritableStore = writable({
   provider: null,
   connect: null,
   instance: null,
+  url: null,
   loading: null
 })
 
