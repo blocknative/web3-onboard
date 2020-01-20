@@ -13,7 +13,7 @@
     padding: 0.55em 1.4em;
     cursor: pointer;
     color: #4a90e2;
-    font-family: "Helvetica Neue";
+    font-family: inherit;
     transition: background 150ms ease-in-out;
     line-height: 1.15;
   }

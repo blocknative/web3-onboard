@@ -216,7 +216,7 @@
   /* .bn-onboard-prepare-description */
   p {
     font-size: 0.889em;
-    font-family: 'Helvetica Neue';
+    font-family: inherit;
     margin: 1em 0;
   }
 

@@ -174,7 +174,7 @@
   p {
     font-size: 0.889em;
     margin: 1.6em 0 0 0;
-    font-family: 'Helvetica Neue';
+    font-family: inherit;
   }
 
   /* .bn-onboard-select-info-container */

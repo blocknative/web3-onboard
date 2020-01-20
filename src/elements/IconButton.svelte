@@ -25,7 +25,7 @@
     cursor: pointer;
     color: inherit;
     line-height: 1.15;
-    font-family: 'Helvetica Neue';
+    font-family: inherit;
   }
 
   button:hover {
