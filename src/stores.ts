@@ -1,7 +1,7 @@
 import { getBlocknative } from './services'
 import { writable, derived, get } from 'svelte/store'
 import debounce from 'lodash.debounce'
-import { wait, makeQueryablePromise, makeCancelable } from './utilities'
+import { wait, makeCancelable } from './utilities'
 import { validateWalletInterface, validateType } from './validation'
 import {
   WritableStore,
@@ -10,7 +10,7 @@ import {
   WalletStateSliceStore,
   StateSyncer,
   BalanceStore,
-  QueryablePromise
+  CancelablePromise
 } from './interfaces'
 
 export const app: WritableStore = writable({
@@ -28,7 +28,7 @@ export const app: WritableStore = writable({
 })
 
 export const balanceSyncStatus: {
-  syncing: null | QueryablePromise
+  syncing: null | CancelablePromise
   error: string
 } = {
   syncing: null,
@@ -48,7 +48,9 @@ export const wallet: WritableStore = writable({
   name: null,
   provider: null,
   connect: null,
-  instance: null
+  instance: null,
+  url: null,
+  loading: null
 })
 
 export const state = derived(
@@ -147,7 +149,7 @@ function createWalletStateSliceStore(options: {
           get()
             .then(set)
             .catch((err: any) => {
-              throw new Error(
+              console.warn(
                 `Error getting ${parameter} from state syncer: ${err}`
               )
             })

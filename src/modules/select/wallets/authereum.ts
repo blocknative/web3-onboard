@@ -1,4 +1,4 @@
-import authereumIcon from '../wallet-icons/authereum.png'
+import authereumIcon from '../wallet-icons/icon-authereum.png'
 import { networkName } from '../../../utilities'
 import { WalletModule } from '../../../interfaces'
 
@@ -51,6 +51,7 @@ function authereum(options: {
     },
     desktop: true,
     mobile: true,
+    url: 'https://accounts.authereum.org/',
     preferred
   }
 }
