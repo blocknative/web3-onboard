@@ -2,6 +2,7 @@
   export let iconSrc: string
   export let iconSrcSet: string
   export let text: string
+  export let svg: string
 </script>
 
 <style>
@@ -36,6 +37,10 @@
 </style>
 
 <div class="bn-onboard-custom bn-onboard-icon-display">
-  <img src={iconSrc} srcset={iconSrcSet} alt={text} />
+  {#if svg}
+    {@html svg}
+  {:else}
+    <img src={iconSrc} srcset={iconSrcSet} alt={text} />
+  {/if}
   <span>{text}</span>
 </div>
