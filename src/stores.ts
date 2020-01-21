@@ -97,6 +97,11 @@ walletInterface.subscribe((walletInterface: WalletInterface | null) => {
 })
 
 export function resetWalletState(options: { disconnected?: boolean } = {}) {
+  // clear all current intervals if they exist
+  currentSyncerIntervals.forEach(
+    (interval: number | undefined) => interval && clearInterval(interval)
+  )
+
   walletInterface.update((currentInterface: WalletInterface | null) => {
     const { disconnected } = options
     !disconnected &&
