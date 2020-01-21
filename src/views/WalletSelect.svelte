@@ -3,7 +3,7 @@
   import { get } from 'svelte/store'
   import { fade } from 'svelte/transition'
 
-  import { app, walletInterface, wallet } from '../stores'
+  import { app, walletInterface, wallet, resetWalletState } from '../stores'
 
   import Modal from '../components/Modal.svelte'
   import ModalHeader from '../components/ModalHeader.svelte'
@@ -116,7 +116,8 @@
       BigNumber,
       getNetwork,
       getAddress,
-      getBalance
+      getBalance,
+      resetWalletState
     })
 
     loadingWallet = undefined
