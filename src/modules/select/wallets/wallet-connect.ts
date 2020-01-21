@@ -1,4 +1,8 @@
-import { WalletConnectOptions, WalletModule } from '../../../interfaces'
+import {
+  WalletConnectOptions,
+  WalletModule,
+  Helpers
+} from '../../../interfaces'
 
 import walletConnectIcon from '../wallet-icons/icon-wallet-connect'
 
@@ -9,7 +13,9 @@ function walletConnect(options: WalletConnectOptions): WalletModule {
     name: label || 'WalletConnect',
     svg: svg || walletConnectIcon,
     iconSrc,
-    wallet: async () => {
+    wallet: async (helpers: Helpers) => {
+      const { resetWalletState } = helpers
+
       const { default: WalletConnectProvider } = await import(
         '@walletconnect/web3-provider'
       )
@@ -19,6 +25,10 @@ function walletConnect(options: WalletConnectOptions): WalletModule {
       })
 
       provider.autoRefreshOnNetworkChange = false
+
+      provider.wc.on('disconnect', () => {
+        resetWalletState({ disconnected: true })
+      })
 
       return {
         provider,
@@ -40,7 +50,7 @@ function walletConnect(options: WalletConnectOptions): WalletModule {
             onChange: func => {
               provider
                 .send('eth_accounts')
-                .then((accounts: string[]) => func(accounts[0]))
+                .then((accounts: string[]) => accounts[0] && func(accounts[0]))
               provider.on('accountsChanged', (accounts: string[]) =>
                 func(accounts[0])
               )
@@ -65,6 +75,10 @@ function walletConnect(options: WalletConnectOptions): WalletModule {
                   'latest'
                 ])
               })
+          },
+          disconnect: () => {
+            provider.wc.killSession()
+            provider.stop()
           }
         }
       }

@@ -76,10 +76,11 @@ export const walletInterface: WalletInterfaceStore = createWalletInterfaceStore(
 
 walletInterface.subscribe((walletInterface: WalletInterface | null) => {
   if (walletInterface) {
+    const currentState = get(state)
     // reset state
-    balance.reset()
-    address.reset()
-    network.reset()
+    currentState.balance && balance.reset()
+    currentState.address && address.reset()
+    currentState.network && network.reset()
 
     // clear all current intervals if they exist
     currentSyncerIntervals.forEach(
@@ -94,6 +95,42 @@ walletInterface.subscribe((walletInterface: WalletInterface | null) => {
     ]
   }
 })
+
+export function resetWalletState(options: { disconnected?: boolean } = {}) {
+  // clear all current intervals if they exist
+  currentSyncerIntervals.forEach(
+    (interval: number | undefined) => interval && clearInterval(interval)
+  )
+
+  walletInterface.update((currentInterface: WalletInterface | null) => {
+    const { disconnected } = options
+    !disconnected &&
+      currentInterface &&
+      currentInterface.disconnect &&
+      currentInterface.disconnect()
+    return null
+  })
+
+  wallet.update(() => ({
+    name: undefined,
+    provider: undefined,
+    connect: undefined,
+    instance: undefined,
+    url: undefined,
+    loading: undefined
+  }))
+
+  balance.reset()
+  address.reset()
+  network.reset()
+
+  app.update(store => ({
+    ...store,
+    walletSelectInProgress: false,
+    walletSelectCompleted: false,
+    autoSelect: false
+  }))
+}
 
 function createWalletInterfaceStore(
   initialState: null | WalletInterface
@@ -164,7 +201,7 @@ function createWalletStateSliceStore(options: {
 function createBalanceStore(initialState: string | null): BalanceStore {
   let stateSyncer: StateSyncer
   let emitter: any
-  let emitterAddress: String
+  let emitterAddress: String | undefined
   let cancel: () => void = () => {}
 
   const { subscribe } = derived(
@@ -209,8 +246,11 @@ function createBalanceStore(initialState: string | null): BalanceStore {
         } else if (emitterAddress && !$address) {
           // no address, so set balance to undefined
           set && set(undefined)
+          emitterAddress = undefined
         }
       }
+
+      set(initialState)
     }
   )
 
