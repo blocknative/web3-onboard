@@ -5,7 +5,7 @@
   import BigNumber from 'bignumber.js'
 
   import { getBlocknative } from '../services'
-  import { app, state, balanceSyncStatus } from '../stores'
+  import { app, state, balanceSyncStatus, walletInterface } from '../stores'
   import { validateModal, validateWalletCheckModule } from '../validation'
   import { isPromise } from '../utilities'
 
@@ -35,9 +35,18 @@
   let actionResolved: boolean | undefined = undefined
   let loading: boolean = false
   let loadingModal: boolean = false
+  let stopChecking: boolean = false
+
+  const unsubscribe = walletInterface.subscribe(currentInterface => {
+    if (currentInterface === null) {
+      stopChecking = true
+      handleExit()
+      unsubscribe()
+    }
+  })
 
   // recheck modules if below conditions
-  $: if (!activeModal && !checkingModule) {
+  $: if (!activeModal && !checkingModule && !stopChecking) {
     renderModule()
   }
 
@@ -93,7 +102,7 @@
 
         // poll to automatically to check if condition has been met
         pollingInterval = setInterval(async () => {
-          if (currentModule) {
+          if (currentModule && !stopChecking) {
             const invalid = await invalidState(currentModule, get(state))
             if (!invalid && actionResolved !== false) {
               resetState()
