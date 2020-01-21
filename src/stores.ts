@@ -96,8 +96,9 @@ walletInterface.subscribe((walletInterface: WalletInterface | null) => {
   }
 })
 
-export function resetWalletState(disconnected?: boolean) {
+export function resetWalletState(options: { disconnected?: boolean } = {}) {
   walletInterface.update((currentInterface: WalletInterface | null) => {
+    const { disconnected } = options
     !disconnected &&
       currentInterface &&
       currentInterface.disconnect &&

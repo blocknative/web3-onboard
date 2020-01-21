@@ -27,7 +27,7 @@ function walletConnect(options: WalletConnectOptions): WalletModule {
       provider.autoRefreshOnNetworkChange = false
 
       provider.wc.on('disconnect', () => {
-        resetWalletState(true)
+        resetWalletState({ disconnected: true })
       })
 
       return {
@@ -76,7 +76,10 @@ function walletConnect(options: WalletConnectOptions): WalletModule {
                 ])
               })
           },
-          disconnect: () => provider.close()
+          disconnect: () => {
+            provider.wc.killSession()
+            provider.stop()
+          }
         }
       }
     },

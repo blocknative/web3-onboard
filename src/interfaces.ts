@@ -94,7 +94,7 @@ export interface Helpers {
   getAddress: (provider: any) => Promise<string | any>
   getNetwork: (provider: any) => Promise<number | any>
   getBalance: (provider: any) => Promise<string | any>
-  resetWalletState: (disconnected?: boolean) => void
+  resetWalletState: (options: { disconnected?: boolean }) => void
 }
 
 export interface WalletInterface {
