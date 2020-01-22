@@ -31,6 +31,7 @@ function status(
             : null
       }
     },
+    type: 'injected',
     link: 'https://status.im/',
     installMessage: extensionInstallMessage,
     mobile: true,

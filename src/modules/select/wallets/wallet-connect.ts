@@ -83,6 +83,7 @@ function walletConnect(options: WalletConnectOptions): WalletModule {
         }
       }
     },
+    type: 'sdk',
     desktop: true,
     preferred
   }

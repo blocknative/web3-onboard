@@ -49,6 +49,7 @@ function authereum(options: {
         }
       }
     },
+    type: 'sdk',
     desktop: true,
     mobile: true,
     url: 'https://accounts.authereum.org/',

@@ -34,6 +34,7 @@ function opera(
             : null
       }
     },
+    type: 'injected',
     link: 'https://www.opera.com/',
     installMessage: extensionInstallMessage,
     desktop: true,

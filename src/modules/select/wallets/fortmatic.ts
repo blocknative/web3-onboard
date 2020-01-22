@@ -47,6 +47,7 @@ function fortmatic(options: SdkWalletOptions): WalletModule {
         }
       }
     },
+    type: 'sdk',
     desktop: true,
     mobile: true,
     preferred

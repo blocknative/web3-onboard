@@ -34,6 +34,7 @@ function operaTouch(
             : null
       }
     },
+    type: 'injected',
     link: 'https://www.opera.com/mobile/touch',
     installMessage: extensionInstallMessage,
     mobile: true,

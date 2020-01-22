@@ -21,15 +21,20 @@ export interface WalletSelectModule {
 }
 
 export interface WalletCheckModule {
-  (stateAndHelpers: StateAndHelpers):
+  (stateAndHelpers: StateAndHelpers, index?: number):
     | WalletCheckModal
     | undefined
     | Promise<WalletCheckModal | undefined>
 }
 
+export interface WalletCheckModule {
+  index?: number
+}
+
 export interface WalletCheckModal {
   heading: string
   description: string
+  html?: string
   button?: {
     onclick: () => void
     text: string
@@ -59,7 +64,9 @@ export interface UserState {
 export interface StateAndHelpers extends UserState {
   BigNumber: any
   walletSelect: WalletSelectFunction
+  wallet: Wallet
   exit: () => void
+  next: (index: number) => void
 }
 
 export interface WalletModule {
@@ -74,6 +81,7 @@ export interface WalletModule {
     interface: WalletInterface | null
     instance?: any
   }>
+  type: 'hardware' | 'injected' | 'sdk'
   link?: string
   url?: string
   installMessage?: (wallets: {
@@ -115,6 +123,7 @@ export interface StateSyncer {
 export interface Wallet {
   name: string
   provider: any
+  type: 'hardware' | 'injected' | 'sdk'
   instance?: any
   connect?: () => Promise<{ message: string } | undefined>
   loading?: Promise<undefined>

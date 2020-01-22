@@ -1,15 +1,20 @@
 import { isWalletCheckModule } from '../../validation'
-import { WalletCheckModule, WalletCheckInit } from '../../interfaces'
+import {
+  WalletCheckModule,
+  WalletCheckInit,
+  WalletModule
+} from '../../interfaces'
 
 const defaultChecks = ['connect', 'network']
 
-function check(
+async function check(
   walletChecks: Array<WalletCheckInit | WalletCheckModule> | undefined,
-  networkId: number
+  networkId: number,
+  wallets: Promise<Array<WalletModule>>
 ): Promise<WalletCheckModule[]> {
   if (walletChecks) {
-    return Promise.all(
-      walletChecks.map((checkOrModule: WalletCheckInit | WalletCheckModule) => {
+    const checks = walletChecks.map(
+      (checkOrModule: WalletCheckInit | WalletCheckModule) => {
         if (!isWalletCheckModule(checkOrModule)) {
           const { checkName, ...otherParams } = checkOrModule
           const module = getModule(checkName)
@@ -20,8 +25,21 @@ function check(
         }
 
         return Promise.resolve(checkOrModule)
-      })
+      }
     )
+
+    const requiresAccountSelect = await wallets.then(ws =>
+      ws.map(wallet => wallet.type).includes('hardware')
+    )
+
+    if (requiresAccountSelect) {
+      const accountSelectModule = await import(
+        './account-select'
+      ).then((m: any) => m.default())
+      checks.splice(1, 0, accountSelectModule)
+    }
+
+    return Promise.all(checks)
   }
 
   return Promise.all(

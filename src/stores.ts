@@ -50,7 +50,8 @@ export const wallet: WritableStore = writable({
   connect: null,
   instance: null,
   url: null,
-  loading: null
+  loading: null,
+  type: null
 })
 
 export const state = derived(

@@ -30,6 +30,7 @@ function coinbase(
             : null
       }
     },
+    type: 'injected',
     link: 'https://go.cb-w.com/',
     installMessage: mobileWalletInstallMessage,
     mobile: true,

@@ -30,6 +30,7 @@ function trust(
             : null
       }
     },
+    type: 'injected',
     link: `https://links.trustwalletapp.com/a/key_live_lfvIpVeI9TFWxPCqwU8rZnogFqhnzs4D?&event=openURL&url=${window.location.href}`,
     installMessage: mobileWalletInstallMessage,
     mobile: true,

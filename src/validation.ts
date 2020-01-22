@@ -356,12 +356,21 @@ export function validateModal(modal: WalletCheckModal): never | void {
     action,
     icon,
     loading,
+    html,
     ...otherParams
   } = modal
 
   invalidParams(
     otherParams,
-    ['heading', 'description', 'button', 'eventCode', 'action', 'icon'],
+    [
+      'heading',
+      'description',
+      'button',
+      'eventCode',
+      'action',
+      'icon',
+      'heading'
+    ],
     'modal'
   )
 
@@ -386,6 +395,13 @@ export function validateModal(modal: WalletCheckModal): never | void {
     name: 'button',
     value: button,
     type: 'object',
+    optional: true
+  })
+
+  validateType({
+    name: 'html',
+    value: html,
+    type: 'string',
     optional: true
   })
 

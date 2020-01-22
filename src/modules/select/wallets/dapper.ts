@@ -31,6 +31,7 @@ function dapper(
             : null
       }
     },
+    type: 'injected',
     link: 'https://www.meetdapper.com/',
     installMessage: extensionInstallMessage,
     desktop: true,

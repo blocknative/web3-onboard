@@ -5,7 +5,13 @@
   import BigNumber from 'bignumber.js'
 
   import { getBlocknative } from '../services'
-  import { app, state, balanceSyncStatus, walletInterface } from '../stores'
+  import {
+    app,
+    state,
+    balanceSyncStatus,
+    walletInterface,
+    wallet
+  } from '../stores'
   import { validateModal, validateWalletCheckModule } from '../validation'
   import { isPromise } from '../utilities'
 
@@ -35,18 +41,20 @@
   let actionResolved: boolean | undefined = undefined
   let loading: boolean = false
   let loadingModal: boolean = false
-  let stopChecking: boolean = false
+  // let stopChecking: boolean = false
+  // array of indexes of which modules to remove from the modules sequence
+  let removeModuleIndexes: Array<number> | undefined
 
   const unsubscribe = walletInterface.subscribe(currentInterface => {
     if (currentInterface === null) {
-      stopChecking = true
+      // stopChecking = true
       handleExit()
       unsubscribe()
     }
   })
 
   // recheck modules if below conditions
-  $: if (!activeModal && !checkingModule && !stopChecking) {
+  $: if (!activeModal && !checkingModule) {
     renderModule()
   }
 
@@ -56,28 +64,44 @@
     if (isPromise(modules)) {
       modules = await modules
       modules.forEach(validateWalletCheckModule)
+
+      // assign modules a set index
+      modules = modules.map((module, index) => {
+        module.index = index
+        return module
+      })
+    }
+
+    let modulesToRun
+    if (removeModuleIndexes !== undefined) {
+      modulesToRun = modules.filter(module => {
+        if (module.index) {
+          return removeModuleIndexes
+            ? !removeModuleIndexes.includes(module.index)
+            : module
+        }
+
+        return module
+      })
+    } else {
+      modulesToRun = modules
     }
 
     // loop through and run each module to check if a modal needs to be shown
-    runModules(modules).then(
+    runModules(modulesToRun).then(
       (result: {
         modal: WalletCheckModal | undefined
         module: WalletCheckModule | undefined
       }) => {
         // no result then user has passed all conditions
         if (!result.modal) {
-          app.update(store => ({
-            ...store,
-            walletCheckInProgress: false,
-            walletCheckCompleted: true
-          }))
-
           blocknative.event({
             categoryCode: 'onboard',
             eventCode: 'onboardingCompleted'
           })
 
-          checkingModule = false
+          handleExit()
+
           return
         }
 
@@ -102,7 +126,7 @@
 
         // poll to automatically to check if condition has been met
         pollingInterval = setInterval(async () => {
-          if (currentModule && !stopChecking) {
+          if (currentModule) {
             const invalid = await invalidState(currentModule, get(state))
             if (!invalid && actionResolved !== false) {
               resetState()
@@ -142,6 +166,7 @@
 
   function resetState() {
     clearInterval(pollingInterval)
+    removeModuleIndexes = undefined
     errorMsg = ''
     actionResolved = undefined
     activeModal = undefined
@@ -157,7 +182,7 @@
           module: WalletCheckModule | undefined
         }) => void
       ) => {
-        for (const module of modules) {
+        for (const [index, module] of modules.entries()) {
           if (balanceSyncStatus.syncing) {
             try {
               await balanceSyncStatus.syncing
@@ -166,7 +191,7 @@
             balanceSyncStatus.syncing = null
           }
 
-          const result = await invalidState(module, get(state))
+          const result = await invalidState(module, get(state), index)
 
           if (result) {
             loadingModal = false
@@ -180,18 +205,33 @@
     )
   }
 
+  function next(index: number) {
+    if (removeModuleIndexes) {
+      removeModuleIndexes.push(index)
+    } else {
+      removeModuleIndexes = [index]
+    }
+    resetState()
+  }
+
   async function invalidState(
     module: WalletCheckModule,
-    state: UserState
+    state: UserState,
+    index?: number
   ): Promise<
     { module: WalletCheckModule; modal: WalletCheckModal } | undefined
   > {
-    const result = module({
-      ...state,
-      BigNumber,
-      walletSelect,
-      exit: handleExit
-    })
+    const result = module(
+      {
+        ...state,
+        BigNumber,
+        walletSelect,
+        exit: handleExit,
+        wallet: get(wallet),
+        next
+      },
+      index
+    )
 
     if (result) {
       if (isCheckModal(result)) {
@@ -268,6 +308,11 @@
         {errorMsg}
       </span>
     {/if}
+
+    {#if activeModal.html}
+      {@html activeModal.html}
+    {/if}
+
     <div class="bn-onboard-custom bn-onboard-prepare-button-container">
       {#if activeModal.button}
         <Button onclick={activeModal.button.onclick}>
