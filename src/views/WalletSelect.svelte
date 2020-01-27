@@ -20,7 +20,8 @@
     getAddress,
     getBalance,
     getNetwork,
-    isPromise
+    isPromise,
+    networkName
   } from '../utilities'
 
   import {
@@ -117,7 +118,8 @@
       getNetwork,
       getAddress,
       getBalance,
-      resetWalletState
+      resetWalletState,
+      networkName
     })
 
     loadingWallet = undefined

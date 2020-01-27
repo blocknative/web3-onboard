@@ -1,35 +1,27 @@
-import { networkName } from '../../utilities'
 import { WalletCheckModule, StateAndHelpers } from '../../interfaces'
 
 function accountSelect(): WalletCheckModule | never {
-  return async (stateAndHelpers: StateAndHelpers, index) => {
-    const { wallet, next } = stateAndHelpers
+  let completed: boolean = false
+  let accountsAndBalances: Array<{ balance: string; address: string }> = []
 
+  return async (stateAndHelpers: StateAndHelpers) => {
+    const { wallet, BigNumber } = stateAndHelpers
     const { provider, type } = wallet
 
-    if (type === 'hardware') {
-      // const accounts = await provider.getAllAccountsAndBalances()
-      const accounts = [
-        {
-          address: '0x6A4C1Fc1137C47707a931934c76d884454Ed2915',
-          balance: '1'
-        },
-        {
-          address: '0x556C0e5d037bEF32AD6ef1289d6DC8CAb9C76e0F',
-          balance: '2.33'
-        }
-      ]
+    if (type === 'hardware' && !completed) {
+      if (!accountsAndBalances.length) {
+        accountsAndBalances = await provider.getAllAccountsAndBalances()
+      }
 
-      const deleteAccountSelect = () => {
+      const deleteAccountSelectProperty = () => {
         delete (window as any).accountSelect
       }
 
       const accountSelect = () => {
         const accountIndex = (document as any).getElementById('account-select')
           .selectedIndex
-        const address = accounts[accountIndex].address
 
-        console.log({ address })
+        provider.setPrimaryAccount(accountsAndBalances[accountIndex].address)
       }
       ;(window as any).accountSelect = accountSelect
 
@@ -39,16 +31,20 @@ function accountSelect(): WalletCheckModule | never {
         eventCode: 'accountSelect',
         html: `
           <select id="account-select" onchange="window.accountSelect()">
-            ${accounts.map(
-              account =>
-                `<option value="${account.address}">${account.address}: ${account.balance} ETH</option>`
+            ${accountsAndBalances.map(
+              (account: { balance: string; address: string }) =>
+                `<option value="${account.address}">${
+                  account.address
+                } --- ${new BigNumber(account.balance)
+                  .div('1000000000000000000')
+                  .toString()} ETH</option>`
             )}
           </select>
         `,
         button: {
           onclick: () => {
-            deleteAccountSelect()
-            index && next(index)
+            deleteAccountSelectProperty()
+            completed = true
           },
           text: 'Done'
         },

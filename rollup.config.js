@@ -39,7 +39,8 @@ export default {
     resolve({
       browser: true,
       dedupe: importee =>
-        importee === 'svelte' || importee.startsWith('svelte/')
+        importee === 'svelte' || importee.startsWith('svelte/'),
+      preferBuiltins: true
     }),
     commonjs(),
     typescript({
@@ -56,6 +57,15 @@ export default {
     'squarelink',
     'authereum',
     'lodash.debounce',
-    'regenerator-runtime/runtime'
+    'regenerator-runtime/runtime',
+    'web3-provider-engine',
+    'trezor-connect',
+    'ethereumjs-tx',
+    '@ledgerhq/hw-transport-u2f',
+    '@ledgerhq/web3-subprovider'
+    // 'util',
+    // 'assert',
+    // 'buffer',
+    // 'stream'
   ]
 }

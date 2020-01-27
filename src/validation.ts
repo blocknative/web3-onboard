@@ -536,6 +536,9 @@ export function validateWalletInit(walletInit: WalletInit): void | never {
     label,
     iconSrc,
     svg,
+    appUrl,
+    email,
+    rpcUrl,
     ...otherParams
   } = walletInit
 
@@ -549,7 +552,10 @@ export function validateWalletInit(walletInit: WalletInit): void | never {
       'preferred',
       'label',
       'iconSrc',
-      'svg'
+      'svg',
+      'appUrl',
+      'email',
+      'rpcUrl'
     ],
     'walletInitObject'
   )
@@ -603,6 +609,24 @@ export function validateWalletInit(walletInit: WalletInit): void | never {
   validateType({
     name: 'walletInit.svg',
     value: svg,
+    type: 'string',
+    optional: true
+  })
+  validateType({
+    name: 'walletInit.appUrl',
+    value: appUrl,
+    type: 'string',
+    optional: true
+  })
+  validateType({
+    name: 'walletInit.email',
+    value: email,
+    type: 'string',
+    optional: true
+  })
+  validateType({
+    name: 'walletInit.rpcUrl',
+    value: rpcUrl,
     type: 'string',
     optional: true
   })

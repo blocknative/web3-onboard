@@ -28,11 +28,11 @@ async function check(
       }
     )
 
-    const requiresAccountSelect = await wallets.then(ws =>
-      ws.map(wallet => wallet.type).includes('hardware')
+    const hardwareWallets = await wallets.then(
+      ws => ws.filter(wallet => wallet.type === 'hardware').length > 0
     )
 
-    if (requiresAccountSelect) {
+    if (hardwareWallets) {
       const accountSelectModule = await import(
         './account-select'
       ).then((m: any) => m.default())

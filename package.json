@@ -40,16 +40,21 @@
     "typescript": "^3.6.4"
   },
   "dependencies": {
+    "@ledgerhq/hw-transport-u2f": "^5.7.0",
+    "@ledgerhq/web3-subprovider": "^5.7.0",
     "@portis/web3": "^2.0.0-beta.42",
     "@walletconnect/web3-provider": "^1.0.0-beta.45",
     "authereum": "^0.0.4-beta.26",
     "bignumber.js": "^9.0.0",
     "bnc-sdk": "1.0.3",
     "bowser": "^2.5.2",
+    "ethereumjs-tx": "^2.1.2",
     "fortmatic": "^0.8.2",
     "lodash.debounce": "^4.0.8",
     "regenerator-runtime": "^0.13.3",
-    "squarelink": "^1.1.4"
+    "squarelink": "^1.1.4",
+    "trezor-connect": "7.0.1",
+    "web3-provider-engine": "^15.0.4"
   },
   "scripts": {
     "build": "rimraf dist && rollup -c && babel dist/cjs --out-dir dist/cjs && babel dist/esm --out-dir dist/esm",

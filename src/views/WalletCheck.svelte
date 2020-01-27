@@ -41,13 +41,9 @@
   let actionResolved: boolean | undefined = undefined
   let loading: boolean = false
   let loadingModal: boolean = false
-  // let stopChecking: boolean = false
-  // array of indexes of which modules to remove from the modules sequence
-  let removeModuleIndexes: Array<number> | undefined
 
   const unsubscribe = walletInterface.subscribe(currentInterface => {
     if (currentInterface === null) {
-      // stopChecking = true
       handleExit()
       unsubscribe()
     }
@@ -64,31 +60,10 @@
     if (isPromise(modules)) {
       modules = await modules
       modules.forEach(validateWalletCheckModule)
-
-      // assign modules a set index
-      modules = modules.map((module, index) => {
-        module.index = index
-        return module
-      })
-    }
-
-    let modulesToRun
-    if (removeModuleIndexes !== undefined) {
-      modulesToRun = modules.filter(module => {
-        if (module.index) {
-          return removeModuleIndexes
-            ? !removeModuleIndexes.includes(module.index)
-            : module
-        }
-
-        return module
-      })
-    } else {
-      modulesToRun = modules
     }
 
     // loop through and run each module to check if a modal needs to be shown
-    runModules(modulesToRun).then(
+    runModules(modules).then(
       (result: {
         modal: WalletCheckModal | undefined
         module: WalletCheckModule | undefined
@@ -100,7 +75,7 @@
             eventCode: 'onboardingCompleted'
           })
 
-          handleExit()
+          handleExit(true)
 
           return
         }
@@ -155,18 +130,18 @@
         })
   }
 
-  function handleExit() {
+  function handleExit(completed?: boolean) {
     resetState()
     app.update((store: AppState) => ({
       ...store,
       walletCheckInProgress: false,
-      walletCheckCompleted: false
+      walletCheckCompleted: completed ? completed : false,
+      accountSelectInProgress: false
     }))
   }
 
   function resetState() {
     clearInterval(pollingInterval)
-    removeModuleIndexes = undefined
     errorMsg = ''
     actionResolved = undefined
     activeModal = undefined
@@ -182,7 +157,7 @@
           module: WalletCheckModule | undefined
         }) => void
       ) => {
-        for (const [index, module] of modules.entries()) {
+        for (const module of modules) {
           if (balanceSyncStatus.syncing) {
             try {
               await balanceSyncStatus.syncing
@@ -191,7 +166,7 @@
             balanceSyncStatus.syncing = null
           }
 
-          const result = await invalidState(module, get(state), index)
+          const result = await invalidState(module, get(state))
 
           if (result) {
             loadingModal = false
@@ -205,33 +180,19 @@
     )
   }
 
-  function next(index: number) {
-    if (removeModuleIndexes) {
-      removeModuleIndexes.push(index)
-    } else {
-      removeModuleIndexes = [index]
-    }
-    resetState()
-  }
-
   async function invalidState(
     module: WalletCheckModule,
-    state: UserState,
-    index?: number
+    state: UserState
   ): Promise<
     { module: WalletCheckModule; modal: WalletCheckModal } | undefined
   > {
-    const result = module(
-      {
-        ...state,
-        BigNumber,
-        walletSelect,
-        exit: handleExit,
-        wallet: get(wallet),
-        next
-      },
-      index
-    )
+    const result = module({
+      ...state,
+      BigNumber,
+      walletSelect,
+      exit: handleExit,
+      wallet: get(wallet)
+    })
 
     if (result) {
       if (isCheckModal(result)) {

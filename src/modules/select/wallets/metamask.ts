@@ -40,7 +40,7 @@ function metamask(
             : null
       }
     },
-    type: 'hardware',
+    type: 'injected',
     link: 'https://metamask.io/',
     installMessage: extensionInstallMessage,
     desktop: true,

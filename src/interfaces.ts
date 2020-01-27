@@ -21,14 +21,10 @@ export interface WalletSelectModule {
 }
 
 export interface WalletCheckModule {
-  (stateAndHelpers: StateAndHelpers, index?: number):
+  (stateAndHelpers: StateAndHelpers):
     | WalletCheckModal
     | undefined
     | Promise<WalletCheckModal | undefined>
-}
-
-export interface WalletCheckModule {
-  index?: number
 }
 
 export interface WalletCheckModal {
@@ -65,8 +61,7 @@ export interface StateAndHelpers extends UserState {
   BigNumber: any
   walletSelect: WalletSelectFunction
   wallet: Wallet
-  exit: () => void
-  next: (index: number) => void
+  exit: (completed?: boolean) => void
 }
 
 export interface WalletModule {
@@ -99,6 +94,7 @@ export interface Helpers {
   createLegacyProviderInterface: (provider: any) => WalletInterface
   createModernProviderInterface: (provider: any) => WalletInterface
   BigNumber: any
+  networkName: (id: number) => string
   getAddress: (provider: any) => Promise<string | any>
   getNetwork: (provider: any) => Promise<number | any>
   getBalance: (provider: any) => Promise<string | any>
@@ -146,6 +142,26 @@ export interface WalletConnectOptions {
   svg?: string
 }
 
+export interface TrezorOptions {
+  networkId: number
+  appUrl: string
+  email: string
+  rpcUrl: string
+  preferred?: boolean
+  label?: string
+  iconSrc?: string
+  svg?: string
+}
+
+export interface LedgerOptions {
+  networkId: number
+  rpcUrl: string
+  preferred?: boolean
+  label?: string
+  iconSrc?: string
+  svg?: string
+}
+
 export interface WalletInit {
   walletName: string
   preferred?: boolean
@@ -155,6 +171,9 @@ export interface WalletInit {
   label?: string
   iconSrc?: string
   svg?: string
+  appUrl?: string
+  email?: string
+  rpcUrl?: string
 }
 
 export interface WalletCheckInit {
@@ -167,6 +186,10 @@ export interface WalletSelectFunction {
 }
 
 interface WalletCheck {
+  (): Promise<boolean>
+}
+
+interface AccountSelect {
   (): Promise<boolean>
 }
 
@@ -189,6 +212,7 @@ export interface API {
   walletReset: () => void
   config: Config
   getState: GetState
+  accountSelect: AccountSelect
 }
 
 export interface WritableStore {
@@ -229,6 +253,7 @@ export interface AppState {
   walletSelectCompleted: boolean
   walletCheckInProgress: boolean
   walletCheckCompleted: boolean
+  accountSelectInProgress: boolean
 }
 
 export interface CancelablePromise extends Promise<any> {
