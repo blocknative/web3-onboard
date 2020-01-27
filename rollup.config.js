@@ -43,7 +43,8 @@ export default {
     }),
     commonjs(),
     typescript({
-      clean: true
+      clean: true,
+      useTsconfigDeclarationDir: true
     })
   ],
   external: [

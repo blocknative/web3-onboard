@@ -10,7 +10,7 @@
   ],
   "main": "dist/cjs/onboard.js",
   "module": "dist/esm/onboard.js",
-  "typings": "dist/esm/src/onboard.d.ts",
+  "typings": "dist/src/onboard.d.ts",
   "files": [
     "dist"
   ],
