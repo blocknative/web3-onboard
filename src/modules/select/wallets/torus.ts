@@ -224,7 +224,7 @@ function torus(options: TorusOptions & CommonWalletOptions): WalletModule {
             let result = await instance.login({ verifier: loginMethod })
             return { message: result[0] }
           },
-          disconnect: () => instance.logout(),
+          disconnect: () => instance.cleanUp(),
           address: {
             get: () => Promise.resolve(instance.web3.eth.accounts[0])
           },
