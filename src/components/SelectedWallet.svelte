@@ -28,6 +28,7 @@
   <IconDisplay
     iconSrc={selectedWalletModule.iconSrc}
     iconSrcSet={selectedWalletModule.iconSrcSet}
+    svg={selectedWalletModule.svg}
     text={selectedWalletModule.name} />
 
   {#if installMessage}

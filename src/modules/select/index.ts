@@ -9,7 +9,8 @@ const defaultWalletNames = [
   'authereum',
   'torus',
   'opera',
-  'operaTouch'
+  'operaTouch',
+  'status'
 ]
 
 function select(
@@ -70,6 +71,8 @@ function getModule(name: string): Promise<any> | undefined {
       return import('./wallets/opera-touch')
     case 'torus':
       return import('./wallets/torus')
+    case 'status':
+      return import('./wallets/status')
     default:
       return
   }

@@ -11,7 +11,8 @@ import {
   balance,
   wallet,
   state,
-  walletInterface
+  walletInterface,
+  resetWalletState
 } from './stores'
 
 import { getDeviceInfo } from './utilities'
@@ -84,7 +85,9 @@ function init(initialization: Initialization): API {
 
     if (subscriptions.network) {
       network.subscribe((networkId: number | null) => {
-        networkId && subscriptions.network(networkId)
+        if (networkId !== null) {
+          subscriptions.network(networkId)
+        }
       })
     }
 
@@ -98,7 +101,7 @@ function init(initialization: Initialization): API {
 
     if (subscriptions.wallet) {
       wallet.subscribe((wallet: Wallet) => {
-        wallet.provider && subscriptions.wallet(wallet)
+        wallet.provider !== null && subscriptions.wallet(wallet)
       })
     }
   }
@@ -144,6 +147,10 @@ function init(initialization: Initialization): API {
     })
   }
 
+  function walletReset(): void {
+    resetWalletState()
+  }
+
   function config(options: ConfigOptions): void {
     validateConfig(options)
     app.update((store: AppState) => ({ ...store, ...options }))
@@ -153,7 +160,7 @@ function init(initialization: Initialization): API {
     return get(state)
   }
 
-  return { walletSelect, walletCheck, config, getState }
+  return { walletSelect, walletCheck, walletReset, config, getState }
 }
 
 export default init

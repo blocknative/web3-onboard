@@ -75,6 +75,7 @@ export interface WalletModule {
     instance?: any
   }>
   link?: string
+  url?: string
   installMessage?: (wallets: {
     currentWallet: string | undefined
     selectedWallet: string
@@ -93,6 +94,7 @@ export interface Helpers {
   getAddress: (provider: any) => Promise<string | any>
   getNetwork: (provider: any) => Promise<number | any>
   getBalance: (provider: any) => Promise<string | any>
+  resetWalletState: (options: { disconnected?: boolean }) => void
 }
 
 export interface WalletInterface {
@@ -107,7 +109,7 @@ export interface WalletInterface {
 
 export interface StateSyncer {
   get?: () => Promise<string | number | null>
-  onChange?: (updater: (val: number | string) => void) => void
+  onChange?: (updater: (val: number | string | undefined) => void) => void
 }
 
 export interface Wallet {
@@ -179,6 +181,7 @@ export interface ConfigOptions {
 export interface API {
   walletSelect: WalletSelectFunction
   walletCheck: WalletCheck
+  walletReset: () => void
   config: Config
   getState: GetState
 }
@@ -192,7 +195,7 @@ export interface WritableStore {
 export interface WalletInterfaceStore {
   subscribe: (subscriber: (store: any) => void) => () => void
   update: (
-    updater: (walletInterface: WalletInterface | null) => WalletInterface
+    updater: (walletInterface: WalletInterface | null) => WalletInterface | null
   ) => void
   set: (walletInterface: WalletInterface) => void | never
 }
@@ -225,10 +228,4 @@ export interface AppState {
 
 export interface CancelablePromise extends Promise<any> {
   cancel: () => void
-}
-
-export interface QueryablePromise extends CancelablePromise {
-  isFulfilled: () => boolean
-  isResolved: () => boolean
-  isRejected: () => boolean
 }

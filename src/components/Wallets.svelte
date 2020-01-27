@@ -22,7 +22,7 @@
     overflow-y: scroll;
     padding: 0;
     scrollbar-width: none;
-    font-family: 'Helvetica Neue';
+    font-family: inherit;
     font-size: inherit;
     line-height: 1.15;
     box-sizing: border-box;
