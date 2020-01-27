@@ -1,12 +1,15 @@
 import {
   WalletConnectOptions,
   WalletModule,
+  CommonWalletOptions,
   Helpers
 } from '../../../interfaces'
 
 import walletConnectIcon from '../wallet-icons/icon-wallet-connect'
 
-function walletConnect(options: WalletConnectOptions): WalletModule {
+function walletConnect(
+  options: WalletConnectOptions & CommonWalletOptions
+): WalletModule {
   const { infuraKey, preferred, label, iconSrc, svg } = options
 
   return {
