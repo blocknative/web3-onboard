@@ -5,6 +5,7 @@ declare module 'web3-provider-engine'
 declare module 'web3-provider-engine/subproviders/rpc'
 declare module 'web3-provider-engine/subproviders/hooked-wallet'
 declare module 'trezor-connect'
+declare module 'ethereumjs-tx'
 declare module '@ledgerhq/hw-app-eth'
 declare module '@ledgerhq/hw-transport-u2f'
 

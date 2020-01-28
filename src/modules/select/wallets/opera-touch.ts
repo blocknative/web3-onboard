@@ -1,17 +1,10 @@
 import { extensionInstallMessage } from '../content'
-import { WalletModule, Helpers } from '../../../interfaces'
+import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
 
 import operaTouchIcon from '../wallet-icons/icon-opera-touch.png'
 import operaTouchIcon2x from '../wallet-icons/icon-opera-touch@2x.png'
 
-function operaTouch(
-  options: {
-    preferred?: boolean
-    label?: string
-    iconSrc?: string
-    svg?: string
-  } = {}
-): WalletModule {
+function operaTouch(options: CommonWalletOptions): WalletModule {
   const { preferred, label, iconSrc, svg } = options
 
   return {

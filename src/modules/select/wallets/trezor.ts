@@ -1,9 +1,14 @@
-import { TrezorOptions, WalletModule, Helpers } from '../../../interfaces'
+import {
+  TrezorOptions,
+  WalletModule,
+  Helpers,
+  CommonWalletOptions
+} from '../../../interfaces'
 import trezorIcon from '../wallet-icons/icon-trezor'
 
 const ACCOUNTS_TO_GET = 10
 
-function trezor(options: TrezorOptions): WalletModule {
+function trezor(options: TrezorOptions & CommonWalletOptions): WalletModule {
   const {
     rpcUrl,
     networkId,

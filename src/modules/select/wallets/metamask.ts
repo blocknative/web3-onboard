@@ -1,17 +1,10 @@
 import { extensionInstallMessage } from '../content'
-import { WalletModule, Helpers } from '../../../interfaces'
+import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
 
 import metamaskIcon from '../wallet-icons/icon-metamask.png'
 import metamaskIcon2x from '../wallet-icons/icon-metamask@2x.png'
 
-function metamask(
-  options: {
-    preferred?: boolean
-    label?: string
-    iconSrc?: string
-    svg?: string
-  } = {}
-): WalletModule {
+function metamask(options: CommonWalletOptions): WalletModule {
   const { preferred, label, iconSrc, svg } = options
 
   return {

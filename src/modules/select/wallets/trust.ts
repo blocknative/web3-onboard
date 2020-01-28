@@ -1,16 +1,9 @@
 import { mobileWalletInstallMessage } from '../content'
-import { WalletModule, Helpers } from '../../../interfaces'
+import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
 
 import trustIcon from '../wallet-icons/icon-trust'
 
-function trust(
-  options: {
-    preferred?: boolean
-    label?: string
-    iconSrc?: string
-    svg?: string
-  } = {}
-): WalletModule {
+function trust(options: CommonWalletOptions): WalletModule {
   const { preferred, label, iconSrc, svg } = options
 
   return {

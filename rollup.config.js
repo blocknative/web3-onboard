@@ -4,6 +4,8 @@ import json from '@rollup/plugin-json'
 import image from 'rollup-plugin-img'
 import commonjs from 'rollup-plugin-commonjs'
 import typescript from 'rollup-plugin-typescript2'
+import builtins from 'rollup-plugin-node-builtins'
+import globals from 'rollup-plugin-node-globals'
 
 import {
   preprocess,
@@ -39,12 +41,19 @@ export default {
     resolve({
       browser: true,
       dedupe: importee =>
-        importee === 'svelte' || importee.startsWith('svelte/'),
-      preferBuiltins: true
+        importee === 'svelte' || importee.startsWith('svelte/')
     }),
     commonjs(),
+    globals({
+      process: false,
+      global: false,
+      dirname: false,
+      filename: false
+    }),
+    builtins(),
     typescript({
-      clean: true
+      clean: true,
+      useTsconfigDeclarationDir: true
     })
   ],
   external: [
@@ -56,6 +65,7 @@ export default {
     'fortmatic',
     'squarelink',
     'authereum',
+    '@toruslabs/torus-embed',
     'lodash.debounce',
     'regenerator-runtime/runtime',
     'web3-provider-engine',

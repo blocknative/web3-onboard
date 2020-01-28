@@ -1,17 +1,10 @@
 import { extensionInstallMessage } from '../content'
-import { WalletModule, Helpers } from '../../../interfaces'
+import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
 
 import dapperIcon from '../wallet-icons/icon-dapper.png'
 import dapperIcon2x from '../wallet-icons/icon-dapper@2x.png'
 
-function dapper(
-  options: {
-    preferred?: boolean
-    label?: string
-    iconSrc?: string
-    svg?: string
-  } = {}
-): WalletModule {
+function dapper(options: CommonWalletOptions): WalletModule {
   const { preferred, label, iconSrc, svg } = options
 
   return {

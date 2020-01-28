@@ -1,9 +1,12 @@
-import { LedgerOptions, WalletModule, Helpers } from '../../../interfaces'
+import {
+  LedgerOptions,
+  WalletModule,
+  Helpers,
+  CommonWalletOptions
+} from '../../../interfaces'
 import ledgerIcon from '../wallet-icons/icon-ledger'
 
-const ACCOUNTS_TO_GET = 10
-
-function ledger(options: LedgerOptions): WalletModule {
+function ledger(options: LedgerOptions & CommonWalletOptions): WalletModule {
   const { rpcUrl, networkId, preferred, label, iconSrc, svg } = options
 
   return {

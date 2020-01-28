@@ -1,14 +1,7 @@
 import { mobileWalletInstallMessage } from '../content'
-import { WalletModule, Helpers } from '../../../interfaces'
+import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
 
-function coinbase(
-  options: {
-    preferred?: boolean
-    label?: string
-    iconSrc?: string
-    svg?: string
-  } = {}
-): WalletModule {
+function coinbase(options: CommonWalletOptions): WalletModule {
   const { preferred, label, iconSrc, svg } = options
 
   return {
