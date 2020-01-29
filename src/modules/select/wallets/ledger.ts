@@ -134,11 +134,8 @@ async function ledgerProvider(options: {
     return addresses()[0]
   }
 
-  async function getAllAccountsAndBalances(
-    amountToGet: number = 1,
-    getMore?: boolean
-  ) {
-    const accounts = await getAccounts(amountToGet, getMore)
+  async function getAllAccountsAndBalances(amountToGet: number = 5) {
+    const accounts = await getAccounts(amountToGet, true)
     return Promise.all(
       accounts.map(
         (address: string) =>
@@ -233,8 +230,6 @@ async function ledgerProvider(options: {
 
   async function signTransaction(transactionData: any) {
     const path = [...addressToPath.values()][0]
-    const address = [...addressToPath.keys()][0]
-    console.log({ path, address })
     const transport = await TransportU2F.create()
     const eth = new Eth(transport)
 

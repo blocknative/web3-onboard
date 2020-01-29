@@ -1,16 +1,11 @@
 import { isWalletCheckModule } from '../../validation'
-import {
-  WalletCheckModule,
-  WalletCheckInit,
-  WalletModule
-} from '../../interfaces'
+import { WalletCheckModule, WalletCheckInit } from '../../interfaces'
 
 const defaultChecks = ['connect', 'network']
 
 async function check(
   walletChecks: Array<WalletCheckInit | WalletCheckModule> | undefined,
-  networkId: number,
-  wallets: Promise<Array<WalletModule>>
+  networkId: number
 ): Promise<WalletCheckModule[]> {
   if (walletChecks) {
     const checks = walletChecks.map(
@@ -27,17 +22,6 @@ async function check(
         return Promise.resolve(checkOrModule)
       }
     )
-
-    const hardwareWallets = await wallets.then(
-      ws => ws.filter(wallet => wallet.type === 'hardware').length > 0
-    )
-
-    if (hardwareWallets) {
-      const accountSelectModule = await import(
-        './account-select'
-      ).then((m: any) => m.default())
-      checks.splice(1, 0, accountSelectModule)
-    }
 
     return Promise.all(checks)
   }
@@ -58,6 +42,8 @@ function getModule(name: string): Promise<any> | never {
       return import('./network')
     case 'balance':
       return import('./balance')
+    case 'accounts':
+      return import('./accounts')
     default:
       throw new Error(`invalid module name: ${name}`)
   }

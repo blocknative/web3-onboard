@@ -10,19 +10,12 @@ function accountSelect(): WalletCheckModule | never {
   let accountsAndBalances: AccountsAndBalances
 
   return async (stateAndHelpers: StateAndHelpers) => {
-    const { wallet, BigNumber } = stateAndHelpers
+    const { wallet, BigNumber, address, balance } = stateAndHelpers
     const { provider, type } = wallet
 
     if (type === 'hardware' && !completed) {
       if (!accountsAndBalances && !loadingAccounts) {
-        loadingAccounts = true
-        provider
-          .getAllAccountsAndBalances()
-          .then((result: AccountsAndBalances) => {
-            accountsAndBalances = result
-            loadingAccounts = false
-          })
-          .catch(console.log)
+        accountsAndBalances = [{ address, balance }]
       }
 
       const deleteWindowProperties = () => {
@@ -32,7 +25,7 @@ function accountSelect(): WalletCheckModule | never {
 
       const loadMoreAccounts = async () => {
         loadingAccounts = true
-        const moreAccounts = await provider.getAllAccountsAndBalances(5, true)
+        const moreAccounts = await provider.getAllAccountsAndBalances()
         accountsAndBalances = moreAccounts
         loadingAccounts = false
       }

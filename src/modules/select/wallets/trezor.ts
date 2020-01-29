@@ -6,8 +6,6 @@ import {
 } from '../../../interfaces'
 import trezorIcon from '../wallet-icons/icon-trezor'
 
-const ACCOUNTS_TO_GET = 10
-
 function trezor(options: TrezorOptions & CommonWalletOptions): WalletModule {
   const {
     rpcUrl,
@@ -87,7 +85,8 @@ async function trezorProvider(options: {
     await import('web3-provider-engine/subproviders/hooked-wallet')
   ).default
 
-  const TrezorConnect = (await import('trezor-connect')).default
+  const TrezorConnectLibrary = await import('trezor-connect')
+  const { default: TrezorConnect, DEVICE_EVENT, DEVICE } = TrezorConnectLibrary
   const EthereumTx = (await import('ethereumjs-tx')).Transaction
 
   const { networkId, email, appUrl, rpcUrl, BigNumber, networkName } = options
@@ -101,6 +100,13 @@ async function trezorProvider(options: {
   TrezorConnect.manifest({
     email,
     appUrl
+  })
+
+  TrezorConnect.on(DEVICE_EVENT, (event: any) => {
+    if (event.type === DEVICE.DISCONNECT) {
+      const listener = listeners.get('accountsChanged')
+      listener && listener([undefined])
+    }
   })
 
   const trezorSubProvider = new HookedWalletSubprovider({
@@ -134,7 +140,7 @@ async function trezorProvider(options: {
 
   function enable() {
     enabled = true
-    return getAccounts()
+    return getAccounts(1)
   }
 
   function on(
@@ -152,11 +158,8 @@ async function trezorProvider(options: {
     return addresses()[0]
   }
 
-  async function getAllAccountsAndBalances(
-    amountToGet: number = 10,
-    getMore?: boolean
-  ) {
-    const accounts = await getAccounts(amountToGet, getMore)
+  async function getAllAccountsAndBalances(amountToGet: number = 10) {
+    const accounts = await getAccounts(amountToGet, true)
     return Promise.all(
       accounts.map(
         address =>
@@ -186,7 +189,7 @@ async function trezorProvider(options: {
 
   async function getAccounts(accountsToGet: number = 10, getMore?: boolean) {
     if (!enabled) {
-      return [null]
+      return [undefined]
     }
 
     const addressesAlreadyFetched = addressToPath.size

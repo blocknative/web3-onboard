@@ -23,6 +23,6 @@ export default function initializeModules(
         (walletSelect && walletSelect.description) || defaultDescription,
       wallets
     },
-    walletCheck: check(walletCheck, networkId, wallets)
+    walletCheck: check(walletCheck, networkId)
   }
 }
