@@ -24,6 +24,10 @@ function select(
           const { walletName, ...initParams } = wallet
           const module = getModule(walletName)
 
+          if (!module) {
+            throw new Error(`${walletName} is not a valid walletName.`)
+          }
+
           return (
             module &&
             module.then((m: any) => m.default({ ...initParams, networkId }))
