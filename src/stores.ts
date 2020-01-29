@@ -154,9 +154,17 @@ function createWalletStateSliceStore(options: {
   const { parameter, initialState } = options
   const { subscribe, set } = writable(initialState)
 
+  let currentState: string | number | null | undefined
+  const unsubscribe = subscribe(store => {
+    currentState = store
+  })
+
   return {
     subscribe,
-    reset: () => set(undefined),
+    reset: () => {
+      unsubscribe()
+      set(undefined)
+    },
     setStateSyncer: (stateSyncer: StateSyncer) => {
       validateType({ name: 'stateSyncer', value: stateSyncer, type: 'object' })
 
@@ -177,14 +185,22 @@ function createWalletStateSliceStore(options: {
       })
 
       if (onChange) {
-        onChange(set)
+        onChange(newVal => {
+          if (newVal || currentState !== initialState) {
+            set(newVal)
+          }
+        })
         return
       }
 
       if (get) {
         const interval: any = setInterval(() => {
           get()
-            .then(set)
+            .then(newVal => {
+              if (newVal || currentState !== initialState) {
+                set(newVal)
+              }
+            })
             .catch((err: any) => {
               console.warn(
                 `Error getting ${parameter} from state syncer: ${err}`
