@@ -1,4 +1,4 @@
-import { WalletInit, WalletModule } from '../../interfaces'
+import { WalletModule, WalletInitOptions } from '../../interfaces'
 import { isWalletInit } from '../../validation'
 
 const defaultWalletNames = [
@@ -7,13 +7,14 @@ const defaultWalletNames = [
   'coinbase',
   'trust',
   'authereum',
+  'torus',
   'opera',
   'operaTouch',
   'status'
 ]
 
 function select(
-  wallets: Array<WalletInit | WalletModule> | undefined,
+  wallets: Array<WalletInitOptions | WalletModule> | undefined,
   networkId: number
 ) {
   if (wallets) {
@@ -22,6 +23,10 @@ function select(
         if (isWalletInit(wallet)) {
           const { walletName, ...initParams } = wallet
           const module = getModule(walletName)
+
+          if (!module) {
+            throw new Error(`${walletName} is not a valid walletName.`)
+          }
 
           return (
             module &&
@@ -68,6 +73,8 @@ function getModule(name: string): Promise<any> | undefined {
       return import('./wallets/opera')
     case 'operaTouch':
       return import('./wallets/opera-touch')
+    case 'torus':
+      return import('./wallets/torus')
     case 'status':
       return import('./wallets/status')
     default:

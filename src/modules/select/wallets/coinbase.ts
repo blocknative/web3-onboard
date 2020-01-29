@@ -1,5 +1,5 @@
 import { mobileWalletInstallMessage } from '../content'
-import { WalletModule, Helpers } from '../../../interfaces'
+import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
 
 function coinbase(
   options: {

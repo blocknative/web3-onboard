@@ -43,7 +43,8 @@ export default {
     }),
     commonjs(),
     typescript({
-      clean: true
+      clean: true,
+      useTsconfigDeclarationDir: true
     })
   ],
   external: [
@@ -55,6 +56,7 @@ export default {
     'fortmatic',
     'squarelink',
     'authereum',
+    '@toruslabs/torus-embed',
     'lodash.debounce',
     'regenerator-runtime/runtime'
   ]

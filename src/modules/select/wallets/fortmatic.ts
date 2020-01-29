@@ -1,9 +1,16 @@
 import { networkName } from '../../../utilities'
-import { SdkWalletOptions, WalletModule, Helpers } from '../../../interfaces'
+import {
+  SdkWalletOptions,
+  WalletModule,
+  Helpers,
+  CommonWalletOptions
+} from '../../../interfaces'
 
 import fortmaticIcon from '../wallet-icons/icon-fortmatic'
 
-function fortmatic(options: SdkWalletOptions): WalletModule {
+function fortmatic(
+  options: SdkWalletOptions & CommonWalletOptions
+): WalletModule {
   const { apiKey, networkId, preferred, label, iconSrc, svg } = options
 
   return {
