@@ -60,6 +60,7 @@
     "web3-provider-engine": "^15.0.4"
   },
   "scripts": {
+    "prepare": "yarn build",
     "build": "rimraf dist && rollup -c && babel dist/cjs --out-dir dist/cjs && babel dist/esm --out-dir dist/esm",
     "test": "echo \"TBD\" && exit 0"
   }
