@@ -4,8 +4,6 @@ import json from '@rollup/plugin-json'
 import image from 'rollup-plugin-img'
 import commonjs from 'rollup-plugin-commonjs'
 import typescript from 'rollup-plugin-typescript2'
-import builtins from 'rollup-plugin-node-builtins'
-import globals from 'rollup-plugin-node-globals'
 
 import {
   preprocess,
@@ -44,13 +42,6 @@ export default {
         importee === 'svelte' || importee.startsWith('svelte/')
     }),
     commonjs(),
-    globals({
-      process: false,
-      global: false,
-      dirname: false,
-      filename: false
-    }),
-    builtins(),
     typescript({
       clean: true,
       useTsconfigDeclarationDir: true
@@ -72,10 +63,10 @@ export default {
     'trezor-connect',
     'ethereumjs-tx',
     '@ledgerhq/hw-transport-u2f',
-    '@ledgerhq/web3-subprovider'
-    // 'util',
-    // 'assert',
-    // 'buffer',
-    // 'stream'
+    '@ledgerhq/hw-app-eth',
+    'util',
+    'assert',
+    'buffer',
+    'stream'
   ]
 }

@@ -1,20 +1,40 @@
 import { WalletCheckModule, StateAndHelpers } from '../../interfaces'
 
+type AccountsAndBalances = Array<{ balance: string; address: string }>
+
+const styles = ''
+
 function accountSelect(): WalletCheckModule | never {
   let completed: boolean = false
-  let accountsAndBalances: Array<{ balance: string; address: string }> = []
+  let loadingAccounts: boolean = false
+  let accountsAndBalances: AccountsAndBalances
 
   return async (stateAndHelpers: StateAndHelpers) => {
     const { wallet, BigNumber } = stateAndHelpers
     const { provider, type } = wallet
 
     if (type === 'hardware' && !completed) {
-      if (!accountsAndBalances.length) {
-        accountsAndBalances = await provider.getAllAccountsAndBalances()
+      if (!accountsAndBalances && !loadingAccounts) {
+        loadingAccounts = true
+        provider
+          .getAllAccountsAndBalances()
+          .then((result: AccountsAndBalances) => {
+            accountsAndBalances = result
+            loadingAccounts = false
+          })
+          .catch(console.log)
       }
 
-      const deleteAccountSelectProperty = () => {
+      const deleteWindowProperties = () => {
         delete (window as any).accountSelect
+        delete (window as any).loadMoreAccounts
+      }
+
+      const loadMoreAccounts = async () => {
+        loadingAccounts = true
+        const moreAccounts = await provider.getAllAccountsAndBalances(5, true)
+        accountsAndBalances = moreAccounts
+        loadingAccounts = false
       }
 
       const accountSelect = () => {
@@ -24,26 +44,33 @@ function accountSelect(): WalletCheckModule | never {
         provider.setPrimaryAccount(accountsAndBalances[accountIndex].address)
       }
       ;(window as any).accountSelect = accountSelect
+      ;(window as any).loadMoreAccounts = loadMoreAccounts
 
       return {
         heading: 'Select Account',
         description: `Please select which account you would like to use with this Dapp:`,
         eventCode: 'accountSelect',
-        html: `
-          <select id="account-select" onchange="window.accountSelect()">
+        html: loadingAccounts
+          ? `<div class="bn-onboard-custom bn-onboard-loading">
+              <div class="bn-onboard-loading-first"></div>
+              <div class="bn-onboard-loading-second"></div>
+              <div class="bn-onboard-loading-third"</div>
+            </div>`
+          : `
+          <select id="account-select" onchange="window.accountSelect()" style="padding: 0.5rem;">
             ${accountsAndBalances.map(
               (account: { balance: string; address: string }) =>
                 `<option value="${account.address}">${
                   account.address
                 } --- ${new BigNumber(account.balance)
                   .div('1000000000000000000')
-                  .toString()} ETH</option>`
+                  .toFixed(3)} ETH</option>`
             )}
-          </select>
+          </select><button style="background: transparent; margin: 0 0.25rem; padding: 0.25rem 0.5rem; border-radius: 40px; cursor: pointer; color: inherit; border-color: inherit; border-width: 1px;" onclick="window.loadMoreAccounts()">Load More</button>
         `,
         button: {
           onclick: () => {
-            deleteAccountSelectProperty()
+            deleteWindowProperties()
             completed = true
           },
           text: 'Done'

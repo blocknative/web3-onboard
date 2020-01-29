@@ -126,6 +126,7 @@ async function trezorProvider(options: {
   provider.enable = enable
   provider.on = on
   provider.setPrimaryAccount = setPrimaryAccount
+  provider.getBalance = getBalance
 
   provider.addProvider(trezorSubProvider)
   provider.addProvider(rpcSubProvider)
@@ -151,8 +152,11 @@ async function trezorProvider(options: {
     return addresses()[0]
   }
 
-  function getAllAccountsAndBalances() {
-    const accounts = addresses()
+  async function getAllAccountsAndBalances(
+    amountToGet: number = 10,
+    getMore?: boolean
+  ) {
+    const accounts = await getAccounts(amountToGet, getMore)
     return Promise.all(
       accounts.map(
         address =>
@@ -180,18 +184,23 @@ async function trezorProvider(options: {
     listener && listener(addresses())
   }
 
-  async function getAccounts() {
+  async function getAccounts(accountsToGet: number = 10, getMore?: boolean) {
     if (!enabled) {
       return [null]
     }
 
-    if (addressToPath.size > 0) {
+    const addressesAlreadyFetched = addressToPath.size
+    const bundle = []
+
+    if (addressesAlreadyFetched > 0 && !getMore) {
       return addresses()
     }
 
-    const bundle = []
-
-    for (let i = 0; i < ACCOUNTS_TO_GET; i++) {
+    for (
+      let i = addressesAlreadyFetched;
+      i < accountsToGet + addressesAlreadyFetched;
+      i++
+    ) {
       const path = `${basePath}/${i}'/0/0`
       bundle.push({ path, showOnTrezor: false })
     }
@@ -212,12 +221,17 @@ async function trezorProvider(options: {
       throw new Error(data.payload.error)
     }
 
-    data.payload.forEach(
-      (addressData: { serializedPath: string; address: string }) => {
-        const { address, serializedPath } = addressData
-        addressToPath.set(address.toLowerCase(), serializedPath)
-      }
-    )
+    if (Array.isArray(data.payload)) {
+      data.payload.forEach(
+        (addressData: { serializedPath: string; address: string }) => {
+          const { address, serializedPath } = addressData
+          addressToPath.set(address.toLowerCase(), serializedPath)
+        }
+      )
+    } else {
+      const { address, serializedPath } = data.payload
+      addressToPath.set(address.toLowerCase(), serializedPath)
+    }
 
     const allAddresses = addresses()
 

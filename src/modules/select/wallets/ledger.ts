@@ -116,7 +116,7 @@ async function ledgerProvider(options: {
 
   function enable() {
     enabled = true
-    return getAccounts()
+    return getAccounts(1)
   }
 
   function on(
@@ -134,11 +134,14 @@ async function ledgerProvider(options: {
     return addresses()[0]
   }
 
-  async function getAllAccountsAndBalances() {
-    const accounts = await getAccounts(5)
+  async function getAllAccountsAndBalances(
+    amountToGet: number = 1,
+    getMore?: boolean
+  ) {
+    const accounts = await getAccounts(amountToGet, getMore)
     return Promise.all(
       accounts.map(
-        address =>
+        (address: string) =>
           new Promise(async resolve => {
             const balance = await getBalance(address)
             resolve({ address, balance })
@@ -163,19 +166,25 @@ async function ledgerProvider(options: {
     listener && listener(addresses())
   }
 
-  async function getAccounts(numberToGet: number = 1) {
+  async function getAccounts(numberToGet: number = 1, getMore?: boolean) {
     if (!enabled) {
       return [null]
     }
 
-    if (addressToPath.size > 1) {
+    const addressesAlreadyFetched = addressToPath.size
+
+    if (addressesAlreadyFetched > 0 && !getMore) {
       return addresses()
     }
 
     const paths = []
 
     if (numberToGet > 1) {
-      for (let i = 0; i < numberToGet; i++) {
+      for (
+        let i = addressesAlreadyFetched;
+        i < numberToGet + addressesAlreadyFetched;
+        i++
+      ) {
         const ledgerPath = `${basePath}/0'/${i}`
         const bipPath = `${basePath}/${i}'/0/0`
         paths.push(ledgerPath, bipPath)
@@ -188,8 +197,12 @@ async function ledgerProvider(options: {
     const eth = new Eth(transport)
 
     for (const path of paths) {
-      const { address } = await eth.getAddress(path)
-      addressToPath.set(address.toLowerCase(), path)
+      try {
+        const { address } = await eth.getAddress(path)
+        addressToPath.set(address.toLowerCase(), path)
+      } catch (err) {
+        console.log({ err })
+      }
     }
 
     const allAddresses = addresses()

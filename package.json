@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "@ledgerhq/hw-transport-u2f": "^5.7.0",
-    "@ledgerhq/web3-subprovider": "^5.7.0",
+    "@ledgerhq/hw-app-eth": "^5.7.0",
     "@portis/web3": "^2.0.0-beta.42",
     "@toruslabs/torus-embed": "^0.2.11",
     "@walletconnect/web3-provider": "^1.0.0-beta.45",

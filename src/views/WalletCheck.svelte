@@ -102,14 +102,16 @@
         // poll to automatically to check if condition has been met
         pollingInterval = setInterval(async () => {
           if (currentModule) {
-            const invalid = await invalidState(currentModule, get(state))
-            if (!invalid && actionResolved !== false) {
+            const result = await invalidState(currentModule, get(state))
+            if (!result && actionResolved !== false) {
               resetState()
 
               // delayed for animations
               setTimeout(() => {
                 checkingModule = false
               }, 250)
+            } else {
+              activeModal = result && result.modal ? result.modal : activeModal
             }
           }
         }, 500)
@@ -247,6 +249,13 @@
     display: flex;
     justify-content: space-between;
   }
+
+  section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
 </style>
 
 {#if loadingModal}
@@ -271,7 +280,9 @@
     {/if}
 
     {#if activeModal.html}
-      {@html activeModal.html}
+      <section>
+        {@html activeModal.html}
+      </section>
     {/if}
 
     <div class="bn-onboard-custom bn-onboard-prepare-button-container">
