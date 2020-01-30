@@ -43,7 +43,7 @@
     "@portis/web3": "^2.0.0-beta.42",
     "@toruslabs/torus-embed": "^0.2.11",
     "@walletconnect/web3-provider": "^1.0.0-beta.45",
-    "authereum": "^0.0.4-beta.26",
+    "authereum": "^0.0.4-beta.88",
     "bignumber.js": "^9.0.0",
     "bnc-sdk": "1.0.3",
     "bowser": "^2.5.2",
