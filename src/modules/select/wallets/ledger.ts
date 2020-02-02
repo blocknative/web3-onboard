@@ -187,7 +187,7 @@ async function ledgerProvider(options: {
         paths.push(ledgerPath, bipPath)
       }
     } else {
-      paths.push(`${basePath}/0'/0/0`)
+      paths.push(`${basePath}/0'/0`)
     }
 
     const transport = await TransportU2F.create()
