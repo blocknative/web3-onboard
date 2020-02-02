@@ -155,14 +155,13 @@ function createWalletStateSliceStore(options: {
   const { subscribe, set } = writable(initialState)
 
   let currentState: string | number | null | undefined
-  const unsubscribe = subscribe(store => {
+  subscribe(store => {
     currentState = store
   })
 
   return {
     subscribe,
     reset: () => {
-      unsubscribe()
       set(undefined)
     },
     setStateSyncer: (stateSyncer: StateSyncer) => {
