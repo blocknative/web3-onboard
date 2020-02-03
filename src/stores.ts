@@ -75,54 +75,55 @@ export const walletInterface: WalletInterfaceStore = createWalletInterfaceStore(
 )
 
 walletInterface.subscribe((walletInterface: WalletInterface | null) => {
+  // clear all current intervals if they exist
+  currentSyncerIntervals.forEach(
+    (interval: number | undefined) => interval && clearInterval(interval)
+  )
+
+  const currentState = get(state)
+
+  // reset state
+  currentState.balance && balance.reset()
+  currentState.address && address.reset()
+  currentState.network && network.reset()
+
   if (walletInterface) {
-    const currentState = get(state)
-    // reset state
-    currentState.balance && balance.reset()
-    currentState.address && address.reset()
-    currentState.network && network.reset()
-
-    // clear all current intervals if they exist
-    currentSyncerIntervals.forEach(
-      (interval: number | undefined) => interval && clearInterval(interval)
-    )
-
     // start syncing state and save intervals
     currentSyncerIntervals = [
       address.setStateSyncer(walletInterface.address),
       network.setStateSyncer(walletInterface.network),
       balance.setStateSyncer(walletInterface.balance)
     ]
+  } else {
+    wallet.update(() => ({
+      name: undefined,
+      provider: undefined,
+      connect: undefined,
+      instance: undefined,
+      url: undefined,
+      loading: undefined
+    }))
   }
 })
 
-export function resetWalletState(options: { disconnected?: boolean } = {}) {
-  // clear all current intervals if they exist
-  currentSyncerIntervals.forEach(
-    (interval: number | undefined) => interval && clearInterval(interval)
-  )
-
+export function resetWalletState(
+  options: { disconnected?: boolean; walletName?: string } = {}
+) {
   walletInterface.update((currentInterface: WalletInterface | null) => {
-    const { disconnected } = options
-    !disconnected &&
-      currentInterface &&
-      currentInterface.disconnect &&
-      currentInterface.disconnect()
-    return null
+    if (
+      !options.walletName ||
+      (currentInterface && currentInterface.name === options.walletName)
+    ) {
+      const { disconnected } = options
+      !disconnected &&
+        currentInterface &&
+        currentInterface.disconnect &&
+        currentInterface.disconnect()
+      return null
+    }
+
+    return currentInterface
   })
-
-  wallet.update(() => ({
-    name: undefined,
-    provider: undefined,
-    connect: undefined,
-    instance: undefined,
-    url: undefined,
-    loading: undefined
-  }))
-
-  balance.reset()
-  address.reset()
-  network.reset()
 
   app.update(store => ({
     ...store,
