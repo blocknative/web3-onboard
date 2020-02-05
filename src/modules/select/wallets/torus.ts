@@ -80,6 +80,7 @@ function torus(options: TorusOptions & CommonWalletOptions): WalletModule {
     },
     desktop: true,
     mobile: true,
+    url: 'https://app.tor.us/',
     preferred
   }
 }

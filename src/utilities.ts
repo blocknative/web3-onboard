@@ -13,7 +13,8 @@ export function getNetwork(provider: any): Promise<number | any> {
       },
       (e: any, res: any) => {
         e && reject(e)
-        resolve(Number(res && res.result))
+        const result = res && res.result
+        resolve(result && Number(result))
       }
     )
   })
@@ -29,7 +30,8 @@ export function getAddress(provider: any): Promise<string | any> {
       },
       (e: any, res: any) => {
         e && reject(e)
-        resolve(res && res.result && res.result[0])
+        const result = res && res.result && res.result[0]
+        resolve(result)
       }
     )
   })
@@ -52,7 +54,8 @@ export function getBalance(provider: any): Promise<string | any> {
       },
       (e: any, res: any) => {
         e && reject(e)
-        resolve(res && res.result && new BigNumber(res.result).toString(10))
+        const result = res && res.result
+        resolve(result && new BigNumber(result).toString(10))
       }
     )
   })
@@ -70,7 +73,7 @@ export function createModernProviderInterface(provider: any): WalletInterface {
             // get the initial value
             getAddress(provider).then(func)
             provider.on('accountsChanged', (accounts: string[]) =>
-              func(accounts[0])
+              func(accounts && accounts[0])
             )
           }
         }
@@ -82,7 +85,9 @@ export function createModernProviderInterface(provider: any): WalletInterface {
           onChange: (func: (val: string | number) => void) => {
             // get initial value
             getNetwork(provider).then(func)
-            provider.on('networkChanged', func)
+            provider.on('networkChanged', (netId: string | number) =>
+              func(netId && Number(netId))
+            )
           }
         }
       : { get: () => getNetwork(provider) },

@@ -30,7 +30,7 @@ function walletConnect(
       provider.autoRefreshOnNetworkChange = false
 
       provider.wc.on('disconnect', () => {
-        resetWalletState({ disconnected: true })
+        resetWalletState({ disconnected: true, walletName: 'WalletConnect' })
       })
 
       return {
