@@ -98,7 +98,9 @@ async function ledgerProvider(options: {
     }
   })
 
-  const rpcSubProvider = new RpcSource({ rpcUrl })
+  const rpcSubProvider = new RpcSource({
+    rpcUrl: rpcUrl.includes('http') ? rpcUrl : `https://${rpcUrl}`
+  })
   const provider = new Web3ProviderEngine()
 
   provider.on('error', (err: any) => {})
@@ -164,6 +166,7 @@ async function ledgerProvider(options: {
   }
 
   async function getAccounts(numberToGet: number = 1, getMore?: boolean) {
+    console.log('get accounts called:', { numberToGet, getMore: getMore })
     if (!enabled) {
       return [null]
     }
@@ -171,6 +174,7 @@ async function ledgerProvider(options: {
     const addressesAlreadyFetched = addressToPath.size
 
     if (addressesAlreadyFetched > 0 && !getMore) {
+      console.log('already have 1 address')
       return addresses()
     }
 
@@ -190,11 +194,14 @@ async function ledgerProvider(options: {
       paths.push(`${basePath}/0'/0`)
     }
 
+    console.log('creating transport')
     const transport = await TransportU2F.create()
     const eth = new Eth(transport)
+    console.log('transport created')
 
     for (const path of paths) {
       try {
+        console.log('getting address for path:', path)
         const { address } = await eth.getAddress(path)
         addressToPath.set(address.toLowerCase(), path)
       } catch (err) {

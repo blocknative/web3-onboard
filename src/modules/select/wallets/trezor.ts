@@ -122,7 +122,9 @@ async function trezorProvider(options: {
     }
   })
 
-  const rpcSubProvider = new RpcSource({ rpcUrl })
+  const rpcSubProvider = new RpcSource({
+    rpcUrl: rpcUrl.includes('http') ? rpcUrl : `https://${rpcUrl}`
+  })
   const provider = new Web3ProviderEngine()
 
   provider.on('error', (err: any) => {})
