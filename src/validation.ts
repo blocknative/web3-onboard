@@ -529,6 +529,7 @@ export function validateWalletInit(
     enableLogging,
     loginMethod,
     showTorusButton,
+    disableNotifications,
     ...otherParams
   } = walletInit
 
@@ -631,6 +632,12 @@ export function validateWalletInit(
   validateType({
     name: 'walletInit.showTorusButton',
     value: showTorusButton,
+    type: 'boolean',
+    optional: true
+  })
+  validateType({
+    name: 'walletInit.disableNotifications',
+    value: disableNotifications,
     type: 'boolean',
     optional: true
   })
