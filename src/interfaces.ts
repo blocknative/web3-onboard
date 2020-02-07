@@ -147,11 +147,16 @@ export interface TorusOptions {
   enableLogging?: boolean
 }
 
+export interface AuthereumOptions {
+  disableNotifications?: boolean
+}
+
 export interface WalletInitOptions
   extends CommonWalletOptions,
-    SdkWalletOptions,
-    WalletConnectOptions,
-    TorusOptions {
+  SdkWalletOptions,
+  WalletConnectOptions,
+  TorusOptions,
+  AuthereumOptions {
   walletName: string
 }
 
