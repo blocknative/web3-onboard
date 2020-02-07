@@ -45,7 +45,7 @@ function authereum(options: CommonWalletOptions): WalletModule {
     },
     desktop: true,
     mobile: true,
-    url: `https://${networkId !== 1 ? `${networkName(networkId)},` : ''}authereum.com/`,
+    url: `https://${networkId !== 1 ? `${networkName(networkId)}.` : ''}authereum.com/`,
     preferred
   }
 }
