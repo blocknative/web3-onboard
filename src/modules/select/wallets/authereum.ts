@@ -1,9 +1,9 @@
 import authereumIcon from '../wallet-icons/icon-authereum.png'
 import { networkName } from '../../../utilities'
-import { WalletModule, CommonWalletOptions } from '../../../interfaces'
+import { WalletModule, AuthereumOptions, CommonWalletOptions } from '../../../interfaces'
 
-function authereum(options: CommonWalletOptions): WalletModule {
-  const { networkId, preferred, label, iconSrc, svg } = options
+function authereum(options: AuthereumOptions & CommonWalletOptions): WalletModule {
+  const { networkId, preferred, label, iconSrc, svg, disableNotifications } = options
 
   return {
     name: label || 'Authereum',
@@ -13,7 +13,7 @@ function authereum(options: CommonWalletOptions): WalletModule {
       const { default: Authereum } = await import('authereum')
       const instance = new Authereum({
         networkName: networkName(networkId),
-        disableNotifications: true
+        disableNotifications: disableNotifications // default: false
       })
 
       const provider = instance.getProvider()
