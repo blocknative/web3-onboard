@@ -77,18 +77,19 @@ export const walletInterface: WalletInterfaceStore = createWalletInterfaceStore(
 )
 
 walletInterface.subscribe((walletInterface: WalletInterface | null) => {
+  // clear all current intervals if they exist
+  currentSyncerIntervals.forEach(
+    (interval: number | undefined) => interval && clearInterval(interval)
+  )
+
+  const currentState = get(state)
+
+  // reset state
+  currentState.balance && balance.reset()
+  currentState.address && address.reset()
+  currentState.network && network.reset()
+
   if (walletInterface) {
-    const currentState = get(state)
-    // reset state
-    currentState.balance && balance.reset()
-    currentState.address && address.reset()
-    currentState.network && network.reset()
-
-    // clear all current intervals if they exist
-    currentSyncerIntervals.forEach(
-      (interval: number | undefined) => interval && clearInterval(interval)
-    )
-
     // start syncing state and save intervals
     currentSyncerIntervals = [
       address.setStateSyncer(walletInterface.address),
@@ -98,33 +99,54 @@ walletInterface.subscribe((walletInterface: WalletInterface | null) => {
   }
 })
 
-export function resetWalletState(options: { disconnected?: boolean } = {}) {
-  // clear all current intervals if they exist
-  currentSyncerIntervals.forEach(
-    (interval: number | undefined) => interval && clearInterval(interval)
-  )
-
+export function resetWalletState(options?: {
+  disconnected: boolean
+  walletName: string
+}) {
   walletInterface.update((currentInterface: WalletInterface | null) => {
-    const { disconnected } = options
-    !disconnected &&
-      currentInterface &&
-      currentInterface.disconnect &&
-      currentInterface.disconnect()
-    return null
+    // no interface then don't do anything
+    if (!currentInterface) {
+      return currentInterface
+    }
+
+    // no options object, so do a full reset by disconnecting and setting interface to null
+    if (!options) {
+      wallet.update(() => ({
+        name: undefined,
+        provider: undefined,
+        connect: undefined,
+        instance: undefined,
+        url: undefined,
+        loading: undefined
+      }))
+
+      currentInterface.disconnect && currentInterface.disconnect()
+
+      return null
+    }
+
+    const { walletName, disconnected } = options
+
+    // if walletName is the same as the current interface name then do a full reset (checking if to do a disconnect)
+    if (currentInterface.name === walletName) {
+      wallet.update(() => ({
+        name: undefined,
+        provider: undefined,
+        connect: undefined,
+        instance: undefined,
+        url: undefined,
+        loading: undefined
+      }))
+
+      disconnected &&
+        currentInterface.disconnect &&
+        currentInterface.disconnect()
+
+      return null
+    }
+
+    return currentInterface
   })
-
-  wallet.update(() => ({
-    name: undefined,
-    provider: undefined,
-    connect: undefined,
-    instance: undefined,
-    url: undefined,
-    loading: undefined
-  }))
-
-  balance.reset()
-  address.reset()
-  network.reset()
 
   app.update(store => ({
     ...store,
@@ -157,14 +179,13 @@ function createWalletStateSliceStore(options: {
   const { subscribe, set } = writable(initialState)
 
   let currentState: string | number | null | undefined
-  const unsubscribe = subscribe(store => {
+  subscribe(store => {
     currentState = store
   })
 
   return {
     subscribe,
     reset: () => {
-      unsubscribe()
       set(undefined)
     },
     setStateSyncer: (stateSyncer: StateSyncer) => {

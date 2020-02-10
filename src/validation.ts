@@ -548,6 +548,7 @@ export function validateWalletInit(
     enableLogging,
     loginMethod,
     showTorusButton,
+    disableNotifications,
     ...otherParams
   } = walletInit
 
@@ -684,6 +685,13 @@ export function validateWalletInit(
     name: 'walletInit.buildEnv',
     value: buildEnv,
     type: 'string',
+    optional: true
+  })
+
+  validateType({
+    name: 'walletInit.disableNotifications',
+    value: disableNotifications,
+    type: 'boolean',
     optional: true
   })
 }

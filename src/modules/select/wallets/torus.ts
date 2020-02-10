@@ -81,6 +81,7 @@ function torus(options: TorusOptions & CommonWalletOptions): WalletModule {
     type: 'sdk',
     desktop: true,
     mobile: true,
+    url: 'https://app.tor.us/',
     preferred
   }
 }

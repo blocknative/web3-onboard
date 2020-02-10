@@ -98,7 +98,10 @@ export interface Helpers {
   getAddress: (provider: any) => Promise<string | any>
   getNetwork: (provider: any) => Promise<number | any>
   getBalance: (provider: any) => Promise<string | any>
-  resetWalletState: (options: { disconnected?: boolean }) => void
+  resetWalletState: (options?: {
+    disconnected: boolean
+    walletName: string
+  }) => void
 }
 
 export interface WalletInterface {
@@ -159,15 +162,22 @@ export interface TorusOptions {
   enableLogging?: boolean
 }
 
-export interface WalletInitOptions
-  extends CommonWalletOptions,
-    SdkWalletOptions,
-    WalletConnectOptions,
-    TorusOptions,
-    TrezorOptions,
-    LedgerOptions {
+export interface AuthereumOptions {
+  disableNotifications?: boolean
+}
+
+interface WalletName {
   walletName: string
 }
+
+export type WalletInitOptions = CommonWalletOptions &
+  SdkWalletOptions &
+  WalletConnectOptions &
+  TorusOptions &
+  TrezorOptions &
+  AuthereumOptions &
+  LedgerOptions &
+  WalletName
 
 export interface WalletCheckInit {
   checkName: string
