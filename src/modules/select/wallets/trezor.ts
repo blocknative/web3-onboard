@@ -282,27 +282,21 @@ async function trezorProvider(options: {
   async function signTransaction(transactionData: any) {
     const path = [...addressToPath.values()][0]
 
-    try {
-      const transaction = new EthereumTx(transactionData, {
-        chain: networkName(networkId)
-      })
-      const trezorResult = await trezorSignTransaction(path, transactionData)
+    const transaction = new EthereumTx(transactionData, {
+      chain: networkName(networkId)
+    })
+    const trezorResult = await trezorSignTransaction(path, transactionData)
 
-      if (!trezorResult.success) {
-        console.log('error', trezorResult.payload.error)
-        throw new Error(trezorResult.payload.error)
-      }
-
-      const signature = trezorResult.payload
-      transaction.v = signature.v
-      transaction.r = signature.r
-      transaction.s = signature.s
-
-      return `0x${transaction.serialize().toString('hex')}`
-    } catch (error) {
-      console.log({ error })
-      throw new Error(error)
+    if (!trezorResult.success) {
+      throw new Error(trezorResult.payload.error)
     }
+
+    const signature = trezorResult.payload
+    transaction.v = signature.v
+    transaction.r = signature.r
+    transaction.s = signature.s
+
+    return `0x${transaction.serialize().toString('hex')}`
   }
 
   return provider

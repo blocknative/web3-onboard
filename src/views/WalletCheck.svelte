@@ -270,6 +270,9 @@
     <p class="bn-onboard-custom bn-onboard-prepare-description">
       {@html activeModal.description}
     </p>
+    {#if activeModal.hint}
+      <p>{activeModal.hint}</p>
+    {/if}
     {#if errorMsg}
       <span
         class:bn-onboard-dark-mode-background={$app.darkMode}

@@ -89,7 +89,7 @@ async function ledgerProvider(options: {
     getAccounts: (callback: any) => {
       getAccounts()
         .then((res: Array<any> | undefined) => callback(null, res))
-        .catch(err => callback(err, null))
+        .catch((err: string) => callback(err, null))
     },
     signTransaction: (transactionData: any, callback: any) => {
       signTransaction(transactionData)
@@ -165,58 +165,60 @@ async function ledgerProvider(options: {
     listener && listener(addresses())
   }
 
-  async function getAccounts(numberToGet: number = 1, getMore?: boolean) {
-    console.log('get accounts called:', { numberToGet, getMore: getMore })
-    if (!enabled) {
-      return [null]
-    }
-
-    const addressesAlreadyFetched = addressToPath.size
-
-    if (addressesAlreadyFetched > 0 && !getMore) {
-      console.log('already have 1 address')
-      return addresses()
-    }
-
-    const paths = []
-
-    if (numberToGet > 1) {
-      for (
-        let i = addressesAlreadyFetched;
-        i < numberToGet + addressesAlreadyFetched;
-        i++
-      ) {
-        const ledgerPath = `${basePath}/0'/${i}`
-        const bipPath = `${basePath}/${i}'/0/0`
-        paths.push(ledgerPath, bipPath)
+  function getAccounts(
+    numberToGet: number = 1,
+    getMore?: boolean
+  ): Promise<any[]> {
+    return new Promise(async (resolve, reject) => {
+      if (!enabled) {
+        resolve([null])
       }
-    } else {
-      paths.push(`${basePath}/0'/0`)
-    }
 
-    console.log('creating transport')
-    const transport = await TransportU2F.create()
-    const eth = new Eth(transport)
-    console.log('transport created')
+      const addressesAlreadyFetched = addressToPath.size
 
-    for (const path of paths) {
-      try {
-        console.log('getting address for path:', path)
-        const { address } = await eth.getAddress(path)
-        addressToPath.set(address.toLowerCase(), path)
-      } catch (err) {
-        console.log({ err })
+      if (addressesAlreadyFetched > 0 && !getMore) {
+        return addresses()
       }
-    }
 
-    const allAddresses = addresses()
+      const paths = []
 
-    const listener = listeners.get('accountsChanged')
-    listener && listener(allAddresses)
+      if (numberToGet > 1) {
+        for (
+          let i = addressesAlreadyFetched;
+          i < numberToGet + addressesAlreadyFetched;
+          i++
+        ) {
+          const ledgerPath = `${basePath}/0'/${i}`
+          const bipPath = `${basePath}/${i}'/0/0`
+          paths.push(ledgerPath, bipPath)
+        }
+      } else {
+        paths.push(`${basePath}/0'/0`)
+      }
 
-    transport.close()
+      const transport = await TransportU2F.create()
+      const eth = new Eth(transport)
 
-    return allAddresses
+      for (const path of paths) {
+        try {
+          const { address } = await eth.getAddress(path)
+          addressToPath.set(address.toLowerCase(), path)
+        } catch (err) {
+          return reject({
+            message: 'An error occurred when trying to get account information'
+          })
+        }
+      }
+
+      const allAddresses = addresses()
+
+      const listener = listeners.get('accountsChanged')
+      listener && listener(allAddresses)
+
+      transport.close()
+
+      resolve(allAddresses)
+    })
   }
 
   function getBalance(address: string) {
@@ -260,7 +262,6 @@ async function ledgerProvider(options: {
 
       return `0x${transaction.serialize().toString('hex')}`
     } catch (error) {
-      console.log({ error })
       throw new Error(error)
     } finally {
       transport.close()

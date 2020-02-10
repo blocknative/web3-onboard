@@ -359,6 +359,7 @@ export function validateModal(modal: WalletCheckModal): never | void {
     icon,
     loading,
     html,
+    hint,
     ...otherParams
   } = modal
 
@@ -371,7 +372,9 @@ export function validateModal(modal: WalletCheckModal): never | void {
       'eventCode',
       'action',
       'icon',
-      'heading'
+      'loading',
+      'html',
+      'hint'
     ],
     'modal'
   )
@@ -403,6 +406,13 @@ export function validateModal(modal: WalletCheckModal): never | void {
   validateType({
     name: 'html',
     value: html,
+    type: 'string',
+    optional: true
+  })
+
+  validateType({
+    name: 'hint',
+    value: hint,
     type: 'string',
     optional: true
   })

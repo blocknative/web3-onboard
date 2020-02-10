@@ -39,6 +39,7 @@ export interface WalletCheckModal {
   action?: () => Promise<{ message: string } | undefined>
   loading?: Promise<undefined>
   icon?: string
+  hint?: string
 }
 
 export interface WalletSelectModalData {
