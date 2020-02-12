@@ -304,10 +304,8 @@ async function trezorProvider(options: {
 
 function networkIdToDerivationPath(networkId: number) {
   switch (networkId) {
-    case 1:
-      return `m/44'/60'`
     default:
-      return `m/44'/1'`
+      return `m/44'/60'`
   }
 }
 
