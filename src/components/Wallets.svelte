@@ -1,13 +1,24 @@
 <script lang="ts">
+  import { onDestroy } from 'svelte'
   import { fade } from 'svelte/transition'
   import Button from '../elements/Button.svelte'
   import IconButton from '../elements/IconButton.svelte'
-  import { WalletSelectModalData, WalletModule } from '../interfaces'
+  import { wallet } from '../stores'
+  import {
+    WalletSelectModalData,
+    WalletModule,
+    WritableStore
+  } from '../interfaces'
   export let modalData: WalletSelectModalData
   export let handleWalletSelect: (wallet: WalletModule) => void
   export let loadingWallet: string | undefined
 
   let showingAllWalletModules: boolean = false
+  let selectedWallet: WritableStore
+
+  const unsubscribe = wallet.subscribe(wallet => (selectedWallet = wallet))
+
+  onDestroy(() => unsubscribe())
 </script>
 
 <style>
@@ -65,6 +76,7 @@
         iconSrcSet={wallet.iconSrcSet}
         svg={wallet.svg}
         text={wallet.name}
+        currentlySelected={wallet.name === selectedWallet.name}
         {loadingWallet} />
     </li>
   {/each}
@@ -86,6 +98,7 @@
           iconSrcSet={wallet.iconSrcSet}
           svg={wallet.svg}
           text={wallet.name}
+          currentlySelected={wallet.name === selectedWallet.name}
           {loadingWallet} />
       </li>
     {/each}

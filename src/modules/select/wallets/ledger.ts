@@ -196,8 +196,15 @@ async function ledgerProvider(options: {
         paths.push(`${basePath}/0'/0`)
       }
 
-      const transport = await TransportU2F.create()
-      const eth = new Eth(transport)
+      let transport
+      let eth
+
+      try {
+        transport = await TransportU2F.create()
+        eth = new Eth(transport)
+      } catch (error) {
+        reject({ message: 'Error connecting to Ledger wallet' })
+      }
 
       for (const path of paths) {
         try {
@@ -205,7 +212,7 @@ async function ledgerProvider(options: {
           addressToPath.set(address.toLowerCase(), path)
         } catch (err) {
           return reject({
-            message: 'An error occurred when trying to get account information'
+            message: 'There was a problem trying to connect to your Ledger.'
           })
         }
       }
@@ -239,8 +246,15 @@ async function ledgerProvider(options: {
 
   async function signTransaction(transactionData: any) {
     const path = [...addressToPath.values()][0]
-    const transport = await TransportU2F.create()
-    const eth = new Eth(transport)
+    let transport
+    let eth
+
+    try {
+      transport = await TransportU2F.create()
+      eth = new Eth(transport)
+    } catch (error) {
+      throw new Error('Error connecting to Ledger wallet')
+    }
 
     try {
       const transaction = new EthereumTx(transactionData, {
@@ -262,7 +276,7 @@ async function ledgerProvider(options: {
 
       return `0x${transaction.serialize().toString('hex')}`
     } catch (error) {
-      throw new Error(error)
+      throw new Error('Error signing transaction')
     } finally {
       transport.close()
     }

@@ -51,7 +51,6 @@ export const wallet: WritableStore = writable({
   connect: null,
   instance: null,
   url: null,
-  loading: null,
   type: null
 })
 
@@ -116,8 +115,7 @@ export function resetWalletState(options?: {
         provider: undefined,
         connect: undefined,
         instance: undefined,
-        url: undefined,
-        loading: undefined
+        url: undefined
       }))
 
       currentInterface.disconnect && currentInterface.disconnect()
@@ -134,8 +132,7 @@ export function resetWalletState(options?: {
         provider: undefined,
         connect: undefined,
         instance: undefined,
-        url: undefined,
-        loading: undefined
+        url: undefined
       }))
 
       disconnected &&

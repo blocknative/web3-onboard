@@ -7,6 +7,7 @@
   export let onclick: () => void = () => {}
   export let text: string
   export let loadingWallet: string | undefined
+  export let currentlySelected: boolean = false
 </script>
 
 <style>
@@ -61,6 +62,11 @@
     font-family: inherit;
   }
 
+  i {
+    font-size: 1.6rem;
+    margin-left: 0.5rem;
+  }
+
   @media only screen and (max-width: 450px) {
     button {
       width: 100%;
@@ -82,4 +88,7 @@
     {/if}
   </div>
   <span>{text}</span>
+  {#if currentlySelected}
+    <i>*</i>
+  {/if}
 </button>

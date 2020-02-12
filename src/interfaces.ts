@@ -25,6 +25,7 @@ export interface WalletCheckModule {
     | WalletCheckModal
     | undefined
     | Promise<WalletCheckModal | undefined>
+  id?: string
 }
 
 export interface WalletCheckModal {
@@ -37,9 +38,7 @@ export interface WalletCheckModal {
   }
   eventCode: string
   action?: () => Promise<{ message: string } | undefined>
-  loading?: Promise<undefined>
   icon?: string
-  hint?: string
 }
 
 export interface WalletSelectModalData {
@@ -109,7 +108,6 @@ export interface WalletInterface {
   name: string | undefined
   connect?: () => Promise<{ message: string } | undefined>
   disconnect?: () => void
-  loading?: Promise<undefined>
   address: StateSyncer
   network: StateSyncer
   balance: StateSyncer
@@ -126,7 +124,6 @@ export interface Wallet {
   type: 'hardware' | 'injected' | 'sdk'
   instance?: any
   connect?: () => Promise<{ message: string } | undefined>
-  loading?: Promise<undefined>
 }
 
 export interface CommonWalletOptions {

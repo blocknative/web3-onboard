@@ -154,7 +154,6 @@
       url: module.url,
       name: module.name,
       connect: selectedWalletInterface.connect,
-      loading: selectedWalletInterface.loading,
       type: module.type
     })
 
