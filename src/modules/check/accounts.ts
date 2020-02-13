@@ -2,8 +2,6 @@ import { WalletCheckModule, StateAndHelpers } from '../../interfaces'
 
 type AccountsAndBalances = Array<{ balance: string; address: string }>
 
-const styles = ''
-
 function accountSelect(): WalletCheckModule | never {
   let completed: boolean = false
   let loadingAccounts: boolean = false
