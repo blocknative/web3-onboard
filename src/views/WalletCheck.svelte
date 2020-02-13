@@ -318,7 +318,7 @@
       {#if loading}
         <Spinner />
       {/if}
-      <Button onclick={handleExit}>Dismiss</Button>
+      <Button onclick={() => handleExit(false)}>Dismiss</Button>
     </div>
   </Modal>
 {/if}
