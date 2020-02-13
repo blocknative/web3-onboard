@@ -284,7 +284,7 @@
 {/if}
 
 {#if activeModal}
-  <Modal closeModal={handleExit}>
+  <Modal closeModal={() => handleExit()}>
     <ModalHeader icon={activeModal.icon} heading={activeModal.heading} />
     <p class="bn-onboard-custom bn-onboard-prepare-description">
       {@html activeModal.description}
