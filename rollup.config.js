@@ -64,6 +64,10 @@ export default {
     'trezor-connect',
     'ethereumjs-tx',
     '@ledgerhq/hw-transport-u2f',
-    '@ledgerhq/hw-app-eth'
+    '@ledgerhq/hw-app-eth',
+    'util',
+    'assert',
+    'buffer',
+    'stream'
   ]
 }
