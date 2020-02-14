@@ -256,7 +256,13 @@ async function trezorProvider(options: {
         },
         (e: any, res: any) => {
           e && reject(e)
-          resolve(res && res.result && new BigNumber(res.result).toString(10))
+          const result = res && res.result
+
+          if (result != null) {
+            resolve(new BigNumber(result).toString(10))
+          } else {
+            resolve(null)
+          }
         }
       )
     })

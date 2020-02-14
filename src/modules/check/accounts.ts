@@ -51,11 +51,13 @@ function accountSelect(): WalletCheckModule | never {
           <select id="account-select" onchange="window.accountSelect()" style="padding: 0.5rem;">
             ${accountsAndBalances.map(
               (account: { balance: string; address: string }) =>
-                `<option value="${account.address}">${
-                  account.address
-                } --- ${new BigNumber(account.balance)
-                  .div('1000000000000000000')
-                  .toFixed(3)} ETH</option>`
+                `<option value="${account.address}">${account.address} --- ${
+                  account.balance != null
+                    ? new BigNumber(account.balance)
+                        .div('1000000000000000000')
+                        .toFixed(3)
+                    : '0'
+                } ETH</option>`
             )}
           </select><button style="background: transparent; margin: 0 0.25rem; padding: 0.25rem 0.5rem; border-radius: 40px; cursor: pointer; color: inherit; border-color: inherit; border-width: 1px;" onclick="window.loadMoreAccounts()">Load More</button>
         `,
