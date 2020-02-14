@@ -177,7 +177,7 @@ async function ledgerProvider(options: {
       const addressesAlreadyFetched = addressToPath.size
 
       if (addressesAlreadyFetched > 0 && !getMore) {
-        resolve(addresses())
+        return resolve(addresses())
       }
 
       const paths = []
