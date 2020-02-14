@@ -188,12 +188,13 @@ async function ledgerProvider(options: {
           i < numberToGet + addressesAlreadyFetched;
           i++
         ) {
-          const ledgerPath = `${basePath}/0'/${i}`
-          const bipPath = `${basePath}/${i}'/0/0`
-          paths.push(ledgerPath, bipPath)
+          const ledgerLive = `${basePath}/${i}'/0/0`
+          const legacy = `${basePath}/0'/${i}'`
+
+          paths.push(ledgerLive, legacy)
         }
       } else {
-        paths.push(`${basePath}/0'/0`)
+        paths.push(`${basePath}/0'/0`, `${basePath}/0'/0/0`)
       }
 
       let transport
