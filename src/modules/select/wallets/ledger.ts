@@ -88,7 +88,7 @@ async function ledgerProvider(options: {
   const ledgerSubProvider = new HookedWalletSubprovider({
     getAccounts: (callback: any) => {
       getAccounts()
-        .then((res: Array<any> | undefined) => callback(null, res))
+        .then((res: Array<any>) => callback(null, res))
         .catch((err: string) => callback(err, null))
     },
     signTransaction: (transactionData: any, callback: any) => {
@@ -177,7 +177,7 @@ async function ledgerProvider(options: {
       const addressesAlreadyFetched = addressToPath.size
 
       if (addressesAlreadyFetched > 0 && !getMore) {
-        return addresses()
+        resolve(addresses())
       }
 
       const paths = []
