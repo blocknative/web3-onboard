@@ -41,7 +41,6 @@ export default {
         importee === 'svelte' || importee.startsWith('svelte/'),
       preferBuiltins: true
     }),
-    // commonjs(),
     typescript({
       clean: true,
       useTsconfigDeclarationDir: true
