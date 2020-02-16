@@ -6,6 +6,14 @@ import {
 } from '../../../interfaces'
 import trezorIcon from '../wallet-icons/icon-trezor'
 
+import Web3ProviderEngine from 'web3-provider-engine'
+import RpcSource from 'web3-provider-engine/subproviders/rpc'
+import HookedWalletSubprovider from 'web3-provider-engine/subproviders/hooked-wallet'
+import * as TrezorConnectLibrary from 'trezor-connect'
+import EthereumTx from 'ethereumjs-tx'
+
+const { default: TrezorConnect, DEVICE_EVENT, DEVICE } = TrezorConnectLibrary
+
 function trezor(options: TrezorOptions & CommonWalletOptions): WalletModule {
   const {
     rpcUrl,
@@ -77,18 +85,6 @@ async function trezorProvider(options: {
   BigNumber: any
   networkName: (id: number) => string
 }) {
-  const Web3ProviderEngine = (await import('web3-provider-engine')).default
-  const RpcSource = (await import('web3-provider-engine/subproviders/rpc'))
-    .default
-
-  const HookedWalletSubprovider = (
-    await import('web3-provider-engine/subproviders/hooked-wallet')
-  ).default
-
-  const TrezorConnectLibrary = await import('trezor-connect')
-  const { default: TrezorConnect, DEVICE_EVENT, DEVICE } = TrezorConnectLibrary
-  const EthereumTx = (await import('ethereumjs-tx')).Transaction
-
   const { networkId, email, appUrl, rpcUrl, BigNumber, networkName } = options
   const basePath = networkIdToDerivationPath(networkId)
 

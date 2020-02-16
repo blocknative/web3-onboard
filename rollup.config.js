@@ -2,7 +2,6 @@ import svelte from 'rollup-plugin-svelte'
 import resolve from 'rollup-plugin-node-resolve'
 import json from '@rollup/plugin-json'
 import image from 'rollup-plugin-img'
-import commonjs from 'rollup-plugin-commonjs'
 import typescript from 'rollup-plugin-typescript2'
 
 import {
@@ -25,7 +24,7 @@ export default {
   input: 'src/onboard.ts',
   output: [
     {
-      format: 'es',
+      format: 'esm',
       dir: 'dist/esm/'
     },
     { format: 'cjs', dir: 'dist/cjs/' }
@@ -42,7 +41,6 @@ export default {
         importee === 'svelte' || importee.startsWith('svelte/'),
       preferBuiltins: true
     }),
-    commonjs(),
     typescript({
       clean: true,
       useTsconfigDeclarationDir: true
@@ -68,6 +66,8 @@ export default {
     'util',
     'assert',
     'buffer',
-    'stream'
+    'stream',
+    'web3-provider-engine/subproviders/hooked-wallet',
+    'web3-provider-engine/subproviders/rpc'
   ]
 }

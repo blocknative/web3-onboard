@@ -6,6 +6,15 @@ import {
 } from '../../../interfaces'
 import ledgerIcon from '../wallet-icons/icon-ledger'
 
+import Web3ProviderEngine from 'web3-provider-engine'
+import RpcSource from 'web3-provider-engine/subproviders/rpc'
+import HookedWalletSubprovider from 'web3-provider-engine/subproviders/hooked-wallet'
+import TransportU2F from '@ledgerhq/hw-transport-u2f'
+import Eth from '@ledgerhq/hw-app-eth'
+import { Transaction } from 'ethereumjs-tx'
+
+const EthereumTx = Transaction
+
 function ledger(options: LedgerOptions & CommonWalletOptions): WalletModule {
   const { rpcUrl, networkId, preferred, label, iconSrc, svg } = options
 
@@ -64,19 +73,6 @@ async function ledgerProvider(options: {
   BigNumber: any
   networkName: (id: number) => string
 }) {
-  const Web3ProviderEngine = (await import('web3-provider-engine')).default
-  const RpcSource = (await import('web3-provider-engine/subproviders/rpc'))
-    .default
-
-  const HookedWalletSubprovider = (
-    await import('web3-provider-engine/subproviders/hooked-wallet')
-  ).default
-
-  const TransportU2F = (await import('@ledgerhq/hw-transport-u2f')).default
-  const Eth = (await import('@ledgerhq/hw-app-eth')).default
-
-  const EthereumTx = (await import('ethereumjs-tx')).Transaction
-
   const { networkId, rpcUrl, BigNumber, networkName } = options
   const basePath = networkIdToDerivationPath(networkId)
 
