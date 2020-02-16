@@ -85,18 +85,6 @@ async function trezorProvider(options: {
   BigNumber: any
   networkName: (id: number) => string
 }) {
-  // const Web3ProviderEngine = (await import('web3-provider-engine')).default
-  // const RpcSource = (await import('web3-provider-engine/subproviders/rpc'))
-  //   .default
-
-  // const HookedWalletSubprovider = (
-  //   await import('web3-provider-engine/subproviders/hooked-wallet')
-  // ).default
-
-  // const TrezorConnectLibrary = await import('trezor-connect')
-  // const { default: TrezorConnect, DEVICE_EVENT, DEVICE } = TrezorConnectLibrary
-  // const EthereumTx = (await import('ethereumjs-tx')).Transaction
-
   const { networkId, email, appUrl, rpcUrl, BigNumber, networkName } = options
   const basePath = networkIdToDerivationPath(networkId)
 
