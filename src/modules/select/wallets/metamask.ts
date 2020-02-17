@@ -43,6 +43,7 @@ function metamask(
     link: 'https://metamask.io/',
     installMessage: extensionInstallMessage,
     desktop: true,
+    mobile: true,
     preferred
   }
 }
