@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { fade } from 'svelte/transition'
   import Button from '../elements/Button.svelte'
   import IconButton from '../elements/IconButton.svelte'
   import { WalletSelectModalData, WalletModule } from '../interfaces'
@@ -57,8 +56,8 @@
 </style>
 
 <ul class="bn-onboard-custom bn-onboard-modal-select-wallets">
-  {#each modalData.primaryWallets as wallet}
-    <li in:fade>
+  {#each modalData.primaryWallets as wallet, i (wallet.name)}
+    <li>
       <IconButton
         onclick={() => handleWalletSelect(wallet)}
         iconSrc={wallet.iconSrc}
@@ -78,8 +77,8 @@
   {/if}
 
   {#if showingAllWalletModules}
-    {#each modalData.secondaryWallets as wallet}
-      <li in:fade>
+    {#each modalData.secondaryWallets as wallet, i (wallet.name)}
+      <li>
         <IconButton
           onclick={() => handleWalletSelect(wallet)}
           iconSrc={wallet.iconSrc}
