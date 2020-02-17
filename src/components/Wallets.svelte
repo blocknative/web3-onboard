@@ -17,10 +17,7 @@
     align-items: center;
     list-style-type: none;
     margin: 1.25em 0;
-    max-height: 66vh;
-    overflow-y: scroll;
     padding: 0;
-    scrollbar-width: none;
     font-family: inherit;
     font-size: inherit;
     line-height: 1.15;
@@ -50,7 +47,8 @@
     }
 
     ul {
-      scrollbar-width: unset;
+      max-height: 66vh;
+      overflow-y: scroll;
     }
   }
 </style>
