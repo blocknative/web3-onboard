@@ -91,13 +91,6 @@
 
       app.update(store => ({ ...store, autoSelectWallet: '' }))
 
-      modalData = {
-        heading,
-        description,
-        primaryWallets,
-        secondaryWallets
-      }
-
       if (module) {
         handleWalletSelect(module)
       }
