@@ -58,7 +58,6 @@ export default {
     '@toruslabs/torus-embed',
     'lodash.debounce',
     'regenerator-runtime/runtime',
-    'web3-provider-engine',
     'trezor-connect',
     'ethereumjs-tx',
     '@ledgerhq/hw-transport-u2f',
@@ -67,7 +66,10 @@ export default {
     'assert',
     'buffer',
     'stream',
+    'web3-provider-engine',
     'web3-provider-engine/subproviders/hooked-wallet',
-    'web3-provider-engine/subproviders/rpc'
+    'web3-provider-engine/subproviders/rpc',
+    'web3-provider-engine/subproviders/subscriptions',
+    'web3-provider-engine/subproviders/filters'
   ]
 }

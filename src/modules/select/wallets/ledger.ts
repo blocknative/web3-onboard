@@ -6,9 +6,8 @@ import {
 } from '../../../interfaces'
 import ledgerIcon from '../wallet-icons/icon-ledger'
 
-import Web3ProviderEngine from 'web3-provider-engine'
-import RpcSource from 'web3-provider-engine/subproviders/rpc'
-import HookedWalletSubprovider from 'web3-provider-engine/subproviders/hooked-wallet'
+import createProvider from './providerEngine'
+
 import TransportU2F from '@ledgerhq/hw-transport-u2f'
 import Eth from '@ledgerhq/hw-app-eth'
 import { Transaction } from 'ethereumjs-tx'
@@ -81,7 +80,7 @@ async function ledgerProvider(options: {
 
   let enabled: boolean = false
 
-  const ledgerSubProvider = new HookedWalletSubprovider({
+  const provider = createProvider({
     getAccounts: (callback: any) => {
       getAccounts()
         .then((res: Array<any>) => callback(null, res))
@@ -91,15 +90,11 @@ async function ledgerProvider(options: {
       signTransaction(transactionData)
         .then((res: string) => callback(null, res))
         .catch(err => callback(err, null))
-    }
+    },
+    rpcUrl
   })
 
-  const rpcSubProvider = new RpcSource({
-    rpcUrl: rpcUrl.includes('http') ? rpcUrl : `https://${rpcUrl}`
-  })
-  const provider = new Web3ProviderEngine()
-
-  provider.on('error', (err: any) => {})
+  provider.on('error', (err: any) => console.log('provider error', err))
 
   provider.getPrimaryAddress = getPrimaryAddress
   provider.getAllAccountsAndBalances = getAllAccountsAndBalances
@@ -107,10 +102,7 @@ async function ledgerProvider(options: {
   provider.on = on
   provider.setPrimaryAccount = setPrimaryAccount
   provider.getBalance = getBalance
-
-  provider.addProvider(ledgerSubProvider)
-  provider.addProvider(rpcSubProvider)
-  provider.start()
+  provider.send = provider.sendAsync
 
   function enable() {
     enabled = true

@@ -6,11 +6,10 @@ import {
 } from '../../../interfaces'
 import trezorIcon from '../wallet-icons/icon-trezor'
 
-import Web3ProviderEngine from 'web3-provider-engine'
-import RpcSource from 'web3-provider-engine/subproviders/rpc'
-import HookedWalletSubprovider from 'web3-provider-engine/subproviders/hooked-wallet'
+import createProvider from './providerEngine'
+
 import * as TrezorConnectLibrary from 'trezor-connect'
-import EthereumTx from 'ethereumjs-tx'
+import * as EthereumTx from 'ethereumjs-tx'
 
 const { default: TrezorConnect, DEVICE_EVENT, DEVICE } = TrezorConnectLibrary
 
@@ -105,7 +104,7 @@ async function trezorProvider(options: {
     }
   })
 
-  const trezorSubProvider = new HookedWalletSubprovider({
+  const provider = createProvider({
     getAccounts: (callback: any) => {
       getAccounts()
         .then((res: Array<string>) => callback(null, res))
@@ -115,15 +114,11 @@ async function trezorProvider(options: {
       signTransaction(transactionData)
         .then((res: string) => callback(null, res))
         .catch(err => callback(err, null))
-    }
+    },
+    rpcUrl
   })
 
-  const rpcSubProvider = new RpcSource({
-    rpcUrl: rpcUrl.includes('http') ? rpcUrl : `https://${rpcUrl}`
-  })
-  const provider = new Web3ProviderEngine()
-
-  provider.on('error', (err: any) => {})
+  provider.on('error', (err: any) => console.log('provider error', err))
 
   provider.getPrimaryAddress = getPrimaryAddress
   provider.getAllAccountsAndBalances = getAllAccountsAndBalances
@@ -131,10 +126,7 @@ async function trezorProvider(options: {
   provider.on = on
   provider.setPrimaryAccount = setPrimaryAccount
   provider.getBalance = getBalance
-
-  provider.addProvider(trezorSubProvider)
-  provider.addProvider(rpcSubProvider)
-  provider.start()
+  provider.send = provider.sendAsync
 
   function enable() {
     enabled = true
@@ -284,7 +276,7 @@ async function trezorProvider(options: {
   async function signTransaction(transactionData: any) {
     const path = [...addressToPath.values()][0]
 
-    const transaction = new EthereumTx(transactionData, {
+    const transaction = new EthereumTx.Transaction(transactionData, {
       chain: networkName(networkId)
     })
     const trezorResult = await trezorSignTransaction(path, transactionData)
