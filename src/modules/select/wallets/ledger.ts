@@ -92,8 +92,6 @@ async function ledgerProvider(options: {
   provider.send = provider.sendAsync
 
   function enable() {
-    const buff = buffer.Buffer.from('4')
-    console.log({ buff })
     enabled = true
     return getAccounts(1)
   }
