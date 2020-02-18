@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onDestroy } from 'svelte'
-  import { fade } from 'svelte/transition'
   import Button from '../elements/Button.svelte'
   import IconButton from '../elements/IconButton.svelte'
   import { wallet } from '../stores'
@@ -29,10 +28,7 @@
     align-items: center;
     list-style-type: none;
     margin: 1.25em 0;
-    max-height: 66vh;
-    overflow-y: scroll;
     padding: 0;
-    scrollbar-width: none;
     font-family: inherit;
     font-size: inherit;
     line-height: 1.15;
@@ -62,14 +58,15 @@
     }
 
     ul {
-      scrollbar-width: unset;
+      max-height: 66vh;
+      overflow-y: scroll;
     }
   }
 </style>
 
 <ul class="bn-onboard-custom bn-onboard-modal-select-wallets">
-  {#each modalData.primaryWallets as wallet}
-    <li in:fade>
+  {#each modalData.primaryWallets as wallet, i (wallet.name)}
+    <li>
       <IconButton
         onclick={() => handleWalletSelect(wallet)}
         iconSrc={wallet.iconSrc}
@@ -90,8 +87,8 @@
   {/if}
 
   {#if showingAllWalletModules}
-    {#each modalData.secondaryWallets as wallet}
-      <li in:fade>
+    {#each modalData.secondaryWallets as wallet, i (wallet.name)}
+      <li>
         <IconButton
           onclick={() => handleWalletSelect(wallet)}
           iconSrc={wallet.iconSrc}

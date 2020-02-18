@@ -67,6 +67,24 @@
         return !osExclusions.includes(os)
       })
 
+    if (deviceWallets.find(wallet => wallet.preferred)) {
+      // if preferred wallets, then split in to preferred and not preferred
+      primaryWallets = deviceWallets.filter(wallet => wallet.preferred)
+      secondaryWallets = deviceWallets.filter(wallet => !wallet.preferred)
+    } else {
+      // otherwise make the first 4 wallets preferred
+      primaryWallets = deviceWallets.slice(0, 4)
+      secondaryWallets =
+        deviceWallets.length > 4 ? deviceWallets.slice(4) : undefined
+    }
+
+    modalData = {
+      heading,
+      description,
+      primaryWallets,
+      secondaryWallets
+    }
+
     if (appState.autoSelectWallet) {
       const module = deviceWallets.find(
         (m: WalletModule) => m.name === appState.autoSelectWallet
@@ -74,24 +92,8 @@
 
       app.update(store => ({ ...store, autoSelectWallet: '' }))
 
-      module ? handleWalletSelect(module) : finish({ completed: false })
-    } else {
-      if (deviceWallets.find(wallet => wallet.preferred)) {
-        // if preferred wallets, then split in to preferred and not preferred
-        primaryWallets = deviceWallets.filter(wallet => wallet.preferred)
-        secondaryWallets = deviceWallets.filter(wallet => !wallet.preferred)
-      } else {
-        // otherwise make the first 4 wallets preferred
-        primaryWallets = deviceWallets.slice(0, 4)
-        secondaryWallets =
-          deviceWallets.length > 4 ? deviceWallets.slice(4) : undefined
-      }
-
-      modalData = {
-        heading,
-        description,
-        primaryWallets,
-        secondaryWallets
+      if (module) {
+        handleWalletSelect(module)
       }
     }
   }
