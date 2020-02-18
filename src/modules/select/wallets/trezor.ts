@@ -252,6 +252,7 @@ async function trezorProvider(options: {
     const transaction = new EthereumTx.Transaction(transactionData, {
       chain: networkName(networkId)
     })
+
     const trezorResult = await trezorSignTransaction(path, transactionData)
 
     if (!trezorResult.success) {

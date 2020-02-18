@@ -244,8 +244,7 @@ async function ledgerProvider(options: {
 
       return `0x${transaction.serialize().toString('hex')}`
     } catch (error) {
-      console.log({ error })
-      throw new Error('Error signing transaction')
+      throw error
     } finally {
       transport.close()
     }
