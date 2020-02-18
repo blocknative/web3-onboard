@@ -10,9 +10,7 @@ import createProvider from './providerEngine'
 
 import TransportU2F from '@ledgerhq/hw-transport-u2f'
 import Eth from '@ledgerhq/hw-app-eth'
-import { Transaction } from 'ethereumjs-tx'
-
-const EthereumTx = Transaction
+import * as EthereumTx from 'ethereumjs-tx'
 
 function ledger(options: LedgerOptions & CommonWalletOptions): WalletModule {
   const { rpcUrl, networkId, preferred, label, iconSrc, svg } = options
@@ -252,7 +250,7 @@ async function ledgerProvider(options: {
     }
 
     try {
-      const transaction = new EthereumTx(transactionData, {
+      const transaction = new EthereumTx.Transaction(transactionData, {
         chain: networkName(networkId)
       })
 
