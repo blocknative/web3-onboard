@@ -229,9 +229,9 @@ async function ledgerProvider(options: {
         chain: networkName(networkId)
       })
 
-      transaction.raw[6] = Buffer.from([networkId]) // v
-      transaction.raw[7] = Buffer.from([]) // r
-      transaction.raw[8] = Buffer.from([]) // s
+      transaction.raw[6] = buffer.Buffer.from([networkId]) // v
+      transaction.raw[7] = buffer.Buffer.from([]) // r
+      transaction.raw[8] = buffer.Buffer.from([]) // s
 
       const ledgerResult = await eth.signTransaction(
         path,
@@ -244,6 +244,7 @@ async function ledgerProvider(options: {
 
       return `0x${transaction.serialize().toString('hex')}`
     } catch (error) {
+      console.log({ error })
       throw new Error('Error signing transaction')
     } finally {
       transport.close()
