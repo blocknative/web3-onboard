@@ -48,23 +48,15 @@ function trezor(options: TrezorOptions & CommonWalletOptions): WalletModule {
           connect: provider.enable,
           disconnect: () => provider.stop(),
           address: {
-            onChange: async func => {
-              const address = await provider.getPrimaryAddress()
-              func(address)
-              provider.on('accountsChanged', (accounts: Array<string>) =>
-                func(accounts[0])
-              )
-            }
+            get: async () => provider.getPrimaryAddress()
           },
           network: {
-            onChange: func => {
-              func(networkId)
-            }
+            get: async () => networkId
           },
           balance: {
             get: async () => {
-              const address = await provider.getPrimaryAddress()
-              return provider.getBalance(address)
+              const address = provider.getPrimaryAddress()
+              return address && provider.getBalance(address)
             }
           }
         }
@@ -88,8 +80,6 @@ async function trezorProvider(options: {
   const basePath = networkIdToDerivationPath(networkId)
 
   let addressToPath = new Map()
-  let listeners = new Map()
-
   let enabled: boolean = false
 
   TrezorConnect.manifest({
@@ -99,8 +89,8 @@ async function trezorProvider(options: {
 
   TrezorConnect.on(DEVICE_EVENT, (event: any) => {
     if (event.type === DEVICE.DISCONNECT) {
-      const listener = listeners.get('accountsChanged')
-      listener && listener([undefined])
+      enabled = false
+      addressToPath = new Map()
     }
   })
 
@@ -118,12 +108,9 @@ async function trezorProvider(options: {
     rpcUrl
   })
 
-  provider.on('error', (err: any) => console.log('provider error', err))
-
   provider.getPrimaryAddress = getPrimaryAddress
   provider.getAllAccountsAndBalances = getAllAccountsAndBalances
   provider.enable = enable
-  provider.on = on
   provider.setPrimaryAccount = setPrimaryAccount
   provider.getBalance = getBalance
   provider.send = provider.sendAsync
@@ -133,19 +120,12 @@ async function trezorProvider(options: {
     return getAccounts(1)
   }
 
-  function on(
-    event: 'accountsChanged',
-    callback: (accounts: Array<string>) => void
-  ) {
-    listeners.set(event, callback)
-  }
-
   function addresses() {
     return Array.from(addressToPath.keys())
   }
 
   function getPrimaryAddress() {
-    return addresses()[0]
+    return enabled ? addresses()[0] : undefined
   }
 
   async function getAllAccountsAndBalances(amountToGet: number = 10) {
@@ -171,10 +151,6 @@ async function trezorProvider(options: {
     accounts.unshift(accounts.splice(accountIndex, 1)[0])
     // reassign addressToPath to new ordered accounts
     addressToPath = new Map(accounts)
-
-    // let listeners know of change
-    const listener = listeners.get('accountsChanged')
-    listener && listener(addresses())
   }
 
   async function getAccounts(accountsToGet: number = 10, getMore?: boolean) {
@@ -227,9 +203,6 @@ async function trezorProvider(options: {
     }
 
     const allAddresses = addresses()
-
-    const listener = listeners.get('accountsChanged')
-    listener && listener(allAddresses)
 
     return allAddresses
   }

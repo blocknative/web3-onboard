@@ -12,6 +12,8 @@ import TransportU2F from '@ledgerhq/hw-transport-u2f'
 import Eth from '@ledgerhq/hw-app-eth'
 import * as EthereumTx from 'ethereumjs-tx'
 
+import buffer from 'buffer'
+
 function ledger(options: LedgerOptions & CommonWalletOptions): WalletModule {
   const { rpcUrl, networkId, preferred, label, iconSrc, svg } = options
 
@@ -36,23 +38,15 @@ function ledger(options: LedgerOptions & CommonWalletOptions): WalletModule {
           connect: provider.enable,
           disconnect: () => provider.stop(),
           address: {
-            onChange: async func => {
-              const address = await provider.getPrimaryAddress()
-              func(address)
-              provider.on('accountsChanged', (accounts: Array<string>) =>
-                func(accounts[0])
-              )
-            }
+            get: async () => provider.getPrimaryAddress()
           },
           network: {
-            onChange: func => {
-              func(networkId)
-            }
+            get: async () => networkId
           },
           balance: {
             get: async () => {
-              const address = await provider.getPrimaryAddress()
-              return provider.getBalance(address)
+              const address = provider.getPrimaryAddress()
+              return address && provider.getBalance(address)
             }
           }
         }
@@ -74,8 +68,6 @@ async function ledgerProvider(options: {
   const basePath = networkIdToDerivationPath(networkId)
 
   let addressToPath = new Map()
-  let listeners = new Map()
-
   let enabled: boolean = false
 
   const provider = createProvider({
@@ -92,26 +84,18 @@ async function ledgerProvider(options: {
     rpcUrl
   })
 
-  provider.on('error', (err: any) => console.log('provider error', err))
-
   provider.getPrimaryAddress = getPrimaryAddress
   provider.getAllAccountsAndBalances = getAllAccountsAndBalances
   provider.enable = enable
-  provider.on = on
   provider.setPrimaryAccount = setPrimaryAccount
   provider.getBalance = getBalance
   provider.send = provider.sendAsync
 
   function enable() {
+    const buff = buffer.Buffer.from('4')
+    console.log({ buff })
     enabled = true
     return getAccounts(1)
-  }
-
-  function on(
-    event: 'accountsChanged',
-    callback: (accounts: Array<string>) => void
-  ) {
-    listeners.set(event, callback)
   }
 
   function addresses() {
@@ -119,7 +103,7 @@ async function ledgerProvider(options: {
   }
 
   function getPrimaryAddress() {
-    return addresses()[0]
+    return enabled ? addresses()[0] : undefined
   }
 
   async function getAllAccountsAndBalances(amountToGet: number = 5) {
@@ -145,10 +129,6 @@ async function ledgerProvider(options: {
     accounts.unshift(accounts.splice(accountIndex, 1)[0])
     // reassign addressToPath to new ordered accounts
     addressToPath = new Map(accounts)
-
-    // let listeners know of change
-    const listener = listeners.get('accountsChanged')
-    listener && listener(addresses())
   }
 
   function getAccounts(
@@ -206,9 +186,6 @@ async function ledgerProvider(options: {
 
       const allAddresses = addresses()
 
-      const listener = listeners.get('accountsChanged')
-      listener && listener(allAddresses)
-
       transport.close()
 
       resolve(allAddresses)
@@ -263,9 +240,9 @@ async function ledgerProvider(options: {
         transaction.serialize().toString('hex')
       )
 
-      transaction.v = Buffer.from(ledgerResult.v, 'hex')
-      transaction.r = Buffer.from(ledgerResult.r, 'hex')
-      transaction.s = Buffer.from(ledgerResult.s, 'hex')
+      transaction.v = buffer.Buffer.from(ledgerResult.v, 'hex')
+      transaction.r = buffer.Buffer.from(ledgerResult.r, 'hex')
+      transaction.s = buffer.Buffer.from(ledgerResult.s, 'hex')
 
       return `0x${transaction.serialize().toString('hex')}`
     } catch (error) {
