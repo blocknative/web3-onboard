@@ -50,6 +50,7 @@ function squarelink(
 
                 provider.sendAsync(
                   {
+                    jsonrpc: '2.0',
                     method: 'eth_getBalance',
                     params: [instance.accounts[0], 'latest'],
                     id: 1
