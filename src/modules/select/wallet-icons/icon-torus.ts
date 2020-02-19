@@ -1,4 +1,4 @@
-const torusIcon = `<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="500px" height="500px" viewBox="0 0 500 500" enable-background="new 0 0 500 500" xml:space="preserve">  <image id="image0" width="500" height="500" x="0" y="0"
+const torusIcon = `<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 500 500" enable-background="new 0 0 500 500" xml:space="preserve">  <image id="image0" width="500" height="500" x="0" y="0"
     href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAAH0CAMAAAD8CC+4AAAMQWlDQ1BpY2MAAEiJlVcHVFPJGp5b
 UklogQhICb2JUqRLCaFFEJAq2AhJIKHEmBBE7MiigmsXEVBXdFXERdcCiB11rYtidy0PRVSUdbFg
 Q+VNCui655139s+Zud/955/vL5l77wwAOjU8qTQX1QUgT5Ivi48IYU1ITWOROgECfxRgBax5fLmU
