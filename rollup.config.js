@@ -1,7 +1,7 @@
 import svelte from 'rollup-plugin-svelte'
-import resolve from 'rollup-plugin-node-resolve'
+import resolve from '@rollup/plugin-node-resolve'
 import json from '@rollup/plugin-json'
-import image from 'rollup-plugin-img'
+import image from '@rollup/plugin-image'
 import typescript from 'rollup-plugin-typescript2'
 
 import {
