@@ -1,16 +1,9 @@
 import { mobileWalletInstallMessage } from '../content'
-import { WalletModule, Helpers } from '../../../interfaces'
+import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
 
 import trustIcon from '../wallet-icons/icon-trust'
 
-function trust(
-  options: {
-    preferred?: boolean
-    label?: string
-    iconSrc?: string
-    svg?: string
-  } = {}
-): WalletModule {
+function trust(options: CommonWalletOptions): WalletModule {
   const { preferred, label, iconSrc, svg } = options
 
   return {
@@ -30,6 +23,7 @@ function trust(
             : null
       }
     },
+    type: 'injected',
     link: `https://links.trustwalletapp.com/a/key_live_lfvIpVeI9TFWxPCqwU8rZnogFqhnzs4D?&event=openURL&url=${window.location.href}`,
     installMessage: mobileWalletInstallMessage,
     mobile: true,

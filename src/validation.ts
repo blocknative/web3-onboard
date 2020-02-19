@@ -357,13 +357,13 @@ export function validateModal(modal: WalletCheckModal): never | void {
     eventCode,
     action,
     icon,
-    loading,
+    html,
     ...otherParams
   } = modal
 
   invalidParams(
     otherParams,
-    ['heading', 'description', 'button', 'eventCode', 'action', 'icon'],
+    ['heading', 'description', 'button', 'eventCode', 'action', 'icon', 'html'],
     'modal'
   )
 
@@ -378,16 +378,16 @@ export function validateModal(modal: WalletCheckModal): never | void {
   })
 
   validateType({
-    name: 'loading',
-    value: loading,
+    name: 'button',
+    value: button,
     type: 'object',
     optional: true
   })
 
   validateType({
-    name: 'button',
-    value: button,
-    type: 'object',
+    name: 'html',
+    value: html,
+    type: 'string',
     optional: true
   })
 
@@ -524,6 +524,9 @@ export function validateWalletInit(
     label,
     iconSrc,
     svg,
+    appUrl,
+    email,
+    rpcUrl,
     buildEnv,
     buttonPosition,
     enableLogging,
@@ -544,6 +547,9 @@ export function validateWalletInit(
       'label',
       'iconSrc',
       'svg',
+      'appUrl',
+      'email',
+      'rpcUrl',
       'buildEnv',
       'buttonPosition',
       'enableLogging',
@@ -593,48 +599,79 @@ export function validateWalletInit(
     type: 'string',
     optional: true
   })
+
   validateType({
     name: 'walletInit.iconSrc',
     value: iconSrc,
     type: 'string',
     optional: true
   })
+
   validateType({
     name: 'walletInit.svg',
     value: svg,
     type: 'string',
     optional: true
   })
+
   validateType({
-    name: 'walletInit.buildEnv',
-    value: buildEnv,
+    name: 'walletInit.appUrl',
+    value: appUrl,
+
     type: 'string',
     optional: true
   })
+
   validateType({
-    name: 'walletInit.buttonPosition',
-    value: buttonPosition,
+    name: 'walletInit.email',
+    value: email,
+
     type: 'string',
     optional: true
   })
+
+  validateType({
+    name: 'walletInit.rpcUrl',
+    value: rpcUrl,
+    type: 'string',
+    optional: true
+  })
+
   validateType({
     name: 'walletInit.enableLogging',
     value: enableLogging,
     type: 'boolean',
     optional: true
   })
+
   validateType({
     name: 'walletInit.loginMethod',
     value: loginMethod,
     type: 'string',
     optional: true
   })
+
   validateType({
     name: 'walletInit.showTorusButton',
     value: showTorusButton,
     type: 'boolean',
     optional: true
   })
+
+  validateType({
+    name: 'walletInit.buttonPosition',
+    value: buttonPosition,
+    type: 'string',
+    optional: true
+  })
+
+  validateType({
+    name: 'walletInit.buildEnv',
+    value: buildEnv,
+    type: 'string',
+    optional: true
+  })
+
   validateType({
     name: 'walletInit.disableNotifications',
     value: disableNotifications,

@@ -86,6 +86,7 @@ function walletConnect(
         }
       }
     },
+    type: 'sdk',
     desktop: true,
     preferred
   }

@@ -1,5 +1,5 @@
 const sqlkIcon = `
-  <svg width="88px" height="88px" viewBox="0 0 88 88" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <svg width="40px" height="40px" viewBox="0 0 88 88" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <g id="Identity" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
       <g id="Artboard" transform="translate(-11.000000, -220.000000)">
           <g id="Group" transform="translate(11.508925, 220.556971)">

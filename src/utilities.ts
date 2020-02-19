@@ -7,6 +7,7 @@ export function getNetwork(provider: any): Promise<number | any> {
   return new Promise((resolve, reject) => {
     provider.sendAsync(
       {
+        jsonrpc: '2.0',
         method: 'net_version',
         params: [],
         id: 42
@@ -24,6 +25,7 @@ export function getAddress(provider: any): Promise<string | any> {
   return new Promise((resolve, reject) => {
     provider.sendAsync(
       {
+        jsonrpc: '2.0',
         method: 'eth_accounts',
         params: [],
         id: 42
@@ -48,6 +50,7 @@ export function getBalance(provider: any): Promise<string | any> {
 
     provider.sendAsync(
       {
+        jsonrpc: '2.0',
         method: 'eth_getBalance',
         params: [currentAddress, 'latest'],
         id: 42

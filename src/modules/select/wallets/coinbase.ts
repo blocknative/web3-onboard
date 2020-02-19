@@ -1,14 +1,7 @@
 import { mobileWalletInstallMessage } from '../content'
 import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
 
-function coinbase(
-  options: {
-    preferred?: boolean
-    label?: string
-    iconSrc?: string
-    svg?: string
-  } = {}
-): WalletModule {
+function coinbase(options: CommonWalletOptions): WalletModule {
   const { preferred, label, iconSrc, svg } = options
 
   return {
@@ -30,6 +23,7 @@ function coinbase(
             : null
       }
     },
+    type: 'injected',
     link: 'https://go.cb-w.com/',
     installMessage: mobileWalletInstallMessage,
     mobile: true,

@@ -77,6 +77,10 @@ function getModule(name: string): Promise<any> | undefined {
       return import('./wallets/torus')
     case 'status':
       return import('./wallets/status')
+    case 'trezor':
+      return import('./wallets/trezor')
+    case 'ledger':
+      return import('./wallets/ledger')
     default:
       return
   }

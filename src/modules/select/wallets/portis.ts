@@ -51,6 +51,7 @@ function portis(options: SdkWalletOptions & CommonWalletOptions): WalletModule {
 
                   provider.sendAsync(
                     {
+                      jsonrpc: '2.0',
                       method: 'eth_getBalance',
                       params: [provider.address, 'latest'],
                       id: 1
@@ -65,6 +66,7 @@ function portis(options: SdkWalletOptions & CommonWalletOptions): WalletModule {
         }
       }
     },
+    type: 'sdk',
     desktop: true,
     mobile: true,
     url: 'https://wallet.portis.io/',

@@ -5,7 +5,13 @@
   import BigNumber from 'bignumber.js'
 
   import { getBlocknative } from '../services'
-  import { app, state, balanceSyncStatus, walletInterface } from '../stores'
+  import {
+    app,
+    state,
+    balanceSyncStatus,
+    walletInterface,
+    wallet
+  } from '../stores'
   import { validateModal, validateWalletCheckModule } from '../validation'
   import { isPromise } from '../utilities'
 
@@ -35,18 +41,16 @@
   let actionResolved: boolean | undefined = undefined
   let loading: boolean = false
   let loadingModal: boolean = false
-  let stopChecking: boolean = false
 
   const unsubscribe = walletInterface.subscribe(currentInterface => {
     if (currentInterface === null) {
-      stopChecking = true
       handleExit()
       unsubscribe()
     }
   })
 
   // recheck modules if below conditions
-  $: if (!activeModal && !checkingModule && !stopChecking) {
+  $: if (!activeModal && !checkingModule) {
     renderModule()
   }
 
@@ -58,6 +62,25 @@
       modules.forEach(validateWalletCheckModule)
     }
 
+    const currentWallet = get(wallet).name
+
+    // check if the current wallet is ledger
+    if (currentWallet === 'Ledger') {
+      // if loadingAccounts module isn't already loaded, then load it
+      if (!modules.find(module => module.id === 'loadingAccounts')) {
+        // import the loading accounts module
+        const { default: loadingAccountsModule } = await import(
+          '../modules/check/loading-accounts'
+        )
+
+        // initialize the loading accounts module and put at the front of the modules array
+        modules.unshift(loadingAccountsModule())
+      }
+    } else {
+      // not a ledger wallet, so make sure loadingAccounts module is not in array
+      modules = modules.filter(m => m.id !== 'loadingAccounts')
+    }
+
     // loop through and run each module to check if a modal needs to be shown
     runModules(modules).then(
       (result: {
@@ -66,18 +89,13 @@
       }) => {
         // no result then user has passed all conditions
         if (!result.modal) {
-          app.update(store => ({
-            ...store,
-            walletCheckInProgress: false,
-            walletCheckCompleted: true
-          }))
-
           blocknative.event({
             categoryCode: 'onboard',
             eventCode: 'onboardingCompleted'
           })
 
-          checkingModule = false
+          handleExit(true)
+
           return
         }
 
@@ -95,22 +113,19 @@
           doAction()
         }
 
-        if (activeModal.loading) {
-          loading = true
-          activeModal.loading.then(() => (loading = false))
-        }
-
         // poll to automatically to check if condition has been met
         pollingInterval = setInterval(async () => {
-          if (currentModule && !stopChecking) {
-            const invalid = await invalidState(currentModule, get(state))
-            if (!invalid && actionResolved !== false) {
+          if (currentModule) {
+            const result = await invalidState(currentModule, get(state))
+            if (!result && actionResolved !== false) {
               resetState()
 
               // delayed for animations
               setTimeout(() => {
                 checkingModule = false
               }, 250)
+            } else {
+              activeModal = result && result.modal ? result.modal : activeModal
             }
           }
         }, 500)
@@ -120,23 +135,29 @@
 
   function doAction() {
     actionResolved = false
+    loading = true
 
     activeModal &&
       activeModal.action &&
       activeModal
         .action()
-        .then(() => (actionResolved = true))
+        .then(() => {
+          actionResolved = true
+          loading = false
+        })
         .catch((err: { message: string }) => {
           errorMsg = err.message
+          loading = false
         })
   }
 
-  function handleExit() {
+  function handleExit(completed?: boolean) {
     resetState()
     app.update((store: AppState) => ({
       ...store,
       walletCheckInProgress: false,
-      walletCheckCompleted: false
+      walletCheckCompleted: completed ? completed : false,
+      accountSelectInProgress: false
     }))
   }
 
@@ -190,7 +211,8 @@
       ...state,
       BigNumber,
       walletSelect,
-      exit: handleExit
+      exit: handleExit,
+      wallet: get(wallet)
     })
 
     if (result) {
@@ -246,6 +268,13 @@
     display: flex;
     justify-content: space-between;
   }
+
+  section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
 </style>
 
 {#if loadingModal}
@@ -255,7 +284,7 @@
 {/if}
 
 {#if activeModal}
-  <Modal closeModal={handleExit}>
+  <Modal closeModal={() => handleExit()}>
     <ModalHeader icon={activeModal.icon} heading={activeModal.heading} />
     <p class="bn-onboard-custom bn-onboard-prepare-description">
       {@html activeModal.description}
@@ -268,6 +297,13 @@
         {errorMsg}
       </span>
     {/if}
+
+    {#if activeModal.html}
+      <section>
+        {@html activeModal.html}
+      </section>
+    {/if}
+
     <div class="bn-onboard-custom bn-onboard-prepare-button-container">
       {#if activeModal.button}
         <Button onclick={activeModal.button.onclick}>
@@ -282,7 +318,7 @@
       {#if loading}
         <Spinner />
       {/if}
-      <Button onclick={handleExit}>Dismiss</Button>
+      <Button onclick={() => handleExit(false)}>Dismiss</Button>
     </div>
   </Modal>
 {/if}

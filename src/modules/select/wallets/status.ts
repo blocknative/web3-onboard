@@ -1,16 +1,9 @@
 import { extensionInstallMessage } from '../content'
-import { WalletModule, Helpers } from '../../../interfaces'
+import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
 
 import statusIcon from '../wallet-icons/icon-status'
 
-function status(
-  options: {
-    preferred?: boolean
-    label?: string
-    iconSrc?: string
-    svg?: string
-  } = {}
-): WalletModule {
+function status(options: CommonWalletOptions): WalletModule {
   const { preferred, label, iconSrc, svg } = options
 
   return {
@@ -31,6 +24,7 @@ function status(
             : null
       }
     },
+    type: 'injected',
     link: 'https://status.im/',
     installMessage: extensionInstallMessage,
     mobile: true,

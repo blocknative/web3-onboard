@@ -54,6 +54,7 @@ function fortmatic(
         }
       }
     },
+    type: 'sdk',
     desktop: true,
     mobile: true,
     preferred

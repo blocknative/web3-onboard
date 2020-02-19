@@ -50,6 +50,7 @@ function squarelink(
 
                 provider.sendAsync(
                   {
+                    jsonrpc: '2.0',
                     method: 'eth_getBalance',
                     params: [instance.accounts[0], 'latest'],
                     id: 1
@@ -63,6 +64,7 @@ function squarelink(
         }
       }
     },
+    type: 'sdk',
     desktop: true,
     mobile: true,
     url: 'https://app.squarelink.com/',

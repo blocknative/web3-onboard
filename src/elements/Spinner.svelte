@@ -1,11 +1,11 @@
 <style>
-  .bn-onboard-loading {
+  :global(.bn-onboard-loading) {
     display: inline-block;
     position: relative;
     width: 2em;
     height: 2em;
   }
-  .bn-onboard-loading div {
+  :global(.bn-onboard-loading) :global(div) {
     box-sizing: border-box;
     font-size: inherit;
     display: block;
@@ -17,16 +17,16 @@
     animation: bn-onboard-loading 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
     border-color: currentColor transparent transparent transparent;
   }
-  .bn-onboard-loading div:nth-child(1) {
+  :global(.bn-onboard-loading) :global(.bn-onboard-loading-first) {
     animation-delay: -0.45s;
   }
-  .bn-onboard-loading div:nth-child(2) {
+  :global(.bn-onboard-loading) :global(.bn-onboard-loading-second) {
     animation-delay: -0.3s;
   }
-  .bn-onboard-loading div:nth-child(3) {
+  :global(.bn-onboard-loading) :global(.bn-onboard-loading-third) {
     animation-delay: -0.15s;
   }
-  @keyframes bn-onboard-loading {
+  @keyframes -global-bn-onboard-loading {
     0% {
       transform: rotate(0deg);
     }
@@ -37,8 +37,7 @@
 </style>
 
 <div class="bn-onboard-custom bn-onboard-loading">
-  <div />
-  <div />
-  <div />
-  <div />
+  <div class="bn-onboard-loading-first" />
+  <div class="bn-onboard-loading-second" />
+  <div class="bn-onboard-loading-third" />
 </div>

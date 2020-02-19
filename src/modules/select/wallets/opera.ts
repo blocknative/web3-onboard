@@ -1,17 +1,10 @@
 import { extensionInstallMessage } from '../content'
-import { WalletModule, Helpers } from '../../../interfaces'
+import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
 
 import operaIcon from '../wallet-icons/icon-opera.png'
 import operaIcon2x from '../wallet-icons/icon-opera@2x.png'
 
-function opera(
-  options: {
-    preferred?: boolean
-    label?: string
-    iconSrc?: string
-    svg?: string
-  } = {}
-): WalletModule {
+function opera(options: CommonWalletOptions): WalletModule {
   const { preferred, label, iconSrc, svg } = options
 
   return {
@@ -34,6 +27,7 @@ function opera(
             : null
       }
     },
+    type: 'injected',
     link: 'https://www.opera.com/',
     installMessage: extensionInstallMessage,
     desktop: true,

@@ -14,12 +14,14 @@ export default function initializeModules(
   walletSelect: WalletSelectModule | undefined,
   walletCheck: Array<WalletCheckModule | WalletCheckInit> | undefined
 ) {
+  const wallets = select(walletSelect && walletSelect.wallets, networkId)
+
   return {
     walletSelect: {
       heading: (walletSelect && walletSelect.heading) || defaultHeading,
       description:
         (walletSelect && walletSelect.description) || defaultDescription,
-      wallets: select(walletSelect && walletSelect.wallets, networkId)
+      wallets
     },
     walletCheck: check(walletCheck, networkId)
   }
