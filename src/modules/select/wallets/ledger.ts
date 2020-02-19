@@ -194,6 +194,7 @@ async function ledgerProvider(options: {
     return new Promise((resolve, reject) => {
       provider.sendAsync(
         {
+          jsonrpc: '2.0',
           method: 'eth_getBalance',
           params: [address, 'latest'],
           id: 42
