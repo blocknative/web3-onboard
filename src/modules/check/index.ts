@@ -3,13 +3,13 @@ import { WalletCheckModule, WalletCheckInit } from '../../interfaces'
 
 const defaultChecks = ['connect', 'network']
 
-function check(
+async function check(
   walletChecks: Array<WalletCheckInit | WalletCheckModule> | undefined,
   networkId: number
 ): Promise<WalletCheckModule[]> {
   if (walletChecks) {
-    return Promise.all(
-      walletChecks.map((checkOrModule: WalletCheckInit | WalletCheckModule) => {
+    const checks = walletChecks.map(
+      (checkOrModule: WalletCheckInit | WalletCheckModule) => {
         if (!isWalletCheckModule(checkOrModule)) {
           const { checkName, ...otherParams } = checkOrModule
           const module = getModule(checkName)
@@ -20,8 +20,10 @@ function check(
         }
 
         return Promise.resolve(checkOrModule)
-      })
+      }
     )
+
+    return Promise.all(checks)
   }
 
   return Promise.all(
@@ -40,6 +42,8 @@ function getModule(name: string): Promise<any> | never {
       return import('./network')
     case 'balance':
       return import('./balance')
+    case 'accounts':
+      return import('./accounts')
     default:
       throw new Error(`invalid module name: ${name}`)
   }

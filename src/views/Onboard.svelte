@@ -1,6 +1,7 @@
 <script lang="ts">
   import WalletSelect from './WalletSelect.svelte'
   import WalletCheck from './WalletCheck.svelte'
+  import accountSelect from '../modules/check/accounts'
   import { app } from '../stores'
 
   import {
@@ -41,4 +42,8 @@
 
 {#if $app.walletCheckInProgress}
   <WalletCheck modules={walletCheckModules} {walletSelect} />
+{/if}
+
+{#if $app.accountSelectInProgress}
+  <WalletCheck modules={[accountSelect()]} />
 {/if}

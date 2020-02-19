@@ -64,6 +64,7 @@ function squarelink(
         }
       }
     },
+    type: 'sdk',
     desktop: true,
     mobile: true,
     url: 'https://app.squarelink.com/',

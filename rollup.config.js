@@ -1,8 +1,7 @@
 import svelte from 'rollup-plugin-svelte'
-import resolve from 'rollup-plugin-node-resolve'
+import resolve from '@rollup/plugin-node-resolve'
 import json from '@rollup/plugin-json'
-import image from 'rollup-plugin-img'
-import commonjs from 'rollup-plugin-commonjs'
+import image from '@rollup/plugin-image'
 import typescript from 'rollup-plugin-typescript2'
 
 import {
@@ -25,7 +24,7 @@ export default {
   input: 'src/onboard.ts',
   output: [
     {
-      format: 'es',
+      format: 'esm',
       dir: 'dist/esm/'
     },
     { format: 'cjs', dir: 'dist/cjs/' }
@@ -39,9 +38,9 @@ export default {
     resolve({
       browser: true,
       dedupe: importee =>
-        importee === 'svelte' || importee.startsWith('svelte/')
+        importee === 'svelte' || importee.startsWith('svelte/'),
+      preferBuiltins: true
     }),
-    commonjs(),
     typescript({
       clean: true,
       useTsconfigDeclarationDir: true
@@ -58,6 +57,19 @@ export default {
     'authereum',
     '@toruslabs/torus-embed',
     'lodash.debounce',
-    'regenerator-runtime/runtime'
+    'regenerator-runtime/runtime',
+    'trezor-connect',
+    'ethereumjs-tx',
+    '@ledgerhq/hw-transport-u2f',
+    '@ledgerhq/hw-app-eth',
+    'util',
+    'assert',
+    'buffer',
+    'stream',
+    'web3-provider-engine',
+    'web3-provider-engine/subproviders/hooked-wallet',
+    'web3-provider-engine/subproviders/rpc',
+    'web3-provider-engine/subproviders/subscriptions',
+    'web3-provider-engine/subproviders/filters'
   ]
 }

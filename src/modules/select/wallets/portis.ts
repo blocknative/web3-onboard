@@ -66,6 +66,7 @@ function portis(options: SdkWalletOptions & CommonWalletOptions): WalletModule {
         }
       }
     },
+    type: 'sdk',
     desktop: true,
     mobile: true,
     url: 'https://wallet.portis.io/',

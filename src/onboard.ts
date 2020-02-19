@@ -151,6 +151,28 @@ function init(initialization: Initialization): API {
     resetWalletState()
   }
 
+  function accountSelect(): Promise<boolean> {
+    return new Promise(resolve => {
+      const { type } = get(wallet)
+      if (type !== 'hardware') {
+        resolve(false)
+      }
+
+      app.update((store: AppState) => ({
+        ...store,
+        accountSelectInProgress: true
+      }))
+
+      const appUnsubscribe = app.subscribe((store: AppState) => {
+        const { accountSelectInProgress } = store
+        if (accountSelectInProgress === false) {
+          appUnsubscribe()
+          setTimeout(() => resolve(true), 500)
+        }
+      })
+    })
+  }
+
   function config(options: ConfigOptions): void {
     validateConfig(options)
     app.update((store: AppState) => ({ ...store, ...options }))
@@ -160,7 +182,14 @@ function init(initialization: Initialization): API {
     return get(state)
   }
 
-  return { walletSelect, walletCheck, walletReset, config, getState }
+  return {
+    walletSelect,
+    walletCheck,
+    walletReset,
+    config,
+    getState,
+    accountSelect
+  }
 }
 
 export default init
