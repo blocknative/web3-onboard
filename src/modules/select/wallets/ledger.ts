@@ -158,7 +158,7 @@ async function ledgerProvider(options: {
           paths.push(ledgerLive, legacy)
         }
       } else {
-        paths.push(`${basePath}/0'/0`, `${basePath}/0'/0/0`)
+        paths.push(`${basePath}/0'/0`)
       }
 
       let transport
