@@ -1,4 +1,3 @@
-import Torus from '@toruslabs/torus-embed'
 import { networkName } from '../../../utilities'
 import {
   TorusOptions,
@@ -27,6 +26,7 @@ function torus(options: TorusOptions & CommonWalletOptions): WalletModule {
     svg: svg || torusIcon,
     iconSrc,
     wallet: async () => {
+      const { default: Torus } = await import('@toruslabs/torus-embed')
       const instance = new Torus({
         buttonPosition: buttonPosition // default: bottom-left
       })
