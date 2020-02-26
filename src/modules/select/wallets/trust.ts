@@ -3,7 +3,7 @@ import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
 
 import trustIcon from '../wallet-icons/icon-trust'
 
-function trust(options: CommonWalletOptions): WalletModule {
+function trust (options: CommonWalletOptions): WalletModule {
   const { preferred, label, iconSrc, svg } = options
 
   return {
@@ -24,7 +24,7 @@ function trust(options: CommonWalletOptions): WalletModule {
       }
     },
     type: 'injected',
-    link: `https://links.trustwalletapp.com/a/key_live_lfvIpVeI9TFWxPCqwU8rZnogFqhnzs4D?&event=openURL&url=${window.location.href}`,
+    link: `https://link.trustwallet.com/open_url?coin_id=60&url=${window.location.href}`,
     installMessage: mobileWalletInstallMessage,
     mobile: true,
     preferred
