@@ -5,14 +5,14 @@ type AccountsAndBalances = Array<{ balance: string; address: string }>
 function accountSelect(): WalletCheckModule | never {
   let completed: boolean = false
   let loadingAccounts: boolean = false
-  let accountsAndBalances: AccountsAndBalances
+  let accountsAndBalances: AccountsAndBalances = []
 
   return async (stateAndHelpers: StateAndHelpers) => {
     const { wallet, BigNumber, address, balance } = stateAndHelpers
     const { provider, type } = wallet
 
     if (type === 'hardware' && !completed) {
-      if (!accountsAndBalances && !loadingAccounts) {
+      if (accountsAndBalances.length <= 1 && !loadingAccounts) {
         accountsAndBalances = [{ address, balance }]
       }
 
