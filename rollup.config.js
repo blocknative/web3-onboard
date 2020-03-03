@@ -56,7 +56,6 @@ export default {
     'squarelink',
     'authereum',
     '@toruslabs/torus-embed',
-    'lodash.debounce',
     'regenerator-runtime/runtime',
     'trezor-connect',
     'ethereumjs-tx',
