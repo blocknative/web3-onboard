@@ -1,6 +1,5 @@
 import { getBlocknative } from './services'
 import { writable, derived, get } from 'svelte/store'
-import debounce from 'lodash.debounce'
 import { wait, makeCancelable } from './utilities'
 import { validateWalletInterface, validateType } from './validation'
 import {
@@ -255,31 +254,36 @@ function createBalanceStore(initialState: string | null): BalanceStore {
           if (emitterAddress !== $address) {
             const blocknative = getBlocknative()
 
+            // unsubscribe from previous address
+            if (emitterAddress) {
+              blocknative.unsubscribe(blocknative.clientIndex, emitterAddress)
+            }
+
             emitter = blocknative.account(blocknative.clientIndex, $address)
               .emitter
 
-            emitter.on(
-              'txConfirmed',
-              debounce(() => {
-                if (stateSyncer.get) {
-                  cancel = syncStateWithTimeout({
-                    getState: stateSyncer.get,
-                    setState: set,
-                    timeout: 2000,
-                    currentBalance: get(balance),
-                    pollStart: Date.now()
-                  })
-                }
+            emitter.on('txConfirmed', () => {
+              if (stateSyncer.get) {
+                cancel = syncStateWithTimeout({
+                  getState: stateSyncer.get,
+                  setState: set,
+                  timeout: 2000,
+                  currentBalance: get(balance),
+                  pollStart: Date.now()
+                })
+              }
 
-                return false
-              }, 500)
-            )
-
-            emitter.on('all', () => false)
+              return false
+            })
 
             emitterAddress = $address
           }
         } else if (emitterAddress && !$address) {
+          const blocknative = getBlocknative()
+
+          // unsubscribe from previous address
+          blocknative.unsubscribe(blocknative.clientIndex, emitterAddress)
+
           // no address, so set balance to undefined
           set && set(undefined)
           emitterAddress = undefined
