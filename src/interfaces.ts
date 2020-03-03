@@ -164,6 +164,12 @@ export interface AuthereumOptions {
   disableNotifications?: boolean
 }
 
+export interface WalletLinkOptions {
+  appName: string
+  appLogoUrl: string
+  rpcUrl: string
+}
+
 interface WalletName {
   walletName: string
 }
@@ -175,6 +181,7 @@ export type WalletInitOptions = CommonWalletOptions &
   TrezorOptions &
   AuthereumOptions &
   LedgerOptions &
+  WalletLinkOptions &
   WalletName
 
 export interface WalletCheckInit {
