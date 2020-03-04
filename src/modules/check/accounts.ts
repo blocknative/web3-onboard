@@ -1,13 +1,19 @@
-import { WalletCheckModule, StateAndHelpers } from '../../interfaces'
+import {
+  WalletCheckModule,
+  StateAndHelpers,
+  WalletCheckModal
+} from '../../interfaces'
 
 type AccountsAndBalances = Array<{ balance: string; address: string }>
 
-function accountSelect(): WalletCheckModule | never {
+function accountSelect(): WalletCheckModule {
   let completed: boolean = false
   let loadingAccounts: boolean = false
   let accountsAndBalances: AccountsAndBalances = []
 
-  return async (stateAndHelpers: StateAndHelpers) => {
+  return async (
+    stateAndHelpers: StateAndHelpers
+  ): Promise<WalletCheckModal | undefined> => {
     const { wallet, BigNumber, address, balance } = stateAndHelpers
     const { provider, type } = wallet
 
@@ -51,7 +57,7 @@ function accountSelect(): WalletCheckModule | never {
           <select id="account-select" onchange="window.accountSelect()" style="padding: 0.5rem;">
             ${accountsAndBalances.map(
               (account: { balance: string; address: string }) =>
-                `<option value="${account.address}">${account.address} --- ${
+                `<option>${account.address} --- ${
                   account.balance != null
                     ? new BigNumber(account.balance)
                         .div('1000000000000000000')

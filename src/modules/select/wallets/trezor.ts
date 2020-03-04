@@ -7,6 +7,7 @@ import {
 import trezorIcon from '../wallet-icons/icon-trezor'
 
 import createProvider from './providerEngine'
+import { generateAddresses } from './hd-wallet'
 
 import * as TrezorConnectLibrary from 'trezor-connect'
 import * as EthereumTx from 'ethereumjs-tx'
@@ -77,7 +78,8 @@ async function trezorProvider(options: {
   networkName: (id: number) => string
 }) {
   const { networkId, email, appUrl, rpcUrl, BigNumber, networkName } = options
-  const basePath = networkIdToDerivationPath(networkId)
+  // let dPath: string = `m/44'/60'/0'/0`
+  let dPath: string = ''
 
   let addressToPath = new Map()
   let enabled: boolean = false
@@ -97,8 +99,8 @@ async function trezorProvider(options: {
   const provider = createProvider({
     getAccounts: (callback: any) => {
       getAccounts()
-        .then((res: Array<string>) => callback(null, res))
-        .catch(err => callback(err, null))
+        .then((res: Array<string | undefined>) => callback(null, res))
+        .catch((err: any) => callback(err, null))
     },
     signTransaction: (transactionData: any, callback: any) => {
       signTransaction(transactionData)
@@ -110,14 +112,20 @@ async function trezorProvider(options: {
 
   provider.getPrimaryAddress = getPrimaryAddress
   provider.getAllAccountsAndBalances = getAllAccountsAndBalances
+  provider.setPath = setPath
+  provider.dPath = dPath
   provider.enable = enable
   provider.setPrimaryAccount = setPrimaryAccount
   provider.getBalance = getBalance
   provider.send = provider.sendAsync
 
+  function setPath(path: string) {
+    dPath = path
+  }
+
   function enable() {
     enabled = true
-    return getAccounts(1)
+    return getAccounts()
   }
 
   function addresses() {
@@ -128,8 +136,8 @@ async function trezorProvider(options: {
     return enabled ? addresses()[0] : undefined
   }
 
-  async function getAllAccountsAndBalances(amountToGet: number = 10) {
-    const accounts = await getAccounts(amountToGet, true)
+  async function getAllAccountsAndBalances() {
+    const accounts = await getAccounts()
     return Promise.all(
       accounts.map(
         address =>
@@ -153,58 +161,31 @@ async function trezorProvider(options: {
     addressToPath = new Map(accounts)
   }
 
-  async function getAccounts(accountsToGet: number = 10, getMore?: boolean) {
+  async function getAccounts() {
     if (!enabled) {
       return [undefined]
     }
 
-    const addressesAlreadyFetched = addressToPath.size
-    const bundle = []
-
-    if (addressesAlreadyFetched > 0 && !getMore) {
+    if (addressToPath.size > 0) {
       return addresses()
     }
 
-    for (
-      let i = addressesAlreadyFetched;
-      i < accountsToGet + addressesAlreadyFetched;
-      i++
-    ) {
-      const path = `${basePath}/${i}'/0/0`
-      bundle.push({ path, showOnTrezor: false })
-    }
+    const trezorAccount = await TrezorConnect.getPublicKey({
+      path: dPath,
+      coin: 'eth'
+    })
 
-    let data
+    const addressInfo = generateAddresses(
+      trezorAccount.payload.publicKey,
+      trezorAccount.payload.chainCode,
+      trezorAccount.payload.serializedPath
+    )
 
-    try {
-      data = await TrezorConnect.ethereumGetAddress({
-        bundle
-      })
-    } catch (error) {
-      enabled = false
-      throw new Error(data.payload.error)
-    }
+    addressInfo.forEach(({ dPath, address }) => {
+      addressToPath.set(address, dPath)
+    })
 
-    if (!data.success) {
-      enabled = false
-      throw new Error(data.payload.error)
-    }
-
-    if (Array.isArray(data.payload)) {
-      data.payload.forEach(
-        (addressData: { serializedPath: string; address: string }) => {
-          const { address, serializedPath } = addressData
-          addressToPath.set(address.toLowerCase(), serializedPath)
-        }
-      )
-    } else {
-      const { address, serializedPath } = data.payload
-      addressToPath.set(address.toLowerCase(), serializedPath)
-    }
-
-    const allAddresses = addresses()
-
-    return allAddresses
+    return addresses()
   }
 
   function getBalance(address: string) {
