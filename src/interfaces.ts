@@ -158,6 +158,16 @@ export interface TorusOptions {
   showTorusButton?: boolean
   buttonPosition?: 'top-left' | 'top-right' | 'bottom-right' | 'bottom-left'
   enableLogging?: boolean
+  enabledVerifiers: TorusVerifierStatus
+}
+
+
+interface TorusVerifierStatus {
+  google?: boolean;
+  facebook?: boolean;
+  reddit?: boolean;
+  twitch?: boolean;
+  discord?: boolean;
 }
 
 export interface AuthereumOptions {
