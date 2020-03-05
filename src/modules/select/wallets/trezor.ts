@@ -166,11 +166,11 @@ async function trezorProvider(options: {
     }
 
     for (
-      let i = addressesAlreadyFetched;
+      let i = addressesAlreadyFetched > 1 ? addressesAlreadyFetched : 0;
       i < accountsToGet + addressesAlreadyFetched;
       i++
     ) {
-      const path = `${basePath}/${i}'/0/0`
+      const path = `${basePath}/0'/0/${i}`
       bundle.push({ path, showOnTrezor: false })
     }
 
