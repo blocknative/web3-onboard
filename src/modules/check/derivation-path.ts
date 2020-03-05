@@ -40,7 +40,7 @@ function derivationSelectHtmlString(walletName: string) {
 function derivationPath() {
   let completed = false
   let showCustomInput = false
-  let path = ''
+  let path: string | undefined
 
   return (stateAndHelpers: StateAndHelpers): WalletCheckModal | undefined => {
     const { wallet, address } = stateAndHelpers
@@ -57,17 +57,21 @@ function derivationPath() {
         const pathIndex = (document as any).getElementById('derivation-select')
           .selectedIndex
 
-        const path = derivationPaths[wallet.name][pathIndex].path
+        const selectedPath = derivationPaths[wallet.name][pathIndex].path
 
-        if (!path) {
+        if (!selectedPath) {
           showCustomInput = true
+        } else {
+          path = selectedPath
         }
       }
 
       const deleteWindowProperties = () => {
         delete (window as any).handleCustomInput
+        delete (window as any).handleDerivationSelect
       }
       ;(window as any).handleCustomInput = handleCustomInput
+      ;(window as any).handleDerivationSelect = handleDerivationSelect
 
       return {
         heading: 'Hardware Wallet Connect',
@@ -81,6 +85,9 @@ function derivationPath() {
           onclick: () => {
             wallet.connect &&
               wallet.connect().then(() => {
+                wallet.provider.setPath(
+                  path || derivationPaths[wallet.name][0].path
+                )
                 deleteWindowProperties()
                 completed = true
               })

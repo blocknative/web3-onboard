@@ -64,23 +64,6 @@
 
     const currentWallet = get(wallet).name
 
-    // check if the current wallet is ledger
-    if (currentWallet === 'Ledger') {
-      // if loadingAccounts module isn't already loaded, then load it
-      if (!modules.find(module => module.id === 'loadingAccounts')) {
-        // import the loading accounts module
-        const { default: loadingAccountsModule } = await import(
-          '../modules/check/loading-accounts'
-        )
-
-        // initialize the loading accounts module and put at the front of the modules array
-        modules.unshift(loadingAccountsModule())
-      }
-    } else {
-      // not a ledger wallet, so make sure loadingAccounts module is not in array
-      modules = modules.filter(m => m.id !== 'loadingAccounts')
-    }
-
     // loop through and run each module to check if a modal needs to be shown
     runModules(modules).then(
       (result: {
