@@ -657,7 +657,7 @@ export function validateWalletInit(
     name: 'walletInit.showTorusButton',
     value: showTorusButton,
     type: 'boolean',
-    optional: false
+    optional: true
   })
 
 
