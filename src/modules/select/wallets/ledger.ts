@@ -148,12 +148,12 @@ async function ledgerProvider(options: {
 
       if (numberToGet > 1) {
         for (
-          let i = addressesAlreadyFetched;
+          let i = addressesAlreadyFetched > 1 ? addressesAlreadyFetched : 0;
           i < numberToGet + addressesAlreadyFetched;
           i++
         ) {
           const ledgerLive = `${basePath}/${i}'/0/0`
-          const legacy = `${basePath}/0'/${i}'`
+          const legacy = `${basePath}/0'/${i}`
 
           paths.push(ledgerLive, legacy)
         }
