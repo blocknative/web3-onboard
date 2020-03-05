@@ -57,6 +57,7 @@
   },
   "scripts": {
     "build": "rimraf dist && rollup -c && babel dist/cjs --out-dir dist/cjs && babel dist/esm --out-dir dist/esm",
-    "test": "echo \"TBD\" && exit 0"
+    "test": "echo \"TBD\" && exit 0",
+    "prepare": "yarn build"
   }
 }
