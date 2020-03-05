@@ -7,62 +7,120 @@ interface DerivationPaths {
 const derivationPaths: DerivationPaths = {
   Ledger: [
     { path: `m/44'/60'`, label: 'Ethereum' },
-    { path: `m/44'/60'/0'`, label: 'Ethereum Legacy' },
-    { label: 'Custom Path' }
+    { path: `m/44'/60'/0'`, label: 'Ethereum Legacy' }
   ],
-  Trezor: [
-    { path: `m/44'/60'/0'/0`, label: 'Ethereum' },
-    { label: 'Custom Path' }
-  ]
+  Trezor: [{ path: `m/44'/60'/0'/0`, label: 'Ethereum' }]
 }
 
-const customInputHtmlString = `
-  <input id="custom-derivation-input" type="text" placeholder="custom derivation path" onchange="window.handleCustomInput()" />
+const styles = `
+  display: flex;
+  flex-direction: column;
 `
 
-function derivationSelectHtmlString(walletName: string) {
-  return `
-    <select id="derivation-select" onchange="window.handleDerivationSelect()">
-      ${derivationPaths[walletName].map(
-        (derivation: { path?: string; label: string }) => {
-          const { path, label } = derivation
-          return path
-            ? `
-            <option>${label} - ${path}</option>
-          `
-            : `<option>${label}</option>`
-        }
-      )}
-    </select>
-  `
-}
+// color: #4a90e2;
+
+const baseStyles = `
+  background: inherit;
+  font-size: 0.889em;
+  font-family: inherit;
+  border: 1px solid #282828;
+  border-radius: 40px;
+  margin-top: 0.5rem;
+  padding: 0.55em 1.4em;
+  cursor: pointer;
+  color: #282828;
+  font-family: inherit;
+  transition: background 150ms ease-in-out;
+  line-height: 1.15;
+`
+
+const buttonStyles = `
+  cursor: pointer;
+`
+
+const selectedStyles = `
+  border: 1px solid #4a90e2;
+`
+
+const customInputHtmlString = `
+  <input 
+    id="custom-derivation-input" 
+    style="${baseStyles + selectedStyles}" 
+    type="text" 
+    placeholder="custom derivation path" 
+    onchange="window.handleCustomInput(this.value)" />
+`
 
 function derivationPath() {
-  let completed = false
-  let showCustomInput = false
-  let path: string | undefined
+  let state = {
+    completed: false,
+    showCustomInput: false,
+    dPath: ''
+  }
 
-  return (stateAndHelpers: StateAndHelpers): WalletCheckModal | undefined => {
+  function derivationSelectHtmlString(
+    walletName: string,
+    showCustomInput: boolean
+  ) {
+    return `
+      <div id="derivation-select" style="${styles}">
+        ${derivationPaths[walletName]
+          .map((derivation: { path?: string; label: string }) => {
+            const { path, label } = derivation
+            return `
+              <button style="${baseStyles +
+                buttonStyles +
+                (state.dPath === path
+                  ? selectedStyles
+                  : '')}" onclick="window.handleDerivationClick(this)" data-path="${path}">
+                ${label} - ${path}
+              </button>
+            `
+          })
+          .join(' ')}
+        ${
+          showCustomInput
+            ? customInputHtmlString
+            : `<button style="${baseStyles +
+                buttonStyles}" onclick="window.handleDerivationClick(this)" data-path="custom">Custom Path</button>`
+        }
+      </div>
+    `
+  }
+
+  function resetState() {
+    state.completed = false
+    state.showCustomInput = false
+    state.dPath = ''
+  }
+
+  function checkModule(
+    stateAndHelpers: StateAndHelpers
+  ): WalletCheckModal | undefined {
     const { wallet, address } = stateAndHelpers
 
-    if (!address && wallet && wallet.type === 'hardware' && !completed) {
+    if (!address && wallet && wallet.type === 'hardware' && !state.completed) {
       const handleCustomInput = () => {
         const input = <HTMLInputElement>(
           document.getElementById('custom-derivation-input')
         )
-        path = input && input.value
+
+        state.dPath = input && input.value
       }
 
-      const handleDerivationSelect = () => {
-        const pathIndex = (document as any).getElementById('derivation-select')
-          .selectedIndex
+      const handleDerivationClick = (button: any) => {
+        const selectedPath = button.dataset.path
 
-        const selectedPath = derivationPaths[wallet.name][pathIndex].path
-
-        if (!selectedPath) {
-          showCustomInput = true
+        if (selectedPath === 'custom') {
+          state.showCustomInput = true
+          state.dPath = ''
+          setTimeout(() => {
+            const input = document.getElementById('custom-derivation-input')
+            input && input.focus()
+          }, 100)
         } else {
-          path = selectedPath
+          state.showCustomInput = false
+          state.dPath = selectedPath
         }
       }
 
@@ -71,25 +129,25 @@ function derivationPath() {
         delete (window as any).handleDerivationSelect
       }
       ;(window as any).handleCustomInput = handleCustomInput
-      ;(window as any).handleDerivationSelect = handleDerivationSelect
+      ;(window as any).handleDerivationClick = handleDerivationClick
 
       return {
         heading: 'Hardware Wallet Connect',
         description: `Please select a derivation path to connect your ${wallet.name} accounts, or select custom to input a custom path:`,
         eventCode: 'derivationPath',
-        html: showCustomInput
-          ? customInputHtmlString
-          : derivationSelectHtmlString(wallet.name),
+        html: derivationSelectHtmlString(wallet.name, state.showCustomInput),
         button: {
           text: 'Connect',
           onclick: () => {
+            wallet.provider.setPath(
+              state.dPath || derivationPaths[wallet.name][0].path
+            )
             wallet.connect &&
               wallet.connect().then(() => {
-                wallet.provider.setPath(
-                  path || derivationPaths[wallet.name][0].path
-                )
+                // @TODO add path to local store
+
                 deleteWindowProperties()
-                completed = true
+                state.completed = true
               })
           }
         },
@@ -100,6 +158,10 @@ function derivationPath() {
       }
     }
   }
+
+  checkModule.reset = resetState
+
+  return checkModule
 }
 
 export default derivationPath

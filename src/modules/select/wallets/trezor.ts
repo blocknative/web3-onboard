@@ -120,6 +120,7 @@ async function trezorProvider(options: {
   provider.send = provider.sendAsync
 
   function setPath(path: string) {
+    console.log({ path })
     dPath = path
   }
 

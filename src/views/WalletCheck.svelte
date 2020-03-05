@@ -111,7 +111,7 @@
               activeModal = result && result.modal ? result.modal : activeModal
             }
           }
-        }, 500)
+        }, 100)
       }
     )
   }
@@ -179,6 +179,7 @@
         }
 
         loadingModal = false
+        modules.forEach(m => m.reset && m.reset())
         return resolve({ modal: undefined, module: undefined })
       }
     )
