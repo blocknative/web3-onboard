@@ -31,7 +31,7 @@ export const extensionInstallMessage = (helpers: {
     <p style="font-size: 0.889rem; font-family: inherit; margin: 0.889rem 0;">
     You'll need to install <b>${selectedWallet}</b> to continue. Once you have it installed, go ahead and
     <span
-    class="bn-clickable"
+    class="bn-onboard-clickable"
       style="color: #4a90e2; font-size: 0.889rem; font-family: inherit;"
       onclick={window.location.reload();}>
       refresh the page.
