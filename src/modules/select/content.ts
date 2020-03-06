@@ -36,6 +36,11 @@ export const extensionInstallMessage = (helpers: {
       onclick={window.location.reload();}>
       refresh the page.
     </span>
+    ${
+      selectedWallet === 'Opera'
+        ? '<br><br><i>Hint: If you already have Opera installed, make sure that your web3 wallet is <a style="color: #4a90e2; font-size: 0.889rem; font-family: inherit;" class="bn-onboard-clickable" href="https://help.opera.com/en/touch/crypto-wallet/" rel="noreferrer noopener" target="_blank">enabled</a></i>'
+        : ''
+    }
     </p>
     `
   }
