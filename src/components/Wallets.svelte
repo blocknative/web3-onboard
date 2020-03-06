@@ -11,8 +11,8 @@
   export let modalData: WalletSelectModalData
   export let handleWalletSelect: (wallet: WalletModule) => void
   export let loadingWallet: string | undefined
-
-  let showingAllWalletModules: boolean = false
+  export let showingAllWalletModules: boolean = false
+  export let showAllWallets: () => void
   let selectedWallet: WritableStore
 
   const unsubscribe = wallet.subscribe(wallet => (selectedWallet = wallet))
@@ -80,9 +80,7 @@
 
   {#if modalData.secondaryWallets && modalData.secondaryWallets.length && !showingAllWalletModules}
     <div>
-      <Button onclick={() => (showingAllWalletModules = true)}>
-        Show More
-      </Button>
+      <Button onclick={showAllWallets}>Show More</Button>
     </div>
   {/if}
 

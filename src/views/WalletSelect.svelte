@@ -53,6 +53,9 @@
 
   let loadingWallet: string | undefined = undefined
 
+  let showingAllWalletModules = false
+  const showAllWallets = () => (showingAllWalletModules = true)
+
   renderWalletSelect()
 
   async function renderWalletSelect() {
@@ -207,7 +210,12 @@
       <p class="bn-onboard-custom bn-onboard-select-description">
         {@html modalData.description}
       </p>
-      <Wallets {modalData} {handleWalletSelect} {loadingWallet} />
+      <Wallets
+        {modalData}
+        {handleWalletSelect}
+        {loadingWallet}
+        {showingAllWalletModules}
+        {showAllWallets} />
       <div class="bn-onboard-custom bn-onboard-select-info-container">
         <span
           class="bn-onboard-custom bn-onboard-select-wallet-info"
