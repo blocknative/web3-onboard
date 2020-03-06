@@ -18,7 +18,8 @@ function torus(options: TorusOptions & CommonWalletOptions): WalletModule {
     buttonPosition,
     enableLogging,
     loginMethod,
-    showTorusButton
+    showTorusButton,
+    enabledVerifiers
   } = options
 
   return {
@@ -39,7 +40,8 @@ function torus(options: TorusOptions & CommonWalletOptions): WalletModule {
           chainId: networkId, // default: 1
           networkName: `${networkName(networkId)} Network` // default: Main Ethereum Network
         },
-        showTorusButton: showTorusButton // default: true
+        showTorusButton: showTorusButton, // default: true
+        enabledVerifiers: enabledVerifiers
       })
 
       const provider = instance.provider
