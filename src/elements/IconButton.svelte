@@ -55,6 +55,10 @@
   }
 
   span {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-size: inherit;
     margin-left: 0.66em;
     font-weight: bold;
@@ -63,8 +67,10 @@
   }
 
   i {
-    font-size: 1.6rem;
-    margin-left: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: lighter;
+    color: inherit;
+    text-decoration: underline;
   }
 
   @media only screen and (max-width: 450px) {
@@ -72,12 +78,17 @@
       width: 100%;
     }
   }
+
+  .bn-onboard-selected-wallet {
+    background: #c3c3c3;
+  }
 </style>
 
 <button
   on:click={onclick}
   class="bn-onboard-custom bn-onboard-icon-button"
-  class:bn-onboard-dark-mode-background-hover={$app.darkMode}>
+  class:bn-onboard-dark-mode-background-hover={$app.darkMode}
+  class:bn-onboard-selected-wallet={currentlySelected}>
   <div>
     {#if loadingWallet === text}
       <Spinner />
@@ -87,8 +98,10 @@
       <img src={iconSrc} srcset={iconSrcSet} alt={text} />
     {/if}
   </div>
-  <span>{text}</span>
-  {#if currentlySelected}
-    <i>*</i>
-  {/if}
+  <span>
+    {text}
+    {#if currentlySelected}
+      <i>selected</i>
+    {/if}
+  </span>
 </button>
