@@ -31,11 +31,16 @@ export const extensionInstallMessage = (helpers: {
     <p style="font-size: 0.889rem; font-family: inherit; margin: 0.889rem 0;">
     You'll need to install <b>${selectedWallet}</b> to continue. Once you have it installed, go ahead and
     <span
-    class="bn-clickable"
+    class="bn-onboard-clickable"
       style="color: #4a90e2; font-size: 0.889rem; font-family: inherit;"
       onclick={window.location.reload();}>
       refresh the page.
     </span>
+    ${
+      selectedWallet === 'Opera'
+        ? '<br><br><i>Hint: If you already have Opera installed, make sure that your web3 wallet is <a style="color: #4a90e2; font-size: 0.889rem; font-family: inherit;" class="bn-onboard-clickable" href="https://help.opera.com/en/touch/crypto-wallet/" rel="noreferrer noopener" target="_blank">enabled</a></i>'
+        : ''
+    }
     </p>
     `
   }

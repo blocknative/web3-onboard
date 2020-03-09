@@ -5,37 +5,51 @@ import { WalletInterface } from './interfaces'
 
 export function getNetwork(provider: any): Promise<number | any> {
   return new Promise((resolve, reject) => {
-    provider.sendAsync(
-      {
-        jsonrpc: '2.0',
-        method: 'net_version',
-        params: [],
-        id: 42
-      },
-      (e: any, res: any) => {
-        e && reject(e)
-        const result = res && res.result
-        resolve(result && Number(result))
-      }
-    )
+    // web3.js sometimes deletes sendAsync method
+    const method = provider.sendAsync || provider.send
+
+    if (method) {
+      method(
+        {
+          jsonrpc: '2.0',
+          method: 'net_version',
+          params: [],
+          id: 42
+        },
+        (e: any, res: any) => {
+          e && reject(e)
+          const result = res && res.result
+          resolve(result && Number(result))
+        }
+      )
+    } else {
+      resolve(null)
+    }
   })
 }
 
 export function getAddress(provider: any): Promise<string | any> {
   return new Promise((resolve, reject) => {
-    provider.sendAsync(
-      {
-        jsonrpc: '2.0',
-        method: 'eth_accounts',
-        params: [],
-        id: 42
-      },
-      (e: any, res: any) => {
-        e && reject(e)
-        const result = res && res.result && res.result[0]
-        resolve(result)
-      }
-    )
+    // web3.js sometimes deletes sendAsync method
+    const method = provider.sendAsync || provider.send
+
+    if (method) {
+      method(
+        {
+          jsonrpc: '2.0',
+          method: 'eth_accounts',
+          params: [],
+          id: 42
+        },
+        (e: any, res: any) => {
+          e && reject(e)
+          const result = res && res.result && res.result[0]
+          resolve(result)
+        }
+      )
+    } else {
+      resolve(null)
+    }
   })
 }
 
@@ -48,19 +62,26 @@ export function getBalance(provider: any): Promise<string | any> {
       return
     }
 
-    provider.sendAsync(
-      {
-        jsonrpc: '2.0',
-        method: 'eth_getBalance',
-        params: [currentAddress, 'latest'],
-        id: 42
-      },
-      (e: any, res: any) => {
-        e && reject(e)
-        const result = res && res.result
-        resolve(result && new BigNumber(result).toString(10))
-      }
-    )
+    // web3.js sometimes deletes sendAsync method
+    const method = provider.sendAsync || provider.send
+
+    if (method) {
+      method(
+        {
+          jsonrpc: '2.0',
+          method: 'eth_getBalance',
+          params: [currentAddress, 'latest'],
+          id: 42
+        },
+        (e: any, res: any) => {
+          e && reject(e)
+          const result = res && res.result
+          resolve(result && new BigNumber(result).toString(10))
+        }
+      )
+    } else {
+      resolve(null)
+    }
   })
 }
 
@@ -132,6 +153,11 @@ export function createLegacyProviderInterface(provider: any): WalletInterface {
 export function getProviderName(provider: any): string | undefined {
   if (!provider) return
 
+  // Torus also exports isMetamask to be true for backward compatibility
+  if (provider.isTorus) {
+    return 'Torus'
+  }
+
   if (provider.isMetaMask) {
     return 'MetaMask'
   }
@@ -154,10 +180,6 @@ export function getProviderName(provider: any): string | undefined {
 
   if (provider.isToshi) {
     return 'Toshi'
-  }
-
-  if (provider.isTorus) {
-    return 'Torus'
   }
 
   if (provider.isCipher) {
