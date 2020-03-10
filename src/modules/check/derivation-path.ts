@@ -23,12 +23,14 @@ const baseStyles = `
   background: inherit;
   font-size: 0.889em;
   font-family: inherit;
-  border: 1px solid #282828;
+  border-width: 1px;
+  border-style: solid;
+  border-color: inherit;
   border-radius: 40px;
   margin-top: 0.5rem;
   padding: 0.55em 1.4em;
   cursor: pointer;
-  color: #282828;
+  color: inherit;
   font-family: inherit;
   transition: background 150ms ease-in-out;
   line-height: 1.15;

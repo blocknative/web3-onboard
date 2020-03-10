@@ -14,12 +14,15 @@ function accountSelect(): WalletCheckModule {
   return async (
     stateAndHelpers: StateAndHelpers
   ): Promise<WalletCheckModal | undefined> => {
-    const { wallet, BigNumber, address, balance } = stateAndHelpers
+    const { wallet, BigNumber } = stateAndHelpers
     const { provider, type } = wallet
 
     if (type === 'hardware' && !completed) {
-      if (accountsAndBalances.length <= 1 && !loadingAccounts) {
-        accountsAndBalances = [{ address, balance }]
+      if (accountsAndBalances.length === 0) {
+        loadingAccounts = true
+        const accounts = await provider.getAccounts()
+        accountsAndBalances = await provider.getBalances(accounts)
+        loadingAccounts = false
       }
 
       const deleteWindowProperties = () => {
@@ -29,8 +32,7 @@ function accountSelect(): WalletCheckModule {
 
       const loadMoreAccounts = async () => {
         loadingAccounts = true
-        const moreAccounts = await provider.getAllAccountsAndBalances()
-        accountsAndBalances = moreAccounts
+        accountsAndBalances = await provider.getMoreAccounts()
         loadingAccounts = false
       }
 

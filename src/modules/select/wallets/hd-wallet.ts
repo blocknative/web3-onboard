@@ -2,12 +2,17 @@ import HDKey from 'hdkey'
 import { publicToAddress, toChecksumAddress } from 'ethereumjs-util'
 import buffer from 'buffer'
 
+const numberToGet = 30
+
 export function generateAddresses(
-  publicKey: string,
-  chainCode: string,
-  basePath: string,
-  amount: number = 30
+  account: {
+    publicKey: string
+    chainCode: string
+    path: string
+  },
+  offset: number
 ) {
+  const { publicKey, chainCode, path } = account
   const hdk = new HDKey()
 
   hdk.publicKey = new buffer.Buffer(publicKey, 'hex')
@@ -15,11 +20,11 @@ export function generateAddresses(
 
   const addresses = []
 
-  for (let i = 0; i < amount; i++) {
+  for (let i = offset; i < numberToGet + offset; i++) {
     const dkey = hdk.deriveChild(i)
     const address = publicToAddress(dkey.publicKey, true).toString('hex')
     addresses.push({
-      dPath: `${basePath}/${i}`,
+      dPath: `${path}/${i}`,
       address: toChecksumAddress(address)
     })
   }

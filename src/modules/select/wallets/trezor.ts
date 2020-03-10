@@ -56,8 +56,8 @@ function trezor(options: TrezorOptions & CommonWalletOptions): WalletModule {
           },
           balance: {
             get: async () => {
-              const address = provider.getPrimaryAddress()
-              return address && provider.getBalance(address)
+              const accounts = provider.getPrimaryAddress()
+              return accounts[0] && provider.getBalance(accounts[0])
             }
           }
         }
@@ -83,6 +83,10 @@ async function trezorProvider(options: {
 
   let addressToPath = new Map()
   let enabled: boolean = false
+
+  let account:
+    | undefined
+    | { publicKey: string; chainCode: string; path: string }
 
   TrezorConnect.manifest({
     email,
@@ -110,17 +114,18 @@ async function trezorProvider(options: {
     rpcUrl
   })
 
-  provider.getPrimaryAddress = getPrimaryAddress
-  provider.getAllAccountsAndBalances = getAllAccountsAndBalances
   provider.setPath = setPath
   provider.dPath = dPath
   provider.enable = enable
   provider.setPrimaryAccount = setPrimaryAccount
+  provider.getPrimaryAddress = getPrimaryAddress
+  provider.getAccounts = getAccounts
+  provider.getMoreAccounts = getMoreAccounts
   provider.getBalance = getBalance
+  provider.getBalances = getBalances
   provider.send = provider.sendAsync
 
   function setPath(path: string) {
-    console.log({ path })
     dPath = path
   }
 
@@ -131,23 +136,6 @@ async function trezorProvider(options: {
 
   function addresses() {
     return Array.from(addressToPath.keys())
-  }
-
-  function getPrimaryAddress() {
-    return enabled ? addresses()[0] : undefined
-  }
-
-  async function getAllAccountsAndBalances() {
-    const accounts = await getAccounts()
-    return Promise.all(
-      accounts.map(
-        address =>
-          new Promise(async resolve => {
-            const balance = await getBalance(address)
-            resolve({ address, balance })
-          })
-      )
-    )
   }
 
   function setPrimaryAccount(address: string) {
@@ -162,31 +150,62 @@ async function trezorProvider(options: {
     addressToPath = new Map(accounts)
   }
 
-  async function getAccounts() {
-    if (!enabled) {
-      return [undefined]
-    }
-
-    if (addressToPath.size > 0) {
-      return addresses()
-    }
-
-    const trezorAccount = await TrezorConnect.getPublicKey({
+  async function getPublicKey() {
+    const result = await TrezorConnect.getPublicKey({
       path: dPath,
       coin: 'eth'
     })
 
-    const addressInfo = generateAddresses(
-      trezorAccount.payload.publicKey,
-      trezorAccount.payload.chainCode,
-      trezorAccount.payload.serializedPath
-    )
+    account = {
+      publicKey: result.payload.publicKey,
+      chainCode: result.payload.chainCode,
+      path: result.payload.serializedPath
+    }
+
+    return account
+  }
+
+  function getPrimaryAddress() {
+    return enabled ? addresses()[0] : undefined
+  }
+
+  async function getMoreAccounts() {
+    const accounts = await getAccounts(true)
+    return getBalances(accounts)
+  }
+
+  async function getAccounts(getMore?: boolean) {
+    if (!enabled) {
+      return [undefined]
+    }
+
+    if (addressToPath.size > 0 && !getMore) {
+      return addresses()
+    }
+
+    const accountInfo = account || (await getPublicKey())
+
+    const addressInfo = generateAddresses(accountInfo, addressToPath.size)
+
+    console.log({ addressInfo })
 
     addressInfo.forEach(({ dPath, address }) => {
       addressToPath.set(address, dPath)
     })
 
     return addresses()
+  }
+
+  function getBalances(addresses: Array<string>) {
+    return Promise.all(
+      addresses.map(
+        address =>
+          new Promise(async resolve => {
+            const balance = await getBalance(address)
+            resolve({ address, balance })
+          })
+      )
+    )
   }
 
   function getBalance(address: string) {
@@ -251,13 +270,6 @@ async function trezorProvider(options: {
   }
 
   return provider
-}
-
-function networkIdToDerivationPath(networkId: number) {
-  switch (networkId) {
-    default:
-      return `m/44'/60'`
-  }
 }
 
 export default trezor
