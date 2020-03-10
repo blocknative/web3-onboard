@@ -67,7 +67,7 @@ function accountSelect(): WalletCheckModule {
                     : '0'
                 } ETH</option>`
             )}
-          </select><button style="background: transparent; margin: 0 0.25rem; padding: 0.25rem 0.5rem; border-radius: 40px; cursor: pointer; color: inherit; border-color: inherit; border-width: 1px;" onclick="window.loadMoreAccounts()">Load More</button>
+          </select><button style="background: transparent; margin: 0 0.25rem; padding: 0.25rem 0.5rem; border-radius: 40px; cursor: pointer; color: inherit; border-color: inherit; border-width: 1px; border-style: solid;" onclick="window.loadMoreAccounts()">Load More</button>
         `,
         button: {
           onclick: () => {
