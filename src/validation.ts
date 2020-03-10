@@ -660,7 +660,6 @@ export function validateWalletInit(
     optional: true
   })
 
-
   validateType({
     name: 'walletInit.enabledVerifiers',
     value: enabledVerifiers,

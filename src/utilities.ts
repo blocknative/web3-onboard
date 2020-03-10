@@ -153,13 +153,12 @@ export function createLegacyProviderInterface(provider: any): WalletInterface {
 export function getProviderName(provider: any): string | undefined {
   if (!provider) return
 
-  // Torus also exports isMetamask to be true for backward compatibility
   if (provider.isTorus) {
     return 'Torus'
   }
 
-  if (provider.isMetaMask) {
-    return 'MetaMask'
+  if (provider.isImToken) {
+    return 'imToken'
   }
 
   if (provider.isDapper) {
@@ -192,6 +191,10 @@ export function getProviderName(provider: any): string | undefined {
 
   if (provider.isStatus) {
     return 'Status'
+  }
+
+  if (provider.isMetaMask) {
+    return 'MetaMask'
   }
 
   if (provider.host && provider.host.indexOf('localhost') !== -1) {
