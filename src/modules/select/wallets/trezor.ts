@@ -47,7 +47,7 @@ function trezor(options: TrezorOptions & CommonWalletOptions): WalletModule {
         interface: {
           name: 'Trezor',
           connect: provider.enable,
-          disconnect: () => provider.stop(),
+          disconnect: provider.disconnect,
           address: {
             get: async () => provider.getPrimaryAddress()
           },
@@ -56,8 +56,8 @@ function trezor(options: TrezorOptions & CommonWalletOptions): WalletModule {
           },
           balance: {
             get: async () => {
-              const accounts = provider.getPrimaryAddress()
-              return accounts[0] && provider.getBalance(accounts[0])
+              const address = provider.getPrimaryAddress()
+              return address && provider.getBalance(address)
             }
           }
         }
@@ -124,6 +124,14 @@ async function trezorProvider(options: {
   provider.getBalance = getBalance
   provider.getBalances = getBalances
   provider.send = provider.sendAsync
+  provider.disconnect = disconnect
+
+  function disconnect() {
+    dPath = ''
+    addressToPath = new Map()
+    enabled = false
+    provider.stop()
+  }
 
   function setPath(path: string) {
     dPath = path
@@ -151,6 +159,10 @@ async function trezorProvider(options: {
   }
 
   async function getPublicKey() {
+    if (!dPath) {
+      throw new Error('a derivation path is needed to get the public key')
+    }
+
     const result = await TrezorConnect.getPublicKey({
       path: dPath,
       coin: 'eth'
@@ -186,8 +198,6 @@ async function trezorProvider(options: {
     const accountInfo = account || (await getPublicKey())
 
     const addressInfo = generateAddresses(accountInfo, addressToPath.size)
-
-    console.log({ addressInfo })
 
     addressInfo.forEach(({ dPath, address }) => {
       addressToPath.set(address, dPath)
