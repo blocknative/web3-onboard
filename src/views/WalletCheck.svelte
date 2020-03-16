@@ -28,7 +28,6 @@
     UserState
   } from '../interfaces'
 
-  export let modules: WalletCheckModule[] | Promise<WalletCheckModule[]> = []
   export let walletSelect: WalletSelectFunction
 
   const blocknative = getBlocknative()
@@ -57,9 +56,12 @@
   async function renderModule() {
     checkingModule = true
 
+    let modules = get(app).checkModules
+
     if (isPromise(modules)) {
       modules = await modules
       modules.forEach(validateWalletCheckModule)
+      app.update(store => ({ ...store, checkModules: modules }))
     }
 
     const currentWallet = get(wallet).name

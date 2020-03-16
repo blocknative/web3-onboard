@@ -11,7 +11,6 @@
   } from '../interfaces'
 
   export let walletSelectModule: WalletSelectModule
-  export let walletCheckModules: WalletCheckModule
   export let walletSelect: WalletSelectFunction
 </script>
 
@@ -41,7 +40,7 @@
 {/if}
 
 {#if $app.walletCheckInProgress}
-  <WalletCheck modules={walletCheckModules} {walletSelect} />
+  <WalletCheck {walletSelect} />
 {/if}
 
 {#if $app.accountSelectInProgress}
