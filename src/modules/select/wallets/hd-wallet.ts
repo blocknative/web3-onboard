@@ -2,7 +2,7 @@ import HDKey from 'hdkey'
 import { publicToAddress, toChecksumAddress } from 'ethereumjs-util'
 import buffer from 'buffer'
 
-const numberToGet = 30
+const numberToGet = 5
 
 export function generateAddresses(
   account: {
@@ -23,6 +23,7 @@ export function generateAddresses(
   for (let i = offset; i < numberToGet + offset; i++) {
     const dkey = hdk.deriveChild(i)
     const address = publicToAddress(dkey.publicKey, true).toString('hex')
+
     addresses.push({
       dPath: `${path}/${i}`,
       address: toChecksumAddress(address)
@@ -32,25 +33,54 @@ export function generateAddresses(
   return addresses
 }
 
-// import * as hdKey from 'ethereumjs-wallet/hdkey'
+export function isValidPath(path: string) {
+  const parts = path.split('/')
 
-// export function generateAddresses(xpub: string, basePath: string, amount = 30) {
-//   const node = new hdKey.fromExtendedKey(xpub)
+  if (parts[0] !== 'm') {
+    return false
+  }
 
-//   const children = []
+  if (parts[1] !== "44'") {
+    return false
+  }
 
-//   for (let i = 0; i < amount; i++) {
-//     children.push({ childNode: node.deriveChild(i), dPath: `${basePath}/${i}` })
-//   }
+  if (parts[2] !== "60'" && parts[2] !== "1'") {
+    return false
+  }
 
-//   console.log({ children })
+  if (parts[3] === undefined) {
+    return true
+  }
 
-//   const addresses = children.map(({ childNode, dPath }) => ({
-//     address: childNode.getWallet().getChecksumAddressString(),
-//     dPath
-//   }))
+  const accountFieldDigit = Number(parts[3][0])
 
-//   console.log({ addresses })
+  if (
+    isNaN(accountFieldDigit) ||
+    accountFieldDigit < 0 ||
+    parts[3][1] !== "'"
+  ) {
+    return false
+  }
 
-//   return addresses
-// }
+  if (parts[4] === undefined) {
+    return true
+  }
+
+  const changeFieldDigit = Number(parts[4][0])
+
+  if (isNaN(changeFieldDigit) || changeFieldDigit < 0) {
+    return false
+  }
+
+  if (parts[5] === undefined) {
+    return true
+  }
+
+  const addressFieldDigit = Number(parts[5][0])
+
+  if (isNaN(addressFieldDigit) || addressFieldDigit < 0) {
+    return false
+  }
+
+  return true
+}
