@@ -24,6 +24,10 @@
     background: #0e212a;
   }
 
+  :global(.bn-onboard-clickable) {
+    text-decoration: none;
+  }
+
   :global(.bn-onboard-clickable:hover) {
     cursor: pointer;
     text-decoration: underline;

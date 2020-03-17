@@ -1,6 +1,6 @@
 <script lang="ts">
   import { get } from 'svelte/store'
-
+  import { onDestroy, onMount } from 'svelte'
   import { fade } from 'svelte/transition'
   import BigNumber from 'bignumber.js'
 
@@ -52,6 +52,23 @@
   $: if (!activeModal && !checkingModule) {
     renderModule()
   }
+
+  function lockScroll() {
+    window.scrollTo(0, 0)
+  }
+
+  let originalOverflowValue
+
+  onMount(() => {
+    originalOverflowValue = window.document.body.style.overflow
+    window.document.body.style.overflow = 'hidden'
+    window.addEventListener('scroll', lockScroll)
+  })
+
+  onDestroy(() => {
+    window.removeEventListener('scroll', lockScroll)
+    window.document.body.style.overflow = originalOverflowValue
+  })
 
   async function renderModule() {
     checkingModule = true

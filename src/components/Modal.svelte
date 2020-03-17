@@ -15,7 +15,7 @@
     font-family: 'Helvetica Neue';
     justify-content: center;
     align-items: center;
-    position: absolute;
+    position: fixed;
     font-size: 16px;
     z-index: 99;
     top: 0;
