@@ -97,6 +97,8 @@ walletInterface.subscribe((walletInterface: WalletInterface | null) => {
       balance.setStateSyncer(walletInterface.balance)
     ]
   }
+
+  resetCheckModules()
 })
 
 export function resetWalletState(options?: {
@@ -146,10 +148,9 @@ export function resetWalletState(options?: {
     return currentInterface
   })
 
-  app.update(store => {
-    Array.isArray(store.checkModules) &&
-      store.checkModules.forEach((m: WalletCheckModule) => m.reset && m.reset())
+  resetCheckModules()
 
+  app.update(store => {
     return {
       ...store,
       walletSelectInProgress: false,
@@ -157,6 +158,13 @@ export function resetWalletState(options?: {
       autoSelect: false
     }
   })
+}
+
+function resetCheckModules() {
+  const { checkModules } = get(app)
+  if (Array.isArray(checkModules)) {
+    checkModules.forEach((m: WalletCheckModule) => m.reset && m.reset())
+  }
 }
 
 function createWalletInterfaceStore(

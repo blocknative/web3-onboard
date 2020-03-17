@@ -30,7 +30,7 @@ const baseStyles = `
   border-radius: 40px;
   margin-top: 0.5rem;
   padding: 0.55em 1.4em;
-  cursor: pointer;
+  text-align: center;
   color: inherit;
   font-family: inherit;
   transition: background 150ms ease-in-out;
@@ -49,22 +49,17 @@ const errorStyles = `
   border: 1px solid #e2504a;
 `
 
-const errorMsgStyles = `
+const msgStyles = `
+  display: block;
   font-size: 0.889em;
   font-family: inherit;
-  color: #e2504a;
+  color: inherit;
+  margin-top: 0.5rem;
 `
 
-const customInputHtmlString = (error?: string) => {
-  return `
-    <input 
-      id="custom-derivation-input" 
-      style="${baseStyles + selectedStyles + (error ? errorStyles : '')}" 
-      type="text" 
-      placeholder="custom derivation path" 
-      onchange="window.handleCustomInput(this.value)" />
-    `
-}
+const errorMsgStyles = `
+  color: #e2504a;
+`
 
 function derivationPath(options: {
   heading: string
@@ -81,6 +76,18 @@ function derivationPath(options: {
     error: ''
   }
 
+  const customInputHtmlString = (error?: string) => {
+    return `
+      <input 
+        id="custom-derivation-input" 
+        style="${baseStyles + selectedStyles + (error ? errorStyles : '')}" 
+        type="text" 
+        value="${state.dPath}"
+        placeholder="custom derivation path" 
+        onchange="window.handleCustomInput(this.value)" />
+      `
+  }
+
   function derivationSelectHtmlString(walletName: string) {
     return `
       <div id="derivation-select" style="${styles}">
@@ -90,7 +97,7 @@ function derivationPath(options: {
             return `
               <button style="${baseStyles +
                 buttonStyles +
-                (state.dPath === path
+                (state.dPath === path && !state.showCustomInput
                   ? selectedStyles
                   : '')}" onclick="window.handleDerivationClick(this)" data-path="${path}">
                 ${label} - ${path}
@@ -106,13 +113,17 @@ function derivationPath(options: {
         }
         ${
           state.loading
-            ? `<div class="bn-onboard-custom bn-onboard-loading" style="margin-top: 1rem">
+            ? `<div class="bn-onboard-custom bn-onboard-loading" style="margin-top: 1rem;">
                 <div class="bn-onboard-loading-first"></div>
                 <div class="bn-onboard-loading-second"></div>
-                <div class="bn-onboard-loading-third"</div>
-              </div>`
+                <div class="bn-onboard-loading-third"></div>
+              </div>
+              <span style="${msgStyles}">Loading Accounts...</span>
+              `
             : state.error
-            ? `<span style="${errorMsgStyles}">${state.error}</span>`
+            ? `<span style="${msgStyles + errorMsgStyles}">${
+                state.error
+              }</span>`
             : ''
         }
       </div>
@@ -147,7 +158,7 @@ function derivationPath(options: {
 
         if (selectedPath === 'custom') {
           state.showCustomInput = true
-          state.dPath = ''
+
           setTimeout(() => {
             const input = document.getElementById('custom-derivation-input')
             input && input.focus()
@@ -170,7 +181,9 @@ function derivationPath(options: {
         heading: heading || 'Hardware Wallet Connect',
         description:
           description ||
-          `Please select a derivation path to connect your ${wallet.name} accounts, or select custom to input a custom path:`,
+          `Make sure your ${wallet.name} is plugged in, ${
+            wallet.name === 'Ledger' ? 'and the Ethereum app is open, ' : ''
+          }then select a derivation path to connect your accounts:`,
         eventCode: 'derivationPath',
         html: derivationSelectHtmlString(wallet.name),
         button: {
@@ -178,13 +191,19 @@ function derivationPath(options: {
           onclick: async () => {
             state.loading = true
             const path = state.dPath || derivationPaths[wallet.name][0].path
-            const validPath = await wallet.provider.setPath(
-              path,
-              state.showCustomInput
-            )
+            try {
+              const validPath = await wallet.provider.setPath(
+                path,
+                state.showCustomInput
+              )
 
-            if (!validPath) {
-              state.error = `${path} is not a valid derivation path`
+              if (!validPath) {
+                state.error = `${path} is not a valid derivation path`
+                state.loading = false
+                return
+              }
+            } catch (error) {
+              state.error = error
               state.loading = false
               return
             }
@@ -192,13 +211,18 @@ function derivationPath(options: {
             state.error = ''
 
             wallet.connect &&
-              wallet.connect().then(() => {
-                // @TODO add path to local store
-
-                deleteWindowProperties()
-                state.loading = false
-                state.completed = true
-              })
+              wallet
+                .connect()
+                .then(() => {
+                  // @TODO add path to local store
+                  deleteWindowProperties()
+                  state.loading = false
+                  state.completed = true
+                })
+                .catch(error => {
+                  state.error = error.message
+                  state.loading = false
+                })
           }
         },
 

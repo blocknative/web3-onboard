@@ -14,7 +14,6 @@ import Eth from '@ledgerhq/hw-app-eth'
 import * as EthereumTx from 'ethereumjs-tx'
 
 import buffer from 'buffer'
-import { getAddress } from '../../../utilities'
 
 const LEDGER_LIVE_PATH = `m/44'/60'`
 const ACCOUNTS_TO_GET = 5
@@ -118,7 +117,6 @@ async function ledgerProvider(options: {
   }
 
   function disconnect() {
-    console.log('resetting')
     dPath = ''
     addressToPath = new Map()
     enabled = false
@@ -175,7 +173,7 @@ async function ledgerProvider(options: {
     } catch (error) {}
   }
 
-  async function getPublicKey(eth: any) {
+  async function getPublicKey() {
     if (!dPath) {
       throw new Error('a derivation path is needed to get the public key')
     }
@@ -192,9 +190,7 @@ async function ledgerProvider(options: {
 
       return account
     } catch (error) {
-      throw new Error(
-        'There was a problem getting access to your Ledger accounts.'
-      )
+      throw new Error('There was a problem accessing your Ledger accounts.')
     }
   }
 
@@ -209,7 +205,7 @@ async function ledgerProvider(options: {
 
   async function getAccounts(getMore?: boolean) {
     if (!enabled) {
-      return [undefined]
+      return []
     }
 
     if (addressToPath.size > 0 && !getMore) {
@@ -228,19 +224,19 @@ async function ledgerProvider(options: {
       }
 
       for (const path of paths) {
-        try {
-          const res = await eth.getAddress(path)
-          addressToPath.set(res.address, path)
-        } catch (error) {
-          console.log({ error })
-        }
+        const res = await eth.getAddress(path)
+        addressToPath.set(res.address, path)
       }
     } else {
-      const accountInfo = account || (await getPublicKey(eth))
+      if (!account) {
+        try {
+          account = await getPublicKey()
+        } catch (error) {
+          throw error
+        }
+      }
 
-      if (!accountInfo) return [undefined]
-
-      const addressInfo = generateAddresses(accountInfo, addressToPath.size)
+      const addressInfo = generateAddresses(account, addressToPath.size)
 
       addressInfo.forEach(({ dPath, address }) => {
         addressToPath.set(address, dPath)

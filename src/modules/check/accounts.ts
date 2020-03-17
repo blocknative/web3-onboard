@@ -7,6 +7,14 @@ import { usbIcon } from './icons'
 
 type AccountsAndBalances = Array<{ balance: string; address: string }>
 
+const msgStyles = `
+  display: block;
+  font-size: 0.889em;
+  font-family: inherit;
+  color: inherit;
+  margin-top: 0.5rem;
+`
+
 function accountSelect(options: {
   heading: string
   description: string
@@ -61,21 +69,26 @@ function accountSelect(options: {
           ? `<div class="bn-onboard-custom bn-onboard-loading">
               <div class="bn-onboard-loading-first"></div>
               <div class="bn-onboard-loading-second"></div>
-              <div class="bn-onboard-loading-third"</div>
-            </div>`
+              <div class="bn-onboard-loading-third"></div>
+            </div>
+            <span style="${msgStyles}">Loading More Accounts...</span>
+            `
           : `
-          <select id="account-select" onchange="window.accountSelect()" style="padding: 0.5rem;">
-            ${accountsAndBalances.map(
-              (account: { balance: string; address: string }) =>
-                `<option>${account.address} --- ${
-                  account.balance != null
-                    ? new BigNumber(account.balance)
-                        .div('1000000000000000000')
-                        .toFixed(3)
-                    : '0'
-                } ETH</option>`
-            )}
-          </select><button style="background: transparent; margin: 0 0.25rem; padding: 0.25rem 0.5rem; border-radius: 40px; cursor: pointer; color: inherit; border-color: inherit; border-width: 1px; border-style: solid;" onclick="window.loadMoreAccounts()">Load More</button>
+          <div style="display: flex; align-items: center;">
+            <select id="account-select" onchange="window.accountSelect()" style="padding: 0.5rem;">
+              ${accountsAndBalances.map(
+                (account: { balance: string; address: string }) =>
+                  `<option>${account.address} --- ${
+                    account.balance != null
+                      ? new BigNumber(account.balance)
+                          .div('1000000000000000000')
+                          .toFixed(3)
+                      : '0'
+                  } ETH</option>`
+              )}
+            </select>
+            <button style="display: flex; align-items: center; text-align: center; height: 1.5rem; background: transparent; margin: 0 0.25rem; padding: 0 0.5rem; border-radius: 40px; cursor: pointer; color: inherit; border-color: inherit; border-width: 1px; border-style: solid;" onclick="window.loadMoreAccounts()">Load More</button>
+          </div>
         `,
         button: {
           onclick: () => {

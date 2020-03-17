@@ -7,7 +7,7 @@ import {
 import trezorIcon from '../wallet-icons/icon-trezor'
 
 import createProvider from './providerEngine'
-import { generateAddresses } from './hd-wallet'
+import { generateAddresses, isValidPath } from './hd-wallet'
 
 import * as TrezorConnectLibrary from 'trezor-connect'
 import * as EthereumTx from 'ethereumjs-tx'
@@ -78,11 +78,11 @@ async function trezorProvider(options: {
   networkName: (id: number) => string
 }) {
   const { networkId, email, appUrl, rpcUrl, BigNumber, networkName } = options
-  // let dPath: string = `m/44'/60'/0'/0`
   let dPath: string = ''
 
   let addressToPath = new Map()
   let enabled: boolean = false
+  let customPath: boolean = false
 
   let account:
     | undefined
@@ -125,6 +125,7 @@ async function trezorProvider(options: {
   provider.getBalances = getBalances
   provider.send = provider.sendAsync
   provider.disconnect = disconnect
+  provider.isCustomPath = isCustomPath
 
   function disconnect() {
     dPath = ''
@@ -133,13 +134,56 @@ async function trezorProvider(options: {
     provider.stop()
   }
 
-  function setPath(path: string) {
+  async function setPath(path: string, custom?: boolean) {
+    if (custom) {
+      if (!isValidPath(path)) {
+        return false
+      }
+
+      try {
+        const address = await getAddress(path)
+        addressToPath.set(address, path)
+        customPath = true
+        return true
+      } catch (error) {
+        throw new Error(
+          `There was a problem deriving an address from path ${path}`
+        )
+      }
+    }
+
+    customPath = false
     dPath = path
+
+    return true
+  }
+
+  function isCustomPath() {
+    return customPath
   }
 
   function enable() {
     enabled = true
     return getAccounts()
+  }
+
+  async function getAddress(path: string) {
+    const errorMsg = `Unable to derive address from path ${path}`
+
+    try {
+      const result = await TrezorConnect.ethereumGetAddress({
+        path,
+        showOnTrezor: false
+      })
+
+      if (!result.success) {
+        throw new Error(errorMsg)
+      }
+
+      return result.payload.address
+    } catch (error) {
+      throw new Error(errorMsg)
+    }
   }
 
   function addresses() {
@@ -163,18 +207,26 @@ async function trezorProvider(options: {
       throw new Error('a derivation path is needed to get the public key')
     }
 
-    const result = await TrezorConnect.getPublicKey({
-      path: dPath,
-      coin: 'eth'
-    })
+    try {
+      const result = await TrezorConnect.getPublicKey({
+        path: dPath,
+        coin: 'eth'
+      })
 
-    account = {
-      publicKey: result.payload.publicKey,
-      chainCode: result.payload.chainCode,
-      path: result.payload.serializedPath
+      if (!result.success) {
+        throw new Error(result.payload.error)
+      }
+
+      account = {
+        publicKey: result.payload.publicKey,
+        chainCode: result.payload.chainCode,
+        path: result.payload.serializedPath
+      }
+
+      return account
+    } catch (error) {
+      throw new Error('There was an error accessing your Trezor accounts.')
     }
-
-    return account
   }
 
   function getPrimaryAddress() {
@@ -195,9 +247,15 @@ async function trezorProvider(options: {
       return addresses()
     }
 
-    const accountInfo = account || (await getPublicKey())
+    if (!account) {
+      try {
+        account = await getPublicKey()
+      } catch (error) {
+        throw error
+      }
+    }
 
-    const addressInfo = generateAddresses(accountInfo, addressToPath.size)
+    const addressInfo = generateAddresses(account, addressToPath.size)
 
     addressInfo.forEach(({ dPath, address }) => {
       addressToPath.set(address, dPath)
