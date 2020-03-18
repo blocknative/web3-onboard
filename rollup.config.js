@@ -60,7 +60,6 @@ export default {
     'trezor-connect',
     'ethereumjs-tx',
     'ethereumjs-util',
-    // 'ethereumjs-wallet/hdkey',
     'hdkey',
     '@ledgerhq/hw-transport-u2f',
     '@ledgerhq/hw-app-eth',
