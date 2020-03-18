@@ -14,8 +14,19 @@ import * as EthereumTx from 'ethereumjs-tx'
 
 import buffer from 'buffer'
 
+let transport: any
+let eth: any
+
 function ledger(options: LedgerOptions & CommonWalletOptions): WalletModule {
-  const { rpcUrl, networkId, preferred, label, iconSrc, svg } = options
+  const {
+    rpcUrl,
+    LedgerTransport,
+    networkId,
+    preferred,
+    label,
+    iconSrc,
+    svg
+  } = options
 
   return {
     name: label || 'Ledger',
@@ -27,6 +38,7 @@ function ledger(options: LedgerOptions & CommonWalletOptions): WalletModule {
       const provider = await ledgerProvider({
         rpcUrl,
         networkId,
+        LedgerTransport,
         BigNumber,
         networkName
       })
@@ -61,10 +73,11 @@ function ledger(options: LedgerOptions & CommonWalletOptions): WalletModule {
 async function ledgerProvider(options: {
   networkId: number
   rpcUrl: string
+  LedgerTransport: any
   BigNumber: any
   networkName: (id: number) => string
 }) {
-  const { networkId, rpcUrl, BigNumber, networkName } = options
+  const { networkId, rpcUrl, LedgerTransport, BigNumber, networkName } = options
   const basePath = networkIdToDerivationPath(networkId)
 
   let addressToPath = new Map()
@@ -90,6 +103,25 @@ async function ledgerProvider(options: {
   provider.setPrimaryAccount = setPrimaryAccount
   provider.getBalance = getBalance
   provider.send = provider.sendAsync
+  provider.disconnect = disconnect
+
+  if (!eth) {
+    try {
+      transport = LedgerTransport
+        ? await LedgerTransport.create()
+        : await TransportU2F.create()
+
+      eth = new Eth(transport)
+    } catch (error) {
+      throw new Error('Error connecting to Ledger wallet')
+    }
+  }
+
+  function disconnect() {
+    addressToPath = new Map()
+    enabled = false
+    provider.stop()
+  }
 
   function enable() {
     enabled = true
@@ -161,16 +193,6 @@ async function ledgerProvider(options: {
         paths.push(`${basePath}/0'/0`)
       }
 
-      let transport
-      let eth
-
-      try {
-        transport = await TransportU2F.create()
-        eth = new Eth(transport)
-      } catch (error) {
-        reject({ message: 'Error connecting to Ledger wallet' })
-      }
-
       for (const path of paths) {
         try {
           const { address } = await eth.getAddress(path)
@@ -215,15 +237,6 @@ async function ledgerProvider(options: {
 
   async function signTransaction(transactionData: any) {
     const path = [...addressToPath.values()][0]
-    let transport
-    let eth
-
-    try {
-      transport = await TransportU2F.create()
-      eth = new Eth(transport)
-    } catch (error) {
-      throw new Error('Error connecting to Ledger wallet')
-    }
 
     try {
       const transaction = new EthereumTx.Transaction(transactionData, {
