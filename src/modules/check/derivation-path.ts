@@ -61,11 +61,13 @@ const errorMsgStyles = `
   color: #e2504a;
 `
 
-function derivationPath(options: {
-  heading: string
-  description: string
-  icon: string
-}) {
+function derivationPath(
+  options: {
+    heading?: string
+    description?: string
+    icon?: string
+  } = {}
+) {
   const { heading, description, icon } = options
 
   let state = {
