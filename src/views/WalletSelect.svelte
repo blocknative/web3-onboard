@@ -2,6 +2,7 @@
   import BigNumber from 'bignumber.js'
   import { get } from 'svelte/store'
   import { fade } from 'svelte/transition'
+  import { onDestroy, onMount } from 'svelte'
 
   import { app, walletInterface, wallet, resetWalletState } from '../stores'
 
@@ -55,6 +56,23 @@
 
   let showingAllWalletModules = false
   const showAllWallets = () => (showingAllWalletModules = true)
+
+  function lockScroll() {
+    window.scrollTo(0, 0)
+  }
+
+  let originalOverflowValue: string
+
+  onMount(() => {
+    originalOverflowValue = window.document.body.style.overflow
+    window.document.body.style.overflow = 'hidden'
+    window.addEventListener('scroll', lockScroll)
+  })
+
+  onDestroy(() => {
+    window.removeEventListener('scroll', lockScroll)
+    window.document.body.style.overflow = originalOverflowValue
+  })
 
   renderWalletSelect()
 
