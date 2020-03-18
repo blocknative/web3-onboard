@@ -2,6 +2,7 @@
   import WalletSelect from './WalletSelect.svelte'
   import WalletCheck from './WalletCheck.svelte'
   import accountSelect from '../modules/check/accounts'
+  import derivationPath from '../modules/check/derivation-path'
   import { app } from '../stores'
 
   import {
@@ -48,5 +49,5 @@
 {/if}
 
 {#if $app.accountSelectInProgress}
-  <WalletCheck modules={[accountSelect()]} />
+  <WalletCheck modules={[derivationPath(), accountSelect()]} />
 {/if}
