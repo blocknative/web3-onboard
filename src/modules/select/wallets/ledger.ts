@@ -14,9 +14,6 @@ import * as EthereumTx from 'ethereumjs-tx'
 
 import buffer from 'buffer'
 
-let transport: any
-let eth: any
-
 function ledger(options: LedgerOptions & CommonWalletOptions): WalletModule {
   const {
     rpcUrl,
@@ -48,7 +45,7 @@ function ledger(options: LedgerOptions & CommonWalletOptions): WalletModule {
         interface: {
           name: 'Ledger',
           connect: provider.enable,
-          disconnect: () => provider.stop(),
+          disconnect: provider.disconnect,
           address: {
             get: async () => provider.getPrimaryAddress()
           },
@@ -105,19 +102,21 @@ async function ledgerProvider(options: {
   provider.send = provider.sendAsync
   provider.disconnect = disconnect
 
-  if (!eth) {
-    try {
-      transport = LedgerTransport
-        ? await LedgerTransport.create()
-        : await TransportU2F.create()
+  let transport: any
+  let eth: any
 
-      eth = new Eth(transport)
-    } catch (error) {
-      throw new Error('Error connecting to Ledger wallet')
-    }
+  try {
+    transport = LedgerTransport
+      ? await LedgerTransport.create()
+      : await TransportU2F.create()
+
+    eth = new Eth(transport)
+  } catch (error) {
+    throw new Error('Error connecting to Ledger wallet')
   }
 
   function disconnect() {
+    transport.close()
     addressToPath = new Map()
     enabled = false
     provider.stop()
