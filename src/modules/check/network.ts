@@ -2,11 +2,13 @@ import { networkName } from '../../utilities'
 import { WalletCheckModule, StateAndHelpers } from '../../interfaces'
 import { networkIcon } from './icons'
 
-function network(options: {
-  heading: string
-  description: string
-  icon: string
-}): WalletCheckModule | never {
+function network(
+  options: {
+    heading?: string
+    description?: string
+    icon?: string
+  } = {}
+): WalletCheckModule | never {
   const { heading, description, icon } = options
 
   return (stateAndHelpers: StateAndHelpers) => {

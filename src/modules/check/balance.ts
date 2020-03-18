@@ -2,12 +2,14 @@ import { WalletCheckModal, StateAndHelpers } from '../../interfaces'
 import { validateType } from '../../validation'
 import { balanceIcon } from './icons'
 
-function balance(options: {
-  minimumBalance: string
-  heading: string
-  description: string
-  icon: string
-}): (currentState: StateAndHelpers) => WalletCheckModal | undefined {
+function balance(
+  options: {
+    minimumBalance: string
+    heading?: string
+    description?: string
+    icon?: string
+  } = { minimumBalance: '0' }
+): (currentState: StateAndHelpers) => WalletCheckModal | undefined {
   validateType({ name: 'balance options', value: options, type: 'object' })
 
   const { minimumBalance, heading, description, icon } = options
@@ -21,7 +23,7 @@ function balance(options: {
   return (StateAndHelpers: StateAndHelpers) => {
     const { balance, BigNumber } = StateAndHelpers
     // if balance is less than minimum
-    if (BigNumber(balance).lt(BigNumber(minimumBalance || 0))) {
+    if (BigNumber(balance).lt(BigNumber(minimumBalance))) {
       return {
         heading: heading || 'Get Some ETH',
         description:

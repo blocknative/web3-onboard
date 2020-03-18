@@ -15,11 +15,13 @@ const msgStyles = `
   margin-top: 0.5rem;
 `
 
-function accountSelect(options: {
-  heading: string
-  description: string
-  icon: string
-}): WalletCheckModule {
+function accountSelect(
+  options: {
+    heading?: string
+    description?: string
+    icon?: string
+  } = {}
+): WalletCheckModule {
   const { heading, description, icon } = options
   let completed: boolean = false
   let loadingAccounts: boolean = false

@@ -5,11 +5,13 @@ import {
 } from '../../interfaces'
 import { connectIcon } from './icons'
 
-function connect(options: {
-  heading: string
-  description: string
-  icon: string
-}): WalletCheckModule {
+function connect(
+  options: {
+    heading?: string
+    description?: string
+    icon?: string
+  } = {}
+): WalletCheckModule {
   const { heading, description, icon } = options
 
   return (stateAndHelpers: StateAndHelpers): WalletCheckModal | undefined => {
