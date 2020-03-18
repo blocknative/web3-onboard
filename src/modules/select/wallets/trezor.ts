@@ -14,6 +14,8 @@ import * as EthereumTx from 'ethereumjs-tx'
 
 const { default: TrezorConnect, DEVICE_EVENT, DEVICE } = TrezorConnectLibrary
 
+const TREZOR_DEFAULT_PATH = "m/44'/60'/0'/0"
+
 function trezor(options: TrezorOptions & CommonWalletOptions): WalletModule {
   const {
     rpcUrl,
@@ -142,6 +144,9 @@ async function trezorProvider(options: {
 
       try {
         const address = await getAddress(path)
+
+        // over-ride any exsting addresses for the case of accountSelect being called
+        addressToPath = new Map()
         addressToPath.set(address, path)
         customPath = true
         return true
@@ -245,6 +250,10 @@ async function trezorProvider(options: {
 
     if (addressToPath.size > 0 && !getMore) {
       return addresses()
+    }
+
+    if (dPath === '') {
+      dPath = TREZOR_DEFAULT_PATH
     }
 
     if (!account) {

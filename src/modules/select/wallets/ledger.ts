@@ -130,6 +130,9 @@ async function ledgerProvider(options: {
       }
 
       const address = await getAddress(path)
+
+      // over-ride any exsting addresses for the case of accountSelect being called
+      addressToPath = new Map()
       addressToPath.set(address, path)
       customPath = true
       return true
@@ -210,6 +213,10 @@ async function ledgerProvider(options: {
 
     if (addressToPath.size > 0 && !getMore) {
       return addresses()
+    }
+
+    if (dPath === '') {
+      dPath = LEDGER_LIVE_PATH
     }
 
     if (dPath === LEDGER_LIVE_PATH) {
