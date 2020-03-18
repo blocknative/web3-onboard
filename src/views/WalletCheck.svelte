@@ -29,6 +29,7 @@
   } from '../interfaces'
 
   export let walletSelect: WalletSelectFunction
+  export let modules: WalletCheckModule[] | undefined
 
   const blocknative = getBlocknative()
 
@@ -73,18 +74,18 @@
   async function renderModule() {
     checkingModule = true
 
-    let modules = get(app).checkModules
+    let checkModules = modules || get(app).checkModules
 
-    if (isPromise(modules)) {
-      modules = await modules
-      modules.forEach(validateWalletCheckModule)
-      app.update(store => ({ ...store, checkModules: modules }))
+    if (isPromise(checkModules)) {
+      checkModules = await checkModules
+      checkModules.forEach(validateWalletCheckModule)
+      app.update(store => ({ ...store, checkModules }))
     }
 
     const currentWallet = get(wallet).name
 
     // loop through and run each module to check if a modal needs to be shown
-    runModules(modules).then(
+    runModules(checkModules).then(
       (result: {
         modal: WalletCheckModal | undefined
         module: WalletCheckModule | undefined
@@ -198,7 +199,6 @@
         }
 
         loadingModal = false
-        modules.forEach(m => m.reset && m.reset())
         return resolve({ modal: undefined, module: undefined })
       }
     )
