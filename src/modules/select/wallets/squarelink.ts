@@ -25,7 +25,6 @@ function squarelink(
       })
 
       const provider = instance.getProviderSync()
-
       const { BigNumber } = helpers
 
       return {
@@ -34,6 +33,7 @@ function squarelink(
         interface: {
           name: 'Squarelink',
           connect: provider.enable,
+          disconnect: () => provider.stop(),
           address: {
             get: () => Promise.resolve(instance.accounts[0])
           },
