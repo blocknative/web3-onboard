@@ -106,7 +106,7 @@ export interface Helpers {
 
 export interface WalletInterface {
   name: string | undefined
-  connect?: () => Promise<{ message: string } | undefined>
+  connect?: () => Promise<{ message: string } | string[] | undefined>
   disconnect?: () => void
   address: StateSyncer
   network: StateSyncer

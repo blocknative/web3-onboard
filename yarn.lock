@@ -948,6 +948,11 @@
   resolved "https://registry.yarnpkg.com/@pyoner/svelte-ts-preprocess/-/svelte-ts-preprocess-1.2.1.tgz#bf03e7e30b35ac3e1a1bbf3e10c06e0880ceed3a"
   integrity sha512-6iIcYcna76WmNFPl9k9kRXyW9ubLDnGT9lMuiDI8K+8TdA/tFxeXQdE9NeIYEITGNYfUseKbtc3/pN6xEww+WA==
 
+"@restless/sanitizers@^0.2.4":
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/@restless/sanitizers/-/sanitizers-0.2.4.tgz#726ea5607f1bf7e327df266e180b2702e3ffe587"
+  integrity sha512-BqEF+7YEPSvmM8xp5R1uM5hpf87wzVdzSK7rr323bjxM6JBQcBE2w1i6KXpYq2GEJ2Z9BIFSAbRs7jGAtgeJxw==
+
 "@rollup/plugin-image@^2.0.4":
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-image/-/plugin-image-2.0.4.tgz#a9b22737684986d2299b7803b82bf87af47d41de"
@@ -1062,6 +1067,14 @@
   integrity sha512-auApPaJf3NPfe18hSoJkp8EbZzer2ISk7o8mCC3M9he/a04+gbMF97NkpD2S8riMGvm4BMRI59/SZQSaLTKpsQ==
   dependencies:
     "@types/node" "*"
+
+"@unilogin/provider@^0.5.18":
+  version "0.5.18"
+  resolved "https://registry.yarnpkg.com/@unilogin/provider/-/provider-0.5.18.tgz#4a22634836d924feef57bf737a4540c83c9d9073"
+  integrity sha512-H4COmRenTVp69ld6ZlDewdY+r6IVNC3HatBi9VbNQhf2ag206IUgvPxsU8ntfAS/yezgtzkHeO3qtD5FLyBoDg==
+  dependencies:
+    "@restless/sanitizers" "^0.2.4"
+    reactive-properties "^0.1.11"
 
 "@walletconnect/browser@^1.0.0-beta.47":
   version "1.0.0-beta.47"
@@ -4602,6 +4615,11 @@ randombytes@^2.1.0:
   integrity sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ==
   dependencies:
     safe-buffer "^5.1.0"
+
+reactive-properties@^0.1.11:
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/reactive-properties/-/reactive-properties-0.1.11.tgz#d8678fa5a66b964c1a520ec92a3137842b8f9d52"
+  integrity sha512-NhOEcAlNSq94ml3WdLroKdndeUo4Idj4PSEieqfaLL5BXZU4BFo+TsOY6yiasR9EVUw27mfW2sYBYhwSUNMrLw==
 
 read-pkg-up@^3.0.0:
   version "3.0.0"
