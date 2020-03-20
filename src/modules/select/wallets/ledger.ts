@@ -138,17 +138,20 @@ async function ledgerProvider(options: {
   }
 
   async function setPath(path: string, custom?: boolean) {
-    if (custom) {
-      if (!isValidPath(path)) {
-        return false
-      }
+    if (!isValidPath(path)) {
+      return false
+    }
 
-      const address = await getAddress(path)
-
-      // over-ride any exsting addresses for the case of accountSelect being called
+    if (path !== dPath) {
+      // clear any exsting addresses if different path
       addressToPath = new Map()
+    }
+
+    if (custom) {
+      const address = await getAddress(path)
       addressToPath.set(address, path)
       customPath = true
+
       return true
     }
 
