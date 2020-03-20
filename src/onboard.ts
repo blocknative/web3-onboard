@@ -48,6 +48,12 @@ function init(initialization: Initialization): API {
 
   const { os, isMobile } = getDeviceInfo()
 
+  const initializedModules = initializeModules(
+    networkId,
+    initialization.walletSelect,
+    initialization.walletCheck
+  )
+
   app.update((store: AppState) => ({
     ...store,
     dappId,
@@ -55,20 +61,14 @@ function init(initialization: Initialization): API {
     version,
     mobileDevice: isMobile,
     os,
-    darkMode
+    darkMode,
+    checkModules: initializedModules.walletCheck
   }))
-
-  const initializedModules = initializeModules(
-    networkId,
-    initialization.walletSelect,
-    initialization.walletCheck
-  )
 
   onboard = new Onboard({
     target: document.body,
     props: {
       walletSelectModule: initializedModules.walletSelect,
-      walletCheckModules: initializedModules.walletCheck,
       walletSelect
     }
   })
