@@ -7,12 +7,16 @@ import {
 import ledgerIcon from '../wallet-icons/icon-ledger'
 
 import createProvider from './providerEngine'
+import { generateAddresses, isValidPath } from './hd-wallet'
 
 import TransportU2F from '@ledgerhq/hw-transport-u2f'
 import Eth from '@ledgerhq/hw-app-eth'
 import * as EthereumTx from 'ethereumjs-tx'
 
 import buffer from 'buffer'
+
+const LEDGER_LIVE_PATH = `m/44'/60'`
+const ACCOUNTS_TO_GET = 5
 
 function ledger(options: LedgerOptions & CommonWalletOptions): WalletModule {
   const {
@@ -75,10 +79,15 @@ async function ledgerProvider(options: {
   networkName: (id: number) => string
 }) {
   const { networkId, rpcUrl, LedgerTransport, BigNumber, networkName } = options
-  const basePath = networkIdToDerivationPath(networkId)
 
+  let dPath = ''
   let addressToPath = new Map()
   let enabled: boolean = false
+  let customPath = false
+
+  let account:
+    | undefined
+    | { publicKey: string; chainCode: string; path: string }
 
   const provider = createProvider({
     getAccounts: (callback: any) => {
@@ -94,13 +103,18 @@ async function ledgerProvider(options: {
     rpcUrl
   })
 
-  provider.getPrimaryAddress = getPrimaryAddress
-  provider.getAllAccountsAndBalances = getAllAccountsAndBalances
+  provider.setPath = setPath
+  provider.dPath = dPath
   provider.enable = enable
   provider.setPrimaryAccount = setPrimaryAccount
+  provider.getPrimaryAddress = getPrimaryAddress
+  provider.getAccounts = getAccounts
+  provider.getMoreAccounts = getMoreAccounts
   provider.getBalance = getBalance
+  provider.getBalances = getBalances
   provider.send = provider.sendAsync
   provider.disconnect = disconnect
+  provider.isCustomPath = isCustomPath
 
   let transport: any
   let eth: any
@@ -117,35 +131,44 @@ async function ledgerProvider(options: {
 
   function disconnect() {
     transport.close()
+    dPath = ''
     addressToPath = new Map()
     enabled = false
     provider.stop()
   }
 
+  async function setPath(path: string, custom?: boolean) {
+    if (custom) {
+      if (!isValidPath(path)) {
+        return false
+      }
+
+      const address = await getAddress(path)
+
+      // over-ride any exsting addresses for the case of accountSelect being called
+      addressToPath = new Map()
+      addressToPath.set(address, path)
+      customPath = true
+      return true
+    }
+
+    customPath = false
+    dPath = path
+
+    return true
+  }
+
+  function isCustomPath() {
+    return customPath
+  }
+
   function enable() {
     enabled = true
-    return getAccounts(1)
+    return getAccounts()
   }
 
   function addresses() {
     return Array.from(addressToPath.keys())
-  }
-
-  function getPrimaryAddress() {
-    return enabled ? addresses()[0] : undefined
-  }
-
-  async function getAllAccountsAndBalances(amountToGet: number = 5) {
-    const accounts = await getAccounts(amountToGet, true)
-    return Promise.all(
-      accounts.map(
-        (address: string) =>
-          new Promise(async resolve => {
-            const balance = await getBalance(address)
-            resolve({ address, balance })
-          })
-      )
-    )
   }
 
   function setPrimaryAccount(address: string) {
@@ -160,55 +183,100 @@ async function ledgerProvider(options: {
     addressToPath = new Map(accounts)
   }
 
-  function getAccounts(
-    numberToGet: number = 1,
-    getMore?: boolean
-  ): Promise<any[]> {
-    return new Promise(async (resolve, reject) => {
-      if (!enabled) {
-        resolve([null])
+  async function getAddress(path: string) {
+    try {
+      const result = await eth.getAddress(path)
+      return result.address
+    } catch (error) {}
+  }
+
+  async function getPublicKey() {
+    if (!dPath) {
+      throw new Error('a derivation path is needed to get the public key')
+    }
+
+    try {
+      const result = await eth.getAddress(dPath, false, true)
+      const { publicKey, chainCode } = result
+
+      account = {
+        publicKey,
+        chainCode,
+        path: dPath
       }
 
-      const addressesAlreadyFetched = addressToPath.size
+      return account
+    } catch (error) {
+      throw new Error('There was a problem accessing your Ledger accounts.')
+    }
+  }
 
-      if (addressesAlreadyFetched > 0 && !getMore) {
-        return resolve(addresses())
-      }
+  function getPrimaryAddress() {
+    return enabled ? addresses()[0] : undefined
+  }
 
+  async function getMoreAccounts() {
+    const accounts = await getAccounts(true)
+    return accounts && getBalances(accounts)
+  }
+
+  async function getAccounts(getMore?: boolean) {
+    if (!enabled) {
+      return []
+    }
+
+    if (addressToPath.size > 0 && !getMore) {
+      return addresses()
+    }
+
+    if (dPath === '') {
+      dPath = LEDGER_LIVE_PATH
+    }
+
+    if (dPath === LEDGER_LIVE_PATH) {
+      const currentAccounts = addressToPath.size
       const paths = []
-
-      if (numberToGet > 1) {
-        for (
-          let i = addressesAlreadyFetched > 1 ? addressesAlreadyFetched : 0;
-          i < numberToGet + addressesAlreadyFetched;
-          i++
-        ) {
-          const ledgerLive = `${basePath}/${i}'/0/0`
-          const legacy = `${basePath}/0'/${i}`
-
-          paths.push(ledgerLive, legacy)
-        }
-      } else {
-        paths.push(`${basePath}/0'/0`)
+      for (
+        let i = currentAccounts;
+        i < ACCOUNTS_TO_GET + currentAccounts;
+        i++
+      ) {
+        paths.push(`${LEDGER_LIVE_PATH}/${i}'/0/0`)
       }
 
       for (const path of paths) {
+        const res = await eth.getAddress(path)
+        addressToPath.set(res.address, path)
+      }
+    } else {
+      if (!account) {
         try {
-          const { address } = await eth.getAddress(path)
-          addressToPath.set(address.toLowerCase(), path)
-        } catch (err) {
-          return reject({
-            message: 'There was a problem trying to connect to your Ledger.'
-          })
+          account = await getPublicKey()
+        } catch (error) {
+          throw error
         }
       }
 
-      const allAddresses = addresses()
+      const addressInfo = generateAddresses(account, addressToPath.size)
 
-      transport.close()
+      addressInfo.forEach(({ dPath, address }) => {
+        addressToPath.set(address, dPath)
+      })
+    }
 
-      resolve(allAddresses)
-    })
+    return addresses()
+  }
+
+  function getBalances(addresses: Array<string>) {
+    return Promise.all(
+      addresses.map(
+        address =>
+          new Promise(async resolve => {
+            const balance = await getBalance(address)
+            resolve({ address, balance })
+          })
+      )
+    )
   }
 
   function getBalance(address: string) {

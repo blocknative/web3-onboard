@@ -28,6 +28,10 @@ export interface WalletCheckModule {
   id?: string
 }
 
+export interface WalletCheckModule {
+  reset?: () => void
+}
+
 export interface WalletCheckModal {
   heading: string
   description: string

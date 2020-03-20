@@ -59,6 +59,8 @@ export default {
     'regenerator-runtime/runtime',
     'trezor-connect',
     'ethereumjs-tx',
+    'ethereumjs-util',
+    'hdkey',
     '@ledgerhq/hw-transport-u2f',
     '@ledgerhq/hw-app-eth',
     'util',

@@ -9,7 +9,8 @@ import {
   WalletStateSliceStore,
   StateSyncer,
   BalanceStore,
-  CancelablePromise
+  CancelablePromise,
+  WalletCheckModule
 } from './interfaces'
 
 export const app: WritableStore = writable({
@@ -24,7 +25,8 @@ export const app: WritableStore = writable({
   walletCheckInProgress: false,
   walletCheckCompleted: false,
   accountSelectInProgress: false,
-  autoSelectWallet: ''
+  autoSelectWallet: '',
+  checkModules: []
 })
 
 export const balanceSyncStatus: {
@@ -95,6 +97,8 @@ walletInterface.subscribe((walletInterface: WalletInterface | null) => {
       balance.setStateSyncer(walletInterface.balance)
     ]
   }
+
+  resetCheckModules()
 })
 
 export function resetWalletState(options?: {
@@ -144,12 +148,23 @@ export function resetWalletState(options?: {
     return currentInterface
   })
 
-  app.update(store => ({
-    ...store,
-    walletSelectInProgress: false,
-    walletSelectCompleted: false,
-    autoSelect: false
-  }))
+  resetCheckModules()
+
+  app.update(store => {
+    return {
+      ...store,
+      walletSelectInProgress: false,
+      walletSelectCompleted: false,
+      autoSelect: false
+    }
+  })
+}
+
+function resetCheckModules() {
+  const { checkModules } = get(app)
+  if (Array.isArray(checkModules)) {
+    checkModules.forEach((m: WalletCheckModule) => m.reset && m.reset())
+  }
 }
 
 function createWalletInterfaceStore(
