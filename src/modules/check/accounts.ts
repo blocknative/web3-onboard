@@ -36,7 +36,7 @@ function accountSelect(
     if (type === 'hardware' && !completed && !provider.isCustomPath()) {
       if (accountsAndBalances.length === 0) {
         loadingAccounts = true
-        const accounts = await provider.getAccounts()
+        const accounts = await provider.enable()
         accountsAndBalances = await provider.getBalances(accounts)
         loadingAccounts = false
       }
