@@ -137,18 +137,22 @@ async function trezorProvider(options: {
   }
 
   async function setPath(path: string, custom?: boolean) {
-    if (custom) {
-      if (!isValidPath(path)) {
-        return false
-      }
+    if (!isValidPath(path)) {
+      return false
+    }
 
+    if (path !== dPath) {
+      // clear any exsting addresses if different path
+      addressToPath = new Map()
+    }
+
+    if (custom) {
       try {
         const address = await getAddress(path)
-
-        // over-ride any exsting addresses for the case of accountSelect being called
-        addressToPath = new Map()
         addressToPath.set(address, path)
+        dPath = path
         customPath = true
+
         return true
       } catch (error) {
         throw new Error(
