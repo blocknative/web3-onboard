@@ -527,6 +527,7 @@ export function validateWalletInit(
     appUrl,
     email,
     rpcUrl,
+    LedgerTransport,
     buildEnv,
     buttonPosition,
     enableLogging,
@@ -551,6 +552,7 @@ export function validateWalletInit(
       'appUrl',
       'email',
       'rpcUrl',
+      'LedgerTransport',
       'buildEnv',
       'buttonPosition',
       'enableLogging',
@@ -619,8 +621,14 @@ export function validateWalletInit(
   validateType({
     name: 'walletInit.appUrl',
     value: appUrl,
-
     type: 'string',
+    optional: true
+  })
+
+  validateType({
+    name: 'walletInit.LedgerTransport',
+    value: LedgerTransport,
+    type: 'function',
     optional: true
   })
 
@@ -659,7 +667,6 @@ export function validateWalletInit(
     type: 'boolean',
     optional: true
   })
-
 
   validateType({
     name: 'walletInit.enabledVerifiers',

@@ -58,7 +58,7 @@
     window.scrollTo(0, 0)
   }
 
-  let originalOverflowValue
+  let originalOverflowValue: string
 
   onMount(() => {
     originalOverflowValue = window.document.body.style.overflow

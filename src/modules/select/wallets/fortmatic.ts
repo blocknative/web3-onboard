@@ -25,7 +25,6 @@ function fortmatic(
         networkId === 1 ? undefined : networkName(networkId)
       )
       const provider = instance.getProvider()
-
       const { BigNumber } = helpers
 
       return {
@@ -34,6 +33,7 @@ function fortmatic(
         interface: {
           name: 'Fortmatic',
           connect: instance.user.login,
+          disconnect: instance.user.logout,
           address: {
             get: () => Promise.resolve(provider.account)
           },

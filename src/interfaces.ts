@@ -154,6 +154,7 @@ export interface TrezorOptions {
 
 export interface LedgerOptions {
   rpcUrl: string
+  LedgerTransport?: any
 }
 
 export interface TorusOptions {
@@ -165,13 +166,12 @@ export interface TorusOptions {
   enabledVerifiers: TorusVerifierStatus
 }
 
-
 interface TorusVerifierStatus {
-  google?: boolean;
-  facebook?: boolean;
-  reddit?: boolean;
-  twitch?: boolean;
-  discord?: boolean;
+  google?: boolean
+  facebook?: boolean
+  reddit?: boolean
+  twitch?: boolean
+  discord?: boolean
 }
 
 export interface AuthereumOptions {
