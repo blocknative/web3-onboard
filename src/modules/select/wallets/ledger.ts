@@ -67,6 +67,8 @@ function ledger(options: LedgerOptions & CommonWalletOptions): WalletModule {
     },
     type: 'hardware',
     desktop: true,
+    mobile: true,
+    osExclusions: ['iOS'],
     preferred
   }
 }
