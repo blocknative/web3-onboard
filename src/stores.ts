@@ -271,11 +271,10 @@ function createBalanceStore(initialState: string | null): BalanceStore {
 
             // unsubscribe from previous address
             if (emitterAddress) {
-              blocknative.unsubscribe(blocknative.clientIndex, emitterAddress)
+              blocknative.unsubscribe(emitterAddress)
             }
 
-            emitter = blocknative.account(blocknative.clientIndex, $address)
-              .emitter
+            emitter = blocknative.account($address).emitter
 
             emitter.on('txConfirmed', () => {
               if (stateSyncer.get) {
@@ -297,7 +296,7 @@ function createBalanceStore(initialState: string | null): BalanceStore {
           const blocknative = getBlocknative()
 
           // unsubscribe from previous address
-          blocknative.unsubscribe(blocknative.clientIndex, emitterAddress)
+          blocknative.unsubscribe(emitterAddress)
 
           // no address, so set balance to undefined
           set && set(undefined)
