@@ -67,6 +67,8 @@ function trezor(options: TrezorOptions & CommonWalletOptions): WalletModule {
     },
     type: 'hardware',
     desktop: true,
+    mobile: true,
+    osExclusions: ['iOS'],
     preferred
   }
 }
