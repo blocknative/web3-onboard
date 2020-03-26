@@ -18,6 +18,7 @@ export interface WalletSelectModule {
   heading: string
   description: string
   wallets: Array<WalletModule | WalletInitOptions>
+  explanation?: string
 }
 
 export interface WalletCheckModule {
@@ -48,6 +49,7 @@ export interface WalletCheckModal {
 export interface WalletSelectModalData {
   heading: string
   description: string
+  explanation?: string
   primaryWallets: WalletModule[]
   secondaryWallets: WalletModule[] | undefined
 }

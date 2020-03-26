@@ -47,7 +47,7 @@
   let selectedWalletModule: WalletModule
 
   const { mobileDevice, os } = get(app)
-  let { heading, description, wallets } = module
+  let { heading, description, explanation, wallets } = module
 
   let primaryWallets: WalletModule[]
   let secondaryWallets: WalletModule[] | undefined
@@ -102,6 +102,7 @@
     modalData = {
       heading,
       description,
+      explanation,
       primaryWallets,
       secondaryWallets
     }
@@ -248,12 +249,7 @@
         <p
           in:fade
           class="bn-onboard-custom bn-onboard-select-wallet-definition">
-          Wallets are used to send, receive, and store digital assets like
-          Ethereum. Wallets come in many forms. They are either built into your
-          browser, an extension added to your browser, a piece of hardware
-          plugged into your computer or even an app on your phone. They are
-          hyper secure, and can be used for any other blockchain application you
-          may want to use.
+          {@html modalData.explanation}
         </p>
       {/if}
     {:else}
