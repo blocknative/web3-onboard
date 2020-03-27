@@ -11,7 +11,7 @@ function imtoken(options: CommonWalletOptions): WalletModule {
     iconSrc,
     svg: svg || imTokenIcon,
     wallet: async (helpers: Helpers) => {
-      const { getProviderName, createModernProviderInterface } = helpers
+      const { getProviderName, createLegacyProviderInterface } = helpers
 
       const provider =
         (window as any).ethereum ||
@@ -21,7 +21,10 @@ function imtoken(options: CommonWalletOptions): WalletModule {
         provider,
         interface:
           provider && getProviderName(provider) === 'imToken'
-            ? createModernProviderInterface(provider)
+            ? {
+                ...createLegacyProviderInterface(provider),
+                connect: () => provider.enable()
+              }
             : null
       }
     },
