@@ -10,7 +10,8 @@ const defaultWalletNames = [
   'torus',
   'opera',
   'operaTouch',
-  'status'
+  'status',
+  'unilogin'
 ]
 
 function select(
@@ -81,6 +82,8 @@ function getModule(name: string): Promise<any> | undefined {
       return import('./wallets/trezor')
     case 'ledger':
       return import('./wallets/ledger')
+    case 'unilogin':
+      return import('./wallets/unilogin')
     default:
       return
   }
