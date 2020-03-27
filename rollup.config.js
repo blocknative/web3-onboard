@@ -56,6 +56,7 @@ export default {
     'squarelink',
     'authereum',
     '@toruslabs/torus-embed',
+    '@unilogin/provider',
     'regenerator-runtime/runtime',
     'trezor-connect',
     'ethereumjs-tx',
