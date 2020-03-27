@@ -158,11 +158,17 @@ function validateSubscriptions(subscriptions: Subscriptions): never | void {
 function validateWalletSelect(walletSelect: WalletSelectModule): never | void {
   validateType({ name: 'walletSelect', value: walletSelect, type: 'object' })
 
-  const { heading, description, wallets, ...otherParams } = walletSelect
+  const {
+    heading,
+    description,
+    explanation,
+    wallets,
+    ...otherParams
+  } = walletSelect
 
   invalidParams(
     otherParams,
-    ['heading', 'description', 'wallets'],
+    ['heading', 'description', 'explanation', 'wallets'],
     'walletSelect'
   )
 
@@ -172,9 +178,17 @@ function validateWalletSelect(walletSelect: WalletSelectModule): never | void {
     type: 'string',
     optional: true
   })
+
   validateType({
     name: 'description',
     value: description,
+    type: 'string',
+    optional: true
+  })
+
+  validateType({
+    name: 'explanation',
+    value: explanation,
     type: 'string',
     optional: true
   })
@@ -527,6 +541,7 @@ export function validateWalletInit(
     appUrl,
     email,
     rpcUrl,
+    LedgerTransport,
     buildEnv,
     buttonPosition,
     enableLogging,
@@ -551,6 +566,7 @@ export function validateWalletInit(
       'appUrl',
       'email',
       'rpcUrl',
+      'LedgerTransport',
       'buildEnv',
       'buttonPosition',
       'enableLogging',
@@ -619,8 +635,14 @@ export function validateWalletInit(
   validateType({
     name: 'walletInit.appUrl',
     value: appUrl,
-
     type: 'string',
+    optional: true
+  })
+
+  validateType({
+    name: 'walletInit.LedgerTransport',
+    value: LedgerTransport,
+    type: 'function',
     optional: true
   })
 

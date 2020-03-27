@@ -5,23 +5,23 @@ import { WalletInterface } from './interfaces'
 
 export function getNetwork(provider: any): Promise<number | any> {
   return new Promise((resolve, reject) => {
-    // web3.js sometimes deletes sendAsync method
-    const method = provider.sendAsync || provider.send
+    const params = {
+      jsonrpc: '2.0',
+      method: 'net_version',
+      params: [],
+      id: 42
+    }
 
-    if (method) {
-      method(
-        {
-          jsonrpc: '2.0',
-          method: 'net_version',
-          params: [],
-          id: 42
-        },
-        (e: any, res: any) => {
-          e && reject(e)
-          const result = res && res.result
-          resolve(result && Number(result))
-        }
-      )
+    const callback = (e: any, res: any) => {
+      e && reject(e)
+      const result = res && res.result
+      resolve(result && Number(result))
+    }
+
+    if (typeof provider.sendAsync === 'function') {
+      provider.sendAsync(params, callback)
+    } else if (typeof provider.send === 'function') {
+      provider.send(params, callback)
     } else {
       resolve(null)
     }
@@ -30,23 +30,23 @@ export function getNetwork(provider: any): Promise<number | any> {
 
 export function getAddress(provider: any): Promise<string | any> {
   return new Promise((resolve, reject) => {
-    // web3.js sometimes deletes sendAsync method
-    const method = provider.sendAsync || provider.send
+    const params = {
+      jsonrpc: '2.0',
+      method: 'eth_accounts',
+      params: [],
+      id: 42
+    }
 
-    if (method) {
-      method(
-        {
-          jsonrpc: '2.0',
-          method: 'eth_accounts',
-          params: [],
-          id: 42
-        },
-        (e: any, res: any) => {
-          e && reject(e)
-          const result = res && res.result && res.result[0]
-          resolve(result)
-        }
-      )
+    const callback = (e: any, res: any) => {
+      e && reject(e)
+      const result = res && res.result && res.result[0]
+      resolve(result)
+    }
+
+    if (typeof provider.sendAsync === 'function') {
+      provider.sendAsync(params, callback)
+    } else if (typeof provider.send === 'function') {
+      provider.send(params, callback)
     } else {
       resolve(null)
     }
@@ -62,23 +62,23 @@ export function getBalance(provider: any): Promise<string | any> {
       return
     }
 
-    // web3.js sometimes deletes sendAsync method
-    const method = provider.sendAsync || provider.send
+    const params = {
+      jsonrpc: '2.0',
+      method: 'eth_getBalance',
+      params: [currentAddress, 'latest'],
+      id: 42
+    }
 
-    if (method) {
-      method(
-        {
-          jsonrpc: '2.0',
-          method: 'eth_getBalance',
-          params: [currentAddress, 'latest'],
-          id: 42
-        },
-        (e: any, res: any) => {
-          e && reject(e)
-          const result = res && res.result
-          resolve(result && new BigNumber(result).toString(10))
-        }
-      )
+    const callback = (e: any, res: any) => {
+      e && reject(e)
+      const result = res && res.result
+      resolve(result && new BigNumber(result).toString(10))
+    }
+
+    if (typeof provider.sendAsync === 'function') {
+      provider.sendAsync(params, callback)
+    } else if (typeof provider.send === 'function') {
+      provider.send(params, callback)
     } else {
       resolve(null)
     }

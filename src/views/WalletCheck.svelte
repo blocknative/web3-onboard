@@ -1,6 +1,6 @@
 <script lang="ts">
   import { get } from 'svelte/store'
-
+  import { onDestroy, onMount } from 'svelte'
   import { fade } from 'svelte/transition'
   import BigNumber from 'bignumber.js'
 
@@ -28,8 +28,8 @@
     UserState
   } from '../interfaces'
 
-  export let modules: WalletCheckModule[] | Promise<WalletCheckModule[]> = []
   export let walletSelect: WalletSelectFunction
+  export let modules: WalletCheckModule[] | undefined
 
   const blocknative = getBlocknative()
 
@@ -54,35 +54,38 @@
     renderModule()
   }
 
+  function lockScroll() {
+    window.scrollTo(0, 0)
+  }
+
+  let originalOverflowValue: string
+
+  onMount(() => {
+    originalOverflowValue = window.document.body.style.overflow
+    window.document.body.style.overflow = 'hidden'
+    window.addEventListener('scroll', lockScroll)
+  })
+
+  onDestroy(() => {
+    window.removeEventListener('scroll', lockScroll)
+    window.document.body.style.overflow = originalOverflowValue
+  })
+
   async function renderModule() {
     checkingModule = true
 
-    if (isPromise(modules)) {
-      modules = await modules
-      modules.forEach(validateWalletCheckModule)
+    let checkModules = modules || get(app).checkModules
+
+    if (isPromise(checkModules)) {
+      checkModules = await checkModules
+      checkModules.forEach(validateWalletCheckModule)
+      app.update(store => ({ ...store, checkModules }))
     }
 
     const currentWallet = get(wallet).name
 
-    // check if the current wallet is ledger
-    if (currentWallet === 'Ledger') {
-      // if loadingAccounts module isn't already loaded, then load it
-      if (!modules.find(module => module.id === 'loadingAccounts')) {
-        // import the loading accounts module
-        const { default: loadingAccountsModule } = await import(
-          '../modules/check/loading-accounts'
-        )
-
-        // initialize the loading accounts module and put at the front of the modules array
-        modules.unshift(loadingAccountsModule())
-      }
-    } else {
-      // not a ledger wallet, so make sure loadingAccounts module is not in array
-      modules = modules.filter(m => m.id !== 'loadingAccounts')
-    }
-
     // loop through and run each module to check if a modal needs to be shown
-    runModules(modules).then(
+    runModules(checkModules).then(
       (result: {
         modal: WalletCheckModal | undefined
         module: WalletCheckModule | undefined
@@ -128,7 +131,7 @@
               activeModal = result && result.modal ? result.modal : activeModal
             }
           }
-        }, 500)
+        }, 100)
       }
     )
   }
@@ -272,6 +275,7 @@
   section {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
     margin-bottom: 1rem;
   }

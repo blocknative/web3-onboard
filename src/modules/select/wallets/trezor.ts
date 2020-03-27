@@ -7,11 +7,14 @@ import {
 import trezorIcon from '../wallet-icons/icon-trezor'
 
 import createProvider from './providerEngine'
+import { generateAddresses, isValidPath } from './hd-wallet'
 
 import * as TrezorConnectLibrary from 'trezor-connect'
 import * as EthereumTx from 'ethereumjs-tx'
 
 const { default: TrezorConnect, DEVICE_EVENT, DEVICE } = TrezorConnectLibrary
+
+const TREZOR_DEFAULT_PATH = "m/44'/60'/0'/0"
 
 function trezor(options: TrezorOptions & CommonWalletOptions): WalletModule {
   const {
@@ -46,7 +49,7 @@ function trezor(options: TrezorOptions & CommonWalletOptions): WalletModule {
         interface: {
           name: 'Trezor',
           connect: provider.enable,
-          disconnect: () => provider.stop(),
+          disconnect: provider.disconnect,
           address: {
             get: async () => provider.getPrimaryAddress()
           },
@@ -64,6 +67,8 @@ function trezor(options: TrezorOptions & CommonWalletOptions): WalletModule {
     },
     type: 'hardware',
     desktop: true,
+    mobile: true,
+    osExclusions: ['iOS'],
     preferred
   }
 }
@@ -77,10 +82,15 @@ async function trezorProvider(options: {
   networkName: (id: number) => string
 }) {
   const { networkId, email, appUrl, rpcUrl, BigNumber, networkName } = options
-  const basePath = networkIdToDerivationPath(networkId)
+  let dPath: string = ''
 
   let addressToPath = new Map()
   let enabled: boolean = false
+  let customPath: boolean = false
+
+  let account:
+    | undefined
+    | { publicKey: string; chainCode: string; path: string }
 
   TrezorConnect.manifest({
     email,
@@ -97,8 +107,8 @@ async function trezorProvider(options: {
   const provider = createProvider({
     getAccounts: (callback: any) => {
       getAccounts()
-        .then((res: Array<string>) => callback(null, res))
-        .catch(err => callback(err, null))
+        .then((res: Array<string | undefined>) => callback(null, res))
+        .catch((err: any) => callback(err, null))
     },
     signTransaction: (transactionData: any, callback: any) => {
       signTransaction(transactionData)
@@ -108,37 +118,87 @@ async function trezorProvider(options: {
     rpcUrl
   })
 
-  provider.getPrimaryAddress = getPrimaryAddress
-  provider.getAllAccountsAndBalances = getAllAccountsAndBalances
+  provider.setPath = setPath
+  provider.dPath = dPath
   provider.enable = enable
   provider.setPrimaryAccount = setPrimaryAccount
+  provider.getPrimaryAddress = getPrimaryAddress
+  provider.getAccounts = getAccounts
+  provider.getMoreAccounts = getMoreAccounts
   provider.getBalance = getBalance
+  provider.getBalances = getBalances
   provider.send = provider.sendAsync
+  provider.disconnect = disconnect
+  provider.isCustomPath = isCustomPath
+
+  function disconnect() {
+    dPath = ''
+    addressToPath = new Map()
+    enabled = false
+    provider.stop()
+  }
+
+  async function setPath(path: string, custom?: boolean) {
+    if (!isValidPath(path)) {
+      return false
+    }
+
+    if (path !== dPath) {
+      // clear any exsting addresses if different path
+      addressToPath = new Map()
+    }
+
+    if (custom) {
+      try {
+        const address = await getAddress(path)
+        addressToPath.set(address, path)
+        dPath = path
+        customPath = true
+
+        return true
+      } catch (error) {
+        throw new Error(
+          `There was a problem deriving an address from path ${path}`
+        )
+      }
+    }
+
+    customPath = false
+    dPath = path
+
+    return true
+  }
+
+  function isCustomPath() {
+    return customPath
+  }
 
   function enable() {
     enabled = true
-    return getAccounts(1)
+    return getAccounts()
+  }
+
+  async function getAddress(path: string) {
+    const errorMsg = `Unable to derive address from path ${path}`
+
+    try {
+      const result = await TrezorConnect.ethereumGetAddress({
+        path,
+        showOnTrezor: false
+      })
+
+      if (!result.success) {
+        throw new Error(errorMsg)
+      }
+
+      return result.payload.address
+    } catch (error) {
+      throw new Error(errorMsg)
+    }
   }
 
   function addresses() {
     return Array.from(addressToPath.keys())
-  }
-
-  function getPrimaryAddress() {
-    return enabled ? addresses()[0] : undefined
-  }
-
-  async function getAllAccountsAndBalances(amountToGet: number = 10) {
-    const accounts = await getAccounts(amountToGet, true)
-    return Promise.all(
-      accounts.map(
-        address =>
-          new Promise(async resolve => {
-            const balance = await getBalance(address)
-            resolve({ address, balance })
-          })
-      )
-    )
   }
 
   function setPrimaryAccount(address: string) {
@@ -153,58 +213,82 @@ async function trezorProvider(options: {
     addressToPath = new Map(accounts)
   }
 
-  async function getAccounts(accountsToGet: number = 10, getMore?: boolean) {
+  async function getPublicKey() {
+    if (!dPath) {
+      throw new Error('a derivation path is needed to get the public key')
+    }
+
+    try {
+      const result = await TrezorConnect.getPublicKey({
+        path: dPath,
+        coin: 'eth'
+      })
+
+      if (!result.success) {
+        throw new Error(result.payload.error)
+      }
+
+      account = {
+        publicKey: result.payload.publicKey,
+        chainCode: result.payload.chainCode,
+        path: result.payload.serializedPath
+      }
+
+      return account
+    } catch (error) {
+      throw new Error('There was an error accessing your Trezor accounts.')
+    }
+  }
+
+  function getPrimaryAddress() {
+    return enabled ? addresses()[0] : undefined
+  }
+
+  async function getMoreAccounts() {
+    const accounts = await getAccounts(true)
+    return getBalances(accounts)
+  }
+
+  async function getAccounts(getMore?: boolean) {
     if (!enabled) {
       return [undefined]
     }
 
-    const addressesAlreadyFetched = addressToPath.size
-    const bundle = []
-
-    if (addressesAlreadyFetched > 0 && !getMore) {
+    if (addressToPath.size > 0 && !getMore) {
       return addresses()
     }
 
-    for (
-      let i = addressesAlreadyFetched > 1 ? addressesAlreadyFetched : 0;
-      i < accountsToGet + addressesAlreadyFetched;
-      i++
-    ) {
-      const path = `${basePath}/0'/0/${i}`
-      bundle.push({ path, showOnTrezor: false })
+    if (dPath === '') {
+      dPath = TREZOR_DEFAULT_PATH
     }
 
-    let data
-
-    try {
-      data = await TrezorConnect.ethereumGetAddress({
-        bundle
-      })
-    } catch (error) {
-      enabled = false
-      throw new Error(data.payload.error)
+    if (!account) {
+      try {
+        account = await getPublicKey()
+      } catch (error) {
+        throw error
+      }
     }
 
-    if (!data.success) {
-      enabled = false
-      throw new Error(data.payload.error)
-    }
+    const addressInfo = generateAddresses(account, addressToPath.size)
 
-    if (Array.isArray(data.payload)) {
-      data.payload.forEach(
-        (addressData: { serializedPath: string; address: string }) => {
-          const { address, serializedPath } = addressData
-          addressToPath.set(address.toLowerCase(), serializedPath)
-        }
+    addressInfo.forEach(({ dPath, address }) => {
+      addressToPath.set(address, dPath)
+    })
+
+    return addresses()
+  }
+
+  function getBalances(addresses: Array<string>) {
+    return Promise.all(
+      addresses.map(
+        address =>
+          new Promise(async resolve => {
+            const balance = await getBalance(address)
+            resolve({ address, balance })
+          })
       )
-    } else {
-      const { address, serializedPath } = data.payload
-      addressToPath.set(address.toLowerCase(), serializedPath)
-    }
-
-    const allAddresses = addresses()
-
-    return allAddresses
+    )
   }
 
   function getBalance(address: string) {
@@ -269,13 +353,6 @@ async function trezorProvider(options: {
   }
 
   return provider
-}
-
-function networkIdToDerivationPath(networkId: number) {
-  switch (networkId) {
-    default:
-      return `m/44'/60'`
-  }
 }
 
 export default trezor

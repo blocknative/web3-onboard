@@ -2,6 +2,7 @@
   import BigNumber from 'bignumber.js'
   import { get } from 'svelte/store'
   import { fade } from 'svelte/transition'
+  import { onDestroy, onMount } from 'svelte'
 
   import { app, walletInterface, wallet, resetWalletState } from '../stores'
 
@@ -46,7 +47,7 @@
   let selectedWalletModule: WalletModule
 
   const { mobileDevice, os } = get(app)
-  let { heading, description, wallets } = module
+  let { heading, description, explanation, wallets } = module
 
   let primaryWallets: WalletModule[]
   let secondaryWallets: WalletModule[] | undefined
@@ -55,6 +56,23 @@
 
   let showingAllWalletModules = false
   const showAllWallets = () => (showingAllWalletModules = true)
+
+  function lockScroll() {
+    window.scrollTo(0, 0)
+  }
+
+  let originalOverflowValue: string
+
+  onMount(() => {
+    originalOverflowValue = window.document.body.style.overflow
+    window.document.body.style.overflow = 'hidden'
+    window.addEventListener('scroll', lockScroll)
+  })
+
+  onDestroy(() => {
+    window.removeEventListener('scroll', lockScroll)
+    window.document.body.style.overflow = originalOverflowValue
+  })
 
   renderWalletSelect()
 
@@ -84,6 +102,7 @@
     modalData = {
       heading,
       description,
+      explanation,
       primaryWallets,
       secondaryWallets
     }
@@ -230,12 +249,7 @@
         <p
           in:fade
           class="bn-onboard-custom bn-onboard-select-wallet-definition">
-          Wallets are used to send, receive, and store digital assets like
-          Ethereum. Wallets come in many forms. They are either built into your
-          browser, an extension added to your browser, a piece of hardware
-          plugged into your computer or even an app on your phone. They are
-          hyper secure, and can be used for any other blockchain application you
-          may want to use.
+          {@html modalData.explanation}
         </p>
       {/if}
     {:else}

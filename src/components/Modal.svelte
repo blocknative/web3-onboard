@@ -15,7 +15,7 @@
     font-family: 'Helvetica Neue';
     justify-content: center;
     align-items: center;
-    position: absolute;
+    position: fixed;
     font-size: 16px;
     z-index: 99;
     top: 0;
@@ -80,10 +80,14 @@
   }
 </style>
 
-<aside transition:fade class="bn-onboard-custom bn-onboard-modal">
+<aside
+  transition:fade
+  class="bn-onboard-custom bn-onboard-modal"
+  on:click={closeModal}>
   <section
     class:bn-onboard-dark-mode={$app.darkMode}
-    class="bn-onboard-custom bn-onboard-modal-content">
+    class="bn-onboard-custom bn-onboard-modal-content"
+    on:click={e => e.stopPropagation()}>
     <slot />
     {#if closeable}
       <div

@@ -10,7 +10,8 @@ const defaultWalletNames = [
   'torus',
   'opera',
   'operaTouch',
-  'status'
+  'status',
+  'unilogin'
 ]
 
 function select(
@@ -83,6 +84,8 @@ function getModule(name: string): Promise<any> | undefined {
       return import('./wallets/ledger')
     case 'imToken':
       return import('./wallets/imtoken')
+    case 'unilogin':
+      return import('./wallets/unilogin')
     default:
       return
   }

@@ -18,6 +18,7 @@ export interface WalletSelectModule {
   heading: string
   description: string
   wallets: Array<WalletModule | WalletInitOptions>
+  explanation?: string
 }
 
 export interface WalletCheckModule {
@@ -26,6 +27,10 @@ export interface WalletCheckModule {
     | undefined
     | Promise<WalletCheckModal | undefined>
   id?: string
+}
+
+export interface WalletCheckModule {
+  reset?: () => void
 }
 
 export interface WalletCheckModal {
@@ -44,6 +49,7 @@ export interface WalletCheckModal {
 export interface WalletSelectModalData {
   heading: string
   description: string
+  explanation?: string
   primaryWallets: WalletModule[]
   secondaryWallets: WalletModule[] | undefined
 }
@@ -106,7 +112,7 @@ export interface Helpers {
 
 export interface WalletInterface {
   name: string | undefined
-  connect?: () => Promise<{ message: string } | undefined>
+  connect?: () => Promise<{ message: string } | string[] | undefined>
   disconnect?: () => void
   address: StateSyncer
   network: StateSyncer
@@ -150,6 +156,7 @@ export interface TrezorOptions {
 
 export interface LedgerOptions {
   rpcUrl: string
+  LedgerTransport?: any
 }
 
 export interface TorusOptions {
@@ -161,13 +168,12 @@ export interface TorusOptions {
   enabledVerifiers: TorusVerifierStatus
 }
 
-
 interface TorusVerifierStatus {
-  google?: boolean;
-  facebook?: boolean;
-  reddit?: boolean;
-  twitch?: boolean;
-  discord?: boolean;
+  google?: boolean
+  facebook?: boolean
+  reddit?: boolean
+  twitch?: boolean
+  discord?: boolean
 }
 
 export interface AuthereumOptions {
