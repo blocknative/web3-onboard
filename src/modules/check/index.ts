@@ -44,6 +44,8 @@ function getModule(name: string): Promise<any> | never {
       return import('./balance')
     case 'accounts':
       return import('./accounts')
+    case 'derivationPath':
+      return import('./derivation-path')
     default:
       throw new Error(`invalid module name: ${name}`)
   }

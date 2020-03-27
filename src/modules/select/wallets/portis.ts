@@ -19,7 +19,6 @@ function portis(options: SdkWalletOptions & CommonWalletOptions): WalletModule {
       const { default: Portis } = await import('@portis/web3')
       const instance = new Portis(apiKey, networkName(networkId))
       const provider = instance.provider
-
       const { BigNumber } = helpers
 
       return {
@@ -28,6 +27,10 @@ function portis(options: SdkWalletOptions & CommonWalletOptions): WalletModule {
         interface: {
           name: 'Portis',
           connect: provider.enable,
+          disconnect: () => {
+            instance.logout()
+            provider.stop()
+          },
           address: {
             onChange: func => {
               instance.onLogin((address: string) => {
