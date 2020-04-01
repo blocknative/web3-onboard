@@ -11,7 +11,7 @@ function imtoken(options: CommonWalletOptions): WalletModule {
     iconSrc,
     svg: svg || imTokenIcon,
     wallet: async (helpers: Helpers) => {
-      const { getProviderName, createLegacyProviderInterface } = helpers
+      const { getProviderName, getBalance } = helpers
 
       const provider =
         (window as any).ethereum ||
@@ -22,7 +22,28 @@ function imtoken(options: CommonWalletOptions): WalletModule {
         interface:
           provider && getProviderName(provider) === 'imToken'
             ? {
-                ...createLegacyProviderInterface(provider),
+                address: {
+                  get: () => Promise.resolve(provider.selectedAddress)
+                },
+                network: {
+                  get: () => Promise.resolve(Number(provider.networkVersion))
+                },
+                balance: {
+                  get: () => {
+                    const params = {
+                      jsonrpc: '2.0',
+                      method: 'eth_getBalance',
+                      params: [provider.selectedAddress, 'latest'],
+                      id: 42
+                    }
+
+                    return provider.sendAsync(params).then((res: any) => {
+                      console.log('balance result:', res)
+                      return res
+                    })
+                  }
+                },
+                name: getProviderName(provider),
                 connect: () => provider.enable()
               }
             : null
