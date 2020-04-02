@@ -1,6 +1,6 @@
 import { getBlocknative } from './services'
 import { writable, derived, get } from 'svelte/store'
-import { wait, makeCancelable } from './utilities'
+import { wait, makeCancelable, createInterval } from './utilities'
 import { validateWalletInterface, validateType } from './validation'
 import {
   WritableStore,
@@ -70,7 +70,7 @@ export const state = derived(
 )
 
 // keep track of intervals that are syncing state so they can be cleared
-let currentSyncerIntervals: (number | undefined)[] = []
+let currentSyncerIntervals: ({ clear: () => void } | undefined)[] = []
 
 export const walletInterface: WalletInterfaceStore = createWalletInterfaceStore(
   null
@@ -79,7 +79,8 @@ export const walletInterface: WalletInterfaceStore = createWalletInterfaceStore(
 walletInterface.subscribe((walletInterface: WalletInterface | null) => {
   // clear all current intervals if they exist
   currentSyncerIntervals.forEach(
-    (interval: number | undefined) => interval && clearInterval(interval)
+    (interval: { clear: () => void } | undefined) =>
+      interval && interval.clear()
   )
 
   const currentState = get(state)
@@ -138,7 +139,7 @@ export function resetWalletState(options?: {
         url: undefined
       }))
 
-      disconnected &&
+      !disconnected &&
         currentInterface.disconnect &&
         currentInterface.disconnect()
 
@@ -175,8 +176,10 @@ function createWalletInterfaceStore(
   return {
     subscribe,
     update,
-    set: (walletInterface: WalletInterface) => {
-      validateWalletInterface(walletInterface)
+    set: (walletInterface: WalletInterface | null) => {
+      if (walletInterface) {
+        validateWalletInterface(walletInterface)
+      }
       set(walletInterface)
     }
   }
@@ -228,11 +231,11 @@ function createWalletStateSliceStore(options: {
       }
 
       if (get) {
-        const interval: any = setInterval(() => {
+        const interval: any = createInterval(() => {
           get()
             .then(newVal => {
               if (newVal || currentState !== initialState) {
-                set(newVal)
+                interval.status.active && set(newVal)
               }
             })
             .catch((err: any) => {

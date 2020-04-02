@@ -243,18 +243,20 @@ export interface WalletInterfaceStore {
   update: (
     updater: (walletInterface: WalletInterface | null) => WalletInterface | null
   ) => void
-  set: (walletInterface: WalletInterface) => void | never
+  set: (walletInterface: WalletInterface | null) => void | never
 }
 
 export interface WalletStateSliceStore {
   subscribe: (subscriber: (store: any) => void) => () => void
   reset: () => void
-  setStateSyncer: (stateSyncer: StateSyncer) => number | undefined
+  setStateSyncer: (
+    stateSyncer: StateSyncer
+  ) => { clear: () => void } | undefined
 }
 
 export interface BalanceStore {
   subscribe: (subscriber: (store: any) => void) => () => void
-  setStateSyncer: (stateSyncer: StateSyncer) => number | undefined
+  setStateSyncer: (stateSyncer: StateSyncer) => undefined
   reset: () => void
 }
 
