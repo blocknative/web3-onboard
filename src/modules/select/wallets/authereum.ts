@@ -31,13 +31,17 @@ function authereum(
 
       const provider = instance.getProvider()
 
+      console.log({ instance, provider })
+
       return {
         provider,
         instance,
         interface: {
           name: 'Authereum',
           connect: () => provider.enable(),
-          disconnect: () => instance.logout(),
+          disconnect: () => {
+            instance.destroy()
+          },
           address: {
             get: () => instance.getAccountAddress()
           },
