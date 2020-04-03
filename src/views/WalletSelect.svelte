@@ -175,7 +175,7 @@
     wallet.set({
       provider,
       instance,
-      url: module.url,
+      settings: module.settings,
       name: module.name,
       connect: selectedWalletInterface.connect,
       type: module.type

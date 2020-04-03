@@ -1,4 +1,4 @@
-import { networkName } from '../../../utilities'
+import { networkName, openLink } from '../../../utilities'
 import {
   SdkWalletOptions,
   WalletModule,
@@ -72,7 +72,7 @@ function portis(options: SdkWalletOptions & CommonWalletOptions): WalletModule {
     type: 'sdk',
     desktop: true,
     mobile: true,
-    url: 'https://wallet.portis.io/',
+    settings: () => openLink('https://wallet.portis.io/'),
     preferred
   }
 }

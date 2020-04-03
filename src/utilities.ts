@@ -283,3 +283,7 @@ export function createInterval(func: any, interval: number) {
     }
   }
 }
+
+export function openLink(url: string) {
+  window.open(url)
+}

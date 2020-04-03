@@ -84,7 +84,7 @@ export interface WalletModule {
   }>
   type: 'hardware' | 'injected' | 'sdk'
   link?: string
-  url?: string
+  settings?: () => void
   installMessage?: (wallets: {
     currentWallet: string | undefined
     selectedWallet: string
@@ -130,6 +130,7 @@ export interface Wallet {
   type: 'hardware' | 'injected' | 'sdk'
   instance?: any
   connect?: () => Promise<{ message: string } | undefined>
+  settings?: () => void
 }
 
 export interface CommonWalletOptions {
