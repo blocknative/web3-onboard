@@ -1,5 +1,5 @@
 import authereumIcon from '../wallet-icons/icon-authereum.png'
-import { networkName } from '../../../utilities'
+import { networkName, openLink } from '../../../utilities'
 import {
   WalletModule,
   AuthereumOptions,
@@ -31,8 +31,6 @@ function authereum(
 
       const provider = instance.getProvider()
 
-      console.log({ instance, provider })
-
       return {
         provider,
         instance,
@@ -53,16 +51,19 @@ function authereum(
               const loggedIn = await instance.isAuthenticated()
               return loggedIn && instance.getBalance()
             }
-          }
+          },
+          settings: () =>
+            openLink(
+              `https://${
+                networkId !== 1 ? `${networkName(networkId)}.` : ''
+              }authereum.com/`
+            )
         }
       }
     },
     type: 'sdk',
     desktop: true,
     mobile: true,
-    url: `https://${
-      networkId !== 1 ? `${networkName(networkId)}.` : ''
-    }authereum.com/`,
     preferred
   }
 }
