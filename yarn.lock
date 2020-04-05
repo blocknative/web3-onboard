@@ -1103,10 +1103,10 @@
   dependencies:
     "@types/node" "*"
 
-"@unilogin/provider@^0.5.20":
-  version "0.5.20"
-  resolved "https://registry.yarnpkg.com/@unilogin/provider/-/provider-0.5.20.tgz#3bdfe542058eca5bf86cb6c509a84ac6c2e64b0b"
-  integrity sha512-lDg/rU2fblQyrUHR0Jkk8vSiRQHkBKY6pUc0pqgaeDimkQNVZJKsPK7FzbRINtIJQGQsoZpObI6a25qguO/jew==
+"@unilogin/provider@^0.5.21":
+  version "0.5.21"
+  resolved "https://registry.yarnpkg.com/@unilogin/provider/-/provider-0.5.21.tgz#bc3aa74750c3fcd2ddcb763279fb58d88f5bc8f5"
+  integrity sha512-HVMrFIKc6ysxj5F1dz0UFaSIvSMtqw5JBYEzomvtthsw/fNwbT8/I/mA4OCaAJcpuaI1d66X9bZhOrP5GWcwVg==
   dependencies:
     "@restless/sanitizers" "^0.2.4"
     reactive-properties "^0.1.11"
