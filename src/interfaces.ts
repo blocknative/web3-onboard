@@ -84,7 +84,6 @@ export interface WalletModule {
   }>
   type: 'hardware' | 'injected' | 'sdk'
   link?: string
-  settings?: () => void
   installMessage?: (wallets: {
     currentWallet: string | undefined
     selectedWallet: string
@@ -117,6 +116,7 @@ export interface WalletInterface {
   address: StateSyncer
   network: StateSyncer
   balance: StateSyncer
+  settings?: () => void
 }
 
 export interface StateSyncer {

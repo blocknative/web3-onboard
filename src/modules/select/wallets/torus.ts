@@ -76,14 +76,14 @@ function torus(options: TorusOptions & CommonWalletOptions): WalletModule {
                   }
                 )
               })
-          }
+          },
+          settings: () => openLink('https://app.tor.us/')
         }
       }
     },
     type: 'sdk',
     desktop: true,
     mobile: true,
-    settings: () => openLink('https://app.tor.us/'),
     preferred
   }
 }

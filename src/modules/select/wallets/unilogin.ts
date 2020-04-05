@@ -23,7 +23,8 @@ function unilogin(options: CommonWalletOptions): WalletModule {
           disconnect: () =>
             new Promise(resolve =>
               provider.send({ method: 'ul_disconnect' }, resolve)
-            )
+            ),
+          settings: () => provider.openDashboard()
         }
       }
     },

@@ -65,14 +65,14 @@ function portis(options: SdkWalletOptions & CommonWalletOptions): WalletModule {
                   )
                 }, 1)
               })
-          }
+          },
+          settings: () => openLink('https://wallet.portis.io/')
         }
       }
     },
     type: 'sdk',
     desktop: true,
     mobile: true,
-    settings: () => openLink('https://wallet.portis.io/'),
     preferred
   }
 }

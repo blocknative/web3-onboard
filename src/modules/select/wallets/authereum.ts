@@ -51,19 +51,19 @@ function authereum(
               const loggedIn = await instance.isAuthenticated()
               return loggedIn && instance.getBalance()
             }
-          }
+          },
+          settings: () =>
+            openLink(
+              `https://${
+                networkId !== 1 ? `${networkName(networkId)}.` : ''
+              }authereum.com/`
+            )
         }
       }
     },
     type: 'sdk',
     desktop: true,
     mobile: true,
-    settings: () =>
-      openLink(
-        `https://${
-          networkId !== 1 ? `${networkName(networkId)}.` : ''
-        }authereum.com/`
-      ),
     preferred
   }
 }

@@ -60,14 +60,14 @@ function squarelink(
                   }
                 )
               })
-          }
+          },
+          settings: () => openLink('https://app.squarelink.com/')
         }
       }
     },
     type: 'sdk',
     desktop: true,
     mobile: true,
-    settings: () => openLink('https://app.squarelink.com/'),
     preferred
   }
 }
