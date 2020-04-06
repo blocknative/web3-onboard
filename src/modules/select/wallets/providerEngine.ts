@@ -5,9 +5,20 @@ import SubscriptionSubprovider from 'web3-provider-engine/subproviders/subscript
 import FilterSubprovider from 'web3-provider-engine/subproviders/filters'
 
 function createProvider(config: any) {
-  const { getAccounts, signTransaction, rpcUrl } = config
+  const {
+    getAccounts,
+    signTransaction,
+    rpcUrl,
+    signMessage,
+    signPersonalMessage
+  } = config
 
-  const idMgmt = new HookedWalletSubprovider({ getAccounts, signTransaction })
+  const idMgmt = new HookedWalletSubprovider({
+    getAccounts,
+    signTransaction,
+    signMessage,
+    signPersonalMessage
+  })
 
   const rpcSubProvider = new RpcSource({
     rpcUrl: rpcUrl.includes('http') ? rpcUrl : `https://${rpcUrl}`

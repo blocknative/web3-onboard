@@ -11,6 +11,7 @@ import { generateAddresses, isValidPath } from './hd-wallet'
 
 import * as TrezorConnectLibrary from 'trezor-connect'
 import * as EthereumTx from 'ethereumjs-tx'
+import * as ethUtil from 'ethereumjs-util'
 
 const { default: TrezorConnect, DEVICE_EVENT, DEVICE } = TrezorConnectLibrary
 
@@ -112,6 +113,16 @@ async function trezorProvider(options: {
     },
     signTransaction: (transactionData: any, callback: any) => {
       signTransaction(transactionData)
+        .then((res: string) => callback(null, res))
+        .catch(err => callback(err, null))
+    },
+    signMessage: (messageData: any, callback: any) => {
+      signMessage(messageData)
+        .then((res: string) => callback(null, res))
+        .catch(err => callback(err, null))
+    },
+    signPersonalMessage: (messageData: any, callback: any) => {
+      signMessage(messageData)
         .then((res: string) => callback(null, res))
         .catch(err => callback(err, null))
     },
@@ -332,6 +343,10 @@ async function trezorProvider(options: {
   }
 
   async function signTransaction(transactionData: any) {
+    if (addressToPath.size === 0) {
+      await enable()
+    }
+
     const path = [...addressToPath.values()][0]
 
     const transaction = new EthereumTx.Transaction(transactionData, {
@@ -350,6 +365,37 @@ async function trezorProvider(options: {
     transaction.s = signature.s
 
     return `0x${transaction.serialize().toString('hex')}`
+  }
+
+  async function signMessage(message: { data: string }): Promise<string> {
+    if (addressToPath.size === 0) {
+      await enable()
+    }
+
+    const [address, path] = [...addressToPath.entries()][0]
+
+    return new Promise((resolve, reject) => {
+      TrezorConnect.ethereumSignMessage({
+        path,
+        message: ethUtil.stripHexPrefix(message.data),
+        hex: true
+      }).then((response: any) => {
+        if (response.success) {
+          if (response.payload.address !== ethUtil.toChecksumAddress(address)) {
+            reject(new Error('signature doesnt match the right address'))
+          }
+          const signature = `0x${response.payload.signature}`
+          resolve(signature)
+        } else {
+          reject(
+            new Error(
+              (response.payload && response.payload.error) ||
+                'There was an error signing a message'
+            )
+          )
+        }
+      })
+    })
   }
 
   return provider

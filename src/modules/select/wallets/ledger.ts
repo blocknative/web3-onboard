@@ -12,6 +12,7 @@ import { generateAddresses, isValidPath } from './hd-wallet'
 import TransportU2F from '@ledgerhq/hw-transport-u2f'
 import Eth from '@ledgerhq/hw-app-eth'
 import * as EthereumTx from 'ethereumjs-tx'
+import * as ethUtil from 'ethereumjs-util'
 
 import buffer from 'buffer'
 
@@ -99,6 +100,16 @@ async function ledgerProvider(options: {
     },
     signTransaction: (transactionData: any, callback: any) => {
       signTransaction(transactionData)
+        .then((res: string) => callback(null, res))
+        .catch(err => callback(err, null))
+    },
+    signMessage: (messageData: any, callback: any) => {
+      signMessage(messageData)
+        .then((res: string) => callback(null, res))
+        .catch(err => callback(err, null))
+    },
+    signPersonalMessage: (messageData: any, callback: any) => {
+      signMessage(messageData)
         .then((res: string) => callback(null, res))
         .catch(err => callback(err, null))
     },
@@ -336,14 +347,25 @@ async function ledgerProvider(options: {
     }
   }
 
-  return provider
-}
+  async function signMessage(message: { data: string }): Promise<string> {
+    if (addressToPath.size === 0) {
+      await enable()
+    }
 
-function networkIdToDerivationPath(networkId: number) {
-  switch (networkId) {
-    default:
-      return `m/44'/60'`
+    const path = [...addressToPath.values()][0]
+
+    return eth
+      .signPersonalMessage(path, ethUtil.stripHexPrefix(message.data))
+      .then((result: any) => {
+        let v = (result['v'] - 27).toString(16)
+        if (v.length < 2) {
+          v = '0' + v
+        }
+        return `0x${result['r']}${result['s']}${v}`
+      })
   }
+
+  return provider
 }
 
 export default ledger
