@@ -2,58 +2,67 @@ import { mobileWalletInstallMessage } from '../content'
 import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
 
 import imTokenIcon from '../wallet-icons/icon-imtoken'
+import createProvider from './providerEngine'
 
 function imtoken(options: CommonWalletOptions): WalletModule {
-  const { preferred, label, iconSrc, svg } = options
+  const { preferred, label, iconSrc, svg, rpcUrl } = options
 
   return {
     name: label || 'imToken',
     iconSrc,
     svg: svg || imTokenIcon,
     wallet: async (helpers: Helpers) => {
-      const { getProviderName, getBalance } = helpers
+      const { getProviderName } = helpers
+      const imTokenProvider = (window as any).ethereum
+      const provider = rpcUrl ? createProvider({ rpcUrl }) : null
 
-      const provider =
-        (window as any).ethereum ||
-        ((window as any).web3 && (window as any).web3.currentProvider)
+      let warned = false
 
       return {
-        provider,
+        provider: provider || imTokenProvider,
         interface:
-          provider && getProviderName(provider) === 'imToken'
+          imTokenProvider && getProviderName(imTokenProvider) === 'imToken'
             ? {
                 address: {
-                  get: () => Promise.resolve(provider.selectedAddress)
+                  get: () => Promise.resolve(imTokenProvider.selectedAddress),
                 },
                 network: {
-                  get: () => Promise.resolve(Number(provider.networkVersion))
+                  get: () =>
+                    Promise.resolve(Number(imTokenProvider.networkVersion)),
                 },
                 balance: {
                   get: () => {
+                    if (!provider) {
+                      !warned &&
+                        console.warn(
+                          'The imToken provider does not allow rpc calls preventing Onboard.js from getting the balance. You can pass in a "rpcUrl" to the imToken wallet initialization object to get the balance.'
+                        )
+                      return Promise.resolve(null)
+                    }
                     const params = {
                       jsonrpc: '2.0',
                       method: 'eth_getBalance',
-                      params: [provider.selectedAddress, 'latest'],
-                      id: 42
+                      params: [imTokenProvider.selectedAddress, 'latest'],
+                      id: 42,
                     }
 
                     return provider.sendAsync(params).then((res: any) => {
                       console.log('balance result:', res)
                       return res
                     })
-                  }
+                  },
                 },
-                name: getProviderName(provider),
-                connect: () => provider.enable()
+                name: getProviderName(imTokenProvider),
+                connect: () => imTokenProvider.enable(),
               }
-            : null
+            : null,
       }
     },
     type: 'injected',
     link: `imtokenv2://navigate?screen=DappView&url=${window.location.href}`,
     installMessage: mobileWalletInstallMessage,
     mobile: true,
-    preferred
+    preferred,
   }
 }
 
