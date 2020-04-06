@@ -24,7 +24,7 @@ function unilogin(options: CommonWalletOptions): WalletModule {
             new Promise(resolve =>
               provider.send({ method: 'ul_disconnect' }, resolve)
             ),
-          settings: () => provider.openDashboard()
+          dashboard: () => provider.openDashboard()
         }
       }
     },

@@ -61,7 +61,7 @@ function squarelink(
                 )
               })
           },
-          settings: () => openLink('https://app.squarelink.com/')
+          dashboard: () => openLink('https://app.squarelink.com/')
         }
       }
     },

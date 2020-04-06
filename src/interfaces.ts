@@ -116,7 +116,7 @@ export interface WalletInterface {
   address: StateSyncer
   network: StateSyncer
   balance: StateSyncer
-  settings?: () => void
+  dashboard?: () => void
 }
 
 export interface StateSyncer {
@@ -130,7 +130,7 @@ export interface Wallet {
   type: 'hardware' | 'injected' | 'sdk'
   instance?: any
   connect?: () => Promise<{ message: string } | undefined>
-  settings?: () => void
+  dashboard?: () => void
 }
 
 export interface CommonWalletOptions {

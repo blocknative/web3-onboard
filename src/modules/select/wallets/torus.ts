@@ -77,7 +77,7 @@ function torus(options: TorusOptions & CommonWalletOptions): WalletModule {
                 )
               })
           },
-          settings: () => openLink('https://app.tor.us/')
+          dashboard: () => openLink('https://app.tor.us/')
         }
       }
     },
