@@ -101,17 +101,27 @@ async function ledgerProvider(options: {
     signTransaction: (transactionData: any, callback: any) => {
       signTransaction(transactionData)
         .then((res: string) => callback(null, res))
-        .catch(err => callback(err, null))
+        .catch((err) => callback(err, null))
+    },
+    processMessage: (messageData: any, callback: any) => {
+      signMessage(messageData)
+        .then((res: string) => callback(null, res))
+        .catch((err) => callback(err, null))
+    },
+    processPersonalMessage: (messageData: any, callback: any) => {
+      signMessage(messageData)
+        .then((res: string) => callback(null, res))
+        .catch((err) => callback(err, null))
     },
     signMessage: (messageData: any, callback: any) => {
       signMessage(messageData)
         .then((res: string) => callback(null, res))
-        .catch(err => callback(err, null))
+        .catch((err) => callback(err, null))
     },
     signPersonalMessage: (messageData: any, callback: any) => {
       signMessage(messageData)
         .then((res: string) => callback(null, res))
-        .catch(err => callback(err, null))
+        .catch((err) => callback(err, null))
     },
     rpcUrl
   })
@@ -286,8 +296,8 @@ async function ledgerProvider(options: {
   function getBalances(addresses: Array<string>) {
     return Promise.all(
       addresses.map(
-        address =>
-          new Promise(async resolve => {
+        (address) =>
+          new Promise(async (resolve) => {
             const balance = await getBalance(address)
             resolve({ address, balance })
           })
