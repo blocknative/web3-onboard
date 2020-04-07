@@ -53,9 +53,12 @@ export function getAddress(provider: any): Promise<string | any> {
   })
 }
 
-export function getBalance(provider: any): Promise<string | any> {
+export function getBalance(
+  provider: any,
+  address?: string
+): Promise<string | any> {
   return new Promise(async (resolve, reject) => {
-    const currentAddress = await getAddress(provider)
+    const currentAddress = address || (await getAddress(provider))
 
     if (!currentAddress) {
       resolve(null)
@@ -153,13 +156,12 @@ export function createLegacyProviderInterface(provider: any): WalletInterface {
 export function getProviderName(provider: any): string | undefined {
   if (!provider) return
 
-  // Torus also exports isMetamask to be true for backward compatibility
   if (provider.isTorus) {
     return 'Torus'
   }
 
-  if (provider.isMetaMask) {
-    return 'MetaMask'
+  if (provider.isImToken) {
+    return 'imToken'
   }
 
   if (provider.isDapper) {
@@ -192,6 +194,10 @@ export function getProviderName(provider: any): string | undefined {
 
   if (provider.isStatus) {
     return 'Status'
+  }
+
+  if (provider.isMetaMask) {
+    return 'MetaMask'
   }
 
   if (provider.host && provider.host.indexOf('localhost') !== -1) {

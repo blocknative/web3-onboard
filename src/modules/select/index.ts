@@ -82,6 +82,8 @@ function getModule(name: string): Promise<any> | undefined {
       return import('./wallets/trezor')
     case 'ledger':
       return import('./wallets/ledger')
+    case 'imToken':
+      return import('./wallets/imtoken')
     case 'unilogin':
       return import('./wallets/unilogin')
     default:
