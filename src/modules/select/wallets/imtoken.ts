@@ -43,10 +43,12 @@ function imtoken(
                 balance: {
                   get: () => {
                     if (!provider) {
-                      !warned &&
+                      if (!warned) {
                         console.warn(
                           'The imToken provider does not allow rpc calls preventing Onboard.js from getting the balance. You can pass in a "rpcUrl" to the imToken wallet initialization object to get the balance.'
                         )
+                        warned = true
+                      }
                       return Promise.resolve(null)
                     }
 
