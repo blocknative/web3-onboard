@@ -102,7 +102,7 @@ export interface Helpers {
   networkName: (id: number) => string
   getAddress: (provider: any) => Promise<string | any>
   getNetwork: (provider: any) => Promise<number | any>
-  getBalance: (provider: any) => Promise<string | any>
+  getBalance: (provider: any, address?: string) => Promise<string | any>
   resetWalletState: (options?: {
     disconnected: boolean
     walletName: string
