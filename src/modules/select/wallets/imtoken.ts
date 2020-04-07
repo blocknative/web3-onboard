@@ -22,43 +22,41 @@ function imtoken(
         createProvider = (await import('./providerEngine')).default
       }
 
-      const provider = rpcUrl
-        ? createProvider && createProvider({ rpcUrl })
-        : null
+      const provider = createProvider ? createProvider({ rpcUrl }) : null
 
       let warned = false
 
       return {
         provider: imTokenProvider,
-        interface:
-          imTokenProvider && isImToken
-            ? {
-                address: {
-                  get: () => Promise.resolve(imTokenProvider.selectedAddress)
-                },
-                network: {
-                  get: () =>
-                    Promise.resolve(Number(imTokenProvider.networkVersion))
-                },
-                balance: {
-                  get: () => {
-                    if (!provider) {
-                      if (!warned) {
-                        console.warn(
-                          'The imToken provider does not allow rpc calls preventing Onboard.js from getting the balance. You can pass in a "rpcUrl" to the imToken wallet initialization object to get the balance.'
-                        )
-                        warned = true
-                      }
-                      return Promise.resolve(null)
+        interface: isImToken
+          ? {
+              address: {
+                get: () => Promise.resolve(imTokenProvider.selectedAddress)
+              },
+              network: {
+                get: () =>
+                  Promise.resolve(Number(imTokenProvider.networkVersion))
+              },
+              balance: {
+                get: () => {
+                  if (!provider) {
+                    if (!warned) {
+                      console.warn(
+                        'The imToken provider does not allow rpc calls preventing Onboard.js from getting the balance. You can pass in a "rpcUrl" to the imToken wallet initialization object to get the balance.'
+                      )
+                      warned = true
                     }
 
-                    return getBalance(provider, imTokenProvider.selectedAddress)
+                    return Promise.resolve(null)
                   }
-                },
-                name: getProviderName(imTokenProvider),
-                connect: () => imTokenProvider.enable()
-              }
-            : null
+
+                  return getBalance(provider, imTokenProvider.selectedAddress)
+                }
+              },
+              name: getProviderName(imTokenProvider),
+              connect: () => imTokenProvider.enable()
+            }
+          : null
       }
     },
     type: 'injected',
