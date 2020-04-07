@@ -1,4 +1,4 @@
-import { networkName } from '../../../utilities'
+import { networkName, openLink } from '../../../utilities'
 import {
   TorusOptions,
   CommonWalletOptions,
@@ -76,14 +76,14 @@ function torus(options: TorusOptions & CommonWalletOptions): WalletModule {
                   }
                 )
               })
-          }
+          },
+          dashboard: () => openLink('https://app.tor.us/')
         }
       }
     },
     type: 'sdk',
     desktop: true,
     mobile: true,
-    url: 'https://app.tor.us/',
     preferred
   }
 }

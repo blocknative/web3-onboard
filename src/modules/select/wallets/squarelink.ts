@@ -1,4 +1,4 @@
-import { networkName, networkToId } from '../../../utilities'
+import { networkName, networkToId, openLink } from '../../../utilities'
 import {
   SdkWalletOptions,
   CommonWalletOptions,
@@ -60,14 +60,14 @@ function squarelink(
                   }
                 )
               })
-          }
+          },
+          dashboard: () => openLink('https://app.squarelink.com/')
         }
       }
     },
     type: 'sdk',
     desktop: true,
     mobile: true,
-    url: 'https://app.squarelink.com/',
     preferred
   }
 }

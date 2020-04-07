@@ -273,3 +273,20 @@ export function isPromise(val: any): val is Promise<any> {
   }
   return false
 }
+
+export function createInterval(func: any, interval: number) {
+  const id = setInterval(func, interval)
+  const status = { active: true }
+
+  return {
+    status,
+    clear: () => {
+      clearInterval(id)
+      status.active = false
+    }
+  }
+}
+
+export function openLink(url: string) {
+  window.open(url)
+}

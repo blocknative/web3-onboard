@@ -19,7 +19,7 @@ function imtoken(options: CommonWalletOptions): WalletModule {
       let warned = false
 
       return {
-        provider: provider || imTokenProvider,
+        provider: imTokenProvider,
         interface:
           imTokenProvider && getProviderName(imTokenProvider) === 'imToken'
             ? {
