@@ -53,9 +53,12 @@ export function getAddress(provider: any): Promise<string | any> {
   })
 }
 
-export function getBalance(provider: any): Promise<string | any> {
+export function getBalance(
+  provider: any,
+  address?: string
+): Promise<string | any> {
   return new Promise(async (resolve, reject) => {
-    const currentAddress = await getAddress(provider)
+    const currentAddress = address || (await getAddress(provider))
 
     if (!currentAddress) {
       resolve(null)

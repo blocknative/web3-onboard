@@ -13,7 +13,7 @@ function imtoken(
     iconSrc,
     svg: svg || imTokenIcon,
     wallet: async (helpers: Helpers) => {
-      const { getProviderName } = helpers
+      const { getProviderName, getBalance } = helpers
       const imTokenProvider = (window as any).ethereum
       const isImToken = getProviderName(imTokenProvider) === 'imToken'
       let createProvider
@@ -34,11 +34,11 @@ function imtoken(
           imTokenProvider && isImToken
             ? {
                 address: {
-                  get: () => Promise.resolve(imTokenProvider.selectedAddress),
+                  get: () => Promise.resolve(imTokenProvider.selectedAddress)
                 },
                 network: {
                   get: () =>
-                    Promise.resolve(Number(imTokenProvider.networkVersion)),
+                    Promise.resolve(Number(imTokenProvider.networkVersion))
                 },
                 balance: {
                   get: () => {
@@ -52,27 +52,20 @@ function imtoken(
                       return Promise.resolve(null)
                     }
 
-                    const params = {
-                      jsonrpc: '2.0',
-                      method: 'eth_getBalance',
-                      params: [imTokenProvider.selectedAddress, 'latest'],
-                      id: 42,
-                    }
-
-                    return provider.sendAsync(params)
-                  },
+                    return getBalance(provider, imTokenProvider.selectedAddress)
+                  }
                 },
                 name: getProviderName(imTokenProvider),
-                connect: () => imTokenProvider.enable(),
+                connect: () => imTokenProvider.enable()
               }
-            : null,
+            : null
       }
     },
     type: 'injected',
     link: `imtokenv2://navigate?screen=DappView&url=${window.location.href}`,
     installMessage: mobileWalletInstallMessage,
     mobile: true,
-    preferred,
+    preferred
   }
 }
 
