@@ -3,23 +3,64 @@ import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
 
 import trustIcon from '../wallet-icons/icon-trust'
 
-function trust (options: CommonWalletOptions): WalletModule {
-  const { preferred, label, iconSrc, svg } = options
+function trust(
+  options: CommonWalletOptions & { rpcUrl: string }
+): WalletModule {
+  const { preferred, label, iconSrc, svg, rpcUrl } = options
 
   return {
     name: label || 'Trust',
     svg: svg || trustIcon,
     iconSrc,
     wallet: async (helpers: Helpers) => {
-      const { getProviderName, createLegacyProviderInterface } = helpers
-      const provider =
+      const { getProviderName, getAddress, getNetwork, getBalance } = helpers
+      const trustProvider =
         (window as any).web3 && (window as any).web3.currentProvider
 
+      const isTrust = getProviderName(trustProvider) === 'Trust'
+      let createProvider
+
+      if (isTrust && rpcUrl) {
+        createProvider = (await import('./providerEngine')).default
+      }
+
+      const provider = rpcUrl
+        ? createProvider && createProvider({ rpcUrl })
+        : null
+
+      let warned = false
+
       return {
-        provider,
+        provider: trustProvider,
         interface:
-          provider && getProviderName(provider) === 'Trust'
-            ? createLegacyProviderInterface(provider)
+          trustProvider && isTrust
+            ? {
+                address: {
+                  get: () => getAddress(trustProvider)
+                },
+                network: {
+                  get: () => getNetwork(trustProvider)
+                },
+                balance: {
+                  get: async () => {
+                    if (!provider) {
+                      if (!warned) {
+                        console.warn(
+                          'The Trust provider does not allow rpc calls preventing Onboard.js from getting the balance. You can pass in a "rpcUrl" to the imToken wallet initialization object to get the balance.'
+                        )
+                        warned = true
+                      }
+
+                      return null
+                    }
+
+                    const address = await getAddress(trustProvider)
+
+                    return getBalance(provider, address)
+                  }
+                },
+                name: getProviderName(trustProvider)
+              }
             : null
       }
     },
