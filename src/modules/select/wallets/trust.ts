@@ -24,44 +24,41 @@ function trust(
         createProvider = (await import('./providerEngine')).default
       }
 
-      const provider = rpcUrl
-        ? createProvider && createProvider({ rpcUrl })
-        : null
+      const provider = createProvider ? createProvider({ rpcUrl }) : null
 
       let warned = false
 
       return {
         provider: trustProvider,
-        interface:
-          trustProvider && isTrust
-            ? {
-                address: {
-                  get: () => getAddress(trustProvider)
-                },
-                network: {
-                  get: () => getNetwork(trustProvider)
-                },
-                balance: {
-                  get: async () => {
-                    if (!provider) {
-                      if (!warned) {
-                        console.warn(
-                          'The Trust provider does not allow rpc calls preventing Onboard.js from getting the balance. You can pass in a "rpcUrl" to the imToken wallet initialization object to get the balance.'
-                        )
-                        warned = true
-                      }
-
-                      return null
+        interface: isTrust
+          ? {
+              address: {
+                get: () => getAddress(trustProvider)
+              },
+              network: {
+                get: () => getNetwork(trustProvider)
+              },
+              balance: {
+                get: async () => {
+                  if (!provider) {
+                    if (!warned) {
+                      console.warn(
+                        'The Trust provider does not allow rpc calls preventing Onboard.js from getting the balance. You can pass in a "rpcUrl" to the imToken wallet initialization object to get the balance.'
+                      )
+                      warned = true
                     }
 
-                    const address = await getAddress(trustProvider)
-
-                    return getBalance(provider, address)
+                    return null
                   }
-                },
-                name: getProviderName(trustProvider)
-              }
-            : null
+
+                  const address = await getAddress(trustProvider)
+
+                  return getBalance(provider, address)
+                }
+              },
+              name: getProviderName(trustProvider)
+            }
+          : null
       }
     },
     type: 'injected',
