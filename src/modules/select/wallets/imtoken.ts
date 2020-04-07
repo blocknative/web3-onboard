@@ -46,10 +46,7 @@ function imtoken(options: CommonWalletOptions): WalletModule {
                       id: 42,
                     }
 
-                    return provider.sendAsync(params).then((res: any) => {
-                      console.log('balance result:', res)
-                      return res
-                    })
+                    return provider.sendAsync(params)
                   },
                 },
                 name: getProviderName(imTokenProvider),
