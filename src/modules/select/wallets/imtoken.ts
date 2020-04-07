@@ -15,15 +15,23 @@ function imtoken(
     wallet: async (helpers: Helpers) => {
       const { getProviderName } = helpers
       const imTokenProvider = (window as any).ethereum
-      const { default: createProvider } = await import('./providerEngine')
-      const provider = rpcUrl ? createProvider({ rpcUrl }) : null
+      const isImToken = getProviderName(imTokenProvider) === 'imToken'
+      let createProvider
+
+      if (isImToken) {
+        createProvider = (await import('./providerEngine')).default
+      }
+
+      const provider = rpcUrl
+        ? createProvider && createProvider({ rpcUrl })
+        : null
 
       let warned = false
 
       return {
         provider: imTokenProvider,
         interface:
-          imTokenProvider && getProviderName(imTokenProvider) === 'imToken'
+          imTokenProvider && isImToken
             ? {
                 address: {
                   get: () => Promise.resolve(imTokenProvider.selectedAddress),
@@ -41,6 +49,7 @@ function imtoken(
                         )
                       return Promise.resolve(null)
                     }
+
                     const params = {
                       jsonrpc: '2.0',
                       method: 'eth_getBalance',
