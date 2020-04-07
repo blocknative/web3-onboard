@@ -18,7 +18,7 @@ function imtoken(
       const isImToken = getProviderName(imTokenProvider) === 'imToken'
       let createProvider
 
-      if (isImToken) {
+      if (isImToken && rpcUrl) {
         createProvider = (await import('./providerEngine')).default
       }
 
