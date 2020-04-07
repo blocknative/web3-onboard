@@ -43,7 +43,7 @@ function trust(
                   if (!provider) {
                     if (!warned) {
                       console.warn(
-                        'The Trust provider does not allow rpc calls preventing Onboard.js from getting the balance. You can pass in a "rpcUrl" to the imToken wallet initialization object to get the balance.'
+                        'The Trust provider does not allow rpc calls preventing Onboard.js from getting the balance. You can pass in a "rpcUrl" to the Trust wallet initialization object to get the balance.'
                       )
                       warned = true
                     }
