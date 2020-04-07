@@ -102,7 +102,7 @@ export interface Helpers {
   networkName: (id: number) => string
   getAddress: (provider: any) => Promise<string | any>
   getNetwork: (provider: any) => Promise<number | any>
-  getBalance: (provider: any) => Promise<string | any>
+  getBalance: (provider: any, address?: string) => Promise<string | any>
   resetWalletState: (options?: {
     disconnected: boolean
     walletName: string
@@ -116,7 +116,7 @@ export interface WalletInterface {
   address: StateSyncer
   network: StateSyncer
   balance: StateSyncer
-  settings?: () => void
+  dashboard?: () => void
 }
 
 export interface StateSyncer {
@@ -130,7 +130,7 @@ export interface Wallet {
   type: 'hardware' | 'injected' | 'sdk'
   instance?: any
   connect?: () => Promise<{ message: string } | undefined>
-  settings?: () => void
+  dashboard?: () => void
 }
 
 export interface CommonWalletOptions {

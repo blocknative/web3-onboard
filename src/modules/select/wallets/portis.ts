@@ -66,7 +66,7 @@ function portis(options: SdkWalletOptions & CommonWalletOptions): WalletModule {
                 }, 1)
               })
           },
-          settings: () => openLink('https://wallet.portis.io/')
+          dashboard: () => openLink('https://wallet.portis.io/')
         }
       }
     },

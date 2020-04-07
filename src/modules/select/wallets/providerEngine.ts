@@ -9,16 +9,22 @@ function createProvider(config: any) {
     getAccounts,
     signTransaction,
     rpcUrl,
+    processMessage,
+    processPersonalMessage,
     signMessage,
     signPersonalMessage
   } = config
 
-  const idMgmt = new HookedWalletSubprovider({
-    getAccounts,
-    signTransaction,
-    signMessage,
-    signPersonalMessage
-  })
+  const idMgmt =
+    getAccounts &&
+    new HookedWalletSubprovider({
+      getAccounts,
+      signTransaction,
+      processMessage,
+      processPersonalMessage,
+      signMessage,
+      signPersonalMessage
+    })
 
   const rpcSubProvider = new RpcSource({
     rpcUrl: rpcUrl.includes('http') ? rpcUrl : `https://${rpcUrl}`
@@ -28,7 +34,7 @@ function createProvider(config: any) {
 
   provider.addProvider(new SubscriptionSubprovider())
   provider.addProvider(new FilterSubprovider())
-  provider.addProvider(idMgmt)
+  idMgmt && provider.addProvider(idMgmt)
   provider.addProvider(rpcSubProvider)
   provider.start()
 

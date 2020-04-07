@@ -52,7 +52,7 @@ function authereum(
               return loggedIn && instance.getBalance()
             }
           },
-          settings: () =>
+          dashboard: () =>
             openLink(
               `https://${
                 networkId !== 1 ? `${networkName(networkId)}.` : ''
