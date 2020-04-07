@@ -2,7 +2,6 @@ import { mobileWalletInstallMessage } from '../content'
 import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
 
 import imTokenIcon from '../wallet-icons/icon-imtoken'
-import createProvider from './providerEngine'
 
 function imtoken(
   options: CommonWalletOptions & { rpcUrl: string }
@@ -16,6 +15,7 @@ function imtoken(
     wallet: async (helpers: Helpers) => {
       const { getProviderName } = helpers
       const imTokenProvider = (window as any).ethereum
+      const { default: createProvider } = await import('./providerEngine')
       const provider = rpcUrl ? createProvider({ rpcUrl }) : null
 
       let warned = false
