@@ -4,7 +4,9 @@ import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
 import imTokenIcon from '../wallet-icons/icon-imtoken'
 import createProvider from './providerEngine'
 
-function imtoken(options: CommonWalletOptions): WalletModule {
+function imtoken(
+  options: CommonWalletOptions & { rpcUrl: string }
+): WalletModule {
   const { preferred, label, iconSrc, svg, rpcUrl } = options
 
   return {
