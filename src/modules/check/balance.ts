@@ -9,7 +9,7 @@ function balance(
     description?: string
     icon?: string
   } = { minimumBalance: '0' }
-): (currentState: StateAndHelpers) => WalletCheckModal | undefined {
+): (currentState: StateAndHelpers) => Promise<WalletCheckModal | undefined> {
   validateType({ name: 'balance options', value: options, type: 'object' })
 
   const { minimumBalance, heading, description, icon } = options
@@ -20,10 +20,20 @@ function balance(
     type: 'string'
   })
 
-  return (StateAndHelpers: StateAndHelpers) => {
-    const { balance, BigNumber } = StateAndHelpers
+  return async (StateAndHelpers: StateAndHelpers) => {
+    const { balance, BigNumber, stateSyncStatus, stateStore } = StateAndHelpers
+
+    if (balance === null) {
+      // wait for balance sync if is still on initial value
+      if (stateSyncStatus.balance) {
+        try {
+          await stateSyncStatus.balance
+        } catch (error) {}
+      }
+    }
+
     // if balance is less than minimum
-    if (BigNumber(balance).lt(BigNumber(minimumBalance))) {
+    if (BigNumber(stateStore.balance.get()).lt(BigNumber(minimumBalance))) {
       return {
         heading: heading || 'Get Some ETH',
         description:

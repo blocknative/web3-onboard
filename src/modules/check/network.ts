@@ -1,5 +1,5 @@
 import { networkName } from '../../utilities'
-import { WalletCheckModule, StateAndHelpers } from '../../interfaces'
+import { WalletCheckModal, StateAndHelpers } from '../../interfaces'
 import { networkIcon } from './icons'
 
 function network(
@@ -8,13 +8,29 @@ function network(
     description?: string
     icon?: string
   } = {}
-): WalletCheckModule | never {
+): (currentState: StateAndHelpers) => Promise<WalletCheckModal | undefined> {
   const { heading, description, icon } = options
 
-  return (stateAndHelpers: StateAndHelpers) => {
-    const { network, appNetworkId, walletSelect, exit } = stateAndHelpers
+  return async (stateAndHelpers: StateAndHelpers) => {
+    const {
+      network,
+      appNetworkId,
+      walletSelect,
+      exit,
+      stateSyncStatus,
+      stateStore
+    } = stateAndHelpers
 
-    if (network != appNetworkId) {
+    if (network === null) {
+      // wait for network sync if is still on initial value
+      if (stateSyncStatus.network) {
+        try {
+          await stateSyncStatus.network
+        } catch (error) {}
+      }
+    }
+
+    if (stateStore.network.get() != appNetworkId) {
       return {
         heading: heading || 'You Must Change Networks',
         description:

@@ -78,7 +78,6 @@
 
   async function renderWalletSelect() {
     const appState = get(app)
-
     wallets = await wallets
 
     const deviceWallets = (wallets as WalletModule[])
@@ -116,8 +115,11 @@
 
       if (module) {
         handleWalletSelect(module)
+        return
       }
     }
+
+    app.update(store => ({ ...store, walletSelectDisplayedUI: true }))
   }
 
   async function handleWalletSelect(module: WalletModule) {
@@ -161,6 +163,8 @@
           selectedWallet: selectedWalletModule.name
         })
 
+      app.update(store => ({ ...store, walletSelectDisplayedUI: true }))
+
       return
     }
 
@@ -186,12 +190,10 @@
 
   function finish(options: { completed: boolean }) {
     modalData = null
-
     app.update(store => ({
       ...store,
       walletSelectInProgress: false,
-      walletSelectCompleted: options.completed,
-      autoSelect: false
+      walletSelectCompleted: options.completed
     }))
   }
 </script>

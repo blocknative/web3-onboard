@@ -26,15 +26,25 @@ export const app: WritableStore = writable({
   walletCheckCompleted: false,
   accountSelectInProgress: false,
   autoSelectWallet: '',
-  checkModules: []
+  checkModules: [],
+  walletSelectDisplayedUI: false,
+  walletCheckDisplayedUI: false
 })
 
-export const balanceSyncStatus: {
-  syncing: null | CancelablePromise
-  error: string
+export const stateSyncStatus: {
+  [key: string]:
+    | null
+    | CancelablePromise
+    | Promise<Array<string>>
+    | Promise<string>
+    | Promise<void>
+  balance: null | CancelablePromise
+  address: null | Promise<Array<string>>
+  network: null | Promise<string>
 } = {
-  syncing: null,
-  error: ''
+  balance: null,
+  address: null,
+  network: null
 }
 
 export const address: WalletStateSliceStore = createWalletStateSliceStore({
@@ -155,8 +165,7 @@ export function resetWalletState(options?: {
     return {
       ...store,
       walletSelectInProgress: false,
-      walletSelectCompleted: false,
-      autoSelect: false
+      walletSelectCompleted: false
     }
   })
 }
@@ -202,6 +211,7 @@ function createWalletStateSliceStore(options: {
     reset: () => {
       set(undefined)
     },
+    get: () => currentState,
     setStateSyncer: (stateSyncer: StateSyncer) => {
       validateType({ name: 'stateSyncer', value: stateSyncer, type: 'object' })
 
@@ -222,18 +232,22 @@ function createWalletStateSliceStore(options: {
       })
 
       if (onChange) {
-        onChange(newVal => {
-          if (newVal || currentState !== initialState) {
-            set(newVal)
-          }
+        stateSyncStatus[parameter] = new Promise(resolve => {
+          onChange(newVal => {
+            resolve()
+            if (newVal || currentState !== initialState) {
+              set(newVal)
+            }
+          })
         })
         return
       }
 
       if (get) {
         const interval: any = createInterval(() => {
-          get()
+          stateSyncStatus[parameter] = get()
             .then(newVal => {
+              stateSyncStatus[parameter] = null
               if (newVal || currentState !== initialState) {
                 interval.status.active && set(newVal)
               }
@@ -242,6 +256,7 @@ function createWalletStateSliceStore(options: {
               console.warn(
                 `Error getting ${parameter} from state syncer: ${err}`
               )
+              stateSyncStatus[parameter] = null
             })
         }, 200)
 
@@ -311,8 +326,14 @@ function createBalanceStore(initialState: string | null): BalanceStore {
     }
   )
 
+  let currentState: string | null
+  subscribe((store: any) => {
+    currentState = store
+  })
+
   return {
     subscribe,
+    get: () => currentState,
     setStateSyncer: (syncer: StateSyncer) => {
       validateType({ name: 'syncer', value: syncer, type: 'object' })
 
@@ -355,7 +376,7 @@ function syncStateWithTimeout(options: {
 
   const prom = makeCancelable(getState())
 
-  balanceSyncStatus.syncing = prom
+  stateSyncStatus.balance = prom
 
   prom
     .then(async (result: string) => {
@@ -363,10 +384,13 @@ function syncStateWithTimeout(options: {
         await wait(350)
         syncStateWithTimeout(options)
       } else {
+        stateSyncStatus.balance = null
         setState(result)
       }
     })
-    .catch(() => {})
+    .catch(() => {
+      stateSyncStatus.balance = null
+    })
 
   const timedOut = wait(timeout)
 
