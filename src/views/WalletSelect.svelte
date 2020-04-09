@@ -78,7 +78,6 @@
 
   async function renderWalletSelect() {
     const appState = get(app)
-
     wallets = await wallets
 
     const deviceWallets = (wallets as WalletModule[])
@@ -99,14 +98,6 @@
         deviceWallets.length > 4 ? deviceWallets.slice(4) : undefined
     }
 
-    modalData = {
-      heading,
-      description,
-      explanation,
-      primaryWallets,
-      secondaryWallets
-    }
-
     if (appState.autoSelectWallet) {
       const module = deviceWallets.find(
         (m: WalletModule) => m.name === appState.autoSelectWallet
@@ -116,8 +107,19 @@
 
       if (module) {
         handleWalletSelect(module)
+        return
       }
     }
+
+    modalData = {
+      heading,
+      description,
+      explanation,
+      primaryWallets,
+      secondaryWallets
+    }
+
+    app.update(store => ({ ...store, walletSelectDisplayedUI: true }))
   }
 
   async function handleWalletSelect(module: WalletModule) {
@@ -186,12 +188,10 @@
 
   function finish(options: { completed: boolean }) {
     modalData = null
-
     app.update(store => ({
       ...store,
       walletSelectInProgress: false,
-      walletSelectCompleted: options.completed,
-      autoSelect: false
+      walletSelectCompleted: options.completed
     }))
   }
 </script>

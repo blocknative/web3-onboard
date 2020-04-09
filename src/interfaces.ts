@@ -68,6 +68,22 @@ export interface StateAndHelpers extends UserState {
   walletSelect: WalletSelectFunction
   wallet: Wallet
   exit: (completed?: boolean) => void
+  stateSyncStatus: {
+    [key: string]:
+      | null
+      | CancelablePromise
+      | Promise<Array<string>>
+      | Promise<string>
+      | Promise<void>
+    balance: null | CancelablePromise
+    address: null | Promise<Array<string>>
+    network: null | Promise<string>
+  }
+  stateStore: {
+    address: WalletStateSliceStore
+    network: WalletStateSliceStore
+    balance: BalanceStore
+  }
 }
 
 export interface WalletModule {
@@ -253,12 +269,14 @@ export interface WalletStateSliceStore {
   setStateSyncer: (
     stateSyncer: StateSyncer
   ) => { clear: () => void } | undefined
+  get: () => any
 }
 
 export interface BalanceStore {
   subscribe: (subscriber: (store: any) => void) => () => void
   setStateSyncer: (stateSyncer: StateSyncer) => undefined
   reset: () => void
+  get: () => any
 }
 
 export interface AppState {
@@ -274,6 +292,8 @@ export interface AppState {
   walletCheckInProgress: boolean
   walletCheckCompleted: boolean
   accountSelectInProgress: boolean
+  walletSelectDisplayedUI: boolean
+  walletCheckDisplayedUI: boolean
 }
 
 export interface CancelablePromise extends Promise<any> {

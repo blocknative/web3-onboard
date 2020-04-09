@@ -97,11 +97,13 @@ function derivationPath(
           .map((derivation: { path?: string; label: string }) => {
             const { path, label } = derivation
             return `
-              <button style="${baseStyles +
+              <button style="${
+                baseStyles +
                 buttonStyles +
                 (state.dPath === path && !state.showCustomInput
                   ? selectedStyles
-                  : '')}" onclick="window.handleDerivationClick(this)" data-path="${path}">
+                  : '')
+              }" onclick="window.handleDerivationClick(this)" data-path="${path}">
                 ${label} - ${path}
               </button>
             `
@@ -110,8 +112,9 @@ function derivationPath(
         ${
           state.showCustomInput
             ? customInputHtmlString(state.error)
-            : `<button style="${baseStyles +
-                buttonStyles}" onclick="window.handleDerivationClick(this)" data-path="custom">Custom Path</button>`
+            : `<button style="${
+                baseStyles + buttonStyles
+              }" onclick="window.handleDerivationClick(this)" data-path="custom">Custom Path</button>`
         }
         ${
           state.loading
@@ -178,7 +181,6 @@ function derivationPath(
       }
       ;(window as any).handleCustomInput = handleCustomInput
       ;(window as any).handleDerivationClick = handleDerivationClick
-
       return {
         heading: heading || 'Hardware Wallet Connect',
         description:
