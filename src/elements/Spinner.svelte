@@ -1,4 +1,24 @@
+<script>
+  export let description
+</script>
+
 <style>
+  .bn-onboard-loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+  }
+
+  span {
+    font-family: inherit;
+    font-size: 0.889em;
+    margin-top: 1rem;
+  }
+
   :global(.bn-onboard-loading) {
     display: inline-block;
     position: relative;
@@ -36,8 +56,13 @@
   }
 </style>
 
-<div class="bn-onboard-custom bn-onboard-loading">
-  <div class="bn-onboard-loading-first" />
-  <div class="bn-onboard-loading-second" />
-  <div class="bn-onboard-loading-third" />
+<div class="bn-onboard-loading-container">
+  <div class="bn-onboard-custom bn-onboard-loading">
+    <div class="bn-onboard-loading-first" />
+    <div class="bn-onboard-loading-second" />
+    <div class="bn-onboard-loading-third" />
+  </div>
+  {#if description}
+    <span>{description}</span>
+  {/if}
 </div>
