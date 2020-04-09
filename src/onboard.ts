@@ -116,11 +116,22 @@ function init(initialization: Initialization): API {
       }))
 
       const appUnsubscribe = app.subscribe((store: AppState) => {
-        const { walletSelectInProgress, walletSelectCompleted } = store
+        const {
+          walletSelectInProgress,
+          walletSelectCompleted,
+          walletSelectDisplayedUI
+        } = store
 
         if (walletSelectInProgress === false) {
           appUnsubscribe()
-          setTimeout(() => resolve(walletSelectCompleted), 500)
+
+          // timeout for UI transitions if it was displayed
+          walletSelectDisplayedUI
+            ? setTimeout(() => {
+                resolve(walletSelectCompleted)
+                app.update(store => ({ ...store, displayedUI: false }))
+              }, 500)
+            : resolve(walletSelectCompleted)
         }
       })
     })
@@ -138,10 +149,19 @@ function init(initialization: Initialization): API {
       }))
 
       const appUnsubscribe = app.subscribe((store: AppState) => {
-        const { walletCheckInProgress, walletCheckCompleted } = store
+        const {
+          walletCheckInProgress,
+          walletCheckCompleted,
+          walletCheckDisplayedUI
+        } = store
         if (walletCheckInProgress === false) {
           appUnsubscribe()
-          setTimeout(() => resolve(walletCheckCompleted), 500)
+          walletCheckDisplayedUI
+            ? setTimeout(() => {
+                resolve(walletCheckCompleted)
+                app.update(store => ({ ...store, displayedUI: false }))
+              }, 500)
+            : resolve(walletCheckCompleted)
         }
       })
     })
@@ -164,10 +184,15 @@ function init(initialization: Initialization): API {
       }))
 
       const appUnsubscribe = app.subscribe((store: AppState) => {
-        const { accountSelectInProgress } = store
+        const { accountSelectInProgress, walletSelectDisplayedUI } = store
         if (accountSelectInProgress === false) {
           appUnsubscribe()
-          setTimeout(() => resolve(true), 500)
+          walletSelectDisplayedUI
+            ? setTimeout(() => {
+                resolve(true)
+                app.update(store => ({ ...store, displayedUI: false }))
+              }, 500)
+            : resolve(true)
         }
       })
     })

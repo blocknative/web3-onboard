@@ -8,9 +8,12 @@
   import {
     app,
     state,
-    balanceSyncStatus,
+    stateSyncStatus,
     walletInterface,
-    wallet
+    wallet,
+    address,
+    network,
+    balance
   } from '../stores'
   import { validateModal, validateWalletCheckModule } from '../validation'
   import { isPromise } from '../utilities'
@@ -32,6 +35,8 @@
   export let modules: WalletCheckModule[] | undefined
 
   const blocknative = getBlocknative()
+
+  let currentState: UserState
 
   let activeModal: WalletCheckModal | undefined = undefined
   let currentModule: WalletCheckModule | undefined = undefined
@@ -60,6 +65,10 @@
 
   let originalOverflowValue: string
 
+  const unsubscribeCurrentState = state.subscribe(
+    store => (currentState = store)
+  )
+
   onMount(() => {
     originalOverflowValue = window.document.body.style.overflow
     window.document.body.style.overflow = 'hidden'
@@ -67,6 +76,7 @@
   })
 
   onDestroy(() => {
+    unsubscribeCurrentState()
     window.removeEventListener('scroll', lockScroll)
     window.document.body.style.overflow = originalOverflowValue
   })
@@ -101,6 +111,9 @@
 
           return
         }
+
+        // set that UI has been displayed, so that timeouts can be added for UI transitions
+        app.update(store => ({ ...store, walletCheckDisplayedUI: true }))
 
         activeModal = result.modal
         currentModule = result.module
@@ -182,15 +195,7 @@
         }) => void
       ) => {
         for (const module of modules) {
-          if (balanceSyncStatus.syncing) {
-            try {
-              await balanceSyncStatus.syncing
-            } catch (error) {}
-
-            balanceSyncStatus.syncing = null
-          }
-
-          const result = await invalidState(module, get(state))
+          const result = await invalidState(module, currentState)
 
           if (result) {
             loadingModal = false
@@ -215,7 +220,13 @@
       BigNumber,
       walletSelect,
       exit: handleExit,
-      wallet: get(wallet)
+      wallet: get(wallet),
+      stateSyncStatus,
+      stateStore: {
+        address,
+        network,
+        balance
+      }
     })
 
     if (result) {
