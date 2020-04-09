@@ -186,7 +186,6 @@
   }
 
   function runModules(modules: WalletCheckModule[]) {
-    loadingModal = true
     return new Promise(
       async (
         resolve: (result: {
@@ -198,12 +197,10 @@
           const result = await invalidState(module, currentState)
 
           if (result) {
-            loadingModal = false
             return resolve(result)
           }
         }
 
-        loadingModal = false
         return resolve({ modal: undefined, module: undefined })
       }
     )
@@ -238,7 +235,25 @@
         }
       } else {
         // module returned a promise, so await it for val
-        const modal = await result
+        // show loading spinner if promise doesn't resolve within 150ms
+        let modal
+        await new Promise(resolve => {
+          let completed: boolean = false
+
+          result.then(res => {
+            loadingModal = false
+            completed = true
+            modal = res
+            resolve()
+          })
+
+          setTimeout(() => {
+            if (!completed) {
+              loadingModal = true
+            }
+          }, 150)
+        })
+
         if (modal) {
           validateModal(modal)
           return {
@@ -294,7 +309,7 @@
 
 {#if loadingModal}
   <Modal closeable={false}>
-    <Spinner />
+    <Spinner description="Checking wallet" />
   </Modal>
 {/if}
 
