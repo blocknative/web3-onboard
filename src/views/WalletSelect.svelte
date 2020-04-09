@@ -98,6 +98,14 @@
         deviceWallets.length > 4 ? deviceWallets.slice(4) : undefined
     }
 
+    modalData = {
+      heading,
+      description,
+      explanation,
+      primaryWallets,
+      secondaryWallets
+    }
+
     if (appState.autoSelectWallet) {
       const module = deviceWallets.find(
         (m: WalletModule) => m.name === appState.autoSelectWallet
@@ -109,14 +117,6 @@
         handleWalletSelect(module)
         return
       }
-    }
-
-    modalData = {
-      heading,
-      description,
-      explanation,
-      primaryWallets,
-      secondaryWallets
     }
 
     app.update(store => ({ ...store, walletSelectDisplayedUI: true }))
@@ -162,6 +162,8 @@
           currentWallet: walletAlreadyInstalled,
           selectedWallet: selectedWalletModule.name
         })
+
+      app.update(store => ({ ...store, walletSelectDisplayedUI: true }))
 
       return
     }
