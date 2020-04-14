@@ -33,6 +33,10 @@ export interface WalletCheckModule {
   reset?: () => void
 }
 
+export interface Connect {
+  (): Promise<{ message: string } | string[] | undefined>
+}
+
 export interface WalletCheckModal {
   heading: string
   description: string
@@ -42,7 +46,7 @@ export interface WalletCheckModal {
     text: string
   }
   eventCode: string
-  action?: () => Promise<{ message: string } | undefined>
+  action?: Connect | null
   icon?: string
 }
 
@@ -58,7 +62,7 @@ export interface UserState {
   address: string
   network: number
   balance: string
-  wallet: Wallet | null
+  wallet: Wallet
   mobileDevice: boolean
   appNetworkId: number
 }
@@ -127,7 +131,7 @@ export interface Helpers {
 
 export interface WalletInterface {
   name: string | undefined
-  connect?: () => Promise<{ message: string } | string[] | undefined>
+  connect?: Connect | null
   disconnect?: () => void
   address: StateSyncer
   network: StateSyncer
@@ -141,12 +145,12 @@ export interface StateSyncer {
 }
 
 export interface Wallet {
-  name: string
-  provider: any
-  type: 'hardware' | 'injected' | 'sdk'
-  instance?: any
-  connect?: () => Promise<{ message: string } | undefined>
-  dashboard?: () => void
+  name: string | null
+  provider: any | null
+  type: 'hardware' | 'injected' | 'sdk' | null
+  instance?: any | null
+  connect?: Connect | null
+  dashboard?: () => void | null
 }
 
 export interface CommonWalletOptions {

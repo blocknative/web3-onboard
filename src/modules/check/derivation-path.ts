@@ -1,4 +1,4 @@
-import { WalletCheckModal, StateAndHelpers } from '../../interfaces'
+import { WalletCheckModal, StateAndHelpers, Connect } from '../../interfaces'
 import { usbIcon } from './icons'
 
 interface DerivationPaths {
@@ -189,12 +189,13 @@ function derivationPath(
             wallet.name === 'Ledger' ? 'and the Ethereum app is open, ' : ''
           }then select a derivation path to connect your accounts:`,
         eventCode: 'derivationPath',
-        html: derivationSelectHtmlString(wallet.name),
+        html: derivationSelectHtmlString(wallet.name as string),
         button: {
           text: 'Connect',
           onclick: async () => {
             state.loading = true
-            const path = state.dPath || derivationPaths[wallet.name][0].path
+            const path =
+              state.dPath || derivationPaths[wallet.name as string][0].path
             try {
               const validPath = await wallet.provider.setPath(
                 path,
@@ -214,11 +215,9 @@ function derivationPath(
 
             state.error = ''
 
-            wallet.connect &&
-              wallet
-                .connect()
+            if (wallet.connect) {
+              ;(wallet.connect as Connect)()
                 .then(() => {
-                  // @TODO add path to local store
                   deleteWindowProperties()
                   state.loading = false
                   state.completed = true
@@ -227,6 +226,7 @@ function derivationPath(
                   state.error = error.message
                   state.loading = false
                 })
+            }
           }
         },
 

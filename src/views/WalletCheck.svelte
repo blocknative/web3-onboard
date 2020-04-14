@@ -28,7 +28,8 @@
     WalletSelectFunction,
     AppState,
     WalletCheckModal,
-    UserState
+    UserState,
+    Connect
   } from '../interfaces'
 
   export let walletSelect: WalletSelectFunction
@@ -155,8 +156,7 @@
 
     activeModal &&
       activeModal.action &&
-      activeModal
-        .action()
+      (activeModal.action as Connect)()
         .then(() => {
           actionResolved = true
           loading = false
