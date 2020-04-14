@@ -352,8 +352,6 @@ async function ledgerProvider(options: {
       return `0x${transaction.serialize().toString('hex')}`
     } catch (error) {
       throw error
-    } finally {
-      transport.close()
     }
   }
 

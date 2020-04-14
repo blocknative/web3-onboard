@@ -29,6 +29,14 @@ export default {
     },
     { format: 'cjs', dir: 'dist/cjs/' }
   ],
+  onwarn: (warning, warn) => {
+    // supress warning as Typescript removes type definitions
+    if (warning.code === 'NON_EXISTENT_EXPORT') {
+      return
+    }
+
+    warn(warning)
+  },
   plugins: [
     json(),
     image(),
