@@ -251,7 +251,7 @@
             if (!completed) {
               loadingModal = true
             }
-          }, 150)
+          }, 650)
         })
 
         if (modal) {
