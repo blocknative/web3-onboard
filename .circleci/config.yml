@@ -45,7 +45,7 @@ jobs:
       - image: circleci/node:8.15-browsers
         user: root
     steps:
-      - run: curl -u $REACT_DEMO_BUILD \
+      - run: curl -u $REACT_DEMO_TRIGGER \
           -d build_parameters[CIRCLE_JOB]=deploy_stage \
           https://circleci.com/api/v1.1/project/github/blocknative/react-demo/tree/develop
 
