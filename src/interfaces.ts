@@ -5,6 +5,7 @@ export interface Initialization {
   walletSelect: WalletSelectModule
   walletCheck: Array<WalletCheckModule | WalletCheckInit>
   darkMode?: boolean
+  apiUrl?: string
 }
 
 export interface Subscriptions {

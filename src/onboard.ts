@@ -42,9 +42,9 @@ function init(initialization: Initialization): API {
 
   validateInit(initialization)
 
-  const { subscriptions, dappId, networkId, darkMode } = initialization
+  const { subscriptions, dappId, networkId, darkMode, apiUrl } = initialization
 
-  initializeBlocknative(dappId, networkId)
+  initializeBlocknative(dappId, networkId, apiUrl)
 
   const { os, isMobile } = getDeviceInfo()
 

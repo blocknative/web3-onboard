@@ -62,6 +62,7 @@ export function validateInit(init: Initialization): never | void {
     walletSelect,
     walletCheck,
     darkMode,
+    apiUrl,
     ...otherParams
   } = init
 
@@ -73,7 +74,8 @@ export function validateInit(init: Initialization): never | void {
       'subscriptions',
       'walletSelect',
       'walletCheck',
-      'darkMode'
+      'darkMode',
+      'apiUrl'
     ],
     'init'
   )
@@ -84,6 +86,12 @@ export function validateInit(init: Initialization): never | void {
     name: 'darkMode',
     value: darkMode,
     type: 'boolean',
+    optional: true
+  })
+  validateType({
+    name: 'apiUrl',
+    value: apiUrl,
+    type: 'string',
     optional: true
   })
 
