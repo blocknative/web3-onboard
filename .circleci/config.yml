@@ -45,7 +45,9 @@ jobs:
       - image: circleci/node:8.15-browsers
         user: root
     steps:
-      - run: curl -X POST https://circleci.com/api/v1.1/project/github/blocknative/onboard/deploy_stage?circle-token=$CIRCLE_TOKEN
+      - run: curl -u $CIRCLE_TOKEN: \
+                  -d build_parameters[CIRCLE_JOB]=deploy_stage \
+                  https://circleci.com/api/v1.1/project/github/blocknative/react-demo/tree/develop
 
 workflows:
   version: 2
