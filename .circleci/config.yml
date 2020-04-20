@@ -47,7 +47,7 @@ jobs:
     steps:
       - run: 'curl -X POST -H -d \
           "{build_parameters: {CIRCLE_JOB: deploy_stage}}" \
-          "https://circleci.com/api/v1/project/blocknative/react-demo/tree/develop?circle-token=$CIRCLE_TOKEN"'
+          https://circleci.com/api/v1/project/blocknative/react-demo/tree/develop?circle-token=$CIRCLE_TOKEN'
 
 workflows:
   version: 2
