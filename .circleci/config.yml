@@ -45,7 +45,7 @@ jobs:
       - image: circleci/node:8.15-browsers
         user: root
     steps:
-      - run: trigger-demo-build.sh $CIRCLE_TOKEN
+      - run: sh ./trigger-demo-build.sh $CIRCLE_TOKEN
 
 workflows:
   version: 2
