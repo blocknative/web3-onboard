@@ -46,8 +46,7 @@ jobs:
         user: root
     steps:
       - checkout
-      - run: chmod +x ./trigger-demo-build.sh
-      - run: sh ./trigger-demo-build.sh
+      - run: sh ./trigger-demo-build.sh $CIRCLE_TOKEN
 
 workflows:
   version: 2
