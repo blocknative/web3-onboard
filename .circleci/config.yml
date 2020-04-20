@@ -45,8 +45,9 @@ jobs:
       - image: circleci/node:8.15-browsers
         user: root
     steps:
-      - run: chmod +x .circleci/trigger-demo-build.sh
-      - run: sh .circleci/trigger-demo-build.sh
+      - checkout
+      - run: chmod +x ./trigger-demo-build.sh
+      - run: sh ./trigger-demo-build.sh
 
 workflows:
   version: 2
