@@ -45,7 +45,7 @@ jobs:
       - image: circleci/node:8.15-browsers
         user: root
     steps:
-      - run: echo ls
+      - run: ls
       - run: sh /home/ubuntu/${CIRCLE_PROJECT_REPONAME}/trigger-demo-build.sh
 
 workflows:
