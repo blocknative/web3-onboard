@@ -9,12 +9,6 @@ import trezorIcon from '../wallet-icons/icon-trezor'
 import createProvider from './providerEngine'
 import { generateAddresses, isValidPath } from './hd-wallet'
 
-import * as TrezorConnectLibrary from 'trezor-connect'
-import * as EthereumTx from 'ethereumjs-tx'
-import * as ethUtil from 'ethereumjs-util'
-
-const { default: TrezorConnect, DEVICE_EVENT, DEVICE } = TrezorConnectLibrary
-
 const TREZOR_DEFAULT_PATH = "m/44'/60'/0'/0"
 
 function trezor(options: TrezorOptions & CommonWalletOptions): WalletModule {
@@ -82,6 +76,12 @@ async function trezorProvider(options: {
   BigNumber: any
   networkName: (id: number) => string
 }) {
+  const TrezorConnectLibrary = await import('trezor-connect')
+  const EthereumTx = await import('ethereumjs-tx')
+  const ethUtil = await import('ethereumjs-util')
+
+  const { default: TrezorConnect, DEVICE_EVENT, DEVICE } = TrezorConnectLibrary
+
   const { networkId, email, appUrl, rpcUrl, BigNumber, networkName } = options
   let dPath: string = ''
 
