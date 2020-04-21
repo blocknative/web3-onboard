@@ -1,6 +1,6 @@
 {
   "name": "bnc-onboard",
-  "version": "1.7.4",
+  "version": "1.7.5",
   "description": "Onboard users to web3 by allowing them to select a wallet, get that wallet ready to transact and have access to synced wallet state.",
   "keywords": [
     "ethereum",
@@ -61,6 +61,7 @@
   },
   "scripts": {
     "build": "rimraf dist && rollup -c && babel dist/cjs --out-dir dist/cjs && babel dist/esm --out-dir dist/esm",
-    "test": "echo \"TBD\" && exit 0"
+    "test": "echo \"TBD\" && exit 0",
+    "prepare": "npm run build"
   }
 }

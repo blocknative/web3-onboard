@@ -5,6 +5,7 @@ export interface Initialization {
   walletSelect: WalletSelectModule
   walletCheck: Array<WalletCheckModule | WalletCheckInit>
   darkMode?: boolean
+  apiUrl?: string
 }
 
 export interface Subscriptions {
@@ -167,6 +168,10 @@ export interface SdkWalletOptions {
 
 export interface WalletConnectOptions {
   infuraKey: string
+  rpc: {
+    [key: string]: string
+  }
+  bridge: string
 }
 
 export interface TrezorOptions {

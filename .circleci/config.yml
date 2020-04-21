@@ -40,6 +40,14 @@ jobs:
       - run: sudo npm i -g add npm-cli-login
       - run: NPM_USER=$NPM_USERNAME NPM_EMAIL=$NPM_EMAIL NPM_PASS=$NPM_PASSWORD npm-cli-login
       - run: npm publish
+  deploy_demo:
+    docker:
+      - image: circleci/node:8.15-browsers
+        user: root
+    steps:
+      - checkout
+      - run: sh ./trigger-demo-build.sh $CIRCLE_TOKEN
+
 workflows:
   version: 2
   test_build:
@@ -59,3 +67,8 @@ workflows:
             branches:
               only:
                 - master
+      - deploy_demo:
+          filters:
+            branches:
+              only:
+                - develop

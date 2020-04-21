@@ -62,6 +62,7 @@ export function validateInit(init: Initialization): never | void {
     walletSelect,
     walletCheck,
     darkMode,
+    apiUrl,
     ...otherParams
   } = init
 
@@ -73,7 +74,8 @@ export function validateInit(init: Initialization): never | void {
       'subscriptions',
       'walletSelect',
       'walletCheck',
-      'darkMode'
+      'darkMode',
+      'apiUrl'
     ],
     'init'
   )
@@ -84,6 +86,12 @@ export function validateInit(init: Initialization): never | void {
     name: 'darkMode',
     value: darkMode,
     type: 'boolean',
+    optional: true
+  })
+  validateType({
+    name: 'apiUrl',
+    value: apiUrl,
+    type: 'string',
     optional: true
   })
 
@@ -534,6 +542,8 @@ export function validateWalletInit(
     apiKey,
     networkId,
     infuraKey,
+    rpc,
+    bridge,
     preferred,
     label,
     iconSrc,
@@ -559,6 +569,8 @@ export function validateWalletInit(
       'apiKey',
       'networkId',
       'infuraKey',
+      'rpc',
+      'bridge',
       'preferred',
       'label',
       'iconSrc',
@@ -600,6 +612,20 @@ export function validateWalletInit(
   validateType({
     name: 'walletInit.infuraKey',
     value: infuraKey,
+    type: 'string',
+    optional: true
+  })
+
+  validateType({
+    name: 'walletInit.rpc',
+    value: rpc,
+    type: 'object',
+    optional: true
+  })
+
+  validateType({
+    name: 'walletInit.bridge',
+    value: bridge,
     type: 'string',
     optional: true
   })
