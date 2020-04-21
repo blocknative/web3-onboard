@@ -29,8 +29,6 @@ function walletConnect(
         bridge
       })
 
-      console.log({ provider })
-
       provider.autoRefreshOnNetworkChange = false
 
       provider.wc.on('disconnect', () => {
