@@ -10,7 +10,7 @@ import walletConnectIcon from '../wallet-icons/icon-wallet-connect'
 function walletConnect(
   options: WalletConnectOptions & CommonWalletOptions
 ): WalletModule {
-  const { infuraKey, preferred, label, iconSrc, svg } = options
+  const { infuraKey, rpc, bridge, preferred, label, iconSrc, svg } = options
 
   return {
     name: label || 'WalletConnect',
@@ -24,8 +24,12 @@ function walletConnect(
       )
 
       const provider = new WalletConnectProvider({
-        infuraId: infuraKey
+        infuraId: infuraKey,
+        rpc,
+        bridge
       })
+
+      console.log({ provider })
 
       provider.autoRefreshOnNetworkChange = false
 
