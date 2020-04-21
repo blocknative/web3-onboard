@@ -168,6 +168,10 @@ export interface SdkWalletOptions {
 
 export interface WalletConnectOptions {
   infuraKey: string
+  rpc: {
+    [key: string]: string
+  }
+  bridge: string
 }
 
 export interface TrezorOptions {
