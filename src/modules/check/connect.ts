@@ -26,10 +26,10 @@ function connect(
 
           setTimeout(() => {
             if (address === null) {
-              // if prom isn't resolving after 250ms, then stop waiting
+              // if prom isn't resolving after 500ms, then stop waiting
               resolve()
             }
-          }, 250)
+          }, 500)
         })
       }
     }
