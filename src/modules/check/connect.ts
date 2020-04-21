@@ -21,9 +21,16 @@ function connect(
     if (address === null) {
       // wait for address sync if is still on initial value
       if (stateSyncStatus.address) {
-        try {
-          await stateSyncStatus.address
-        } catch (error) {}
+        await new Promise(resolve => {
+          stateSyncStatus.address && stateSyncStatus.address.then(resolve)
+
+          setTimeout(() => {
+            if (address === null) {
+              // if prom isn't resolving after 500ms, then stop waiting
+              resolve()
+            }
+          }, 500)
+        })
       }
     }
 

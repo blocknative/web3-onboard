@@ -24,9 +24,16 @@ function network(
     if (network === null) {
       // wait for network sync if is still on initial value
       if (stateSyncStatus.network) {
-        try {
-          await stateSyncStatus.network
-        } catch (error) {}
+        await new Promise(resolve => {
+          stateSyncStatus.network && stateSyncStatus.network.then(resolve)
+
+          setTimeout(() => {
+            if (network === null) {
+              // if prom isn't resolving after 500ms, then stop waiting
+              resolve()
+            }
+          }, 500)
+        })
       }
     }
 
