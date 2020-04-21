@@ -13,7 +13,7 @@ function connect(
   } = {}
 ): WalletCheckModule {
   const { heading, description, icon } = options
-  console.log('inside connect module')
+
   return async (
     stateAndHelpers: StateAndHelpers
   ): Promise<WalletCheckModal | undefined> => {
