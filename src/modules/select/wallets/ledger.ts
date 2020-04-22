@@ -4,17 +4,8 @@ import {
   Helpers,
   CommonWalletOptions
 } from '../../../interfaces'
+
 import ledgerIcon from '../wallet-icons/icon-ledger'
-
-import createProvider from './providerEngine'
-import { generateAddresses, isValidPath } from './hd-wallet'
-
-import TransportU2F from '@ledgerhq/hw-transport-u2f'
-import Eth from '@ledgerhq/hw-app-eth'
-import * as EthereumTx from 'ethereumjs-tx'
-import * as ethUtil from 'ethereumjs-util'
-
-import buffer from 'buffer'
 
 const LEDGER_LIVE_PATH = `m/44'/60'`
 const ACCOUNTS_TO_GET = 5
@@ -81,6 +72,15 @@ async function ledgerProvider(options: {
   BigNumber: any
   networkName: (id: number) => string
 }) {
+  const { default: createProvider } = await import('./providerEngine')
+  const { generateAddresses, isValidPath } = await import('./hd-wallet')
+  const { default: TransportU2F } = await import('@ledgerhq/hw-transport-u2f')
+  const { default: Eth } = await import('@ledgerhq/hw-app-eth')
+
+  const EthereumTx = await import('ethereumjs-tx')
+  const ethUtil = await import('ethereumjs-util')
+  const buffer = await import('buffer')
+
   const { networkId, rpcUrl, LedgerTransport, BigNumber, networkName } = options
 
   let dPath = ''
