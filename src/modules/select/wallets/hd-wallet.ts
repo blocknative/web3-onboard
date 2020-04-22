@@ -1,6 +1,6 @@
 import HDKey from 'hdkey'
 import * as ethUtil from 'ethereumjs-util'
-import buffer from 'buffer'
+import * as buffer from 'buffer'
 
 const { publicToAddress, toChecksumAddress } = ethUtil
 
