@@ -98,14 +98,6 @@
         deviceWallets.length > 4 ? deviceWallets.slice(4) : undefined
     }
 
-    modalData = {
-      heading,
-      description,
-      explanation,
-      primaryWallets,
-      secondaryWallets
-    }
-
     if (appState.autoSelectWallet) {
       const module = deviceWallets.find(
         (m: WalletModule) => m.name === appState.autoSelectWallet
@@ -114,15 +106,23 @@
       app.update(store => ({ ...store, autoSelectWallet: '' }))
 
       if (module) {
-        handleWalletSelect(module)
+        handleWalletSelect(module, true)
         return
       }
+    }
+
+    modalData = {
+      heading,
+      description,
+      explanation,
+      primaryWallets,
+      secondaryWallets
     }
 
     app.update(store => ({ ...store, walletSelectDisplayedUI: true }))
   }
 
-  async function handleWalletSelect(module: WalletModule) {
+  async function handleWalletSelect(module: WalletModule, autoSelected?: boolean) {
     const currentWalletInterface = get(walletInterface)
 
     if (currentWalletInterface && currentWalletInterface.name === module.name) {
@@ -163,7 +163,18 @@
           selectedWallet: selectedWalletModule.name
         })
 
-      app.update(store => ({ ...store, walletSelectDisplayedUI: true }))
+      // if it was autoSelected then we need to add modalData to show the modal
+      if (autoSelected) {
+        modalData = {
+          heading,
+          description,
+          explanation,
+          primaryWallets,
+          secondaryWallets
+        }
+
+        app.update(store => ({ ...store, walletSelectDisplayedUI: true }))
+      }
 
       return
     }
