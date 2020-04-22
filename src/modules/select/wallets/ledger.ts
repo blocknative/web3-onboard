@@ -72,7 +72,6 @@ async function ledgerProvider(options: {
   BigNumber: any
   networkName: (id: number) => string
 }) {
-  console.log('importing hardware libraries')
   const { default: createProvider } = await import('./providerEngine')
   const { generateAddresses, isValidPath } = await import('./hd-wallet')
   const { default: TransportU2F } = await import('@ledgerhq/hw-transport-u2f')
