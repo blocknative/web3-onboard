@@ -21,10 +21,12 @@ function walletConnect(
     networkId
   } = options
 
-  if (!infuraKey || (rpc && !rpc[networkId])) {
-    throw new Error(
-      `A "infuraKey" or a "rpc" object with a parameter of ${networkId} must be included in the WalletConnect initialization object`
-    )
+  if (!infuraKey) {
+    if (!rpc || !rpc[networkId]) {
+      throw new Error(
+        `A "infuraKey" or a "rpc" object with a parameter of ${networkId} must be included in the WalletConnect initialization object`
+      )
+    }
   }
 
   return {
