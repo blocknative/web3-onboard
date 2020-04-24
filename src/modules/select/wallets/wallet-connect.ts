@@ -10,18 +10,41 @@ import walletConnectIcon from '../wallet-icons/icon-wallet-connect'
 function walletConnect(
   options: WalletConnectOptions & CommonWalletOptions
 ): WalletModule {
-  const { infuraKey, rpc, bridge, preferred, label, iconSrc, svg } = options
+  const {
+    infuraKey,
+    rpc,
+    bridge,
+    preferred,
+    label,
+    iconSrc,
+    svg,
+    networkId
+  } = options
+
+  if (!infuraKey || (rpc && !rpc[networkId])) {
+    throw new Error(
+      `A "infuraKey" or a "rpc" object with a parameter of ${networkId} must be included in the WalletConnect initialization object`
+    )
+  }
 
   return {
     name: label || 'WalletConnect',
     svg: svg || walletConnectIcon,
     iconSrc,
     wallet: async (helpers: Helpers) => {
-      const { resetWalletState } = helpers
-
+      const createProvider = (await import('./providerEngine')).default
       const { default: WalletConnectProvider } = await import(
         '@walletconnect/web3-provider'
       )
+
+      const { resetWalletState, networkName, getBalance } = helpers
+
+      const rpcUrl =
+        rpc && rpc[networkId]
+          ? rpc[networkId]
+          : `https://${networkName(networkId)}.infura.io/v3/${infuraKey}`
+
+      const balanceProvider = createProvider({ rpcUrl })
 
       const provider = new WalletConnectProvider({
         infuraId: infuraKey,
@@ -68,18 +91,13 @@ function walletConnect(
             }
           },
           balance: {
-            get: () =>
-              new Promise(resolve => {
-                if (!provider.wc._accounts[0]) {
-                  resolve(null)
-                  return
-                }
+            get: async () => {
+              if (!provider.wc._accounts[0]) {
+                return null
+              }
 
-                provider.send('eth_getBalance', [
-                  provider.wc._accounts[0],
-                  'latest'
-                ])
-              })
+              return getBalance(balanceProvider, provider.wc._accounts[0])
+            }
           },
           disconnect: () => {
             provider.wc.killSession()
