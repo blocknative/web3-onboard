@@ -19,6 +19,9 @@
     "type": "git",
     "url": "https://github.com/blocknative/onboard"
   },
+  "resolutions": {
+    "moment": "2.24.0"
+  },
   "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.7.0",
