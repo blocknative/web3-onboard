@@ -1,14 +1,13 @@
 import {
   WalletConnectOptions,
   WalletModule,
-  CommonWalletOptions,
   Helpers
 } from '../../../interfaces'
 
 import walletConnectIcon from '../wallet-icons/icon-wallet-connect'
 
 function walletConnect(
-  options: WalletConnectOptions & CommonWalletOptions
+  options: WalletConnectOptions & { networkId: number }
 ): WalletModule {
   const {
     infuraKey,

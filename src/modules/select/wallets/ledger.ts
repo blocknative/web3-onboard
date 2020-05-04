@@ -1,8 +1,7 @@
 import {
   LedgerOptions,
   WalletModule,
-  Helpers,
-  CommonWalletOptions
+  Helpers
 } from '../../../interfaces'
 
 import ledgerIcon from '../wallet-icons/icon-ledger'
@@ -10,7 +9,7 @@ import ledgerIcon from '../wallet-icons/icon-ledger'
 const LEDGER_LIVE_PATH = `m/44'/60'`
 const ACCOUNTS_TO_GET = 5
 
-function ledger(options: LedgerOptions & CommonWalletOptions): WalletModule {
+function ledger(options: LedgerOptions & { networkId: number }): WalletModule {
   const {
     rpcUrl,
     LedgerTransport,

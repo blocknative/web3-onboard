@@ -78,7 +78,7 @@ function init(initialization: Initialization): API {
     if (subscriptions.address) {
       address.subscribe((address: string | null) => {
         if (address !== null) {
-          subscriptions.address(address)
+          subscriptions.address && subscriptions.address(address)
         }
       })
     }
@@ -86,7 +86,7 @@ function init(initialization: Initialization): API {
     if (subscriptions.network) {
       network.subscribe((networkId: number | null) => {
         if (networkId !== null) {
-          subscriptions.network(networkId)
+          subscriptions.network && subscriptions.network(networkId)
         }
       })
     }
@@ -94,14 +94,14 @@ function init(initialization: Initialization): API {
     if (subscriptions.balance) {
       balance.subscribe((balance: string) => {
         if (balance !== null) {
-          subscriptions.balance(balance)
+          subscriptions.balance && subscriptions.balance(balance)
         }
       })
     }
 
     if (subscriptions.wallet) {
       wallet.subscribe((wallet: Wallet) => {
-        wallet.provider !== null && subscriptions.wallet(wallet)
+        wallet.provider !== null && subscriptions.wallet && subscriptions.wallet(wallet)
       })
     }
   }

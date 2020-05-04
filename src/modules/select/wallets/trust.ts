@@ -1,10 +1,10 @@
 import { mobileWalletInstallMessage } from '../content'
-import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
+import { WalletModule, Helpers, TrustWalletOptions } from '../../../interfaces'
 
 import trustIcon from '../wallet-icons/icon-trust'
 
 function trust(
-  options: CommonWalletOptions & { rpcUrl: string }
+  options: TrustWalletOptions
 ): WalletModule {
   const { preferred, label, iconSrc, svg, rpcUrl } = options
 

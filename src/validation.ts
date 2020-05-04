@@ -1,14 +1,14 @@
 import {
   Initialization,
   Subscriptions,
-  WalletSelectModule,
   WalletCheckModule,
   WalletModule,
   ConfigOptions,
   WalletCheckModal,
   WalletInterface,
   WalletInitOptions,
-  WalletCheckInit
+  WalletCheckInit,
+  WalletSelectModuleOptions
 } from './interfaces'
 
 const validSubscriptionKeys = ['address', 'network', 'balance', 'wallet']
@@ -39,17 +39,19 @@ function invalidParams(
   validParams: string[],
   functionName: string
 ): void | never {
-  const invalid = Object.keys(params)
+  const keys = Object.keys(params)
 
-  if (invalid.length > 0) {
-    throw new Error(
-      `${
-        invalid[0]
-      } is not a valid parameter for ${functionName}, must be one of the following valid parameters: ${validParams.join(
-        ', '
-      )}`
-    )
-  }
+  keys.forEach(key => {
+    if (!validParams.includes(key)) {
+      throw new Error(
+        `${
+          key
+        } is not a valid parameter for ${functionName}, must be one of the following valid parameters: ${validParams.join(
+          ', '
+        )}`
+      )
+    }
+  })
 }
 
 export function validateInit(init: Initialization): never | void {
@@ -163,7 +165,7 @@ function validateSubscriptions(subscriptions: Subscriptions): never | void {
   })
 }
 
-function validateWalletSelect(walletSelect: WalletSelectModule): never | void {
+function validateWalletSelect(walletSelect: WalletSelectModuleOptions): never | void {
   validateType({ name: 'walletSelect', value: walletSelect, type: 'object' })
 
   const {
@@ -539,26 +541,10 @@ export function validateWalletInit(
 
   const {
     walletName,
-    apiKey,
-    networkId,
-    infuraKey,
-    rpc,
-    bridge,
     preferred,
     label,
     iconSrc,
     svg,
-    appUrl,
-    email,
-    rpcUrl,
-    LedgerTransport,
-    buildEnv,
-    buttonPosition,
-    enableLogging,
-    loginMethod,
-    showTorusButton,
-    enabledVerifiers,
-    disableNotifications,
     ...otherParams
   } = walletInit
 
@@ -584,7 +570,8 @@ export function validateWalletInit(
       'enableLogging',
       'loginMethod',
       'showTorusButton',
-      'enabledVerifiers'
+      'enabledVerifiers',
+      'disableNotifications'
     ],
     'walletInitObject'
   )
@@ -593,41 +580,6 @@ export function validateWalletInit(
     name: 'walletInit.walletName',
     value: walletName,
     type: 'string'
-  })
-
-  validateType({
-    name: 'walletInit.apiKey',
-    value: apiKey,
-    type: 'string',
-    optional: true
-  })
-
-  validateType({
-    name: 'walletInit.networkId',
-    value: networkId,
-    type: 'number',
-    optional: true
-  })
-
-  validateType({
-    name: 'walletInit.infuraKey',
-    value: infuraKey,
-    type: 'string',
-    optional: true
-  })
-
-  validateType({
-    name: 'walletInit.rpc',
-    value: rpc,
-    type: 'object',
-    optional: true
-  })
-
-  validateType({
-    name: 'walletInit.bridge',
-    value: bridge,
-    type: 'string',
-    optional: true
   })
 
   validateType({
@@ -655,84 +607,6 @@ export function validateWalletInit(
     name: 'walletInit.svg',
     value: svg,
     type: 'string',
-    optional: true
-  })
-
-  validateType({
-    name: 'walletInit.appUrl',
-    value: appUrl,
-    type: 'string',
-    optional: true
-  })
-
-  validateType({
-    name: 'walletInit.LedgerTransport',
-    value: LedgerTransport,
-    type: 'function',
-    optional: true
-  })
-
-  validateType({
-    name: 'walletInit.email',
-    value: email,
-
-    type: 'string',
-    optional: true
-  })
-
-  validateType({
-    name: 'walletInit.rpcUrl',
-    value: rpcUrl,
-    type: 'string',
-    optional: true
-  })
-
-  validateType({
-    name: 'walletInit.enableLogging',
-    value: enableLogging,
-    type: 'boolean',
-    optional: true
-  })
-
-  validateType({
-    name: 'walletInit.loginMethod',
-    value: loginMethod,
-    type: 'string',
-    optional: true
-  })
-
-  validateType({
-    name: 'walletInit.showTorusButton',
-    value: showTorusButton,
-    type: 'boolean',
-    optional: true
-  })
-
-  validateType({
-    name: 'walletInit.enabledVerifiers',
-    value: enabledVerifiers,
-    type: 'object',
-    optional: true
-  })
-
-  validateType({
-    name: 'walletInit.buttonPosition',
-    value: buttonPosition,
-    type: 'string',
-    optional: true
-  })
-
-  validateType({
-    name: 'walletInit.buildEnv',
-    value: buildEnv,
-    type: 'string',
-    optional: true
-  })
-
-  validateType({
-    name: 'walletInit.disableNotifications',
-    value: disableNotifications,
-    type: 'boolean',
     optional: true
   })
 }

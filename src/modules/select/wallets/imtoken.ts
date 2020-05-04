@@ -1,10 +1,10 @@
 import { mobileWalletInstallMessage } from '../content'
-import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
+import { WalletModule, Helpers, ImTokenOptions } from '../../../interfaces'
 
 import imTokenIcon from '../wallet-icons/icon-imtoken'
 
 function imtoken(
-  options: CommonWalletOptions & { rpcUrl: string }
+  options: ImTokenOptions
 ): WalletModule {
   const { preferred, label, iconSrc, svg, rpcUrl } = options
 
