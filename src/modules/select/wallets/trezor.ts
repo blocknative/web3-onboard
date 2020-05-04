@@ -1,8 +1,4 @@
-import {
-  TrezorOptions,
-  WalletModule,
-  Helpers
-} from '../../../interfaces'
+import { TrezorOptions, WalletModule, Helpers } from '../../../interfaces'
 import trezorIcon from '../wallet-icons/icon-trezor'
 
 import createProvider from './providerEngine'
@@ -82,11 +78,11 @@ async function trezorProvider(options: {
   const { default: TrezorConnect, DEVICE_EVENT, DEVICE } = TrezorConnectLibrary
 
   const { networkId, email, appUrl, rpcUrl, BigNumber, networkName } = options
-  let dPath: string = ''
+  let dPath = ''
 
   let addressToPath = new Map()
-  let enabled: boolean = false
-  let customPath: boolean = false
+  let enabled = false
+  let customPath = false
 
   let account:
     | undefined

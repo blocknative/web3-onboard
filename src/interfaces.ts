@@ -220,26 +220,26 @@ export interface TrustWalletOptions extends CommonWalletOptions {
   rpcUrl?: string
 }
 
-export type WalletInitOptions = CommonWalletOptions |
-  SdkWalletOptions |
-  WalletConnectOptions |
-  TorusOptions |
-  TrezorOptions |
-  AuthereumOptions |
-  LedgerOptions | 
-  ImTokenOptions |
-  TrustWalletOptions
+export type WalletInitOptions =
+  | CommonWalletOptions
+  | SdkWalletOptions
+  | WalletConnectOptions
+  | TorusOptions
+  | TrezorOptions
+  | AuthereumOptions
+  | LedgerOptions
+  | ImTokenOptions
+  | TrustWalletOptions
 
 export type AllWalletInitOptions = CommonWalletOptions &
-SdkWalletOptions &
-WalletConnectOptions &
-TorusOptions &
-TrezorOptions &
-AuthereumOptions &
-LedgerOptions & 
-ImTokenOptions &
-TrustWalletOptions & 
-{networkId: number}
+  SdkWalletOptions &
+  WalletConnectOptions &
+  TorusOptions &
+  TrezorOptions &
+  AuthereumOptions &
+  LedgerOptions &
+  ImTokenOptions &
+  TrustWalletOptions & { networkId: number }
 
 export interface WalletCheckInit {
   checkName: string

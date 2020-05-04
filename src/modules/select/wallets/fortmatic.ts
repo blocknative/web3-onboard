@@ -1,9 +1,5 @@
 import { networkName } from '../../../utilities'
-import {
-  SdkWalletOptions,
-  WalletModule,
-  Helpers
-} from '../../../interfaces'
+import { SdkWalletOptions, WalletModule, Helpers } from '../../../interfaces'
 
 import fortmaticIcon from '../wallet-icons/icon-fortmatic'
 
@@ -42,13 +38,15 @@ function fortmatic(
           balance: {
             get: () =>
               provider.account &&
-              instance.user.getBalances().then((res: any) =>
-                res[0]
-                  ? BigNumber(res[0].crypto_amount)
-                      .times(BigNumber('1000000000000000000'))
-                      .toString(10)
-                  : null
-              )
+              instance.user
+                .getBalances()
+                .then((res: any) =>
+                  res[0]
+                    ? BigNumber(res[0].crypto_amount)
+                        .times(BigNumber('1000000000000000000'))
+                        .toString(10)
+                    : null
+                )
           }
         }
       }

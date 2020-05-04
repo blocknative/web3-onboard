@@ -1,9 +1,5 @@
 import { networkName, networkToId, openLink } from '../../../utilities'
-import {
-  SdkWalletOptions,
-  WalletModule,
-  Helpers
-} from '../../../interfaces'
+import { SdkWalletOptions, WalletModule, Helpers } from '../../../interfaces'
 
 import sqlkIcon from '../wallet-icons/icon-squarelink'
 

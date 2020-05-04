@@ -1,8 +1,4 @@
-import {
-  LedgerOptions,
-  WalletModule,
-  Helpers
-} from '../../../interfaces'
+import { LedgerOptions, WalletModule, Helpers } from '../../../interfaces'
 
 import ledgerIcon from '../wallet-icons/icon-ledger'
 
@@ -84,7 +80,7 @@ async function ledgerProvider(options: {
 
   let dPath = ''
   let addressToPath = new Map()
-  let enabled: boolean = false
+  let enabled = false
   let customPath = false
 
   let account:
