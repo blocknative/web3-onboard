@@ -3,9 +3,7 @@ import { WalletModule, Helpers, TrustWalletOptions } from '../../../interfaces'
 
 import trustIcon from '../wallet-icons/icon-trust'
 
-function trust(
-  options: TrustWalletOptions
-): WalletModule {
+function trust(options: TrustWalletOptions): WalletModule {
   const { preferred, label, iconSrc, svg, rpcUrl } = options
 
   return {

@@ -23,8 +23,8 @@ function accountSelect(
   } = {}
 ): WalletCheckModule {
   const { heading, description, icon } = options
-  let completed: boolean = false
-  let loadingAccounts: boolean = false
+  let completed = false
+  let loadingAccounts = false
   let accountsAndBalances: AccountsAndBalances = []
 
   async function checkModule(

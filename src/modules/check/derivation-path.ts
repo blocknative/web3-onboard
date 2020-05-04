@@ -70,7 +70,7 @@ function derivationPath(
 ) {
   const { heading, description, icon } = options
 
-  let state = {
+  const state = {
     completed: false,
     showCustomInput: false,
     dPath: '',
@@ -150,9 +150,9 @@ function derivationPath(
 
     if (wallet && wallet.type === 'hardware' && !state.completed) {
       const handleCustomInput = () => {
-        const input = <HTMLInputElement>(
-          document.getElementById('custom-derivation-input')
-        )
+        const input = document.getElementById(
+          'custom-derivation-input'
+        ) as HTMLInputElement
 
         state.dPath = input && input.value
         state.error = ''

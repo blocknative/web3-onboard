@@ -122,7 +122,10 @@
     app.update(store => ({ ...store, walletSelectDisplayedUI: true }))
   }
 
-  async function handleWalletSelect(module: WalletModule, autoSelected?: boolean) {
+  async function handleWalletSelect(
+    module: WalletModule,
+    autoSelected?: boolean
+  ) {
     const currentWalletInterface = get(walletInterface)
 
     if (currentWalletInterface && currentWalletInterface.name === module.name) {

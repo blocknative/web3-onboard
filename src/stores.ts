@@ -270,7 +270,7 @@ function createWalletStateSliceStore(options: {
 function createBalanceStore(initialState: string | null): BalanceStore {
   let stateSyncer: StateSyncer
   let emitter: any
-  let emitterAddress: String | undefined
+  let emitterAddress: string | undefined
   let cancel: () => void = () => {}
 
   const { subscribe } = derived(

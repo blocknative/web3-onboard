@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { app } from "../stores";
-  export let onclick: () => void = () => {};
+  import { app } from '../stores'
+  export let onclick: () => void = () => {}
 </script>
 
 <style>

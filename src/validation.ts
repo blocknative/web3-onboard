@@ -44,9 +44,7 @@ function invalidParams(
   keys.forEach(key => {
     if (!validParams.includes(key)) {
       throw new Error(
-        `${
-          key
-        } is not a valid parameter for ${functionName}, must be one of the following valid parameters: ${validParams.join(
+        `${key} is not a valid parameter for ${functionName}, must be one of the following valid parameters: ${validParams.join(
           ', '
         )}`
       )
@@ -165,7 +163,9 @@ function validateSubscriptions(subscriptions: Subscriptions): never | void {
   })
 }
 
-function validateWalletSelect(walletSelect: WalletSelectModuleOptions): never | void {
+function validateWalletSelect(
+  walletSelect: WalletSelectModuleOptions
+): never | void {
   validateType({ name: 'walletSelect', value: walletSelect, type: 'object' })
 
   const {

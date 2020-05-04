@@ -10,7 +10,6 @@ declare module 'trezor-connect'
 declare module 'ethereumjs-tx'
 declare module 'ethereumjs-util'
 declare module 'hdkey'
-// declare module 'ethereumjs-wallet/hdkey'
 declare module '@ledgerhq/hw-app-eth'
 declare module '@ledgerhq/hw-transport-u2f'
 
