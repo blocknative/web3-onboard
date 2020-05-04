@@ -1,18 +1,25 @@
 export interface Initialization {
   dappId: string
   networkId: number
-  subscriptions: Subscriptions
-  walletSelect: WalletSelectModule
-  walletCheck: Array<WalletCheckModule | WalletCheckInit>
+  subscriptions?: Subscriptions
+  walletSelect?: WalletSelectModuleOptions
+  walletCheck?: Array<WalletCheckModule | WalletCheckInit>
   darkMode?: boolean
   apiUrl?: string
 }
 
 export interface Subscriptions {
-  address: (address: string) => void
-  network: (networkId: number) => void
-  balance: (balance: string) => void
-  wallet: (wallet: Wallet) => void
+  address?: (address: string) => void
+  network?: (networkId: number) => void
+  balance?: (balance: string) => void
+  wallet?: (wallet: Wallet) => void
+}
+
+export interface WalletSelectModuleOptions {
+  heading?: string
+  description?: string
+  wallets?: Array<WalletModule | WalletInitOptions>
+  explanation?: string
 }
 
 export interface WalletSelectModule {
@@ -27,7 +34,6 @@ export interface WalletCheckModule {
     | WalletCheckModal
     | undefined
     | Promise<WalletCheckModal | undefined>
-  id?: string
 }
 
 export interface WalletCheckModule {
@@ -155,18 +161,18 @@ export interface Wallet {
 }
 
 export interface CommonWalletOptions {
-  networkId: number
+  walletName: string
   preferred?: boolean
   label?: string
   iconSrc?: string
   svg?: string
 }
 
-export interface SdkWalletOptions {
+export interface SdkWalletOptions extends CommonWalletOptions {
   apiKey: string
 }
 
-export interface WalletConnectOptions {
+export interface WalletConnectOptions extends CommonWalletOptions {
   infuraKey: string
   rpc: {
     [key: string]: string
@@ -174,18 +180,18 @@ export interface WalletConnectOptions {
   bridge: string
 }
 
-export interface TrezorOptions {
+export interface TrezorOptions extends CommonWalletOptions {
   appUrl: string
   email: string
   rpcUrl: string
 }
 
-export interface LedgerOptions {
+export interface LedgerOptions extends CommonWalletOptions {
   rpcUrl: string
   LedgerTransport?: any
 }
 
-export interface TorusOptions {
+export interface TorusOptions extends CommonWalletOptions {
   loginMethod?: 'google' | 'facebook' | 'twitch' | 'reddit' | 'discord'
   buildEnv?: 'production' | 'development' | 'staging' | 'testing'
   showTorusButton?: boolean
@@ -202,22 +208,38 @@ interface TorusVerifierStatus {
   discord?: boolean
 }
 
-export interface AuthereumOptions {
+export interface AuthereumOptions extends CommonWalletOptions {
   disableNotifications?: boolean
 }
 
-interface WalletName {
-  walletName: string
+export interface ImTokenOptions extends CommonWalletOptions {
+  rpcUrl?: string
 }
 
-export type WalletInitOptions = CommonWalletOptions &
-  SdkWalletOptions &
-  WalletConnectOptions &
-  TorusOptions &
-  TrezorOptions &
-  AuthereumOptions &
-  LedgerOptions &
-  WalletName
+export interface TrustWalletOptions extends CommonWalletOptions {
+  rpcUrl?: string
+}
+
+export type WalletInitOptions = CommonWalletOptions |
+  SdkWalletOptions |
+  WalletConnectOptions |
+  TorusOptions |
+  TrezorOptions |
+  AuthereumOptions |
+  LedgerOptions | 
+  ImTokenOptions |
+  TrustWalletOptions
+
+export type AllWalletInitOptions = CommonWalletOptions &
+SdkWalletOptions &
+WalletConnectOptions &
+TorusOptions &
+TrezorOptions &
+AuthereumOptions &
+LedgerOptions & 
+ImTokenOptions &
+TrustWalletOptions & 
+{networkId: number}
 
 export interface WalletCheckInit {
   checkName: string

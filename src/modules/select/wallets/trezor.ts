@@ -1,8 +1,7 @@
 import {
   TrezorOptions,
   WalletModule,
-  Helpers,
-  CommonWalletOptions
+  Helpers
 } from '../../../interfaces'
 import trezorIcon from '../wallet-icons/icon-trezor'
 
@@ -11,7 +10,7 @@ import { generateAddresses, isValidPath } from './hd-wallet'
 
 const TREZOR_DEFAULT_PATH = "m/44'/60'/0'/0"
 
-function trezor(options: TrezorOptions & CommonWalletOptions): WalletModule {
+function trezor(options: TrezorOptions & { networkId: number }): WalletModule {
   const {
     rpcUrl,
     networkId,

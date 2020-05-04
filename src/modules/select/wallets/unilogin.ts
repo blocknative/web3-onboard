@@ -1,7 +1,7 @@
 import { WalletModule, CommonWalletOptions } from '../../../interfaces'
 import uniloginIcon from '../wallet-icons/icon-unilogin'
 
-function unilogin(options: CommonWalletOptions): WalletModule {
+function unilogin(options: CommonWalletOptions & { networkId: number }): WalletModule {
   const { networkId, preferred, label, iconSrc, svg } = options
 
   return {

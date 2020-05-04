@@ -1,9 +1,9 @@
 import select from './select'
 import check from './check'
 import {
-  WalletSelectModule,
   WalletCheckModule,
-  WalletCheckInit
+  WalletCheckInit,
+  WalletSelectModuleOptions
 } from '../interfaces'
 
 const defaultHeading = 'Select a Wallet'
@@ -12,7 +12,7 @@ const defaultWalletExplanation = `Wallets are used to send, receive, and store d
 
 export default function initializeModules(
   networkId: number,
-  walletSelect: WalletSelectModule | undefined,
+  walletSelect: WalletSelectModuleOptions | undefined,
   walletCheck: Array<WalletCheckModule | WalletCheckInit> | undefined
 ) {
   const wallets = select(walletSelect && walletSelect.wallets, networkId)

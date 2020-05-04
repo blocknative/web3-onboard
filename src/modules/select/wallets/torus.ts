@@ -1,13 +1,12 @@
 import { networkName, openLink } from '../../../utilities'
 import {
   TorusOptions,
-  CommonWalletOptions,
   WalletModule
 } from '../../../interfaces'
 
 import torusIcon from '../wallet-icons/icon-torus'
 
-function torus(options: TorusOptions & CommonWalletOptions): WalletModule {
+function torus(options: TorusOptions & { networkId: number }): WalletModule {
   const {
     networkId,
     preferred,
