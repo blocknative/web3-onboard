@@ -1,14 +1,11 @@
 import { networkName, openLink } from '../../../utilities'
-import {
-  SdkWalletOptions,
-  WalletModule,
-  Helpers,
-  CommonWalletOptions
-} from '../../../interfaces'
+import { SdkWalletOptions, WalletModule, Helpers } from '../../../interfaces'
 
 import portisIcon from '../wallet-icons/icon-portis'
 
-function portis(options: SdkWalletOptions & CommonWalletOptions): WalletModule {
+function portis(
+  options: SdkWalletOptions & { networkId: number }
+): WalletModule {
   const { apiKey, networkId, preferred, label, iconSrc, svg } = options
 
   return {

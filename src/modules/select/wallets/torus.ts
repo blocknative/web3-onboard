@@ -1,13 +1,9 @@
 import { networkName, openLink } from '../../../utilities'
-import {
-  TorusOptions,
-  CommonWalletOptions,
-  WalletModule
-} from '../../../interfaces'
+import { TorusOptions, WalletModule } from '../../../interfaces'
 
 import torusIcon from '../wallet-icons/icon-torus'
 
-function torus(options: TorusOptions & CommonWalletOptions): WalletModule {
+function torus(options: TorusOptions & { networkId: number }): WalletModule {
   const {
     networkId,
     preferred,
@@ -52,7 +48,7 @@ function torus(options: TorusOptions & CommonWalletOptions): WalletModule {
         interface: {
           name: 'Torus',
           connect: async () => {
-            let result = await instance.login({ verifier: loginMethod })
+            const result = await instance.login({ verifier: loginMethod })
             return { message: result[0] }
           },
           disconnect: () => instance.cleanUp(),

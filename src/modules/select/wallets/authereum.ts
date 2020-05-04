@@ -1,13 +1,9 @@
 import authereumIcon from '../wallet-icons/icon-authereum.png'
 import { networkName, openLink } from '../../../utilities'
-import {
-  WalletModule,
-  AuthereumOptions,
-  CommonWalletOptions
-} from '../../../interfaces'
+import { WalletModule, AuthereumOptions } from '../../../interfaces'
 
 function authereum(
-  options: AuthereumOptions & CommonWalletOptions
+  options: AuthereumOptions & { networkId: number }
 ): WalletModule {
   const {
     networkId,

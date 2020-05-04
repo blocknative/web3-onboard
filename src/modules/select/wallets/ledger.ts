@@ -1,16 +1,11 @@
-import {
-  LedgerOptions,
-  WalletModule,
-  Helpers,
-  CommonWalletOptions
-} from '../../../interfaces'
+import { LedgerOptions, WalletModule, Helpers } from '../../../interfaces'
 
 import ledgerIcon from '../wallet-icons/icon-ledger'
 
 const LEDGER_LIVE_PATH = `m/44'/60'`
 const ACCOUNTS_TO_GET = 5
 
-function ledger(options: LedgerOptions & CommonWalletOptions): WalletModule {
+function ledger(options: LedgerOptions & { networkId: number }): WalletModule {
   const {
     rpcUrl,
     LedgerTransport,
@@ -85,7 +80,7 @@ async function ledgerProvider(options: {
 
   let dPath = ''
   let addressToPath = new Map()
-  let enabled: boolean = false
+  let enabled = false
   let customPath = false
 
   let account:

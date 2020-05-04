@@ -97,8 +97,6 @@
         on:mouseenter={() => (closeHovered = true)}
         on:mouseleave={() => (closeHovered = false)}>
         <svg
-          version="1.1"
-          id="Capa_1"
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
           x="0px"
