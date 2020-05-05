@@ -1,5 +1,5 @@
 export interface Initialization {
-  dappId: string
+  dappId?: string
   networkId: number
   subscriptions?: Subscriptions
   walletSelect?: WalletSelectModuleOptions
