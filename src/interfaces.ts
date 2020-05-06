@@ -1,11 +1,12 @@
 export interface Initialization {
-  dappId: string
+  dappId?: string
   networkId: number
   subscriptions?: Subscriptions
   walletSelect?: WalletSelectModuleOptions
   walletCheck?: Array<WalletCheckModule | WalletCheckInit>
   darkMode?: boolean
   apiUrl?: string
+  hideBranding?: boolean
 }
 
 export interface Subscriptions {
@@ -93,7 +94,7 @@ export interface StateAndHelpers extends UserState {
   stateStore: {
     address: WalletStateSliceStore
     network: WalletStateSliceStore
-    balance: BalanceStore
+    balance: BalanceStore | WalletStateSliceStore
   }
 }
 
@@ -286,6 +287,10 @@ export interface WritableStore {
   subscribe: (subscriber: (store: any) => any) => () => void
 }
 
+export interface ReadableStore {
+  subscribe: (subscriber: (store: any) => any) => () => void
+}
+
 export interface WalletInterfaceStore {
   subscribe: (subscriber: (store: any) => void) => () => void
   update: (
@@ -325,6 +330,7 @@ export interface AppState {
   accountSelectInProgress: boolean
   walletSelectDisplayedUI: boolean
   walletCheckDisplayedUI: boolean
+  displayBranding: boolean
 }
 
 export interface CancelablePromise extends Promise<any> {
