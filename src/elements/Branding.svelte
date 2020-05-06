@@ -3,19 +3,28 @@
 </script>
 
 <style>
-  div {
-    font-size: 0.66rem;
-    height: 1.3rem;
+  .bn-branding {
+    font-size: 0.75rem;
+    font-family: inherit;
     margin: 0.4rem;
-    display: flex;
-  }
-
-  a {
     display: flex;
     justify-content: center;
     width: 100%;
-    opacity: 0.8;
+    align-items: center;
+    opacity: 0.3;
+  }
+
+  a {
     color: inherit;
+    display: flex;
+    margin-left: 0.25rem;
+    align-items: center;
+  }
+
+  .bn-logo {
+    height: 0.9rem;
+    margin-left: 0.25rem;
+    margin-bottom: 0.1rem;
   }
 
   img {
@@ -24,14 +33,18 @@
   }
 </style>
 
-<div>
+<div class="bn-branding">
+  Powered by
   <a
     href="https://blocknative.com"
     class="bn-onboard-clickable"
     target="_blank"
     rel="noopener noreferrer">
-    <img
-      alt="Blocknative Logo"
-      src={darkMode ? ' https://www.blocknative.com/hubfs/Infrastructure%20Rebrand/bn-structure-logo-white.svg' : 'https://www.blocknative.com/hubfs/Infrastructure%20Rebrand/bn-structure-logo-black.svg'} />
+    Blocknative
+    <div class="bn-logo">
+      <img
+        alt="Blocknative Logo"
+        src={darkMode ? 'https://cdn2.hubspot.net/hubfs/5118396/Company Logos/bn-line-logo-white.svg' : 'https://cdn2.hubspot.net/hubfs/5118396/Company Logos/bn-line-logo-black.svg'} />
+    </div>
   </a>
 </div>
