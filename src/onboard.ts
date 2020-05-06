@@ -12,7 +12,8 @@ import {
   wallet,
   state,
   walletInterface,
-  resetWalletState
+  resetWalletState,
+  initializeStores
 } from './stores'
 
 import { getDeviceInfo } from './utilities'
@@ -44,8 +45,6 @@ function init(initialization: Initialization): API {
 
   const { subscriptions, dappId, networkId, darkMode, apiUrl } = initialization
 
-  initializeBlocknative(dappId, networkId, apiUrl)
-
   const { os, isMobile } = getDeviceInfo()
 
   const initializedModules = initializeModules(
@@ -64,6 +63,12 @@ function init(initialization: Initialization): API {
     darkMode,
     checkModules: initializedModules.walletCheck
   }))
+
+  initializeStores()
+
+  if (dappId) {
+    initializeBlocknative(dappId, networkId, apiUrl)
+  }
 
   onboard = new Onboard({
     target: document.body,

@@ -93,7 +93,7 @@ export interface StateAndHelpers extends UserState {
   stateStore: {
     address: WalletStateSliceStore
     network: WalletStateSliceStore
-    balance: BalanceStore
+    balance: BalanceStore | WalletStateSliceStore
   }
 }
 
@@ -283,6 +283,10 @@ export interface API {
 export interface WritableStore {
   set: (newValue: any) => void
   update: (updater: (newValue: any) => any) => void
+  subscribe: (subscriber: (store: any) => any) => () => void
+}
+
+export interface ReadableStore {
   subscribe: (subscriber: (store: any) => any) => () => void
 }
 

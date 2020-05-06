@@ -80,7 +80,12 @@ export function validateInit(init: Initialization): never | void {
     'init'
   )
 
-  validateType({ name: 'dappId', value: dappId, type: 'string' })
+  validateType({
+    name: 'dappId',
+    value: dappId,
+    type: 'string',
+    optional: true
+  })
   validateType({ name: 'networkId', value: networkId, type: 'number' })
   validateType({
     name: 'darkMode',

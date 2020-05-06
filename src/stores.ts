@@ -4,6 +4,7 @@ import { wait, makeCancelable, createInterval } from './utilities'
 import { validateWalletInterface, validateType } from './validation'
 import {
   WritableStore,
+  ReadableStore,
   WalletInterfaceStore,
   WalletInterface,
   WalletStateSliceStore,
@@ -47,37 +48,54 @@ export const stateSyncStatus: {
   network: null
 }
 
-export const address: WalletStateSliceStore = createWalletStateSliceStore({
-  parameter: 'address',
-  initialState: null
-})
-export const network: WalletStateSliceStore = createWalletStateSliceStore({
-  parameter: 'network',
-  initialState: null
-})
-export const balance: BalanceStore = createBalanceStore(null)
-export const wallet: WritableStore = writable({
-  name: null,
-  provider: null,
-  connect: null,
-  instance: null,
-  dashboard: null,
-  type: null
-})
+export let address: WalletStateSliceStore
+export let network: WalletStateSliceStore
+export let balance: BalanceStore | WalletStateSliceStore
+export let wallet: WritableStore
+export let state: ReadableStore
 
-export const state = derived(
-  [address, network, balance, wallet, app],
-  ([$address, $network, $balance, $wallet, $app]) => {
-    return {
-      address: $address,
-      network: $network,
-      balance: $balance,
-      wallet: $wallet,
-      mobileDevice: $app.mobileDevice,
-      appNetworkId: $app.networkId
+export function initializeStores() {
+  address = createWalletStateSliceStore({
+    parameter: 'address',
+    initialState: null
+  })
+
+  network = createWalletStateSliceStore({
+    parameter: 'network',
+    initialState: null
+  })
+
+  balance = get(app).dappId
+    ? createBalanceStore(null)
+    : createWalletStateSliceStore({
+        parameter: 'balance',
+        initialState: null,
+        intervalSetting: 1000
+      })
+
+  wallet = writable({
+    name: null,
+    provider: null,
+    connect: null,
+    instance: null,
+    dashboard: null,
+    type: null
+  })
+
+  state = derived(
+    [address, network, balance, wallet, app],
+    ([$address, $network, $balance, $wallet, $app]) => {
+      return {
+        address: $address,
+        network: $network,
+        balance: $balance,
+        wallet: $wallet,
+        mobileDevice: $app.mobileDevice,
+        appNetworkId: $app.networkId
+      }
     }
-  }
-)
+  )
+}
 
 // keep track of intervals that are syncing state so they can be cleared
 let currentSyncerIntervals: ({ clear: () => void } | undefined)[] = []
@@ -87,29 +105,32 @@ export const walletInterface: WalletInterfaceStore = createWalletInterfaceStore(
 )
 
 walletInterface.subscribe((walletInterface: WalletInterface | null) => {
-  // clear all current intervals if they exist
-  currentSyncerIntervals.forEach(
-    (interval: { clear: () => void } | undefined) =>
-      interval && interval.clear()
-  )
+  // make sure that stores have been initialized
+  if (state) {
+    // clear all current intervals if they exist
+    currentSyncerIntervals.forEach(
+      (interval: { clear: () => void } | undefined) =>
+        interval && interval.clear()
+    )
 
-  const currentState = get(state)
+    const currentState = get(state)
 
-  // reset state
-  currentState.balance && balance.reset()
-  currentState.address && address.reset()
-  currentState.network && network.reset()
+    // reset state
+    currentState.balance && balance.reset()
+    currentState.address && address.reset()
+    currentState.network && network.reset()
 
-  if (walletInterface) {
-    // start syncing state and save intervals
-    currentSyncerIntervals = [
-      address.setStateSyncer(walletInterface.address),
-      network.setStateSyncer(walletInterface.network),
-      balance.setStateSyncer(walletInterface.balance)
-    ]
+    if (walletInterface) {
+      // start syncing state and save intervals
+      currentSyncerIntervals = [
+        address.setStateSyncer(walletInterface.address),
+        network.setStateSyncer(walletInterface.network),
+        balance.setStateSyncer(walletInterface.balance)
+      ]
+    }
+
+    resetCheckModules()
   }
-
-  resetCheckModules()
 })
 
 export function resetWalletState(options?: {
@@ -198,8 +219,9 @@ function createWalletInterfaceStore(
 function createWalletStateSliceStore(options: {
   parameter: string
   initialState: string | number | null | undefined
+  intervalSetting?: number
 }): WalletStateSliceStore {
-  const { parameter, initialState } = options
+  const { parameter, initialState, intervalSetting } = options
   const { subscribe, set } = writable(initialState)
 
   let currentState: string | number | null | undefined
@@ -259,7 +281,7 @@ function createWalletStateSliceStore(options: {
               )
               stateSyncStatus[parameter] = null
             })
-        }, 200)
+        }, intervalSetting || 200)
 
         return interval
       }
