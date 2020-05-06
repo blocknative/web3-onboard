@@ -6,6 +6,7 @@ export interface Initialization {
   walletCheck?: Array<WalletCheckModule | WalletCheckInit>
   darkMode?: boolean
   apiUrl?: string
+  hideBranding?: boolean
 }
 
 export interface Subscriptions {
@@ -329,6 +330,7 @@ export interface AppState {
   accountSelectInProgress: boolean
   walletSelectDisplayedUI: boolean
   walletCheckDisplayedUI: boolean
+  displayBranding: boolean
 }
 
 export interface CancelablePromise extends Promise<any> {

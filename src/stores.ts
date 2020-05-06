@@ -29,7 +29,8 @@ export const app: WritableStore = writable({
   autoSelectWallet: '',
   checkModules: [],
   walletSelectDisplayedUI: false,
-  walletCheckDisplayedUI: false
+  walletCheckDisplayedUI: false,
+  displayBranding: false
 })
 
 export const stateSyncStatus: {
