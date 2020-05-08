@@ -12,7 +12,8 @@ import {
   wallet,
   state,
   walletInterface,
-  resetWalletState
+  resetWalletState,
+  initializeStores
 } from './stores'
 
 import { getDeviceInfo } from './utilities'
@@ -42,9 +43,14 @@ function init(initialization: Initialization): API {
 
   validateInit(initialization)
 
-  const { subscriptions, dappId, networkId, darkMode, apiUrl } = initialization
-
-  initializeBlocknative(dappId, networkId, apiUrl)
+  const {
+    subscriptions,
+    dappId,
+    networkId,
+    darkMode,
+    apiUrl,
+    hideBranding
+  } = initialization
 
   const { os, isMobile } = getDeviceInfo()
 
@@ -54,6 +60,22 @@ function init(initialization: Initialization): API {
     initialization.walletCheck
   )
 
+  let displayBranding: boolean
+
+  if (dappId) {
+    if (hideBranding !== false) {
+      displayBranding = false
+    } else {
+      displayBranding = true
+    }
+  } else {
+    if (hideBranding !== true) {
+      displayBranding = true
+    } else {
+      displayBranding = false
+    }
+  }
+
   app.update((store: AppState) => ({
     ...store,
     dappId,
@@ -62,8 +84,15 @@ function init(initialization: Initialization): API {
     mobileDevice: isMobile,
     os,
     darkMode,
+    displayBranding,
     checkModules: initializedModules.walletCheck
   }))
+
+  initializeStores()
+
+  if (dappId) {
+    initializeBlocknative(dappId, networkId, apiUrl)
+  }
 
   onboard = new Onboard({
     target: document.body,

@@ -103,7 +103,7 @@
       }) => {
         // no result then user has passed all conditions
         if (!result.modal) {
-          blocknative.event({
+          blocknative && blocknative.event({
             categoryCode: 'onboard',
             eventCode: 'onboardingCompleted'
           })
@@ -120,7 +120,7 @@
         currentModule = result.module
 
         // log the event code for this module
-        blocknative.event({
+        blocknative && blocknative.event({
           eventCode: activeModal.eventCode,
           categoryCode: 'onboard'
         })

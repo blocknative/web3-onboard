@@ -1,6 +1,7 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
   import { app } from '../stores'
+  import Branding from '../elements/Branding.svelte'
   export let closeModal: () => void
   export let closeable: boolean = true
 
@@ -78,6 +79,10 @@
   .bn-onboard-dark-mode-close-background:hover {
     background: #00222c;
   }
+
+  .no-padding-branding {
+    padding-bottom: 0;
+  }
 </style>
 
 <aside
@@ -86,9 +91,13 @@
   on:click={closeModal}>
   <section
     class:bn-onboard-dark-mode={$app.darkMode}
+    class:no-padding-branding={$app.displayBranding}
     class="bn-onboard-custom bn-onboard-modal-content"
     on:click={e => e.stopPropagation()}>
     <slot />
+    {#if $app.displayBranding}
+      <Branding darkMode={$app.darkMode} />
+    {/if}
     {#if closeable}
       <div
         class="bn-onboard-custom bn-onboard-modal-content-close"
