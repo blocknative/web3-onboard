@@ -29,6 +29,14 @@ export default {
     },
     { format: 'cjs', dir: 'dist/cjs/' }
   ],
+  onwarn: (warning, warn) => {
+    // supress warning as Typescript removes type definitions
+    if (warning.code === 'NON_EXISTENT_EXPORT') {
+      return
+    }
+
+    warn(warning)
+  },
   plugins: [
     json(),
     image(),
@@ -57,10 +65,12 @@ export default {
     'authereum',
     '@toruslabs/torus-embed',
     'walletlink',
-    'lodash.debounce',
+    '@unilogin/provider',
     'regenerator-runtime/runtime',
     'trezor-connect',
     'ethereumjs-tx',
+    'ethereumjs-util',
+    'hdkey',
     '@ledgerhq/hw-transport-u2f',
     '@ledgerhq/hw-app-eth',
     'util',

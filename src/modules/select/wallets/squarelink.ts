@@ -1,15 +1,10 @@
-import { networkName, networkToId } from '../../../utilities'
-import {
-  SdkWalletOptions,
-  CommonWalletOptions,
-  WalletModule,
-  Helpers
-} from '../../../interfaces'
+import { networkName, networkToId, openLink } from '../../../utilities'
+import { SdkWalletOptions, WalletModule, Helpers } from '../../../interfaces'
 
 import sqlkIcon from '../wallet-icons/icon-squarelink'
 
 function squarelink(
-  options: SdkWalletOptions & CommonWalletOptions
+  options: SdkWalletOptions & { networkId: number }
 ): WalletModule {
   const { apiKey, networkId, preferred, label, iconSrc, svg } = options
 
@@ -25,7 +20,6 @@ function squarelink(
       })
 
       const provider = instance.getProviderSync()
-
       const { BigNumber } = helpers
 
       return {
@@ -34,6 +28,7 @@ function squarelink(
         interface: {
           name: 'Squarelink',
           connect: provider.enable,
+          disconnect: () => provider.stop(),
           address: {
             get: () => Promise.resolve(instance.accounts[0])
           },
@@ -60,14 +55,14 @@ function squarelink(
                   }
                 )
               })
-          }
+          },
+          dashboard: () => openLink('https://app.squarelink.com/')
         }
       }
     },
     type: 'sdk',
     desktop: true,
     mobile: true,
-    url: 'https://app.squarelink.com/',
     preferred
   }
 }

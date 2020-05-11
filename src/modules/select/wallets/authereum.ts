@@ -1,13 +1,9 @@
 import authereumIcon from '../wallet-icons/icon-authereum.png'
-import { networkName } from '../../../utilities'
-import {
-  WalletModule,
-  AuthereumOptions,
-  CommonWalletOptions
-} from '../../../interfaces'
+import { networkName, openLink } from '../../../utilities'
+import { WalletModule, AuthereumOptions } from '../../../interfaces'
 
 function authereum(
-  options: AuthereumOptions & CommonWalletOptions
+  options: AuthereumOptions & { networkId: number }
 ): WalletModule {
   const {
     networkId,
@@ -37,7 +33,9 @@ function authereum(
         interface: {
           name: 'Authereum',
           connect: () => provider.enable(),
-          disconnect: () => instance.logout(),
+          disconnect: () => {
+            instance.destroy()
+          },
           address: {
             get: () => instance.getAccountAddress()
           },
@@ -49,16 +47,19 @@ function authereum(
               const loggedIn = await instance.isAuthenticated()
               return loggedIn && instance.getBalance()
             }
-          }
+          },
+          dashboard: () =>
+            openLink(
+              `https://${
+                networkId !== 1 ? `${networkName(networkId)}.` : ''
+              }authereum.com/`
+            )
         }
       }
     },
     type: 'sdk',
     desktop: true,
     mobile: true,
-    url: `https://${
-      networkId !== 1 ? `${networkName(networkId)}.` : ''
-    }authereum.com/`,
     preferred
   }
 }

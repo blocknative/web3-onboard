@@ -2,6 +2,7 @@
   import WalletSelect from './WalletSelect.svelte'
   import WalletCheck from './WalletCheck.svelte'
   import accountSelect from '../modules/check/accounts'
+  import derivationPath from '../modules/check/derivation-path'
   import { app } from '../stores'
 
   import {
@@ -11,7 +12,6 @@
   } from '../interfaces'
 
   export let walletSelectModule: WalletSelectModule
-  export let walletCheckModules: WalletCheckModule
   export let walletSelect: WalletSelectFunction
 </script>
 
@@ -23,6 +23,10 @@
 
   :global(.bn-onboard-custom.bn-onboard-dark-mode-background-hover:hover, .bn-onboard-custom.bn-onboard-dark-mode-background) {
     background: #0e212a;
+  }
+
+  :global(.bn-onboard-clickable) {
+    text-decoration: none;
   }
 
   :global(.bn-onboard-clickable:hover) {
@@ -41,9 +45,9 @@
 {/if}
 
 {#if $app.walletCheckInProgress}
-  <WalletCheck modules={walletCheckModules} {walletSelect} />
+  <WalletCheck {walletSelect} />
 {/if}
 
 {#if $app.accountSelectInProgress}
-  <WalletCheck modules={[accountSelect()]} />
+  <WalletCheck modules={[derivationPath(), accountSelect()]} />
 {/if}

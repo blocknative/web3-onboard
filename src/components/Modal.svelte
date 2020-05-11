@@ -1,6 +1,7 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
   import { app } from '../stores'
+  import Branding from '../elements/Branding.svelte'
   export let closeModal: () => void
   export let closeable: boolean = true
 
@@ -15,7 +16,7 @@
     font-family: 'Helvetica Neue';
     justify-content: center;
     align-items: center;
-    position: absolute;
+    position: fixed;
     font-size: 16px;
     z-index: 99;
     top: 0;
@@ -78,13 +79,25 @@
   .bn-onboard-dark-mode-close-background:hover {
     background: #00222c;
   }
+
+  .no-padding-branding {
+    padding-bottom: 0;
+  }
 </style>
 
-<aside transition:fade class="bn-onboard-custom bn-onboard-modal">
+<aside
+  transition:fade
+  class="bn-onboard-custom bn-onboard-modal"
+  on:click={closeModal}>
   <section
     class:bn-onboard-dark-mode={$app.darkMode}
-    class="bn-onboard-custom bn-onboard-modal-content">
+    class:no-padding-branding={$app.displayBranding}
+    class="bn-onboard-custom bn-onboard-modal-content"
+    on:click={e => e.stopPropagation()}>
     <slot />
+    {#if $app.displayBranding}
+      <Branding darkMode={$app.darkMode} />
+    {/if}
     {#if closeable}
       <div
         class="bn-onboard-custom bn-onboard-modal-content-close"
@@ -93,8 +106,6 @@
         on:mouseenter={() => (closeHovered = true)}
         on:mouseleave={() => (closeHovered = false)}>
         <svg
-          version="1.1"
-          id="Capa_1"
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
           x="0px"

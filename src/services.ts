@@ -1,11 +1,17 @@
-import blocknativeApi from 'bnc-sdk'
+import BlocknativeApi from 'bnc-sdk'
 
 let blocknative: any
 
-export function initializeBlocknative(dappId: string, networkId: number): any {
-  blocknative = blocknativeApi({
+export function initializeBlocknative(
+  dappId: string,
+  networkId: number,
+  apiUrl?: string
+): any {
+  blocknative = new BlocknativeApi({
     dappId,
-    networkId
+    networkId,
+    name: 'Onboard',
+    apiUrl
   })
 
   return blocknative

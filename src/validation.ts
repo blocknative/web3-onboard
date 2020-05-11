@@ -1,14 +1,14 @@
 import {
   Initialization,
   Subscriptions,
-  WalletSelectModule,
   WalletCheckModule,
   WalletModule,
   ConfigOptions,
   WalletCheckModal,
   WalletInterface,
   WalletInitOptions,
-  WalletCheckInit
+  WalletCheckInit,
+  WalletSelectModuleOptions
 } from './interfaces'
 
 const validSubscriptionKeys = ['address', 'network', 'balance', 'wallet']
@@ -39,17 +39,17 @@ function invalidParams(
   validParams: string[],
   functionName: string
 ): void | never {
-  const invalid = Object.keys(params)
+  const keys = Object.keys(params)
 
-  if (invalid.length > 0) {
-    throw new Error(
-      `${
-        invalid[0]
-      } is not a valid parameter for ${functionName}, must be one of the following valid parameters: ${validParams.join(
-        ', '
-      )}`
-    )
-  }
+  keys.forEach(key => {
+    if (!validParams.includes(key)) {
+      throw new Error(
+        `${key} is not a valid parameter for ${functionName}, must be one of the following valid parameters: ${validParams.join(
+          ', '
+        )}`
+      )
+    }
+  })
 }
 
 export function validateInit(init: Initialization): never | void {
@@ -62,6 +62,8 @@ export function validateInit(init: Initialization): never | void {
     walletSelect,
     walletCheck,
     darkMode,
+    apiUrl,
+    hideBranding,
     ...otherParams
   } = init
 
@@ -73,16 +75,35 @@ export function validateInit(init: Initialization): never | void {
       'subscriptions',
       'walletSelect',
       'walletCheck',
-      'darkMode'
+      'darkMode',
+      'apiUrl',
+      'hideBranding'
     ],
     'init'
   )
 
-  validateType({ name: 'dappId', value: dappId, type: 'string' })
+  validateType({
+    name: 'dappId',
+    value: dappId,
+    type: 'string',
+    optional: true
+  })
   validateType({ name: 'networkId', value: networkId, type: 'number' })
   validateType({
     name: 'darkMode',
     value: darkMode,
+    type: 'boolean',
+    optional: true
+  })
+  validateType({
+    name: 'apiUrl',
+    value: apiUrl,
+    type: 'string',
+    optional: true
+  })
+  validateType({
+    name: 'hideBranding',
+    value: hideBranding,
     type: 'boolean',
     optional: true
   })
@@ -155,14 +176,22 @@ function validateSubscriptions(subscriptions: Subscriptions): never | void {
   })
 }
 
-function validateWalletSelect(walletSelect: WalletSelectModule): never | void {
+function validateWalletSelect(
+  walletSelect: WalletSelectModuleOptions
+): never | void {
   validateType({ name: 'walletSelect', value: walletSelect, type: 'object' })
 
-  const { heading, description, wallets, ...otherParams } = walletSelect
+  const {
+    heading,
+    description,
+    explanation,
+    wallets,
+    ...otherParams
+  } = walletSelect
 
   invalidParams(
     otherParams,
-    ['heading', 'description', 'wallets'],
+    ['heading', 'description', 'explanation', 'wallets'],
     'walletSelect'
   )
 
@@ -172,9 +201,17 @@ function validateWalletSelect(walletSelect: WalletSelectModule): never | void {
     type: 'string',
     optional: true
   })
+
   validateType({
     name: 'description',
     value: description,
+    type: 'string',
+    optional: true
+  })
+
+  validateType({
+    name: 'explanation',
+    value: explanation,
     type: 'string',
     optional: true
   })
@@ -517,24 +554,10 @@ export function validateWalletInit(
 
   const {
     walletName,
-    apiKey,
-    networkId,
-    infuraKey,
     preferred,
     label,
     iconSrc,
     svg,
-    appUrl,
-    email,
-    rpcUrl,
-    buildEnv,
-    buttonPosition,
-    enableLogging,
-    loginMethod,
-    showTorusButton,
-    disableNotifications,
-    appName,
-    appLogoUrl,
     ...otherParams
   } = walletInit
 
@@ -545,6 +568,8 @@ export function validateWalletInit(
       'apiKey',
       'networkId',
       'infuraKey',
+      'rpc',
+      'bridge',
       'preferred',
       'label',
       'iconSrc',
@@ -552,13 +577,16 @@ export function validateWalletInit(
       'appUrl',
       'email',
       'rpcUrl',
+      'LedgerTransport',
       'buildEnv',
       'buttonPosition',
       'enableLogging',
       'loginMethod',
       'showTorusButton',
       'appName',
-      'appLogoUrl'
+      'appLogoUrl',
+      'enabledVerifiers',
+      'disableNotifications'
     ],
     'walletInitObject'
   )
@@ -567,27 +595,6 @@ export function validateWalletInit(
     name: 'walletInit.walletName',
     value: walletName,
     type: 'string'
-  })
-
-  validateType({
-    name: 'walletInit.apiKey',
-    value: apiKey,
-    type: 'string',
-    optional: true
-  })
-
-  validateType({
-    name: 'walletInit.networkId',
-    value: networkId,
-    type: 'number',
-    optional: true
-  })
-
-  validateType({
-    name: 'walletInit.infuraKey',
-    value: infuraKey,
-    type: 'string',
-    optional: true
   })
 
   validateType({
@@ -614,85 +621,6 @@ export function validateWalletInit(
   validateType({
     name: 'walletInit.svg',
     value: svg,
-    type: 'string',
-    optional: true
-  })
-
-  validateType({
-    name: 'walletInit.appUrl',
-    value: appUrl,
-
-    type: 'string',
-    optional: true
-  })
-
-  validateType({
-    name: 'walletInit.email',
-    value: email,
-
-    type: 'string',
-    optional: true
-  })
-
-  validateType({
-    name: 'walletInit.rpcUrl',
-    value: rpcUrl,
-    type: 'string',
-    optional: true
-  })
-
-  validateType({
-    name: 'walletInit.enableLogging',
-    value: enableLogging,
-    type: 'boolean',
-    optional: true
-  })
-
-  validateType({
-    name: 'walletInit.loginMethod',
-    value: loginMethod,
-    type: 'string',
-    optional: true
-  })
-
-  validateType({
-    name: 'walletInit.showTorusButton',
-    value: showTorusButton,
-    type: 'boolean',
-    optional: true
-  })
-
-  validateType({
-    name: 'walletInit.buttonPosition',
-    value: buttonPosition,
-    type: 'string',
-    optional: true
-  })
-
-  validateType({
-    name: 'walletInit.buildEnv',
-    value: buildEnv,
-    type: 'string',
-    optional: true
-  })
-
-  validateType({
-    name: 'walletInit.disableNotifications',
-    value: disableNotifications,
-    type: 'boolean',
-    optional: true
-  })
-
-  validateType({
-    name: 'walletInit.appName',
-    value: appName,
-    type: 'string',
-    optional: true
-  })
-
-  validateType({
-    name: 'walletInit.appLogoUrl',
-    value: appLogoUrl,
     type: 'string',
     optional: true
   })

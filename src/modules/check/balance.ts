@@ -1,12 +1,18 @@
 import { WalletCheckModal, StateAndHelpers } from '../../interfaces'
 import { validateType } from '../../validation'
+import { balanceIcon } from './icons'
 
-function balance(options: {
-  minimumBalance: string
-}): (currentState: StateAndHelpers) => WalletCheckModal | undefined {
+function balance(
+  options: {
+    minimumBalance: string
+    heading?: string
+    description?: string
+    icon?: string
+  } = { minimumBalance: '0' }
+): (currentState: StateAndHelpers) => Promise<WalletCheckModal | undefined> {
   validateType({ name: 'balance options', value: options, type: 'object' })
 
-  const { minimumBalance } = options
+  const { minimumBalance, heading, description, icon } = options
 
   validateType({
     name: 'minimumBalance',
@@ -14,21 +20,31 @@ function balance(options: {
     type: 'string'
   })
 
-  return (StateAndHelpers: StateAndHelpers) => {
-    const { balance, BigNumber } = StateAndHelpers
+  return async (StateAndHelpers: StateAndHelpers) => {
+    const { balance, BigNumber, stateSyncStatus, stateStore } = StateAndHelpers
+
+    if (balance === null) {
+      // wait for balance sync if is still on initial value
+      if (stateSyncStatus.balance) {
+        try {
+          await stateSyncStatus.balance
+        } catch (error) {}
+      }
+    }
+
     // if balance is less than minimum
-    if (BigNumber(balance).lt(BigNumber(minimumBalance || 0))) {
+    if (BigNumber(stateStore.balance.get()).lt(BigNumber(minimumBalance))) {
       return {
-        heading: 'Get Some ETH',
-        description: `Your current account has less than the necessary minimum balance of ${BigNumber(
-          minimumBalance
-        )
-          .div(BigNumber('1000000000000000000'))
-          .toString(10)} ETH.`,
+        heading: heading || 'Get Some ETH',
+        description:
+          description ||
+          `Your current account has less than the necessary minimum balance of ${BigNumber(
+            minimumBalance
+          )
+            .div(BigNumber('1000000000000000000'))
+            .toString(10)} ETH.`,
         eventCode: 'nsfFail',
-        icon: `
-        <svg height="18" viewBox="0 0 429 695" width="18" xmlns="http://www.w3.org/2000/svg"><g fill="currentColor" fill-rule="evenodd"><path d="m0 394 213 126.228516 214-126.228516-214 301z"/><path d="m0 353.962264 213.5-353.962264 213.5 353.962264-213.5 126.037736z"/></g></svg>
-        `
+        icon: icon || balanceIcon
       }
     }
   }

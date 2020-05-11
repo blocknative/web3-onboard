@@ -12,7 +12,8 @@ import {
   wallet,
   state,
   walletInterface,
-  resetWalletState
+  resetWalletState,
+  initializeStores
 } from './stores'
 
 import { getDeviceInfo } from './utilities'
@@ -42,11 +43,38 @@ function init(initialization: Initialization): API {
 
   validateInit(initialization)
 
-  const { subscriptions, dappId, networkId, darkMode } = initialization
-
-  initializeBlocknative(dappId, networkId)
+  const {
+    subscriptions,
+    dappId,
+    networkId,
+    darkMode,
+    apiUrl,
+    hideBranding
+  } = initialization
 
   const { os, isMobile } = getDeviceInfo()
+
+  const initializedModules = initializeModules(
+    networkId,
+    initialization.walletSelect,
+    initialization.walletCheck
+  )
+
+  let displayBranding: boolean
+
+  if (dappId) {
+    if (hideBranding !== false) {
+      displayBranding = false
+    } else {
+      displayBranding = true
+    }
+  } else {
+    if (hideBranding !== true) {
+      displayBranding = true
+    } else {
+      displayBranding = false
+    }
+  }
 
   app.update((store: AppState) => ({
     ...store,
@@ -55,20 +83,21 @@ function init(initialization: Initialization): API {
     version,
     mobileDevice: isMobile,
     os,
-    darkMode
+    darkMode,
+    displayBranding,
+    checkModules: initializedModules.walletCheck
   }))
 
-  const initializedModules = initializeModules(
-    networkId,
-    initialization.walletSelect,
-    initialization.walletCheck
-  )
+  initializeStores()
+
+  if (dappId) {
+    initializeBlocknative(dappId, networkId, apiUrl)
+  }
 
   onboard = new Onboard({
     target: document.body,
     props: {
       walletSelectModule: initializedModules.walletSelect,
-      walletCheckModules: initializedModules.walletCheck,
       walletSelect
     }
   })
@@ -78,7 +107,7 @@ function init(initialization: Initialization): API {
     if (subscriptions.address) {
       address.subscribe((address: string | null) => {
         if (address !== null) {
-          subscriptions.address(address)
+          subscriptions.address && subscriptions.address(address)
         }
       })
     }
@@ -86,7 +115,7 @@ function init(initialization: Initialization): API {
     if (subscriptions.network) {
       network.subscribe((networkId: number | null) => {
         if (networkId !== null) {
-          subscriptions.network(networkId)
+          subscriptions.network && subscriptions.network(networkId)
         }
       })
     }
@@ -94,14 +123,16 @@ function init(initialization: Initialization): API {
     if (subscriptions.balance) {
       balance.subscribe((balance: string) => {
         if (balance !== null) {
-          subscriptions.balance(balance)
+          subscriptions.balance && subscriptions.balance(balance)
         }
       })
     }
 
     if (subscriptions.wallet) {
       wallet.subscribe((wallet: Wallet) => {
-        wallet.provider !== null && subscriptions.wallet(wallet)
+        wallet.provider !== null &&
+          subscriptions.wallet &&
+          subscriptions.wallet(wallet)
       })
     }
   }
@@ -116,11 +147,22 @@ function init(initialization: Initialization): API {
       }))
 
       const appUnsubscribe = app.subscribe((store: AppState) => {
-        const { walletSelectInProgress, walletSelectCompleted } = store
+        const {
+          walletSelectInProgress,
+          walletSelectCompleted,
+          walletSelectDisplayedUI
+        } = store
 
         if (walletSelectInProgress === false) {
           appUnsubscribe()
-          setTimeout(() => resolve(walletSelectCompleted), 500)
+
+          // timeout for UI transitions if it was displayed
+          walletSelectDisplayedUI
+            ? setTimeout(() => {
+                resolve(walletSelectCompleted)
+                app.update(store => ({ ...store, displayedUI: false }))
+              }, 500)
+            : resolve(walletSelectCompleted)
         }
       })
     })
@@ -138,10 +180,19 @@ function init(initialization: Initialization): API {
       }))
 
       const appUnsubscribe = app.subscribe((store: AppState) => {
-        const { walletCheckInProgress, walletCheckCompleted } = store
+        const {
+          walletCheckInProgress,
+          walletCheckCompleted,
+          walletCheckDisplayedUI
+        } = store
         if (walletCheckInProgress === false) {
           appUnsubscribe()
-          setTimeout(() => resolve(walletCheckCompleted), 500)
+          walletCheckDisplayedUI
+            ? setTimeout(() => {
+                resolve(walletCheckCompleted)
+                app.update(store => ({ ...store, displayedUI: false }))
+              }, 500)
+            : resolve(walletCheckCompleted)
         }
       })
     })
@@ -164,10 +215,15 @@ function init(initialization: Initialization): API {
       }))
 
       const appUnsubscribe = app.subscribe((store: AppState) => {
-        const { accountSelectInProgress } = store
+        const { accountSelectInProgress, walletSelectDisplayedUI } = store
         if (accountSelectInProgress === false) {
           appUnsubscribe()
-          setTimeout(() => resolve(true), 500)
+          walletSelectDisplayedUI
+            ? setTimeout(() => {
+                resolve(true)
+                app.update(store => ({ ...store, displayedUI: false }))
+              }, 500)
+            : resolve(true)
         }
       })
     })

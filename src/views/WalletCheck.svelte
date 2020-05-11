@@ -1,6 +1,6 @@
 <script lang="ts">
   import { get } from 'svelte/store'
-
+  import { onDestroy, onMount } from 'svelte'
   import { fade } from 'svelte/transition'
   import BigNumber from 'bignumber.js'
 
@@ -8,9 +8,12 @@
   import {
     app,
     state,
-    balanceSyncStatus,
+    stateSyncStatus,
     walletInterface,
-    wallet
+    wallet,
+    address,
+    network,
+    balance
   } from '../stores'
   import { validateModal, validateWalletCheckModule } from '../validation'
   import { isPromise } from '../utilities'
@@ -25,13 +28,16 @@
     WalletSelectFunction,
     AppState,
     WalletCheckModal,
-    UserState
+    UserState,
+    Connect
   } from '../interfaces'
 
-  export let modules: WalletCheckModule[] | Promise<WalletCheckModule[]> = []
   export let walletSelect: WalletSelectFunction
+  export let modules: WalletCheckModule[] | undefined
 
   const blocknative = getBlocknative()
+
+  let currentState: UserState
 
   let activeModal: WalletCheckModal | undefined = undefined
   let currentModule: WalletCheckModule | undefined = undefined
@@ -54,42 +60,50 @@
     renderModule()
   }
 
+  function lockScroll() {
+    window.scrollTo(0, 0)
+  }
+
+  let originalOverflowValue: string
+
+  const unsubscribeCurrentState = state.subscribe(
+    store => (currentState = store)
+  )
+
+  onMount(() => {
+    originalOverflowValue = window.document.body.style.overflow
+    window.document.body.style.overflow = 'hidden'
+    window.addEventListener('scroll', lockScroll)
+  })
+
+  onDestroy(() => {
+    unsubscribeCurrentState()
+    window.removeEventListener('scroll', lockScroll)
+    window.document.body.style.overflow = originalOverflowValue
+  })
+
   async function renderModule() {
     checkingModule = true
 
-    if (isPromise(modules)) {
-      modules = await modules
-      modules.forEach(validateWalletCheckModule)
+    let checkModules = modules || get(app).checkModules
+
+    if (isPromise(checkModules)) {
+      checkModules = await checkModules
+      checkModules.forEach(validateWalletCheckModule)
+      app.update(store => ({ ...store, checkModules }))
     }
 
     const currentWallet = get(wallet).name
 
-    // check if the current wallet is ledger
-    if (currentWallet === 'Ledger') {
-      // if loadingAccounts module isn't already loaded, then load it
-      if (!modules.find(module => module.id === 'loadingAccounts')) {
-        // import the loading accounts module
-        const { default: loadingAccountsModule } = await import(
-          '../modules/check/loading-accounts'
-        )
-
-        // initialize the loading accounts module and put at the front of the modules array
-        modules.unshift(loadingAccountsModule())
-      }
-    } else {
-      // not a ledger wallet, so make sure loadingAccounts module is not in array
-      modules = modules.filter(m => m.id !== 'loadingAccounts')
-    }
-
     // loop through and run each module to check if a modal needs to be shown
-    runModules(modules).then(
+    runModules(checkModules).then(
       (result: {
         modal: WalletCheckModal | undefined
         module: WalletCheckModule | undefined
       }) => {
         // no result then user has passed all conditions
         if (!result.modal) {
-          blocknative.event({
+          blocknative && blocknative.event({
             categoryCode: 'onboard',
             eventCode: 'onboardingCompleted'
           })
@@ -99,11 +113,14 @@
           return
         }
 
+        // set that UI has been displayed, so that timeouts can be added for UI transitions
+        app.update(store => ({ ...store, walletCheckDisplayedUI: true }))
+
         activeModal = result.modal
         currentModule = result.module
 
         // log the event code for this module
-        blocknative.event({
+        blocknative && blocknative.event({
           eventCode: activeModal.eventCode,
           categoryCode: 'onboard'
         })
@@ -128,7 +145,7 @@
               activeModal = result && result.modal ? result.modal : activeModal
             }
           }
-        }, 500)
+        }, 100)
       }
     )
   }
@@ -139,8 +156,7 @@
 
     activeModal &&
       activeModal.action &&
-      activeModal
-        .action()
+      (activeModal.action as Connect)()
         .then(() => {
           actionResolved = true
           loading = false
@@ -170,7 +186,6 @@
   }
 
   function runModules(modules: WalletCheckModule[]) {
-    loadingModal = true
     return new Promise(
       async (
         resolve: (result: {
@@ -179,23 +194,13 @@
         }) => void
       ) => {
         for (const module of modules) {
-          if (balanceSyncStatus.syncing) {
-            try {
-              await balanceSyncStatus.syncing
-            } catch (error) {}
-
-            balanceSyncStatus.syncing = null
-          }
-
-          const result = await invalidState(module, get(state))
+          const result = await invalidState(module, currentState)
 
           if (result) {
-            loadingModal = false
             return resolve(result)
           }
         }
 
-        loadingModal = false
         return resolve({ modal: undefined, module: undefined })
       }
     )
@@ -212,7 +217,13 @@
       BigNumber,
       walletSelect,
       exit: handleExit,
-      wallet: get(wallet)
+      wallet: get(wallet),
+      stateSyncStatus,
+      stateStore: {
+        address,
+        network,
+        balance
+      }
     })
 
     if (result) {
@@ -224,7 +235,25 @@
         }
       } else {
         // module returned a promise, so await it for val
-        const modal = await result
+        // show loading spinner if promise doesn't resolve within 150ms
+        let modal
+        await new Promise(resolve => {
+          let completed: boolean = false
+
+          result.then(res => {
+            loadingModal = false
+            completed = true
+            modal = res
+            resolve()
+          })
+
+          setTimeout(() => {
+            if (!completed) {
+              loadingModal = true
+            }
+          }, 650)
+        })
+
         if (modal) {
           validateModal(modal)
           return {
@@ -272,6 +301,7 @@
   section {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
     margin-bottom: 1rem;
   }
@@ -279,7 +309,7 @@
 
 {#if loadingModal}
   <Modal closeable={false}>
-    <Spinner />
+    <Spinner description="Checking wallet" />
   </Modal>
 {/if}
 

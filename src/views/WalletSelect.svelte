@@ -2,6 +2,7 @@
   import BigNumber from 'bignumber.js'
   import { get } from 'svelte/store'
   import { fade } from 'svelte/transition'
+  import { onDestroy, onMount } from 'svelte'
 
   import { app, walletInterface, wallet, resetWalletState } from '../stores'
 
@@ -46,18 +47,37 @@
   let selectedWalletModule: WalletModule
 
   const { mobileDevice, os } = get(app)
-  let { heading, description, wallets } = module
+  let { heading, description, explanation, wallets } = module
 
   let primaryWallets: WalletModule[]
   let secondaryWallets: WalletModule[] | undefined
 
   let loadingWallet: string | undefined = undefined
 
+  let showingAllWalletModules = false
+  const showAllWallets = () => (showingAllWalletModules = true)
+
+  function lockScroll() {
+    window.scrollTo(0, 0)
+  }
+
+  let originalOverflowValue: string
+
+  onMount(() => {
+    originalOverflowValue = window.document.body.style.overflow
+    window.document.body.style.overflow = 'hidden'
+    window.addEventListener('scroll', lockScroll)
+  })
+
+  onDestroy(() => {
+    window.removeEventListener('scroll', lockScroll)
+    window.document.body.style.overflow = originalOverflowValue
+  })
+
   renderWalletSelect()
 
   async function renderWalletSelect() {
     const appState = get(app)
-
     wallets = await wallets
 
     const deviceWallets = (wallets as WalletModule[])
@@ -78,13 +98,6 @@
         deviceWallets.length > 4 ? deviceWallets.slice(4) : undefined
     }
 
-    modalData = {
-      heading,
-      description,
-      primaryWallets,
-      secondaryWallets
-    }
-
     if (appState.autoSelectWallet) {
       const module = deviceWallets.find(
         (m: WalletModule) => m.name === appState.autoSelectWallet
@@ -93,12 +106,26 @@
       app.update(store => ({ ...store, autoSelectWallet: '' }))
 
       if (module) {
-        handleWalletSelect(module)
+        handleWalletSelect(module, true)
+        return
       }
     }
+
+    modalData = {
+      heading,
+      description,
+      explanation,
+      primaryWallets,
+      secondaryWallets
+    }
+
+    app.update(store => ({ ...store, walletSelectDisplayedUI: true }))
   }
 
-  async function handleWalletSelect(module: WalletModule) {
+  async function handleWalletSelect(
+    module: WalletModule,
+    autoSelected?: boolean
+  ) {
     const currentWalletInterface = get(walletInterface)
 
     if (currentWalletInterface && currentWalletInterface.name === module.name) {
@@ -139,6 +166,19 @@
           selectedWallet: selectedWalletModule.name
         })
 
+      // if it was autoSelected then we need to add modalData to show the modal
+      if (autoSelected) {
+        modalData = {
+          heading,
+          description,
+          explanation,
+          primaryWallets,
+          secondaryWallets
+        }
+
+        app.update(store => ({ ...store, walletSelectDisplayedUI: true }))
+      }
+
       return
     }
 
@@ -153,7 +193,7 @@
     wallet.set({
       provider,
       instance,
-      url: module.url,
+      dashboard: selectedWalletInterface.dashboard,
       name: module.name,
       connect: selectedWalletInterface.connect,
       type: module.type
@@ -164,12 +204,10 @@
 
   function finish(options: { completed: boolean }) {
     modalData = null
-
     app.update(store => ({
       ...store,
       walletSelectInProgress: false,
-      walletSelectCompleted: options.completed,
-      autoSelect: false
+      walletSelectCompleted: options.completed
     }))
   }
 </script>
@@ -207,7 +245,12 @@
       <p class="bn-onboard-custom bn-onboard-select-description">
         {@html modalData.description}
       </p>
-      <Wallets {modalData} {handleWalletSelect} {loadingWallet} />
+      <Wallets
+        {modalData}
+        {handleWalletSelect}
+        {loadingWallet}
+        {showingAllWalletModules}
+        {showAllWallets} />
       <div class="bn-onboard-custom bn-onboard-select-info-container">
         <span
           class="bn-onboard-custom bn-onboard-select-wallet-info"
@@ -222,12 +265,7 @@
         <p
           in:fade
           class="bn-onboard-custom bn-onboard-select-wallet-definition">
-          Wallets are used to send, receive, and store digital assets like
-          Ethereum. Wallets come in many forms. They are either built into your
-          browser, an extension added to your browser, a piece of hardware
-          plugged into your computer or even an app on your phone. They are
-          hyper secure, and can be used for any other blockchain application you
-          may want to use.
+          {@html modalData.explanation}
         </p>
       {/if}
     {:else}

@@ -1,16 +1,17 @@
 import { getBlocknative } from './services'
 import { writable, derived, get } from 'svelte/store'
-import debounce from 'lodash.debounce'
-import { wait, makeCancelable } from './utilities'
+import { wait, makeCancelable, createInterval } from './utilities'
 import { validateWalletInterface, validateType } from './validation'
 import {
   WritableStore,
+  ReadableStore,
   WalletInterfaceStore,
   WalletInterface,
   WalletStateSliceStore,
   StateSyncer,
   BalanceStore,
-  CancelablePromise
+  CancelablePromise,
+  WalletCheckModule
 } from './interfaces'
 
 export const app: WritableStore = writable({
@@ -25,76 +26,111 @@ export const app: WritableStore = writable({
   walletCheckInProgress: false,
   walletCheckCompleted: false,
   accountSelectInProgress: false,
-  autoSelectWallet: ''
+  autoSelectWallet: '',
+  checkModules: [],
+  walletSelectDisplayedUI: false,
+  walletCheckDisplayedUI: false,
+  displayBranding: false
 })
 
-export const balanceSyncStatus: {
-  syncing: null | CancelablePromise
-  error: string
+export const stateSyncStatus: {
+  [key: string]:
+    | null
+    | CancelablePromise
+    | Promise<Array<string>>
+    | Promise<string>
+    | Promise<void>
+  balance: null | CancelablePromise
+  address: null | Promise<Array<string>>
+  network: null | Promise<string>
 } = {
-  syncing: null,
-  error: ''
+  balance: null,
+  address: null,
+  network: null
 }
 
-export const address: WalletStateSliceStore = createWalletStateSliceStore({
-  parameter: 'address',
-  initialState: null
-})
-export const network: WalletStateSliceStore = createWalletStateSliceStore({
-  parameter: 'network',
-  initialState: null
-})
-export const balance: BalanceStore = createBalanceStore(null)
-export const wallet: WritableStore = writable({
-  name: null,
-  provider: null,
-  connect: null,
-  instance: null,
-  url: null,
-  type: null
-})
+export let address: WalletStateSliceStore
+export let network: WalletStateSliceStore
+export let balance: BalanceStore | WalletStateSliceStore
+export let wallet: WritableStore
+export let state: ReadableStore
 
-export const state = derived(
-  [address, network, balance, wallet, app],
-  ([$address, $network, $balance, $wallet, $app]) => {
-    return {
-      address: $address,
-      network: $network,
-      balance: $balance,
-      wallet: $wallet,
-      mobileDevice: $app.mobileDevice,
-      appNetworkId: $app.networkId
+export function initializeStores() {
+  address = createWalletStateSliceStore({
+    parameter: 'address',
+    initialState: null
+  })
+
+  network = createWalletStateSliceStore({
+    parameter: 'network',
+    initialState: null
+  })
+
+  balance = get(app).dappId
+    ? createBalanceStore(null)
+    : createWalletStateSliceStore({
+        parameter: 'balance',
+        initialState: null,
+        intervalSetting: 1000
+      })
+
+  wallet = writable({
+    name: null,
+    provider: null,
+    connect: null,
+    instance: null,
+    dashboard: null,
+    type: null
+  })
+
+  state = derived(
+    [address, network, balance, wallet, app],
+    ([$address, $network, $balance, $wallet, $app]) => {
+      return {
+        address: $address,
+        network: $network,
+        balance: $balance,
+        wallet: $wallet,
+        mobileDevice: $app.mobileDevice,
+        appNetworkId: $app.networkId
+      }
     }
-  }
-)
+  )
+}
 
 // keep track of intervals that are syncing state so they can be cleared
-let currentSyncerIntervals: (number | undefined)[] = []
+let currentSyncerIntervals: ({ clear: () => void } | undefined)[] = []
 
 export const walletInterface: WalletInterfaceStore = createWalletInterfaceStore(
   null
 )
 
 walletInterface.subscribe((walletInterface: WalletInterface | null) => {
-  // clear all current intervals if they exist
-  currentSyncerIntervals.forEach(
-    (interval: number | undefined) => interval && clearInterval(interval)
-  )
+  // make sure that stores have been initialized
+  if (state) {
+    // clear all current intervals if they exist
+    currentSyncerIntervals.forEach(
+      (interval: { clear: () => void } | undefined) =>
+        interval && interval.clear()
+    )
 
-  const currentState = get(state)
+    const currentState = get(state)
 
-  // reset state
-  currentState.balance && balance.reset()
-  currentState.address && address.reset()
-  currentState.network && network.reset()
+    // reset state
+    currentState.balance && balance.reset()
+    currentState.address && address.reset()
+    currentState.network && network.reset()
 
-  if (walletInterface) {
-    // start syncing state and save intervals
-    currentSyncerIntervals = [
-      address.setStateSyncer(walletInterface.address),
-      network.setStateSyncer(walletInterface.network),
-      balance.setStateSyncer(walletInterface.balance)
-    ]
+    if (walletInterface) {
+      // start syncing state and save intervals
+      currentSyncerIntervals = [
+        address.setStateSyncer(walletInterface.address),
+        network.setStateSyncer(walletInterface.network),
+        balance.setStateSyncer(walletInterface.balance)
+      ]
+    }
+
+    resetCheckModules()
   }
 })
 
@@ -115,7 +151,8 @@ export function resetWalletState(options?: {
         provider: undefined,
         connect: undefined,
         instance: undefined,
-        url: undefined
+        dashboard: undefined,
+        type: undefined
       }))
 
       currentInterface.disconnect && currentInterface.disconnect()
@@ -128,14 +165,14 @@ export function resetWalletState(options?: {
     // if walletName is the same as the current interface name then do a full reset (checking if to do a disconnect)
     if (currentInterface.name === walletName) {
       wallet.update(() => ({
-        name: undefined,
-        provider: undefined,
-        connect: undefined,
-        instance: undefined,
-        url: undefined
+        name: null,
+        provider: null,
+        connect: null,
+        instance: null,
+        dashboard: null
       }))
 
-      disconnected &&
+      !disconnected &&
         currentInterface.disconnect &&
         currentInterface.disconnect()
 
@@ -145,12 +182,22 @@ export function resetWalletState(options?: {
     return currentInterface
   })
 
-  app.update(store => ({
-    ...store,
-    walletSelectInProgress: false,
-    walletSelectCompleted: false,
-    autoSelect: false
-  }))
+  resetCheckModules()
+
+  app.update(store => {
+    return {
+      ...store,
+      walletSelectInProgress: false,
+      walletSelectCompleted: false
+    }
+  })
+}
+
+function resetCheckModules() {
+  const { checkModules } = get(app)
+  if (Array.isArray(checkModules)) {
+    checkModules.forEach((m: WalletCheckModule) => m.reset && m.reset())
+  }
 }
 
 function createWalletInterfaceStore(
@@ -161,8 +208,10 @@ function createWalletInterfaceStore(
   return {
     subscribe,
     update,
-    set: (walletInterface: WalletInterface) => {
-      validateWalletInterface(walletInterface)
+    set: (walletInterface: WalletInterface | null) => {
+      if (walletInterface) {
+        validateWalletInterface(walletInterface)
+      }
       set(walletInterface)
     }
   }
@@ -171,8 +220,9 @@ function createWalletInterfaceStore(
 function createWalletStateSliceStore(options: {
   parameter: string
   initialState: string | number | null | undefined
+  intervalSetting?: number
 }): WalletStateSliceStore {
-  const { parameter, initialState } = options
+  const { parameter, initialState, intervalSetting } = options
   const { subscribe, set } = writable(initialState)
 
   let currentState: string | number | null | undefined
@@ -185,6 +235,7 @@ function createWalletStateSliceStore(options: {
     reset: () => {
       set(undefined)
     },
+    get: () => currentState,
     setStateSyncer: (stateSyncer: StateSyncer) => {
       validateType({ name: 'stateSyncer', value: stateSyncer, type: 'object' })
 
@@ -205,28 +256,33 @@ function createWalletStateSliceStore(options: {
       })
 
       if (onChange) {
-        onChange(newVal => {
-          if (newVal || currentState !== initialState) {
-            set(newVal)
-          }
+        stateSyncStatus[parameter] = new Promise(resolve => {
+          onChange(newVal => {
+            resolve()
+            if (newVal || currentState !== initialState) {
+              set(newVal)
+            }
+          })
         })
         return
       }
 
       if (get) {
-        const interval: any = setInterval(() => {
-          get()
+        const interval: any = createInterval(() => {
+          stateSyncStatus[parameter] = get()
             .then(newVal => {
+              stateSyncStatus[parameter] = null
               if (newVal || currentState !== initialState) {
-                set(newVal)
+                interval.status.active && set(newVal)
               }
             })
             .catch((err: any) => {
               console.warn(
                 `Error getting ${parameter} from state syncer: ${err}`
               )
+              stateSyncStatus[parameter] = null
             })
-        }, 200)
+        }, intervalSetting || 200)
 
         return interval
       }
@@ -237,7 +293,7 @@ function createWalletStateSliceStore(options: {
 function createBalanceStore(initialState: string | null): BalanceStore {
   let stateSyncer: StateSyncer
   let emitter: any
-  let emitterAddress: String | undefined
+  let emitterAddress: string | undefined
   let cancel: () => void = () => {}
 
   const { subscribe } = derived(
@@ -255,31 +311,35 @@ function createBalanceStore(initialState: string | null): BalanceStore {
           if (emitterAddress !== $address) {
             const blocknative = getBlocknative()
 
-            emitter = blocknative.account(blocknative.clientIndex, $address)
-              .emitter
+            // unsubscribe from previous address
+            if (emitterAddress) {
+              blocknative.unsubscribe(emitterAddress)
+            }
 
-            emitter.on(
-              'txConfirmed',
-              debounce(() => {
-                if (stateSyncer.get) {
-                  cancel = syncStateWithTimeout({
-                    getState: stateSyncer.get,
-                    setState: set,
-                    timeout: 2000,
-                    currentBalance: get(balance),
-                    pollStart: Date.now()
-                  })
-                }
+            emitter = blocknative.account($address).emitter
 
-                return false
-              }, 500)
-            )
+            emitter.on('txConfirmed', () => {
+              if (stateSyncer.get) {
+                cancel = syncStateWithTimeout({
+                  getState: stateSyncer.get,
+                  setState: set,
+                  timeout: 2000,
+                  currentBalance: get(balance),
+                  pollStart: Date.now()
+                })
+              }
 
-            emitter.on('all', () => false)
+              return false
+            })
 
             emitterAddress = $address
           }
         } else if (emitterAddress && !$address) {
+          const blocknative = getBlocknative()
+
+          // unsubscribe from previous address
+          blocknative.unsubscribe(emitterAddress)
+
           // no address, so set balance to undefined
           set && set(undefined)
           emitterAddress = undefined
@@ -290,8 +350,14 @@ function createBalanceStore(initialState: string | null): BalanceStore {
     }
   )
 
+  let currentState: string | null
+  subscribe((store: any) => {
+    currentState = store
+  })
+
   return {
     subscribe,
+    get: () => currentState,
     setStateSyncer: (syncer: StateSyncer) => {
       validateType({ name: 'syncer', value: syncer, type: 'object' })
 
@@ -334,7 +400,7 @@ function syncStateWithTimeout(options: {
 
   const prom = makeCancelable(getState())
 
-  balanceSyncStatus.syncing = prom
+  stateSyncStatus.balance = prom
 
   prom
     .then(async (result: string) => {
@@ -342,10 +408,13 @@ function syncStateWithTimeout(options: {
         await wait(350)
         syncStateWithTimeout(options)
       } else {
+        stateSyncStatus.balance = null
         setState(result)
       }
     })
-    .catch(() => {})
+    .catch(() => {
+      stateSyncStatus.balance = null
+    })
 
   const timedOut = wait(timeout)
 

@@ -1,23 +1,33 @@
 export interface Initialization {
-  dappId: string
+  dappId?: string
   networkId: number
-  subscriptions: Subscriptions
-  walletSelect: WalletSelectModule
-  walletCheck: Array<WalletCheckModule | WalletCheckInit>
+  subscriptions?: Subscriptions
+  walletSelect?: WalletSelectModuleOptions
+  walletCheck?: Array<WalletCheckModule | WalletCheckInit>
   darkMode?: boolean
+  apiUrl?: string
+  hideBranding?: boolean
 }
 
 export interface Subscriptions {
-  address: (address: string) => void
-  network: (networkId: number) => void
-  balance: (balance: string) => void
-  wallet: (wallet: Wallet) => void
+  address?: (address: string) => void
+  network?: (networkId: number) => void
+  balance?: (balance: string) => void
+  wallet?: (wallet: Wallet) => void
+}
+
+export interface WalletSelectModuleOptions {
+  heading?: string
+  description?: string
+  wallets?: Array<WalletModule | WalletInitOptions>
+  explanation?: string
 }
 
 export interface WalletSelectModule {
   heading: string
   description: string
   wallets: Array<WalletModule | WalletInitOptions>
+  explanation?: string
 }
 
 export interface WalletCheckModule {
@@ -25,7 +35,14 @@ export interface WalletCheckModule {
     | WalletCheckModal
     | undefined
     | Promise<WalletCheckModal | undefined>
-  id?: string
+}
+
+export interface WalletCheckModule {
+  reset?: () => void
+}
+
+export interface Connect {
+  (): Promise<{ message: string } | string[] | undefined>
 }
 
 export interface WalletCheckModal {
@@ -37,13 +54,14 @@ export interface WalletCheckModal {
     text: string
   }
   eventCode: string
-  action?: () => Promise<{ message: string } | undefined>
+  action?: Connect | null
   icon?: string
 }
 
 export interface WalletSelectModalData {
   heading: string
   description: string
+  explanation?: string
   primaryWallets: WalletModule[]
   secondaryWallets: WalletModule[] | undefined
 }
@@ -52,7 +70,7 @@ export interface UserState {
   address: string
   network: number
   balance: string
-  wallet: Wallet | null
+  wallet: Wallet
   mobileDevice: boolean
   appNetworkId: number
 }
@@ -62,6 +80,22 @@ export interface StateAndHelpers extends UserState {
   walletSelect: WalletSelectFunction
   wallet: Wallet
   exit: (completed?: boolean) => void
+  stateSyncStatus: {
+    [key: string]:
+      | null
+      | CancelablePromise
+      | Promise<Array<string>>
+      | Promise<string>
+      | Promise<void>
+    balance: null | CancelablePromise
+    address: null | Promise<Array<string>>
+    network: null | Promise<string>
+  }
+  stateStore: {
+    address: WalletStateSliceStore
+    network: WalletStateSliceStore
+    balance: BalanceStore | WalletStateSliceStore
+  }
 }
 
 export interface WalletModule {
@@ -78,7 +112,6 @@ export interface WalletModule {
   }>
   type: 'hardware' | 'injected' | 'sdk'
   link?: string
-  url?: string
   installMessage?: (wallets: {
     currentWallet: string | undefined
     selectedWallet: string
@@ -97,7 +130,7 @@ export interface Helpers {
   networkName: (id: number) => string
   getAddress: (provider: any) => Promise<string | any>
   getNetwork: (provider: any) => Promise<number | any>
-  getBalance: (provider: any) => Promise<string | any>
+  getBalance: (provider: any, address?: string) => Promise<string | any>
   resetWalletState: (options?: {
     disconnected: boolean
     walletName: string
@@ -106,11 +139,12 @@ export interface Helpers {
 
 export interface WalletInterface {
   name: string | undefined
-  connect?: () => Promise<{ message: string } | undefined>
+  connect?: Connect | null
   disconnect?: () => void
   address: StateSyncer
   network: StateSyncer
   balance: StateSyncer
+  dashboard?: () => void
 }
 
 export interface StateSyncer {
@@ -119,62 +153,92 @@ export interface StateSyncer {
 }
 
 export interface Wallet {
-  name: string
-  provider: any
-  type: 'hardware' | 'injected' | 'sdk'
-  instance?: any
-  connect?: () => Promise<{ message: string } | undefined>
+  name: string | null
+  provider: any | null
+  type: 'hardware' | 'injected' | 'sdk' | null
+  instance?: any | null
+  connect?: Connect | null
+  dashboard?: () => void | null
 }
 
 export interface CommonWalletOptions {
-  networkId: number
+  walletName: string
   preferred?: boolean
   label?: string
   iconSrc?: string
   svg?: string
 }
 
-export interface SdkWalletOptions {
+export interface SdkWalletOptions extends CommonWalletOptions {
   apiKey: string
 }
 
-export interface WalletConnectOptions {
+export interface WalletConnectOptions extends CommonWalletOptions {
   infuraKey: string
+  rpc: {
+    [key: string]: string
+  }
+  bridge: string
 }
 
-export interface TrezorOptions {
+export interface TrezorOptions extends CommonWalletOptions {
   appUrl: string
   email: string
   rpcUrl: string
 }
 
-export interface LedgerOptions {
+export interface LedgerOptions extends CommonWalletOptions {
   rpcUrl: string
+  LedgerTransport?: any
 }
 
-export interface TorusOptions {
+export interface TorusOptions extends CommonWalletOptions {
   loginMethod?: 'google' | 'facebook' | 'twitch' | 'reddit' | 'discord'
   buildEnv?: 'production' | 'development' | 'staging' | 'testing'
   showTorusButton?: boolean
   buttonPosition?: 'top-left' | 'top-right' | 'bottom-right' | 'bottom-left'
   enableLogging?: boolean
+  enabledVerifiers: TorusVerifierStatus
 }
 
-export interface AuthereumOptions {
+interface TorusVerifierStatus {
+  google?: boolean
+  facebook?: boolean
+  reddit?: boolean
+  twitch?: boolean
+  discord?: boolean
+}
+
+export interface AuthereumOptions extends CommonWalletOptions {
   disableNotifications?: boolean
 }
 
-export interface WalletLinkOptions {
+export interface WalletLinkOptions extends CommonWalletOptions {
   appName: string
   appLogoUrl: string
   rpcUrl: string
 }
 
-interface WalletName {
-  walletName: string
+export interface ImTokenOptions extends CommonWalletOptions {
+  rpcUrl?: string
 }
 
-export type WalletInitOptions = CommonWalletOptions &
+export interface TrustWalletOptions extends CommonWalletOptions {
+  rpcUrl?: string
+}
+
+export type WalletInitOptions =
+  | CommonWalletOptions
+  | SdkWalletOptions
+  | WalletConnectOptions
+  | TorusOptions
+  | TrezorOptions
+  | AuthereumOptions
+  | LedgerOptions
+  | ImTokenOptions
+  | TrustWalletOptions
+
+export type AllWalletInitOptions = CommonWalletOptions &
   SdkWalletOptions &
   WalletConnectOptions &
   TorusOptions &
@@ -182,7 +246,8 @@ export type WalletInitOptions = CommonWalletOptions &
   AuthereumOptions &
   LedgerOptions &
   WalletLinkOptions &
-  WalletName
+  ImTokenOptions &
+  TrustWalletOptions & { networkId: number }
 
 export interface WalletCheckInit {
   checkName: string
@@ -229,24 +294,32 @@ export interface WritableStore {
   subscribe: (subscriber: (store: any) => any) => () => void
 }
 
+export interface ReadableStore {
+  subscribe: (subscriber: (store: any) => any) => () => void
+}
+
 export interface WalletInterfaceStore {
   subscribe: (subscriber: (store: any) => void) => () => void
   update: (
     updater: (walletInterface: WalletInterface | null) => WalletInterface | null
   ) => void
-  set: (walletInterface: WalletInterface) => void | never
+  set: (walletInterface: WalletInterface | null) => void | never
 }
 
 export interface WalletStateSliceStore {
   subscribe: (subscriber: (store: any) => void) => () => void
   reset: () => void
-  setStateSyncer: (stateSyncer: StateSyncer) => number | undefined
+  setStateSyncer: (
+    stateSyncer: StateSyncer
+  ) => { clear: () => void } | undefined
+  get: () => any
 }
 
 export interface BalanceStore {
   subscribe: (subscriber: (store: any) => void) => () => void
-  setStateSyncer: (stateSyncer: StateSyncer) => number | undefined
+  setStateSyncer: (stateSyncer: StateSyncer) => undefined
   reset: () => void
+  get: () => any
 }
 
 export interface AppState {
@@ -262,6 +335,9 @@ export interface AppState {
   walletCheckInProgress: boolean
   walletCheckCompleted: boolean
   accountSelectInProgress: boolean
+  walletSelectDisplayedUI: boolean
+  walletCheckDisplayedUI: boolean
+  displayBranding: boolean
 }
 
 export interface CancelablePromise extends Promise<any> {

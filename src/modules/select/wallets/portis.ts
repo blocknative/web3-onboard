@@ -1,14 +1,11 @@
-import { networkName } from '../../../utilities'
-import {
-  SdkWalletOptions,
-  WalletModule,
-  Helpers,
-  CommonWalletOptions
-} from '../../../interfaces'
+import { networkName, openLink } from '../../../utilities'
+import { SdkWalletOptions, WalletModule, Helpers } from '../../../interfaces'
 
 import portisIcon from '../wallet-icons/icon-portis'
 
-function portis(options: SdkWalletOptions & CommonWalletOptions): WalletModule {
+function portis(
+  options: SdkWalletOptions & { networkId: number }
+): WalletModule {
   const { apiKey, networkId, preferred, label, iconSrc, svg } = options
 
   return {
@@ -19,7 +16,6 @@ function portis(options: SdkWalletOptions & CommonWalletOptions): WalletModule {
       const { default: Portis } = await import('@portis/web3')
       const instance = new Portis(apiKey, networkName(networkId))
       const provider = instance.provider
-
       const { BigNumber } = helpers
 
       return {
@@ -28,6 +24,10 @@ function portis(options: SdkWalletOptions & CommonWalletOptions): WalletModule {
         interface: {
           name: 'Portis',
           connect: provider.enable,
+          disconnect: () => {
+            instance.logout()
+            provider.stop()
+          },
           address: {
             onChange: func => {
               instance.onLogin((address: string) => {
@@ -62,14 +62,14 @@ function portis(options: SdkWalletOptions & CommonWalletOptions): WalletModule {
                   )
                 }, 1)
               })
-          }
+          },
+          dashboard: () => openLink('https://wallet.portis.io/')
         }
       }
     },
     type: 'sdk',
     desktop: true,
     mobile: true,
-    url: 'https://wallet.portis.io/',
     preferred
   }
 }

@@ -1,13 +1,9 @@
-import { networkName } from '../../../utilities'
-import {
-  TorusOptions,
-  CommonWalletOptions,
-  WalletModule
-} from '../../../interfaces'
+import { networkName, openLink } from '../../../utilities'
+import { TorusOptions, WalletModule } from '../../../interfaces'
 
 import torusIcon from '../wallet-icons/icon-torus'
 
-function torus(options: TorusOptions & CommonWalletOptions): WalletModule {
+function torus(options: TorusOptions & { networkId: number }): WalletModule {
   const {
     networkId,
     preferred,
@@ -18,7 +14,8 @@ function torus(options: TorusOptions & CommonWalletOptions): WalletModule {
     buttonPosition,
     enableLogging,
     loginMethod,
-    showTorusButton
+    showTorusButton,
+    enabledVerifiers
   } = options
 
   return {
@@ -39,7 +36,8 @@ function torus(options: TorusOptions & CommonWalletOptions): WalletModule {
           chainId: networkId, // default: 1
           networkName: `${networkName(networkId)} Network` // default: Main Ethereum Network
         },
-        showTorusButton: showTorusButton // default: true
+        showTorusButton: showTorusButton, // default: true
+        enabledVerifiers: enabledVerifiers
       })
 
       const provider = instance.provider
@@ -50,7 +48,7 @@ function torus(options: TorusOptions & CommonWalletOptions): WalletModule {
         interface: {
           name: 'Torus',
           connect: async () => {
-            let result = await instance.login({ verifier: loginMethod })
+            const result = await instance.login({ verifier: loginMethod })
             return { message: result[0] }
           },
           disconnect: () => instance.cleanUp(),
@@ -74,14 +72,14 @@ function torus(options: TorusOptions & CommonWalletOptions): WalletModule {
                   }
                 )
               })
-          }
+          },
+          dashboard: () => openLink('https://app.tor.us/')
         }
       }
     },
     type: 'sdk',
     desktop: true,
     mobile: true,
-    url: 'https://app.tor.us/',
     preferred
   }
 }

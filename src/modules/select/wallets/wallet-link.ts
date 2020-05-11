@@ -1,14 +1,9 @@
-import {
-  WalletLinkOptions,
-  WalletModule,
-  CommonWalletOptions,
-  Helpers
-} from '../../../interfaces'
+import { WalletLinkOptions, WalletModule, Helpers } from '../../../interfaces'
 
 import coinbaseIcon from '../wallet-icons/icon-coinbase'
 
 function walletLink(
-  options: WalletLinkOptions & CommonWalletOptions
+  options: WalletLinkOptions & { networkId: number }
 ): WalletModule {
   const {
     rpcUrl,
@@ -26,7 +21,7 @@ function walletLink(
     svg: svg || coinbaseIcon,
     iconSrc,
     wallet: async (helpers: Helpers) => {
-      const { getBalance, getAddress, resetWalletState } = helpers
+      const { getBalance, getAddress, getNetwork, resetWalletState } = helpers
 
       const { default: WalletLink } = await import('walletlink')
 
@@ -62,18 +57,10 @@ function walletLink(
             provider.disconnect()
           },
           address: {
-            onChange: func => {
-              getAddress(provider).then(func)
-              provider.on('accountsChanged', (accounts: string[]) =>
-                func(accounts[0])
-              )
-            }
+            get: () => getAddress(provider)
           },
           network: {
-            onChange: func => {
-              func(networkId)
-              provider.on('chainChanged', func)
-            }
+            get: () => getNetwork(provider)
           },
           balance: {
             get: () => getBalance(provider)

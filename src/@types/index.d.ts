@@ -8,6 +8,8 @@ declare module 'web3-provider-engine/subproviders/subscriptions'
 declare module 'web3-provider-engine/subproviders/filters'
 declare module 'trezor-connect'
 declare module 'ethereumjs-tx'
+declare module 'ethereumjs-util'
+declare module 'hdkey'
 declare module '@ledgerhq/hw-app-eth'
 declare module '@ledgerhq/hw-transport-u2f'
 

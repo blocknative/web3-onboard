@@ -11,7 +11,8 @@ const defaultWalletNames = [
   'opera',
   'operaTouch',
   'status',
-  'walletLink'
+  'walletLink',
+  'unilogin'
 ]
 
 function select(
@@ -84,6 +85,10 @@ function getModule(name: string): Promise<any> | undefined {
       return import('./wallets/ledger')
     case 'walletLink':
       return import('./wallets/wallet-link')
+    case 'imToken':
+      return import('./wallets/imtoken')
+    case 'unilogin':
+      return import('./wallets/unilogin')
     default:
       return
   }
