@@ -198,7 +198,7 @@ export interface TorusOptions extends CommonWalletOptions {
   showTorusButton?: boolean
   buttonPosition?: 'top-left' | 'top-right' | 'bottom-right' | 'bottom-left'
   enableLogging?: boolean
-  enabledVerifiers: TorusVerifierStatus
+  enabledVerifiers?: TorusVerifierStatus
 }
 
 interface TorusVerifierStatus {
