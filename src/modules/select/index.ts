@@ -1,6 +1,8 @@
 import { WalletModule, WalletInitOptions } from '../../interfaces'
 import { isWalletInit } from '../../validation'
 
+// wallets that qualify for default wallets need to have no
+// init parameters that are required
 const defaultWalletNames = [
   'metamask',
   'dapper',
@@ -11,7 +13,6 @@ const defaultWalletNames = [
   'opera',
   'operaTouch',
   'status',
-  'walletLink',
   'unilogin'
 ]
 
