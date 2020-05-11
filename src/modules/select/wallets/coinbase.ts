@@ -1,14 +1,14 @@
 import { mobileWalletInstallMessage } from '../content'
 import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
 
+import coinbaseIcon from '../wallet-icons/icon-coinbase'
+
 function coinbase(options: CommonWalletOptions): WalletModule {
   const { preferred, label, iconSrc, svg } = options
 
   return {
     name: label || 'Coinbase',
-    iconSrc:
-      iconSrc ||
-      'https://cdn-images-1.medium.com/max/1200/1*7ywNS48PnonfsvvMu1tTsA.png',
+    iconSrc: iconSrc || coinbaseIcon,
     svg,
     wallet: async (helpers: Helpers) => {
       const { getProviderName, createLegacyProviderInterface } = helpers

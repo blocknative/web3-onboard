@@ -63,6 +63,7 @@
     "regenerator-runtime": "^0.13.3",
     "squarelink": "^1.1.4",
     "trezor-connect": "^8.1.2",
+    "walletlink": "^2.0.2",
     "web3-provider-engine": "^15.0.4"
   },
   "scripts": {
