@@ -583,6 +583,8 @@ export function validateWalletInit(
       'enableLogging',
       'loginMethod',
       'showTorusButton',
+      'appName',
+      'appLogoUrl',
       'enabledVerifiers',
       'disableNotifications'
     ],

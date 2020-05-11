@@ -198,7 +198,7 @@ export interface TorusOptions extends CommonWalletOptions {
   showTorusButton?: boolean
   buttonPosition?: 'top-left' | 'top-right' | 'bottom-right' | 'bottom-left'
   enableLogging?: boolean
-  enabledVerifiers: TorusVerifierStatus
+  enabledVerifiers?: TorusVerifierStatus
 }
 
 interface TorusVerifierStatus {
@@ -211,6 +211,12 @@ interface TorusVerifierStatus {
 
 export interface AuthereumOptions extends CommonWalletOptions {
   disableNotifications?: boolean
+}
+
+export interface WalletLinkOptions extends CommonWalletOptions {
+  appName: string
+  appLogoUrl?: string
+  rpcUrl: string
 }
 
 export interface ImTokenOptions extends CommonWalletOptions {
@@ -239,6 +245,7 @@ export type AllWalletInitOptions = CommonWalletOptions &
   TrezorOptions &
   AuthereumOptions &
   LedgerOptions &
+  WalletLinkOptions &
   ImTokenOptions &
   TrustWalletOptions & { networkId: number }
 
