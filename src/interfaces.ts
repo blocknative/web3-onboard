@@ -214,7 +214,7 @@ export interface AuthereumOptions extends CommonWalletOptions {
 }
 
 export interface WalletLinkOptions extends CommonWalletOptions {
-  appName?: string
+  appName: string
   appLogoUrl?: string
   rpcUrl: string
 }
