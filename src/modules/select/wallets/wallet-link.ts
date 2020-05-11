@@ -21,7 +21,7 @@ function walletLink(
     svg: svg || coinbaseIcon,
     iconSrc,
     wallet: async (helpers: Helpers) => {
-      const { getBalance, getAddress, getNetwork, resetWalletState } = helpers
+      const { getBalance, getAddress, getNetwork } = helpers
 
       const { default: WalletLink } = await import('walletlink')
 
@@ -31,11 +31,6 @@ function walletLink(
       })
 
       const provider = instance.makeWeb3Provider(rpcUrl, networkId)
-
-      // provider.on('disconnect', () => {
-      //   console.log('DISCONNECTED')
-      //   resetWalletState({ disconnected: true, walletName: 'WalletLink' })
-      // })
 
       return {
         provider,
