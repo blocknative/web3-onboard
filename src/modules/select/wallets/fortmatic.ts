@@ -47,7 +47,8 @@ function fortmatic(
                         .toString(10)
                     : null
                 )
-          }
+          },
+          dashboard: () => instance.user.settings()
         }
       }
     },
