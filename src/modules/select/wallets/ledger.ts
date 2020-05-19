@@ -138,7 +138,7 @@ async function ledgerProvider(options: {
   let eth: any
 
   function disconnect() {
-    transport.close()
+    transport && transport.close()
     dPath = ''
     addressToPath = new Map()
     enabled = false
