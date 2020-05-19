@@ -103,10 +103,11 @@
       }) => {
         // no result then user has passed all conditions
         if (!result.modal) {
-          blocknative && blocknative.event({
-            categoryCode: 'onboard',
-            eventCode: 'onboardingCompleted'
-          })
+          blocknative &&
+            blocknative.event({
+              categoryCode: 'onboard',
+              eventCode: 'onboardingCompleted'
+            })
 
           handleExit(true)
 
@@ -120,10 +121,11 @@
         currentModule = result.module
 
         // log the event code for this module
-        blocknative && blocknative.event({
-          eventCode: activeModal.eventCode,
-          categoryCode: 'onboard'
-        })
+        blocknative &&
+          blocknative.event({
+            eventCode: activeModal.eventCode,
+            categoryCode: 'onboard'
+          })
 
         // run any actions that module require as part of this step
         if (activeModal.action) {
@@ -295,7 +297,10 @@
   /* .bn-onboard-prepare-button-container */
   div {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+    min-height: 2.5rem;
+    position: relative;
   }
 
   section {
@@ -336,19 +341,23 @@
 
     <div class="bn-onboard-custom bn-onboard-prepare-button-container">
       {#if activeModal.button}
-        <Button onclick={activeModal.button.onclick}>
+        <Button position="left" onclick={activeModal.button.onclick}>
           {activeModal.button.text}
         </Button>
       {/if}
       {#if errorMsg}
-        <Button onclick={doAction}>Try Again</Button>
+        <Button position={!activeModal.button && 'left'} onclick={doAction}>
+          Try Again
+        </Button>
       {:else}
         <div />
       {/if}
       {#if loading}
         <Spinner />
       {/if}
-      <Button onclick={() => handleExit(false)}>Dismiss</Button>
+      <Button position="right" onclick={() => handleExit(false)}>
+        Dismiss
+      </Button>
     </div>
   </Modal>
 {/if}
