@@ -342,12 +342,23 @@ function validateWalletCheck(
         heading,
         description,
         minimumBalance,
+        html,
+        icon,
+        button,
         ...otherParams
       } = check
 
       invalidParams(
         otherParams,
-        ['checkName', 'heading', 'description', 'minimumBalance'],
+        [
+          'checkName',
+          'heading',
+          'description',
+          'html',
+          'icon',
+          'button',
+          'minimumBalance'
+        ],
         'walletCheck item'
       )
 
@@ -364,6 +375,27 @@ function validateWalletCheck(
         name: 'description',
         value: description,
         type: 'string',
+        optional: true
+      })
+
+      validateType({
+        name: 'html',
+        value: html,
+        type: 'string',
+        optional: true
+      })
+
+      validateType({
+        name: 'icon',
+        value: icon,
+        type: 'string',
+        optional: true
+      })
+
+      validateType({
+        name: 'button',
+        value: button,
+        type: 'object',
         optional: true
       })
 
@@ -540,33 +572,6 @@ export function validateWalletInterface(
     value: balance.onChange,
     type: 'function',
     optional: true
-  })
-}
-
-export function validateWalletCheckInit(
-  walletCheckInit: WalletCheckInit[]
-): void | never {
-  validateType({
-    name: 'walletCheckInit',
-    value: walletCheckInit,
-    type: 'array'
-  })
-
-  walletCheckInit.forEach(init => {
-    validateType({ name: 'walletCheckInit', value: init, type: 'object' })
-
-    validateType({
-      name: 'walletCheckInit.checkName',
-      value: init.checkName,
-      type: 'string'
-    })
-
-    validateType({
-      name: 'walletCheckInit.minimumBalance',
-      value: init.minimumBalance,
-      type: 'string',
-      optional: true
-    })
   })
 }
 

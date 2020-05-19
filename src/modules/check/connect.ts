@@ -1,18 +1,13 @@
 import {
   WalletCheckModal,
   StateAndHelpers,
-  WalletCheckModule
+  WalletCheckModule,
+  WalletCheckCustomOptions
 } from '../../interfaces'
 import { connectIcon } from './icons'
 
-function connect(
-  options: {
-    heading?: string
-    description?: string
-    icon?: string
-  } = {}
-): WalletCheckModule {
-  const { heading, description, icon } = options
+function connect(options: WalletCheckCustomOptions = {}): WalletCheckModule {
+  const { heading, description, icon, html, button } = options
 
   return async (
     stateAndHelpers: StateAndHelpers
@@ -42,7 +37,9 @@ function connect(
           `This dapp requires access to your wallet, please login and authorize access to your ${wallet.name} accounts to continue.`,
         eventCode: 'loginFail',
         action: wallet.connect,
-        icon: icon || connectIcon
+        icon: icon || connectIcon,
+        html,
+        button
       }
     }
   }
