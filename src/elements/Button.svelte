@@ -1,6 +1,7 @@
 <script lang="ts">
   import { app } from '../stores'
   export let onclick: () => void = () => {}
+  export let position: string
 </script>
 
 <style>
@@ -24,11 +25,22 @@
   button:hover {
     background: #ecf3fc;
   }
+
+  .bn-onboard-prepare-button-right {
+    position: absolute;
+    right: 0;
+  }
+
+  .bn-onboard-prepare-button-left {
+    position: absolute;
+    left: 0;
+  }
 </style>
 
 <button
   on:click={onclick}
-  class="bn-onboard-custom bn-onboard-button"
+  class:bn-onboard-prepare-button-right={position === 'right'}
+  class:bn-onboard-prepare-button-left={position === 'left'}
   class:bn-onboard-dark-mode-link={$app.darkMode}
   class:bn-onboard-dark-mode-background-hover={$app.darkMode}>
   <slot />

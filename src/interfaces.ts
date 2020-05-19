@@ -249,9 +249,20 @@ export type AllWalletInitOptions = CommonWalletOptions &
   ImTokenOptions &
   TrustWalletOptions & { networkId: number }
 
-export interface WalletCheckInit {
-  checkName: string
+export interface WalletCheckCustomOptions {
+  heading?: string
+  description?: string
   minimumBalance?: string
+  icon?: string
+  button?: {
+    text: string
+    onclick: () => void
+  }
+  html?: string
+}
+
+export interface WalletCheckInit extends WalletCheckCustomOptions {
+  checkName: string
 }
 
 export interface WalletSelectFunction {

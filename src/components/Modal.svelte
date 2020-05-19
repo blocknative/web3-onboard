@@ -52,7 +52,7 @@
   div {
     height: 0.66em;
     position: absolute;
-    padding: 0.8em;
+    padding: 0.25em;
     top: 1.33em;
     right: 1.33em;
     font-size: inherit;

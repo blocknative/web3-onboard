@@ -137,18 +137,8 @@ async function ledgerProvider(options: {
   let transport: any
   let eth: any
 
-  try {
-    transport = LedgerTransport
-      ? await LedgerTransport.create()
-      : await TransportU2F.create()
-
-    eth = new Eth(transport)
-  } catch (error) {
-    throw new Error('Error connecting to Ledger wallet')
-  }
-
   function disconnect() {
-    transport.close()
+    transport && transport.close()
     dPath = ''
     addressToPath = new Map()
     enabled = false
@@ -183,6 +173,32 @@ async function ledgerProvider(options: {
     return customPath
   }
 
+  async function createTransport() {
+    try {
+      transport = LedgerTransport
+        ? await LedgerTransport.create()
+        : await TransportU2F.create()
+
+      eth = new Eth(transport)
+
+      const observer = {
+        next: (event: any) => {
+          if (event.type === 'remove') {
+            disconnect()
+          }
+        },
+        error: () => {},
+        complete: () => {}
+      }
+
+      LedgerTransport
+        ? LedgerTransport.listen(observer)
+        : TransportU2F.listen(observer)
+    } catch (error) {
+      throw new Error('Error connecting to Ledger wallet')
+    }
+  }
+
   function enable() {
     enabled = true
     return getAccounts()
@@ -205,6 +221,10 @@ async function ledgerProvider(options: {
   }
 
   async function getAddress(path: string) {
+    if (!eth) {
+      await createTransport()
+    }
+
     try {
       const result = await eth.getAddress(path)
       return result.address
@@ -214,6 +234,10 @@ async function ledgerProvider(options: {
   async function getPublicKey() {
     if (!dPath) {
       throw new Error('a derivation path is needed to get the public key')
+    }
+
+    if (!eth) {
+      await createTransport()
     }
 
     try {

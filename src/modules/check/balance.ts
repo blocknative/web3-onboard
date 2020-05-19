@@ -1,24 +1,16 @@
-import { WalletCheckModal, StateAndHelpers } from '../../interfaces'
-import { validateType } from '../../validation'
+import {
+  WalletCheckModal,
+  StateAndHelpers,
+  WalletCheckCustomOptions
+} from '../../interfaces'
 import { balanceIcon } from './icons'
 
 function balance(
-  options: {
-    minimumBalance: string
-    heading?: string
-    description?: string
-    icon?: string
-  } = { minimumBalance: '0' }
+  options: WalletCheckCustomOptions & { minimumBalance: string } = {
+    minimumBalance: '0'
+  }
 ): (currentState: StateAndHelpers) => Promise<WalletCheckModal | undefined> {
-  validateType({ name: 'balance options', value: options, type: 'object' })
-
-  const { minimumBalance, heading, description, icon } = options
-
-  validateType({
-    name: 'minimumBalance',
-    value: minimumBalance,
-    type: 'string'
-  })
+  const { minimumBalance, heading, description, icon, html, button } = options
 
   return async (StateAndHelpers: StateAndHelpers) => {
     const { balance, BigNumber, stateSyncStatus, stateStore } = StateAndHelpers
@@ -44,7 +36,9 @@ function balance(
             .div(BigNumber('1000000000000000000'))
             .toString(10)} ETH.`,
         eventCode: 'nsfFail',
-        icon: icon || balanceIcon
+        icon: icon || balanceIcon,
+        html,
+        button
       }
     }
   }

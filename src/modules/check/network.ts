@@ -1,15 +1,15 @@
 import { networkName } from '../../utilities'
-import { WalletCheckModal, StateAndHelpers } from '../../interfaces'
+import {
+  WalletCheckModal,
+  StateAndHelpers,
+  WalletCheckCustomOptions
+} from '../../interfaces'
 import { networkIcon } from './icons'
 
 function network(
-  options: {
-    heading?: string
-    description?: string
-    icon?: string
-  } = {}
+  options: WalletCheckCustomOptions = {}
 ): (currentState: StateAndHelpers) => Promise<WalletCheckModal | undefined> {
-  const { heading, description, icon } = options
+  const { heading, description, icon, html, button } = options
 
   return async (stateAndHelpers: StateAndHelpers) => {
     const {
@@ -48,13 +48,14 @@ function network(
             appNetworkId
           )} network</b> for this Dapp. <br><br> <i style="font-size: inherit; font-family: inherit;">*Some wallets may not support changing networks. If you can not change networks in your wallet you may consider switching to a different wallet.</i>`,
         eventCode: 'networkFail',
-        button: {
+        button: button || {
           onclick: () => {
             exit()
             walletSelect()
           },
           text: 'Switch Wallet'
         },
+        html,
         icon: icon || networkIcon
       }
     }
