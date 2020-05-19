@@ -251,6 +251,8 @@ export type AllWalletInitOptions = CommonWalletOptions &
 
 export interface WalletCheckInit {
   checkName: string
+  heading?: string
+  description?: string
   minimumBalance?: string
 }
 
