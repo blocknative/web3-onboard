@@ -337,13 +337,36 @@ function validateWalletCheck(
       validateWalletCheckModule(check)
     } else {
       validateType({ name: 'walletCheck item', value: check, type: 'object' })
-      const { checkName, minimumBalance, ...otherParams } = check
+      const {
+        checkName,
+        heading,
+        description,
+        minimumBalance,
+        ...otherParams
+      } = check
+
       invalidParams(
         otherParams,
-        ['checkName', 'minimumBalance'],
+        ['checkName', 'heading', 'description', 'minimumBalance'],
         'walletCheck item'
       )
+
       validateType({ name: 'checkName', value: checkName, type: 'string' })
+
+      validateType({
+        name: 'heading',
+        value: heading,
+        type: 'string',
+        optional: true
+      })
+
+      validateType({
+        name: 'description',
+        value: description,
+        type: 'string',
+        optional: true
+      })
+
       validateType({
         name: 'minimumBalance',
         value: minimumBalance,
