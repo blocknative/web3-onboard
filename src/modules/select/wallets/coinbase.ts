@@ -8,8 +8,8 @@ function coinbase(options: CommonWalletOptions): WalletModule {
 
   return {
     name: label || 'Coinbase',
-    iconSrc: iconSrc || coinbaseIcon,
-    svg,
+    iconSrc,
+    svg: svg || coinbaseIcon,
     wallet: async (helpers: Helpers) => {
       const { getProviderName, createLegacyProviderInterface } = helpers
       const provider =
