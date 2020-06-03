@@ -274,6 +274,10 @@ async function ledgerProvider(options: {
       return addresses()
     }
 
+    if (!eth) {
+      await createTransport()
+    }
+
     if (dPath === '') {
       dPath = LEDGER_LIVE_PATH
     }
