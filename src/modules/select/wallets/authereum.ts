@@ -5,14 +5,7 @@ import { WalletModule, AuthereumOptions } from '../../../interfaces'
 function authereum(
   options: AuthereumOptions & { networkId: number }
 ): WalletModule {
-  const {
-    networkId,
-    preferred,
-    label,
-    iconSrc,
-    svg,
-    disableNotifications
-  } = options
+  const { networkId, preferred, label, iconSrc, svg, ...otherOptions } = options
 
   return {
     name: label || 'Authereum',
@@ -22,7 +15,7 @@ function authereum(
       const { default: Authereum } = await import('authereum')
       const instance = new Authereum({
         networkName: networkName(networkId),
-        disableNotifications: disableNotifications // default: false
+        ...otherOptions
       })
 
       const provider = instance.getProvider()
