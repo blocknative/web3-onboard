@@ -614,7 +614,11 @@ export function validateWalletInit(
       'appName',
       'appLogoUrl',
       'enabledVerifiers',
-      'disableNotifications'
+      'disableNotifications',
+      'rpcUri',
+      'webUri',
+      'xsUri',
+      'blockedPopupRedirect'
     ],
     'walletInitObject'
   )

@@ -210,7 +210,12 @@ interface TorusVerifierStatus {
 }
 
 export interface AuthereumOptions extends CommonWalletOptions {
+  apiKey?: string
   disableNotifications?: boolean
+  rpcUri?: string
+  webUri?: string
+  xsUri?: string
+  blockedPopupRedirect?: string
 }
 
 export interface WalletLinkOptions extends CommonWalletOptions {
