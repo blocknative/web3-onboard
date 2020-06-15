@@ -215,7 +215,7 @@ export interface AuthereumOptions extends CommonWalletOptions {
   rpcUri?: string
   webUri?: string
   xsUri?: string
-  blockedPopupRedirect?: string
+  blockedPopupRedirect?: boolean
 }
 
 export interface WalletLinkOptions extends CommonWalletOptions {
