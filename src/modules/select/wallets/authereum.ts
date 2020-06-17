@@ -15,6 +15,7 @@ function authereum(
       const { default: Authereum } = await import('authereum')
       const instance = new Authereum({
         networkName: networkName(networkId),
+        blockedPopupRedirect: false,
         ...otherOptions
       })
 
