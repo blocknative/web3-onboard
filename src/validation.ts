@@ -250,6 +250,8 @@ export function validateWallet(
       preferred,
       desktop,
       mobile,
+      type,
+      osExclusions,
       ...otherParams
     } = obj
 
@@ -261,11 +263,13 @@ export function validateWallet(
         'iconSrcSet',
         'svg',
         'wallet',
+        'type',
         'link',
         'installMessage',
         'preferred',
         'desktop',
-        'mobile'
+        'mobile',
+        'osExclusions'
       ],
       'selectWallets.wallets item'
     )
@@ -315,6 +319,20 @@ export function validateWallet(
       name: 'mobile',
       value: mobile,
       type: 'boolean',
+      optional: true
+    })
+
+    validateType({
+      name: 'type',
+      value: type,
+      type: 'string',
+      optional: true
+    })
+
+    validateType({
+      name: 'osExclusions',
+      value: osExclusions,
+      type: 'array',
       optional: true
     })
 
