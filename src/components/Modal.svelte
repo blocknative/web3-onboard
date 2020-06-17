@@ -18,7 +18,6 @@
     align-items: center;
     position: fixed;
     font-size: 16px;
-    z-index: 99;
     top: 0;
     left: 0;
     width: 100vw;
