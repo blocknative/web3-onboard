@@ -165,11 +165,11 @@ export function resetWalletState(options?: {
     // if walletName is the same as the current interface name then do a full reset (checking if to do a disconnect)
     if (currentInterface.name === walletName) {
       wallet.update(() => ({
-        name: null,
-        provider: null,
-        connect: null,
-        instance: null,
-        dashboard: null
+        name: undefined,
+        provider: undefined,
+        connect: undefined,
+        instance: undefined,
+        dashboard: undefined
       }))
 
       !disconnected &&
