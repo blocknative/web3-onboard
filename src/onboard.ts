@@ -130,9 +130,9 @@ function init(initialization: Initialization): API {
 
     if (subscriptions.wallet) {
       wallet.subscribe((wallet: Wallet) => {
-        wallet.provider !== null &&
-          subscriptions.wallet &&
-          subscriptions.wallet(wallet)
+        if (wallet.provider !== null) {
+          subscriptions.wallet && subscriptions.wallet(wallet)
+        }
       })
     }
   }
