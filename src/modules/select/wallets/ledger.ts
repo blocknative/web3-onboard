@@ -21,14 +21,15 @@ function ledger(options: LedgerOptions & { networkId: number }): WalletModule {
     svg: svg || ledgerIcon,
     iconSrc,
     wallet: async (helpers: Helpers) => {
-      const { BigNumber, networkName } = helpers
+      const { BigNumber, networkName, resetWalletState } = helpers
 
       const provider = await ledgerProvider({
         rpcUrl,
         networkId,
         LedgerTransport,
         BigNumber,
-        networkName
+        networkName,
+        resetWalletState
       })
 
       return {
@@ -66,6 +67,10 @@ async function ledgerProvider(options: {
   LedgerTransport: any
   BigNumber: any
   networkName: (id: number) => string
+  resetWalletState: (options?: {
+    disconnected: boolean
+    walletName: string
+  }) => void
 }) {
   const { default: createProvider } = await import('./providerEngine')
   const { generateAddresses, isValidPath } = await import('./hd-wallet')
@@ -76,7 +81,14 @@ async function ledgerProvider(options: {
   const ethUtil = await import('ethereumjs-util')
   const buffer = await import('buffer')
 
-  const { networkId, rpcUrl, LedgerTransport, BigNumber, networkName } = options
+  const {
+    networkId,
+    rpcUrl,
+    LedgerTransport,
+    BigNumber,
+    networkName,
+    resetWalletState
+  } = options
 
   let dPath = ''
   let addressToPath = new Map()
@@ -139,10 +151,8 @@ async function ledgerProvider(options: {
 
   function disconnect() {
     transport && transport.close()
-    dPath = ''
-    addressToPath = new Map()
-    enabled = false
     provider.stop()
+    resetWalletState({ disconnected: true, walletName: 'Ledger' })
   }
 
   async function setPath(path: string, custom?: boolean) {
