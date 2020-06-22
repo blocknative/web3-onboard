@@ -2217,10 +2217,10 @@ bn.js@^5.1.1, bn.js@^5.1.2:
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-5.1.2.tgz#c9686902d3c9a27729f43ab10f9d79c2004da7b0"
   integrity sha512-40rZaf3bUNKTVYu9sIeeEGOg7g14Yvnj9kH7b50EiwX0Q7A6umbvfI5tvHaOERH0XigqKkfLkFQxzb4e6CIXnA==
 
-bnc-sdk@^2.1.3:
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-2.1.3.tgz#62cc865455186bae1dc5ce41b5e0f8b609ea306c"
-  integrity sha512-SkvnM9IAXqHozlllJk5QO82RuptWrRyTwncSxm150ziUVqTSYYa0XDn/5AGfJrQgrxR1iGT47QQs+ZP7RaCf7Q==
+bnc-sdk@^2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-2.1.4.tgz#23267198f5a48e800d9c2406f6d04a767cab5643"
+  integrity sha512-aU7DYweE+6tfTvZE7NOOfQsieU2Zyrav6o/xwuLt+uKGvrkblIeg1aqBW1yAQBEg4LCHEygX6TwZk8VznDAh3g==
   dependencies:
     crypto-es "^1.2.2"
     sturdy-websocket "^0.1.12"
