@@ -228,6 +228,8 @@ export function networkName(id: number): string {
       return 'goerli'
     case 42:
       return 'kovan'
+    case 100:
+      return 'xdai'
     default:
       return 'local'
   }
@@ -245,6 +247,8 @@ export function networkToId(network: string): number {
       return 5
     case 'kovan':
       return 42
+    case 'xdai':
+      return 100
     default:
       return 0
   }

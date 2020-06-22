@@ -109,6 +109,7 @@ function walletConnect(
     },
     type: 'sdk',
     desktop: true,
+    mobile: true,
     preferred
   }
 }
