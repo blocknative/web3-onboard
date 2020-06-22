@@ -23,7 +23,7 @@ function trezor(options: TrezorOptions & { networkId: number }): WalletModule {
     svg: svg || trezorIcon,
     iconSrc,
     wallet: async (helpers: Helpers) => {
-      const { BigNumber, networkName } = helpers
+      const { BigNumber, networkName, resetWalletState } = helpers
 
       const provider = await trezorProvider({
         rpcUrl,
@@ -31,7 +31,8 @@ function trezor(options: TrezorOptions & { networkId: number }): WalletModule {
         email,
         appUrl,
         BigNumber,
-        networkName
+        networkName,
+        resetWalletState
       })
 
       return {
@@ -70,6 +71,10 @@ async function trezorProvider(options: {
   rpcUrl: string
   BigNumber: any
   networkName: (id: number) => string
+  resetWalletState: (options?: {
+    disconnected: boolean
+    walletName: string
+  }) => void
 }) {
   const TrezorConnectLibrary = await import('trezor-connect')
   const EthereumTx = await import('ethereumjs-tx')
@@ -77,7 +82,16 @@ async function trezorProvider(options: {
 
   const { default: TrezorConnect, DEVICE_EVENT, DEVICE } = TrezorConnectLibrary
 
-  const { networkId, email, appUrl, rpcUrl, BigNumber, networkName } = options
+  const {
+    networkId,
+    email,
+    appUrl,
+    rpcUrl,
+    BigNumber,
+    networkName,
+    resetWalletState
+  } = options
+
   let dPath = ''
 
   let addressToPath = new Map()
@@ -91,13 +105,6 @@ async function trezorProvider(options: {
   TrezorConnect.manifest({
     email,
     appUrl
-  })
-
-  TrezorConnect.on(DEVICE_EVENT, (event: any) => {
-    if (event.type === DEVICE.DISCONNECT) {
-      enabled = false
-      addressToPath = new Map()
-    }
   })
 
   const provider = createProvider({
@@ -132,6 +139,13 @@ async function trezorProvider(options: {
         .catch(err => callback(err, null))
     },
     rpcUrl
+  })
+
+  TrezorConnect.on(DEVICE_EVENT, (event: any) => {
+    if (event.type === DEVICE.DISCONNECT) {
+      provider.stop()
+      resetWalletState({ disconnected: true, walletName: 'Trezor' })
+    }
   })
 
   provider.setPath = setPath
