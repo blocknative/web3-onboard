@@ -1336,7 +1336,7 @@
     enc-utils "2.1.0"
     js-sha3 "0.8.0"
 
-"@walletconnect/web3-provider@^1.0.11":
+"@walletconnect/web3-provider@^1.0.13":
   version "1.0.13"
   resolved "https://registry.yarnpkg.com/@walletconnect/web3-provider/-/web3-provider-1.0.13.tgz#71aae6975bf281900123331ea24a3ce59d3be598"
   integrity sha512-ckmn96H2WZHJsy7StPOCOi7D2bqHwJx5aWuVzbhFPG7fjK/gEg0mPdujoIlbskXv2K5LFV1ZHFaoGrjt38rNOw==
