@@ -45,8 +45,8 @@
     "typescript": "^3.6.4"
   },
   "dependencies": {
-    "@ledgerhq/hw-app-eth": "^5.7.0",
-    "@ledgerhq/hw-transport-u2f": "^5.7.0",
+    "@ledgerhq/hw-app-eth": "^5.19.0",
+    "@ledgerhq/hw-transport-u2f": "^5.19.0",
     "@portis/web3": "^2.0.0-beta.42",
     "@toruslabs/torus-embed": "^1.3.0",
     "@unilogin/provider": "^0.5.21",
