@@ -54,6 +54,9 @@ export let network: WalletStateSliceStore
 export let balance: BalanceStore | WalletStateSliceStore
 export let wallet: WritableStore
 export let state: ReadableStore
+export let walletInterface: WalletInterfaceStore
+
+let currentSyncerIntervals: ({ clear: () => void } | undefined)[]
 
 export function initializeStores() {
   address = createWalletStateSliceStore({
@@ -96,43 +99,39 @@ export function initializeStores() {
       }
     }
   )
-}
 
-// keep track of intervals that are syncing state so they can be cleared
-let currentSyncerIntervals: ({ clear: () => void } | undefined)[] = []
+  currentSyncerIntervals = []
 
-export const walletInterface: WalletInterfaceStore = createWalletInterfaceStore(
-  null
-)
+  walletInterface = createWalletInterfaceStore(null)
+  walletInterface.subscribe((walletInterface: WalletInterface | null) => {
+    // make sure that stores have been initialized
+    if (state) {
+      // clear all current intervals if they exist
+      currentSyncerIntervals.forEach(
+        (interval: { clear: () => void } | undefined) =>
+          interval && interval.clear()
+      )
 
-walletInterface.subscribe((walletInterface: WalletInterface | null) => {
-  // make sure that stores have been initialized
-  if (state) {
-    // clear all current intervals if they exist
-    currentSyncerIntervals.forEach(
-      (interval: { clear: () => void } | undefined) =>
-        interval && interval.clear()
-    )
+      const currentState = get(state)
 
-    const currentState = get(state)
+      // reset state
+      currentState.balance && balance.reset()
+      currentState.address && address.reset()
+      currentState.network && network.reset()
 
-    // reset state
-    currentState.balance && balance.reset()
-    currentState.address && address.reset()
-    currentState.network && network.reset()
+      if (walletInterface) {
+        // start syncing state and save intervals
+        currentSyncerIntervals = [
+          address.setStateSyncer(walletInterface.address),
+          network.setStateSyncer(walletInterface.network),
+          balance.setStateSyncer(walletInterface.balance)
+        ]
+      }
 
-    if (walletInterface) {
-      // start syncing state and save intervals
-      currentSyncerIntervals = [
-        address.setStateSyncer(walletInterface.address),
-        network.setStateSyncer(walletInterface.network),
-        balance.setStateSyncer(walletInterface.balance)
-      ]
+      resetCheckModules()
     }
-
-    resetCheckModules()
-  }
-})
+  })
+}
 
 export function resetWalletState(options?: {
   disconnected: boolean
