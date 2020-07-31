@@ -1113,7 +1113,19 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@toruslabs/fetch-node-details@^2.2.6":
+"@toruslabs/eccrypto@^1.1.3":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@toruslabs/eccrypto/-/eccrypto-1.1.3.tgz#6dcee86670149501efee4865d0acb25366f72237"
+  integrity sha512-hoLACz9Z6RP/ZH41Ba0iImJpl1f4Zx7pi/d3R7UIrOyt4IOgnWrlkzh2IqQYw4ouae4WZQYSZlyeYv81EWkoxQ==
+  dependencies:
+    acorn "^7.3.1"
+    elliptic "^6.5.3"
+    es6-promise "^4.2.8"
+    nan "^2.14.1"
+  optionalDependencies:
+    secp256k1 "^3.8.0"
+
+"@toruslabs/fetch-node-details@^2.3.0":
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/@toruslabs/fetch-node-details/-/fetch-node-details-2.3.0.tgz#55ca927814812a029bb29816ace3d60d27fcd0b1"
   integrity sha512-QWfYxBel+XUnUgkyPnjTLZpWiYJVl3Nz6I5MwSRJ/t3GteJvvGuq93zbsIzRmyhxK5C+e+FufnEUsKFwiXtPmA==
@@ -1121,18 +1133,28 @@
     web3-eth-contract "^1.2.9"
     web3-utils "^1.2.9"
 
-"@toruslabs/torus-embed@^1.3.0":
-  version "1.5.4"
-  resolved "https://registry.yarnpkg.com/@toruslabs/torus-embed/-/torus-embed-1.5.4.tgz#d5d0662dee4e5d8bc3c01f59ebade6fda9829faa"
-  integrity sha512-CfUw4Pdz8hstpixnvNZWQMlXZY673zNfd71DyEKANgH+Dxxx8ncFYqM7/zxA/sQLYmkhnuD6kUQm/8lv843Yeg==
+"@toruslabs/http-helpers@^1.3.3":
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/@toruslabs/http-helpers/-/http-helpers-1.3.3.tgz#8564665a0cb9d4f868e5eaf814bbac71926623a2"
+  integrity sha512-bM0NyFCA+K8DOlhciDLIUQ05/VzuM9lgdwnNSr/gociRhPWbUDc8PkSVKYT3MshXj/ZtLvN9UvcTvY1hddN5UQ==
+  dependencies:
+    deepmerge "^4.2.2"
+    loglevel "^1.6.8"
+
+"@toruslabs/torus-embed@^1.8.1":
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/@toruslabs/torus-embed/-/torus-embed-1.8.1.tgz#97aef2fde80d67d62747c643fd4e29dd11e3dd62"
+  integrity sha512-2l/Y8rqhcsjgVBgk4fqRb9rMES0aoydWgqaGiPZZ23mMgdg5DnqVd3viELjwFdlokuFg+VblE3NmsP8F9YhdLg==
   dependencies:
     "@chaitanyapotti/random-id" "^1.0.3"
-    "@toruslabs/fetch-node-details" "^2.2.6"
-    "@toruslabs/torus.js" "^2.1.9"
+    "@toruslabs/fetch-node-details" "^2.3.0"
+    "@toruslabs/http-helpers" "^1.3.3"
+    "@toruslabs/torus.js" "^2.2.3"
     create-hash "^1.2.0"
     deepmerge "^4.2.2"
     eth-json-rpc-errors "^2.0.2"
     fast-deep-equal "^3.1.3"
+    is-stream "^2.0.0"
     json-rpc-engine "^5.1.8"
     json-rpc-middleware-stream "^2.1.1"
     loglevel "^1.6.8"
@@ -1143,16 +1165,18 @@
     safe-event-emitter "^1.0.1"
     web3 "^0.20.7"
 
-"@toruslabs/torus.js@^2.1.9":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@toruslabs/torus.js/-/torus.js-2.2.1.tgz#4560b0dd96c70cb5a87b6a9b0478be8a80111751"
-  integrity sha512-WpGp5EtIx/bhQ5b6PbizW9oN1DCJBrUeKfbAy0kRQ9QeSWiAnDLhjH1NTgmABFB+LY7uevI6IGdiCTodeBqx+Q==
+"@toruslabs/torus.js@^2.2.3":
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/@toruslabs/torus.js/-/torus.js-2.2.3.tgz#525456e01cddfecf29a7b70b640d0188ffbf819e"
+  integrity sha512-GryzcqY5/iumfCy0LNUIdjo9iKYRHof6UQzHYK/u2oc4XtCWVKnwk+6OZfuYeurEoW/VDYU+b1MEa7qqOKV9RQ==
   dependencies:
+    "@toruslabs/eccrypto" "^1.1.3"
+    "@toruslabs/http-helpers" "^1.3.3"
     bn.js "^5.1.2"
-    eccrypto "^1.1.3"
     elliptic "^6.5.3"
     json-stable-stringify "^1.0.1"
     loglevel "^1.6.8"
+    memory-cache "^0.2.0"
     web3-utils "^1.2.9"
 
 "@types/bn.js@^4.11.3", "@types/bn.js@^4.11.4":
@@ -1367,12 +1391,7 @@ acorn-jsx@^5.2.0:
   resolved "https://registry.yarnpkg.com/acorn-jsx/-/acorn-jsx-5.2.0.tgz#4c66069173d6fdd68ed85239fc256226182b2ebe"
   integrity sha512-HiUX/+K2YpkpJ+SzBffkM/AQ2YE03S0U1kjTLVpoJdhZMOWy8qvXVN9JdLqv2QsaQ6MPYQIuNmwD8zOiYUofLQ==
 
-acorn@7.1.0:
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-7.1.0.tgz#949d36f2c292535da602283586c2477c57eb2d6c"
-  integrity sha512-kL5CuoXA/dgxlBbVrflsflzQ3PAas7RYZB52NOm/6839iVYJgKMJ3cQJD+t2i5+qFa8h3MDpEOJiS64E8JLnSQ==
-
-acorn@^7.1.0, acorn@^7.1.1:
+acorn@^7.1.0, acorn@^7.1.1, acorn@^7.3.1:
   version "7.3.1"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-7.3.1.tgz#85010754db53c3fbaf3b9ea3e083aa5c5d147ffd"
   integrity sha512-tLc0wSnatxAQHVHUapaHdz72pi9KUyHjq5KyHjGg9Y8Ifdc79pTh2XvI6I1/chZbnM7QtNKzh66ooDogPZSleA==
@@ -2879,35 +2898,10 @@ eccrypto-js@5.2.0:
     randombytes "2.1.0"
     secp256k1 "3.8.0"
 
-eccrypto@^1.1.3:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/eccrypto/-/eccrypto-1.1.3.tgz#010cb4e9d239ce9752b82c0ac6d8af207fffaf3e"
-  integrity sha512-Xtyj039Xp2NDZwoe9IcD7pT1EwM4DILdxPCN2H7Rk1wgJNtTkFpk+cpX1QpuHTMaIhkatOBlGGKzGw/DUCDdqg==
-  dependencies:
-    acorn "7.1.0"
-    elliptic "6.5.1"
-    es6-promise "4.2.8"
-    nan "2.14.0"
-  optionalDependencies:
-    secp256k1 "3.7.1"
-
 electron-to-chromium@^1.3.47, electron-to-chromium@^1.3.483:
   version "1.3.484"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.484.tgz#75f5a1eee5fe3168758b7c2cf375ae73c1ccf5e6"
   integrity sha512-esh5mmjAGl6HhAaYgHlDZme+jCIc+XIrLrBTwxviE+pM64UBmdLUIHLlrPzJGbit7hQI1TR/oGDQWCvQZ5yrFA==
-
-elliptic@6.5.1:
-  version "6.5.1"
-  resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.1.tgz#c380f5f909bf1b9b4428d028cd18d3b0efd6b52b"
-  integrity sha512-xvJINNLbTeWQjrl6X+7eQCrIy/YPv5XCpKW6kB5mKvtnGILoLDcySuwomfdzt0BMdLNVnuRNTuzKNHj0bva1Cg==
-  dependencies:
-    bn.js "^4.4.0"
-    brorand "^1.0.1"
-    hash.js "^1.0.0"
-    hmac-drbg "^1.0.0"
-    inherits "^2.0.1"
-    minimalistic-assert "^1.0.0"
-    minimalistic-crypto-utils "^1.0.0"
 
 elliptic@6.5.2:
   version "6.5.2"
@@ -2922,7 +2916,7 @@ elliptic@6.5.2:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
 
-elliptic@6.5.3, elliptic@^6.4.0, elliptic@^6.4.1, elliptic@^6.5.2, elliptic@^6.5.3:
+elliptic@6.5.3, elliptic@^6.4.0, elliptic@^6.5.2, elliptic@^6.5.3:
   version "6.5.3"
   resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.3.tgz#cb59eb2efdaf73a0bd78ccd7015a62ad6e0f93d6"
   integrity sha512-IMqzv5wNQf+E6aHeIqATs0tOLeOTwj1QKbRcS3jBbYkl5oLAserA8yJTT7/VyHUYG91PRmPyeQDObKLPpeS4dw==
@@ -3026,7 +3020,7 @@ es6-iterator@~2.0.3:
     es5-ext "^0.10.35"
     es6-symbol "^3.1.1"
 
-es6-promise@4.2.8:
+es6-promise@^4.2.8:
   version "4.2.8"
   resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.2.8.tgz#4eb21594c972bc40553d276e510539143db53e0a"
   integrity sha512-HJDGx5daxeIvxdBxvG2cb9g4tEvwIk3i8+nhX0yGrYmZUzbkdg8QbDevheDB8gd0//uPj4c1EQua8Q+MViT0/w==
@@ -4361,6 +4355,11 @@ is-stream@^1.0.1:
   resolved "https://registry.yarnpkg.com/is-stream/-/is-stream-1.1.0.tgz#12d4a3dd4e68e0b79ceb8dbc84173ae80d91ca44"
   integrity sha1-EtSj3U5o4Lec6428hBc66A2RykQ=
 
+is-stream@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/is-stream/-/is-stream-2.0.0.tgz#bde9c32680d6fae04129d6ac9d921ce7815f78e3"
+  integrity sha512-XCoy+WlUr7d1+Z8GgSuXmpuUFC9fOhRXglJMx+dwLKTkL44Cjd4W1Z5P+BQZpr+cR93aGP4S/s7Ftw6Nd/kiEw==
+
 is-symbol@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/is-symbol/-/is-symbol-1.0.3.tgz#38e1014b9e6329be0de9d24a414fd7441ec61937"
@@ -4823,6 +4822,11 @@ memdown@^1.0.0:
     ltgt "~2.2.0"
     safe-buffer "~5.1.1"
 
+memory-cache@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/memory-cache/-/memory-cache-0.2.0.tgz#7890b01d52c00c8ebc9d533e1f8eb17e3034871a"
+  integrity sha1-eJCwHVLADI68nVM+H46xfjA0hxo=
+
 meow@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/meow/-/meow-5.0.0.tgz#dfc73d63a9afc714a5e371760eb5c88b91078aa4"
@@ -4980,12 +4984,7 @@ nan@2.13.2:
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.13.2.tgz#f51dc7ae66ba7d5d55e1e6d4d8092e802c9aefe7"
   integrity sha512-TghvYc72wlMGMVMluVo9WRJc0mB8KxxF/gZ4YYFy7V2ZQX9l7rgbPg7vjS9mt6U5HXODVFVI2bOduCzwOMv/lw==
 
-nan@2.14.0:
-  version "2.14.0"
-  resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.0.tgz#7818f722027b2459a86f0295d434d1fc2336c52c"
-  integrity sha512-INOFj37C7k3AfaNTtX8RhsTw7qRy7eLET14cROi9+5HAVbbHuIWUHEauBv5qT4Av2tWasiTY1Jw6puUNqRJXQg==
-
-nan@^2.12.1, nan@^2.14.0, nan@^2.2.1:
+nan@^2.12.1, nan@^2.14.0, nan@^2.14.1, nan@^2.2.1:
   version "2.14.1"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.1.tgz#d7be34dfa3105b91494c3147089315eff8874b01"
   integrity sha512-isWHgVjnFjh2x2yuJ/tj3JbwoHu3UC2dX5G/88Cm24yB6YopVgxvBObDY7n5xW6ExmFhJpSEQqFPvq9zaXc8Jw==
@@ -5939,21 +5938,7 @@ scryptsy@^1.2.1:
   dependencies:
     pbkdf2 "^3.0.3"
 
-secp256k1@3.7.1:
-  version "3.7.1"
-  resolved "https://registry.yarnpkg.com/secp256k1/-/secp256k1-3.7.1.tgz#12e473e0e9a7c2f2d4d4818e722ad0e14cc1e2f1"
-  integrity sha512-1cf8sbnRreXrQFdH6qsg2H71Xw91fCCS9Yp021GnUNJzWJS/py96fS4lHbnTnouLp08Xj6jBoBB6V78Tdbdu5g==
-  dependencies:
-    bindings "^1.5.0"
-    bip66 "^1.1.5"
-    bn.js "^4.11.8"
-    create-hash "^1.2.0"
-    drbg.js "^1.0.1"
-    elliptic "^6.4.1"
-    nan "^2.14.0"
-    safe-buffer "^5.1.2"
-
-secp256k1@3.8.0, secp256k1@^3.0.1, secp256k1@^3.7.1:
+secp256k1@3.8.0, secp256k1@^3.0.1, secp256k1@^3.7.1, secp256k1@^3.8.0:
   version "3.8.0"
   resolved "https://registry.yarnpkg.com/secp256k1/-/secp256k1-3.8.0.tgz#28f59f4b01dbee9575f56a47034b7d2e3b3b352d"
   integrity sha512-k5ke5avRZbtl9Tqx/SA7CbY3NF6Ro+Sj9cZxezFzuBlLDmyqPiL8hJJ+EmzD8Ig4LUDByHJ3/iPOVoRixs/hmw==
