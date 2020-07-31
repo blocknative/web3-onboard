@@ -1,4 +1,4 @@
-import { networkName, openLink } from '../../../utilities'
+import { networkName } from '../../../utilities'
 import { TorusOptions, WalletModule } from '../../../interfaces'
 
 import torusIcon from '../wallet-icons/icon-torus'
@@ -10,12 +10,17 @@ function torus(options: TorusOptions & { networkId: number }): WalletModule {
     label,
     iconSrc,
     svg,
-    buildEnv,
     buttonPosition,
+    modalZIndex,
+    apiKey,
+    buildEnv,
     enableLogging,
-    loginMethod,
+    enabledVerifiers,
+    loginConfig,
     showTorusButton,
-    enabledVerifiers
+    integrity,
+    whiteLabel,
+    loginMethod
   } = options
 
   return {
@@ -25,19 +30,24 @@ function torus(options: TorusOptions & { networkId: number }): WalletModule {
     wallet: async () => {
       const { default: Torus } = await import('@toruslabs/torus-embed')
       const instance = new Torus({
-        buttonPosition: buttonPosition // default: bottom-left
+        buttonPosition, // default: bottom-left
+        modalZIndex,
+        apiKey
       })
 
       await instance.init({
-        buildEnv: buildEnv, // default: production
-        enableLogging: enableLogging, // default: false
+        buildEnv, // default: production
+        enableLogging, // default: false
         network: {
           host: networkName(networkId), // default: mainnet
           chainId: networkId, // default: 1
           networkName: `${networkName(networkId)} Network` // default: Main Ethereum Network
         },
         showTorusButton: showTorusButton, // default: true
-        enabledVerifiers: enabledVerifiers
+        enabledVerifiers: enabledVerifiers,
+        loginConfig,
+        integrity,
+        whiteLabel
       })
 
       const provider = instance.provider
@@ -73,7 +83,7 @@ function torus(options: TorusOptions & { networkId: number }): WalletModule {
                 )
               })
           },
-          dashboard: () => openLink('https://app.tor.us/')
+          dashboard: () => instance.showWallet('home')
         }
       }
     },
