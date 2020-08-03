@@ -112,7 +112,14 @@ export function createModernProviderInterface(provider: any): WalletInterface {
           onChange: (func: (val: string | number) => void) => {
             // get initial value
             getNetwork(provider).then(func)
+
+            // networkChanged event is deprecated in MM, keep for wallets that may not have updated
             provider.on('networkChanged', (netId: string | number) =>
+              func(netId && Number(netId))
+            )
+
+            // use new chainChanged event for network change
+            provider.on('chainChanged', (netId: string | number) =>
               func(netId && Number(netId))
             )
           }
