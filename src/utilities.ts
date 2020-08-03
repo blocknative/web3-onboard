@@ -156,6 +156,10 @@ export function createLegacyProviderInterface(provider: any): WalletInterface {
 export function getProviderName(provider: any): string | undefined {
   if (!provider) return
 
+  if (provider.wallet === 'MEETONE') {
+    return 'MEETONE'
+  }
+
   if (provider.isTorus) {
     return 'Torus'
   }
