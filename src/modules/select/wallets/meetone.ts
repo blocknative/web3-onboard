@@ -13,10 +13,7 @@ function meetone(options: CommonWalletOptions): WalletModule {
     iconSrcSet: iconSrc || meetoneIcon2x,
     svg,
     wallet: async (helpers: Helpers) => {
-      const {
-        // createLegacyProviderInterface,
-        createModernProviderInterface
-      } = helpers
+      const { getProviderName, createModernProviderInterface } = helpers
 
       const provider =
         (window as any).ethereum ||
@@ -24,7 +21,10 @@ function meetone(options: CommonWalletOptions): WalletModule {
 
       return {
         provider,
-        interface: createModernProviderInterface(provider)
+        interface:
+          (getProviderName(provider) === 'MEETONE' &&
+            createModernProviderInterface(provider)) ||
+          null
       }
     },
     type: 'injected',
