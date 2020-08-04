@@ -28,7 +28,7 @@ export function generateAddresses(
 
     addresses.push({
       dPath: `${path}/${i}`,
-      address: toChecksumAddress(address)
+      address: toChecksumAddress(`0x${address}`)
     })
   }
 
