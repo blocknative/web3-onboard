@@ -57,7 +57,6 @@
     "bowser": "^2.10.0",
     "ethereumjs-tx": "^2.1.2",
     "ethereumjs-util": "^7.0.3",
-    "ethereumjs-wallet": "^1.0.0",
     "fortmatic": "^2.2.1",
     "hdkey": "^2.0.1",
     "regenerator-runtime": "^0.13.7",
