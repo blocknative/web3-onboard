@@ -54,6 +54,8 @@ function select(
 
 function getModule(name: string): Promise<any> | undefined {
   switch (name) {
+    case 'meetone':
+      return import('./wallets/meetone')
     case 'metamask':
       return import('./wallets/metamask')
     case 'dapper':
