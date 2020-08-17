@@ -26,7 +26,7 @@ function mykey(options: CommonWalletOptions): WalletModule {
       return {
         provider,
         interface:
-          provider && getProviderName(provider) === 'MYKEY'
+          provider && getProviderName(provider) === 'mykey'
             ? typeof provider.enable === 'function'
               ? createModernProviderInterface(provider)
               : createLegacyProviderInterface(provider)
