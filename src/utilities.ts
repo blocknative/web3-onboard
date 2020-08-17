@@ -212,7 +212,7 @@ export function getProviderName(provider: any): string | undefined {
   }
 
   if (provider.isMYKEY) {
-    return 'mykey'
+    return 'MYKEY'
   }
 
   if (provider.host && provider.host.indexOf('localhost') !== -1) {
