@@ -1,4 +1,4 @@
-import { extensionInstallMessage } from '../content'
+import { mobileWalletInstallMessage } from '../content'
 import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
 
 import meetoneIcon from '../wallet-icons/icon-meetone.png'
@@ -29,7 +29,7 @@ function meetone(options: CommonWalletOptions): WalletModule {
     },
     type: 'injected',
     link: 'https://meet.one',
-    installMessage: extensionInstallMessage,
+    installMessage: mobileWalletInstallMessage,
     mobile: true,
     preferred
   }
