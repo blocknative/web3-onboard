@@ -211,6 +211,10 @@ export function getProviderName(provider: any): string | undefined {
     return 'MetaMask'
   }
 
+  if (provider.isMYKEY) {
+    return 'mykey'
+  }
+
   if (provider.host && provider.host.indexOf('localhost') !== -1) {
     return 'localhost'
   }
