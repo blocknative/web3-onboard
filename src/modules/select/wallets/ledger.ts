@@ -1,4 +1,10 @@
-import { LedgerOptions, WalletModule, Helpers } from '../../../interfaces'
+import {
+  LedgerOptions,
+  WalletModule,
+  Helpers,
+  Browser,
+  OS
+} from '../../../interfaces'
 
 import ledgerIcon from '../wallet-icons/icon-ledger'
 
@@ -21,7 +27,7 @@ function ledger(options: LedgerOptions & { networkId: number }): WalletModule {
     svg: svg || ledgerIcon,
     iconSrc,
     wallet: async (helpers: Helpers) => {
-      const { BigNumber, networkName, resetWalletState } = helpers
+      const { BigNumber, networkName, resetWalletState, browser, os } = helpers
 
       const provider = await ledgerProvider({
         rpcUrl,
@@ -29,7 +35,9 @@ function ledger(options: LedgerOptions & { networkId: number }): WalletModule {
         LedgerTransport,
         BigNumber,
         networkName,
-        resetWalletState
+        resetWalletState,
+        browser,
+        os
       })
 
       return {
@@ -64,17 +72,18 @@ function ledger(options: LedgerOptions & { networkId: number }): WalletModule {
 async function ledgerProvider(options: {
   networkId: number
   rpcUrl: string
-  LedgerTransport: any
+  CustomLedgerTransport: any
   BigNumber: any
   networkName: (id: number) => string
   resetWalletState: (options?: {
     disconnected: boolean
     walletName: string
   }) => void
+  browser: Browser
+  os: OS
 }) {
   const { default: createProvider } = await import('./providerEngine')
   const { generateAddresses, isValidPath } = await import('./hd-wallet')
-  const { default: TransportU2F } = await import('@ledgerhq/hw-transport-u2f')
   const { default: Eth } = await import('@ledgerhq/hw-app-eth')
 
   const EthereumTx = await import('ethereumjs-tx')
@@ -84,10 +93,12 @@ async function ledgerProvider(options: {
   const {
     networkId,
     rpcUrl,
-    LedgerTransport,
+    CustomLedgerTransport,
     BigNumber,
     networkName,
-    resetWalletState
+    resetWalletState,
+    browser,
+    os
   } = options
 
   let dPath = ''
@@ -185,25 +196,44 @@ async function ledgerProvider(options: {
 
   async function createTransport() {
     try {
-      transport = LedgerTransport
-        ? await LedgerTransport.create()
-        : await TransportU2F.create()
-
-      eth = new Eth(transport)
-
-      const observer = {
-        next: (event: any) => {
-          if (event.type === 'remove') {
-            disconnect()
-          }
-        },
-        error: () => {},
-        complete: () => {}
+      const observer = (event: any) => {
+        if (event.type === 'remove') {
+          disconnect()
+        }
       }
 
-      LedgerTransport
-        ? LedgerTransport.listen(observer)
-        : TransportU2F.listen(observer)
+      if (CustomLedgerTransport) {
+        transport = await CustomLedgerTransport.create()
+        CustomLedgerTransport.listen(observer)
+      } else {
+        if (
+          os.name === 'Windows' &&
+          parseInt(os.versionName) >= 11 &&
+          (browser.name === 'Internet Explorer' || browser.name === 'Firefox')
+        ) {
+          throw new Error(
+            `OS: ${os.name} ${os.versionName} and Browser: ${browser.name} are not compatible with Ledger wallets, please switch to Chrome browser to continue.`
+          )
+        } else if (
+          os.name === 'macOS' &&
+          (browser.name === 'Firefox' || browser.name === 'Safari')
+        ) {
+          const { default: TransportU2F } = await import(
+            '@ledgerhq/hw-transport-u2f'
+          )
+
+          transport = TransportU2F.create()
+        } else {
+          const { default: TransportWebUsb } = await import(
+            '@ledgerhq/hw-transport-webusb'
+          )
+
+          transport = TransportWebUsb.create()
+          CustomLedgerTransport.listen(observer)
+        }
+      }
+
+      eth = new Eth(transport)
     } catch (error) {
       throw new Error('Error connecting to Ledger wallet')
     }
