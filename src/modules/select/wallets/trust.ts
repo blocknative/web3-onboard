@@ -17,7 +17,8 @@ function trust(options: InjectedWithBalanceOptions): WalletModule {
     wallet: async (helpers: Helpers) => {
       const { getProviderName, getAddress, getNetwork, getBalance } = helpers
       const trustProvider =
-        (window as any).web3 && (window as any).web3.currentProvider
+        (window as any).ethereum ||
+        ((window as any).web3 && (window as any).web3.currentProvider)
 
       const isTrust = getProviderName(trustProvider) === 'Trust'
       let createProvider
