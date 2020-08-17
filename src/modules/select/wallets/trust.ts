@@ -1,9 +1,13 @@
 import { mobileWalletInstallMessage } from '../content'
-import { WalletModule, Helpers, TrustWalletOptions } from '../../../interfaces'
+import {
+  WalletModule,
+  Helpers,
+  InjectedWithBalanceOptions
+} from '../../../interfaces'
 
 import trustIcon from '../wallet-icons/icon-trust'
 
-function trust(options: TrustWalletOptions): WalletModule {
+function trust(options: InjectedWithBalanceOptions): WalletModule {
   const { preferred, label, iconSrc, svg, rpcUrl } = options
 
   return {

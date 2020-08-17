@@ -321,11 +321,7 @@ export interface WalletLinkOptions extends CommonWalletOptions {
   rpcUrl: string
 }
 
-export interface ImTokenOptions extends CommonWalletOptions {
-  rpcUrl?: string
-}
-
-export interface TrustWalletOptions extends CommonWalletOptions {
+export interface InjectedWithBalanceOptions extends CommonWalletOptions {
   rpcUrl?: string
 }
 
@@ -337,8 +333,7 @@ export type WalletInitOptions =
   | TrezorOptions
   | AuthereumOptions
   | LedgerOptions
-  | ImTokenOptions
-  | TrustWalletOptions
+  | InjectedWithBalanceOptions
 
 export type AllWalletInitOptions = CommonWalletOptions &
   SdkWalletOptions &
@@ -348,8 +343,7 @@ export type AllWalletInitOptions = CommonWalletOptions &
   AuthereumOptions &
   LedgerOptions &
   WalletLinkOptions &
-  ImTokenOptions &
-  TrustWalletOptions & { networkId: number }
+  InjectedWithBalanceOptions & { networkId: number }
 
 export interface WalletCheckCustomOptions {
   heading?: string

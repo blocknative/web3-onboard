@@ -1,11 +1,15 @@
 import { mobileWalletInstallMessage } from '../content'
-import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
+import {
+  WalletModule,
+  Helpers,
+  InjectedWithBalanceOptions
+} from '../../../interfaces'
 
 import mykeyIcon from '../wallet-icons/icon-mykey.png'
 import mykeyIcon2x from '../wallet-icons/icon-mykey@2x.png'
 
-function mykey(options: CommonWalletOptions): WalletModule {
-  const { preferred, label, iconSrc, svg } = options
+function mykey(options: InjectedWithBalanceOptions): WalletModule {
+  const { preferred, label, iconSrc, svg, rpcUrl } = options
 
   return {
     name: label || 'MYKEY',
@@ -13,24 +17,53 @@ function mykey(options: CommonWalletOptions): WalletModule {
     iconSrcSet: iconSrc || mykeyIcon2x,
     svg,
     wallet: async (helpers: Helpers) => {
-      const {
-        getProviderName,
-        createModernProviderInterface,
-        createLegacyProviderInterface
-      } = helpers
-
-      const provider =
+      const { getProviderName, getAddress, getNetwork, getBalance } = helpers
+      const myKeyProvider =
         (window as any).ethereum ||
         ((window as any).web3 && (window as any).web3.currentProvider)
 
+      const isMyKey = getProviderName(myKeyProvider) === 'MYKEY'
+      let createProvider
+
+      if (isMyKey && rpcUrl) {
+        createProvider = (await import('./providerEngine')).default
+      }
+
+      const provider = createProvider ? createProvider({ rpcUrl }) : null
+
+      let warned = false
+
       return {
-        provider,
-        interface:
-          provider && getProviderName(provider) === 'mykey'
-            ? typeof provider.enable === 'function'
-              ? createModernProviderInterface(provider)
-              : createLegacyProviderInterface(provider)
-            : null
+        provider: myKeyProvider,
+        interface: isMyKey
+          ? {
+              address: {
+                get: () => getAddress(myKeyProvider)
+              },
+              network: {
+                get: () => getNetwork(myKeyProvider)
+              },
+              balance: {
+                get: async () => {
+                  if (!provider) {
+                    if (!warned) {
+                      console.warn(
+                        'The MYKEY provider does not allow rpc calls preventing Onboard.js from getting the balance. You can pass in a "rpcUrl" to the MYKEY wallet initialization object to get the balance.'
+                      )
+                      warned = true
+                    }
+
+                    return null
+                  }
+
+                  const address = await getAddress(myKeyProvider)
+
+                  return getBalance(provider, address)
+                }
+              },
+              name: getProviderName(myKeyProvider)
+            }
+          : null
       }
     },
     type: 'injected',
