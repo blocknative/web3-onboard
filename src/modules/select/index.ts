@@ -2,7 +2,7 @@ import { WalletModule, WalletInitOptions } from '../../interfaces'
 import { isWalletInit } from '../../validation'
 
 // wallets that qualify for default wallets need to have no
-// init parameters that are required
+// init parameters that are required for full functionality
 const defaultWalletNames = [
   'metamask',
   'dapper',
@@ -92,6 +92,8 @@ function getModule(name: string): Promise<any> | undefined {
       return import('./wallets/imtoken')
     case 'unilogin':
       return import('./wallets/unilogin')
+    case 'mykey':
+      return import('./wallets/mykey')
     default:
       return
   }

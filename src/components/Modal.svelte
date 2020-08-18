@@ -13,7 +13,7 @@
   /* .bn-onboard-modal */
   aside {
     display: flex;
-    font-family: 'Helvetica Neue';
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
     justify-content: center;
     align-items: center;
     position: fixed;

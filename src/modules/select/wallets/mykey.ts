@@ -5,25 +5,27 @@ import {
   InjectedWithBalanceOptions
 } from '../../../interfaces'
 
-import trustIcon from '../wallet-icons/icon-trust'
+import mykeyIcon from '../wallet-icons/icon-mykey.png'
+import mykeyIcon2x from '../wallet-icons/icon-mykey@2x.png'
 
-function trust(options: InjectedWithBalanceOptions): WalletModule {
+function mykey(options: InjectedWithBalanceOptions): WalletModule {
   const { preferred, label, iconSrc, svg, rpcUrl } = options
 
   return {
-    name: label || 'Trust',
-    svg: svg || trustIcon,
-    iconSrc,
+    name: label || 'MYKEY',
+    iconSrc: iconSrc || mykeyIcon,
+    iconSrcSet: iconSrc || mykeyIcon2x,
+    svg,
     wallet: async (helpers: Helpers) => {
       const { getProviderName, getAddress, getNetwork, getBalance } = helpers
-      const trustProvider =
+      const myKeyProvider =
         (window as any).ethereum ||
         ((window as any).web3 && (window as any).web3.currentProvider)
 
-      const isTrust = getProviderName(trustProvider) === 'Trust'
+      const isMyKey = getProviderName(myKeyProvider) === 'MYKEY'
       let createProvider
 
-      if (isTrust && rpcUrl) {
+      if (isMyKey && rpcUrl) {
         createProvider = (await import('./providerEngine')).default
       }
 
@@ -32,21 +34,21 @@ function trust(options: InjectedWithBalanceOptions): WalletModule {
       let warned = false
 
       return {
-        provider: trustProvider,
-        interface: isTrust
+        provider: myKeyProvider,
+        interface: isMyKey
           ? {
               address: {
-                get: () => getAddress(trustProvider)
+                get: () => getAddress(myKeyProvider)
               },
               network: {
-                get: () => getNetwork(trustProvider)
+                get: () => getNetwork(myKeyProvider)
               },
               balance: {
                 get: async () => {
                   if (!provider) {
                     if (!warned) {
                       console.warn(
-                        'The Trust provider does not allow rpc calls preventing Onboard.js from getting the balance. You can pass in a "rpcUrl" to the Trust wallet initialization object to get the balance.'
+                        'The MYKEY provider does not allow rpc calls preventing Onboard.js from getting the balance. You can pass in a "rpcUrl" to the MYKEY wallet initialization object to get the balance.'
                       )
                       warned = true
                     }
@@ -54,22 +56,22 @@ function trust(options: InjectedWithBalanceOptions): WalletModule {
                     return null
                   }
 
-                  const address = await getAddress(trustProvider)
+                  const address = await getAddress(myKeyProvider)
 
                   return getBalance(provider, address)
                 }
               },
-              name: getProviderName(trustProvider)
+              name: getProviderName(myKeyProvider)
             }
           : null
       }
     },
     type: 'injected',
-    link: `https://link.trustwallet.com/open_url?coin_id=60&url=${window.location.href}`,
+    link: 'https://mykey.org/download',
     installMessage: mobileWalletInstallMessage,
     mobile: true,
     preferred
   }
 }
 
-export default trust
+export default mykey
