@@ -32,7 +32,7 @@ function ledger(options: LedgerOptions & { networkId: number }): WalletModule {
       const provider = await ledgerProvider({
         rpcUrl,
         networkId,
-        LedgerTransport,
+        CustomLedgerTransport: LedgerTransport,
         BigNumber,
         networkName,
         resetWalletState,
@@ -158,10 +158,14 @@ async function ledgerProvider(options: {
   provider.isCustomPath = isCustomPath
 
   let transport: any
+  let transportSubscription: any
   let eth: any
 
   function disconnect() {
     transport && transport.close()
+    transportSubscription &&
+      transportSubscription.unsubscribe &&
+      transportSubscription.unsubscribe()
     provider.stop()
     resetWalletState({ disconnected: true, walletName: 'Ledger' })
   }
@@ -196,15 +200,19 @@ async function ledgerProvider(options: {
 
   async function createTransport() {
     try {
-      const observer = (event: any) => {
-        if (event.type === 'remove') {
-          disconnect()
-        }
+      const observer = {
+        next: (event: any) => {
+          if (event.type === 'remove') {
+            disconnect()
+          }
+        },
+        error: console.log,
+        complete: console.log
       }
 
       if (CustomLedgerTransport) {
         transport = await CustomLedgerTransport.create()
-        CustomLedgerTransport.listen(observer)
+        transportSubscription = CustomLedgerTransport.listen(observer)
       } else {
         if (
           os.name === 'Windows' &&
@@ -215,21 +223,21 @@ async function ledgerProvider(options: {
             `OS: ${os.name} ${os.versionName} and Browser: ${browser.name} are not compatible with Ledger wallets, please switch to Chrome browser to continue.`
           )
         } else if (
-          os.name === 'macOS' &&
+          (os.name === 'macOS' || os.name === 'Linux') &&
           (browser.name === 'Firefox' || browser.name === 'Safari')
         ) {
           const { default: TransportU2F } = await import(
             '@ledgerhq/hw-transport-u2f'
           )
 
-          transport = TransportU2F.create()
+          transport = await TransportU2F.create()
         } else {
           const { default: TransportWebUsb } = await import(
             '@ledgerhq/hw-transport-webusb'
           )
 
-          transport = TransportWebUsb.create()
-          CustomLedgerTransport.listen(observer)
+          transport = await TransportWebUsb.create()
+          transportSubscription = TransportWebUsb.listen(observer)
         }
       }
 
