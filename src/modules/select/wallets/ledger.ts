@@ -206,8 +206,10 @@ async function ledgerProvider(options: {
             disconnect()
           }
         },
-        error: console.log,
-        complete: console.log
+        error: (error: any) => {
+          throw new Error(error)
+        },
+        complete: () => {}
       }
 
       if (CustomLedgerTransport) {
@@ -243,7 +245,9 @@ async function ledgerProvider(options: {
 
       eth = new Eth(transport)
     } catch (error) {
-      throw new Error('Error connecting to Ledger wallet')
+      throw new Error(
+        'An error occurred when trying to connect to your Ledger wallet'
+      )
     }
   }
 
