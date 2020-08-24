@@ -215,7 +215,7 @@ export function getProviderName(provider: any): string | undefined {
     return 'MYKEY'
   }
 
-  if (provider.isHuobiWallet) {
+  if (provider.isHbWallet) {
     return 'huobiwallet'
   }
 

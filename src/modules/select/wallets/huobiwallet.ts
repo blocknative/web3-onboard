@@ -19,7 +19,8 @@ function huobiwallet(options: InjectedWithBalanceOptions): WalletModule {
         (window as any).ethereum ||
         ((window as any).web3 && (window as any).web3.currentProvider)
 
-      const isHuobiWallet = getProviderName(huobiwalletProvider) === 'huobiwallet'
+      const isHuobiWallet =
+        getProviderName(huobiwalletProvider) === 'huobiwallet'
       let createProvider
 
       if (isHuobiWallet && rpcUrl) {
