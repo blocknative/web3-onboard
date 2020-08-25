@@ -135,6 +135,8 @@ export interface Helpers {
     disconnected: boolean
     walletName: string
   }) => void
+  browser: Browser
+  os: OS
 }
 
 export interface WalletInterface {
@@ -429,12 +431,24 @@ export interface BalanceStore {
   get: () => any
 }
 
+export type Browser = {
+  name: string
+  version: string
+}
+
+export type OS = {
+  name: string
+  version: string
+  versionName: string
+}
+
 export interface AppState {
   dappId: string
   networkId: number
   version: string
   mobileDevice: boolean
-  os: string
+  os: OS
+  browser: Browser
   darkMode: boolean
   autoSelectWallet: string
   walletSelectInProgress: boolean

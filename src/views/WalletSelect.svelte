@@ -84,7 +84,7 @@
       .filter(wallet => wallet[mobileDevice ? 'mobile' : 'desktop'])
       .filter(wallet => {
         const { osExclusions = [] } = wallet
-        return !osExclusions.includes(os)
+        return !osExclusions.includes(os.name)
       })
 
     if (deviceWallets.find(wallet => wallet.preferred)) {
@@ -127,6 +127,7 @@
     autoSelected?: boolean
   ) {
     const currentWalletInterface = get(walletInterface)
+    const { browser, os } = get(app)
 
     if (currentWalletInterface && currentWalletInterface.name === module.name) {
       finish({ completed: true })
@@ -148,7 +149,9 @@
       getAddress,
       getBalance,
       resetWalletState,
-      networkName
+      networkName,
+      browser,
+      os
     })
 
     loadingWallet = undefined

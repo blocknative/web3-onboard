@@ -215,19 +215,26 @@ export function getProviderName(provider: any): string | undefined {
     return 'MYKEY'
   }
 
+  if (provider.isHbWallet) {
+    return 'huobiwallet'
+  }
+
+
   if (provider.host && provider.host.indexOf('localhost') !== -1) {
     return 'localhost'
   }
 }
 
 export function getDeviceInfo() {
-  const browser = bowser.getParser(window.navigator.userAgent)
-  const { name } = browser.getOS()
-  const { type } = browser.getPlatform()
+  const parsed = bowser.getParser(window.navigator.userAgent)
+  const os = parsed.getOS()
+  const browser = parsed.getBrowser()
+  const { type } = parsed.getPlatform()
 
   return {
     isMobile: type ? type !== 'desktop' : window.innerWidth < 600,
-    os: name
+    os,
+    browser
   }
 }
 

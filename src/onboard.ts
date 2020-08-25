@@ -52,7 +52,7 @@ function init(initialization: Initialization): API {
     hideBranding
   } = initialization
 
-  const { os, isMobile } = getDeviceInfo()
+  const { os, browser, isMobile } = getDeviceInfo()
 
   const initializedModules = initializeModules(
     networkId,
@@ -83,6 +83,7 @@ function init(initialization: Initialization): API {
     version,
     mobileDevice: isMobile,
     os,
+    browser,
     darkMode,
     displayBranding,
     checkModules: initializedModules.walletCheck
