@@ -215,6 +215,11 @@ export function getProviderName(provider: any): string | undefined {
     return 'MYKEY'
   }
 
+  if (provider.isHbWallet) {
+    return 'huobiwallet'
+  }
+
+
   if (provider.host && provider.host.indexOf('localhost') !== -1) {
     return 'localhost'
   }
