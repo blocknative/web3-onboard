@@ -13,6 +13,7 @@ const defaultWalletNames = [
   'opera',
   'operaTouch',
   'status',
+  'hyerpay',
   'unilogin'
 ]
 
