@@ -22,7 +22,7 @@ function hyperpay(options: CommonWalletOptions): WalletModule {
       return {
         provider,
         interface:
-          provider && getProviderName(provider) === undefined
+          provider && getProviderName(provider) === 'HyperPay'
             ? createModernProviderInterface(provider)
             : null
       }
