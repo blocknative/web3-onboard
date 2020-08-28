@@ -29,7 +29,7 @@ function hyperpay(options: CommonWalletOptions): WalletModule {
     },
     type: 'injected',
     link: 'https://www.hyperpay.me/',
-    installMessage: extensionInstallMessage,
+    installMessage: mobileWalletInstallMessage,
     mobile: true,
     preferred
   }
