@@ -1,4 +1,4 @@
-import { extensionInstallMessage } from '../content'
+import { mobileWalletInstallMessage } from '../content'
 import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
 
 import hyerpayIcon from '../wallet-icons/icon-hyperpay.png'
