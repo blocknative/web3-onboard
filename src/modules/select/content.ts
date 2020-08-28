@@ -29,13 +29,7 @@ export const extensionInstallMessage = (helpers: {
   } else {
     return `
     <p style="font-size: 0.889rem; font-family: inherit; margin: 0.889rem 0;">
-    You'll need to install <b>${selectedWallet}</b> to continue. Once you have it installed, go ahead and
-    <span
-    class="bn-onboard-clickable"
-      style="color: #4a90e2; font-size: 0.889rem; font-family: inherit;"
-      onclick={window.location.reload();}>
-      refresh the page.
-    </span>
+    You'll need to open or install <b>${selectedWallet}</b> to continue.
     ${
       selectedWallet === 'Opera'
         ? '<br><br><i>Hint: If you already have Opera installed, make sure that your web3 wallet is <a style="color: #4a90e2; font-size: 0.889rem; font-family: inherit;" class="bn-onboard-clickable" href="https://help.opera.com/en/touch/crypto-wallet/" rel="noreferrer noopener" target="_blank">enabled</a></i>'
@@ -53,7 +47,7 @@ export const mobileWalletInstallMessage = (helpers: {
 
   return `
   <p style="font-size: 0.889rem;">
-    You'll need to install <b>${selectedWallet}</b> to continue. Click below to install and then load this Dapp with <b>${selectedWallet}</b>.
+    You'll need to open or install <b>${selectedWallet}</b> to continue. Click below to open this Dapp with <b>${selectedWallet}</b>.
   </p>
   `
 }

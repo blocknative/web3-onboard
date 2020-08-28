@@ -38,6 +38,7 @@ function network(
     }
 
     if (stateStore.network.get() != appNetworkId) {
+      return undefined
       return {
         heading: heading || 'You Must Change Networks',
         description:

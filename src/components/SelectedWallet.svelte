@@ -40,7 +40,7 @@
       href={selectedWalletModule.link}
       rel="noreferrer noopener"
       target="_blank">
-      <Button>Install {selectedWalletModule.name}</Button>
+      <Button>Open or install {selectedWalletModule.name}</Button>
     </a>
     <Button onclick={onBack}>Back</Button>
   </footer>
