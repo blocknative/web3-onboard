@@ -99,6 +99,8 @@ function getModule(name: string): Promise<any> | undefined {
       return import('./wallets/huobiwallet')
     case 'hyperpay':
       return import('./wallets/hyperpay')
+    case 'wallet.io':
+        return import('./wallets/wallet-io')
     default:
       return
   }
