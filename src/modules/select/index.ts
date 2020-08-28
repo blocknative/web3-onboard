@@ -96,6 +96,8 @@ function getModule(name: string): Promise<any> | undefined {
       return import('./wallets/mykey')
     case 'huobiwallet':
       return import('./wallets/huobiwallet')
+    case 'wallet.io':
+        return import('./wallets/wallet-io')
     default:
       return
   }
