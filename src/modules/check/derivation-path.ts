@@ -10,7 +10,8 @@ const derivationPaths: DerivationPaths = {
     { path: `m/44'/60'/0'`, label: 'Ethereum' },
     { path: `m/44'/60'`, label: 'Ethereum Ledger Live' }
   ],
-  Trezor: [{ path: `m/44'/60'/0'/0`, label: 'Ethereum' }]
+  Trezor: [{ path: `m/44'/60'/0'/0`, label: 'Ethereum' }],
+  Lattice: [{ path: `m/44'/60'/0'/0`, label: 'Ethereum' }]
 }
 
 const styles = `

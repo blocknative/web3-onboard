@@ -85,6 +85,8 @@ function getModule(name: string): Promise<any> | undefined {
       return import('./wallets/status')
     case 'trezor':
       return import('./wallets/trezor')
+    case 'lattice':
+      return import('./wallets/lattice')
     case 'ledger':
       return import('./wallets/ledger')
     case 'walletLink':
