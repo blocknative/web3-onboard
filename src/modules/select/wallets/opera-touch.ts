@@ -13,17 +13,38 @@ function operaTouch(options: CommonWalletOptions): WalletModule {
     iconSrcSet: iconSrc || operaTouchIcon2x,
     svg,
     wallet: async (helpers: Helpers) => {
-      const { getProviderName, createModernProviderInterface } = helpers
+      const { getProviderName, getAddress, getBalance, getNetwork } = helpers
 
       const provider =
         (window as any).ethereum ||
         ((window as any).web3 && (window as any).web3.currentProvider)
 
+      let enabled = false
+
       return {
         provider,
         interface:
           provider && getProviderName(provider) === undefined
-            ? createModernProviderInterface(provider)
+            ? {
+                name: 'Opera Touch',
+                connect: () =>
+                  provider.enable().then((res: any) => {
+                    enabled = true
+                    return res
+                  }),
+                address: {
+                  get: () =>
+                    enabled ? getAddress(provider) : Promise.resolve(null)
+                },
+                network: {
+                  get: () =>
+                    enabled ? getNetwork(provider) : Promise.resolve(null)
+                },
+                balance: {
+                  get: () =>
+                    enabled ? getBalance(provider) : Promise.resolve(null)
+                }
+              }
             : null
       }
     },
