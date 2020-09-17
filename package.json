@@ -1,6 +1,6 @@
 {
   "name": "bnc-onboard",
-  "version": "1.13.0",
+  "version": "1.13.1",
   "description": "Onboard users to web3 by allowing them to select a wallet, get that wallet ready to transact and have access to synced wallet state.",
   "keywords": [
     "ethereum",
@@ -47,7 +47,6 @@
   "dependencies": {
     "@ledgerhq/hw-app-eth": "^5.21.0",
     "@ledgerhq/hw-transport-u2f": "^5.21.0",
-    "@ledgerhq/hw-transport-webusb": "^5.22.0",
     "@portis/web3": "^2.0.0-beta.57",
     "@toruslabs/torus-embed": "^1.8.2",
     "@unilogin/provider": "^0.6.1",
