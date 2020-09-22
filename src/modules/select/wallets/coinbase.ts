@@ -24,7 +24,7 @@ function coinbase(options: CommonWalletOptions): WalletModule {
       }
     },
     type: 'injected',
-    link: 'https://go.cb-w.com/',
+    link: 'https://go.cb-w.com/p6UkDPpxu0',
     installMessage: mobileWalletInstallMessage,
     mobile: true,
     preferred
