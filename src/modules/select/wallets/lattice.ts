@@ -1,8 +1,5 @@
 import { LatticeOptions, WalletModule, Helpers } from '../../../interfaces'
 import latticeIcon from '../wallet-icons/icon-lattice'
-import createProvider from './providerEngine'
-
-const BASE_PATH = "m/44'/60'/0'/0"
 
 function lattice(
   options: LatticeOptions & { networkId: number }
@@ -67,6 +64,9 @@ async function latticeProvider(options: {
 }) {
   const { default: EthLatticeKeyring } = await import('eth-lattice-keyring')
   const EthereumTx = await import('ethereumjs-tx')
+  const { default: createProvider } = await import('./providerEngine')
+
+  const BASE_PATH = "m/44'/60'/0'/0"
 
   const { networkId, appName, rpcUrl, BigNumber, networkName } = options
 
