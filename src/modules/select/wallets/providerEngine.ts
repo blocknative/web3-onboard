@@ -38,6 +38,8 @@ function createProvider(config: any) {
   provider.addProvider(rpcSubProvider)
   provider.start()
 
+  provider.on('error', console.error)
+
   return provider
 }
 
