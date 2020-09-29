@@ -1,11 +1,6 @@
 import { TrezorOptions, WalletModule, Helpers } from '../../../interfaces'
 import trezorIcon from '../wallet-icons/icon-trezor'
 
-import createProvider from './providerEngine'
-import { generateAddresses, isValidPath } from './hd-wallet'
-
-const TREZOR_DEFAULT_PATH = "m/44'/60'/0'/0"
-
 function trezor(options: TrezorOptions & { networkId: number }): WalletModule {
   const {
     rpcUrl,
@@ -79,8 +74,12 @@ async function trezorProvider(options: {
   const TrezorConnectLibrary = await import('trezor-connect')
   const EthereumTx = await import('ethereumjs-tx')
   const ethUtil = await import('ethereumjs-util')
+  const { default: createProvider } = await import('./providerEngine')
+  const { generateAddresses, isValidPath } = await import('./hd-wallet')
 
   const { default: TrezorConnect, DEVICE_EVENT, DEVICE } = TrezorConnectLibrary
+
+  const TREZOR_DEFAULT_PATH = "m/44'/60'/0'/0"
 
   const {
     networkId,
