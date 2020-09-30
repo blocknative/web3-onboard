@@ -55,6 +55,7 @@
     "bignumber.js": "^9.0.0",
     "bnc-sdk": "^2.1.4",
     "bowser": "^2.10.0",
+    "eth-lattice-keyring": "^0.2.4",
     "ethereumjs-tx": "^2.1.2",
     "ethereumjs-util": "^7.0.3",
     "fortmatic": "^2.2.1",
