@@ -77,7 +77,7 @@ function accountSelect(
             `
           : `
           <div style="display: flex; align-items: center;">
-            <select id="account-select" onchange="window.accountSelect()" style="padding: 0.5rem;">
+            <select id="account-select" onchange="window.accountSelect();">
               ${accountsAndBalances.map(
                 (account: { balance: string; address: string }) =>
                   `<option>${account.address} --- ${

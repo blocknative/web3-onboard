@@ -38,6 +38,10 @@
     color: #91bced;
     border-color: #91bced;
   }
+
+  :global(.bn-onboard-wallet-check-section select) {
+    padding: 0.5rem;
+  }
 </style>
 
 {#if $app.walletSelectInProgress}
