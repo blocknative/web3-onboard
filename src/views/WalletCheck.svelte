@@ -334,7 +334,7 @@
     {/if}
 
     {#if activeModal.html}
-      <section>
+      <section class="bn-onboard-custom bn-onboard-wallet-check-section">
         {@html activeModal.html}
       </section>
     {/if}
