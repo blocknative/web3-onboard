@@ -77,7 +77,7 @@ function accountSelect(
             `
           : `
           <div style="display: flex; align-items: center;">
-            <select id="account-select" onchange="window.accountSelect();">
+            <select id="account-select" onchange="window.accountSelect();" class="bn-onboard-custom bn-onboard-account-select>
               ${accountsAndBalances.map(
                 (account: { balance: string; address: string }) =>
                   `<option>${account.address} --- ${
