@@ -167,6 +167,10 @@ export function getProviderName(provider: any): string | undefined {
     return 'wallet.io';
   }
 
+  if (provider.isTokenPocket) {
+    return 'TokenPocket'
+  }
+
   if (provider.wallet === 'MEETONE') {
     return 'MEETONE'
   }
