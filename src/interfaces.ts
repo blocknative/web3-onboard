@@ -189,6 +189,11 @@ export interface TrezorOptions extends CommonWalletOptions {
   rpcUrl: string
 }
 
+export interface LatticeOptions extends CommonWalletOptions {
+  appName: string
+  rpcUrl: string
+}
+
 export interface LedgerOptions extends CommonWalletOptions {
   rpcUrl: string
   LedgerTransport?: any
@@ -333,6 +338,7 @@ export type WalletInitOptions =
   | WalletConnectOptions
   | TorusOptions
   | TrezorOptions
+  | LatticeOptions
   | AuthereumOptions
   | LedgerOptions
   | InjectedWithBalanceOptions
@@ -342,6 +348,7 @@ export type AllWalletInitOptions = CommonWalletOptions &
   WalletConnectOptions &
   TorusOptions &
   TrezorOptions &
+  LatticeOptions &
   AuthereumOptions &
   LedgerOptions &
   WalletLinkOptions &
