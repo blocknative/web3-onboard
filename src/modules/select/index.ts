@@ -4,6 +4,7 @@ import { isWalletInit } from '../../validation'
 // wallets that qualify for default wallets need to have no
 // init parameters that are required for full functionality
 const defaultWalletNames = [
+  'web3Wallet',
   'metamask',
   'dapper',
   'coinbase',
@@ -97,6 +98,8 @@ function getModule(name: string): Promise<any> | undefined {
       return import('./wallets/unilogin')
     case 'mykey':
       return import('./wallets/mykey')
+    case 'web3Wallet':
+      return import('./wallets/web3Wallet')
     case 'huobiwallet':
       return import('./wallets/huobiwallet')
     case 'wallet.io':

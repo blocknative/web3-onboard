@@ -230,6 +230,8 @@ export function getProviderName(provider: any): string | undefined {
   if (provider.host && provider.host.indexOf('localhost') !== -1) {
     return 'localhost'
   }
+
+  return 'web3Wallet'
 }
 
 export function getDeviceInfo() {
