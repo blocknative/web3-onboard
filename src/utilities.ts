@@ -5,11 +5,16 @@ import { WalletInterface } from './interfaces'
 
 export function getNetwork(provider: any): Promise<number | any> {
   return new Promise((resolve, reject) => {
-    const params = {
+    const options = {
       jsonrpc: '2.0',
       method: 'net_version',
       params: [],
       id: 42
+    }
+
+    // use MetaMask parameter if there
+    if (provider.chainId) {
+      return resolve(Number(provider.chainId))
     }
 
     const callback = (e: any, res: any) => {
@@ -19,9 +24,9 @@ export function getNetwork(provider: any): Promise<number | any> {
     }
 
     if (typeof provider.sendAsync === 'function') {
-      provider.sendAsync(params, callback)
+      provider.sendAsync(options, callback)
     } else if (typeof provider.send === 'function') {
-      provider.send(params, callback)
+      provider.send(options, callback)
     } else {
       resolve(null)
     }
@@ -30,11 +35,18 @@ export function getNetwork(provider: any): Promise<number | any> {
 
 export function getAddress(provider: any): Promise<string | any> {
   return new Promise((resolve, reject) => {
-    const params = {
+    const options = {
       jsonrpc: '2.0',
       method: 'eth_accounts',
       params: [],
       id: 42
+    }
+
+    // use MetaMask request method if there
+    if (provider.request) {
+      return provider.request(options).then((res: string[]) => {
+        return resolve(res[0])
+      })
     }
 
     const callback = (e: any, res: any) => {
@@ -44,9 +56,9 @@ export function getAddress(provider: any): Promise<string | any> {
     }
 
     if (typeof provider.sendAsync === 'function') {
-      provider.sendAsync(params, callback)
+      provider.sendAsync(options, callback)
     } else if (typeof provider.send === 'function') {
-      provider.send(params, callback)
+      provider.send(options, callback)
     } else {
       resolve(null)
     }
@@ -65,11 +77,19 @@ export function getBalance(
       return
     }
 
-    const params = {
+    const options = {
       jsonrpc: '2.0',
       method: 'eth_getBalance',
       params: [currentAddress, 'latest'],
       id: 42
+    }
+
+    // use MetaMask request method if there
+    if (provider.request) {
+      return provider
+        .request(options)
+        .then((res: string) => (res ? new BigNumber(res).toString(10) : null))
+        .then(resolve)
     }
 
     const callback = (e: any, res: any) => {
@@ -79,9 +99,9 @@ export function getBalance(
     }
 
     if (typeof provider.sendAsync === 'function') {
-      provider.sendAsync(params, callback)
+      provider.sendAsync(options, callback)
     } else if (typeof provider.send === 'function') {
-      provider.send(params, callback)
+      provider.send(options, callback)
     } else {
       resolve(null)
     }
@@ -131,14 +151,19 @@ export function createModernProviderInterface(provider: any): WalletInterface {
     connect: () =>
       new Promise(
         (resolve: () => void, reject: (err: { message: string }) => void) => {
-          provider
-            .enable()
-            .then(resolve)
-            .catch(() =>
-              reject({
-                message: 'This dapp needs access to your account information.'
+          const request = provider.request
+            ? getAddress(provider).then((address: string) => {
+                return address
+                  ? address
+                  : provider.request({ method: 'eth_requestAccounts' })
               })
-            )
+            : provider.enable()
+
+          return request.then(resolve).catch(() =>
+            reject({
+              message: 'This dapp needs access to your account information.'
+            })
+          )
         }
       ),
     name: getProviderName(provider)
@@ -164,7 +189,11 @@ export function getProviderName(provider: any): string | undefined {
   if (!provider) return
 
   if (provider.isWalletIO) {
-    return 'wallet.io';
+    return 'wallet.io'
+  }
+
+  if (provider.isTokenPocket) {
+    return 'TokenPocket'
   }
 
   if (provider.wallet === 'MEETONE') {
