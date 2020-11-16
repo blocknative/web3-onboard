@@ -34,7 +34,7 @@ function metamask(options: CommonWalletOptions): WalletModule {
       }
     },
     type: 'injected',
-    link: 'https://metamask.io/',
+    link: `https://metamask.app.link/dapp/${window.location.host}`,
     installMessage: extensionInstallMessage,
     desktop: true,
     mobile: true,
