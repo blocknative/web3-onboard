@@ -191,7 +191,9 @@ export function getProviderName(provider: any): string | undefined {
   if (provider.isWalletIO) {
     return 'wallet.io'
   }
-
+  if (provider.isDcentWallet) {
+    return 'D\'CENT'
+  }  
   if (provider.isTokenPocket) {
     return 'TokenPocket'
   }
