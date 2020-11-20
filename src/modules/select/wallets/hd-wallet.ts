@@ -37,7 +37,6 @@ export function generateAddresses(
 
 export function isValidPath(path: string) {
   const parts = path.split('/')
-
   if (parts[0] !== 'm') {
     return false
   }
@@ -46,16 +45,16 @@ export function isValidPath(path: string) {
     return false
   }
 
-  if (parts[2] !== "60'" && parts[2] !== "1'") {
+  if (parts[2] !== "60'" && parts[2] !== "1'" && parts[2] !== "73799'" && parts[2] !== "246'") {
     return false
   }
 
-  if (parts[3] === undefined) {
+  if (parts[3] === undefined || parts[3] === "0'") {
     return true
   }
 
   const accountFieldDigit = Number(parts[3][0])
-
+  
   if (
     isNaN(accountFieldDigit) ||
     accountFieldDigit < 0 ||

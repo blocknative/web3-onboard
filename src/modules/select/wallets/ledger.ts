@@ -205,6 +205,7 @@ async function ledgerProvider(options: {
         ? LedgerTransport.listen(observer)
         : TransportU2F.listen(observer)
     } catch (error) {
+      console.log(error)
       throw new Error('Error connecting to Ledger wallet')
     }
   }
@@ -363,25 +364,32 @@ async function ledgerProvider(options: {
 
   async function signTransaction(transactionData: any) {
     const path = [...addressToPath.values()][0]
-
     try {
-      const transaction = new EthereumTx.Transaction(transactionData, {
-        chain: networkName(networkId)
-      })
-
-      transaction.raw[6] = buffer.Buffer.from([networkId]) // v
-      transaction.raw[7] = buffer.Buffer.from([]) // r
-      transaction.raw[8] = buffer.Buffer.from([]) // s
-
+      const transaction = new EthereumTx.Transaction(transactionData, { chain: networkName(networkId)})
+      transaction.raw[6] = networkId
+      transaction.raw[7] = transaction.raw[8] = 0
+      
       const ledgerResult = await eth.signTransaction(
         path,
         transaction.serialize().toString('hex')
       )
-
-      transaction.v = buffer.Buffer.from(ledgerResult.v, 'hex')
-      transaction.r = buffer.Buffer.from(ledgerResult.r, 'hex')
-      transaction.s = buffer.Buffer.from(ledgerResult.s, 'hex')
-
+​
+      let v = ledgerResult.v.toString(16)
+​
+      // EIP155 support. check/recalc signature v value.
+      let rv = parseInt(v, 16)
+      let cv = networkId * 2 + 35
+​
+      if (rv !== cv && (rv & cv) !== rv) {
+        cv += 1 // add signature v bit.
+      }
+​
+      v = cv.toString(16)
+      
+      transaction.v = `0x${v}`;
+      transaction.r = `0x${ledgerResult.r}`;
+      transaction.s = `0x${ledgerResult.s}`;
+    
       return `0x${transaction.serialize().toString('hex')}`
     } catch (error) {
       throw error

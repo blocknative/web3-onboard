@@ -9,6 +9,7 @@
     "wallet"
   ],
   "main": "dist/cjs/onboard.js",
+  "postinstall": "patch-package",
   "module": "dist/esm/onboard.js",
   "typings": "dist/src/onboard.d.ts",
   "files": [
@@ -35,6 +36,8 @@
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.3",
+    "patch-package": "^6.2.2",
+    "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.0.5",
     "rimraf": "^3.0.0",
     "rollup": "^1.27.5",
@@ -69,6 +72,7 @@
   "scripts": {
     "build": "rimraf dist && rollup -c && babel dist/cjs --out-dir dist/cjs && babel dist/esm --out-dir dist/esm",
     "test": "echo \"TBD\" && exit 0",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "postinstall": "patch-package"
   }
 }

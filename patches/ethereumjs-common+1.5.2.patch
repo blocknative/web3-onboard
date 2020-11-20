@@ -1,0 +1,181 @@
+diff --git a/node_modules/ethereumjs-common/dist/chains/energyWebChain.json b/node_modules/ethereumjs-common/dist/chains/energyWebChain.json
+new file mode 100644
+index 0000000..f418165
+--- /dev/null
++++ b/node_modules/ethereumjs-common/dist/chains/energyWebChain.json
+@@ -0,0 +1,74 @@
++{
++    "name": "energyWebChain",
++    "chainId": 246,
++    "networkId": 246,
++    "comment": "Energy Web Chain network",
++    "url": "https://explorer.energyweb.org/",
++    "genesis":{
++      "hash": "0x0b6d3e680af2fc525392c720666cce58e3d8e6fe75ba4b48cb36bcc69039229b",
++      "timestamp": null,
++      "gasLimit": 6000000,
++      "difficulty": 131072,
++      "nonce": "0x0000000000000000",
++      "extraData": "",
++      "stateRoot": ""
++    },
++    "hardforks": [
++        {
++            "name": "chainstart",
++            "block": 0,
++            "consensus": "poa",
++            "finality": null
++        },
++        {
++            "name": "istanbul",
++            "block": 4922294,
++            "consensus": "poa",
++            "finality": null
++        }
++    ],
++    "bootstrapNodes": [
++      {
++        "ip": "35.181.30.169",
++        "port": 30303,
++        "id": "cc67008e850c4b64702f1664f18704dd23980fb574138588904270739dca3a9c417ac3f97077b0f4e4872a5db109195f7137c156314dbcc724eabd809044553e",
++        "location": "",
++        "comment": ""
++      },
++      {
++        "ip": "35.181.104.81",
++        "port": 30303,
++        "id": "34f97743b9c07fac84c2db921337f006b5932e14c29df496951bdcfe3fce71e3d1504c25d66156dae01065623849b4fe940168c7e3f21c49b538af0cabb5805f",
++        "location": "",
++        "comment": ""
++      },
++      {
++        "ip": "3.1.233.174",
++        "port": 30303,
++        "id": "80e49825bb6bdfbf69576fd4a5f7bb173db98c08439bd7a019e2d42548afbb1f70232b74ede42dbd99cc0de3990a0101d49543c1b299027d2fd6f5a2c81eff75",
++        "location": "",
++        "comment": ""
++      },
++      {
++        "ip": "52.74.191.91",
++        "port": 30303,
++        "id": "1cd00f54ddaa41793d32500f0cb123d43e95f5ed18220c367d5a4db7d111e5fb59f250c397e40977562881875827f022d88a51e51171daaebf916beaa60e2139",
++        "location": "",
++        "comment": ""
++      },
++      {
++        "ip": "3.130.32.228",
++        "port": 30303,
++        "id": "3a8588bd883ea3bce606b08e7ca71d55717077cb3d25d3c00421ac371fbae286b94f58ba2e739b17b64c4d0d3e19f1b0ae2e47962703b42d7f36f1b9a448d4ea",
++        "location": "",
++        "comment": ""
++      },
++      {
++        "ip": "3.130.9.1",
++        "port": 30303,
++        "id": "69749dbe7e6f5fceaeb0a16f60353b3ec04825a12400e6d581fe980275e96fecb464276e61d79fc1628e448f1f74da2985d778ea54e0e8e7c64d980f2b3b6a94",
++        "location": "",
++        "comment": ""
++      }
++    ]
++  }
+diff --git a/node_modules/ethereumjs-common/dist/chains/index.js b/node_modules/ethereumjs-common/dist/chains/index.js
+index 3e906cb..6544105 100644
+--- a/node_modules/ethereumjs-common/dist/chains/index.js
++++ b/node_modules/ethereumjs-common/dist/chains/index.js
+@@ -8,11 +8,16 @@ exports.chains = {
+         '4': 'rinkeby',
+         '42': 'kovan',
+         '5': 'goerli',
++        '73799': 'volta',
++        '246': 'energyWebChain',
+     },
+     mainnet: require('./mainnet.json'),
+     ropsten: require('./ropsten.json'),
+     rinkeby: require('./rinkeby.json'),
+     kovan: require('./kovan.json'),
+     goerli: require('./goerli.json'),
++    volta: require('./volta.json'),
++    energyWebChain: require('./energyWebChain.json'),
++
+ };
+ //# sourceMappingURL=index.js.map
+diff --git a/node_modules/ethereumjs-common/dist/chains/volta.json b/node_modules/ethereumjs-common/dist/chains/volta.json
+new file mode 100644
+index 0000000..d05074e
+--- /dev/null
++++ b/node_modules/ethereumjs-common/dist/chains/volta.json
+@@ -0,0 +1,74 @@
++{
++  "name": "volta",
++  "chainId": 73799,
++  "networkId": 73799,
++  "comment": "Volta test network",
++  "url": "http://volta-explorer.energyweb.org/",
++  "genesis":{
++    "hash": "0xebd8b413ca7b7f84a8dd20d17519ce2b01954c74d94a0a739a3e416abe0e43e5",
++    "timestamp": null,
++    "gasLimit": 6000000,
++    "difficulty": 131072,
++    "nonce": "0x0000000000000000",
++    "extraData": "",
++    "stateRoot": ""
++  },
++  "hardforks": [
++    {
++      "name": "chainstart",
++      "block": 0,
++      "consensus": "poa",
++      "finality": null
++    },
++    {
++      "name": "istanbul",
++      "block": 5240580,
++      "consensus": "poa",
++      "finality": null
++    }
++  ],
++  "bootstrapNodes": [
++    {
++      "ip": "54.70.158.106",
++      "port": 30303,
++      "id": "59c9250cb805409e84c9cd0038e97d8e5e4605b928663675869ebdfd4c251d80ccad76267a5eb2f4362ddceb5ec671f7595463adfc0a12e9f68dbf233072db41",
++      "location": "",
++      "comment": ""
++    },
++    {
++      "ip": "99.81.92.124",
++      "port": 30303,
++      "id": "e487ebacbdad3418905d2ed7f009fa5dbd17d73880854884acc604c0afc1a60a396aa90cb2741278c555a4e30ffc6ffc1c29e83840aa22009ec92fe53f81ec04",
++      "location": "",
++      "comment": ""
++    },
++    {
++      "ip": "54.201.62.74",
++      "port": 30303,
++      "id": "563f12602a117201b39ebeea108185abb15d9286830c074640c9fccbaaaabcc7fe2c95682cc43f95b95059f6d0dc4c9becbc1b2bd78e0c5ef5fddff07d85ba0e",
++      "location": "",
++      "comment": ""
++    },
++    {
++      "ip": "3.121.165.10",
++      "port": 30303,
++      "id": "5903b3acebdc4a34800f6923e5f3aec3ca7e5d1285bec4adb9f20ebb0f87a3bebdd748b1849ca1108a9f1e37ff9ced0b475292b8effc29e95d49ec438f244b02",
++      "location": "",
++      "comment": ""
++    },
++    {
++      "ip": "54.93.159.98",
++      "port": 30303,
++      "id": "8f8e35a6dcacfee946f46447b4703c84f4e485e478143997f86b1834e1b0bb78dab363d700dff3147442b9d3e2a1c521f79340c436eb7245a97c7fe385b89a5d",
++      "location": "",
++      "comment": ""
++    },
++    {
++      "ip": "52.31.129.130",
++      "port": 30303,
++      "id": "bd228aa03cf4a88491c81c5f3ab4a1437df3b463081cc93943c4d3ab37f1e4f8081c6995eca076f717d4fdf9a277c750bd0289477ac151f1e2b024747dcd1747",
++      "location": "",
++      "comment": ""
++    }
++  ]
++}
