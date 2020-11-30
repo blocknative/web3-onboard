@@ -63,7 +63,8 @@ async function latticeProvider(options: {
   }) => void
 }) {
   const { default: EthLatticeKeyring } = await import('eth-lattice-keyring')
-  const EthereumTx = await import('ethereumjs-tx')
+  const { Transaction } = await import('@ethereumjs/tx')
+  const {default:Common} = await import ('@ethereumjs/common')
   const { default: createProvider } = await import('./providerEngine')
 
   const BASE_PATH = "m/44'/60'/0'/0"
@@ -228,10 +229,12 @@ async function latticeProvider(options: {
     if (addressList.length === 0) {
       await enable()
     }
+    const common = new Common({ chain: networkName(networkId) })
 
-    const transaction = new EthereumTx.Transaction(transactionData, {
-      chain: networkName(networkId)
-    })
+    const transaction =  Transaction.fromTxData(
+      {...transactionData,gasLimit: transactionData.gas??transactionData.gasLimit}, 
+      {common,freeze:false}
+    )
 
     try {
       const signedTx = await Lattice.signTransaction(

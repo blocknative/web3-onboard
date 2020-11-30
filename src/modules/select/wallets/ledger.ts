@@ -13,7 +13,7 @@ function ledger(options: LedgerOptions & { networkId: number }): WalletModule {
     preferred,
     label,
     iconSrc,
-    svg
+    svg,
   } = options
 
   return {
@@ -29,7 +29,7 @@ function ledger(options: LedgerOptions & { networkId: number }): WalletModule {
         LedgerTransport,
         BigNumber,
         networkName,
-        resetWalletState
+        resetWalletState,
       })
 
       return {
@@ -77,10 +77,9 @@ async function ledgerProvider(options: {
   const { default: TransportU2F } = await import('@ledgerhq/hw-transport-u2f')
   const { default: Eth } = await import('@ledgerhq/hw-app-eth')
 
-  const EthereumTx = await import('ethereumjs-tx')
+  const { Transaction } = await import('@ethereumjs/tx')
+  const {default:Common} = await import ('@ethereumjs/common')
   const ethUtil = await import('ethereumjs-util')
-  const buffer = await import('buffer')
-
   const {
     networkId,
     rpcUrl,
@@ -364,16 +363,21 @@ async function ledgerProvider(options: {
 
   async function signTransaction(transactionData: any) {
     const path = [...addressToPath.values()][0]
+    const {BN, toBuffer} = ethUtil
+    const common =  new Common({ chain: networkName(networkId) })
     try {
-      const transaction = new EthereumTx.Transaction(transactionData, { chain: networkName(networkId)})
-      transaction.raw[6] = networkId
-      transaction.raw[7] = transaction.raw[8] = 0
+      const transaction =  Transaction.fromTxData(
+        {...transactionData,gasLimit: transactionData.gas??transactionData.gasLimit}, 
+        {common,freeze:false}
+      )
+      transaction.v = new BN(toBuffer(networkId))
+      transaction.r = transaction.s = new BN(toBuffer(0));
       
       const ledgerResult = await eth.signTransaction(
         path,
         transaction.serialize().toString('hex')
       )
-​
+​   
       let v = ledgerResult.v.toString(16)
 ​
       // EIP155 support. check/recalc signature v value.
@@ -385,11 +389,10 @@ async function ledgerProvider(options: {
       }
 ​
       v = cv.toString(16)
-      
-      transaction.v = `0x${v}`;
-      transaction.r = `0x${ledgerResult.r}`;
-      transaction.s = `0x${ledgerResult.s}`;
-    
+      transaction.v = new BN(toBuffer(`0x${v}`))        
+      transaction.r = new BN(toBuffer(`0x${ledgerResult.r}`))
+      transaction.s = new BN(toBuffer(`0x${ledgerResult.s}`))
+
       return `0x${transaction.serialize().toString('hex')}`
     } catch (error) {
       throw error

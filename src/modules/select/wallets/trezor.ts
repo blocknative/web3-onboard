@@ -72,7 +72,8 @@ async function trezorProvider(options: {
   }) => void
 }) {
   const TrezorConnectLibrary = await import('trezor-connect')
-  const EthereumTx = await import('ethereumjs-tx')
+  const { Transaction } = await import('@ethereumjs/tx')
+  const {default:Common} = await import ('@ethereumjs/common')
   const ethUtil = await import('ethereumjs-util')
   const { default: createProvider } = await import('./providerEngine')
   const { generateAddresses, isValidPath } = await import('./hd-wallet')
@@ -366,10 +367,12 @@ async function trezorProvider(options: {
     }
 
     const path = [...addressToPath.values()][0]
+    const common = new Common({ chain: networkName(networkId) })
 
-    const transaction = new EthereumTx.Transaction(transactionData, {
-      chain: networkName(networkId)
-    })
+    const transaction =  Transaction.fromTxData(
+      {...transactionData,gasLimit: transactionData.gas??transactionData.gasLimit}, 
+      {common,freeze:false}
+    )
 
     const trezorResult = await trezorSignTransaction(path, transactionData)
 
