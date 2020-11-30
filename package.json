@@ -9,7 +9,6 @@
     "wallet"
   ],
   "main": "dist/cjs/onboard.js",
-  "postinstall": "patch-package",
   "module": "dist/esm/onboard.js",
   "typings": "dist/src/onboard.d.ts",
   "files": [
@@ -36,8 +35,6 @@
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.3",
-    "patch-package": "^6.2.2",
-    "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.0.5",
     "rimraf": "^3.0.0",
     "rollup": "^1.27.5",
@@ -48,6 +45,8 @@
     "typescript": "^3.6.4"
   },
   "dependencies": {
+    "@ethereumjs/common": "^2.0.0",
+    "@ethereumjs/tx": "^3.0.0",
     "@ledgerhq/hw-app-eth": "^5.21.0",
     "@ledgerhq/hw-transport-u2f": "^5.21.0",
     "@portis/web3": "^2.0.0-beta.57",
@@ -59,7 +58,6 @@
     "bnc-sdk": "^2.1.4",
     "bowser": "^2.10.0",
     "eth-lattice-keyring": "^0.2.4",
-    "ethereumjs-tx": "^2.1.2",
     "ethereumjs-util": "^7.0.3",
     "fortmatic": "^2.2.1",
     "hdkey": "^2.0.1",
