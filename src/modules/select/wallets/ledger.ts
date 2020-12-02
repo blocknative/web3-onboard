@@ -1,4 +1,4 @@
-import { LedgerOptions, WalletModule, Helpers } from '../../../interfaces'
+import { LedgerOptions, WalletModule,HardwareWalletCustomNetwok, Helpers } from '../../../interfaces'
 
 import ledgerIcon from '../wallet-icons/icon-ledger'
 
@@ -14,6 +14,7 @@ function ledger(options: LedgerOptions & { networkId: number }): WalletModule {
     label,
     iconSrc,
     svg,
+    customNetwork
   } = options
 
   return {
@@ -30,6 +31,7 @@ function ledger(options: LedgerOptions & { networkId: number }): WalletModule {
         BigNumber,
         networkName,
         resetWalletState,
+        customNetwork
       })
 
       return {
@@ -66,6 +68,7 @@ async function ledgerProvider(options: {
   rpcUrl: string
   LedgerTransport: any
   BigNumber: any
+  customNetwork?: HardwareWalletCustomNetwok
   networkName: (id: number) => string
   resetWalletState: (options?: {
     disconnected: boolean
@@ -86,7 +89,8 @@ async function ledgerProvider(options: {
     LedgerTransport,
     BigNumber,
     networkName,
-    resetWalletState
+    resetWalletState,
+    customNetwork
   } = options
 
   let dPath = ''
@@ -364,7 +368,7 @@ async function ledgerProvider(options: {
   async function signTransaction(transactionData: any) {
     const path = [...addressToPath.values()][0]
     const {BN, toBuffer} = ethUtil
-    const common =  new Common({ chain: networkName(networkId) })
+    const common =  new Common({ chain: (customNetwork) || networkName(networkId) })
     try {
       const transaction =  Transaction.fromTxData(
         {...transactionData,gasLimit: transactionData.gas??transactionData.gasLimit}, 

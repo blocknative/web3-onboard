@@ -1,4 +1,4 @@
-import { TrezorOptions, WalletModule, Helpers } from '../../../interfaces'
+import { TrezorOptions, WalletModule, HardwareWalletCustomNetwok, Helpers } from '../../../interfaces'
 import trezorIcon from '../wallet-icons/icon-trezor'
 
 function trezor(options: TrezorOptions & { networkId: number }): WalletModule {
@@ -10,7 +10,8 @@ function trezor(options: TrezorOptions & { networkId: number }): WalletModule {
     preferred,
     label,
     iconSrc,
-    svg
+    svg,
+    customNetwork
   } = options
 
   return {
@@ -27,6 +28,7 @@ function trezor(options: TrezorOptions & { networkId: number }): WalletModule {
         appUrl,
         BigNumber,
         networkName,
+        customNetwork,
         resetWalletState
       })
 
@@ -65,6 +67,7 @@ async function trezorProvider(options: {
   appUrl: string
   rpcUrl: string
   BigNumber: any
+  customNetwork?: HardwareWalletCustomNetwok
   networkName: (id: number) => string
   resetWalletState: (options?: {
     disconnected: boolean
@@ -89,6 +92,7 @@ async function trezorProvider(options: {
     rpcUrl,
     BigNumber,
     networkName,
+    customNetwork,
     resetWalletState
   } = options
 
@@ -367,8 +371,7 @@ async function trezorProvider(options: {
     }
 
     const path = [...addressToPath.values()][0]
-    const common = new Common({ chain: networkName(networkId) })
-
+    const common = new Common({ chain: (customNetwork) || networkName(networkId) })
     const transaction =  Transaction.fromTxData(
       {...transactionData,gasLimit: transactionData.gas??transactionData.gasLimit}, 
       {common,freeze:false}
