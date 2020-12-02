@@ -70,7 +70,6 @@
   "scripts": {
     "build": "rimraf dist && rollup -c && babel dist/cjs --out-dir dist/cjs && babel dist/esm --out-dir dist/esm",
     "test": "echo \"TBD\" && exit 0",
-    "prepare": "npm run build",
-    "postinstall": "patch-package"
+    "prepare": "npm run build"
   }
 }
