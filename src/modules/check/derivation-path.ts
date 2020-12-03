@@ -224,7 +224,6 @@ function derivationPath(
                   state.completed = true
                 })
                 .catch(error => {
-                  console.log(error)
                   state.error = error.message
                   state.loading = false
                 })

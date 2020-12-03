@@ -208,7 +208,6 @@ async function ledgerProvider(options: {
         ? LedgerTransport.listen(observer)
         : TransportU2F.listen(observer)
     } catch (error) {
-      console.log(error)
       throw new Error('Error connecting to Ledger wallet')
     }
   }

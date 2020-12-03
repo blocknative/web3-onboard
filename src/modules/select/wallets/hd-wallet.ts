@@ -45,7 +45,7 @@ export function isValidPath(path: string) {
     return false
   }
 
-  if (parts[2] !== "60'" && parts[2] !== "1'" && parts[2] !== "73799'" && parts[2] !== "246'") {
+  if (!["60'", "1'", "73799'",  "246'"].includes(parts[2])) {
     return false
   }
 

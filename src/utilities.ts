@@ -259,10 +259,6 @@ export function networkName(id: number): string {
       return 'kovan'
     case 100:
       return 'xdai'
-    case 73799:
-      return 'volta'
-    case 246:
-      return 'energyWebChain'
     default:
       return 'local'
   }
@@ -282,10 +278,6 @@ export function networkToId(network: string): number {
       return 42
     case 'xdai':
       return 100
-    case 'volta':
-      return 73799
-    case 'energyWebChain':
-      return 246
     default:
       return 0
   }
