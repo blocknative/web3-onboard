@@ -81,7 +81,6 @@ function torus(options: TorusOptions & { networkId: number }): WalletModule {
                     if (err) {
                       reject(`Error while checking Balance: ${err}`)
                     } else {
-                      console.log(data.toString())
                       resolve(data.toString())
                     }
                   }
