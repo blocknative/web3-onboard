@@ -16,7 +16,8 @@ const defaultWalletNames = [
   'hyperpay',
   'unilogin',
   'tokenpocket',
-  'dcent'
+  'dcent',
+  'atoken'
 ]
 
 function select(
@@ -109,6 +110,8 @@ function getModule(name: string): Promise<any> | undefined {
       return import('./wallets/tokenpocket')
     case 'dcent':
       return import('./wallets/dcent')
+    case 'atoken':
+      return import('./wallets/atoken')
     default:
       return
   }
