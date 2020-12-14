@@ -7,7 +7,6 @@ export interface Initialization {
   darkMode?: boolean
   apiUrl?: string
   hideBranding?: boolean
-  pollingInterval?: number
 }
 
 export interface Subscriptions {
@@ -182,7 +181,6 @@ export interface WalletConnectOptions extends CommonWalletOptions {
     [key: string]: string
   }
   bridge: string
-  pollingInterval: number
 }
 
 export interface TrezorOptions extends CommonWalletOptions {

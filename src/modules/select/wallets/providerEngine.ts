@@ -12,11 +12,8 @@ function createProvider(config: any) {
     processMessage,
     processPersonalMessage,
     signMessage,
-    signPersonalMessage,
-    pollingInterval
+    signPersonalMessage
   } = config
-
-  console.log("from inside provider engine : " , {pollingInterval})
 
   const idMgmt =
     getAccounts &&
@@ -33,7 +30,7 @@ function createProvider(config: any) {
     rpcUrl: rpcUrl.includes('http') ? rpcUrl : `https://${rpcUrl}`
   })
 
-  const provider = new Web3ProviderEngine({pollingInterval})
+  const provider = new Web3ProviderEngine()
 
   provider.addProvider(new SubscriptionSubprovider())
   provider.addProvider(new FilterSubprovider())

@@ -17,11 +17,8 @@ function walletConnect(
     label,
     iconSrc,
     svg,
-    networkId,
-    pollingInterval
+    networkId
   } = options
-
-  console.log({pollingInterval})
 
   if (!infuraKey) {
     if (!rpc || !rpc[networkId]) {
@@ -48,16 +45,12 @@ function walletConnect(
           ? rpc[networkId]
           : `https://${networkName(networkId)}.infura.io/v3/${infuraKey}`
 
-      const balanceProvider = createProvider({
-        rpcUrl, 
-        pollingInterval 
-      })
+      const balanceProvider = createProvider({ rpcUrl })
 
       const provider = new WalletConnectProvider({
         infuraId: infuraKey,
         rpc,
-        bridge,
-        pollingInterval
+        bridge
       })
 
       provider.autoRefreshOnNetworkChange = false
