@@ -53,9 +53,7 @@ function walletConnect(
           ? rpc[networkId]
           : `https://${networkName(networkId)}.infura.io/v3/${infuraKey}`
 
-      const balanceProvider = createProvider({
-        rpcUrl
-      })
+      const balanceProvider = createProvider({ rpcUrl })
 
       const provider = new WalletConnectProvider({
         infuraId: infuraKey,
