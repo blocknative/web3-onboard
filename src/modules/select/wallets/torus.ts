@@ -23,8 +23,6 @@ function torus(options: TorusOptions & { networkId: number }): WalletModule {
     loginMethod
   } = options
 
-  let account: string
-
   return {
     name: label || 'Torus',
     svg: svg || torusIcon,
@@ -61,27 +59,25 @@ function torus(options: TorusOptions & { networkId: number }): WalletModule {
           name: 'Torus',
           connect: async () => {
             const result = await instance.login({ verifier: loginMethod })
-            account = result[0]
             return { message: result[0] }
           },
           disconnect: () => instance.cleanUp(),
           address: {
-            get: () => Promise.resolve(account)
+            get: () => Promise.resolve(instance.web3.eth.accounts[0])
           },
           network: {
-            get: () => Promise.resolve(Number(networkId))
+            get: () => Promise.resolve(Number(instance.web3.version.network))
           },
           balance: {
             get: () =>
               new Promise(async (resolve, reject) => {
                 instance.web3.eth.getBalance(
-                  account,
-                  instance.web3.eth.defaultBlock,
-                  (err: any, data: string) => {
+                  instance.web3.eth.accounts[0],
+                  (err: any, data: any) => {
                     if (err) {
                       reject(`Error while checking Balance: ${err}`)
                     } else {
-                      resolve(data.toString())
+                      resolve(data.toString(10))
                     }
                   }
                 )
