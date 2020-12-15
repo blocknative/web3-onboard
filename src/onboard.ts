@@ -50,7 +50,7 @@ function init(initialization: Initialization): API {
     darkMode,
     apiUrl,
     hideBranding,
-    blockPollingInterval = 40000
+    blockPollingInterval = 4000
   } = initialization
 
   const { os, browser, isMobile } = getDeviceInfo()
