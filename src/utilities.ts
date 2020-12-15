@@ -258,6 +258,10 @@ export function getProviderName(provider: any): string | undefined {
     return 'HyperPay'
   }
 
+  if (provider.isAToken) {
+    return 'AToken'
+  }
+
   if (provider.host && provider.host.indexOf('localhost') !== -1) {
     return 'localhost'
   }
