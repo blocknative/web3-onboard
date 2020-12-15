@@ -49,7 +49,8 @@ function init(initialization: Initialization): API {
     networkId,
     darkMode,
     apiUrl,
-    hideBranding
+    hideBranding,
+    blockPollingInterval = 40000
   } = initialization
 
   const { os, browser, isMobile } = getDeviceInfo()
@@ -86,7 +87,8 @@ function init(initialization: Initialization): API {
     browser,
     darkMode,
     displayBranding,
-    checkModules: initializedModules.walletCheck
+    checkModules: initializedModules.walletCheck,
+    blockPollingInterval
   }))
 
   initializeStores()

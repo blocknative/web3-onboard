@@ -64,7 +64,7 @@ export function validateInit(init: Initialization): never | void {
     darkMode,
     apiUrl,
     hideBranding,
-    pollingInterval,
+    blockPollingInterval,
     ...otherParams
   } = init
 
@@ -79,7 +79,7 @@ export function validateInit(init: Initialization): never | void {
       'darkMode',
       'apiUrl',
       'hideBranding',
-      'pollingInterval'
+      'blockPollingInterval'
     ],
     'init'
   )
@@ -110,8 +110,8 @@ export function validateInit(init: Initialization): never | void {
     optional: true
   })
   validateType({
-    name: 'pollingInterval',
-    value: pollingInterval,
+    name: 'blockPollingInterval',
+    value: blockPollingInterval,
     type: 'number',
     optional: true
   })
@@ -649,7 +649,6 @@ export function validateWalletInit(
       'webUri',
       'xsUri',
       'blockedPopupRedirect',
-      'pollingInterval'
     ],
     'walletInitObject'
   )

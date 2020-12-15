@@ -6,6 +6,12 @@ import {
 
 import walletConnectIcon from '../wallet-icons/icon-wallet-connect'
 
+import { get } from 'svelte/store'
+
+import {
+  app,
+} from '../../../stores'
+
 function walletConnect(
   options: WalletConnectOptions & { networkId: number }
 ): WalletModule {
@@ -17,11 +23,10 @@ function walletConnect(
     label,
     iconSrc,
     svg,
-    networkId,
-    pollingInterval
+    networkId
   } = options
 
-  console.log({pollingInterval})
+  const pollingInterval = get(app).blockPollingInterval
 
   if (!infuraKey) {
     if (!rpc || !rpc[networkId]) {
@@ -49,8 +54,7 @@ function walletConnect(
           : `https://${networkName(networkId)}.infura.io/v3/${infuraKey}`
 
       const balanceProvider = createProvider({
-        rpcUrl, 
-        pollingInterval 
+        rpcUrl
       })
 
       const provider = new WalletConnectProvider({
