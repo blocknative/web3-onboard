@@ -7,6 +7,7 @@ export interface Initialization {
   darkMode?: boolean
   apiUrl?: string
   hideBranding?: boolean
+  blockPollingInterval?: number
 }
 
 export interface Subscriptions {

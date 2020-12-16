@@ -4,6 +4,10 @@ import HookedWalletSubprovider from 'web3-provider-engine/subproviders/hooked-wa
 import SubscriptionSubprovider from 'web3-provider-engine/subproviders/subscriptions'
 import FilterSubprovider from 'web3-provider-engine/subproviders/filters'
 
+import { get } from 'svelte/store'
+
+import { app } from '../../../stores'
+
 function createProvider(config: any) {
   const {
     getAccounts,
@@ -12,8 +16,10 @@ function createProvider(config: any) {
     processMessage,
     processPersonalMessage,
     signMessage,
-    signPersonalMessage
+    signPersonalMessage,
   } = config
+
+  const pollingInterval = get(app).blockPollingInterval
 
   const idMgmt =
     getAccounts &&
@@ -30,7 +36,7 @@ function createProvider(config: any) {
     rpcUrl: rpcUrl.includes('http') ? rpcUrl : `https://${rpcUrl}`
   })
 
-  const provider = new Web3ProviderEngine()
+  const provider = new Web3ProviderEngine({pollingInterval})
 
   provider.addProvider(new SubscriptionSubprovider())
   provider.addProvider(new FilterSubprovider())
