@@ -274,7 +274,8 @@ interface LocaleLinks<T> {
   ja?: T
   ko?: T
   de?: T
-  zh?: T
+  zh?: T,
+  es?: T,
 }
 
 interface ThemeParams {
@@ -283,7 +284,7 @@ interface ThemeParams {
 }
 
 interface LoginConfigItem {
-  name?: string
+  name: string
   typeOfLogin: LOGIN_TYPE
   description?: string
   clientId?: string
@@ -291,7 +292,11 @@ interface LoginConfigItem {
   logoLight?: string
   logoDark?: string
   showOnModal?: boolean
+  showOnMobile?: boolean
+  showOnDesktop?: boolean
+  mainOption?: boolean
   jwtParameters?: JwtParameters
+  priority?: number
 }
 
 interface LoginConfig {
@@ -302,7 +307,7 @@ export interface TorusOptions extends CommonWalletOptions {
   buttonPosition?: 'top-left' | 'top-right' | 'bottom-right' | 'bottom-left'
   modalZIndex?: number
   apiKey?: string
-  buildEnv?: 'production' | 'development' | 'staging' | 'testing' | 'lrc'
+  buildEnv?: 'production' | 'development' | 'binance' | 'testing' | 'lrc' | 'beta'
   enableLogging?: boolean
   enabledVerifiers?: VerifierStatus
   loginConfig?: LoginConfig

@@ -1,5 +1,5 @@
 import { networkName } from '../../../utilities'
-import { TorusOptions, WalletModule } from '../../../interfaces'
+import { Helpers, TorusOptions, WalletModule } from '../../../interfaces'
 
 import torusIcon from '../wallet-icons/icon-torus'
 
@@ -27,7 +27,11 @@ function torus(options: TorusOptions & { networkId: number }): WalletModule {
     name: label || 'Torus',
     svg: svg || torusIcon,
     iconSrc,
-    wallet: async () => {
+    wallet: async (helpers: Helpers) => {
+      const {
+        createModernProviderInterface
+      } = helpers
+
       const { default: Torus } = await import('@toruslabs/torus-embed')
       const instance = new Torus({
         buttonPosition, // default: bottom-left
@@ -54,37 +58,17 @@ function torus(options: TorusOptions & { networkId: number }): WalletModule {
 
       return {
         provider,
-        instance,
         interface: {
+          ...createModernProviderInterface(provider),
           name: 'Torus',
+          dashboard: () => instance.showWallet('home'),
           connect: async () => {
             const result = await instance.login({ verifier: loginMethod })
             return { message: result[0] }
           },
           disconnect: () => instance.cleanUp(),
-          address: {
-            get: () => Promise.resolve(instance.web3.eth.accounts[0])
-          },
-          network: {
-            get: () => Promise.resolve(Number(instance.web3.version.network))
-          },
-          balance: {
-            get: () =>
-              new Promise(async (resolve, reject) => {
-                instance.web3.eth.getBalance(
-                  instance.web3.eth.accounts[0],
-                  (err: any, data: any) => {
-                    if (err) {
-                      reject(`Error while checking Balance: ${err}`)
-                    } else {
-                      resolve(data.toString(10))
-                    }
-                  }
-                )
-              })
-          },
-          dashboard: () => instance.showWallet('home')
-        }
+        },
+        instance
       }
     },
     type: 'sdk',
