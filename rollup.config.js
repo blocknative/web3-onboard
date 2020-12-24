@@ -65,7 +65,6 @@ export default {
     'authereum',
     '@toruslabs/torus-embed',
     'walletlink',
-    '@unilogin/provider',
     'regenerator-runtime/runtime',
     'trezor-connect',
     'ethereumjs-tx',

@@ -14,7 +14,6 @@ const defaultWalletNames = [
   'operaTouch',
   'status',
   'hyperpay',
-  'unilogin',
   'tokenpocket',
   'dcent',
   'atoken'
@@ -96,8 +95,6 @@ function getModule(name: string): Promise<any> | undefined {
       return import('./wallets/wallet-link')
     case 'imToken':
       return import('./wallets/imtoken')
-    case 'unilogin':
-      return import('./wallets/unilogin')
     case 'mykey':
       return import('./wallets/mykey')
     case 'huobiwallet':

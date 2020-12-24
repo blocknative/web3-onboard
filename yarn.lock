@@ -1251,11 +1251,6 @@
   resolved "https://registry.yarnpkg.com/@pyoner/svelte-ts-preprocess/-/svelte-ts-preprocess-1.3.0.tgz#8b6e78c782f8c10f33ba4b2d35c0d62b155d9eab"
   integrity sha512-o1C6E2bCwTaIEmOnKc3KXAJJ7P37PDK5gM28VBQ3SalesmgyhpZZU3hIzfCkmEfGcKVci44tWQ8PJagNwdG6Fw==
 
-"@restless/sanitizers@^0.2.5":
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/@restless/sanitizers/-/sanitizers-0.2.5.tgz#96a5cfa3edb52abd8fa14e77798738f3a067dbec"
-  integrity sha512-utsOFwv5owNnbj8HijF7uML/AURgUl5YvY4S2gpxQsrp2D1EP/4rQU/HSyYdIQaL89BoZ/5NHveRJrcFyuHo/w==
-
 "@rollup/plugin-image@^2.0.4":
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-image/-/plugin-image-2.0.5.tgz#07859a69f5fe592643c2ad3ef59ae8a5c268a7ef"
@@ -1465,14 +1460,6 @@
     lodash "^4.17.15"
     semver "^7.3.2"
     tsutils "^3.17.1"
-
-"@unilogin/provider@^0.6.1":
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/@unilogin/provider/-/provider-0.6.1.tgz#427247f0cb0899d8b0d00c04a4b90ae2a3c2cb40"
-  integrity sha512-S96uBfoh+/nk8L6Yr+YgEV+FwQgtRnozWhgJpOhmRz128ri5Qv2SXLx5Sac33NGbs8g27PgKOyHX3dKJCvcP3g==
-  dependencies:
-    "@restless/sanitizers" "^0.2.5"
-    reactive-properties "^0.1.11"
 
 "@walletconnect/client@^1.3.1":
   version "1.3.1"
@@ -5951,11 +5938,6 @@ randomhex@0.1.5:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/randomhex/-/randomhex-0.1.5.tgz#baceef982329091400f2a2912c6cd02f1094f585"
   integrity sha1-us7vmCMpCRQA8qKRLGzQLxCU9YU=
-
-reactive-properties@^0.1.11:
-  version "0.1.12"
-  resolved "https://registry.yarnpkg.com/reactive-properties/-/reactive-properties-0.1.12.tgz#35000ddb9b516bf5ea5b4c41154a45a7a38fdedf"
-  integrity sha512-jPpTyoAZOvMhq3pt87X/kZ1zT4j1aad8iafSRHOziYfhBYVYTiUjmIYAxZPmcFziF/4JbEsA7DXA91ZzdosQyQ==
 
 read-pkg-up@^3.0.0:
   version "3.0.0"
