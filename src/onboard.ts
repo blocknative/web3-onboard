@@ -58,7 +58,8 @@ function init(initialization: Initialization): API {
   const initializedModules = initializeModules(
     networkId,
     initialization.walletSelect,
-    initialization.walletCheck
+    initialization.walletCheck,
+    isMobile
   )
 
   let displayBranding: boolean
