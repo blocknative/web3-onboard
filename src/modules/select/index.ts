@@ -3,18 +3,18 @@ import { isWalletInit } from '../../validation'
 
 // wallets that qualify for default wallets need to have no
 // init parameters that are required for full functionality
-const defaultWalletNames = [
+const desktopDefaultWalletNames = ['metamask', 'authereum', 'torus', 'opera']
+
+const mobileDefaultWalletNames = [
   'metamask',
-  'dapper',
+  'authereum',
   'coinbase',
   'trust',
-  'authereum',
   'torus',
   'opera',
   'operaTouch',
   'status',
   'hyperpay',
-  'unilogin',
   'tokenpocket',
   'dcent',
   'atoken'
@@ -22,23 +22,30 @@ const defaultWalletNames = [
 
 function select(
   wallets: Array<WalletInitOptions | WalletModule> | undefined,
-  networkId: number
+  networkId: number,
+  isMobile: boolean
 ) {
+  const defaultWalletNames = isMobile
+    ? mobileDefaultWalletNames
+    : desktopDefaultWalletNames
+
   if (wallets) {
     return Promise.all(
       wallets.map(wallet => {
         if (isWalletInit(wallet)) {
           const { walletName, ...initParams } = wallet
-          const module = getModule(walletName)
 
-          if (!module) {
-            throw new Error(`${walletName} is not a valid walletName.`)
+          try {
+            return getModule(walletName).then((m: any) =>
+              m.default({ ...initParams, networkId })
+            )
+          } catch (error) {
+            if (error.name === 'DeprecatedWalletError') {
+              console.warn(error.message)
+            } else {
+              throw error
+            }
           }
-
-          return (
-            module &&
-            module.then((m: any) => m.default({ ...initParams, networkId }))
-          )
         }
 
         return Promise.resolve(wallet)
@@ -47,29 +54,34 @@ function select(
   }
 
   return Promise.all(
-    defaultWalletNames.map(walletName => {
-      const module = getModule(walletName)
-      if (module) {
-        return module.then((m: any) => m.default({ networkId }))
-      }
-    })
+    defaultWalletNames.map(walletName =>
+      getModule(walletName).then((m: any) => m.default({ networkId }))
+    )
   )
 }
 
-function getModule(name: string): Promise<any> | undefined {
+function getModule(
+  name: string
+): Promise<{
+  default: (options: any) => WalletModule
+}> {
   switch (name) {
+    // Deprecated wallets
+    case 'dapper':
+    case 'squarelink':
+    case 'unilogin':
+      throw {
+        name: 'DeprecatedWalletError',
+        message: `${name} wallet has been deprecated`
+      }
     case 'meetone':
       return import('./wallets/meetone')
     case 'metamask':
       return import('./wallets/metamask')
-    case 'dapper':
-      return import('./wallets/dapper')
     case 'portis':
       return import('./wallets/portis')
     case 'fortmatic':
       return import('./wallets/fortmatic')
-    case 'squarelink':
-      return import('./wallets/squarelink')
     case 'authereum':
       return import('./wallets/authereum')
     case 'trust':
@@ -96,8 +108,6 @@ function getModule(name: string): Promise<any> | undefined {
       return import('./wallets/wallet-link')
     case 'imToken':
       return import('./wallets/imtoken')
-    case 'unilogin':
-      return import('./wallets/unilogin')
     case 'mykey':
       return import('./wallets/mykey')
     case 'huobiwallet':
@@ -113,7 +123,7 @@ function getModule(name: string): Promise<any> | undefined {
     case 'atoken':
       return import('./wallets/atoken')
     default:
-      return
+      throw new Error(`${name} is not a valid walletName.`)
   }
 }
 
