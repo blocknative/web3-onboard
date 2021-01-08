@@ -35,21 +35,17 @@ function select(
         if (isWalletInit(wallet)) {
           const { walletName, ...initParams } = wallet
 
-          let module
           try {
-            module = getModule(walletName)
+            return getModule(walletName).then((m: any) =>
+              m.default({ ...initParams, networkId })
+            )
           } catch (error) {
-            console.warn(error)
+            if (error.name === 'DeprecatedWalletError') {
+              console.warn(error.message)
+            } else {
+              throw error
+            }
           }
-
-          if (!module) {
-            throw new Error(`${walletName} is not a valid walletName.`)
-          }
-
-          return (
-            module &&
-            module.then((m: any) => m.default({ ...initParams, networkId }))
-          )
         }
 
         return Promise.resolve(wallet)
@@ -58,22 +54,26 @@ function select(
   }
 
   return Promise.all(
-    defaultWalletNames.map(walletName => {
-      const module = getModule(walletName)
-      if (module) {
-        return module.then((m: any) => m.default({ networkId }))
-      }
-    })
+    defaultWalletNames.map(walletName =>
+      getModule(walletName).then((m: any) => m.default({ networkId }))
+    )
   )
 }
 
-function getModule(name: string): Promise<any> | undefined {
+function getModule(
+  name: string
+): Promise<{
+  default: (options: any) => WalletModule
+}> {
   switch (name) {
     // Deprecated wallets
     case 'dapper':
     case 'squarelink':
     case 'unilogin':
-      throw new Error(`${name.toUpperCase()} wallet has been deprecated`)
+      throw {
+        name: 'DeprecatedWalletError',
+        message: `${name} wallet has been deprecated`
+      }
     case 'meetone':
       return import('./wallets/meetone')
     case 'metamask':
@@ -123,7 +123,7 @@ function getModule(name: string): Promise<any> | undefined {
     case 'atoken':
       return import('./wallets/atoken')
     default:
-      return
+      throw new Error(`${name} is not a valid walletName.`)
   }
 }
 
