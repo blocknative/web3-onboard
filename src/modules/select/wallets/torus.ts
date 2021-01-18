@@ -1,5 +1,5 @@
 import { networkName } from '../../../utilities'
-import { TorusOptions, WalletModule } from '../../../interfaces'
+import { Helpers, TorusOptions, WalletModule } from '../../../interfaces'
 
 import torusIcon from '../wallet-icons/icon-torus'
 
@@ -29,7 +29,11 @@ function torus(options: TorusOptions & { networkId: number }): WalletModule {
     name: label || 'Torus',
     svg: svg || torusIcon,
     iconSrc,
-    wallet: async () => {
+    wallet: async (helpers: Helpers) => {
+      const {
+        createModernProviderInterface
+      } = helpers
+
       const { default: Torus } = await import('@toruslabs/torus-embed')
       const instance = new Torus({
         buttonPosition, // default: bottom-left
@@ -56,9 +60,10 @@ function torus(options: TorusOptions & { networkId: number }): WalletModule {
 
       return {
         provider,
-        instance,
         interface: {
+          ...createModernProviderInterface(provider),
           name: 'Torus',
+          dashboard: () => instance.showWallet('home'),
           connect: async () => {
             const result = await instance.login({ verifier: loginMethod })
             account = result[0]
@@ -93,6 +98,8 @@ function torus(options: TorusOptions & { networkId: number }): WalletModule {
           },
           dashboard: () => instance.showWallet('home')
         }
+        // },
+        // instance
       }
     },
     type: 'sdk',

@@ -13,9 +13,14 @@ const defaultWalletExplanation = `Wallets are used to send, receive, and store d
 export default function initializeModules(
   networkId: number,
   walletSelect: WalletSelectModuleOptions | undefined,
-  walletCheck: Array<WalletCheckModule | WalletCheckInit> | undefined
+  walletCheck: Array<WalletCheckModule | WalletCheckInit> | undefined,
+  isMobile: boolean
 ) {
-  const wallets = select(walletSelect && walletSelect.wallets, networkId)
+  const wallets = select(
+    walletSelect && walletSelect.wallets,
+    networkId,
+    isMobile
+  )
 
   return {
     walletSelect: {
