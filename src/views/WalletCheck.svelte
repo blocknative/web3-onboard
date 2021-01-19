@@ -345,13 +345,13 @@
           {activeModal.button.text}
         </Button>
       {/if}
-      {#if errorMsg}
+      <!-- {#if errorMsg}
         <Button position={!activeModal.button && 'left'} onclick={doAction}>
           Try Again
         </Button>
-      {:else}
-        <div />
-      {/if}
+      {:else} -->
+        <!-- <div /> -->
+      <!-- {/if} -->
       {#if loading}
         <Spinner />
       {/if}

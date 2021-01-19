@@ -47,7 +47,7 @@ function network(
             network
           )}</b> to <b>${networkName(
             appNetworkId
-          )} network</b> for this Dapp. <br><br> <i style="font-size: inherit; font-family: inherit;">*Some wallets may not support changing networks. If you can not change networks in your wallet you may consider switching to a different wallet.</i>`,
+          )} network</b> for PoolTogether. <br><br> <i style="font-size: inherit; font-family: inherit;">*Some wallets may not support changing networks. If you can not change networks in your wallet you may consider switching to a different wallet.</i>`,
         eventCode: 'networkFail',
         button: button || {
           onclick: () => {

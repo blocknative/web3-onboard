@@ -65,7 +65,7 @@ function accountSelect(
         heading: heading || 'Select Account',
         description:
           description ||
-          `Please select which account you would like to use with this Dapp:`,
+          `Please select which account you would like to use with PoolTogether:`,
         eventCode: 'accountSelect',
         html: loadingAccounts
           ? `<div class="bn-onboard-custom bn-onboard-loading">

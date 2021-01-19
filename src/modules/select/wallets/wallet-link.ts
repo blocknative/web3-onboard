@@ -17,7 +17,7 @@ function walletLink(
   } = options
 
   return {
-    name: label || 'WalletLink',
+    name: label || 'Coinbase WalletLink',
     // svg: coinbaseIcon,
     // iconSrc,
     iconSrc: iconSrc || coinbaseIcon,
@@ -46,7 +46,7 @@ function walletLink(
                 .catch(() =>
                   reject({
                     message:
-                      'This dapp needs access to your account information.'
+                      'PoolTogether needs access to your account information.'
                   })
                 )
             }),

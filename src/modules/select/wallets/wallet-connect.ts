@@ -38,7 +38,7 @@ function walletConnect(
 
   return {
     name: label || 'WalletConnect',
-    svg: svg || walletConnectIcon,
+    svg: (svg === null) ? undefined : (svg || walletConnectIcon),
     iconSrc,
     wallet: async (helpers: Helpers) => {
       const createProvider = (await import('./providerEngine')).default
@@ -80,7 +80,7 @@ function walletConnect(
                 .catch(() =>
                   reject({
                     message:
-                      'This dapp needs access to your account information.'
+                      'PoolTogether needs access to your account information.'
                   })
                 )
             }),
@@ -110,8 +110,10 @@ function walletConnect(
             }
           },
           disconnect: () => {
-            provider.wc.killSession()
-            provider.stop()
+            if (provider.wc._accounts[0]) {
+              provider.wc.killSession()
+              provider.stop()
+            }
           }
         }
       }

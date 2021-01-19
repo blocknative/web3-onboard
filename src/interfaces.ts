@@ -103,7 +103,7 @@ export interface WalletModule {
   name: string
   iconSrc?: string
   iconSrcSet?: string
-  svg?: string
+  svg?: string | null
   wallet: (
     helpers: Helpers
   ) => Promise<{
@@ -169,7 +169,7 @@ export interface CommonWalletOptions {
   preferred?: boolean
   label?: string
   iconSrc?: string
-  svg?: string
+  svg?: string | null
 }
 
 export interface SdkWalletOptions extends CommonWalletOptions {

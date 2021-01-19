@@ -161,7 +161,7 @@ export function createModernProviderInterface(provider: any): WalletInterface {
 
           return request.then(resolve).catch(() =>
             reject({
-              message: 'This dapp needs access to your account information.'
+              message: 'PoolTogether requires access to your account information.'
             })
           )
         }

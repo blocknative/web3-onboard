@@ -34,7 +34,7 @@ function connect(options: WalletCheckCustomOptions = {}): WalletCheckModule {
         heading: heading || 'Login and Authorize Your Wallet',
         description:
           description ||
-          `This dapp requires access to your wallet, please login and authorize access to your ${wallet.name} accounts to continue.`,
+          `PoolTogether requires access to your wallet, please login and authorize access to your ${wallet.name} account to continue.`,
         eventCode: 'loginFail',
         action: wallet.connect,
         icon: icon || connectIcon,

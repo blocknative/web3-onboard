@@ -91,6 +91,14 @@ function getModule(
       return import('./wallets/coinbase')
     case 'walletConnect':
       return import('./wallets/wallet-connect')
+    case 'rainbow':
+      return import('./wallets/rainbow')
+    case 'argent':
+      return import('./wallets/argent')
+    case 'trustWallet':
+      return import('./wallets/trust-wallet')
+    case 'gnosisSafe':
+      return import('./wallets/gnosis-safe')
     case 'opera':
       return import('./wallets/opera')
     case 'operaTouch':

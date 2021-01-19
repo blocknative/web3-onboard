@@ -47,7 +47,7 @@ export const mobileWalletInstallMessage = (helpers: {
 
   return `
   <p style="font-size: 0.889rem;">
-    You'll need to open or install <b>${selectedWallet}</b> to continue. Click below to open this Dapp with <b>${selectedWallet}</b>.
+    You'll need to open or install <b>${selectedWallet}</b> to continue. Click below to open PoolTogether with <b>${selectedWallet}</b>.
   </p>
   `
 }
