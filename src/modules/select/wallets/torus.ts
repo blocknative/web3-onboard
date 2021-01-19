@@ -70,36 +70,8 @@ function torus(options: TorusOptions & { networkId: number }): WalletModule {
             return { message: result[0] }
           },
           disconnect: () => instance.cleanUp(),
-          address: {
-            get: () => Promise.resolve(account)
-          },
-          network: {
-            get: () => Promise.resolve(Number(networkId))
-          },
-          balance: {
-            get: () =>
-              new Promise(async (resolve, reject) => {
-                if (!account) {
-                  reject(`Error while checking Balance:`)
-                  return
-                }
-                instance.web3.eth.getBalance(
-                  account,
-                  instance.web3.eth.defaultBlock,
-                  (err: any, data: string) => {
-                    if (err) {
-                      reject(`Error while checking Balance: ${err}`)
-                    } else {
-                      resolve(data.toString())
-                    }
-                  }
-                )
-              })
-          },
-          dashboard: () => instance.showWallet('home')
-        }
-        // },
-        // instance
+        },
+        instance
       }
     },
     type: 'sdk',

@@ -1,6 +1,6 @@
 import { WalletLinkOptions, WalletModule, Helpers } from '../../../interfaces'
 
-import coinbaseIcon from '../wallet-icons/icon-coinbase'
+import coinbaseIcon from '../wallet-icons/icon-coinbase.png'
 
 function walletLink(
   options: WalletLinkOptions & { networkId: number }
@@ -18,8 +18,10 @@ function walletLink(
 
   return {
     name: label || 'WalletLink',
-    svg: svg || coinbaseIcon,
-    iconSrc,
+    // svg: coinbaseIcon,
+    // iconSrc,
+    iconSrc: iconSrc || coinbaseIcon,
+    iconSrcSet: iconSrc || coinbaseIcon,
     wallet: async (helpers: Helpers) => {
       const { getBalance, getAddress, getNetwork } = helpers
 
