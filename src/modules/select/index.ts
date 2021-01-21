@@ -17,7 +17,8 @@ const mobileDefaultWalletNames = [
   'hyperpay',
   'tokenpocket',
   'dcent',
-  'atoken'
+  'atoken',
+  'liquality'
 ]
 
 function select(
@@ -122,6 +123,8 @@ function getModule(
       return import('./wallets/dcent')
     case 'atoken':
       return import('./wallets/atoken')
+    case 'liquality':
+      return import('./wallets/liquality')
     default:
       throw new Error(`${name} is not a valid walletName.`)
   }
