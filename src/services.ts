@@ -13,7 +13,6 @@ export function initializeBlocknative(
     name: 'Onboard',
     apiUrl
   })
-
   return blocknative
 }
 
