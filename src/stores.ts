@@ -1,4 +1,4 @@
-import { getBlocknative, initializeBlocknative } from './services'
+import { getBlocknative } from './services'
 import { writable, derived, get } from 'svelte/store'
 import { wait, makeCancelable, createInterval } from './utilities'
 import { validateWalletInterface, validateType } from './validation'
@@ -308,14 +308,6 @@ function createBalanceStore(initialState: string | null): BalanceStore {
             timeout: 2000,
             currentBalance: get(balance)
           })
-
-          if (!getBlocknative()) {
-            initializeBlocknative(
-              get(app).dappId,
-              get(app).networkId,
-              get(app).apiUrl
-            )
-          }
 
           if (emitterAddress !== $address) {
             const blocknative = getBlocknative()
