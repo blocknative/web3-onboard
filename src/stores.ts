@@ -1,4 +1,4 @@
-import { getBlocknative, initializeBlocknative } from './services'
+import { getBlocknative } from './services'
 import { writable, derived, get } from 'svelte/store'
 import { wait, makeCancelable, createInterval } from './utilities'
 import { validateWalletInterface, validateType } from './validation'
