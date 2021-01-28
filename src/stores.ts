@@ -309,14 +309,6 @@ function createBalanceStore(initialState: string | null): BalanceStore {
             currentBalance: get(balance)
           })
 
-          if (!getBlocknative()) {
-            initializeBlocknative(
-              get(app).dappId,
-              get(app).networkId,
-              get(app).apiUrl
-            )
-          }
-
           if (emitterAddress !== $address) {
             const blocknative = getBlocknative()
 
