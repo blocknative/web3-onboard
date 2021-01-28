@@ -1,6 +1,6 @@
 import BlocknativeApi from 'bnc-sdk'
 import { get } from 'svelte/store'
-import { app } from '../stores'
+import { app } from './stores'
 
 let blocknative: any
 
