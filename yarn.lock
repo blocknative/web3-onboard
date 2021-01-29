@@ -2452,12 +2452,13 @@ bn.js@^5.1.3:
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-5.1.3.tgz#beca005408f642ebebea80b042b4d18d2ac0ee6b"
   integrity sha512-GkTiFpjFtUzU9CbMeJ5iazkCzGL3jrhzerzZIuqLABjbwRaFt33I9tUdSNryIptM+RxDet6OKm2WnLXzW51KsQ==
 
-bnc-sdk@^2.1.4:
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-2.1.4.tgz#23267198f5a48e800d9c2406f6d04a767cab5643"
-  integrity sha512-aU7DYweE+6tfTvZE7NOOfQsieU2Zyrav6o/xwuLt+uKGvrkblIeg1aqBW1yAQBEg4LCHEygX6TwZk8VznDAh3g==
+bnc-sdk@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-3.1.0.tgz#b568d357a3fe95b627701470c051b72d6c9199a8"
+  integrity sha512-qr299cdBiAxFjTharZNlF+qpxjtB49oexSVwDnsW5fczJjBLG1ibJHoUD/GtJbCiVPS+hqq+qH6HJnpsQknRZA==
   dependencies:
     crypto-es "^1.2.2"
+    rxjs "^6.6.3"
     sturdy-websocket "^0.1.12"
 
 bowser@^2.10.0:
@@ -6341,6 +6342,13 @@ rxjs@^6.5.4, rxjs@^6.6.0:
   version "6.6.2"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.6.2.tgz#8096a7ac03f2cc4fe5860ef6e572810d9e01c0d2"
   integrity sha512-BHdBMVoWC2sL26w//BCu3YzKT4s2jip/WhwsGEDmeKYBhKDZeYezVUnHatYB7L85v5xs0BAQmg6BEYJEKxBabg==
+  dependencies:
+    tslib "^1.9.0"
+
+rxjs@^6.6.3:
+  version "6.6.3"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.6.3.tgz#8ca84635c4daa900c0d3967a6ee7ac60271ee552"
+  integrity sha512-trsQc+xYYXZ3urjOiJOuCOa5N3jAZ3eiSpQB5hIT8zGlL2QfnHLJ2r7GMkBGuIausdJN1OneaI6gQlsqNHHmZQ==
   dependencies:
     tslib "^1.9.0"
 
