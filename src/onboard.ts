@@ -17,7 +17,6 @@ import {
 } from './stores'
 
 import { getDeviceInfo } from './utilities'
-import { initializeBlocknative } from './services'
 import { validateInit, validateConfig } from './validation'
 
 import { version } from '../package.json'
@@ -81,6 +80,7 @@ function init(initialization: Initialization): API {
   app.update((store: AppState) => ({
     ...store,
     dappId,
+    apiUrl,
     networkId,
     version,
     mobileDevice: isMobile,
@@ -93,10 +93,6 @@ function init(initialization: Initialization): API {
   }))
 
   initializeStores()
-
-  if (dappId) {
-    initializeBlocknative(dappId, networkId, apiUrl)
-  }
 
   onboard = new Onboard({
     target: document.body,

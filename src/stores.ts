@@ -16,6 +16,7 @@ import {
 
 export const app: WritableStore = writable({
   dappId: '',
+  apiUrl: '',
   networkId: 1,
   version: '',
   mobileDevice: false,

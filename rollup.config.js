@@ -68,6 +68,7 @@ export default {
     'trezor-connect',
     'ethereumjs-tx',
     'ethereumjs-util',
+    'eth-lattice-keyring',
     'hdkey',
     '@ledgerhq/hw-transport-u2f',
     '@ledgerhq/hw-app-eth',
