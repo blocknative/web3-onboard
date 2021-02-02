@@ -148,24 +148,23 @@ export function createModernProviderInterface(provider: any): WalletInterface {
     balance: {
       get: () => getBalance(provider)
     },
-    connect: () =>
-      new Promise(
-        (resolve: () => void, reject: (err: { message: string }) => void) => {
-          const request = provider.request
-            ? getAddress(provider).then((address: string) => {
-                return address
-                  ? address
-                  : provider.request({ method: 'eth_requestAccounts' })
-              })
-            : provider.enable()
-
-          return request.then(resolve).catch(() =>
-            reject({
-              message: 'This dapp needs access to your account information.'
-            })
-          )
+    connect: async () => {
+      try {
+        if (provider.request) {
+          const result = await provider.request({
+            method: 'eth_requestAccounts'
+          })
+          return result
+        } else {
+          const result = await provider.enable()
+          return result
         }
-      ),
+      } catch (e) {
+        throw {
+          message: 'This dapp requires access to your account information.'
+        }
+      }
+    },
     name: getProviderName(provider)
   }
 }
@@ -193,7 +192,7 @@ export function getProviderName(provider: any): string | undefined {
   }
   if (provider.isDcentWallet) {
     return 'D\'CENT'
-  }  
+  }
   if (provider.isTokenPocket) {
     return 'TokenPocket'
   }
