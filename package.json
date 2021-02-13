@@ -55,6 +55,7 @@
     "bnc-sdk": "^3.1.0",
     "bowser": "^2.10.0",
     "eth-lattice-keyring": "^0.2.7",
+    "eth-provider": "^0.6.1",
     "ethereumjs-tx": "^2.1.2",
     "ethereumjs-util": "^7.0.3",
     "fortmatic": "^2.2.1",
