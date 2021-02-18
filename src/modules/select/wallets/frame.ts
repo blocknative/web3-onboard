@@ -14,12 +14,13 @@ function frame(options: CommonWalletOptions): WalletModule {
     svg,
     wallet: async (helpers: Helpers) => {
       const { createModernProviderInterface } = helpers
-      
-      const provider = await import('eth-provider')
+
+      const { default: ethProvider } = await import('eth-provider')
+      const provider = ethProvider('frame')
 
       return {
         provider,
-        interface: createModernProviderInterface(provider('frame'))
+        interface: createModernProviderInterface(provider)
       }
     },
     type: 'injected', // native
