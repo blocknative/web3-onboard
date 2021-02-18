@@ -23,7 +23,8 @@ export function initializeBlocknative(
 export function getBlocknative(): any {
   if (!blocknative) {
     const { dappId, networkId, apiUrl } = get(app)
-    initializeBlocknative(dappId, networkId, apiUrl)
+    // init only if dappId
+    dappId && initializeBlocknative(dappId, networkId, apiUrl)
   }
   return blocknative
 }
