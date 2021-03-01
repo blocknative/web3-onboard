@@ -1,6 +1,7 @@
 export interface Initialization {
   dappId?: string
   networkId: number
+  networkName?: string
   subscriptions?: Subscriptions
   walletSelect?: WalletSelectModuleOptions
   walletCheck?: Array<WalletCheckModule | WalletCheckInit>
@@ -464,6 +465,7 @@ export type OS = {
 export interface AppState {
   dappId: string
   networkId: number
+  networkName: string
   version: string
   mobileDevice: boolean
   os: OS
