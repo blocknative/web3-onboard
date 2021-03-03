@@ -2,6 +2,8 @@ import bowser from 'bowser'
 import BigNumber from 'bignumber.js'
 
 import { WalletInterface } from './interfaces'
+import { app } from './stores'
+import { get } from 'svelte/store'
 
 export function getNetwork(provider: any): Promise<number | any> {
   return new Promise((resolve, reject) => {
@@ -298,7 +300,7 @@ export function networkName(id: number): string {
     case 100:
       return 'xdai'
     default:
-      return 'local'
+      return get(app).networkName || 'local'
   }
 }
 
