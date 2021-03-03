@@ -125,6 +125,8 @@ function getModule(
       return import('./wallets/atoken')
     case 'liquality':
       return import('./wallets/liquality')
+    case 'frame':
+      return import('./wallets/frame')
     default:
       throw new Error(`${name} is not a valid walletName.`)
   }
