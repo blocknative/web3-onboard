@@ -266,6 +266,10 @@ export function getProviderName(provider: any): string | undefined {
   if (provider.isLiquality) {
     return 'Liquality'
   }
+  
+  if (provider.isAlphaWallet) {
+    return 'AlphaWallet'
+  }
 
   if (provider.host && provider.host.indexOf('localhost') !== -1) {
     return 'localhost'
