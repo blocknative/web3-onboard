@@ -58,6 +58,7 @@ export function validateInit(init: Initialization): never | void {
   const {
     dappId,
     networkId,
+    networkName,
     subscriptions,
     walletSelect,
     walletCheck,
@@ -74,6 +75,7 @@ export function validateInit(init: Initialization): never | void {
     [
       'dappId',
       'networkId',
+      'networkName',
       'subscriptions',
       'walletSelect',
       'walletCheck',
@@ -93,6 +95,12 @@ export function validateInit(init: Initialization): never | void {
     optional: true
   })
   validateType({ name: 'networkId', value: networkId, type: 'number' })
+  validateType({
+    name: 'networkName',
+    value: networkName,
+    type: 'string',
+    optional: true
+  })
   validateType({
     name: 'darkMode',
     value: darkMode,
@@ -656,7 +664,7 @@ export function validateWalletInit(
       'rpcUri',
       'webUri',
       'xsUri',
-      'blockedPopupRedirect',
+      'blockedPopupRedirect'
     ],
     'walletInitObject'
   )

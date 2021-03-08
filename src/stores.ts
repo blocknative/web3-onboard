@@ -18,6 +18,7 @@ export const app: WritableStore = writable({
   dappId: '',
   apiUrl: '',
   networkId: 1,
+  networkName: '',
   version: '',
   mobileDevice: false,
   os: '',
@@ -32,7 +33,7 @@ export const app: WritableStore = writable({
   walletSelectDisplayedUI: false,
   walletCheckDisplayedUI: false,
   displayBranding: false,
-  blockPollingInterval: 4000,
+  blockPollingInterval: 4000
 })
 
 export const stateSyncStatus: {
