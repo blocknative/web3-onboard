@@ -198,6 +198,10 @@ export function getProviderName(provider: any): string | undefined {
   if (provider.isTokenPocket) {
     return 'TokenPocket'
   }
+  
+  if (provider.isOwnbit) {
+    return 'Ownbit'
+  }
 
   if (provider.wallet === 'MEETONE') {
     return 'MEETONE'
