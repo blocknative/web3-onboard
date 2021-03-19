@@ -1,7 +1,9 @@
 export const extensionInstallMessage = (helpers: {
   currentWallet: string | undefined
   selectedWallet: string
+  mobileDevice: boolean
 }) => {
+  console.log({ helpers })
   const { currentWallet, selectedWallet } = helpers
 
   if (currentWallet) {

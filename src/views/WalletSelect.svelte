@@ -11,7 +11,6 @@
   import Wallets from '../components/Wallets.svelte'
   import SelectedWallet from '../components/SelectedWallet.svelte'
   import Button from '../elements/Button.svelte'
-  import IconButton from '../elements/IconButton.svelte'
   import walletIcon from '../elements/walletIcon'
 
   import {
@@ -21,13 +20,11 @@
     getAddress,
     getBalance,
     getNetwork,
-    isPromise,
     networkName
   } from '../utilities'
 
   import {
     WalletSelectModalData,
-    AppState,
     WalletModule,
     WalletSelectModule,
     WalletInterface
@@ -166,7 +163,8 @@
         module.installMessage &&
         module.installMessage({
           currentWallet: walletAlreadyInstalled,
-          selectedWallet: selectedWalletModule.name
+          selectedWallet: selectedWalletModule.name,
+          mobileDevice: $app.mobileDevice
         })
 
       // if it was autoSelected then we need to add modalData to show the modal
@@ -215,6 +213,52 @@
   }
 </script>
 
+{#if modalData}
+  <Modal closeModal={() => finish({ completed: false })}>
+    <ModalHeader icon={walletIcon} heading={modalData.heading} />
+    {#if !selectedWalletModule}
+      <p class="bn-onboard-custom bn-onboard-select-description">
+        {@html modalData.description}
+      </p>
+      <Wallets
+        {modalData}
+        {handleWalletSelect}
+        {loadingWallet}
+        {showingAllWalletModules}
+        {showAllWallets}
+      />
+      <div class="bn-onboard-custom bn-onboard-select-info-container">
+        <span
+          class="bn-onboard-custom bn-onboard-select-wallet-info"
+          on:click={() => (showWalletDefinition = !showWalletDefinition)}
+        >
+          What is a wallet?
+        </span>
+        {#if mobileDevice}
+          <Button onclick={() => finish({ completed: false })}>Dismiss</Button>
+        {/if}
+      </div>
+      {#if showWalletDefinition}
+        <p
+          in:fade
+          class="bn-onboard-custom bn-onboard-select-wallet-definition"
+        >
+          {@html modalData.explanation}
+        </p>
+      {/if}
+    {:else}
+      <SelectedWallet
+        {selectedWalletModule}
+        onBack={() => {
+          selectedWalletModule = null
+          walletAlreadyInstalled = null
+        }}
+        {installMessage}
+      />
+    {/if}
+  </Modal>
+{/if}
+
 <style>
   /* .bn-onboard-select-description, .bn-onboard-select-wallet-definition */
   p {
@@ -240,45 +284,3 @@
     cursor: pointer;
   }
 </style>
-
-{#if modalData}
-  <Modal closeModal={() => finish({ completed: false })}>
-    <ModalHeader icon={walletIcon} heading={modalData.heading} />
-    {#if !selectedWalletModule}
-      <p class="bn-onboard-custom bn-onboard-select-description">
-        {@html modalData.description}
-      </p>
-      <Wallets
-        {modalData}
-        {handleWalletSelect}
-        {loadingWallet}
-        {showingAllWalletModules}
-        {showAllWallets} />
-      <div class="bn-onboard-custom bn-onboard-select-info-container">
-        <span
-          class="bn-onboard-custom bn-onboard-select-wallet-info"
-          on:click={() => (showWalletDefinition = !showWalletDefinition)}>
-          What is a wallet?
-        </span>
-        {#if mobileDevice}
-          <Button onclick={() => finish({ completed: false })}>Dismiss</Button>
-        {/if}
-      </div>
-      {#if showWalletDefinition}
-        <p
-          in:fade
-          class="bn-onboard-custom bn-onboard-select-wallet-definition">
-          {@html modalData.explanation}
-        </p>
-      {/if}
-    {:else}
-      <SelectedWallet
-        {selectedWalletModule}
-        onBack={() => {
-          selectedWalletModule = null
-          walletAlreadyInstalled = null
-        }}
-        {installMessage} />
-    {/if}
-  </Modal>
-{/if}
