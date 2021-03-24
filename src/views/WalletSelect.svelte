@@ -213,6 +213,32 @@
   }
 </script>
 
+<style>
+  /* .bn-onboard-select-description, .bn-onboard-select-wallet-definition */
+  p {
+    font-size: 0.889em;
+    margin: 1.6em 0 0 0;
+    font-family: inherit;
+  }
+
+  /* .bn-onboard-select-info-container */
+  div {
+    display: flex;
+    font-size: inherit;
+    font-family: inherit;
+    justify-content: space-between;
+  }
+
+  /* .bn-onboard-select-wallet-info */
+  div span {
+    color: #4a90e2;
+    font-size: inherit;
+    font-family: inherit;
+    margin-top: 0.66em;
+    cursor: pointer;
+  }
+</style>
+
 {#if modalData}
   <Modal closeModal={() => finish({ completed: false })}>
     <ModalHeader icon={walletIcon} heading={modalData.heading} />
@@ -258,29 +284,3 @@
     {/if}
   </Modal>
 {/if}
-
-<style>
-  /* .bn-onboard-select-description, .bn-onboard-select-wallet-definition */
-  p {
-    font-size: 0.889em;
-    margin: 1.6em 0 0 0;
-    font-family: inherit;
-  }
-
-  /* .bn-onboard-select-info-container */
-  div {
-    display: flex;
-    font-size: inherit;
-    font-family: inherit;
-    justify-content: space-between;
-  }
-
-  /* .bn-onboard-select-wallet-info */
-  div span {
-    color: #4a90e2;
-    font-size: inherit;
-    font-family: inherit;
-    margin-top: 0.66em;
-    cursor: pointer;
-  }
-</style>
