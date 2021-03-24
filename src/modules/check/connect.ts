@@ -29,7 +29,7 @@ function connect(options: WalletCheckCustomOptions = {}): WalletCheckModule {
       }
     }
 
-    if (!stateStore.address.get() && wallet && wallet.name && wallet.name !== 'CoboVault') {
+    if (!stateStore.address.get() && wallet && wallet.name) {
       return {
         heading: heading || 'Login and Authorize Your Wallet',
         description:

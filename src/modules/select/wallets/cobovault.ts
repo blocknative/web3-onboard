@@ -149,8 +149,8 @@ async function cobovaultProvider(options: {
     if (enabled) {
       return getAccounts()
     }
-    enabled = true
     return keyring.readKeyring().then(() => {
+      enabled = true
       return getAccounts()
     })
   }
