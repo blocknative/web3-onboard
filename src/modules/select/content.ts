@@ -1,9 +1,7 @@
 export const extensionInstallMessage = (helpers: {
   currentWallet: string | undefined
   selectedWallet: string
-  mobileDevice: boolean
 }) => {
-  console.log({ helpers })
   const { currentWallet, selectedWallet } = helpers
 
   if (currentWallet) {
@@ -55,7 +53,7 @@ export const mobileWalletInstallMessage = (helpers: {
 
   return `
   <p style="font-size: 0.889rem;">
-    You'll need to install <b>${selectedWallet}</b> to continue. Click below to install and then load this Dapp with <b>${selectedWallet}</b>.
+  Tap the button below to <b>Open ${selectedWallet}</b>. Please access this site on ${selectedWallet}'s in-app browser for a seamless experience.
   </p>
   `
 }
