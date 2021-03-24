@@ -163,8 +163,7 @@
         module.installMessage &&
         module.installMessage({
           currentWallet: walletAlreadyInstalled,
-          selectedWallet: selectedWalletModule.name,
-          mobileDevice: $app.mobileDevice
+          selectedWallet: selectedWalletModule.name
         })
 
       // if it was autoSelected then we need to add modalData to show the modal
