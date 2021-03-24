@@ -182,9 +182,9 @@ function derivationPath(
       }
       ;(window as any).handleCustomInput = handleCustomInput
       ;(window as any).handleDerivationClick = handleDerivationClick
-      
-        return (
-          derivationPaths[wallet.name as string] && {
+
+      return (
+        derivationPaths[wallet.name as string] && {
           heading: heading || 'Hardware Wallet Connect',
           description:
             description ||
@@ -235,7 +235,7 @@ function derivationPath(
 
           icon: icon || usbIcon
         }
-      }
+      )
     }
   }
 
