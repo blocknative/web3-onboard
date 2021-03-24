@@ -182,7 +182,7 @@ function derivationPath(
       }
       ;(window as any).handleCustomInput = handleCustomInput
       ;(window as any).handleDerivationClick = handleDerivationClick
-      if (wallet.name !== 'CoboVault') {
+      
         return {
           heading: heading || 'Hardware Wallet Connect',
           description:
