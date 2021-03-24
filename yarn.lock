@@ -861,36 +861,36 @@
   resolved "https://registry.yarnpkg.com/@chaitanyapotti/random-id/-/random-id-1.0.3.tgz#f52f647cfe9f79fc7723ea2b01b0ad3889204002"
   integrity sha512-xiVWA2vTL3jQeuZ+yebXAtwIeEbh/13RAFxvRq0YxeUc02RBOGyC9eyDKXjwlN0uxPtnEwWxsELkSwnaH5kxjg==
 
-"@cvbb/bc-bech32@^1.1.12":
-  version "1.1.12"
-  resolved "https://registry.yarnpkg.com/@cvbb/bc-bech32/-/bc-bech32-1.1.12.tgz#03375f243725836b4616eb94d57367eee88580f9"
-  integrity sha512-9W9zImyqqG6590tvt5iiMnUqLTPlKJx06TThxoDi+xvEV7qyC2BwAXsWvS9mxpRs0pzkztFfia4Sdc6EUUG3tg==
+"@cvbb/bc-bech32@^1.1.14":
+  version "1.1.14"
+  resolved "https://registry.yarnpkg.com/@cvbb/bc-bech32/-/bc-bech32-1.1.14.tgz#9ddf0785b75ab9634b9a5e6748b66b8df033c101"
+  integrity sha512-bpmhLFQo4mML42q80ol0fv2IbylmWr804IJGH/IBlC7WsFUvNloNsFkUMbIcadjI5DPYODT+1lZ0e9/0mbCZGA==
 
-"@cvbb/bc-ur@^0.2.12":
-  version "0.2.12"
-  resolved "https://registry.yarnpkg.com/@cvbb/bc-ur/-/bc-ur-0.2.12.tgz#e9bcf0ea7c42aa6ffb98780d848356b0f4f11e54"
-  integrity sha512-DS42xr35ZLq3l7FZDfOWdHil1Wti2JHx4hKLySDXj2GNQY9Ye1tThjVuYrLiLFJxmCGJFYlnWH/NCCLDY5fOYg==
+"@cvbb/bc-ur@^0.2.14":
+  version "0.2.14"
+  resolved "https://registry.yarnpkg.com/@cvbb/bc-ur/-/bc-ur-0.2.14.tgz#b9f42a3ea8f4c464aade0a759ed0602bb94ede48"
+  integrity sha512-1QNsQptuooYqji0tppCCt+f3D0KhK1knuQDHm7NhZ4gfVCGEZ+1d8eH9PKrLbe/EWn2+L+VbCeyizEEQNFz9Cg==
   dependencies:
-    "@cvbb/bc-bech32" "^1.1.12"
+    "@cvbb/bc-bech32" "^1.1.14"
     "@types/sha.js" "^2.4.0"
     sha.js "^2.4.11"
 
-"@cvbb/eth-keyring@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@cvbb/eth-keyring/-/eth-keyring-1.0.4.tgz#8f4f99551402a180dec048a258754499eaf13f27"
-  integrity sha512-FneY6hUJgc4UIvMVZEj9yd9TWWvB9b4UtIl+M6u6fipwNCyt81HEMlwiph0cKeC6g1YmpF7S0NVcpr/13wkffg==
+"@cvbb/eth-keyring@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@cvbb/eth-keyring/-/eth-keyring-1.1.0.tgz#1c4da9f084cd74e68f55a898434ebd44923cbbec"
+  integrity sha512-lu2N4JB7zDKvI0qKrSudre9vzgBO3nj7pgMUnTi5VvTBOgfyiw4GpyOxa86ua6u1tPhpKlmGFpqA3h4AdV+7Cw==
   dependencies:
-    "@cvbb/sdk" "^1.0.4"
+    "@cvbb/sdk" "^1.1.0"
     ethereumjs-tx "^2.1.2"
     ethereumjs-util "^7.0.8"
     hdkey "^2.0.1"
 
-"@cvbb/sdk@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@cvbb/sdk/-/sdk-1.0.4.tgz#e8fb086ed23310d6b2727eeebc839845fada298f"
-  integrity sha512-dqZQ+pKBMWP/AwAwikAzTa5q8LNMBj0ypMcxVsHMoxPo8bXBS0HBzi678U1VuSGVT+fJajveG0ew6y9T1VH02A==
+"@cvbb/sdk@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@cvbb/sdk/-/sdk-1.1.0.tgz#7faf87860f024ac702c073da2d901cdf8571b106"
+  integrity sha512-hQIuSVii9PVRp5/U3G/wJsfOEJOzglJELTDhsOlIsBZ3g1/kIPQ6S3vh5kcIA5YacwFnA7+IaFKqjxXWSa9Q9Q==
   dependencies:
-    "@cvbb/bc-ur" "^0.2.12"
+    "@cvbb/bc-ur" "^0.2.14"
     "@types/qrcode.react" "^1.0.1"
     "@types/react-dom" "^17.0.1"
     "@types/react-modal" "^3.12.0"
