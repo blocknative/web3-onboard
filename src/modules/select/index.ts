@@ -39,7 +39,7 @@ function select(
 
           try {
             return getModule(walletName).then((m: any) =>
-              m.default({ ...initParams, networkId })
+              m.default({ ...initParams, networkId, isMobile })
             )
           } catch (error) {
             if (error.name === 'DeprecatedWalletError') {
