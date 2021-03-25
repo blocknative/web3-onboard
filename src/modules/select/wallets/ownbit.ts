@@ -1,40 +1,40 @@
-import { mobileWalletInstallMessage } from '../content'
+import { mobileWalletInstallMessage } from "../content";
 import {
   WalletModule,
   Helpers,
-  InjectedWithBalanceOptions
-} from '../../../interfaces'
+  CommonWalletOptions,
+} from "../../../interfaces";
 
-import ownbitIcon from '../wallet-icons/icon-ownbit'
+import ownbitIcon from "../wallet-icons/icon-ownbit";
 
 function ownbit(options: CommonWalletOptions): WalletModule {
-  const { preferred, label, iconSrc, svg } = options
+  const { preferred, label, iconSrc, svg } = options;
 
   return {
-    name: label || 'Ownbit',
+    name: label || "Ownbit",
     iconSrc,
     svg: svg || ownbitIcon,
     wallet: async (helpers: Helpers) => {
-            const { getProviderName, createModernProviderInterface } = helpers
+      const { getProviderName, createModernProviderInterface } = helpers;
 
-            const provider =
-                (window as any).ethereum ||
-                ((window as any).web3 && (window as any).web3.currentProvider)
+      const provider =
+        (window as any).ethereum ||
+        ((window as any).web3 && (window as any).web3.currentProvider);
 
-            return {
-                provider,
-                interface:
-                    (getProviderName(provider) === 'Ownbit' &&
-                        createModernProviderInterface(provider)) ||
-                    null
-            }
+      return {
+        provider,
+        interface:
+          (getProviderName(provider) === "Ownbit" &&
+            createModernProviderInterface(provider)) ||
+          null,
+      };
     },
-    type: 'injected',
-    link: 'https://ownbit.io',
+    type: "injected",
+    link: "https://ownbit.io",
     installMessage: mobileWalletInstallMessage,
     mobile: true,
-    preferred
-  }
+    preferred,
+  };
 }
 
-export default ownbit
+export default ownbit;
