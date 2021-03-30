@@ -29,7 +29,8 @@
     iconSrc={selectedWalletModule.iconSrc}
     iconSrcSet={selectedWalletModule.iconSrcSet}
     svg={selectedWalletModule.svg}
-    text={selectedWalletModule.name} />
+    text={selectedWalletModule.name}
+  />
 
   {#if installMessage}
     {@html installMessage}
@@ -39,8 +40,9 @@
     <a
       href={selectedWalletModule.link}
       rel="noreferrer noopener"
-      target="_blank">
-      <Button>Install {selectedWalletModule.name}</Button>
+      target="_blank"
+    >
+      <Button>Open {selectedWalletModule.name}</Button>
     </a>
     <Button onclick={onBack}>Back</Button>
   </footer>

@@ -38,7 +38,7 @@ function select(
 
           try {
             return getModule(walletName).then((m: any) =>
-              m.default({ ...initParams, networkId })
+              m.default({ ...initParams, networkId, isMobile })
             )
           } catch (error) {
             if (error.name === 'DeprecatedWalletError') {
@@ -103,6 +103,8 @@ function getModule(
       return import('./wallets/trezor')
     case 'lattice':
       return import('./wallets/lattice')
+    case 'cobovault':
+      return import('./wallets/cobovault')
     case 'ledger':
       return import('./wallets/ledger')
     case 'walletLink':

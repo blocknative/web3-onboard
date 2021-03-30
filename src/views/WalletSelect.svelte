@@ -11,7 +11,6 @@
   import Wallets from '../components/Wallets.svelte'
   import SelectedWallet from '../components/SelectedWallet.svelte'
   import Button from '../elements/Button.svelte'
-  import IconButton from '../elements/IconButton.svelte'
   import walletIcon from '../elements/walletIcon'
 
   import {
@@ -21,13 +20,11 @@
     getAddress,
     getBalance,
     getNetwork,
-    isPromise,
     networkName
   } from '../utilities'
 
   import {
     WalletSelectModalData,
-    AppState,
     WalletModule,
     WalletSelectModule,
     WalletInterface
@@ -253,11 +250,13 @@
         {handleWalletSelect}
         {loadingWallet}
         {showingAllWalletModules}
-        {showAllWallets} />
+        {showAllWallets}
+      />
       <div class="bn-onboard-custom bn-onboard-select-info-container">
         <span
           class="bn-onboard-custom bn-onboard-select-wallet-info"
-          on:click={() => (showWalletDefinition = !showWalletDefinition)}>
+          on:click={() => (showWalletDefinition = !showWalletDefinition)}
+        >
           What is a wallet?
         </span>
         {#if mobileDevice}
@@ -267,7 +266,8 @@
       {#if showWalletDefinition}
         <p
           in:fade
-          class="bn-onboard-custom bn-onboard-select-wallet-definition">
+          class="bn-onboard-custom bn-onboard-select-wallet-definition"
+        >
           {@html modalData.explanation}
         </p>
       {/if}
@@ -278,7 +278,8 @@
           selectedWalletModule = null
           walletAlreadyInstalled = null
         }}
-        {installMessage} />
+        {installMessage}
+      />
     {/if}
   </Modal>
 {/if}
