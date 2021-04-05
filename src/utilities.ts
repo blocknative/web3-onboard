@@ -2,8 +2,6 @@ import bowser from 'bowser'
 import BigNumber from 'bignumber.js'
 
 import { WalletInterface } from './interfaces'
-import { app } from './stores'
-import { get } from 'svelte/store'
 
 export function getNetwork(provider: any): Promise<number | any> {
   return new Promise((resolve, reject) => {
@@ -198,7 +196,7 @@ export function getProviderName(provider: any): string | undefined {
   if (provider.isTokenPocket) {
     return 'TokenPocket'
   }
-  
+
   if (provider.isOwnbit) {
     return 'Ownbit'
   }
@@ -289,7 +287,7 @@ export function getDeviceInfo() {
   }
 }
 
-export function networkName(id: number): string {
+export function networkName(id: number, fallbackName?: string): string {
   switch (id) {
     case 1:
       return 'mainnet'
@@ -304,7 +302,7 @@ export function networkName(id: number): string {
     case 100:
       return 'xdai'
     default:
-      return get(app).networkName || 'local'
+      return fallbackName || 'unknown'
   }
 }
 

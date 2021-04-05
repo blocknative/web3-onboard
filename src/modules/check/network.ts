@@ -5,6 +5,8 @@ import {
   WalletCheckCustomOptions
 } from '../../interfaces'
 import { networkIcon } from './icons'
+import { app } from './../../stores'
+import { get } from 'svelte/store'
 
 function network(
   options: WalletCheckCustomOptions = {}
@@ -43,7 +45,8 @@ function network(
         description:
           description ||
           `We've detected that you need to switch your wallet's network from <b>${networkName(
-            network
+            network,
+            get(app).networkName
           )}</b> to <b>${networkName(
             appNetworkId
           )}</b> for this Dapp. <br><br> <i style="font-size: inherit; font-family: inherit;">*Some wallets may not support changing networks. If you can not change networks in your wallet you may consider switching to a different wallet.</i>`,
