@@ -104,6 +104,8 @@ function getModule(
       return import('./wallets/trezor')
     case 'lattice':
       return import('./wallets/lattice')
+    case 'cobovault':
+      return import('./wallets/cobovault')
     case 'ledger':
       return import('./wallets/ledger')
     case 'walletLink':

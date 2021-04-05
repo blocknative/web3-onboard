@@ -182,57 +182,60 @@ function derivationPath(
       }
       ;(window as any).handleCustomInput = handleCustomInput
       ;(window as any).handleDerivationClick = handleDerivationClick
-      return {
-        heading: heading || 'Hardware Wallet Connect',
-        description:
-          description ||
-          `Make sure your ${wallet.name} is plugged in, ${
-            wallet.name === 'Ledger' ? 'and the Ethereum app is open, ' : ''
-          }then select a derivation path to connect your accounts:`,
-        eventCode: 'derivationPath',
-        html: derivationSelectHtmlString(wallet.name as string),
-        button: {
-          text: 'Connect',
-          onclick: async () => {
-            state.loading = true
-            const path =
-              state.dPath || derivationPaths[wallet.name as string][0].path
-            try {
-              const validPath = await wallet.provider.setPath(
-                path,
-                state.showCustomInput
-              )
 
-              if (!validPath) {
-                state.error = `${path} is not a valid derivation path`
+      return (
+        derivationPaths[wallet.name as string] && {
+          heading: heading || 'Hardware Wallet Connect',
+          description:
+            description ||
+            `Make sure your ${wallet.name} is plugged in, ${
+              wallet.name === 'Ledger' ? 'and the Ethereum app is open, ' : ''
+            }then select a derivation path to connect your accounts:`,
+          eventCode: 'derivationPath',
+          html: derivationSelectHtmlString(wallet.name as string),
+          button: {
+            text: 'Connect',
+            onclick: async () => {
+              state.loading = true
+              const path =
+                state.dPath || derivationPaths[wallet.name as string][0].path
+              try {
+                const validPath = await wallet.provider.setPath(
+                  path,
+                  state.showCustomInput
+                )
+
+                if (!validPath) {
+                  state.error = `${path} is not a valid derivation path`
+                  state.loading = false
+                  return
+                }
+              } catch (error) {
+                state.error = error
                 state.loading = false
                 return
               }
-            } catch (error) {
-              state.error = error
-              state.loading = false
-              return
+
+              state.error = ''
+
+              if (wallet.connect) {
+                ;(wallet.connect as Connect)()
+                  .then(() => {
+                    deleteWindowProperties()
+                    state.loading = false
+                    state.completed = true
+                  })
+                  .catch(error => {
+                    state.error = error.message
+                    state.loading = false
+                  })
+              }
             }
+          },
 
-            state.error = ''
-
-            if (wallet.connect) {
-              ;(wallet.connect as Connect)()
-                .then(() => {
-                  deleteWindowProperties()
-                  state.loading = false
-                  state.completed = true
-                })
-                .catch(error => {
-                  state.error = error.message
-                  state.loading = false
-                })
-            }
-          }
-        },
-
-        icon: icon || usbIcon
-      }
+          icon: icon || usbIcon
+        }
+      )
     }
   }
 
