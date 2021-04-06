@@ -20,10 +20,11 @@ function alphawallet(options: InjectedWithBalanceOptions): WalletModule {
         (window as any).ethereum ||
         ((window as any).web3 && (window as any).web3.currentProvider)
 
-      const isAlphaWallet = getProviderName(alphawalletProvider) === 'AlphaWallet'
+      const isAlphaWallet =
+        getProviderName(alphawalletProvider) === 'AlphaWallet'
       let createProvider
 
-      if isAlphaWallet && rpcUrl) {
+      if (isAlphaWallet && rpcUrl) {
         createProvider = (await import('./providerEngine')).default
       }
 
