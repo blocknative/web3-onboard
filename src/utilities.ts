@@ -1,6 +1,8 @@
 import bowser from 'bowser'
 import BigNumber from 'bignumber.js'
+import { get } from 'svelte/store'
 
+import { app } from './stores'
 import { WalletInterface } from './interfaces'
 
 export function getNetwork(provider: any): Promise<number | any> {
@@ -287,7 +289,7 @@ export function getDeviceInfo() {
   }
 }
 
-export function networkName(id: number, fallbackName?: string): string {
+export function networkName(id: number): string {
   switch (id) {
     case 1:
       return 'mainnet'
@@ -302,7 +304,8 @@ export function networkName(id: number, fallbackName?: string): string {
     case 100:
       return 'xdai'
     default:
-      return fallbackName || 'unknown'
+      const { networkId, networkName } = get(app)
+      return (networkId === id && networkName) || 'unknown'
   }
 }
 
