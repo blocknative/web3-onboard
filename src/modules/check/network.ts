@@ -32,7 +32,7 @@ function network(
           setTimeout(() => {
             if (network === null) {
               // if prom isn't resolving after 500ms, then stop waiting
-              resolve()
+              resolve(undefined)
             }
           }, 500)
         })
@@ -45,8 +45,7 @@ function network(
         description:
           description ||
           `We've detected that you need to switch your wallet's network from <b>${networkName(
-            network,
-            get(app).networkName
+            network
           )}</b> to <b>${networkName(
             appNetworkId
           )}</b> for this Dapp. <br><br> <i style="font-size: inherit; font-family: inherit;">*Some wallets may not support changing networks. If you can not change networks in your wallet you may consider switching to a different wallet.</i>`,
