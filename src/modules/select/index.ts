@@ -19,7 +19,7 @@ const mobileDefaultWalletNames = [
   'dcent',
   'atoken',
   'liquality',
-  'alphawallet'
+  'alphawallet',
   'ownbit'
 ]
 
