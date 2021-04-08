@@ -171,7 +171,6 @@ export interface CommonWalletOptions {
   label?: string
   iconSrc?: string
   svg?: string
-  isMobile: boolean
 }
 
 export interface SdkWalletOptions extends CommonWalletOptions {
