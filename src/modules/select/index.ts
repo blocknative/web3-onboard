@@ -1,4 +1,8 @@
-import { WalletModule, WalletInitOptions } from '../../interfaces'
+import {
+  WalletModule,
+  WalletInitOptions,
+  AllWalletInitOptions
+} from '../../interfaces'
 import { isWalletInit } from '../../validation'
 
 // wallets that qualify for default wallets need to have no
@@ -65,7 +69,7 @@ function select(
 function getModule(
   name: string
 ): Promise<{
-  default: (options: any) => WalletModule
+  default: (options: AllWalletInitOptions) => WalletModule
 }> {
   switch (name) {
     // Deprecated wallets
@@ -131,7 +135,7 @@ function getModule(
     case 'frame':
       return import('./wallets/frame')
     case 'ownbit':
-      return import('./wallets/ownbit')  
+      return import('./wallets/ownbit')
     default:
       throw new Error(`${name} is not a valid walletName.`)
   }
