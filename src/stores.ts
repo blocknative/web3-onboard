@@ -260,7 +260,7 @@ function createWalletStateSliceStore(options: {
       if (onChange) {
         stateSyncStatus[parameter] = new Promise(resolve => {
           onChange(newVal => {
-            resolve()
+            resolve(undefined)
             if (newVal || currentState !== initialState) {
               set(newVal)
             }
