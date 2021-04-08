@@ -171,7 +171,6 @@ export interface CommonWalletOptions {
   label?: string
   iconSrc?: string
   svg?: string
-  isMobile: boolean
 }
 
 export interface SdkWalletOptions extends CommonWalletOptions {
@@ -366,7 +365,7 @@ export type AllWalletInitOptions = CommonWalletOptions &
   AuthereumOptions &
   LedgerOptions &
   WalletLinkOptions &
-  InjectedWithBalanceOptions & { networkId: number }
+  InjectedWithBalanceOptions & { networkId: number } & { isMobile: boolean }
 
 export interface WalletCheckCustomOptions {
   heading?: string
