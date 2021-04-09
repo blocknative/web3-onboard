@@ -23,6 +23,7 @@ const mobileDefaultWalletNames = [
   'dcent',
   'atoken',
   'liquality',
+  'alphawallet',
   'ownbit'
 ]
 
@@ -134,6 +135,8 @@ function getModule(
       return import('./wallets/liquality')
     case 'frame':
       return import('./wallets/frame')
+    case 'alphawallet':
+      return import('./wallets/alphawallet')
     case 'ownbit':
       return import('./wallets/ownbit')
     default:
