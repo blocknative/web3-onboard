@@ -270,7 +270,7 @@ export function getProviderName(provider: any): string | undefined {
   if (provider.isLiquality) {
     return 'Liquality'
   }
-  
+
   if (provider.isAlphaWallet) {
     return 'AlphaWallet'
   }
