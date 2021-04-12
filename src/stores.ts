@@ -1,5 +1,6 @@
-import { getBlocknative } from './services'
+import { Emitter } from 'bnc-sdk/dist/types/src/interfaces'
 import { writable, derived, get } from 'svelte/store'
+import { getBlocknative } from './services'
 import { wait, makeCancelable, createInterval } from './utilities'
 import { validateWalletInterface, validateType } from './validation'
 import {
@@ -318,23 +319,34 @@ function createBalanceStore(initialState: string | null): BalanceStore {
               blocknative.unsubscribe(emitterAddress)
             }
 
-            emitter = blocknative.account($address).emitter
+            blocknative
+              .configuration({
+                scope: $address,
+                filters: [{ status: 'confirmed' }],
+                watchAddress: true
+              })
+              .then((result: { emitter: Emitter }) => {
+                emitter = result.emitter
 
-            emitter.on('txConfirmed', () => {
-              if (stateSyncer.get) {
-                cancel = syncStateWithTimeout({
-                  getState: stateSyncer.get,
-                  setState: set,
-                  timeout: 2000,
-                  currentBalance: get(balance),
-                  pollStart: Date.now()
-                })
-              }
+                emitter
+                  .on('txConfirmed', () => {
+                    if (stateSyncer.get) {
+                      cancel = syncStateWithTimeout({
+                        getState: stateSyncer.get,
+                        setState: set,
+                        timeout: 2000,
+                        currentBalance: get(balance),
+                        pollStart: Date.now()
+                      })
+                    }
 
-              return false
-            })
+                    return false
+                  })
+                  // swallow possible timeout error
+                  .catch(() => {})
 
-            emitterAddress = $address
+                emitterAddress = $address
+              })
           }
         } else if (emitterAddress && !$address) {
           const blocknative = getBlocknative()
