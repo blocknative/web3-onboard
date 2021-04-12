@@ -319,6 +319,7 @@ function createBalanceStore(initialState: string | null): BalanceStore {
               blocknative.unsubscribe(emitterAddress)
             }
 
+            // subscribe to new address and filter to just confirmed status
             blocknative
               .configuration({
                 scope: $address,
@@ -328,25 +329,24 @@ function createBalanceStore(initialState: string | null): BalanceStore {
               .then((result: { emitter: Emitter }) => {
                 emitter = result.emitter
 
-                emitter
-                  .on('txConfirmed', () => {
-                    if (stateSyncer.get) {
-                      cancel = syncStateWithTimeout({
-                        getState: stateSyncer.get,
-                        setState: set,
-                        timeout: 2000,
-                        currentBalance: get(balance),
-                        pollStart: Date.now()
-                      })
-                    }
+                emitter.on('txConfirmed', () => {
+                  if (stateSyncer.get) {
+                    cancel = syncStateWithTimeout({
+                      getState: stateSyncer.get,
+                      setState: set,
+                      timeout: 2000,
+                      currentBalance: get(balance),
+                      pollStart: Date.now()
+                    })
+                  }
 
-                    return false
-                  })
-                  // swallow possible timeout error
-                  .catch(() => {})
+                  return false
+                })
 
                 emitterAddress = $address
               })
+              // swallow possible timeout error for sending configuration
+              .catch(() => {})
           }
         } else if (emitterAddress && !$address) {
           const blocknative = getBlocknative()
