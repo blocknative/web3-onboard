@@ -192,9 +192,11 @@ export function getProviderName(provider: any): string | undefined {
   if (provider.isWalletIO) {
     return 'wallet.io'
   }
+
   if (provider.isDcentWallet) {
     return 'D\'CENT'
   }
+
   if (provider.isTokenPocket) {
     return 'TokenPocket'
   }
@@ -269,6 +271,10 @@ export function getProviderName(provider: any): string | undefined {
 
   if (provider.isLiquality) {
     return 'Liquality'
+  }
+
+  if (provider.isAlphaWallet) {
+    return 'AlphaWallet'
   }
 
   if (provider.host && provider.host.indexOf('localhost') !== -1) {

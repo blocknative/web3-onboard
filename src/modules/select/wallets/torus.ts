@@ -28,9 +28,7 @@ function torus(options: TorusOptions & { networkId: number }): WalletModule {
     svg: svg || torusIcon,
     iconSrc,
     wallet: async (helpers: Helpers) => {
-      const {
-        createModernProviderInterface
-      } = helpers
+      const { createModernProviderInterface } = helpers
 
       const { default: Torus } = await import('@toruslabs/torus-embed')
       const instance = new Torus({
@@ -66,7 +64,7 @@ function torus(options: TorusOptions & { networkId: number }): WalletModule {
             const result = await instance.login({ verifier: loginMethod })
             return { message: result[0] }
           },
-          disconnect: () => instance.cleanUp(),
+          disconnect: () => instance.cleanUp()
         },
         instance
       }
