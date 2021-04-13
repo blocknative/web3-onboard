@@ -19,8 +19,7 @@ function walletIoWallet(options: InjectedWithBalanceOptions): WalletModule {
         (window as any).ethereum ||
         ((window as any).web3 && (window as any).web3.currentProvider)
 
-      const isWalleIoWallet =
-        getProviderName(walletIoProvider) === 'wallet.io'
+      const isWalleIoWallet = getProviderName(walletIoProvider) === 'wallet.io'
       let createProvider
 
       if (isWalleIoWallet && rpcUrl) {
