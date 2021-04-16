@@ -2,6 +2,7 @@
   import { app } from '../stores'
   export let onclick: () => void = () => {}
   export let position: string
+  export let disabled: boolean = false
 </script>
 
 <style>
@@ -17,6 +18,8 @@
     font-family: inherit;
     transition: background 150ms ease-in-out;
     line-height: 1.15;
+    opacity: 1;
+    transition: opacity 200ms;
   }
 
   button:focus {
@@ -35,10 +38,18 @@
     position: absolute;
     left: 0;
   }
+
+  .disabled {
+    cursor: inherit;
+    pointer-events: none;
+    opacity: .4;
+  }
 </style>
 
 <button
   on:click={onclick}
+  {disabled}
+  class:disabled
   class="bn-onboard-custom bn-onboard-prepare-button"
   class:bn-onboard-prepare-button-right={position === 'right'}
   class:bn-onboard-prepare-button-left={position === 'left'}

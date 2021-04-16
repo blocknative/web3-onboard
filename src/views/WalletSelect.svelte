@@ -29,22 +29,42 @@
     WalletSelectModule,
     WalletInterface
   } from '../interfaces'
+  import { STORAGE_KEYS } from '../constants'
 
   export let module: WalletSelectModule = {
     heading: '',
     description: '',
+    termsOfServiceUrl: '',
+    privacyPolicyUrl: '',
     wallets: []
   }
 
   let modalData: WalletSelectModalData | null
   let showWalletDefinition: boolean
   let walletAlreadyInstalled: string | undefined
-  let installMessage: string | undefined
+  let installMessage: string
 
   let selectedWalletModule: WalletModule
 
   const { mobileDevice, os } = get(app)
-  let { heading, description, explanation, wallets } = module
+  let {
+    heading,
+    description,
+    explanation,
+    termsOfServiceUrl,
+    privacyPolicyUrl,
+    wallets
+  } = module
+
+  let showTermsOfService: boolean = !!(termsOfServiceUrl || privacyPolicyUrl) && !get(app).termsAgreed
+
+  app.subscribe(({ termsAgreed }) => {
+    if (termsAgreed) {
+      localStorage.setItem(STORAGE_KEYS.TERMS_AGREED, 'true')
+    } else {
+      localStorage.removeItem(STORAGE_KEYS.TERMS_AGREED)
+    }
+  })
 
   let primaryWallets: WalletModule[]
   let secondaryWallets: WalletModule[] | undefined
@@ -159,12 +179,12 @@
 
       walletAlreadyInstalled = provider && getProviderName(provider)
 
-      installMessage =
-        module.installMessage &&
-        module.installMessage({
-          currentWallet: walletAlreadyInstalled,
-          selectedWallet: selectedWalletModule.name
-        })
+      installMessage = module.installMessage
+        ? module.installMessage({
+            currentWallet: walletAlreadyInstalled,
+            selectedWallet: selectedWalletModule.name
+          })
+        : ''
 
       // if it was autoSelected then we need to add modalData to show the modal
       if (autoSelected) {
@@ -236,11 +256,30 @@
     margin-top: 0.66em;
     cursor: pointer;
   }
+  .terms-of-service {
+    display: flex;
+    align-items: center;
+  }
+  .terms-of-service-check-box {
+    margin-right: 7px;
+  }
 </style>
 
 {#if modalData}
   <Modal closeModal={() => finish({ completed: false })}>
     <ModalHeader icon={walletIcon} heading={modalData.heading} />
+    {#if showTermsOfService}
+      <p>
+        <label class="terms-of-service">
+          <input class="terms-of-service-check-box" type="checkbox" bind:checked={$app.termsAgreed} />
+          <span>
+            I agree to the 
+            {#if termsOfServiceUrl}<a href={termsOfServiceUrl} target="_blank">Terms & Conditions</a>{privacyPolicyUrl ? ' and' : '.'} {/if}
+            {#if privacyPolicyUrl}<a href={privacyPolicyUrl} target="_blank">Privacy Policy</a>.{/if}
+          </span>
+        </label>
+      </p>
+    {/if}
     {#if !selectedWalletModule}
       <p class="bn-onboard-custom bn-onboard-select-description">
         {@html modalData.description}

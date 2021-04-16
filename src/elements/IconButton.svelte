@@ -8,6 +8,7 @@
   export let text: string
   export let loadingWallet: string | undefined
   export let currentlySelected: boolean = false
+  export let disabled: boolean = false
 </script>
 
 <style>
@@ -27,6 +28,14 @@
     color: inherit;
     line-height: 1.15;
     font-family: inherit;
+    opacity: 1;
+    transition: opacity 200ms;
+  }
+
+  .disabled {
+    cursor: inherit;
+    pointer-events: none;
+    opacity: .4;
   }
 
   button:hover {
@@ -86,6 +95,8 @@
 
 <button
   on:click={onclick}
+  {disabled}
+  class:disabled
   class="bn-onboard-custom bn-onboard-icon-button"
   class:bn-onboard-dark-mode-background-hover={$app.darkMode}
   class:bn-onboard-selected-wallet={currentlySelected}>
