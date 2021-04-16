@@ -88,7 +88,8 @@
   on:click={onclick}
   class="bn-onboard-custom bn-onboard-icon-button"
   class:bn-onboard-dark-mode-background-hover={$app.darkMode}
-  class:bn-onboard-selected-wallet={currentlySelected}>
+  class:bn-onboard-selected-wallet={currentlySelected}
+>
   <div>
     {#if loadingWallet === text}
       <Spinner />

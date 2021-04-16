@@ -42,8 +42,10 @@
   class="bn-onboard-custom bn-onboard-prepare-button"
   class:bn-onboard-prepare-button-right={position === 'right'}
   class:bn-onboard-prepare-button-left={position === 'left'}
-  class:bn-onboard-prepare-button-center={position !== 'left' && position !== 'right'}
+  class:bn-onboard-prepare-button-center={position !== 'left' &&
+    position !== 'right'}
   class:bn-onboard-dark-mode-link={$app.darkMode}
-  class:bn-onboard-dark-mode-background-hover={$app.darkMode}>
+  class:bn-onboard-dark-mode-background-hover={$app.darkMode}
+>
   <slot />
 </button>

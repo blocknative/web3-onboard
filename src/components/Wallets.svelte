@@ -74,7 +74,8 @@
         svg={wallet.svg}
         text={wallet.name}
         currentlySelected={wallet.name === selectedWallet.name}
-        {loadingWallet} />
+        {loadingWallet}
+      />
     </li>
   {/each}
 
@@ -94,7 +95,8 @@
           svg={wallet.svg}
           text={wallet.name}
           currentlySelected={wallet.name === selectedWallet.name}
-          {loadingWallet} />
+          {loadingWallet}
+        />
       </li>
     {/each}
   {/if}
