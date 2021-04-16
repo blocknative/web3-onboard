@@ -58,13 +58,13 @@
 
   let showTermsOfService: boolean = !!(termsOfServiceUrl || privacyPolicyUrl) && !get(app).termsAgreed
 
-  app.subscribe(({ termsAgreed }) => {
-    if (termsAgreed) {
+  $: {
+    if ($app.termsAgreed) {
       localStorage.setItem(STORAGE_KEYS.TERMS_AGREED, 'true')
     } else {
       localStorage.removeItem(STORAGE_KEYS.TERMS_AGREED)
     }
-  })
+  }
 
   let primaryWallets: WalletModule[]
   let secondaryWallets: WalletModule[] | undefined
