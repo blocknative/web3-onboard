@@ -4,7 +4,9 @@ import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
 import metamaskIcon from '../wallet-icons/icon-metamask.png'
 import metamaskIcon2x from '../wallet-icons/icon-metamask@2x.png'
 
-function metamask(options: CommonWalletOptions): WalletModule {
+function metamask(
+  options: CommonWalletOptions & { isMobile: boolean }
+): WalletModule {
   const { preferred, label, iconSrc, svg, isMobile } = options
 
   return {

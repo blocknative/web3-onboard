@@ -1,5 +1,6 @@
-import { getBlocknative } from './services'
+import { Emitter } from 'bnc-sdk/dist/types/src/interfaces'
 import { writable, derived, get } from 'svelte/store'
+import { getBlocknative } from './services'
 import { wait, makeCancelable, createInterval } from './utilities'
 import { validateWalletInterface, validateType } from './validation'
 import {
@@ -260,7 +261,7 @@ function createWalletStateSliceStore(options: {
       if (onChange) {
         stateSyncStatus[parameter] = new Promise(resolve => {
           onChange(newVal => {
-            resolve()
+            resolve(undefined)
             if (newVal || currentState !== initialState) {
               set(newVal)
             }
@@ -318,23 +319,34 @@ function createBalanceStore(initialState: string | null): BalanceStore {
               blocknative.unsubscribe(emitterAddress)
             }
 
-            emitter = blocknative.account($address).emitter
+            // subscribe to new address and filter to just confirmed status
+            blocknative
+              .configuration({
+                scope: $address,
+                filters: [{ status: 'confirmed' }],
+                watchAddress: true
+              })
+              .then((result: { emitter: Emitter }) => {
+                emitter = result.emitter
 
-            emitter.on('txConfirmed', () => {
-              if (stateSyncer.get) {
-                cancel = syncStateWithTimeout({
-                  getState: stateSyncer.get,
-                  setState: set,
-                  timeout: 2000,
-                  currentBalance: get(balance),
-                  pollStart: Date.now()
+                emitter.on('txConfirmed', () => {
+                  if (stateSyncer.get) {
+                    cancel = syncStateWithTimeout({
+                      getState: stateSyncer.get,
+                      setState: set,
+                      timeout: 2000,
+                      currentBalance: get(balance),
+                      pollStart: Date.now()
+                    })
+                  }
+
+                  return false
                 })
-              }
 
-              return false
-            })
-
-            emitterAddress = $address
+                emitterAddress = $address
+              })
+              // swallow possible timeout error for sending configuration
+              .catch(() => {})
           }
         } else if (emitterAddress && !$address) {
           const blocknative = getBlocknative()
