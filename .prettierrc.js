@@ -5,5 +5,6 @@ module.exports = {
   printWidth: 80,
   tabWidth: 2,
   arrowParens: 'avoid',
-  svelteSortOrder: 'scripts-styles-markup'
+  svelteSortOrder: 'options-scripts-styles-markup',
+  plugins: ['prettier-plugin-svelte']
 }

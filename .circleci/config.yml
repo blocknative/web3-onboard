@@ -10,6 +10,7 @@ jobs:
             - v1-dependencies-{{ checksum "package.json" }}
             - v1-dependencies-
       - run: yarn
+      - run: yarn lint
       - run: yarn test
       - run: yarn build
       - save_cache:

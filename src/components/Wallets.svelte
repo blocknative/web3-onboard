@@ -75,13 +75,16 @@
         svg={wallet.svg}
         text={wallet.name}
         currentlySelected={wallet.name === selectedWallet.name}
-        {loadingWallet} />
+        {loadingWallet}
+      />
     </li>
   {/each}
 
   {#if modalData.secondaryWallets && modalData.secondaryWallets.length && !showingAllWalletModules}
     <div>
-      <Button disabled={!$app.termsAgreed} onclick={showAllWallets}>Show More</Button>
+      <Button disabled={!$app.termsAgreed} onclick={showAllWallets}
+        >Show More</Button
+      >
     </div>
   {/if}
 
@@ -96,7 +99,8 @@
           svg={wallet.svg}
           text={wallet.name}
           currentlySelected={wallet.name === selectedWallet.name}
-          {loadingWallet} />
+          {loadingWallet}
+        />
       </li>
     {/each}
   {/if}

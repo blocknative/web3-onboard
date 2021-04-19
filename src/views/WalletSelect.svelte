@@ -56,7 +56,8 @@
     wallets
   } = module
 
-  let showTermsOfService: boolean = !!(termsOfServiceUrl || privacyPolicyUrl) && !get(app).termsAgreed
+  let showTermsOfService: boolean =
+    !!(termsOfServiceUrl || privacyPolicyUrl) && !get(app).termsAgreed
 
   $: {
     if ($app.termsAgreed) {
@@ -271,11 +272,20 @@
     {#if showTermsOfService}
       <p>
         <label class="terms-of-service">
-          <input class="terms-of-service-check-box" type="checkbox" bind:checked={$app.termsAgreed} />
+          <input
+            class="terms-of-service-check-box"
+            type="checkbox"
+            bind:checked={$app.termsAgreed}
+          />
           <span>
-            I agree to the 
-            {#if termsOfServiceUrl}<a href={termsOfServiceUrl} target="_blank">Terms & Conditions</a>{privacyPolicyUrl ? ' and' : '.'} {/if}
-            {#if privacyPolicyUrl}<a href={privacyPolicyUrl} target="_blank">Privacy Policy</a>.{/if}
+            I agree to the
+            {#if termsOfServiceUrl}<a href={termsOfServiceUrl} target="_blank"
+                >Terms & Conditions</a
+              >{privacyPolicyUrl ? ' and' : '.'}
+            {/if}
+            {#if privacyPolicyUrl}<a href={privacyPolicyUrl} target="_blank"
+                >Privacy Policy</a
+              >.{/if}
           </span>
         </label>
       </p>

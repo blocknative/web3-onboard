@@ -328,7 +328,8 @@
       <span
         class:bn-onboard-dark-mode-background={$app.darkMode}
         class="bn-onboard-custom bn-onboard-prepare-error"
-        in:fade>
+        in:fade
+      >
         {errorMsg}
       </span>
     {/if}
