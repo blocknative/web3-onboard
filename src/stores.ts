@@ -34,7 +34,8 @@ export const app: WritableStore = writable({
   walletSelectDisplayedUI: false,
   walletCheckDisplayedUI: false,
   displayBranding: false,
-  blockPollingInterval: 4000
+  blockPollingInterval: 4000,
+  termsAgreed: false
 })
 
 export const stateSyncStatus: {
