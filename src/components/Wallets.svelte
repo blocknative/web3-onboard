@@ -82,7 +82,9 @@
 
   {#if modalData.secondaryWallets && modalData.secondaryWallets.length && !showingAllWalletModules}
     <div>
-      <Button disabled={!$app.termsAgreed} onclick={showAllWallets}>Show More</Button>
+      <Button disabled={!$app.termsAgreed} onclick={showAllWallets}
+        >Show More</Button
+      >
     </div>
   {/if}
 

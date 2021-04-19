@@ -35,7 +35,7 @@
   .disabled {
     cursor: inherit;
     pointer-events: none;
-    opacity: .4;
+    opacity: 0.4;
   }
 
   button:hover {
