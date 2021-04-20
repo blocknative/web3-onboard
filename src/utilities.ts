@@ -247,6 +247,10 @@ export function getProviderName(provider: any): string | undefined {
     return 'MetaMask'
   }
 
+  if (provider.isXDeFi) {
+    return 'XDeFi'
+  }
+
   if (provider.isMYKEY) {
     return 'MYKEY'
   }

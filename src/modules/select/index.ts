@@ -127,6 +127,8 @@ function getModule(
       return import('./wallets/liquality')
     case 'frame':
       return import('./wallets/frame')
+    case 'xdefi':
+      return import('./wallets/xdefi')
     default:
       throw new Error(`${name} is not a valid walletName.`)
   }
