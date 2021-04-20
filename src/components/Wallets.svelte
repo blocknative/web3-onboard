@@ -68,7 +68,7 @@
   {#each modalData.primaryWallets as wallet, i (wallet.name)}
     <li>
       <IconButton
-        disabled={!$app.termsAgreed}
+        disabled={$app.termsAgreed === false}
         onclick={() => handleWalletSelect(wallet)}
         iconSrc={wallet.iconSrc}
         iconSrcSet={wallet.iconSrcSet}
@@ -82,7 +82,7 @@
 
   {#if modalData.secondaryWallets && modalData.secondaryWallets.length && !showingAllWalletModules}
     <div>
-      <Button disabled={!$app.termsAgreed} onclick={showAllWallets}
+      <Button disabled={$app.termsAgreed === false} onclick={showAllWallets}
         >Show More</Button
       >
     </div>
@@ -92,7 +92,7 @@
     {#each modalData.secondaryWallets as wallet, i (wallet.name)}
       <li>
         <IconButton
-          disabled={!$app.termsAgreed}
+          disabled={$app.termsAgreed === false}
           onclick={() => handleWalletSelect(wallet)}
           iconSrc={wallet.iconSrc}
           iconSrcSet={wallet.iconSrcSet}

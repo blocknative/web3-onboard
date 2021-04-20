@@ -56,8 +56,7 @@
     wallets
   } = module
 
-  let showTermsOfService: boolean =
-    !!(termsOfServiceUrl || privacyPolicyUrl) && !get(app).termsAgreed
+  const showTermsOfService: boolean = get(app).termsAgreed === false
 
   $: {
     if ($app.termsAgreed) {
@@ -257,11 +256,11 @@
     margin-top: 0.66em;
     cursor: pointer;
   }
-  .terms-of-service {
+  .bn-onboard-modal-terms-of-service {
     display: flex;
     align-items: center;
   }
-  .terms-of-service-check-box {
+  .bn-onboard-modal-terms-of-service-check-box {
     margin-right: 7px;
   }
 </style>
@@ -271,9 +270,9 @@
     <ModalHeader icon={walletIcon} heading={modalData.heading} />
     {#if showTermsOfService}
       <p>
-        <label class="terms-of-service">
+        <label class="bn-onboard-custom bn-onboard-modal-terms-of-service">
           <input
-            class="terms-of-service-check-box"
+            class="bn-onboard-custom bn-onboard-modal-terms-of-service-check-box"
             type="checkbox"
             bind:checked={$app.termsAgreed}
           />

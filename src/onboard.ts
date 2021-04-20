@@ -83,8 +83,8 @@ function init(initialization: Initialization): API {
 
   const termsAgreed =
     termsOfServiceUrl || privacyPolicyUrl
-      ? localStorage.getItem(STORAGE_KEYS.TERMS_AGREED) == 'true'
-      : true
+      ? localStorage.getItem(STORAGE_KEYS.TERMS_AGREED) === 'true'
+      : null
 
   app.update((store: AppState) => ({
     ...store,
