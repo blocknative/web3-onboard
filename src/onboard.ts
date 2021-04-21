@@ -81,17 +81,21 @@ function init(initialization: Initialization): API {
   }
 
   const { version: agreementVersion, termsUrl, privacyUrl } =
-    initialization?.walletSelect?.agreement|| {}
-  
+    initialization?.walletSelect?.agreement || {}
+
   let agreement: TermsAgreementState
-  if(termsUrl || privacyUrl) {
-    const storedAgreement = JSON.parse(localStorage.getItem(STORAGE_KEYS.TERMS_AGREEMENT) || 'null')
-    agreement = agreementVersion !== storedAgreement?.version 
-      ? {
-        version: agreementVersion,
-        ...( termsUrl ? {terms: false} : {}),
-        ...( privacyUrl ? {privacy: false} : {})
-      } : storedAgreement
+  if (termsUrl || privacyUrl) {
+    const storedAgreement = JSON.parse(
+      localStorage.getItem(STORAGE_KEYS.TERMS_AGREEMENT) || 'null'
+    )
+    agreement =
+      agreementVersion !== storedAgreement?.version
+        ? {
+            version: agreementVersion,
+            ...(termsUrl ? { terms: false } : {}),
+            ...(privacyUrl ? { privacy: false } : {})
+          }
+        : storedAgreement
   }
 
   app.update((store: AppState) => ({
@@ -113,8 +117,11 @@ function init(initialization: Initialization): API {
 
   // Settles all updates to the agreement object to the users local storage
   app.subscribe(({ agreement }) => {
-    if(agreement) {
-      localStorage.setItem(STORAGE_KEYS.TERMS_AGREEMENT, JSON.stringify(agreement))
+    if (agreement) {
+      localStorage.setItem(
+        STORAGE_KEYS.TERMS_AGREEMENT,
+        JSON.stringify(agreement)
+      )
     } else {
       localStorage.removeItem(STORAGE_KEYS.TERMS_AGREEMENT)
     }

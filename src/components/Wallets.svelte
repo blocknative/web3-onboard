@@ -19,7 +19,8 @@
 
   onDestroy(() => unsubscribe())
 
- $: buttonsDisabled = $app.agreement?.terms === false || $app.agreement?.privacy === false
+  $: buttonsDisabled =
+    $app.agreement?.terms === false || $app.agreement?.privacy === false
 </script>
 
 <style>

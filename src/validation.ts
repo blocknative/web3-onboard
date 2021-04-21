@@ -210,13 +210,7 @@ function validateWalletSelect(
 
   invalidParams(
     otherParams,
-    [
-      'heading',
-      'description',
-      'explanation',
-      'wallets',
-      'agreement'
-    ],
+    ['heading', 'description', 'explanation', 'wallets', 'agreement'],
     'walletSelect'
   )
 

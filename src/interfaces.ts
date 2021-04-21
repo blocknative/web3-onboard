@@ -30,7 +30,7 @@ export interface WalletSelectModule {
   heading: string
   description: string
   wallets: Array<WalletModule | WalletInitOptions>
-  explanation?: string,
+  explanation?: string
   agreement: TermsOfServiceAgreementOptions | null
 }
 

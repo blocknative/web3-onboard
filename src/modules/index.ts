@@ -35,7 +35,7 @@ export default function initializeModules(
       description,
       wallets,
       explanation,
-      agreement,
+      agreement
     },
     walletCheck: check(walletCheck, networkId)
   }
