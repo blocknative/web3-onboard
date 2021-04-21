@@ -8,7 +8,7 @@ function xdefi(options: CommonWalletOptions): WalletModule {
   const { preferred, label, iconSrc, svg } = options
 
   return {
-    name: label || '',
+    name: label || 'XDEFI Wallet',
     iconSrc: iconSrc || xdefiIcon,
     iconSrcSet: iconSrc || xdefiIcon2x,
     svg,
