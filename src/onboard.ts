@@ -32,6 +32,7 @@ import {
 
 import initializeModules from './modules'
 import { STORAGE_KEYS } from './constants'
+import { TermsAgreementState } from './interfaces'
 
 let onboard: any
 
@@ -78,13 +79,20 @@ function init(initialization: Initialization): API {
       displayBranding = false
     }
   }
-  const { termsOfServiceUrl, privacyPolicyUrl } =
-    initialization.walletSelect || {}
 
-  const termsAgreed =
-    termsOfServiceUrl || privacyPolicyUrl
-      ? localStorage.getItem(STORAGE_KEYS.TERMS_AGREED) === 'true'
-      : null
+  const { version: agreementVersion, termsUrl, privacyUrl } =
+    initialization?.walletSelect?.agreement|| {}
+  
+  let agreement: TermsAgreementState
+  if(termsUrl || privacyUrl) {
+    const storedAgreement = JSON.parse(localStorage.getItem(STORAGE_KEYS.TERMS_AGREEMENT) || 'null')
+    agreement = agreementVersion !== storedAgreement?.version 
+      ? {
+        version: agreementVersion,
+        ...( termsUrl ? {terms: false} : {}),
+        ...( privacyUrl ? {privacy: false} : {})
+      } : storedAgreement
+  }
 
   app.update((store: AppState) => ({
     ...store,
@@ -100,8 +108,17 @@ function init(initialization: Initialization): API {
     displayBranding,
     checkModules: initializedModules.walletCheck,
     blockPollingInterval,
-    termsAgreed
+    agreement
   }))
+
+  // Settles all updates to the agreement object to the users local storage
+  app.subscribe(({ agreement }) => {
+    if(agreement) {
+      localStorage.setItem(STORAGE_KEYS.TERMS_AGREEMENT, JSON.stringify(agreement))
+    } else {
+      localStorage.removeItem(STORAGE_KEYS.TERMS_AGREEMENT)
+    }
+  })
 
   initializeStores()
 

@@ -34,9 +34,8 @@
   export let module: WalletSelectModule = {
     heading: '',
     description: '',
-    termsOfServiceUrl: '',
-    privacyPolicyUrl: '',
-    wallets: []
+    wallets: [],
+    agreement: null
   }
 
   let modalData: WalletSelectModalData | null
@@ -44,25 +43,28 @@
   let walletAlreadyInstalled: string | undefined
   let installMessage: string
 
-  let selectedWalletModule: WalletModule
+  let selectedWalletModule: WalletModule | null
 
   const { mobileDevice, os } = get(app)
-  let {
-    heading,
-    description,
-    explanation,
-    termsOfServiceUrl,
-    privacyPolicyUrl,
-    wallets
-  } = module
+  let { heading, description, explanation, wallets, agreement } = module
 
-  const showTermsOfService: boolean = get(app).termsAgreed === false
+  const { termsUrl, privacyUrl } = agreement || {}
 
-  $: {
-    if ($app.termsAgreed) {
-      localStorage.setItem(STORAGE_KEYS.TERMS_AGREED, 'true')
-    } else {
-      localStorage.removeItem(STORAGE_KEYS.TERMS_AGREED)
+  const showTermsOfService: boolean =
+    get(app).agreement?.terms === false || get(app).agreement?.privacy === false
+
+  let agreed: boolean
+  $: if (agreed) {
+    $app.agreement = {
+      ...$app.agreement,
+      ...(termsUrl ? { terms: agreed } : {}),
+      ...(privacyUrl ? { privacy: agreed } : {})
+    }
+  } else if (agreed === false) {
+    $app.agreement = {
+      ...$app.agreement,
+      ...(termsUrl ? { terms: false } : {}),
+      ...(privacyUrl ? { privacy: false } : {})
     }
   }
 
@@ -274,15 +276,15 @@
           <input
             class="bn-onboard-custom bn-onboard-modal-terms-of-service-check-box"
             type="checkbox"
-            bind:checked={$app.termsAgreed}
+            bind:checked={agreed}
           />
           <span>
             I agree to the
-            {#if termsOfServiceUrl}<a href={termsOfServiceUrl} target="_blank"
+            {#if termsUrl}<a href={termsUrl} target="_blank"
                 >Terms & Conditions</a
-              >{privacyPolicyUrl ? ' and' : '.'}
+              >{privacyUrl ? ' and' : '.'}
             {/if}
-            {#if privacyPolicyUrl}<a href={privacyPolicyUrl} target="_blank"
+            {#if privacyUrl}<a href={privacyUrl} target="_blank"
                 >Privacy Policy</a
               >.{/if}
           </span>
@@ -324,7 +326,7 @@
         {selectedWalletModule}
         onBack={() => {
           selectedWalletModule = null
-          walletAlreadyInstalled = null
+          walletAlreadyInstalled = undefined
         }}
         {installMessage}
       />

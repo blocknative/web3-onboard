@@ -18,6 +18,8 @@
   const unsubscribe = wallet.subscribe(wallet => (selectedWallet = wallet))
 
   onDestroy(() => unsubscribe())
+
+ $: buttonsDisabled = $app.agreement?.terms === false || $app.agreement?.privacy === false
 </script>
 
 <style>
@@ -68,7 +70,7 @@
   {#each modalData.primaryWallets as wallet, i (wallet.name)}
     <li>
       <IconButton
-        disabled={$app.termsAgreed === false}
+        disabled={buttonsDisabled}
         onclick={() => handleWalletSelect(wallet)}
         iconSrc={wallet.iconSrc}
         iconSrcSet={wallet.iconSrcSet}
@@ -82,7 +84,7 @@
 
   {#if modalData.secondaryWallets && modalData.secondaryWallets.length && !showingAllWalletModules}
     <div>
-      <Button disabled={$app.termsAgreed === false} onclick={showAllWallets}
+      <Button disabled={buttonsDisabled} onclick={showAllWallets}
         >Show More</Button
       >
     </div>
@@ -92,7 +94,7 @@
     {#each modalData.secondaryWallets as wallet, i (wallet.name)}
       <li>
         <IconButton
-          disabled={$app.termsAgreed === false}
+          disabled={buttonsDisabled}
           onclick={() => handleWalletSelect(wallet)}
           iconSrc={wallet.iconSrc}
           iconSrcSet={wallet.iconSrcSet}
