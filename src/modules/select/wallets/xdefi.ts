@@ -26,7 +26,7 @@ function xdefi(options: CommonWalletOptions): WalletModule {
       return {
         provider,
         interface:
-          provider && getProviderName(provider) === 'XDeFi'
+          provider && getProviderName(provider) === 'XDEFI'
             ? typeof provider.enable === 'function'
               ? createModernProviderInterface(provider)
               : createLegacyProviderInterface(provider)
