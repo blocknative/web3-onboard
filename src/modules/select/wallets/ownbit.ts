@@ -1,17 +1,15 @@
 import { mobileWalletInstallMessage } from '../content'
 import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
 
-import atokenIcon from '../wallet-icons/icon-atoken.png'
-import atokenIcon2x from '../wallet-icons/icon-atoken@2x.png'
+import ownbitIcon from '../wallet-icons/icon-ownbit'
 
-function atoken(options: CommonWalletOptions): WalletModule {
+function ownbit(options: CommonWalletOptions): WalletModule {
   const { preferred, label, iconSrc, svg } = options
 
   return {
-    name: label || 'AToken',
-    iconSrc: iconSrc || atokenIcon,
-    iconSrcSet: iconSrc || atokenIcon2x,
-    svg,
+    name: label || 'Ownbit',
+    iconSrc,
+    svg: svg || ownbitIcon,
     wallet: async (helpers: Helpers) => {
       const { getProviderName, createModernProviderInterface } = helpers
 
@@ -22,17 +20,17 @@ function atoken(options: CommonWalletOptions): WalletModule {
       return {
         provider,
         interface:
-          (getProviderName(provider) === 'AToken' &&
+          (getProviderName(provider) === 'Ownbit' &&
             createModernProviderInterface(provider)) ||
           null
       }
     },
     type: 'injected',
-    link: 'https://www.atoken.com',
+    link: 'https://ownbit.io',
     installMessage: mobileWalletInstallMessage,
     mobile: true,
     preferred
   }
 }
 
-export default atoken
+export default ownbit

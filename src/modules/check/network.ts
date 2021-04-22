@@ -5,6 +5,8 @@ import {
   WalletCheckCustomOptions
 } from '../../interfaces'
 import { networkIcon } from './icons'
+import { app } from './../../stores'
+import { get } from 'svelte/store'
 
 function network(
   options: WalletCheckCustomOptions = {}
@@ -30,7 +32,7 @@ function network(
           setTimeout(() => {
             if (network === null) {
               // if prom isn't resolving after 500ms, then stop waiting
-              resolve()
+              resolve(undefined)
             }
           }, 500)
         })

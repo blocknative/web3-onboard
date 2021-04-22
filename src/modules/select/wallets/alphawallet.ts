@@ -5,24 +5,26 @@ import {
   InjectedWithBalanceOptions
 } from '../../../interfaces'
 
-import walletIoIcon from '../wallet-icons/icon-wallet-io'
+import alphawalletIcon from '../wallet-icons/icon-alphawallet'
 
-function walletIoWallet(options: InjectedWithBalanceOptions): WalletModule {
-  const { preferred, label, svg, rpcUrl } = options
+function alphawallet(options: InjectedWithBalanceOptions): WalletModule {
+  const { preferred, label, iconSrc, svg, rpcUrl } = options
 
   return {
-    name: label || 'wallet.io',
-    svg: svg || walletIoIcon,
+    name: label || 'AlphaWallet',
+    svg: svg || alphawalletIcon,
+    iconSrc,
     wallet: async (helpers: Helpers) => {
       const { getProviderName, getAddress, getNetwork, getBalance } = helpers
-      const walletIoProvider =
+      const alphawalletProvider =
         (window as any).ethereum ||
         ((window as any).web3 && (window as any).web3.currentProvider)
 
-      const isWalleIoWallet = getProviderName(walletIoProvider) === 'wallet.io'
+      const isAlphaWallet =
+        getProviderName(alphawalletProvider) === 'AlphaWallet'
       let createProvider
 
-      if (isWalleIoWallet && rpcUrl) {
+      if (isAlphaWallet && rpcUrl) {
         createProvider = (await import('./providerEngine')).default
       }
 
@@ -31,21 +33,21 @@ function walletIoWallet(options: InjectedWithBalanceOptions): WalletModule {
       let warned = false
 
       return {
-        provider: walletIoProvider,
-        interface: isWalleIoWallet
+        provider: alphawalletProvider,
+        interface: isAlphaWallet
           ? {
               address: {
-                get: () => getAddress(walletIoProvider)
+                get: () => getAddress(alphawalletProvider)
               },
               network: {
-                get: () => getNetwork(walletIoProvider)
+                get: () => getNetwork(alphawalletProvider)
               },
               balance: {
                 get: async () => {
                   if (!provider) {
                     if (!warned) {
                       console.warn(
-                        'The wallet.io Wallet provider does not allow rpc calls preventing Onboard.js from getting the balance. You can pass in a "rpcUrl" to the wallet.io Wallet initialization object to get the balance.'
+                        'The AlphaWallet provider does not allow rpc calls preventing Onboard.js from getting the balance. You can pass in a "rpcUrl" to the AlphaWallet initialization object to get the balance.'
                       )
                       warned = true
                     }
@@ -53,22 +55,22 @@ function walletIoWallet(options: InjectedWithBalanceOptions): WalletModule {
                     return null
                   }
 
-                  const address = await getAddress(walletIoProvider)
+                  const address = await getAddress(alphawalletProvider)
 
                   return getBalance(provider, address)
                 }
               },
-              name: getProviderName(walletIoProvider)
+              name: getProviderName(alphawalletProvider)
             }
           : null
       }
     },
     type: 'injected',
-    link: 'http://wallet.io/',
+    link: `https://alphawallet.com`,
     installMessage: mobileWalletInstallMessage,
     mobile: true,
     preferred
   }
 }
 
-export default walletIoWallet
+export default alphawallet

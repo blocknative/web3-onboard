@@ -2,7 +2,7 @@
   import { onDestroy } from 'svelte'
   import Button from '../elements/Button.svelte'
   import IconButton from '../elements/IconButton.svelte'
-  import { wallet } from '../stores'
+  import { app, wallet } from '../stores'
   import {
     WalletSelectModalData,
     WalletModule,
@@ -68,19 +68,23 @@
   {#each modalData.primaryWallets as wallet, i (wallet.name)}
     <li>
       <IconButton
+        disabled={!$app.termsAgreed}
         onclick={() => handleWalletSelect(wallet)}
         iconSrc={wallet.iconSrc}
         iconSrcSet={wallet.iconSrcSet}
         svg={wallet.svg}
         text={wallet.name}
         currentlySelected={wallet.name === selectedWallet.name}
-        {loadingWallet} />
+        {loadingWallet}
+      />
     </li>
   {/each}
 
   {#if modalData.secondaryWallets && modalData.secondaryWallets.length && !showingAllWalletModules}
     <div>
-      <Button onclick={showAllWallets}>Show More</Button>
+      <Button disabled={!$app.termsAgreed} onclick={showAllWallets}
+        >Show More</Button
+      >
     </div>
   {/if}
 
@@ -88,13 +92,15 @@
     {#each modalData.secondaryWallets as wallet, i (wallet.name)}
       <li>
         <IconButton
+          disabled={!$app.termsAgreed}
           onclick={() => handleWalletSelect(wallet)}
           iconSrc={wallet.iconSrc}
           iconSrcSet={wallet.iconSrcSet}
           svg={wallet.svg}
           text={wallet.name}
           currentlySelected={wallet.name === selectedWallet.name}
-          {loadingWallet} />
+          {loadingWallet}
+        />
       </li>
     {/each}
   {/if}

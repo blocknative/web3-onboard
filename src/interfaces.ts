@@ -23,6 +23,8 @@ export interface WalletSelectModuleOptions {
   description?: string
   wallets?: Array<WalletModule | WalletInitOptions>
   explanation?: string
+  termsOfServiceUrl?: string
+  privacyPolicyUrl?: string
 }
 
 export interface WalletSelectModule {
@@ -30,6 +32,8 @@ export interface WalletSelectModule {
   description: string
   wallets: Array<WalletModule | WalletInitOptions>
   explanation?: string
+  termsOfServiceUrl: string
+  privacyPolicyUrl: string
 }
 
 export interface WalletCheckModule {
@@ -171,7 +175,6 @@ export interface CommonWalletOptions {
   label?: string
   iconSrc?: string
   svg?: string
-  isMobile: boolean
 }
 
 export interface SdkWalletOptions extends CommonWalletOptions {
@@ -366,7 +369,7 @@ export type AllWalletInitOptions = CommonWalletOptions &
   AuthereumOptions &
   LedgerOptions &
   WalletLinkOptions &
-  InjectedWithBalanceOptions & { networkId: number }
+  InjectedWithBalanceOptions & { networkId: number } & { isMobile: boolean }
 
 export interface WalletCheckCustomOptions {
   heading?: string
@@ -481,8 +484,13 @@ export interface AppState {
   walletSelectDisplayedUI: boolean
   walletCheckDisplayedUI: boolean
   displayBranding: boolean
+  termsAgreed: boolean
 }
 
 export interface CancelablePromise extends Promise<any> {
   cancel: () => void
+}
+
+export interface StorageKeys {
+  TERMS_AGREED: string
 }

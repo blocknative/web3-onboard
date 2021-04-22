@@ -202,12 +202,21 @@ function validateWalletSelect(
     description,
     explanation,
     wallets,
+    termsOfServiceUrl,
+    privacyPolicyUrl,
     ...otherParams
   } = walletSelect
 
   invalidParams(
     otherParams,
-    ['heading', 'description', 'explanation', 'wallets'],
+    [
+      'heading',
+      'description',
+      'explanation',
+      'termsOfServiceUrl',
+      'privacyPolicyUrl',
+      'wallets'
+    ],
     'walletSelect'
   )
 
@@ -228,6 +237,20 @@ function validateWalletSelect(
   validateType({
     name: 'explanation',
     value: explanation,
+    type: 'string',
+    optional: true
+  })
+
+  validateType({
+    name: 'termsOfServiceUrl',
+    value: termsOfServiceUrl,
+    type: 'string',
+    optional: true
+  })
+
+  validateType({
+    name: 'privacyPolicyUrl',
+    value: privacyPolicyUrl,
     type: 'string',
     optional: true
   })
