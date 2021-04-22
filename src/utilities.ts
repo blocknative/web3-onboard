@@ -243,6 +243,10 @@ export function getProviderName(provider: any): string | undefined {
     return 'Status'
   }
 
+  if (provider.isXDEFI) {
+    return 'XDEFI'
+  }
+
   if (provider.isMetaMask) {
     return 'MetaMask'
   }
