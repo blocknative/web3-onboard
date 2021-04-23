@@ -61,6 +61,8 @@
     (version && version !== versionAgreed)
   )
 
+  let walletsDisabled: boolean = showTermsOfService
+
   let agreed: boolean
 
   $: if (agreed) {
@@ -72,8 +74,10 @@
         privacy: !!privacyUrl
       })
     )
+    walletsDisabled = false
   } else if (agreed === false) {
     localStorage.removeItem(STORAGE_KEYS.TERMS_AGREEMENT)
+    walletsDisabled = true
   }
 
   let primaryWallets: WalletModule[]
@@ -309,6 +313,7 @@
         {loadingWallet}
         {showingAllWalletModules}
         {showAllWallets}
+        {walletsDisabled}
       />
       <div class="bn-onboard-custom bn-onboard-select-info-container">
         <span

@@ -2,7 +2,7 @@
   import { onDestroy } from 'svelte'
   import Button from '../elements/Button.svelte'
   import IconButton from '../elements/IconButton.svelte'
-  import { app, wallet } from '../stores'
+  import { wallet } from '../stores'
   import {
     WalletSelectModalData,
     WalletModule,
@@ -13,14 +13,13 @@
   export let loadingWallet: string | undefined
   export let showingAllWalletModules: boolean = false
   export let showAllWallets: () => void
+  export let walletsDisabled: boolean = false
+
   let selectedWallet: WritableStore
 
   const unsubscribe = wallet.subscribe(wallet => (selectedWallet = wallet))
 
   onDestroy(() => unsubscribe())
-
-  $: buttonsDisabled =
-    $app.agreement?.terms === false || $app.agreement?.privacy === false
 </script>
 
 <style>
@@ -71,7 +70,7 @@
   {#each modalData.primaryWallets as wallet, i (wallet.name)}
     <li>
       <IconButton
-        disabled={buttonsDisabled}
+        disabled={walletsDisabled}
         onclick={() => handleWalletSelect(wallet)}
         iconSrc={wallet.iconSrc}
         iconSrcSet={wallet.iconSrcSet}
@@ -85,7 +84,7 @@
 
   {#if modalData.secondaryWallets && modalData.secondaryWallets.length && !showingAllWalletModules}
     <div>
-      <Button disabled={buttonsDisabled} onclick={showAllWallets}
+      <Button disabled={walletsDisabled} onclick={showAllWallets}
         >Show More</Button
       >
     </div>
@@ -95,7 +94,7 @@
     {#each modalData.secondaryWallets as wallet, i (wallet.name)}
       <li>
         <IconButton
-          disabled={buttonsDisabled}
+          disabled={walletsDisabled}
           onclick={() => handleWalletSelect(wallet)}
           iconSrc={wallet.iconSrc}
           iconSrcSet={wallet.iconSrcSet}
