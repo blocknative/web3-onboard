@@ -35,7 +35,7 @@
     heading: '',
     description: '',
     wallets: [],
-    agreement: null
+    agreement: undefined
   }
 
   let modalData: WalletSelectModalData | null
@@ -48,24 +48,32 @@
   const { mobileDevice, os } = get(app)
   let { heading, description, explanation, wallets, agreement } = module
 
-  const { termsUrl, privacyUrl } = agreement || {}
+  const { termsUrl, privacyUrl, version } = agreement || {}
+  const {
+    terms: termsAgreed,
+    privacy: privacyAgreed,
+    version: versionAgreed
+  } = JSON.parse(localStorage.getItem(STORAGE_KEYS.TERMS_AGREEMENT) || '{}')
 
-  const showTermsOfService: boolean =
-    get(app).agreement?.terms === false || get(app).agreement?.privacy === false
+  const showTermsOfService: boolean = !!(
+    (termsUrl && !termsAgreed) ||
+    (privacyUrl && !privacyAgreed) ||
+    (version && version !== versionAgreed)
+  )
 
   let agreed: boolean
+
   $: if (agreed) {
-    $app.agreement = {
-      ...$app.agreement,
-      ...(termsUrl ? { terms: agreed } : {}),
-      ...(privacyUrl ? { privacy: agreed } : {})
-    }
+    localStorage.setItem(
+      STORAGE_KEYS.TERMS_AGREEMENT,
+      JSON.stringify({
+        version,
+        terms: !!termsUrl,
+        privacy: !!privacyUrl
+      })
+    )
   } else if (agreed === false) {
-    $app.agreement = {
-      ...$app.agreement,
-      ...(termsUrl ? { terms: false } : {}),
-      ...(privacyUrl ? { privacy: false } : {})
-    }
+    localStorage.removeItem(STORAGE_KEYS.TERMS_AGREEMENT)
   }
 
   let primaryWallets: WalletModule[]

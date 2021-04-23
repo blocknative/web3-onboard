@@ -31,7 +31,7 @@ export interface WalletSelectModule {
   description: string
   wallets: Array<WalletModule | WalletInitOptions>
   explanation?: string
-  agreement: TermsOfServiceAgreementOptions | null
+  agreement?: TermsOfServiceAgreementOptions
 }
 
 export interface TermsOfServiceAgreementOptions {
@@ -488,7 +488,7 @@ export interface AppState {
   walletSelectDisplayedUI: boolean
   walletCheckDisplayedUI: boolean
   displayBranding: boolean
-  agreement: TermsAgreementState
+  agreement: TermsOfServiceAgreementOptions
 }
 
 export interface CancelablePromise extends Promise<any> {
