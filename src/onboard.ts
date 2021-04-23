@@ -31,8 +31,6 @@ import {
 } from './interfaces'
 
 import initializeModules from './modules'
-import { STORAGE_KEYS } from './constants'
-import { TermsAgreementState } from './interfaces'
 
 let onboard: any
 
