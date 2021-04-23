@@ -277,6 +277,10 @@ export function getProviderName(provider: any): string | undefined {
     return 'AlphaWallet'
   }
 
+  if (provider.isBitpie) {
+    return 'Bitpie'
+  }
+
   if (provider.host && provider.host.indexOf('localhost') !== -1) {
     return 'localhost'
   }
