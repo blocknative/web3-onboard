@@ -26,8 +26,7 @@ export default function initializeModules(
     heading = defaultHeading,
     description = defaultDescription,
     explanation = defaultWalletExplanation,
-    termsOfServiceUrl = '',
-    privacyPolicyUrl = ''
+    agreement = {}
   } = walletSelectOptions || {}
 
   return {
@@ -36,8 +35,7 @@ export default function initializeModules(
       description,
       wallets,
       explanation,
-      termsOfServiceUrl,
-      privacyPolicyUrl
+      agreement
     },
     walletCheck: check(walletCheck, networkId)
   }

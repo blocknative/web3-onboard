@@ -156,7 +156,7 @@ async function latticeProvider(options: {
     return addressList
   }
 
-  function setPrimaryAccount(address: string) {
+  function setPrimaryAccount() {
     return
   }
 
