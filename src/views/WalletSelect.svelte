@@ -34,9 +34,8 @@
   export let module: WalletSelectModule = {
     heading: '',
     description: '',
-    termsOfServiceUrl: '',
-    privacyPolicyUrl: '',
-    wallets: []
+    wallets: [],
+    agreement: undefined
   }
 
   let modalData: WalletSelectModalData | null
@@ -44,27 +43,41 @@
   let walletAlreadyInstalled: string | undefined
   let installMessage: string
 
-  let selectedWalletModule: WalletModule
+  let selectedWalletModule: WalletModule | null
 
   const { mobileDevice, os } = get(app)
-  let {
-    heading,
-    description,
-    explanation,
-    termsOfServiceUrl,
-    privacyPolicyUrl,
-    wallets
-  } = module
+  let { heading, description, explanation, wallets, agreement } = module
 
-  let showTermsOfService: boolean =
-    !!(termsOfServiceUrl || privacyPolicyUrl) && !get(app).termsAgreed
+  const { termsUrl, privacyUrl, version } = agreement || {}
+  const {
+    terms: termsAgreed,
+    privacy: privacyAgreed,
+    version: versionAgreed
+  } = JSON.parse(localStorage.getItem(STORAGE_KEYS.TERMS_AGREEMENT) || '{}')
 
-  $: {
-    if ($app.termsAgreed) {
-      localStorage.setItem(STORAGE_KEYS.TERMS_AGREED, 'true')
-    } else {
-      localStorage.removeItem(STORAGE_KEYS.TERMS_AGREED)
-    }
+  const showTermsOfService: boolean = !!(
+    (termsUrl && !termsAgreed) ||
+    (privacyUrl && !privacyAgreed) ||
+    (version && version !== versionAgreed)
+  )
+
+  let walletsDisabled: boolean = showTermsOfService
+
+  let agreed: boolean
+
+  $: if (agreed) {
+    localStorage.setItem(
+      STORAGE_KEYS.TERMS_AGREEMENT,
+      JSON.stringify({
+        version,
+        terms: !!termsUrl,
+        privacy: !!privacyUrl
+      })
+    )
+    walletsDisabled = false
+  } else if (agreed === false) {
+    localStorage.removeItem(STORAGE_KEYS.TERMS_AGREEMENT)
+    walletsDisabled = true
   }
 
   let primaryWallets: WalletModule[]
@@ -257,11 +270,11 @@
     margin-top: 0.66em;
     cursor: pointer;
   }
-  .terms-of-service {
+  .bn-onboard-modal-terms-of-service {
     display: flex;
     align-items: center;
   }
-  .terms-of-service-check-box {
+  .bn-onboard-modal-terms-of-service-check-box {
     margin-right: 7px;
   }
 </style>
@@ -271,19 +284,19 @@
     <ModalHeader icon={walletIcon} heading={modalData.heading} />
     {#if showTermsOfService}
       <p>
-        <label class="terms-of-service">
+        <label class="bn-onboard-custom bn-onboard-modal-terms-of-service">
           <input
-            class="terms-of-service-check-box"
+            class="bn-onboard-custom bn-onboard-modal-terms-of-service-check-box"
             type="checkbox"
-            bind:checked={$app.termsAgreed}
+            bind:checked={agreed}
           />
           <span>
             I agree to the
-            {#if termsOfServiceUrl}<a href={termsOfServiceUrl} target="_blank"
+            {#if termsUrl}<a href={termsUrl} target="_blank"
                 >Terms & Conditions</a
-              >{privacyPolicyUrl ? ' and' : '.'}
+              >{privacyUrl ? ' and' : '.'}
             {/if}
-            {#if privacyPolicyUrl}<a href={privacyPolicyUrl} target="_blank"
+            {#if privacyUrl}<a href={privacyUrl} target="_blank"
                 >Privacy Policy</a
               >.{/if}
           </span>
@@ -300,6 +313,7 @@
         {loadingWallet}
         {showingAllWalletModules}
         {showAllWallets}
+        {walletsDisabled}
       />
       <div class="bn-onboard-custom bn-onboard-select-info-container">
         <span
@@ -325,7 +339,7 @@
         {selectedWalletModule}
         onBack={() => {
           selectedWalletModule = null
-          walletAlreadyInstalled = null
+          walletAlreadyInstalled = undefined
         }}
         {installMessage}
       />

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { app } from '../stores'
   export let onclick: () => void = () => {}
-  export let position: string
+  export let position: string = ''
   export let disabled: boolean = false
 </script>
 

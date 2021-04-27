@@ -5,8 +5,6 @@ import {
   WalletCheckCustomOptions
 } from '../../interfaces'
 import { networkIcon } from './icons'
-import { app } from './../../stores'
-import { get } from 'svelte/store'
 
 function network(
   options: WalletCheckCustomOptions = {}
