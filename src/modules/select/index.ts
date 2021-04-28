@@ -24,14 +24,12 @@ const mobileDefaultWalletNames = [
   'liquality',
   'alphawallet',
   'ownbit',
-  'bitpie'
+  'bitpie',
   'authereum'
-
 ]
 
 function select(
-  wallets: Array<WalletInitOptions | WalletModule> | unde
-   fined,
+  wallets: Array<WalletInitOptions | WalletModule> | undefined,
   networkId: number,
   isMobile: boolean
 ) {
