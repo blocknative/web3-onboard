@@ -8,7 +8,8 @@ import {
   WalletInterface,
   WalletInitOptions,
   WalletCheckInit,
-  WalletSelectModuleOptions
+  WalletSelectModuleOptions,
+  TermsOfServiceAgreementOptions
 } from './interfaces'
 
 const validSubscriptionKeys = ['address', 'network', 'balance', 'wallet']
@@ -81,7 +82,8 @@ export function validateInit(init: Initialization): never | void {
       'darkMode',
       'apiUrl',
       'hideBranding',
-      'blockPollingInterval'
+      'blockPollingInterval',
+      'agreement'
     ],
     'init'
   )
@@ -202,21 +204,13 @@ function validateWalletSelect(
     description,
     explanation,
     wallets,
-    termsOfServiceUrl,
-    privacyPolicyUrl,
+    agreement,
     ...otherParams
   } = walletSelect
 
   invalidParams(
     otherParams,
-    [
-      'heading',
-      'description',
-      'explanation',
-      'termsOfServiceUrl',
-      'privacyPolicyUrl',
-      'wallets'
-    ],
+    ['heading', 'description', 'explanation', 'wallets', 'agreement'],
     'walletSelect'
   )
 
@@ -241,23 +235,44 @@ function validateWalletSelect(
     optional: true
   })
 
-  validateType({
-    name: 'termsOfServiceUrl',
-    value: termsOfServiceUrl,
-    type: 'string',
-    optional: true
-  })
-
-  validateType({
-    name: 'privacyPolicyUrl',
-    value: privacyPolicyUrl,
-    type: 'string',
-    optional: true
-  })
-
   if (Array.isArray(wallets)) {
     wallets.forEach(validateWallet)
   }
+
+  validateType({
+    name: 'agreement',
+    value: agreement,
+    type: 'object',
+    optional: true
+  })
+
+  if (agreement) {
+    validateAgreement(agreement)
+  }
+}
+
+const validateAgreement = (agreement: TermsOfServiceAgreementOptions) => {
+  const { version, termsUrl, privacyUrl } = agreement
+  validateType({
+    name: 'version',
+    value: version,
+    type: 'string',
+    optional: false
+  })
+
+  validateType({
+    name: 'termsUrl',
+    value: termsUrl,
+    type: 'string',
+    optional: true
+  })
+
+  validateType({
+    name: 'privacyUrl',
+    value: privacyUrl,
+    type: 'string',
+    optional: true
+  })
 }
 
 export function isWalletModule(obj: any): obj is WalletModule {

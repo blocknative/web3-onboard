@@ -347,7 +347,7 @@
         </Button>
       {/if}
       {#if errorMsg}
-        <Button position={!activeModal.button && 'left'} onclick={doAction}>
+        <Button position={!activeModal.button ? 'left' : ''} onclick={doAction}>
           Try Again
         </Button>
       {:else}

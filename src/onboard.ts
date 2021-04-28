@@ -31,7 +31,6 @@ import {
 } from './interfaces'
 
 import initializeModules from './modules'
-import { STORAGE_KEYS } from './constants'
 
 let onboard: any
 
@@ -78,13 +77,6 @@ function init(initialization: Initialization): API {
       displayBranding = false
     }
   }
-  const { termsOfServiceUrl, privacyPolicyUrl } =
-    initialization.walletSelect || {}
-
-  const termsAgreed =
-    termsOfServiceUrl || privacyPolicyUrl
-      ? localStorage.getItem(STORAGE_KEYS.TERMS_AGREED) == 'true'
-      : true
 
   app.update((store: AppState) => ({
     ...store,
@@ -100,7 +92,7 @@ function init(initialization: Initialization): API {
     displayBranding,
     checkModules: initializedModules.walletCheck,
     blockPollingInterval,
-    termsAgreed
+    agreement: initialization.walletSelect?.agreement || null
   }))
 
   initializeStores()

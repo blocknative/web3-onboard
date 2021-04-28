@@ -7,11 +7,10 @@ import { isWalletInit } from '../../validation'
 
 // wallets that qualify for default wallets need to have no
 // init parameters that are required for full functionality
-const desktopDefaultWalletNames = ['metamask', 'authereum', 'torus', 'opera']
+const desktopDefaultWalletNames = ['metamask', 'torus', 'opera', 'liquality']
 
 const mobileDefaultWalletNames = [
   'metamask',
-  'authereum',
   'coinbase',
   'trust',
   'torus',
@@ -26,10 +25,13 @@ const mobileDefaultWalletNames = [
   'alphawallet',
   'ownbit',
   'bitpie'
+  'authereum'
+
 ]
 
 function select(
-  wallets: Array<WalletInitOptions | WalletModule> | undefined,
+  wallets: Array<WalletInitOptions | WalletModule> | unde
+   fined,
   networkId: number,
   isMobile: boolean
 ) {
