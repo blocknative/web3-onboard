@@ -23,8 +23,7 @@ export interface WalletSelectModuleOptions {
   description?: string
   wallets?: Array<WalletModule | WalletInitOptions>
   explanation?: string
-  termsOfServiceUrl?: string
-  privacyPolicyUrl?: string
+  agreement?: TermsOfServiceAgreementOptions
 }
 
 export interface WalletSelectModule {
@@ -32,8 +31,13 @@ export interface WalletSelectModule {
   description: string
   wallets: Array<WalletModule | WalletInitOptions>
   explanation?: string
-  termsOfServiceUrl: string
-  privacyPolicyUrl: string
+  agreement?: TermsOfServiceAgreementOptions
+}
+
+export interface TermsOfServiceAgreementOptions {
+  version: string
+  termsUrl?: string
+  privacyUrl?: string
 }
 
 export interface WalletCheckModule {
@@ -484,7 +488,7 @@ export interface AppState {
   walletSelectDisplayedUI: boolean
   walletCheckDisplayedUI: boolean
   displayBranding: boolean
-  termsAgreed: boolean
+  agreement: TermsOfServiceAgreementOptions
 }
 
 export interface CancelablePromise extends Promise<any> {
@@ -492,5 +496,15 @@ export interface CancelablePromise extends Promise<any> {
 }
 
 export interface StorageKeys {
-  TERMS_AGREED: string
+  TERMS_AGREEMENT: string
+}
+
+/**
+ * The object that will be stored in local storage to track
+ * user's agreement to the terms.
+ */
+export interface TermsAgreementState {
+  version: string
+  terms?: boolean
+  privacy?: boolean
 }

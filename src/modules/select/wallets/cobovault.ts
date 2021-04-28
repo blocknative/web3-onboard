@@ -70,7 +70,7 @@ async function cobovaultProvider(options: {
 
   const BASE_PATH = "m/44'/60'/0'/0"
 
-  const { networkId, appName, rpcUrl, BigNumber, networkName } = options
+  const { networkId, rpcUrl, BigNumber, networkName } = options
 
   const keyring = AirGapedKeyring.getEmptyKeyring()
 
