@@ -7,7 +7,7 @@ function coinbase(options: CommonWalletOptions): WalletModule {
   const { preferred, label, iconSrc, svg } = options
 
   return {
-    name: label || 'Coinbase',
+    name: label || 'Coinbase Wallet',
     iconSrc,
     svg: svg || coinbaseIcon,
     wallet: async (helpers: Helpers) => {
