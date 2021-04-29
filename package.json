@@ -1,6 +1,6 @@
 {
   "name": "bnc-onboard",
-  "version": "1.24.0",
+  "version": "1.25.0",
   "description": "Onboard users to web3 by allowing them to select a wallet, get that wallet ready to transact and have access to synced wallet state.",
   "keywords": [
     "ethereum",
@@ -72,7 +72,7 @@
     "prettier-plugin-svelte": "^2.2.0",
     "regenerator-runtime": "^0.13.7",
     "trezor-connect": "^8.1.9",
-    "walletlink": "^2.0.2",
+    "walletlink": "^2.1.0",
     "web3-provider-engine": "^15.0.4"
   }
 }
