@@ -91,7 +91,8 @@ function init(initialization: Initialization): API {
     darkMode,
     displayBranding,
     checkModules: initializedModules.walletCheck,
-    blockPollingInterval
+    blockPollingInterval,
+    agreement: initialization.walletSelect?.agreement || null
   }))
 
   initializeStores()

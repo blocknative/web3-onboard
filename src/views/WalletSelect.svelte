@@ -29,22 +29,56 @@
     WalletSelectModule,
     WalletInterface
   } from '../interfaces'
+  import { STORAGE_KEYS } from '../constants'
 
   export let module: WalletSelectModule = {
     heading: '',
     description: '',
-    wallets: []
+    wallets: [],
+    agreement: undefined
   }
 
   let modalData: WalletSelectModalData | null
   let showWalletDefinition: boolean
   let walletAlreadyInstalled: string | undefined
-  let installMessage: string | undefined
+  let installMessage: string
 
-  let selectedWalletModule: WalletModule
+  let selectedWalletModule: WalletModule | null
 
   const { mobileDevice, os } = get(app)
-  let { heading, description, explanation, wallets } = module
+  let { heading, description, explanation, wallets, agreement } = module
+
+  const { termsUrl, privacyUrl, version } = agreement || {}
+  const {
+    terms: termsAgreed,
+    privacy: privacyAgreed,
+    version: versionAgreed
+  } = JSON.parse(localStorage.getItem(STORAGE_KEYS.TERMS_AGREEMENT) || '{}')
+
+  const showTermsOfService: boolean = !!(
+    (termsUrl && !termsAgreed) ||
+    (privacyUrl && !privacyAgreed) ||
+    (version && version !== versionAgreed)
+  )
+
+  let walletsDisabled: boolean = showTermsOfService
+
+  let agreed: boolean
+
+  $: if (agreed) {
+    localStorage.setItem(
+      STORAGE_KEYS.TERMS_AGREEMENT,
+      JSON.stringify({
+        version,
+        terms: !!termsUrl,
+        privacy: !!privacyUrl
+      })
+    )
+    walletsDisabled = false
+  } else if (agreed === false) {
+    localStorage.removeItem(STORAGE_KEYS.TERMS_AGREEMENT)
+    walletsDisabled = true
+  }
 
   let primaryWallets: WalletModule[]
   let secondaryWallets: WalletModule[] | undefined
@@ -159,12 +193,12 @@
 
       walletAlreadyInstalled = provider && getProviderName(provider)
 
-      installMessage =
-        module.installMessage &&
-        module.installMessage({
-          currentWallet: walletAlreadyInstalled,
-          selectedWallet: selectedWalletModule.name
-        })
+      installMessage = module.installMessage
+        ? module.installMessage({
+            currentWallet: walletAlreadyInstalled,
+            selectedWallet: selectedWalletModule.name
+          })
+        : ''
 
       // if it was autoSelected then we need to add modalData to show the modal
       if (autoSelected) {
@@ -236,11 +270,39 @@
     margin-top: 0.66em;
     cursor: pointer;
   }
+  .bn-onboard-modal-terms-of-service {
+    display: flex;
+    align-items: center;
+  }
+  .bn-onboard-modal-terms-of-service-check-box {
+    margin-right: 7px;
+  }
 </style>
 
 {#if modalData}
   <Modal closeModal={() => finish({ completed: false })}>
     <ModalHeader icon={walletIcon} heading={modalData.heading} />
+    {#if showTermsOfService}
+      <p>
+        <label class="bn-onboard-custom bn-onboard-modal-terms-of-service">
+          <input
+            class="bn-onboard-custom bn-onboard-modal-terms-of-service-check-box"
+            type="checkbox"
+            bind:checked={agreed}
+          />
+          <span>
+            I agree to the
+            {#if termsUrl}<a href={termsUrl} target="_blank"
+                >Terms & Conditions</a
+              >{privacyUrl ? ' and' : '.'}
+            {/if}
+            {#if privacyUrl}<a href={privacyUrl} target="_blank"
+                >Privacy Policy</a
+              >.{/if}
+          </span>
+        </label>
+      </p>
+    {/if}
     {#if !selectedWalletModule}
       <p class="bn-onboard-custom bn-onboard-select-description">
         {@html modalData.description}
@@ -251,6 +313,7 @@
         {loadingWallet}
         {showingAllWalletModules}
         {showAllWallets}
+        {walletsDisabled}
       />
       <div class="bn-onboard-custom bn-onboard-select-info-container">
         <span
@@ -276,7 +339,7 @@
         {selectedWalletModule}
         onBack={() => {
           selectedWalletModule = null
-          walletAlreadyInstalled = null
+          walletAlreadyInstalled = undefined
         }}
         {installMessage}
       />

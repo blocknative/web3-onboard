@@ -328,7 +328,8 @@
       <span
         class:bn-onboard-dark-mode-background={$app.darkMode}
         class="bn-onboard-custom bn-onboard-prepare-error"
-        in:fade>
+        in:fade
+      >
         {errorMsg}
       </span>
     {/if}
@@ -346,7 +347,7 @@
         </Button>
       {/if}
       {#if errorMsg}
-        <Button position={!activeModal.button && 'left'} onclick={doAction}>
+        <Button position={!activeModal.button ? 'left' : ''} onclick={doAction}>
           Try Again
         </Button>
       {:else}
