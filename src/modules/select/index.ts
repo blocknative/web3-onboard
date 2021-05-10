@@ -139,6 +139,8 @@ function getModule(
       return import('./wallets/alphawallet')
     case 'ownbit':
       return import('./wallets/ownbit')
+    case 'keepkey':
+      return import('./wallets/keepkey')
     default:
       throw new Error(`${name} is not a valid walletName.`)
   }

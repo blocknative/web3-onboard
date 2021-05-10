@@ -1319,32 +1319,32 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@shapeshiftoss/hdwallet-core@^1.13.10":
-  version "1.13.10"
-  resolved "https://registry.yarnpkg.com/@shapeshiftoss/hdwallet-core/-/hdwallet-core-1.13.10.tgz#81f0dd6f0d036b74b1aed0a37b262d9b20bc09a2"
-  integrity sha512-tb9xaBQeO2WrUlAL/L5wgQ4RfcmcAC5U8Qm0Po5otnBGlUxddmm7BFoXZ5cjDHnOlZ7SEQg0jgfr3CLnqfjb/Q==
+"@shapeshiftoss/hdwallet-core@^1.14.0":
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/@shapeshiftoss/hdwallet-core/-/hdwallet-core-1.14.0.tgz#b91c79a66a317c463ae26ab8be4995ac359d964d"
+  integrity sha512-fGdqqrORfYyUvhVf83rCLEyu9D2xDWsQ9c/xIKMBBfxwEKsbHebGJRPah1ZCGag+BoZ/HxHqjkiKFRg/sTrURg==
   dependencies:
     eventemitter2 "^5.0.1"
     lodash "^4.17.15"
     rxjs "^6.4.0"
 
-"@shapeshiftoss/hdwallet-keepkey-webusb@^1.13.10":
-  version "1.13.10"
-  resolved "https://registry.yarnpkg.com/@shapeshiftoss/hdwallet-keepkey-webusb/-/hdwallet-keepkey-webusb-1.13.10.tgz#25fcd93e44ecd7c351f3c81b660fc905f432179c"
-  integrity sha512-fh9E9NSru+WhwOoL/o67Bxim6oLROdi54lBlR2n/Jvlrf5tpMi3URUcjyVje6fx48BM2GgdhCkaZOIMMDbSAHQ==
+"@shapeshiftoss/hdwallet-keepkey-webusb@^1.14.0":
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/@shapeshiftoss/hdwallet-keepkey-webusb/-/hdwallet-keepkey-webusb-1.14.0.tgz#18673a9269b7eef5c64001b5779c4e24f9c0c77b"
+  integrity sha512-OUbiTlwVLwx1WBRLn2Fvti2M9FcBebzY6TYcgq4wPeygNBgzBmGTHXFXoaMxKLrDd8rvyI7HhsRh+PyRT21P7A==
   dependencies:
-    "@shapeshiftoss/hdwallet-core" "^1.13.10"
-    "@shapeshiftoss/hdwallet-keepkey" "^1.13.10"
+    "@shapeshiftoss/hdwallet-core" "^1.14.0"
+    "@shapeshiftoss/hdwallet-keepkey" "^1.14.0"
     bytebuffer "^5.0.1"
     eventemitter2 "^5.0.1"
 
-"@shapeshiftoss/hdwallet-keepkey@^1.13.10":
-  version "1.13.10"
-  resolved "https://registry.yarnpkg.com/@shapeshiftoss/hdwallet-keepkey/-/hdwallet-keepkey-1.13.10.tgz#f982f943ead85b0e4f8a9123cd45e6722d34c934"
-  integrity sha512-r6wnFMPze9Y5MI7Vfw6iJ0uzkP3r2CgL9+CW4aBcSLHTUVn3WhG8q64AxGjAlN0XPm77R6NSVB6MARVUr8Ccbg==
+"@shapeshiftoss/hdwallet-keepkey@^1.14.0":
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/@shapeshiftoss/hdwallet-keepkey/-/hdwallet-keepkey-1.14.0.tgz#6a469635752975c648ab8207efbf97e0e556d454"
+  integrity sha512-qoK5fZ9j0if82hKD/ssY4zg8OI9CswU4wpqbF8pz1NUk+5ZOxzi/I74Ga8jSzWjgzz8/rQvgozHsm03GQFk61g==
   dependencies:
     "@keepkey/device-protocol" "^7.0.2"
-    "@shapeshiftoss/hdwallet-core" "^1.13.10"
+    "@shapeshiftoss/hdwallet-core" "^1.14.0"
     bignumber.js "^9.0.1"
     eip55 "^1.0.3"
     ethereumjs-tx "^1.3.7"
