@@ -141,6 +141,8 @@ function getModule(
       return import('./wallets/ownbit')
     case 'keepkey':
       return import('./wallets/keepkey')
+    case 'gnosis':
+      return import('./wallets/gnosis')
     default:
       throw new Error(`${name} is not a valid walletName.`)
   }
