@@ -120,7 +120,7 @@ export interface WalletModule {
     interface: WalletInterface | null
     instance?: any
   }>
-  type: 'hardware' | 'injected' | 'sdk'
+  type: WalletType
   link?: string
   installMessage?: (wallets: {
     currentWallet: string | undefined
@@ -131,6 +131,8 @@ export interface WalletModule {
   mobile?: boolean
   osExclusions?: Array<string>
 }
+
+export type WalletType = 'hardware' | 'injected' | 'sdk'
 
 export interface Helpers {
   getProviderName: (provider: any) => string | undefined
@@ -179,6 +181,7 @@ export interface CommonWalletOptions {
   label?: string
   iconSrc?: string
   svg?: string
+  networkId?: number
 }
 
 export interface SdkWalletOptions extends CommonWalletOptions {
