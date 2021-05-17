@@ -76,5 +76,9 @@
     "trezor-connect": "^8.1.9",
     "walletlink": "^2.1.0",
     "web3-provider-engine": "^15.0.4"
+  },
+  "resolutions": {
+    "@toruslabs/torus-embed/@toruslabs/fetch-node-details": "2.6.1",
+    "@toruslabs/torus-embed/@toruslabs/torus.js/web3-utils": "1.3.6"
   }
 }
