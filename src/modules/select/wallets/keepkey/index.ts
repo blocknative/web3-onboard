@@ -10,6 +10,7 @@ import keepKeyIcon from '../../wallet-icons/icon-keepkey.png'
 
 /* -= CONSTANTS =- */
 
+const ACCOUNTS_TO_GET = 5
 const WALLET_NAME = 'KeepKey'
 const ERROR_BUSY: ErrorCode = 'busy'
 const ERROR_PAIRING: ErrorCode = 'pairing'
@@ -67,7 +68,7 @@ function keepkey(
                 get: async () => provider.getPrimaryAddress()
               },
               network: {
-                get: async () => `${networkId}`
+                get: async () => networkId
               },
               balance: {
                 get: async () => {
@@ -130,7 +131,7 @@ async function createKeepKeyProvider({
     }
   }
 
-  const DEFAULT_DERIVATION_PATH = "m/44'/60'/0'/0"
+  const DEFAULT_DERIVATION_PATH = "m/44'/60'/0'/0/0"
 
   // The currently selected derivation path
   let dPath = ''
@@ -294,17 +295,29 @@ async function createKeepKeyProvider({
 
     dPath = dPath || DEFAULT_DERIVATION_PATH
 
-    const { addressNList } = keepKeyWallet.ethGetAccountPaths({
-      coin: 'Ethereum',
-      accountIdx: addressToPath.size
-    })[0]
-
-    const address = await keepKeyWallet.ethGetAddress({
-      addressNList
+    // Get the account index from the derivation path
+    const { accountIdx } = keepKeyWallet.describePath({
+      path: bip32ToAddressNList(dPath),
+      coin: 'Ethereum'
     })
 
-    addressToPath.set(address, addressNList)
+    // Calculate the index to start from based on the dPath index and the current number of generated addresses
+    const startingIndex = accountIdx + addressToPath.size
+    for (let i = startingIndex; i < ACCOUNTS_TO_GET + startingIndex; i++) {
+      // Retrieve the array form of the derivation path for a given account index
+      const { addressNList } = keepKeyWallet.ethGetAccountPaths({
+        coin: 'Ethereum',
+        accountIdx: i
+      })[0]
 
+      // Retrieve the address associated with the given account index
+      const address = await keepKeyWallet.ethGetAddress({
+        addressNList
+      })
+
+      // Store the address in our set of generated addresses
+      addressToPath.set(address, addressNList)
+    }
     return addresses()
   }
 
