@@ -1206,9 +1206,9 @@
     "@json-rpc-tools/types" "^1.6.1"
 
 "@keepkey/device-protocol@^7.0.2":
-  version "7.0.2"
-  resolved "https://registry.yarnpkg.com/@keepkey/device-protocol/-/device-protocol-7.0.2.tgz#0fda263e8c72f833e03e7b17ceb518a6a5bdbb82"
-  integrity sha512-le0zKwbGuu62XcjhciV7Al6y4wMKejw0O63+Zlwm505MXyuygLvKXXzoa6OE8oA2m5KWmfGvq4j8rk2wWEaCZg==
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/@keepkey/device-protocol/-/device-protocol-7.2.0.tgz#515184c61bb4ea2b6a02707bbfba68eea6b09ebf"
+  integrity sha512-j+Tu1z627fbTXqvYKN3uIpBcH7yJMkk9xqVmWZ91QKPTWy0SPm9ncep7g2PiHWzfDQ4Rrxnpu5Vvn8g3q/THTQ==
   dependencies:
     google-protobuf "^3.7.0-rc.2"
     pbjs "^0.0.5"
@@ -3824,9 +3824,9 @@ globals@^12.1.0:
     type-fest "^0.8.1"
 
 google-protobuf@^3.7.0-rc.2:
-  version "3.15.8"
-  resolved "https://registry.yarnpkg.com/google-protobuf/-/google-protobuf-3.15.8.tgz#5f3948905e4951c867d6bc143f385a80e2a39efe"
-  integrity sha512-2jtfdqTaSxk0cuBJBtTTWsot4WtR9RVr2rXg7x7OoqiuOKopPrwXpM1G4dXIkLcUNRh3RKzz76C8IOkksZSeOw==
+  version "3.17.0"
+  resolved "https://registry.yarnpkg.com/google-protobuf/-/google-protobuf-3.17.0.tgz#5623215f9d0345649720ae5e5e9713491e2456fc"
+  integrity sha512-xuxzzx6FXmkmddRZci2SmGeZcx+vykmqG60yJf/Rz+NEKaUs+nLhaiUQAWa7Z00a7bHfRjRxSIX9FcELaxWIVA==
 
 graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.6:
   version "4.2.4"
@@ -5818,10 +5818,10 @@ rlp@^2.0.0, rlp@^2.2.3, rlp@^2.2.4, rlp@^2.2.6:
   dependencies:
     bn.js "^4.11.1"
 
-rollup-plugin-svelte@^5.0.3:
-  version "5.2.3"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-svelte/-/rollup-plugin-svelte-5.2.3.tgz#efdc15e3e3fdd9b9f1100fdc14a8532b4e587bc8"
-  integrity sha512-513vOht9A93OV7fvmpIq8mD1JFgTZ5LidmpULKM2Od9P1l8oI5KwvO32fwCnASuVJS1EkRfvCnS7vKQ8DF4srg==
+rollup-plugin-svelte@^6.1.1:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-svelte/-/rollup-plugin-svelte-6.1.1.tgz#66362cf0500fb7a848283ebcf19d289a60ef0871"
+  integrity sha512-ijnm0pH1ScrY4uxwaNXBpNVejVzpL2769hIEbAlnqNUWZrffLspu5/k9/l/Wsj3NrEHLQ6wCKGagVJonyfN7ow==
   dependencies:
     require-relative "^0.8.7"
     rollup-pluginutils "^2.8.2"

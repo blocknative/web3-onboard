@@ -140,7 +140,7 @@ function getModule(
     case 'ownbit':
       return import('./wallets/ownbit')
     case 'keepkey':
-      return import('./wallets/keepkey')
+      return import('./wallets/keepkey/')
     case 'gnosis':
       return import('./wallets/gnosis')
     default:
