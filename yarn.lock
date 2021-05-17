@@ -1343,6 +1343,15 @@
     lodash "^4.17.15"
     rxjs "^6.4.0"
 
+"@shapeshiftoss/hdwallet-core@^1.14.1-alpha.0":
+  version "1.14.1-alpha.0"
+  resolved "https://registry.yarnpkg.com/@shapeshiftoss/hdwallet-core/-/hdwallet-core-1.14.1-alpha.0.tgz#14fa5f7b7bd927034b971cec784cabcd88b70915"
+  integrity sha512-yN/arnyP0qcUO1D9UTJFwpB7ai62xsg33NcIzoRZ31BUzWePCrq+IvgHRTnacfE+oO9WbiR7N1tQd4IQFWrXfA==
+  dependencies:
+    eventemitter2 "^5.0.1"
+    lodash "^4.17.15"
+    rxjs "^6.4.0"
+
 "@shapeshiftoss/hdwallet-keepkey-webusb@^1.14.0":
   version "1.14.0"
   resolved "https://registry.yarnpkg.com/@shapeshiftoss/hdwallet-keepkey-webusb/-/hdwallet-keepkey-webusb-1.14.0.tgz#18673a9269b7eef5c64001b5779c4e24f9c0c77b"
@@ -1360,6 +1369,20 @@
   dependencies:
     "@keepkey/device-protocol" "^7.0.2"
     "@shapeshiftoss/hdwallet-core" "^1.14.0"
+    bignumber.js "^9.0.1"
+    eip55 "^1.0.3"
+    ethereumjs-tx "^1.3.7"
+    eventemitter2 "^5.0.1"
+    lodash "^4.17.15"
+    semver "^6.3.0"
+
+"@shapeshiftoss/hdwallet-keepkey@^1.14.1-alpha.0":
+  version "1.14.1-alpha.0"
+  resolved "https://registry.yarnpkg.com/@shapeshiftoss/hdwallet-keepkey/-/hdwallet-keepkey-1.14.1-alpha.0.tgz#4a4d84d2aaf3f048cfe4d774ffe6967d854b9126"
+  integrity sha512-MlwWMHNrtaLzrTX605JE/uAfKbLGTzriP/7GT0i1zm9Thc5JyoP+kBZtG7TRSCiLgVk670t/KIVlmpwJcEccSg==
+  dependencies:
+    "@keepkey/device-protocol" "^7.0.2"
+    "@shapeshiftoss/hdwallet-core" "^1.14.1-alpha.0"
     bignumber.js "^9.0.1"
     eip55 "^1.0.3"
     ethereumjs-tx "^1.3.7"

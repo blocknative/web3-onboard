@@ -367,7 +367,7 @@ async function createKeepKeyProvider({
 
     const { nonce, gasPrice, gas, to, value, data } = transactionData
 
-    const res = await keepKeyWallet.ethSignTx({
+    const { serialized } = await keepKeyWallet.ethSignTx({
       addressNList,
       nonce,
       gasPrice,
@@ -378,7 +378,7 @@ async function createKeepKeyProvider({
       chainId: networkId
     })
 
-    return res.serialized
+    return serialized
   }
 
   async function signMessage(message: { data: string }): Promise<string> {

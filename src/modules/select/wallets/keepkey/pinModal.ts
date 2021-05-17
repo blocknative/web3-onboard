@@ -1,7 +1,10 @@
 import type { KeepKeyHDWallet } from '@shapeshiftoss/hdwallet-keepkey'
+import { detach, insert, noop } from 'svelte/internal'
+
 import Modal from '../../../../components/Modal.svelte'
 import Button from '../../../../elements/Button.svelte'
-import { detach, insert, noop } from 'svelte/internal'
+
+const HANDLE_PIN_PRESS = 'handlePinPress'
 
 const buttonStyles = `
   align-items: center;
@@ -13,8 +16,6 @@ const buttonStyles = `
   line-height: 1;
   font-size: 18px;
 `
-
-const HANDLE_PIN_PRESS = 'handlePinPress'
 
 const pinButton = (
   value: number,
@@ -71,12 +72,15 @@ const pinInputContainerStyles = `
 
 const pinInput = `
   <div style="${pinInputContainerStyles}">
-    <input
-      id="pin-input"
-      style="${pinInputStyles}"
-      placeholder="PIN"
-      type="password"
-    />
+    <form>
+      <input
+        id="pin-input"
+        style="${pinInputStyles}"
+        placeholder="PIN"
+        type="password"
+        autocomplete="current-password"
+      />
+    </form>
     <div style="margin-left: 5px">
       ${pinButton(-1, '❮', '36px', '36px')}
     </div>
