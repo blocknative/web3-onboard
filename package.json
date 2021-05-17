@@ -79,6 +79,9 @@
   },
   "resolutions": {
     "@toruslabs/torus-embed/@toruslabs/fetch-node-details": "2.6.1",
-    "@toruslabs/torus-embed/@toruslabs/torus.js/web3-utils": "1.3.6"
+    "@toruslabs/torus-embed/@toruslabs/torus.js/web3-utils": "1.3.6",
+    "authereum/web3-utils/underscore": "^1.12.1",
+    "authereum/ethers/elliptic": "^6.5.3",
+    "@portis/web3/pocket-js-core/axios": "^0.21.1"
   }
 }
