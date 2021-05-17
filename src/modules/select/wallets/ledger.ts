@@ -1,4 +1,5 @@
 import { LedgerOptions, WalletModule, Helpers } from '../../../interfaces'
+import { TypedDataUtils } from 'eth-sig-util'
 
 import ledgerIcon from '../wallet-icons/icon-ledger'
 
@@ -81,6 +82,23 @@ async function ledgerProvider(options: {
   const ethUtil = await import('ethereumjs-util')
   const buffer = await import('buffer')
 
+  const domainHash = (message: any) => {
+    return TypedDataUtils.hashStruct(
+      'EIP712Domain',
+      message.domain,
+      message.types,
+      true
+    )
+  }
+  const messageHash = (message: any) => {
+    return TypedDataUtils.hashStruct(
+      message.primaryType,
+      message.message,
+      message.types,
+      true
+    )
+  }
+
   const {
     networkId,
     rpcUrl,
@@ -127,6 +145,11 @@ async function ledgerProvider(options: {
     },
     signPersonalMessage: (messageData: any, callback: any) => {
       signMessage(messageData)
+        .then((res: string) => callback(null, res))
+        .catch(err => callback(err, null))
+    },
+    signTypedMessage: (messageData: any, callback: any) => {
+      signTypedMessage(messageData)
         .then((res: string) => callback(null, res))
         .catch(err => callback(err, null))
     },
@@ -402,6 +425,31 @@ async function ledgerProvider(options: {
         if (v.length < 2) {
           v = '0' + v
         }
+        return `0x${result['r']}${result['s']}${v}`
+      })
+  }
+
+  async function signTypedMessage(message: { data: any }) {
+    if (addressToPath.size === 0) {
+      await enable()
+    }
+
+    const path = [...addressToPath.values()][0]
+
+    const data = JSON.parse(message.data)
+
+    return eth
+      .signEIP712HashedMessage(
+        path,
+        ethUtil.bufferToHex(domainHash(data)),
+        ethUtil.bufferToHex(messageHash(data))
+      )
+      .then((result: any) => {
+        let v = (result['v'] - 27).toString(16)
+        if (v.length < 2) {
+          v = '0' + v
+        }
+
         return `0x${result['r']}${result['s']}${v}`
       })
   }
