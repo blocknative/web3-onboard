@@ -3,22 +3,23 @@ import type { SafeInfo } from '@gnosis.pm/safe-apps-sdk'
 import { CommonWalletOptions, Helpers, WalletModule } from '../../../interfaces'
 import gnosisWalletIcon from '../wallet-icons/icon-gnosis'
 
-const getSafe = (sdk: SafeAppsSDK): Promise<SafeInfo | undefined> => {
-  return Promise.race([
+const getSafe = (sdk: SafeAppsSDK): Promise<SafeInfo | undefined> =>
+  Promise.race([
     sdk.getSafeInfo(),
     // Timeout need as this method hangs until it can find the safe info
     new Promise<undefined>(resolve => setTimeout(resolve, 200))
   ])
-}
 
-function gnosis(options: CommonWalletOptions): WalletModule {
+function gnosis(
+  options: CommonWalletOptions
+): WalletModule & { isSafeContext: () => Promise<boolean> } {
   const { preferred, label, iconSrc, svg, networkId } = options
 
   const network = networkId === 4 ? 'rinkeby.' : ''
   const link = `https://${network}gnosis-safe.io/app`
 
   return {
-    name: label || 'Gnosis Safe Wallet',
+    name: label || 'Gnosis Safe',
     iconSrc,
     svg: svg || gnosisWalletIcon,
     wallet: async ({ createModernProviderInterface }: Helpers) => {
@@ -47,7 +48,11 @@ function gnosis(options: CommonWalletOptions): WalletModule {
         `,
     desktop: true,
     mobile: false,
-    preferred
+    preferred,
+    isSafeContext: async () =>
+      !!(await getSafe(
+        new (await import('@gnosis.pm/safe-apps-sdk')).default()
+      ))
   }
 }
 
