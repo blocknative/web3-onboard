@@ -1,6 +1,4 @@
 import { LedgerOptions, WalletModule, Helpers } from '../../../interfaces'
-import { TypedDataUtils } from 'eth-sig-util'
-
 import ledgerIcon from '../wallet-icons/icon-ledger'
 
 const LEDGER_LIVE_PATH = `m/44'/60'`
@@ -81,6 +79,7 @@ async function ledgerProvider(options: {
   const EthereumTx = await import('ethereumjs-tx')
   const ethUtil = await import('ethereumjs-util')
   const buffer = await import('buffer')
+  const { TypedDataUtils } = await import('eth-sig-util')
 
   const domainHash = (message: any) => {
     return TypedDataUtils.hashStruct(
@@ -429,14 +428,12 @@ async function ledgerProvider(options: {
       })
   }
 
-  async function signTypedMessage(message: { data: any }) {
+  async function signTypedMessage({ data }: { data: any }) {
     if (addressToPath.size === 0) {
       await enable()
     }
 
     const path = [...addressToPath.values()][0]
-
-    const data = JSON.parse(message.data)
 
     return eth
       .signEIP712HashedMessage(
