@@ -3,10 +3,8 @@ import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
 
 import bitpieIcon from '../wallet-icons/icon-bitpie'
 
-function bitpie(
-  options: CommonWalletOptions & { isMobile: boolean }
-): WalletModule {
-  const { preferred, label, iconSrc, svg, isMobile } = options
+function bitpie(options: CommonWalletOptions): WalletModule {
+  const { preferred, label, iconSrc, svg } = options
 
   return {
     name: label || 'Bitpie',
