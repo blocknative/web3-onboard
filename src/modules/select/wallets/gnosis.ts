@@ -10,9 +10,17 @@ const getSafe = (sdk: SafeAppsSDK): Promise<SafeInfo | undefined> =>
     new Promise<undefined>(resolve => setTimeout(resolve, 200))
   ])
 
-function gnosis(
-  options: CommonWalletOptions
-): WalletModule & { isSafeContext: () => Promise<boolean> } {
+/**
+ * Checks to see if we are are within a Safe App context. If we are it executes
+ * the callback function which self-selects this wallet.
+ * @param selectWallet - A callback function which can call the `walletSelect` method
+ * with the Gnosis wallet name.
+ */
+export const checkGnosisSafeContext = async (selectWallet: () => void) =>
+  !!(await getSafe(new (await import('@gnosis.pm/safe-apps-sdk')).default())) &&
+  selectWallet()
+
+function gnosis(options: CommonWalletOptions): WalletModule {
   const { preferred, label, iconSrc, svg, networkId } = options
 
   const network = networkId === 4 ? 'rinkeby.' : ''
@@ -48,11 +56,7 @@ function gnosis(
         `,
     desktop: true,
     mobile: false,
-    preferred,
-    isSafeContext: async () =>
-      !!(await getSafe(
-        new (await import('@gnosis.pm/safe-apps-sdk')).default()
-      ))
+    preferred
   }
 }
 

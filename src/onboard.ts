@@ -245,23 +245,19 @@ function init(initialization: Initialization): API {
   // Find the Gnosis wallet from the wallet init options. Ignore it
   // if it is a wallet module. We need to get the wallet init first
   // in order to determine the wallet name: `walletName` or `label`.
-  const gnosisWallet = initialization.walletSelect?.wallets?.find(
+  const {
+    // If label is undefined set it to 'Gnosis Safe'
+    label: gnosisWalletName = 'Gnosis Safe'
+  } = initialization.walletSelect?.wallets?.find(
     wallet => isWalletInit(wallet) && wallet.walletName === 'gnosis'
-  ) as WalletInitOptions | undefined
+  ) as WalletInitOptions
 
-  // If we found the Gnosis wallet, get the wallet instance and
-  // inquire to see if we are within a Safe App context.
-  if (gnosisWallet) {
-    initializedModules.walletSelect.wallets.then(wallets => {
-      // Check first for the label in case the `wallet.name` was overridden by it
-      const walletName = gnosisWallet?.label || 'Gnosis Safe'
-      const walletInstance = wallets.find(wallet => wallet.name === walletName)
-      walletInstance?.isSafeContext().then((isSafe: boolean) => {
-        if (isSafe) {
-          walletSelect(walletName)
-        }
-      })
-    })
+  if (gnosisWalletName) {
+    import(
+      './modules/select/wallets/gnosis'
+    ).then(({ checkGnosisSafeContext }) =>
+      checkGnosisSafeContext(() => walletSelect(gnosisWalletName))
+    )
   }
 
   return {
