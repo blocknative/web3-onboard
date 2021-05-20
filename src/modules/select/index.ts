@@ -136,6 +136,8 @@ function getModule(
       return import('./wallets/liquality')
     case 'frame':
       return import('./wallets/frame')
+    case 'xdefi':
+      return import('./wallets/xdefi')
     case 'alphawallet':
       return import('./wallets/alphawallet')
     case 'ownbit':
