@@ -1,6 +1,6 @@
 {
   "name": "bnc-onboard",
-  "version": "1.25.0-0.2.2",
+  "version": "1.25.0-0.5.2",
   "description": "Onboard users to web3 by allowing them to select a wallet, get that wallet ready to transact and have access to synced wallet state.",
   "keywords": [
     "ethereum",
@@ -56,10 +56,10 @@
     "@cvbb/eth-keyring": "^1.1.0",
     "@gnosis.pm/safe-apps-provider": "^0.3.0",
     "@gnosis.pm/safe-apps-sdk": "^2.3.0",
-    "@ledgerhq/hw-app-eth": "^5.21.0",
+    "@ledgerhq/hw-app-eth": "^5.49.0",
     "@ledgerhq/hw-transport-u2f": "^5.21.0",
     "@portis/web3": "^4.0.0",
-    "@toruslabs/torus-embed": "^1.9.2",
+    "@toruslabs/torus-embed": "^1.10.11",
     "@walletconnect/web3-provider": "^1.4.1",
     "authereum": "^0.1.12",
     "bignumber.js": "^9.0.0",
@@ -67,6 +67,7 @@
     "bowser": "^2.10.0",
     "eth-lattice-keyring": "^0.2.7",
     "eth-provider": "^0.6.1",
+    "eth-sig-util": "^3.0.1",
     "ethereumjs-tx": "^2.1.2",
     "ethereumjs-util": "^7.0.3",
     "fortmatic": "^2.2.1",
@@ -76,5 +77,10 @@
     "trezor-connect": "^8.1.9",
     "walletlink": "^2.1.0",
     "web3-provider-engine": "^15.0.4"
+  },
+  "resolutions": {
+    "authereum/web3-utils/underscore": "^1.12.1",
+    "authereum/ethers/elliptic": "^6.5.3",
+    "@portis/web3/pocket-js-core/axios": "^0.21.1"
   }
 }
