@@ -2073,10 +2073,10 @@ bn.js@^5.2.0:
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-5.2.0.tgz#358860674396c6997771a9d051fcc1b57d4ae002"
   integrity sha512-D7iWRBvnZE8ecXiLj/9wbxH7Tk79fAh8IHaTNq1RWRixsS02W+5qS+iE9yq6RYl0asXx5tw0bLhmT5pIfbSquw==
 
-bnc-sdk@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-3.2.0.tgz#421a9151107785bc075447c8cff260df0c3aed48"
-  integrity sha512-7nyb+zRiKYRz0DTdceWHW1whC2nMVj+2uyg91giq8pwV02oDYMpdBsQssKBFghOQMaUqv2TBSZmD5p9hgA5FsA==
+bnc-sdk@^3.3.4:
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-3.3.4.tgz#43e7c0e69be92e0706fce5f42ad6a700296078d9"
+  integrity sha512-yBQ1FHBOhPlWGNWHdma5Rx8iHiM0DBxXahyVqmlHdqpX6Idkxzqc1kT6GmV0FnLx/bL8OOcpstPcovn3meu0fQ==
   dependencies:
     crypto-es "^1.2.2"
     rxjs "^6.6.3"
