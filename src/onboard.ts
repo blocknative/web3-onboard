@@ -248,9 +248,9 @@ function init(initialization: Initialization): API {
   const {
     // If label is undefined set it to 'Gnosis Safe'
     label: gnosisWalletName = 'Gnosis Safe'
-  } = initialization.walletSelect?.wallets?.find(
+  } = (initialization.walletSelect?.wallets?.find(
     wallet => isWalletInit(wallet) && wallet.walletName === 'gnosis'
-  ) as WalletInitOptions
+  ) || {}) as WalletInitOptions
 
   if (gnosisWalletName) {
     import(
