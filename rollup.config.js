@@ -69,6 +69,7 @@ export default {
     'ethereumjs-tx',
     'ethereumjs-util',
     'eth-lattice-keyring',
+    'eth-sig-util',
     '@cvbb/eth-keyring',
     'hdkey',
     '@ledgerhq/hw-transport-u2f',

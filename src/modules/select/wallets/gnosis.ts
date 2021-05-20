@@ -3,13 +3,22 @@ import type { SafeInfo } from '@gnosis.pm/safe-apps-sdk'
 import { CommonWalletOptions, Helpers, WalletModule } from '../../../interfaces'
 import gnosisWalletIcon from '../wallet-icons/icon-gnosis'
 
-const getSafe = (sdk: SafeAppsSDK): Promise<SafeInfo | undefined> => {
-  return Promise.race([
+const getSafe = (sdk: SafeAppsSDK): Promise<SafeInfo | undefined> =>
+  Promise.race([
     sdk.getSafeInfo(),
     // Timeout need as this method hangs until it can find the safe info
     new Promise<undefined>(resolve => setTimeout(resolve, 200))
   ])
-}
+
+/**
+ * Checks to see if we are are within a Safe App context. If we are it executes
+ * the callback function which self-selects this wallet.
+ * @param selectWallet - A callback function which can call the `walletSelect` method
+ * with the Gnosis wallet name.
+ */
+export const checkGnosisSafeContext = async (selectWallet: () => void) =>
+  !!(await getSafe(new (await import('@gnosis.pm/safe-apps-sdk')).default())) &&
+  selectWallet()
 
 function gnosis(options: CommonWalletOptions): WalletModule {
   const { preferred, label, iconSrc, svg, networkId } = options
@@ -18,7 +27,7 @@ function gnosis(options: CommonWalletOptions): WalletModule {
   const link = `https://${network}gnosis-safe.io/app`
 
   return {
-    name: label || 'Gnosis Safe Wallet',
+    name: label || 'Gnosis Safe',
     iconSrc,
     svg: svg || gnosisWalletIcon,
     wallet: async ({ createModernProviderInterface }: Helpers) => {

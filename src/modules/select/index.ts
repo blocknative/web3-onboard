@@ -24,6 +24,7 @@ const mobileDefaultWalletNames = [
   'liquality',
   'alphawallet',
   'ownbit',
+  'bitpie',
   'authereum'
 ]
 
@@ -135,12 +136,16 @@ function getModule(
       return import('./wallets/liquality')
     case 'frame':
       return import('./wallets/frame')
+    case 'xdefi':
+      return import('./wallets/xdefi')
     case 'alphawallet':
       return import('./wallets/alphawallet')
     case 'ownbit':
       return import('./wallets/ownbit')
     case 'keepkey':
       return import('./wallets/keepkey/')
+    case 'bitpie':
+      return import('./wallets/bitpie')
     case 'gnosis':
       return import('./wallets/gnosis')
     default:

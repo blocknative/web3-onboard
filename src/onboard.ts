@@ -17,7 +17,7 @@ import {
 } from './stores'
 
 import { getDeviceInfo } from './utilities'
-import { validateInit, validateConfig } from './validation'
+import { validateInit, validateConfig, isWalletInit } from './validation'
 
 import { version } from '../package.json'
 
@@ -27,7 +27,8 @@ import {
   API,
   ConfigOptions,
   UserState,
-  Wallet
+  Wallet,
+  WalletInitOptions
 } from './interfaces'
 
 import initializeModules from './modules'
@@ -239,6 +240,24 @@ function init(initialization: Initialization): API {
 
   function getState(): UserState {
     return get(state)
+  }
+
+  // Find the Gnosis wallet from the wallet init options. Ignore it
+  // if it is a wallet module. We need to get the wallet init first
+  // in order to determine the wallet name: `walletName` or `label`.
+  const {
+    // If label is undefined set it to 'Gnosis Safe'
+    label: gnosisWalletName = 'Gnosis Safe'
+  } = (initialization.walletSelect?.wallets?.find(
+    wallet => isWalletInit(wallet) && wallet.walletName === 'gnosis'
+  ) || {}) as WalletInitOptions
+
+  if (gnosisWalletName) {
+    import(
+      './modules/select/wallets/gnosis'
+    ).then(({ checkGnosisSafeContext }) =>
+      checkGnosisSafeContext(() => walletSelect(gnosisWalletName))
+    )
   }
 
   return {
