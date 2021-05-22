@@ -120,7 +120,7 @@ async function createKeepKeyProvider({
   let keepKeyWallet: import('@shapeshiftoss/hdwallet-keepkey').KeepKeyHDWallet
 
   try {
-    keepKeyWallet = await keepKeyAdapter.pairDevice()
+    keepKeyWallet = (await keepKeyAdapter.pairDevice()) as import('@shapeshiftoss/hdwallet-keepkey').KeepKeyHDWallet
   } catch (error) {
     // This error indicates that the keepkey is paired with another app
     if (error.name === HDWalletErrorType.ConflictingApp) {
@@ -196,6 +196,9 @@ async function createKeepKeyProvider({
   provider.isCustomPath = isCustomPath
 
   async function enable(): Promise<Array<string | undefined>> {
+    // Cancel any user prompt that may be displayed on the keepkey i.e. the pin matrix
+    keepKeyWallet.cancel().catch(err => err)
+
     enabled = true
     return getAccounts().catch((error: any) => {
       // If the error.message is an object, then the error message originated from keepkey
@@ -211,6 +214,7 @@ async function createKeepKeyProvider({
     dPath = ''
     addressToPath = new Map()
     enabled = false
+    keepKeyWallet.clearSession()
     provider.stop()
   }
 
@@ -301,6 +305,10 @@ async function createKeepKeyProvider({
       coin: 'Ethereum'
     })
 
+    // This would only happen if the user provides an invalid dPath and it wasn't caught by the setPath method
+    if (accountIdx === undefined)
+      throw new Error(`Could not derive account from path: ${dPath}`)
+
     // Calculate the index to start from based on the dPath index and the current number of generated addresses
     const startingIndex = accountIdx + addressToPath.size
     for (let i = startingIndex; i < ACCOUNTS_TO_GET + startingIndex; i++) {
@@ -381,7 +389,11 @@ async function createKeepKeyProvider({
     return serialized
   }
 
-  async function signMessage(message: { data: string }): Promise<string> {
+  async function signMessage({
+    data: message
+  }: {
+    data: string
+  }): Promise<string> {
     if (addressToPath.size === 0) {
       await enable()
     }
