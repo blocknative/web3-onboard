@@ -53,6 +53,12 @@ function walletConnect(
 
       const balanceProvider = createProvider({ rpcUrl })
 
+      if (infuraKey && rpc) {
+        throw new Error(
+          'WalletConnect requires  an Infura ID or a custom RPC object but not both.'
+        )
+      }
+
       const provider = new WalletConnectProvider({
         infuraId: infuraKey,
         rpc,
