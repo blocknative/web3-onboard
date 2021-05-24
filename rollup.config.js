@@ -69,6 +69,7 @@ export default {
     'ethereumjs-tx',
     'ethereumjs-util',
     'eth-lattice-keyring',
+    'eth-sig-util',
     '@cvbb/eth-keyring',
     'hdkey',
     '@ledgerhq/hw-transport-u2f',
@@ -82,6 +83,8 @@ export default {
     'web3-provider-engine/subproviders/rpc',
     'web3-provider-engine/subproviders/subscriptions',
     'web3-provider-engine/subproviders/filters',
-    'eth-provider'
+    'eth-provider',
+    '@gnosis.pm/safe-apps-sdk',
+    '@gnosis.pm/safe-apps-provider'
   ]
 }

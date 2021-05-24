@@ -16,7 +16,8 @@ function createProvider(config: any) {
     processMessage,
     processPersonalMessage,
     signMessage,
-    signPersonalMessage
+    signPersonalMessage,
+    signTypedMessage
   } = config
 
   const pollingInterval = get(app).blockPollingInterval
@@ -29,7 +30,8 @@ function createProvider(config: any) {
       processMessage,
       processPersonalMessage,
       signMessage,
-      signPersonalMessage
+      signPersonalMessage,
+      signTypedMessage
     })
 
   const rpcSubProvider = new RpcSource({

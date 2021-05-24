@@ -249,6 +249,10 @@ export function getProviderName(provider: any): string | undefined {
     return 'Status'
   }
 
+  if (provider.isXDEFI) {
+    return 'XDEFI'
+  }
+
   if (provider.isMetaMask) {
     return 'MetaMask'
   }
@@ -275,6 +279,17 @@ export function getProviderName(provider: any): string | undefined {
 
   if (provider.isAlphaWallet) {
     return 'AlphaWallet'
+  }
+
+  if (provider.isBitpie) {
+    return 'Bitpie'
+  }
+
+  // =====================================
+  // When adding new wallet place above this metamask check as some providers
+  // have an isMetaMask property in addition to the wallet's own `is[WalletName]`
+  if (provider.isMetaMask) {
+    return 'MetaMask'
   }
 
   if (provider.host && provider.host.indexOf('localhost') !== -1) {
