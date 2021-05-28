@@ -333,6 +333,7 @@ export interface TorusOptions extends CommonWalletOptions {
   integrity?: IntegrityParams
   whiteLabel?: WhiteLabelParams
   loginMethod?: 'google' | 'facebook' | 'twitch' | 'reddit' | 'discord' | string
+  rpcUrl?: string
 }
 
 //#endregion torus
