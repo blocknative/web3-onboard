@@ -20,7 +20,8 @@ function torus(options: TorusOptions & { networkId: number }): WalletModule {
     showTorusButton,
     integrity,
     whiteLabel,
-    loginMethod
+    loginMethod,
+    rpcUrl
   } = options
 
   return {
@@ -41,7 +42,7 @@ function torus(options: TorusOptions & { networkId: number }): WalletModule {
         buildEnv, // default: production
         enableLogging, // default: false
         network: {
-          host: networkName(networkId), // default: mainnet
+          host: rpcUrl || networkName(networkId), // default: mainnet
           chainId: networkId, // default: 1
           networkName: `${networkName(networkId)} Network` // default: Main Ethereum Network
         },
