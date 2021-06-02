@@ -4,7 +4,7 @@ import {
   Helpers,
   WalletModule
 } from '../../../../interfaces'
-import { renderPinModal } from './pinModal'
+import { ModalType, renderModal } from './entryModal'
 
 import keepKeyIcon from '../../wallet-icons/icon-keepkey.png'
 
@@ -179,7 +179,12 @@ async function createKeepKeyProvider({
 
   // If the wallet asks for a PIN, open the PIN modal
   keyring.on(['*', '*', Events.PIN_REQUEST], () => {
-    renderPinModal(keepKeyWallet)
+    renderModal(keepKeyWallet, ModalType.Pin)
+  })
+
+  // If the wallet asks for a PIN, open the PIN modal
+  keyring.on(['*', '*', Events.PASSPHRASE_REQUEST], () => {
+    renderModal(keepKeyWallet, ModalType.Passphrase)
   })
 
   provider.setPath = setPath
@@ -320,7 +325,8 @@ async function createKeepKeyProvider({
 
       // Retrieve the address associated with the given account index
       const address = await keepKeyWallet.ethGetAddress({
-        addressNList
+        addressNList,
+        showDisplay: false
       })
 
       // Store the address in our set of generated addresses

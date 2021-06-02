@@ -1,10 +1,30 @@
 import type { KeepKeyHDWallet } from '@shapeshiftoss/hdwallet-keepkey'
-import { detach, insert, noop } from 'svelte/internal'
+import { detach, insert, noop, SvelteComponentDev } from 'svelte/internal'
 
 import Modal from '../../../../components/Modal.svelte'
 import Button from '../../../../elements/Button.svelte'
 
 const HANDLE_PIN_PRESS = 'handlePinPress'
+const BUTTON_COLOR = `#EBEBED`
+const BUTTON_DOT_COLOR = `#33394B`
+
+export enum ModalType {
+  Pin,
+  Passphrase
+}
+
+interface Slot {
+  (): {
+    c: () => void
+    m: (target: any, anchor: any) => void
+    d: (detaching: any) => void
+    l: () => void
+  }
+}
+
+interface Slots {
+  default: Slot[]
+}
 
 const pinButton = (
   value: number,
@@ -32,29 +52,76 @@ const pinButtons = `
     ${[7, 8, 9, 4, 5, 6, 1, 2, 3].map(val => pinButton(val)).join('')}
   </div>
 `
+
 const delButtonIcon = `<svg class="del-button-icon" viewBox="0 0 24 24" focusable="false" class="chakra-icon css-onkibi" aria-hidden="true"><path fill="currentColor" d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>`
-const pinInput = `
-<form class="pin-input-container">
+
+const pinPhraseInput = (modalType: ModalType) => `
+<form class="pin-phrase-input-container">
   <input
-    id="pin-input"
-    placeholder="PIN"
+    id="pin-phrase-input"
+    placeholder="${modalType === ModalType.Pin ? 'PIN' : ''}"
     type="password"
     autocomplete="current-password"
   />
-  <div class="del-button-wrapper">
-  ${pinButton(-1, delButtonIcon, '38px', '38px')}
-  </div>
+  ${
+    modalType === ModalType.Pin
+      ? ` <div class="del-button-wrapper">
+            ${pinButton(-1, delButtonIcon, '38px', '38px')}
+          </div>`
+      : ''
+  }
 </form>
 `
-const buttonColor = `#EBEBED`
-const buttonDotColor = `#33394B`
 
-const styles = `
-  .pin-modal {
+// Contains styles used by both the pin entry modal and the passphrase entry modal
+const baseStyles = `
+  .keepkey-modal {
     max-width: 22rem;
     padding: 20px 10px;
   }
-  #pin-pad {
+  .pin-phrase-input-container {
+    display: flex;
+    position: relative;
+    align-items: center;
+    margin: 20px 0;
+    width: 100%;
+  }
+  #pin-phrase-input {
+    background: inherit;
+    font-size: 0.889em;
+    font-family: inherit;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #242835;
+    border-radius: 4px;
+    padding-left: 0.5rem;
+    padding-right: 4.1rem;
+    transition: opacity 150ms ease-in-out;
+    height: 42px;
+    width: 100%;
+    opacity: 0.6;
+    outline: none;
+  }
+  #pin-phrase-input:hover, #pin-phrase-input:focus {
+    opacity: 1;
+  }
+  .unlock-button {
+    height: 26px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  /* Overrides the branding on the modal*/
+  .keepkey-modal + .bn-branding { visibility: hidden !important; }
+  .keepkey-modal .bn-onboard-prepare-button {
+    width: 100%;
+  }
+`
+
+const pinModalStyles = `
+  #entry {
     align-items: center;
     display: flex;
     flex-flow: column;
@@ -71,7 +138,7 @@ const styles = `
   .pin-button {
     align-items: center;
     border-radius: 6px;
-    border: 1px solid ${buttonColor};
+    border: 1px solid ${BUTTON_COLOR};
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -86,42 +153,17 @@ const styles = `
     height: 100%;
     display: flex;
     overflow: hidden;
-    background-color: ${buttonColor};
+    background-color: ${BUTTON_COLOR};
     transition: opacity 100ms ease-in;
   }
   .pin-button-bg:hover {
     opacity: .2;
   }
   .pin-button-dot {
-    fill: ${buttonDotColor};
+    fill: ${BUTTON_DOT_COLOR};
     position: absolute;
     pointer-events: none;
     z-index: 2;
-  }
-  .pin-input-container {
-    display: flex;
-    position: relative;
-    align-items: center;
-    margin: 15px 0;
-  }
-  #pin-input {
-    background: inherit;
-    font-size: 0.889em;
-    font-family: inherit;
-    border-width: 1px;
-    border-style: solid;
-    border-color: #242835;
-    border-radius: 4px;
-    padding-left: 0.5rem;
-    padding-right: 4.1rem;
-    transition: opacity 150ms ease-in-out;
-    height: 42px;
-    width: 100%;
-    opacity: 0.6;
-    outline: none;
-  }
-  #pin-input:hover, #pin-input:focus {
-    opacity: 1;
   }
   .del-button-wrapper {
     position: absolute;
@@ -147,53 +189,57 @@ const styles = `
   .del-button-icon + div:hover {
     opacity: 1;
   }
-  .unlock-button {
-    height: 26px;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: center;
-  }
-  
-  /* Overrides the branding on the modal*/
-  .pin-modal + .bn-branding { visibility: hidden !important; }
-  #pin-pad .bn-onboard-prepare-button {
-    width: 218px;
+`
+
+const passphraseModalStyles = `
+  .keepkey-modal {
+    padding: 40px 30px;
   }
 `
 
-export const renderPinModal = (wallet: KeepKeyHDWallet) => {
-  const pinPadHTML = `
-    <style>${styles}</style>
+const pinHTML = `
+    <style>${baseStyles}${pinModalStyles}</style>
     <h2>Enter Your Pin</h2>
     <p>
       Use PIN layout shown on your device to find the location to press on this pin pad.
     </p>
-    <div id="pin-pad" class="bn-onboard-custom">
+    <div id="entry" class="bn-onboard-custom">
       ${pinButtons}
-      ${pinInput}
+      ${pinPhraseInput(ModalType.Pin)}
     </div>
   `
 
-  const getPinInput = () =>
-    document.getElementById('pin-input') as HTMLInputElement
+const passphraseHTML = `
+  <style>${baseStyles}${passphraseModalStyles}</style>
+  <h2 style="margin-bottom: 35px">Enter Your Passphrase</h2>
+  <div id="entry" class="bn-onboard-custom">
+    ${pinPhraseInput(ModalType.Passphrase)}
+  </div>
+`
 
-  const handlePinPress = (value: number) => {
-    const input = getPinInput()
-    // A value of -1 signals a backspace e.g. we delete the last char from the input
-    input.value = value === -1 ? input.value.slice(0, -1) : input.value + value
-  }
+export const renderModal = (wallet: KeepKeyHDWallet, modalType: ModalType) => {
+  const modalHtml = modalType === ModalType.Pin ? pinHTML : passphraseHTML
+
+  const getInput = () =>
+    document.getElementById('pin-phrase-input') as HTMLInputElement
 
   const deleteWindowProperties = () => {
     delete (window as any)[HANDLE_PIN_PRESS]
   }
 
-  ;(window as any)[HANDLE_PIN_PRESS] = handlePinPress
+  if (modalType === ModalType.Pin) {
+    ;(window as any)[HANDLE_PIN_PRESS] = (value: number) => {
+      const input = getInput()
+      // A value of -1 signals a backspace e.g. we delete the last char from the input
+      input.value =
+        value === -1 ? input.value.slice(0, -1) : input.value + value
+    }
+  }
 
   // Creates a modal component which gets mounted to the body and is passed the pin html into it's slot
   const div = document.createElement('div')
-  div.innerHTML = pinPadHTML
-  div.className = 'pin-modal'
+  div.innerHTML = modalHtml
+  div.className = 'keepkey-modal'
   const pinModal = new Modal({
     target: document.body,
     props: {
@@ -206,27 +252,31 @@ export const renderPinModal = (wallet: KeepKeyHDWallet) => {
       $$slots: createSlot(div),
       $$scope: {}
     }
-  })
+  } as SvelteComponentDev['new'])
 
   // Creates a new Button component used to trigger sending the pin to Keepkey
-  const pinPadEl = document.getElementById('pin-pad')
-  if (pinPadEl) {
-    const span = document.createElement('div')
+  const entryEl = document.getElementById('entry')
+  if (entryEl) {
+    const span = document.createElement('span')
     span.innerHTML = `Unlock`
     span.className = `unlock-button`
     new Button({
-      target: pinPadEl,
+      target: entryEl,
       props: {
         onclick: async () => {
-          const pin = getPinInput().value
-          await wallet.sendPin(pin)
+          const value = getInput().value
+
+          modalType === ModalType.Pin
+            ? await wallet.sendPin(value)
+            : await wallet.sendPassphrase(value)
+
           pinModal.$destroy()
           deleteWindowProperties()
         },
         $$slots: createSlot(span),
         $$scope: {}
       }
-    })
+    } as SvelteComponentDev['new'])
   }
 }
 
@@ -235,7 +285,7 @@ export const renderPinModal = (wallet: KeepKeyHDWallet) => {
  * arbitrary html into a component's default slot
  * @param element The html element which is inserted into the components slot
  */
-function createSlot(element: HTMLElement) {
+function createSlot(element: HTMLElement): Slots {
   return {
     default: [
       function () {
