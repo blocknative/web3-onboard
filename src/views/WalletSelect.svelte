@@ -232,7 +232,9 @@
       connect: selectedWalletInterface.connect,
       type,
       icons: {
-        svg, iconSrc, iconSrcSet
+        svg,
+        iconSrc,
+        iconSrcSet
       }
     })
 
