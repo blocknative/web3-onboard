@@ -223,14 +223,17 @@
 
       return selectedWalletInterface
     })
-
+    const { name, type, svg, iconSrc, iconSrcSet } = module
     wallet.set({
       provider,
       instance,
       dashboard: selectedWalletInterface.dashboard,
-      name: module.name,
+      name,
       connect: selectedWalletInterface.connect,
-      type: module.type
+      type,
+      icons: {
+        svg, iconSrc, iconSrcSet
+      }
     })
 
     finish({ completed: true })
