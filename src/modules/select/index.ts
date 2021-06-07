@@ -25,7 +25,8 @@ const mobileDefaultWalletNames = [
   'alphawallet',
   'ownbit',
   'bitpie',
-  'authereum'
+  'authereum',
+  'tp'
 ]
 
 function select(
@@ -146,6 +147,8 @@ function getModule(
       return import('./wallets/bitpie')
     case 'gnosis':
       return import('./wallets/gnosis')
+    case 'tp':
+      return import('./wallets/tp')
     default:
       throw new Error(`${name} is not a valid walletName.`)
   }
