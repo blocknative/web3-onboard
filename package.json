@@ -58,6 +58,7 @@
     "@gnosis.pm/safe-apps-sdk": "^2.3.0",
     "@ledgerhq/hw-app-eth": "^5.49.0",
     "@ledgerhq/hw-transport-u2f": "^5.21.0",
+    "@ledgerhq/hw-transport-webusb": "^5.53.1",
     "@portis/web3": "^4.0.0",
     "@toruslabs/torus-embed": "^1.10.11",
     "@walletconnect/web3-provider": "^1.4.1",

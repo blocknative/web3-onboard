@@ -60,7 +60,7 @@ function ledger(options: LedgerOptions & { networkId: number }): WalletModule {
   }
 }
 
-async function ledgerProvider(options: {
+interface LedgerProviderOptions {
   networkId: number
   rpcUrl: string
   LedgerTransport: any
@@ -70,7 +70,9 @@ async function ledgerProvider(options: {
     disconnected: boolean
     walletName: string
   }) => void
-}) {
+}
+
+async function ledgerProvider(options: LedgerProviderOptions) {
   const { default: createProvider } = await import('./providerEngine')
   const { generateAddresses, isValidPath } = await import('./hd-wallet')
   const { default: TransportU2F } = await import('@ledgerhq/hw-transport-u2f')
@@ -169,10 +171,12 @@ async function ledgerProvider(options: {
   provider.isCustomPath = isCustomPath
 
   let transport: any
+  let transportSubscription: any
   let eth: any
 
   function disconnect() {
-    transport && transport.close()
+    transport?.close()
+    transportSubscription?.unsubscribe()
     provider.stop()
     resetWalletState({ disconnected: true, walletName: 'Ledger' })
   }
@@ -207,12 +211,6 @@ async function ledgerProvider(options: {
 
   async function createTransport() {
     try {
-      transport = LedgerTransport
-        ? await LedgerTransport.create()
-        : await TransportU2F.create()
-
-      eth = new Eth(transport)
-
       const observer = {
         next: (event: any) => {
           if (event.type === 'remove') {
@@ -223,9 +221,17 @@ async function ledgerProvider(options: {
         complete: () => {}
       }
 
-      LedgerTransport
-        ? LedgerTransport.listen(observer)
-        : TransportU2F.listen(observer)
+      // Get the Transport class
+      const Transport =
+        LedgerTransport || (navigator as Navigator & { usb: object })?.usb
+          ? (await import('@ledgerhq/hw-transport-webusb')).default
+          : TransportU2F
+
+      transport = await Transport.create()
+
+      eth = new Eth(transport)
+
+      Transport.listen(observer)
     } catch (error) {
       throw new Error('Error connecting to Ledger wallet')
     }
