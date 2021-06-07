@@ -88,7 +88,8 @@ export function initializeStores() {
     connect: null,
     instance: null,
     dashboard: null,
-    type: null
+    type: null,
+    icons: null
   })
 
   state = derived(
