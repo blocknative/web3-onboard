@@ -194,7 +194,7 @@ export function getProviderName(provider: any): string | undefined {
   }
 
   if (provider.isDcentWallet) {
-    return 'D\'CENT'
+    return "D'CENT"
   }
 
   if (provider.isTokenPocket) {
@@ -283,6 +283,10 @@ export function getProviderName(provider: any): string | undefined {
 
   if (provider.isBitpie) {
     return 'Bitpie'
+  }
+
+  if (provider.isSparrow) {
+    return 'Sparrow'
   }
 
   // =====================================
