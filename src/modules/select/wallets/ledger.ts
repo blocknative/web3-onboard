@@ -75,7 +75,6 @@ interface LedgerProviderOptions {
 async function ledgerProvider(options: LedgerProviderOptions) {
   const { default: createProvider } = await import('./providerEngine')
   const { generateAddresses, isValidPath } = await import('./hd-wallet')
-  const { default: TransportU2F } = await import('@ledgerhq/hw-transport-u2f')
   const { default: Eth } = await import('@ledgerhq/hw-app-eth')
 
   const EthereumTx = await import('ethereumjs-tx')
@@ -223,9 +222,9 @@ async function ledgerProvider(options: LedgerProviderOptions) {
 
       // Get the Transport class
       const Transport =
-        LedgerTransport || (navigator as Navigator & { usb: object })?.usb
+        LedgerTransport || supportsWebUSB
           ? (await import('@ledgerhq/hw-transport-webusb')).default
-          : TransportU2F
+          : (await import('@ledgerhq/hw-transport-u2f')).default
 
       transport = await Transport.create()
 
@@ -459,5 +458,12 @@ async function ledgerProvider(options: LedgerProviderOptions) {
 
   return provider
 }
+type Nav = Navigator & { usb: { getDevices(): void } }
+const supportsWebUSB = (): Promise<boolean> =>
+  Promise.resolve(
+    !!navigator &&
+      !!(navigator as Nav).usb &&
+      typeof (navigator as Nav).usb.getDevices === 'function'
+  )
 
 export default ledger
