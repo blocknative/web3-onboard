@@ -13,16 +13,8 @@ import { app } from '../../../stores'
 function walletConnect(
   options: WalletConnectOptions & { networkId: number }
 ): WalletModule {
-  const {
-    infuraKey,
-    rpc,
-    bridge,
-    preferred,
-    label,
-    iconSrc,
-    svg,
-    networkId
-  } = options
+  const { infuraKey, rpc, bridge, preferred, label, iconSrc, svg, networkId } =
+    options
 
   const pollingInterval = get(app).blockPollingInterval
 

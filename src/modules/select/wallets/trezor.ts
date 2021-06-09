@@ -2,16 +2,8 @@ import { TrezorOptions, WalletModule, Helpers } from '../../../interfaces'
 import trezorIcon from '../wallet-icons/icon-trezor'
 
 function trezor(options: TrezorOptions & { networkId: number }): WalletModule {
-  const {
-    rpcUrl,
-    networkId,
-    email,
-    appUrl,
-    preferred,
-    label,
-    iconSrc,
-    svg
-  } = options
+  const { rpcUrl, networkId, email, appUrl, preferred, label, iconSrc, svg } =
+    options
 
   return {
     name: label || 'Trezor',

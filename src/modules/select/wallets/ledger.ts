@@ -5,15 +5,8 @@ const LEDGER_LIVE_PATH = `m/44'/60'`
 const ACCOUNTS_TO_GET = 5
 
 function ledger(options: LedgerOptions & { networkId: number }): WalletModule {
-  const {
-    rpcUrl,
-    LedgerTransport,
-    networkId,
-    preferred,
-    label,
-    iconSrc,
-    svg
-  } = options
+  const { rpcUrl, LedgerTransport, networkId, preferred, label, iconSrc, svg } =
+    options
 
   return {
     name: label || 'Ledger',
@@ -222,7 +215,7 @@ async function ledgerProvider(options: LedgerProviderOptions) {
 
       // Get the Transport class
       const Transport =
-        LedgerTransport || supportsWebUSB
+        LedgerTransport || (await supportsWebUSB())
           ? (await import('@ledgerhq/hw-transport-webusb')).default
           : (await import('@ledgerhq/hw-transport-u2f')).default
 

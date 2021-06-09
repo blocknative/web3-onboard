@@ -113,9 +113,7 @@ export interface WalletModule {
   iconSrc?: string
   iconSrcSet?: string
   svg?: string
-  wallet: (
-    helpers: Helpers
-  ) => Promise<{
+  wallet: (helpers: Helpers) => Promise<{
     provider: any | undefined
     interface: WalletInterface | null
     instance?: any
