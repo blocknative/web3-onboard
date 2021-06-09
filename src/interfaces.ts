@@ -173,6 +173,7 @@ export interface Wallet {
   instance?: any | null
   connect?: Connect | null
   dashboard?: () => void | null
+  icons: Pick<WalletModule, 'svg' | 'iconSrc' | 'iconSrcSet'>
 }
 
 export interface CommonWalletOptions {

@@ -36,8 +36,27 @@ import initializeModules from './modules'
 let onboard: any
 
 function init(initialization: Initialization): API {
+  if (typeof window === 'undefined') {
+    console.warn(
+      'Onboard.js must be run in a browser environment. If you are utilizing server side rendering you can ignore this warning.'
+    )
+
+    const stubbedAPI = {
+      walletSelect: () => Promise.resolve(false),
+      walletCheck: () => Promise.resolve(false),
+      walletReset: () => {},
+      config: () => {},
+      getState: () => get(state),
+      accountSelect: () => Promise.resolve(false)
+    }
+
+    return stubbedAPI
+  }
+
   if (onboard) {
-    console.warn('onboard has already been initialized')
+    console.warn(
+      'Initializing Onboard and destroying previously initialized instance.'
+    )
     onboard.$destroy()
   }
 
