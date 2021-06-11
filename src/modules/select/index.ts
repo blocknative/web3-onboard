@@ -140,6 +140,8 @@ function getModule(name: string): Promise<{
       return import('./wallets/alphawallet')
     case 'ownbit':
       return import('./wallets/ownbit')
+    case 'keepkey':
+      return import('./wallets/keepkey/')
     case 'bitpie':
       return import('./wallets/bitpie')
     case 'gnosis':
