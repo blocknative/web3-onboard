@@ -652,14 +652,8 @@ export function validateWalletInit(
 ): void | never {
   validateType({ name: 'walletInit', value: walletInit, type: 'object' })
 
-  const {
-    walletName,
-    preferred,
-    label,
-    iconSrc,
-    svg,
-    ...otherParams
-  } = walletInit
+  const { walletName, preferred, label, iconSrc, svg, ...otherParams } =
+    walletInit
 
   invalidParams(
     otherParams,

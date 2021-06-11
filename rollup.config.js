@@ -73,6 +73,7 @@ export default {
     '@cvbb/eth-keyring',
     'hdkey',
     '@ledgerhq/hw-transport-u2f',
+    '@ledgerhq/hw-transport-webusb',
     '@ledgerhq/hw-app-eth',
     'util',
     'assert',

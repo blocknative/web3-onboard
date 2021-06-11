@@ -68,9 +68,7 @@ function select(
   )
 }
 
-function getModule(
-  name: string
-): Promise<{
+function getModule(name: string): Promise<{
   default: (options: AllWalletInitOptions) => WalletModule
 }> {
   switch (name) {

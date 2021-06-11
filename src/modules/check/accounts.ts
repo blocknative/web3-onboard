@@ -53,8 +53,9 @@ function accountSelect(
       }
 
       const accountSelect = () => {
-        const accountIndex = (document as any).getElementById('account-select')
-          .selectedIndex
+        const accountIndex = (document as any).getElementById(
+          'account-select'
+        ).selectedIndex
 
         provider.setPrimaryAccount(accountsAndBalances[accountIndex].address)
       }
