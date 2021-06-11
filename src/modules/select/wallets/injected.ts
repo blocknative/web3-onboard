@@ -1,6 +1,6 @@
 import { extensionInstallMessage } from '../content'
 import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
-import injectedIcon from '../wallet-icons/icon-lattice'
+import injectedIcon from '../wallet-icons/icon-injected'
 
 function injected(options: CommonWalletOptions): WalletModule {
   const { preferred, label, svg } = options

@@ -68,10 +68,13 @@ function select(
     )
   }
 
-  const initWalletForNetwork = (walletModule: any) => walletModule.default({ networkId })
+  const initWalletForNetwork = (walletModule: any) =>
+    walletModule.default({ networkId })
 
   return Promise.all(
-    defaultWalletNames.map(walletName => getModule(walletName).then(initWalletForNetwork))
+    defaultWalletNames.map(walletName =>
+      getModule(walletName).then(initWalletForNetwork)
+    )
   ).then(modules => {
     const installedModuleNames = modules.map(m => m.name)
 
