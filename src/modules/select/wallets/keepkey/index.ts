@@ -104,12 +104,8 @@ async function createKeepKeyProvider({
     '@shapeshiftoss/hdwallet-keepkey-webusb'
   )
 
-  const {
-    Keyring,
-    Events,
-    bip32ToAddressNList,
-    HDWalletErrorType
-  } = await import('@shapeshiftoss/hdwallet-core')
+  const { Keyring, Events, bip32ToAddressNList, HDWalletErrorType } =
+    await import('@shapeshiftoss/hdwallet-core')
 
   const { default: createProvider } = await import('../providerEngine')
   const { isValidPath } = await import('../hd-wallet')
@@ -120,7 +116,8 @@ async function createKeepKeyProvider({
   let keepKeyWallet: import('@shapeshiftoss/hdwallet-keepkey').KeepKeyHDWallet
 
   try {
-    keepKeyWallet = (await keepKeyAdapter.pairDevice()) as import('@shapeshiftoss/hdwallet-keepkey').KeepKeyHDWallet
+    keepKeyWallet =
+      (await keepKeyAdapter.pairDevice()) as import('@shapeshiftoss/hdwallet-keepkey').KeepKeyHDWallet
   } catch (error) {
     // This error indicates that the keepkey is paired with another app
     if (error.name === HDWalletErrorType.ConflictingApp) {
