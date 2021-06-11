@@ -1,4 +1,9 @@
-import { TrezorOptions, WalletModule, HardwareWalletCustomNetwok, Helpers } from '../../../interfaces'
+import {
+  TrezorOptions,
+  WalletModule,
+  HardwareWalletCustomNetwork,
+  Helpers
+} from '../../../interfaces'
 import trezorIcon from '../wallet-icons/icon-trezor'
 
 function trezor(options: TrezorOptions & { networkId: number }): WalletModule {
@@ -67,7 +72,7 @@ async function trezorProvider(options: {
   appUrl: string
   rpcUrl: string
   BigNumber: any
-  customNetwork?: HardwareWalletCustomNetwok
+  customNetwork?: HardwareWalletCustomNetwork
   networkName: (id: number) => string
   resetWalletState: (options?: {
     disconnected: boolean
@@ -76,7 +81,7 @@ async function trezorProvider(options: {
 }) {
   const TrezorConnectLibrary = await import('trezor-connect')
   const { Transaction } = await import('@ethereumjs/tx')
-  const {default:Common} = await import ('@ethereumjs/common')
+  const { default: Common } = await import('@ethereumjs/common')
   const ethUtil = await import('ethereumjs-util')
   const { default: createProvider } = await import('./providerEngine')
   const { generateAddresses, isValidPath } = await import('./hd-wallet')
@@ -371,10 +376,15 @@ async function trezorProvider(options: {
     }
 
     const path = [...addressToPath.values()][0]
-    const common = new Common({ chain: (customNetwork) || networkName(networkId) })
-    const transaction =  Transaction.fromTxData(
-      {...transactionData,gasLimit: transactionData.gas??transactionData.gasLimit}, 
-      {common,freeze:false}
+    const common = new Common({
+      chain: customNetwork || networkName(networkId)
+    })
+    const transaction = Transaction.fromTxData(
+      {
+        ...transactionData,
+        gasLimit: transactionData.gas ?? transactionData.gasLimit
+      },
+      { common, freeze: false }
     )
 
     const trezorResult = await trezorSignTransaction(path, transactionData)

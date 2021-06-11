@@ -196,9 +196,9 @@ export interface WalletConnectOptions extends CommonWalletOptions {
 }
 
 /*
-* Types taken from https://github.com/ethereumjs/ethereumjs-vm/blob/eb05651554ec23d2ba7c46af6e5f5a7bc199f217/packages/common/src/types.ts#L15 
-* since they are not exported
-*/
+ * Types taken from https://github.com/ethereumjs/ethereumjs-vm/blob/eb05651554ec23d2ba7c46af6e5f5a7bc199f217/packages/common/src/types.ts#L15
+ * since they are not exported
+ */
 
 export interface GenesisBlock {
   hash: string
@@ -224,7 +224,7 @@ export interface BootstrapNode {
   comment: string
 }
 
-export interface HardwareWalletCustomNetwok {
+export interface HardwareWalletCustomNetwork {
   networkId: number
   genesis: GenesisBlock
   hardforks: Hardfork[]
@@ -235,19 +235,19 @@ export interface TrezorOptions extends CommonWalletOptions {
   appUrl: string
   email: string
   rpcUrl: string
-  customNetwork?: HardwareWalletCustomNetwok 
+  customNetwork?: HardwareWalletCustomNetwork
 }
 
 export interface LatticeOptions extends CommonWalletOptions {
   appName: string
   rpcUrl: string
-  customNetwork?: HardwareWalletCustomNetwok 
+  customNetwork?: HardwareWalletCustomNetwork
 }
 
 export interface LedgerOptions extends CommonWalletOptions {
   rpcUrl: string
   LedgerTransport?: any
-  customNetwork?: HardwareWalletCustomNetwok 
+  customNetwork?: HardwareWalletCustomNetwork
 }
 
 //#region torus

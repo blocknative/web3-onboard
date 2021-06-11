@@ -1,10 +1,24 @@
-import { LatticeOptions, WalletModule, HardwareWalletCustomNetwok,Helpers } from '../../../interfaces'
+import {
+  LatticeOptions,
+  WalletModule,
+  HardwareWalletCustomNetwork,
+  Helpers
+} from '../../../interfaces'
 import latticeIcon from '../wallet-icons/icon-lattice'
 
 function lattice(
   options: LatticeOptions & { networkId: number }
 ): WalletModule {
-  const { appName, rpcUrl, networkId, preferred, label, iconSrc, svg,customNetwork } = options
+  const {
+    appName,
+    rpcUrl,
+    networkId,
+    preferred,
+    label,
+    iconSrc,
+    svg,
+    customNetwork
+  } = options
 
   return {
     name: label || 'Lattice',
@@ -58,7 +72,7 @@ async function latticeProvider(options: {
   rpcUrl: string
   BigNumber: any
   networkName: (id: number) => string
-  customNetwork?: HardwareWalletCustomNetwok
+  customNetwork?: HardwareWalletCustomNetwork
   resetWalletState: (options?: {
     disconnected: boolean
     walletName: string
@@ -66,12 +80,13 @@ async function latticeProvider(options: {
 }) {
   const { default: EthLatticeKeyring } = await import('eth-lattice-keyring')
   const { Transaction } = await import('@ethereumjs/tx')
-  const {default:Common} = await import ('@ethereumjs/common')
+  const { default: Common } = await import('@ethereumjs/common')
   const { default: createProvider } = await import('./providerEngine')
 
   const BASE_PATH = "m/44'/60'/0'/0"
 
-  const { networkId, appName, rpcUrl, BigNumber, networkName,customNetwork } = options
+  const { networkId, appName, rpcUrl, BigNumber, networkName, customNetwork } =
+    options
 
   const params = {
     name: appName,
@@ -231,11 +246,16 @@ async function latticeProvider(options: {
     if (addressList.length === 0) {
       await enable()
     }
-    const common = new Common({ chain: (customNetwork) || networkName(networkId) })
+    const common = new Common({
+      chain: customNetwork || networkName(networkId)
+    })
 
-    const transaction =  Transaction.fromTxData(
-      {...transactionData,gasLimit: transactionData.gas??transactionData.gasLimit}, 
-      {common,freeze:false}
+    const transaction = Transaction.fromTxData(
+      {
+        ...transactionData,
+        gasLimit: transactionData.gas ?? transactionData.gasLimit
+      },
+      { common, freeze: false }
     )
 
     try {
