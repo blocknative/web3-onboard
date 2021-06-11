@@ -4,10 +4,17 @@ import {
   AllWalletInitOptions
 } from '../../interfaces'
 import { isWalletInit } from '../../validation'
+import { getProviderName } from '../../utilities'
 
 // wallets that qualify for default wallets need to have no
 // init parameters that are required for full functionality
-const desktopDefaultWalletNames = ['metamask', 'torus', 'opera', 'liquality']
+const desktopDefaultWalletNames = [
+  'metamask',
+  'frame',
+  'torus',
+  'opera',
+  'liquality'
+]
 
 const mobileDefaultWalletNames = [
   'metamask',
@@ -61,11 +68,27 @@ function select(
     )
   }
 
+  const initWalletForNetwork = (walletModule: any) => walletModule.default({ networkId })
+
   return Promise.all(
-    defaultWalletNames.map(walletName =>
-      getModule(walletName).then((m: any) => m.default({ networkId }))
-    )
-  )
+    defaultWalletNames.map(walletName => getModule(walletName).then(initWalletForNetwork))
+  ).then(modules => {
+    const installedModuleNames = modules.map(m => m.name)
+
+    if (window.ethereum) {
+      const injectedProviderName = getProviderName(window.ethereum)
+
+      if (!installedModuleNames.some(name => name === injectedProviderName)) {
+        // if an injected provider is present, list it as an option
+        // only if it's not already one of the provided options
+        return getModule('injected')
+          .then(initWalletForNetwork)
+          .then(m => [m, ...modules])
+      }
+    }
+
+    return modules
+  })
 }
 
 function getModule(name: string): Promise<{
@@ -146,6 +169,8 @@ function getModule(name: string): Promise<{
       return import('./wallets/bitpie')
     case 'gnosis':
       return import('./wallets/gnosis')
+    case 'injected':
+      return import('./wallets/injected')
     default:
       throw new Error(`${name} is not a valid walletName.`)
   }

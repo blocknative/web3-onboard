@@ -253,6 +253,10 @@ export function getProviderName(provider: any): string | undefined {
     return 'XDEFI'
   }
 
+  if (provider.isFrame) {
+    return 'Frame'
+  }
+
   if (provider.isMetaMask) {
     return 'MetaMask'
   }
