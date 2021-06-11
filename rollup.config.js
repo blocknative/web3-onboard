@@ -84,6 +84,7 @@ export default {
     'web3-provider-engine/subproviders/subscriptions',
     'web3-provider-engine/subproviders/filters',
     'eth-provider',
+    '@shapeshiftoss/hdwallet-keepkey',
     '@shapeshiftoss/hdwallet-keepkey-webusb',
     '@shapeshiftoss/hdwallet-core',
     '@gnosis.pm/safe-apps-sdk',
