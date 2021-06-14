@@ -490,6 +490,7 @@ export interface AppState {
   accountSelectInProgress: boolean
   walletSelectDisplayedUI: boolean
   walletCheckDisplayedUI: boolean
+  switchingWallets: boolean
   displayBranding: boolean
   agreement: TermsOfServiceAgreementOptions
 }
