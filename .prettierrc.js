@@ -6,5 +6,5 @@ module.exports = {
   tabWidth: 2,
   arrowParens: 'avoid',
   svelteSortOrder: 'options-scripts-styles-markup',
-  plugins: ['./node_modules/prettier-plugin-svelte']
+  plugins: ['prettier-plugin-svelte']
 }
