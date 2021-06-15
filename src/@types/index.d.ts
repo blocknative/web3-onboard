@@ -14,7 +14,11 @@ declare module 'ethereumjs-util'
 declare module 'hdkey'
 declare module '@ledgerhq/hw-app-eth'
 declare module '@ledgerhq/hw-transport-u2f'
+declare module '@ledgerhq/hw-transport-webusb'
 declare module 'eth-provider'
+
+declare module '@shapeshiftoss/hdwallet-core'
+declare module '@shapeshiftoss/hdwallet-keepkey-webusb'
 
 declare module '*.png'
 declare module '*.svg'

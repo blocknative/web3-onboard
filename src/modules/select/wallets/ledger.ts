@@ -5,15 +5,8 @@ const LEDGER_LIVE_PATH = `m/44'/60'`
 const ACCOUNTS_TO_GET = 5
 
 function ledger(options: LedgerOptions & { networkId: number }): WalletModule {
-  const {
-    rpcUrl,
-    LedgerTransport,
-    networkId,
-    preferred,
-    label,
-    iconSrc,
-    svg
-  } = options
+  const { rpcUrl, LedgerTransport, networkId, preferred, label, iconSrc, svg } =
+    options
 
   return {
     name: label || 'Ledger',
@@ -60,7 +53,7 @@ function ledger(options: LedgerOptions & { networkId: number }): WalletModule {
   }
 }
 
-async function ledgerProvider(options: {
+interface LedgerProviderOptions {
   networkId: number
   rpcUrl: string
   LedgerTransport: any
@@ -70,10 +63,11 @@ async function ledgerProvider(options: {
     disconnected: boolean
     walletName: string
   }) => void
-}) {
+}
+
+async function ledgerProvider(options: LedgerProviderOptions) {
   const { default: createProvider } = await import('./providerEngine')
   const { generateAddresses, isValidPath } = await import('./hd-wallet')
-  const { default: TransportU2F } = await import('@ledgerhq/hw-transport-u2f')
   const { default: Eth } = await import('@ledgerhq/hw-app-eth')
 
   const EthereumTx = await import('ethereumjs-tx')
@@ -169,10 +163,12 @@ async function ledgerProvider(options: {
   provider.isCustomPath = isCustomPath
 
   let transport: any
+  let transportSubscription: any
   let eth: any
 
   function disconnect() {
-    transport && transport.close()
+    transport?.close()
+    transportSubscription?.unsubscribe()
     provider.stop()
     resetWalletState({ disconnected: true, walletName: 'Ledger' })
   }
@@ -207,12 +203,6 @@ async function ledgerProvider(options: {
 
   async function createTransport() {
     try {
-      transport = LedgerTransport
-        ? await LedgerTransport.create()
-        : await TransportU2F.create()
-
-      eth = new Eth(transport)
-
       const observer = {
         next: (event: any) => {
           if (event.type === 'remove') {
@@ -223,9 +213,17 @@ async function ledgerProvider(options: {
         complete: () => {}
       }
 
-      LedgerTransport
-        ? LedgerTransport.listen(observer)
-        : TransportU2F.listen(observer)
+      // Get the Transport class
+      const Transport =
+        LedgerTransport || (await supportsWebUSB())
+          ? (await import('@ledgerhq/hw-transport-webusb')).default
+          : (await import('@ledgerhq/hw-transport-u2f')).default
+
+      transport = await Transport.create()
+
+      eth = new Eth(transport)
+
+      Transport.listen(observer)
     } catch (error) {
       throw new Error('Error connecting to Ledger wallet')
     }
@@ -453,5 +451,12 @@ async function ledgerProvider(options: {
 
   return provider
 }
+type Nav = Navigator & { usb: { getDevices(): void } }
+const supportsWebUSB = (): Promise<boolean> =>
+  Promise.resolve(
+    !!navigator &&
+      !!(navigator as Nav).usb &&
+      typeof (navigator as Nav).usb.getDevices === 'function'
+  )
 
 export default ledger

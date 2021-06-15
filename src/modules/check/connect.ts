@@ -22,7 +22,7 @@ function connect(options: WalletCheckCustomOptions = {}): WalletCheckModule {
           setTimeout(() => {
             if (address === null) {
               // if prom isn't resolving after 500ms, then stop waiting
-              resolve()
+              resolve(undefined)
             }
           }, 500)
         })
