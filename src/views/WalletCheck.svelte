@@ -169,12 +169,16 @@
         })
   }
 
-  function handleExit(completed?: boolean) {
+  function handleExit(
+    completed: boolean = false,
+    { switchingWallets }: Partial<AppState> = {}
+  ) {
     resetState()
     app.update((store: AppState) => ({
       ...store,
+      switchingWallets,
       walletCheckInProgress: false,
-      walletCheckCompleted: completed ? completed : false,
+      walletCheckCompleted: completed,
       accountSelectInProgress: false
     }))
   }
@@ -246,7 +250,7 @@
             loadingModal = false
             completed = true
             modal = res
-            resolve()
+            resolve(undefined)
           })
 
           setTimeout(() => {
@@ -274,44 +278,6 @@
   }
 </script>
 
-<style>
-  /* .bn-onboard-prepare-description */
-  p {
-    font-size: 0.889em;
-    font-family: inherit;
-    margin: 1em 0;
-  }
-
-  /* .bn-onboard-prepare-error */
-  span {
-    color: #e2504a;
-    font-size: 0.889em;
-    font-family: inherit;
-    display: block;
-    margin-bottom: 0.75em;
-    padding: 0.5em;
-    border: 1px solid #e2504a;
-    border-radius: 5px;
-  }
-
-  /* .bn-onboard-prepare-button-container */
-  div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 2.5rem;
-    position: relative;
-  }
-
-  section {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 1rem;
-  }
-</style>
-
 {#if loadingModal}
   <Modal closeable={false}>
     <Spinner description="Checking wallet" />
@@ -320,7 +286,7 @@
 
 {#if activeModal}
   <Modal closeModal={() => handleExit()}>
-    <ModalHeader icon={activeModal.icon} heading={activeModal.heading} />
+    <ModalHeader icon={activeModal.icon || ''} heading={activeModal.heading} />
     <p class="bn-onboard-custom bn-onboard-prepare-description">
       {@html activeModal.description}
     </p>
@@ -362,3 +328,41 @@
     </div>
   </Modal>
 {/if}
+
+<style>
+  /* .bn-onboard-prepare-description */
+  p {
+    font-size: 0.889em;
+    font-family: inherit;
+    margin: 1em 0;
+  }
+
+  /* .bn-onboard-prepare-error */
+  span {
+    color: #e2504a;
+    font-size: 0.889em;
+    font-family: inherit;
+    display: block;
+    margin-bottom: 0.75em;
+    padding: 0.5em;
+    border: 1px solid #e2504a;
+    border-radius: 5px;
+  }
+
+  /* .bn-onboard-prepare-button-container */
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 2.5rem;
+    position: relative;
+  }
+
+  section {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+</style>

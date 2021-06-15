@@ -53,11 +53,8 @@ function network(
         eventCode: 'networkFail',
         button: button || {
           onclick: () => {
-            app.update((store: AppState) => ({
-              ...store,
-              switchingWallets: true
-            }))
-            exit()
+            exit(false, { switchingWallets: true })
+
             walletSelect().then(result => {
               app.update((store: AppState) => ({
                 ...store,

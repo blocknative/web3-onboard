@@ -89,7 +89,7 @@ export interface StateAndHelpers extends UserState {
   BigNumber: any
   walletSelect: WalletSelectFunction
   wallet: Wallet
-  exit: (completed?: boolean) => void
+  exit: (completed?: boolean, state?: Partial<AppState>) => void
   stateSyncStatus: {
     [key: string]:
       | null
