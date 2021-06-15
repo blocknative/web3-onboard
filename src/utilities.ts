@@ -257,10 +257,6 @@ export function getProviderName(provider: any): string | undefined {
     return 'Frame'
   }
 
-  if (provider.isMetaMask) {
-    return 'MetaMask'
-  }
-
   if (provider.isMYKEY) {
     return 'MYKEY'
   }
