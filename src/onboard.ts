@@ -272,10 +272,9 @@ function init(initialization: Initialization): API {
   ) || {}) as WalletInitOptions
 
   if (gnosisWalletName) {
-    import(
-      './modules/select/wallets/gnosis'
-    ).then(({ checkGnosisSafeContext }) =>
-      checkGnosisSafeContext(() => walletSelect(gnosisWalletName))
+    import('./modules/select/wallets/gnosis').then(
+      ({ checkGnosisSafeContext }) =>
+        checkGnosisSafeContext(() => walletSelect(gnosisWalletName))
     )
   }
 

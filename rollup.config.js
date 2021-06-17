@@ -73,6 +73,7 @@ export default {
     '@cvbb/eth-keyring',
     'hdkey',
     '@ledgerhq/hw-transport-u2f',
+    '@ledgerhq/hw-transport-webusb',
     '@ledgerhq/hw-app-eth',
     'util',
     'assert',
@@ -84,6 +85,9 @@ export default {
     'web3-provider-engine/subproviders/subscriptions',
     'web3-provider-engine/subproviders/filters',
     'eth-provider',
+    '@shapeshiftoss/hdwallet-keepkey',
+    '@shapeshiftoss/hdwallet-keepkey-webusb',
+    '@shapeshiftoss/hdwallet-core',
     '@gnosis.pm/safe-apps-sdk',
     '@gnosis.pm/safe-apps-provider'
   ]
