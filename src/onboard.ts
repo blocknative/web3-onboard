@@ -206,9 +206,11 @@ function init(initialization: Initialization): API {
         const {
           walletCheckInProgress,
           walletCheckCompleted,
-          walletCheckDisplayedUI
+          walletCheckDisplayedUI,
+          switchingWallets
         } = store
-        if (walletCheckInProgress === false) {
+
+        if (!switchingWallets && walletCheckInProgress === false) {
           appUnsubscribe()
           walletCheckDisplayedUI
             ? setTimeout(() => {
