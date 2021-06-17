@@ -1,5 +1,5 @@
-<script>
-  export let description
+<script lang="ts">
+  export let description: string = ''
 </script>
 
 <style>

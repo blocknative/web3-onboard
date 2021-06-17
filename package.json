@@ -1,6 +1,6 @@
 {
   "name": "bnc-onboard",
-  "version": "1.27.0-0.1.2",
+  "version": "1.28.0-0.1.0",
   "description": "Onboard users to web3 by allowing them to select a wallet, get that wallet ready to transact and have access to synced wallet state.",
   "keywords": [
     "ethereum",
@@ -43,6 +43,7 @@
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^8.3.0",
     "prettier": "^2.0.5",
+    "prettier-plugin-svelte": "^2.2.0",
     "rimraf": "^3.0.0",
     "rollup": "^1.27.5",
     "rollup-plugin-svelte": "^6.1.1",
@@ -76,7 +77,6 @@
     "ethereumjs-util": "^7.0.3",
     "fortmatic": "^2.2.1",
     "hdkey": "^2.0.1",
-    "prettier-plugin-svelte": "^2.2.0",
     "regenerator-runtime": "^0.13.7",
     "trezor-connect": "^8.1.9",
     "walletlink": "^2.1.0",
