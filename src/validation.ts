@@ -323,7 +323,8 @@ export function validateWallet(
         'preferred',
         'desktop',
         'mobile',
-        'osExclusions'
+        'osExclusions',
+        'customNetwork'
       ],
       'selectWallets.wallets item'
     )
@@ -688,7 +689,8 @@ export function validateWalletInit(
       'rpcUri',
       'webUri',
       'xsUri',
-      'blockedPopupRedirect'
+      'blockedPopupRedirect',
+      'customNetwork'
     ],
     'walletInitObject'
   )
