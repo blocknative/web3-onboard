@@ -289,7 +289,7 @@ export function getProviderName(provider: any): string | undefined {
   // When adding new wallet place above this metamask check as some providers
   // have an isMetaMask property in addition to the wallet's own `is[WalletName]`
 
-  if (provider.isMetaMask && (provider._metamask || deriveProviderName(provider) !== 'MetaMask' )) {
+  if (provider.isMetaMask && provider._metamask) {
     return 'MetaMask'
   }
 
