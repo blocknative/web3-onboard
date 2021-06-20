@@ -51,13 +51,11 @@ function select(
 
   if (wallets) {
     return Promise.all(
-      wallets.map(wallet => {
-        if (isWalletInit(wallet)) {
-          const { walletName, ...initParams } = wallet
-          // If the dApp has opted into the injected wallet but there is no injected wallet then skip this wallet
-          if (walletName === 'detectedwallet' && !injectedWalletDetected()) {
-            return null // don't return a wallet module
-          }
+      wallets
+      // only include a detected wallet if it's not already one of the provided options
+      .filter(wallet => isWalletInit(wallet) && (wallet.walletName !== 'detectedwallet' || injectedWalletDetected()))
+      .map( wallet  => {
+          const { walletName, ...initParams } = wallet as WalletInitOptions
           try {
             return getModule(walletName).then((m: any) =>
               m.default({ ...initParams, networkId, isMobile })
@@ -68,25 +66,18 @@ function select(
             } else {
               throw error
             }
-          }
         }
 
         return Promise.resolve(wallet)
       })
-      // Filter out the skipped injected wallet if it is undefined
-    ).then(wallets => {
-      return wallets.filter(wallet => !!wallet)
-    })
+    )
   }
 
   return Promise.all(
     defaultWalletNames
-      .map(walletName =>
-        walletName === 'detectedwallet' && !injectedWalletDetected()
-          ? null
-          : getModule(walletName).then((m: any) => m.default({ networkId }))
-      )
-      .filter(wallet => !!wallet)
+      // only include a detected wallet if it's not already one of the provided options
+      .filter(walletName => walletName !== 'detectedwallet' || injectedWalletDetected())
+      .map(walletName => getModule(walletName).then((m: any) => m.default({ networkId })))
   )
 }
 
