@@ -298,9 +298,10 @@ export function getProviderName(provider: any): string | undefined {
   }
 }
 
-const deriveProviderName = (provider: any) => Object.keys(provider)
-      .find(key => key.startsWith('is'))
-      ?.split('is')[1]
+const deriveProviderName = (provider: any) =>
+  Object.keys(provider)
+    .find(key => key.startsWith('is'))
+    ?.split('is')[1]
 
 export function getDeviceInfo() {
   const parsed = bowser.getParser(window.navigator.userAgent)

@@ -52,9 +52,13 @@ function select(
   if (wallets) {
     return Promise.all(
       wallets
-      // only include a detected wallet if it's not already one of the provided options
-      .filter(wallet => isWalletInit(wallet) && (wallet.walletName !== 'detectedwallet' || injectedWalletDetected()))
-      .map( wallet  => {
+        // only include a detected wallet if it's not already one of the provided options
+        .filter(
+          wallet =>
+            isWalletInit(wallet) &&
+            (wallet.walletName !== 'detectedwallet' || injectedWalletDetected())
+        )
+        .map(wallet => {
           const { walletName, ...initParams } = wallet as WalletInitOptions
           try {
             return getModule(walletName).then((m: any) =>
@@ -66,18 +70,23 @@ function select(
             } else {
               throw error
             }
-        }
+          }
 
-        return Promise.resolve(wallet)
-      })
+          return Promise.resolve(wallet)
+        })
     )
   }
 
   return Promise.all(
     defaultWalletNames
       // only include a detected wallet if it's not already one of the provided options
-      .filter(walletName => walletName !== 'detectedwallet' || injectedWalletDetected())
-      .map(walletName => getModule(walletName).then((m: any) => m.default({ networkId })))
+      .filter(
+        walletName =>
+          walletName !== 'detectedwallet' || injectedWalletDetected()
+      )
+      .map(walletName =>
+        getModule(walletName).then((m: any) => m.default({ networkId }))
+      )
   )
 }
 
