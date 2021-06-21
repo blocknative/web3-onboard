@@ -2,9 +2,12 @@ import { networkName } from '../../utilities'
 import {
   WalletCheckModal,
   StateAndHelpers,
-  WalletCheckCustomOptions
+  WalletCheckCustomOptions,
+  AppState
 } from '../../interfaces'
 import { networkIcon } from './icons'
+
+import { app } from '../../stores'
 
 function network(
   options: WalletCheckCustomOptions = {}
@@ -50,8 +53,15 @@ function network(
         eventCode: 'networkFail',
         button: button || {
           onclick: () => {
-            exit()
-            walletSelect()
+            exit(false, { switchingWallets: true })
+
+            walletSelect().then(result => {
+              app.update((store: AppState) => ({
+                ...store,
+                switchingWallets: false,
+                walletCheckCompleted: result
+              }))
+            })
           },
           text: 'Switch Wallet'
         },
