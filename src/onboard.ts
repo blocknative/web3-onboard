@@ -121,7 +121,8 @@ function init(initialization: Initialization): API {
     target: document.body,
     props: {
       walletSelectModule: initializedModules.walletSelect,
-      walletSelect
+      walletSelect,
+      walletCheck
     }
   })
 
