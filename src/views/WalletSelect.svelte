@@ -63,7 +63,7 @@
 
   let walletsDisabled: boolean = showTermsOfService
 
-  let agreed: boolean = false
+  let agreed: boolean | undefined = undefined
 
   $: if (agreed) {
     localStorage.setItem(
