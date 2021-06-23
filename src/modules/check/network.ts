@@ -56,8 +56,8 @@ function network(
           onclick: async () => {
             exit(false, { switchingWallets: true })
             const walletSelected = await walletSelect()
-            const walletReady = walletSelected && await walletCheck()
-            
+            const walletReady = walletSelected && (await walletCheck())
+
             app.update((store: AppState) => ({
               ...store,
               switchingWallets: false,
