@@ -26,12 +26,14 @@
   import {
     WalletCheckModule,
     WalletSelectFunction,
+    WalletCheck,
     AppState,
     WalletCheckModal,
     UserState,
     Connect
   } from '../interfaces'
 
+  export let walletCheck: WalletCheck
   export let walletSelect: WalletSelectFunction
   export let modules: WalletCheckModule[] | undefined
 
@@ -169,12 +171,16 @@
         })
   }
 
-  function handleExit(completed?: boolean) {
+  function handleExit(
+    completed: boolean = false,
+    { switchingWallets }: Partial<AppState> = {}
+  ) {
     resetState()
     app.update((store: AppState) => ({
       ...store,
+      switchingWallets,
       walletCheckInProgress: false,
-      walletCheckCompleted: completed ? completed : false,
+      walletCheckCompleted: completed,
       accountSelectInProgress: false
     }))
   }
@@ -218,6 +224,7 @@
       ...state,
       BigNumber,
       walletSelect,
+      walletCheck,
       exit: handleExit,
       wallet: get(wallet),
       stateSyncStatus,
@@ -246,7 +253,7 @@
             loadingModal = false
             completed = true
             modal = res
-            resolve()
+            resolve(undefined)
           })
 
           setTimeout(() => {
@@ -320,7 +327,7 @@
 
 {#if activeModal}
   <Modal closeModal={() => handleExit()}>
-    <ModalHeader icon={activeModal.icon} heading={activeModal.heading} />
+    <ModalHeader icon={activeModal.icon || ''} heading={activeModal.heading} />
     <p class="bn-onboard-custom bn-onboard-prepare-description">
       {@html activeModal.description}
     </p>
