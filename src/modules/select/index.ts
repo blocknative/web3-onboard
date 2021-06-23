@@ -4,12 +4,21 @@ import {
   AllWalletInitOptions
 } from '../../interfaces'
 import { isWalletInit } from '../../validation'
+import { getProviderName } from '../../utilities'
 
 // wallets that qualify for default wallets need to have no
 // init parameters that are required for full functionality
-const desktopDefaultWalletNames = ['metamask', 'torus', 'opera', 'liquality']
+const desktopDefaultWalletNames = [
+  'detectedwallet',
+  'metamask',
+  'frame',
+  'torus',
+  'opera',
+  'liquality'
+]
 
 const mobileDefaultWalletNames = [
+  'detectedwallet',
   'metamask',
   'coinbase',
   'trust',
@@ -28,6 +37,9 @@ const mobileDefaultWalletNames = [
   'authereum'
 ]
 
+const injectedWalletDetected = () =>
+  window.ethereum && getProviderName(window.ethereum) === undefined
+
 function select(
   wallets: Array<WalletInitOptions | WalletModule> | undefined,
   networkId: number,
@@ -39,10 +51,15 @@ function select(
 
   if (wallets) {
     return Promise.all(
-      wallets.map(wallet => {
-        if (isWalletInit(wallet)) {
-          const { walletName, ...initParams } = wallet
-
+      wallets
+        // only include a detected wallet if it's not already one of the provided options
+        .filter(
+          wallet =>
+            isWalletInit(wallet) &&
+            (wallet.walletName !== 'detectedwallet' || injectedWalletDetected())
+        )
+        .map(wallet => {
+          const { walletName, ...initParams } = wallet as WalletInitOptions
           try {
             return getModule(walletName).then((m: any) =>
               m.default({ ...initParams, networkId, isMobile })
@@ -54,17 +71,22 @@ function select(
               throw error
             }
           }
-        }
 
-        return Promise.resolve(wallet)
-      })
+          return Promise.resolve(wallet)
+        })
     )
   }
 
   return Promise.all(
-    defaultWalletNames.map(walletName =>
-      getModule(walletName).then((m: any) => m.default({ networkId }))
-    )
+    defaultWalletNames
+      // only include a detected wallet if it's not already one of the provided options
+      .filter(
+        walletName =>
+          walletName !== 'detectedwallet' || injectedWalletDetected()
+      )
+      .map(walletName =>
+        getModule(walletName).then((m: any) => m.default({ networkId }))
+      )
   )
 }
 
@@ -146,6 +168,8 @@ function getModule(name: string): Promise<{
       return import('./wallets/bitpie')
     case 'gnosis':
       return import('./wallets/gnosis')
+    case 'detectedwallet':
+      return import('./wallets/detectedwallet')
     default:
       throw new Error(`${name} is not a valid walletName.`)
   }

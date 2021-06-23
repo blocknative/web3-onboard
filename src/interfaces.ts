@@ -88,6 +88,7 @@ export interface UserState {
 export interface StateAndHelpers extends UserState {
   BigNumber: any
   walletSelect: WalletSelectFunction
+  walletCheck: WalletCheck
   wallet: Wallet
   exit: (completed?: boolean, state?: Partial<AppState>) => void
   stateSyncStatus: {
@@ -398,19 +399,19 @@ export interface WalletSelectFunction {
   (autoSelectWallet?: string): Promise<boolean>
 }
 
-interface WalletCheck {
+export interface WalletCheck {
   (): Promise<boolean>
 }
 
-interface AccountSelect {
+export interface AccountSelect {
   (): Promise<boolean>
 }
 
-interface Config {
+export interface Config {
   (options: ConfigOptions): void
 }
 
-interface GetState {
+export interface GetState {
   (): UserState
 }
 

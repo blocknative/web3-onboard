@@ -253,8 +253,8 @@ export function getProviderName(provider: any): string | undefined {
     return 'XDEFI'
   }
 
-  if (provider.isMetaMask) {
-    return 'MetaMask'
+  if (provider.isFrame) {
+    return 'Frame'
   }
 
   if (provider.isMYKEY) {
@@ -288,7 +288,8 @@ export function getProviderName(provider: any): string | undefined {
   // =====================================
   // When adding new wallet place above this metamask check as some providers
   // have an isMetaMask property in addition to the wallet's own `is[WalletName]`
-  if (provider.isMetaMask) {
+
+  if (provider.isMetaMask && provider._metamask) {
     return 'MetaMask'
   }
 
