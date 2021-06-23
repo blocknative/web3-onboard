@@ -26,12 +26,14 @@
   import {
     WalletCheckModule,
     WalletSelectFunction,
+    WalletCheck,
     AppState,
     WalletCheckModal,
     UserState,
     Connect
   } from '../interfaces'
 
+  export let walletCheck: WalletCheck
   export let walletSelect: WalletSelectFunction
   export let modules: WalletCheckModule[] | undefined
 
@@ -222,6 +224,7 @@
       ...state,
       BigNumber,
       walletSelect,
+      walletCheck,
       exit: handleExit,
       wallet: get(wallet),
       stateSyncStatus,
