@@ -16,7 +16,7 @@ function liquality(options: CommonWalletOptions): WalletModule {
       const { getProviderName, createModernProviderInterface } = helpers
 
       const provider =
-        (window as any).ethereum ||
+        (window as any).eth ||
         ((window as any).web3 && (window as any).web3.currentProvider)
 
       return {
