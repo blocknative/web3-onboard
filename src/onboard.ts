@@ -58,7 +58,7 @@ function init(initialization: Initialization): API {
     console.warn(
       'Initializing Onboard and destroying previously initialized instance.'
     )
-    
+
     // close WebSocket connection
     closeSocketConnection()
 
