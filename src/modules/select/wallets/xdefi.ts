@@ -20,8 +20,7 @@ function xdefi(options: CommonWalletOptions): WalletModule {
       } = helpers
 
       const provider =
-        (window as any).ethereum ||
-        ((window as any).web3 && (window as any).web3.currentProvider)
+        (window as any).xfi && (window as any).xfi.ethereum
 
       return {
         provider,
