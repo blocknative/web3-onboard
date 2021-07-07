@@ -349,13 +349,13 @@
 
     <div class="bn-onboard-custom bn-onboard-prepare-button-container">
       {#if activeModal.button}
-        <Button position="right" onclick={activeModal.button.onclick}>
+        <Button position="left" onclick={activeModal.button.onclick}>
           {activeModal.button.text}
         </Button>
       {/if}
       {#if errorMsg}
         <Button
-          position={!activeModal.button ? 'right' : ''}
+          position={!activeModal.button ? 'left' : ''}
           onclick={doAction}
         >
           Try Again
@@ -366,7 +366,7 @@
       {#if loading}
         <Spinner />
       {/if}
-      <Button position="left" onclick={() => handleExit(false)}>Dismiss</Button>
+      <Button position="right" onclick={() => handleExit(false)}>Dismiss</Button>
     </div>
   </Modal>
 {/if}
