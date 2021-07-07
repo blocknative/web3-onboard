@@ -329,6 +329,8 @@ export function networkName(id: number): string {
       return 'matic'
     case 80001:
       return 'mumbai'
+    case 42220:
+      return 'celo'
     default:
       const { networkId, networkName } = get(app)
       return (networkId === id && networkName) || 'unknown'
@@ -353,6 +355,8 @@ export function networkToId(network: string): number {
       return 137
     case 'mumbai':
       return 80001
+    case 'celo':
+      return 42220
     default:
       return 0
   }
