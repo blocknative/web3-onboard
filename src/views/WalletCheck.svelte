@@ -354,7 +354,10 @@
         </Button>
       {/if}
       {#if errorMsg}
-        <Button position={!activeModal.button ? 'right' : ''} onclick={doAction}>
+        <Button
+          position={!activeModal.button ? 'right' : ''}
+          onclick={doAction}
+        >
           Try Again
         </Button>
       {:else}
@@ -363,9 +366,7 @@
       {#if loading}
         <Spinner />
       {/if}
-      <Button position="left" onclick={() => handleExit(false)}>
-        Dismiss
-      </Button>
+      <Button position="left" onclick={() => handleExit(false)}>Dismiss</Button>
     </div>
   </Modal>
 {/if}
