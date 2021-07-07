@@ -328,7 +328,9 @@
           What is a wallet?
         </span>
         {#if mobileDevice}
-          <Button cta={false} onclick={() => finish({ completed: false })}>Dismiss</Button>
+          <Button cta={false} onclick={() => finish({ completed: false })}
+            >Dismiss</Button
+          >
         {/if}
       </div>
       {#if showWalletDefinition}
