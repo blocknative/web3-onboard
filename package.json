@@ -67,7 +67,7 @@
     "@walletconnect/web3-provider": "^1.4.1",
     "authereum": "^0.1.12",
     "bignumber.js": "^9.0.0",
-    "bnc-sdk": "^3.3.4",
+    "bnc-sdk": "^3.4.1",
     "bowser": "^2.10.0",
     "eth-lattice-keyring": "^0.2.7",
     "eth-provider": "^0.6.1",
