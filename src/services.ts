@@ -28,3 +28,7 @@ export function getBlocknative(): any {
   }
   return blocknative
 }
+
+export function closeSocketConnection(): void {
+  blocknative?.destroy()
+}

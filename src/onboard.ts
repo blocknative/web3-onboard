@@ -32,6 +32,7 @@ import {
 } from './interfaces'
 
 import initializeModules from './modules'
+import { closeSocketConnection } from './services'
 
 let onboard: any
 
@@ -57,6 +58,14 @@ function init(initialization: Initialization): API {
     console.warn(
       'Initializing Onboard and destroying previously initialized instance.'
     )
+
+    // close WebSocket connection
+    closeSocketConnection()
+
+    // reset the wallet state
+    resetWalletState()
+
+    // destroy svelte instance and remove from DOM
     onboard.$destroy()
   }
 

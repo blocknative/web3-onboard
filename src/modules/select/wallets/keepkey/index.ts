@@ -41,7 +41,7 @@ interface KeepProviderOptions {
 function keepkey(
   options: CommonWalletOptions & { rpcUrl: string; networkId: number }
 ): WalletModule {
-  const { label, iconSrc, rpcUrl, networkId } = options
+  const { label, iconSrc, rpcUrl, networkId, preferred } = options
 
   // Used to signal if the keep key could not be paired or if the keep key is already paired with another app
   let installMessage: string
@@ -90,7 +90,8 @@ function keepkey(
         : '',
     type: 'hardware',
     mobile: false,
-    desktop: true
+    desktop: true,
+    preferred
   }
 }
 
