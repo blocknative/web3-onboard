@@ -4,6 +4,17 @@ import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
 import frameIcon from '../wallet-icons/icon-frame.png'
 import frameIcon2x from '../wallet-icons/icon-frame@2x.png'
 
+async function getProvider() {
+  const injected = window.ethereum
+
+  if (injected && (injected as any).isFrame) {
+    return injected
+  }
+
+  const { default: ethProvider } = await import('eth-provider')
+  return ethProvider('frame')
+}
+
 function frame(options: CommonWalletOptions): WalletModule {
   const { preferred, label, iconSrc, svg } = options
 
@@ -15,8 +26,7 @@ function frame(options: CommonWalletOptions): WalletModule {
     wallet: async (helpers: Helpers) => {
       const { createModernProviderInterface } = helpers
 
-      const { default: ethProvider } = await import('eth-provider')
-      const provider = ethProvider('frame')
+      const provider = await getProvider()
 
       return {
         provider,

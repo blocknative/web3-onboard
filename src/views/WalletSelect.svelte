@@ -63,7 +63,7 @@
 
   let walletsDisabled: boolean = showTermsOfService
 
-  let agreed: boolean
+  let agreed: boolean | undefined = undefined
 
   $: if (agreed) {
     localStorage.setItem(
@@ -328,7 +328,9 @@
           What is a wallet?
         </span>
         {#if mobileDevice}
-          <Button onclick={() => finish({ completed: false })}>Dismiss</Button>
+          <Button cta={false} onclick={() => finish({ completed: false })}
+            >Dismiss</Button
+          >
         {/if}
       </div>
       {#if showWalletDefinition}

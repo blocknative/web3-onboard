@@ -253,8 +253,8 @@ export function getProviderName(provider: any): string | undefined {
     return 'XDEFI'
   }
 
-  if (provider.isMetaMask) {
-    return 'MetaMask'
+  if (provider.isFrame) {
+    return 'Frame'
   }
 
   if (provider.isMYKEY) {
@@ -288,7 +288,8 @@ export function getProviderName(provider: any): string | undefined {
   // =====================================
   // When adding new wallet place above this metamask check as some providers
   // have an isMetaMask property in addition to the wallet's own `is[WalletName]`
-  if (provider.isMetaMask) {
+
+  if (provider.isMetaMask && provider._metamask) {
     return 'MetaMask'
   }
 
@@ -324,6 +325,8 @@ export function networkName(id: number): string {
       return 'kovan'
     case 100:
       return 'xdai'
+    case 56:
+      return 'bsc'
     default:
       const { networkId, networkName } = get(app)
       return (networkId === id && networkName) || 'unknown'
@@ -344,6 +347,8 @@ export function networkToId(network: string): number {
       return 42
     case 'xdai':
       return 100
+    case 'bsc':
+      return 56
     default:
       return 0
   }
