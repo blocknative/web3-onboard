@@ -65,7 +65,7 @@ async function cobovaultProvider(options: {
     walletName: string
   }) => void
 }) {
-  const EthereumTx = await import('ethereumjs-tx')
+  const { Transaction } = await import('@ethereumjs/tx')
   const { default: createProvider } = await import('./providerEngine')
 
   const BASE_PATH = "m/44'/60'/0'/0"
@@ -227,7 +227,7 @@ async function cobovaultProvider(options: {
       await enable()
     }
 
-    const transaction = new EthereumTx.Transaction(transactionData, {
+    const transaction = Transaction.fromTxData(transactionData, {
       chain: networkName(networkId)
     })
 
