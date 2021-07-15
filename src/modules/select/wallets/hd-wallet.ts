@@ -37,7 +37,6 @@ export function generateAddresses(
 
 export function isValidPath(path: string) {
   const parts = path.split('/')
-
   if (parts[0] !== 'm') {
     return false
   }
@@ -46,11 +45,11 @@ export function isValidPath(path: string) {
     return false
   }
 
-  if (parts[2] !== "60'" && parts[2] !== "1'") {
+  if (!["60'", "1'", "73799'", "246'"].includes(parts[2])) {
     return false
   }
 
-  if (parts[3] === undefined) {
+  if (parts[3] === undefined || parts[3] === "0'") {
     return true
   }
 
