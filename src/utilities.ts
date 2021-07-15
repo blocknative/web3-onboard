@@ -315,15 +315,17 @@ export function networkName(id: number): string {
   const { networkName, networkId } = get(app)
   return networkId === id && networkName
     ? networkName
-    : {
-        1: 'mainnet',
-        3: 'ropsten',
-        4: 'rinkeby',
-        5: 'goerli',
-        42: 'kovan',
-        100: 'xdai',
-        56: 'bsc'
-      }[id] || 'unknown'
+    : (
+        {
+          1: 'mainnet',
+          3: 'ropsten',
+          4: 'rinkeby',
+          5: 'goerli',
+          42: 'kovan',
+          100: 'xdai',
+          56: 'bsc'
+        } as { [key: number]: string }
+      )[id] || 'unknown'
 }
 
 export function wait(time: number) {
