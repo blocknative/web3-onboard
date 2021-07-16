@@ -12,6 +12,7 @@
     walletInterface,
     wallet,
     address,
+    ens,
     network,
     balance
   } from '../stores'
@@ -230,6 +231,7 @@
       stateSyncStatus,
       stateStore: {
         address,
+        ens,
         network,
         balance
       }

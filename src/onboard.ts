@@ -7,6 +7,7 @@ import Onboard from './views/Onboard.svelte'
 import {
   app,
   address,
+  ens,
   network,
   balance,
   wallet,
@@ -28,7 +29,8 @@ import {
   ConfigOptions,
   UserState,
   Wallet,
-  WalletInitOptions
+  WalletInitOptions,
+  Ens
 } from './interfaces'
 
 import initializeModules from './modules'
@@ -141,6 +143,14 @@ function init(initialization: Initialization): API {
       address.subscribe((address: string | null) => {
         if (address !== null) {
           subscriptions.address && subscriptions.address(address)
+        }
+      })
+    }
+
+    if (subscriptions.ens) {
+      ens.subscribe((ens: Ens) => {
+        if (ens !== null) {
+          subscriptions.ens && subscriptions.ens(ens)
         }
       })
     }

@@ -13,6 +13,7 @@ export interface Initialization {
 
 export interface Subscriptions {
   address?: (address: string) => void
+  ens?: (ens: Ens) => void
   network?: (networkId: number) => void
   balance?: (balance: string) => void
   wallet?: (wallet: Wallet) => void
@@ -78,6 +79,7 @@ export interface WalletSelectModalData {
 
 export interface UserState {
   address: string
+  ens: Ens
   network: number
   balance: string
   wallet: Wallet
@@ -96,14 +98,17 @@ export interface StateAndHelpers extends UserState {
       | null
       | CancelablePromise
       | Promise<Array<string>>
+      | Promise<Ens>
       | Promise<string>
       | Promise<void>
     balance: null | CancelablePromise
     address: null | Promise<Array<string>>
+    ens: null | Promise<Ens>
     network: null | Promise<string>
   }
   stateStore: {
     address: WalletStateSliceStore
+    ens: WalletStateSliceStore
     network: WalletStateSliceStore
     balance: BalanceStore | WalletStateSliceStore
   }
@@ -155,14 +160,15 @@ export interface WalletInterface {
   connect?: Connect | null
   disconnect?: () => void
   address: StateSyncer
+  ens?: StateSyncer
   network: StateSyncer
   balance: StateSyncer
   dashboard?: () => void
 }
 
 export interface StateSyncer {
-  get?: () => Promise<string | number | null>
-  onChange?: (updater: (val: number | string | undefined) => void) => void
+  get?: () => Promise<string | number | Ens | null>
+  onChange?: (updater: (val: number | string | Ens | undefined) => void) => void
 }
 
 export interface Wallet {
@@ -173,6 +179,12 @@ export interface Wallet {
   connect?: Connect | null
   dashboard?: () => void | null
   icons: Pick<WalletModule, 'svg' | 'iconSrc' | 'iconSrcSet'>
+}
+
+export interface Ens {
+  name?: string
+  contentHash?: string
+  getText?: (key: string) => Promise<string | undefined>
 }
 
 export interface CommonWalletOptions {

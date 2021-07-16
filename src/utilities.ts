@@ -1,9 +1,10 @@
 import bowser from 'bowser'
 import BigNumber from 'bignumber.js'
+import ENS, { getEnsAddress } from '@ensdomains/ensjs'
 import { get } from 'svelte/store'
 
 import { app } from './stores'
-import { WalletInterface } from './interfaces'
+import { WalletInterface, Ens } from './interfaces'
 
 export function getNetwork(provider: any): Promise<number | any> {
   return new Promise((resolve, reject) => {
@@ -65,6 +66,23 @@ export function getAddress(provider: any): Promise<string | any> {
       resolve(null)
     }
   })
+}
+
+export async function getENS(provider: any, address: string): Promise<Ens> {
+  const { networkId } = get(app)
+  const ens = new ENS({ provider, ensAddress: getEnsAddress(networkId) })
+  let nameInterface
+  try {
+    nameInterface = await ens.getName(address)
+    
+  } catch (e) {
+    // Error getting ens name
+  }
+  return {
+    name: nameInterface?.name,
+    contentHash: nameInterface?.getContent(),
+    getText: nameInterface?.getText
+  }
 }
 
 export function getBalance(
@@ -129,6 +147,21 @@ export function createModernProviderInterface(provider: any): WalletInterface {
       : {
           get: () => getAddress(provider)
         },
+    ens: onFuncExists
+      ? {
+          onChange: (func: (ens: Ens) => void) => {
+            getAddress(provider)
+              .then(address => getENS(provider, address))
+              .then(func)
+            provider.on('accountsChanged', async (accounts: string[]) =>
+              accounts ? getENS(provider, accounts[0]).then(func) : null
+            )
+          }
+        }
+      : {
+          get: () =>
+            getAddress(provider).then(address => getENS(provider, address))
+        },
     network: onFuncExists
       ? {
           onChange: (func: (val: string | number) => void) => {
@@ -175,6 +208,9 @@ export function createLegacyProviderInterface(provider: any): WalletInterface {
   return {
     address: {
       get: () => getAddress(provider)
+    },
+    ens: {
+      get: () => getAddress(provider).then(address => getENS(provider, address))
     },
     network: {
       get: () => getNetwork(provider)

@@ -12,7 +12,8 @@ import {
   StateSyncer,
   BalanceStore,
   CancelablePromise,
-  WalletCheckModule
+  WalletCheckModule,
+  Ens
 } from './interfaces'
 
 export const app: WritableStore = writable({
@@ -45,17 +46,21 @@ export const stateSyncStatus: {
     | CancelablePromise
     | Promise<Array<string>>
     | Promise<string>
+    | Promise<Ens>
     | Promise<void>
   balance: null | CancelablePromise
   address: null | Promise<Array<string>>
+  ens: null | Promise<Ens>
   network: null | Promise<string>
 } = {
   balance: null,
   address: null,
+  ens: null,
   network: null
 }
 
 export let address: WalletStateSliceStore
+export let ens: WalletStateSliceStore
 export let network: WalletStateSliceStore
 export let balance: BalanceStore | WalletStateSliceStore
 export let wallet: WritableStore
@@ -69,6 +74,11 @@ export function initializeStores() {
     parameter: 'address',
     initialState: null
   })
+
+   ens = createWalletStateSliceStore({
+     parameter: 'ens',
+     initialState: null
+   })
 
   network = createWalletStateSliceStore({
     parameter: 'network',
@@ -94,10 +104,11 @@ export function initializeStores() {
   })
 
   state = derived(
-    [address, network, balance, wallet, app],
-    ([$address, $network, $balance, $wallet, $app]) => {
+    [address, ens, network, balance, wallet, app],
+    ([$address, $ens, $network, $balance, $wallet, $app]) => {
       return {
         address: $address,
+        ens: $ens,
         network: $network,
         balance: $balance,
         wallet: $wallet,
@@ -124,12 +135,14 @@ export function initializeStores() {
       // reset state
       currentState.balance && balance.reset()
       currentState.address && address.reset()
+      currentState.ens && ens.reset()
       currentState.network && network.reset()
 
       if (walletInterface) {
         // start syncing state and save intervals
         currentSyncerIntervals = [
           address.setStateSyncer(walletInterface.address),
+          ens.setStateSyncer(walletInterface?.ens || {}),
           network.setStateSyncer(walletInterface.network),
           balance.setStateSyncer(walletInterface.balance)
         ]
@@ -225,13 +238,13 @@ function createWalletInterfaceStore(
 
 function createWalletStateSliceStore(options: {
   parameter: string
-  initialState: string | number | null | undefined
+  initialState: string | number | null | Ens | undefined
   intervalSetting?: number
 }): WalletStateSliceStore {
   const { parameter, initialState, intervalSetting } = options
   const { subscribe, set } = writable(initialState)
 
-  let currentState: string | number | null | undefined
+  let currentState: string | number | null | Ens | undefined
   subscribe(store => {
     currentState = store
   })
@@ -403,7 +416,7 @@ function createBalanceStore(initialState: string | null): BalanceStore {
 }
 
 function syncStateWithTimeout(options: {
-  getState: () => Promise<string | number | null>
+  getState: () => Promise<string | number | Ens | null>
   setState: (newState: string) => void
   timeout: number
   currentBalance: string

@@ -44,7 +44,7 @@ function select(
   wallets: Array<WalletInitOptions | WalletModule> | undefined,
   networkId: number,
   isMobile: boolean
-) {
+): Promise<Array<WalletInitOptions | WalletModule>> {
   const defaultWalletNames = isMobile
     ? mobileDefaultWalletNames
     : desktopDefaultWalletNames
