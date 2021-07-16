@@ -211,6 +211,13 @@ export interface LedgerOptions extends CommonWalletOptions {
   LedgerTransport?: any
 }
 
+export interface GnosisOptions extends CommonWalletOptions {
+  // For default apps (cf. https://github.com/gnosis/safe-apps-list/issues/new/choose)
+  appName?: string
+  // For other apps, give the URL needed to add a custom app
+  appUrl?: string
+}
+
 //#region torus
 
 interface VerifierStatus {
