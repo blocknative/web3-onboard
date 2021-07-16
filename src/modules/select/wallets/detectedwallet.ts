@@ -1,17 +1,24 @@
 import { extensionInstallMessage } from '../content'
 import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
+import injectedIcon from '../wallet-icons/icon-detected-wallet'
 
-import xdefiIcon from '../wallet-icons/icon-xdefi.png'
-import xdefiIcon2x from '../wallet-icons/icon-xdefi@2x.png'
+function injected(options: CommonWalletOptions): WalletModule {
+  const { preferred, label, svg } = options
 
-function xdefi(options: CommonWalletOptions): WalletModule {
-  const { preferred, label, iconSrc, svg } = options
+  const provider =
+    (window as any).ethereum ||
+    ((window as any).web3 && (window as any).web3.currentProvider)
+
+  const name =
+    label ||
+    Object.keys(provider)
+      .find(key => key.startsWith('is') && !key.includes('MetaMask'))
+      ?.split('is')[1] ||
+    'Detected Wallet'
 
   return {
-    name: label || 'XDEFI Wallet',
-    iconSrc: iconSrc || xdefiIcon,
-    iconSrcSet: iconSrc || xdefiIcon2x,
-    svg,
+    name,
+    svg: svg || injectedIcon,
     wallet: async (helpers: Helpers) => {
       const {
         getProviderName,
@@ -19,12 +26,10 @@ function xdefi(options: CommonWalletOptions): WalletModule {
         createLegacyProviderInterface
       } = helpers
 
-      const provider = (window as any).xfi && (window as any).xfi.ethereum
-
       return {
         provider,
         interface:
-          provider && getProviderName(provider) === 'XDEFI'
+          provider && getProviderName(provider) === undefined
             ? typeof provider.enable === 'function'
               ? createModernProviderInterface(provider)
               : createLegacyProviderInterface(provider)
@@ -32,7 +37,6 @@ function xdefi(options: CommonWalletOptions): WalletModule {
       }
     },
     type: 'injected',
-    link: 'https://www.xdefi.io/',
     installMessage: extensionInstallMessage,
     desktop: true,
     mobile: true,
@@ -40,4 +44,4 @@ function xdefi(options: CommonWalletOptions): WalletModule {
   }
 }
 
-export default xdefi
+export default injected

@@ -37,6 +37,7 @@
   {/if}
 
   <footer class="bn-onboard-custom bn-onboard-modal-selected-wallet-footer">
+    <Button cta={false} onclick={onBack}>Back</Button>
     <a
       href={selectedWalletModule.link}
       rel="noreferrer noopener"
@@ -44,6 +45,5 @@
     >
       <Button>Open {selectedWalletModule.name}</Button>
     </a>
-    <Button onclick={onBack}>Back</Button>
   </footer>
 </section>

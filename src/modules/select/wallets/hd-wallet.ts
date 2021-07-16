@@ -37,7 +37,6 @@ export function generateAddresses(
 
 export function isValidPath(path: string) {
   const parts = path.split('/')
-
   if (parts[0] !== 'm') {
     return false
   }
@@ -46,20 +45,20 @@ export function isValidPath(path: string) {
     return false
   }
 
-  if (parts[2] !== "60'" && parts[2] !== "1'") {
+  if (!["60'", "1'", "73799'", "246'"].includes(parts[2])) {
     return false
   }
 
-  if (parts[3] === undefined) {
+  if (parts[3] === undefined || parts[3] === "0'") {
     return true
   }
 
-  const accountFieldDigit = Number(parts[3][0])
+  const accountFieldNumber = Number(parts[3].slice(0, -1))
 
   if (
-    isNaN(accountFieldDigit) ||
-    accountFieldDigit < 0 ||
-    parts[3][1] !== "'"
+    isNaN(accountFieldNumber) ||
+    accountFieldNumber < 0 ||
+    parts[3].slice(-1) !== "'"
   ) {
     return false
   }
@@ -68,9 +67,9 @@ export function isValidPath(path: string) {
     return true
   }
 
-  const changeFieldDigit = Number(parts[4][0])
+  const changeFieldNumber = Number(parts[4])
 
-  if (isNaN(changeFieldDigit) || changeFieldDigit < 0) {
+  if (isNaN(changeFieldNumber) || changeFieldNumber < 0) {
     return false
   }
 
@@ -78,9 +77,9 @@ export function isValidPath(path: string) {
     return true
   }
 
-  const addressFieldDigit = Number(parts[5][0])
+  const addressFieldNumber = Number(parts[5])
 
-  if (isNaN(addressFieldDigit) || addressFieldDigit < 0) {
+  if (isNaN(addressFieldNumber) || addressFieldNumber < 0) {
     return false
   }
 

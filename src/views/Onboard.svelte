@@ -7,12 +7,13 @@
 
   import {
     WalletSelectModule,
-    WalletCheckModule,
-    WalletSelectFunction
+    WalletSelectFunction,
+    WalletCheck as WalletCheckType
   } from '../interfaces'
 
   export let walletSelectModule: WalletSelectModule
   export let walletSelect: WalletSelectFunction
+  export let walletCheck: WalletCheckType
 </script>
 
 <style>
@@ -49,9 +50,13 @@
 {/if}
 
 {#if $app.walletCheckInProgress}
-  <WalletCheck {walletSelect} />
+  <WalletCheck modules={undefined} {walletSelect} {walletCheck} />
 {/if}
 
 {#if $app.accountSelectInProgress}
-  <WalletCheck modules={[derivationPath(), accountSelect()]} />
+  <WalletCheck
+    modules={[derivationPath(), accountSelect()]}
+    {walletSelect}
+    {walletCheck}
+  />
 {/if}

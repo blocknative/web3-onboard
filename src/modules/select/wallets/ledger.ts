@@ -1,12 +1,26 @@
-import { LedgerOptions, WalletModule, Helpers } from '../../../interfaces'
+import {
+  LedgerOptions,
+  WalletModule,
+  HardwareWalletCustomNetwork,
+  Helpers
+} from '../../../interfaces'
+
 import ledgerIcon from '../wallet-icons/icon-ledger'
 
 const LEDGER_LIVE_PATH = `m/44'/60'`
 const ACCOUNTS_TO_GET = 5
 
 function ledger(options: LedgerOptions & { networkId: number }): WalletModule {
-  const { rpcUrl, LedgerTransport, networkId, preferred, label, iconSrc, svg } =
-    options
+  const {
+    rpcUrl,
+    LedgerTransport,
+    networkId,
+    preferred,
+    label,
+    iconSrc,
+    svg,
+    customNetwork
+  } = options
 
   return {
     name: label || 'Ledger',
@@ -21,7 +35,8 @@ function ledger(options: LedgerOptions & { networkId: number }): WalletModule {
         LedgerTransport,
         BigNumber,
         networkName,
-        resetWalletState
+        resetWalletState,
+        customNetwork
       })
 
       return {
@@ -58,6 +73,7 @@ interface LedgerProviderOptions {
   rpcUrl: string
   LedgerTransport: any
   BigNumber: any
+  customNetwork?: HardwareWalletCustomNetwork
   networkName: (id: number) => string
   resetWalletState: (options?: {
     disconnected: boolean
@@ -70,7 +86,8 @@ async function ledgerProvider(options: LedgerProviderOptions) {
   const { generateAddresses, isValidPath } = await import('./hd-wallet')
   const { default: Eth } = await import('@ledgerhq/hw-app-eth')
 
-  const EthereumTx = await import('ethereumjs-tx')
+  const { Transaction } = await import('@ethereumjs/tx')
+  const { default: Common } = await import('@ethereumjs/common')
   const ethUtil = await import('ethereumjs-util')
   const buffer = await import('buffer')
   const { TypedDataUtils } = await import('eth-sig-util')
@@ -98,7 +115,8 @@ async function ledgerProvider(options: LedgerProviderOptions) {
     LedgerTransport,
     BigNumber,
     networkName,
-    resetWalletState
+    resetWalletState,
+    customNetwork
   } = options
 
   let dPath = ''
@@ -383,24 +401,36 @@ async function ledgerProvider(options: LedgerProviderOptions) {
 
   async function signTransaction(transactionData: any) {
     const path = [...addressToPath.values()][0]
-
+    const { BN, toBuffer } = ethUtil
+    const common = new Common({
+      chain: customNetwork || networkName(networkId)
+    })
     try {
-      const transaction = new EthereumTx.Transaction(transactionData, {
-        chain: networkName(networkId)
-      })
-
-      transaction.raw[6] = buffer.Buffer.from([networkId]) // v
-      transaction.raw[7] = buffer.Buffer.from([]) // r
-      transaction.raw[8] = buffer.Buffer.from([]) // s
+      const transaction = Transaction.fromTxData(
+        {
+          ...transactionData,
+          gasLimit: transactionData.gas ?? transactionData.gasLimit
+        },
+        { common, freeze: false }
+      )
+      transaction.v = new BN(toBuffer(networkId))
+      transaction.r = transaction.s = new BN(toBuffer(0))
 
       const ledgerResult = await eth.signTransaction(
         path,
         transaction.serialize().toString('hex')
       )
-
-      transaction.v = buffer.Buffer.from(ledgerResult.v, 'hex')
-      transaction.r = buffer.Buffer.from(ledgerResult.r, 'hex')
-      transaction.s = buffer.Buffer.from(ledgerResult.s, 'hex')
+      let v = ledgerResult.v.toString(16)
+      // EIP155 support. check/recalc signature v value.
+      const rv = parseInt(v, 16)
+      let cv = networkId * 2 + 35
+      if (rv !== cv && (rv & cv) !== rv) {
+        cv += 1 // add signature v bit.
+      }
+      v = cv.toString(16)
+      transaction.v = new BN(toBuffer(`0x${v}`))
+      transaction.r = new BN(toBuffer(`0x${ledgerResult.r}`))
+      transaction.s = new BN(toBuffer(`0x${ledgerResult.s}`))
 
       return `0x${transaction.serialize().toString('hex')}`
     } catch (error) {

@@ -2,9 +2,12 @@ import { networkName } from '../../utilities'
 import {
   WalletCheckModal,
   StateAndHelpers,
-  WalletCheckCustomOptions
+  WalletCheckCustomOptions,
+  AppState
 } from '../../interfaces'
 import { networkIcon } from './icons'
+
+import { app } from '../../stores'
 
 function network(
   options: WalletCheckCustomOptions = {}
@@ -16,6 +19,7 @@ function network(
       network,
       appNetworkId,
       walletSelect,
+      walletCheck,
       exit,
       stateSyncStatus,
       stateStore
@@ -49,9 +53,16 @@ function network(
           )}</b> for this Dapp. <br><br> <i style="font-size: inherit; font-family: inherit;">*Some wallets may not support changing networks. If you can not change networks in your wallet you may consider switching to a different wallet.</i>`,
         eventCode: 'networkFail',
         button: button || {
-          onclick: () => {
-            exit()
-            walletSelect()
+          onclick: async () => {
+            exit(false, { switchingWallets: true })
+            const walletSelected = await walletSelect()
+            const walletReady = walletSelected && (await walletCheck())
+
+            app.update((store: AppState) => ({
+              ...store,
+              switchingWallets: false,
+              walletCheckCompleted: walletReady
+            }))
           },
           text: 'Switch Wallet'
         },
