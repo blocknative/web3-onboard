@@ -74,7 +74,6 @@ export async function getENS(provider: any, address: string): Promise<Ens> {
   let nameInterface
   try {
     nameInterface = await ens.getName(address)
-    
   } catch (e) {
     // Error getting ens name
   }

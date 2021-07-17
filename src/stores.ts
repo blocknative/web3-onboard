@@ -75,10 +75,10 @@ export function initializeStores() {
     initialState: null
   })
 
-   ens = createWalletStateSliceStore({
-     parameter: 'ens',
-     initialState: null
-   })
+  ens = createWalletStateSliceStore({
+    parameter: 'ens',
+    initialState: null
+  })
 
   network = createWalletStateSliceStore({
     parameter: 'network',
