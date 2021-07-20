@@ -13,6 +13,7 @@ export interface Initialization {
 
 export interface Subscriptions {
   address?: (address: string) => void
+  ens?: (ens: Ens) => void
   network?: (networkId: number) => void
   balance?: (balance: string) => void
   wallet?: (wallet: Wallet) => void
@@ -558,4 +559,10 @@ export interface TermsAgreementState {
   version: string
   terms?: boolean
   privacy?: boolean
+}
+
+export interface Ens {
+  name?: string
+  contentHash?: string
+  getText?: (key: string) => Promise<string | undefined>
 }

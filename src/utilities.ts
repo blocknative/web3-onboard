@@ -1,9 +1,10 @@
 import bowser from 'bowser'
 import BigNumber from 'bignumber.js'
 import { get } from 'svelte/store'
+import ENS, { getEnsAddress } from '@ensdomains/ensjs'
 
 import { app } from './stores'
-import { WalletInterface } from './interfaces'
+import { WalletInterface, Ens } from './interfaces'
 
 export function getNetwork(provider: any): Promise<number | any> {
   return new Promise((resolve, reject) => {
@@ -65,6 +66,27 @@ export function getAddress(provider: any): Promise<string | any> {
       resolve(null)
     }
   })
+}
+
+export async function getEns(provider: any, address: string): Promise<Ens> {
+  const { networkId } = get(app)
+  const ens = new ENS({ provider, ensAddress: getEnsAddress(networkId) })
+  let name
+  let nameInterface
+  let contentHash
+  try {
+    ;({ name } = await ens.getName(address))
+    nameInterface = await ens.name(name)
+    contentHash = await nameInterface?.getContent()
+  } catch (e) {
+    // Error getting ens name
+  }
+
+  return {
+    name,
+    contentHash,
+    getText: nameInterface?.getText.bind(nameInterface)
+  }
 }
 
 export function getBalance(
