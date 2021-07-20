@@ -1,6 +1,6 @@
 import type SafeAppsSDK from '@gnosis.pm/safe-apps-sdk'
 import type { SafeInfo } from '@gnosis.pm/safe-apps-sdk'
-import { CommonWalletOptions, Helpers, WalletModule } from '../../../interfaces'
+import { GnosisOptions, Helpers, WalletModule } from '../../../interfaces'
 import gnosisWalletIcon from '../wallet-icons/icon-gnosis'
 
 const getSafe = (sdk: SafeAppsSDK): Promise<SafeInfo | undefined> =>
@@ -20,11 +20,16 @@ export const checkGnosisSafeContext = async (selectWallet: () => void) =>
   !!(await getSafe(new (await import('@gnosis.pm/safe-apps-sdk')).default())) &&
   selectWallet()
 
-function gnosis(options: CommonWalletOptions): WalletModule {
+function gnosis(options: GnosisOptions): WalletModule {
   const { preferred, label, iconSrc, svg, networkId } = options
 
   const network = networkId === 4 ? 'rinkeby.' : ''
   const link = `https://${network}gnosis-safe.io/app`
+  const safeAppMessage = options.appName
+    ? `Then go to APPS and select <b>${options.appName}</b>.`
+    : options.appUrl
+    ? `Then go to APPS and add a custom app with the URL:<br /><b>${options.appUrl}</b>`
+    : ''
 
   return {
     name: label || 'Gnosis Safe',
@@ -51,7 +56,8 @@ function gnosis(options: CommonWalletOptions): WalletModule {
     link,
     installMessage: () => `
         <p style="font-size: 0.889rem; font-family: inherit; margin: 0.889rem 0;">
-            Click the button below to open the Gnosis Safe interface.
+            Click the button below to open the Gnosis Safe interface.<br />
+            ${safeAppMessage}
         </p>
         `,
     desktop: true,
