@@ -16,7 +16,7 @@ function portis(
       const { default: Portis } = await import('@portis/web3')
       const instance = new Portis(apiKey, networkName(networkId))
       const provider = instance.provider
-      const { BigNumber } = helpers
+      const { BigNumber, getENS } = helpers
 
       return {
         provider,
@@ -34,6 +34,13 @@ function portis(
                 func(address)
                 provider.address = address
               })
+            }
+          },
+          ens: {
+            onChange: func => {
+              instance.onLogin((address: string) =>
+                getENS(provider, address).then(func)
+              )
             }
           },
           network: {

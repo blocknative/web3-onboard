@@ -15,7 +15,8 @@ function trust(options: InjectedWithBalanceOptions): WalletModule {
     svg: svg || trustIcon,
     iconSrc,
     wallet: async (helpers: Helpers) => {
-      const { getProviderName, getAddress, getNetwork, getBalance } = helpers
+      const { getProviderName, getAddress, getNetwork, getBalance, getENS } =
+        helpers
       const trustProvider =
         (window as any).ethereum ||
         ((window as any).web3 && (window as any).web3.currentProvider)
@@ -37,6 +38,12 @@ function trust(options: InjectedWithBalanceOptions): WalletModule {
           ? {
               address: {
                 get: () => getAddress(trustProvider)
+              },
+              ens: {
+                get: () =>
+                  getAddress(trustProvider).then(address =>
+                    getENS(provider, address)
+                  )
               },
               network: {
                 get: () => getNetwork(trustProvider)

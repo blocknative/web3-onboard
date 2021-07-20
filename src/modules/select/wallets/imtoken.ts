@@ -15,7 +15,7 @@ function imtoken(options: InjectedWithBalanceOptions): WalletModule {
     iconSrc,
     svg: svg || imTokenIcon,
     wallet: async (helpers: Helpers) => {
-      const { getProviderName, getBalance } = helpers
+      const { getProviderName, getBalance, getENS } = helpers
       const imTokenProvider = (window as any).ethereum
       const isImToken = getProviderName(imTokenProvider) === 'imToken'
       let createProvider
@@ -33,11 +33,14 @@ function imtoken(options: InjectedWithBalanceOptions): WalletModule {
         interface: isImToken
           ? {
               address: {
-                get: () => Promise.resolve(imTokenProvider.selectedAddress)
+                get: async () => imTokenProvider.selectedAddress
+              },
+              ens: {
+                get: () =>
+                  getENS(provider, imTokenProvider.selectedAddress)
               },
               network: {
-                get: () =>
-                  Promise.resolve(Number(imTokenProvider.networkVersion))
+                get: async () => Number(imTokenProvider.networkVersion)
               },
               balance: {
                 get: () => {

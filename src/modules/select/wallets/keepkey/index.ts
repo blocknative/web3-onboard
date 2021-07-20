@@ -48,7 +48,7 @@ function keepkey(
   return {
     name: label || WALLET_NAME,
     iconSrc: iconSrc || keepKeyIcon,
-    wallet: async ({ BigNumber, resetWalletState }: Helpers) => {
+    wallet: async ({ BigNumber, resetWalletState, getENS }: Helpers) => {
       const { provider, error } = await createKeepKeyProvider({
         resetWalletState,
         BigNumber,
@@ -66,6 +66,9 @@ function keepkey(
               disconnect: provider.disconnect,
               address: {
                 get: async () => provider.getPrimaryAddress()
+              },
+              ens: {
+                get: () => getENS(provider, provider.getPrimaryAddress())
               },
               network: {
                 get: async () => networkId

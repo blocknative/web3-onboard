@@ -21,7 +21,7 @@ function walletLink(
     svg: svg || coinbaseIcon,
     iconSrc,
     wallet: async (helpers: Helpers) => {
-      const { getBalance, getAddress, getNetwork } = helpers
+      const { getBalance, getAddress, getNetwork, getENS } = helpers
 
       const { default: WalletLink } = await import('walletlink')
 
@@ -53,6 +53,9 @@ function walletLink(
           },
           address: {
             get: () => getAddress(provider)
+          },
+          ens: {
+            get: () => getAddress(provider).then(address => getENS(provider, address))
           },
           network: {
             get: () => getNetwork(provider)

@@ -13,7 +13,7 @@ function fortmatic(
     svg: svg || fortmaticIcon,
     iconSrc,
     wallet: async (helpers: Helpers) => {
-      const { default: Fortmatic } = await import('fortmatic')
+      const { default: Fortmatic, getEns } = await import('fortmatic')
 
       const instance = new Fortmatic(
         apiKey,
@@ -38,6 +38,12 @@ function fortmatic(
           disconnect: () => instance.user.logout(),
           address: {
             get: () => (enabled ? getAddress(provider) : Promise.resolve())
+          },
+          ens: {
+            get: () =>
+              enabled
+                ? getAddress(provider).then(address => getEns(provider, address))
+                : Promise.resolve()
           },
           network: {
             get: () => Promise.resolve(networkId)

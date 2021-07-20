@@ -24,7 +24,7 @@ function trezor(options: TrezorOptions & { networkId: number }): WalletModule {
     svg: svg || trezorIcon,
     iconSrc,
     wallet: async (helpers: Helpers) => {
-      const { BigNumber, networkName, resetWalletState } = helpers
+      const { BigNumber, networkName, resetWalletState, getENS } = helpers
 
       const provider = await trezorProvider({
         rpcUrl,
@@ -45,6 +45,9 @@ function trezor(options: TrezorOptions & { networkId: number }): WalletModule {
           disconnect: provider.disconnect,
           address: {
             get: async () => provider.getPrimaryAddress()
+          },
+          ens: {
+            get: () => getENS(provider, provider.getPrimaryAddress())
           },
           network: {
             get: async () => networkId

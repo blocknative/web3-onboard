@@ -13,7 +13,8 @@ function operaTouch(options: CommonWalletOptions): WalletModule {
     iconSrcSet: iconSrc || operaTouchIcon2x,
     svg,
     wallet: async (helpers: Helpers) => {
-      const { getProviderName, getAddress, getBalance, getNetwork } = helpers
+      const { getProviderName, getAddress, getBalance, getNetwork, getENS } =
+        helpers
 
       const provider =
         (window as any).ethereum ||
@@ -35,6 +36,12 @@ function operaTouch(options: CommonWalletOptions): WalletModule {
                 address: {
                   get: () =>
                     enabled ? getAddress(provider) : Promise.resolve(null)
+                },
+                ens: {
+                  get: () =>
+                    enabled
+                      ? getAddress(provider).then(address => getENS(provider, address))
+                      : Promise.resolve(null)
                 },
                 network: {
                   get: () =>

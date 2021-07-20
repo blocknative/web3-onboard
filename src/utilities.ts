@@ -71,16 +71,21 @@ export function getAddress(provider: any): Promise<string | any> {
 export async function getENS(provider: any, address: string): Promise<Ens> {
   const { networkId } = get(app)
   const ens = new ENS({ provider, ensAddress: getEnsAddress(networkId) })
+  let name
   let nameInterface
+  let contentHash
   try {
-    nameInterface = await ens.getName(address)
+    ;({ name } = await ens.getName(address))
+    nameInterface = await ens.name(name)
+    contentHash = await nameInterface?.getContent()
   } catch (e) {
     // Error getting ens name
   }
+
   return {
-    name: nameInterface?.name,
-    contentHash: nameInterface?.getContent(),
-    getText: nameInterface?.getText
+    name,
+    contentHash,
+    getText: nameInterface?.getText.bind(nameInterface)
   }
 }
 

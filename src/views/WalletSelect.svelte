@@ -18,6 +18,7 @@
     createLegacyProviderInterface,
     createModernProviderInterface,
     getAddress,
+    getENS,
     getBalance,
     getNetwork,
     networkName
@@ -178,6 +179,7 @@
       BigNumber,
       getNetwork,
       getAddress,
+      getENS,
       getBalance,
       resetWalletState,
       networkName,

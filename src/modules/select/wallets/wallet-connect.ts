@@ -36,7 +36,7 @@ function walletConnect(
         '@walletconnect/web3-provider'
       )
 
-      const { resetWalletState, networkName, getBalance } = helpers
+      const { resetWalletState, networkName, getBalance, getENS } = helpers
 
       const rpcUrl =
         rpc && rpc[networkId]
@@ -87,6 +87,19 @@ function walletConnect(
                 .then((accounts: string[]) => accounts[0] && func(accounts[0]))
               provider.on('accountsChanged', (accounts: string[]) =>
                 func(accounts[0])
+              )
+            }
+          },
+          ens: {
+            onChange: func => {
+              provider
+                .send('eth_accounts')
+                .then(
+                  ([account]: string[]) => account && getENS(provider, account)
+                )
+                .then(func)
+              provider.on('accountsChanged', ([account]: string[]) =>
+                getENS(provider, account).then(func)
               )
             }
           },

@@ -145,6 +145,7 @@ export interface Helpers {
   BigNumber: any
   networkName: (id: number) => string
   getAddress: (provider: any) => Promise<string | any>
+  getENS: (provider: any, address: string) => Promise<Ens | any>
   getNetwork: (provider: any) => Promise<number | any>
   getBalance: (provider: any, address?: string) => Promise<string | any>
   resetWalletState: (options?: {

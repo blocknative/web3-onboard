@@ -17,7 +17,7 @@ function mykey(options: InjectedWithBalanceOptions): WalletModule {
     iconSrcSet: iconSrc || mykeyIcon2x,
     svg,
     wallet: async (helpers: Helpers) => {
-      const { getProviderName, getAddress, getNetwork, getBalance } = helpers
+      const { getProviderName, getAddress, getENS, getNetwork, getBalance } = helpers
       const myKeyProvider =
         (window as any).ethereum ||
         ((window as any).web3 && (window as any).web3.currentProvider)
@@ -39,6 +39,12 @@ function mykey(options: InjectedWithBalanceOptions): WalletModule {
           ? {
               address: {
                 get: () => getAddress(myKeyProvider)
+              },
+              ens: {
+                get: () =>
+                  getAddress(myKeyProvider).then(address =>
+                    getENS(provider, address)
+                  )
               },
               network: {
                 get: () => getNetwork(myKeyProvider)

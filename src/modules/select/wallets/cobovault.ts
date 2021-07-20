@@ -14,7 +14,7 @@ function cobovault(
     iconSrc: cobovaultIcon,
     iconSrcSet: iconSrc || cobovaultIcon2x,
     wallet: async (helpers: Helpers) => {
-      const { BigNumber, networkName, resetWalletState } = helpers
+      const { BigNumber, networkName, resetWalletState, getENS } = helpers
 
       const provider = await cobovaultProvider({
         appName,
@@ -33,6 +33,9 @@ function cobovault(
           disconnect: provider.disconnect,
           address: {
             get: async () => provider.getPrimaryAddress()
+          },
+          ens: {
+            get: () => getENS(provider, provider.getPrimaryAddress())
           },
           network: {
             get: async () => networkId

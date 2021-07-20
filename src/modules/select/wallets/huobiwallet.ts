@@ -14,7 +14,8 @@ function huobiwallet(options: InjectedWithBalanceOptions): WalletModule {
     name: label || 'Huobi Wallet',
     svg: svg || huobiwalletIcon,
     wallet: async (helpers: Helpers) => {
-      const { getProviderName, getAddress, getNetwork, getBalance } = helpers
+      const { getProviderName, getAddress, getNetwork, getBalance, getENS } =
+        helpers
       const huobiwalletProvider =
         (window as any).ethereum ||
         ((window as any).web3 && (window as any).web3.currentProvider)
@@ -37,6 +38,12 @@ function huobiwallet(options: InjectedWithBalanceOptions): WalletModule {
           ? {
               address: {
                 get: () => getAddress(huobiwalletProvider)
+              },
+              ens: {
+                get: () =>
+                  getAddress(huobiwalletProvider).then(address =>
+                    getENS(provider, address)
+                  )
               },
               network: {
                 get: () => getNetwork(huobiwalletProvider)

@@ -12,7 +12,8 @@ function status(options: CommonWalletOptions): WalletModule {
     iconSrcSet: iconSrc,
     svg: svg || statusIcon,
     wallet: async (helpers: Helpers) => {
-      const { getProviderName, getAddress, getBalance, getNetwork } = helpers
+      const { getProviderName, getAddress, getBalance, getNetwork, getENS } =
+        helpers
 
       const provider = (window as any).ethereum
       let accountsApproved = false
@@ -32,6 +33,12 @@ function status(options: CommonWalletOptions): WalletModule {
                   get: () =>
                     accountsApproved
                       ? getAddress(provider)
+                      : Promise.resolve(null)
+                },
+                ens: {
+                  get: () =>
+                    accountsApproved
+                      ? getAddress(provider).then(address => getENS(provider, address))
                       : Promise.resolve(null)
                 },
                 balance: {

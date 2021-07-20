@@ -25,7 +25,7 @@ function lattice(
     svg: svg || latticeIcon,
     iconSrc,
     wallet: async (helpers: Helpers) => {
-      const { BigNumber, networkName, resetWalletState } = helpers
+      const { BigNumber, networkName, resetWalletState, getENS } = helpers
 
       const provider = await latticeProvider({
         appName,
@@ -45,6 +45,9 @@ function lattice(
           disconnect: provider.disconnect,
           address: {
             get: async () => provider.getPrimaryAddress()
+          },
+          ens: {
+            get: () => getENS(provider, provider.getPrimaryAddress())
           },
           network: {
             get: async () => networkId

@@ -27,7 +27,7 @@ function ledger(options: LedgerOptions & { networkId: number }): WalletModule {
     svg: svg || ledgerIcon,
     iconSrc,
     wallet: async (helpers: Helpers) => {
-      const { BigNumber, networkName, resetWalletState } = helpers
+      const { BigNumber, networkName, resetWalletState, getENS } = helpers
 
       const provider = await ledgerProvider({
         rpcUrl,
@@ -47,6 +47,9 @@ function ledger(options: LedgerOptions & { networkId: number }): WalletModule {
           disconnect: provider.disconnect,
           address: {
             get: async () => provider.getPrimaryAddress()
+          },
+          ens: {
+            get: () => getENS(provider, provider.getPrimaryAddress())
           },
           network: {
             get: async () => networkId
