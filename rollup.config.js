@@ -90,6 +90,7 @@ export default {
     '@shapeshiftoss/hdwallet-keepkey-webusb',
     '@shapeshiftoss/hdwallet-core',
     '@gnosis.pm/safe-apps-sdk',
-    '@gnosis.pm/safe-apps-provider'
+    '@gnosis.pm/safe-apps-provider',
+    '@ensdomains/ensjs'
   ]
 }
