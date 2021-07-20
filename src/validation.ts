@@ -161,7 +161,8 @@ export function validateInit(init: Initialization): never | void {
 }
 
 function validateSubscriptions(subscriptions: Subscriptions): never | void {
-  const { address, ens, network, balance, wallet, ...otherParams } = subscriptions
+  const { address, ens, network, balance, wallet, ...otherParams } =
+    subscriptions
 
   invalidParams(otherParams, validSubscriptionKeys, 'subscriptions')
 
