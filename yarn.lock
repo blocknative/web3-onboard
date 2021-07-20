@@ -8852,15 +8852,15 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
+walletlink@^2.1.6:
+  version "2.1.6"
+  resolved "https://registry.yarnpkg.com/walletlink/-/walletlink-2.1.6.tgz#4e48310af09bb0c940a156c26c1d0b1b9506ddb9"
+  integrity sha512-4M+8GrDq4zUCcRsbpBVIwMLVxJ8Fg8ybWi1E6K9d2cYHO1S9WnzsV5MN6HDyThBci00a+O3tKeUD++nVaUyA5g==
+  
 vm-browserify@^1.0.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
-
-walletlink@^2.1.0:
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/walletlink/-/walletlink-2.1.3.tgz#dd7ae5c5464ab3608c0faa5435ba736b945abcd7"
-  integrity sha512-W8qgXiJn5BoecV8gneo7hMCGue7H5UsXjLfhaph6Z6BT7cC4+3ItWWGY5PoSbXRtR7LGe3h0kPZqCggiPrSQzQ==
   dependencies:
     "@metamask/safe-event-emitter" "2.0.0"
     bind-decorator "^1.0.11"
