@@ -42,7 +42,9 @@ function fortmatic(
           ens: {
             get: () =>
               enabled
-                ? getAddress(provider).then(address => getEns(provider, address))
+                ? getAddress(provider).then(address =>
+                    getEns(provider, address)
+                  )
                 : Promise.resolve()
           },
           network: {

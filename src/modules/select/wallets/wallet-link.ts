@@ -55,7 +55,8 @@ function walletLink(
             get: () => getAddress(provider)
           },
           ens: {
-            get: () => getAddress(provider).then(address => getENS(provider, address))
+            get: () =>
+              getAddress(provider).then(address => getENS(provider, address))
           },
           network: {
             get: () => getNetwork(provider)

@@ -36,8 +36,7 @@ function imtoken(options: InjectedWithBalanceOptions): WalletModule {
                 get: async () => imTokenProvider.selectedAddress
               },
               ens: {
-                get: () =>
-                  getENS(provider, imTokenProvider.selectedAddress)
+                get: () => getENS(provider, imTokenProvider.selectedAddress)
               },
               network: {
                 get: async () => Number(imTokenProvider.networkVersion)

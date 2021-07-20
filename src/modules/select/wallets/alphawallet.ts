@@ -15,7 +15,8 @@ function alphawallet(options: InjectedWithBalanceOptions): WalletModule {
     svg: svg || alphawalletIcon,
     iconSrc,
     wallet: async (helpers: Helpers) => {
-      const { getProviderName, getAddress, getENS, getNetwork, getBalance } = helpers
+      const { getProviderName, getAddress, getENS, getNetwork, getBalance } =
+        helpers
       const alphawalletProvider =
         (window as any).ethereum ||
         ((window as any).web3 && (window as any).web3.currentProvider)
@@ -40,9 +41,10 @@ function alphawallet(options: InjectedWithBalanceOptions): WalletModule {
                 get: () => getAddress(alphawalletProvider)
               },
               ens: {
-                get: () => getAddress(alphawalletProvider).then(address =>
-                  getENS(provider, address)
-                )
+                get: () =>
+                  getAddress(alphawalletProvider).then(address =>
+                    getENS(provider, address)
+                  )
               },
               network: {
                 get: () => getNetwork(alphawalletProvider)

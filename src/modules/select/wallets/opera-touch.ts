@@ -40,7 +40,9 @@ function operaTouch(options: CommonWalletOptions): WalletModule {
                 ens: {
                   get: () =>
                     enabled
-                      ? getAddress(provider).then(address => getENS(provider, address))
+                      ? getAddress(provider).then(address =>
+                          getENS(provider, address)
+                        )
                       : Promise.resolve(null)
                 },
                 network: {

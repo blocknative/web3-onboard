@@ -14,7 +14,8 @@ function walletIoWallet(options: InjectedWithBalanceOptions): WalletModule {
     name: label || 'wallet.io',
     svg: svg || walletIoIcon,
     wallet: async (helpers: Helpers) => {
-      const { getProviderName, getAddress, getNetwork, getBalance, getENS } = helpers
+      const { getProviderName, getAddress, getNetwork, getBalance, getENS } =
+        helpers
       const walletIoProvider =
         (window as any).ethereum ||
         ((window as any).web3 && (window as any).web3.currentProvider)

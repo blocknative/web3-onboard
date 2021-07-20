@@ -38,7 +38,9 @@ function status(options: CommonWalletOptions): WalletModule {
                 ens: {
                   get: () =>
                     accountsApproved
-                      ? getAddress(provider).then(address => getENS(provider, address))
+                      ? getAddress(provider).then(address =>
+                          getENS(provider, address)
+                        )
                       : Promise.resolve(null)
                 },
                 balance: {
