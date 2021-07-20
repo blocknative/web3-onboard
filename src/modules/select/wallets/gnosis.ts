@@ -26,10 +26,10 @@ function gnosis(options: GnosisOptions): WalletModule {
   const network = networkId === 4 ? 'rinkeby.' : ''
   const link = `https://${network}gnosis-safe.io/app`
   const safeAppMessage = options.appName
-    ? `Then go to APPS and pick ${options.appName}` 
+    ? `Then go to APPS and select <b>${options.appName}</b>.`
     : options.appUrl
-      ? `Then go to APPS and add a custom app with the URL: ${options.appUrl}`
-      : '';
+    ? `Then go to APPS and add a custom app with the URL:<br /><b>${options.appUrl}</b>`
+    : ''
 
   return {
     name: label || 'Gnosis Safe',
@@ -56,7 +56,7 @@ function gnosis(options: GnosisOptions): WalletModule {
     link,
     installMessage: () => `
         <p style="font-size: 0.889rem; font-family: inherit; margin: 0.889rem 0;">
-            Click the button below to open the Gnosis Safe interface.
+            Click the button below to open the Gnosis Safe interface.<br />
             ${safeAppMessage}
         </p>
         `,
