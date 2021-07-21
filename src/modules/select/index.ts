@@ -43,14 +43,14 @@ const injectedWalletDetected = () =>
 function select(
   wallets: Array<WalletInitOptions | WalletModule> | undefined,
   networkId: number,
-  isMobile: boolean,
+  isMobile: boolean
 ) {
   const defaultWalletNames = isMobile
     ? mobileDefaultWalletNames
     : desktopDefaultWalletNames
 
   if (wallets) {
-    // If we detect an injected wallet then place the detected wallet 
+    // If we detect an injected wallet then place the detected wallet
     // at the beginning of the list e.g. the of the wallet select modal
     if (injectedWalletDetected()) {
       wallets.unshift({ walletName: 'detectedwallet' })
