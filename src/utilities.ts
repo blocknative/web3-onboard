@@ -1,9 +1,10 @@
 import bowser from 'bowser'
 import BigNumber from 'bignumber.js'
 import { get } from 'svelte/store'
+import ENS, { getEnsAddress } from '@ensdomains/ensjs'
 
 import { app } from './stores'
-import { WalletInterface } from './interfaces'
+import { WalletInterface, Ens } from './interfaces'
 
 export function getNetwork(provider: any): Promise<number | any> {
   return new Promise((resolve, reject) => {
@@ -65,6 +66,27 @@ export function getAddress(provider: any): Promise<string | any> {
       resolve(null)
     }
   })
+}
+
+export async function getEns(provider: any, address: string): Promise<Ens> {
+  const { networkId } = get(app)
+  const ens = new ENS({ provider, ensAddress: getEnsAddress(networkId) })
+  let name
+  let nameInterface
+  let contentHash
+  try {
+    ;({ name } = await ens.getName(address))
+    nameInterface = await ens.name(name)
+    contentHash = await nameInterface?.getContent()
+  } catch (e) {
+    // Error getting ens name
+  }
+
+  return {
+    name,
+    contentHash,
+    getText: nameInterface?.getText.bind(nameInterface)
+  }
 }
 
 export function getBalance(
@@ -316,46 +338,20 @@ export function getDeviceInfo() {
 }
 
 export function networkName(id: number): string {
-  switch (id) {
-    case 1:
-      return 'mainnet'
-    case 3:
-      return 'ropsten'
-    case 4:
-      return 'rinkeby'
-    case 5:
-      return 'goerli'
-    case 42:
-      return 'kovan'
-    case 100:
-      return 'xdai'
-    case 56:
-      return 'bsc'
-    default:
-      const { networkId, networkName } = get(app)
-      return (networkId === id && networkName) || 'unknown'
-  }
-}
-
-export function networkToId(network: string): number {
-  switch (network) {
-    case 'mainnet':
-      return 1
-    case 'ropsten':
-      return 3
-    case 'rinkeby':
-      return 4
-    case 'goerli':
-      return 5
-    case 'kovan':
-      return 42
-    case 'xdai':
-      return 100
-    case 'bsc':
-      return 56
-    default:
-      return 0
-  }
+  const { networkName, networkId } = get(app)
+  return networkId === id && networkName
+    ? networkName
+    : (
+        {
+          1: 'mainnet',
+          3: 'ropsten',
+          4: 'rinkeby',
+          5: 'goerli',
+          42: 'kovan',
+          100: 'xdai',
+          56: 'bsc'
+        } as { [key: number]: string }
+      )[id] || 'unknown'
 }
 
 export function wait(time: number) {

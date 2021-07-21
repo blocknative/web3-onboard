@@ -13,6 +13,7 @@ export interface Initialization {
 
 export interface Subscriptions {
   address?: (address: string) => void
+  ens?: (ens: Ens) => void
   network?: (networkId: number) => void
   balance?: (balance: string) => void
   wallet?: (wallet: Wallet) => void
@@ -249,6 +250,13 @@ export interface LedgerOptions extends CommonWalletOptions {
   rpcUrl: string
   LedgerTransport?: any
   customNetwork?: HardwareWalletCustomNetwork
+}
+
+export interface GnosisOptions extends CommonWalletOptions {
+  // For default apps (cf. https://github.com/gnosis/safe-apps-list/issues/new/choose)
+  appName?: string
+  // For other apps, give the URL needed to add a custom app
+  appUrl?: string
 }
 
 //#region torus
@@ -551,4 +559,10 @@ export interface TermsAgreementState {
   version: string
   terms?: boolean
   privacy?: boolean
+}
+
+export interface Ens {
+  name?: string
+  contentHash?: string
+  getText?: (key: string) => Promise<string | undefined>
 }
