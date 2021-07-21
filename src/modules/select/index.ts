@@ -43,22 +43,22 @@ const injectedWalletDetected = () =>
 function select(
   wallets: Array<WalletInitOptions | WalletModule> | undefined,
   networkId: number,
-  isMobile: boolean
+  isMobile: boolean,
 ) {
   const defaultWalletNames = isMobile
     ? mobileDefaultWalletNames
     : desktopDefaultWalletNames
 
   if (wallets) {
+    // If we detect an injected wallet then place the detected wallet 
+    // at the beginning of the list e.g. the of the wallet select modal
+    if (injectedWalletDetected()) {
+      wallets.unshift({ walletName: 'detectedwallet' })
+    }
     return Promise.all(
-      wallets
-        // only include a detected wallet if it's not already one of the provided options
-        .filter(
-          wallet =>
-            isWalletInit(wallet) &&
-            (wallet.walletName !== 'detectedwallet' || injectedWalletDetected())
-        )
-        .map(wallet => {
+      wallets.map(wallet => {
+        // If this is a wallet init object then load the built-in wallet module
+        if (isWalletInit(wallet)) {
           const { walletName, ...initParams } = wallet as WalletInitOptions
           try {
             return getModule(walletName).then((m: any) =>
@@ -71,15 +71,17 @@ function select(
               throw error
             }
           }
+        }
 
-          return Promise.resolve(wallet)
-        })
+        // This is a custom wallet module so just return it
+        return Promise.resolve(wallet)
+      })
     )
   }
 
   return Promise.all(
     defaultWalletNames
-      // only include a detected wallet if it's not already one of the provided options
+      // Include the detected wallet only if an injected wallet is detected
       .filter(
         walletName =>
           walletName !== 'detectedwallet' || injectedWalletDetected()
