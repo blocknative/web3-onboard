@@ -385,7 +385,7 @@ async function createKeepKeyProvider({
       gasPrice,
       gasLimit: gas,
       to,
-      value: value || '',
+      value: value || '0x0',
       data: data || '',
       chainId: networkId
     })
