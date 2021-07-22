@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
+import * as ethUtil from 'ethereumjs-util'
 import {
   CommonWalletOptions,
   Helpers,
@@ -406,7 +407,7 @@ async function createKeepKeyProvider({
 
     const { signature } = await keepKeyWallet.ethSignMessage({
       addressNList,
-      message
+      message: ethUtil.toBuffer(message).toString("utf8")
     })
 
     return signature
