@@ -72,18 +72,21 @@ export async function getEns(provider: any, address: string): Promise<Ens> {
   const { networkId } = get(app)
   const ens = new ENS({ provider, ensAddress: getEnsAddress(networkId) })
   let name
+  let avatar
   let nameInterface
   let contentHash
   try {
     ;({ name } = await ens.getName(address))
     nameInterface = await ens.name(name)
     contentHash = await nameInterface?.getContent()
+    avatar = await nameInterface?.getText('avatar')
   } catch (e) {
     // Error getting ens name
   }
 
   return {
     name,
+    avatar,
     contentHash,
     getText: nameInterface?.getText.bind(nameInterface)
   }
