@@ -1006,7 +1006,7 @@
   dependencies:
     crc-32 "^1.2.0"
 
-"@ethereumjs/tx@^3.0.0":
+"@ethereumjs/tx@3.0.0", "@ethereumjs/tx@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@ethereumjs/tx/-/tx-3.0.0.tgz#8dfd91ed6e91e63996e37b3ddc340821ebd48c81"
   integrity sha512-H9tfy6qgYxPXvt1TSObfVmVjlF43OoQqoPQ3PJsG2JiuqaMHj5ettV1pGFEC3FamENDBkl6vD6niQEvIlXv/VQ==
@@ -1754,12 +1754,12 @@
     google-protobuf "^3.7.0-rc.2"
     pbjs "^0.0.5"
 
-"@keystonehq/bc-ur-registry-eth@^0.3.6":
-  version "0.3.6"
-  resolved "https://registry.npmjs.org/@keystonehq/bc-ur-registry-eth/-/bc-ur-registry-eth-0.3.6.tgz#365f07b9de6963e387724c0c64eb32b278bfd860"
-  integrity sha512-BP8JwbgXMGv1RLR1LhjhI3geOMeqbaHxvTHynAZCHpTnj766ddM7K0VzDw8xh2XQtNVg7CXPZBoJ/B27dXa4Qw==
+"@keystonehq/bc-ur-registry-eth@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@keystonehq/bc-ur-registry-eth/-/bc-ur-registry-eth-0.4.1.tgz#502ddda350d540698116e71949b5e6eb5c50abc6"
+  integrity sha512-ObOiNtQOiExaSTiSHEKPVHUGxFxoQ6SejlMDpkElIuvF4p8/YQwsNPuWKa3ypQhP276Qm4ILbY6HeXaCcFltHg==
   dependencies:
-    "@keystonehq/bc-ur-registry" "^0.4.3"
+    "@keystonehq/bc-ur-registry" "^0.4.4"
     bip32 "^2.0.6"
     bs58check "^2.1.2"
     ethereumjs-tx "^2.1.2"
@@ -1767,34 +1767,32 @@
     hdkey "^2.0.1"
     uuid "^8.3.2"
 
-"@keystonehq/bc-ur-registry@^0.4.3":
-  version "0.4.3"
-  resolved "https://registry.npmjs.org/@keystonehq/bc-ur-registry/-/bc-ur-registry-0.4.3.tgz#1231f85f1c8dfdeef5a25b987941664180d54137"
-  integrity sha512-NBeUZQMQzhPaF4yvxyI3aUPmg+Gjj3x8Oa6L9Y16WdJHcvFfi1AYroJiS8FgWD3inXkVQ699PG2lPZPGYVQXvw==
+"@keystonehq/bc-ur-registry@^0.4.4":
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/@keystonehq/bc-ur-registry/-/bc-ur-registry-0.4.4.tgz#3073fdd4b33cdcbd04526a313a7685891a4b4583"
+  integrity sha512-SBdKdAZfp3y14GTGrKjfJJHf4iXObjcm4/qKUZ92lj8HVR8mxHHGmHksjE328bJPTAsJPloLix4rTnWg+qgS2w==
   dependencies:
     "@ngraveio/bc-ur" "^1.1.5"
     base58check "^2.0.0"
     tslib "^2.3.0"
 
-"@keystonehq/eth-keyring@^0.3.6":
-  version "0.3.6"
-  resolved "https://registry.npmjs.org/@keystonehq/eth-keyring/-/eth-keyring-0.3.6.tgz#0920ec34edb064d7f585e33540de21aba6c60794"
-  integrity sha512-N63RkVRCTmf29KYvO2uGBYWE15J8lrStMFxlhRMkYkCeKRtOjXNeVWbSiSEpYpApkE31jx7Ge5SGiT6aJwbx6Q==
+"@keystonehq/eth-keyring@0.4.3":
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/@keystonehq/eth-keyring/-/eth-keyring-0.4.3.tgz#b21d35736086c72b6e5492407dcc136a76cda760"
+  integrity sha512-bGRwOx+ZHcTugeFIMf1eyrPMws+xGTe30MU8xEt3m85Yz8cs+5vlBMxuZeJjIDoW5sICqEGZ2qZ7oloA4c5svA==
   dependencies:
-    "@keystonehq/bc-ur-registry-eth" "^0.3.6"
-    "@keystonehq/sdk" "^0.3.10"
+    "@ethereumjs/tx" "3.0.0"
+    "@keystonehq/bc-ur-registry-eth" "^0.4.1"
+    "@keystonehq/sdk" "^0.4.3"
     bs58check "^2.1.2"
-    ethereumjs-tx "^2.1.2"
     ethereumjs-util "^7.0.8"
     hdkey "^2.0.1"
-    tslib "^2.3.0"
-    typescript "^4.3.5"
     uuid "^8.3.2"
 
-"@keystonehq/sdk@^0.3.10":
-  version "0.3.10"
-  resolved "https://registry.npmjs.org/@keystonehq/sdk/-/sdk-0.3.10.tgz#251bc9817e1cfff34affe40da1417f738a152d7d"
-  integrity sha512-j8uHYU8P3ng6uLMLzoMju2TiWZs1xlesSInA95rT5dyFQQ8B70Zrk0QTvK9LVWMv+IKdyB9HY7E4Oj04XTw+xw==
+"@keystonehq/sdk@^0.4.3":
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/@keystonehq/sdk/-/sdk-0.4.3.tgz#8723edd53cae940484bc75285ea747c4d9382cfb"
+  integrity sha512-a6wvt8GUEyYC8bnAZTSVPDUp28JDnNFuytuCMrEBIumqM/AfFsI2O6xcujvHwry7QuaFFqz706qlGon6pe1p6g==
   dependencies:
     "@ngraveio/bc-ur" "^1.0.0"
     "@types/qrcode.react" "^1.0.1"
@@ -8792,11 +8790,6 @@ typescript@^3.6.4:
   version "3.9.9"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.9.tgz#e69905c54bc0681d0518bd4d587cc6f2d0b1a674"
   integrity sha512-kdMjTiekY+z/ubJCATUPlRDl39vXYiMV9iyeMuEuXZh2we6zz80uovNN2WlAxmmdE/Z/YQe+EbOEXB5RHEED3w==
-
-typescript@^4.3.5:
-  version "4.3.5"
-  resolved "https://registry.npmjs.org/typescript/-/typescript-4.3.5.tgz#4d1c37cc16e893973c45a06886b7113234f119f4"
-  integrity sha512-DqQgihaQ9cUrskJo9kIyW/+g0Vxsk8cDtZ52a3NGh0YNTfpUSArXSohyUGnvbPazEPLu398C0UxmKSOrPumUzA==
 
 u2f-api@0.2.7:
   version "0.2.7"

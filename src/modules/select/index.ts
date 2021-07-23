@@ -139,10 +139,10 @@ function getModule(name: string): Promise<{
       return import('./wallets/trezor')
     case 'lattice':
       return import('./wallets/lattice')
-    case 'cobovault':
-      return import('./wallets/cobovault')
     case 'keystone':
       return import('./wallets/keystone')
+    case 'cobovault':
+      return import('./wallets/cobovault')
     case 'ledger':
       return import('./wallets/ledger')
     case 'walletLink':

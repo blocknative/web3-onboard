@@ -1,12 +1,12 @@
 import AirGapedKeyring from '@keystonehq/eth-keyring'
-import { Helpers, LatticeOptions, WalletModule } from '../../../interfaces'
+import { Helpers, KeystoneOptions, WalletModule, HardwareWalletCustomNetwork} from '../../../interfaces'
 import keystoneIcon from '../wallet-icons/icon-keystone.png'
 import keystoneIcon2x from '../wallet-icons/icon-keystone@2x.png'
 
 function keystone(
-  options: LatticeOptions & { networkId: number }
+  options: KeystoneOptions & { networkId: number }
 ): WalletModule {
-  const { appName, rpcUrl, networkId, preferred, label, iconSrc, svg } = options
+  const { appName, rpcUrl, networkId, preferred, label, iconSrc, svg ,customNetwork } = options
 
   return {
     name: label || 'Keystone',
@@ -22,7 +22,8 @@ function keystone(
         networkId,
         BigNumber,
         networkName,
-        resetWalletState
+        resetWalletState,
+        customNetwork
       })
 
       return {
@@ -59,18 +60,20 @@ async function keystoneProvider(options: {
   networkId: number
   rpcUrl: string
   BigNumber: any
+  customNetwork?: HardwareWalletCustomNetwork
   networkName: (id: number) => string
   resetWalletState: (options?: {
     disconnected: boolean
     walletName: string
   }) => void
 }) {
-  const EthereumTx = await import('ethereumjs-tx')
+  const { Transaction } = await import('@ethereumjs/tx')
+  const { default: Common } = await import('@ethereumjs/common')
   const { default: createProvider } = await import('./providerEngine')
 
   const BASE_PATH = "m/44'/60'/0'/0"
 
-  const { networkId, rpcUrl, BigNumber, networkName } = options
+  const { networkId, rpcUrl, BigNumber, networkName, customNetwork } = options
 
   const keyring = AirGapedKeyring.getEmptyKeyring()
 
@@ -227,9 +230,17 @@ async function keystoneProvider(options: {
       await enable()
     }
 
-    const transaction = new EthereumTx.Transaction(transactionData, {
-      chain: networkName(networkId)
+    const common = new Common({
+      chain: customNetwork || networkName(networkId)
     })
+
+    const transaction = Transaction.fromTxData(
+      {
+        ...transactionData,
+        gasLimit: transactionData.gas ?? transactionData.gasLimit
+      },
+      { common, freeze: false }
+    )
 
     try {
       const signedTx = await keyring.signTransaction(
