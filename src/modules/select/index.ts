@@ -50,6 +50,13 @@ function select(
     : desktopDefaultWalletNames
 
   if (wallets) {
+    // For backwards compatibility if a user is still using 'detectedwallet' in the onboard wallet select array
+    // it will be filtered out so there are no duplicates
+    wallets = wallets.filter(
+      wallet =>
+        'walletName' in wallet ? wallet.walletName !== 'detectedwallet' : true // It is not a WalletInitOption but rather a WalletModule so let it through
+    )
+
     // If we detect an injected wallet then place the detected wallet
     // at the beginning of the list e.g. the of the wallet select modal
     if (injectedWalletDetected()) {
@@ -59,7 +66,7 @@ function select(
       wallets.map(wallet => {
         // If this is a wallet init object then load the built-in wallet module
         if (isWalletInit(wallet)) {
-          const { walletName, ...initParams } = wallet as WalletInitOptions
+          const { walletName, ...initParams } = wallet
           try {
             return getModule(walletName).then((m: any) =>
               m.default({ ...initParams, networkId, isMobile })
