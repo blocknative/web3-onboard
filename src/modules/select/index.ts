@@ -50,8 +50,8 @@ function select(
     : desktopDefaultWalletNames
 
   if (wallets) {
-    // For backwards compatibility if a uses is still using 'detectedwallet' in the onboard wallet select array
-    // it will be filtered out so there is not duplicates
+    // For backwards compatibility if a user is still using 'detectedwallet' in the onboard wallet select array
+    // it will be filtered out so there are no duplicates
     wallets = wallets.filter(
       wallet =>
         'walletName' in wallet ? wallet.walletName !== 'detectedwallet' : true // It is not a WalletInitOption but rather a WalletModule so let it through
