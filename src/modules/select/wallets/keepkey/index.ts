@@ -407,7 +407,7 @@ async function createKeepKeyProvider({
 
     const { signature } = await keepKeyWallet.ethSignMessage({
       addressNList,
-      message: ethUtil.toBuffer(message).toString("utf8")
+      message: ethUtil.toBuffer(message).toString('utf8')
     })
 
     return signature
