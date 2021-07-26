@@ -13,6 +13,7 @@ export interface Initialization {
 
 export interface Subscriptions {
   address?: (address: string) => void
+  ens?: (ens: Ens) => void
   network?: (networkId: number) => void
   balance?: (balance: string) => void
   wallet?: (wallet: Wallet) => void
@@ -88,8 +89,9 @@ export interface UserState {
 export interface StateAndHelpers extends UserState {
   BigNumber: any
   walletSelect: WalletSelectFunction
+  walletCheck: WalletCheck
   wallet: Wallet
-  exit: (completed?: boolean) => void
+  exit: (completed?: boolean, state?: Partial<AppState>) => void
   stateSyncStatus: {
     [key: string]:
       | null
@@ -113,9 +115,7 @@ export interface WalletModule {
   iconSrc?: string
   iconSrcSet?: string
   svg?: string
-  wallet: (
-    helpers: Helpers
-  ) => Promise<{
+  wallet: (helpers: Helpers) => Promise<{
     provider: any | undefined
     interface: WalletInterface | null
     instance?: any
@@ -197,20 +197,66 @@ export interface WalletConnectOptions extends CommonWalletOptions {
   bridge: string
 }
 
+/*
+ * Types taken from https://github.com/ethereumjs/ethereumjs-vm/blob/eb05651554ec23d2ba7c46af6e5f5a7bc199f217/packages/common/src/types.ts#L15
+ * since they are not exported
+ */
+
+export interface GenesisBlock {
+  hash: string
+  timestamp: string | null
+  gasLimit: number
+  difficulty: number
+  nonce: string
+  extraData: string
+  stateRoot: string
+}
+export interface Hardfork {
+  name: string
+  block: number | null
+}
+
+export interface BootstrapNode {
+  ip: string
+  port: number | string
+  network?: string
+  chainId?: number
+  id: string
+  location: string
+  comment: string
+}
+
+export interface HardwareWalletCustomNetwork {
+  networkId: number
+  genesis: GenesisBlock
+  hardforks: Hardfork[]
+  bootstrapNodes: BootstrapNode[]
+}
+
 export interface TrezorOptions extends CommonWalletOptions {
   appUrl: string
   email: string
   rpcUrl: string
+  customNetwork?: HardwareWalletCustomNetwork
 }
 
 export interface LatticeOptions extends CommonWalletOptions {
   appName: string
   rpcUrl: string
+  customNetwork?: HardwareWalletCustomNetwork
 }
 
 export interface LedgerOptions extends CommonWalletOptions {
   rpcUrl: string
   LedgerTransport?: any
+  customNetwork?: HardwareWalletCustomNetwork
+}
+
+export interface GnosisOptions extends CommonWalletOptions {
+  // For default apps (cf. https://github.com/gnosis/safe-apps-list/issues/new/choose)
+  appName?: string
+  // For other apps, give the URL needed to add a custom app
+  appUrl?: string
 }
 
 //#region torus
@@ -400,19 +446,19 @@ export interface WalletSelectFunction {
   (autoSelectWallet?: string): Promise<boolean>
 }
 
-interface WalletCheck {
+export interface WalletCheck {
   (): Promise<boolean>
 }
 
-interface AccountSelect {
+export interface AccountSelect {
   (): Promise<boolean>
 }
 
-interface Config {
+export interface Config {
   (options: ConfigOptions): void
 }
 
-interface GetState {
+export interface GetState {
   (): UserState
 }
 
@@ -492,6 +538,7 @@ export interface AppState {
   accountSelectInProgress: boolean
   walletSelectDisplayedUI: boolean
   walletCheckDisplayedUI: boolean
+  switchingWallets: boolean
   displayBranding: boolean
   agreement: TermsOfServiceAgreementOptions
 }
@@ -512,4 +559,11 @@ export interface TermsAgreementState {
   version: string
   terms?: boolean
   privacy?: boolean
+}
+
+export interface Ens {
+  name?: string
+  avatar?: string
+  contentHash?: string
+  getText?: (key: string) => Promise<string | undefined>
 }

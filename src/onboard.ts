@@ -1,6 +1,6 @@
 import 'regenerator-runtime/runtime'
 
-import { get } from 'svelte/store'
+import { get, derived } from 'svelte/store'
 
 import Onboard from './views/Onboard.svelte'
 
@@ -16,7 +16,7 @@ import {
   initializeStores
 } from './stores'
 
-import { getDeviceInfo } from './utilities'
+import { getDeviceInfo, getEns } from './utilities'
 import { validateInit, validateConfig, isWalletInit } from './validation'
 
 import { version } from '../package.json'
@@ -28,10 +28,12 @@ import {
   ConfigOptions,
   UserState,
   Wallet,
-  WalletInitOptions
+  WalletInitOptions,
+  Ens
 } from './interfaces'
 
 import initializeModules from './modules'
+import { closeSocketConnection } from './services'
 
 let onboard: any
 
@@ -57,6 +59,14 @@ function init(initialization: Initialization): API {
     console.warn(
       'Initializing Onboard and destroying previously initialized instance.'
     )
+
+    // close WebSocket connection
+    closeSocketConnection()
+
+    // reset the wallet state
+    resetWalletState()
+
+    // destroy svelte instance and remove from DOM
     onboard.$destroy()
   }
 
@@ -121,7 +131,8 @@ function init(initialization: Initialization): API {
     target: document.body,
     props: {
       walletSelectModule: initializedModules.walletSelect,
-      walletSelect
+      walletSelect,
+      walletCheck
     }
   })
 
@@ -131,6 +142,21 @@ function init(initialization: Initialization): API {
       address.subscribe((address: string | null) => {
         if (address !== null) {
           subscriptions.address && subscriptions.address(address)
+        }
+      })
+    }
+
+    if (subscriptions.ens) {
+      derived([address, wallet], ([$address, $wallet], set) => {
+        if ($address && $wallet && $wallet.provider) {
+          getEns($wallet.provider, $address).then(set)
+        } else {
+          // Wallet not selected or reset
+          set(undefined)
+        }
+      }).subscribe(ens => {
+        if (ens !== null) {
+          subscriptions.ens && subscriptions.ens(ens as Ens)
         }
       })
     }
@@ -206,9 +232,11 @@ function init(initialization: Initialization): API {
         const {
           walletCheckInProgress,
           walletCheckCompleted,
-          walletCheckDisplayedUI
+          walletCheckDisplayedUI,
+          switchingWallets
         } = store
-        if (walletCheckInProgress === false) {
+
+        if (!switchingWallets && walletCheckInProgress === false) {
           appUnsubscribe()
           walletCheckDisplayedUI
             ? setTimeout(() => {
@@ -272,10 +300,9 @@ function init(initialization: Initialization): API {
   ) || {}) as WalletInitOptions
 
   if (gnosisWalletName) {
-    import(
-      './modules/select/wallets/gnosis'
-    ).then(({ checkGnosisSafeContext }) =>
-      checkGnosisSafeContext(() => walletSelect(gnosisWalletName))
+    import('./modules/select/wallets/gnosis').then(
+      ({ checkGnosisSafeContext }) =>
+        checkGnosisSafeContext(() => walletSelect(gnosisWalletName))
     )
   }
 

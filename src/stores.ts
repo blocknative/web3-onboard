@@ -28,6 +28,7 @@ export const app: WritableStore = writable({
   walletSelectCompleted: false,
   walletCheckInProgress: false,
   walletCheckCompleted: false,
+  switchingWallets: false,
   accountSelectInProgress: false,
   autoSelectWallet: '',
   checkModules: [],

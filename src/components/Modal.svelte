@@ -2,7 +2,7 @@
   import { fade } from 'svelte/transition'
   import { app } from '../stores'
   import Branding from '../elements/Branding.svelte'
-  export let closeModal: () => void
+  export let closeModal: () => void = () => {}
   export let closeable: boolean = true
 
   let closeHovered: boolean
