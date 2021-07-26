@@ -563,6 +563,7 @@ export interface TermsAgreementState {
 
 export interface Ens {
   name?: string
+  avatar?: string
   contentHash?: string
   getText?: (key: string) => Promise<string | undefined>
 }
