@@ -285,7 +285,7 @@ export function getProviderName(provider: any): string | undefined {
     return 'Bitpie'
   }
 
-  if (provider.IsTp) {
+  if (provider.isTp) {
     return 'tp'
   }
 
