@@ -1,12 +1,26 @@
 import AirGapedKeyring from '@keystonehq/eth-keyring'
-import { Helpers, KeystoneOptions, WalletModule, HardwareWalletCustomNetwork} from '../../../interfaces'
+import {
+  Helpers,
+  KeystoneOptions,
+  WalletModule,
+  HardwareWalletCustomNetwork
+} from '../../../interfaces'
 import keystoneIcon from '../wallet-icons/icon-keystone.png'
 import keystoneIcon2x from '../wallet-icons/icon-keystone@2x.png'
 
 function keystone(
   options: KeystoneOptions & { networkId: number }
 ): WalletModule {
-  const { appName, rpcUrl, networkId, preferred, label, iconSrc, svg ,customNetwork } = options
+  const {
+    appName,
+    rpcUrl,
+    networkId,
+    preferred,
+    label,
+    iconSrc,
+    svg,
+    customNetwork
+  } = options
 
   return {
     name: label || 'Keystone',

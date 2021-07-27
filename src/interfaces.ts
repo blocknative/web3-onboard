@@ -258,7 +258,6 @@ export interface KeystoneOptions extends CommonWalletOptions {
   customNetwork?: HardwareWalletCustomNetwork
 }
 
-
 export interface GnosisOptions extends CommonWalletOptions {
   // For default apps (cf. https://github.com/gnosis/safe-apps-list/issues/new/choose)
   appName?: string
