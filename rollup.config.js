@@ -66,6 +66,7 @@ export default {
     'walletlink',
     'regenerator-runtime/runtime',
     'trezor-connect',
+    'ethereumjs-tx',
     '@ethereumjs/tx',
     '@ethereumjs/common',
     'ethereumjs-util',
