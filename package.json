@@ -1,6 +1,6 @@
 {
   "name": "bnc-onboard",
-  "version": "1.29.0-0.5.9",
+  "version": "1.29.0-0.5.11",
   "description": "Onboard users to web3 by allowing them to select a wallet, get that wallet ready to transact and have access to synced wallet state.",
   "keywords": [
     "ethereum",
@@ -75,6 +75,7 @@
     "eth-lattice-keyring": "^0.2.7",
     "eth-provider": "^0.6.1",
     "eth-sig-util": "^3.0.1",
+    "ethereumjs-tx": "^2.1.2",
     "ethereumjs-util": "^7.0.3",
     "fortmatic": "^2.2.1",
     "hdkey": "^2.0.1",
