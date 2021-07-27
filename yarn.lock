@@ -1754,10 +1754,10 @@
     google-protobuf "^3.7.0-rc.2"
     pbjs "^0.0.5"
 
-"@keystonehq/bc-ur-registry-eth@^0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@keystonehq/bc-ur-registry-eth/-/bc-ur-registry-eth-0.4.1.tgz#502ddda350d540698116e71949b5e6eb5c50abc6"
-  integrity sha512-ObOiNtQOiExaSTiSHEKPVHUGxFxoQ6SejlMDpkElIuvF4p8/YQwsNPuWKa3ypQhP276Qm4ILbY6HeXaCcFltHg==
+"@keystonehq/bc-ur-registry-eth@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@keystonehq/bc-ur-registry-eth/-/bc-ur-registry-eth-0.5.0.tgz#6ea69c11c4f7a9e79148f5b9f894d4b6452053a8"
+  integrity sha512-q2H8eBAs1TWga2AgsVj9ousBVTIMmf4v0p4DXBRkbKtZHK95UFEOOsmYsBAxe9HGqk1FUqUOuR2p8YuQadZsNQ==
   dependencies:
     "@keystonehq/bc-ur-registry" "^0.4.4"
     bip32 "^2.0.6"
@@ -1776,23 +1776,23 @@
     base58check "^2.0.0"
     tslib "^2.3.0"
 
-"@keystonehq/eth-keyring@0.4.3":
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/@keystonehq/eth-keyring/-/eth-keyring-0.4.3.tgz#b21d35736086c72b6e5492407dcc136a76cda760"
-  integrity sha512-bGRwOx+ZHcTugeFIMf1eyrPMws+xGTe30MU8xEt3m85Yz8cs+5vlBMxuZeJjIDoW5sICqEGZ2qZ7oloA4c5svA==
+"@keystonehq/eth-keyring@0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@keystonehq/eth-keyring/-/eth-keyring-0.5.0.tgz#90992a97f4b6ffc2bb2b684cceb47d37e5bfe5f1"
+  integrity sha512-Z7PbxuVDQNgeiVDpl8a3tGY2tIZPOaAsyZZ1751ikGu8NghixiNdY2gjt2dN5yMmhTQUkoTxgqvGbVkfBG825g==
   dependencies:
     "@ethereumjs/tx" "3.0.0"
-    "@keystonehq/bc-ur-registry-eth" "^0.4.1"
-    "@keystonehq/sdk" "^0.4.3"
+    "@keystonehq/bc-ur-registry-eth" "^0.5.0"
+    "@keystonehq/sdk" "^0.5.0"
     bs58check "^2.1.2"
     ethereumjs-util "^7.0.8"
     hdkey "^2.0.1"
     uuid "^8.3.2"
 
-"@keystonehq/sdk@^0.4.3":
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/@keystonehq/sdk/-/sdk-0.4.3.tgz#8723edd53cae940484bc75285ea747c4d9382cfb"
-  integrity sha512-a6wvt8GUEyYC8bnAZTSVPDUp28JDnNFuytuCMrEBIumqM/AfFsI2O6xcujvHwry7QuaFFqz706qlGon6pe1p6g==
+"@keystonehq/sdk@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@keystonehq/sdk/-/sdk-0.5.0.tgz#614ba308e9bfa3c692961c0720c4873970dc6a23"
+  integrity sha512-TvsJ1oM20fP6N6AqUkwYFN+wokQLGc9JP5+EGBIRB3rxfcSPsAiwcrigApvGOZFzhSlH2yY9/f3Gseg9/bx4uQ==
   dependencies:
     "@ngraveio/bc-ur" "^1.0.0"
     "@types/qrcode.react" "^1.0.1"
