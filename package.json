@@ -75,6 +75,7 @@
     "eth-lattice-keyring": "^0.2.7",
     "eth-provider": "^0.6.1",
     "eth-sig-util": "^3.0.1",
+    "ethereumjs-tx": "^2.1.2",
     "ethereumjs-util": "^7.0.3",
     "fortmatic": "^2.2.1",
     "hdkey": "^2.0.1",
