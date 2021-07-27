@@ -67,6 +67,8 @@ export default {
     'regenerator-runtime/runtime',
     'trezor-connect',
     'ethereumjs-tx',
+    '@ethereumjs/tx',
+    '@ethereumjs/common',
     'ethereumjs-util',
     'eth-lattice-keyring',
     'eth-sig-util',
@@ -89,6 +91,7 @@ export default {
     '@shapeshiftoss/hdwallet-keepkey-webusb',
     '@shapeshiftoss/hdwallet-core',
     '@gnosis.pm/safe-apps-sdk',
-    '@gnosis.pm/safe-apps-provider'
+    '@gnosis.pm/safe-apps-provider',
+    '@ensdomains/ensjs'
   ]
 }

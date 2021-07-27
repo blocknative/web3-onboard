@@ -1,9 +1,23 @@
-import { TrezorOptions, WalletModule, Helpers } from '../../../interfaces'
+import {
+  TrezorOptions,
+  WalletModule,
+  HardwareWalletCustomNetwork,
+  Helpers
+} from '../../../interfaces'
 import trezorIcon from '../wallet-icons/icon-trezor'
 
 function trezor(options: TrezorOptions & { networkId: number }): WalletModule {
-  const { rpcUrl, networkId, email, appUrl, preferred, label, iconSrc, svg } =
-    options
+  const {
+    rpcUrl,
+    networkId,
+    email,
+    appUrl,
+    preferred,
+    label,
+    iconSrc,
+    svg,
+    customNetwork
+  } = options
 
   return {
     name: label || 'Trezor',
@@ -19,6 +33,7 @@ function trezor(options: TrezorOptions & { networkId: number }): WalletModule {
         appUrl,
         BigNumber,
         networkName,
+        customNetwork,
         resetWalletState
       })
 
@@ -57,6 +72,7 @@ async function trezorProvider(options: {
   appUrl: string
   rpcUrl: string
   BigNumber: any
+  customNetwork?: HardwareWalletCustomNetwork
   networkName: (id: number) => string
   resetWalletState: (options?: {
     disconnected: boolean
@@ -64,7 +80,8 @@ async function trezorProvider(options: {
   }) => void
 }) {
   const TrezorConnectLibrary = await import('trezor-connect')
-  const EthereumTx = await import('ethereumjs-tx')
+  const { Transaction } = await import('@ethereumjs/tx')
+  const { default: Common } = await import('@ethereumjs/common')
   const ethUtil = await import('ethereumjs-util')
   const { default: createProvider } = await import('./providerEngine')
   const { generateAddresses, isValidPath } = await import('./hd-wallet')
@@ -80,6 +97,7 @@ async function trezorProvider(options: {
     rpcUrl,
     BigNumber,
     networkName,
+    customNetwork,
     resetWalletState
   } = options
 
@@ -356,24 +374,35 @@ async function trezorProvider(options: {
     if (addressToPath.size === 0) {
       await enable()
     }
-
     const path = [...addressToPath.values()][0]
-
-    const transaction = new EthereumTx.Transaction(transactionData, {
-      chain: networkName(networkId)
+    const { BN, toBuffer } = ethUtil
+    const common = new Common({
+      chain: customNetwork || networkName(networkId)
     })
-
+    const transaction = Transaction.fromTxData(
+      {
+        ...transactionData,
+        gasLimit: transactionData.gas ?? transactionData.gasLimit
+      },
+      { common, freeze: false }
+    )
+    transaction.v = new BN(toBuffer(networkId))
+    transaction.r = transaction.s = new BN(toBuffer(0))
     const trezorResult = await trezorSignTransaction(path, transactionData)
-
     if (!trezorResult.success) {
       throw new Error(trezorResult.payload.error)
     }
-
-    const signature = trezorResult.payload
-    transaction.v = signature.v
-    transaction.r = signature.r
-    transaction.s = signature.s
-
+    let v = trezorResult.payload.v.toString(16)
+    // EIP155 support. check/recalc signature v value.
+    const rv = parseInt(v, 16)
+    let cv = networkId * 2 + 35
+    if (rv !== cv && (rv & cv) !== rv) {
+      cv += 1 // add signature v bit.
+    }
+    v = cv.toString(16)
+    transaction.v = new BN(toBuffer(`0x${v}`))
+    transaction.r = new BN(toBuffer(`${trezorResult.payload.r}`))
+    transaction.s = new BN(toBuffer(`${trezorResult.payload.s}`))
     return `0x${transaction.serialize().toString('hex')}`
   }
 
