@@ -1,24 +1,10 @@
-import {
-  LatticeOptions,
-  WalletModule,
-  HardwareWalletCustomNetwork,
-  Helpers
-} from '../../../interfaces'
+import { LatticeOptions, WalletModule, Helpers } from '../../../interfaces'
 import latticeIcon from '../wallet-icons/icon-lattice'
 
 function lattice(
   options: LatticeOptions & { networkId: number }
 ): WalletModule {
-  const {
-    appName,
-    rpcUrl,
-    networkId,
-    preferred,
-    label,
-    iconSrc,
-    svg,
-    customNetwork
-  } = options
+  const { appName, rpcUrl, networkId, preferred, label, iconSrc, svg } = options
 
   return {
     name: label || 'Lattice',
@@ -33,7 +19,6 @@ function lattice(
         networkId,
         BigNumber,
         networkName,
-        customNetwork,
         resetWalletState
       })
 
@@ -72,21 +57,18 @@ async function latticeProvider(options: {
   rpcUrl: string
   BigNumber: any
   networkName: (id: number) => string
-  customNetwork?: HardwareWalletCustomNetwork
   resetWalletState: (options?: {
     disconnected: boolean
     walletName: string
   }) => void
 }) {
   const { default: EthLatticeKeyring } = await import('eth-lattice-keyring')
-  const { Transaction } = await import('@ethereumjs/tx')
-  const { default: Common } = await import('@ethereumjs/common')
+  const EthereumTx = await import('ethereumjs-tx')
   const { default: createProvider } = await import('./providerEngine')
 
   const BASE_PATH = "m/44'/60'/0'/0"
 
-  const { networkId, appName, rpcUrl, BigNumber, networkName, customNetwork } =
-    options
+  const { networkId, appName, rpcUrl, BigNumber, networkName } = options
 
   const params = {
     name: appName,
@@ -246,17 +228,10 @@ async function latticeProvider(options: {
     if (addressList.length === 0) {
       await enable()
     }
-    const common = new Common({
-      chain: customNetwork || networkName(networkId)
-    })
 
-    const transaction = Transaction.fromTxData(
-      {
-        ...transactionData,
-        gasLimit: transactionData.gas ?? transactionData.gasLimit
-      },
-      { common, freeze: false }
-    )
+    const transaction = new EthereumTx.Transaction(transactionData, {
+      chain: networkName(networkId)
+    })
 
     try {
       const signedTx = await Lattice.signTransaction(

@@ -26,7 +26,7 @@ export default function initializeModules(
     heading = defaultHeading,
     description = defaultDescription,
     explanation = defaultWalletExplanation,
-    agreement = {}
+    agreement
   } = walletSelectOptions || {}
 
   return {

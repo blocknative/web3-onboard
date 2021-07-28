@@ -374,8 +374,8 @@ async function trezorProvider(options: {
     if (addressToPath.size === 0) {
       await enable()
     }
-
     const path = [...addressToPath.values()][0]
+    const { BN, toBuffer } = ethUtil
     const common = new Common({
       chain: customNetwork || networkName(networkId)
     })
@@ -386,18 +386,23 @@ async function trezorProvider(options: {
       },
       { common, freeze: false }
     )
-
+    transaction.v = new BN(toBuffer(networkId))
+    transaction.r = transaction.s = new BN(toBuffer(0))
     const trezorResult = await trezorSignTransaction(path, transactionData)
-
     if (!trezorResult.success) {
       throw new Error(trezorResult.payload.error)
     }
-
-    const signature = trezorResult.payload
-    transaction.v = signature.v
-    transaction.r = signature.r
-    transaction.s = signature.s
-
+    let v = trezorResult.payload.v.toString(16)
+    // EIP155 support. check/recalc signature v value.
+    const rv = parseInt(v, 16)
+    let cv = networkId * 2 + 35
+    if (rv !== cv && (rv & cv) !== rv) {
+      cv += 1 // add signature v bit.
+    }
+    v = cv.toString(16)
+    transaction.v = new BN(toBuffer(`0x${v}`))
+    transaction.r = new BN(toBuffer(`${trezorResult.payload.r}`))
+    transaction.s = new BN(toBuffer(`${trezorResult.payload.s}`))
     return `0x${transaction.serialize().toString('hex')}`
   }
 
