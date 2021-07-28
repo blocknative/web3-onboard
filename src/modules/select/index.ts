@@ -34,7 +34,8 @@ const mobileDefaultWalletNames = [
   'alphawallet',
   'ownbit',
   'bitpie',
-  'authereum'
+  'authereum',
+  'tp'
 ]
 
 const injectedWalletDetected = () =>
@@ -179,6 +180,8 @@ function getModule(name: string): Promise<{
       return import('./wallets/gnosis')
     case 'detectedwallet':
       return import('./wallets/detectedwallet')
+    case 'tp':
+      return import('./wallets/tp')
     default:
       throw new Error(`${name} is not a valid walletName.`)
   }
