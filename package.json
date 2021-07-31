@@ -1,6 +1,6 @@
 {
   "name": "bnc-onboard",
-  "version": "1.31.0",
+  "version": "1.32.0",
   "description": "Onboard users to web3 by allowing them to select a wallet, get that wallet ready to transact and have access to synced wallet state.",
   "keywords": [
     "ethereum",
@@ -67,7 +67,7 @@
     "@shapeshiftoss/hdwallet-keepkey": "^1.15.2",
     "@shapeshiftoss/hdwallet-keepkey-webusb": "^1.15.2",
     "@toruslabs/torus-embed": "^1.10.11",
-    "@walletconnect/web3-provider": "^1.4.1",
+    "@walletconnect/web3-provider": "^1.5.2",
     "authereum": "^0.1.12",
     "bignumber.js": "^9.0.0",
     "bnc-sdk": "^3.4.1",
@@ -86,7 +86,9 @@
   },
   "resolutions": {
     "authereum/web3-utils/underscore": "^1.12.1",
+    "authereum/ethereum-private-key-to-address/meow/trim-newlines": "^3.0.1",
     "authereum/ethers/elliptic": "^6.5.3",
-    "@portis/web3/pocket-js-core/axios": "^0.21.1"
+    "@portis/web3/pocket-js-core/axios": "^0.21.1",
+    "@shapeshiftoss/hdwallet-keepkey/bnb-javascript-sdk-nobroadcast/axios": "^0.21.1"
   }
 }
