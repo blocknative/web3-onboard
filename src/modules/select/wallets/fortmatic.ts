@@ -6,7 +6,7 @@ import fortmaticIcon from '../wallet-icons/icon-fortmatic'
 function fortmatic(
   options: SdkWalletOptions & { networkId: number }
 ): WalletModule {
-  const { apiKey, networkId, preferred, label, iconSrc, svg } = options
+  const { apiKey, networkId, preferred, label, iconSrc, svg, customNode } = options
 
   return {
     name: label || 'Fortmatic',
@@ -17,7 +17,11 @@ function fortmatic(
 
       const instance = new Fortmatic(
         apiKey,
-        networkId === 1 ? undefined : networkName(networkId)
+        customNode 
+          ? customNode
+          : networkId === 1 
+            ? undefined 
+            : networkName(networkId)
       )
 
       const provider = instance.getProvider()
