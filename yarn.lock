@@ -1754,15 +1754,12 @@
     google-protobuf "^3.7.0-rc.2"
     pbjs "^0.0.5"
 
-"@keystonehq/bc-ur-registry-eth@^0.5.2":
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/@keystonehq/bc-ur-registry-eth/-/bc-ur-registry-eth-0.5.2.tgz#05cb784d73f5c43e9121ecd570d0b36478ae34be"
-  integrity sha512-7zCuV3/r5RQUrySlHp6T41LEEoUgdAwuDlCiSJjpL0aKqRUL1JFO3UGdS+nlEBwPnwyRzTFsAmRFlzoirvU7Kw==
+"@keystonehq/bc-ur-registry-eth@^0.6.3-alpha.0":
+  version "0.6.3-alpha.0"
+  resolved "https://registry.yarnpkg.com/@keystonehq/bc-ur-registry-eth/-/bc-ur-registry-eth-0.6.3-alpha.0.tgz#ef4d3b1655d3d38df256c82baa324a621e384180"
+  integrity sha512-pmSU2H6QvElTSEaDcBDQWTsVpfB3TVxXXKUnTPsPcr/cUV/0VvDCEfHFgMNxPRZh1A5CwmIlSW2sUFo7G3/Z0g==
   dependencies:
     "@keystonehq/bc-ur-registry" "^0.4.4"
-    bip32 "^2.0.6"
-    bs58check "^2.1.2"
-    ethereumjs-tx "^2.1.2"
     ethereumjs-util "^7.0.8"
     hdkey "^2.0.1"
     uuid "^8.3.2"
@@ -1776,23 +1773,23 @@
     base58check "^2.0.0"
     tslib "^2.3.0"
 
-"@keystonehq/eth-keyring@0.5.4":
-  version "0.5.4"
-  resolved "https://registry.yarnpkg.com/@keystonehq/eth-keyring/-/eth-keyring-0.5.4.tgz#424672d3ed838ffd90acf921e0d1851b4f523dd9"
-  integrity sha512-oQCPc08j4jMJ1PTYDxIn2uHW6Yq5G0ULBl3zXSn5jPP3Hs5KpHk6gVhuApHsW7elTYT0+YrB3MiVRRtwG8qyBA==
+"@keystonehq/eth-keyring@0.7.1":
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/@keystonehq/eth-keyring/-/eth-keyring-0.7.1.tgz#a7f667e2f973ea7a9073959c51848bdab3a12f83"
+  integrity sha512-IbOr6hmJhOQ/crBh3GofmVCZEO4A8Vzntd+2/rWEa2CZZmQsf8gNxHcuqQB574mOZvap0b/WyKdyK+6yLSf1yA==
   dependencies:
     "@ethereumjs/tx" "3.0.0"
-    "@keystonehq/bc-ur-registry-eth" "^0.5.2"
-    "@keystonehq/sdk" "^0.5.4"
+    "@keystonehq/bc-ur-registry-eth" "^0.6.3-alpha.0"
+    "@keystonehq/sdk" "^0.7.2"
     bs58check "^2.1.2"
     ethereumjs-util "^7.0.8"
     hdkey "^2.0.1"
     uuid "^8.3.2"
 
-"@keystonehq/sdk@^0.5.4":
-  version "0.5.4"
-  resolved "https://registry.yarnpkg.com/@keystonehq/sdk/-/sdk-0.5.4.tgz#81523a61595d901d8a06071ef40228f69a2f4842"
-  integrity sha512-UFb6QtgRd8V9jlbOyL4rrVKrOwVb04m0Y5oIs2aJ+AUC3DJxEODUYi2rx4jn+2MqwMAZScuBx2UQZ4raLg0Jyg==
+"@keystonehq/sdk@^0.7.2":
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/@keystonehq/sdk/-/sdk-0.7.2.tgz#a17e98376c607bcef5cfc78bb51263706188576a"
+  integrity sha512-YZcsqhZ6HPQA34aZHUL0p9kwLmwsxqDqE6BF6Y2e5Qtg5fCwez25XU3jU1l0bHsadTc4kyQkcti+prkgc9fqtA==
   dependencies:
     "@ngraveio/bc-ur" "^1.0.0"
     "@types/qrcode.react" "^1.0.1"
@@ -2837,7 +2834,7 @@ bindings@^1.2.1, bindings@^1.3.0, bindings@^1.5.0:
   dependencies:
     file-uri-to-path "1.0.0"
 
-bip32@^2.0.5, bip32@^2.0.6:
+bip32@^2.0.5:
   version "2.0.6"
   resolved "https://registry.npmjs.org/bip32/-/bip32-2.0.6.tgz#6a81d9f98c4cd57d05150c60d8f9e75121635134"
   integrity sha512-HpV5OMLLGTjSVblmrtYRfFFKuQB+GArM0+XP8HGWfJ5vxYBqo+DesvJwOdC2WJ3bCkZShGf0QIfoIpeomVzVdA==
