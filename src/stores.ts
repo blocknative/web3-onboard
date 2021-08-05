@@ -229,7 +229,7 @@ function createWalletStateSliceStore(options: {
   intervalSetting?: number
 }): WalletStateSliceStore {
   const { parameter, initialState, intervalSetting } = options
-  const { subscribe, set } = writable<string | number | null | undefined>(initialState)
+  const { subscribe, set } = writable(initialState)
 
   let currentState: string | number | null | undefined
   subscribe(store => {
