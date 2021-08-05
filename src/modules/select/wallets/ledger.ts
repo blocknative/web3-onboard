@@ -89,7 +89,6 @@ async function ledgerProvider(options: LedgerProviderOptions) {
   const { Transaction } = await import('@ethereumjs/tx')
   const { default: Common } = await import('@ethereumjs/common')
   const ethUtil = await import('ethereumjs-util')
-  const buffer = await import('buffer')
   const { TypedDataUtils } = await import('eth-sig-util')
 
   const domainHash = (message: any) => {
