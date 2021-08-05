@@ -233,7 +233,7 @@ async function ledgerProvider(options: LedgerProviderOptions) {
       // Get the Transport class
       let Transport = LedgerTransport
       if (!Transport) {
-        Transport =  (await supportsWebUSB())
+        Transport = (await supportsWebUSB())
           ? (await import('@ledgerhq/hw-transport-webusb')).default
           : (await import('@ledgerhq/hw-transport-u2f')).default
       }
@@ -301,7 +301,7 @@ async function ledgerProvider(options: LedgerProviderOptions) {
 
       return account
     } catch (error) {
-      console.error({error})
+      console.error({ error })
       throw new Error('There was a problem accessing your Ledger accounts.')
     }
   }
