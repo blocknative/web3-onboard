@@ -22,7 +22,8 @@ function network(
       walletCheck,
       exit,
       stateSyncStatus,
-      stateStore
+      stateStore,
+      wallet
     } = stateAndHelpers
 
     if (network === null) {
@@ -40,7 +41,14 @@ function network(
         })
       }
     }
-
+    try {
+      await wallet?.provider?.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: '0x' + appNetworkId?.toString(16) }]
+      })
+    } catch (e) {
+      // Could not switch networks so proceed as normal through the checks
+    }
     if (stateStore.network.get() != appNetworkId) {
       return {
         heading: heading || 'You Must Change Networks',
