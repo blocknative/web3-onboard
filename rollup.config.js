@@ -73,6 +73,7 @@ export default {
     'eth-lattice-keyring',
     'eth-sig-util',
     '@cvbb/eth-keyring',
+    '@keystonehq/eth-keyring',
     'hdkey',
     '@ledgerhq/hw-transport-u2f',
     '@ledgerhq/hw-transport-webusb',
