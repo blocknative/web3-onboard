@@ -128,6 +128,11 @@ async function keystoneProvider(options: {
         .then((res: string) => callback(null, res))
         .catch(err => callback(err, null))
     },
+    signTypedMessage: (messageData: any, callback: any) => {
+      signTypedMessage(messageData)
+        .then((res: string) => callback(null, res))
+        .catch(err => callback(err, null))
+    },
     rpcUrl
   })
 
@@ -147,6 +152,7 @@ async function keystoneProvider(options: {
   function disconnect() {
     dPath = ''
     enabled = false
+    addressList = []
     provider.stop()
   }
 
@@ -173,9 +179,11 @@ async function keystoneProvider(options: {
   }
 
   function setPrimaryAccount(address: string) {
-    return keyring.setCurrentAccount(
-      addressList.findIndex(addr => addr === address) || 0
-    )
+    const index = addressList.findIndex(addr => addr === address) || 0
+    keyring.setCurrentAccount(index)
+    const accounts = [...addressList]
+    accounts.unshift(accounts.splice(index, 1)[0])
+    addressList = accounts
   }
 
   function getPrimaryAddress() {
@@ -192,12 +200,14 @@ async function keystoneProvider(options: {
       return []
     }
 
-    if (keyring.getAccounts().length > 0 && !getMore) {
-      return keyring.getAccounts()
+    if (addressList.length > 0 && !getMore) {
+      return addressList
     }
 
     try {
       addressList = await keyring.addAccounts(keyring.getAccounts().length + 5)
+      const currentPrimary = getPrimaryAddress()
+      setPrimaryAccount(currentPrimary)
     } catch (error) {
       throw error
     }
@@ -274,6 +284,24 @@ async function keystoneProvider(options: {
 
     try {
       return keyring.signPersonalMessage(getPrimaryAddress(), message.data)
+    } catch (err) {
+      throw err
+    }
+  }
+
+  async function signTypedMessage({ data }: { data: any }) {
+    if (addressList.length === 0) {
+      await enable()
+    }
+
+    try {
+      if (typeof data === 'string') {
+        return keyring.signTypedData(getPrimaryAddress(), JSON.parse(data))
+      }
+      if (typeof data === 'object') {
+        return keyring.signTypedData(getPrimaryAddress(), data)
+      }
+      throw new Error('invalid typed data')
     } catch (err) {
       throw err
     }
