@@ -35,7 +35,8 @@ const mobileDefaultWalletNames = [
   'alphawallet',
   'ownbit',
   'bitpie',
-  'authereum'
+  'authereum',
+  'tp'
 ]
 
 const injectedWalletDetected = () =>
@@ -46,21 +47,31 @@ function select(
   networkId: number,
   isMobile: boolean
 ) {
-  const defaultWalletNames = isMobile
-    ? mobileDefaultWalletNames
-    : desktopDefaultWalletNames
-
   if (wallets) {
+    const hideWallet = (wallet: WalletInitOptions) =>
+      wallet?.display &&
+      wallet?.display[isMobile ? 'mobile' : 'desktop'] === false
+
+    // For backwards compatibility if a user is still using 'detectedwallet' in the onboard wallet select array
+    // it will be filtered out so there are no duplicates
+    wallets = wallets.filter(
+      wallet =>
+        'walletName' in wallet
+          ? wallet.walletName !== 'detectedwallet' && !hideWallet(wallet)
+          : true // It is not a WalletInitOption but rather a WalletModule so let it through
+    )
+
+    // If we detect an injected wallet then place the detected wallet
+    // at the beginning of the list e.g. the top of the wallet select modal
+    if (injectedWalletDetected()) {
+      wallets.unshift({ walletName: 'detectedwallet' })
+    }
+
     return Promise.all(
-      wallets
-        // only include a detected wallet if it's not already one of the provided options
-        .filter(
-          wallet =>
-            isWalletInit(wallet) &&
-            (wallet.walletName !== 'detectedwallet' || injectedWalletDetected())
-        )
-        .map(wallet => {
-          const { walletName, ...initParams } = wallet as WalletInitOptions
+      wallets.map(wallet => {
+        // If this is a wallet init object then load the built-in wallet module
+        if (isWalletInit(wallet)) {
+          const { walletName, ...initParams } = wallet
           try {
             return getModule(walletName).then((m: any) =>
               m.default({ ...initParams, networkId, isMobile })
@@ -72,15 +83,21 @@ function select(
               throw error
             }
           }
+        }
 
-          return Promise.resolve(wallet)
-        })
+        // This is a custom wallet module so just return it
+        return Promise.resolve(wallet)
+      })
     )
   }
 
+  const defaultWalletNames = isMobile
+    ? mobileDefaultWalletNames
+    : desktopDefaultWalletNames
+
   return Promise.all(
     defaultWalletNames
-      // only include a detected wallet if it's not already one of the provided options
+      // Include the detected wallet only if an injected wallet is detected
       .filter(
         walletName =>
           walletName !== 'detectedwallet' || injectedWalletDetected()
@@ -131,6 +148,8 @@ function getModule(name: string): Promise<{
       return import('./wallets/trezor')
     case 'lattice':
       return import('./wallets/lattice')
+    case 'keystone':
+      return import('./wallets/keystone')
     case 'cobovault':
       return import('./wallets/cobovault')
     case 'ledger':
@@ -173,6 +192,8 @@ function getModule(name: string): Promise<{
       return import('./wallets/binance-chain-wallet')
     case 'detectedwallet':
       return import('./wallets/detectedwallet')
+    case 'tp':
+      return import('./wallets/tp')
     default:
       throw new Error(`${name} is not a valid walletName.`)
   }

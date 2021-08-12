@@ -1,34 +1,49 @@
-import AirGapedKeyring from '@cvbb/eth-keyring'
-import { Helpers, LatticeOptions, WalletModule } from '../../../interfaces'
-import cobovaultIcon from '../wallet-icons/icon-cobovault.png'
-import cobovaultIcon2x from '../wallet-icons/icon-cobovault@2x.png'
+import AirGapedKeyring from '@keystonehq/eth-keyring'
+import {
+  Helpers,
+  KeystoneOptions,
+  WalletModule,
+  HardwareWalletCustomNetwork
+} from '../../../interfaces'
+import keystoneIcon from '../wallet-icons/icon-keystone.png'
+import keystoneIcon2x from '../wallet-icons/icon-keystone@2x.png'
 
-function cobovault(
-  options: LatticeOptions & { networkId: number }
+function keystone(
+  options: KeystoneOptions & { networkId: number }
 ): WalletModule {
-  const { appName, rpcUrl, networkId, preferred, label, iconSrc, svg } = options
+  const {
+    appName,
+    rpcUrl,
+    networkId,
+    preferred,
+    label,
+    iconSrc,
+    svg,
+    customNetwork
+  } = options
 
   return {
-    name: label || 'CoboVault',
+    name: label || 'Keystone',
     svg: svg,
-    iconSrc: cobovaultIcon,
-    iconSrcSet: iconSrc || cobovaultIcon2x,
+    iconSrc: keystoneIcon,
+    iconSrcSet: iconSrc || keystoneIcon2x,
     wallet: async (helpers: Helpers) => {
       const { BigNumber, networkName, resetWalletState } = helpers
 
-      const provider = await cobovaultProvider({
+      const provider = await keystoneProvider({
         appName,
         rpcUrl,
         networkId,
         BigNumber,
         networkName,
-        resetWalletState
+        resetWalletState,
+        customNetwork
       })
 
       return {
         provider,
         interface: {
-          name: 'CoboVault',
+          name: 'Keystone',
           connect: provider.enable,
           disconnect: provider.disconnect,
           address: {
@@ -54,11 +69,12 @@ function cobovault(
   }
 }
 
-async function cobovaultProvider(options: {
+async function keystoneProvider(options: {
   appName: string
   networkId: number
   rpcUrl: string
   BigNumber: any
+  customNetwork?: HardwareWalletCustomNetwork
   networkName: (id: number) => string
   resetWalletState: (options?: {
     disconnected: boolean
@@ -66,11 +82,12 @@ async function cobovaultProvider(options: {
   }) => void
 }) {
   const { Transaction } = await import('@ethereumjs/tx')
+  const { default: Common } = await import('@ethereumjs/common')
   const { default: createProvider } = await import('./providerEngine')
 
   const BASE_PATH = "m/44'/60'/0'/0"
 
-  const { networkId, rpcUrl, BigNumber, networkName } = options
+  const { networkId, rpcUrl, BigNumber, networkName, customNetwork } = options
 
   const keyring = AirGapedKeyring.getEmptyKeyring()
 
@@ -111,6 +128,11 @@ async function cobovaultProvider(options: {
         .then((res: string) => callback(null, res))
         .catch(err => callback(err, null))
     },
+    signTypedMessage: (messageData: any, callback: any) => {
+      signTypedMessage(messageData)
+        .then((res: string) => callback(null, res))
+        .catch(err => callback(err, null))
+    },
     rpcUrl
   })
 
@@ -130,12 +152,13 @@ async function cobovaultProvider(options: {
   function disconnect() {
     dPath = ''
     enabled = false
+    addressList = []
     provider.stop()
   }
 
   async function setPath(path: string) {
     if (path !== BASE_PATH)
-      throw new Error("CoboVault only supports standard path: m/44'/0'/0'/0/x")
+      throw new Error("Keystone only supports standard path: m/44'/0'/0'/0/x")
     customPath = false
     dPath = path
     return true
@@ -156,9 +179,11 @@ async function cobovaultProvider(options: {
   }
 
   function setPrimaryAccount(address: string) {
-    return keyring.setCurrentAccount(
-      addressList.findIndex(addr => addr === address) || 0
-    )
+    const index = addressList.findIndex(addr => addr === address) || 0
+    keyring.setCurrentAccount(index)
+    const accounts = [...addressList]
+    accounts.unshift(accounts.splice(index, 1)[0])
+    addressList = accounts
   }
 
   function getPrimaryAddress() {
@@ -175,12 +200,14 @@ async function cobovaultProvider(options: {
       return []
     }
 
-    if (keyring.getAccounts().length > 0 && !getMore) {
-      return keyring.getAccounts()
+    if (addressList.length > 0 && !getMore) {
+      return addressList
     }
 
     try {
       addressList = await keyring.addAccounts(keyring.getAccounts().length + 5)
+      const currentPrimary = getPrimaryAddress()
+      setPrimaryAccount(currentPrimary)
     } catch (error) {
       throw error
     }
@@ -227,9 +254,17 @@ async function cobovaultProvider(options: {
       await enable()
     }
 
-    const transaction = Transaction.fromTxData(transactionData, {
-      chain: networkName(networkId)
+    const common = new Common({
+      chain: customNetwork || networkName(networkId)
     })
+
+    const transaction = Transaction.fromTxData(
+      {
+        ...transactionData,
+        gasLimit: transactionData.gas ?? transactionData.gasLimit
+      },
+      { common, freeze: false }
+    )
 
     try {
       const signedTx = await keyring.signTransaction(
@@ -254,7 +289,25 @@ async function cobovaultProvider(options: {
     }
   }
 
+  async function signTypedMessage({ data }: { data: any }) {
+    if (addressList.length === 0) {
+      await enable()
+    }
+
+    try {
+      if (typeof data === 'string') {
+        return keyring.signTypedData(getPrimaryAddress(), JSON.parse(data))
+      }
+      if (typeof data === 'object') {
+        return keyring.signTypedData(getPrimaryAddress(), data)
+      }
+      throw new Error('invalid typed data')
+    } catch (err) {
+      throw err
+    }
+  }
+
   return provider
 }
 
-export default cobovault
+export default keystone

@@ -19,9 +19,7 @@ function xdefi(options: CommonWalletOptions): WalletModule {
         createLegacyProviderInterface
       } = helpers
 
-      const provider =
-        (window as any).ethereum ||
-        ((window as any).web3 && (window as any).web3.currentProvider)
+      const provider = (window as any).xfi && (window as any).xfi.ethereum
 
       return {
         provider,

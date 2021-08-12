@@ -1,6 +1,6 @@
 import 'regenerator-runtime/runtime'
 
-import { get } from 'svelte/store'
+import { get, derived } from 'svelte/store'
 
 import Onboard from './views/Onboard.svelte'
 
@@ -16,7 +16,7 @@ import {
   initializeStores
 } from './stores'
 
-import { getDeviceInfo } from './utilities'
+import { getDeviceInfo, getEns } from './utilities'
 import { validateInit, validateConfig, isWalletInit } from './validation'
 
 import { version } from '../package.json'
@@ -28,7 +28,8 @@ import {
   ConfigOptions,
   UserState,
   Wallet,
-  WalletInitOptions
+  WalletInitOptions,
+  Ens
 } from './interfaces'
 
 import initializeModules from './modules'
@@ -141,6 +142,21 @@ function init(initialization: Initialization): API {
       address.subscribe((address: string | null) => {
         if (address !== null) {
           subscriptions.address && subscriptions.address(address)
+        }
+      })
+    }
+
+    if (subscriptions.ens) {
+      derived([address, wallet], ([$address, $wallet], set) => {
+        if ($address && $wallet && $wallet.provider) {
+          getEns($wallet.provider, $address).then(set)
+        } else {
+          // Wallet not selected or reset
+          set(undefined)
+        }
+      }).subscribe(ens => {
+        if (ens !== null) {
+          subscriptions.ens && subscriptions.ens(ens as Ens)
         }
       })
     }

@@ -1,9 +1,10 @@
 import bowser from 'bowser'
 import BigNumber from 'bignumber.js'
 import { get } from 'svelte/store'
+import ENS, { getEnsAddress } from '@ensdomains/ensjs'
 
 import { app } from './stores'
-import { WalletInterface } from './interfaces'
+import { WalletInterface, Ens } from './interfaces'
 
 export function getNetwork(provider: any): Promise<number | any> {
   return new Promise((resolve, reject) => {
@@ -65,6 +66,26 @@ export function getAddress(provider: any): Promise<string | any> {
       resolve(null)
     }
   })
+}
+
+export async function getEns(provider: any, address: string): Promise<Ens> {
+  const { networkId } = get(app)
+  try {
+    const ens = new ENS({ provider, ensAddress: getEnsAddress(networkId) })
+    const { name } = await ens.getName(address)
+    const nameInterface = await ens.name(name)
+    const contentHash = await nameInterface?.getContent()
+    const avatar = await nameInterface?.getText('avatar')
+    return {
+      name,
+      avatar,
+      contentHash,
+      getText: nameInterface?.getText.bind(nameInterface)
+    }
+  } catch (e) {
+    // Error getting ens
+    return {}
+  }
 }
 
 export function getBalance(
@@ -285,6 +306,10 @@ export function getProviderName(provider: any): string | undefined {
     return 'Bitpie'
   }
 
+  if (provider.isTp) {
+    return 'tp'
+  }
+
   // =====================================
   // When adding new wallet place above this metamask check as some providers
   // have an isMetaMask property in addition to the wallet's own `is[WalletName]`
@@ -312,46 +337,20 @@ export function getDeviceInfo() {
 }
 
 export function networkName(id: number): string {
-  switch (id) {
-    case 1:
-      return 'mainnet'
-    case 3:
-      return 'ropsten'
-    case 4:
-      return 'rinkeby'
-    case 5:
-      return 'goerli'
-    case 42:
-      return 'kovan'
-    case 100:
-      return 'xdai'
-    case 42220:
-      return 'celo'
-    default:
-      const { networkId, networkName } = get(app)
-      return (networkId === id && networkName) || 'unknown'
-  }
-}
-
-export function networkToId(network: string): number {
-  switch (network) {
-    case 'mainnet':
-      return 1
-    case 'ropsten':
-      return 3
-    case 'rinkeby':
-      return 4
-    case 'goerli':
-      return 5
-    case 'kovan':
-      return 42
-    case 'xdai':
-      return 100
-    case 'celo':
-      return 42220
-    default:
-      return 0
-  }
+  const { networkName, networkId } = get(app)
+  return networkId === id && networkName
+    ? networkName
+    : (
+        {
+          1: 'mainnet',
+          3: 'ropsten',
+          4: 'rinkeby',
+          5: 'goerli',
+          42: 'kovan',
+          100: 'xdai',
+          56: 'bsc'
+        } as { [key: number]: string }
+      )[id] || 'unknown'
 }
 
 export function wait(time: number) {

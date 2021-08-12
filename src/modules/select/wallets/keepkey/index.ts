@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
+import * as ethUtil from 'ethereumjs-util'
 import {
   CommonWalletOptions,
   Helpers,
@@ -41,7 +42,7 @@ interface KeepProviderOptions {
 function keepkey(
   options: CommonWalletOptions & { rpcUrl: string; networkId: number }
 ): WalletModule {
-  const { label, iconSrc, rpcUrl, networkId } = options
+  const { label, iconSrc, rpcUrl, networkId, preferred } = options
 
   // Used to signal if the keep key could not be paired or if the keep key is already paired with another app
   let installMessage: string
@@ -90,7 +91,8 @@ function keepkey(
         : '',
     type: 'hardware',
     mobile: false,
-    desktop: true
+    desktop: true,
+    preferred
   }
 }
 
@@ -384,7 +386,7 @@ async function createKeepKeyProvider({
       gasPrice,
       gasLimit: gas,
       to,
-      value: value || '',
+      value: value || '0x0',
       data: data || '',
       chainId: networkId
     })
@@ -405,7 +407,7 @@ async function createKeepKeyProvider({
 
     const { signature } = await keepKeyWallet.ethSignMessage({
       addressNList,
-      message
+      message: ethUtil.toBuffer(message).toString('utf8')
     })
 
     return signature

@@ -161,13 +161,21 @@ export function validateInit(init: Initialization): never | void {
 }
 
 function validateSubscriptions(subscriptions: Subscriptions): never | void {
-  const { address, network, balance, wallet, ...otherParams } = subscriptions
+  const { address, ens, network, balance, wallet, ...otherParams } =
+    subscriptions
 
   invalidParams(otherParams, validSubscriptionKeys, 'subscriptions')
 
   validateType({
     name: 'subscriptions.address',
     value: address,
+    type: 'function',
+    optional: true
+  })
+
+  validateType({
+    name: 'subscriptions.ens',
+    value: ens,
     type: 'function',
     optional: true
   })
@@ -323,7 +331,8 @@ export function validateWallet(
         'preferred',
         'desktop',
         'mobile',
-        'osExclusions'
+        'osExclusions',
+        'customNetwork'
       ],
       'selectWallets.wallets item'
     )
@@ -652,8 +661,15 @@ export function validateWalletInit(
 ): void | never {
   validateType({ name: 'walletInit', value: walletInit, type: 'object' })
 
-  const { walletName, preferred, label, iconSrc, svg, ...otherParams } =
-    walletInit
+  const {
+    walletName,
+    preferred,
+    label,
+    iconSrc,
+    svg,
+    display,
+    ...otherParams
+  } = walletInit
 
   invalidParams(
     otherParams,
@@ -688,10 +704,18 @@ export function validateWalletInit(
       'rpcUri',
       'webUri',
       'xsUri',
-      'blockedPopupRedirect'
+      'blockedPopupRedirect',
+      'customNetwork',
+      'display'
     ],
     'walletInitObject'
   )
+  validateType({
+    name: 'walletInit.display',
+    value: display,
+    type: 'object',
+    optional: true
+  })
 
   validateType({
     name: 'walletInit.walletName',
