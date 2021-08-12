@@ -661,8 +661,15 @@ export function validateWalletInit(
 ): void | never {
   validateType({ name: 'walletInit', value: walletInit, type: 'object' })
 
-  const { walletName, preferred, label, iconSrc, svg, ...otherParams } =
-    walletInit
+  const {
+    walletName,
+    preferred,
+    label,
+    iconSrc,
+    svg,
+    display,
+    ...otherParams
+  } = walletInit
 
   invalidParams(
     otherParams,
@@ -698,10 +705,17 @@ export function validateWalletInit(
       'webUri',
       'xsUri',
       'blockedPopupRedirect',
-      'customNetwork'
+      'customNetwork',
+      'display'
     ],
     'walletInitObject'
   )
+  validateType({
+    name: 'walletInit.display',
+    value: display,
+    type: 'object',
+    optional: true
+  })
 
   validateType({
     name: 'walletInit.walletName',
