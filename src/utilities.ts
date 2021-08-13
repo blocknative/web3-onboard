@@ -1,7 +1,6 @@
 import bowser from 'bowser'
 import BigNumber from 'bignumber.js'
 import { get } from 'svelte/store'
-import ENS, { getEnsAddress } from '@ensdomains/ensjs'
 
 import { app } from './stores'
 import { WalletInterface, Ens } from './interfaces'
@@ -71,6 +70,11 @@ export function getAddress(provider: any): Promise<string | any> {
 export async function getEns(provider: any, address: string): Promise<Ens> {
   const { networkId } = get(app)
   try {
+    // There is an issue with ens and ts unable to find the
+    // declaration file for it even though it is present.
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore - TS7016
+    const { default: ENS, getEnsAddress } = await import('@ensdomains/ensjs')
     const ens = new ENS({ provider, ensAddress: getEnsAddress(networkId) })
     const { name } = await ens.getName(address)
     const nameInterface = await ens.name(name)
@@ -84,6 +88,7 @@ export async function getEns(provider: any, address: string): Promise<Ens> {
     }
   } catch (e) {
     // Error getting ens
+    console.error(e)
     return {}
   }
 }
