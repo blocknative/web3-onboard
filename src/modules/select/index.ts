@@ -182,6 +182,8 @@ function getModule(name: string): Promise<{
       return import('./wallets/detectedwallet')
     case 'tp':
       return import('./wallets/tp')
+    case 'walletlink':
+      return import('./wallets/mewwallet')
     default:
       throw new Error(`${name} is not a valid walletName.`)
   }

@@ -239,6 +239,8 @@ function createWalletStateSliceStore(options: {
   return {
     subscribe,
     reset: () => {
+      // eslint-disable-next-line
+      // @ts-ignore
       set(undefined)
     },
     get: () => currentState,
@@ -266,6 +268,8 @@ function createWalletStateSliceStore(options: {
           onChange(newVal => {
             resolve(undefined)
             if (newVal || currentState !== initialState) {
+              // eslint-disable-next-line
+              // @ts-ignore
               set(newVal)
             }
           })
