@@ -68,7 +68,7 @@
     "@shapeshiftoss/hdwallet-keepkey": "^1.15.2",
     "@shapeshiftoss/hdwallet-keepkey-webusb": "^1.15.2",
     "@toruslabs/torus-embed": "^1.10.11",
-    "@walletconnect/web3-provider": "^1.6.0",
+    "@walletconnect/web3-provider": "^1.6.2",
     "authereum": "^0.1.12",
     "bignumber.js": "^9.0.0",
     "bnc-sdk": "^3.4.1",
