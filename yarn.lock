@@ -1824,10 +1824,10 @@
   resolved "https://registry.yarnpkg.com/@metamask/safe-event-emitter/-/safe-event-emitter-2.0.0.tgz#af577b477c683fad17c619a78208cede06f9605c"
   integrity sha512-/kSXhY692qiV1MXu6EeOZvg5nECLclxNXcKCxJ3cXQgYuRymRHpdx/t7JXfsK+JLjwA1e1c1/SBrlQYpusC29Q==
 
-"@myetherwallet/mewconnect-web-client@^2.2.0-beta.4":
-  version "2.2.0-beta.4"
-  resolved "https://registry.yarnpkg.com/@myetherwallet/mewconnect-web-client/-/mewconnect-web-client-2.2.0-beta.4.tgz#2610b8f476b72897c94145cff219091b6ef762a7"
-  integrity sha512-kVyT4V2Oa1PaaKVRLawov8AyJ1Q1C3LuA0XnmcM8pZmzaiGhxzSIvN426aTJ2wLvfn1G3W6oxWq1WGw1CYhThw==
+"@myetherwallet/mewconnect-web-client@^2.2.0-beta.5":
+  version "2.2.0-beta.5"
+  resolved "https://registry.yarnpkg.com/@myetherwallet/mewconnect-web-client/-/mewconnect-web-client-2.2.0-beta.5.tgz#5866a12faa124cbd135b72f4c529184458191ceb"
+  integrity sha512-IJ3Q/xLbpRSE08sTQvcgbrmE9kTmPhRUm8ZHbsfYajJd63C2w2njLHw5qqIXnRUXMZWMezFQlIZ705wJP6tEXg==
   dependencies:
     "@rollup/plugin-json" "^4.1.0"
     bignumber.js "^9.0.0"
