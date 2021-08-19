@@ -89,7 +89,6 @@ async function ledgerProvider(options: LedgerProviderOptions) {
   const { Transaction } = await import('@ethereumjs/tx')
   const { default: Common } = await import('@ethereumjs/common')
   const ethUtil = await import('ethereumjs-util')
-  const buffer = await import('buffer')
   const { TypedDataUtils } = await import('eth-sig-util')
 
   const domainHash = (message: any) => {
@@ -232,17 +231,19 @@ async function ledgerProvider(options: LedgerProviderOptions) {
       }
 
       // Get the Transport class
-      const Transport =
-        LedgerTransport || (await supportsWebUSB())
+      let Transport = LedgerTransport
+      if (!Transport) {
+        Transport = (await supportsWebUSB())
           ? (await import('@ledgerhq/hw-transport-webusb')).default
           : (await import('@ledgerhq/hw-transport-u2f')).default
-
+      }
       transport = await Transport.create()
 
       eth = new Eth(transport)
 
       Transport.listen(observer)
     } catch (error) {
+      console.error(error)
       throw new Error('Error connecting to Ledger wallet')
     }
   }
@@ -300,6 +301,7 @@ async function ledgerProvider(options: LedgerProviderOptions) {
 
       return account
     } catch (error) {
+      console.error({ error })
       throw new Error('There was a problem accessing your Ledger accounts.')
     }
   }

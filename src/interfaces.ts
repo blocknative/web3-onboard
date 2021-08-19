@@ -183,6 +183,7 @@ export interface CommonWalletOptions {
   iconSrc?: string
   svg?: string
   networkId?: number
+  display?: { mobile?: boolean; desktop?: boolean }
 }
 
 export interface SdkWalletOptions extends CommonWalletOptions {
@@ -253,6 +254,12 @@ export interface LatticeOptions extends CommonWalletOptions {
 export interface LedgerOptions extends CommonWalletOptions {
   rpcUrl: string
   LedgerTransport?: any
+  customNetwork?: HardwareWalletCustomNetwork
+}
+
+export interface KeystoneOptions extends CommonWalletOptions {
+  appName: string
+  rpcUrl: string
   customNetwork?: HardwareWalletCustomNetwork
 }
 

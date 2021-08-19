@@ -11,6 +11,7 @@ import { getProviderName } from '../../utilities'
 const desktopDefaultWalletNames = [
   'detectedwallet',
   'metamask',
+  'binance',
   'frame',
   'torus',
   'opera',
@@ -46,23 +47,26 @@ function select(
   networkId: number,
   isMobile: boolean
 ) {
-  const defaultWalletNames = isMobile
-    ? mobileDefaultWalletNames
-    : desktopDefaultWalletNames
-
   if (wallets) {
+    const hideWallet = (wallet: WalletInitOptions) =>
+      wallet?.display &&
+      wallet?.display[isMobile ? 'mobile' : 'desktop'] === false
+
     // For backwards compatibility if a user is still using 'detectedwallet' in the onboard wallet select array
     // it will be filtered out so there are no duplicates
     wallets = wallets.filter(
       wallet =>
-        'walletName' in wallet ? wallet.walletName !== 'detectedwallet' : true // It is not a WalletInitOption but rather a WalletModule so let it through
+        'walletName' in wallet
+          ? wallet.walletName !== 'detectedwallet' && !hideWallet(wallet)
+          : true // It is not a WalletInitOption but rather a WalletModule so let it through
     )
 
     // If we detect an injected wallet then place the detected wallet
-    // at the beginning of the list e.g. the of the wallet select modal
+    // at the beginning of the list e.g. the top of the wallet select modal
     if (injectedWalletDetected()) {
       wallets.unshift({ walletName: 'detectedwallet' })
     }
+
     return Promise.all(
       wallets.map(wallet => {
         // If this is a wallet init object then load the built-in wallet module
@@ -86,6 +90,10 @@ function select(
       })
     )
   }
+
+  const defaultWalletNames = isMobile
+    ? mobileDefaultWalletNames
+    : desktopDefaultWalletNames
 
   return Promise.all(
     defaultWalletNames
@@ -140,6 +148,8 @@ function getModule(name: string): Promise<{
       return import('./wallets/trezor')
     case 'lattice':
       return import('./wallets/lattice')
+    case 'keystone':
+      return import('./wallets/keystone')
     case 'cobovault':
       return import('./wallets/cobovault')
     case 'ledger':
@@ -178,6 +188,8 @@ function getModule(name: string): Promise<{
       return import('./wallets/bitpie')
     case 'gnosis':
       return import('./wallets/gnosis')
+    case 'binance':
+      return import('./wallets/binance-chain-wallet')
     case 'detectedwallet':
       return import('./wallets/detectedwallet')
     case 'tp':

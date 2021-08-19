@@ -1,4 +1,4 @@
-import { networkName } from '../../utilities'
+import { getProviderName, networkName } from '../../utilities'
 import {
   WalletCheckModal,
   StateAndHelpers,
@@ -22,7 +22,8 @@ function network(
       walletCheck,
       exit,
       stateSyncStatus,
-      stateStore
+      stateStore,
+      wallet
     } = stateAndHelpers
 
     if (network === null) {
@@ -38,6 +39,17 @@ function network(
             }
           }, 500)
         })
+      }
+    }
+    // Adds a check for WalletConnect since it hangs for unsupported rpc methods
+    if (getProviderName(wallet?.provider) !== 'WalletConnect') {
+      try {
+        await wallet?.provider?.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: '0x' + appNetworkId?.toString(16) }]
+        })
+      } catch (e) {
+        // Could not switch networks so proceed as normal through the checks
       }
     }
 
