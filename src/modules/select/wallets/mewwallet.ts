@@ -21,12 +21,16 @@ function mewConnect(
     wallet: async (helpers: Helpers) => {
       const { resetWalletState, getBalance, getAddress, getNetwork } = helpers
       const mewConnect = new MEWWallet.Provider({
-      windowClosedError: true,
-      chainId: networkId,
-      rpcUrl
-    })
+        windowClosedError: true,
+        chainId: networkId,
+        rpcUrl
+      })
       const provider = mewConnect.makeWeb3Provider()
-      provider.on('disconnected', () => {
+      if (mewConnect.isConnected) {
+        mewConnect.disconnect();
+        resetWalletState({ disconnected: true, walletName: 'MEW Wallet' })
+      }
+      mewConnect.on('popupWindowClosed', () => {
         resetWalletState({ disconnected: true, walletName: 'MEW Wallet' })
       })
       return {
@@ -37,12 +41,13 @@ function mewConnect(
             provider
               .enable()
               .then(resolve)
-              .catch(() =>
+              .catch(() => {
+                resetWalletState()
                 reject({
                   message:
                     'This dapp needs access to your account information.'
                 })
-              )
+              })
           }),
           address: {
             get: () => getAddress(provider)
@@ -52,6 +57,9 @@ function mewConnect(
           },
           balance: {
             get: () => getBalance(provider)
+          },
+          disconnect: () => {
+            mewConnect.disconnect()
           }
         }
       }
