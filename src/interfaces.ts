@@ -198,10 +198,7 @@ export interface WalletConnectOptions extends CommonWalletOptions {
 }
 
 export interface MewConnectOptions extends CommonWalletOptions {
-  infuraKey: string
-  rpc: {
-    [key: string]: string
-  }
+  rpcUrl: string
 }
 
 /*

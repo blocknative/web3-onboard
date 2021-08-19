@@ -1,3 +1,4 @@
+const mewWalletIcon = `
 <svg width="69" height="84" viewBox="0 0 69 84" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M50.8393 79.1764C68.2511 79.9999 70.0067 64.7764 64.9062 55.9113C59.9651 47.3231 52.5533 44.3819 40.5663 45.5101C28.5793 46.6382 40.6179 66.167 48.8417 64.7349C52.5727 64.0851 49.3351 79.1052 50.8393 79.1764Z" fill="white" stroke="black" stroke-width="2.5"/>
 <path d="M18.5716 79.1764C1.15985 79.9999 -0.595807 64.7764 4.50465 55.9113C9.44582 47.3231 16.8576 44.3819 28.8446 45.5101C40.8316 46.6382 28.793 66.167 20.5692 64.7349C16.8382 64.0851 20.0758 79.1052 18.5716 79.1764Z" fill="white" stroke="black" stroke-width="2.5"/>
@@ -20,3 +21,6 @@
 <path d="M46.7804 66.3056L51.4628 67.8824" stroke="black" stroke-width="2.5" stroke-linecap="round"/>
 <path d="M45.0049 70.2743L49.6666 71.9126" stroke="black" stroke-width="2.5" stroke-linecap="round"/>
 </svg>
+`
+
+export default mewWalletIcon

@@ -3,51 +3,32 @@ import {
   WalletModule,
   Helpers
 } from '../../../interfaces'
-
-import mewWalletIcon from '../wallet-icons/icon-mew-wallet.svg'
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+import MEWWallet from '@myetherwallet/mewconnect-web-client';
+import mewWalletIcon from '../wallet-icons/icon-mew-wallet'
 
 function mewConnect(
   options: MewConnectOptions & { networkId: number }
 ): WalletModule {
-  const { infuraKey, preferred, iconSrc, networkId } =
+  const { rpcUrl, iconSrc, networkId, preferred } =
     options
-  const rpcUrl = `wss://mainnet.infura.io/ws/v3/${infuraKey}`;
-  // if (networkId !== 1) {
-  //   throw new Error(
-  //     `MEW Wallet only supports Mainnet right now!`
-  //   )
-  // }
-
-  if (!infuraKey) {
-    throw new Error(
-      `A "infuraKey" must be included in the MEW Connect initialization object`
-    )
-  }
 
   return {
     name: 'MEW Wallet',
     svg: mewWalletIcon,
-    iconSrc: iconSrc,
+    iconSrc: iconSrc || mewWalletIcon,
     wallet: async (helpers: Helpers) => {
-      // const createProvider = (await import('./providerEngine')).default
-      const MEWConnectProvider = (await import(
-        // eslint-disable-next-line
-        // @ts-ignore
-        '@myetherwallet/mewconnect-web-client'
-      )).default
       const { resetWalletState, getBalance, getAddress, getNetwork } = helpers
-      // const rpcUrl =
-      //   rpc && rpc[networkId]
-      //     ? rpc[networkId]
-      //     : `https://${networkName(networkId)}.infura.io/v3/${infuraKey}`
-      // const balanceProvider = createProvider({ rpcUrl })
-
-      const mewConnect = new MEWConnectProvider()
-      const provider = mewConnect.makeWeb3Provider(networkId, rpcUrl, true)
+      const mewConnect = new MEWWallet.Provider({
+      windowClosedError: true,
+      chainId: networkId,
+      rpcUrl
+    })
+      const provider = mewConnect.makeWeb3Provider()
       provider.on('disconnected', () => {
         resetWalletState({ disconnected: true, walletName: 'MEW Wallet' })
       })
-
       return {
         provider,
         interface: {
@@ -78,6 +59,7 @@ function mewConnect(
     type: 'sdk',
     desktop: true,
     preferred
+
   }
 }
 
