@@ -93,7 +93,7 @@ async function keystoneProvider(options: {
 
   let dPath = ''
 
-  let addressList = Array.from<string>([])
+  let addressToIndex = new Map<string, number>()
   let enabled = false
   let customPath = false
 
@@ -152,7 +152,7 @@ async function keystoneProvider(options: {
   function disconnect() {
     dPath = ''
     enabled = false
-    addressList = []
+    addressToIndex = new Map<string, number>()
     provider.stop()
   }
 
@@ -178,12 +178,32 @@ async function keystoneProvider(options: {
     })
   }
 
+  function addresses() {
+    return Array.from(addressToIndex.keys())
+  }
+
+  function generateAccountsMap(accounts: string[]) {
+    const _map = new Map<string, number>()
+    accounts.forEach((account, index) => {
+      _map.set(account, index)
+    })
+    return _map
+  }
+
   function setPrimaryAccount(address: string) {
-    const index = addressList.findIndex(addr => addr === address) || 0
-    keyring.setCurrentAccount(index)
-    const accounts = [...addressList]
-    accounts.unshift(accounts.splice(index, 1)[0])
-    addressList = accounts
+    // make a copy and put in an array
+    const accounts = [...addressToIndex.entries()]
+    const account = accounts.find(
+      ([accountAddress]) => accountAddress === address
+    )!
+    const accountIndex = accounts.findIndex(
+      ([accountAddress]) => accountAddress === address
+    )
+    keyring.setCurrentAccount(account?.[1] || 0)
+    // pull the item at the account index out of the array and place at the front
+    accounts.unshift(accounts.splice(accountIndex, 1)[0])
+    // reassign addressToPath to new ordered accounts
+    addressToIndex = new Map(accounts)
   }
 
   function getPrimaryAddress() {
@@ -200,18 +220,21 @@ async function keystoneProvider(options: {
       return []
     }
 
-    if (addressList.length > 0 && !getMore) {
-      return addressList
+    if (addressToIndex.size > 0 && !getMore) {
+      return addresses()
     }
 
     try {
-      addressList = await keyring.addAccounts(keyring.getAccounts().length + 5)
+      const accounts = await keyring.addAccounts(
+        keyring.getAccounts().length + 5
+      )
+      addressToIndex = generateAccountsMap(accounts)
       const currentPrimary = getPrimaryAddress()
       setPrimaryAccount(currentPrimary)
     } catch (error) {
       throw error
     }
-    return addressList
+    return addresses()
   }
 
   function getBalances(addresses: Array<string>) {
@@ -250,7 +273,7 @@ async function keystoneProvider(options: {
   }
 
   async function signTransaction(transactionData: any) {
-    if (addressList.length === 0) {
+    if (addressToIndex.size === 0) {
       await enable()
     }
 
@@ -278,7 +301,7 @@ async function keystoneProvider(options: {
   }
 
   async function signMessage(message: { data: string }): Promise<string> {
-    if (addressList.length === 0) {
+    if (addressToIndex.size === 0) {
       await enable()
     }
 
@@ -290,7 +313,7 @@ async function keystoneProvider(options: {
   }
 
   async function signTypedMessage({ data }: { data: any }) {
-    if (addressList.length === 0) {
+    if (addressToIndex.size === 0) {
       await enable()
     }
 
