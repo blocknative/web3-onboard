@@ -9,7 +9,7 @@ import MEWWallet from '@myetherwallet/mewconnect-web-client';
 import mewWalletIcon from '../wallet-icons/icon-mew-wallet'
 
 function mewConnect(
-  options: MewConnectOptions & { networkId: number }
+  options: MewConnectOptions
 ): WalletModule {
   const { rpcUrl, iconSrc, networkId, preferred } =
     options
@@ -42,7 +42,6 @@ function mewConnect(
               .enable()
               .then(resolve)
               .catch(() => {
-                resetWalletState()
                 reject({
                   message:
                     'This dapp needs access to your account information.'
@@ -60,11 +59,12 @@ function mewConnect(
           },
           disconnect: () => {
             mewConnect.disconnect()
+            resetWalletState({ disconnected: true, walletName: 'MEW Wallet' })
           }
         }
       }
     },
-    type: 'sdk',
+    type: 'injected',
     desktop: true,
     preferred
 
