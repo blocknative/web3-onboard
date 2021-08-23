@@ -33,8 +33,6 @@ function torus(options: TorusOptions & { networkId: number }): WalletModule {
 
       const { default: Torus } = await import('@toruslabs/torus-embed')
       const instance = new Torus({
-        // eslint-disable-next-line
-        // @ts-ignore
         buttonPosition, // default: bottom-left
         modalZIndex,
         apiKey

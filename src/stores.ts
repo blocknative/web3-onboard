@@ -41,11 +41,11 @@ export const app: WritableStore = writable({
 
 export const stateSyncStatus: {
   [key: string]:
-    | null
-    | CancelablePromise
-    | Promise<Array<string>>
-    | Promise<string>
-    | Promise<void>
+  | null
+  | CancelablePromise
+  | Promise<Array<string>>
+  | Promise<string>
+  | Promise<void>
   balance: null | CancelablePromise
   address: null | Promise<Array<string>>
   network: null | Promise<string>
@@ -78,10 +78,10 @@ export function initializeStores() {
   balance = get(app).dappId
     ? createBalanceStore(null)
     : createWalletStateSliceStore({
-        parameter: 'balance',
-        initialState: null,
-        intervalSetting: 1000
-      })
+      parameter: 'balance',
+      initialState: null,
+      intervalSetting: 1000
+    })
 
   wallet = writable({
     name: null,
@@ -239,8 +239,6 @@ function createWalletStateSliceStore(options: {
   return {
     subscribe,
     reset: () => {
-      // eslint-disable-next-line
-      // @ts-ignore
       set(undefined)
     },
     get: () => currentState,
@@ -268,8 +266,6 @@ function createWalletStateSliceStore(options: {
           onChange(newVal => {
             resolve(undefined)
             if (newVal || currentState !== initialState) {
-              // eslint-disable-next-line
-              // @ts-ignore
               set(newVal)
             }
           })
@@ -304,7 +300,7 @@ function createBalanceStore(initialState: string | null): BalanceStore {
   let stateSyncer: StateSyncer
   let emitter: any
   let emitterAddress: string | undefined
-  let cancel: () => void = () => {}
+  let cancel: () => void = () => { }
 
   const { subscribe } = derived(
     [address, network],
@@ -353,7 +349,7 @@ function createBalanceStore(initialState: string | null): BalanceStore {
                 emitterAddress = $address
               })
               // swallow possible timeout error for sending configuration
-              .catch(() => {})
+              .catch(() => { })
           }
         } else if (emitterAddress && !$address) {
           const blocknative = getBlocknative()
@@ -416,7 +412,7 @@ function syncStateWithTimeout(options: {
   const { getState, setState, timeout, currentBalance, pollStart } = options
 
   if (pollStart && Date.now() - pollStart > 25000) {
-    return () => {}
+    return () => { }
   }
 
   const prom = makeCancelable(getState())
