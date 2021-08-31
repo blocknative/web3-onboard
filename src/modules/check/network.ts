@@ -56,15 +56,16 @@ function network(
     }
     // Adds a check for WalletConnect since it hangs for unsupported rpc methods
     if (
-      !networkCheckRequested && stateStore.network.get() != appNetworkId &&
-        getProviderName(wallet?.provider) !== 'WalletConnect'
+      !networkCheckRequested &&
+      stateStore.network.get() != appNetworkId &&
+      getProviderName(wallet?.provider) !== 'WalletConnect'
     ) {
       try {
-          networkCheckRequested = true
-          await wallet?.provider?.request({
-            method: 'wallet_switchEthereumChain',
-            params: [{ chainId: '0x' + appNetworkId?.toString(16) }]
-          })
+        networkCheckRequested = true
+        await wallet?.provider?.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: '0x' + appNetworkId?.toString(16) }]
+        })
       } catch (e) {
         // Could not switch networks so proceed as normal through the checks
       }
