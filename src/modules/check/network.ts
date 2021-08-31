@@ -14,6 +14,19 @@ function network(
 ): (currentState: StateAndHelpers) => Promise<WalletCheckModal | undefined> {
   const { heading, description, icon, html, button } = options
 
+  let networkCheckRequested = false
+  let prevWalletCheckInProgressValue: boolean
+
+  app.subscribe(({ walletCheckInProgress }: AppState) => {
+    if (
+      prevWalletCheckInProgressValue === false &&
+      walletCheckInProgress === true
+    ) {
+      networkCheckRequested = false
+    }
+    prevWalletCheckInProgressValue = walletCheckInProgress
+  })
+
   return async (stateAndHelpers: StateAndHelpers) => {
     const {
       network,
@@ -42,12 +55,16 @@ function network(
       }
     }
     // Adds a check for WalletConnect since it hangs for unsupported rpc methods
-    if (getProviderName(wallet?.provider) !== 'WalletConnect') {
+    if (
+      !networkCheckRequested && stateStore.network.get() != appNetworkId &&
+        getProviderName(wallet?.provider) !== 'WalletConnect'
+    ) {
       try {
-        await wallet?.provider?.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{ chainId: '0x' + appNetworkId?.toString(16) }]
-        })
+          networkCheckRequested = true
+          await wallet?.provider?.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: '0x' + appNetworkId?.toString(16) }]
+          })
       } catch (e) {
         // Could not switch networks so proceed as normal through the checks
       }
