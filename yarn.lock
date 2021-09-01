@@ -1898,10 +1898,10 @@
   resolved "https://registry.yarnpkg.com/@metamask/safe-event-emitter/-/safe-event-emitter-2.0.0.tgz#af577b477c683fad17c619a78208cede06f9605c"
   integrity sha512-/kSXhY692qiV1MXu6EeOZvg5nECLclxNXcKCxJ3cXQgYuRymRHpdx/t7JXfsK+JLjwA1e1c1/SBrlQYpusC29Q==
 
-"@myetherwallet/mewconnect-web-client@^2.2.0-beta.9":
-  version "2.2.0-beta.9"
-  resolved "https://registry.yarnpkg.com/@myetherwallet/mewconnect-web-client/-/mewconnect-web-client-2.2.0-beta.9.tgz#42012513f21346830c2014f5d7055f50f71c6adf"
-  integrity sha512-87NTJghio1w3dOgQ0v0j2KiocWzn42wzunWuHWdY07FMUXM5Zuhclp1TqGwkNlc93FkPVt124kbjLQpUvVNaWA==
+"@myetherwallet/mewconnect-web-client@^2.2.0-beta.11":
+  version "2.2.0-beta.11"
+  resolved "https://registry.yarnpkg.com/@myetherwallet/mewconnect-web-client/-/mewconnect-web-client-2.2.0-beta.11.tgz#4c6b99ce5af3e40a1d93776f8dd9ff3664947f67"
+  integrity sha512-X/LOCvm3FV5mkguYP92/o8MMkFb/g3yjceVaxbnqj2iENmhl4tDS2lrX3NskN7CD/KOpjKtQvygdgkRxo4NQKw==
   dependencies:
     "@rollup/plugin-babel" "^5.3.0"
     "@rollup/plugin-commonjs" "^20.0.0"
@@ -1911,7 +1911,7 @@
     core-js "^3.4.4"
     debug "^4.0.1"
     detect-browser "^3.0.1"
-    eccrypto "^1.1.3"
+    eccrypto "^1.1.6"
     eth-sig-util "^3.0.1"
     ethereumjs-common "^1.5.0"
     ethereumjs-tx "^2.1.2"
@@ -1940,7 +1940,7 @@
     web3-utils "1.5.0"
     webrtc-adapter "^6.4.3"
     wrtc "^0.4.6"
-    ws "^7.2.1"
+    ws "^7.5.3"
 
 "@ngraveio/bc-ur@^1.0.0", "@ngraveio/bc-ur@^1.1.5":
   version "1.1.6"
@@ -4267,7 +4267,7 @@ ecc-jsbn@~0.1.1:
     jsbn "~0.1.0"
     safer-buffer "^2.1.0"
 
-eccrypto@^1.1.3:
+eccrypto@^1.1.6:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/eccrypto/-/eccrypto-1.1.6.tgz#846bd1222323036f7a3515613704386399702bd3"
   integrity sha512-d78ivVEzu7Tn0ZphUUaL43+jVPKTMPFGtmgtz1D0LrFn7cY3K8CdrvibuLz2AAkHBLKZtR8DMbB2ukRYFk987A==
@@ -11114,10 +11114,10 @@ ws@^6.0.0:
   dependencies:
     async-limiter "~1.0.0"
 
-ws@^7.2.1:
-  version "7.5.3"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-7.5.3.tgz#160835b63c7d97bfab418fc1b8a9fced2ac01a74"
-  integrity sha512-kQ/dHIzuLrS6Je9+uv81ueZomEwH0qVYstcAQ4/Z93K8zeko9gtAbttJWzoC5ukqXY1PpoouV3+VSOqEAFt5wg==
+ws@^7.5.3:
+  version "7.5.4"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-7.5.4.tgz#56bfa20b167427e138a7795de68d134fe92e21f9"
+  integrity sha512-zP9z6GXm6zC27YtspwH99T3qTG7bBFv2VIkeHstMLrLlDJuzA7tQ5ls3OJ1hOGGCzTQPniNJoHXIAOS0Jljohg==
 
 xhr-request-promise@^0.1.2:
   version "0.1.3"
