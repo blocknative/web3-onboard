@@ -199,8 +199,7 @@ export interface WalletConnectOptions extends CommonWalletOptions {
 }
 
 export interface MewConnectOptions extends CommonWalletOptions {
-  rpcUrl: string,
-  networkId: number
+  rpcUrl: string
 }
 
 /*
