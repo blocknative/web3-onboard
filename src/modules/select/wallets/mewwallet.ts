@@ -1,18 +1,11 @@
-import {
-  MewConnectOptions,
-  WalletModule,
-  Helpers
-} from '../../../interfaces'
+import { MewConnectOptions, WalletModule, Helpers } from '../../../interfaces'
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
-import MEWWallet from '@myetherwallet/mewconnect-web-client';
+import MEWWallet from '@myetherwallet/mewconnect-web-client'
 import mewWalletIcon from '../wallet-icons/icon-mew-wallet'
 
-function mewConnect(
-  options: MewConnectOptions
-): WalletModule {
-  const { rpcUrl, iconSrc, networkId, preferred } =
-    options
+function mewConnect(options: MewConnectOptions): WalletModule {
+  const { rpcUrl, iconSrc, networkId, preferred } = options
 
   return {
     name: 'MEW Wallet',
@@ -27,7 +20,7 @@ function mewConnect(
       })
       const provider = mewConnect.makeWeb3Provider()
       if (mewConnect.isConnected) {
-        mewConnect.disconnect();
+        mewConnect.disconnect()
         resetWalletState({ disconnected: true, walletName: 'MEW Wallet' })
       }
       mewConnect.on('popupWindowClosed', () => {
@@ -37,17 +30,18 @@ function mewConnect(
         provider,
         interface: {
           name: 'MEW Wallet',
-          connect: () => new Promise((resolve, reject) => {
-            provider
-              .enable()
-              .then(resolve)
-              .catch(() => {
-                reject({
-                  message:
-                    'This dapp needs access to your account information.'
+          connect: () =>
+            new Promise((resolve, reject) => {
+              provider
+                .enable()
+                .then(resolve)
+                .catch(() => {
+                  reject({
+                    message:
+                      'This dapp needs access to your account information.'
+                  })
                 })
-              })
-          }),
+            }),
           address: {
             get: () => getAddress(provider)
           },
@@ -67,7 +61,6 @@ function mewConnect(
     type: 'injected',
     desktop: true,
     preferred
-
   }
 }
 
