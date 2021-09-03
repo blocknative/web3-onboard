@@ -94,11 +94,11 @@ export interface StateAndHelpers extends UserState {
   exit: (completed?: boolean, state?: Partial<AppState>) => void
   stateSyncStatus: {
     [key: string]:
-      | null
-      | CancelablePromise
-      | Promise<Array<string>>
-      | Promise<string>
-      | Promise<void>
+    | null
+    | CancelablePromise
+    | Promise<Array<string>>
+    | Promise<string>
+    | Promise<void>
     balance: null | CancelablePromise
     address: null | Promise<Array<string>>
     network: null | Promise<string>
@@ -196,6 +196,10 @@ export interface WalletConnectOptions extends CommonWalletOptions {
     [key: string]: string
   }
   bridge: string
+}
+
+export interface MewConnectOptions extends CommonWalletOptions {
+  rpcUrl: string
 }
 
 /*
@@ -374,12 +378,12 @@ export interface TorusOptions extends CommonWalletOptions {
   modalZIndex?: number
   apiKey?: string
   buildEnv?:
-    | 'production'
-    | 'development'
-    | 'binance'
-    | 'testing'
-    | 'lrc'
-    | 'beta'
+  | 'production'
+  | 'development'
+  | 'binance'
+  | 'testing'
+  | 'lrc'
+  | 'beta'
   enableLogging?: boolean
   enabledVerifiers?: VerifierStatus
   loginConfig?: LoginConfig
