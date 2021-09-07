@@ -24,7 +24,7 @@ body:
       required: false
   - type: textarea
     attributes:
-      label: Alternaive Solutions
+      label: Alternative Solutions
       description: Let us know about other solutions you've tried or researched.
     validations:
       required: false
