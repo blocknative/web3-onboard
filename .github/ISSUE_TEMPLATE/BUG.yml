@@ -34,16 +34,14 @@ body:
     validations:
       required: false
   - type: input
-    id: version
     attributes:
-      label: Version
+      label: Onboard Version
       description: What version of Onboard are you using?
     validations:
       required: true
   - type: input
-    id: version
     attributes:
-      label: Version
+      label: Node Version
       description: What version of NodeJS are you running?
     validations:
       required: true
