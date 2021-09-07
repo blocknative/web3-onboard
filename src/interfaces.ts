@@ -198,6 +198,10 @@ export interface WalletConnectOptions extends CommonWalletOptions {
   bridge: string
 }
 
+export interface MewConnectOptions extends CommonWalletOptions {
+  rpcUrl: string
+}
+
 /*
  * Types taken from https://github.com/ethereumjs/ethereumjs-vm/blob/eb05651554ec23d2ba7c46af6e5f5a7bc199f217/packages/common/src/types.ts#L15
  * since they are not exported
