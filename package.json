@@ -83,7 +83,7 @@
     "hdkey": "^2.0.1",
     "regenerator-runtime": "^0.13.7",
     "trezor-connect": "^8.1.9",
-    "walletlink": "^2.1.9",
+    "walletlink": "^2.1.10",
     "web3-provider-engine": "^15.0.4"
   },
   "resolutions": {
