@@ -353,7 +353,9 @@ export function networkName(id: number): string {
           5: 'goerli',
           42: 'kovan',
           100: 'xdai',
-          56: 'bsc'
+          56: 'bsc',
+          288: 'boba-mainnet',
+          28: 'boba-rinkeby'
         } as { [key: number]: string }
       )[id] || 'unknown'
 }
