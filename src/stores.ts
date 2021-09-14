@@ -290,7 +290,6 @@ function createWalletStateSliceStore(options: {
 
       if (get) {
         const interval: any = createInterval(() => {
-          console.log('polling for ', parameter)
           stateSyncStatus[parameter] = get()
             .then(newVal => {
               stateSyncStatus[parameter] = null
