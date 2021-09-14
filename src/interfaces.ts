@@ -514,7 +514,7 @@ export interface WalletStateSliceStore {
   get: () => any
 }
 
-export interface BalanceStore extends WalletStateSliceStore{
+export interface BalanceStore extends WalletStateSliceStore {
   setStateSyncer: (stateSyncer: StateSyncer) => undefined
 }
 
