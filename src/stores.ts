@@ -75,13 +75,28 @@ export function initializeStores() {
     initialState: null
   })
 
-  balance = get(app).dappId
-    ? createBalanceStore(null)
-    : createWalletStateSliceStore({
-        parameter: 'balance',
-        initialState: null,
-        intervalSetting: 1000
-      })
+  balance = get(
+    derived<WalletStateSliceStore, BalanceStore | WalletStateSliceStore>(
+      address,
+      $address => {
+        if (!$address) {
+          return {
+            subscribe: () => () => {},
+            setStateSyncer: (stateSyncer: StateSyncer) => undefined,
+            reset: () => {},
+            get: () => {}
+          }
+        }
+        return get(app).dappId
+          ? createBalanceStore(null)
+          : createWalletStateSliceStore({
+              parameter: 'balance',
+              initialState: null,
+              intervalSetting: 1000
+            })
+      }
+    )
+  )
 
   wallet = writable({
     name: null,
@@ -275,6 +290,7 @@ function createWalletStateSliceStore(options: {
 
       if (get) {
         const interval: any = createInterval(() => {
+          console.log('polling for ', parameter)
           stateSyncStatus[parameter] = get()
             .then(newVal => {
               stateSyncStatus[parameter] = null
