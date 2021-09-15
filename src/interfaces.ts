@@ -507,18 +507,15 @@ export interface WalletInterfaceStore {
 
 export interface WalletStateSliceStore {
   subscribe: (subscriber: (store: any) => void) => () => void
-  reset: () => void
   setStateSyncer: (
     stateSyncer: StateSyncer
   ) => { clear: () => void } | undefined
+  reset: () => void
   get: () => any
 }
 
-export interface BalanceStore {
-  subscribe: (subscriber: (store: any) => void) => () => void
+export interface BalanceStore extends WalletStateSliceStore {
   setStateSyncer: (stateSyncer: StateSyncer) => undefined
-  reset: () => void
-  get: () => any
 }
 
 export type Browser = {
