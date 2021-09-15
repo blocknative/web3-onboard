@@ -10370,10 +10370,10 @@ vue@^2.6.10:
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.14.tgz#e51aa5250250d569a3fbad3a8a5a687d6036e235"
   integrity sha512-x2284lgYvjOMj3Za7kqzRcUSxBboHqtgRE2zlos1qWaOye5yUmHn42LB1250NJBLRwEcdrB0JRwyPTEPhfQjiQ==
 
-walletlink@^2.1.10:
-  version "2.1.10"
-  resolved "https://registry.yarnpkg.com/walletlink/-/walletlink-2.1.10.tgz#f69b816bc1aacc11fb4f0385419e3ef7ef322058"
-  integrity sha512-ndX2yaa8KDzlxiuiLmrA4pJlD4CXjyCoxm4FqaeGqv/ez3WfwIRa+ZjSDpi7odHiz6sTgi/L6zy16fiocWfHJA==
+walletlink@^2.1.11:
+  version "2.1.11"
+  resolved "https://registry.yarnpkg.com/walletlink/-/walletlink-2.1.11.tgz#4ed5d53066f4fae8cc43169475e4f9d1f6b8735a"
+  integrity sha512-DdnQ2jnVHAdKgQ1IgxPKn3GvVEUbrGCgvgqKqQ7eanxUnyWgRm5T8Ib6NqPDuQ6SNFk6St54uN+uxV7GP6AyZg==
   dependencies:
     "@metamask/safe-event-emitter" "2.0.0"
     bind-decorator "^1.0.11"
