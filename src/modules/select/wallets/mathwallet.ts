@@ -4,7 +4,9 @@ import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
 import mathwalletIcon from '../wallet-icons/icon-mathwallet.png'
 import mathwalletIcon2x from '../wallet-icons/icon-mathwallet@2x.png'
 
-function mathwallet(options: CommonWalletOptions): WalletModule {
+function mathwallet(
+  options: CommonWalletOptions & { isMobile: boolean }
+  ): WalletModule {
   const { preferred, label, iconSrc, svg, isMobile } = options
 
   return {
