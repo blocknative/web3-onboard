@@ -141,14 +141,33 @@ export function createModernProviderInterface(provider: any): WalletInterface {
 
   const onFuncExists = typeof provider.on === 'function'
 
+  interface ProviderEventHandlers {
+    accountsChanged: ((arg: string[]) => void) | null
+    networkChanged: ((arg: string | number) => void) | null
+    chainChanged: ((arg: string | number) => void) | null
+  }
+
+  // A map of provider event handlers -- refferences needed
+  // in order to remove the event listners when their no longer needed
+  const providerEventHandler: ProviderEventHandlers = {
+    accountsChanged: null,
+    networkChanged: null,
+    chainChanged: null
+  }
+
   return {
     address: onFuncExists
       ? {
           onChange: func => {
+            providerEventHandler['accountsChanged'] = (accounts: string[]) => {
+              func(accounts && accounts[0])
+            }
+
             // get the initial value
             getAddress(provider).then(func)
-            provider.on('accountsChanged', (accounts: string[]) =>
-              func(accounts && accounts[0])
+            provider.on(
+              'accountsChanged',
+              providerEventHandler['accountsChanged']
             )
           }
         }
@@ -158,18 +177,26 @@ export function createModernProviderInterface(provider: any): WalletInterface {
     network: onFuncExists
       ? {
           onChange: (func: (val: string | number) => void) => {
+            providerEventHandler['networkChanged'] = (netId: string | number) =>
+              func(netId && Number(netId))
+
+            // We clone the previous handler in order to get a distinct refference
+            // to the 'chainChanged' event handler
+            providerEventHandler['chainChanged'] = providerEventHandler[
+              'networkChanged'
+            ].bind({})
+
             // get initial value
             getNetwork(provider).then(func)
 
             // networkChanged event is deprecated in MM, keep for wallets that may not have updated
-            provider.on('networkChanged', (netId: string | number) =>
-              func(netId && Number(netId))
+            provider.on(
+              'networkChanged',
+              providerEventHandler['networkChanged']
             )
 
             // use new chainChanged event for network change
-            provider.on('chainChanged', (netId: string | number) =>
-              func(netId && Number(netId))
-            )
+            provider.on('chainChanged', providerEventHandler['chainChanged'])
           }
         }
       : { get: () => getNetwork(provider) },
@@ -190,6 +217,17 @@ export function createModernProviderInterface(provider: any): WalletInterface {
       } catch (e) {
         throw {
           message: 'This dapp requires access to your account information.'
+        }
+      }
+    },
+    disconnect: () => {
+      if (provider?.removeListener) {
+        // Iterate over the event handlers and remove them from the event listener.
+        for (let [key, handler] of Object.entries(providerEventHandler)) {
+          // If the handler is null, this indicates that no event listener was created
+          if (handler) {
+            provider.removeListener(key, handler)
+          }
         }
       }
     },
