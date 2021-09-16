@@ -223,7 +223,7 @@ export function createModernProviderInterface(provider: any): WalletInterface {
     disconnect: () => {
       if (provider?.removeListener) {
         // Iterate over the event handlers and remove them from the event listener.
-        for (let [key, handler] of Object.entries(providerEventHandler)) {
+        for (const [key, handler] of Object.entries(providerEventHandler)) {
           // If the handler is null, this indicates that no event listener was created
           if (handler) {
             provider.removeListener(key, handler)
