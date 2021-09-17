@@ -12,6 +12,7 @@ const desktopDefaultWalletNames = [
   'detectedwallet',
   'metamask',
   'binance',
+  'mathwallet',
   'frame',
   'torus',
   'opera',
@@ -29,6 +30,7 @@ const mobileDefaultWalletNames = [
   'status',
   'hyperpay',
   'tokenpocket',
+  'mathwallet',
   'dcent',
   'atoken',
   'liquality',
@@ -36,8 +38,7 @@ const mobileDefaultWalletNames = [
   'ownbit',
   'bitpie',
   'authereum',
-  'tp',
-  'mathwallet'
+  'tp'
 ]
 
 const injectedWalletDetected = () =>
