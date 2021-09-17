@@ -6,7 +6,7 @@ import mathwalletIcon2x from '../wallet-icons/icon-mathwallet@2x.png'
 
 function mathwallet(
   options: CommonWalletOptions & { isMobile: boolean }
-  ): WalletModule {
+): WalletModule {
   const { preferred, label, iconSrc, svg, isMobile } = options
 
   return {
@@ -24,12 +24,14 @@ function mathwallet(
       return {
         provider,
         interface:
-          (provider && getProviderName(provider) === 'MathWallet') ? createModernProviderInterface(provider) : null
+          provider && getProviderName(provider) === 'MathWallet'
+            ? createModernProviderInterface(provider)
+            : null
       }
     },
     type: 'injected',
     link: 'https://mathwallet.org',
-    installMessage:  isMobile
+    installMessage: isMobile
       ? mobileWalletInstallMessage
       : extensionInstallMessage,
     desktop: true,
