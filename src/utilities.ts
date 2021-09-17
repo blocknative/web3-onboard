@@ -315,6 +315,10 @@ export function getProviderName(provider: any): string | undefined {
     return 'tp'
   }
 
+  if (provider.isMathWallet) {
+    return 'MathWallet'
+  }
+
   // =====================================
   // When adding new wallet place above this metamask check as some providers
   // have an isMetaMask property in addition to the wallet's own `is[WalletName]`
