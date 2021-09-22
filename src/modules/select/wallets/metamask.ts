@@ -36,7 +36,7 @@ function metamask(
       }
     },
     type: 'injected',
-    link: `https://metamask.app.link/dapp/${window.location.host}`,
+    link: `https://metamask.app.link/dapp/${window.location.href}`,
     installMessage: isMobile
       ? mobileWalletInstallMessage
       : extensionInstallMessage,
