@@ -9,7 +9,6 @@ import { getProviderName } from '../../utilities'
 // wallets that qualify for default wallets need to have no
 // init parameters that are required for full functionality
 const desktopDefaultWalletNames = [
-  'detectedwallet',
   'metamask',
   'binance',
   'frame',
@@ -19,7 +18,6 @@ const desktopDefaultWalletNames = [
 ]
 
 const mobileDefaultWalletNames = [
-  'detectedwallet',
   'metamask',
   'coinbase',
   'trust',
@@ -111,11 +109,11 @@ function select(
   const defaultWalletNames = isMobile
     ? mobileDefaultWalletNames
     : desktopDefaultWalletNames
-  // If we have detected a builtin wallet at it to the list of default wallets to init
+  // If we have detected a builtin wallet that is not already in the list of default wallets so add it
   if (detectedWalletName && !defaultWalletNames.includes(detectedWalletName)) {
     defaultWalletNames.unshift(detectedWalletName)
     // If we detected a provider but it is not builtin add the generic injected provider
-  } else if (detectedProviderName) {
+  } else if (!detectedWalletName && detectedProviderName) {
     defaultWalletNames.unshift('detectedwallet')
   }
   return Promise.all(

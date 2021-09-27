@@ -12,7 +12,7 @@ function injected(options: CommonWalletOptions): WalletModule {
   const name =
     label ||
     Object.keys(provider)
-      .find(key => key.startsWith('is') && !key.includes('MetaMask'))
+      .find(key => key.startsWith('is') && !key.includes('MetaMask') && !key.includes('Connected'))
       ?.split('is')[1] ||
     'Detected Wallet'
 
