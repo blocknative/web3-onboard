@@ -3,9 +3,7 @@ import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
 
 import blankwalletIcon from '../wallet-icons/icon-blankwallet'
 
-function blankwallet(
-  options: CommonWalletOptions
-): WalletModule {
+function blankwallet(options: CommonWalletOptions): WalletModule {
   const { preferred, label, iconSrc, svg } = options
 
   return {
