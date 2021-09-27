@@ -297,14 +297,6 @@ export function getProviderName(provider: any): string | undefined {
     return 'Coinbase'
   }
 
-  if (provider.isToshi) {
-    return 'Toshi'
-  }
-
-  if (provider.isCipher) {
-    return 'Cipher'
-  }
-
   if (provider.isOpera) {
     return 'Opera'
   }
