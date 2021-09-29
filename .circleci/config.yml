@@ -2,7 +2,7 @@ version: 2
 jobs:
   test:
     docker:
-      - image: circleci/node:10.18.1-browsers
+      - image: circleci/node:12-browsers
     steps:
       - checkout
       - restore_cache:
@@ -19,7 +19,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
   deploy_stage:
     docker:
-      - image: circleci/node:10.18.1-browsers
+      - image: circleci/node:12-browsers
         user: root
     steps:
       - checkout
@@ -31,7 +31,7 @@ jobs:
       - run: npm publish --dry-run
   deploy_prod:
     docker:
-      - image: circleci/node:10.18.1-browsers
+      - image: circleci/node:12-browsers
         user: root
     steps:
       - checkout
@@ -43,7 +43,7 @@ jobs:
       - run: npm publish
   deploy_demo:
     docker:
-      - image: circleci/node:10.18.1-browsers
+      - image: circleci/node:12-browsers
         user: root
     steps:
       - checkout
