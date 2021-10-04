@@ -381,11 +381,12 @@ export function networkName(id: number): string {
           3: 'ropsten',
           4: 'rinkeby',
           5: 'goerli',
+          28: 'boba-rinkeby',
           42: 'kovan',
-          100: 'xdai',
           56: 'bsc',
-          288: 'boba-mainnet',
-          28: 'boba-rinkeby'
+          100: 'xdai',
+          137: 'polygon',
+          288: 'boba-mainnet'
         } as { [key: number]: string }
       )[id] || 'unknown'
 }
