@@ -1,8 +1,12 @@
 import { MewConnectOptions, WalletModule, Helpers } from '../../../interfaces'
 import mewWalletIcon from '../wallet-icons/icon-mew-wallet'
 
-function mewConnect(options: MewConnectOptions): WalletModule {
+async function mewConnect(options: MewConnectOptions): Promise<WalletModule> {
   const { rpcUrl, iconSrc, networkId, preferred } = options
+
+  const { default: MEWWallet } = await import(
+    '@myetherwallet/mewconnect-web-client'
+  )
 
   return {
     name: 'MEW Wallet',
@@ -10,10 +14,6 @@ function mewConnect(options: MewConnectOptions): WalletModule {
     iconSrc: iconSrc || mewWalletIcon,
     wallet: async (helpers: Helpers) => {
       const { resetWalletState, getBalance, getAddress, getNetwork } = helpers
-
-      const { default: MEWWallet } = await import(
-        '@myetherwallet/mewconnect-web-client'
-      )
 
       const mewConnect = new MEWWallet.Provider({
         windowClosedError: true,
