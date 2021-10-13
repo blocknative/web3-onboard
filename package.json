@@ -21,7 +21,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "rimraf dist && rollup -c && babel dist/cjs --out-dir dist/cjs && babel dist/esm --out-dir dist/esm",
+    "build": "rimraf dist && rollup -c && babel dist/cjs --out-dir dist/cjs",
     "test": "echo \"TBD\" && exit 0",
     "prepare": "npm run build",
     "lint": "eslint 'src/**/*.ts' && prettier --check {'src/**/*.ts','src/**/*.svelte'}",
