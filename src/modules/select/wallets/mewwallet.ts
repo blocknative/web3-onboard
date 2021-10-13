@@ -1,7 +1,4 @@
 import { MewConnectOptions, WalletModule, Helpers } from '../../../interfaces'
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-import MEWWallet from '@myetherwallet/mewconnect-web-client'
 import mewWalletIcon from '../wallet-icons/icon-mew-wallet'
 
 function mewConnect(options: MewConnectOptions): WalletModule {
@@ -13,19 +10,28 @@ function mewConnect(options: MewConnectOptions): WalletModule {
     iconSrc: iconSrc || mewWalletIcon,
     wallet: async (helpers: Helpers) => {
       const { resetWalletState, getBalance, getAddress, getNetwork } = helpers
+
+      const { default: MEWWallet } = await import(
+        '@myetherwallet/mewconnect-web-client'
+      )
+
       const mewConnect = new MEWWallet.Provider({
         windowClosedError: true,
         chainId: networkId,
         rpcUrl
       })
+
       const provider = mewConnect.makeWeb3Provider()
+
       if (mewConnect.isConnected) {
         mewConnect.disconnect()
         resetWalletState({ disconnected: true, walletName: 'MEW Wallet' })
       }
+
       mewConnect.on('popupWindowClosed', () => {
         resetWalletState({ disconnected: true, walletName: 'MEW Wallet' })
       })
+
       return {
         provider,
         interface: {
