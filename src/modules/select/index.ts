@@ -91,8 +91,13 @@ function select(
               setOfWallets.add(walletName)
               return module
             } catch (error) {
-              if (error.name === 'DeprecatedWalletError') {
-                console.warn(error.message)
+              const { type, message } = error as {
+                type: string
+                message: string
+              }
+
+              if (type === 'DeprecatedWalletError') {
+                console.warn(message)
               } else {
                 throw error
               }
@@ -132,7 +137,7 @@ function getModule(name: string): Promise<{
     case 'squarelink':
     case 'unilogin':
       throw {
-        name: 'DeprecatedWalletError',
+        type: 'DeprecatedWalletError',
         message: `${name} wallet has been deprecated`
       }
     case 'meetone':
@@ -209,8 +214,8 @@ function getModule(name: string): Promise<{
       return import('./wallets/detectedwallet')
     case 'tp':
       return import('./wallets/tp')
-    case 'mewwallet':
-      return import('./wallets/mewwallet')
+    // case 'mewwallet':
+    //   return import('./wallets/mewwallet')
     default:
       throw new Error(`${name} is not a valid walletName.`)
   }

@@ -21,7 +21,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "rimraf dist && rollup -c && babel dist/cjs --out-dir dist/cjs",
+    "build": "rimraf dist && rollup -c && babel dist/cjs --out-dir dist/cjs && babel dist/esm --out-dir dist/esm",
     "test": "echo \"TBD\" && exit 0",
     "prepare": "npm run build",
     "lint": "eslint 'src/**/*.ts' && prettier --check {'src/**/*.ts','src/**/*.svelte'}",
@@ -84,9 +84,6 @@
     "trezor-connect": "^8.1.9",
     "walletlink": "^2.1.11",
     "web3-provider-engine": "^15.0.4"
-  },
-  "optionalDependencies": {
-    "@myetherwallet/mewconnect-web-client": "^2.2.0-beta.11"
   },
   "resolutions": {
     "authereum/web3-utils/underscore": "^1.12.1",

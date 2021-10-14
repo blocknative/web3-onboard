@@ -23,7 +23,7 @@ declare module '@keystonehq/eth-keyring'
 declare module '@shapeshiftoss/hdwallet-core'
 declare module '@shapeshiftoss/hdwallet-keepkey-webusb'
 
-declare module '@myetherwallet/mewconnect-web-client'
+// declare module '@myetherwallet/mewconnect-web-client'
 
 declare module '*.png'
 declare module '*.svg'
