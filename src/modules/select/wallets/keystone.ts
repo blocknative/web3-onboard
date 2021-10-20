@@ -225,9 +225,7 @@ async function keystoneProvider(options: {
     }
 
     try {
-      const accounts = await keyring.addAccounts(
-        keyring.getAccounts().length + 5
-      )
+      const accounts = await keyring.addAccounts(5)
       addressToIndex = generateAccountsMap(accounts)
       const currentPrimary = getPrimaryAddress()
       setPrimaryAccount(currentPrimary)
