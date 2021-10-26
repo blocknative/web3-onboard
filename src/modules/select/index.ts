@@ -66,7 +66,12 @@ function select(
       wallet?.display &&
       wallet?.display[isMobile ? 'mobile' : 'desktop'] === false
 
-    if (detectedWalletName) {
+    // If the detected wallet is already listed as a wallet option then don't inject it
+    const walletNotIncluded = wallets.every(
+      wallet => isWalletInit(wallet) && wallet.walletName !== detectedWalletName
+    )
+
+    if (detectedWalletName && walletNotIncluded) {
       // This wallet is built into onboard so add the walletName and
       // the code below will load it as a wallet module
       wallets.unshift({ walletName: detectedWalletName })
