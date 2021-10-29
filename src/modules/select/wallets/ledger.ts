@@ -86,8 +86,10 @@ async function ledgerProvider(options: LedgerProviderOptions) {
   const { generateAddresses, isValidPath } = await import('./hd-wallet')
   const { default: Eth } = await import('@ledgerhq/hw-app-eth')
 
-  const { Transaction } = await import('@ethereumjs/tx')
-  const { default: Common } = await import('@ethereumjs/common')
+  const { TransactionFactory: Transaction, Capability } = await import(
+    '@ethereumjs/tx'
+  )
+  const { default: Common, Hardfork } = await import('@ethereumjs/common')
   const ethUtil = await import('ethereumjs-util')
   const { TypedDataUtils } = await import('eth-sig-util')
 
@@ -403,38 +405,47 @@ async function ledgerProvider(options: LedgerProviderOptions) {
 
   async function signTransaction(transactionData: any) {
     const path = [...addressToPath.values()][0]
-    const { BN, toBuffer } = ethUtil
+    const { rlp } = ethUtil
     const common = new Common({
-      chain: customNetwork || networkName(networkId)
+      chain: customNetwork || networkName(networkId),
+      // Berlin is the minimum hardfork that will allow for EIP1559
+      hardfork: Hardfork.Berlin,
+      // List of supported EIPS
+      eips: [1559]
     })
     try {
+      // The below implemenation is adapted from:
+      // https://github.com/ethereumjs/ethereumjs-monorepo/tree/master/packages/tx#signing-with-a-hardware-or-external-wallet
+      transactionData.gasLimit = transactionData.gas ?? transactionData.gasLimit
       const transaction = Transaction.fromTxData(
         {
-          ...transactionData,
-          gasLimit: transactionData.gas ?? transactionData.gasLimit
+          ...transactionData
         },
-        { common, freeze: false }
+        { common }
       )
-      transaction.v = new BN(toBuffer(networkId))
-      transaction.r = transaction.s = new BN(toBuffer(0))
 
-      const ledgerResult = await eth.signTransaction(
-        path,
-        transaction.serialize().toString('hex')
-      )
-      let v = ledgerResult.v.toString(16)
-      // EIP155 support. check/recalc signature v value.
-      const rv = parseInt(v, 16)
-      let cv = networkId * 2 + 35
-      if (rv !== cv && (rv & cv) !== rv) {
-        cv += 1 // add signature v bit.
+      let unsignedTx = transaction.getMessageToSign(false)
+
+      // If this is not an EIP1559 transaction then it is legacy and it needs to be
+      // rlp encoded before being passed to ledger
+      if (!transaction.supports(Capability.EIP1559FeeMarket)) {
+        unsignedTx = rlp.encode(unsignedTx)
       }
-      v = cv.toString(16)
-      transaction.v = new BN(toBuffer(`0x${v}`))
-      transaction.r = new BN(toBuffer(`0x${ledgerResult.r}`))
-      transaction.s = new BN(toBuffer(`0x${ledgerResult.s}`))
 
-      return `0x${transaction.serialize().toString('hex')}`
+      const { v, r, s } = await eth.signTransaction(path, unsignedTx)
+
+      // Reconstruct the signed transaction
+      const signedTx = Transaction.fromTxData(
+        {
+          ...transactionData,
+          v: `0x${v}`,
+          r: `0x${r}`,
+          s: `0x${s}`
+        },
+        { common }
+      )
+
+      return `0x${signedTx.serialize().toString('hex')}`
     } catch (error) {
       throw error
     }
