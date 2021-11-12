@@ -75,7 +75,7 @@ function select(
       // This wallet is built into onboard so add the walletName and
       // the code below will load it as a wallet module
       wallets.unshift({ walletName: detectedWalletName })
-    } else if (detectedProviderName) {
+    } else if (!detectedWalletName && detectedProviderName) {
       // A provider has been detected but there is not a walletName therefore
       // this wallet is not built into onboard so add it as a generic injected wallet
       wallets.unshift({ walletName: 'detectedwallet' })
