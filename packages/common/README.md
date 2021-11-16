@@ -1,4 +1,4 @@
-# @onboard/common
+# @bn-onboard/common
 
 Utilities and helper method common to all wallets.
 

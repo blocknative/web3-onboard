@@ -12,7 +12,7 @@ import type {
   ChainId,
   EIP1193Provider,
   WalletModule
-} from '@onboard/types'
+} from '@bn-onboard/types'
 
 export interface InitOptions {
   apiKey?: string

@@ -3,10 +3,10 @@ import {
   EIP1193Provider,
   InjectedWalletModule,
   InjectedNameSpace
-} from '@onboard/types'
+} from '@bn-onboard/types'
 
-import { ProviderIdentityFlag, ProviderLabel } from '@onboard/types'
-import { createEIP1193Provider } from '@onboard/common'
+import { ProviderIdentityFlag, ProviderLabel } from '@bn-onboard/types'
+import { createEIP1193Provider } from '@bn-onboard/common'
 
 declare const window: CustomWindow
 

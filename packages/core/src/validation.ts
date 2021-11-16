@@ -9,7 +9,7 @@ import {
   ValidationResult
 } from 'joi'
 
-import type { WalletModule } from '@onboard/types'
+import type { WalletModule } from '@bn-onboard/types'
 
 import type {
   Chain,

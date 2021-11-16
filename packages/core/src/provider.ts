@@ -7,7 +7,7 @@ import type {
   EIP1102Request,
   EIP1193Provider,
   ProviderAccounts
-} from '@onboard/types'
+} from '@bn-onboard/types'
 
 import { disconnectWallet$, wallets$ } from './streams'
 

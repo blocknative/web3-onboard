@@ -6,7 +6,7 @@ import type {
   DeviceBrowser,
   DeviceOS,
   DeviceType
-} from '@onboard/types'
+} from '@bn-onboard/types'
 import type { Chain } from './types'
 
 export const noop = (): void => {}

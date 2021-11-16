@@ -1,11 +1,11 @@
-# @onboard/injected-wallets
+# @bn-onboard/injected-wallets
 
 ### Usage
 
 Example Usage:
 
 ```typescript
-import { ProviderLabel } from '@onboard/types'
+import { ProviderLabel } from '@bn-onboard/types'
 
 const wallets: InjectedWalletModule[] = [
   {

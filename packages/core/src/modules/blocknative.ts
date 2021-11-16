@@ -1,5 +1,5 @@
 import type Blocknative from 'bnc-sdk'
-import type { ChainId } from '@onboard/types'
+import type { ChainId } from '@bn-onboard/types'
 import { internalState$ } from '../streams'
 
 export async function getBlocknative(chainId: ChainId): Promise<Blocknative> {

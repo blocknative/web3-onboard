@@ -1,5 +1,5 @@
 {
-  "name": "@onboard/core",
+  "name": "@bn-onboard/core",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -11,7 +11,7 @@
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
   "devDependencies": {
-    "@onboard/types": "^0.0.1",
+    "@bn-onboard/types": "^0.0.1",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
@@ -36,7 +36,7 @@
     "typescript": "4.3.5"
   },
   "dependencies": {
-    "@onboard/types": "^0.0.1",
+    "@bn-onboard/types": "^0.0.1",
     "bnc-sdk": "^3.6.0",
     "bowser": "^2.11.0",
     "lodash.merge": "^4.6.2",

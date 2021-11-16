@@ -1,7 +1,7 @@
 <script>
   import { share } from 'rxjs/operators'
-  import Onboard from '@onboard/core'
-  import injected from '@onboard/injected-wallets'
+  import Onboard from '@bn-onboard/core'
+  import injected from '@bn-onboard/injected-wallets'
   import blocknativeIcon from './blocknative-icon'
 
   const injectedWallet = injected({

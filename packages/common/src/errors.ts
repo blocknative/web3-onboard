@@ -1,4 +1,4 @@
-import { ProviderRpcErrorCode } from '@onboard/types'
+import { ProviderRpcErrorCode } from '@bn-onboard/types'
 
 export class ProviderRpcError extends Error {
   message: string

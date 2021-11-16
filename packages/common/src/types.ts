@@ -11,7 +11,7 @@ import {
   ProviderInfo,
   ProviderMessage,
   ProviderRpcError
-} from '@onboard/types'
+} from '@bn-onboard/types'
 
 /**
  * Types for request patching methods. Ethereum RPC request is mapped to

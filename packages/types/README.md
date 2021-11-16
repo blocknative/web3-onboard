@@ -1,1 +1,1 @@
-# @onboard/types
+# @bn-onboard/types

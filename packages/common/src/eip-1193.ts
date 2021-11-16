@@ -6,7 +6,7 @@ import {
   ProviderInfo,
   ProviderMessage,
   SimpleEventEmitter
-} from '@onboard/types'
+} from '@bn-onboard/types'
 import { EventCallback, RequestPatch } from './types'
 import { ProviderRpcError } from './errors'
 

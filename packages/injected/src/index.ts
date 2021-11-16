@@ -5,7 +5,7 @@ import {
   InjectedWalletOptions,
   CustomWindow,
   ProviderLabel
-} from '@onboard/types'
+} from '@bn-onboard/types'
 
 import standardWallets from './wallets'
 import { remove } from './helpers'

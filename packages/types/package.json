@@ -1,5 +1,5 @@
 {
-  "name": "@onboard/types",
+  "name": "@bn-onboard/types",
   "version": "0.0.1",
   "description": "Shared Typescript types",
   "module": "dist/index.js",

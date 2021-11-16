@@ -1,4 +1,4 @@
-import { InjectedWalletOptions } from '@onboard/types'
+import { InjectedWalletOptions } from '@bn-onboard/types'
 
 import {
   string,
