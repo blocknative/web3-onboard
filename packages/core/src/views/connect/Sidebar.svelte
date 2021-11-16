@@ -2,11 +2,18 @@
   import { _ } from 'svelte-i18n'
   import blocknative from '../../icons/blocknative'
   import { internalState$ } from '../../streams'
+  import en from '../../i18n/en.json'
+  import type { i18n } from '../../types'
 
-  export let status: string
+  export let status: keyof i18n['connect']
 
   const { appMetadata } = internalState$.getValue()
   const { icon, name = 'This dapp' } = appMetadata || {}
+
+  const defaultContent = en.connect[status].sidebar
+  const { subheading, paragraph } = defaultContent
+  const { heading } =
+    defaultContent as i18n['connect']['selectingWallet']['sidebar']
 </script>
 
 <style>
@@ -94,13 +101,24 @@
       {/if}
     </div>
     {#if $_(`connect.${status}.sidebar.heading`, { default: '' })}
-      <h2 class="heading">{$_(`connect.${status}.sidebar.heading`)}</h2>
+      <h2 class="heading">
+        {$_(`connect.${status}.sidebar.heading`, {
+          default: heading
+        })}
+      </h2>
     {/if}
 
-    <h4 class="subheading">{$_(`connect.${status}.sidebar.subheading`)}</h4>
+    <h4 class="subheading">
+      {$_(`connect.${status}.sidebar.subheading`, {
+        default: subheading
+      })}
+    </h4>
 
     <p class="description">
-      {$_(`connect.${status}.sidebar.paragraph`, { values: { dapp: name } })}
+      {$_(`connect.${status}.sidebar.paragraph`, {
+        values: { dapp: name },
+        default: paragraph
+      })}
     </p>
 
     <div class="indicators">

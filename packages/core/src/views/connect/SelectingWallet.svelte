@@ -3,6 +3,7 @@
 
   import { state } from '../../store'
   import type { WalletWithLoadedIcon, WalletWithLoadingIcon } from '../../types'
+  import en from '../../i18n/en.json'
 
   import LoadingWalletButton from './LoadingWalletButton.svelte'
   import WalletButton from './WalletButton.svelte'
@@ -75,7 +76,9 @@
 
   {#if !showSecondaryWallets && primaryWallets.length > NUM_PRIMARY_WALLETS}
     <button class="button-1" on:click={() => (showSecondaryWallets = true)}
-      >{$_(`connect.selectingWallet.primaryButton`)}</button
+      >{$_(`connect.selectingWallet.primaryButton`, {
+        default: en.connect.selectingWallet.primaryButton
+      })}</button
     >
   {/if}
 </div>

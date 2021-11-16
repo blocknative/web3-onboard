@@ -10,6 +10,7 @@
   import PendingStatusIcon from '../shared/PendingStatusIcon.svelte'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
   import defaultAppIcon from '../../icons/default-app-icon'
+  import en from '../../i18n/en.json'
 
   export let selectedWallet: WalletState
 
@@ -107,7 +108,11 @@
         <SuccessStatusIcon slot="status" size={17} />
       </WalletAppBadge>
 
-      <div class="text">{$_('connect.connectingWallet.mainText')}</div>
+      <div class="text">
+        {$_('connect.connectingWallet.mainText', {
+          default: en.connect.connectingWallet.mainText
+        })}
+      </div>
     </div>
 
     <WalletAppBadge
@@ -121,7 +126,9 @@
   </div>
 
   <button class="button-1"
-    >{$_('connect.connectingWallet.primaryButton')}</button
+    >{$_('connect.connectingWallet.primaryButton', {
+      default: en.connect.connectingWallet.primaryButton
+    })}</button
   >
 </div>
 

@@ -13,6 +13,7 @@
   import defaultAppIcon from '../../icons/default-app-icon'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import { state } from '../../store'
+  import en from '../../i18n/en.json'
 
   export let selectedWallet: WalletState
 
@@ -129,7 +130,11 @@
         </div>
       </div>
 
-      <div class="text">{$_('connect.connectedWallet.mainText')}</div>
+      <div class="text">
+        {$_('connect.connectedWallet.mainText', {
+          default: en.connect.connectedWallet.mainText
+        })}
+      </div>
     </div>
 
     <div class="tick" style="width: 17.6px; height: 13.4px;">
