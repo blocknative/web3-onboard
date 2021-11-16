@@ -1,0 +1,28 @@
+{
+  "name": "@onboard/injected-wallets",
+  "version": "0.0.1",
+  "description": "<todo>",
+  "module": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "yarn.lock"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w",
+    "test": "ava",
+    "prepare": "yarn build"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "tsc": "^2.0.3",
+    "typescript": "^4.4.4"
+  },
+  "dependencies": {
+    "@onboard/common": "^0.0.1",
+    "@onboard/types": "^0.0.1",
+    "joi": "^17.4.2",
+    "lodash.uniqby": "^4.7.0"
+  }
+}

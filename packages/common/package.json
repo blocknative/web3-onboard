@@ -1,0 +1,24 @@
+{
+  "name": "@onboard/common",
+  "version": "0.0.1",
+  "description": "Resources common to all wallets",
+  "module": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "yarn.lock"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w",
+    "test": "ava",
+    "prepare": "yarn build"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.4.4"
+  },
+  "dependencies": {
+    "@onboard/types": "^0.0.1"
+  }
+}

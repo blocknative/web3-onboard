@@ -1,0 +1,29 @@
+{
+  "connect": {
+    "selectingWallet": {
+      "sidebar": {
+        "heading": "Get Started",
+        "subheading": "Connect your wallet",
+        "paragraph": "Connecting a crypto wallet is like “logging in” for an application. It will allow you to do things with the items in your wallet. Etc..."
+      },
+      "primaryButton": "Show More"
+    },
+    "connectingWallet": {
+      "sidebar": {
+        "subheading": "Login and Authorize Your Wallet...",
+        "paragraph": "This dapp requires access to your wallet, please login and authorize access to your MetaMask accounts to continue."
+      },
+      "mainText": "Connecting...",
+      "primaryButton": "Back to wallets"
+    },
+    "connectedWallet": {
+      "sidebar": {
+        "subheading": "Dapp Authorized",
+        "paragraph": "{dapp} is now connected to your wallet"
+      },
+      "mainText": "Connected"
+    }
+  },
+  "menu": {},
+  "shared": {}
+}
