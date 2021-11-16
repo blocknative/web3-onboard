@@ -130,19 +130,34 @@ export type InternalState = {
 }
 
 export type ValueOf<T> = T[keyof T]
+export type Locale = string
 
-export type i18nOptions = Record<string, i18n>
+export type i18nOptions = Record<Locale, i18n>
 
 export type i18n = {
   connect: {
-    sidebar: {
-      heading: string
-      subheading: string
-      paragraph: string
+    selectingWallet: {
+      sidebar: {
+        heading: string
+        subheading: string
+        paragraph: string
+      }
+      primaryButton: string
     }
-    selecting: {
-      searchBar: string
-      button1: string
+    connectingWallet: {
+      sidebar: {
+        subheading: string
+        paragraph: string
+      }
+      mainText: string
+      primaryButton: string
+    }
+    connectedWallet: {
+      sidebar: {
+        subheading: string
+        paragraph: string
+      }
+      mainText: string
     }
   }
 }
