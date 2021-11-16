@@ -1,12 +1,13 @@
 <script lang="ts">
+  import type { WalletModule } from '@bn-onboard/types'
   import { connectWallet$, internalState$ } from '../../streams'
 
   import type {
     ConnectOptions,
-    WalletModule,
     WalletState,
     WalletWithLoadingIcon,
-    WalletWithLoadedIcon
+    WalletWithLoadedIcon,
+    i18n
   } from '../../types'
 
   import Modal from '../shared/Modal.svelte'
@@ -33,13 +34,7 @@
       ({ label }) => label.toLowerCase() === autoSelect.toLowerCase()
     )
 
-  const unsupportedInjectedWallet = walletModules.find(
-    ({ supported, type }) => !supported && type === 'injected'
-  )
-
-  // @TODO - Show warning that unsupported wallet has been detected
-
-  if (walletToAutoSelect && walletToAutoSelect.supported) {
+  if (walletToAutoSelect) {
     autoSelectWallet(walletToAutoSelect)
   } else {
     loadWalletsForSelection()
@@ -54,15 +49,13 @@
   }
 
   async function loadWalletsForSelection() {
-    wallets = walletModules
-      .filter(({ supported }) => supported)
-      .map(({ getIcon, getInterface, label }) => {
-        return {
-          label,
-          icon: getIcon(),
-          getInterface
-        }
-      })
+    wallets = walletModules.map(({ getIcon, getInterface, label }) => {
+      return {
+        label,
+        icon: getIcon(),
+        getInterface
+      }
+    })
 
     loading = false
   }
@@ -105,7 +98,7 @@
     ? 'selectingWallet'
     : !selectedWallet.accounts.length
     ? 'connectingWallet'
-    : 'connectedWallet'
+    : ('connectedWallet' as keyof i18n['connect'])
 </script>
 
 <style>

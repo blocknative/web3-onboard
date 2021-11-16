@@ -22,7 +22,7 @@ function injected(options: InjectedWalletOptions): WalletInit {
     const allWallets = [...wallets, ...standardWallets]
     const deduped = uniqBy(allWallets, ({ label }) => `${label}`)
 
-    const walletsWithSupportedFlag = deduped.map(wallet => {
+    const filteredWallets = deduped.filter(wallet => {
       const { label, platforms } = wallet
       const walletExclusions = exclude[label]
 
@@ -41,15 +41,12 @@ function injected(options: InjectedWalletOptions): WalletInit {
       const supportedWallet =
         !excludedWallet && !excludedDevice && !invalidPlatform
 
-      return {
-        ...wallet,
-        supported: !!supportedWallet
-      }
+      return supportedWallet
     })
 
     let removeMetaMask = false
 
-    const validWallets = walletsWithSupportedFlag.filter(
+    const validWallets = filteredWallets.filter(
       ({ injectedNamespace, checkProviderIdentity, label }) => {
         const provider = window[injectedNamespace] as CustomWindow['ethereum']
 
@@ -78,12 +75,10 @@ function injected(options: InjectedWalletOptions): WalletInit {
             metamask: moreThanOneWallet && removeMetaMask
           })
         )
-        .map(({ label, getIcon, getInterface, supported }) => ({
+        .map(({ label, getIcon, getInterface }) => ({
           label,
           getIcon,
-          getInterface,
-          supported,
-          type: 'injected'
+          getInterface
         }))
     }
 

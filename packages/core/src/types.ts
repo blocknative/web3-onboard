@@ -68,8 +68,7 @@ export interface Chain {
   token?: TokenSymbol // eg ETH, BNB, MATIC
 }
 
-export interface WalletWithLoadedIcon
-  extends Omit<WalletModule, 'getIcon' | 'supported' | 'type'> {
+export interface WalletWithLoadedIcon extends Omit<WalletModule, 'getIcon'> {
   icon: string
 }
 

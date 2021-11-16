@@ -43,14 +43,9 @@ export interface WalletModule {
    * @returns the wallet interface associated with the module
    */
   getInterface: () => Promise<WalletInterface>
-  supported: boolean
-  type: WalletModuleType
 }
 
-export type WalletModuleType = 'injected' | 'sdk' | 'hardware'
-
-export interface InjectedWalletModule
-  extends Omit<WalletModule, 'type' | 'supported'> {
+export interface InjectedWalletModule extends WalletModule {
   injectedNamespace: InjectedNameSpace
   checkProviderIdentity: (helpers: { provider: any; device: Device }) => boolean
   platforms: Platform[]
