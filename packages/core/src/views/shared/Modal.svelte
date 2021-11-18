@@ -1,5 +1,4 @@
 <script context="module">
-  import closeIcon from '../../icons/close'
   let scrollContainer
 
   export function modalAutoScroll(el) {
@@ -55,23 +54,6 @@
     overflow-y: auto;
     background: white;
   }
-
-  .close-button {
-    position: absolute;
-    top: -1.25rem;
-    right: -1.25rem;
-    cursor: pointer;
-    padding: 10.1px;
-    z-index: 1;
-    background: var(--onboard-white, var(--white));
-    border-radius: 40px;
-    box-shadow: var(--onboard-shadow-1, var(--shadow-1));
-  }
-
-  .close-icon {
-    width: 19.8px;
-    height: 19.8px;
-  }
 </style>
 
 <section transition:fade>
@@ -81,9 +63,6 @@
         <div class="modal">
           <slot />
         </div>
-      </div>
-      <div class="close-button" on:click={close}>
-        <div class="close-icon">{@html closeIcon}</div>
       </div>
     </div>
   </div>

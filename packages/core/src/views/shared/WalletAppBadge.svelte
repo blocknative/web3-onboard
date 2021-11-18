@@ -28,12 +28,19 @@
     box-sizing: border-box;
   }
 
+  .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
   .border-yellow {
     border: 1px solid var(--onboard-warning-500, var(--warning-500));
   }
 
   .border-gray {
-    border: 1px solid var(--onboard-gray-400, var(--gray-400));
+    border: 1px solid var(--onboard-gray-300, var(--gray-300));
   }
 
   .border-green {

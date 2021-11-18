@@ -29,13 +29,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 1rem;
   }
 
   .wallets-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 0.5rem;
-    padding: 1rem;
+    width: 100%;
   }
 
   .button-1 {

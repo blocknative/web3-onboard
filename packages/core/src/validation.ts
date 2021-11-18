@@ -72,12 +72,18 @@ const wallet = object({
   balance: object().pattern(/\w/, number())
 })
 
+const recommendedWallet = object({
+  name: string().required(),
+  url: string().uri().required()
+})
+
 const appMetadata = object({
   name: string().required(),
   description: string().required(),
   icon: string().required(),
   gettingStartedGuide: string(),
-  explore: string()
+  explore: string(),
+  recommendedInjectedWallets: array().items(recommendedWallet)
 })
 
 const walletModule = object({

@@ -5,6 +5,7 @@ import type connect from './connect'
 import type disconnect from './disconnect'
 import type { state } from './store'
 import type { addChains } from './store/actions'
+import type en from './i18n/en.json'
 
 import type {
   Device,
@@ -133,33 +134,7 @@ export type Locale = string
 
 export type i18nOptions = Record<Locale, i18n>
 
-export type i18n = {
-  connect: {
-    selectingWallet: {
-      sidebar: {
-        heading: string
-        subheading: string
-        paragraph: string
-      }
-      primaryButton: string
-    }
-    connectingWallet: {
-      sidebar: {
-        subheading: string
-        paragraph: string
-      }
-      mainText: string
-      primaryButton: string
-    }
-    connectedWallet: {
-      sidebar: {
-        subheading: string
-        paragraph: string
-      }
-      mainText: string
-    }
-  }
-}
+export type i18n = typeof en
 
 // ==== ACTIONS ==== //
 export type Action =

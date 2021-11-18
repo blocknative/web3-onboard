@@ -9,7 +9,7 @@
       // include custom injected wallet modules here
     ],
     exclude: {
-     // mapping of wallet label to exclusion here
+      'Detected Wallet': false
     }
   })
 
@@ -19,7 +19,11 @@
     appMetadata: {
       name: 'Blocknative',
       icon: blocknativeIcon,
-      description: 'Demo app for Onboard V2'
+      description: 'Demo app for Onboard V2',
+      recommendedInjectedWallets: [
+        { name: 'MetaMask', url: 'https://metamask.io' },
+        { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
+      ]
     }
   }
 
