@@ -26,6 +26,11 @@ async function setChain(chainId: string): Promise<boolean> {
     )
   }
 
+  // check if wallet is already connected to chainId
+  if (wallet.chain === chainId) {
+    return true
+  }
+
   try {
     await switchChain(wallet.provider, chainId)
     return true
