@@ -34,13 +34,13 @@ export type RequestPatch = {
   wallet_switchEthereumChain?:
     | ((
         request: EIP1193Provider['request'],
-        params: EIP3085Request['params']
+        params: EIP3326Request['params']
       ) => Promise<null>)
     | null
   wallet_addEthereumChain?:
     | ((
         request: EIP1193Provider['request'],
-        params: EIP3326Request['params']
+        params: EIP3085Request['params']
       ) => Promise<null>)
     | null
 }

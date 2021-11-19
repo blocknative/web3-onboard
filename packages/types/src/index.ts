@@ -217,7 +217,7 @@ export interface EIP3085Request {
 
 export interface EIP3326Request {
   method: 'wallet_switchEthereumChain'
-  params: { chainId: ChainId }[]
+  params: [{ chainId: ChainId }]
 }
 
 export type AddChainParams = {
@@ -283,7 +283,7 @@ export enum ProviderIdentityFlag {
   Binance = 'bbcSignTx',
   Bitpie = 'isBitpie',
   BlankWallet = 'isBlank',
-  Coinbase = 'isWalletLink',
+  Coinbase = 'isToshi',
   Detected = 'request',
   Dcent = 'isDcentWallet',
   Frame = 'isFrame',
