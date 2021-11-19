@@ -24,3 +24,4 @@ If you would like to test out the current functionality of V2 in a small browser
 - All wallet modules will now return a provider that has been patched so that it is compliant with the standards: EIP-1193, EIP-1102, EIP-3085 and EIP-3326. This will mean that app devs will not need to worry about the specifics of which wallet the user has selected to interact with it.
 - Multiple wallets, with multiple accounts can be connected at the same time
 - Simplified connection wallet flow via a single API call
+- App can be initialised with multiple networks and can switch between them

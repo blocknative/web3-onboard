@@ -9,7 +9,7 @@ import {
   ValidationResult
 } from 'joi'
 
-import type { WalletModule } from '@bn-onboard/types'
+import type { ChainId, WalletModule } from '@bn-onboard/types'
 
 import type {
   Chain,
@@ -145,4 +145,8 @@ export function validateDisconnectOptions(
 
 export function validateString(str: string): ValidateReturn {
   return validate(string().required(), str)
+}
+
+export function validateChainId(data: ChainId): ValidateReturn {
+  return validate(chainId, data)
 }

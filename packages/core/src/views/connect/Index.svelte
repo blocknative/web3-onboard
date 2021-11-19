@@ -166,7 +166,7 @@
               }
             })}
           </h4>
-          <div class="button-container">
+          <div on:click={close} class="button-container">
             <CloseButton />
           </div>
         </div>

@@ -8,7 +8,7 @@
   export let status: keyof i18n['connect']
 
   const { appMetadata } = internalState$.getValue()
-  const { icon, name = 'This dapp' } = appMetadata || {}
+  const { icon, name = 'This app' } = appMetadata || {}
 
   const defaultContent = en.connect[status].sidebar
   const { subheading, paragraph } = defaultContent
@@ -116,7 +116,7 @@
 
     <p class="description">
       {$_(`connect.${status}.sidebar.paragraph`, {
-        values: { dapp: name },
+        values: { app: name },
         default: paragraph
       })}
     </p>

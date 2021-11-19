@@ -1,12 +1,9 @@
 <script lang="ts">
+  import { fade } from 'svelte/transition'
   import infoIcon from '../../icons/info'
 </script>
 
 <style>
-  .outer-container {
-    padding: 1rem;
-  }
-
   .container {
     display: flex;
     justify-content: space-between;
@@ -33,14 +30,12 @@
   }
 </style>
 
-<div class="outer-container">
-  <div class="container">
-    <p>
-      <slot />
-    </p>
+<div in:fade class="container">
+  <p>
+    <slot />
+  </p>
 
-    <div class="icon">
-      {@html infoIcon}
-    </div>
+  <div class="icon">
+    {@html infoIcon}
   </div>
 </div>

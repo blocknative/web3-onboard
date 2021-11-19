@@ -13,7 +13,7 @@ export async function getBlocknative(chainId: ChainId): Promise<Blocknative> {
     const { default: BlocknativeSDK } = await import('bnc-sdk')
 
     sdkInstances[chainIdDecimal] = new BlocknativeSDK({
-      dappId: apiKey,
+      appId: apiKey,
       system: 'ethereum',
       networkId: chainIdDecimal
     })

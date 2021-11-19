@@ -57,8 +57,8 @@
 </style>
 
 <section transition:fade>
-  <div class="background">
-    <div class="relative">
+  <div on:click={close} class="background">
+    <div on:click|stopPropagation class="relative">
       <div class="modal-overflow">
         <div class="modal">
           <slot />

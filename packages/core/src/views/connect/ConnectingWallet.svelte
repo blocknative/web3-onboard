@@ -1,17 +1,19 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
   import { createEventDispatcher } from 'svelte'
+  import { take, takeUntil, timer } from 'rxjs'
 
   import { requestAccounts, trackWallet } from '../../provider'
   import { state } from '../../store'
   import { addWallet } from '../../store/actions'
-  import { internalState$ } from '../../streams'
+  import { internalState$, onDestroy$ } from '../../streams'
   import type { WalletState } from '../../types'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import PendingStatusIcon from '../shared/PendingStatusIcon.svelte'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
   import defaultAppIcon from '../../icons/default-app-icon'
   import en from '../../i18n/en.json'
+  import Warning from '../shared/Warning.svelte'
 
   export let selectedWallet: WalletState
 
@@ -27,6 +29,11 @@
   const { appMetadata } = internalState$.getValue()
 
   const dispatch = createEventDispatcher<{ connectionRejected: boolean }>()
+
+  // After 10 secs, if not connected, show hint to user
+  timer(15000)
+    .pipe(take(1), takeUntil(onDestroy$))
+    .subscribe(() => (connectionWarning = true))
 
   function walletAdded(label: WalletState['label']) {
     return !!state.get().wallets.find(wallet => wallet.label === label)
@@ -99,6 +106,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
     padding: 1rem;
     transition: background-color 100ms ease-in-out,
       border-color 100ms ease-in-out;
@@ -106,7 +114,6 @@
     background-color: var(--onboard-success-100, var(--success-100));
     border: 1px solid;
     border-color: var(--onboard-success-600, var(--success-600));
-    width: 441px;
     box-sizing: border-box;
   }
 
@@ -131,7 +138,7 @@
     cursor: pointer;
   }
 
-  .button-1 {
+  .onboard-button-primary {
     position: absolute;
     bottom: 1.5rem;
     cursor: pointer;
@@ -194,14 +201,22 @@
     {/if}
   </div>
 
-  <button on:click={unSelectWallet} class="button-1"
+  <button on:click={unSelectWallet} class="onboard-button-primary"
     >{$_('connect.connectingWallet.primaryButton', {
       default: en.connect.connectingWallet.primaryButton
     })}</button
   >
 </div>
 
-<!-- {#if connectionWarning}
-  <div>{connectingError}</div>
-  <button on:click={connect}>Try again</button>
-{/if} -->
+{#if connectionWarning}
+  <div style="padding: 0 1rem;">
+    <Warning
+      >{$_('connect.connectingWallet.warningText', {
+        default: en.connect.connectingWallet.warningText,
+        values: {
+          app: appMetadata?.name || 'This app'
+        }
+      })}</Warning
+    >
+  </div>
+{/if}

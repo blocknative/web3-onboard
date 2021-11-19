@@ -1,6 +1,8 @@
 <script lang="ts">
+  import { fade } from 'svelte/transition'
   export let size: number // px
-  export let icon: string // svg string
+  export let icon: Promise<string> | string // svg string
+
   export let border:
     | 'yellow'
     | 'gray'
@@ -17,6 +19,7 @@
     | 'green'
     | 'white'
     | 'custom' = 'white'
+
   export let customBackgroundColor: string = ''
   export let backgroundOpaque: boolean = false
 </script>
@@ -78,6 +81,24 @@
   .background-white {
     background: var(--onboard-white, var(--white));
   }
+
+  @keyframes pulse {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  .placeholder-icon {
+    width: 100%;
+    height: 100%;
+    background: var(--onboard-gray-100, var(--gray-100));
+    border-radius: 32px;
+    animation: pulse infinite 750ms alternate ease-in-out;
+  }
 </style>
 
 <div
@@ -98,8 +119,12 @@
     size / 6
   }px; width: ${size}px; height: ${size}px;`}
 >
-  <div class="icon">
-    {@html icon}
-  </div>
+  {#await icon}
+    <div class="placeholder-icon" />
+  {:then iconLoaded}
+    <div in:fade class="icon">
+      {@html iconLoaded}
+    </div>
+  {/await}
   <slot name="status" />
 </div>

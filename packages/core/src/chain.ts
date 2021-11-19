@@ -1,9 +1,17 @@
 import { addNewChain, switchChain } from './provider'
 import { state } from './store'
+import { switchChainModal$ } from './streams'
+import { validateChainId } from './validation'
 
 async function setChain(chainId: string): Promise<boolean> {
-  // @TODO - Validate chainId
+  const error = validateChainId(chainId)
+
+  if (error) {
+    throw error
+  }
+
   const { wallets, chains } = state.get()
+
   // validate a wallet is connected
   const [wallet] = wallets
   if (!wallet) {
@@ -22,22 +30,23 @@ async function setChain(chainId: string): Promise<boolean> {
     await switchChain(wallet.provider, chainId)
     return true
   } catch (error) {
-    console.warn(error)
     const { code } = error as { code: number }
 
     if (code === 4902) {
       // chain has not been added to wallet
       try {
-        addNewChain(wallet.provider, chain)
+        await addNewChain(wallet.provider, chain)
+        await switchChain(wallet.provider, chainId)
         return true
       } catch (error) {
-        // display notification to user to switch networks
+        // display notification to user to switch chain
+        switchChainModal$.next({ chain })
       }
     }
 
     if (code === 4200) {
       // method not supported
-      // display notification to user to switch networks
+      switchChainModal$.next({ chain })
     }
   }
 
