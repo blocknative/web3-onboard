@@ -1,13 +1,4 @@
-import {
-  number,
-  string,
-  object,
-  array,
-  function as joiFunction,
-  Schema,
-  any,
-  ValidationResult
-} from 'joi'
+import Joi from 'joi'
 
 import type { ChainId, WalletModule } from '@bn-onboard/types'
 
@@ -19,98 +10,98 @@ import type {
   DisconnectOptions
 } from './types'
 
-const chainId = string().pattern(/^0x[0-9a-fA-F]+$/)
+const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
 
-const unknownObject = object().unknown()
-const address = string().pattern(/^0x[a-fA-F0-9]{40}$/)
+const unknownObject = Joi.object().unknown()
+const address = Joi.string().pattern(/^0x[a-fA-F0-9]{40}$/)
 
-const chain = object({
-  id: string().required(),
-  rpcUrl: string().required(),
-  label: string(),
-  token: string()
+const chain = Joi.object({
+  id: Joi.string().required(),
+  rpcUrl: Joi.string().required(),
+  label: Joi.string(),
+  token: Joi.string()
 })
 
-const ens = any().allow(
-  object({
-    name: string().required(),
-    avatar: string(),
-    contentHash: any().allow(string(), null),
-    getText: joiFunction().arity(1).required()
+const ens = Joi.any().allow(
+  Joi.object({
+    name: Joi.string().required(),
+    avatar: Joi.string(),
+    contentHash: Joi.any().allow(Joi.string(), null),
+    getText: Joi.function().arity(1).required()
   }),
   null
 )
 
-const balance = any().allow(
-  object({
-    eth: number()
+const balance = Joi.any().allow(
+  Joi.object({
+    eth: Joi.number()
   }).unknown(),
   null
 )
 
 const account = {
-  address: string().required(),
+  address: Joi.string().required(),
   ens,
   balance
 }
 
-const chains = array().items(chain)
-const accounts = array().items(account)
+const chains = Joi.array().items(chain)
+const accounts = Joi.array().items(account)
 
-const wallet = object({
-  label: string(),
-  icon: string(),
+const wallet = Joi.object({
+  label: Joi.string(),
+  icon: Joi.string(),
   provider: unknownObject,
   accounts,
-  chain: string(),
-  ens: object({
-    name: string(),
-    avatar: string(),
-    contentHash: string(),
-    getText: joiFunction().arity(1)
+  chain: Joi.string(),
+  ens: Joi.object({
+    name: Joi.string(),
+    avatar: Joi.string(),
+    contentHash: Joi.string(),
+    getText: Joi.function().arity(1)
   }),
-  balance: object().pattern(/\w/, number())
+  balance: Joi.object().pattern(/\w/, Joi.number())
 })
 
-const recommendedWallet = object({
-  name: string().required(),
-  url: string().uri().required()
+const recommendedWallet = Joi.object({
+  name: Joi.string().required(),
+  url: Joi.string().uri().required()
 })
 
-const appMetadata = object({
-  name: string().required(),
-  description: string().required(),
-  icon: string().required(),
-  gettingStartedGuide: string(),
-  explore: string(),
-  recommendedInjectedWallets: array().items(recommendedWallet)
+const appMetadata = Joi.object({
+  name: Joi.string().required(),
+  description: Joi.string().required(),
+  icon: Joi.string().required(),
+  gettingStartedGuide: Joi.string(),
+  explore: Joi.string(),
+  recommendedInjectedWallets: Joi.array().items(recommendedWallet)
 })
 
-const walletModule = object({
-  label: string().required(),
-  getInfo: joiFunction().arity(1).required(),
-  getInterface: joiFunction().arity(1).required()
+const walletModule = Joi.object({
+  label: Joi.string().required(),
+  getInfo: Joi.function().arity(1).required(),
+  getInterface: Joi.function().arity(1).required()
 })
 
-const walletModules = array().items(joiFunction().arity(1)).required()
+const walletModules = Joi.array().items(Joi.function().arity(1)).required()
 
-const initOptions = object({
-  apiKey: string(),
+const initOptions = Joi.object({
   wallets: walletModules,
-  appMetadata: appMetadata
+  appMetadata: appMetadata,
+  i18n: Joi.object().unknown()
 })
 
-const connectOptions = object({
-  autoSelect: string()
+const connectOptions = Joi.object({
+  autoSelect: Joi.string()
 })
 
-const disconnectOptions = object({
-  label: string().required()
+const disconnectOptions = Joi.object({
+  label: Joi.string().required()
 }).required()
 
-type ValidateReturn = ValidationResult | null
+type ValidateReturn = Joi.ValidationResult | null
 
-function validate(validator: Schema, data: unknown): ValidateReturn {
+function validate(validator: Joi.Schema, data: unknown): ValidateReturn {
   const result = validator.validate(data)
   return result.error ? result : null
 }
@@ -144,7 +135,7 @@ export function validateDisconnectOptions(
 }
 
 export function validateString(str: string): ValidateReturn {
-  return validate(string().required(), str)
+  return validate(Joi.string().required(), str)
 }
 
 export function validateChainId(data: ChainId): ValidateReturn {
