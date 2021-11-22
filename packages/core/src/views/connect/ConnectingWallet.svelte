@@ -1,7 +1,7 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
   import { createEventDispatcher } from 'svelte'
-  import { take, takeUntil, timer } from 'rxjs'
+  import { Subject, switchMap, take, takeUntil, timer } from 'rxjs'
 
   import { requestAccounts, trackWallet } from '../../provider'
   import { state } from '../../store'
@@ -31,8 +31,13 @@
   const dispatch = createEventDispatcher<{ connectionRejected: boolean }>()
 
   // After 10 secs, if not connected, show hint to user
-  timer(15000)
-    .pipe(take(1), takeUntil(onDestroy$))
+  const startTimer$ = new Subject<void>()
+
+  startTimer$
+    .pipe(
+      switchMap(() => timer(15000)),
+      takeUntil(onDestroy$)
+    )
     .subscribe(() => (connectionWarning = true))
 
   function walletAdded(label: WalletState['label']) {
@@ -40,6 +45,7 @@
   }
 
   async function connect() {
+    startTimer$.next()
     dispatch('connectionRejected', false)
     connectionRejected = false
     connectionWarning = false
