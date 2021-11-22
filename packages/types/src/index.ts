@@ -258,13 +258,20 @@ export interface BinanceProvider extends EIP1193Provider {
 export enum InjectedNameSpace {
   Ethereum = 'ethereum',
   Binance = 'BinanceChain',
-  Web3 = 'web3'
+  Web3 = 'web3',
+  Arbitrum = 'arbitrum',
+  XFI = 'xfi'
 }
 
+//   Arbitrum = 'arbitrum'
 export interface CustomWindow extends Window {
   BinanceChain: BinanceProvider
   ethereum: InjectedProvider
   web3: ExternalProvider | MeetOneProvider
+  arbitrum: InjectedProvider
+  xfi: {
+    ethereum: InjectedProvider
+  }
 }
 
 export type InjectedProvider = ExternalProvider &
@@ -309,6 +316,7 @@ export enum ProviderLabel {
   Binance = 'Binance Smart Wallet',
   Bitpie = 'Bitpie',
   BlankWallet = 'BlankWallet',
+  Brave = "Brave Wallet",
   Coinbase = 'Coinbase Wallet',
   Dcent = "D'CENT",
   Detected = 'Detected Wallet',

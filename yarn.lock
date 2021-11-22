@@ -54,12 +54,6 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-"@bn-onboard/types@https://gitpkg.now.sh/blocknative/onboard/packages/types?feature/v2":
-  version "0.0.1"
-  resolved "https://gitpkg.now.sh/blocknative/onboard/packages/types?feature/v2#bf06e357b947f2d1b27788fce67c50829b177d77"
-  dependencies:
-    "@ethersproject/providers" "^5.5.0"
-
 "@concordance/react@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@concordance/react/-/react-2.0.0.tgz#aef913f27474c53731f4fd79cc2f54897de90fde"
@@ -6560,7 +6554,7 @@ signal-exit@^3.0.0, signal-exit@^3.0.2, signal-exit@^3.0.3:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.5.tgz#9e3e8cc0c75a99472b44321033a7702e7738252f"
   integrity sha512-KWcOiKeQj6ZyXx7zq4YxSMgHRlod4czeBQZrPb8OKcohcqAXShm7E20kEMle9WBt26hFcAf0qLOcp5zmY7kOqQ==
 
-sirv-cli@^1.0.0:
+sirv-cli@^1.0.14:
   version "1.0.14"
   resolved "https://registry.yarnpkg.com/sirv-cli/-/sirv-cli-1.0.14.tgz#4bc60421b3de9caea80ccd292b5004aca4ce3c81"
   integrity sha512-yyUTNr984ANKDloqepkYbBSqvx3buwYg2sQKPWjSU+IBia5loaoka2If8N9CMwt8AfP179cdEl7kYJ//iWJHjQ==

@@ -22,6 +22,7 @@
   "dependencies": {
     "@bn-onboard/common": "^0.0.1",
     "@bn-onboard/types": "^0.0.1",
+    "eventemitter3": "^4.0.7",
     "joi": "^17.4.2",
     "lodash.uniqby": "^4.7.0"
   }
