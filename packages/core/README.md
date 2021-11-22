@@ -9,9 +9,6 @@ import InjectedWallets from '@bn-onboard/injected-wallets'
 const injectedWallet = InjectedWallets()
 
 const onboard = Onboard({
-  // apiKey is used for Blocknative services such as
-  // transaction monitoring, balance watching, gas estimation
-  apiKey: '<API_KEY>',
   // wallet modules that you would like the user to be able to select from
   wallets: [injectedWallet],
   // additional metadata for app information

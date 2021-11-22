@@ -1,4 +1,3 @@
-import type Blocknative from 'bnc-sdk'
 import type { SvelteComponent } from 'svelte'
 import type setChain from './chain'
 import type connect from './connect'
@@ -16,7 +15,6 @@ import type {
 } from '@bn-onboard/types'
 
 export interface InitOptions {
-  apiKey?: string
   wallets: WalletInit[]
   appMetadata?: AppMetadata
   i18n?: i18nOptions
@@ -123,10 +121,8 @@ export interface AppState {
 export type InternalState = {
   svelteInstance: SvelteComponent | null
   walletModules: WalletModule[]
-  apiKey: string | null
   appMetadata: AppMetadata | null
   device: Device | null
-  sdkInstances: { [key: number]: Blocknative | null }
 }
 
 export type ValueOf<T> = T[keyof T]

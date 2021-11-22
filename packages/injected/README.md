@@ -43,7 +43,6 @@ const injectedWallet = injected({
 })
 
 const options = {
-  apiKey: 'c54e6c89-e4gb-5c94-cdfc-38cs5326g27t',
   wallets: [injectedWallet]
 }
 

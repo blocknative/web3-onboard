@@ -14,7 +14,6 @@
   })
 
   const options = {
-    apiKey: 'd65d5b97-f3fc-4d85-beed-29ba6709c14d',
     wallets: [injectedWallet],
     appMetadata: {
       name: 'Blocknative',
