@@ -19,12 +19,15 @@
   })
 
   const options = {
-    apiKey: 'd65d5b97-f3fc-4d85-beed-29ba6709c14d',
     wallets: [injectedWallet],
     appMetadata: {
       name: 'Blocknative',
       icon: blocknativeIcon,
-      description: 'Demo app for Onboard V2'
+      description: 'Demo app for Onboard V2',
+      recommendedInjectedWallets: [
+        { name: 'MetaMask', url: 'https://metamask.io' },
+        { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
+      ]
     }
   }
 
@@ -77,9 +80,17 @@
 
 <main>
   <button on:click={() => onboard.connectWallet()}>Connect Wallet</button>
-  <button on:click={() => onboard.setChain('0x1')}>Set Chain to Mainnet</button>
-  <button on:click={() => onboard.setChain('0x4')}>Set Chain to Rinkeby</button>
-  <button on:click={() => onboard.setChain('0x89')}>Set Chain to Matic</button>
+
+  {#if $wallets$.length}
+    <button on:click={() => onboard.setChain('0x1')}
+      >Set Chain to Mainnet</button
+    >
+    <button on:click={() => onboard.setChain('0x4')}
+      >Set Chain to Rinkeby</button
+    >
+    <button on:click={() => onboard.setChain('0x89')}>Set Chain to Matic</button
+    >
+  {/if}
 
   {#if $wallets$}
     {#each $wallets$ as { icon, label, accounts, chain }}

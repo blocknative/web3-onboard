@@ -22,7 +22,7 @@ function init(options: InitOptions): OnboardAPI {
     }
   }
 
-  const { wallets, appMetadata = null, apiKey = null, i18n } = options
+  const { wallets, appMetadata = null, i18n } = options
 
   initI18N(i18n)
 
@@ -50,12 +50,10 @@ function init(options: InitOptions): OnboardAPI {
   const app = mountApp()
 
   internalState$.next({
-    apiKey,
     appMetadata,
     svelteInstance: app,
     walletModules,
-    device,
-    sdkInstances: {}
+    device
   })
 
   return {
@@ -160,6 +158,7 @@ function mountApp() {
   
           /* SHADOWS */
           --shadow-1: 0px 4px 12px rgba(0, 0, 0, 0.1);
+          --shadow-2: inset 0px -1px 0px rgba(0, 0, 0, 0.1);
         }
   
       </style>

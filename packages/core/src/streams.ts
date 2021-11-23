@@ -5,7 +5,7 @@ import { onDestroy, onMount, beforeUpdate, afterUpdate } from 'svelte'
 import { share } from 'rxjs/operators'
 import { resetStore } from './store/actions'
 import { state } from './store'
-import type { WalletState, InternalState } from './types'
+import type { WalletState, InternalState, Chain } from './types'
 
 export const reset$ = new Subject<void>()
 export const disconnectWallet$ = new Subject<WalletState['label']>()
@@ -13,16 +13,18 @@ export const disconnectWallet$ = new Subject<WalletState['label']>()
 export const internalState$ = new BehaviorSubject<InternalState>({
   svelteInstance: null,
   walletModules: [],
-  apiKey: null,
   appMetadata: null,
-  device: null,
-  sdkInstances: {}
+  device: null
 })
 
 export const connectWallet$ = new BehaviorSubject<{
   autoSelect?: string
   inProgress: boolean
 }>({ inProgress: false })
+
+export const switchChainModal$ = new BehaviorSubject<null | {
+  chain: Chain
+}>(null)
 
 export const wallets$ = (
   state.select('wallets') as Observable<WalletState[]>

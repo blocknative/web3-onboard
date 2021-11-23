@@ -1,10 +1,11 @@
 <script lang="ts">
-  import { connectWallet$ } from '../streams'
+  import { connectWallet$, switchChainModal$ } from '../streams'
   import Connect from './connect/Index.svelte'
+  import SwitchChain from './chain/SwitchChain.svelte'
 </script>
 
 <style>
-  :global(.button-1) {
+  :global(.onboard-button-primary) {
     border-radius: 24px;
     background: var(--onboard-white, var(--white));
     padding: 0.5rem 1rem;
@@ -21,4 +22,8 @@
 
 {#if $connectWallet$.inProgress}
   <Connect options={$connectWallet$} />
+{/if}
+
+{#if $switchChainModal$}
+  <SwitchChain />
 {/if}

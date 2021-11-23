@@ -1,29 +1,42 @@
 {
   "connect": {
     "selectingWallet": {
+      "header": "Available Wallets",
       "sidebar": {
         "heading": "Get Started",
         "subheading": "Connect your wallet",
         "paragraph": "Connecting a crypto wallet is like “logging in” for an application. It will allow you to do things with the items in your wallet. Etc..."
       },
-      "primaryButton": "Show More"
+      "recommendedWalletsPart1": "{app} only supports",
+      "recommendedWalletsPart2": "on this platform. Please use/install one of the supported wallets to continue",
+      "installWallet": "You do not have any wallets installed that {app} supports, please contact for supported wallets"
     },
     "connectingWallet": {
+      "header": "{connectionRejected, select, false {Connecting to {wallet}...} other {Connection Rejected}}",
       "sidebar": {
         "subheading": "Login and Authorize Your Wallet...",
-        "paragraph": "This dapp requires access to your wallet, please login and authorize access to your MetaMask accounts to continue."
+        "paragraph": "This app requires access to your wallet, please login and authorize access to your MetaMask accounts to continue."
       },
       "mainText": "Connecting...",
+      "rejectedText": "Connection Rejected!",
+      "rejectedCTA": "Click here to try again",
+      "warningText": "{app} is waiting for you to connect your wallet, try manually connecting through your wallet menu",
       "primaryButton": "Back to wallets"
     },
     "connectedWallet": {
+      "header": "Connection Successful",
       "sidebar": {
-        "subheading": "Dapp Authorized",
-        "paragraph": "{dapp} is now connected to your wallet"
+        "subheading": "App Authorized",
+        "paragraph": "{app} is now connected to your wallet"
       },
       "mainText": "Connected"
     }
   },
-  "menu": {},
-  "shared": {}
+  "chain": {
+    "switch": {
+      "heading": "Switch Chain",
+      "paragraph1": "{app} requires that you switch your wallet to the {nextNetworkName} network to continue.",
+      "paragraph2": "*Some wallets may not support changing networks. If you can not change networks in your wallet you may consider switching to a different wallet."
+    }
+  }
 }

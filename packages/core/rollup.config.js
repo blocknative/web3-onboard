@@ -39,10 +39,8 @@ export default {
   ],
   external: [
     'ethers',
-    'bnc-sdk',
     'bowser',
     'joi',
-    'nanoid',
     'rxjs',
     'svelte-i18n',
     'lodash.merge',

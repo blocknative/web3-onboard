@@ -2,7 +2,7 @@
   import { fade } from 'svelte/transition'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
 
-  export let icon: string
+  export let icon: Promise<string>
   export let label: string
   export let onClick: () => void
   export let connected: boolean

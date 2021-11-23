@@ -1,10 +1,10 @@
-import type Blocknative from 'bnc-sdk'
 import type { SvelteComponent } from 'svelte'
 import type setChain from './chain'
 import type connect from './connect'
 import type disconnect from './disconnect'
 import type { state } from './store'
 import type { addChains } from './store/actions'
+import type en from './i18n/en.json'
 
 import type {
   Device,
@@ -15,7 +15,6 @@ import type {
 } from '@bn-onboard/types'
 
 export interface InitOptions {
-  apiKey?: string
   wallets: WalletInit[]
   appMetadata?: AppMetadata
   i18n?: i18nOptions
@@ -122,10 +121,8 @@ export interface AppState {
 export type InternalState = {
   svelteInstance: SvelteComponent | null
   walletModules: WalletModule[]
-  apiKey: string | null
   appMetadata: AppMetadata | null
   device: Device | null
-  sdkInstances: { [key: number]: Blocknative | null }
 }
 
 export type ValueOf<T> = T[keyof T]
@@ -133,33 +130,7 @@ export type Locale = string
 
 export type i18nOptions = Record<Locale, i18n>
 
-export type i18n = {
-  connect: {
-    selectingWallet: {
-      sidebar: {
-        heading: string
-        subheading: string
-        paragraph: string
-      }
-      primaryButton: string
-    }
-    connectingWallet: {
-      sidebar: {
-        subheading: string
-        paragraph: string
-      }
-      mainText: string
-      primaryButton: string
-    }
-    connectedWallet: {
-      sidebar: {
-        subheading: string
-        paragraph: string
-      }
-      mainText: string
-    }
-  }
-}
+export type i18n = typeof en
 
 // ==== ACTIONS ==== //
 export type Action =
