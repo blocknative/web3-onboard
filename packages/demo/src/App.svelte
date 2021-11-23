@@ -3,13 +3,18 @@
   import Onboard from '@bn-onboard/core'
   import injected from '@bn-onboard/injected-wallets'
   import blocknativeIcon from './blocknative-icon'
+  import VConsole from 'vconsole'
+
+  if (window.innerWidth < 700) {
+    new VConsole()
+  }
 
   const injectedWallet = injected({
     wallets: [
       // include custom injected wallet modules here
     ],
     exclude: {
-      'Detected Wallet': false
+      // mapping of wallet label to exclusion here
     }
   })
 

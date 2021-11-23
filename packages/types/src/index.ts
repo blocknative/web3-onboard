@@ -217,7 +217,7 @@ export interface EIP3085Request {
 
 export interface EIP3326Request {
   method: 'wallet_switchEthereumChain'
-  params: { chainId: ChainId }[]
+  params: [{ chainId: ChainId }]
 }
 
 export type AddChainParams = {
@@ -258,13 +258,20 @@ export interface BinanceProvider extends EIP1193Provider {
 export enum InjectedNameSpace {
   Ethereum = 'ethereum',
   Binance = 'BinanceChain',
-  Web3 = 'web3'
+  Web3 = 'web3',
+  Arbitrum = 'arbitrum',
+  XFI = 'xfi'
 }
 
+//   Arbitrum = 'arbitrum'
 export interface CustomWindow extends Window {
   BinanceChain: BinanceProvider
   ethereum: InjectedProvider
   web3: ExternalProvider | MeetOneProvider
+  arbitrum: InjectedProvider
+  xfi: {
+    ethereum: InjectedProvider
+  }
 }
 
 export type InjectedProvider = ExternalProvider &
@@ -283,7 +290,7 @@ export enum ProviderIdentityFlag {
   Binance = 'bbcSignTx',
   Bitpie = 'isBitpie',
   BlankWallet = 'isBlank',
-  Coinbase = 'isWalletLink',
+  Coinbase = 'isToshi',
   Detected = 'request',
   Dcent = 'isDcentWallet',
   Frame = 'isFrame',
@@ -309,6 +316,7 @@ export enum ProviderLabel {
   Binance = 'Binance Smart Wallet',
   Bitpie = 'Bitpie',
   BlankWallet = 'BlankWallet',
+  Brave = "Brave Wallet",
   Coinbase = 'Coinbase Wallet',
   Dcent = "D'CENT",
   Detected = 'Detected Wallet',
