@@ -1,4 +1,4 @@
-import { fromEvent, Observable } from 'rxjs'
+import { fromEvent, fromEventPattern, Observable } from 'rxjs'
 import { filter, takeUntil, withLatestFrom } from 'rxjs/operators'
 import partition from 'lodash.partition'
 
@@ -6,12 +6,15 @@ import type {
   ChainId,
   EIP1102Request,
   EIP1193Provider,
-  ProviderAccounts
+  ProviderAccounts,
+  Chain,
+  AccountsListener,
+  ChainListener
 } from '@bn-onboard/types'
 
 import { disconnectWallet$, wallets$ } from './streams'
 
-import type { Address, Balances, Chain, Ens, WalletState } from './types'
+import type { Address, Balances, Ens, WalletState } from './types'
 import { updateWallet } from './store/actions'
 import { providers, utils } from 'ethers'
 import { getRpcUrl, validEnsChain } from './utils'
@@ -37,7 +40,15 @@ export function accountsChanged(
     filter(wallet => wallet === label)
   )
 
-  return fromEvent<ProviderAccounts>(provider, 'accountsChanged').pipe(
+  const addHandler = (handler: AccountsListener) => {
+    provider.on('accountsChanged', handler)
+  }
+
+  const removeHandler = (handler: AccountsListener) => {
+    provider.removeListener('accountsChanged', handler)
+  }
+
+  return fromEventPattern<ProviderAccounts>(addHandler, removeHandler).pipe(
     takeUntil(disconnected$)
   )
 }
@@ -50,7 +61,15 @@ export function chainChanged(
     filter(wallet => wallet === label)
   )
 
-  return fromEvent<ChainId>(provider, 'chainChanged').pipe(
+  const addHandler = (handler: ChainListener) => {
+    provider.on('chainChanged', handler)
+  }
+
+  const removeHandler = (handler: ChainListener) => {
+    provider.removeListener('chainChanged', handler)
+  }
+
+  return fromEventPattern<ChainId>(addHandler, removeHandler).pipe(
     takeUntil(disconnected$)
   )
 }

@@ -3,6 +3,7 @@ import {
   ChainId,
   EIP1193Provider,
   ProviderAccounts,
+  ProviderEvent,
   ProviderInfo,
   ProviderMessage,
   SimpleEventEmitter
@@ -89,11 +90,8 @@ const patchEvents = (
   if (events) {
     // Override provider event implementations
     Object.entries(events).forEach(([method, implementation]) => {
-      const eventListener: SimpleEventEmitter[
-        | 'on'
-        | 'off'
-        | 'once'
-        | 'removeListener'] = provider[method].bind(provider)
+      const eventListener: SimpleEventEmitter['on' | 'removeListener'] =
+        provider[method].bind(provider)
 
       // Check if it is in this form - `{ on: { chainChanged: (chainId) => `${chainId}` } }`
       // If it is then we need to patch the specific event
@@ -101,7 +99,7 @@ const patchEvents = (
         // Overwrite the listener method (e.g. `on`) such that when called will create a listener
         // with our value transformer
         provider[method] = ((
-          event,
+          event: ProviderEvent,
           listener: (
             value:
               | string
@@ -113,30 +111,31 @@ const patchEvents = (
         ) => {
           if (implementation[event]) {
             // Wrap the callback value transformer in the original listener
-            eventListener(
-              event,
-              (
-                value:
-                  | ProviderInfo
-                  | ProviderRpcError
-                  | ProviderMessage
-                  | ChainId
-                  | ProviderAccounts
-              ) => {
-                if (value && event) {
-                  const transformedValue = implementation?.[event]?.(value)
-                  if (transformedValue) {
-                    listener(transformedValue)
-                  } else {
-                    listener(value)
+            eventListener &&
+              eventListener(
+                event,
+                (
+                  value:
+                    | ProviderInfo
+                    | ProviderRpcError
+                    | ProviderMessage
+                    | ChainId
+                    | ProviderAccounts
+                ) => {
+                  if (value && event) {
+                    const transformedValue = implementation?.[event]?.(value)
+                    if (transformedValue) {
+                      listener(transformedValue)
+                    } else {
+                      listener(value)
+                    }
                   }
                 }
-              }
-            )
+              )
           } else {
-            eventListener(event, listener)
+            eventListener && eventListener(event, listener)
           }
-        }) as SimpleEventEmitter['on' | 'off' | 'once' | 'removeListener']
+        }) as SimpleEventEmitter['on' | 'removeListener']
       } else {
         provider[method] = implementation
       }

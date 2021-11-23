@@ -32,7 +32,7 @@ const brave: InjectedWalletModule = {
   getIcon: async () => (await import('./icons/brave')).default,
   getInterface: async () => {
     const provider = window.ethereum
-    provider.off = (event, listener) => {}
+    provider.removeListener = (event, listener) => {}
     return {
       provider
     }
@@ -71,7 +71,7 @@ const binance: InjectedWalletModule = {
       wallet_switchEthereumChain: UNSUPPORTED_METHOD
     })
 
-    provider.off = (event, func) => {}
+    provider.removeListener = (event, func) => {}
 
     return {
       provider
@@ -89,7 +89,7 @@ const coinbase: InjectedWalletModule = {
   getInterface: async () => {
     const provider = window.ethereum as EIP1193Provider
     const addListener = provider.on.bind(provider)
-    provider.addListener = (event, func) => {
+    provider.on = (event, func) => {
       if (event === 'chainChanged') {
         addListener(event, chainId => {
           // @ts-ignore

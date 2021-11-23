@@ -25,6 +25,13 @@ export interface InjectedWalletOptions {
   exclude?: WalletExclusions
 }
 
+export interface WalletConnectOptions {
+  bridge?: string
+  qrcodeModalOptions?: {
+    mobileLinks: string[]
+  }
+}
+
 export type Device = {
   os: DeviceOS
   type: DeviceType
@@ -42,7 +49,11 @@ export interface WalletModule {
   /**
    * @returns the wallet interface associated with the module
    */
-  getInterface: () => Promise<WalletInterface>
+  getInterface: (helpers: GetInterfaceHelpers) => Promise<WalletInterface>
+}
+
+export type GetInterfaceHelpers = {
+  chains: Chain[]
 }
 
 export interface InjectedWalletModule extends WalletModule {
@@ -132,34 +143,7 @@ export interface SimpleEventEmitter {
       | ChainListener
       | AccountsListener
   ): void
-  addListener(
-    event: ProviderEvent,
-    listener:
-      | ConnectListener
-      | DisconnectListener
-      | MessageListener
-      | ChainListener
-      | AccountsListener
-  ): void
-  once(
-    event: ProviderEvent,
-    listener:
-      | ConnectListener
-      | DisconnectListener
-      | MessageListener
-      | ChainListener
-      | AccountsListener
-  ): void
   removeListener(
-    event: ProviderEvent,
-    listener:
-      | ConnectListener
-      | DisconnectListener
-      | MessageListener
-      | ChainListener
-      | AccountsListener
-  ): void
-  off(
     event: ProviderEvent,
     listener:
       | ConnectListener
@@ -249,7 +233,7 @@ export interface MeetOneProvider extends ExternalProvider {
   wallet?: string
 }
 
-export interface BinanceProvider extends EIP1193Provider {
+export type BinanceProvider = EIP1193Provider & {
   bbcSignTx: () => void
   requestAccounts: () => Promise<ProviderAccounts>
   isUnlocked: boolean
@@ -354,3 +338,12 @@ export enum ProviderRpcErrorCode {
   /** The Provider is not connected to the requested chain. */
   ChainDisconnected = '4901'
 }
+
+export interface Chain {
+  id: ChainId
+  rpcUrl: string
+  label?: string
+  token?: TokenSymbol // eg ETH, BNB, MATIC
+}
+
+export type TokenSymbol = string // eg ETH

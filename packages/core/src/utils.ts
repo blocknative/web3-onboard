@@ -2,12 +2,12 @@ import bowser from 'bowser'
 
 import type {
   ChainId,
+  Chain,
   Device,
   DeviceBrowser,
   DeviceOS,
   DeviceType
 } from '@bn-onboard/types'
-import type { Chain } from './types'
 
 export const noop = (): void => {}
 

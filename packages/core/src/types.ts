@@ -11,7 +11,9 @@ import type {
   WalletInit,
   ChainId,
   EIP1193Provider,
-  WalletModule
+  WalletModule,
+  Chain,
+  TokenSymbol
 } from '@bn-onboard/types'
 
 export interface InitOptions {
@@ -60,13 +62,6 @@ export interface DisconnectOptions {
   label: string // wallet name to disconnect
 }
 
-export interface Chain {
-  id: ChainId
-  rpcUrl: string
-  label?: string
-  token?: TokenSymbol // eg ETH, BNB, MATIC
-}
-
 export interface WalletWithLoadedIcon extends Omit<WalletModule, 'getIcon'> {
   icon: string
 }
@@ -86,7 +81,7 @@ export interface WalletState {
   icon: string // wallet icon svg string
   provider: EIP1193Provider
   accounts: Account[]
-  chain: Chain['id']
+  chain: ChainId
   instance?: unknown
 }
 
@@ -106,7 +101,6 @@ export interface Ens {
 }
 
 export type Address = string
-export type TokenSymbol = string // eg ETH
 
 export type AddChains = (chains: Chain[]) => void
 export interface OnboardActions {

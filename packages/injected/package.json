@@ -11,8 +11,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc -w",
-    "test": "ava",
-    "prepare": "yarn build"
+    "test": "ava"
   },
   "license": "MIT",
   "devDependencies": {

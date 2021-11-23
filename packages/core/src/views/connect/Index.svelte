@@ -87,7 +87,8 @@
       return
     }
 
-    const { provider } = await getInterface()
+    const { chains } = state.get()
+    const { provider } = await getInterface({ chains })
     const chain = await getChainId(provider)
 
     selectedWallet = {

@@ -2,6 +2,7 @@
   import { share } from 'rxjs/operators'
   import Onboard from '@bn-onboard/core'
   import injected from '@bn-onboard/injected-wallets'
+  // import walletConnect from '@bn-onboard/walletconnect'
   import blocknativeIcon from './blocknative-icon'
   import VConsole from 'vconsole'
 
@@ -9,7 +10,7 @@
     new VConsole()
   }
 
-  const injectedWallet = injected({
+  const injectedModule = injected({
     wallets: [
       // include custom injected wallet modules here
     ],
@@ -18,8 +19,13 @@
     }
   })
 
+  // const walletConnectModule = walletConnect()
+
   const options = {
-    wallets: [injectedWallet],
+    wallets: [
+      // walletConnectModule,
+      injectedModule
+    ],
     appMetadata: {
       name: 'Blocknative',
       icon: blocknativeIcon,

@@ -1,9 +1,7 @@
 import Joi from 'joi'
-
-import type { ChainId, WalletModule } from '@bn-onboard/types'
+import type { ChainId, WalletModule, Chain } from '@bn-onboard/types'
 
 import type {
-  Chain,
   InitOptions,
   WalletState,
   ConnectOptions,
@@ -83,7 +81,7 @@ const walletModule = Joi.object({
   getInterface: Joi.function().arity(1).required()
 })
 
-const walletModules = Joi.array().items(Joi.function().arity(1)).required()
+const walletModules = Joi.array().items(Joi.function()).required()
 
 const initOptions = Joi.object({
   wallets: walletModules,

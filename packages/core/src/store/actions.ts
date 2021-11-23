@@ -1,7 +1,8 @@
+import type { Chain } from '@bn-onboard/types'
+
 import type {
   AddChainsAction,
   AddWalletAction,
-  Chain,
   RemoveWalletAction,
   ResetStoreAction,
   UpdateWalletAction,

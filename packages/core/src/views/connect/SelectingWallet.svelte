@@ -1,9 +1,6 @@
 <script lang="ts">
-  import { _ } from 'svelte-i18n'
-
   import { state } from '../../store'
   import type { WalletWithLoadedIcon, WalletWithLoadingIcon } from '../../types'
-  import en from '../../i18n/en.json'
   import WalletButton from './WalletButton.svelte'
 
   export let wallets: WalletWithLoadingIcon[]
