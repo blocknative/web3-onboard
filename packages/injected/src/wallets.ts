@@ -27,12 +27,16 @@ const metamask: InjectedWalletModule = {
 const brave: InjectedWalletModule = {
   label: ProviderLabel.Brave,
   injectedNamespace: InjectedNameSpace.Ethereum,
-  checkProviderIdentity: ({ device, provider }) =>
-    device.browser.name === 'Opera' && !!provider?.emit,
-  getIcon: async () => (await import('./icons/metamask')).default,
-  getInterface: async () => ({
-    provider: window.ethereum as EIP1193Provider
-  }),
+  checkProviderIdentity: ({ provider }) =>
+    !!(navigator as any).brave && !!provider?.emit,
+  getIcon: async () => (await import('./icons/brave')).default,
+  getInterface: async () => {
+    const provider = window.ethereum
+    provider.off = (event, listener) => {}
+    return {
+      provider
+    }
+  },
   platforms: ['all']
 }
 
