@@ -392,7 +392,7 @@ export function networkName(id: number): string {
           137: 'polygon',
           288: 'boba-mainnet',
           250: 'fantom-opera',
-          4002: 'fantom-testnet',
+          4002: 'fantom-testnet'
         } as { [key: number]: string }
       )[id] || 'unknown'
 }
