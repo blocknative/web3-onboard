@@ -390,7 +390,9 @@ export function networkName(id: number): string {
           56: 'bsc',
           100: 'xdai',
           137: 'polygon',
-          288: 'boba-mainnet'
+          288: 'boba-mainnet',
+          250: 'fantom-opera',
+          4002: 'fantom-testnet'
         } as { [key: number]: string }
       )[id] || 'unknown'
 }
