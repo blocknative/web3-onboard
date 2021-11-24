@@ -1,5 +1,6 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
+  import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
 
   export let icon: Promise<string>
@@ -10,6 +11,7 @@
 
 <style>
   button {
+    position: relative;
     display: flex;
     align-items: center;
     padding: 1rem;
@@ -25,12 +27,22 @@
     background-color: var(--onboard-blue-100, var(--blue-100));
   }
 
+  button.connected {
+    border: 1px solid var(--onboard-success-200, var(--success-200));
+  }
+
+  button.connected:hover {
+    background-color: var(--onboard-success-100, var(--success-100));
+  }
   .name {
     margin-left: 0.5rem;
   }
 </style>
 
-<button in:fade on:click={onClick}>
-  <WalletAppBadge size={48} {icon} />
+<button class:connected in:fade on:click={onClick}>
+  <WalletAppBadge size={48} {icon} border={connected ? 'green' : 'blue'} />
   <span class="name">{label}</span>
+  {#if connected}
+    <SuccessStatusIcon size={16} bottom={null} right={16} />
+  {/if}
 </button>
