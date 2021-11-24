@@ -152,7 +152,7 @@ const status: InjectedWalletModule = {
   getIcon: async () => (await import('./icons/status')).default,
   getInterface: async () => {
     const provider = window.ethereum
-    provider.off = provider.removeListener
+
     return {
       provider
     }
@@ -291,7 +291,7 @@ const liquality: InjectedWalletModule = {
   getIcon: async () => (await import('./icons/liquality')).default,
   getInterface: async () => {
     const provider = window[InjectedNameSpace.Arbitrum]
-    provider.off = (event, func) => {}
+    provider.removeListener = (event, func) => {}
     return { provider }
   },
   platforms: ['desktop']
@@ -335,7 +335,7 @@ const ownbit: InjectedWalletModule = {
         ),
       wallet_switchEthereumChain: UNSUPPORTED_METHOD
     })
-    provider.off = (event, listener) => {}
+    provider.removeListener = (event, listener) => {}
     provider.on = (event, listener) => {}
     return { provider }
   },
@@ -362,7 +362,9 @@ const tokenpocket: InjectedWalletModule = {
         })
       }
     })
-    provider.addListener = emitter.on.bind(emitter)
+
+    provider.on = emitter.on.bind(emitter)
+
     return {
       provider
     }
