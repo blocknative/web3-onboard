@@ -1,17 +1,11 @@
-import { Observable, Subject, defer, BehaviorSubject } from 'rxjs'
-import {
-  take,
-  takeUntil,
-  withLatestFrom,
-  pluck,
-  share,
-  shareReplay
-} from 'rxjs/operators'
 import { onDestroy, onMount, beforeUpdate, afterUpdate } from 'svelte'
-import type { Chain } from '@bn-onboard/types'
+import { Observable, Subject, defer, BehaviorSubject } from 'rxjs'
+
+import { take, takeUntil, withLatestFrom, pluck, share } from 'rxjs/operators'
 
 import { resetStore } from './store/actions'
 import { state } from './store'
+import type { Chain } from '@bn-onboard/types'
 import type { WalletState, InternalState } from './types'
 
 export const reset$ = new Subject<void>()
