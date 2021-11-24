@@ -28,7 +28,7 @@ const brave: InjectedWalletModule = {
   label: ProviderLabel.Brave,
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
-    !!(navigator as any).brave && !!provider?.emit,
+    !!(navigator as any).brave && !!provider?._web3Ref,
   getIcon: async () => (await import('./icons/brave')).default,
   getInterface: async () => {
     const provider = window.ethereum
