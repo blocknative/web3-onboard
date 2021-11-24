@@ -40,6 +40,11 @@ export default {
     format: 'esm',
     dir: 'public/build/'
   },
+  onwarn: (warning, warn) => {
+    if (warning.code !== 'THIS_IS_UNDEFINED' && warning.code !== 'EVAL') {
+      warn(warning)
+    }
+  },
   plugins: [
     svelte({
       compilerOptions: {
