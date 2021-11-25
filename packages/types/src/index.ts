@@ -227,13 +227,14 @@ export interface EIP1193Provider extends SimpleEventEmitter {
   request(args: EIP3326Request): Promise<null>
   request(args: EIP3085Request): Promise<null>
   request(args: EthChainIdRequest): Promise<ChainId>
+  disconnect?(): void
 }
 
 export interface MeetOneProvider extends ExternalProvider {
   wallet?: string
 }
 
-export type BinanceProvider = EIP1193Provider & {
+export interface BinanceProvider extends EIP1193Provider {
   bbcSignTx: () => void
   requestAccounts: () => Promise<ProviderAccounts>
   isUnlocked: boolean
@@ -300,7 +301,7 @@ export enum ProviderLabel {
   Binance = 'Binance Smart Wallet',
   Bitpie = 'Bitpie',
   BlankWallet = 'BlankWallet',
-  Brave = "Brave Wallet",
+  Brave = 'Brave Wallet',
   Coinbase = 'Coinbase Wallet',
   Dcent = "D'CENT",
   Detected = 'Detected Wallet',
