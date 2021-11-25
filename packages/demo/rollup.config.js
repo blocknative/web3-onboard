@@ -1,7 +1,6 @@
 import svelte from 'rollup-plugin-svelte'
 import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
-import nodePolyfills from 'rollup-plugin-polyfill-node'
 import livereload from 'rollup-plugin-livereload'
 import { terser } from 'rollup-plugin-terser'
 import css from 'rollup-plugin-css-only'
@@ -36,7 +35,6 @@ function serve() {
 export default {
   input: 'src/main.js',
   output: {
-    sourcemap: true,
     format: 'esm',
     dir: 'public/build/'
   },
@@ -62,7 +60,6 @@ export default {
       dedupe: ['svelte']
     }),
     commonjs(),
-    nodePolyfills({ include: ['events'] }),
 
     // In dev mode, call `npm run start` once
     // the bundle has been generated
