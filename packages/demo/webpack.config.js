@@ -16,7 +16,8 @@ module.exports = {
   output: {
     path: path.join(__dirname, '/public/build'),
     filename: '[name].js',
-    chunkFilename: '[name].[id].js'
+    chunkFilename: '[name].[id].js',
+    publicPath: '/build/'
   },
   module: {
     rules: [
