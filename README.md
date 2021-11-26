@@ -11,10 +11,8 @@ If you would like to test out the current functionality of V2 in a small browser
 - Checkout the V2 feature branch: `git checkout feature/v2`
 - Install the dependencies: `yarn`
 - Setup the monorepo symlinks: `yarn setup`
-- Build the packages: `yarn build`
-- Change in to the demo package directory: `cd packages/demo`
-- Start the demo server: `yarn dev`
-- [View demo app in the browser](http://localhost:5000)
+- Run all packages in dev mode: `yarn dev`
+- [View demo app in the browser](http://localhost:8080)
 
 ## Phase 1 Design Goals
 
