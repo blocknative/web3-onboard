@@ -1,33 +1,26 @@
 import { InjectedWalletOptions } from '@bn-onboard/types'
 
-import {
-  string,
-  object,
-  array,
-  function as joiFunction,
-  Schema,
-  ValidationResult
-} from 'joi'
+import Joi from 'joi'
 
-const walletModule = object({
-  label: string().required(),
-  getIcon: joiFunction().arity(1).required(),
-  getInterface: joiFunction().arity(1).required(),
-  injectedNamespace: string().required(),
-  checkProviderIdentity: joiFunction().arity(1).required().required(),
-  platforms: array().items(string())
+const walletModule = Joi.object({
+  label: Joi.string().required(),
+  getIcon: Joi.function().arity(1).required(),
+  getInterface: Joi.function().arity(1).required(),
+  injectedNamespace: Joi.string().required(),
+  checkProviderIdentity: Joi.function().arity(1).required().required(),
+  platforms: Joi.array().items(Joi.string())
 })
 
-const wallets = array().items(walletModule)
-const exclusions = object().pattern(/\w/, string())
-const walletOptions = object({
+const wallets = Joi.array().items(walletModule)
+const exclusions = Joi.object().pattern(/\w/, Joi.string())
+const walletOptions = Joi.object({
   wallets,
   exclusions
 })
 
-type ValidateReturn = ValidationResult | null
+type ValidateReturn = Joi.ValidationResult | null
 
-const validate = (validator: Schema, data: unknown): ValidateReturn => {
+const validate = (validator: Joi.Schema, data: unknown): ValidateReturn => {
   const result = validator.validate(data)
   return result.error ? result : null
 }
