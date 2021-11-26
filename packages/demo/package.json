@@ -14,7 +14,7 @@
   "dependencies": {
     "@bn-onboard/core": "^0.0.1",
     "@bn-onboard/injected-wallets": "^0.0.1",
-    "@bn-onboard/walletconnect": "0.0.1",
+    "@bn-onboard/walletconnect-v1": "0.0.1",
     "rxjs": "^7.4.0",
     "vconsole": "^3.9.5"
   },

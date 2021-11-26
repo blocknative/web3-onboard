@@ -6,10 +6,10 @@ import {
 
 type RPCMapping = { [key: number]: string }
 
-function walletConnect(options?: WalletConnectOptions): WalletInit {
+function walletConnect(options: WalletConnectOptions): WalletInit {
   // validate options
 
-  const { bridge, qrcodeModalOptions } = options || {}
+  const { bridge, qrcodeModalOptions, apiKey } = options
 
   return () => {
     return {

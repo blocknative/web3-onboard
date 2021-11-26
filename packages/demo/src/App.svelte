@@ -3,6 +3,7 @@
   import Onboard from '@bn-onboard/core'
   import injected from '@bn-onboard/injected-wallets'
   // import walletConnect from '@bn-onboard/walletconnect'
+  import portis from '@bn-onboard/portis'
   import blocknativeIcon from './blocknative-icon'
   import VConsole from 'vconsole'
 
@@ -20,10 +21,14 @@
   })
 
   // const walletConnectModule = walletConnect()
+  const portisModule = portis({
+    apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
+  })
 
   const options = {
     wallets: [
       // walletConnectModule,
+      portisModule,
       injectedModule
     ],
     appMetadata: {

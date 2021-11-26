@@ -25,7 +25,11 @@ export interface InjectedWalletOptions {
   exclude?: WalletExclusions
 }
 
-export interface WalletConnectOptions {
+export interface APIKey {
+  apiKey: string
+}
+
+export interface WalletConnectOptions extends APIKey {
   bridge?: string
   qrcodeModalOptions?: {
     mobileLinks: string[]
