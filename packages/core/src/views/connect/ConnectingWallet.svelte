@@ -2,6 +2,7 @@
   import { _ } from 'svelte-i18n'
   import { createEventDispatcher } from 'svelte'
   import { Subject, switchMap, take, takeUntil, timer } from 'rxjs'
+  import { ErrorCodes } from '@bn-onboard/common'
 
   import { requestAccounts, trackWallet } from '../../provider'
   import { state } from '../../store'
@@ -76,15 +77,18 @@
 
       connectionWarning = false
     } catch (error) {
+      console.log({ error })
       const { code } = error as { code: number; message: string }
 
-      if (code === 4001) {
+      // user rejected account access
+      if (code === ErrorCodes.ACCOUNT_ACCESS_REJECTED) {
         connectionRejected = true
         dispatch('connectionRejected', true)
         return
       }
 
-      if (code === -32002) {
+      // account access has already been requested and is awaiting approval
+      if (code === ErrorCodes.ACCOUNT_ACCESS_ALREADY_REQUESTED) {
         // show warning message that the user needs to connect to wallet
         connectionWarning = true
 
