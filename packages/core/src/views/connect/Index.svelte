@@ -1,6 +1,8 @@
 <script lang="ts">
   import type { WalletModule } from '@bn-onboard/types'
   import { _ } from 'svelte-i18n'
+  import { BigNumber } from 'ethers'
+  import EventEmitter from 'eventemitter3'
 
   import type {
     ConnectOptions,
@@ -88,7 +90,7 @@
     }
 
     const { chains } = state.get()
-    const { provider } = await getInterface({ chains })
+    const { provider } = await getInterface({ chains, BigNumber, EventEmitter })
     const chain = await getChainId(provider)
 
     selectedWallet = {

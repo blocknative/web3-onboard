@@ -1,4 +1,6 @@
 import type { ExternalProvider } from '@ethersproject/providers'
+import { ethers } from 'ethers'
+import EventEmitter from 'eventemitter3'
 
 /**
  * A method that takes `WalletHelpers` and returns an initialised `WalletModule` or array of `WalletModule`s.
@@ -58,6 +60,8 @@ export interface WalletModule {
 
 export type GetInterfaceHelpers = {
   chains: Chain[]
+  BigNumber: typeof ethers.BigNumber
+  EventEmitter: typeof EventEmitter
 }
 
 export interface InjectedWalletModule extends WalletModule {
