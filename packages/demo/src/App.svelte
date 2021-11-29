@@ -4,6 +4,7 @@
   import injected from '@bn-onboard/injected-wallets'
   // import walletConnect from '@bn-onboard/walletconnect'
   import portis from '@bn-onboard/portis'
+  import fortmatic from '@bn-onboard/fortmatic'
   import blocknativeIcon from './blocknative-icon'
   import VConsole from 'vconsole'
 
@@ -25,9 +26,14 @@
     apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
   })
 
+  const fortmaticModule = fortmatic({
+    apiKey: 'pk_test_886ADCAB855632AA'
+  })
+
   const options = {
     wallets: [
       // walletConnectModule,
+      fortmaticModule,
       portisModule,
       injectedModule
     ],
