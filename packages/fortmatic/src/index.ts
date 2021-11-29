@@ -4,15 +4,8 @@ import {
   ProviderRpcError
 } from '@bn-onboard/common'
 
-import {
-  WalletInit,
-  APIKey,
-  EIP1193Provider,
-  WalletInterface,
-  GetInterfaceHelpers
-} from '@bn-onboard/types'
-import { FmProvider } from 'fortmatic/dist/cjs/src/core/fm-provider'
-import { WidgetMode } from 'fortmatic/dist/cjs/src/core/sdk'
+import { WalletInit, APIKey, EIP1193Provider } from '@bn-onboard/types'
+
 import Joi from 'joi'
 
 const validation = Joi.object({ apiKey: Joi.string().required() }).required()
