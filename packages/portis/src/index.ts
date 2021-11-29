@@ -1,8 +1,12 @@
 import { createEIP1193Provider } from '@bn-onboard/common'
 import { WalletInit, APIKey } from '@bn-onboard/types'
+import Joi from 'joi'
+
+const validation = Joi.object({ apiKey: Joi.string().required() }).required()
 
 function portis(options: APIKey): WalletInit {
-  // validate options
+  const { error } = validation.validate(options)
+  if (error) throw error
 
   const { apiKey } = options
 
@@ -39,7 +43,8 @@ function portis(options: APIKey): WalletInit {
         })
 
         return {
-          provider
+          provider,
+          instance
         }
       }
     }
