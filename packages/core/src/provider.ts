@@ -32,13 +32,11 @@ export function getChainId(provider: EIP1193Provider): Promise<string> {
   return provider.request({ method: 'eth_chainId' }) as Promise<string>
 }
 
-export function accountsChanged(
-  provider: EIP1193Provider,
-  label: WalletState['label']
-): Observable<ProviderAccounts> {
-  const disconnected$ = disconnectWallet$.pipe(
-    filter(wallet => wallet === label)
-  )
+export function accountsChanged(args: {
+  provider: EIP1193Provider
+  disconnected$: Observable<string>
+}): Observable<ProviderAccounts> {
+  const { provider, disconnected$ } = args
 
   const addHandler = (handler: AccountsListener) => {
     provider.on('accountsChanged', handler)
@@ -53,14 +51,11 @@ export function accountsChanged(
   )
 }
 
-export function chainChanged(
-  provider: EIP1193Provider,
-  label: WalletState['label']
-): Observable<ChainId> {
-  const disconnected$ = disconnectWallet$.pipe(
-    filter(wallet => wallet === label)
-  )
-
+export function chainChanged(args: {
+  provider: EIP1193Provider
+  disconnected$: Observable<string>
+}): Observable<ChainId> {
+  const { provider, disconnected$ } = args
   const addHandler = (handler: ChainListener) => {
     provider.on('chainChanged', handler)
   }
@@ -78,7 +73,12 @@ export function trackWallet(
   provider: EIP1193Provider,
   label: WalletState['label']
 ): void {
-  accountsChanged(provider, label)
+  const disconnected$ = disconnectWallet$.pipe(
+    filter(wallet => wallet === label)
+  )
+
+  // listen for accounts change
+  accountsChanged({ provider, disconnected$ })
     .pipe(withLatestFrom(wallets$))
     .subscribe({
       complete: () =>
@@ -148,7 +148,8 @@ export function trackWallet(
       }
     })
 
-  chainChanged(provider, label)
+  // listen for chain changed
+  chainChanged({ provider, disconnected$ })
     .pipe(withLatestFrom(wallets$))
     .subscribe({
       complete: () =>
@@ -198,6 +199,10 @@ export function trackWallet(
         })
       }
     })
+
+  disconnected$.subscribe(() => {
+    provider.disconnect && provider.disconnect()
+  })
 }
 
 export async function getEns(
