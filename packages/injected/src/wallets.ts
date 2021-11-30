@@ -2,7 +2,8 @@ import {
   CustomWindow,
   EIP1193Provider,
   InjectedWalletModule,
-  InjectedNameSpace
+  InjectedNameSpace,
+  ChainListener
 } from '@bn-onboard/types'
 
 import { ProviderIdentityFlag, ProviderLabel } from '@bn-onboard/types'
@@ -92,8 +93,8 @@ const coinbase: InjectedWalletModule = {
     provider.on = (event, func) => {
       if (event === 'chainChanged') {
         addListener(event, chainId => {
-          // @ts-ignore
-          func(`0x${parseInt(chainId).toString(16)}`)
+          const cb = func as ChainListener
+          cb(`0x${parseInt(chainId).toString(16)}`)
         })
       }
     }
