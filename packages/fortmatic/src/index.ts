@@ -15,7 +15,7 @@ function fortmatic(options: APIKey): WalletInit {
   if (error) throw error
 
   const { apiKey } = options
-  // @ts-ignore
+
   return () => {
     return {
       label: 'Fortmatic',
@@ -31,7 +31,7 @@ function fortmatic(options: APIKey): WalletInit {
         })
 
         let fortmaticProvider = instance.getProvider()
-        let provider
+        let provider: EIP1193Provider
 
         function patchProvider(): EIP1193Provider {
           provider = createEIP1193Provider(fortmaticProvider, {
@@ -82,11 +82,12 @@ function fortmatic(options: APIKey): WalletInit {
           })
 
           provider.on = emitter.on.bind(emitter)
+          provider.disconnect = () => instance.user.logout()
 
           return provider
         }
 
-        patchProvider()
+        provider = patchProvider()
 
         return {
           provider,
