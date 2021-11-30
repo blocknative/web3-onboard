@@ -1,10 +1,11 @@
 <script>
   import { share } from 'rxjs/operators'
   import Onboard from '@bn-onboard/core'
-  import injected from '@bn-onboard/injected-wallets'
+  import injectedModule from '@bn-onboard/injected-wallets'
   // import walletConnect from '@bn-onboard/walletconnect'
-  import portis from '@bn-onboard/portis'
-  import fortmatic from '@bn-onboard/fortmatic'
+  import portisModule from '@bn-onboard/portis'
+  import fortmaticModule from '@bn-onboard/fortmatic'
+  import torusModule from '@bn-onboard/torus'
   import blocknativeIcon from './blocknative-icon'
   import VConsole from 'vconsole'
 
@@ -12,7 +13,7 @@
     new VConsole()
   }
 
-  const injectedModule = injected({
+  const injected = injectedModule({
     wallets: [
       // include custom injected wallet modules here
     ],
@@ -22,20 +23,23 @@
   })
 
   // const walletConnectModule = walletConnect()
-  const portisModule = portis({
+  const portis = portisModule({
     apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
   })
 
-  const fortmaticModule = fortmatic({
+  const fortmatic = fortmaticModule({
     apiKey: 'pk_test_886ADCAB855632AA'
   })
+
+  const torus = torusModule()
 
   const options = {
     wallets: [
       // walletConnectModule,
-      fortmaticModule,
-      portisModule,
-      injectedModule
+      injected,
+      fortmatic,
+      portis,
+      torus
     ],
     appMetadata: {
       name: 'Blocknative',
