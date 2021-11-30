@@ -27,11 +27,7 @@ import { ProviderRpcError } from './errors'
  */
 export const createEIP1193Provider = (
   provider: any,
-  requestPatch?: RequestPatch,
-  events?: Record<
-    keyof SimpleEventEmitter,
-    EventCallback | EIP1193Provider['on']
-  >
+  requestPatch?: RequestPatch
 ): EIP1193Provider => {
   let baseRequest: any
   if (provider.request) {
@@ -61,86 +57,7 @@ export const createEIP1193Provider = (
   }
   provider.request = request
 
-  patchEvents(provider, events)
-
   return provider
-}
-/**
- *
- * Example:
- * ```typescript
- * {
- *  // Override the listener completely
- *  on: () => {},
- *  // Only transform the value for a particular event
- *  // The return value gets passed to original listener
- *  on: { chainChanged: (chainId) => `${chainId}` }
- * }
- * ```
- * @param provider
- * @param events
- */
-const patchEvents = (
-  provider: any,
-  events?: Record<
-    keyof SimpleEventEmitter,
-    EventCallback | EIP1193Provider['on']
-  >
-) => {
-  if (events) {
-    // Override provider event implementations
-    Object.entries(events).forEach(([method, implementation]) => {
-      const eventListener: SimpleEventEmitter['on' | 'removeListener'] =
-        provider[method].bind(provider)
-
-      // Check if it is in this form - `{ on: { chainChanged: (chainId) => `${chainId}` } }`
-      // If it is then we need to patch the specific event
-      if (typeof implementation === 'object') {
-        // Overwrite the listener method (e.g. `on`) such that when called will create a listener
-        // with our value transformer
-        provider[method] = ((
-          event: ProviderEvent,
-          listener: (
-            value:
-              | string
-              | ProviderRpcError
-              | ProviderInfo
-              | ProviderMessage
-              | ProviderAccounts
-          ) => void
-        ) => {
-          if (implementation[event]) {
-            // Wrap the callback value transformer in the original listener
-            eventListener &&
-              eventListener(
-                event,
-                (
-                  value:
-                    | ProviderInfo
-                    | ProviderRpcError
-                    | ProviderMessage
-                    | ChainId
-                    | ProviderAccounts
-                ) => {
-                  if (value && event) {
-                    const transformedValue = implementation?.[event]?.(value)
-                    if (transformedValue) {
-                      listener(transformedValue)
-                    } else {
-                      listener(value)
-                    }
-                  }
-                }
-              )
-          } else {
-            eventListener && eventListener(event, listener)
-          }
-        }) as SimpleEventEmitter['on' | 'removeListener']
-      } else {
-        provider[method] = implementation
-      }
-    })
-  }
 }
 interface JsonRpcResponse {
   id: string | undefined
