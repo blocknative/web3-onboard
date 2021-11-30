@@ -1,5 +1,6 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const path = require('path')
+const webpack = require('webpack')
 
 const mode = process.env.NODE_ENV || 'development'
 const prod = mode === 'production'
@@ -8,7 +9,16 @@ module.exports = {
   entry: './src/main.js',
   resolve: {
     alias: {
-      svelte: path.dirname(require.resolve('svelte/package.json'))
+      svelte: path.dirname(require.resolve('svelte/package.json')),
+      assert: 'assert',
+      buffer: 'buffer',
+      crypto: 'crypto-browserify',
+      http: 'stream-http',
+      https: 'https-browserify',
+      os: 'os-browserify/browser',
+      process: 'process/browser',
+      stream: 'stream-browserify',
+      util: 'util'
     },
     extensions: ['.mjs', '.js', '.svelte'],
     mainFields: ['svelte', 'browser', 'module', 'main']
@@ -51,6 +61,10 @@ module.exports = {
   plugins: [
     new MiniCssExtractPlugin({
       filename: '[name].css'
+    }),
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+      Buffer: ['buffer', 'Buffer']
     })
   ],
   devtool: prod ? false : 'source-map',
