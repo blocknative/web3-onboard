@@ -309,6 +309,10 @@ export function getProviderName(provider: any): string | undefined {
     return 'XDEFI'
   }
 
+  if (provider.isTally) {
+    return 'Tally'
+  }
+
   if (provider.isFrame) {
     return 'Frame'
   }
