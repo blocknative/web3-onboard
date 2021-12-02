@@ -9,6 +9,7 @@ import { getProviderName } from '../../utilities'
 // wallets that qualify for default wallets need to have no
 // init parameters that are required for full functionality
 const desktopDefaultWalletNames = [
+  'tally',
   'metamask',
   'binance',
   'frame',
@@ -148,6 +149,8 @@ function getModule(name: string): Promise<{
       }
     case 'meetone':
       return import('./wallets/meetone')
+    case 'tally':
+      return import('./wallets/tally')
     case 'metamask':
       return import('./wallets/metamask')
     case 'portis':
