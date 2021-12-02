@@ -27,7 +27,7 @@
 
   export let options: ConnectOptions
 
-  const { walletModules } = internalState$.getValue()
+  const { walletModules, appMetadata } = internalState$.getValue()
   const { autoSelect } = options
 
   let loading = true
@@ -90,7 +90,14 @@
     }
 
     const { chains } = state.get()
-    const { provider } = await getInterface({ chains, BigNumber, EventEmitter })
+
+    const { provider } = await getInterface({
+      chains,
+      BigNumber,
+      EventEmitter,
+      appMetadata
+    })
+
     const chain = await getChainId(provider)
 
     selectedWallet = {

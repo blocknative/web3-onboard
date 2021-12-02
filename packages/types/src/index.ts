@@ -2,6 +2,31 @@ import type { ExternalProvider } from '@ethersproject/providers'
 import { ethers } from 'ethers'
 import EventEmitter from 'eventemitter3'
 
+export interface AppMetadata {
+  /* App name */
+  name: string
+
+  /* SVG icon string, with height set to 100% */
+  icon: string
+
+  /* Description of app*/
+  description?: string
+
+  /* Url to a getting started guide for app */
+  gettingStartedGuide?: string
+
+  /* Url that points to more information about app */
+  explore?: string
+
+  /** When no injected wallets detected, recommend the user to install some*/
+  recommendedInjectedWallets?: RecommendedInjectedWallets[]
+}
+
+export type RecommendedInjectedWallets = {
+  name: string
+  url: string
+}
+
 /**
  * A method that takes `WalletHelpers` and returns an initialised `WalletModule` or array of `WalletModule`s.
  */
@@ -60,6 +85,7 @@ export interface WalletModule {
 
 export type GetInterfaceHelpers = {
   chains: Chain[]
+  appMetadata: AppMetadata | null
   BigNumber: typeof ethers.BigNumber
   EventEmitter: typeof EventEmitter
 }

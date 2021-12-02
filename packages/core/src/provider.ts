@@ -201,6 +201,7 @@ export function trackWallet(
     })
 
   disconnected$.subscribe(() => {
+    console.log('calling disconnect', provider.disconnect)
     provider.disconnect && provider.disconnect()
   })
 }

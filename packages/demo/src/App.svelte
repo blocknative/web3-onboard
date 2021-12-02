@@ -3,6 +3,7 @@
   import Onboard from '@bn-onboard/core'
   import injectedModule from '@bn-onboard/injected-wallets'
   // import walletConnect from '@bn-onboard/walletconnect'
+  import walletLinkModule from '@bn-onboard/wallet-link'
   import portisModule from '@bn-onboard/portis'
   import fortmaticModule from '@bn-onboard/fortmatic'
   import torusModule from '@bn-onboard/torus'
@@ -22,6 +23,8 @@
     }
   })
 
+  const walletLink = walletLinkModule()
+
   // const walletConnectModule = walletConnect()
   const portis = portisModule({
     apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
@@ -36,6 +39,7 @@
   const options = {
     wallets: [
       // walletConnectModule,
+      walletLink,
       injected,
       fortmatic,
       portis,

@@ -32,7 +32,7 @@ function torus(options: TorusOptions = {}): WalletInit {
         const [chain] = chains
         const { default: Torus } = await import('@toruslabs/torus-embed')
 
-        const instance = new Torus({
+        let instance = new Torus({
           buttonPosition,
           modalZIndex,
           apiKey
@@ -62,6 +62,7 @@ function torus(options: TorusOptions = {}): WalletInit {
           on(event, val => {
             if (event === 'chainChanged') {
               listener(`0x${(val as number).toString(16)}`)
+              return
             }
 
             listener(val)
@@ -86,21 +87,10 @@ function torus(options: TorusOptions = {}): WalletInit {
             const chain = chains.find(({ id }) => id === params[0].chainId)
             if (!chain) throw new Error('chain must be set before switching')
 
-            // re-instantiate instance with new network
-            await instance.init({
-              buildEnv,
-              enableLogging,
-              network: {
-                host: chain.rpcUrl,
-                chainId: parseInt(chain.id, 10),
-                networkName: chain.label
-              },
-              showTorusButton: showTorusButton,
-              loginConfig,
-              integrity,
-              whiteLabel,
-              skipTKey,
-              useLocalStorage
+            await instance.setProvider({
+              host: chain.rpcUrl,
+              chainId: parseInt(chain.id, 10),
+              networkName: chain.label
             })
 
             return null

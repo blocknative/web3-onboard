@@ -1,4 +1,5 @@
 import type { SvelteComponent } from 'svelte'
+import type { AppMetadata } from '@bn-onboard/types'
 import type setChain from './chain'
 import type connect from './connect'
 import type disconnect from './disconnect'
@@ -20,31 +21,6 @@ export interface InitOptions {
   wallets: WalletInit[]
   appMetadata?: AppMetadata
   i18n?: i18nOptions
-}
-
-export interface AppMetadata {
-  /* App name */
-  name: string
-
-  /* SVG icon string, with height set to 100% */
-  icon: string
-
-  /* Description of app*/
-  description?: string
-
-  /* Url to a getting started guide for app */
-  gettingStartedGuide?: string
-
-  /* Url that points to more information about app */
-  explore?: string
-
-  /** When no injected wallets detected, recommend the user to install some*/
-  recommendedInjectedWallets?: RecommendedInjectedWallets[]
-}
-
-export type RecommendedInjectedWallets = {
-  name: string
-  url: string
 }
 
 export interface OnboardAPI {
