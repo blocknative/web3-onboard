@@ -27,7 +27,7 @@ jobs:
       - run: yarn
       - run: yarn build
       - run: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
-      - run: npm publish --access public
+      - run: npm publish --dry-run
   deploy_prod:
     docker:
       - image: circleci/node:12-browsers
