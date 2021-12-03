@@ -26,8 +26,7 @@ jobs:
       - run: sudo apt update && sudo apt install awscli
       - run: yarn
       - run: yarn build
-      - run: sudo npm i -g npm-cli-login
-      - run: NPM_USER=$NPM_USERNAME NPM_EMAIL=$NPM_EMAIL NPM_PASS=$NPM_PASSWORD npm-cli-login
+      - run: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
       - run: npm publish --dry-run
   deploy_prod:
     docker:
@@ -38,9 +37,8 @@ jobs:
       - run: sudo apt update && sudo apt install awscli
       - run: yarn
       - run: yarn build
-      - run: sudo npm i -g add npm-cli-login
-      - run: NPM_USER=$NPM_USERNAME NPM_EMAIL=$NPM_EMAIL NPM_PASS=$NPM_PASSWORD npm-cli-login
-      - run: npm publish
+      - run: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
+      - run: npm publish --access public
   deploy_demo:
     docker:
       - image: circleci/node:12-browsers
