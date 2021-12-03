@@ -26,7 +26,6 @@ jobs:
       - run: sudo apt update && sudo apt install awscli
       - run: yarn
       - run: yarn build
-      - run: sudo npm i -g npm-cli-login
       - run: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
       - run: npm publish --access public
   deploy_prod:
@@ -38,7 +37,6 @@ jobs:
       - run: sudo apt update && sudo apt install awscli
       - run: yarn
       - run: yarn build
-      - run: sudo npm i -g add npm-cli-login
       - run: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
       - run: npm publish --access public
   deploy_demo:
