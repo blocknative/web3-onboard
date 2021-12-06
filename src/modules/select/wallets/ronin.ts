@@ -14,7 +14,7 @@ function roninWallet(
     svg: svg || roninWalletLogo,
     wallet: async (helpers: Helpers) => {
       const { createModernProviderInterface } = helpers
-      let provider = (window as any).ronin?.provider
+      const provider = (window as any).ronin?.provider
       let providerInterface = null
 
       if (provider) {
