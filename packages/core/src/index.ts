@@ -22,9 +22,10 @@ function init(options: InitOptions): OnboardAPI {
     }
   }
 
-  const { wallets, appMetadata = null, i18n } = options
+  const { wallets, chains, appMetadata = null, i18n } = options
 
   initI18N(i18n)
+  addChains(chains)
 
   // if already initialized, need to cleanup old instance
   const { svelteInstance } = internalState$.getValue()
@@ -59,7 +60,6 @@ function init(options: InitOptions): OnboardAPI {
   return {
     connectWallet,
     disconnectWallet,
-    addChains,
     setChain,
     state
   }

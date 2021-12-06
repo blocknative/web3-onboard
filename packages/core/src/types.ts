@@ -19,6 +19,7 @@ import type {
 
 export interface InitOptions {
   wallets: WalletInit[]
+  chains: Chain[]
   appMetadata?: AppMetadata
   i18n?: i18nOptions
 }
@@ -26,7 +27,6 @@ export interface InitOptions {
 export interface OnboardAPI {
   connectWallet: typeof connect
   disconnectWallet: typeof disconnect
-  addChains: typeof addChains
   setChain: typeof setChain
   state: typeof state
 }

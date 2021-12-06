@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import type { ChainId, WalletModule, Chain } from '@bn-onboard/types'
+import type { ChainId, WalletModule } from '@bn-onboard/types'
 
 import type {
   InitOptions,
@@ -85,6 +85,7 @@ const walletModules = Joi.array().items(Joi.function()).required()
 
 const initOptions = Joi.object({
   wallets: walletModules,
+  chains: chains.required(),
   appMetadata: appMetadata,
   i18n: Joi.object().unknown()
 })
@@ -102,10 +103,6 @@ type ValidateReturn = Joi.ValidationResult | null
 function validate(validator: Joi.Schema, data: unknown): ValidateReturn {
   const result = validator.validate(data)
   return result.error ? result : null
-}
-
-export function validateChains(data: Chain[]): ValidateReturn {
-  return validate(chains, data)
 }
 
 export function validateWallet(

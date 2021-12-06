@@ -9,7 +9,7 @@ import type {
   WalletState
 } from '../types'
 
-import { validateChains, validateString, validateWallet } from '../validation'
+import { validateString, validateWallet } from '../validation'
 
 import {
   ADD_CHAINS,
@@ -21,12 +21,7 @@ import {
 import { dispatch } from './index'
 
 export function addChains(chains: Chain[]): void {
-  const error = validateChains(chains)
-
-  if (error) {
-    throw error
-  }
-
+  // chains are validated on init
   const action = {
     type: ADD_CHAINS,
     payload: chains

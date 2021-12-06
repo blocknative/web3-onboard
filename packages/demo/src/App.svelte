@@ -45,6 +45,26 @@
       portis,
       torus
     ],
+    chains: [
+      {
+        id: '0x1',
+        token: 'ETH',
+        label: 'Ethereum Mainnet',
+        rpcUrl: 'https://mainnet.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
+      },
+      {
+        id: '0x4',
+        token: 'rETH',
+        label: 'Ethereum Rinkeby Testnet',
+        rpcUrl: 'https://rinkeby.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
+      },
+      {
+        id: '0x89',
+        token: 'MATIC',
+        label: 'Matic Mainnet',
+        rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+      }
+    ],
     appMetadata: {
       name: 'Blocknative',
       icon: blocknativeIcon,
@@ -60,28 +80,6 @@
 
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
-
-  // Add networks that are valid for this app
-  onboard.addChains([
-    {
-      id: '0x1',
-      token: 'ETH',
-      label: 'Ethereum Mainnet',
-      rpcUrl: 'https://mainnet.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
-    },
-    {
-      id: '0x4',
-      token: 'rETH',
-      label: 'Ethereum Rinkeby Testnet',
-      rpcUrl: 'https://rinkeby.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
-    },
-    {
-      id: '0x89',
-      token: 'MATIC',
-      label: 'Matic Mainnet',
-      rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
-    }
-  ])
 </script>
 
 <style>
@@ -106,7 +104,7 @@
 <main>
   <button on:click={() => onboard.connectWallet()}>Connect Wallet</button>
 
-  {#if $wallets$.length}
+  {#if $wallets$}
     <button on:click={() => onboard.setChain('0x1')}
       >Set Chain to Mainnet</button
     >
