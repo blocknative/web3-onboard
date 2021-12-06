@@ -29,7 +29,7 @@ function roninWallet(
 
       return {
         provider,
-        interface: providerInterface,
+        interface: providerInterface
       }
     },
     type: 'injected',
