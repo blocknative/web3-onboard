@@ -19,7 +19,7 @@
     | 'green'
     | 'white'
     | 'transparent'
-    | 'custom' = 'transparent'
+    | 'custom' = 'white'
 
   export let customBackgroundColor: string = ''
   export let backgroundOpaque: boolean = false

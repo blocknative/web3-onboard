@@ -40,7 +40,12 @@
 </style>
 
 <button class:connected in:fade on:click={onClick}>
-  <WalletAppBadge size={48} {icon} border={connected ? 'green' : 'blue'} />
+  <WalletAppBadge
+    size={48}
+    {icon}
+    border={connected ? 'green' : 'blue'}
+    background="transparent"
+  />
   <span class="name">{label}</span>
   {#if connected}
     <SuccessStatusIcon size={16} bottom={null} right={16} />
