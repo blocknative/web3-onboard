@@ -1,5 +1,5 @@
 {
-  "name": "@bn-onboard/walletconnect-v1",
+  "name": "@bn-onboard/walletconnect",
   "version": "0.0.1",
   "description": "<todo>",
   "module": "dist/index.js",
@@ -19,6 +19,7 @@
     "typescript": "^4.4.4"
   },
   "dependencies": {
-    "@bn-onboard/types": "^0.0.1"
+    "@bn-onboard/types": "^0.0.1",
+    "@walletconnect/client": "2.0.0-beta.17"
   }
 }

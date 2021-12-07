@@ -2,8 +2,8 @@
   import { share } from 'rxjs/operators'
   import Onboard from '@bn-onboard/core'
   import injectedModule from '@bn-onboard/injected-wallets'
-  // import walletConnect from '@bn-onboard/walletconnect'
-  import walletLinkModule from '@bn-onboard/wallet-link'
+  // import walletConnectModule from '@bn-onboard/walletconnect'
+  import walletLinkModule from '@bn-onboard/walletlink'
   import portisModule from '@bn-onboard/portis'
   import fortmaticModule from '@bn-onboard/fortmatic'
   import torusModule from '@bn-onboard/torus'
@@ -25,7 +25,7 @@
 
   const walletLink = walletLinkModule()
 
-  // const walletConnectModule = walletConnect()
+  // const walletConnect = walletConnectModule()
   const portis = portisModule({
     apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
   })
@@ -38,7 +38,7 @@
 
   const options = {
     wallets: [
-      // walletConnectModule,
+      /* walletConnect, */
       walletLink,
       injected,
       fortmatic,
