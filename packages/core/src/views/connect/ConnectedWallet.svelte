@@ -115,7 +115,7 @@
       <div class="icons">
         <WalletAppBadge
           size={40}
-          background="lightBlue"
+          background={appMetadata?.icon ? 'lightBlue' : 'lightGray'}
           border="darkGreen"
           icon={appMetadata?.icon || defaultAppIcon}
         />

@@ -168,6 +168,7 @@
         <WalletAppBadge
           size={48}
           border="gray"
+          background={appMetadata?.icon ? 'white' : 'lightGray'}
           icon={appMetadata?.icon || defaultAppIcon}
         >
           <SuccessStatusIcon slot="status" size={17} />
