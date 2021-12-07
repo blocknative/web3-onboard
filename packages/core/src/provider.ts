@@ -102,40 +102,44 @@ export function trackWallet(
         let account
 
         if (!existingAccount) {
+          let ens: Ens | null = null
+          let balance: Balances = null
+
           // update accounts without ens and balance first
           updateWallet(label, {
-            accounts: [
-              { address: address, ens: null, balance: null },
-              ...restAccounts
-            ]
+            accounts: [{ address: address, ens, balance }, ...restAccounts]
           })
 
           const rpcUrl = getRpcUrl(chain, state.get().chains)
 
           if (!rpcUrl) {
             console.warn('A chain with rpcUrl is required for requests')
-
-            account = {
-              address: address,
-              ens: null,
-              balance: null
-            }
           } else {
             const ethersProvider = new providers.JsonRpcProvider(rpcUrl)
             const { chainId } = await ethersProvider.getNetwork()
-
             const balanceProm = getBalance(ethersProvider, address)
-            const ensProm = validEnsChain(chainId.toString(16))
+
+            const ensProm = validEnsChain(`0x${chainId.toString(16)}`)
               ? getEns(ethersProvider, address)
               : Promise.resolve(null)
 
-            const [balance, ens] = await Promise.all([balanceProm, ensProm])
+            balanceProm.then(b => {
+              balance = b
 
-            account = {
-              address,
-              balance,
-              ens
-            }
+              updateWallet(label, {
+                accounts: [{ address: address, ens, balance }, ...restAccounts]
+              })
+            })
+
+            ensProm.then(e => {
+              ens = e
+
+              updateWallet(label, {
+                accounts: [{ address: address, ens, balance }, ...restAccounts]
+              })
+            })
+
+            return
           }
         }
 
