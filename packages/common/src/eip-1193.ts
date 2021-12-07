@@ -1,18 +1,16 @@
-import {
+import type {
   Balance,
   ChainId,
   EIP1193Provider,
-  ProviderAccounts,
-  ProviderEvent,
-  ProviderInfo,
-  ProviderMessage,
-  SimpleEventEmitter
+  ProviderAccounts
 } from '@bn-onboard/types'
-import { EventCallback, RequestPatch } from './types'
+
+import type { RequestPatch } from './types'
 import { ProviderRpcError } from './errors'
 
 /**
- * Takes a provider instance along with events and requests to override and returns an EIP1193 provider
+ * Takes a provider instance along with events
+ * and requests to override and returns an EIP1193 provider
  *
  *  ## Example:
  *
@@ -21,7 +19,8 @@ import { ProviderRpcError } from './errors'
  * ```
  *
  * @param provider The provider to patch
- * @param requestPatch An `object` with the method to patch and the implementation with which to patch
+ * @param requestPatch An `object` with the method to patch
+ * and the implementation with which to patch
  * @param events Events to patch
  * @returns An EIP1193 Provider
  */
@@ -40,7 +39,8 @@ export const createEIP1193Provider = (
   const request: EIP1193Provider['request'] = ({ method, params }) => {
     const key = method as keyof RequestPatch
 
-    // If the request method is set to null this indicates this method is not supported
+    // If the request method is set to null
+    // this indicates this method is not supported
     if (requestPatch?.[key] === null) {
       throw new ProviderRpcError({
         code: 4200,
@@ -49,6 +49,7 @@ export const createEIP1193Provider = (
     }
 
     if (requestPatch?.[key]) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore // @TODO - Fix this type error
       return requestPatch[key]?.(baseRequest, params)
     } else {

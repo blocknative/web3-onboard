@@ -1,21 +1,16 @@
-import App from './App.svelte'
-import { SofiaProRegular, SofiaProSemiBold, SofiaProLight } from './fonts'
+// import App from './App.svelte'
+// import { SofiaProRegular, SofiaProSemiBold, SofiaProLight } from './fonts'
 
-export function accountSelect(options: InitOptions): Promise<Account> {
-  if (options) {
-    const error = validateInitOptions(options)
-
-    if (error) {
-      throw error
-    }
-  }
-
-  const {} = options
-
-  const app = mountApp()
-
+export async function accountSelect(): Promise<void> {
+  // if (options) {
+  //   const error = validateInitOptions(options)
+  //   if (error) {
+  //     throw error
+  //   }
+  // }
+  // const {} = options
+  // const app = mountApp()
   // complete$.pipe(take(1)).subscribe(() => app.$destroy())
-
   // return firstValueFrom(complete$)
 }
 
@@ -31,11 +26,11 @@ function mountApp() {
   // Add Fonts to main page
   const styleEl = document.createElement('style')
 
-  styleEl.innerHTML = `
-    ${SofiaProRegular}
-    ${SofiaProSemiBold}
-    ${SofiaProLight}
-  `
+  // styleEl.innerHTML = `
+  //   ${SofiaProRegular}
+  //   ${SofiaProSemiBold}
+  //   ${SofiaProLight}
+  // `
   document.body.appendChild(styleEl)
 
   // add to DOM
@@ -120,9 +115,9 @@ function mountApp() {
 
   document.body.appendChild(onboard)
 
-  const app = new App({
-    target
-  })
+  // const app = new App({
+  //   target
+  // })
 
-  return app
+  // return app
 }

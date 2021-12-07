@@ -1,4 +1,4 @@
-import {
+import type {
   Balance,
   ChainId,
   EIP1193Provider,
@@ -13,7 +13,8 @@ import {
 /**
  * Types for request patching methods. Ethereum RPC request is mapped to
  * the implementation that will replace the original.
- * If a method is not supported set it to `null` and the appropriate error will get called.
+ * If a method is not supported set it to `null`
+ * and the appropriate error will get called.
  */
 export type RequestPatch = {
   eth_accounts?:
