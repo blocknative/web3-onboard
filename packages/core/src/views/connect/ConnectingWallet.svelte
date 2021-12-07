@@ -112,15 +112,6 @@
     border-color: var(--onboard-warning-400, var(--warning-400));
   }
 
-  .left-side {
-    display: flex;
-    align-items: center;
-  }
-
-  .text {
-    margin-left: 1rem;
-  }
-
   .rejected-cta {
     font-size: var(--onboard-font-size-7, var(--font-size-7));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
@@ -164,21 +155,19 @@
         </div>
       </div>
     {:else}
-      <div class="left-side">
-        <WalletAppBadge
-          size={48}
-          border="gray"
-          background={appMetadata?.icon ? 'white' : 'lightGray'}
-          icon={appMetadata?.icon || defaultAppIcon}
-        >
-          <SuccessStatusIcon slot="status" size={17} />
-        </WalletAppBadge>
+      <WalletAppBadge
+        size={48}
+        border="gray"
+        background={appMetadata?.icon ? 'white' : 'lightGray'}
+        icon={appMetadata?.icon || defaultAppIcon}
+      >
+        <SuccessStatusIcon slot="status" size={17} />
+      </WalletAppBadge>
 
-        <div class="text">
-          {$_('connect.connectingWallet.mainText', {
-            default: en.connect.connectingWallet.mainText
-          })}
-        </div>
+      <div class="text">
+        {$_('connect.connectingWallet.mainText', {
+          default: en.connect.connectingWallet.mainText
+        })}
       </div>
 
       <WalletAppBadge

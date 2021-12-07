@@ -85,11 +85,6 @@
     box-sizing: border-box;
   }
 
-  .left-side {
-    display: flex;
-    align-items: center;
-  }
-
   .icons {
     display: flex;
     justify-content: center;
@@ -97,7 +92,8 @@
   }
 
   .text {
-    margin-left: 0.5rem;
+    position: relative;
+    right: 0.5rem;
   }
 
   .tick {
@@ -111,33 +107,31 @@
 
 <div class="container">
   <div class="connecting-container">
-    <div class="left-side">
-      <div class="icons">
+    <div class="icons">
+      <WalletAppBadge
+        size={40}
+        background={appMetadata?.icon ? 'lightBlue' : 'lightGray'}
+        border="darkGreen"
+        icon={appMetadata?.icon || defaultAppIcon}
+      />
+
+      <div style="position: relative; right: 0.85rem;">
+        <SuccessStatusIcon size={17} right={null} />
+      </div>
+
+      <div style="position: relative; right: 0.5rem;">
         <WalletAppBadge
           size={40}
-          background={appMetadata?.icon ? 'lightBlue' : 'lightGray'}
           border="darkGreen"
-          icon={appMetadata?.icon || defaultAppIcon}
+          icon={selectedWallet.icon}
         />
-
-        <div style="position: relative; right: 0.85rem;">
-          <SuccessStatusIcon size={17} right={null} />
-        </div>
-
-        <div style="position: relative; right: 0.5rem;">
-          <WalletAppBadge
-            size={40}
-            border="darkGreen"
-            icon={selectedWallet.icon}
-          />
-        </div>
       </div>
+    </div>
 
-      <div class="text">
-        {$_('connect.connectedWallet.mainText', {
-          default: en.connect.connectedWallet.mainText
-        })}
-      </div>
+    <div class="text">
+      {$_('connect.connectedWallet.mainText', {
+        default: en.connect.connectedWallet.mainText
+      })}
     </div>
 
     <div class="tick" style="width: 17.6px; height: 13.4px;">
