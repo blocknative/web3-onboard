@@ -5,17 +5,17 @@
       "sidebar": {
         "heading": "Get Started",
         "subheading": "Connect your wallet",
-        "paragraph": "Connecting a crypto wallet is like “logging in” for an application. It will allow you to do things with the items in your wallet. Etc..."
+        "paragraph": "Connecting your wallet is similar to “logging in” to an application. Select your wallet from the options to get started."
       },
       "recommendedWalletsPart1": "{app} only supports",
-      "recommendedWalletsPart2": "on this platform. Please use/install one of the supported wallets to continue",
-      "installWallet": "You do not have any wallets installed that {app} supports, please contact for supported wallets"
+      "recommendedWalletsPart2": "on this platform. Please use or install one of the supported wallets to continue",
+      "installWallet": "You do not have any wallets installed that {app} supports, please use a supported wallet"
     },
     "connectingWallet": {
       "header": "{connectionRejected, select, false {Connecting to {wallet}...} other {Connection Rejected}}",
       "sidebar": {
-        "subheading": "Login and Authorize Your Wallet...",
-        "paragraph": "This app requires access to your wallet, please login and authorize access to your MetaMask accounts to continue."
+        "subheading": "Approve Connection",
+        "paragraph": "Please approve the connection in your wallet and authorize access to continue."
       },
       "mainText": "Connecting...",
       "rejectedText": "Connection Rejected!",
@@ -26,8 +26,8 @@
     "connectedWallet": {
       "header": "Connection Successful",
       "sidebar": {
-        "subheading": "App Authorized",
-        "paragraph": "{app} is now connected to your wallet"
+        "subheading": "Connection Successful!",
+        "paragraph": "Your wallet is now connected to {app}"
       },
       "mainText": "Connected"
     }
