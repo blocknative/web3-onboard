@@ -18,7 +18,8 @@
     | 'lightBlue'
     | 'green'
     | 'white'
-    | 'custom' = 'white'
+    | 'transparent'
+    | 'custom' = 'transparent'
 
   export let customBackgroundColor: string = ''
   export let backgroundOpaque: boolean = false
@@ -82,6 +83,10 @@
     background: var(--onboard-white, var(--white));
   }
 
+  .background-transparent {
+    background: transparent;
+  }
+
   @keyframes pulse {
     from {
       opacity: 0;
@@ -114,6 +119,7 @@
   class:background-light-blue={background === 'lightBlue'}
   class:background-green={background === 'green'}
   class:background-white={background === 'white'}
+  class:background-transparent={background === 'transparent'}
   class="icon-container"
   style={`${background === 'custom' ? customBackgroundColor : ''}; padding: ${
     size / 6
