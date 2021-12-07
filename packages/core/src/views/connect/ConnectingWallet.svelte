@@ -1,20 +1,18 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
   import { createEventDispatcher } from 'svelte'
-  import { Subject, switchMap, take, takeUntil, timer } from 'rxjs'
   import { ErrorCodes } from '@bn-onboard/common'
 
   import { requestAccounts, trackWallet } from '../../provider'
   import { state } from '../../store'
   import { addWallet } from '../../store/actions'
-  import { internalState$, onDestroy$ } from '../../streams'
+  import { internalState$ } from '../../streams'
   import type { WalletState } from '../../types'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import PendingStatusIcon from '../shared/PendingStatusIcon.svelte'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
   import defaultAppIcon from '../../icons/default-app-icon'
   import en from '../../i18n/en.json'
-  import Warning from '../shared/Warning.svelte'
 
   export let selectedWallet: WalletState
 
@@ -25,31 +23,18 @@
   export let unSelectWallet: () => void
 
   let connectionRejected: boolean = false
-  let connectionWarning: boolean = false
 
   const { appMetadata } = internalState$.getValue()
 
   const dispatch = createEventDispatcher<{ connectionRejected: boolean }>()
-
-  // After 10 secs, if not connected, show hint to user
-  const startTimer$ = new Subject<void>()
-
-  startTimer$
-    .pipe(
-      switchMap(() => timer(15000)),
-      takeUntil(onDestroy$)
-    )
-    .subscribe(() => (connectionWarning = true))
 
   function walletAdded(label: WalletState['label']) {
     return !!state.get().wallets.find(wallet => wallet.label === label)
   }
 
   async function connect() {
-    startTimer$.next()
     dispatch('connectionRejected', false)
     connectionRejected = false
-    connectionWarning = false
 
     const { provider, label } = selectedWallet
 
@@ -74,8 +59,6 @@
         addWallet({ ...selectedWallet, ...update })
         trackWallet(provider, label)
       }
-
-      connectionWarning = false
     } catch (error) {
       console.log({ error })
       const { code } = error as { code: number; message: string }
@@ -89,9 +72,6 @@
 
       // account access has already been requested and is awaiting approval
       if (code === ErrorCodes.ACCOUNT_ACCESS_ALREADY_REQUESTED) {
-        // show warning message that the user needs to connect to wallet
-        connectionWarning = true
-
         // track wallet and wait for accounts to be connected
         if (!walletAdded(label)) {
           addWallet(selectedWallet)
@@ -217,16 +197,3 @@
     })}</button
   >
 </div>
-
-{#if connectionWarning}
-  <div style="padding: 0 1rem;">
-    <Warning
-      >{$_('connect.connectingWallet.warningText', {
-        default: en.connect.connectingWallet.warningText,
-        values: {
-          app: appMetadata?.name || 'This app'
-        }
-      })}</Warning
-    >
-  </div>
-{/if}
