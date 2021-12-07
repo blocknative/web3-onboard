@@ -1,11 +1,4 @@
-import {
-  createEIP1193Provider,
-  ErrorCodes,
-  ProviderRpcError
-} from '@bn-onboard/common'
-
 import { WalletInit } from '@bn-onboard/types'
-import { btoa } from 'buffer'
 
 function walletLink(options?: { darkMode?: boolean }): WalletInit {
   const { darkMode = false } = options || {}
