@@ -26,6 +26,12 @@
     gap: 0.5rem;
     width: 100%;
   }
+
+  @media all and (max-width: 520px) {
+    .wallets-container {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
 </style>
 
 <div class="outer-container">

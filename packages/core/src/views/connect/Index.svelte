@@ -35,6 +35,8 @@
   let wallets: WalletWithLoadingIcon[] = []
   let selectedWallet: WalletState | null
 
+  let windowWidth: number
+
   const walletToAutoSelect =
     autoSelect &&
     walletModules.find(
@@ -158,12 +160,27 @@
     position: absolute;
     right: 0.5rem;
   }
+
+  @media all and (max-width: 520px) {
+    .content {
+      width: 100%;
+    }
+
+    .container {
+      height: auto;
+      min-height: 228px;
+    }
+  }
 </style>
+
+<svelte:window bind:innerWidth={windowWidth} />
 
 {#if !loading}
   <Modal {close}>
     <div class="container">
-      <Sidebar {status} />
+      {#if windowWidth >= 809}
+        <Sidebar {status} />
+      {/if}
 
       <div class="content">
         <div class="header">

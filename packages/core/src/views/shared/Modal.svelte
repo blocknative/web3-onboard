@@ -40,12 +40,16 @@
 
   .relative {
     position: relative;
+    width: 100%;
+    max-height: calc(100vh - 2rem);
   }
 
   .modal-overflow {
     position: relative;
     overflow: hidden;
     border-radius: 24px;
+    display: flex;
+    justify-content: center;
   }
 
   .modal {
@@ -53,6 +57,20 @@
     border-radius: 24px;
     overflow-y: auto;
     background: white;
+  }
+
+  @media all and (max-width: 520px) {
+    .relative {
+      width: calc(100% - 1rem);
+    }
+
+    .modal-overflow {
+      width: 100%;
+    }
+
+    .modal {
+      width: 100%;
+    }
   }
 </style>
 

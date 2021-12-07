@@ -81,7 +81,7 @@
     border-radius: 24px;
     background: var(--onboard-success-100, var(--success-100));
     border: 1px solid var(--onboard-success-600, var(--success-600));
-    width: 441px;
+    width: 100%;
     box-sizing: border-box;
   }
 
@@ -103,6 +103,9 @@
   .tick {
     display: flex;
     color: var(--onboard-black, var(--black));
+  }
+
+  @media all and (max-width: 520px) {
   }
 </style>
 
