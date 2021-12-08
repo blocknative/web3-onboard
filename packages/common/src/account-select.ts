@@ -1,4 +1,4 @@
-// import App from './App.svelte'
+import App from './views/AccountSelect.svelte'
 // import { SofiaProRegular, SofiaProSemiBold, SofiaProLight } from './fonts'
 
 export async function accountSelect(): Promise<void> {
@@ -9,7 +9,7 @@ export async function accountSelect(): Promise<void> {
   //   }
   // }
   // const {} = options
-  // const app = mountApp()
+  const app = mountApp()
   // complete$.pipe(take(1)).subscribe(() => app.$destroy())
   // return firstValueFrom(complete$)
 }
@@ -115,9 +115,9 @@ function mountApp() {
 
   document.body.appendChild(onboard)
 
-  // const app = new App({
-  //   target
-  // })
+  const app = new App({
+    target
+  })
 
-  // return app
+  return app
 }
