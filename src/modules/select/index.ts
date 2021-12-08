@@ -227,6 +227,8 @@ function getModule(name: string): Promise<{
       return import('./wallets/blankwallet')
     // case 'mewwallet':
     //   return import('./wallets/mewwallet')
+    case 'ronin':
+      return import('./wallets/ronin')
     default:
       throw new Error(`${name} is not a valid walletName.`)
   }
