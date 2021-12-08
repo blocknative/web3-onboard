@@ -21,9 +21,7 @@ function roninWallet(
         providerInterface = createModernProviderInterface(provider)
 
         if (providerInterface.network.get) {
-          providerInterface.network.get = () => {
-            return Promise.resolve(2020)
-          }
+          providerInterface.network.get = async () => 2020
         }
       }
 
