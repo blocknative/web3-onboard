@@ -1,43 +1,15 @@
 <script>
-  import { writable } from 'svelte/store'
-  import { fade } from 'svelte/transition'
-  import cloneDeep from 'lodash.clonedeep'
-
-  import Modal, { modalAutoScroll } from '../shared/elements/Modal.svelte'
-
-  import { liveExplorerConfiguration, updateConfiguration } from '../streams'
-
-  import { sortAlphabetical } from '../utilities'
-
-  export let data
-  export let close
-
-  const { subscription, abiDetails } = data
-
-  let submitButton
-  let scrollTo
-
-  const { name, schema, abi } = subscription
-
-  const filterInitialState = {
-    options: [schema],
-    properties: [],
-    values: [],
-    comparison: '',
-    value: '',
-    gray: true
-  }
-
-  let showEmptyAddresses
+  export let options
+  const { basePaths, assets, chains, scanAccounts, walletIcon } = options
 
   // Validates current filters to ensure invalid filters are
   // not saved.
-  $: filtersAreValid = $filters.every(
-    ({ properties, values, comparison, value }) =>
-      (properties.length &&
-        (value || values.length || properties.includes('exists'))) ||
-      comparison === 'exists'
-  )
+  // $: filtersAreValid = $filters.every(
+  //   ({ properties, values, comparison, value }) =>
+  //     (properties.length &&
+  //       (value || values.length || properties.includes('exists'))) ||
+  //     comparison === 'exists'
+  // )
 
   function handleSelect(filterIndex, option, optionIndex) {
     // return event => {
@@ -60,45 +32,6 @@
 </script>
 
 <style>
-  .gray {
-    color: var(--grey400);
-  }
-  #add-filter {
-    box-sizing: initial;
-  }
-
-  .global-header {
-    background-color: var(--warning100);
-    border: 1px solid var(--warning500);
-  }
-
-  .local-header {
-    background-color: var(--grey100);
-  }
-
-  .abi-badge {
-    transition: all 250ms ease-in-out;
-    padding-top: 3px;
-    padding-bottom: 3px;
-  }
-
-  .abi-badge.abi-loaded {
-    background: var(--success500);
-    color: var(--grey600);
-    border: 1px solid var(--success500);
-  }
-
-  .abi-badge.abi-invalid {
-    background: var(--danger300);
-    color: var(--grey600);
-    border: 1px solid var(--danger300);
-  }
-
-  .abi-badge.abi-warn {
-    background: var(--warning300);
-    color: var(--grey600);
-    border: 1px solid var(--warning300);
-  }
 
   select {
     min-width: 230px;
@@ -108,9 +41,7 @@
     font-weight: 300;
   }
 
-  .bottom-radius {
-    border-radius: 0 0 24px 24px;
-  }
+
 </style>
 
 
@@ -158,7 +89,7 @@ type Account = {
   }
 } -->
 
-<Modal closeButton={false} verticalCentered={false}>
+<div>
   <div class='modal-controls'>
     <div class="flex flex-column pa2 w-100" on:keydown={handleKeyDown}>
       <div class="pa2">
@@ -249,7 +180,7 @@ type Account = {
       </div>
     </div>
   </div>
-  <div class='table-container'>
+  <!-- <div class='table-container'>
     <div class='table-controls'>
       <div class="flex items-center ph2 pt2">
         <input
@@ -296,7 +227,7 @@ type Account = {
       >
         Connect
       </button>
-    </div>
+    </div> -->
 
-  </div>
-</Modal>
+  <!-- </div> -->
+</div>

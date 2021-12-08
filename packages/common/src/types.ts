@@ -50,3 +50,48 @@ export interface EventCallback {
   chainChanged?: <T = ChainId>(chainId: T) => ChainId
   accountsChanged?: <T = ProviderAccounts>(accounts: T) => ProviderAccounts
 }
+export type API = (options: SelectAccountOptions) => Promise<Account>
+
+export type SelectAccountOptions = {
+  basePaths: BasePath[] // the paths to display in the base path selector
+  assets: Asset[] // the selectable assets to scan for a balance
+  chains: Chain[] // the selectable chains/networks to scan for balance
+  scanAccounts: ScanAccounts
+  walletIcon: string
+}
+
+export type BasePath = {
+  label: string // eg - Ethereum Ledger Live
+  value: DerivationPath
+}
+
+export type DerivationPath = string // eg - m/44'/60'
+
+export type Asset = {
+  label: string // eg - ETH
+  address?: string // if is a token, address to query contract
+}
+
+export type Chain = {
+  label: string // eg - Ethereum, Rinkeby, Matic
+  id: string 
+  // 0x prefixed hex string | 
+  // eg - 0x1 (mainnet ethereum), 0x4 (rinkeby), 0x89 (polygon matic)
+}
+
+export type ScanAccounts = (options: ScanAccountsOptions) => Promise<Account[]>
+
+export type ScanAccountsOptions = {
+  derivationPath: DerivationPath
+  chainId: Chain['id']
+  asset: Asset
+}
+
+export type Account = {
+  address: string
+  derivationPath: DerivationPath
+  balance: {
+    asset: Asset['label']
+    value: string
+  }
+}
