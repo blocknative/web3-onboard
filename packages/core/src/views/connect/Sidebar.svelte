@@ -18,20 +18,20 @@
 
 <style>
   .sidebar {
-    padding: 1.5rem;
+    padding: var(--onboard-spacing-3, var(--spacing-3));
     border-radius: 24px 0 0 24px;
     background: var(--onboard-gray-100, var(--gray-100));
   }
 
   .inner-container {
-    padding-left: 0.5rem;
+    padding-left: var(--onboard-spacing-5, var(--spacing-5));
     max-width: 236px;
   }
 
   .icon-container {
     height: 3rem;
     display: inline-block;
-    margin-bottom: var(--onboard-margin-3, var(--margin-3));
+    margin-bottom: var(--onboard-spacing-3, var(--spacing-3));
   }
 
   .heading {
@@ -40,7 +40,7 @@
       --onboard-font-family-semibold,
       var(--font-family-semibold)
     );
-    margin: 0 0 var(--onboard-margin-5, var(--margin-5)) 0;
+    margin: 0 0 var(--onboard-spacing-5, var(--spacing-5)) 0;
   }
 
   .subheading {
@@ -48,7 +48,7 @@
       --onboard-font-family-semibold,
       var(--font-family-semibold)
     );
-    margin: 0 0 var(--onboard-margin-5, var(--margin-5)) 0;
+    margin: 0 0 var(--onboard-spacing-5, var(--spacing-5)) 0;
   }
 
   .description {
@@ -60,7 +60,7 @@
   .indicators {
     display: flex;
     align-items: center;
-    margin-top: var(--onboard-margin-2, var(--margin-2));
+    margin-top: var(--onboard-spacing-2, var(--spacing-2));
   }
 
   .indicator {

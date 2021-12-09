@@ -89,7 +89,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 1rem;
+    padding: var(--onboard-spacing-4, var(--spacing-4));
   }
 
   .connecting-container {
@@ -97,7 +97,7 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 1rem;
+    padding: var(--onboard-spacing-4, var(--spacing-4));
     transition: background-color 100ms ease-in-out,
       border-color 100ms ease-in-out;
     border-radius: 24px;
@@ -121,7 +121,7 @@
 
   .onboard-button-primary {
     position: absolute;
-    bottom: 1.5rem;
+    bottom: var(--onboard-spacing-3, var(--spacing-3));
     cursor: pointer;
   }
 

@@ -144,7 +144,7 @@
     position: relative;
     display: flex;
     align-items: center;
-    padding: 1rem;
+    padding: var(--onboard-spacing-4, var(--spacing-4));
     box-shadow: var(--onboard-shadow-2, var(--shadow-2));
   }
 
@@ -158,7 +158,7 @@
 
   .button-container {
     position: absolute;
-    right: 0.5rem;
+    right: var(--onboard-spacing-5, var(--spacing-5));
   }
 
   @media all and (max-width: 520px) {

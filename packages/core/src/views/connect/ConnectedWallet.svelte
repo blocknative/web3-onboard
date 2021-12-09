@@ -70,14 +70,14 @@
 
 <style>
   .container {
-    padding: 1rem;
+    padding: var(--onboard-spacing-4, var(--spacing-4));
   }
 
   .connecting-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
+    padding: var(--onboard-spacing-4, var(--spacing-4));
     border-radius: 24px;
     background: var(--onboard-success-100, var(--success-100));
     border: 1px solid var(--onboard-success-600, var(--success-600));
@@ -93,7 +93,7 @@
 
   .text {
     position: relative;
-    right: 0.5rem;
+    right: var(--onboard-spacing-5, var(--spacing-5));
   }
 
   .tick {

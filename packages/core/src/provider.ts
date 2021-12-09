@@ -1,6 +1,7 @@
-import { fromEvent, fromEventPattern, Observable } from 'rxjs'
+import { fromEventPattern, Observable } from 'rxjs'
 import { filter, takeUntil, withLatestFrom } from 'rxjs/operators'
 import partition from 'lodash.partition'
+import { providers, utils } from 'ethers'
 
 import type {
   ChainId,
@@ -13,10 +14,8 @@ import type {
 } from '@bn-onboard/types'
 
 import { disconnectWallet$, wallets$ } from './streams'
-
 import type { Address, Balances, Ens, WalletState } from './types'
 import { updateWallet } from './store/actions'
-import { providers, utils } from 'ethers'
 import { getRpcUrl, validEnsChain } from './utils'
 import disconnect from './disconnect'
 import { state } from './store'
@@ -32,7 +31,7 @@ export function getChainId(provider: EIP1193Provider): Promise<string> {
   return provider.request({ method: 'eth_chainId' }) as Promise<string>
 }
 
-export function accountsChanged(args: {
+export function listenAccountsChanged(args: {
   provider: EIP1193Provider
   disconnected$: Observable<string>
 }): Observable<ProviderAccounts> {
@@ -51,7 +50,7 @@ export function accountsChanged(args: {
   )
 }
 
-export function chainChanged(args: {
+export function listenChainChanged(args: {
   provider: EIP1193Provider
   disconnected$: Observable<string>
 }): Observable<ChainId> {
@@ -77,8 +76,7 @@ export function trackWallet(
     filter(wallet => wallet === label)
   )
 
-  // listen for accounts change
-  accountsChanged({ provider, disconnected$ })
+  listenAccountsChanged({ provider, disconnected$ })
     .pipe(withLatestFrom(wallets$))
     .subscribe({
       complete: () =>
@@ -94,6 +92,8 @@ export function trackWallet(
         )
 
         // no address, then no account connected, so disconnect wallet
+        // this could happen if user locks wallet,
+        // or if disconnects app from wallet
         if (!address) {
           disconnect({ label })
           return
@@ -152,8 +152,7 @@ export function trackWallet(
       }
     })
 
-  // listen for chain changed
-  chainChanged({ provider, disconnected$ })
+  listenChainChanged({ provider, disconnected$ })
     .pipe(withLatestFrom(wallets$))
     .subscribe({
       complete: () =>

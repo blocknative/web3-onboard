@@ -7,7 +7,7 @@
   .container {
     display: flex;
     justify-content: space-between;
-    padding: 0.5rem;
+    padding: var(--onboard-spacing-5, var(--spacing-5));
     color: var(--onboard-warning-700, var(--warning-700));
     font-size: var(--onboard-font-size-7, var(--font-size-7));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
@@ -21,7 +21,7 @@
     color: var(--onboard-warning-700, var(--warning-700));
     width: 1rem;
     height: 1rem;
-    margin-left: 0.5rem;
+    margin-left: var(--onboard-spacing-5, var(--spacing-5));
   }
 
   p {

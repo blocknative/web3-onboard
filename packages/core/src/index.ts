@@ -27,10 +27,10 @@ function init(options: InitOptions): OnboardAPI {
   initI18N(i18n)
   addChains(chains)
 
-  // if already initialized, need to cleanup old instance
   const { svelteInstance } = internalState$.getValue()
 
   if (svelteInstance) {
+    // if already initialized, need to cleanup old instance
     console.warn('Re-initializing Onboard and resetting back to initial state')
     svelteInstance.$destroy()
     reset$.next()
@@ -42,6 +42,7 @@ function init(options: InitOptions): OnboardAPI {
     const initialized = walletInit({ device })
 
     if (initialized) {
+      // injected wallets is an array of wallets
       acc.push(...(Array.isArray(initialized) ? initialized : [initialized]))
     }
 
@@ -66,13 +67,13 @@ function init(options: InitOptions): OnboardAPI {
 }
 
 function mountApp() {
-  class OnboardV2 extends HTMLElement {
+  class Onboard extends HTMLElement {
     constructor() {
       super()
     }
   }
 
-  customElements.define('onboard-v2', OnboardV2)
+  customElements.define('onboard-v2', Onboard)
 
   // Add Fonts to main page
   const styleEl = document.createElement('style')
@@ -150,17 +151,16 @@ function mountApp() {
           --font-line-height-4: 12px;
   
           /* SPACING */
-          --margin-1: 3rem;
-          --margin-2: 2rem;
-          --margin-3: 1.5rem;
-          --margin-4: 1rem;
-          --margin-5: 0.5rem;
+          --spacing-1: 3rem;
+          --spacing-2: 2rem;
+          --spacing-3: 1.5rem;
+          --spacing-4: 1rem;
+          --spacing-5: 0.5rem;
   
           /* SHADOWS */
           --shadow-1: 0px 4px 12px rgba(0, 0, 0, 0.1);
           --shadow-2: inset 0px -1px 0px rgba(0, 0, 0, 0.1);
         }
-  
       </style>
     `
 

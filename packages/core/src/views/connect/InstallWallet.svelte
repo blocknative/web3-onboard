@@ -10,7 +10,7 @@
 
 <style>
   .outer-container {
-    padding: 1rem;
+    padding: var(--onboard-spacing-4, var(--spacing-4));
   }
   .link {
     font-size: var(--onboard-font-size-7, var(--font-size-7));

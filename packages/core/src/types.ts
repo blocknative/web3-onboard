@@ -4,7 +4,6 @@ import type setChain from './chain'
 import type connect from './connect'
 import type disconnect from './disconnect'
 import type { state } from './store'
-import type { addChains } from './store/actions'
 import type en from './i18n/en.json'
 
 import type {
@@ -47,11 +46,6 @@ export interface WalletWithLoadingIcon
   icon: Promise<string>
 }
 
-export interface RequestArguments {
-  method: string
-  params?: unknown[] | unknown
-}
-
 export interface WalletState {
   label: string //  wallet name
   icon: string // wallet icon svg string
@@ -78,11 +72,6 @@ export interface Ens {
 
 export type Address = string
 
-export type AddChains = (chains: Chain[]) => void
-export interface OnboardActions {
-  addChains: AddChains
-}
-
 export interface AppState {
   chains: Chain[]
   wallets: WalletState[]
@@ -95,11 +84,8 @@ export type InternalState = {
   device: Device | null
 }
 
-export type ValueOf<T> = T[keyof T]
 export type Locale = string
-
 export type i18nOptions = Record<Locale, i18n>
-
 export type i18n = typeof en
 
 // ==== ACTIONS ==== //
@@ -111,7 +97,6 @@ export type Action =
   | ResetStoreAction
 
 export type AddChainsAction = { type: 'add_chains'; payload: Chain[] }
-
 export type AddWalletAction = { type: 'add_wallet'; payload: WalletState }
 
 export type UpdateWalletAction = {

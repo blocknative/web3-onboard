@@ -16,7 +16,7 @@
 <style>
   .container {
     position: relative;
-    padding: 1rem;
+    padding: var(--onboard-spacing-4, var(--spacing-4));
     font-family: var(--onboard-font-family-normal, var(--font-family-normal));
     line-height: var(--onboard-font-line-height-1, var(--font-line-height-1));
     font-size: var(--onboard-font-size-5, var(--font-size-5));
@@ -24,8 +24,8 @@
 
   .close {
     position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
+    top: var(--onboard-spacing-5, var(--spacing-5));
+    right: var(--onboard-spacing-5, var(--spacing-5));
   }
 
   h4 {
@@ -34,11 +34,11 @@
       --onboard-font-family-semibold,
       var(--font-family-semibold)
     );
-    margin: 1rem 0;
+    margin: var(--onboard-spacing-4, var(--spacing-4)) 0;
   }
 
   p {
-    margin: 0 0 1rem 0;
+    margin: 0 0 var(--onboard-spacing-4, var(--spacing-4)) 0;
     max-width: 485px;
   }
 </style>

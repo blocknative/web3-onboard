@@ -14,7 +14,7 @@
     position: relative;
     display: flex;
     align-items: center;
-    padding: 1rem;
+    padding: var(--onboard-spacing-4, var(--spacing-4));
     border-radius: 24px;
     background-color: white;
     cursor: pointer;
@@ -35,7 +35,7 @@
     background-color: var(--onboard-success-100, var(--success-100));
   }
   .name {
-    margin-left: 0.5rem;
+    margin-left: var(--onboard-spacing-5, var(--spacing-5));
   }
 </style>
 
