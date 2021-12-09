@@ -36,7 +36,7 @@
 
   const torus = torusModule()
 
-  const options = {
+  const onboard = Onboard({
     wallets: [
       /* walletConnect, */
       walletLink,
@@ -74,9 +74,17 @@
         { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
       ]
     }
-  }
-
-  const onboard = Onboard(options)
+    // example customising copy
+    // i18n: {
+    //   en: {
+    //     connect: {
+    //       selectingWallet: {
+    //         header: 'custom text header'
+    //       }
+    //     }
+    //   }
+    // }
+  })
 
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
