@@ -32,7 +32,7 @@ export type RecommendedInjectedWallets = {
  */
 export type WalletInit = (
   helpers: WalletHelpers
-) => WalletModule | WalletModule[]
+) => WalletModule | WalletModule[] | null
 
 export type WalletHelpers = {
   device: Device
