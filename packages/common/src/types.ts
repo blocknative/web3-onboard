@@ -50,7 +50,9 @@ export interface EventCallback {
   chainChanged?: <T = ChainId>(chainId: T) => ChainId
   accountsChanged?: <T = ProviderAccounts>(accounts: T) => ProviderAccounts
 }
-export type API = (options: SelectAccountOptions) => Promise<Account>
+
+// eslint-disable-next-line max-len
+export type AccountSelectAPI = (options: SelectAccountOptions) => Promise<Account>
 
 export type SelectAccountOptions = {
   basePaths: BasePath[] // the paths to display in the base path selector
@@ -94,4 +96,9 @@ export type Account = {
     asset: Asset['label']
     value: string
   }
+}
+
+export type AccountsList = {
+  all: Account[]
+  filtered: Account[]
 }

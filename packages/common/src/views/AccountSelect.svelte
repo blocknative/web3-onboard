@@ -1,16 +1,126 @@
 <script lang="ts">
-import type { ScanAccountsOptions, SelectAccountOptions, Account } from './types'
   import blocknative from '../icons/blocknative'
   import CloseButton from './CloseButton.svelte'
   import { fade } from 'svelte/transition'
-  export let mockData: SelectAccountOptions
+  import type { Asset, DerivationPath, ScanAccountsOptions, SelectAccountOptions, Account, Chain, AccountsList } from '../types';
+  export let selectAccountOptions: SelectAccountOptions
 
-  const { basePaths, assets, chains, scanAccounts, walletIcon } = mockData
+  const { basePaths, assets, chains, scanAccounts, walletIcon } = selectAccountOptions
   
   console.log(basePaths, assets, chains, scanAccounts, walletIcon)
 
   let showEmptyAddresses: boolean = false;
   let selectionsMade: boolean = false;
+  let accountsList: AccountsList;
+
+  let scanAccountOptions: ScanAccountsOptions = {
+    derivationPath : basePaths[0]?.value || '',
+    chainId: chains[0]?.id || '',
+    asset: assets[0] || null
+  };
+
+
+  const accountMock = [
+    {
+      address: 'OxcED987876765',
+      derivationPath: "m/44'/60'/1'/0/0",
+      balance: {
+        asset: 'ETH',
+        value: '100.00'
+      }
+    },{
+      address: 'OxcED987876765',
+      derivationPath: "m/44'/60'/1'/0/0",
+      balance: {
+        asset: 'ETH',
+        value: '88.00'
+      }
+    },{
+      address: 'OxcED987876765',
+      derivationPath: "m/44'/60'/1'/0/0",
+      balance: {
+        asset: 'ETH',
+        value: '20.00'
+      }
+    },{
+      address: 'OxcED987876765',
+      derivationPath: "m/44'/60'/1'/0/0",
+      balance: {
+        asset: 'ETH',
+        value: '0.00'
+      }
+    },{
+      address: 'OxcED987876765',
+      derivationPath: "m/44'/60'/1'/0/0",
+      balance: {
+        asset: 'ETH',
+        value: '0.00'
+      }
+    },{
+      address: 'OxcED987876765',
+      derivationPath: "m/44'/60'/1'/0/0",
+      balance: {
+        asset: 'ETH',
+        value: '5.00'
+      }
+    },{
+      address: 'OxcED987876765',
+      derivationPath: "m/44'/60'/1'/0/0",
+      balance: {
+        asset: 'ETH',
+        value: '10000.00'
+      }
+    },{
+      address: 'OxcED987876765',
+      derivationPath: "m/44'/60'/1'/0/0",
+      balance: {
+        asset: 'ETH',
+        value: '0.00'
+      }
+    },{
+      address: 'OxcED987876765',
+      derivationPath: "m/44'/60'/1'/0/0",
+      balance: {
+        asset: 'ETH',
+        value: '5.00'
+      }
+    },{
+      address: 'OxcED987876765',
+      derivationPath: "m/44'/60'/1'/0/0",
+      balance: {
+        asset: 'ETH',
+        value: '10000.00'
+      }
+    },{
+      address: 'OxcED987876765',
+      derivationPath: "m/44'/60'/1'/0/0",
+      balance: {
+        asset: 'ETH',
+        value: '10000.00'
+      }
+    },{
+      address: 'OxcED987876765',
+      derivationPath: "m/44'/60'/1'/0/0",
+      balance: {
+        asset: 'ETH',
+        value: '0.00'
+      }
+    },{
+      address: 'OxcED987876765',
+      derivationPath: "m/44'/60'/1'/0/0",
+      balance: {
+        asset: 'ETH',
+        value: '5.00'
+      }
+    },{
+      address: 'OxcED987876765',
+      derivationPath: "m/44'/60'/1'/0/0",
+      balance: {
+        asset: 'ETH',
+        value: '10000.00'
+      }
+    }
+  ]
 
   // $: filtersAreValid = $filters.every(
   //   ({ properties, values, comparison, value }) =>
@@ -19,22 +129,25 @@ import type { ScanAccountsOptions, SelectAccountOptions, Account } from './types
   //     comparison === 'exists'
   // )
 
-  const handleSelect = (filterIndex, option, optionIndex) => {
-    console.log('handle select')
+  const filterEmptyAccounts = () => {
+    showEmptyAddresses = !showEmptyAddresses;
   }
 
-  const handleSelectValue = (filterIndex) => {
-    console.log('handle select val')
-  }
-
-  const connectAccounts = (filterIndex) => {
+  const connectAccounts = () => {
     console.log('connectAccount')
   }
 
-  const handleKeyDown = (event) => {
+  const handleKeyDown = (event: any) => {
     if (event.key === 'Enter') {
       // Submit it!
     }
+  }
+
+  const handleScanAccounts = async () => {
+    console.log(scanAccountOptions)
+    // const allAccounts = await scanAccounts(scanAccountOptions)
+    const allAccounts = accountMock;
+    accountsList = {all: allAccounts, filtered: allAccounts.filter(account => Number(account?.balance.value) > 0)};
   }
 
   const close = () => {
@@ -82,11 +195,18 @@ import type { ScanAccountsOptions, SelectAccountOptions, Account } from './types
     padding: .75rem 1.5rem;
     color: var(--account-select-white, var(--white));
     border-radius: 1.5rem;
+    font-family: var(--account-select-font-family-normal, var(--font-family-normal));
+    font-style: normal;
+    font-weight: bold;
+    font-size: var(--account-select-font-size-5, var(--font-size-5));
+    line-height: var(--account-select-font-size-5, var(--font-size-5));
+    border: none;
   }
 
   .scan-accounts-btn {
     background-color: var(--account-select-gray-500, var(--gray-500));
     color: var(--account-select-blue-100, var(--blue-100));
+    width: 11rem;
   }
 
   .connect-btn {
@@ -98,13 +218,11 @@ import type { ScanAccountsOptions, SelectAccountOptions, Account } from './types
   }
 
   input:hover,
-  textarea:hover,
   select:hover {
     border-color: var(--blue-300);
   }
 
   input:focus,
-  textarea.focus,
   select:focus {
     border-color: var(--blue-500);
     box-shadow: 0 0 1px 1px var(--blue-500);
@@ -113,33 +231,31 @@ import type { ScanAccountsOptions, SelectAccountOptions, Account } from './types
   }
 
   input:disabled,
-  textarea:disabled,
   select:disabled {
     background-color: var(--grey-100);
   }
 
   input.invalid,
-  textarea.invalid,
   select.invalid {
     border-color: var(--danger-500);
     background: var(--danger-100);
   }
 
-input[type='checkbox'] {
-  -webkit-appearance: none;
-  width: auto;
-  background-color: var(--account-select-white, var(--white));
-  border: 1px solid var(--account-select-gray-300, var(--gray-300));
-  padding: 0.5em;
-  border-radius: 3px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  cursor: pointer;
-  height: 1.5rem;
-  width: 1.5rem;
-}
+  input[type='checkbox'] {
+    -webkit-appearance: none;
+    width: auto;
+    background-color: var(--account-select-white, var(--white));
+    border: 1px solid var(--account-select-gray-300, var(--gray-300));
+    padding: 0.5em;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    height: 1.5rem;
+    width: 1.5rem;
+  }
 
   input[type='checkbox']:hover {
     border-color: var(--account-select-blue-500, var(--blue-500));
@@ -170,6 +286,28 @@ input[type='checkbox'] {
   option {
     font-weight: 300;
   }
+
+  th, td {
+    text-align: left;
+    padding: .5rem 1rem;
+  }
+  td {
+    font-family: Sofia Pro;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  tbody tr {
+    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1);
+  }
+  table thead{
+  position: sticky;
+  inset-block-start: 0; /* "top" */
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1);
+  background-color: var(--account-select-white, var(--white));
+}
 
   .close {
     position: absolute;
@@ -216,6 +354,10 @@ input[type='checkbox'] {
   .wallet-icon {
     width: 4rem;
     height: 4rem;
+  }
+
+  .wallet-icon > svg {
+    height: 100%;
   }
 
   .modal-controls {
@@ -273,7 +415,12 @@ input[type='checkbox'] {
   }
 
   .address-table {
-    height: 27.625rem;
+    height: 28rem;
+    overflow: scroll;
+  }
+
+  .asset-td {
+    font-weight: bold;
   }
   .w-100 {
     width: 100%
@@ -317,7 +464,7 @@ input[type='checkbox'] {
             <!-- svelte-ignore a11y-no-onchange -->
             <select
               class='base-path-select'
-              bind:value={path.value}
+              bind:value={scanAccountOptions['derivationPath']}
             >
             <option
               value={path.value}
@@ -343,10 +490,10 @@ input[type='checkbox'] {
           <!-- svelte-ignore a11y-no-onchange -->
           <select
             class='asset-select'
-            bind:value={asset.label}
+            bind:value={scanAccountOptions['asset']}
           >
           <option
-            value={asset.label}
+            value={asset}
           >
             {asset.label}
           </option>
@@ -368,7 +515,7 @@ input[type='checkbox'] {
         >
           <!-- svelte-ignore a11y-no-onchange -->
           <select
-            bind:value={chain.id}
+            bind:value={scanAccountOptions['chainId']}
             class='network-select'
           >
           <option
@@ -389,7 +536,7 @@ input[type='checkbox'] {
           <input
             id="show-empty-addresses"
             type="checkbox"
-            bind:checked={showEmptyAddresses}
+            on:change="{filterEmptyAccounts}"
             class="checkbox-input"
           />
           <label for="legacy" class="ml2 cursor-pointer font-5"
@@ -400,26 +547,59 @@ input[type='checkbox'] {
         <button
           class="scan-accounts-btn"
           id="scan-accounts"
-          disabled={!selectionsMade}
-          on:click={scanAccounts}
+          disabled={!scanAccountOptions?.asset || !scanAccountOptions?.chainId || !scanAccountOptions?.derivationPath}
+          on:click={handleScanAccounts}
         >
           Scan Accounts
         </button>
       </div>
       <div class='address-table'>
-
+        <table class="w-100">
+          <colgroup>
+            <col span="1" style="width: 50%;">
+            <col span="1" style="width: 28%;">
+            <col span="1" style="width: 22%;">
+          </colgroup>
+          <thead class="">
+            <tr>
+              <th>Address</th>
+              <th>DPATH</th>
+              <th>Asset</th>
+            </tr>
+          </thead>
+          <tbody>
+            {#if accountsList?.all?.length && showEmptyAddresses}
+              {#each accountsList.all as account, i }
+                <tr>
+                  <td>{account?.address}</td>
+                  <td>{account?.derivationPath}</td>
+                  <td class='asset-td'>{account?.balance?.value} {account?.balance?.asset}</td>
+                </tr>
+              {/each}
+            {/if}
+            {#if accountsList?.filtered?.length && !showEmptyAddresses}
+              {#each accountsList.filtered as account, i }
+                <tr>
+                  <td>{account?.address}</td>
+                  <td>{account?.derivationPath}</td>
+                  <td class='asset-td'>{account?.balance?.value} {account?.balance?.asset}</td>
+                </tr>
+              {/each}
+            {/if}
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
   <section>
     <div class='address-found-count'>
-        {basePaths.length} total address{basePaths.length !== 1 ? 'es' : ''} found
+        {accountsList?.all?.length || 0} total address{accountsList?.all?.length !== 1 ? 'es' : ''} found
     </div>
     <div class='modal-controls'>
       <div
         class="dismiss-action"
         id="dismiss-account-select"
-        on:click={scanAccounts}
+        on:click={close}
       >
         Dismiss
     </div>

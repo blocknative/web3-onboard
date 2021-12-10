@@ -1,5 +1,4 @@
 import Joi from 'joi'
-import type { ChainId, WalletModule } from '@bn-onboard/types'
 
 const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
 

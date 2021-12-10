@@ -1,30 +1,31 @@
 import AccountSelect from './views/AccountSelect.svelte'
 import type { ScanAccountsOptions, SelectAccountOptions, Account } from './types'
-import { firstValueFrom, Subject } from 'rxjs'
-import { options } from 'joi'
+import { firstValueFrom, Subject, take, of } from 'rxjs'
 import ledgerIcon from './icons/ledgerIcon'
 
 import { SofiaProRegular, SofiaProSemiBold, SofiaProLight } from './fonts'
 
-const accountArr: Account[] = [{
-  address: 'addres string',
-  derivationPath: "m/44'/60'",
-  balance: {
-    asset: 'ETH',
-    value: 'balance string'
+const accountArr: Account[] = [
+  {
+    address: 'OxcED987876765',
+    derivationPath: "m/44'/60'/1'/0/0",
+    balance: {
+      asset: 'ETH',
+      value: '1.00'
+    }
   }
-}];
-  const mockData: SelectAccountOptions = {
-    basePaths: [ { label: 'Ethereum Ledger Live', value: "m/44'/60'" } ],
-    assets: [  { label: 'ETH', address: 'OxcED123123123' } ],
-    chains: [ { label: 'Ethereum', id: '0x1' }],
-    scanAccounts: (options: ScanAccountsOptions) => {
-      return new Promise((options) => accountArr)
-    },
-    walletIcon: ledgerIcon
-  }
+]
+const mockData: SelectAccountOptions = {
+  basePaths: [ { label: 'Ethereum Ledger Live', value: "m/44'/60'" } ],
+  assets: [  { label: 'ETH', address: 'OxcED123123123' } ],
+  chains: [ { label: 'Ethereum', id: '0x1' }],
+  scanAccounts: (options: ScanAccountsOptions) => {
+    return new Promise((options) => accountArr)
+  },
+  walletIcon: ledgerIcon
+}
 
-
+// eslint-disable-next-line max-len
 const accountSelect = async (options: SelectAccountOptions): Promise<Account> => {
   if (options) {
     // TODO handle validation
@@ -34,17 +35,16 @@ const accountSelect = async (options: SelectAccountOptions): Promise<Account> =>
       throw error
     }
   }
-  // const { basePaths, assets, chains, scanAccounts, walletIcon } = options
-  console.log(mockData)
+
   const app = mountAccountSelect(mockData)
-  const complete$ = new Subject();
+  const complete$ = new Subject(options)
   // TODO: Handle destroy with below
-  // complete$.pipe(take(1)).subscribe(() => app.$destroy())
-  return firstValueFrom(complete$)
+  await complete$.pipe(take(1)).subscribe(() => app.$destroy())
+  let account: Account
+  return of(accountArr[0])
 }
 
-// TODO: pass options
-function mountAccountSelect(options: SelectAccountOptions) {
+const mountAccountSelect = (selectAccountOptions: SelectAccountOptions) => {
   class AccountSelectEl extends HTMLElement {
     constructor() {
       super()
@@ -145,12 +145,12 @@ function mountAccountSelect(options: SelectAccountOptions) {
   `
 
   document.body.appendChild(accountSelectDomElement)
-  console.log(options)
+  console.log(selectAccountOptions)
 
   const app = new AccountSelect({
-    target: target, 
+    target: target,
     props: {
-      mockData
+      selectAccountOptions
     }
   })
 
