@@ -18,6 +18,7 @@ const accountSelect = async (options: SelectAccountOptions): Promise<Account[]> 
   const svelteInstance = mountAccountSelect(options, accounts$)
 
   accounts$.pipe(take(1)).subscribe(() => {
+    console.log('destroying')
     svelteInstance.$destroy()
   })
 

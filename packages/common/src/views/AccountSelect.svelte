@@ -110,14 +110,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
   }
 
   .connect-btn:disabled {
     background-color: var(--account-select-blue-300, var(--blue-300));
+    cursor: default;
   }
 
   .connect-btn {
     background-color: var(--account-select-blue-500, var(--blue-500));
+    cursor: pointer;
   }
 
   .dismiss-action {
@@ -226,6 +229,10 @@
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
+    width: 2rem;
+    height: 2rem;
+    background: var(--account-select-gray-200, var(--gray-200));
+    border-radius: 40px;
   }
 
   .hardware-connect-modal {
