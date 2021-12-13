@@ -17,21 +17,15 @@ const accountSelect = async (options: SelectAccountOptions): Promise<Account[]> 
   const accounts$ = new Subject<Account[]>()
   const svelteInstance = mountAccountSelect(options, accounts$)
 
-  // destroy the svelte instance on next emission of accounts
-  // which indicates the user has completed actions required in the modal
   accounts$.pipe(take(1)).subscribe(() => {
     svelteInstance.$destroy()
   })
 
-  // firstValueFrom will convert the Observable to a promise and will
-  // resolve the first emission from accounts$,
-  // which will be an empty array if the user dismissed the modal
-  // or it will be an array of one account if the user selected an account
   return firstValueFrom(accounts$)
 }
 
 // eslint-disable-next-line max-len
-const mountAccountSelect = (selectAccountOptions: SelectAccountOptions, accounts: Subject<Account[]>) => {
+const mountAccountSelect = (selectAccountOptions: SelectAccountOptions, accounts$: Subject<Account[]>) => {
   class AccountSelectEl extends HTMLElement {
     constructor() {
       super()
@@ -132,13 +126,12 @@ const mountAccountSelect = (selectAccountOptions: SelectAccountOptions, accounts
   `
 
   document.body.appendChild(accountSelectDomElement)
-  console.log(selectAccountOptions)
 
   const app = new AccountSelect({
     target: target,
     props: {
       selectAccountOptions,
-      accounts
+      accounts$
     }
   })
 

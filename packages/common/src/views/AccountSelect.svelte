@@ -2,7 +2,6 @@
   import blocknative from '../icons/blocknative'
   import CloseButton from './CloseButton.svelte'
   import Spinner from '../elements/Spinner.svelte'
-  import { fade } from 'svelte/transition'
   import { Subject } from 'rxjs'
 
   import type { Asset, DerivationPath, ScanAccountsOptions, SelectAccountOptions, Account, Chain, AccountsList } from '../types';
@@ -11,12 +10,11 @@
 
   const { basePaths, assets, chains, scanAccounts, walletIcon } = selectAccountOptions
   
-  console.log(basePaths, assets, chains, scanAccounts, walletIcon)
-
   let loadingAccounts: boolean = false;
   let showEmptyAddresses: boolean = false;
-  let selectionsMade: boolean = false;
   let accountsList: AccountsList;
+  let accountSelected: Account;
+  let selectedRowIndex: number;
 
   let scanAccountOptions: ScanAccountsOptions = {
     derivationPath : basePaths[0]?.value || '',
@@ -24,24 +22,13 @@
     asset: assets[0] || null
   };
 
-  // $: filtersAreValid = $filters.every(
-  //   ({ properties, values, comparison, value }) =>
-  //     (properties.length &&
-  //       (value || values.length || properties.includes('exists'))) ||
-  //     comparison === 'exists'
-  // )
-
   const filterEmptyAccounts = () => {
     showEmptyAddresses = !showEmptyAddresses;
   }
 
   const connectAccounts = () => {
-    console.log('connectAccount')
-    // dismiss with an empty array to indicate that the user did not select an account
-    const dismiss = () => accounts$.next([])
-
-    // user selects an account, so emit an array of the selected account
-    const connect = (account: Account) => accounts$.next([account])
+    if (!accountSelected) return;
+    accounts$.next([accountSelected]);
   }
 
   const handleKeyDown = (event: any) => {
@@ -51,18 +38,19 @@
   }
 
   const handleScanAccounts = async () => {
-    console.log(scanAccountOptions)
     loadingAccounts = true;
-    const allAccounts = await scanAccounts(scanAccountOptions)
-    // const allAccounts = accountMock;
+    const allAccounts = await scanAccounts(scanAccountOptions);
     if (allAccounts) {
       loadingAccounts = false;
     }
     accountsList = {all: allAccounts, filtered: allAccounts.filter(account => Number(account?.balance.value) > 0)};
   }
 
-  const close = () => {
-    console.log('close')
+  const dismiss = () => accounts$.next([]);
+
+  const handleSelectedRow = (accountClicked: Account, index: number) => {
+    selectedRowIndex = index;
+    accountSelected = accountClicked;
   }
 </script>
 
@@ -110,20 +98,26 @@
     font-style: normal;
     font-weight: bold;
     font-size: var(--account-select-font-size-5, var(--font-size-5));
-    line-height: var(--account-select-font-size-5, var(--font-size-5));
+    line-height: var(--account-select-font-line-height-1, var(--line-height-1));
     border: none;
   }
 
   .scan-accounts-btn {
+    line-height: var(--account-select-font-line-height-1, var(--line-height-1));
     background-color: var(--account-select-gray-500, var(--gray-500));
     color: var(--account-select-blue-100, var(--blue-100));
-    width: 12rem;
+    width: 10rem;
     display: flex;
     justify-content: center;
+    align-items: center;
+  }
+
+  .connect-btn:disabled {
+    background-color: var(--account-select-blue-300, var(--blue-300));
   }
 
   .connect-btn {
-    background-color: var(--account-select-blue-300, var(--blue-300));
+    background-color: var(--account-select-blue-500, var(--blue-500));
   }
 
   .dismiss-action {
@@ -146,12 +140,6 @@
   input:disabled,
   select:disabled {
     background-color: var(--grey-100);
-  }
-
-  input.invalid,
-  select.invalid {
-    border-color: var(--danger-500);
-    background: var(--danger-100);
   }
 
   input[type='checkbox'] {
@@ -215,12 +203,23 @@
   tbody tr {
     box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1);
   }
+
   table thead{
   position: sticky;
   inset-block-start: 0; /* "top" */
   box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1);
   background-color: var(--account-select-white, var(--white));
-}
+  }
+
+  tbody tr:hover {
+		background-color: var(--account-select-blue-100, var(--blue-100));
+		color: var(--account-select-black, var(--black));
+	}
+
+  .selected-row, .selected-row:hover {
+		background-color: var(--account-select-blue-500, var(--blue-500));
+		color: var(--account-select-blue-100, var(--blue-100));
+	}
 
   .close {
     position: absolute;
@@ -269,10 +268,6 @@
     height: 4rem;
   }
 
-  .wallet-icon > svg {
-    height: 100%;
-  }
-
   .modal-controls {
     display: flex;
     justify-content: space-between;
@@ -302,7 +297,7 @@
     width: 8rem
   }
   .table-section {
-    height: 31.25rem;
+    height: 32.8rem;
     padding: 1rem;
   }
 
@@ -444,9 +439,12 @@
           on:click={handleScanAccounts}
         >
           {#if loadingAccounts}
+            Scanning...
             <Spinner size='1.5rem'/>
           {/if}
-          Scan Accounts
+          {#if !loadingAccounts}
+            Scan Accounts
+          {/if}
         </button>
       </div>
       <div class='address-table'>
@@ -466,7 +464,8 @@
           <tbody>
             {#if accountsList?.all?.length && showEmptyAddresses}
               {#each accountsList.all as account, i }
-                <tr>
+                <tr class:selected-row="{selectedRowIndex === i}"
+                    on:click="{() => handleSelectedRow(account, i)}">
                   <td>{account?.address}</td>
                   <td>{account?.derivationPath}</td>
                   <td class='asset-td'>{account?.balance?.value} {account?.balance?.asset}</td>
@@ -475,7 +474,8 @@
             {/if}
             {#if accountsList?.filtered?.length && !showEmptyAddresses}
               {#each accountsList.filtered as account, i }
-                <tr>
+                <tr class:selected-row="{selectedRowIndex === i}"
+                    on:click="{() => handleSelectedRow(account, i)}">
                   <td>{account?.address}</td>
                   <td>{account?.derivationPath}</td>
                   <td class='asset-td'>{account?.balance?.value} {account?.balance?.asset}</td>
@@ -495,14 +495,14 @@
       <div
         class="dismiss-action"
         id="dismiss-account-select"
-        on:click={close}
+        on:click={dismiss}
       >
         Dismiss
     </div>
       <button
         class="connect-btn"
         id="connect-accounts"
-        disabled={!selectionsMade}
+        disabled={!accountSelected}
         on:click={connectAccounts}
       >
         Connect

@@ -12,7 +12,7 @@
     font-family: inherit;
     font-size: inherit;
     color: inherit;
-    margin-right: .5rem;
+    margin-left: auto;
   }
 
   span {
@@ -59,7 +59,7 @@
   }
 </style>
 
-<div class="loading-container absolute">
+<div class="loading-container">
   <div class="loading" style={`height: ${size}; width: ${size};`}>
     <div class="loading-first" style={`height: ${size}; width: ${size};`} />
     <div class="loading-second" style={`height: ${size}; width: ${size};`} />
