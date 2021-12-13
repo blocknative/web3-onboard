@@ -194,14 +194,6 @@ export type MessageListener = (message: ProviderMessage) => void
 export type ChainListener = (chainId: ChainId) => void
 export type AccountsListener = (accounts: ProviderAccounts) => void
 
-export type RequestMethods =
-  | 'eth_accounts'
-  | 'eth_chainId'
-  | 'eth_getBalance'
-  | 'eth_requestAccounts'
-  | 'wallet_addEthereumChain'
-  | 'wallet_switchEthereumChain'
-
 /**
  * The hexadecimal representation of the users
  */
