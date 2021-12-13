@@ -1,6 +1,6 @@
 import AccountSelect from './views/AccountSelect.svelte'
 import type { SelectAccountOptions, Account } from './types'
-import { firstValueFrom, Subject, take, of } from 'rxjs'
+import { firstValueFrom, Subject, take } from 'rxjs'
 
 import { SofiaProRegular, SofiaProSemiBold, SofiaProLight } from './fonts'
 
@@ -18,7 +18,6 @@ const accountSelect = async (options: SelectAccountOptions): Promise<Account[]> 
   const svelteInstance = mountAccountSelect(options, accounts$)
 
   accounts$.pipe(take(1)).subscribe(() => {
-    console.log('destroying')
     svelteInstance.$destroy()
   })
 

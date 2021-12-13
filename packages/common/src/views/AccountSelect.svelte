@@ -234,12 +234,11 @@
           bind:value={scanAccountOptions['derivationPath']}
         >
           {#each basePaths as path, pathIndex}
-
-          <option
-            value={path.value}
-          >
-            {path.label} - {path.value}
-          </option>
+            <option
+              value={path.value}
+            >
+              {path.label} - {path.value}
+            </option>
           {/each}
         </select>
     </div>
