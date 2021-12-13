@@ -12,6 +12,7 @@
     font-family: inherit;
     font-size: inherit;
     color: inherit;
+    margin-right: .5rem;
   }
 
   span {

@@ -1,6 +1,7 @@
 <script lang="ts">
   import blocknative from '../icons/blocknative'
   import CloseButton from './CloseButton.svelte'
+  import Spinner from '../elements/Spinner.svelte'
   import { fade } from 'svelte/transition'
   import { Subject } from 'rxjs'
 
@@ -12,6 +13,7 @@
   
   console.log(basePaths, assets, chains, scanAccounts, walletIcon)
 
+  let loadingAccounts: boolean = false;
   let showEmptyAddresses: boolean = false;
   let selectionsMade: boolean = false;
   let accountsList: AccountsList;
@@ -50,8 +52,12 @@
 
   const handleScanAccounts = async () => {
     console.log(scanAccountOptions)
+    loadingAccounts = true;
     const allAccounts = await scanAccounts(scanAccountOptions)
     // const allAccounts = accountMock;
+    if (allAccounts) {
+      loadingAccounts = false;
+    }
     accountsList = {all: allAccounts, filtered: allAccounts.filter(account => Number(account?.balance.value) > 0)};
   }
 
@@ -111,7 +117,9 @@
   .scan-accounts-btn {
     background-color: var(--account-select-gray-500, var(--gray-500));
     color: var(--account-select-blue-100, var(--blue-100));
-    width: 11rem;
+    width: 12rem;
+    display: flex;
+    justify-content: center;
   }
 
   .connect-btn {
@@ -381,8 +389,8 @@
         Asset
       </h4>
       <select
-      class='asset-select'
-      bind:value={scanAccountOptions['asset']}
+        class='asset-select'
+        bind:value={scanAccountOptions['asset']}
       >
         {#each assets as asset, assetIndex}
           <option
@@ -400,8 +408,8 @@
         Network
       </h4>
       <select
-      bind:value={scanAccountOptions['chainId']}
-      class='network-select'
+        bind:value={scanAccountOptions['chainId']}
+        class='network-select'
       >
         {#each chains as chain, chainIndex}
           <option
@@ -435,6 +443,9 @@
           disabled={!scanAccountOptions?.asset || !scanAccountOptions?.chainId || !scanAccountOptions?.derivationPath}
           on:click={handleScanAccounts}
         >
+          {#if loadingAccounts}
+            <Spinner size='1.5rem'/>
+          {/if}
           Scan Accounts
         </button>
       </div>
