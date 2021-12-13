@@ -1,6 +1,6 @@
 {
   "name": "@bn-onboard/common",
-  "version": "0.0.1",
+  "version": "0.0.1-0.0.1",
   "private": true,
   "scripts": {
     "build": "rollup -c",
