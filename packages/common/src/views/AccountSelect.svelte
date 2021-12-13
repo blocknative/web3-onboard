@@ -26,19 +26,11 @@
     accounts$.next([accountSelected]);
   }
 
-  const handleKeyDown = (event: any) => {
-    if (event.key === 'Enter') {
-      // Submit it!
-    }
-  }
-
   const setAccountsList = (newAccountsList: AccountsList) => {
     accountsList = newAccountsList;
   }
 
   const dismiss = () => accounts$.next([]);
-
-  console.log(showEmptyAddresses)
 
 </script>
 
@@ -103,7 +95,7 @@
   .dismiss-action {
     color: var(--account-select-blue-500, var(--blue-500));
     cursor: pointer;
-    margin-left: var(--account-select-margin-5);
+    margin-left: var(--account-select-margin-4, var(--margin-4));
   }
 
   select:hover {
@@ -179,6 +171,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
+    padding-top: 0;
   }
 
   .control-label {
@@ -232,7 +225,7 @@
     <div class="close" on:click={dismiss}><CloseButton /></div>
   </header>
   <section class='modal-controls'>
-    <div class="w-100 base-path-container" on:keydown={handleKeyDown}>
+    <div class="w-100 base-path-container">
         <h4 class="control-label">
           Select Base Path
         </h4>
@@ -252,7 +245,7 @@
     </div>
 
 
-    <div class="w-100 asset-container" on:keydown={handleKeyDown}>
+    <div class="w-100 asset-container">
       <h4 class="control-label">
         Asset
       </h4>
@@ -271,7 +264,7 @@
     </div>
 
 
-    <div class="network-container w-100" on:keydown={handleKeyDown}>
+    <div class="network-container w-100">
       <h4 class="control-label">
         Network
       </h4>
