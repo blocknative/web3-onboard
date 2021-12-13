@@ -122,6 +122,7 @@
 
   .dismiss-action {
     color: var(--account-select-blue-500, var(--blue-500));
+    cursor: pointer;
   }
 
   input:hover,
@@ -356,7 +357,7 @@
   <header class='connect-wallet-header'>
     <div class='bn-logo'>{@html blocknative}</div>
     <div class='wallet-icon'>{@html walletIcon}</div>
-    <div class="close" on:click={close}><CloseButton /></div>
+    <div class="close" on:click={dismiss}><CloseButton /></div>
   </header>
   <section class='modal-controls'>
     <div class="w-100 base-path-container" on:keydown={handleKeyDown}>
