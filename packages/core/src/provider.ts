@@ -99,8 +99,6 @@ export function trackWallet(
           return
         }
 
-        let account
-
         if (!existingAccount) {
           let ens: Ens | null = null
           let balance: Balances = null
@@ -126,17 +124,27 @@ export function trackWallet(
             balanceProm.then(b => {
               balance = b
 
-              updateWallet(label, {
-                accounts: [{ address: address, ens, balance }, ...restAccounts]
-              })
+              if (balance) {
+                updateWallet(label, {
+                  accounts: [
+                    { address: address, ens, balance },
+                    ...restAccounts
+                  ]
+                })
+              }
             })
 
             ensProm.then(e => {
               ens = e
 
-              updateWallet(label, {
-                accounts: [{ address: address, ens, balance }, ...restAccounts]
-              })
+              if (ens) {
+                updateWallet(label, {
+                  accounts: [
+                    { address: address, ens, balance },
+                    ...restAccounts
+                  ]
+                })
+              }
             })
 
             return
@@ -144,7 +152,7 @@ export function trackWallet(
         }
 
         const updatedOrderedAccounts = [
-          existingAccount || account,
+          existingAccount || { address, ens: null, balance: null },
           ...restAccounts
         ]
 
@@ -158,11 +166,13 @@ export function trackWallet(
       complete: () =>
         console.log('Removing chainChanged listener for wallet:', label),
       next: async ([chainId, wallets]) => {
-        const { accounts } = wallets.find(
+        const wallet = wallets.find(
           wallet => wallet.label === label
         ) as WalletState
 
-        const resetAccounts = accounts.map(({ address }) => ({
+        if (chainId === wallet.chain) return
+
+        const resetAccounts = wallet.accounts.map(({ address }) => ({
           address,
           ens: null,
           balance: null
@@ -180,7 +190,7 @@ export function trackWallet(
         const ethersProvider = new providers.JsonRpcProvider(rpcUrl)
 
         const updatedAccounts = await Promise.all(
-          accounts.map(async ({ address }) => {
+          wallet.accounts.map(async ({ address }) => {
             const balanceProm = getBalance(ethersProvider, address)
             const ensProm = validEnsChain(chainId)
               ? getEns(ethersProvider, address)

@@ -3,9 +3,8 @@
   import { createEventDispatcher } from 'svelte'
   import { ErrorCodes } from '@bn-onboard/common'
 
-  import { requestAccounts, trackWallet } from '../../provider'
-  import { state } from '../../store'
-  import { addWallet } from '../../store/actions'
+  import { requestAccounts } from '../../provider'
+  import { updateWallet } from '../../store/actions'
   import { internalState$ } from '../../streams'
   import type { WalletState } from '../../types'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
@@ -14,13 +13,10 @@
   import defaultAppIcon from '../../icons/default-app-icon'
   import en from '../../i18n/en.json'
 
-  export let selectedWallet: WalletState
-
-  export let updateSelectedWallet: (
-    update: WalletState | Partial<WalletState>
-  ) => void
-
-  export let unSelectWallet: () => void
+  export let primaryWallet: WalletState
+  export let next: () => void
+  export let back: () => void
+  export let deselectWallet: (label: string) => void
 
   let connectionRejected: boolean = false
 
@@ -28,15 +24,11 @@
 
   const dispatch = createEventDispatcher<{ connectionRejected: boolean }>()
 
-  function walletAdded(label: WalletState['label']) {
-    return !!state.get().wallets.find(wallet => wallet.label === label)
-  }
-
   async function connect() {
     dispatch('connectionRejected', false)
     connectionRejected = false
 
-    const { provider, label } = selectedWallet
+    const { provider, label } = primaryWallet
 
     try {
       const blankAccountDetails = {
@@ -47,18 +39,16 @@
       const [address] = await requestAccounts(provider)
 
       // canceled previous request
-      if (!address) return
+      if (!address) {
+        return
+      }
 
       const update = {
         accounts: [{ address, ...blankAccountDetails }]
       }
 
-      updateSelectedWallet(update)
-
-      if (!walletAdded(label)) {
-        addWallet({ ...selectedWallet, ...update })
-        trackWallet(provider, label)
-      }
+      updateWallet(label, update)
+      next()
     } catch (error) {
       console.log({ error })
       const { code } = error as { code: number; message: string }
@@ -72,11 +62,7 @@
 
       // account access has already been requested and is awaiting approval
       if (code === ErrorCodes.ACCOUNT_ACCESS_ALREADY_REQUESTED) {
-        // track wallet and wait for accounts to be connected
-        if (!walletAdded(label)) {
-          addWallet(selectedWallet)
-          trackWallet(provider, label)
-        }
+        return
       }
     }
   }
@@ -130,6 +116,10 @@
     flex-direction: column;
     justify-content: center;
   }
+
+  .ml {
+    margin-left: var(--onboard-spacing-4, var(--spacing-4));
+  }
 </style>
 
 <div class="container">
@@ -141,7 +131,7 @@
           border="yellow"
           icon={appMetadata?.icon || defaultAppIcon}
         />
-        <div class="centered-flex-column">
+        <div class="centered-flex-column ml">
           <div class="text">
             {$_('connect.connectingWallet.rejectedText', {
               default: en.connect.connectingWallet.rejectedText
@@ -174,14 +164,19 @@
         size={48}
         border="yellow"
         background="lightGray"
-        icon={selectedWallet.icon}
+        icon={primaryWallet.icon}
       >
         <PendingStatusIcon slot="status" size={17} />
       </WalletAppBadge>
     {/if}
   </div>
 
-  <button on:click={unSelectWallet} class="onboard-button-primary"
+  <button
+    on:click={() => {
+      deselectWallet(primaryWallet.label)
+      back()
+    }}
+    class="onboard-button-primary"
     >{$_('connect.connectingWallet.primaryButton', {
       default: en.connect.connectingWallet.primaryButton
     })}</button

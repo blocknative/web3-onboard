@@ -15,13 +15,13 @@
   import { state } from '../../store'
   import en from '../../i18n/en.json'
 
-  export let selectedWallet: WalletState
+  export let primaryWallet: WalletState
 
-  const { label } = selectedWallet
+  const { label } = primaryWallet
   const { appMetadata } = internalState$.getValue()
 
   async function updateAccountDetails() {
-    const { chain, accounts } = selectedWallet
+    const { chain, accounts } = primaryWallet
     const rpcUrl = getRpcUrl(chain, state.get().chains)
 
     if (rpcUrl) {
@@ -123,7 +123,7 @@
         <WalletAppBadge
           size={40}
           border="darkGreen"
-          icon={selectedWallet.icon}
+          icon={primaryWallet.icon}
         />
       </div>
     </div>

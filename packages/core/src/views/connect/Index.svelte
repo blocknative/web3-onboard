@@ -1,12 +1,12 @@
 <script lang="ts">
   import type { WalletModule } from '@bn-onboard/types'
+  import { pluck, shareReplay } from 'rxjs'
   import { _ } from 'svelte-i18n'
   import { BigNumber } from 'ethers'
   import EventEmitter from 'eventemitter3'
 
   import type {
     ConnectOptions,
-    WalletState,
     WalletWithLoadingIcon,
     WalletWithLoadedIcon,
     i18n
@@ -17,23 +17,26 @@
   import InstallWallet from './InstallWallet.svelte'
   import ConnectingWallet from './ConnectingWallet.svelte'
   import ConnectedWallet from './ConnectedWallet.svelte'
-
-  import { connectWallet$, internalState$ } from '../../streams'
-  import { getChainId } from '../../provider'
-  import Sidebar from './Sidebar.svelte'
-  import { state } from '../../store'
-  import en from '../../i18n/en.json'
   import CloseButton from '../shared/CloseButton.svelte'
+  import Sidebar from './Sidebar.svelte'
+
+  import { connectWallet$, internalState$, wallets$ } from '../../streams'
+  import { getChainId, trackWallet } from '../../provider'
+  import { state } from '../../store'
+  import { addWallet, removeWallet } from '../../store/actions'
+  import en from '../../i18n/en.json'
 
   export let options: ConnectOptions
 
   const { walletModules, appMetadata } = internalState$.getValue()
   const { autoSelect } = options
 
+  const primaryWallet$ = wallets$.pipe(pluck(0), shareReplay(1))
+
   let loading = true
   let connectionRejected: string = 'false'
   let wallets: WalletWithLoadingIcon[] = []
-  let selectedWallet: WalletState | null
+  let selectedWallet: string
 
   let windowWidth: number
 
@@ -47,6 +50,47 @@
     autoSelectWallet(walletToAutoSelect)
   } else {
     loadWalletsForSelection()
+  }
+
+  async function selectWallet({
+    label,
+    icon,
+    getInterface
+  }: WalletWithLoadedIcon): Promise<void> {
+    const existingWallet = state
+      .get()
+      .wallets.find(wallet => wallet.label === label)
+
+    if (existingWallet) {
+      addWallet(existingWallet)
+      close()
+      return
+    }
+
+    const { chains } = state.get()
+
+    const { provider } = await getInterface({
+      chains,
+      BigNumber,
+      EventEmitter,
+      appMetadata
+    })
+
+    const chain = await getChainId(provider)
+
+    addWallet({
+      label,
+      icon,
+      provider,
+      accounts: [],
+      chain
+    })
+
+    trackWallet(provider, label)
+
+    selectedWallet = label
+
+    setStep('connectingWallet')
   }
 
   async function autoSelectWallet(wallet: WalletModule): Promise<void> {
@@ -73,55 +117,17 @@
     connectWallet$.next({ inProgress: false })
   }
 
-  function updateSelectedWallet(update: Partial<WalletState>) {
-    selectedWallet = { ...(selectedWallet as WalletState), ...update }
+  type Step = keyof i18n['connect']
+  let step: Step = 'selectingWallet'
+
+  function setStep(nextStep: Step) {
+    step = nextStep
   }
 
-  async function selectWallet({
-    label,
-    icon,
-    getInterface
-  }: WalletWithLoadedIcon): Promise<void> {
-    const existingWallet = state
-      .get()
-      .wallets.find(wallet => wallet.label === label)
-
-    if (existingWallet) {
-      selectedWallet = existingWallet
-      return
-    }
-
-    const { chains } = state.get()
-
-    const { provider } = await getInterface({
-      chains,
-      BigNumber,
-      EventEmitter,
-      appMetadata
-    })
-
-    const chain = await getChainId(provider)
-
-    selectedWallet = {
-      label,
-      icon,
-      provider,
-      accounts: [],
-      chain
-    }
+  function deselectWallet(label: string) {
+    removeWallet(label)
+    selectedWallet = ''
   }
-
-  function unSelectWallet() {
-    selectedWallet = null
-  }
-
-  $: status = (
-    !selectedWallet
-      ? 'selectingWallet'
-      : !selectedWallet.accounts.length
-      ? 'connectingWallet'
-      : 'connectedWallet'
-  ) as keyof i18n['connect']
 </script>
 
 <style>
@@ -179,17 +185,17 @@
   <Modal {close}>
     <div class="container">
       {#if windowWidth >= 809}
-        <Sidebar {status} />
+        <Sidebar {step} />
       {/if}
 
       <div class="content">
         <div class="header">
           <h4 class="header-heading">
-            {$_(`connect.${status}.header`, {
-              default: en.connect[status].header,
+            {$_(`connect.${step}.header`, {
+              default: en.connect[step].header,
               values: {
                 connectionRejected,
-                wallet: selectedWallet?.label
+                wallet: selectedWallet
               }
             })}
           </h4>
@@ -197,7 +203,7 @@
             <CloseButton />
           </div>
         </div>
-        {#if status === 'selectingWallet'}
+        {#if step === 'selectingWallet'}
           {#if wallets.length}
             <SelectingWallet {selectWallet} {wallets} />
           {:else}
@@ -205,19 +211,20 @@
           {/if}
         {/if}
 
-        {#if status === 'connectingWallet' && selectedWallet}
+        {#if step === 'connectingWallet' && selectedWallet}
           <ConnectingWallet
             on:connectionRejected={({ detail }) => {
               connectionRejected = String(detail)
             }}
-            {selectedWallet}
-            {updateSelectedWallet}
-            {unSelectWallet}
+            {deselectWallet}
+            primaryWallet={$primaryWallet$}
+            next={() => setStep('connectedWallet')}
+            back={() => setStep('selectingWallet')}
           />
         {/if}
 
-        {#if status === 'connectedWallet' && selectedWallet}
-          <ConnectedWallet {selectedWallet} />
+        {#if step === 'connectedWallet' && selectedWallet}
+          <ConnectedWallet primaryWallet={$primaryWallet$} />
         {/if}
       </div>
     </div>

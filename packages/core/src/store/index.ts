@@ -37,18 +37,28 @@ function reducer(state: AppState, action: Action): AppState {
         chains: [...state.chains, ...(payload as Chain[])]
       }
 
-    case ADD_WALLET:
+    case ADD_WALLET: {
+      const existingWallet = state.wallets.find(
+        ({ label }) => label === payload?.label
+      )
+
       return {
         ...state,
-        // add to front of wallets as it is now the primary wallet
-        wallets: [payload as WalletState, ...state.wallets]
+        wallets: [
+          // add to front of wallets as it is now the primary wallet
+          existingWallet || (payload as WalletState),
+          // filter out wallet if it already existed
+          ...state.wallets.filter(({ label }) => label !== payload.label)
+        ]
       }
+    }
 
     case UPDATE_WALLET: {
       const update = payload as UpdateWalletAction['payload']
+      const { id, ...walletUpdate } = update
 
       const updatedWallets = state.wallets.map(wallet =>
-        wallet.label === update.id ? { ...wallet, ...update } : wallet
+        wallet.label === id ? { ...wallet, ...walletUpdate } : wallet
       )
 
       return {

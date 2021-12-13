@@ -7,6 +7,7 @@
   export let label: string
   export let onClick: () => void
   export let connected: boolean
+  export let connecting: boolean
 </script>
 
 <style>
@@ -43,6 +44,7 @@
   <WalletAppBadge
     size={48}
     {icon}
+    loading={connecting}
     border={connected ? 'green' : 'blue'}
     background="transparent"
   />

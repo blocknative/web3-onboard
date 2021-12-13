@@ -51,14 +51,7 @@ const wallet = Joi.object({
   icon: Joi.string(),
   provider: unknownObject,
   accounts,
-  chain: Joi.string(),
-  ens: Joi.object({
-    name: Joi.string(),
-    avatar: Joi.string(),
-    contentHash: Joi.string(),
-    getText: Joi.function().arity(1)
-  }),
-  balance: Joi.object().pattern(/\w/, Joi.number())
+  chain: Joi.string()
 })
 
 const recommendedWallet = Joi.object({
