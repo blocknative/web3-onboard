@@ -1,32 +1,11 @@
 import AccountSelect from './views/AccountSelect.svelte'
-import type { ScanAccountsOptions, SelectAccountOptions, Account } from './types'
+import type { SelectAccountOptions, Account } from './types'
 import { firstValueFrom, Subject, take, of } from 'rxjs'
-import ledgerIcon from './icons/ledgerIcon'
 
 import { SofiaProRegular, SofiaProSemiBold, SofiaProLight } from './fonts'
 
-const accountArr: Account[] = [
-  {
-    address: 'OxcED987876765',
-    derivationPath: "m/44'/60'/1'/0/0",
-    balance: {
-      asset: 'ETH',
-      value: '1.00'
-    }
-  }
-]
-const mockData: SelectAccountOptions = {
-  basePaths: [ { label: 'Ethereum Ledger Live', value: "m/44'/60'" } ],
-  assets: [  { label: 'ETH', address: 'OxcED123123123' } ],
-  chains: [ { label: 'Ethereum', id: '0x1' }],
-  scanAccounts: (options: ScanAccountsOptions) => {
-    return new Promise((options) => accountArr)
-  },
-  walletIcon: ledgerIcon
-}
-
 // eslint-disable-next-line max-len
-const accountSelect = async (options: SelectAccountOptions): Promise<Account> => {
+const accountSelect = async (options: SelectAccountOptions): Promise<Account[]> => {
   if (options) {
     // TODO handle validation
     const error = false
@@ -35,16 +14,24 @@ const accountSelect = async (options: SelectAccountOptions): Promise<Account> =>
       throw error
     }
   }
+  const accounts$ = new Subject<Account[]>()
+  const svelteInstance = mountAccountSelect(options, accounts$)
 
-  const app = mountAccountSelect(mockData)
-  const complete$ = new Subject(options)
-  // TODO: Handle destroy with below
-  await complete$.pipe(take(1)).subscribe(() => app.$destroy())
-  let account: Account
-  return of(accountArr[0])
+  // destroy the svelte instance on next emission of accounts
+  // which indicates the user has completed actions required in the modal
+  accounts$.pipe(take(1)).subscribe(() => {
+    svelteInstance.$destroy()
+  })
+
+  // firstValueFrom will convert the Observable to a promise and will
+  // resolve the first emission from accounts$,
+  // which will be an empty array if the user dismissed the modal
+  // or it will be an array of one account if the user selected an account
+  return firstValueFrom(accounts$)
 }
 
-const mountAccountSelect = (selectAccountOptions: SelectAccountOptions) => {
+// eslint-disable-next-line max-len
+const mountAccountSelect = (selectAccountOptions: SelectAccountOptions, accounts: Subject<Account[]>) => {
   class AccountSelectEl extends HTMLElement {
     constructor() {
       super()
@@ -150,7 +137,8 @@ const mountAccountSelect = (selectAccountOptions: SelectAccountOptions) => {
   const app = new AccountSelect({
     target: target,
     props: {
-      selectAccountOptions
+      selectAccountOptions,
+      accounts
     }
   })
 

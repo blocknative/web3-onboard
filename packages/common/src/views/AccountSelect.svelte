@@ -2,8 +2,11 @@
   import blocknative from '../icons/blocknative'
   import CloseButton from './CloseButton.svelte'
   import { fade } from 'svelte/transition'
+  import { Subject } from 'rxjs'
+
   import type { Asset, DerivationPath, ScanAccountsOptions, SelectAccountOptions, Account, Chain, AccountsList } from '../types';
   export let selectAccountOptions: SelectAccountOptions
+  export let accounts$: Subject<Account[]>
 
   const { basePaths, assets, chains, scanAccounts, walletIcon } = selectAccountOptions
   
@@ -19,109 +22,6 @@
     asset: assets[0] || null
   };
 
-
-  const accountMock = [
-    {
-      address: 'OxcED987876765',
-      derivationPath: "m/44'/60'/1'/0/0",
-      balance: {
-        asset: 'ETH',
-        value: '100.00'
-      }
-    },{
-      address: 'OxcED987876765',
-      derivationPath: "m/44'/60'/1'/0/0",
-      balance: {
-        asset: 'ETH',
-        value: '88.00'
-      }
-    },{
-      address: 'OxcED987876765',
-      derivationPath: "m/44'/60'/1'/0/0",
-      balance: {
-        asset: 'ETH',
-        value: '20.00'
-      }
-    },{
-      address: 'OxcED987876765',
-      derivationPath: "m/44'/60'/1'/0/0",
-      balance: {
-        asset: 'ETH',
-        value: '0.00'
-      }
-    },{
-      address: 'OxcED987876765',
-      derivationPath: "m/44'/60'/1'/0/0",
-      balance: {
-        asset: 'ETH',
-        value: '0.00'
-      }
-    },{
-      address: 'OxcED987876765',
-      derivationPath: "m/44'/60'/1'/0/0",
-      balance: {
-        asset: 'ETH',
-        value: '5.00'
-      }
-    },{
-      address: 'OxcED987876765',
-      derivationPath: "m/44'/60'/1'/0/0",
-      balance: {
-        asset: 'ETH',
-        value: '10000.00'
-      }
-    },{
-      address: 'OxcED987876765',
-      derivationPath: "m/44'/60'/1'/0/0",
-      balance: {
-        asset: 'ETH',
-        value: '0.00'
-      }
-    },{
-      address: 'OxcED987876765',
-      derivationPath: "m/44'/60'/1'/0/0",
-      balance: {
-        asset: 'ETH',
-        value: '5.00'
-      }
-    },{
-      address: 'OxcED987876765',
-      derivationPath: "m/44'/60'/1'/0/0",
-      balance: {
-        asset: 'ETH',
-        value: '10000.00'
-      }
-    },{
-      address: 'OxcED987876765',
-      derivationPath: "m/44'/60'/1'/0/0",
-      balance: {
-        asset: 'ETH',
-        value: '10000.00'
-      }
-    },{
-      address: 'OxcED987876765',
-      derivationPath: "m/44'/60'/1'/0/0",
-      balance: {
-        asset: 'ETH',
-        value: '0.00'
-      }
-    },{
-      address: 'OxcED987876765',
-      derivationPath: "m/44'/60'/1'/0/0",
-      balance: {
-        asset: 'ETH',
-        value: '5.00'
-      }
-    },{
-      address: 'OxcED987876765',
-      derivationPath: "m/44'/60'/1'/0/0",
-      balance: {
-        asset: 'ETH',
-        value: '10000.00'
-      }
-    }
-  ]
-
   // $: filtersAreValid = $filters.every(
   //   ({ properties, values, comparison, value }) =>
   //     (properties.length &&
@@ -135,6 +35,11 @@
 
   const connectAccounts = () => {
     console.log('connectAccount')
+    // dismiss with an empty array to indicate that the user did not select an account
+    const dismiss = () => accounts$.next([])
+
+    // user selects an account, so emit an array of the selected account
+    const connect = (account: Account) => accounts$.next([account])
   }
 
   const handleKeyDown = (event: any) => {
@@ -145,8 +50,8 @@
 
   const handleScanAccounts = async () => {
     console.log(scanAccountOptions)
-    // const allAccounts = await scanAccounts(scanAccountOptions)
-    const allAccounts = accountMock;
+    const allAccounts = await scanAccounts(scanAccountOptions)
+    // const allAccounts = accountMock;
     accountsList = {all: allAccounts, filtered: allAccounts.filter(account => Number(account?.balance.value) > 0)};
   }
 
@@ -455,25 +360,19 @@
         <h4 class="control-label">
           Select Base Path
         </h4>
-        {#each basePaths as path, pathIndex}
-          <div
-            transition:fade
-            class="items-start w-100"
-            style={`padding-left: ${pathIndex * 2}rem;`}
+        <select
+          class='base-path-select'
+          bind:value={scanAccountOptions['derivationPath']}
+        >
+          {#each basePaths as path, pathIndex}
+
+          <option
+            value={path.value}
           >
-            <!-- svelte-ignore a11y-no-onchange -->
-            <select
-              class='base-path-select'
-              bind:value={scanAccountOptions['derivationPath']}
-            >
-            <option
-              value={path.value}
-            >
-              {path.label} - {path.value}
-            </option>
-            </select>
-          </div>
-        {/each}
+            {path.label} - {path.value}
+          </option>
+          {/each}
+        </select>
     </div>
 
 
@@ -481,25 +380,18 @@
       <h4 class="control-label">
         Asset
       </h4>
-      {#each assets as asset, assetIndex}
-        <div
-          transition:fade
-          class="items-start w-100"
-          style={`padding-left: ${assetIndex * 2}rem;`}
-        >
-          <!-- svelte-ignore a11y-no-onchange -->
-          <select
-            class='asset-select'
-            bind:value={scanAccountOptions['asset']}
-          >
+      <select
+      class='asset-select'
+      bind:value={scanAccountOptions['asset']}
+      >
+        {#each assets as asset, assetIndex}
           <option
             value={asset}
           >
             {asset.label}
           </option>
-          </select>
-        </div>
-      {/each}
+        {/each}
+      </select>
     </div>
 
 
@@ -507,25 +399,18 @@
       <h4 class="control-label">
         Network
       </h4>
-      {#each chains as chain, chainIndex}
-        <div
-          transition:fade
-          class="flex items-start w-100"
-          style={`padding-left: ${chainIndex * 2}rem;`}
-        >
-          <!-- svelte-ignore a11y-no-onchange -->
-          <select
-            bind:value={scanAccountOptions['chainId']}
-            class='network-select'
-          >
+      <select
+      bind:value={scanAccountOptions['chainId']}
+      class='network-select'
+      >
+        {#each chains as chain, chainIndex}
           <option
             value={chain.id}
           >
             {chain.label}
           </option>
-          </select>
-        </div>
-      {/each}
+        {/each}
+      </select>
     </div>
   </section>
 
