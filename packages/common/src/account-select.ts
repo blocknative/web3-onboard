@@ -37,7 +37,6 @@ const mountAccountSelect = (selectAccountOptions: SelectAccountOptions, accounts
   // Add Fonts to main page
   const styleEl = document.createElement('style')
 
-  // TODO: Import fonts - extract into common?
   styleEl.innerHTML = `
     ${SofiaProRegular}
     ${SofiaProSemiBold}
