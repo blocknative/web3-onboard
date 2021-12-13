@@ -34,8 +34,19 @@
 
 <style>
   .table-section {
-    height: 32.8rem;
+    height: 31.8rem;
     padding: 1rem;
+  }
+
+  table {
+    border-spacing: 0px;
+  }
+  
+  table thead{
+    position: sticky;
+    inset-block-start: 0; /* "top" */
+    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1);
+    background-color: var(--account-select-white, var(--white));
   }
 
   th, td {
@@ -53,13 +64,6 @@
 
   tbody tr {
     box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1);
-  }
-
-  table thead{
-  position: sticky;
-  inset-block-start: 0; /* "top" */
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1);
-  background-color: var(--account-select-white, var(--white));
   }
 
   tbody tr:hover {
@@ -175,7 +179,7 @@
   }
 
   .address-table {
-    height: 28rem;
+    height: 27rem;
     overflow: scroll;
   }
 
@@ -221,9 +225,9 @@
     <div class='address-table'>
       <table class="w-100">
         <colgroup>
-          <col span="1" style="width: 50%;">
-          <col span="1" style="width: 28%;">
-          <col span="1" style="width: 22%;">
+          <col style="width: 50%;">
+          <col style="width: 28%;">
+          <col style="width: 22%;">
         </colgroup>
         <thead class="">
           <tr>

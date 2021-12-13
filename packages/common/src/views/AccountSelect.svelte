@@ -103,6 +103,7 @@
   .dismiss-action {
     color: var(--account-select-blue-500, var(--blue-500));
     cursor: pointer;
+    margin-left: var(--account-select-margin-5);
   }
 
   select:hover {
@@ -148,9 +149,7 @@
     -ms-transform:translateY(-50%);
     -o-transform:translateY(-50%);
     transform:translateY(-50%);
-
     background: var(--account-select-white, var(--white));
-
     box-shadow: var(--account-select-shadow-1, var(--shadow-1));
     border-radius: 1.5rem;
   }
