@@ -7,7 +7,8 @@ import type {
   AppState,
   WalletState,
   Action,
-  UpdateWalletAction
+  UpdateWalletAction,
+  AddWalletAction
 } from '../types'
 
 import {
@@ -38,8 +39,9 @@ function reducer(state: AppState, action: Action): AppState {
       }
 
     case ADD_WALLET: {
+      const wallet = payload as AddWalletAction['payload']
       const existingWallet = state.wallets.find(
-        ({ label }) => label === payload?.label
+        ({ label }) => label === wallet.label
       )
 
       return {
@@ -48,7 +50,7 @@ function reducer(state: AppState, action: Action): AppState {
           // add to front of wallets as it is now the primary wallet
           existingWallet || (payload as WalletState),
           // filter out wallet if it already existed
-          ...state.wallets.filter(({ label }) => label !== payload.label)
+          ...state.wallets.filter(({ label }) => label !== wallet.label)
         ]
       }
     }
