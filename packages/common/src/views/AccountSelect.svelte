@@ -13,8 +13,8 @@
 
   const { basePaths, assets, chains, scanAccounts, walletIcon } = selectAccountOptions
   
-  let accountsList: AccountsList;
-  let accountSelected: Account;
+  let accountsListObject: AccountsList | undefined;
+  let accountSelected: Account | undefined;
   let showEmptyAddresses: boolean = false;
 
   let scanAccountOptions: ScanAccountsOptions = {
@@ -26,13 +26,23 @@
   const connectAccounts = () => {
     if (!accountSelected) return;
     accounts$.next([accountSelected]);
+    resetModal();
   }
 
   const setAccountsList = (newAccountsList: AccountsList) => {
-    accountsList = newAccountsList;
+    accountsListObject = newAccountsList;
   }
 
-  const dismiss = () => accounts$.next([]);
+  const dismiss = () => {
+    accounts$.next([]);
+    resetModal();
+  };
+
+  const resetModal = () => {
+    accountSelected = undefined;
+    accountsListObject = undefined;
+    showEmptyAddresses = false;
+  }
 
 </script>
 
@@ -287,7 +297,7 @@
 
     <AddressTable scanAccounts={scanAccounts} 
       scanAccountOptions={scanAccountOptions} 
-      accountsList={accountsList}
+      accountsListObject={accountsListObject}
       setAccountsList={setAccountsList}
       bind:showEmptyAddresses={showEmptyAddresses}
       bind:accountSelected={accountSelected}
@@ -295,10 +305,10 @@
     <section>
       <div class='address-found-count'>
         {#if showEmptyAddresses}
-          {accountsList?.all?.length || 0} total address{accountsList?.all?.length !== 1 ? 'es' : ''} found
+          {accountsListObject?.all?.length || 0} total address{accountsListObject?.all?.length !== 1 ? 'es' : ''} found
         {/if}
         {#if !showEmptyAddresses}
-          {accountsList?.filtered?.length || 0} total address{accountsList?.filtered?.length !== 1 ? 'es' : ''} found
+          {accountsListObject?.filtered?.length || 0} total address{accountsListObject?.filtered?.length !== 1 ? 'es' : ''} found
         {/if}
       </div>
       <div class='modal-controls'>

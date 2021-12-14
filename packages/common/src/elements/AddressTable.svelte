@@ -7,7 +7,7 @@
   export let setAccountsList: (newAccountsList: AccountsList) => void;
   export let scanAccountOptions: ScanAccountsOptions;
   export let showEmptyAddresses: boolean;
-  export let accountsList: AccountsList;
+  export let accountsListObject: AccountsList;
   export let accountSelected: Account;
 
   let loadingAccounts: boolean = false;
@@ -237,8 +237,8 @@
           </tr>
         </thead>
         <tbody>
-          {#if accountsList?.all?.length && showEmptyAddresses}
-            {#each accountsList.all as account, i }
+          {#if accountsListObject?.all?.length && showEmptyAddresses}
+            {#each accountsListObject.all as account, i }
               <tr class:selected-row="{selectedRowIndex === i}"
                   on:click="{() => handleSelectedRow(account, i)}">
                 <td>{account?.address}</td>
@@ -247,8 +247,8 @@
               </tr>
             {/each}
           {/if}
-          {#if accountsList?.filtered?.length && !showEmptyAddresses}
-            {#each accountsList.filtered as account, i }
+          {#if accountsListObject?.filtered?.length && !showEmptyAddresses}
+            {#each accountsListObject.filtered as account, i }
               <tr class:selected-row="{selectedRowIndex === i}"
                   on:click="{() => handleSelectedRow(account, i)}">
                 <td>{account?.address}</td>
