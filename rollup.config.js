@@ -55,7 +55,7 @@ export default {
     })
   ],
   external: [
-    '@myetherwallet/mewconnect-web-client',
+    // '@myetherwallet/mewconnect-web-client',
     'bowser',
     'bnc-sdk',
     'bignumber.js',

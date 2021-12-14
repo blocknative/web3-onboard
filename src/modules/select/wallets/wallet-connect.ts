@@ -54,6 +54,7 @@ function walletConnect(
       const provider = new WalletConnectProvider({
         infuraId: infuraKey,
         rpc,
+        chainId: networkId,
         bridge,
         pollingInterval
       })
