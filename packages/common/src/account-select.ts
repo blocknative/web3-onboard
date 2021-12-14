@@ -1,16 +1,16 @@
-import AccountSelect from './views/AccountSelect.svelte'
-import type { SelectAccountOptions, Account } from './types'
 import { firstValueFrom, Subject, take } from 'rxjs'
-import { accounts$, displayModal$, hideAccountSelect } from './streams'
 
+import AccountSelect from './views/AccountSelect.svelte'
+import { accounts$, displayModal$ } from './streams'
+import { validateSelectAccountOptions } from './validation'
 import { SofiaProRegular, SofiaProSemiBold, SofiaProLight } from './fonts'
+
+import type { SelectAccountOptions, Account } from './types'
 
 // eslint-disable-next-line max-len
 const accountSelect = async (options: SelectAccountOptions): Promise<Account[]> => {
   if (options) {
-    // TODO handle validation
-    const error = false
-      // validateInitOptions(options)
+    const error = validateSelectAccountOptions(options)
     if (error) {
       throw error
     }
@@ -18,10 +18,9 @@ const accountSelect = async (options: SelectAccountOptions): Promise<Account[]> 
 
   if (!document.querySelector('account-select')) {
     mountAccountSelect(options, accounts$);
-    displayModal$.next(true)
-  } else {
-    displayModal$.next(true)
   }
+  
+  displayModal$.next(true)
 
   accounts$.pipe(take(1)).subscribe(() => {
     displayModal$.next(false)
