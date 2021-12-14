@@ -3,7 +3,7 @@
   import Spinner from './Spinner.svelte'
   export let size: number // px
   export let icon: Promise<string> | string // svg string
-  export let loading: boolean
+  export let loading: boolean = false
 
   export let border:
     | 'yellow'
