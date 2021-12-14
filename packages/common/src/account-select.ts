@@ -1,6 +1,7 @@
 import AccountSelect from './views/AccountSelect.svelte'
 import type { SelectAccountOptions, Account } from './types'
 import { firstValueFrom, Subject, take } from 'rxjs'
+import { accounts$, displayModal$, hideAccountSelect } from './streams'
 
 import { SofiaProRegular, SofiaProSemiBold, SofiaProLight } from './fonts'
 
@@ -14,11 +15,16 @@ const accountSelect = async (options: SelectAccountOptions): Promise<Account[]> 
       throw error
     }
   }
-  const accounts$ = new Subject<Account[]>()
-  const svelteInstance = mountAccountSelect(options, accounts$)
+
+  if (!document.querySelector('account-select')) {
+    mountAccountSelect(options, accounts$);
+    displayModal$.next(true)
+  } else {
+    displayModal$.next(true)
+  }
 
   accounts$.pipe(take(1)).subscribe(() => {
-    svelteInstance.$destroy()
+    displayModal$.next(false)
   })
 
   return firstValueFrom(accounts$)

@@ -2,6 +2,8 @@
   import blocknative from '../icons/blocknative'
   import CloseButton from '../elements/CloseButton.svelte'
   import AddressTable from '../elements/AddressTable.svelte'
+  import { displayModal$ } from '../streams'
+
   
   import type { Subject } from 'rxjs'
   import type { ScanAccountsOptions, SelectAccountOptions, Account, AccountsList } from '../types';
@@ -218,102 +220,104 @@
 
 </style>
 
-<div class='hardware-connect-modal'>
-  <header class='connect-wallet-header'>
-    <div class='bn-logo'>{@html blocknative}</div>
-    <div class='wallet-icon'>{@html walletIcon}</div>
-    <div class="close" on:click={dismiss}><CloseButton /></div>
-  </header>
-  <section class='modal-controls'>
-    <div class="w-100 base-path-container">
+{#if $displayModal$}
+  <div class='hardware-connect-modal'>
+    <header class='connect-wallet-header'>
+      <div class='bn-logo'>{@html blocknative}</div>
+      <div class='wallet-icon'>{@html walletIcon}</div>
+      <div class="close" on:click={dismiss}><CloseButton /></div>
+    </header>
+    <section class='modal-controls'>
+      <div class="w-100 base-path-container">
+          <h4 class="control-label">
+            Select Base Path
+          </h4>
+          <select
+            class='base-path-select'
+            bind:value={scanAccountOptions['derivationPath']}
+          >
+            {#each basePaths as path, pathIndex}
+              <option
+                value={path.value}
+              >
+                {path.label} - {path.value}
+              </option>
+            {/each}
+          </select>
+      </div>
+
+
+      <div class="w-100 asset-container">
         <h4 class="control-label">
-          Select Base Path
+          Asset
         </h4>
         <select
-          class='base-path-select'
-          bind:value={scanAccountOptions['derivationPath']}
+          class='asset-select'
+          bind:value={scanAccountOptions['asset']}
         >
-          {#each basePaths as path, pathIndex}
+          {#each assets as asset, assetIndex}
             <option
-              value={path.value}
+              value={asset}
             >
-              {path.label} - {path.value}
+              {asset.label}
             </option>
           {/each}
         </select>
-    </div>
+      </div>
 
 
-    <div class="w-100 asset-container">
-      <h4 class="control-label">
-        Asset
-      </h4>
-      <select
-        class='asset-select'
-        bind:value={scanAccountOptions['asset']}
-      >
-        {#each assets as asset, assetIndex}
-          <option
-            value={asset}
-          >
-            {asset.label}
-          </option>
-        {/each}
-      </select>
-    </div>
+      <div class="network-container w-100">
+        <h4 class="control-label">
+          Network
+        </h4>
+        <select
+          bind:value={scanAccountOptions['chainId']}
+          class='network-select'
+        >
+          {#each chains as chain, chainIndex}
+            <option
+              value={chain.id}
+            >
+              {chain.label}
+            </option>
+          {/each}
+        </select>
+      </div>
+    </section>
 
-
-    <div class="network-container w-100">
-      <h4 class="control-label">
-        Network
-      </h4>
-      <select
-        bind:value={scanAccountOptions['chainId']}
-        class='network-select'
-      >
-        {#each chains as chain, chainIndex}
-          <option
-            value={chain.id}
-          >
-            {chain.label}
-          </option>
-        {/each}
-      </select>
-    </div>
-  </section>
-
-  <AddressTable scanAccounts={scanAccounts} 
-    scanAccountOptions={scanAccountOptions} 
-    accountsList={accountsList}
-    setAccountsList={setAccountsList}
-    bind:showEmptyAddresses={showEmptyAddresses}
-    bind:accountSelected={accountSelected}
-  />
-  <section>
-    <div class='address-found-count'>
-      {#if showEmptyAddresses}
-        {accountsList?.all?.length || 0} total address{accountsList?.all?.length !== 1 ? 'es' : ''} found
-      {/if}
-      {#if !showEmptyAddresses}
-        {accountsList?.filtered?.length || 0} total address{accountsList?.filtered?.length !== 1 ? 'es' : ''} found
-      {/if}
-    </div>
-    <div class='modal-controls'>
-      <div
-        class="dismiss-action"
-        id="dismiss-account-select"
-        on:click={dismiss}
-      >
-        Dismiss
-    </div>
-      <button
-        class="connect-btn"
-        id="connect-accounts"
-        disabled={!accountSelected}
-        on:click={connectAccounts}
-      >
-        Connect
-      </button>
-    </div>
-  </section>
-</div>
+    <AddressTable scanAccounts={scanAccounts} 
+      scanAccountOptions={scanAccountOptions} 
+      accountsList={accountsList}
+      setAccountsList={setAccountsList}
+      bind:showEmptyAddresses={showEmptyAddresses}
+      bind:accountSelected={accountSelected}
+    />
+    <section>
+      <div class='address-found-count'>
+        {#if showEmptyAddresses}
+          {accountsList?.all?.length || 0} total address{accountsList?.all?.length !== 1 ? 'es' : ''} found
+        {/if}
+        {#if !showEmptyAddresses}
+          {accountsList?.filtered?.length || 0} total address{accountsList?.filtered?.length !== 1 ? 'es' : ''} found
+        {/if}
+      </div>
+      <div class='modal-controls'>
+        <div
+          class="dismiss-action"
+          id="dismiss-account-select"
+          on:click={dismiss}
+        >
+          Dismiss
+      </div>
+        <button
+          class="connect-btn"
+          id="connect-accounts"
+          disabled={!accountSelected}
+          on:click={connectAccounts}
+        >
+          Connect
+        </button>
+      </div>
+    </section>
+  </div>
+{/if}
