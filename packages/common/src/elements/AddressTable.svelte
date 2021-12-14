@@ -7,8 +7,8 @@
   export let setAccountsList: (newAccountsList: AccountsList) => void;
   export let scanAccountOptions: ScanAccountsOptions;
   export let showEmptyAddresses: boolean;
-  export let accountsListObject: AccountsList;
-  export let accountSelected: Account;
+  export let accountsListObject: AccountsList | undefined;
+  export let accountSelected: Account | undefined;
 
   let loadingAccounts: boolean = false;
   let selectedRowIndex: number;

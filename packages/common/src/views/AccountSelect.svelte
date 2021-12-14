@@ -111,18 +111,18 @@
   }
 
   select:hover {
-    border-color: var(--blue-300);
+    border-color: var(--account-select-blue-300, var(--blue-300));
   }
 
   select:focus {
-    border-color: var(--blue-500);
-    box-shadow: 0 0 1px 1px var(--blue-500);
+    border-color: var(--account-select-blue-500, var(--blue-500));
+    box-shadow: 0 0 1px 1px var(--account-select-blue-500, var(--blue-500));
     box-shadow: 0 0 0 1px -moz-mac-focusring;
     outline: none;
   }
 
   select:disabled {
-    background-color: var(--grey-100);
+    background-color: var(--account-select-gray-100, var(--gray--account-select-gray-100));
   }
 
   option {
