@@ -32,7 +32,6 @@ function init(options: InitOptions): OnboardAPI {
   if (svelteInstance) {
     // if already initialized, need to cleanup old instance
     console.warn('Re-initializing Onboard and resetting back to initial state')
-    svelteInstance.$destroy()
     reset$.next()
   }
 
@@ -49,7 +48,7 @@ function init(options: InitOptions): OnboardAPI {
     return acc
   }, [] as WalletModule[])
 
-  const app = mountApp()
+  const app = svelteInstance || mountApp()
 
   internalState$.next({
     appMetadata,
