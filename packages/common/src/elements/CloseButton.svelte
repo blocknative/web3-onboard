@@ -12,9 +12,9 @@
     justify-content: center;
     align-items: center;
     padding: 0.4rem;
-    background: var(--onboard-gray-100, var(--gray-100));
+    background: var(--account-select-gray-100, var(--gray-200));
     border-radius: 40px;
-    color: var(--onboard-black, var(--black));
+    color: var(--account-select-black, var(--black));
   }
 
   .close-icon {

@@ -3,27 +3,19 @@
   import Spinner from './Spinner.svelte'
   import type { Account, AccountsList, ScanAccounts, ScanAccountsOptions } from '../types';
 
-  export let scanAccounts: ScanAccounts;
-  export let setAccountsList: (newAccountsList: AccountsList) => void;
-  export let scanAccountOptions: ScanAccountsOptions;
-  export let showEmptyAddresses: boolean;
+  export let scanAccounts: () => Promise<void>;
+    
+  export let loadingAccounts: boolean;
   export let accountsListObject: AccountsList | undefined;
   export let accountSelected: Account | undefined;
+  export let showEmptyAddresses: boolean;
 
-  let loadingAccounts: boolean = false;
+  $: accounts = showEmptyAddresses ? accountsListObject?.all : accountsListObject?.filtered;
+
   let selectedRowIndex: number;
 
   const filterEmptyAccounts = () => {
     showEmptyAddresses = !showEmptyAddresses;
-  }
-
-  const handleScanAccounts = async () => {
-    loadingAccounts = true;
-    const allAccounts = await scanAccounts(scanAccountOptions);
-    if (allAccounts) {
-      loadingAccounts = false;
-    }
-    setAccountsList({all: allAccounts, filtered: allAccounts.filter(account => Number(account?.balance.value) > 0)})
   }
 
   const handleSelectedRow = (accountClicked: Account, index: number) => {
@@ -34,7 +26,7 @@
 
 <style>
   .table-section {
-    height: 31.8rem;
+    max-height: 31.8rem;
     padding: 1rem;
   }
 
@@ -55,11 +47,11 @@
   }
 
   td {
-    font-family: Sofia Pro;
+    font-family: var(--account-select-font-family-normal, var(--font-family-normal));
     font-style: normal;
     font-weight: normal;
-    font-size: 16px;
-    line-height: 24px;
+    font-size: var(--account-select-font-size-5, var(--font-size-5));
+    line-height: var(--account-select-font-line-height-1, var(--font-line-height-1));
   }
 
   tbody tr {
@@ -172,14 +164,13 @@
     align-items: center;
     padding: .5rem;
     border-radius: .4rem .4rem 0 0;
-
     background: var(--account-select-gray-100, var(--gray-100));
-
     border-bottom: 1px solid var(--account-select-gray-200, var(--gray-200));
   }
 
   .address-table {
-    height: 27rem;
+    min-height: 9.5rem;
+    max-height: 27rem;
     overflow: scroll;
   }
 
@@ -210,8 +201,7 @@
       <button
         class="scan-accounts-btn"
         id="scan-accounts"
-        disabled={!scanAccountOptions?.asset || !scanAccountOptions?.chainId || !scanAccountOptions?.derivationPath}
-        on:click={handleScanAccounts}
+        on:click={async () => await scanAccounts()}
       >
         {#if loadingAccounts}
           Scanning...
@@ -237,18 +227,8 @@
           </tr>
         </thead>
         <tbody>
-          {#if accountsListObject?.all?.length && showEmptyAddresses}
-            {#each accountsListObject.all as account, i }
-              <tr class:selected-row="{selectedRowIndex === i}"
-                  on:click="{() => handleSelectedRow(account, i)}">
-                <td>{account?.address}</td>
-                <td>{account?.derivationPath}</td>
-                <td class='asset-td'>{account?.balance?.value} {account?.balance?.asset}</td>
-              </tr>
-            {/each}
-          {/if}
-          {#if accountsListObject?.filtered?.length && !showEmptyAddresses}
-            {#each accountsListObject.filtered as account, i }
+          {#if accounts?.length}
+            {#each accounts as account, i }
               <tr class:selected-row="{selectedRowIndex === i}"
                   on:click="{() => handleSelectedRow(account, i)}">
                 <td>{account?.address}</td>

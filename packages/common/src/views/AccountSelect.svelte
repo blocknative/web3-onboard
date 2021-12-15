@@ -16,12 +16,30 @@
   let accountsListObject: AccountsList | undefined;
   let accountSelected: Account | undefined;
   let showEmptyAddresses: boolean = false;
+  let loadingAccounts: boolean = false;
 
   let scanAccountOptions: ScanAccountsOptions = {
     derivationPath : basePaths[0]?.value || '',
     chainId: chains[0]?.id || '',
     asset: assets[0] || null
   };
+
+  const scanAccountsWrap = async () : Promise<void> => {
+    try {
+      loadingAccounts = true;
+      const allAccounts = await scanAccounts(scanAccountOptions);
+      if (allAccounts) {
+        loadingAccounts = false;
+      }
+      accountsListObject = {
+        all: allAccounts, 
+        filtered: allAccounts.filter(account => Number(account?.balance.value) > 0)
+      };
+    } catch(err) {
+      console.error(err);
+      loadingAccounts = false;
+    }
+  }
 
   const connectAccounts = () => {
     if (!accountSelected) return;
@@ -63,8 +81,8 @@
     width: 100%;
     padding: 0.5rem 1rem;
     border-radius: 8px;
-    font-size: 1rem;
-    line-height: 1.5;
+    font-size: var(--account-select-font-size-5, var(--font-size-5));
+    line-height: var(--account-select-font-line-height-1, var(--font-line-height-1));
     color: var(--account-select-gray-600, var(--grey-600));
     transition: all 200ms ease-in-out;
     border: 2px solid var(--account-select-gray-200, var(--gray-200));
@@ -122,7 +140,7 @@
   }
 
   select:disabled {
-    background-color: var(--account-select-gray-100, var(--gray--account-select-gray-100));
+    background-color: var(--account-select-gray-100, var(--gray-100));
   }
 
   option {
@@ -142,24 +160,18 @@
   .hardware-connect-modal {
     position: absolute;
     width: 42rem;
-    height: 51.75rem;
+    max-height: 51.75rem;
     margin:0 auto;
     display:table;
-    left: 0;
-    right:0;
-    top: 50%; 
-    -webkit-transform:translateY(-50%);
-    -moz-transform:translateY(-50%);
-    -ms-transform:translateY(-50%);
-    -o-transform:translateY(-50%);
-    transform:translateY(-50%);
+    right: var(--account-select-right-1, var(--right-1));
+    top: var(--account-select-top-1, var(--top-1)); 
     background: var(--account-select-white, var(--white));
     box-shadow: var(--account-select-shadow-1, var(--shadow-1));
     border-radius: 1.5rem;
   }
 
   .connect-wallet-header {
-    background-color: var(--account-select-gray-100);
+    background-color: var(--account-select-gray-100, var(--gray-100));
     height: 5rem;
     border-radius: 1.5rem 1.5rem 0 0;
     display: flex;
@@ -190,16 +202,17 @@
     font-family: var(--account-select-font-family-normal, var(--font-family-normal));
     font-style: normal;
     font-weight: bold;
-    font-size: 1rem;
-    line-height: 1.5rem;
-    margin-top: .5rem;
-    margin-bottom: .5rem;
+    font-size: var(--account-select-font-size-5, var(--font-size-5));
+    line-height: var(--account-select-font-line-height-1, var(--font-line-height-1));
+    margin-top: var(--account-select-margin-5, var(--margin-5));
+    margin-bottom: var(--account-select-margin-5, var(--margin-5));
     color: var(--account-select-gray-700, var(--gray-700));
   }
 
   .base-path-select {
     width: 25rem;
   }
+
   .asset-select {
     width: 6rem
   }
@@ -211,14 +224,17 @@
   .w-100 {
     width: 100%
   }
+
   .base-path-container {
     flex-grow: 1;
-    margin-right: 0.5rem;
+    margin-right: var(--account-select-margin-5, var(--margin-5));
   }
+  
   .asset-container {
     flex-grow: 0;
-    margin-right: 0.5rem;
+    margin-right: var(--account-select-margin-5, var(--margin-5));
   }
+  
   .network-container {
     flex-grow: 0;
   }
@@ -295,10 +311,10 @@
       </div>
     </section>
 
-    <AddressTable scanAccounts={scanAccounts} 
-      scanAccountOptions={scanAccountOptions} 
+    <AddressTable 
+      scanAccounts={scanAccountsWrap} 
       accountsListObject={accountsListObject}
-      setAccountsList={setAccountsList}
+      loadingAccounts={loadingAccounts}
       bind:showEmptyAddresses={showEmptyAddresses}
       bind:accountSelected={accountSelected}
     />
