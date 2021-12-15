@@ -4,7 +4,7 @@
 
 ```typescript
 type WalletLinkOptions = {
-  darkMode: Boolean // default = false
+  darkMode: boolean // default = false
 }
 ```
 
