@@ -21,7 +21,6 @@
   "dependencies": {
     "@bn-onboard/common": "^0.0.1",
     "@bn-onboard/types": "^0.0.1",
-    "@portis/web3": "^4.0.6",
-    "joi": "^17.4.2"
+    "@portis/web3": "^4.0.6"
   }
 }

@@ -1,12 +1,7 @@
 import { WalletInit } from '@bn-onboard/types'
 import Joi from 'joi'
 
-const validation = Joi.object({ darkMode: Joi.boolean() })
-
 function walletLink(options?: { darkMode?: boolean }): WalletInit {
-  const { error } = validation.validate(options)
-  if (error) throw error
-
   const { darkMode = false } = options || {}
 
   return () => {

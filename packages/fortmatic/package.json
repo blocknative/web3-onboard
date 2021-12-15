@@ -21,7 +21,6 @@
   "dependencies": {
     "@bn-onboard/common": "^0.0.1",
     "@bn-onboard/types": "^0.0.1",
-    "fortmatic": "^2.2.1",
-    "joi": "^17.4.2"
+    "fortmatic": "^2.2.1"
   }
 }

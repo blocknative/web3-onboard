@@ -7,19 +7,8 @@ import {
 } from '@bn-onboard/types'
 
 import { ProviderRpcError } from '@bn-onboard/common'
-import Joi from 'joi'
-
-const validation = Joi.object({
-  bridge: Joi.string().uri(),
-  qrcodeModalOptions: Joi.object({
-    mobileLinks: Joi.array().items(Joi.string())
-  })
-})
 
 function walletConnect(options?: WalletConnectOptions): WalletInit {
-  const { error } = validation.validate(options)
-  if (error) throw error
-
   const { bridge = 'https://bridge.walletconnect.org', qrcodeModalOptions } =
     options || {}
 

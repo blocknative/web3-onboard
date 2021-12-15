@@ -6,14 +6,7 @@ import {
 
 import { WalletInit, APIKey, EIP1193Provider } from '@bn-onboard/types'
 
-import Joi from 'joi'
-
-const validation = Joi.object({ apiKey: Joi.string().required() }).required()
-
 function fortmatic(options: APIKey): WalletInit {
-  const { error } = validation.validate(options)
-  if (error) throw error
-
   const { apiKey } = options
 
   return () => {
