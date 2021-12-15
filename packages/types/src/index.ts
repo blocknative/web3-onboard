@@ -56,13 +56,6 @@ export interface APIKey {
   apiKey: string
 }
 
-export interface WalletConnectOptions extends APIKey {
-  bridge?: string
-  qrcodeModalOptions?: {
-    mobileLinks: string[]
-  }
-}
-
 export type Device = {
   os: DeviceOS
   type: DeviceType

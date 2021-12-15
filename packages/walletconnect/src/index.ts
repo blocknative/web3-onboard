@@ -2,11 +2,17 @@ import {
   Chain,
   EIP1193Provider,
   ProviderAccounts,
-  WalletConnectOptions,
   WalletInit
 } from '@bn-onboard/types'
 
 import { ProviderRpcError } from '@bn-onboard/common'
+
+interface WalletConnectOptions {
+  bridge?: string
+  qrcodeModalOptions?: {
+    mobileLinks: string[]
+  }
+}
 
 function walletConnect(options?: WalletConnectOptions): WalletInit {
   const { bridge = 'https://bridge.walletconnect.org', qrcodeModalOptions } =
