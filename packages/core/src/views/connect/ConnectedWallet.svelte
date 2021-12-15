@@ -3,7 +3,7 @@
   import { _ } from 'svelte-i18n'
 
   import { getBalance, getEns } from '../../provider'
-  import { updateWallet } from '../../store/actions'
+  import { updateAccount, updateWallet } from '../../store/actions'
   import { connectWallet$, internalState$ } from '../../streams'
   import { getRpcUrl, validEnsChain } from '../../utils'
   import success from '../../icons/success'
@@ -15,14 +15,15 @@
   import { state } from '../../store'
   import en from '../../i18n/en.json'
 
-  export let primaryWallet: WalletState
+  export let selectedWallet: WalletState
 
-  const { label } = primaryWallet
+  const { label } = selectedWallet
   const { appMetadata } = internalState$.getValue()
 
   async function updateAccountDetails() {
-    const { chain, accounts } = primaryWallet
-    const rpcUrl = getRpcUrl(chain, state.get().chains)
+    const { accounts, chain } = selectedWallet
+    const chains = state.get().chains
+    const rpcUrl = getRpcUrl(chain, chains)
 
     if (rpcUrl) {
       const { address } = accounts[0]
@@ -30,39 +31,27 @@
       const ethersProvider = new providers.JsonRpcProvider(rpcUrl)
 
       if (balance === null) {
-        getBalance(ethersProvider, address).then(balanceUpdate => {
-          balance = balanceUpdate
-
-          updateWallet(label, {
-            accounts: [
-              {
-                address,
-                ens,
-                balance
-              }
-            ]
+        getBalance(
+          ethersProvider,
+          address,
+          chains.find(({ id }) => id === chain)
+        ).then(balance => {
+          updateAccount(label, address, {
+            balance
           })
         })
       }
 
       if (ens === null && validEnsChain(chain)) {
-        getEns(ethersProvider, address).then(ensUpdate => {
-          ens = ensUpdate
-
-          updateWallet(label, {
-            accounts: [
-              {
-                address,
-                ens,
-                balance
-              }
-            ]
+        getEns(ethersProvider, address).then(ens => {
+          updateAccount(label, address, {
+            ens
           })
         })
       }
     }
 
-    setTimeout(() => connectWallet$.next({ inProgress: false }), 2000)
+    setTimeout(() => connectWallet$.next({ inProgress: false }), 1500)
   }
 
   updateAccountDetails()
@@ -123,7 +112,7 @@
         <WalletAppBadge
           size={40}
           border="darkGreen"
-          icon={primaryWallet.icon}
+          icon={selectedWallet.icon}
         />
       </div>
     </div>

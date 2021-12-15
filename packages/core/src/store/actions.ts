@@ -1,10 +1,12 @@
 import type { Chain } from '@bn-onboard/types'
 
 import type {
+  Account,
   AddChainsAction,
   AddWalletAction,
   RemoveWalletAction,
   ResetStoreAction,
+  UpdateAccountAction,
   UpdateWalletAction,
   WalletState
 } from '../types'
@@ -16,7 +18,8 @@ import {
   UPDATE_WALLET,
   RESET_STORE,
   ADD_WALLET,
-  REMOVE_WALLET
+  REMOVE_WALLET,
+  UPDATE_ACCOUNT
 } from './constants'
 import { dispatch } from './index'
 
@@ -82,10 +85,26 @@ export function removeWallet(id: string): void {
   dispatch(action as RemoveWalletAction)
 }
 
+export function updateAccount(
+  id: string,
+  address: string,
+  update: Partial<Account>
+): void {
+  const action = {
+    type: UPDATE_ACCOUNT,
+    payload: {
+      id,
+      address,
+      ...update
+    }
+  }
+
+  dispatch(action as UpdateAccountAction)
+}
+
 export function resetStore(): void {
   const action = {
-    type: RESET_STORE,
-    payload: null
+    type: RESET_STORE
   }
 
   dispatch(action as ResetStoreAction)

@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { WalletModule } from '@bn-onboard/types'
-  import { pluck, shareReplay } from 'rxjs'
   import { _ } from 'svelte-i18n'
   import { BigNumber } from 'ethers'
   import EventEmitter from 'eventemitter3'
@@ -9,7 +8,8 @@
     ConnectOptions,
     WalletWithLoadingIcon,
     WalletWithLoadedIcon,
-    i18n
+    i18n,
+    WalletState
   } from '../../types'
 
   import Modal from '../shared/Modal.svelte'
@@ -21,9 +21,9 @@
   import Sidebar from './Sidebar.svelte'
 
   import { connectWallet$, internalState$, wallets$ } from '../../streams'
-  import { getChainId, trackWallet } from '../../provider'
+
   import { state } from '../../store'
-  import { addWallet, removeWallet } from '../../store/actions'
+  import { addWallet } from '../../store/actions'
   import en from '../../i18n/en.json'
 
   export let options: ConnectOptions
@@ -31,12 +31,11 @@
   const { walletModules, appMetadata } = internalState$.getValue()
   const { autoSelect } = options
 
-  const primaryWallet$ = wallets$.pipe(pluck(0), shareReplay(1))
-
   let loading = true
   let connectionRejected: string = 'false'
   let wallets: WalletWithLoadingIcon[] = []
-  let selectedWallet: string
+  let selectedWallet: WalletState | null
+  let selectWalletError: string
 
   let windowWidth: number
 
@@ -62,35 +61,40 @@
       .wallets.find(wallet => wallet.label === label)
 
     if (existingWallet) {
+      // set as first wallet
       addWallet(existingWallet)
-      close()
+      selectedWallet = existingWallet
       return
     }
 
     const { chains } = state.get()
 
-    const { provider } = await getInterface({
-      chains,
-      BigNumber,
-      EventEmitter,
-      appMetadata
-    })
+    try {
+      const { provider } = await getInterface({
+        chains,
+        BigNumber,
+        EventEmitter,
+        appMetadata
+      })
 
-    const chain = await getChainId(provider)
+      selectedWallet = {
+        label,
+        icon,
+        provider,
+        accounts: [],
+        chain: '0x1'
+      }
+    } catch (error) {
+      selectWalletError = (error as Error).message
+    }
+  }
 
-    addWallet({
-      label,
-      icon,
-      provider,
-      accounts: [],
-      chain
-    })
+  function deselectWallet(label: string) {
+    selectedWallet = null
+  }
 
-    trackWallet(provider, label)
-
-    selectedWallet = label
-
-    setStep('connectingWallet')
+  function updateSelectedWallet(update: Partial<WalletState> | WalletState) {
+    selectedWallet = { ...selectedWallet, ...update }
   }
 
   async function autoSelectWallet(wallet: WalletModule): Promise<void> {
@@ -118,16 +122,13 @@
   }
 
   type Step = keyof i18n['connect']
-  let step: Step = 'selectingWallet'
-
-  function setStep(nextStep: Step) {
-    step = nextStep
-  }
-
-  function deselectWallet(label: string) {
-    removeWallet(label)
-    selectedWallet = ''
-  }
+  $: step = (
+    !selectedWallet
+      ? 'selectingWallet'
+      : !selectedWallet.accounts.length
+      ? 'connectingWallet'
+      : 'connectedWallet'
+  ) as Step
 </script>
 
 <style>
@@ -195,7 +196,7 @@
               default: en.connect[step].header,
               values: {
                 connectionRejected,
-                wallet: selectedWallet
+                wallet: selectedWallet?.label
               }
             })}
           </h4>
@@ -217,14 +218,13 @@
               connectionRejected = String(detail)
             }}
             {deselectWallet}
-            primaryWallet={$primaryWallet$}
-            next={() => setStep('connectedWallet')}
-            back={() => setStep('selectingWallet')}
+            {selectedWallet}
+            {updateSelectedWallet}
           />
         {/if}
 
         {#if step === 'connectedWallet' && selectedWallet}
-          <ConnectedWallet primaryWallet={$primaryWallet$} />
+          <ConnectedWallet {selectedWallet} />
         {/if}
       </div>
     </div>

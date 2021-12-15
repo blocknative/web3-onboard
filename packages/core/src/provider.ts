@@ -1,5 +1,5 @@
 import { fromEventPattern, Observable } from 'rxjs'
-import { filter, takeUntil, withLatestFrom } from 'rxjs/operators'
+import { filter, takeUntil, take, share, switchMap } from 'rxjs/operators'
 import partition from 'lodash.partition'
 import { providers, utils } from 'ethers'
 
@@ -13,9 +13,9 @@ import type {
   ChainListener
 } from '@bn-onboard/types'
 
-import { disconnectWallet$, wallets$ } from './streams'
-import type { Address, Balances, Ens, WalletState } from './types'
-import { updateWallet } from './store/actions'
+import { disconnectWallet$ } from './streams'
+import type { Account, Address, Balances, Ens, WalletState } from './types'
+import { updateAccount, updateWallet } from './store/actions'
 import { getRpcUrl, validEnsChain } from './utils'
 import disconnect from './disconnect'
 import { state } from './store'
@@ -73,144 +73,141 @@ export function trackWallet(
   label: WalletState['label']
 ): void {
   const disconnected$ = disconnectWallet$.pipe(
-    filter(wallet => wallet === label)
+    filter(wallet => wallet === label),
+    take(1)
   )
 
-  listenAccountsChanged({ provider, disconnected$ })
-    .pipe(withLatestFrom(wallets$))
-    .subscribe({
-      complete: () =>
-        console.log('Removing accountsChanged listener for wallet:', label),
-      next: async ([[address], wallets]) => {
-        const { accounts, chain } = wallets.find(
-          wallet => wallet.label === label
-        ) as WalletState
+  const accountsChanged$ = listenAccountsChanged({
+    provider,
+    disconnected$
+  }).pipe(share())
 
-        const [[existingAccount], restAccounts] = partition(
-          accounts,
-          account => account.address === address
+  // when account changed, set it to first account
+  accountsChanged$.subscribe(([address]) => {
+    // no address, then no account connected, so disconnect wallet
+    // this could happen if user locks wallet,
+    // or if disconnects app from wallet
+    if (!address) {
+      disconnect({ label })
+      return
+    }
+
+    const { wallets } = state.get()
+    const { accounts } = wallets.find(wallet => wallet.label === label)
+
+    const [[existingAccount], restAccounts] = partition(
+      accounts,
+      account => account.address === address
+    )
+
+    // update accounts without ens and balance first
+    updateWallet(label, {
+      accounts: [
+        existingAccount || { address: address, ens: null, balance: null },
+        ...restAccounts
+      ]
+    })
+  })
+
+  // also when accounts change update Balance and ENS
+  accountsChanged$
+    .pipe(
+      switchMap(async ([address]) => {
+        if (!address) return
+
+        const { wallets, chains } = state.get()
+
+        const { chain, accounts } = wallets.find(
+          wallet => wallet.label === label
         )
 
-        // no address, then no account connected, so disconnect wallet
-        // this could happen if user locks wallet,
-        // or if disconnects app from wallet
-        if (!address) {
-          disconnect({ label })
-          return
+        const rpcUrl = getRpcUrl(chain, chains)
+
+        if (rpcUrl) {
+          const ethersProvider = new providers.JsonRpcProvider(rpcUrl)
+
+          const balanceProm = getBalance(
+            ethersProvider,
+            address,
+            chains.find(({ id }) => id === chain)
+          )
+
+          const account = accounts.find(account => account.address === address)
+
+          const ensProm = account.ens
+            ? Promise.resolve(account.ens)
+            : validEnsChain(chain)
+            ? getEns(ethersProvider, address)
+            : Promise.resolve(null)
+
+          return Promise.all([Promise.resolve(address), balanceProm, ensProm])
         }
-
-        if (!existingAccount) {
-          let ens: Ens | null = null
-          let balance: Balances = null
-
-          // update accounts without ens and balance first
-          updateWallet(label, {
-            accounts: [{ address: address, ens, balance }, ...restAccounts]
-          })
-
-          const rpcUrl = getRpcUrl(chain, state.get().chains)
-
-          if (!rpcUrl) {
-            console.warn('A chain with rpcUrl is required for requests')
-          } else {
-            const ethersProvider = new providers.JsonRpcProvider(rpcUrl)
-            const { chainId } = await ethersProvider.getNetwork()
-            const balanceProm = getBalance(ethersProvider, address)
-
-            const ensProm = validEnsChain(`0x${chainId.toString(16)}`)
-              ? getEns(ethersProvider, address)
-              : Promise.resolve(null)
-
-            balanceProm.then(b => {
-              balance = b
-
-              if (balance) {
-                updateWallet(label, {
-                  accounts: [
-                    { address: address, ens, balance },
-                    ...restAccounts
-                  ]
-                })
-              }
-            })
-
-            ensProm.then(e => {
-              ens = e
-
-              if (ens) {
-                updateWallet(label, {
-                  accounts: [
-                    { address: address, ens, balance },
-                    ...restAccounts
-                  ]
-                })
-              }
-            })
-
-            return
-          }
-        }
-
-        const updatedOrderedAccounts = [
-          existingAccount || { address, ens: null, balance: null },
-          ...restAccounts
-        ]
-
-        updateWallet(label, { accounts: updatedOrderedAccounts })
-      }
+      })
+    )
+    .subscribe(([address, balance, ens]) => {
+      updateAccount(label, address, { balance, ens })
     })
 
-  listenChainChanged({ provider, disconnected$ })
-    .pipe(withLatestFrom(wallets$))
-    .subscribe({
-      complete: () =>
-        console.log('Removing chainChanged listener for wallet:', label),
-      next: async ([chainId, wallets]) => {
-        const wallet = wallets.find(
-          wallet => wallet.label === label
-        ) as WalletState
+  const chainChanged$ = listenChainChanged({ provider, disconnected$ }).pipe(
+    share()
+  )
 
-        if (chainId === wallet.chain) return
+  // Update chain on wallet when chainId changed
+  chainChanged$.subscribe(chainId => {
+    const { wallets } = state.get()
+    const { chain, accounts } = wallets.find(wallet => wallet.label === label)
 
-        const resetAccounts = wallet.accounts.map(({ address }) => ({
+    if (chainId === chain) return
+
+    const resetAccounts = accounts.map(
+      ({ address }) =>
+        ({
           address,
           ens: null,
           balance: null
-        }))
+        } as Account)
+    )
 
-        updateWallet(label, { chain: chainId, accounts: resetAccounts })
+    updateWallet(label, { chain: chainId, accounts: resetAccounts })
+  })
 
-        const rpcUrl = getRpcUrl(chainId, state.get().chains)
+  // when chain changes get ens and balance for each account for wallet
+  chainChanged$
+    .pipe(
+      switchMap(async chainId => {
+        const { wallets, chains } = state.get()
+        const { accounts } = wallets.find(wallet => wallet.label === label)
+        const rpcUrl = getRpcUrl(chainId, chains)
 
-        if (!rpcUrl) {
-          console.warn('A chain with rpcUrl is required for requests')
-          return
+        if (rpcUrl) {
+          const ethersProvider = new providers.JsonRpcProvider(rpcUrl)
+
+          return Promise.all(
+            accounts.map(async ({ address }) => {
+              const balanceProm = getBalance(
+                ethersProvider,
+                address,
+                chains.find(({ id }) => id === chainId)
+              )
+
+              const ensProm = validEnsChain(chainId)
+                ? getEns(ethersProvider, address)
+                : Promise.resolve(null)
+
+              const [balance, ens] = await Promise.all([balanceProm, ensProm])
+
+              return {
+                address,
+                balance,
+                ens
+              }
+            })
+          )
         }
-
-        const ethersProvider = new providers.JsonRpcProvider(rpcUrl)
-
-        const updatedAccounts = await Promise.all(
-          wallet.accounts.map(async ({ address }) => {
-            const balanceProm = getBalance(ethersProvider, address)
-            const ensProm = validEnsChain(chainId)
-              ? getEns(ethersProvider, address)
-              : Promise.resolve(null)
-
-            const [balance, ens] = await Promise.all([balanceProm, ensProm])
-
-            return {
-              address,
-              balance,
-              ens
-            }
-          })
-        )
-
-        // update accounts
-        updateWallet(label, {
-          accounts: updatedAccounts
-        })
-      }
+      })
+    )
+    .subscribe(updatedAccounts => {
+      updatedAccounts && updateWallet(label, { accounts: updatedAccounts })
     })
 
   disconnected$.subscribe(() => {
@@ -245,10 +242,14 @@ export async function getEns(
 
 export async function getBalance(
   ethersProvider: providers.JsonRpcProvider,
-  address: string
+  address: string,
+  chain: Chain
 ): Promise<Balances | null> {
   const balanceWei = await ethersProvider.getBalance(address)
-  return balanceWei ? { eth: utils.formatEther(balanceWei) } : null
+
+  return balanceWei
+    ? { [chain.token || 'eth']: utils.formatEther(balanceWei) }
+    : null
 }
 
 export function switchChain(

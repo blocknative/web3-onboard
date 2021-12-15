@@ -8,7 +8,8 @@ import type {
   WalletState,
   Action,
   UpdateWalletAction,
-  AddWalletAction
+  AddWalletAction,
+  UpdateAccountAction
 } from '../types'
 
 import {
@@ -16,7 +17,8 @@ import {
   ADD_WALLET,
   UPDATE_WALLET,
   REMOVE_WALLET,
-  RESET_STORE
+  RESET_STORE,
+  UPDATE_ACCOUNT
 } from './constants'
 
 import { APP_INITIAL_STATE } from '../constants'
@@ -74,6 +76,30 @@ function reducer(state: AppState, action: Action): AppState {
       return {
         ...state,
         wallets: state.wallets.filter(({ label }) => label !== update.id)
+      }
+    }
+
+    case UPDATE_ACCOUNT: {
+      const update = payload as UpdateAccountAction['payload']
+      const { id, address, ...accountUpdate } = update
+
+      const updatedWallets = state.wallets.map(wallet => {
+        if (wallet.label === id) {
+          wallet.accounts = wallet.accounts.map(account => {
+            if (account.address === address) {
+              return { ...account, ...accountUpdate }
+            }
+
+            return account
+          })
+        }
+
+        return wallet
+      })
+
+      return {
+        ...state,
+        wallets: updatedWallets
       }
     }
 

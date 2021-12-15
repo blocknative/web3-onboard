@@ -58,7 +58,7 @@ export interface WalletState {
 export type Account = {
   address: Address
   ens: Ens | null
-  balance: Balances
+  balance: Balances | null
 }
 
 export type Balances = Record<TokenSymbol, string> | null
@@ -95,6 +95,7 @@ export type Action =
   | UpdateWalletAction
   | RemoveWalletAction
   | ResetStoreAction
+  | UpdateAccountAction
 
 export type AddChainsAction = { type: 'add_chains'; payload: Chain[] }
 export type AddWalletAction = { type: 'add_wallet'; payload: WalletState }
@@ -111,5 +112,10 @@ export type RemoveWalletAction = {
 
 export type ResetStoreAction = {
   type: 'reset_store'
-  payload: null
+  payload: unknown
+}
+
+export type UpdateAccountAction = {
+  type: 'update_account'
+  payload: { id: string; address: string } & Partial<Account>
 }

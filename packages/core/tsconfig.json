@@ -9,7 +9,8 @@
     "declarationDir": "dist",
     "target": "esnext",
     "module": "esnext",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "strictNullChecks": false
   },
   "outDir": "dist",
 }

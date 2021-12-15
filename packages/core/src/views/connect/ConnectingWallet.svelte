@@ -3,20 +3,20 @@
   import { createEventDispatcher } from 'svelte'
   import { ErrorCodes } from '@bn-onboard/common'
 
-  import { requestAccounts } from '../../provider'
-  import { updateWallet } from '../../store/actions'
+  import { getChainId, requestAccounts, trackWallet } from '../../provider'
   import { internalState$ } from '../../streams'
   import type { WalletState } from '../../types'
+
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import PendingStatusIcon from '../shared/PendingStatusIcon.svelte'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
   import defaultAppIcon from '../../icons/default-app-icon'
   import en from '../../i18n/en.json'
+  import { addWallet } from '../../store/actions'
 
-  export let primaryWallet: WalletState
-  export let next: () => void
-  export let back: () => void
+  export let selectedWallet: WalletState
   export let deselectWallet: (label: string) => void
+  export let updateSelectedWallet: (update: Partial<WalletState>) => void
 
   let connectionRejected: boolean = false
 
@@ -28,14 +28,9 @@
     dispatch('connectionRejected', false)
     connectionRejected = false
 
-    const { provider, label } = primaryWallet
+    const { provider, label } = selectedWallet
 
     try {
-      const blankAccountDetails = {
-        ens: null,
-        balance: null
-      }
-
       const [address] = await requestAccounts(provider)
 
       // canceled previous request
@@ -43,14 +38,17 @@
         return
       }
 
-      const update = {
-        accounts: [{ address, ...blankAccountDetails }]
+      const chain = await getChainId(provider)
+
+      const update: Pick<WalletState, 'accounts' | 'chain'> = {
+        accounts: [{ address, ens: null, balance: null }],
+        chain
       }
 
-      updateWallet(label, update)
-      next()
+      addWallet({ ...selectedWallet, ...update })
+      trackWallet(provider, label)
+      updateSelectedWallet(update)
     } catch (error) {
-      console.log({ error })
       const { code } = error as { code: number; message: string }
 
       // user rejected account access
@@ -164,7 +162,7 @@
         size={48}
         border="yellow"
         background="lightGray"
-        icon={primaryWallet.icon}
+        icon={selectedWallet.icon}
       >
         <PendingStatusIcon slot="status" size={17} />
       </WalletAppBadge>
@@ -173,8 +171,7 @@
 
   <button
     on:click={() => {
-      deselectWallet(primaryWallet.label)
-      back()
+      deselectWallet(selectedWallet.label)
     }}
     class="onboard-button-primary"
     >{$_('connect.connectingWallet.primaryButton', {
