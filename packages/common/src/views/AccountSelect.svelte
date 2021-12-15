@@ -2,6 +2,7 @@
   import blocknative from '../icons/blocknative'
   import CloseButton from '../elements/CloseButton.svelte'
   import AddressTable from '../elements/AddressTable.svelte'
+  import TableHeader from '../elements/TableHeader.svelte';
   import { displayModal$ } from '../streams'
 
   
@@ -17,6 +18,7 @@
   let accountSelected: Account | undefined;
   let showEmptyAddresses: boolean = false;
   let loadingAccounts: boolean = false;
+  let errorFromScan: boolean = false;
 
   let scanAccountOptions: ScanAccountsOptions = {
     derivationPath : basePaths[0]?.value || '',
@@ -28,15 +30,14 @@
     try {
       loadingAccounts = true;
       const allAccounts = await scanAccounts(scanAccountOptions);
-      if (allAccounts) {
-        loadingAccounts = false;
-      }
+      loadingAccounts = false;
       accountsListObject = {
         all: allAccounts, 
         filtered: allAccounts.filter(account => Number(account?.balance.value) > 0)
       };
     } catch(err) {
       console.error(err);
+      errorFromScan = true;
       loadingAccounts = false;
     }
   }
@@ -210,7 +211,7 @@
   }
 
   .base-path-select {
-    width: 25rem;
+    min-width: 25rem;
   }
 
   .asset-select {
@@ -226,17 +227,23 @@
   }
 
   .base-path-container {
-    flex-grow: 1;
     margin-right: var(--account-select-margin-5, var(--margin-5));
   }
   
   .asset-container {
-    flex-grow: 0;
     margin-right: var(--account-select-margin-5, var(--margin-5));
   }
-  
-  .network-container {
-    flex-grow: 0;
+
+  .table-section {
+    max-height: 31.8rem;
+    padding: 1rem;
+  }
+
+  .table-container {
+    background: var(--account-select-white, var(--white));
+    border: 2px solid var(--account-select-gray-200, var(--gray-200));
+    box-sizing: border-box;
+    border-radius: .5rem;
   }
 
   .address-found-count {
@@ -273,7 +280,7 @@
       </div>
 
 
-      <div class="w-100 asset-container">
+      <div class="asset-container">
         <h4 class="control-label">
           Asset
         </h4>
@@ -292,7 +299,7 @@
       </div>
 
 
-      <div class="network-container w-100">
+      <div class="network-container">
         <h4 class="control-label">
           Network
         </h4>
@@ -310,14 +317,20 @@
         </select>
       </div>
     </section>
-
-    <AddressTable 
-      scanAccounts={scanAccountsWrap} 
-      accountsListObject={accountsListObject}
-      loadingAccounts={loadingAccounts}
-      bind:showEmptyAddresses={showEmptyAddresses}
-      bind:accountSelected={accountSelected}
-    />
+    <section class='table-section'>
+      <div class='w-100 table-container'>
+        <TableHeader
+          scanAccounts={scanAccountsWrap} 
+          loadingAccounts={loadingAccounts}
+          bind:showEmptyAddresses={showEmptyAddresses}
+        />
+        <AddressTable 
+          accountsListObject={accountsListObject}
+          showEmptyAddresses={showEmptyAddresses}
+          bind:accountSelected={accountSelected}
+        />
+      </div>
+    </section>
     <section>
       <div class='address-found-count'>
         {#if showEmptyAddresses}
