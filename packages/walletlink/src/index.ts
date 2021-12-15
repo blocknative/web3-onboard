@@ -1,5 +1,4 @@
 import { WalletInit } from '@bn-onboard/types'
-
 import Joi from 'joi'
 
 const validation = Joi.object({ darkMode: Joi.boolean() })
