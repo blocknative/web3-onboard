@@ -131,8 +131,16 @@
             style="margin-top: 0.25rem; padding: 0.25rem; border: 1px solid gray;"
           >
             <div>Address: {address}</div>
-            <div>ETH Balance: {balance?.eth || ''}</div>
-            <div>ENS Name: {ens?.name || ''}</div>
+            {#if balance}
+              <div>Balances:</div>
+              {#each Object.entries(balance) as [token, amount]}
+                <div style="margin-left: 1rem;">{token}: {amount}</div>
+              {/each}
+            {/if}
+
+            {#if ens}
+              <div>ENS Name: {ens?.name || ''}</div>
+            {/if}
           </div>
         {/each}
 
