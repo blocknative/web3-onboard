@@ -14,7 +14,7 @@ type PortisOptions {
 import Onboard from '@bn-onboard/core'
 import torusModule from '@bn-onboard/portis'
 
-const portis = portisModule()
+const portis = portisModule({ apiKey: 'API_KEY' })
 
 const onboard = Onboard({
   // ... other Onboard options
