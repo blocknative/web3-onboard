@@ -1,22 +1,27 @@
 import { WalletInit } from '@bn-onboard/types'
 
-function gnosis(): WalletInit {
+type GnosisOptions = {
+  whitelistedDomains: RegExp[]
+}
+
+function gnosis(options?: GnosisOptions): WalletInit {
+  const { whitelistedDomains = [/gnosis-safe.io/] } = options || {}
+
   return () => {
     return {
       label: 'Gnosis Safe',
       getIcon: async () => (await import('./icon')).default,
-      getInterface: async ({ chains }) => {
+      getInterface: async () => {
         const { default: SafeAppsSDK } = await import(
           '@gnosis.pm/safe-apps-sdk'
         )
+
         const { SafeAppProvider } = await import(
           '@gnosis.pm/safe-apps-provider'
         )
 
-        const [chain] = chains
-
         const opts = {
-          whitelistedDomains: [/gnosis-safe.io/]
+          whitelistedDomains
         }
 
         const appsSdk = new SafeAppsSDK(opts)
