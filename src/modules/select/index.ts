@@ -12,6 +12,7 @@ const desktopDefaultWalletNames = [
   'tally',
   'metamask',
   'binance',
+  'mathwallet',
   'frame',
   'torus',
   'opera',
@@ -29,6 +30,7 @@ const mobileDefaultWalletNames = [
   'status',
   'hyperpay',
   'tokenpocket',
+  'mathwallet',
   'dcent',
   'atoken',
   'liquality',
@@ -223,10 +225,12 @@ function getModule(name: string): Promise<{
       return import('./wallets/detectedwallet')
     case 'tp':
       return import('./wallets/tp')
-    case 'blankwallet':
-      return import('./wallets/blankwallet')
     // case 'mewwallet':
     //   return import('./wallets/mewwallet')
+    case 'mathwallet':
+      return import('./wallets/mathwallet')
+    case 'blankwallet':
+      return import('./wallets/blankwallet')
     case 'ronin':
       return import('./wallets/ronin')
     default:
