@@ -28,6 +28,7 @@
 
   const scanAccountsWrap = async () : Promise<void> => {
     try {
+      errorFromScan = false;
       loadingAccounts = true;
       const allAccounts = await scanAccounts(scanAccountOptions);
       loadingAccounts = false;
@@ -46,10 +47,6 @@
     if (!accountSelected) return;
     accounts$.next([accountSelected]);
     resetModal();
-  }
-
-  const setAccountsList = (newAccountsList: AccountsList) => {
-    accountsListObject = newAccountsList;
   }
 
   const dismiss = () => {
@@ -322,6 +319,7 @@
         <TableHeader
           scanAccounts={scanAccountsWrap} 
           loadingAccounts={loadingAccounts}
+          errorFromScan={errorFromScan}
           bind:showEmptyAddresses={showEmptyAddresses}
         />
         <AddressTable 
@@ -331,6 +329,7 @@
         />
       </div>
     </section>
+    
     <section>
       <div class='address-found-count'>
         {#if showEmptyAddresses}

@@ -5,6 +5,7 @@
   export let scanAccounts: () => Promise<void>;
   export let loadingAccounts: boolean;
   export let showEmptyAddresses: boolean;
+  export let errorFromScan: boolean;
 
   const filterEmptyAccounts = () => {
     showEmptyAddresses = !showEmptyAddresses;
@@ -38,7 +39,7 @@
   }
 
   input:hover {
-    border-color: var(--blue-300);
+    border-color: var(--account-select-blue-500, var(--blue-300));
   }
 
   input:focus {
@@ -80,7 +81,7 @@
 
   input[type='checkbox']:checked:after {
     content: url("data:image/svg+xml,%3Csvg width='0.885em' height='0.6em' viewBox='0 0 14 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0 6L5 11L14 2L12.59 0.58L5 8.17L1.41 4.59L0 6Z' fill='white'/%3E%3C/svg%3E");
-    font-size: 12px;
+    font-size: var(--account-select-font-size-7, var(--font-size-7));
     position: absolute;
     color: var(--account-select-white, var(--white));
   }
@@ -92,6 +93,11 @@
 
   .checkbox-input {
     margin-right: .75rem;
+  }
+
+  .error-msg {
+    color: var(--account-select-danger-500, var(--danger-500));
+    font-family: var(--account-select-font-family-light, var(--font-family-light));;
   }
 
   .table-controls {
@@ -120,7 +126,9 @@
       >Show Empty Addresses</label
     >
   </div>
-
+  {#if errorFromScan}
+    <span class='error-msg'>An error occured while scanning wallet</span>
+  {/if}
   <button
     class="scan-accounts-btn"
     id="scan-accounts"

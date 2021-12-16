@@ -69,25 +69,13 @@ const mountAccountSelect = (selectAccountOptions: SelectAccountOptions, accounts
         --gray-300: #999ca5;
         --gray-500: #33394b;
         --gray-700: #1a1d26;
-
-        --success-100: #d1fae3;
-        --success-200: #baf7d5;
-        --success-300: #a4f4c6;
-        --success-400: #8df2b8;
-        --success-500: #5aec99;
-        --success-600: #18ce66;
-        --success-700: #129b4d;
-        --danger-100: #ffe5e6;
-        --danger-200: #ffcccc;
-        --danger-300: #ffb3b3;
-        --danger-400: #ff8080;
         --danger-500: #ff4f4f;
-        --danger-600: #cc0000;
-        --danger-700: #660000;
 
         /* FONTS */
         --font-family-normal: Sofia Pro;
+        --font-family-light: Sofia Pro Light;
         --font-size-5: 1rem;
+        --font-size-7: .75rem;
         --font-line-height-1: 24px;
 
         /* SPACING */
