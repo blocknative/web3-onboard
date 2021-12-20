@@ -1,10 +1,10 @@
-# Onboard Wallet Module - [Portis](https://docs.portis.io/#/configuration)
+# Onboard Wallet Module - [Gnosis Safe](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-sdk)
 
 ## Options
 
 ```typescript
-type PortisOptions {
-  apiKey: string // required
+type GnosisOptions = {
+  whitelistedDomains: RegExp[]
 }
 ```
 
@@ -12,14 +12,14 @@ type PortisOptions {
 
 ```typescript
 import Onboard from '@bn-onboard/core'
-import torusModule from '@bn-onboard/portis'
+import gnosisModule from '@bn-onboard/gnosis'
 
-const portis = portisModule({ apiKey: 'API_KEY' })
+const gnosis = gnosisModule()
 
 const onboard = Onboard({
   // ... other Onboard options
   wallets: [
-    portis
+    gnosis
     //... other wallets
   ]
 })

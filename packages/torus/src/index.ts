@@ -9,7 +9,7 @@ import type { TorusCtorArgs, TorusParams } from '@toruslabs/torus-embed'
 
 type TorusOptions = TorusCtorArgs & TorusParams
 
-function torus(options: TorusOptions = {}): WalletInit {
+function torus(options?: TorusOptions): WalletInit {
   const {
     buttonPosition,
     modalZIndex,
@@ -22,7 +22,7 @@ function torus(options: TorusOptions = {}): WalletInit {
     whiteLabel,
     skipTKey,
     useLocalStorage
-  } = options
+  } = options || {}
 
   return () => {
     return {

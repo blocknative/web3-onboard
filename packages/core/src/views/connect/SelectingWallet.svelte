@@ -1,10 +1,12 @@
 <script lang="ts">
-  import { state } from '../../store'
   import type { WalletWithLoadedIcon, WalletWithLoadingIcon } from '../../types'
+  import { state } from '../../store'
   import WalletButton from './WalletButton.svelte'
 
   export let wallets: WalletWithLoadingIcon[]
   export let selectWallet: (wallet: WalletWithLoadedIcon) => void
+
+  let connecting: string
 
   function checkConnected(label: string) {
     const { wallets } = state.get()
@@ -17,13 +19,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 1rem;
+    padding: var(--onboard-spacing-4, var(--spacing-4));
   }
 
   .wallets-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.5rem;
+    gap: var(--onboard-spacing-5, var(--spacing-5));
     width: 100%;
   }
 
@@ -39,11 +41,13 @@
     {#each wallets as { label, icon, getInterface }}
       <WalletButton
         connected={checkConnected(label)}
+        connecting={connecting === label}
         {label}
         {icon}
         onClick={async () => {
+          connecting = label
           const iconLoaded = await icon
-          selectWallet({ label, icon: iconLoaded, getInterface })
+          await selectWallet({ label, icon: iconLoaded, getInterface })
         }}
       />
     {/each}

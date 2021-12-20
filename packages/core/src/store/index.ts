@@ -7,7 +7,9 @@ import type {
   AppState,
   WalletState,
   Action,
-  UpdateWalletAction
+  UpdateWalletAction,
+  AddWalletAction,
+  UpdateAccountAction
 } from '../types'
 
 import {
@@ -15,7 +17,8 @@ import {
   ADD_WALLET,
   UPDATE_WALLET,
   REMOVE_WALLET,
-  RESET_STORE
+  RESET_STORE,
+  UPDATE_ACCOUNT
 } from './constants'
 
 import { APP_INITIAL_STATE } from '../constants'
@@ -37,18 +40,29 @@ function reducer(state: AppState, action: Action): AppState {
         chains: [...state.chains, ...(payload as Chain[])]
       }
 
-    case ADD_WALLET:
+    case ADD_WALLET: {
+      const wallet = payload as AddWalletAction['payload']
+      const existingWallet = state.wallets.find(
+        ({ label }) => label === wallet.label
+      )
+
       return {
         ...state,
-        // add to front of wallets as it is now the primary wallet
-        wallets: [payload as WalletState, ...state.wallets]
+        wallets: [
+          // add to front of wallets as it is now the primary wallet
+          existingWallet || (payload as WalletState),
+          // filter out wallet if it already existed
+          ...state.wallets.filter(({ label }) => label !== wallet.label)
+        ]
       }
+    }
 
     case UPDATE_WALLET: {
       const update = payload as UpdateWalletAction['payload']
+      const { id, ...walletUpdate } = update
 
       const updatedWallets = state.wallets.map(wallet =>
-        wallet.label === update.id ? { ...wallet, ...update } : wallet
+        wallet.label === id ? { ...wallet, ...walletUpdate } : wallet
       )
 
       return {
@@ -62,6 +76,30 @@ function reducer(state: AppState, action: Action): AppState {
       return {
         ...state,
         wallets: state.wallets.filter(({ label }) => label !== update.id)
+      }
+    }
+
+    case UPDATE_ACCOUNT: {
+      const update = payload as UpdateAccountAction['payload']
+      const { id, address, ...accountUpdate } = update
+
+      const updatedWallets = state.wallets.map(wallet => {
+        if (wallet.label === id) {
+          wallet.accounts = wallet.accounts.map(account => {
+            if (account.address === address) {
+              return { ...account, ...accountUpdate }
+            }
+
+            return account
+          })
+        }
+
+        return wallet
+      })
+
+      return {
+        ...state,
+        wallets: updatedWallets
       }
     }
 

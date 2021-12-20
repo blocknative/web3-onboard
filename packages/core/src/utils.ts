@@ -9,8 +9,6 @@ import type {
   DeviceType
 } from '@bn-onboard/types'
 
-export const noop = (): void => {}
-
 export const notNullish = <T>(value: T | null | undefined): value is T =>
   value != null
 

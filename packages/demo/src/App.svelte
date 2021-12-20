@@ -2,8 +2,9 @@
   import { share } from 'rxjs/operators'
   import Onboard from '@bn-onboard/core'
   import injectedModule from '@bn-onboard/injected-wallets'
+
   import ledgerModule from '@bn-onboard/ledger'
-  // import walletConnectModule from '@bn-onboard/walletconnect'
+  import walletConnectModule from '@bn-onboard/walletconnect'
   import walletLinkModule from '@bn-onboard/walletlink'
   import portisModule from '@bn-onboard/portis'
   import fortmaticModule from '@bn-onboard/fortmatic'
@@ -26,7 +27,7 @@
 
   const walletLink = walletLinkModule()
 
-  // const walletConnect = walletConnectModule()
+  const walletConnect = walletConnectModule()
   const portis = portisModule({
     apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
   })
@@ -39,15 +40,15 @@
 
   const ledger = ledgerModule()
 
-  const options = {
+  const onboard = Onboard({
     wallets: [
-      /* walletConnect, */
+      walletConnect,
       walletLink,
       injected,
       fortmatic,
-      ledger,
       portis,
-      torus
+      torus,
+      ledger
     ],
     chains: [
       {
@@ -78,9 +79,17 @@
         { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
       ]
     }
-  }
-
-  const onboard = Onboard(options)
+    // example customising copy
+    // i18n: {
+    //   en: {
+    //     connect: {
+    //       selectingWallet: {
+    //         header: 'custom text header'
+    //       }
+    //     }
+    //   }
+    // }
+  })
 
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
@@ -134,8 +143,16 @@
             style="margin-top: 0.25rem; padding: 0.25rem; border: 1px solid gray;"
           >
             <div>Address: {address}</div>
-            <div>ETH Balance: {balance?.eth || ''}</div>
-            <div>ENS Name: {ens?.name || ''}</div>
+            {#if balance}
+              <div>Balances:</div>
+              {#each Object.entries(balance) as [token, amount]}
+                <div style="margin-left: 1rem;">{token}: {amount}</div>
+              {/each}
+            {/if}
+
+            {#if ens}
+              <div>ENS Name: {ens?.name || ''}</div>
+            {/if}
           </div>
         {/each}
 

@@ -1,10 +1,16 @@
 import { onDestroy, onMount, beforeUpdate, afterUpdate } from 'svelte'
 import { Observable, Subject, defer, BehaviorSubject } from 'rxjs'
-
-import { take, takeUntil, withLatestFrom, pluck, share } from 'rxjs/operators'
+import {
+  take,
+  takeUntil,
+  withLatestFrom,
+  pluck,
+  shareReplay
+} from 'rxjs/operators'
 
 import { resetStore } from './store/actions'
 import { state } from './store'
+
 import type { Chain } from '@bn-onboard/types'
 import type { WalletState, InternalState } from './types'
 
@@ -29,7 +35,7 @@ export const switchChainModal$ = new BehaviorSubject<null | {
 
 export const wallets$ = (
   state.select('wallets') as Observable<WalletState[]>
-).pipe(share())
+).pipe(shareReplay(1))
 
 // reset logic
 reset$.pipe(withLatestFrom(wallets$), pluck('1')).subscribe(wallets => {

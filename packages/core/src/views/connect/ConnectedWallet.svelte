@@ -3,7 +3,7 @@
   import { _ } from 'svelte-i18n'
 
   import { getBalance, getEns } from '../../provider'
-  import { updateWallet } from '../../store/actions'
+  import { updateAccount, updateWallet } from '../../store/actions'
   import { connectWallet$, internalState$ } from '../../streams'
   import { getRpcUrl, validEnsChain } from '../../utils'
   import success from '../../icons/success'
@@ -21,8 +21,9 @@
   const { appMetadata } = internalState$.getValue()
 
   async function updateAccountDetails() {
-    const { chain, accounts } = selectedWallet
-    const rpcUrl = getRpcUrl(chain, state.get().chains)
+    const { accounts, chain } = selectedWallet
+    const chains = state.get().chains
+    const rpcUrl = getRpcUrl(chain, chains)
 
     if (rpcUrl) {
       const { address } = accounts[0]
@@ -30,39 +31,27 @@
       const ethersProvider = new providers.JsonRpcProvider(rpcUrl)
 
       if (balance === null) {
-        getBalance(ethersProvider, address).then(balanceUpdate => {
-          balance = balanceUpdate
-
-          updateWallet(label, {
-            accounts: [
-              {
-                address,
-                ens,
-                balance
-              }
-            ]
+        getBalance(
+          ethersProvider,
+          address,
+          chains.find(({ id }) => id === chain)
+        ).then(balance => {
+          updateAccount(label, address, {
+            balance
           })
         })
       }
 
       if (ens === null && validEnsChain(chain)) {
-        getEns(ethersProvider, address).then(ensUpdate => {
-          ens = ensUpdate
-
-          updateWallet(label, {
-            accounts: [
-              {
-                address,
-                ens,
-                balance
-              }
-            ]
+        getEns(ethersProvider, address).then(ens => {
+          updateAccount(label, address, {
+            ens
           })
         })
       }
     }
 
-    setTimeout(() => connectWallet$.next({ inProgress: false }), 2000)
+    setTimeout(() => connectWallet$.next({ inProgress: false }), 1500)
   }
 
   updateAccountDetails()
@@ -70,14 +59,14 @@
 
 <style>
   .container {
-    padding: 1rem;
+    padding: var(--onboard-spacing-4, var(--spacing-4));
   }
 
   .connecting-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
+    padding: var(--onboard-spacing-4, var(--spacing-4));
     border-radius: 24px;
     background: var(--onboard-success-100, var(--success-100));
     border: 1px solid var(--onboard-success-600, var(--success-600));
@@ -93,7 +82,7 @@
 
   .text {
     position: relative;
-    right: 0.5rem;
+    right: var(--onboard-spacing-5, var(--spacing-5));
   }
 
   .tick {

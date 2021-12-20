@@ -1,8 +1,79 @@
-# Work in Progress Branch for Onboard V2
+# Onboard V2
 
-(note: not ready for production use)
+_NOTE: not currently ready for production use_
 
-## Test out the demo
+## Features
+
+- **Minimal Dependencies**: All wallet dependencies are included in separate packages, so you only include the ones you want to use in your app.
+- **Multiple Wallets and Accounts Connection**: Allow your users to connect multiple wallets and multiple accounts within each wallet at the same time to your app.
+- **Multiple Chain Support**: Allow users to switch between chains/networks with ease.
+- **Wallet Provider Standardization**: All wallet modules expose a provider that is patched to be compliant with the [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193), [EIP-1102](https://eips.ethereum.org/EIPS/eip-1102), [EIP-3085](https://eips.ethereum.org/EIPS/eip-3085) and [EIP-3326](https://ethereum-magicians.org/t/eip-3326-wallet-switchethereumchain/5471) specifications.
+- **Dynamic Imports**: Supporting multiple wallets in your app comes requires a lot of dependencies. Onboard dynamically imports a wallet and it's dependencies only when the user selects it, so that minimal bandwidth is used.
+
+## Quickstart
+
+Get started with Onboard supporting all injected wallet modules:
+
+```javascript
+import Onboard from '@bn-onboard/core'
+import injectedModule from '@bn-onboard/injected-wallets'
+
+const MAINNET_RPC_URL = 'https://mainnet.infura.io/v3/<INFURA_KEY>'
+
+const injected = injectedModule()
+
+const onboard = Onboard({
+  wallets: [injected],
+  chains: [
+    {
+      id: '0x1',
+      token: 'ETH',
+      label: 'Ethereum Mainnet',
+      rpcUrl: MAINNET_RPC_URL
+    }
+  ],
+  appMetadata: {
+    name: 'My App',
+    icon: '<SVG_ICON_STRING>',
+    description: 'My app using Onboard'
+  }
+})
+
+const wallets = await onboard.connectWallet()
+
+console.log(wallets)
+```
+
+## Documentation
+
+For full documentation, check out the README.md for each package:
+
+**Core Repo**
+
+- [Core](packages/core/README.md)
+
+**Injected Wallets**
+
+- [Injected](packages/injected/README.md)
+
+**SDK Wallets**
+
+- [Fortmatic](packages/fortmatic/README.md)
+- [Gnosis](packages/gnosis/README.md)
+- [MEW](packages/mew/README.md)
+- [Portis](packages/portis/README.md)
+- [Torus](packages/torus/README.md)
+- [WalletConnect](packages/walletconnect/README.md)
+- [WalletLink](packages/walletlink/README.md)
+
+**Hardware Wallets**
+
+- KeepKey (in active development)
+- Keystone (in active development)
+- Ledger (in active development)
+- Trezor (in active development)
+
+## Test out the demo app
 
 If you would like to test out the current functionality of V2 in a small browser demo, then:
 
@@ -13,15 +84,3 @@ If you would like to test out the current functionality of V2 in a small browser
 - Setup the monorepo symlinks: `yarn setup`
 - Run all packages in dev mode: `yarn dev`
 - [View demo app in the browser](http://localhost:8080)
-
-## Phase 1 Design Goals
-
-- Onboard V1 Feature parity
-- Separate all of the wallet modules in to their own installable packages. This will mean that:
-  - Apps will only need to install the deps for the wallets they are using which will help with various build environment issues and bundle sizes
-  - The onboard core functionality will stay lean and focused and will not require a release to fix or add a wallet module
-- Allow an app to declare that it runs on multiple chains and to be able to switch between them, rather than setting a single networkId that the app runs on an enforcing that (V1)
-- All wallet modules will now return a provider that has been patched so that it is compliant with the standards: EIP-1193, EIP-1102, EIP-3085 and EIP-3326. This will mean that app devs will not need to worry about the specifics of which wallet the user has selected to interact with it.
-- Multiple wallets, with multiple accounts can be connected at the same time
-- Simplified connection wallet flow via a single API call
-- App can be initialised with multiple networks and can switch between them

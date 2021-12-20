@@ -9,11 +9,8 @@ const basePaths = Joi.array().items(basePath)
 
 const chain = Joi.object({
   id: Joi.string().required(),
-  rpcUrl: Joi.string().required(),
-  label: Joi.string(),
-  token: Joi.string()
+  label: Joi.string()
 })
-
 const chains = Joi.array().items(chain)
 
 const asset = Joi.object({

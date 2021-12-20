@@ -42,6 +42,7 @@ export default {
     'bowser',
     'joi',
     'rxjs',
+    'rxjs/operators',
     'svelte-i18n',
     'lodash.merge',
     'lodash.partition'

@@ -1,7 +1,9 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
+  import Spinner from './Spinner.svelte'
   export let size: number // px
   export let icon: Promise<string> | string // svg string
+  export let loading: boolean = false
 
   export let border:
     | 'yellow'
@@ -104,6 +106,10 @@
     border-radius: 32px;
     animation: pulse infinite 750ms alternate ease-in-out;
   }
+
+  .spinner-container {
+    color: var(--onboard-blue-300, var(--blue-300));
+  }
 </style>
 
 <div
@@ -125,12 +131,18 @@
     size / 6
   }px; width: ${size}px; height: ${size}px;`}
 >
-  {#await icon}
-    <div class="placeholder-icon" />
-  {:then iconLoaded}
-    <div in:fade class="icon">
-      {@html iconLoaded}
+  {#if loading}
+    <div class="spinner-container">
+      <Spinner size="2rem" />
     </div>
-  {/await}
+  {:else}
+    {#await icon}
+      <div class="placeholder-icon" />
+    {:then iconLoaded}
+      <div in:fade class="icon">
+        {@html iconLoaded}
+      </div>
+    {/await}
+  {/if}
   <slot name="status" />
 </div>

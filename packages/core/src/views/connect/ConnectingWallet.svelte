@@ -3,34 +3,26 @@
   import { createEventDispatcher } from 'svelte'
   import { ErrorCodes } from '@bn-onboard/common'
 
-  import { requestAccounts, trackWallet } from '../../provider'
-  import { state } from '../../store'
-  import { addWallet } from '../../store/actions'
+  import { getChainId, requestAccounts, trackWallet } from '../../provider'
   import { internalState$ } from '../../streams'
   import type { WalletState } from '../../types'
+
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import PendingStatusIcon from '../shared/PendingStatusIcon.svelte'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
   import defaultAppIcon from '../../icons/default-app-icon'
   import en from '../../i18n/en.json'
+  import { addWallet } from '../../store/actions'
 
   export let selectedWallet: WalletState
-
-  export let updateSelectedWallet: (
-    update: WalletState | Partial<WalletState>
-  ) => void
-
-  export let unSelectWallet: () => void
+  export let deselectWallet: (label: string) => void
+  export let updateSelectedWallet: (update: Partial<WalletState>) => void
 
   let connectionRejected: boolean = false
 
   const { appMetadata } = internalState$.getValue()
 
   const dispatch = createEventDispatcher<{ connectionRejected: boolean }>()
-
-  function walletAdded(label: WalletState['label']) {
-    return !!state.get().wallets.find(wallet => wallet.label === label)
-  }
 
   async function connect() {
     dispatch('connectionRejected', false)
@@ -39,28 +31,24 @@
     const { provider, label } = selectedWallet
 
     try {
-      const blankAccountDetails = {
-        ens: null,
-        balance: null
-      }
-
       const [address] = await requestAccounts(provider)
 
       // canceled previous request
-      if (!address) return
-
-      const update = {
-        accounts: [{ address, ...blankAccountDetails }]
+      if (!address) {
+        return
       }
 
+      const chain = await getChainId(provider)
+
+      const update: Pick<WalletState, 'accounts' | 'chain'> = {
+        accounts: [{ address, ens: null, balance: null }],
+        chain
+      }
+
+      addWallet({ ...selectedWallet, ...update })
+      trackWallet(provider, label)
       updateSelectedWallet(update)
-
-      if (!walletAdded(label)) {
-        addWallet({ ...selectedWallet, ...update })
-        trackWallet(provider, label)
-      }
     } catch (error) {
-      console.log({ error })
       const { code } = error as { code: number; message: string }
 
       // user rejected account access
@@ -72,11 +60,7 @@
 
       // account access has already been requested and is awaiting approval
       if (code === ErrorCodes.ACCOUNT_ACCESS_ALREADY_REQUESTED) {
-        // track wallet and wait for accounts to be connected
-        if (!walletAdded(label)) {
-          addWallet(selectedWallet)
-          trackWallet(provider, label)
-        }
+        return
       }
     }
   }
@@ -89,7 +73,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 1rem;
+    padding: var(--onboard-spacing-4, var(--spacing-4));
   }
 
   .connecting-container {
@@ -97,7 +81,7 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 1rem;
+    padding: var(--onboard-spacing-4, var(--spacing-4));
     transition: background-color 100ms ease-in-out,
       border-color 100ms ease-in-out;
     border-radius: 24px;
@@ -121,7 +105,7 @@
 
   .onboard-button-primary {
     position: absolute;
-    bottom: 1.5rem;
+    bottom: var(--onboard-spacing-3, var(--spacing-3));
     cursor: pointer;
   }
 
@@ -129,6 +113,10 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+  }
+
+  .ml {
+    margin-left: var(--onboard-spacing-4, var(--spacing-4));
   }
 </style>
 
@@ -141,7 +129,7 @@
           border="yellow"
           icon={appMetadata?.icon || defaultAppIcon}
         />
-        <div class="centered-flex-column">
+        <div class="centered-flex-column ml">
           <div class="text">
             {$_('connect.connectingWallet.rejectedText', {
               default: en.connect.connectingWallet.rejectedText
@@ -181,7 +169,11 @@
     {/if}
   </div>
 
-  <button on:click={unSelectWallet} class="onboard-button-primary"
+  <button
+    on:click={() => {
+      deselectWallet(selectedWallet.label)
+    }}
+    class="onboard-button-primary"
     >{$_('connect.connectingWallet.primaryButton', {
       default: en.connect.connectingWallet.primaryButton
     })}</button

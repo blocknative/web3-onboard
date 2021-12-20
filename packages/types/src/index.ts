@@ -32,7 +32,7 @@ export type RecommendedInjectedWallets = {
  */
 export type WalletInit = (
   helpers: WalletHelpers
-) => WalletModule | WalletModule[]
+) => WalletModule | WalletModule[] | null
 
 export type WalletHelpers = {
   device: Device
@@ -54,13 +54,6 @@ export interface InjectedWalletOptions {
 
 export interface APIKey {
   apiKey: string
-}
-
-export interface WalletConnectOptions extends APIKey {
-  bridge?: string
-  qrcodeModalOptions?: {
-    mobileLinks: string[]
-  }
 }
 
 export type Device = {
@@ -193,14 +186,6 @@ export type DisconnectListener = (error: ProviderRpcError) => void
 export type MessageListener = (message: ProviderMessage) => void
 export type ChainListener = (chainId: ChainId) => void
 export type AccountsListener = (accounts: ProviderAccounts) => void
-
-export type RequestMethods =
-  | 'eth_accounts'
-  | 'eth_chainId'
-  | 'eth_getBalance'
-  | 'eth_requestAccounts'
-  | 'wallet_addEthereumChain'
-  | 'wallet_switchEthereumChain'
 
 /**
  * The hexadecimal representation of the users

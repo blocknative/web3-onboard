@@ -5,12 +5,12 @@
   import en from '../../i18n/en.json'
   import type { i18n } from '../../types'
 
-  export let status: keyof i18n['connect']
+  export let step: keyof i18n['connect']
 
   const { appMetadata } = internalState$.getValue()
   const { icon, name = 'This app' } = appMetadata || {}
 
-  const defaultContent = en.connect[status].sidebar
+  const defaultContent = en.connect[step].sidebar
   const { subheading, paragraph } = defaultContent
   const { heading } =
     defaultContent as i18n['connect']['selectingWallet']['sidebar']
@@ -18,20 +18,20 @@
 
 <style>
   .sidebar {
-    padding: 1.5rem;
+    padding: var(--onboard-spacing-3, var(--spacing-3));
     border-radius: 24px 0 0 24px;
     background: var(--onboard-gray-100, var(--gray-100));
   }
 
   .inner-container {
-    padding-left: 0.5rem;
+    padding-left: var(--onboard-spacing-5, var(--spacing-5));
     max-width: 236px;
   }
 
   .icon-container {
     height: 3rem;
     display: inline-block;
-    margin-bottom: var(--onboard-margin-3, var(--margin-3));
+    margin-bottom: var(--onboard-spacing-3, var(--spacing-3));
   }
 
   .heading {
@@ -40,7 +40,7 @@
       --onboard-font-family-semibold,
       var(--font-family-semibold)
     );
-    margin: 0 0 var(--onboard-margin-5, var(--margin-5)) 0;
+    margin: 0 0 var(--onboard-spacing-5, var(--spacing-5)) 0;
   }
 
   .subheading {
@@ -48,7 +48,7 @@
       --onboard-font-family-semibold,
       var(--font-family-semibold)
     );
-    margin: 0 0 var(--onboard-margin-5, var(--margin-5)) 0;
+    margin: 0 0 var(--onboard-spacing-5, var(--spacing-5)) 0;
   }
 
   .description {
@@ -60,7 +60,7 @@
   .indicators {
     display: flex;
     align-items: center;
-    margin-top: var(--onboard-margin-2, var(--margin-2));
+    margin-top: var(--onboard-spacing-2, var(--spacing-2));
   }
 
   .indicator {
@@ -100,22 +100,22 @@
         {@html blocknative}
       {/if}
     </div>
-    {#if $_(`connect.${status}.sidebar.heading`, { default: '' })}
+    {#if $_(`connect.${step}.sidebar.heading`, { default: '' })}
       <h2 class="heading">
-        {$_(`connect.${status}.sidebar.heading`, {
+        {$_(`connect.${step}.sidebar.heading`, {
           default: heading
         })}
       </h2>
     {/if}
 
     <h4 class="subheading">
-      {$_(`connect.${status}.sidebar.subheading`, {
+      {$_(`connect.${step}.sidebar.subheading`, {
         default: subheading
       })}
     </h4>
 
     <p class="description">
-      {$_(`connect.${status}.sidebar.paragraph`, {
+      {$_(`connect.${step}.sidebar.paragraph`, {
         values: { app: name },
         default: paragraph
       })}
@@ -124,10 +124,10 @@
     <div class="indicators">
       <div class="indicator" class:on={true} />
       <div
-        class:active={status !== 'selectingWallet'}
+        class:active={step !== 'selectingWallet'}
         class="join"
         style={`${
-          status !== 'selectingWallet'
+          step !== 'selectingWallet'
             ? 'right: 4px; width: 52px;'
             : 'right: 2px; width: 54px;'
         }`}
@@ -135,13 +135,13 @@
       <div
         class="indicator"
         style={`right: 8px;`}
-        class:on={status !== 'selectingWallet'}
+        class:on={step !== 'selectingWallet'}
       />
       <div
-        class:active={status === 'connectedWallet'}
+        class:active={step === 'connectedWallet'}
         class="join"
         style={`${
-          status === 'connectedWallet'
+          step === 'connectedWallet'
             ? 'right: 12px; width: 52px;'
             : 'right: 10px; width: 54px;'
         }`}
@@ -149,7 +149,7 @@
       <div
         style={`right: 16px;`}
         class="indicator"
-        class:on={status === 'connectedWallet'}
+        class:on={step === 'connectedWallet'}
       />
     </div>
   </div>

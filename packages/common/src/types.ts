@@ -63,9 +63,7 @@ export interface EventCallback {
 }
 
 // eslint-disable-next-line max-len
-export type AccountSelectAPI = (
-  options: SelectAccountOptions
-) => Promise<Account>
+export type AccountSelectAPI = (options: SelectAccountOptions) => Promise<Account>
 
 export type SelectAccountOptions = {
   basePaths: BasePath[] // the paths to display in the base path selector
@@ -88,9 +86,9 @@ export type Asset = {
 }
 
 export type Chain = {
-  label?: string // eg - Ethereum, Rinkeby, Matic
-  id: string
-  // 0x prefixed hex string |
+  label: string // eg - Ethereum, Rinkeby, Matic
+  id: string 
+  // 0x prefixed hex string | 
   // eg - 0x1 (mainnet ethereum), 0x4 (rinkeby), 0x89 (polygon matic)
 }
 

@@ -1,4 +1,5 @@
 import { WalletInit } from '@bn-onboard/types'
+import Joi from 'joi'
 
 function walletLink(options?: { darkMode?: boolean }): WalletInit {
   const { darkMode = false } = options || {}

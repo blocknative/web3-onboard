@@ -8,7 +8,8 @@
   :global(.onboard-button-primary) {
     border-radius: 24px;
     background: var(--onboard-white, var(--white));
-    padding: 0.5rem 1rem;
+    padding: var(--onboard-spacing-5, var(--spacing-5))
+      var(--onboard-spacing-4, var(--spacing-4));
     color: var(--onboard-gray-500, var(--gray-500));
     font-family: var(
       --onboard-font-family-semibold,
