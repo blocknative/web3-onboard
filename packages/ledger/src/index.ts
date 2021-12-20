@@ -104,7 +104,7 @@ const getAddresses = (
   asset: Asset,
   currentChain: Chain,
   offset: number = 0,
-  limit: number = 15
+  limit: number = 5
 ): Promise<Account[]> =>
   limit - offset <= 0
     ? (() => {
