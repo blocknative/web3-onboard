@@ -193,7 +193,6 @@ function ledger(): WalletInit {
             return accounts?.[0]?.address ? [accounts[0].address] : []
           },
           eth_chainId: async baseRequest => {
-            console.log('eth_chainId called', currentChain?.id)
             return currentChain?.id ?? ''
           },
           eth_getBalance: async (baseRequest, [address, block]) => {
