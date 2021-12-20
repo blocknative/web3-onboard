@@ -19,3 +19,5 @@ const onboard = Onboard({
 const connectedWallets = await onboard.connectWallet()
 console.log(connectedWallets)
 ```
+
+_NOTE: Currently not building on M1 Macs_
