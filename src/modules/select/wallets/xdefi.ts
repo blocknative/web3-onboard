@@ -13,22 +13,18 @@ function xdefi(options: CommonWalletOptions): WalletModule {
     iconSrcSet: iconSrc || xdefiIcon2x,
     svg,
     wallet: async (helpers: Helpers) => {
-      const {
-        getProviderName,
-        createModernProviderInterface,
-        createLegacyProviderInterface
-      } = helpers
+      const { createModernProviderInterface, createLegacyProviderInterface } =
+        helpers
 
       const provider = (window as any).xfi && (window as any).xfi.ethereum
 
       return {
         provider,
-        interface:
-          provider && getProviderName(provider) === 'XDEFI'
-            ? typeof provider.enable === 'function'
-              ? createModernProviderInterface(provider)
-              : createLegacyProviderInterface(provider)
-            : null
+        interface: provider
+          ? typeof provider.enable === 'function'
+            ? createModernProviderInterface(provider)
+            : createLegacyProviderInterface(provider)
+          : null
       }
     },
     type: 'injected',
