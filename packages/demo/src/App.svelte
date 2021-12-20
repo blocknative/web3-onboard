@@ -15,11 +15,11 @@
   }
 
   const injected = injectedModule({
-    wallets: [
+    custom: [
       // include custom injected wallet modules here
     ],
-    exclude: {
-      // mapping of wallet label to exclusion here
+    filters: {
+      // mapping of wallet label to filter here
     }
   })
 

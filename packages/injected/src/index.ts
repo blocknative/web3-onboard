@@ -14,24 +14,26 @@ import { validateWalletOptions } from './validation'
 declare const window: CustomWindow
 
 function injected(options: InjectedWalletOptions): WalletInit {
-  validateWalletOptions(options)
+  const result = validateWalletOptions(options)
+
+  if (result?.error) throw result.error
 
   return helpers => {
     const { device } = helpers
-    const { wallets = [], exclude = {} } = options || {}
-    const allWallets = [...wallets, ...standardWallets]
+    const { custom = [], filter = {} } = options || {}
+    const allWallets = [...custom, ...standardWallets]
     const deduped = uniqBy(allWallets, ({ label }) => `${label}`)
 
     const filteredWallets = deduped.filter(wallet => {
       const { label, platforms } = wallet
-      const walletExclusions = exclude[label]
+      const walletFilters = filter[label]
 
-      const excludedWallet = walletExclusions === false
+      const filteredWallet = walletFilters === false
 
       const excludedDevice =
-        typeof walletExclusions === 'object' &&
-        (walletExclusions?.includes(device.type) ||
-          walletExclusions.includes(device.os.name))
+        typeof walletFilters === 'object' &&
+        (walletFilters?.includes(device.type) ||
+          walletFilters.includes(device.os.name))
 
       const invalidPlatform =
         !platforms.includes('all') &&
@@ -39,7 +41,7 @@ function injected(options: InjectedWalletOptions): WalletInit {
         !platforms.includes(device.os.name)
 
       const supportedWallet =
-        !excludedWallet && !excludedDevice && !invalidPlatform
+        !filteredWallet && !excludedDevice && !invalidPlatform
 
       return supportedWallet
     })
