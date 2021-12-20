@@ -224,6 +224,27 @@ export interface EthBalanceRequest {
   params: [string, (number | 'latest' | 'earliest' | 'pending')?]
 }
 
+// "data": "0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675",
+// "from": "0xb60e8dd61c5d32be8058bb8eb970870f07233155",
+// "gas": "0x76c0",
+// "gasPrice": "0x9184e72a000",
+// "to": "0xd46e8dd67c5d32be8058bb8eb970870f07244567",
+// "value": "0x9184e72a"
+export interface TransactionObject {
+  data: string
+  from: string
+  gas?: string
+  gasPrice?: string
+  to?: string
+  value?: string
+  nonce?: string
+}
+
+export interface EthSignTransactionRequest {
+  method: 'eth_signTransaction'
+  params: [TransactionObject]
+}
+
 export interface EIP1102Request extends BaseRequest {
   method: 'eth_requestAccounts'
 }
@@ -261,6 +282,7 @@ export interface EIP1193Provider extends SimpleEventEmitter {
   request(args: EIP3326Request): Promise<null>
   request(args: EIP3085Request): Promise<null>
   request(args: EthChainIdRequest): Promise<ChainId>
+  request(args: EthSignTransactionRequest): Promise<string>
   disconnect?(): void
 }
 

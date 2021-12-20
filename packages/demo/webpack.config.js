@@ -57,6 +57,9 @@ module.exports = {
       }
     ]
   },
+  experiments: {
+    asyncWebAssembly: true,
+  },
   mode,
   plugins: [
     new MiniCssExtractPlugin({

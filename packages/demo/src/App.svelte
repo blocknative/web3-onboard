@@ -2,6 +2,7 @@
   import { share } from 'rxjs/operators'
   import Onboard from '@bn-onboard/core'
   import injectedModule from '@bn-onboard/injected-wallets'
+  import ledgerModule from '@bn-onboard/ledger'
   // import walletConnectModule from '@bn-onboard/walletconnect'
   import walletLinkModule from '@bn-onboard/walletlink'
   import portisModule from '@bn-onboard/portis'
@@ -36,12 +37,15 @@
 
   const torus = torusModule()
 
+  const ledger = ledgerModule()
+
   const options = {
     wallets: [
       /* walletConnect, */
       walletLink,
       injected,
       fortmatic,
+      ledger,
       portis,
       torus
     ],
