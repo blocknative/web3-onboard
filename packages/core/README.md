@@ -20,7 +20,7 @@ An array of wallet modules that you would like to be presented to the user to se
 An array of Chains that your app supports:
 
 ```typescript
-type Chain {
+type Chain = {
   id: ChainId // hex encoded string, eg '0x1' for Ethereum Mainnet
   rpcUrl: string // used for network requests
   label?: string // used for display, eg Ethereum Mainnet
@@ -32,7 +32,7 @@ type Chain {
 An object that defines your app:
 
 ```typescript
-type AppMetadata {
+type AppMetadata = {
   // app name
   name: string
   // SVG icon string, with height set to 100%, width unset
@@ -156,12 +156,12 @@ Onboard currently keeps track of the following state:
 - `chains`: The chains that Onboard has been initialized with
 
 ```typescript
-type AppState {
+type AppState = {
   chains: Chain[]
   wallets: WalletState[]
 }
 
-type WalletState {
+type WalletState = {
   label: string
   icon: string
   provider: EIP1193Provider
@@ -191,7 +191,7 @@ The current state of Onboard can be accessed at any time using the `state.get()`
 const currentState = onboard.state.get()
 ```
 
-State can also be subscribed to using the `state.select()` method. The `select` method will return an [RXJS Observable](https://rxjs.dev/guide/observable). Understanding of RXJS observables is not necessary to subscribe to state updates, but allows for composable functionality if wanted. The key points to understand is that if you subscribe for updates, remember to unsubscribe when you are finished to prevent memory leaks.
+State can also be subscribed to using the `state.select()` method. The `select` method will return an [RXJS Observable](https://rxjs.dev/guide/observable). Understanding of RXJS observables is not necessary to subscribe to state updates, but allows for composable functionality if wanted. The key point to understand is that if you subscribe for updates, remember to unsubscribe when you are finished to prevent memory leaks.
 
 To subscribe to all state updates, call the `select` method with no arguments:
 

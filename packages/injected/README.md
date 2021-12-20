@@ -36,7 +36,7 @@ console.log(connectedWallets)
 
 ## Excluding Wallets
 
-Injected wallets that you do not want to support can be excluded based on the `Platform` the user is on. For example you may not want to support the 'Detected Wallet' that is detected automatically and exclude it via all platforms by passing `false`:
+Injected wallets that you do not want to support can be filtered based on the `Platform` the user is on. For example you may not want to support the 'Detected Wallet' that is detected automatically and filter it via all platforms by passing `false`:
 
 ```javascript
 import Onboard from '@bn-onboard/core'
@@ -57,7 +57,7 @@ const onboard = Onboard({
 })
 ```
 
-Or you may want to only exclude the 'Detected Wallet' on a select few platforms:
+Or you may want to only filter the 'Detected Wallet' on a select few platforms:
 
 ```javascript
 import Onboard from '@bn-onboard/core'
@@ -102,7 +102,7 @@ type Platform =
   | 'tablet'
 ```
 
-### Adding Custom Injected Wallets
+## Adding Custom Injected Wallets
 
 If there is an injected wallet that you would like to support in your app, but is not yet included in this repo, you can add a custom wallet module in the `custom` field:
 
