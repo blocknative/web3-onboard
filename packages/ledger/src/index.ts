@@ -89,14 +89,6 @@ const getAddress = async (
   const address = toChecksumAddress(
     `0x${publicToAddress(child.publicKey, true).toString('hex')}`
   )
-
-  console.log({
-    address,
-    index,
-    derivationPath,
-    fullPath: `${derivationPath}/${index}`
-  })
-
   return {
     derivationPath,
     address,
