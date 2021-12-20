@@ -1,3 +1,5 @@
+import { firstValueFrom } from 'rxjs'
+import { filter, mapTo } from 'rxjs/operators'
 import { addNewChain, switchChain } from './provider'
 import { state } from './store'
 import { switchChainModal$ } from './streams'
@@ -22,7 +24,7 @@ async function setChain(chainId: string): Promise<boolean> {
   const chain = chains.find(({ id }) => id === chainId)
   if (!chain) {
     throw new Error(
-      `Chain with chainId: ${chainId} has not been set. Try adding via the setChains method`
+      `Chain with chainId: ${chainId} has not been set and must be added when Onboard is initialized.`
     )
   }
 
@@ -36,6 +38,10 @@ async function setChain(chainId: string): Promise<boolean> {
     return true
   } catch (error) {
     const { code } = error as { code: number }
+    const switchChainModalClosed$ = switchChainModal$.pipe(
+      filter(x => x === null),
+      mapTo(false)
+    )
 
     if (code === 4902) {
       // chain has not been added to wallet
@@ -46,12 +52,14 @@ async function setChain(chainId: string): Promise<boolean> {
       } catch (error) {
         // display notification to user to switch chain
         switchChainModal$.next({ chain })
+        return firstValueFrom(switchChainModalClosed$)
       }
     }
 
     if (code === 4200) {
       // method not supported
       switchChainModal$.next({ chain })
+      return firstValueFrom(switchChainModalClosed$)
     }
   }
 
