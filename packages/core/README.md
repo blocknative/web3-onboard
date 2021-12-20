@@ -14,7 +14,7 @@ Onboard needs to be initialized with options that are static to your app:
 ### Options
 
 **`wallets`**
-An array of wallet modules that you would like to be presented to the user to select from when connecting a wallet. A wallet module is an abstraction that allows for easy interaction without needing to know the specifics of how that wallet works.
+An array of wallet modules that you would like to be presented to the user to select from when connecting a wallet. A wallet module is an abstraction that allows for easy interaction without needing to know the specifics of how that wallet works and are separate packages that can be included.
 
 **`chains`**
 An array of Chains that your app supports:
@@ -135,6 +135,18 @@ async function connectWallet() {
 
 connectWallet()
 ```
+
+## Disconnecting a Wallet
+
+A wallet can be disconnected, which will cleanup any background operations the wallet may be doing and will also remove it from the Onboard `wallets` array:
+
+```javascript
+// disconnect the first wallet in the wallets array
+const [primaryWallet] = onboard.state.get().wallets
+await onboard.disconnectWallet(primaryWallet.label)
+```
+
+The `disconnectWallet` method takes the `wallet.label` value and returns a `Promise` that resolves to the current state of the `wallets` array.
 
 ## State
 
