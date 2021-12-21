@@ -156,6 +156,7 @@
   }
 
   .hardware-connect-modal {
+    z-index: 20;
     position: absolute;
     width: 42rem;
     max-height: 51.75rem;
