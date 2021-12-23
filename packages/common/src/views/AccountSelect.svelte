@@ -273,10 +273,11 @@
     background-position: center;
     background-size: 0.65em auto, 100%;
     position: absolute;
-    top: 2.45rem;
-    right: 0;
-    width: 2.85rem;
-    height: 3rem;
+    top: 2.7rem;
+    right: 0.2rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: var(--account-select-white, var(--white));
   }
   
   .asset-container {
