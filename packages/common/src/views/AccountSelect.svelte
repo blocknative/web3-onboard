@@ -47,13 +47,12 @@
     try {
       errorFromScan = false;
       loadingAccounts = true;
-      console.log(scanAccountOptions)
       const allAccounts = await scanAccounts(scanAccountOptions);
-      loadingAccounts = false;
       accountsListObject = {
         all: allAccounts, 
         filtered: allAccounts.filter(account => Number(account?.balance.value) > 0)
       };
+      loadingAccounts = false;
     } catch(err) {
       console.error(err);
       errorFromScan = true;
@@ -346,7 +345,7 @@
           class='asset-select'
           bind:value={scanAccountOptions['asset']}
         >
-          {#each assets as asset, assetIndex}
+          {#each assets as asset}
             <option
               value={asset}
             >
@@ -365,7 +364,7 @@
           bind:value={scanAccountOptions['chainId']}
           class='network-select'
         >
-          {#each chains as chain, chainIndex}
+          {#each chains as chain}
             <option
               value={chain.id}
             >
