@@ -47,6 +47,7 @@
     try {
       errorFromScan = false;
       loadingAccounts = true;
+      console.log(scanAccountOptions)
       const allAccounts = await scanAccounts(scanAccountOptions);
       loadingAccounts = false;
       accountsListObject = {
@@ -75,6 +76,7 @@
     accountSelected = undefined;
     accountsListObject = undefined;
     showEmptyAddresses = false;
+    scanAccountOptions.derivationPath = basePaths[0]?.value || '';
   }
 
 </script>
@@ -106,6 +108,14 @@
     -ms-overflow-style: none;
   }
 
+  select::-webkit-scrollbar, input::-webkit-scrollbar {
+    display: none;
+  }
+
+  select::-ms-expand, input::-ms-expand {
+    display: none;
+  }
+
   input {
     display: block;
     margin: 0;
@@ -124,14 +134,6 @@
     box-sizing: border-box;
     height: 3rem;
     -ms-overflow-style: none;
-  }
-
-  select::-webkit-scrollbar, input::-webkit-scrollbar {
-    display: none;
-  }
-
-  select::-ms-expand, input::-ms-expand {
-    display: none;
   }
 
   button {
@@ -317,22 +319,21 @@
             <input class='base-path-select' placeholder="type/your/custom/path..." on:change={e => handleCustomPath(e)}/> 
             <span class='input-select' on:click={toggleDerivationPathToDropdown}></span>
           {:else if  !customDerivationPath}
-
-          <select
-            class='base-path-select'
-            on:change={(e) => handleDerivationPathSelect(e)}
-          >
-            {#each basePaths as path}
-              <option
-                value={path.value}
-              >
-                {path.label} - {path.value}
+            <select
+              class='base-path-select'
+              on:change={(e) => handleDerivationPathSelect(e)}
+            >
+              {#each basePaths as path}
+                <option
+                  value={path.value}
+                >
+                  {path.label} - {path.value}
+                </option>
+              {/each}
+              <option value='customPath'>
+                Custom Derivation Path
               </option>
-            {/each}
-            <option value='customPath'>
-              Custom Derivation Path
-            </option>
-          </select>
+            </select>
           {/if}
       </div>
 
