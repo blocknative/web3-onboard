@@ -93,6 +93,17 @@
 
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
+
+  const data = JSON.stringify({
+    types: {
+        EIP712Domain: domain,
+        Bid: bid,
+        Identity: identity,
+    },
+    domain: domainData,
+    primaryType: "Bid",
+    message: ''
+  });
 </script>
 
 <style>
@@ -129,7 +140,7 @@
   {/if}
 
   {#if $wallets$}
-    {#each $wallets$ as { icon, label, accounts, chain }}
+    {#each $wallets$ as { icon, label, accounts, chain, provider }}
       <div class="connected-wallet">
         <div class="flex-centered" style="width: 10rem;">
           <div style="width: 2rem; height: 2rem">{@html icon}</div>
@@ -154,13 +165,65 @@
               <div>ENS Name: {ens?.name || ''}</div>
             {/if}
           </div>
-        {/each}
 
+          <div>
+            <input
+              id="sign-transaction-input"
+              type="text"
+              class="text-input"
+              placeholder='transaction...'
+              bind:value={signTransactionMsg}
+            />
+            <button on:click={() => {
+              provider.request({
+                method: 'eth_signTransaction',
+                params: [address, signTransactionMsg]
+              })
+            }}>
+              Sign Transaction
+            </button>
+          </div>
+          <div>
+            <input
+              id="sign-msg-input"
+              type="text"
+              class="text-input"
+              placeholder='message...'
+              bind:value={signMsg}
+            />
+            <button on:click={() => {
+              provider.request({
+                method: 'eth_sign',
+                params: [address, signMsg]
+              })
+            }}>
+              Sign Message
+            </button>
+          </div>
+          <div>
+            <input
+              id="sign-type-msg-input"
+              type="text"
+              class="text-input"
+              placeholder='typed message...'
+              bind:value={signTypedMsg}
+            />
+            <button on:click={() => {
+              provider.request({
+                method: 'eth_signTypedData',
+                params: [address, signTypedMsg]
+              })
+            }}>
+              Sign Typed Message
+            </button>
+          </div>
+        {/each}
         <button
           style="margin-top: 0.5rem;"
           on:click={() => onboard.disconnectWallet({ label })}
           >Disconnect Wallet</button
         >
+
       </div>
     {/each}
   {/if}
