@@ -11,6 +11,7 @@
   import torusModule from '@bn-onboard/torus'
   import blocknativeIcon from './blocknative-icon'
   import VConsole from 'vconsole'
+  import { keccak256 } from 'ethers/lib/utils';
 
   if (window.innerWidth < 700) {
     new VConsole()
@@ -212,9 +213,10 @@
               bind:value={signMsg}
             />
             <button on:click={() => {
+              console.log(keccak256(signMsg), keccak256(signMsg).toString('hex'))
               provider.request({
                 method: 'eth_sign',
-                params: [address, signMsg]
+                params: [address, keccak256(signMsg)]
               })
             }}>
               Sign Message
