@@ -97,6 +97,8 @@
 
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
+  console.log(wallets$.subscribe(stuff => console.log(stuff)))
+
 
   const msgParams = {types:{
       EIP712Domain:[
@@ -227,6 +229,7 @@
               bind:value={signTypedMsg}
             />
             <button on:click={() => {
+              console.log(address, msgParams)
               provider.request({
                 method: 'eth_signTypedData',
                 params: [address, JSON.stringify(msgParams)]
