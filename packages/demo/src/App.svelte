@@ -183,7 +183,7 @@
 
         {#each accounts as { address, ens, balance }}
           <div
-            style="margin-top: 0.25rem; padding: 0.25rem; border: 1px solid gray;"
+            style="margin-top: 0.25rem; margin-bottom: 0.25rem; padding: 0.25rem; border: 1px solid gray;"
           >
             <div>Address: {address}</div>
             {#if balance}
@@ -203,7 +203,7 @@
               id="sign-transaction-input"
               type="text"
               class="text-input"
-              placeholder='transaction...'
+              placeholder='Sign Transaction...'
               bind:value={signTransactionMsg}
             />
             <button on:click={signTransactionMessage(provider)}>
@@ -215,7 +215,7 @@
               id="sign-msg-input"
               type="text"
               class="text-input"
-              placeholder='message...'
+              placeholder='Message...'
               bind:value={signMsg}
             />
             <button on:click={signMessage(provider)}>
@@ -227,7 +227,7 @@
               id="sign-type-msg-input"
               type="text"
               class="text-input"
-              placeholder='typed message...'
+              placeholder='Typed message...'
               bind:value={signTypedMsg}
             />
             <button on:click={signTypedMessage(provider)}>
