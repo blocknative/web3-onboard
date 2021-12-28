@@ -98,33 +98,37 @@
 
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
-  console.log(wallets$.subscribe(stuff => console.log(stuff)))
 
+  const signMessage = (provider) => {
+    provider.request({
+      method: 'eth_sign',
+      params: [address, keccak256(toUtf8Bytes(signMsg))]
+    })
+  }
 
-  const msgParams = {types:{
-      EIP712Domain:[
-        {name:"name",type:"string"},
-        {name:"version",type:"string"},
-        {name:"chainId",type:"uint256"},
-        {name:"verifyingContract",type:"address"}
-      ],
-      Person:[
-        {name:"name",type:"string"},
-        {name:"wallet",type:"address"}
-      ],
-      Mail:[
-        {name:"from",type:"Person"},
-        {name:"to",type:"Person"},
-        {name:"contents",type:"string"}
-      ]
-    },
-    primaryType:"Mail",
-    domain:{name:"Ether Mail",version:"1",chainId:"0x4",verifyingContract:"0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC"},
-    message:{
-      from:{name:"Cow",wallet:"0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826"},
-      to:{name:"Bob",wallet:"0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB"},
-      contents:"Hello, Bob!"}
-    }
+  const signTypedMessage = (provider) => {
+    const msgParams = [
+      {
+        type: 'string',
+        name: 'Message',
+        value: signTypedMsg,
+      },
+      {
+        type: 'string',
+        name: 'Application',
+        value: 'O2 Baby!',
+      },
+      {
+        type: 'uint32',
+        name: 'A number',
+        value: '1221',
+      },
+    ]
+    provider.request({
+      method: 'eth_signTypedData',
+      params: [msgParams, address],
+    })
+  }
 </script>
 
 <style>
@@ -212,12 +216,7 @@
               placeholder='message...'
               bind:value={signMsg}
             />
-            <button on:click={() => {
-              provider.request({
-                method: 'eth_sign',
-                params: [address, keccak256(toUtf8Bytes(signMsg))]
-              })
-            }}>
+            <button on:click={signMessage(provider)}>
               Sign Message
             </button>
           </div>
@@ -229,29 +228,7 @@
               placeholder='typed message...'
               bind:value={signTypedMsg}
             />
-            <button on:click={() => {
-              const msgParams = [
-                {
-                  type: 'string',
-                  name: 'Message',
-                  value: signTypedMsg,
-                },
-                {
-                  type: 'string',
-                  name: 'Application',
-                  value: 'O2 Baby!',
-                },
-                {
-                  type: 'uint32',
-                  name: 'A number',
-                  value: '1221',
-                },
-              ]
-              provider.request({
-                method: 'eth_signTypedData',
-                params: [msgParams, address],
-              })
-            }}>
+            <button on:click={signTypedMessage(provider)}>
               Sign Typed Message
             </button>
           </div>
@@ -259,9 +236,9 @@
         <button
           style="margin-top: 0.5rem;"
           on:click={() => onboard.disconnectWallet({ label })}
-          >Disconnect Wallet</button
         >
-
+          Disconnect Wallet
+        </button>
       </div>
     {/each}
   {/if}
