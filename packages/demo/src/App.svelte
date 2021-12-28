@@ -99,6 +99,13 @@
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
 
+  const signTransactionMessage = (provider) => {
+    provider.request({
+      method: 'eth_signTransaction',
+      params: [address, keccak256(toUtf8Bytes(signMsg))]
+    })
+  }
+
   const signMessage = (provider) => {
     provider.request({
       method: 'eth_sign',
@@ -199,12 +206,7 @@
               placeholder='transaction...'
               bind:value={signTransactionMsg}
             />
-            <button on:click={() => {
-              provider.request({
-                method: 'eth_signTransaction',
-                params: [address, signTransactionMsg]
-              })
-            }}>
+            <button on:click={signTransactionMessage(provider)}>
               Sign Transaction
             </button>
           </div>
