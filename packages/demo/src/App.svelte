@@ -102,7 +102,7 @@
   const signTransactionMessage = (provider) => {
     provider.request({
       method: 'eth_signTransaction',
-      params: [address, keccak256(toUtf8Bytes(signMsg))]
+      params: [address, `0x${keccak256(toUtf8Bytes(signMsg))}`]
     })
   }
 
