@@ -11,15 +11,15 @@
   import torusModule from '@bn-onboard/torus'
   import blocknativeIcon from './blocknative-icon'
   import VConsole from 'vconsole'
-  import { keccak256, toUtf8Bytes } from 'ethers/lib/utils';
+  import { keccak256, toUtf8Bytes } from 'ethers/lib/utils'
 
   if (window.innerWidth < 700) {
     new VConsole()
   }
 
-  let signTransactionMsg;
-  let signMsg;
-  let signTypedMsg;
+  let transactionObject
+  let signMsg
+  let signTypedMsg
 
   const injected = injectedModule({
     wallets: [
@@ -102,7 +102,7 @@
   const signTransactionMessage = (provider) => {
     provider.request({
       method: 'eth_signTransaction',
-      params: [address, `0x${keccak256(toUtf8Bytes(signMsg))}`]
+      params: [JSON.parse(signTransactionMessage)]
     })
   }
 
@@ -155,6 +155,21 @@
   :root {
     /* --onboard-gray-100: pink; */
   }
+
+  .text-input {
+    width: 24rem;
+  }
+
+  .sign-transaction {
+    display: flex;
+    align-items: end;
+  }
+
+  .sign-transaction-textarea {
+    width: 24rem;
+    height: 12rem;
+    margin: 0;
+  }
 </style>
 
 <main>
@@ -197,19 +212,6 @@
               <div>ENS Name: {ens?.name || ''}</div>
             {/if}
           </div>
-
-          <div>
-            <input
-              id="sign-transaction-input"
-              type="text"
-              class="text-input"
-              placeholder='Sign Transaction...'
-              bind:value={signTransactionMsg}
-            />
-            <button on:click={signTransactionMessage(provider)}>
-              Sign Transaction
-            </button>
-          </div>
           <div>
             <input
               id="sign-msg-input"
@@ -232,6 +234,17 @@
             />
             <button on:click={signTypedMessage(provider)}>
               Sign Typed Message
+            </button>
+          </div>
+
+          <div class="sign-transaction">
+            <textarea 
+              bind:value={transactionObject}
+              id="sign-transaction-input"
+              type="text"
+              class="sign-transaction-textarea" />
+            <button on:click={signTransactionMessage(provider)} style="margin: 0 0 0 .5rem">
+              Sign Transaction
             </button>
           </div>
         {/each}
