@@ -86,7 +86,7 @@ export type Asset = {
 }
 
 export type Chain = {
-  label: string // eg - Ethereum, Rinkeby, Matic
+  label?: string // eg - Ethereum, Rinkeby, Matic
   id: string 
   // 0x prefixed hex string | 
   // eg - 0x1 (mainnet ethereum), 0x4 (rinkeby), 0x89 (polygon matic)

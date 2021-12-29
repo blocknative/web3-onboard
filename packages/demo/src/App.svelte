@@ -11,15 +11,15 @@
   import torusModule from '@bn-onboard/torus'
   import blocknativeIcon from './blocknative-icon'
   import VConsole from 'vconsole'
-  import { keccak256, toUtf8Bytes } from 'ethers/lib/utils';
+  import { keccak256, toUtf8Bytes } from 'ethers/lib/utils'
 
   if (window.innerWidth < 700) {
     new VConsole()
   }
 
-  let signTransactionMsg;
-  let signMsg;
-  let signTypedMsg;
+  let transactionObject
+  let signMsg
+  let signTypedMsg
 
   const injected = injectedModule({
     wallets: [
@@ -99,41 +99,41 @@
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
 
-  const signTransactionMessage = (provider) => {
+  const signTransactionMessage = provider => {
     provider.request({
       method: 'eth_signTransaction',
-      params: [address, `0x${keccak256(toUtf8Bytes(signMsg))}`]
+      params: [transactionObject]
     })
   }
 
-  const signMessage = (provider) => {
+  const signMessage = provider => {
     provider.request({
       method: 'eth_sign',
       params: [address, keccak256(toUtf8Bytes(signMsg))]
     })
   }
 
-  const signTypedMessage = (provider) => {
+  const signTypedMessage = provider => {
     const msgParams = [
       {
         type: 'string',
         name: 'Message',
-        value: signTypedMsg,
+        value: signTypedMsg
       },
       {
         type: 'string',
         name: 'Application',
-        value: 'O2 Baby!',
+        value: 'O2 Baby!'
       },
       {
         type: 'uint32',
         name: 'A number',
-        value: '1221',
-      },
+        value: '1221'
+      }
     ]
     provider.request({
       method: 'eth_signTypedData',
-      params: [msgParams, address],
+      params: [msgParams, address]
     })
   }
 </script>
@@ -203,8 +203,8 @@
               id="sign-transaction-input"
               type="text"
               class="text-input"
-              placeholder='Sign Transaction...'
-              bind:value={signTransactionMsg}
+              placeholder="Sign Transaction..."
+              bind:value={transactionObject}
             />
             <button on:click={signTransactionMessage(provider)}>
               Sign Transaction
@@ -215,19 +215,17 @@
               id="sign-msg-input"
               type="text"
               class="text-input"
-              placeholder='Message...'
+              placeholder="Message..."
               bind:value={signMsg}
             />
-            <button on:click={signMessage(provider)}>
-              Sign Message
-            </button>
+            <button on:click={signMessage(provider)}> Sign Message </button>
           </div>
           <div>
             <input
               id="sign-type-msg-input"
               type="text"
               class="text-input"
-              placeholder='Typed message...'
+              placeholder="Typed message..."
               bind:value={signTypedMsg}
             />
             <button on:click={signTypedMessage(provider)}>
