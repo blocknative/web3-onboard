@@ -90,7 +90,7 @@ const getAddress = async (
     `0x${publicToAddress(child.publicKey, true).toString('hex')}`
   )
   return {
-    derivationPath,
+    derivationPath: `${derivationPath}/${index}`,
     address,
     balance: {
       asset: asset.label,
@@ -117,32 +117,30 @@ const getAddresses = (
       )
 
 function ledger(): WalletInit {
+  const getIcon = async () => (await import('./icon')).default
   return () => {
     let accounts: Account[] | undefined
     return {
       label: 'Ledger',
-      getIcon: async () => (await import('./icon')).default,
+      getIcon,
       getInterface: async ({ EventEmitter, chains }) => {
         const Eth = (await import('@ledgerhq/hw-app-eth')).default
         const { TransactionFactory: Transaction, Capability } = await import(
           '@ethereumjs/tx'
         )
         const { default: Common, Hardfork } = await import('@ethereumjs/common')
-        const { rlp } = (await import('ethereumjs-util')).default
-
+        const ethUtil = await import('ethereumjs-util')
         const transport: Transport = await getTransport()
         const eth = new Eth(transport)
         const eventEmitter = new EventEmitter()
 
-        let currentChain: Chain | undefined
+        let currentChain: Chain = chains[0]
         const scanAccounts = async ({
           derivationPath,
           chainId,
           asset
         }: ScanAccountsOptions): Promise<Account[]> => {
-          currentChain = chains.find(({ id }) => id === chainId)
-          // TODO: Maybe throw error here
-          if (!currentChain) return []
+          currentChain = chains.find(({ id }) => id === chainId) ?? currentChain
 
           const { publicKey, chainCode } = await eth.getAddress(
             derivationPath,
@@ -163,15 +161,18 @@ function ledger(): WalletInit {
           )
         }
 
-        const getAccounts = async () =>
-          accounts ??
-          (accounts = await accountSelect({
-            basePaths: DEFAULT_BASE_PATHS,
-            assets,
-            chains,
-            scanAccounts,
-            walletIcon: '<svg></svg>'
-          }))
+        const getAccounts = async () => {
+          return (
+            accounts ??
+            (accounts = await accountSelect({
+              basePaths: DEFAULT_BASE_PATHS,
+              assets,
+              chains,
+              scanAccounts,
+              walletIcon: await getIcon()
+            }))
+          )
+        }
 
         const ledgerProvider = {}
 
@@ -187,58 +188,69 @@ function ledger(): WalletInit {
           eth_chainId: async baseRequest => {
             return currentChain?.id ?? ''
           },
-          eth_getBalance: async (baseRequest, [address, block]) => {
-            return currentChain?.rpcUrl
-              ? getBalance(address, currentChain?.rpcUrl, block)
-              : '0x'
-          },
           eth_signTransaction: async (baseRequest, [transactionObject]) => {
+            if (!accounts)
+              throw new Error(
+                'No account selected. Must call eth_requestAccounts first.'
+              )
+
+            const account =
+              accounts.find(
+                account => account.address === transactionObject?.from
+              ) || accounts[0]
+
+            const { address: from, derivationPath } = account
+
+            // Set the `from` field to the currently selected account
+            transactionObject = { ...transactionObject, from }
+
             const common = new Common({
-              chain: currentChain?.id || 1,
+              chain: Number.parseInt(currentChain?.id) || 1,
               // Berlin is the minimum hardfork that will allow for EIP1559
               hardfork: Hardfork.Berlin,
               // List of supported EIPS
               eips: [1559]
             })
-            try {
-              const transaction = Transaction.fromTxData(
-                {
-                  ...transactionObject
-                },
-                { common }
-              )
-              let unsignedTx = transaction.getMessageToSign(false)
 
-              // If this is not an EIP1559 transaction then it is legacy and it needs to be
-              // rlp encoded before being passed to ledger
-              if (!transaction.supports(Capability.EIP1559FeeMarket)) {
-                unsignedTx = rlp.encode(unsignedTx)
-              }
+            transactionObject.gasLimit =
+              transactionObject.gas ?? transactionObject.gasLimit
 
-              const [{ derivationPath }] = accounts || [{ derivationPath: '' }]
+            const transaction = Transaction.fromTxData(
+              {
+                ...transactionObject
+              },
+              { common }
+            )
 
-              const { v, r, s } = await eth.signTransaction(
-                derivationPath,
-                unsignedTx.toString()
-              )
+            let unsignedTx = transaction.getMessageToSign(false)
 
-              // Reconstruct the signed transaction
-              const signedTx = Transaction.fromTxData(
-                {
-                  ...transactionObject,
-                  v: `0x${v}`,
-                  r: `0x${r}`,
-                  s: `0x${s}`
-                },
-                { common }
-              )
+            // If this is not an EIP1559 transaction then it is legacy and it needs to be
+            // rlp encoded before being passed to ledger
+            if (!transaction.supports(Capability.EIP1559FeeMarket)) {
+              unsignedTx = ethUtil.rlp.encode(unsignedTx)
+            }
 
-              return `0x${signedTx.serialize().toString('hex')}`
-            } catch (error) {}
-            return ''
+            const { v, r, s } = await eth.signTransaction(
+              derivationPath,
+              unsignedTx.toString('hex')
+            )
+
+            // Reconstruct the signed transaction
+            const signedTx = Transaction.fromTxData(
+              {
+                ...transactionObject,
+                v: `0x${v}`,
+                r: `0x${r}`,
+                s: `0x${s}`
+              },
+              { common }
+            )
+
+            return signedTx ? `0x${signedTx.serialize().toString('hex')}` : ''
           },
           wallet_switchEthereumChain: async (baseRequest, [{ chainId }]) => {
-            currentChain = chains.find(({ id }) => id === chainId)
+            currentChain =
+              chains.find(({ id }) => id === chainId) ?? currentChain
             if (!currentChain)
               throw new Error('chain must be set before switching')
 
