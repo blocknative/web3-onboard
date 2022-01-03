@@ -316,14 +316,14 @@
           <h4 class="control-label">
             Select Base Path
           </h4>
-          {#if customDerivationPath}
+          {#if (customDerivationPath)}
             <input type='text' 
               class='base-path-select' 
               placeholder="type/your/custom/path..." 
               on:change={handleCustomPath}
             /> 
             <span class='input-select' on:click={toggleDerivationPathToDropdown}></span>
-          {:else if  !customDerivationPath}
+          {:else if  (!customDerivationPath)}
             <select
               class='base-path-select'
               on:change={handleDerivationPathSelect}
