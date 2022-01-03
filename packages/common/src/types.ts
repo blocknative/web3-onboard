@@ -4,8 +4,10 @@ import type {
   EIP1193Provider,
   EIP3085Request,
   EIP3326Request,
+  EIP712Request,
   EthBalanceRequest,
   EthSignTransactionRequest,
+  EthSignMessageRequest,
   ProviderAccounts,
   ProviderInfo,
   ProviderMessage,
@@ -40,6 +42,18 @@ export type RequestPatch = {
         params: EthSignTransactionRequest['params']
       ) => Promise<string>)
     | null
+  eth_sign?:
+    | ((
+        request: EIP1193Provider['request'],
+        params: EthSignMessageRequest['params']
+      ) => Promise<string>)
+    | null
+  eth_signTypedData?:
+    | ((
+        request: EIP1193Provider['request'],
+        params: EIP712Request['params']
+      ) => Promise<string>)
+    | null
   wallet_switchEthereumChain?:
     | ((
         request: EIP1193Provider['request'],
@@ -63,7 +77,9 @@ export interface EventCallback {
 }
 
 // eslint-disable-next-line max-len
-export type AccountSelectAPI = (options: SelectAccountOptions) => Promise<Account>
+export type AccountSelectAPI = (
+  options: SelectAccountOptions
+) => Promise<Account>
 
 export type SelectAccountOptions = {
   basePaths: BasePath[] // the paths to display in the base path selector
@@ -87,8 +103,8 @@ export type Asset = {
 
 export type Chain = {
   label?: string // eg - Ethereum, Rinkeby, Matic
-  id: string 
-  // 0x prefixed hex string | 
+  id: string
+  // 0x prefixed hex string |
   // eg - 0x1 (mainnet ethereum), 0x4 (rinkeby), 0x89 (polygon matic)
 }
 

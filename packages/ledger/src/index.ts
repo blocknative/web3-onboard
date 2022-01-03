@@ -4,7 +4,7 @@ import {
   Account,
   Asset
 } from '@bn-onboard/common/src/types'
-import type { Chain, WalletInit } from '@bn-onboard/types'
+import type { Chain, CustomNetwork, WalletInit } from '@bn-onboard/types'
 import type { BIP32Interface } from 'bip32'
 import type Transport from '@ledgerhq/hw-transport'
 
@@ -116,7 +116,11 @@ const getAddresses = (
         )
       )
 
-function ledger(): WalletInit {
+function ledger({
+  customNetwork
+}: {
+  customNetwork?: CustomNetwork
+} = {}): WalletInit {
   const getIcon = async () => (await import('./icon')).default
   return () => {
     let accounts: Account[] | undefined
@@ -129,7 +133,10 @@ function ledger(): WalletInit {
           '@ethereumjs/tx'
         )
         const { default: Common, Hardfork } = await import('@ethereumjs/common')
+        const { compress } = (await import('eth-crypto')).publicKey
         const ethUtil = await import('ethereumjs-util')
+        const { getStructHash, getMessage } = await import('eip-712')
+
         const transport: Transport = await getTransport()
         const eth = new Eth(transport)
         const eventEmitter = new EventEmitter()
@@ -148,13 +155,11 @@ function ledger(): WalletInit {
             true // set to true to return chainCode
           )
 
-          const { compress } = (await import('eth-crypto')).publicKey
-
           return getAddresses(
             {
               publicKey: compress(publicKey),
               chainCode: chainCode ?? '',
-              derivationPath: derivationPath
+              derivationPath
             },
             asset,
             currentChain
@@ -205,7 +210,7 @@ function ledger(): WalletInit {
             transactionObject = { ...transactionObject, from }
 
             const common = new Common({
-              chain: Number.parseInt(currentChain?.id) || 1,
+              chain: customNetwork || Number.parseInt(currentChain?.id) || 1,
               // Berlin is the minimum hardfork that will allow for EIP1559
               hardfork: Hardfork.Berlin,
               // List of supported EIPS
@@ -247,6 +252,67 @@ function ledger(): WalletInit {
             )
 
             return signedTx ? `0x${signedTx.serialize().toString('hex')}` : ''
+          },
+          eth_sign: async (baseRequest, [address, message]) => {
+            if (!(accounts?.length && accounts?.length > 0))
+              throw new Error(
+                'No account selected. Must call eth_requestAccounts first.'
+              )
+
+            const account =
+              accounts.find(account => account.address === address) ||
+              accounts[0]
+
+            return eth
+              .signPersonalMessage(
+                account.derivationPath,
+                Buffer.from(message).toString('hex')
+              )
+              .then(result => {
+                let v = (result['v'] - 27).toString(16)
+                if (v.length < 2) {
+                  v = '0' + v
+                }
+
+                return `0x${result['r']}${result['s']}${v}`
+              })
+          },
+          eth_signTypedData: async (baseRequest, [address, typedData]) => {
+            if (!(accounts?.length && accounts?.length > 0))
+              throw new Error(
+                'No account selected. Must call eth_requestAccounts first.'
+              )
+
+            const account =
+              accounts.find(account => account.address === address) ||
+              accounts[0]
+
+            const domainHash = getStructHash(
+              typedData,
+              'EIP712Domain',
+              typedData.domain
+            ).toString('hex')
+
+            const messageHash = getStructHash(
+              typedData,
+              typedData.primaryType,
+              typedData.message
+            ).toString('hex') //getMessage(typedData, true).toString('hex')
+
+            return eth
+              .signEIP712HashedMessage(
+                account.derivationPath,
+                domainHash,
+                messageHash
+              )
+              .then(result => {
+                let v = (result['v'] - 27).toString(16)
+                if (v.length < 2) {
+                  v = '0' + v
+                }
+
+                return `0x${result['r']}${result['s']}${v}`
+              })
           },
           wallet_switchEthereumChain: async (baseRequest, [{ chainId }]) => {
             currentChain =

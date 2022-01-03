@@ -1,6 +1,8 @@
 import type { ExternalProvider } from '@ethersproject/providers'
 import { ethers } from 'ethers'
 import EventEmitter from 'eventemitter3'
+import type { TypedData as EIP712TypedData } from 'eip-712'
+export type { TypedData as EIP712TypedData } from 'eip-712'
 
 export interface AppMetadata {
   /* App name */
@@ -224,6 +226,19 @@ export interface EthSignTransactionRequest {
   params: [TransactionObject]
 }
 
+type Address = string
+type Message = string
+export interface EthSignMessageRequest {
+  method: 'eth_sign'
+  params: [Address, Message]
+}
+
+// request -> signTypedData_v3`
+export interface EIP712Request {
+  method: 'eth_signTypedData'
+  params: [Address, EIP712TypedData]
+}
+
 export interface EIP1102Request extends BaseRequest {
   method: 'eth_requestAccounts'
 }
@@ -262,6 +277,8 @@ export interface EIP1193Provider extends SimpleEventEmitter {
   request(args: EIP3085Request): Promise<null>
   request(args: EthChainIdRequest): Promise<ChainId>
   request(args: EthSignTransactionRequest): Promise<string>
+  request(args: EthSignMessageRequest): Promise<string>
+  request(args: EIP712Request): Promise<string>
   disconnect?(): void
 }
 
@@ -383,3 +400,34 @@ export interface Chain {
 }
 
 export type TokenSymbol = string // eg ETH
+
+export interface GenesisBlock {
+  hash: string
+  timestamp: string | null
+  gasLimit: number
+  difficulty: number
+  nonce: string
+  extraData: string
+  stateRoot: string
+}
+export interface Hardfork {
+  name: string
+  block: number | null
+}
+
+export interface BootstrapNode {
+  ip: string
+  port: number | string
+  network?: string
+  chainId?: number
+  id: string
+  location: string
+  comment: string
+}
+
+export interface CustomNetwork {
+  networkId: number
+  genesis: GenesisBlock
+  hardforks: Hardfork[]
+  bootstrapNodes: BootstrapNode[]
+}

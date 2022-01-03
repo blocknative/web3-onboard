@@ -11,7 +11,7 @@
   import torusModule from '@bn-onboard/torus'
   import blocknativeIcon from './blocknative-icon'
   import VConsole from 'vconsole'
-  import { keccak256, toUtf8Bytes } from 'ethers/lib/utils'
+  import { verifyTypedData, verifyMessage } from 'ethers/lib/utils'
 
   if (window.innerWidth < 700) {
     new VConsole()
@@ -106,35 +106,27 @@
     })
   }
 
-  const signMessage = provider => {
-    provider.request({
+  const signMessage = async (provider, address) => {
+    console.log(signMsg)
+    const signature = await provider.request({
       method: 'eth_sign',
-      params: [address, keccak256(toUtf8Bytes(signMsg))]
+      params: [address, signMsg]
     })
+    console.log(signature)
+    const recoveredAddress = verifyMessage(signMsg, signature)
+    console.log(recoveredAddress)
   }
 
-  const signTypedMessage = provider => {
-    const msgParams = [
-      {
-        type: 'string',
-        name: 'Message',
-        value: signTypedMsg
-      },
-      {
-        type: 'string',
-        name: 'Application',
-        value: 'O2 Baby!'
-      },
-      {
-        type: 'uint32',
-        name: 'A number',
-        value: '1221'
-      }
-    ]
-    provider.request({
+  const signTypedMessage = async (provider, address) => {
+    const data = JSON.parse(signTypedMsg)
+    const signature = await provider.request({
       method: 'eth_signTypedData',
-      params: [msgParams, address]
+      params: [address, data]
     })
+    const { domain, types, message } = data
+
+    delete types.EIP712Domain
+    console.log(verifyTypedData(domain, types, message, signature))
   }
 </script>
 
@@ -220,7 +212,9 @@
               placeholder="Message..."
               bind:value={signMsg}
             />
-            <button on:click={signMessage(provider)}> Sign Message </button>
+            <button on:click={signMessage(provider, address)}>
+              Sign Message
+            </button>
           </div>
           <div>
             <input
@@ -230,18 +224,22 @@
               placeholder="Typed message..."
               bind:value={signTypedMsg}
             />
-            <button on:click={signTypedMessage(provider)}>
+            <button on:click={signTypedMessage(provider, address)}>
               Sign Typed Message
             </button>
           </div>
 
           <div class="sign-transaction">
-            <textarea 
+            <textarea
               bind:value={transactionObject}
               id="sign-transaction-input"
               type="text"
-              class="sign-transaction-textarea" />
-            <button on:click={signTransactionMessage(provider)} style="margin: 0 0 0 .5rem">
+              class="sign-transaction-textarea"
+            />
+            <button
+              on:click={signTransactionMessage(provider)}
+              style="margin: 0 0 0 .5rem"
+            >
               Sign Transaction
             </button>
           </div>
