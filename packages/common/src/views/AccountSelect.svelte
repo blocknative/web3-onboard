@@ -16,6 +16,7 @@
   
   let accountsListObject: AccountsList | undefined;
   let accountSelected: Account | undefined;
+  let customDerivationPath: boolean = false;
   let showEmptyAddresses: boolean = false;
   let loadingAccounts: boolean = false;
   let errorFromScan: boolean = false;
@@ -26,16 +27,32 @@
     asset: assets[0] || null
   };
 
+  const handleDerivationPathSelect = (e: Event) => {
+    let selectVal = (e.target as HTMLInputElement).value;
+    if (selectVal === 'customPath') return customDerivationPath = true;
+    scanAccountOptions.derivationPath = selectVal;
+  }
+
+  const toggleDerivationPathToDropdown = () => {
+    customDerivationPath = false;
+    scanAccountOptions.derivationPath = basePaths[0]?.value;
+  }
+
+  const handleCustomPath = (e: Event) => {
+    let inputVal = (e.target as HTMLInputElement).value;
+    scanAccountOptions.derivationPath = inputVal;
+  }
+
   const scanAccountsWrap = async () : Promise<void> => {
     try {
       errorFromScan = false;
       loadingAccounts = true;
       const allAccounts = await scanAccounts(scanAccountOptions);
-      loadingAccounts = false;
       accountsListObject = {
         all: allAccounts, 
         filtered: allAccounts.filter(account => Number(account?.balance.value) > 0)
       };
+      loadingAccounts = false;
     } catch(err) {
       console.error(err);
       errorFromScan = true;
@@ -58,6 +75,7 @@
     accountSelected = undefined;
     accountsListObject = undefined;
     showEmptyAddresses = false;
+    scanAccountOptions.derivationPath = basePaths[0]?.value || '';
   }
 
 </script>
@@ -89,12 +107,32 @@
     -ms-overflow-style: none;
   }
 
-  select::-webkit-scrollbar {
+  select::-webkit-scrollbar, input::-webkit-scrollbar {
     display: none;
   }
 
-  select::-ms-expand {
+  select::-ms-expand, input::-ms-expand {
     display: none;
+  }
+
+  input[type='text'] {
+    display: block;
+    margin: 0;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    scrollbar-width: none;
+    width: 100%;
+    padding: 0.5rem 2.6rem 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: var(--account-select-font-size-5, var(--font-size-5));
+    line-height: var(--account-select-font-line-height-1, var(--font-line-height-1));
+    color: var(--account-select-gray-600, var(--grey-600));
+    transition: all 200ms ease-in-out;
+    border: 2px solid var(--account-select-gray-200, var(--gray-200));
+    box-sizing: border-box;
+    height: 3rem;
+    -ms-overflow-style: none;
   }
 
   button {
@@ -126,11 +164,11 @@
     margin-left: var(--account-select-margin-4, var(--margin-4));
   }
 
-  select:hover {
+  select:hover, input:hover {
     border-color: var(--account-select-blue-300, var(--blue-300));
   }
 
-  select:focus {
+  select:focus, input:focus {
     border-color: var(--account-select-blue-500, var(--blue-500));
     box-shadow: 0 0 1px 1px var(--account-select-blue-500, var(--blue-500));
     box-shadow: 0 0 0 1px -moz-mac-focusring;
@@ -225,7 +263,22 @@
   }
 
   .base-path-container {
+    position: relative;
     margin-right: var(--account-select-margin-5, var(--margin-5));
+  }
+
+  .input-select {
+    background-image: url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23242835%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E), linear-gradient(to bottom, transparent 0%, transparent 100%);
+    background-repeat: no-repeat, repeat;
+    background-position: center;
+    background-size: 0.65em auto, 100%;
+    position: absolute;
+    top: 2.7rem;
+    right: 0.2rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: var(--account-select-white, var(--white));
+    border-radius: 1rem;
   }
   
   .asset-container {
@@ -263,18 +316,30 @@
           <h4 class="control-label">
             Select Base Path
           </h4>
-          <select
-            class='base-path-select'
-            bind:value={scanAccountOptions['derivationPath']}
-          >
-            {#each basePaths as path, pathIndex}
-              <option
-                value={path.value}
-              >
-                {path.label} - {path.value}
+          {#if (customDerivationPath)}
+            <input type='text' 
+              class='base-path-select' 
+              placeholder="type/your/custom/path..." 
+              on:change={handleCustomPath}
+            /> 
+            <span class='input-select' on:click={toggleDerivationPathToDropdown}></span>
+          {:else if  (!customDerivationPath)}
+            <select
+              class='base-path-select'
+              on:change={handleDerivationPathSelect}
+            >
+              {#each basePaths as path}
+                <option
+                  value={path.value}
+                >
+                  {path.label} - {path.value}
+                </option>
+              {/each}
+              <option value='customPath'>
+                Custom Derivation Path
               </option>
-            {/each}
-          </select>
+            </select>
+          {/if}
       </div>
 
 
@@ -286,7 +351,7 @@
           class='asset-select'
           bind:value={scanAccountOptions['asset']}
         >
-          {#each assets as asset, assetIndex}
+          {#each assets as asset}
             <option
               value={asset}
             >
@@ -305,7 +370,7 @@
           bind:value={scanAccountOptions['chainId']}
           class='network-select'
         >
-          {#each chains as chain, chainIndex}
+          {#each chains as chain}
             <option
               value={chain.id}
             >
