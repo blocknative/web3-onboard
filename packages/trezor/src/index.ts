@@ -44,6 +44,53 @@ interface TrezorProviderOptions {
 //   bootstrapNodes: BootstrapNode[]
 // }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const trezor = (options: TrezorOptions): WalletInit => {
   const {
     walletName,
