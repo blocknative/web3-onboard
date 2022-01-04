@@ -9,14 +9,33 @@ import type { BIP32Interface } from 'bip32'
 import TrezorConnect from 'trezor-connect';
 
 import {
-  TrezorOptions,
   WalletModule,
   HardwareWalletCustomNetwork,
   Helpers
 } from '../../../interfaces'
-import trezorIcon from './icon'
 
-const trezor = (options: TrezorOptions & { networkId: number }): WalletModule => {
+
+export interface TrezorOptions {
+  walletName: string
+  preferred?: boolean
+  label?: string
+  iconSrc?: string
+  svg?: string
+  networkId?: number
+  display?: { mobile?: boolean; desktop?: boolean }
+  appUrl: string
+  email: string
+  rpcUrl: string
+  customNetwork?: any //HardwareWalletCustomNetwork
+}
+// interface HardwareWalletCustomNetwork {
+//   networkId: number
+//   genesis: GenesisBlock
+//   hardforks: Hardfork[]
+//   bootstrapNodes: BootstrapNode[]
+// }
+
+const trezor = (options?: TrezorOptions): WalletInit => {
   const {
     rpcUrl,
     networkId,
@@ -30,9 +49,10 @@ const trezor = (options: TrezorOptions & { networkId: number }): WalletModule =>
   } = options
 
   return {
-    name: label || 'Trezor',
-    svg: svg || trezorIcon,
-    iconSrc,
+    label: 'Trezor',
+    getIcon: async () => (await import('./icon')).default,
+
+
     wallet: async (helpers: Helpers) => {
       const { BigNumber, networkName, resetWalletState } = helpers
 
