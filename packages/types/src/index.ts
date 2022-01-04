@@ -47,11 +47,11 @@ export type WalletExclusions = {
 
 export interface InjectedWalletOptions {
   // A list of injected wallets to include that are not included by default here: ./packages/injected/
-  wallets?: InjectedWalletModule[]
-  // A mapping of a provider label to a list of excluded platforms
+  custom?: InjectedWalletModule[]
+  // A mapping of a provider label to a list of filtered platforms
   // or a boolean indicating if it should be included or not.
   // By default all wallets listed in ./packages/injected/ are included add them to here to remove them.
-  exclude?: WalletExclusions
+  filter?: WalletExclusions
 }
 
 export interface APIKey {
