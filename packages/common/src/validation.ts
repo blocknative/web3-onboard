@@ -9,7 +9,9 @@ const basePaths = Joi.array().items(basePath)
 
 const chain = Joi.object({
   id: Joi.string().required(),
-  label: Joi.string()
+  label: Joi.string(),
+  token: Joi.string().required(),
+  rpcUrl: Joi.string()
 })
 const chains = Joi.array().items(chain)
 
@@ -37,5 +39,5 @@ const validate = (validator: Joi.Schema, data: unknown): ValidateReturn => {
 export const validateSelectAccountOptions = (
   data: SelectAccountOptions
 ): ValidateReturn => {
-  return validate(selectAccountOptions, data);
+  return validate(selectAccountOptions, data)
 }

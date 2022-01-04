@@ -23,12 +23,12 @@
   },
   "dependencies": {
     "@bn-onboard/core": "^0.0.1",
+    "@bn-onboard/fortmatic": "0.0.1",
     "@bn-onboard/injected-wallets": "^0.0.1",
+    "@bn-onboard/portis": "0.0.1",
+    "@bn-onboard/torus": "0.0.1",
     "@bn-onboard/walletconnect": "0.0.1",
     "@bn-onboard/walletlink": "0.0.1",
-    "@bn-onboard/portis": "0.0.1",
-    "@bn-onboard/fortmatic": "0.0.1",
-    "@bn-onboard/torus": "0.0.1",
     "rxjs": "^7.4.0",
     "vconsole": "^3.9.5"
   },

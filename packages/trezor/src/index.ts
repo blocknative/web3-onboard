@@ -4,18 +4,13 @@ import {
   Account,
   Asset
 } from '@bn-onboard/common/src/types'
-import type { Chain, WalletInit } from '@bn-onboard/types'
 import type { BIP32Interface } from 'bip32'
 import TrezorConnect from 'trezor-connect';
 
-import {
-  WalletModule,
-  HardwareWalletCustomNetwork,
-  Helpers
-} from '../../../interfaces'
+import type { Chain, CustomNetwork, WalletInit, GetInterfaceHelpers } from '@bn-onboard/types'
 
 
-export interface TrezorOptions {
+interface TrezorOptions {
   walletName: string
   preferred?: boolean
   label?: string
@@ -28,6 +23,20 @@ export interface TrezorOptions {
   rpcUrl: string
   customNetwork?: any //HardwareWalletCustomNetwork
 }
+
+interface TrezorProviderOptions {
+  networkId?: number
+  email: string
+  appUrl: string
+  rpcUrl: string
+  BigNumber: any
+  customNetwork?: CustomNetwork
+  networkName: (id: number) => string
+  resetWalletState: (options?: {
+    disconnected: boolean
+    walletName: string
+  }) => void
+}
 // interface HardwareWalletCustomNetwork {
 //   networkId: number
 //   genesis: GenesisBlock
@@ -35,17 +44,19 @@ export interface TrezorOptions {
 //   bootstrapNodes: BootstrapNode[]
 // }
 
-const trezor = (options?: TrezorOptions): WalletInit => {
+const trezor = (options: TrezorOptions): WalletInit => {
   const {
-    rpcUrl,
-    networkId,
-    email,
-    appUrl,
+    walletName,
     preferred,
     label,
     iconSrc,
     svg,
-    customNetwork
+    networkId,
+    display,
+    appUrl,
+    email,
+    rpcUrl,
+    customNetwork,
   } = options
 
   return {
@@ -53,8 +64,8 @@ const trezor = (options?: TrezorOptions): WalletInit => {
     getIcon: async () => (await import('./icon')).default,
 
 
-    wallet: async (helpers: Helpers) => {
-      const { BigNumber, networkName, resetWalletState } = helpers
+    getInterface: async (helpers: GetInterfaceHelpers) => {
+      const { BigNumber, EventEmitter, chains } = helpers
 
       const provider = await trezorProvider({
         rpcUrl,
@@ -96,24 +107,12 @@ const trezor = (options?: TrezorOptions): WalletInit => {
   }
 }
 
-const trezorProvider = async (options: {
-  networkId: number
-  email: string
-  appUrl: string
-  rpcUrl: string
-  BigNumber: any
-  customNetwork?: HardwareWalletCustomNetwork
-  networkName: (id: number) => string
-  resetWalletState: (options?: {
-    disconnected: boolean
-    walletName: string
-  }) => void
-}) => {
+const trezorProvider = async (options: TrezorProviderOptions) => {
   const TrezorConnectLibrary = await import('trezor-connect')
   const { Transaction } = await import('@ethereumjs/tx')
   const { default: Common } = await import('@ethereumjs/common')
   const ethUtil = await import('ethereumjs-util')
-  const { default: createProvider } = await import('./providerEngine')
+  // const { default: createProvider } = await import('./providerEngine')
   const { generateAddresses, isValidPath } = await import('./hd-wallet')
 
   const { default: TrezorConnect, DEVICE_EVENT, DEVICE } = TrezorConnectLibrary
@@ -146,7 +145,35 @@ const trezorProvider = async (options: {
     appUrl
   })
 
-  const provider = createProvider({
+  const provider = createEIP1193Provider({}, {
+    eth_requestAccounts: async baseRequest => {
+      // Triggers the account select modal if no accounts have been selected
+      const [{ address }] = await getAccounts()
+      return [address]
+    },
+    eth_accounts: async baseRequest => {
+      return getAccounts();
+    },
+    eth_chainId: async baseRequest => {
+      return networkId ?? ''
+    },
+    eth_signTransaction: async (baseRequest, [transactionObject]) => {
+//signTransaction
+    },
+    eth_sign: async (baseRequest, [address, message]) => {
+//signMessage
+    },
+    eth_signTypedData: async (baseRequest, [address, typedData]) => {
+
+    },
+    wallet_switchEthereumChain: async (baseRequest, [{ chainId }]) => {
+
+    },
+    wallet_addEthereumChain: null
+  })
+
+
+  const provider = {
     getAccounts: (callback: any) => {
       getAccounts()
         .then((res: Array<string | undefined>) => callback(null, res))
