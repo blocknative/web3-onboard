@@ -6,7 +6,7 @@ import type {
 import type { Chain, CustomNetwork, WalletInit } from '@bn-onboard/types'
 import type { BIP32Interface } from 'bip32'
 import type Transport from '@ledgerhq/hw-transport'
-import type { BigNumber } from 'ethers'
+import type { providers } from 'ethers'
 
 const LEDGER_LIVE_PATH = `m/44'/60'`
 const LEDGER_DEFAULT_PATH = `m/44'/60'/0'`
@@ -53,21 +53,11 @@ interface LedgerAccount {
   chainCode: string
 }
 
-const getBalance = async (
-  address: string,
-  rpcUrl: string,
-  block: string | number = 'latest'
-): Promise<BigNumber> => {
-  const { providers } = await import('ethers')
-  const provider = new providers.JsonRpcProvider(rpcUrl)
-  return provider.getBalance(address, block)
-}
-
 const getAccount = async (
   { publicKey, chainCode, derivationPath }: LedgerAccount,
   asset: Asset,
-  { rpcUrl }: Chain,
-  index: number
+  index: number,
+  provider: providers.JsonRpcProvider
 ): Promise<Account> => {
   const { BIP32Factory } = await import('bip32')
   const ecc = await import('tiny-secp256k1')
@@ -90,7 +80,7 @@ const getAccount = async (
     address,
     balance: {
       asset: asset.label,
-      value: await getBalance(address, rpcUrl)
+      value: await provider.getBalance(address)
     }
   }
 }
@@ -98,7 +88,7 @@ const getAccount = async (
 const getAddresses = async (
   account: LedgerAccount,
   asset: Asset,
-  currentChain: Chain
+  provider: providers.JsonRpcProvider
 ): Promise<Account[]> => {
   const accounts = []
   let index = 0
@@ -107,7 +97,7 @@ const getAddresses = async (
   // Iterates until a 0 balance account is found
   // Then adds 4 more 0 balance accounts to the array
   while (zeroBalanceAccounts < 5) {
-    const acc = await getAccount(account, asset, currentChain, index)
+    const acc = await getAccount(account, asset, index, provider)
     if (acc?.balance?.value?.isZero()) {
       zeroBalanceAccounts++
       accounts.push(acc)
@@ -144,6 +134,7 @@ function ledger({
         const { getStructHash } = await import('eip-712')
         const { accountSelect, createEIP1193Provider, ProviderRpcError } =
           await import('@bn-onboard/common')
+        const { providers } = await import('ethers')
 
         const transport: Transport = await getTransport()
         const eth = new Eth(transport)
@@ -156,6 +147,7 @@ function ledger({
           asset
         }: ScanAccountsOptions): Promise<Account[]> => {
           currentChain = chains.find(({ id }) => id === chainId) ?? currentChain
+          const provider = new providers.JsonRpcProvider(currentChain.rpcUrl)
 
           const { publicKey, chainCode, address } = await eth.getAddress(
             derivationPath,
@@ -175,7 +167,7 @@ function ledger({
                 address,
                 balance: {
                   asset: asset.label,
-                  value: await getBalance(address, currentChain.rpcUrl)
+                  value: await provider.getBalance(address)
                 }
               }
             ]
@@ -188,7 +180,7 @@ function ledger({
               derivationPath
             },
             asset,
-            currentChain
+            provider
           )
         }
 
