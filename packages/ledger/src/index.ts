@@ -1,5 +1,4 @@
-import { accountSelect, createEIP1193Provider } from '@bn-onboard/common'
-import {
+import type {
   ScanAccountsOptions,
   Account,
   Asset
@@ -7,6 +6,7 @@ import {
 import type { Chain, CustomNetwork, WalletInit } from '@bn-onboard/types'
 import type { BIP32Interface } from 'bip32'
 import type Transport from '@ledgerhq/hw-transport'
+import type { providers } from 'ethers'
 
 const LEDGER_LIVE_PATH = `m/44'/60'`
 const LEDGER_DEFAULT_PATH = `m/44'/60'/0'`
@@ -27,11 +27,6 @@ const assets = [
     label: 'ETH'
   }
 ]
-
-const getFullDerivationPath = (derivationPath: string, index: number): string =>
-  derivationPath === LEDGER_LIVE_PATH
-    ? `${derivationPath}/${index}'/0/0`
-    : `${derivationPath}/${index}`
 
 type CustomNavigator = Navigator & { usb: { getDevices(): void } }
 
@@ -58,21 +53,11 @@ interface LedgerAccount {
   chainCode: string
 }
 
-const getBalance = async (
-  address: string,
-  rpcUrl: string,
-  block: string | number = 'latest'
-): Promise<string> => {
-  const { providers } = await import('ethers')
-  const provider = new providers.JsonRpcProvider(rpcUrl)
-  return (await provider.getBalance(address, block)).toHexString()
-}
-
-const getAddress = async (
+const getAccount = async (
   { publicKey, chainCode, derivationPath }: LedgerAccount,
   asset: Asset,
-  { rpcUrl }: Chain,
-  index: number
+  index: number,
+  provider: providers.JsonRpcProvider
 ): Promise<Account> => {
   const { BIP32Factory } = await import('bip32')
   const ecc = await import('tiny-secp256k1')
@@ -89,32 +74,43 @@ const getAddress = async (
   const address = toChecksumAddress(
     `0x${publicToAddress(child.publicKey, true).toString('hex')}`
   )
+
   return {
     derivationPath: `${derivationPath}/${index}`,
     address,
     balance: {
       asset: asset.label,
-      value: await getBalance(address, rpcUrl)
+      value: await provider.getBalance(address)
     }
   }
 }
 
-const getAddresses = (
+const getAddresses = async (
   account: LedgerAccount,
   asset: Asset,
-  currentChain: Chain,
-  offset: number = 0,
-  limit: number = 5
-): Promise<Account[]> =>
-  limit - offset <= 0
-    ? (() => {
-        throw new Error('Offset must be less than limit')
-      })()
-    : Promise.all(
-        Array.from({ length: limit - offset }, (_, index) =>
-          getAddress(account, asset, currentChain, index)
-        )
-      )
+  provider: providers.JsonRpcProvider
+): Promise<Account[]> => {
+  const accounts = []
+  let index = 0
+  let zeroBalanceAccounts = 0
+
+  // Iterates until a 0 balance account is found
+  // Then adds 4 more 0 balance accounts to the array
+  while (zeroBalanceAccounts < 5) {
+    const acc = await getAccount(account, asset, index, provider)
+    if (acc?.balance?.value?.isZero()) {
+      zeroBalanceAccounts++
+      accounts.push(acc)
+    } else {
+      accounts.push(acc)
+      // Reset the number of 0 balance accounts
+      zeroBalanceAccounts = 0
+    }
+    index++
+  }
+
+  return accounts
+}
 
 function ledger({
   customNetwork
@@ -135,7 +131,10 @@ function ledger({
         const { default: Common, Hardfork } = await import('@ethereumjs/common')
         const { compress } = (await import('eth-crypto')).publicKey
         const ethUtil = await import('ethereumjs-util')
-        const { getStructHash, getMessage } = await import('eip-712')
+        const { getStructHash } = await import('eip-712')
+        const { accountSelect, createEIP1193Provider, ProviderRpcError } =
+          await import('@bn-onboard/common')
+        const { providers } = await import('ethers')
 
         const transport: Transport = await getTransport()
         const eth = new Eth(transport)
@@ -148,12 +147,31 @@ function ledger({
           asset
         }: ScanAccountsOptions): Promise<Account[]> => {
           currentChain = chains.find(({ id }) => id === chainId) ?? currentChain
+          const provider = new providers.JsonRpcProvider(currentChain.rpcUrl)
 
-          const { publicKey, chainCode } = await eth.getAddress(
+          const { publicKey, chainCode, address } = await eth.getAddress(
             derivationPath,
             false,
             true // set to true to return chainCode
           )
+
+          // Checks to see if this is a custom derivation path
+          // If it is then just return the single account
+          if (
+            derivationPath !== LEDGER_LIVE_PATH &&
+            derivationPath !== LEDGER_DEFAULT_PATH
+          ) {
+            return [
+              {
+                derivationPath,
+                address,
+                balance: {
+                  asset: asset.label,
+                  value: await provider.getBalance(address)
+                }
+              }
+            ]
+          }
 
           return getAddresses(
             {
@@ -162,30 +180,33 @@ function ledger({
               derivationPath
             },
             asset,
-            currentChain
+            provider
           )
         }
 
-        const getAccounts = async () => {
-          return (
-            accounts ??
-            (accounts = await accountSelect({
-              basePaths: DEFAULT_BASE_PATHS,
-              assets,
-              chains,
-              scanAccounts,
-              walletIcon: await getIcon()
-            }))
-          )
-        }
+        const getAccounts = async () =>
+          accounts ??
+          (accounts = await accountSelect({
+            basePaths: DEFAULT_BASE_PATHS,
+            assets,
+            chains,
+            scanAccounts,
+            walletIcon: await getIcon()
+          }))
 
         const ledgerProvider = {}
 
         const provider = createEIP1193Provider(ledgerProvider, {
           eth_requestAccounts: async baseRequest => {
             // Triggers the account select modal if no accounts have been selected
-            const [{ address }] = await getAccounts()
-            return [address]
+            const accounts = await getAccounts()
+            if (accounts?.length === 0) {
+              throw new ProviderRpcError({
+                code: 4001,
+                message: 'User rejected the request.'
+              })
+            }
+            return [accounts[0]?.address]
           },
           eth_accounts: async baseRequest => {
             return accounts?.[0]?.address ? [accounts[0].address] : []
@@ -297,7 +318,7 @@ function ledger({
               typedData,
               typedData.primaryType,
               typedData.message
-            ).toString('hex') //getMessage(typedData, true).toString('hex')
+            ).toString('hex')
 
             return eth
               .signEIP712HashedMessage(

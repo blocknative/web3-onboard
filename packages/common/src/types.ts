@@ -14,6 +14,8 @@ import type {
   ProviderRpcError
 } from '@bn-onboard/types'
 
+import type { BigNumber } from 'ethers'
+
 /**
  * Types for request patching methods. Ethereum RPC request is mapped to
  * the implementation that will replace the original.
@@ -121,7 +123,7 @@ export type Account = {
   derivationPath: DerivationPath
   balance: {
     asset: Asset['label']
-    value: string
+    value: BigNumber
   }
 }
 
