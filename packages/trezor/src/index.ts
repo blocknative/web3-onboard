@@ -124,7 +124,7 @@ const getAddresses = async (
 
 
 
-function trezor(): WalletInit {
+function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletInit {
   const getIcon = async () => (await import('./icon')).default
 
   return () => {
@@ -157,10 +157,9 @@ function trezor(): WalletInit {
         const {email, appUrl} = appMetadata;
         
         TrezorConnect.manifest({
-          email,
-          appUrl
+          email: email,
+          appUrl: appUrl
         })
-        console.log('init trezor!')
         
         let currentChain: Chain = chains[0]
         
