@@ -3,6 +3,7 @@
   import Onboard from '@bn-onboard/core'
   import injectedModule from '@bn-onboard/injected-wallets'
 
+  import trezorModule from '@bn-onboard/trezor'
   import ledgerModule from '@bn-onboard/ledger'
   import walletConnectModule from '@bn-onboard/walletconnect'
   import walletLinkModule from '@bn-onboard/walletlink'
@@ -45,6 +46,8 @@
 
   const ledger = ledgerModule()
 
+  const trezor = trezorModule()
+
   const onboard = Onboard({
     wallets: [
       walletConnect,
@@ -53,7 +56,8 @@
       fortmatic,
       portis,
       torus,
-      ledger
+      ledger,
+      trezor
     ],
     chains: [
       {
@@ -79,6 +83,7 @@
       name: 'Blocknative',
       icon: blocknativeIcon,
       description: 'Demo app for Onboard V2',
+      email: 'test@test.com',
       recommendedInjectedWallets: [
         { name: 'MetaMask', url: 'https://metamask.io' },
         { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
