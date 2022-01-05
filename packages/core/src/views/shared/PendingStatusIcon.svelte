@@ -2,7 +2,7 @@
   import pendingIcon from '../../icons/pending'
 
   export let size: number // px
-  export let color: 'yellow'  = 'yellow'
+  export let color: 'yellow' = 'yellow'
 </script>
 
 <style>
