@@ -64,6 +64,8 @@ const appMetadata = Joi.object({
   description: Joi.string().required(),
   icon: Joi.string().required(),
   gettingStartedGuide: Joi.string(),
+  email: Joi.string(),
+  appUrl: Joi.string(),
   explore: Joi.string(),
   recommendedInjectedWallets: Joi.array().items(recommendedWallet)
 })

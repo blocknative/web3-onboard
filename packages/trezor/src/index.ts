@@ -133,7 +133,7 @@ function trezor(): WalletInit {
       label: 'Trezor',
       getIcon,
       getInterface: async ({ EventEmitter, BigNumber, chains, appMetadata }) => {
-
+        
         const TrezorConnectLibrary = await import('trezor-connect')
         const { Transaction } = await import('@ethereumjs/tx')
         const { default: Common, Hardfork } = await import('@ethereumjs/common')
@@ -141,46 +141,47 @@ function trezor(): WalletInit {
         const { accountSelect, createEIP1193Provider, ProviderRpcError } = await import('@bn-onboard/common')
         const { default: TrezorConnect, DEVICE_EVENT, DEVICE } = TrezorConnectLibrary
         const { generateAddresses, isValidPath } = await import('./hd-wallet-helpers')
-
+        
         // const { getStructHash } = await import('eip-712')
         // const { providers } = await import('ethers')
-
-
-
-
+        
+        
+        
+        
         // Initialize!!
-
+        
         if (!(appMetadata?.email && appMetadata?.appUrl)) {
           throw new Error('Email and AppUrl required for Trezor Wallet')
         }
-
+        
         const {email, appUrl} = appMetadata;
-
+        
         TrezorConnect.manifest({
           email,
           appUrl
         })
-
+        console.log('init trezor!')
+        
         let currentChain: Chain = chains[0]
-
+        
         // Variables
         const eventEmitter = new EventEmitter()
-
+        
         let addressToPath: any = new Map();
         let dPath: string = ''
-
+        
         let enabled: boolean = false
         let customPath: boolean = false
-      
+        
         let account:
-          | undefined
-          | { publicKey: string; chainCode: string; path: string }
-
-
+        | undefined
+        | { publicKey: string; chainCode: string; path: string }
+        
+        
         // TODO: Do we need this?
         // TrezorConnect.on(DEVICE_EVENT, (event: any) => {
-        //   if (event.type === DEVICE.DISCONNECT) {
-        //     provider.stop()
+          //   if (event.type === DEVICE.DISCONNECT) {
+            //     provider.stop()
         //     resetWalletState({ disconnected: true, walletName: 'Trezor' })
         //   }
         // })
