@@ -1,5 +1,5 @@
 jobs:
-  install-deps:
+  check:
     docker:
       - image: cimg/node:16.13.1
     steps:
@@ -14,15 +14,9 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: yarn setup
-  check:
-    docker:
-      - image: cimg/node:16.13.1
-    steps:
-      - checkout
       - run: cd packages/core && yarn lint && yarn check
 
 workflows:
   core:
     jobs:
-      - install-deps
       - check
