@@ -1,5 +1,4 @@
-import { accountSelect, createEIP1193Provider } from '@bn-onboard/common'
-import {
+import type {
   ScanAccountsOptions,
   Account,
   Asset
@@ -143,6 +142,8 @@ function ledger({
         const { compress } = (await import('eth-crypto')).publicKey
         const ethUtil = await import('ethereumjs-util')
         const { getStructHash } = await import('eip-712')
+        const { accountSelect, createEIP1193Provider, ProviderRpcError } =
+          await import('@bn-onboard/common')
 
         const transport: Transport = await getTransport()
         const eth = new Eth(transport)
@@ -191,26 +192,29 @@ function ledger({
           )
         }
 
-        const getAccounts = async () => {
-          return (
-            accounts ??
-            (accounts = await accountSelect({
-              basePaths: DEFAULT_BASE_PATHS,
-              assets,
-              chains,
-              scanAccounts,
-              walletIcon: await getIcon()
-            }))
-          )
-        }
+        const getAccounts = async () =>
+          accounts ??
+          (accounts = await accountSelect({
+            basePaths: DEFAULT_BASE_PATHS,
+            assets,
+            chains,
+            scanAccounts,
+            walletIcon: await getIcon()
+          }))
 
         const ledgerProvider = {}
 
         const provider = createEIP1193Provider(ledgerProvider, {
           eth_requestAccounts: async baseRequest => {
             // Triggers the account select modal if no accounts have been selected
-            const [{ address }] = await getAccounts()
-            return [address]
+            const accounts = await getAccounts()
+            if (accounts?.length === 0) {
+              throw new ProviderRpcError({
+                code: 4001,
+                message: 'User rejected the request.'
+              })
+            }
+            return [accounts[0]?.address]
           },
           eth_accounts: async baseRequest => {
             return accounts?.[0]?.address ? [accounts[0].address] : []
