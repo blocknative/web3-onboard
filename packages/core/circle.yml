@@ -1,12 +1,28 @@
 jobs:
-  check:
+  install-deps:
     docker:
-      - image: circleci/node:12-browsers
+      - image: cimg/node:16.13.1
     steps:
       - checkout
-      - run: cd packages/core && yarn && yarn lint && yarn check
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run: yarn
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - run: yarn setup
+  check:
+    docker:
+      - image: cimg/node:16.13.1
+    steps:
+      - checkout
+      - run: cd packages/core && yarn lint && yarn check
 
 workflows:
   core:
     jobs:
+      - install-deps
       - check
