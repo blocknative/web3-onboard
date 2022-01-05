@@ -6,6 +6,8 @@ jobs:
     steps:
       - checkout
           path: ~/onboard
+      - run: pwd
+      - run: echo $CIRCLE_WORKING_DIRECTORY 
       - run: yarn lint
       - run: yarn check
 
