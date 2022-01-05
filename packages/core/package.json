@@ -6,8 +6,8 @@
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "start": "sirv public --no-clear",
-    "check": "svelte-check --tsconfig ./tsconfig.json",
-    "lint": "eslint 'src/**/*.ts' && prettier --check {'src/**/*.ts','src/**/*.svelte'}"
+    "check": "svelte-check --workspace ./src --tsconfig ./tsconfig.json",
+    "lint": "eslint './src/**/*.ts' && prettier --check {'./src/**/*.ts','./src/**/*.svelte'}"
   },
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
