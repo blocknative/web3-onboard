@@ -4,8 +4,7 @@ jobs:
       - image: circleci/node:12-browsers
     steps:
       - checkout
-      - run: cd packages/core && yarn lint
-      - run: cd packages/core && yarn check
+      - run: cd packages/core && yarn lint && yarn check
 
 workflows:
   core:

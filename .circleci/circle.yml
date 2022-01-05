@@ -1,0 +1,21 @@
+version: 2.1
+
+jobs:
+  install-deps:
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run: yarn
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - run: yarn setup
+
+workflows:
+  install:
+    jobs:
+      - install-deps
