@@ -1,13 +1,11 @@
 jobs:
   check:
-    working_directory: ~/onboard/packages/core
     docker:
       - image: circleci/node:12-browsers
     steps:
       - checkout
-          path: ~/onboard
       - run: pwd
-      - run: echo $CIRCLE_WORKING_DIRECTORY 
+      - run: echo $CIRCLE_WORKING_DIRECTORY
       - run: yarn lint
       - run: yarn check
 
