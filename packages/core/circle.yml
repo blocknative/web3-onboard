@@ -1,0 +1,14 @@
+jobs:
+  check:
+    docker:
+      - image: circleci/node:12-browsers
+    steps:
+      - checkout
+      - run: cd packages/core
+      - run: yarn lint
+      - run: yarn check
+
+workflows:
+  core:
+    jobs:
+      - check
