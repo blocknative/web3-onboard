@@ -3,10 +3,11 @@ import {
   EIP1193Provider,
   InjectedWalletModule,
   InjectedNameSpace,
-  ChainListener
-} from '@bn-onboard/types'
+  ChainListener,
+  ProviderIdentityFlag,
+  ProviderLabel
+} from '@bn-onboard/common'
 
-import { ProviderIdentityFlag, ProviderLabel } from '@bn-onboard/types'
 import { createEIP1193Provider } from '@bn-onboard/common'
 
 declare const window: CustomWindow
@@ -59,13 +60,13 @@ const binance: InjectedWalletModule = {
       ...(!window.BinanceChain.isUnlocked && {
         eth_accounts: () => Promise.resolve([])
       }),
-      eth_requestAccounts: request =>
-        request({ method: 'eth_requestAccounts' }).then(accts => {
+      eth_requestAccounts: ({ baseRequest }) =>
+        baseRequest({ method: 'eth_requestAccounts' }).then(accts => {
           window.BinanceChain.isUnlocked = true
           return accts
         }),
-      eth_chainId: request =>
-        request({ method: 'eth_chainId' }).then(
+      eth_chainId: ({ baseRequest }) =>
+        baseRequest({ method: 'eth_chainId' }).then(
           id => `0x${parseInt(id).toString(16)}`
         ),
       // Unsupported method -- will throw error
@@ -139,7 +140,8 @@ const opera: InjectedWalletModule = {
   getIcon: async () => (await import('./icons/opera')).default,
   getInterface: async () => ({
     provider: createEIP1193Provider(window.ethereum, {
-      eth_requestAccounts: async request => request({ method: 'eth_accounts' })
+      eth_requestAccounts: async ({ baseRequest }) =>
+        baseRequest({ method: 'eth_accounts' })
     })
   }),
   platforms: ['all']
@@ -330,8 +332,8 @@ const ownbit: InjectedWalletModule = {
   getIcon: async () => (await import('./icons/ownbit')).default,
   getInterface: async () => {
     const provider = createEIP1193Provider(window.ethereum, {
-      eth_chainId: request =>
-        request({ method: 'eth_chainId' }).then(
+      eth_chainId: ({ baseRequest }) =>
+        baseRequest({ method: 'eth_chainId' }).then(
           id => `0x${parseInt(id).toString(16)}`
         ),
       wallet_switchEthereumChain: UNSUPPORTED_METHOD
@@ -354,9 +356,9 @@ const tokenpocket: InjectedWalletModule = {
     const emitter = new EventEmitter()
 
     const provider = createEIP1193Provider(window.ethereum, {
-      wallet_switchEthereumChain: (request, params) => {
+      wallet_switchEthereumChain: ({ baseRequest, params }) => {
         emitter.emit('chainChanged', params?.[0]?.chainId)
-        return request({
+        return baseRequest({
           method: 'wallet_switchEthereumChain',
           params
         })

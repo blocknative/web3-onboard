@@ -1,11 +1,12 @@
 import uniqBy from 'lodash.uniqby'
 
-import {
+import type {
   WalletInit,
   InjectedWalletOptions,
-  CustomWindow,
-  ProviderLabel
-} from '@bn-onboard/types'
+  CustomWindow
+} from '@bn-onboard/common'
+
+import { ProviderLabel } from '@bn-onboard/common'
 
 import standardWallets from './wallets'
 import { remove } from './helpers'

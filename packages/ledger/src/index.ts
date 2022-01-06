@@ -1,9 +1,12 @@
 import type {
   ScanAccountsOptions,
   Account,
-  Asset
-} from '@bn-onboard/common/src/types'
-import type { Chain, CustomNetwork, WalletInit } from '@bn-onboard/types'
+  Asset,
+  Chain,
+  CustomNetwork,
+  WalletInit
+} from '@bn-onboard/common'
+
 import type { BIP32Interface } from 'bip32'
 import type Transport from '@ledgerhq/hw-transport'
 import type { providers } from 'ethers'
@@ -197,7 +200,7 @@ function ledger({
         const ledgerProvider = {}
 
         const provider = createEIP1193Provider(ledgerProvider, {
-          eth_requestAccounts: async baseRequest => {
+          eth_requestAccounts: async () => {
             // Triggers the account select modal if no accounts have been selected
             const accounts = await getAccounts()
             if (accounts?.length === 0) {
@@ -208,13 +211,13 @@ function ledger({
             }
             return [accounts[0]?.address]
           },
-          eth_accounts: async baseRequest => {
+          eth_accounts: async () => {
             return accounts?.[0]?.address ? [accounts[0].address] : []
           },
-          eth_chainId: async baseRequest => {
+          eth_chainId: async () => {
             return currentChain?.id ?? ''
           },
-          eth_signTransaction: async (baseRequest, [transactionObject]) => {
+          eth_signTransaction: async ({ params: [transactionObject] }) => {
             if (!accounts)
               throw new Error(
                 'No account selected. Must call eth_requestAccounts first.'
@@ -274,7 +277,7 @@ function ledger({
 
             return signedTx ? `0x${signedTx.serialize().toString('hex')}` : ''
           },
-          eth_sign: async (baseRequest, [address, message]) => {
+          eth_sign: async ({ params: [address, message] }) => {
             if (!(accounts?.length && accounts?.length > 0))
               throw new Error(
                 'No account selected. Must call eth_requestAccounts first.'
@@ -298,7 +301,7 @@ function ledger({
                 return `0x${result['r']}${result['s']}${v}`
               })
           },
-          eth_signTypedData: async (baseRequest, [address, typedData]) => {
+          eth_signTypedData: async ({ params: [address, typedData] }) => {
             if (!(accounts?.length && accounts?.length > 0))
               throw new Error(
                 'No account selected. Must call eth_requestAccounts first.'
@@ -335,7 +338,7 @@ function ledger({
                 return `0x${result['r']}${result['s']}${v}`
               })
           },
-          wallet_switchEthereumChain: async (baseRequest, [{ chainId }]) => {
+          wallet_switchEthereumChain: async ({ params: [{ chainId }] }) => {
             currentChain =
               chains.find(({ id }) => id === chainId) ?? currentChain
             if (!currentChain)

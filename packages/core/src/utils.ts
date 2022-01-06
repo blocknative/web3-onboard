@@ -7,7 +7,7 @@ import type {
   DeviceBrowser,
   DeviceOS,
   DeviceType
-} from '@bn-onboard/types'
+} from '@bn-onboard/common'
 
 export const notNullish = <T>(value: T | null | undefined): value is T =>
   value != null

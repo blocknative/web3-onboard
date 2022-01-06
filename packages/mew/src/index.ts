@@ -1,5 +1,9 @@
-import { createEIP1193Provider, ErrorCodes, ProviderRpcError } from '@bn-onboard/common'
-import { EIP1193Provider, WalletInit } from '@bn-onboard/types'
+import {
+  createEIP1193Provider,
+  ErrorCodes,
+  ProviderRpcError
+} from '@bn-onboard/common'
+import { EIP1193Provider, WalletInit } from '@bn-onboard/common'
 import { firstValueFrom, fromEvent, map, take } from 'rxjs'
 
 function mew(): WalletInit {
@@ -9,8 +13,10 @@ function mew(): WalletInit {
       getIcon: async () => (await import('./icon')).default,
       getInterface: async ({ chains, EventEmitter }) => {
         const [chain] = chains
-        const { default: MEWWallet } = await import('@myetherwallet/mewconnect-web-client')
-          
+        const { default: MEWWallet } = await import(
+          '@myetherwallet/mewconnect-web-client'
+        )
+
         const mewConnect = new MEWWallet.Provider({
           windowClosedError: true,
           chainId: parseInt(chain.id),
@@ -21,19 +27,21 @@ function mew(): WalletInit {
 
         const mewProvider: EIP1193Provider = mewConnect.makeWeb3Provider()
         const provider = createEIP1193Provider(mewProvider, {
-          'eth_requestAccounts': (request) => {
-            const closed$ = fromEvent(mewConnect, 'popupWindowClosed').
-              pipe(
-                map(() => {
-                  throw new ProviderRpcError({
-                    code: ErrorCodes.ACCOUNT_ACCESS_REJECTED, 
-                    message: 'Popup window closed'
-                  })
-                }),
-                take(1)
-              )
+          eth_requestAccounts: ({ baseRequest }) => {
+            const closed$ = fromEvent(mewConnect, 'popupWindowClosed').pipe(
+              map(() => {
+                throw new ProviderRpcError({
+                  code: ErrorCodes.ACCOUNT_ACCESS_REJECTED,
+                  message: 'Popup window closed'
+                })
+              }),
+              take(1)
+            )
 
-            return Promise.race([request({method: 'eth_requestAccounts'}), firstValueFrom(closed$)])
+            return Promise.race([
+              baseRequest({ method: 'eth_requestAccounts' }),
+              firstValueFrom(closed$)
+            ])
           }
         })
 

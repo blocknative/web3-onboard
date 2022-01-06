@@ -2,7 +2,7 @@ import {
   ProviderRpcErrorCode,
   WalletModule,
   ProviderLabel
-} from '@bn-onboard/types'
+} from '@bn-onboard/common'
 
 export class ProviderRpcError extends Error {
   message: string

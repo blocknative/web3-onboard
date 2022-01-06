@@ -1,7 +1,7 @@
 import { BehaviorSubject, Subject, Observable } from 'rxjs'
 import { distinctUntilKeyChanged, pluck, filter } from 'rxjs/operators'
 
-import type { Chain } from '@bn-onboard/types'
+import type { Chain } from '@bn-onboard/common'
 
 import type {
   AppState,

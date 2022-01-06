@@ -1,3 +1,4 @@
+import type { Chain } from '@bn-onboard/common'
 import { onDestroy, onMount, beforeUpdate, afterUpdate } from 'svelte'
 import { Observable, Subject, defer, BehaviorSubject } from 'rxjs'
 import {
@@ -11,7 +12,6 @@ import {
 import { resetStore } from './store/actions'
 import { state } from './store'
 
-import type { Chain } from '@bn-onboard/types'
 import type { WalletState, InternalState } from './types'
 
 export const reset$ = new Subject<void>()

@@ -4,7 +4,7 @@ import {
   ProviderRpcError
 } from '@bn-onboard/common'
 
-import { WalletInit, APIKey, EIP1193Provider } from '@bn-onboard/types'
+import { WalletInit, APIKey, EIP1193Provider } from '@bn-onboard/common'
 
 function fortmatic(options: APIKey): WalletInit {
   const { apiKey } = options
@@ -52,7 +52,7 @@ function fortmatic(options: APIKey): WalletInit {
                     .toString()
                 : '0'
             },
-            wallet_switchEthereumChain: async (baseRequest, params) => {
+            wallet_switchEthereumChain: async ({ params }) => {
               const chain = chains.find(({ id }) => id === params[0].chainId)
               if (!chain) throw new Error('chain must be set before switching')
 
