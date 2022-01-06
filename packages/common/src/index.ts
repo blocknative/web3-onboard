@@ -57,7 +57,8 @@ import {
   InjectedProvider,
   ProviderRpcErrorCode,
   Chain,
-  TokenSymbol
+  TokenSymbol,
+  CustomNetwork
 } from './types'
 
 import { ProviderIdentityFlag, ProviderLabel } from './types'
@@ -126,5 +127,6 @@ export type {
   InjectedProvider,
   ProviderRpcErrorCode,
   Chain,
-  TokenSymbol
+  TokenSymbol,
+  CustomNetwork
 }
