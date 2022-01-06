@@ -14,7 +14,8 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: yarn setup
-      - run: cd packages/core && yarn lint && yarn typescript
+      - run: cd packages/core && yarn lint
+      - run: cd packages/core && yarn typescript
 
 workflows:
   core:
