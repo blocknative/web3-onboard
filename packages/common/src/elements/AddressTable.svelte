@@ -74,6 +74,10 @@
   .w-100 {
     width: 100%;
   }
+
+  .pointer {
+    cursor: pointer;
+  }
 </style>
 
 <div class="address-table">
@@ -94,6 +98,7 @@
       {#if accounts?.length}
         {#each accounts as account}
           <tr
+            class="pointer"
             class:selected-row={accountSelected?.address === account.address}
             on:click={() => handleSelectedRow(account)}
           >
