@@ -1,16 +1,19 @@
 <script lang="ts">
+  import { fade } from 'svelte/transition'
   import blocknative from '../icons/blocknative'
   import CloseButton from '../elements/CloseButton.svelte'
   import AddressTable from '../elements/AddressTable.svelte'
-  import TableHeader from '../elements/TableHeader.svelte';
+  import TableHeader from '../elements/TableHeader.svelte'
   import { displayModal$ } from '../streams'
+  import { utils } from 'ethers'
 
   
   import type { Subject } from 'rxjs'
-  import type { ScanAccountsOptions, SelectAccountOptions, Account, AccountsList } from '../types';
+  import type { ScanAccountsOptions, SelectAccountOptions, Account, AccountsList } from '../types'
 
   export let selectAccountOptions: SelectAccountOptions
   export let accounts$: Subject<Account[]>
+  console.log(selectAccountOptions, accounts$)
 
   const { basePaths, assets, chains, scanAccounts, walletIcon } = selectAccountOptions
   
@@ -48,9 +51,10 @@
       errorFromScan = false;
       loadingAccounts = true;
       const allAccounts = await scanAccounts(scanAccountOptions);
+      console.log('alllll acounts', await allAccounts[0])
       accountsListObject = {
         all: allAccounts, 
-        filtered: allAccounts.filter(account => Number(account?.balance.value) > 0)
+        filtered: allAccounts.filter(async(account) => (account?.balance?.value._isBigNumber ? account?.balance?.value.toNumber() : utils.formatEther(account?.balance?.value)) > 0)
       };
       loadingAccounts = false;
     } catch(err) {
@@ -95,7 +99,7 @@
     background-size: 0.65em auto, 100%;
     scrollbar-width: none;
     width: 100%;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 1.8rem 0.5rem 1rem;
     border-radius: 8px;
     font-size: var(--account-select-font-size-5, var(--font-size-5));
     line-height: var(--account-select-font-line-height-1, var(--font-line-height-1));
@@ -247,19 +251,19 @@
   }
 
   .base-path-select {
-    min-width: 25rem;
+    min-width: 20rem;
   }
 
   .asset-select {
-    width: 6rem
+    width: 6rem;
   }
   
   .network-select {
-    width: 8rem
+    min-width: 12rem;
   }
 
   .w-100 {
-    width: 100%
+    width: 100%;
   }
 
   .base-path-container {
@@ -305,7 +309,7 @@
 </style>
 
 {#if $displayModal$}
-  <div class='hardware-connect-modal'>
+  <div class='hardware-connect-modal' transition:fade>
     <header class='connect-wallet-header'>
       <div class='bn-logo'>{@html blocknative}</div>
       <div class='wallet-icon'>{@html walletIcon}</div>

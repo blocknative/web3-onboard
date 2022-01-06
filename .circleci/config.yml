@@ -1,75 +1,9 @@
-version: 2
-jobs:
-  test:
-    docker:
-      - image: circleci/node:12-browsers
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            - v1-dependencies-
-      - run: yarn
-      - run: yarn lint
-      - run: yarn test
-      - run: yarn build
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-  deploy_stage:
-    docker:
-      - image: circleci/node:12-browsers
-        user: root
-    steps:
-      - checkout
-      - run: sudo apt update && sudo apt install awscli
-      - run: yarn
-      - run: yarn build
-      - run: sudo npm i -g npm-cli-login
-      - run: NPM_USER=$NPM_USERNAME NPM_EMAIL=$NPM_EMAIL NPM_PASS=$NPM_PASSWORD npm-cli-login
-      - run: npm publish --dry-run
-  deploy_prod:
-    docker:
-      - image: circleci/node:12-browsers
-        user: root
-    steps:
-      - checkout
-      - run: sudo apt update && sudo apt install awscli
-      - run: yarn
-      - run: yarn build
-      - run: sudo npm i -g add npm-cli-login
-      - run: NPM_USER=$NPM_USERNAME NPM_EMAIL=$NPM_EMAIL NPM_PASS=$NPM_PASSWORD npm-cli-login
-      - run: npm publish
-  deploy_demo:
-    docker:
-      - image: circleci/node:12-browsers
-        user: root
-    steps:
-      - checkout
-      - run: sh ./trigger-demo-build.sh $CIRCLE_TOKEN
+version: 2.1
+setup: true
+orbs:
+  circletron: circletron/circletron@3.0.4
 
 workflows:
-  version: 2
-  test_build:
+  trigger-jobs:
     jobs:
-      - test
-      - deploy_stage:
-          requires:
-            - test
-          filters:
-            branches:
-              only:
-                - develop
-      - deploy_prod:
-          requires:
-            - test
-          filters:
-            branches:
-              only:
-                - master
-      - deploy_demo:
-          filters:
-            branches:
-              only:
-                - develop
+      - circletron/trigger-jobs

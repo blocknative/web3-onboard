@@ -1,0 +1,24 @@
+jobs:
+  check:
+    docker:
+      - image: cimg/node:16.13.1
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run: yarn
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - run: yarn setup
+      - run: yarn build
+      - run: cd packages/core && yarn lint
+      - run: cd packages/core && yarn typescript
+
+workflows:
+  core:
+    jobs:
+      - check

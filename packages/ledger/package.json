@@ -22,7 +22,6 @@
   },
   "dependencies": {
     "@bn-onboard/common": "^0.0.1",
-    "@bn-onboard/types": "^0.0.1",
     "@ledgerhq/hw-app-eth": "^6.19.0",
     "@ledgerhq/hw-transport-u2f": "^5.36.0-deprecated",
     "@ledgerhq/hw-transport-webusb": "^6.19.0",

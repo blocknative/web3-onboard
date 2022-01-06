@@ -18,7 +18,7 @@
   export let deselectWallet: (label: string) => void
   export let updateSelectedWallet: (update: Partial<WalletState>) => void
 
-  let connectionRejected: boolean = false
+  let connectionRejected = false
 
   const { appMetadata } = internalState$.getValue()
 

@@ -1,7 +1,7 @@
-<script context="module">
-  let scrollContainer
+<script lang="ts" context="module">
+  let scrollContainer: HTMLElement
 
-  export function modalAutoScroll(el) {
+  export function modalAutoScroll(el: HTMLElement): void {
     const { scrollHeight, clientHeight } = scrollContainer || {}
 
     if (scrollHeight && scrollHeight > clientHeight) {
@@ -13,10 +13,10 @@
   }
 </script>
 
-<script>
+<script lang="ts">
   import { fade } from 'svelte/transition'
 
-  export let close
+  export let close: () => void
 </script>
 
 <style>

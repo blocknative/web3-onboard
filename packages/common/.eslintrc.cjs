@@ -22,7 +22,11 @@ module.exports = {
     es2017: true
   },
   rules: {
-    '@typescript-eslint/quotes': ['error', 'single'],
+    '@typescript-eslint/quotes': [
+      'error',
+      'single',
+      { allowTemplateLiterals: true }
+    ],
     '@typescript-eslint/no-case-declarations': 'off',
     'max-len': [
       'error',

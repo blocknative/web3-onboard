@@ -6,13 +6,13 @@
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "start": "sirv public --no-clear",
-    "check": "svelte-check --tsconfig ./tsconfig.json"
+    "typescript": "svelte-check --tsconfig ./tsconfig.json",
+    "lint": "eslint -c './.eslintrc.cjs' './src' && prettier --check './src/**/*'"
   },
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
   "devDependencies": {
     "@bn-onboard/common": "^0.0.1",
-    "@bn-onboard/types": "^0.0.1",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^11.0.0",

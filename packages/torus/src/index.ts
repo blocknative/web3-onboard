@@ -4,7 +4,7 @@ import {
   ProviderRpcError
 } from '@bn-onboard/common'
 
-import { WalletInit } from '@bn-onboard/types'
+import { WalletInit } from '@bn-onboard/common'
 import type { TorusCtorArgs, TorusParams } from '@toruslabs/torus-embed'
 
 type TorusOptions = TorusCtorArgs & TorusParams
@@ -83,7 +83,7 @@ function torus(options?: TorusOptions): WalletInit {
               })
             }
           },
-          wallet_switchEthereumChain: async (baseRequest, params) => {
+          wallet_switchEthereumChain: async ({ params }) => {
             const chain = chains.find(({ id }) => id === params[0].chainId)
             if (!chain) throw new Error('chain must be set before switching')
 
@@ -95,7 +95,7 @@ function torus(options?: TorusOptions): WalletInit {
 
             return null
           },
-          eth_chainId: async baseRequest => {
+          eth_chainId: async ({ baseRequest }) => {
             const chainId = await baseRequest({ method: 'eth_chainId' })
             return `0x${parseInt(chainId).toString(16)}`
           }

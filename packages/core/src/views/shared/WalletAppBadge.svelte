@@ -3,7 +3,7 @@
   import Spinner from './Spinner.svelte'
   export let size: number // px
   export let icon: Promise<string> | string // svg string
-  export let loading: boolean = false
+  export let loading = false
 
   export let border:
     | 'yellow'
@@ -23,8 +23,8 @@
     | 'transparent'
     | 'custom' = 'white'
 
-  export let customBackgroundColor: string = ''
-  export let backgroundOpaque: boolean = false
+  export let customBackgroundColor = ''
+  export let backgroundOpaque = false
 </script>
 
 <style>

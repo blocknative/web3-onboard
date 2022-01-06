@@ -1,4 +1,4 @@
-import type { WalletModule } from '@bn-onboard/types'
+import type { WalletModule } from '@bn-onboard/common'
 import connectWallet from './connect'
 import disconnectWallet from './disconnect'
 import setChain from './chain'

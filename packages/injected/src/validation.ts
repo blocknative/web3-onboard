@@ -1,4 +1,4 @@
-import { InjectedWalletOptions } from '@bn-onboard/types'
+import { InjectedWalletOptions } from '@bn-onboard/common'
 
 import Joi from 'joi'
 

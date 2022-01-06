@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { WalletModule } from '@bn-onboard/types'
+  import type { WalletModule } from '@bn-onboard/common'
   import { _ } from 'svelte-i18n'
   import { BigNumber } from 'ethers'
   import EventEmitter from 'eventemitter3'
@@ -20,7 +20,7 @@
   import CloseButton from '../shared/CloseButton.svelte'
   import Sidebar from './Sidebar.svelte'
 
-  import { connectWallet$, internalState$, wallets$ } from '../../streams'
+  import { connectWallet$, internalState$ } from '../../streams'
 
   import { state } from '../../store'
   import { addWallet } from '../../store/actions'
@@ -32,10 +32,10 @@
   const { autoSelect } = options
 
   let loading = true
-  let connectionRejected: string = 'false'
+  let connectionRejected = 'false'
   let wallets: WalletWithLoadingIcon[] = []
   let selectedWallet: WalletState | null
-  let selectWalletError: string
+  // let selectWalletError: string
 
   let windowWidth: number
 
@@ -85,11 +85,11 @@
         chain: '0x1'
       }
     } catch (error) {
-      selectWalletError = (error as Error).message
+      // selectWalletError = (error as Error).message
     }
   }
 
-  function deselectWallet(label: string) {
+  function deselectWallet() {
     selectedWallet = null
   }
 
