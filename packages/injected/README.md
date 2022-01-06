@@ -41,7 +41,7 @@ Injected wallets that you do not want to support can be filtered based on the `P
 ```javascript
 import Onboard from '@bn-onboard/core'
 import injectedModule from '@bn-onboard/injected-wallets'
-import { ProviderLabel } from '@bn-onboard/types'
+import { ProviderLabel } from '@bn-onboard/common'
 
 const MAINNET_RPC_URL = 'https://mainnet.infura.io/v3/<INFURA_KEY>'
 
@@ -62,7 +62,7 @@ Or you may want to only filter the 'Detected Wallet' on a select few platforms:
 ```javascript
 import Onboard from '@bn-onboard/core'
 import injectedModule from '@bn-onboard/injected-wallets'
-import { ProviderLabel } from '@bn-onboard/types'
+import { ProviderLabel } from '@bn-onboard/common'
 
 const MAINNET_RPC_URL = 'https://mainnet.infura.io/v3/<INFURA_KEY>'
 

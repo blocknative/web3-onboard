@@ -1,4 +1,4 @@
-import type { Chain } from '@bn-onboard/types'
+import type { Chain } from '@bn-onboard/common'
 
 import type {
   Account,

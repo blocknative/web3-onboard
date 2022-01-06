@@ -11,7 +11,7 @@ import type {
   Chain,
   AccountsListener,
   ChainListener
-} from '@bn-onboard/types'
+} from '@bn-onboard/common'
 
 import { disconnectWallet$ } from './streams'
 import type { Account, Address, Balances, Ens, WalletState } from './types'

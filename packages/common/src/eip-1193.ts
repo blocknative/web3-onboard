@@ -1,11 +1,10 @@
 import type {
+  RequestPatch,
   Balance,
   ChainId,
   EIP1193Provider,
   ProviderAccounts
-} from '@bn-onboard/types'
-
-import type { RequestPatch } from './types'
+} from './types'
 import { ProviderRpcError } from './errors'
 
 /**
@@ -51,7 +50,7 @@ export const createEIP1193Provider = (
     if (requestPatch?.[key]) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore // @TODO - Fix this type error
-      return requestPatch[key]?.(baseRequest, params)
+      return requestPatch[key]?.({ baseRequest, params })
     } else {
       return baseRequest?.({ method, params })
     }

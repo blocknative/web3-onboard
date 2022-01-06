@@ -1,5 +1,5 @@
 import { createEIP1193Provider } from '@bn-onboard/common'
-import { WalletInit, APIKey } from '@bn-onboard/types'
+import { WalletInit, APIKey } from '@bn-onboard/common'
 
 function portis(options: APIKey): WalletInit {
   const { apiKey } = options
@@ -20,7 +20,7 @@ function portis(options: APIKey): WalletInit {
 
         const provider = createEIP1193Provider(portisProvider, {
           eth_requestAccounts: portisProvider.enable,
-          wallet_switchEthereumChain: async (baseRequest, params) => {
+          wallet_switchEthereumChain: async ({ params }) => {
             const chain = chains.find(({ id }) => id === params[0].chainId)
             if (!chain) throw new Error('chain must be set before switching')
 

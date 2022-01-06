@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { WalletModule } from '@bn-onboard/types'
+  import type { WalletModule } from '@bn-onboard/common'
   import { _ } from 'svelte-i18n'
   import { BigNumber } from 'ethers'
   import EventEmitter from 'eventemitter3'

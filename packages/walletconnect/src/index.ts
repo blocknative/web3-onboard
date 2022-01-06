@@ -3,7 +3,7 @@ import {
   EIP1193Provider,
   ProviderAccounts,
   WalletInit
-} from '@bn-onboard/types'
+} from '@bn-onboard/common'
 
 import { ProviderRpcError } from '@bn-onboard/common'
 

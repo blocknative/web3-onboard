@@ -1,12 +1,7 @@
 import type { SvelteComponent } from 'svelte'
-import type { AppMetadata } from '@bn-onboard/types'
-import type setChain from './chain'
-import type connect from './connect'
-import type disconnect from './disconnect'
-import type { state } from './store'
-import type en from './i18n/en.json'
 
 import type {
+  AppMetadata,
   Device,
   WalletInit,
   ChainId,
@@ -14,7 +9,13 @@ import type {
   WalletModule,
   Chain,
   TokenSymbol
-} from '@bn-onboard/types'
+} from '@bn-onboard/common'
+
+import type setChain from './chain'
+import type connect from './connect'
+import type disconnect from './disconnect'
+import type { state } from './store'
+import type en from './i18n/en.json'
 
 export interface InitOptions {
   wallets: WalletInit[]
