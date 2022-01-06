@@ -4,11 +4,17 @@ import type {
   EIP1193Provider,
   EIP3085Request,
   EIP3326Request,
+  EIP712Request,
+  EthBalanceRequest,
+  EthSignTransactionRequest,
+  EthSignMessageRequest,
   ProviderAccounts,
   ProviderInfo,
   ProviderMessage,
   ProviderRpcError
 } from '@bn-onboard/types'
+
+import type { BigNumber } from 'ethers'
 
 /**
  * Types for request patching methods. Ethereum RPC request is mapped to
@@ -21,13 +27,34 @@ export type RequestPatch = {
     | ((request: EIP1193Provider['request']) => Promise<ProviderAccounts>)
     | null
   eth_getBalance?:
-    | ((request: EIP1193Provider['request']) => Promise<Balance>)
+    | ((
+        request: EIP1193Provider['request'],
+        params: EthBalanceRequest['params']
+      ) => Promise<Balance>)
     | null
   eth_requestAccounts?:
     | ((request: EIP1193Provider['request']) => Promise<ProviderAccounts>)
     | null
   eth_chainId?:
     | ((request: EIP1193Provider['request']) => Promise<string>)
+    | null
+  eth_signTransaction?:
+    | ((
+        request: EIP1193Provider['request'],
+        params: EthSignTransactionRequest['params']
+      ) => Promise<string>)
+    | null
+  eth_sign?:
+    | ((
+        request: EIP1193Provider['request'],
+        params: EthSignMessageRequest['params']
+      ) => Promise<string>)
+    | null
+  eth_signTypedData?:
+    | ((
+        request: EIP1193Provider['request'],
+        params: EIP712Request['params']
+      ) => Promise<string>)
     | null
   wallet_switchEthereumChain?:
     | ((
@@ -52,7 +79,9 @@ export interface EventCallback {
 }
 
 // eslint-disable-next-line max-len
-export type AccountSelectAPI = (options: SelectAccountOptions) => Promise<Account>
+export type AccountSelectAPI = (
+  options: SelectAccountOptions
+) => Promise<Account>
 
 export type SelectAccountOptions = {
   basePaths: BasePath[] // the paths to display in the base path selector
@@ -75,9 +104,9 @@ export type Asset = {
 }
 
 export type Chain = {
-  label: string // eg - Ethereum, Rinkeby, Matic
-  id: string 
-  // 0x prefixed hex string | 
+  label?: string // eg - Ethereum, Rinkeby, Matic
+  id: string
+  // 0x prefixed hex string |
   // eg - 0x1 (mainnet ethereum), 0x4 (rinkeby), 0x89 (polygon matic)
 }
 
@@ -94,7 +123,7 @@ export type Account = {
   derivationPath: DerivationPath
   balance: {
     asset: Asset['label']
-    value: string
+    value: BigNumber
   }
 }
 
