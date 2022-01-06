@@ -7,8 +7,7 @@
     "dev": "rollup -c -w",
     "start": "sirv public --no-clear",
     "typescript": "svelte-check --tsconfig ./tsconfig.json",
-    "lint": "eslint './src/**/*.ts' && prettier --check {'./src/**/*.ts','./src/**/*.svelte'}",
-    "lint-ci": "pwd && eslint 'packages/core/src/**/*.ts' && prettier --check {'packages/core/src/**/*.ts','packages/core/src/**/*.svelte'}"
+    "lint": "eslint -c './.eslintrc.cjs' './src' && prettier --check './src/**/*'"
   },
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",

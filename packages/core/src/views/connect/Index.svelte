@@ -32,7 +32,7 @@
   const { autoSelect } = options
 
   let loading = true
-  let connectionRejected: string = 'false'
+  let connectionRejected = 'false'
   let wallets: WalletWithLoadingIcon[] = []
   let selectedWallet: WalletState | null
   // let selectWalletError: string

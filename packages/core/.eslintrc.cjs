@@ -6,7 +6,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'prettier'
   ],
-  plugins: ['svelte3', '@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'svelte3'],
   ignorePatterns: ['*.cjs'],
   overrides: [{ files: ['*.svelte'], processor: 'svelte3/svelte3' }],
   settings: {
@@ -22,7 +22,11 @@ module.exports = {
     es2017: true
   },
   rules: {
-    '@typescript-eslint/quotes': ['error', 'single'],
+    '@typescript-eslint/quotes': [
+      'error',
+      'single',
+      { allowTemplateLiterals: true }
+    ],
     '@typescript-eslint/no-case-declarations': 'off',
     'max-len': [
       'error',
