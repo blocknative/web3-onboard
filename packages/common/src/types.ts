@@ -1,6 +1,9 @@
 import type { ExternalProvider } from '@ethersproject/providers'
 import type { ethers } from 'ethers'
 import type EventEmitter from 'eventemitter3'
+import type { BigNumber } from 'ethers'
+import type { TypedData as EIP712TypedData } from 'eip-712'
+export type { TypedData as EIP712TypedData } from 'eip-712'
 
 /**
  * Types for request patching methods. Ethereum RPC request is mapped to
@@ -24,6 +27,24 @@ export type RequestPatch = {
     | null
   eth_chainId?:
     | ((args: { baseRequest: EIP1193Provider['request'] }) => Promise<string>)
+    | null
+  eth_signTransaction?:
+    | ((args: {
+        baseRequest: EIP1193Provider['request']
+        params: EthSignTransactionRequest['params']
+      }) => Promise<string>)
+    | null
+  eth_sign?:
+    | ((args: {
+        baseRequest: EIP1193Provider['request']
+        params: EthSignMessageRequest['params']
+      }) => Promise<string>)
+    | null
+  eth_signTypedData?:
+    | ((args: {
+        baseRequest: EIP1193Provider['request']
+        params: EIP712Request['params']
+      }) => Promise<string>)
     | null
   wallet_switchEthereumChain?:
     | ((args: {
@@ -87,7 +108,7 @@ export type Account = {
   derivationPath: DerivationPath
   balance: {
     asset: Asset['label']
-    value: string
+    value: BigNumber
   }
 }
 
@@ -286,6 +307,17 @@ export type AccountsListener = (accounts: ProviderAccounts) => void
  */
 export type Balance = string
 
+export interface TransactionObject {
+  data?: string
+  from: string
+  gas?: string
+  gasLimit?: string
+  gasPrice?: string
+  to?: string
+  value?: string
+  nonce?: string
+}
+
 interface BaseRequest {
   params?: never
 }
@@ -296,6 +328,24 @@ export interface EthAccountsRequest extends BaseRequest {
 
 export interface EthChainIdRequest extends BaseRequest {
   method: 'eth_chainId'
+}
+
+export interface EthSignTransactionRequest {
+  method: 'eth_signTransaction'
+  params: [TransactionObject]
+}
+
+type Address = string
+type Message = string
+export interface EthSignMessageRequest {
+  method: 'eth_sign'
+  params: [Address, Message]
+}
+
+// request -> signTypedData_v3`
+export interface EIP712Request {
+  method: 'eth_signTypedData'
+  params: [Address, EIP712TypedData]
 }
 
 export interface EthBalanceRequest {
@@ -340,6 +390,9 @@ export interface EIP1193Provider extends SimpleEventEmitter {
   request(args: EIP3326Request): Promise<null>
   request(args: EIP3085Request): Promise<null>
   request(args: EthChainIdRequest): Promise<ChainId>
+  request(args: EthSignTransactionRequest): Promise<string>
+  request(args: EthSignMessageRequest): Promise<string>
+  request(args: EIP712Request): Promise<string>
   disconnect?(): void
 }
 
@@ -441,7 +494,7 @@ export enum ProviderRpcErrorCode {
   RejectedRequest = '4001',
 
   /** The requested method and/or 
-  account has not been authorized by the user. */
+       account has not been authorized by the user. */
   Unauthorized = '4100',
 
   /** The Provider does not support the requested method. */
@@ -462,3 +515,34 @@ export interface Chain {
 }
 
 export type TokenSymbol = string // eg ETH
+
+export interface CustomNetwork {
+  networkId: number
+  genesis: GenesisBlock
+  hardforks: Hardfork[]
+  bootstrapNodes: BootstrapNode[]
+}
+
+export interface GenesisBlock {
+  hash: string
+  timestamp: string | null
+  gasLimit: number
+  difficulty: number
+  nonce: string
+  extraData: string
+  stateRoot: string
+}
+export interface Hardfork {
+  name: string
+  block: number | null
+}
+
+export interface BootstrapNode {
+  ip: string
+  port: number | string
+  network?: string
+  chainId?: number
+  id: string
+  location: string
+  comment: string
+}

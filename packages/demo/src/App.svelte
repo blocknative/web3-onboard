@@ -2,6 +2,8 @@
   import { share } from 'rxjs/operators'
   import Onboard from '@bn-onboard/core'
   import injectedModule from '@bn-onboard/injected-wallets'
+
+  import ledgerModule from '@bn-onboard/ledger'
   import walletConnectModule from '@bn-onboard/walletconnect'
   import walletLinkModule from '@bn-onboard/walletlink'
   import portisModule from '@bn-onboard/portis'
@@ -9,10 +11,15 @@
   import torusModule from '@bn-onboard/torus'
   import blocknativeIcon from './blocknative-icon'
   import VConsole from 'vconsole'
+  import { verifyTypedData, verifyMessage } from 'ethers/lib/utils'
 
   if (window.innerWidth < 700) {
     new VConsole()
   }
+
+  let transactionObject
+  let signMsg
+  let signTypedMsg
 
   const injected = injectedModule({
     custom: [
@@ -36,8 +43,18 @@
 
   const torus = torusModule()
 
+  const ledger = ledgerModule()
+
   const onboard = Onboard({
-    wallets: [walletConnect, walletLink, injected, fortmatic, portis, torus],
+    wallets: [
+      walletConnect,
+      walletLink,
+      injected,
+      fortmatic,
+      portis,
+      torus,
+      ledger
+    ],
     chains: [
       {
         id: '0x1',
@@ -81,6 +98,36 @@
 
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
+
+  const signTransactionMessage = provider => {
+    provider.request({
+      method: 'eth_signTransaction',
+      params: [JSON.parse(signTransactionMessage)]
+    })
+  }
+
+  const signMessage = async (provider, address) => {
+    console.log(signMsg)
+    const signature = await provider.request({
+      method: 'eth_sign',
+      params: [address, signMsg]
+    })
+    console.log(signature)
+    const recoveredAddress = verifyMessage(signMsg, signature)
+    console.log(recoveredAddress)
+  }
+
+  const signTypedMessage = async (provider, address) => {
+    const data = JSON.parse(signTypedMsg)
+    const signature = await provider.request({
+      method: 'eth_signTypedData',
+      params: [address, data]
+    })
+    const { domain, types, message } = data
+
+    delete types.EIP712Domain
+    console.log(verifyTypedData(domain, types, message, signature))
+  }
 </script>
 
 <style>
@@ -100,6 +147,21 @@
   :root {
     /* --onboard-gray-100: pink; */
   }
+
+  .text-input {
+    width: 24rem;
+  }
+
+  .sign-transaction {
+    display: flex;
+    align-items: end;
+  }
+
+  .sign-transaction-textarea {
+    width: 24rem;
+    height: 12rem;
+    margin: 0;
+  }
 </style>
 
 <main>
@@ -117,7 +179,7 @@
   {/if}
 
   {#if $wallets$}
-    {#each $wallets$ as { icon, label, accounts, chain }}
+    {#each $wallets$ as { icon, label, accounts, chain, provider }}
       <div class="connected-wallet">
         <div class="flex-centered" style="width: 10rem;">
           <div style="width: 2rem; height: 2rem">{@html icon}</div>
@@ -128,7 +190,7 @@
 
         {#each accounts as { address, ens, balance }}
           <div
-            style="margin-top: 0.25rem; padding: 0.25rem; border: 1px solid gray;"
+            style="margin-top: 0.25rem; margin-bottom: 0.25rem; padding: 0.25rem; border: 1px solid gray;"
           >
             <div>Address: {address}</div>
             {#if balance}
@@ -142,13 +204,52 @@
               <div>ENS Name: {ens?.name || ''}</div>
             {/if}
           </div>
-        {/each}
+          <div>
+            <input
+              id="sign-msg-input"
+              type="text"
+              class="text-input"
+              placeholder="Message..."
+              bind:value={signMsg}
+            />
+            <button on:click={signMessage(provider, address)}>
+              Sign Message
+            </button>
+          </div>
+          <div>
+            <input
+              id="sign-type-msg-input"
+              type="text"
+              class="text-input"
+              placeholder="Typed message..."
+              bind:value={signTypedMsg}
+            />
+            <button on:click={signTypedMessage(provider, address)}>
+              Sign Typed Message
+            </button>
+          </div>
 
+          <div class="sign-transaction">
+            <textarea
+              bind:value={transactionObject}
+              id="sign-transaction-input"
+              type="text"
+              class="sign-transaction-textarea"
+            />
+            <button
+              on:click={signTransactionMessage(provider)}
+              style="margin: 0 0 0 .5rem"
+            >
+              Sign Transaction
+            </button>
+          </div>
+        {/each}
         <button
           style="margin-top: 0.5rem;"
           on:click={() => onboard.disconnectWallet({ label })}
-          >Disconnect Wallet</button
         >
+          Disconnect Wallet
+        </button>
       </div>
     {/each}
   {/if}
