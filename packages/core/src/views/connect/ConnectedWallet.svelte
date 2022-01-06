@@ -3,7 +3,7 @@
   import { _ } from 'svelte-i18n'
 
   import { getBalance, getEns } from '../../provider'
-  import { updateAccount, updateWallet } from '../../store/actions'
+  import { updateAccount } from '../../store/actions'
   import { connectWallet$, internalState$ } from '../../streams'
   import { getRpcUrl, validEnsChain } from '../../utils'
   import success from '../../icons/success'

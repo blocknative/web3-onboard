@@ -10,7 +10,8 @@
     "target": "esnext",
     "module": "esnext",
     "resolveJsonModule": true,
-    "strictNullChecks": false
+    "strictNullChecks": false,
+    "allowSyntheticDefaultImports": true
   },
   "outDir": "dist",
 }

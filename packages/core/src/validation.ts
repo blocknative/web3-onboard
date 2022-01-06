@@ -11,7 +11,7 @@ import type {
 const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
 
 const unknownObject = Joi.object().unknown()
-const address = Joi.string().pattern(/^0x[a-fA-F0-9]{40}$/)
+// const address = Joi.string().pattern(/^0x[a-fA-F0-9]{40}$/)
 
 const chain = Joi.object({
   id: Joi.string().required(),

@@ -47,7 +47,7 @@
         onClick={async () => {
           connecting = label
           const iconLoaded = await icon
-          await selectWallet({ label, icon: iconLoaded, getInterface })
+          selectWallet({ label, icon: iconLoaded, getInterface })
         }}
       />
     {/each}
