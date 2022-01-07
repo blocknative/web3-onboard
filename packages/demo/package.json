@@ -1,6 +1,6 @@
 {
   "name": "demo",
-  "version": "0.0.1",
+  "version": "2.0.0-alpha",
   "devDependencies": {
     "assert": "^2.0.0",
     "buffer": "^6.0.3",
@@ -22,13 +22,13 @@
     "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
-    "@bn-onboard/core": "^0.0.1",
-    "@bn-onboard/fortmatic": "0.0.1",
+    "@bn-onboard/core": "2.0.0-alpha",
+    "@bn-onboard/fortmatic": "2.0.0-alpha",
     "@bn-onboard/injected-wallets": "^0.0.1",
-    "@bn-onboard/portis": "0.0.1",
-    "@bn-onboard/torus": "0.0.1",
-    "@bn-onboard/walletconnect": "0.0.1",
-    "@bn-onboard/walletlink": "0.0.1",
+    "@bn-onboard/portis": "2.0.0-alpha",
+    "@bn-onboard/torus": "2.0.0-alpha",
+    "@bn-onboard/walletconnect": "2.0.0-alpha",
+    "@bn-onboard/walletlink": "2.0.0-alpha",
     "rxjs": "^7.4.0",
     "vconsole": "^3.9.5"
   },
