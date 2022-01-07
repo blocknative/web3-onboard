@@ -15,8 +15,8 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: yarn setup
       - run: yarn build
-      - run: cd packages/core && yarn lint
-      - run: cd packages/core && yarn typescript
+      - run: cd packages/common && yarn lint
+      - run: cd packages/common && yarn typescript
   publish:
     docker:
       - image: cimg/node:16.13.1
@@ -33,11 +33,11 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: yarn setup
       - run: yarn build
-      - run: cd packages/core && echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
-      - run: cd packages/core && npm publish --access public
+      - run: cd packages/common && echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
+      - run: cd packages/common && npm publish --access public
 
 workflows:
-  core:
+  common:
     jobs:
       - check
       - publish:
@@ -45,6 +45,4 @@ workflows:
             - test
           filters:
             branches:
-              only:
-                - main
-                - feature/v2
+              only: - main
