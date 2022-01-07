@@ -7,13 +7,11 @@
   import { displayModal$ } from '../streams'
   import { utils } from 'ethers'
 
-  
   import type { Subject } from 'rxjs'
   import type { ScanAccountsOptions, SelectAccountOptions, Account, AccountsList } from '../types'
 
   export let selectAccountOptions: SelectAccountOptions
   export let accounts$: Subject<Account[]>
-  console.log(selectAccountOptions, accounts$)
 
   const { basePaths, assets, chains, scanAccounts, walletIcon } = selectAccountOptions
   
@@ -51,10 +49,9 @@
       errorFromScan = false;
       loadingAccounts = true;
       const allAccounts = await scanAccounts(scanAccountOptions);
-      console.log('alllll acounts', await allAccounts[0])
       accountsListObject = {
         all: allAccounts, 
-        filtered: allAccounts.filter(async(account) => (account?.balance?.value._isBigNumber ? account?.balance?.value.toNumber() : utils.formatEther(account?.balance?.value)) > 0)
+        filtered: allAccounts.filter(account => utils.formatEther(account?.balance?.value) > 0)
       };
       loadingAccounts = false;
     } catch(err) {
