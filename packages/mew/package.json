@@ -1,7 +1,7 @@
 {
   "name": "@bn-onboard/mew",
-  "version": "0.0.1",
-  "description": "<todo>",
+  "version": "2.0.0-alpha",
+  "description": "MEW module for Onboard.js",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -19,7 +19,7 @@
     "typescript": "^4.4.4"
   },
   "dependencies": {
-    "@bn-onboard/common": "^0.0.1",
+    "@bn-onboard/common": "2.0.0-alpha",
     "@myetherwallet/mewconnect-web-client": "^2.2.0-beta.14",
     "rxjs": "^7.4.0"
   }

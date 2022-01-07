@@ -68,7 +68,7 @@
       },
       {
         id: '0x3',
-        token: 'ETH',
+        token: 'tROP',
         label: 'Ethereum Ropsten Testnet',
         rpcUrl: 'https://ropsten.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
       },

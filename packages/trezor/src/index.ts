@@ -1,24 +1,29 @@
 import {
   ScanAccountsOptions,
   Account,
-  Asset
+  Asset,
+  Chain,
+  CustomNetwork,
+  WalletInit
 } from '@bn-onboard/common/src/types'
-import type { Chain, CustomNetwork, WalletInit } from '@bn-onboard/types'
 import type { providers } from 'ethers'
 import type { BIP32Interface } from 'bip32'
 
 
-const TREZOR_DEFAULT_PATH = "m/44'/60'/0'/0"
+const TREZOR_DEFAULT_PATH = "m/44'/1'/0'/0"
 
 const assets = [
   {
     label: 'ETH'
+  },
+    {
+    label: 'tROP'
   }
 ]
 
 const DEFAULT_BASE_PATHS = [
   {
-    label: 'Ethereum',
+    label: 'Ethereum Testnet Ropsten',
     value: TREZOR_DEFAULT_PATH
   }
 ]
@@ -68,7 +73,7 @@ const getAddresses = async (
 
   // Iterates until a 0 balance account is found
   // Then adds 4 more 0 balance accounts to the array
-  while (zeroBalanceAccounts < 5) {
+  while (zeroBalanceAccounts < 10) {
     const acc = await getAccount(account, asset, index, provider)
     if (acc?.balance?.value?.isZero()) {
       zeroBalanceAccounts++
@@ -131,7 +136,7 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
           try {
             const result = await TrezorConnect.ethereumGetAddress({
               path,
-              showOnTrezor: false
+              showOnTrezor: true
             })
       
             if (!result.success) {
@@ -152,7 +157,7 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
           try {
             const result = await TrezorConnect.getPublicKey({
               path: dPath,
-              coin: 'eth'
+              coin: "tROP"
             })
       
             if (!result.success) {
@@ -176,8 +181,12 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
         const scanAccounts = async ({derivationPath, chainId, asset}: ScanAccountsOptions): Promise<Account[]> => {
           currentChain = chains.find(({ id }) => id === chainId) ?? currentChain
           const provider = new providers.JsonRpcProvider(currentChain.rpcUrl)
-
+          console.log({derivationPath, chainId, asset})
+          
           const {publicKey, chainCode, path} = await getPublicKey(derivationPath);
+          console.log('ropsten data', await TrezorConnect.getCoinInfo({
+            coin: 'trop',
+        }))
 
           if ( derivationPath !== TREZOR_DEFAULT_PATH && isValidPath(derivationPath) ) {
             const address = await getAddress(path);
