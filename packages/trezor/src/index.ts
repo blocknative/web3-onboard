@@ -43,7 +43,7 @@ const getAddresses = (
   provider: providers.JsonRpcProvider,
 ): Promise<Account[]> => {
   const accounts = []
-
+// Change to map
   for (let [address, path] of  addressList.entries()) {
     accounts.push(getAccount(address, asset, path, provider))
   }
@@ -98,52 +98,6 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
         | undefined
         | { publicKey: string; chainCode: string; path: string }
         
-        
-        // TODO: Do we need this?
-        // TrezorConnect.on(DEVICE_EVENT, (event: any) => {
-          //   if (event.type === DEVICE.DISCONNECT) {
-            //     provider.stop()
-        //     resetWalletState({ disconnected: true, walletName: 'Trezor' })
-        //   }
-        // })
-
-        // function disconnect() {
-        //   dPath = ''
-        //   addressToPath = new Map()
-        //   enabled = false
-        //   provider.stop()
-        // }
-
-        // async function setPath(path: string, custom?: boolean ) {
-        //   if (!isValidPath(path)) {
-        //     return false
-        //   }
-      
-        //   if (path !== dPath) {
-        //     // clear any exsting addresses if different path
-        //     addressToPath = new Map()
-        //   }
-      
-        //   if (custom) {
-        //     try {
-        //       const address = await getAddress(path)
-        //       addressToPath.set(address, path)
-        //       dPath = path
-        //       customPath = true
-      
-        //       return true
-        //     } catch (error) {
-        //       throw new Error(
-        //         `There was a problem deriving an address from path ${path}`
-        //       )
-        //     }
-        //   }
-      
-        //   customPath = false
-        //   dPath = path
-      
-        //   return true
-        // }
 
         function enable() {
           enabled = true
@@ -249,7 +203,7 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
         }))
 
       
-        function trezorSignTransaction(path: string, transactionData: any) {
+        function trezorSignTransactionLegacy(path: string, transactionData: any) {
           const { nonce, gasPrice, gas, to, value, data } = transactionData
       
           return TrezorConnect.ethereumSignTransaction({
@@ -265,7 +219,7 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
             }
           })
         }
-            
+        // Handle both    
         function trezorSignTransaction1559(path: string, transactionData: any) {
           const { nonce, gas, to, value, data, maxFeePerGas, maxPriorityFeePerGas } = transactionData
       
@@ -282,6 +236,13 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
               maxPriorityFeePerGas,
             }
           })
+        }
+
+        function trezorSignTransaction(path: string, transactionData: any) {
+          if (transactionData.hasOwnProperty('maxFeePerGas') && transactionData.hasOwnProperty('maxPriorityFeePerGas')) {
+            return trezorSignTransaction1559(path, transactionData)
+          }
+          return trezorSignTransactionLegacy(path, transactionData)
         }
       
         async function signTransaction(transactionData: any) {
