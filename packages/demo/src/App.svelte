@@ -67,6 +67,12 @@
         rpcUrl: 'https://mainnet.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
       },
       {
+        id: '0x3',
+        token: 'ETH',
+        label: 'Ethereum Ropsten Testnet',
+        rpcUrl: 'https://ropsten.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
+      },
+      {
         id: '0x4',
         token: 'rETH',
         label: 'Ethereum Rinkeby Testnet',

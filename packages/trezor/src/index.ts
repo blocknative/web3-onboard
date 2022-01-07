@@ -5,6 +5,8 @@ import {
 } from '@bn-onboard/common/src/types'
 import type { Chain, CustomNetwork, WalletInit } from '@bn-onboard/types'
 import type { providers } from 'ethers'
+import type { BIP32Interface } from 'bip32'
+
 
 const TREZOR_DEFAULT_PATH = "m/44'/60'/0'/0"
 
@@ -21,14 +23,32 @@ const DEFAULT_BASE_PATHS = [
   }
 ]
 
+interface AccountData { publicKey: string; chainCode: string; path: string };
+
 const getAccount = async (
-  address: string,
+  { publicKey, chainCode, path }: AccountData,
   asset: Asset,
-  dPath: string,
-  provider: providers.JsonRpcProvider,
+  index: number,
+  provider: providers.JsonRpcProvider
 ): Promise<Account> => {
+  const { BIP32Factory } = await import('bip32')
+  const ecc = await import('tiny-secp256k1')
+  const { Buffer } = await import('buffer')
+  const { publicToAddress, toChecksumAddress } = await import('ethereumjs-util')
+
+  const node: BIP32Interface = BIP32Factory(ecc).fromPublicKey(
+    Buffer.from(publicKey, 'hex'),
+    Buffer.from(chainCode, 'hex')
+  )
+
+  const child: BIP32Interface = node.derive(index)
+
+  const address = toChecksumAddress(
+    `0x${publicToAddress(child.publicKey, true).toString('hex')}`
+  )
+
   return {
-    derivationPath: dPath,
+    derivationPath: `${path}/${index}`,
     address,
     balance: {
       asset: asset.label,
@@ -37,17 +57,31 @@ const getAccount = async (
   }
 }
 
-const getAddresses = (
-  addressList: any,
+const getAddresses = async (
+  account: AccountData,
   asset: Asset,
-  provider: providers.JsonRpcProvider,
+  provider: providers.JsonRpcProvider
 ): Promise<Account[]> => {
   const accounts = []
-// Change to map
-  for (let [address, path] of  addressList.entries()) {
-    accounts.push(getAccount(address, asset, path, provider))
+  let index = 0
+  let zeroBalanceAccounts = 0
+
+  // Iterates until a 0 balance account is found
+  // Then adds 4 more 0 balance accounts to the array
+  while (zeroBalanceAccounts < 5) {
+    const acc = await getAccount(account, asset, index, provider)
+    if (acc?.balance?.value?.isZero()) {
+      zeroBalanceAccounts++
+      accounts.push(acc)
+    } else {
+      accounts.push(acc)
+      // Reset the number of 0 balance accounts
+      zeroBalanceAccounts = 0
+    }
+    index++
   }
-  return Promise.all(accounts)
+
+  return accounts
 }
 
 
@@ -61,48 +95,35 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
       getIcon,
       getInterface: async ({ EventEmitter, chains, appMetadata }) => {
         
+        const { isValidPath } = await import('./hd-wallet-helpers')
         const TrezorConnectLibrary = await import('trezor-connect')
+        const { default: TrezorConnect } = TrezorConnectLibrary
         const { Transaction } = await import('@ethereumjs/tx')
         const { default: Common, Hardfork } = await import('@ethereumjs/common')
-        const ethUtil = await import('ethereumjs-util')
         const { accountSelect, createEIP1193Provider, ProviderRpcError } = await import('@bn-onboard/common')
-        const { default: TrezorConnect, DEVICE_EVENT, DEVICE } = TrezorConnectLibrary
-        const { generateAddresses, isValidPath } = await import('./hd-wallet-helpers')
+        const ethUtil = await import('ethereumjs-util')
+        const { compress } = (await import('eth-crypto')).publicKey
         const { providers } = await import('ethers')
         
-        // Initialize!!
         
         if (!(appMetadata?.email && appMetadata?.appUrl)) {
           throw new Error('Email and AppUrl required for Trezor Wallet')
         }
         
-        const {email, appUrl} = appMetadata;
+        const { email, appUrl } = appMetadata;
         
         TrezorConnect.manifest({
           email: email,
           appUrl: appUrl
         })
         
+        
+        const eventEmitter = new EventEmitter()
+        // TODO: Deal with addressToPath
+        let addressToPath: any = new Map()
         let currentChain: Chain = chains[0]
         
-        // Variables
-        const eventEmitter = new EventEmitter()
-        
-        let addressToPath: any = new Map();
-        let dPath: string = ''
-        let assetType: Asset;
-        
-        let enabled: boolean = false
-        
-        let account:
-        | undefined
-        | { publicKey: string; chainCode: string; path: string }
-        
-
-        function enable() {
-          enabled = true
-          return enableAccounts()
-        }
+        let account: { publicKey: string; chainCode: string; path: string } | undefined
 
         async function getAddress(path: string) {
           const errorMsg = `Unable to derive address from path ${path}`
@@ -123,38 +144,7 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
           }
         }
 
-        async function enableAccounts() {
-
-          if (dPath === '') {
-            dPath = TREZOR_DEFAULT_PATH
-          }
-          
-          if (!account) {
-            try {
-              account = await getPublicKey()
-            } catch (error) {
-              throw error
-            }
-          }
-      
-          const addressInfo = generateAddresses(account, addressToPath.size)
-      
-          addressInfo.forEach(({ dPath, address }) => {
-            addressToPath.set(address, dPath)
-          })
-
-        }
-
-        async function getAccountsForScan(): Promise<Account[]> {
-          if (!enabled) {
-            return []
-          }
-
-          const provider = new providers.JsonRpcProvider(currentChain.rpcUrl)
-          return getAddresses(addressToPath, assetType, provider)
-        }
- 
-        async function getPublicKey() {
+        async function getPublicKey(dPath: string) {
           if (!dPath) {
             throw new Error('a derivation path is needed to get the public key')
           }
@@ -168,12 +158,14 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
             if (!result.success) {
               throw new Error(result.payload.error)
             }
+            console.log(result)
       
             account = {
               publicKey: result.payload.publicKey,
               chainCode: result.payload.chainCode,
               path: result.payload.serializedPath
             }
+            console.log(accounts)
       
             return account
           } catch (error) {
@@ -182,14 +174,34 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
         }
 
         const scanAccounts = async ({derivationPath, chainId, asset}: ScanAccountsOptions): Promise<Account[]> => {
-          if (derivationPath !== dPath) addressToPath = new Map()
-          if (!isValidPath(derivationPath)) {
-            throw new Error('Invalid derivation path')
-          } 
-          dPath = derivationPath;
-          assetType = asset;
           currentChain = chains.find(({ id }) => id === chainId) ?? currentChain
-          return getAccountsForScan()
+          const provider = new providers.JsonRpcProvider(currentChain.rpcUrl)
+
+          const {publicKey, chainCode, path} = await getPublicKey(derivationPath);
+
+          if ( derivationPath !== TREZOR_DEFAULT_PATH && isValidPath(derivationPath) ) {
+            const address = await getAddress(path);
+            return [
+              {
+                derivationPath,
+                address,
+                balance: {
+                  asset: asset.label,
+                  value: await provider.getBalance(address)
+                }
+              }
+            ]
+          }
+
+          return getAddresses(
+            {
+              publicKey: compress(publicKey),
+              chainCode: chainCode ?? '',
+              path: derivationPath
+            },
+            asset,
+            provider
+          )
         }
 
         const getAccountFromAccountSelect = async () =>
@@ -219,7 +231,7 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
             }
           })
         }
-        // Handle both    
+
         function trezorSignTransaction1559(path: string, transactionData: any) {
           const { nonce, gas, to, value, data, maxFeePerGas, maxPriorityFeePerGas } = transactionData
       
@@ -239,16 +251,17 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
         }
 
         function trezorSignTransaction(path: string, transactionData: any) {
-          if (transactionData.hasOwnProperty('maxFeePerGas') && transactionData.hasOwnProperty('maxPriorityFeePerGas')) {
+          if (transactionData.hasOwnProperty('maxFeePerGas') || transactionData.hasOwnProperty('maxPriorityFeePerGas') {
             return trezorSignTransaction1559(path, transactionData)
           }
           return trezorSignTransactionLegacy(path, transactionData)
         }
       
         async function signTransaction(transactionData: any) {
-          if (addressToPath.size === 0 || !accounts) {
-            enableAccounts();
-          }
+          if (!(accounts?.length && accounts?.length > 0))
+            throw new Error(
+              'No account selected. Must call eth_requestAccounts first.'
+            )
           const path = [...addressToPath.values()][0]
           const { BN, toBuffer } = ethUtil
           const common = new Common({
@@ -283,9 +296,10 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
       
         
         async function signMessage(message: { data: string }): Promise<string> {
-          if (addressToPath.size === 0 || !accounts) {
-            enableAccounts();
-          }
+          if (!(accounts?.length && accounts?.length > 0))
+            throw new Error(
+              'No account selected. Must call eth_requestAccounts first.'
+            )
       
           const [address, path] = [...addressToPath.entries()][0]
       
@@ -317,7 +331,7 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
 
         const provider = createEIP1193Provider(trezorProvider, {
           eth_requestAccounts: async baseRequest => {
-            await enable()
+            // await enable()
             const accounts = await getAccountFromAccountSelect()
             if (accounts?.length === 0) {
               throw new ProviderRpcError({
