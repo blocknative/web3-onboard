@@ -42,7 +42,7 @@ workflows:
       - check
       - publish:
           requires:
-            - test
+            - check
           filters:
             branches:
               only:
