@@ -24,7 +24,7 @@
   "dependencies": {
     "@bn-onboard/core": "2.0.0-alpha",
     "@bn-onboard/fortmatic": "2.0.0-alpha",
-    "@bn-onboard/injected-wallets": "^0.0.1",
+    "@bn-onboard/injected-wallets": "2.0.0-alpha",
     "@bn-onboard/portis": "2.0.0-alpha",
     "@bn-onboard/torus": "2.0.0-alpha",
     "@bn-onboard/walletconnect": "2.0.0-alpha",
