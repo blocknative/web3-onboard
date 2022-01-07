@@ -157,7 +157,6 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
           try {
             const result = await TrezorConnect.getPublicKey({
               path: dPath,
-              coin: "tROP"
             })
       
             if (!result.success) {
@@ -186,7 +185,7 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
           const {publicKey, chainCode, path} = await getPublicKey(derivationPath);
           console.log('ropsten data', await TrezorConnect.getCoinInfo({
             coin: 'trop',
-        }))
+          }))
 
           if ( derivationPath !== TREZOR_DEFAULT_PATH && isValidPath(derivationPath) ) {
             const address = await getAddress(path);
