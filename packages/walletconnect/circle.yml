@@ -1,5 +1,5 @@
 jobs:
-  check:
+  check-walletconnect:
     docker:
       - image: cimg/node:16.13.1
     steps:
@@ -17,7 +17,7 @@ jobs:
       - run: yarn build
       - run: cd packages/walletconnect && yarn lint
       - run: cd packages/walletconnect && yarn typescript
-  publish:
+  publish-walletconnect:
     docker:
       - image: cimg/node:16.13.1
     steps:
@@ -39,10 +39,10 @@ jobs:
 workflows:
   walletconnect:
     jobs:
-      - check
-      - publish:
+      - check-walletconnect
+      - publish-walletconnect:
           requires:
-            - check
+            - check-walletconnect
           filters:
             branches:
               only:

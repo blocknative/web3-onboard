@@ -1,5 +1,5 @@
 jobs:
-  check:
+  check-mew:
     docker:
       - image: cimg/node:16.13.1
     steps:
@@ -17,7 +17,7 @@ jobs:
       - run: yarn build
       - run: cd packages/mew && yarn lint
       - run: cd packages/mew && yarn typescript
-  publish:
+  publish-mew:
     docker:
       - image: cimg/node:16.13.1
     steps:
@@ -39,10 +39,10 @@ jobs:
 workflows:
   mew:
     jobs:
-      - check
-      - publish:
+      - check-mew
+      - publish-mew:
           requires:
-            - check
+            - check-mew
           filters:
             branches:
               only:

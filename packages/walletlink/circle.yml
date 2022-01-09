@@ -1,5 +1,5 @@
 jobs:
-  check:
+  check-walletlink:
     docker:
       - image: cimg/node:16.13.1
     steps:
@@ -17,7 +17,7 @@ jobs:
       - run: yarn build
       - run: cd packages/walletlink && yarn lint
       - run: cd packages/walletlink && yarn typescript
-  publish:
+  publish-walletlink:
     docker:
       - image: cimg/node:16.13.1
     steps:
@@ -39,10 +39,10 @@ jobs:
 workflows:
   walletlink:
     jobs:
-      - check
-      - publish:
+      - check-walletlink
+      - publish-walletlink:
           requires:
-            - check
+            - check-walletlink
           filters:
             branches:
               only:

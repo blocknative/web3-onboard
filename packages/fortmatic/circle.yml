@@ -1,5 +1,5 @@
 jobs:
-  check:
+  check-fortmatic:
     docker:
       - image: cimg/node:16.13.1
     steps:
@@ -17,7 +17,7 @@ jobs:
       - run: yarn build
       - run: cd packages/fortmatic && yarn lint
       - run: cd packages/fortmatic && yarn typescript
-  publish:
+  publish-fortmatic:
     docker:
       - image: cimg/node:16.13.1
     steps:
@@ -39,10 +39,10 @@ jobs:
 workflows:
   fortmatic:
     jobs:
-      - check
-      - publish:
+      - check-fortmatic
+      - publish-fortmatic:
           requires:
-            - check
+            - check-fortmatic
           filters:
             branches:
               only:

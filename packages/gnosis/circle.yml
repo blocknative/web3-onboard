@@ -1,5 +1,5 @@
 jobs:
-  check:
+  check-gnosis:
     docker:
       - image: cimg/node:16.13.1
     steps:
@@ -17,7 +17,7 @@ jobs:
       - run: yarn build
       - run: cd packages/gnosis && yarn lint
       - run: cd packages/gnosis && yarn typescript
-  publish:
+  publish-gnosis:
     docker:
       - image: cimg/node:16.13.1
     steps:
@@ -39,10 +39,10 @@ jobs:
 workflows:
   gnosis:
     jobs:
-      - check
-      - publish:
+      - check-gnosis
+      - publish-gnosis:
           requires:
-            - check
+            - check-gnosis
           filters:
             branches:
               only:

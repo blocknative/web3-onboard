@@ -1,5 +1,5 @@
 jobs:
-  check:
+  check-ledger:
     docker:
       - image: cimg/node:16.13.1
     steps:
@@ -17,7 +17,7 @@ jobs:
       - run: yarn build
       - run: cd packages/ledger && yarn lint
       - run: cd packages/ledger && yarn typescript
-  publish:
+  publish-ledger:
     docker:
       - image: cimg/node:16.13.1
     steps:
@@ -39,10 +39,10 @@ jobs:
 workflows:
   ledger:
     jobs:
-      - check
-      - publish:
+      - check-ledger
+      - publish-ledger:
           requires:
-            - check
+            - check-ledger
           filters:
             branches:
               only:
