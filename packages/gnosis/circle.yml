@@ -45,4 +45,6 @@ workflows:
             - check
           filters:
             branches:
-              only: - main
+              only:
+                - main
+                - feature/v2
