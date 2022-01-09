@@ -13,8 +13,6 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn setup
-      - run: yarn build
       - run: cd packages/core && yarn lint
       - run: cd packages/core && yarn typescript
   publish-core:
@@ -31,8 +29,7 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn setup
-      - run: yarn build
+      - run: cd packages/core && yarn build
       - run: cd packages/core && echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
       - run: cd packages/core && npm publish --access public
 
