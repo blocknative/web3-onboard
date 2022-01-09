@@ -9,6 +9,7 @@
     "lint": "eslint -c './.eslintrc.cjs' './src' && prettier --check './src/**/*'"
   },
   "module": "dist/index.js",
+  "browser": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist"

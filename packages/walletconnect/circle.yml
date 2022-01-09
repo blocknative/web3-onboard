@@ -13,8 +13,7 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn setup
-      - run: yarn build
+      - run: cd packages/walletconnect && yarn build
       - run: cd packages/walletconnect && echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
       - run: cd packages/walletconnect && npm publish --access public
 
