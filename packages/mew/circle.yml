@@ -1,22 +1,4 @@
 jobs:
-  check-mew:
-    docker:
-      - image: cimg/node:16.13.1
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            - v1-dependencies-
-      - run: yarn
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn setup
-      - run: yarn build
-      - run: cd packages/mew && yarn lint
-      - run: cd packages/mew && yarn typescript
   publish-mew:
     docker:
       - image: cimg/node:16.13.1
@@ -39,10 +21,7 @@ jobs:
 workflows:
   mew:
     jobs:
-      - check-mew
       - publish-mew:
-          requires:
-            - check-mew
           filters:
             branches:
               only:

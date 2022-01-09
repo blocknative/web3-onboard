@@ -1,22 +1,4 @@
 jobs:
-  check-fortmatic:
-    docker:
-      - image: cimg/node:16.13.1
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            - v1-dependencies-
-      - run: yarn
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn setup
-      - run: yarn build
-      - run: cd packages/fortmatic && yarn lint
-      - run: cd packages/fortmatic && yarn typescript
   publish-fortmatic:
     docker:
       - image: cimg/node:16.13.1
@@ -39,10 +21,7 @@ jobs:
 workflows:
   fortmatic:
     jobs:
-      - check-fortmatic
       - publish-fortmatic:
-          requires:
-            - check-fortmatic
           filters:
             branches:
               only:
