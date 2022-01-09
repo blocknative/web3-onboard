@@ -1,21 +1,21 @@
 jobs:
-  check-injected:
-    docker:
-      - image: cimg/node:16.13.1
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            - v1-dependencies-
-      - run: yarn
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn setup
-      - run: yarn build
-      - run: cd packages/injected && yarn test
+  # check-injected:
+  #   docker:
+  #     - image: cimg/node:16.13.1
+  #   steps:
+  #     - checkout
+  #     - restore_cache:
+  #         keys:
+  #           - v1-dependencies-{{ checksum "package.json" }}
+  #           - v1-dependencies-
+  #     - run: yarn
+  #     - save_cache:
+  #         paths:
+  #           - node_modules
+  #         key: v1-dependencies-{{ checksum "package.json" }}
+  #     - run: yarn setup
+  #     - run: yarn build
+  #     - run: cd packages/injected && yarn test
   publish-injected:
     docker:
       - image: cimg/node:16.13.1
@@ -38,10 +38,10 @@ jobs:
 workflows:
   injected:
     jobs:
-      - check-injected
+      # - check-injected
       - publish-injected:
-          requires:
-            - check-injected
+          # requires:
+          #   - check-injected
           filters:
             branches:
               only:
