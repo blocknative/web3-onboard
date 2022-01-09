@@ -8,7 +8,9 @@ import { SofiaProRegular, SofiaProSemiBold, SofiaProLight } from './fonts'
 import type { SelectAccountOptions, Account } from './types'
 
 // eslint-disable-next-line max-len
-const accountSelect = async (options: SelectAccountOptions): Promise<Account[]> => {
+const accountSelect = async (
+  options: SelectAccountOptions
+): Promise<Account[]> => {
   if (options) {
     const error = validateSelectAccountOptions(options)
     if (error) {
@@ -17,9 +19,9 @@ const accountSelect = async (options: SelectAccountOptions): Promise<Account[]> 
   }
 
   if (!document.querySelector('account-select')) {
-    mountAccountSelect(options, accounts$);
+    mountAccountSelect(options, accounts$)
   }
-  
+
   displayModal$.next(true)
 
   accounts$.pipe(take(1)).subscribe(() => {
@@ -30,7 +32,10 @@ const accountSelect = async (options: SelectAccountOptions): Promise<Account[]> 
 }
 
 // eslint-disable-next-line max-len
-const mountAccountSelect = (selectAccountOptions: SelectAccountOptions, accounts$: Subject<Account[]>) => {
+const mountAccountSelect = (
+  selectAccountOptions: SelectAccountOptions,
+  accounts$: Subject<Account[]>
+) => {
   class AccountSelectEl extends HTMLElement {
     constructor() {
       super()

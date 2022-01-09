@@ -1,25 +1,26 @@
 <script lang="ts">
-
   import Spinner from './Spinner.svelte'
 
-  export let scanAccounts: () => Promise<void>;
-  export let loadingAccounts: boolean;
-  export let showEmptyAddresses: boolean;
-  export let errorFromScan: boolean;
+  export let scanAccounts: () => Promise<void>
+  export let loadingAccounts: boolean
+  export let showEmptyAddresses: boolean
+  export let errorFromScan: boolean
 
   const filterEmptyAccounts = () => {
-    showEmptyAddresses = !showEmptyAddresses;
+    showEmptyAddresses = !showEmptyAddresses
   }
-
 </script>
 
 <style>
   button {
     align-items: center;
-    padding: .75rem 1.5rem;
+    padding: 0.75rem 1.5rem;
     color: var(--account-select-white, var(--white));
     border-radius: 1.5rem;
-    font-family: var(--account-select-font-family-normal, var(--font-family-normal));
+    font-family: var(
+      --account-select-font-family-normal,
+      var(--font-family-normal)
+    );
     font-style: normal;
     font-weight: bold;
     font-size: var(--account-select-font-size-5, var(--font-size-5));
@@ -92,12 +93,15 @@
   }
 
   .checkbox-input {
-    margin-right: .75rem;
+    margin-right: 0.75rem;
   }
 
   .error-msg {
     color: var(--account-select-danger-500, var(--danger-500));
-    font-family: var(--account-select-font-family-light, var(--font-family-light));;
+    font-family: var(
+      --account-select-font-family-light,
+      var(--font-family-light)
+    );
   }
 
   .table-controls {
@@ -106,20 +110,19 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: .5rem;
-    border-radius: .4rem .4rem 0 0;
+    padding: 0.5rem;
+    border-radius: 0.4rem 0.4rem 0 0;
     background: var(--account-select-gray-100, var(--gray-100));
     border-bottom: 1px solid var(--account-select-gray-200, var(--gray-200));
   }
-
 </style>
 
-<div class='table-controls'>
+<div class="table-controls">
   <div class="checkbox-container">
     <input
       id="show-empty-addresses"
       type="checkbox"
-      on:change="{filterEmptyAccounts}"
+      on:change={filterEmptyAccounts}
       class="checkbox-input"
     />
     <label for="legacy" class="ml2 cursor-pointer font-5"
@@ -127,7 +130,7 @@
     >
   </div>
   {#if errorFromScan}
-    <span class='error-msg'>An error occured while scanning wallet</span>
+    <span class="error-msg">An error occured while scanning wallet</span>
   {/if}
   <button
     class="scan-accounts-btn"
@@ -136,7 +139,7 @@
   >
     {#if loadingAccounts}
       Scanning...
-      <Spinner size='1.5rem'/>
+      <Spinner size="1.5rem" />
     {/if}
     {#if !loadingAccounts}
       Scan Accounts
