@@ -10,7 +10,7 @@ import type { providers } from 'ethers'
 import type { BIP32Interface } from 'bip32'
 
 
-const TREZOR_DEFAULT_PATH = "m/44'/1'/0'/0"
+const TREZOR_DEFAULT_PATH = "m/44'/60'/0'/0"
 
 const assets = [
   {
@@ -23,7 +23,7 @@ const assets = [
 
 const DEFAULT_BASE_PATHS = [
   {
-    label: 'Ethereum Testnet Ropsten',
+    label: 'Ethereum Mainnet',
     value: TREZOR_DEFAULT_PATH
   }
 ]
@@ -157,6 +157,7 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
           try {
             const result = await TrezorConnect.getPublicKey({
               path: dPath,
+              coin: "ETH"
             })
       
             if (!result.success) {
@@ -185,7 +186,7 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
           const {publicKey, chainCode, path} = await getPublicKey(derivationPath);
           console.log('ropsten data', await TrezorConnect.getCoinInfo({
             coin: 'trop',
-          }))
+        }))
 
           if ( derivationPath !== TREZOR_DEFAULT_PATH && isValidPath(derivationPath) ) {
             const address = await getAddress(path);
