@@ -1,6 +1,6 @@
 {
   "name": "@bn-onboard/gnosis",
-  "version": "2.0.0-alpha",
+  "version": "2.0.0-alpha.1",
   "description": "Gnosis module for Onboard.js",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",

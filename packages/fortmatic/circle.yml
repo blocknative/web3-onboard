@@ -13,7 +13,7 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run: cd packages/fortmatic && yarn build
+      - run: yarn build
       - run: cd packages/fortmatic && echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
       - run: cd packages/fortmatic && npm publish --access public
 
@@ -25,3 +25,4 @@ workflows:
             branches:
               only:
                 - main
+                - feature/v2
