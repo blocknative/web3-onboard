@@ -310,7 +310,7 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
             accounts.find(account => account.address === address) ||
             accounts[0]
 
-            return new Promise((resolve, reject) => {
+          return new Promise((resolve, reject) => {
             TrezorConnect.ethereumSignMessage({
               path: accountToSign.derivationPath,
               message: ethUtil.stripHexPrefix(message.data),
@@ -337,7 +337,7 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
         const trezorProvider = {}
 
         const provider = createEIP1193Provider(trezorProvider, {
-          eth_requestAccounts: async baseRequest => {
+          eth_requestAccounts: async () => {
             // await enable()
             const accounts = await getAccountFromAccountSelect()
             if (accounts?.length === 0) {
@@ -348,20 +348,20 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
             }
             return [accounts[0]?.address]
           },
-          eth_accounts: async baseRequest => {
+          eth_accounts: async () => {
             return accounts?.[0]?.address ? [accounts[0].address] : []
           },
-          eth_chainId: async baseRequest => {
+          eth_chainId: async () => {
             return currentChain?.id ?? ''
           },
-          eth_signTransaction: async (baseRequest, [transactionObject]) => {
+          eth_signTransaction: async ({ params: [transactionObject] }) => {
              return signTransaction(transactionObject)
           },
           eth_sign: async ({ params: [address, message] }) => {
             let messageData = { data: message }
             return signMessage(address, messageData)
           },
-          wallet_switchEthereumChain: async (baseRequest, [{ chainId }]) => {
+          wallet_switchEthereumChain: async ({ params: [{ chainId }] }) => {
             currentChain =
             chains.find(({ id }) => id === chainId) ?? currentChain
             if (!currentChain)
