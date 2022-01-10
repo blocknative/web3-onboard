@@ -213,6 +213,16 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
 
+"@bn-onboard/common@2.0.0-alpha":
+  version "2.0.0-alpha"
+  resolved "https://registry.yarnpkg.com/@bn-onboard/common/-/common-2.0.0-alpha.tgz#8085159bae56f315ad288b832c2306dfc469262a"
+  integrity sha512-EGM08sWbVcV1rqZingMss/Vp7snyb1DDlto0PWLFSeT/xL8R1f2/C5DVnJHf6Ym4oxsxJa+iDYvh5XDsZEr7kQ==
+  dependencies:
+    "@ethersproject/providers" "^5.5.0"
+    eip-712 "^0.4.3"
+    joi "^17.4.2"
+    rxjs "^7.3.0"
+
 "@concordance/react@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@concordance/react/-/react-2.0.0.tgz#aef913f27474c53731f4fd79cc2f54897de90fde"
@@ -1913,9 +1923,9 @@
   integrity sha512-/kSXhY692qiV1MXu6EeOZvg5nECLclxNXcKCxJ3cXQgYuRymRHpdx/t7JXfsK+JLjwA1e1c1/SBrlQYpusC29Q==
 
 "@myetherwallet/mewconnect-web-client@^2.2.0-beta.14":
-  version "2.2.0-beta.14"
-  resolved "https://registry.yarnpkg.com/@myetherwallet/mewconnect-web-client/-/mewconnect-web-client-2.2.0-beta.14.tgz#3446bf4e57c5192ea81bae852012ebce698127eb"
-  integrity sha512-dJQ4wBmTCm4u8UTjTe8DKEG1TaUGYCpSOlv0w7cSIkCX2kXlhVZ33jhz98mwYUy4Syng+zR2wO0lQ1yvv097dw==
+  version "2.2.0-beta.15"
+  resolved "https://registry.yarnpkg.com/@myetherwallet/mewconnect-web-client/-/mewconnect-web-client-2.2.0-beta.15.tgz#761ea17a0ca759120a2b657b510403723352b681"
+  integrity sha512-6aVfDopbktGXvxeRNtLaXnK3pJpWScqgzkcUugl3+nxaS7/pV2agLFOZZYEstFNrhIlKeapBT5auCid6dErHWQ==
   dependencies:
     "@rollup/plugin-babel" "^5.3.0"
     "@rollup/plugin-commonjs" "^20.0.0"
@@ -1938,13 +1948,13 @@
     node-fetch "^2.6.0"
     platform "^1.3.5"
     promise-ws "^1.0.0-1"
-    qrcode "^1.4.4"
+    qrcode "^1.5.0"
     query-string "^6.10.1"
     secp256k1 "^3.8.0"
     simple-peer "^9.6.2"
     socket.io-client "^2.3.0"
     store "^2.0.12"
-    underscore latest
+    underscore "^1.13.2"
     uuid "^3.4.0"
     vue "^2.6.10"
     web3 "1.5.0"
@@ -10530,7 +10540,7 @@ qrcode@1.4.4:
     pngjs "^3.3.0"
     yargs "^13.2.4"
 
-qrcode@^1.4.4:
+qrcode@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/qrcode/-/qrcode-1.5.0.tgz#95abb8a91fdafd86f8190f2836abbfc500c72d1b"
   integrity sha512-9MgRpgVc+/+47dFvQeD6U2s0Z92EsKzcHogtum4QB+UNd025WOJSHvn/hjk9xmzj7Stj95CyUAs31mrjxliEsQ==
@@ -12629,7 +12639,7 @@ unbox-primitive@^1.0.1:
     has-symbols "^1.0.2"
     which-boxed-primitive "^1.0.2"
 
-underscore@latest:
+underscore@^1.13.2:
   version "1.13.2"
   resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.13.2.tgz#276cea1e8b9722a8dbed0100a407dda572125881"
   integrity sha512-ekY1NhRzq0B08g4bGuX4wd2jZx5GnKz6mKSqFL4nqBlfyMGiG10gDFhDTMEfYmDL6Jy0FUIZp7wiRB+0BP7J2g==

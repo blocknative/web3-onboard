@@ -19,7 +19,7 @@
     "typescript": "^4.4.4"
   },
   "dependencies": {
-    "@bn-onboard/common": "2.0.0-alpha",
+    "@bn-onboard/common": "^2.0.0-alpha.1",
     "@toruslabs/torus-embed": "^1.18.3"
   }
 }

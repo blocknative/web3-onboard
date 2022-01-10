@@ -44,6 +44,7 @@ export default {
     'rxjs',
     'rxjs/operators',
     'svelte-i18n',
+    'svelte/store',
     'lodash.merge',
     'lodash.partition'
   ]

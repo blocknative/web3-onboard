@@ -1,5 +1,5 @@
 jobs:
-  check:
+  publish-torus:
     docker:
       - image: cimg/node:16.13.1
     steps:
@@ -13,36 +13,15 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn setup
-      - run: yarn build
-      - run: cd packages/torus && yarn lint
-      - run: cd packages/torus && yarn typescript
-  publish:
-    docker:
-      - image: cimg/node:16.13.1
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            - v1-dependencies-
-      - run: yarn
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn setup
-      - run: yarn build
+      - run: cd packages/torus && yarn build
       - run: cd packages/torus && echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
       - run: cd packages/torus && npm publish --access public
 
 workflows:
   torus:
     jobs:
-      - check
-      - publish:
-          requires:
-            - check
+      - publish-torus:
           filters:
             branches:
-              only: - main
+              only:
+                - main

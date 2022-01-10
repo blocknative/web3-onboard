@@ -181,12 +181,8 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
         const scanAccounts = async ({derivationPath, chainId, asset}: ScanAccountsOptions): Promise<Account[]> => {
           currentChain = chains.find(({ id }) => id === chainId) ?? currentChain
           const provider = new providers.JsonRpcProvider(currentChain.rpcUrl)
-          console.log({derivationPath, chainId, asset})
           
           const {publicKey, chainCode, path} = await getPublicKey(derivationPath);
-          console.log('ropsten data', await TrezorConnect.getCoinInfo({
-            coin: 'trop',
-        }))
 
           if ( derivationPath !== TREZOR_DEFAULT_PATH && isValidPath(derivationPath) ) {
             const address = await getAddress(path);
@@ -304,17 +300,19 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
         }
       
         
-        async function signMessage(message: { data: string }): Promise<string> {
+        async function signMessage(address: string, message: { data: string }): Promise<string> {
           if (!(accounts?.length && accounts?.length > 0))
             throw new Error(
               'No account selected. Must call eth_requestAccounts first.'
             )
       
-          const [address, path] = [...addressToPath.entries()][0]
-      
-          return new Promise((resolve, reject) => {
+          const accountToSign =
+            accounts.find(account => account.address === address) ||
+            accounts[0]
+
+            return new Promise((resolve, reject) => {
             TrezorConnect.ethereumSignMessage({
-              path,
+              path: accountToSign.derivationPath,
               message: ethUtil.stripHexPrefix(message.data),
               hex: true
             }).then((response: any) => {
@@ -359,9 +357,9 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
           eth_signTransaction: async (baseRequest, [transactionObject]) => {
              return signTransaction(transactionObject)
           },
-          eth_sign: async (baseRequest, [address, message]) => {
+          eth_sign: async ({ params: [address, message] }) => {
             let messageData = { data: message }
-            return signMessage(messageData)
+            return signMessage(address, messageData)
           },
           wallet_switchEthereumChain: async (baseRequest, [{ chainId }]) => {
             currentChain =

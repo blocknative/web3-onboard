@@ -1,14 +1,18 @@
 {
   "name": "@bn-onboard/common",
-  "version": "2.0.0-alpha",
+  "version": "2.0.0-alpha.1",
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "start": "sirv public --no-clear",
-    "check": "svelte-check --tsconfig ./tsconfig.json"
+    "typescript": "svelte-check --tsconfig ./tsconfig.json",
+    "lint": "eslint -c './.eslintrc.cjs' './src' && prettier --check './src/**/*'"
   },
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-json": "^4.1.0",

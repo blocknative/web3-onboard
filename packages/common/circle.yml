@@ -1,5 +1,5 @@
 jobs:
-  check:
+  check-common:
     docker:
       - image: cimg/node:16.13.1
     steps:
@@ -13,11 +13,9 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn setup
-      - run: yarn build
       - run: cd packages/common && yarn lint
       - run: cd packages/common && yarn typescript
-  publish:
+  publish-common:
     docker:
       - image: cimg/node:16.13.1
     steps:
@@ -31,18 +29,18 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn setup
-      - run: yarn build
+      - run: cd packages/common && yarn build
       - run: cd packages/common && echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
       - run: cd packages/common && npm publish --access public
 
 workflows:
   common:
     jobs:
-      - check
-      - publish:
+      - check-common
+      - publish-common:
           requires:
-            - check
+            - check-common
           filters:
             branches:
-              only: - main
+              only:
+                - main

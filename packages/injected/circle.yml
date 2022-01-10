@@ -1,5 +1,20 @@
 jobs:
-  check:
+  # check-injected:
+  #   docker:
+  #     - image: cimg/node:16.13.1
+  #   steps:
+  #     - checkout
+  #     - restore_cache:
+  #         keys:
+  #           - v1-dependencies-{{ checksum "package.json" }}
+  #           - v1-dependencies-
+  #     - run: yarn
+  #     - save_cache:
+  #         paths:
+  #           - node_modules
+  #         key: v1-dependencies-{{ checksum "package.json" }}
+  #     - run: cd packages/injected && yarn test
+  publish-injected:
     docker:
       - image: cimg/node:16.13.1
     steps:
@@ -13,25 +28,6 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn setup
-      - run: yarn build
-      - run: cd packages/injected && yarn lint
-      - run: cd packages/injected && yarn typescript
-  publish:
-    docker:
-      - image: cimg/node:16.13.1
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            - v1-dependencies-
-      - run: yarn
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn setup
       - run: yarn build
       - run: cd packages/injected && echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
       - run: cd packages/injected && npm publish --access public
@@ -39,10 +35,11 @@ jobs:
 workflows:
   injected:
     jobs:
-      - check
-      - publish:
-          requires:
-            - check
+      # - check-injected
+      - publish-injected:
+          # requires:
+          #   - check-injected
           filters:
             branches:
-              only: - main
+              only:
+                - main
