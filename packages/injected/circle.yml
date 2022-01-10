@@ -28,7 +28,7 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run: cd packages/injected && yarn build
+      - run: yarn build
       - run: cd packages/injected && echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
       - run: cd packages/injected && npm publish --access public
 
