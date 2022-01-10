@@ -105,7 +105,7 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
         const TrezorConnectLibrary = await import('trezor-connect')
         const { default: TrezorConnect } = TrezorConnectLibrary
         const { Transaction } = await import('@ethereumjs/tx')
-        const { default: Common } = await import('@ethereumjs/common')
+        const { default: Common, Hardfork } = await import('@ethereumjs/common')
         const { accountSelect, createEIP1193Provider, ProviderRpcError } = await import('@bn-onboard/common')
         const ethUtil = await import('ethereumjs-util')
         const { compress } = (await import('eth-crypto')).publicKey
@@ -222,7 +222,7 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
 
       
         function trezorSignTransactionLegacy(path: string, transactionData: any) {
-          const { nonce, gasPrice, gas, to, value, data } = transactionData
+          const { nonce, gasPrice, gasLimit, gas, to, value, data } = transactionData
       
           return TrezorConnect.ethereumSignTransaction({
             path: path,
@@ -233,13 +233,13 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
               chainId: parseInt(currentChain?.id),
               nonce,
               gasPrice,
-              gasLimit: gas,
+              gasLimit: gasLimit || gas,
             }
           })
         }
 
         function trezorSignTransaction1559(path: string, transactionData: any) {
-          const { nonce, gas, to, value, data, maxFeePerGas, maxPriorityFeePerGas } = transactionData
+          const { nonce, gas, gasLimit, to, value, data, maxFeePerGas, maxPriorityFeePerGas } = transactionData
       
           return TrezorConnect.ethereumSignTransaction({
             path: path,
@@ -249,7 +249,7 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
               data: data || '',
               chainId: parseInt(currentChain?.id),
               nonce,
-              gasLimit: gas,
+              gasLimit: gasLimit || gas,
               maxFeePerGas,
               maxPriorityFeePerGas,
             }
@@ -263,29 +263,48 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
           return trezorSignTransactionLegacy(path, transactionData)
         }
       
-        async function signTransaction(transactionData: any) {
+        async function signTransaction(transactionObject: any) {
           if (!(accounts?.length && accounts?.length > 0))
             throw new Error(
               'No account selected. Must call eth_requestAccounts first.'
             )
-          const path = [...addressToPath.values()][0]
-          const { BN, toBuffer } = ethUtil
+          
+          const signingAccount =
+            accounts.find(
+              account => account.address === transactionObject?.from
+            ) || accounts[0]
+
+          const { address: from, derivationPath } = signingAccount
+
+          // Set the `from` field to the currently selected account
+          transactionObject = { ...transactionObject, from }
+
           const common = new Common({
-            chain: customNetwork || currentChain?.id || 1
+            chain: customNetwork || Number.parseInt(currentChain?.id) || 1,
+            // Berlin is the minimum hardfork that will allow for EIP1559
+            hardfork: Hardfork.Berlin,
+            // List of supported EIPS
+            eips: [1559]
           })
+
+          
+          const { BN, toBuffer } = ethUtil
+          
           const transaction = Transaction.fromTxData(
             {
-              ...transactionData,
-              gasLimit: transactionData.gas ?? transactionData.gasLimit
+              ...transactionObject,
+              gasLimit: transactionObject.gas ?? transactionObject.gasLimit
             },
             { common, freeze: false }
-          )
+            )
+
           transaction.v = new BN(toBuffer(currentChain?.id))
           transaction.r = transaction.s = new BN(toBuffer(0))
-          const trezorResult = await trezorSignTransaction(path, transactionData)
+          const trezorResult = await trezorSignTransaction(signingAccount.derivationPath, transactionObject)
           if (!trezorResult.success) {
             throw new Error(trezorResult.payload.error)
           }
+          console.log(trezorResult)
           let v = trezorResult.payload.v.toString(16)
           // EIP155 support. check/recalc signature v value.
           const rv = parseInt(v, 16)
@@ -335,46 +354,10 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
           })
         }
 
-        async function signTypedData(address: string, typedData: EIP712TypedData): Promise<string>  {
-          if (!(accounts?.length && accounts?.length > 0))
-          throw new Error(
-            'No account selected. Must call eth_requestAccounts first.'
-          )
-
-          const accountToSign =
-            accounts.find(account => account.address === address) ||
-            accounts[0]
-          
-            return new Promise((resolve, reject) => {
-              TrezorConnect.ethereumSignMessage({
-                path: accountToSign.derivationPath,
-                data: typedData,
-                metamask_v4_compat: true
-              }).then((response: any) => {
-                if (response.success) {
-                  if (response.payload.address !== ethUtil.toChecksumAddress(address)) {
-                    reject(new Error('signature doesnt match the right address'))
-                  }
-                  const signature = `0x${response.payload.signature}`
-                  resolve(signature)
-                } else {
-                  reject(
-                    new Error(
-                      (response.payload && response.payload.error) ||
-                        'There was an error signing a message'
-                    )
-                  )
-                }
-              })
-            })
-
-        }
-
         const trezorProvider = {}
 
         const provider = createEIP1193Provider(trezorProvider, {
           eth_requestAccounts: async () => {
-            // await enable()
             const accounts = await getAccountFromAccountSelect()
             if (accounts?.length === 0) {
               throw new ProviderRpcError({
@@ -397,9 +380,6 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
             let messageData = { data: message }
             return signMessage(address, messageData)
           },
-          eth_signTypedData: async ({ params: [address, typedData] }) => {
-            return signTypedData(address, typedData)
-          },
           wallet_switchEthereumChain: async ({ params: [{ chainId }] }) => {
             currentChain =
             chains.find(({ id }) => id === chainId) ?? currentChain
@@ -409,6 +389,7 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
             eventEmitter.emit('chainChanged', currentChain.id)
             return null
           },
+          eth_signTypedData: null,
           wallet_addEthereumChain: null
         })
 
@@ -423,4 +404,3 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
 }
 
 export default trezor
-
