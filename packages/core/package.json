@@ -15,7 +15,7 @@
     "dist"
   ],
   "devDependencies": {
-    "@bn-onboard/common": "2.0.0-alpha",
+    "@bn-onboard/common": "^2.0.0-alpha",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
