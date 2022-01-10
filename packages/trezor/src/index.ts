@@ -4,7 +4,8 @@ import {
   Asset,
   Chain,
   CustomNetwork,
-  WalletInit
+  WalletInit,
+  EIP712TypedData
 } from '@bn-onboard/common/src/types'
 import type { providers } from 'ethers'
 import type { BIP32Interface } from 'bip32'
@@ -104,7 +105,7 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
         const TrezorConnectLibrary = await import('trezor-connect')
         const { default: TrezorConnect } = TrezorConnectLibrary
         const { Transaction } = await import('@ethereumjs/tx')
-        const { default: Common, Hardfork } = await import('@ethereumjs/common')
+        const { default: Common } = await import('@ethereumjs/common')
         const { accountSelect, createEIP1193Provider, ProviderRpcError } = await import('@bn-onboard/common')
         const ethUtil = await import('ethereumjs-util')
         const { compress } = (await import('eth-crypto')).publicKey
@@ -334,6 +335,41 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
           })
         }
 
+        async function signTypedData(address: string, typedData: EIP712TypedData): Promise<string>  {
+          if (!(accounts?.length && accounts?.length > 0))
+          throw new Error(
+            'No account selected. Must call eth_requestAccounts first.'
+          )
+
+          const accountToSign =
+            accounts.find(account => account.address === address) ||
+            accounts[0]
+          
+            return new Promise((resolve, reject) => {
+              TrezorConnect.ethereumSignMessage({
+                path: accountToSign.derivationPath,
+                data: typedData,
+                metamask_v4_compat: true
+              }).then((response: any) => {
+                if (response.success) {
+                  if (response.payload.address !== ethUtil.toChecksumAddress(address)) {
+                    reject(new Error('signature doesnt match the right address'))
+                  }
+                  const signature = `0x${response.payload.signature}`
+                  resolve(signature)
+                } else {
+                  reject(
+                    new Error(
+                      (response.payload && response.payload.error) ||
+                        'There was an error signing a message'
+                    )
+                  )
+                }
+              })
+            })
+
+        }
+
         const trezorProvider = {}
 
         const provider = createEIP1193Provider(trezorProvider, {
@@ -355,11 +391,14 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
             return currentChain?.id ?? ''
           },
           eth_signTransaction: async ({ params: [transactionObject] }) => {
-             return signTransaction(transactionObject)
+            return signTransaction(transactionObject)
           },
           eth_sign: async ({ params: [address, message] }) => {
             let messageData = { data: message }
             return signMessage(address, messageData)
+          },
+          eth_signTypedData: async ({ params: [address, typedData] }) => {
+            return signTypedData(address, typedData)
           },
           wallet_switchEthereumChain: async ({ params: [{ chainId }] }) => {
             currentChain =
@@ -370,7 +409,6 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
             eventEmitter.emit('chainChanged', currentChain.id)
             return null
           },
-          eth_signTypedData: null,
           wallet_addEthereumChain: null
         })
 
