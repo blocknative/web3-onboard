@@ -9,15 +9,11 @@ import {
 import type { providers } from 'ethers'
 import type { BIP32Interface } from 'bip32'
 
-
 const TREZOR_DEFAULT_PATH = "m/44'/60'/0'/0"
 
 const assets = [
   {
     label: 'ETH'
-  },
-    {
-    label: 'tROP'
   }
 ]
 
@@ -110,9 +106,8 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
         const { compress } = (await import('eth-crypto')).publicKey
         const { providers } = await import('ethers')
         
-        
         if (!(appMetadata?.email && appMetadata?.appUrl)) {
-          throw new Error('Email and AppUrl required for Trezor Wallet')
+          throw new Error('Email and AppUrl required in AppMetaData for Trezor Wallet Connection')
         }
         
         const { email, appUrl } = appMetadata;
@@ -122,60 +117,10 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
           appUrl: appUrl
         })
         
-        
         const eventEmitter = new EventEmitter()
-        // TODO: Deal with addressToPath
-        let addressToPath: any = new Map()
         let currentChain: Chain = chains[0]
         
         let account: { publicKey: string; chainCode: string; path: string } | undefined
-
-        async function getAddress(path: string) {
-          const errorMsg = `Unable to derive address from path ${path}`
-      
-          try {
-            const result = await TrezorConnect.ethereumGetAddress({
-              path,
-              showOnTrezor: true
-            })
-      
-            if (!result.success) {
-              throw new Error(errorMsg)
-            }
-      
-            return result.payload.address
-          } catch (error) {
-            throw new Error(errorMsg)
-          }
-        }
-
-        async function getPublicKey(dPath: string) {
-          if (!dPath) {
-            throw new Error('a derivation path is needed to get the public key')
-          }
-      
-          try {
-            const result = await TrezorConnect.getPublicKey({
-              path: dPath,
-              coin: "ETH"
-            })
-      
-            if (!result.success) {
-              throw new Error(result.payload.error)
-            }
-      
-            account = {
-              publicKey: result.payload.publicKey,
-              chainCode: result.payload.chainCode,
-              path: result.payload.serializedPath
-            }
-            console.log(accounts)
-      
-            return account
-          } catch (error) {
-            throw new Error('There was an error accessing your Trezor accounts.')
-          }
-        }
 
         const scanAccounts = async ({derivationPath, chainId, asset}: ScanAccountsOptions): Promise<Account[]> => {
           currentChain = chains.find(({ id }) => id === chainId) ?? currentChain
@@ -218,7 +163,52 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
           walletIcon: await getIcon()
         }))
 
+        async function getAddress(path: string) {
+          const errorMsg = `Unable to derive address from path ${path}`
       
+          try {
+            const result = await TrezorConnect.ethereumGetAddress({
+              path,
+              showOnTrezor: true
+            })
+      
+            if (!result.success) {
+              throw new Error(errorMsg)
+            }
+      
+            return result.payload.address
+          } catch (error) {
+            throw new Error(errorMsg)
+          }
+        }
+
+        async function getPublicKey(dPath: string) {
+          if (!dPath) {
+            throw new Error('a derivation path is needed to get the public key')
+          }
+      
+          try {
+            const result = await TrezorConnect.getPublicKey({
+              path: dPath,
+              coin: "ETH"
+            })
+      
+            if (!result.success) {
+              throw new Error(result.payload.error)
+            }
+      
+            account = {
+              publicKey: result.payload.publicKey,
+              chainCode: result.payload.chainCode,
+              path: result.payload.serializedPath
+            }
+      
+            return account
+          } catch (error) {
+            throw new Error('There was an error accessing your Trezor accounts.')
+          }
+        }
+
         function trezorSignTransactionLegacy(path: string, transactionData: any) {
           const { nonce, gasPrice, gasLimit, gas, to, value, data } = transactionData
       
@@ -284,7 +274,6 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
             // List of supported EIPS
             eips: [1559]
           })
-
           
           const { BN, toBuffer } = ethUtil
           
