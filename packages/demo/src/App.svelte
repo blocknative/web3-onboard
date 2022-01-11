@@ -124,8 +124,6 @@
   const wallets$ = onboard.state.select('wallets').pipe(share())
 
   const signTransactionMessage = provider => {
-    console.log('line 115!!!!!', typeof transactionObject, transactionObject)
-    console.log(JSON.parse(transactionObject))
     provider.request({
       method: 'eth_signTransaction',
       params: [JSON.parse(transactionObject)]
@@ -133,14 +131,11 @@
   }
 
   const signMessage = async (provider, address) => {
-    console.log(signMsg)
     const signature = await provider.request({
       method: 'eth_sign',
       params: [address, signMsg]
     })
-    console.log(signature)
     const recoveredAddress = verifyMessage(signMsg, signature)
-    console.log(recoveredAddress)
   }
 
   const signTypedMessage = async (provider, address) => {
