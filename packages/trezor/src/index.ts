@@ -4,8 +4,7 @@ import {
   Asset,
   Chain,
   CustomNetwork,
-  WalletInit,
-  EIP712TypedData
+  WalletInit
 } from '@bn-onboard/common/src/types'
 import type { providers } from 'ethers'
 import type { BIP32Interface } from 'bip32'
@@ -164,7 +163,6 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
             if (!result.success) {
               throw new Error(result.payload.error)
             }
-            console.log(result)
       
             account = {
               publicKey: result.payload.publicKey,
@@ -257,7 +255,7 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
         }
 
         function trezorSignTransaction(path: string, transactionData: any) {
-          if (transactionData.hasOwnProperty('maxFeePerGas') || transactionData.hasOwnProperty('maxPriorityFeePerGas') {
+          if (transactionData.hasOwnProperty('maxFeePerGas') || transactionData.hasOwnProperty('maxPriorityFeePerGas')) {
             return trezorSignTransaction1559(path, transactionData)
           }
           return trezorSignTransactionLegacy(path, transactionData)

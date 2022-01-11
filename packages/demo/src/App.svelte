@@ -18,8 +18,20 @@
     new VConsole()
   }
 
-  let transactionObject
-  let signMsg
+  let defaultTransactionObject = JSON.stringify({
+      "from": "0xD87927847330FC926afd2B66C478A42a004aB4e7",
+      "to": "0xd0d6d6c5fe4a677d343cc433536bb717bae167dd",
+      "value": "0xf4240",
+      "data": "0xa",
+      "chainId": 1,
+      "nonce": "0x0",
+      "maxFeePerGas": "0x14",
+      "maxPriorityFeePerGas": "0x0",
+      "gasLimit": "0x14"
+    }, undefined, 4)
+
+  let transactionObject = defaultTransactionObject
+  let signMsg = 'Any string message'
   let signTypedMsg
 
   const injected = injectedModule({
@@ -112,9 +124,11 @@
   const wallets$ = onboard.state.select('wallets').pipe(share())
 
   const signTransactionMessage = provider => {
+    console.log('line 115!!!!!', typeof transactionObject, transactionObject)
+    console.log(JSON.parse(transactionObject))
     provider.request({
       method: 'eth_signTransaction',
-      params: [JSON.parse(signTransactionMessage)]
+      params: [JSON.parse(transactionObject)]
     })
   }
 

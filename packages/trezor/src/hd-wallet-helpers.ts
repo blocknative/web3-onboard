@@ -1,6 +1,3 @@
-import * as ethUtil from 'ethereumjs-util'
-
-
 export const isValidPath = (path: string) => {
   const parts = path.split('/')
   if (parts[0] !== 'm') {
