@@ -1,13 +1,15 @@
 import {
-  ScanAccountsOptions,
   Account,
   Asset,
   Chain,
   CustomNetwork,
+  ScanAccountsOptions,
+  TransactionObject,
   WalletInit
 } from '@bn-onboard/common/src/types'
 import type { providers } from 'ethers'
 import type { BIP32Interface } from 'bip32'
+import { EthereumTransaction, EthereumTransactionEIP1559 } from 'trezor-connect'
 
 interface TrezorOptions {
   email: string
@@ -113,7 +115,7 @@ function trezor(options: TrezorOptions): WalletInit {
           throw new Error('Email and AppUrl required in Trezor options for Trezor Wallet Connection')
         }
         
-        const { email, appUrl } = options;
+        const { email, appUrl, customNetwork } = options;
         
         TrezorConnect.manifest({
           email: email,
@@ -208,53 +210,40 @@ function trezor(options: TrezorOptions): WalletInit {
       
             return account
           } catch (error) {
-            throw new Error('There was an error accessing your Trezor accounts.')
+            throw new Error(`There was an error accessing your Trezor accounts - Error: ${error}`)
           }
         }
-
-        function trezorSignTransactionLegacy(path: string, transactionData: any) {
-          const { nonce, gasPrice, gasLimit, gas, to, value, data } = transactionData
-      
-          return TrezorConnect.ethereumSignTransaction({
-            path: path,
-            transaction: {
-              to,
-              value: value || '',
-              data: data || '',
-              chainId: parseInt(currentChain?.id),
-              nonce,
-              gasPrice,
-              gasLimit: gasLimit || gas,
-            }
-          })
-        }
-
-        function trezorSignTransaction1559(path: string, transactionData: any) {
+        // data?: string
+        // from: string
+        // gas?: string
+        // gasLimit?: string
+        // gasPrice?: string
+        // to?: string
+        // value?: string
+        // nonce?: string
+        function trezorSignTransaction(dPath: string, transactionData: TransactionObject) {
           const { nonce, gas, gasLimit, to, value, data, maxFeePerGas, maxPriorityFeePerGas } = transactionData
-      
-          return TrezorConnect.ethereumSignTransaction({
-            path: path,
-            transaction: {
-              to,
-              value: value || '',
-              data: data || '',
-              chainId: parseInt(currentChain?.id),
-              nonce,
-              gasLimit: gasLimit || gas,
-              maxFeePerGas,
-              maxPriorityFeePerGas,
-            }
-          })
+
+          try {
+            return TrezorConnect.ethereumSignTransaction({
+              path: dPath,
+              transaction: {
+                to,
+                value: value || '',
+                data: data || '',
+                chainId: parseInt(currentChain?.id),
+                nonce,
+                gasLimit: gas ?? gasLimit,
+                maxFeePerGas,
+                maxPriorityFeePerGas,
+              }
+            })
+          } catch (error) {
+            throw new Error(`There was an error signing transaction - Error: ${error}`)
+          }
         }
 
-        function trezorSignTransaction(path: string, transactionData: any) {
-          if (transactionData.hasOwnProperty('maxFeePerGas') || transactionData.hasOwnProperty('maxPriorityFeePerGas')) {
-            return trezorSignTransaction1559(path, transactionData)
-          }
-          return trezorSignTransactionLegacy(path, transactionData)
-        }
-      
-        async function signTransaction(transactionObject: any) {
+        async function signTransaction(transactionObject: TransactionObject) {
           if (!(accounts?.length && accounts?.length > 0))
             throw new Error(
               'No account selected. Must call eth_requestAccounts first.'
