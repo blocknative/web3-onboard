@@ -261,12 +261,12 @@ function trezor(options: TrezorOptions): WalletInit {
 
         function trezorSignTransaction(
           path: string,
-          transactionData: TransactionObject
+          transactionData: EthereumTransactionEIP1559 | EthereumTransaction
         ) {
           try {
             return TrezorConnect.ethereumSignTransaction({
               path: path,
-              transaction: createTrezorTransactionObject(transactionData)
+              transaction: transactionData
             })
           } catch (error) {
             throw new Error(
@@ -286,10 +286,11 @@ function trezor(options: TrezorOptions): WalletInit {
               account => account.address === transactionObject?.from
             ) || accounts[0]
 
-          const { address: from } = signingAccount
+          const { derivationPath } = signingAccount
 
           // Set the `from` field to the currently selected account
-          transactionObject = { ...transactionObject, from }
+          const transactionData =
+            createTrezorTransactionObject(transactionObject)
 
           const common = new Common({
             chain: customNetwork || Number.parseInt(currentChain.id) || 1,
@@ -300,8 +301,8 @@ function trezor(options: TrezorOptions): WalletInit {
           })
 
           const trezorResult = await trezorSignTransaction(
-            signingAccount.derivationPath,
-            transactionObject
+            derivationPath,
+            transactionData
           )
           if (!trezorResult.success) {
             throw new Error(trezorResult.payload.error)
@@ -320,7 +321,7 @@ function trezor(options: TrezorOptions): WalletInit {
 
           const signedTx = Transaction.fromTxData(
             {
-              ...transactionObject,
+              ...transactionData,
               v: `0x${v}`,
               r: r,
               s: s
