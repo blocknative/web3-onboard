@@ -69,7 +69,7 @@ const getAddresses = async (
 
   // Iterates until a 0 balance account is found
   // Then adds 4 more 0 balance accounts to the array
-  while (zeroBalanceAccounts < 10) {
+  while (zeroBalanceAccounts < 5) {
     const acc = await getAccount(account, asset, index, provider)
     if (acc?.balance?.value?.isZero()) {
       zeroBalanceAccounts++
