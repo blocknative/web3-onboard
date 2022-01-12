@@ -18,17 +18,21 @@
     new VConsole()
   }
 
-  let defaultTransactionObject = JSON.stringify({
-      "from": "0xD87927847330FC926afd2B66C478A42a004aB4e7",
-      "to": "0xd0d6d6c5fe4a677d343cc433536bb717bae167dd",
-      "value": "0xf4240",
-      "data": "0xa",
-      "chainId": 1,
-      "nonce": "0x0",
-      "maxFeePerGas": "0x14",
-      "maxPriorityFeePerGas": "0x0",
-      "gasLimit": "0x14"
-    }, undefined, 4)
+  let defaultTransactionObject = JSON.stringify(
+    {
+      from: '0xD87927847330FC926afd2B66C478A42a004aB4e7',
+      to: '0xd0d6d6c5fe4a677d343cc433536bb717bae167dd',
+      value: '0xf4240',
+      data: '0xa',
+      chainId: 1,
+      nonce: '0x0',
+      maxFeePerGas: '0x14',
+      maxPriorityFeePerGas: '0x0',
+      gasLimit: '0x14'
+    },
+    undefined,
+    4
+  )
 
   let transactionObject = defaultTransactionObject
   let signMsg = 'Any string message'
@@ -58,7 +62,7 @@
 
   const ledger = ledgerModule()
 
-  const trezorOptions = {      
+  const trezorOptions = {
     email: 'test@test.com',
     appUrl: 'https://www.blocknative.com'
   }

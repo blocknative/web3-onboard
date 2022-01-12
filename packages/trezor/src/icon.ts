@@ -6,4 +6,3 @@ const trezorIcon = `
 	</svg>
 `
 export default trezorIcon
-
