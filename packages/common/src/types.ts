@@ -133,12 +133,6 @@ export interface AppMetadata {
   /* Url that points to more information about app */
   explore?: string
 
-  /* Email for Trezor validation and initialization by application site for wallet connect */
-  email?: string
-
-  /* Url that points to app for Trezor validation and initialization for wallet connect */
-  appUrl?: string
-
   /** When no injected wallets detected, recommend the user to install some*/
   recommendedInjectedWallets?: RecommendedInjectedWallets[]
 }

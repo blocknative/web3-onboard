@@ -9,6 +9,12 @@ import {
 import type { providers } from 'ethers'
 import type { BIP32Interface } from 'bip32'
 
+interface TrezorOptions {
+  email: string
+  appUrl: string
+  customNetwork?: CustomNetwork
+}
+
 const TREZOR_DEFAULT_PATH = "m/44'/60'/0'/0"
 
 const assets = [
@@ -86,18 +92,16 @@ const getAddresses = async (
 }
 
 
-function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletInit {
+function trezor(options: TrezorOptions): WalletInit {
   const getIcon = async () => (await import('./icon')).default
-
   return () => {
     let accounts: Account[] | undefined
     return {
       label: 'Trezor',
       getIcon,
-      getInterface: async ({ EventEmitter, chains, appMetadata }) => {
+      getInterface: async ({ EventEmitter, chains }) => {
         
-        const TrezorConnectLibrary = await import('trezor-connect')
-        const { default: TrezorConnect } = TrezorConnectLibrary
+        const { default: TrezorConnect } = await import('trezor-connect')
         const { Transaction } = await import('@ethereumjs/tx')
         const { default: Common, Hardfork } = await import('@ethereumjs/common')
         const { accountSelect, createEIP1193Provider, ProviderRpcError } = await import('@bn-onboard/common')
@@ -105,11 +109,11 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
         const { compress } = (await import('eth-crypto')).publicKey
         const { providers } = await import('ethers')
         
-        if (!(appMetadata?.email && appMetadata?.appUrl)) {
-          throw new Error('Email and AppUrl required in AppMetaData for Trezor Wallet Connection')
+        if (!(options?.email && options?.appUrl)) {
+          throw new Error('Email and AppUrl required in Trezor options for Trezor Wallet Connection')
         }
         
-        const { email, appUrl } = appMetadata;
+        const { email, appUrl } = options;
         
         TrezorConnect.manifest({
           email: email,

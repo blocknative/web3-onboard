@@ -58,7 +58,11 @@
 
   const ledger = ledgerModule()
 
-  const trezor = trezorModule()
+  const trezorOptions = {      
+    email: 'test@test.com',
+    appUrl: 'https://www.blocknative.com'
+  }
+  const trezor = trezorModule(trezorOptions)
 
   const onboard = Onboard({
     wallets: [
@@ -101,8 +105,6 @@
       name: 'Blocknative',
       icon: blocknativeIcon,
       description: 'Demo app for Onboard V2',
-      email: 'test@test.com',
-      appUrl: 'https://www.blocknative.com',
       recommendedInjectedWallets: [
         { name: 'MetaMask', url: 'https://metamask.io' },
         { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
