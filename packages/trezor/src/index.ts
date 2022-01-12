@@ -283,16 +283,16 @@ function trezor(options: TrezorOptions): WalletInit {
               gasLimit: transactionObject.gas ?? transactionObject.gasLimit
             },
             { common, freeze: false }
-            )
+          )
 
-          transaction.v = new BN(toBuffer(currentChain?.id))
-          transaction.r = transaction.s = new BN(toBuffer(0))
           const trezorResult = await trezorSignTransaction(signingAccount.derivationPath, transactionObject)
           if (!trezorResult.success) {
             throw new Error(trezorResult.payload.error)
           }
-          console.log(trezorResult)
-          let v = trezorResult.payload.v.toString(16)
+
+          const { r, s }  = trezorResult.payload
+          let v = trezorResult.payload.v
+
           // EIP155 support. check/recalc signature v value.
           const rv = parseInt(v, 16)
           let cv = parseInt(currentChain?.id) * 2 + 35
@@ -300,10 +300,16 @@ function trezor(options: TrezorOptions): WalletInit {
             cv += 1 // add signature v bit.
           }
           v = cv.toString(16)
-          transaction.v = new BN(toBuffer(`0x${v}`))
-          transaction.r = new BN(toBuffer(`${trezorResult.payload.r}`))
-          transaction.s = new BN(toBuffer(`${trezorResult.payload.s}`))
-          return `0x${transaction.serialize().toString('hex')}`
+          const signedTx = Transaction.fromTxData(
+            {
+              ...transactionObject,
+              v: new BN(toBuffer(`0x${v}`)),
+              r: new BN(toBuffer(`${r}`)),
+              s: new BN(toBuffer(`${s}`))
+            },
+            { common }
+          )
+          return signedTx ? `0x${signedTx.serialize().toString('hex')}` : ''
         }
       
         
