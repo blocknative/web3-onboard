@@ -96,7 +96,6 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
       getIcon,
       getInterface: async ({ EventEmitter, chains, appMetadata }) => {
         
-        const { isValidPath } = await import('./hd-wallet-helpers')
         const TrezorConnectLibrary = await import('trezor-connect')
         const { default: TrezorConnect } = TrezorConnectLibrary
         const { Transaction } = await import('@ethereumjs/tx')
@@ -128,7 +127,7 @@ function trezor({customNetwork}: {customNetwork?: CustomNetwork} = {}): WalletIn
           
           const {publicKey, chainCode, path} = await getPublicKey(derivationPath);
 
-          if ( derivationPath !== TREZOR_DEFAULT_PATH && isValidPath(derivationPath) ) {
+          if ( derivationPath !== TREZOR_DEFAULT_PATH ) {
             const address = await getAddress(path);
             return [
               {
