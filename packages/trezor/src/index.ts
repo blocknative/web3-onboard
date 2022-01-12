@@ -213,30 +213,38 @@ function trezor(options: TrezorOptions): WalletInit {
             throw new Error(`There was an error accessing your Trezor accounts - Error: ${error}`)
           }
         }
-        // data?: string
-        // from: string
-        // gas?: string
-        // gasLimit?: string
-        // gasPrice?: string
-        // to?: string
-        // value?: string
-        // nonce?: string
-        function trezorSignTransaction(dPath: string, transactionData: TransactionObject) {
-          const { nonce, gas, gasLimit, to, value, data, maxFeePerGas, maxPriorityFeePerGas } = transactionData
 
+        function createTrezorTransactionObject(transactionData: TransactionObject): EthereumTransactionEIP1559 | EthereumTransaction {
+          const gasLimit = transactionData?.gasLimit || transactionData?.gas
+          if (transactionData!.maxFeePerGas || transactionData!.maxPriorityFeePerGas) {
+            return {            
+              to: transactionData.to!,
+              value: transactionData.value!,
+              gasLimit: gasLimit!,
+              maxFeePerGas: transactionData.maxFeePerGas!,
+              maxPriorityFeePerGas: transactionData.maxPriorityFeePerGas!,
+              nonce: transactionData.nonce!,
+              chainId: parseInt(currentChain.id),
+              data: transactionData?.data
+            }
+          }
+          return {
+            to: transactionData.to!,
+            value: transactionData.value!,
+            gasPrice: transactionData.gasPrice!,
+            gasLimit: gasLimit!,
+            nonce: transactionData.nonce!,
+            chainId: parseInt(currentChain.id),
+            data: transactionData?.data
+          }
+        }
+
+
+        function trezorSignTransaction(path: string, transactionData: TransactionObject) {
           try {
             return TrezorConnect.ethereumSignTransaction({
-              path: dPath,
-              transaction: {
-                to,
-                value: value || '',
-                data: data || '',
-                chainId: parseInt(currentChain?.id),
-                nonce,
-                gasLimit: gas ?? gasLimit,
-                maxFeePerGas,
-                maxPriorityFeePerGas,
-              }
+              path: path,
+              transaction: createTrezorTransactionObject(transactionData)
             })
           } catch (error) {
             throw new Error(`There was an error signing transaction - Error: ${error}`)
