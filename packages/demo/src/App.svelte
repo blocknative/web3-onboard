@@ -3,6 +3,7 @@
   import Onboard from '@bn-onboard/core'
   import injectedModule from '@bn-onboard/injected-wallets'
 
+  import trezorModule from '@bn-onboard/trezor'
   import ledgerModule from '@bn-onboard/ledger'
   import walletConnectModule from '@bn-onboard/walletconnect'
   import walletLinkModule from '@bn-onboard/walletlink'
@@ -17,8 +18,24 @@
     new VConsole()
   }
 
-  let transactionObject
-  let signMsg
+  let defaultTransactionObject = JSON.stringify(
+    {
+      from: '0xD87927847330FC926afd2B66C478A42a004aB4e7',
+      to: '0xd0d6d6c5fe4a677d343cc433536bb717bae167dd',
+      value: '0xf4240',
+      data: '0xa',
+      chainId: 1,
+      nonce: '0x0',
+      maxFeePerGas: '0x14',
+      maxPriorityFeePerGas: '0x0',
+      gasLimit: '0x14'
+    },
+    undefined,
+    4
+  )
+
+  let transactionObject = defaultTransactionObject
+  let signMsg = 'Any string message'
   let signTypedMsg
 
   const injected = injectedModule({
@@ -45,6 +62,12 @@
 
   const ledger = ledgerModule()
 
+  const trezorOptions = {
+    email: 'test@test.com',
+    appUrl: 'https://www.blocknative.com'
+  }
+  const trezor = trezorModule(trezorOptions)
+
   const onboard = Onboard({
     wallets: [
       walletConnect,
@@ -53,7 +76,8 @@
       fortmatic,
       portis,
       torus,
-      ledger
+      ledger,
+      trezor
     ],
     chains: [
       {
@@ -61,6 +85,12 @@
         token: 'ETH',
         label: 'Ethereum Mainnet',
         rpcUrl: 'https://mainnet.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
+      },
+      {
+        id: '0x3',
+        token: 'tROP',
+        label: 'Ethereum Ropsten Testnet',
+        rpcUrl: 'https://ropsten.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
       },
       {
         id: '0x4',
@@ -102,19 +132,16 @@
   const signTransactionMessage = provider => {
     provider.request({
       method: 'eth_signTransaction',
-      params: [JSON.parse(signTransactionMessage)]
+      params: [JSON.parse(transactionObject)]
     })
   }
 
   const signMessage = async (provider, address) => {
-    console.log(signMsg)
     const signature = await provider.request({
       method: 'eth_sign',
       params: [address, signMsg]
     })
-    console.log(signature)
     const recoveredAddress = verifyMessage(signMsg, signature)
-    console.log(recoveredAddress)
   }
 
   const signTypedMessage = async (provider, address) => {

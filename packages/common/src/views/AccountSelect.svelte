@@ -5,6 +5,7 @@
   import AddressTable from '../elements/AddressTable.svelte'
   import TableHeader from '../elements/TableHeader.svelte'
   import { displayModal$ } from '../streams'
+  import { utils } from 'ethers'
 
   import type { Subject } from 'rxjs'
   import type {
@@ -55,16 +56,14 @@
       loadingAccounts = true
       const allAccounts = await scanAccounts(scanAccountOptions)
       accountsListObject = {
-        all: allAccounts,
-        filtered: allAccounts.filter(
-          account => Number(account?.balance.value) > 0
-        )
-      }
-      loadingAccounts = false
-    } catch (err) {
-      console.error(err)
-      errorFromScan = true
-      loadingAccounts = false
+        all: allAccounts, 
+        filtered: allAccounts.filter(account => utils.formatEther(account?.balance?.value) > 0)
+      };
+      loadingAccounts = false;
+    } catch(err) {
+      console.error(err);
+      errorFromScan = true;
+      loadingAccounts = false;
     }
   }
 
