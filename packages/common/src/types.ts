@@ -317,6 +317,8 @@ export interface TransactionObject {
   maxPriorityFeePerGas?: string
   to: string
   value?: string
+  maxFeePerGas?: string,
+  maxPriorityFeePerGas?: string,
   nonce?: string
 }
 
