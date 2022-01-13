@@ -25,15 +25,10 @@
     "@ledgerhq/hw-app-eth": "^6.19.0",
     "@ledgerhq/hw-transport-u2f": "^5.36.0-deprecated",
     "@ledgerhq/hw-transport-webusb": "^6.19.0",
-    "@portis/web3": "^4.0.6",
-    "@shapeshiftoss/hdwallet-core": "^1.18.4",
     "bip32": "^3.0.1",
     "buffer": "^6.0.3",
     "eth-crypto": "^2.1.0",
     "ethereumjs-util": "^7.1.3",
-    "hdkey": "^2.0.1",
-    "joi": "^17.4.2",
-    "node-fetch": "^3.1.0",
     "tiny-secp256k1": "^2.1.2"
   }
 }
