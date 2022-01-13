@@ -9,6 +9,7 @@
   import portisModule from '@bn-onboard/portis'
   import fortmaticModule from '@bn-onboard/fortmatic'
   import torusModule from '@bn-onboard/torus'
+  import keepkeyModule from '@bn-onboard/keepkey'
   import blocknativeIcon from './blocknative-icon'
   import VConsole from 'vconsole'
   import { verifyTypedData, verifyMessage } from 'ethers/lib/utils'
@@ -42,11 +43,12 @@
   })
 
   const torus = torusModule()
-
   const ledger = ledgerModule()
+  const keepkey = keepkeyModule()
 
   const onboard = Onboard({
     wallets: [
+      keepkey,
       walletConnect,
       walletLink,
       injected,

@@ -313,7 +313,9 @@ export interface TransactionObject {
   gas?: string
   gasLimit?: string
   gasPrice?: string
-  to?: string
+  maxFeePerGas?: string
+  maxPriorityFeePerGas?: string
+  to: string
   value?: string
   nonce?: string
 }
