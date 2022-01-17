@@ -35,7 +35,7 @@ export const createEIP1193Provider = (
     baseRequest = createRequest(provider)
   }
 
-  const request: EIP1193Provider['request'] = ({ method, params }) => {
+  const request: EIP1193Provider['request'] = async ({ method, params }) => {
     const key = method as keyof RequestPatch
 
     // If the request method is set to null
@@ -51,8 +51,13 @@ export const createEIP1193Provider = (
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore // @TODO - Fix this type error
       return requestPatch[key]?.({ baseRequest, params })
+    } else if (baseRequest) {
+      return baseRequest({ method, params })
     } else {
-      return baseRequest?.({ method, params })
+      throw new ProviderRpcError({
+        code: 4200,
+        message: `The Provider does not support the requested method: ${method}`
+      })
     }
   }
   provider.request = request

@@ -25,6 +25,7 @@
   import { state } from '../../store'
   import { addWallet } from '../../store/actions'
   import en from '../../i18n/en.json'
+  import { requestAccounts } from '../../provider'
 
   export let options: ConnectOptions
 
@@ -63,7 +64,10 @@
     if (existingWallet) {
       // set as first wallet
       addWallet(existingWallet)
+
+      await requestAccounts(existingWallet.provider)
       selectedWallet = existingWallet
+
       return
     }
 

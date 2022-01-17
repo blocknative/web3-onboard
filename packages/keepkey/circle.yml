@@ -1,5 +1,5 @@
 jobs:
-  publish-portis:
+  publish-keepkey:
     docker:
       - image: cimg/node:16.13.1
     steps:
@@ -14,13 +14,13 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: yarn build
-      - run: cd packages/portis && echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
-      - run: cd packages/portis && npm publish --access public
+      - run: cd packages/keepkey && echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
+      - run: cd packages/keepkey && npm publish --access public
 
 workflows:
-  portis:
+  keepkey:
     jobs:
-      - publish-portis:
+      - publish-keepkey:
           filters:
             branches:
               only:
