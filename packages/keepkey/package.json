@@ -22,7 +22,6 @@
     "@shapeshiftoss/hdwallet-core": "^1.15.2",
     "@shapeshiftoss/hdwallet-keepkey": "^1.15.2",
     "@shapeshiftoss/hdwallet-keepkey-webusb": "^1.15.2",
-    "bip32": "^3.0.1",
     "ethereumjs-util": "^7.1.3"
   }
 }
