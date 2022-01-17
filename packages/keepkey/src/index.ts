@@ -285,13 +285,13 @@ function keepkey(): WalletInit {
                 ) || accounts[0]
 
               const { derivationPath } = account
-              const accountIdx = getAccountIdx(derivationPath)
-              const { addressNList } = getPaths(accountIdx)
+              const addressNList = bip32ToAddressNList(derivationPath)
 
               const {
                 nonce,
                 gasPrice,
                 gas,
+                gasLimit,
                 to,
                 value,
                 data,
@@ -301,15 +301,15 @@ function keepkey(): WalletInit {
 
               const { serialized } = await keepKeyWallet.ethSignTx({
                 addressNList,
-                nonce: nonce || '0',
+                nonce: nonce || '0x0',
                 gasPrice,
-                gasLimit: gas || '21000',
+                gasLimit: gasLimit || gas || '0x5208',
                 to,
-                value: value || '0x00',
+                value: value || '0x0',
                 data: data || '',
                 maxFeePerGas,
                 maxPriorityFeePerGas,
-                chainId: parseInt(currentChain.id, 10)
+                chainId: parseInt(currentChain.id)
               })
 
               return serialized
@@ -330,7 +330,10 @@ function keepkey(): WalletInit {
 
               const { signature } = await keepKeyWallet.ethSignMessage({
                 addressNList,
-                message: ethUtil.toBuffer(message).toString('utf8')
+                message:
+                  message.slice(0, 2) === '0x'
+                    ? ethUtil.toBuffer(message).toString('utf8')
+                    : message
               })
 
               return signature
