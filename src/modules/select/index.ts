@@ -46,6 +46,8 @@ const providerNameToWalletName = (providerName: string) =>
     ? providerName
     : providerName === 'WalletConnect'
     ? 'walletConnect'
+    : providerName === `D'CENT`
+    ? 'dcent'
     : providerName.toLocaleLowerCase()
 
 function select(
