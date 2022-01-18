@@ -56,14 +56,16 @@
       loadingAccounts = true
       const allAccounts = await scanAccounts(scanAccountOptions)
       accountsListObject = {
-        all: allAccounts, 
-        filtered: allAccounts.filter(account => utils.formatEther(account?.balance?.value) > 0)
-      };
-      loadingAccounts = false;
-    } catch(err) {
-      console.error(err);
-      errorFromScan = true;
-      loadingAccounts = false;
+        all: allAccounts,
+        filtered: allAccounts.filter(
+          account => parseInt(utils.formatEther(account?.balance?.value)) > 0
+        )
+      }
+      loadingAccounts = false
+    } catch (err) {
+      console.error(err)
+      errorFromScan = true
+      loadingAccounts = false
     }
   }
 

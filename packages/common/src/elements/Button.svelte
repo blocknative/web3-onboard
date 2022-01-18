@@ -1,9 +1,9 @@
 <script lang="ts">
   export let onclick: () => void = () => {}
-  export let position: string = ''
-  export let disabled: boolean = false
+  export let position = ''
+  export let disabled = false
   // If this is a CTA Button then we want to emphasize it
-  export let cta: boolean = true
+  export let cta = true
 </script>
 
 <style>

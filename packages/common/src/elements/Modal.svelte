@@ -2,7 +2,7 @@
   import { fade } from 'svelte/transition'
 
   export let closeModal: () => void = () => {}
-  export let closeable: boolean = true
+  export let closeable = true
   let closeHovered: boolean
 </script>
 
