@@ -1,5 +1,5 @@
 jobs:
-  publish-keepkey:
+  publish-trezor:
     docker:
       - image: cimg/node:16.13.1
     steps:
@@ -14,13 +14,13 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: yarn build
-      - run: cd packages/keepkey && echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
-      - run: cd packages/keepkey && npm publish --access public
+      - run: cd packages/trezor && echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
+      - run: cd packages/trezor && npm publish --access public
 
 workflows:
-  keepkey:
+  trezor:
     jobs:
-      - publish-keepkey:
+      - publish-trezor:
           filters:
             branches:
               only:
