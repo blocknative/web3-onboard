@@ -38,7 +38,6 @@ export default {
     })
   ],
   external: [
-    'ethers',
     'bowser',
     'joi',
     'rxjs',

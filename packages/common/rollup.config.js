@@ -37,13 +37,5 @@ export default {
       inlineSources: !production
     })
   ],
-  external: [
-    'ethers',
-    'bowser',
-    'joi',
-    'rxjs',
-    'svelte-i18n',
-    'lodash.merge',
-    'lodash.partition'
-  ]
+  external: ['joi', 'rxjs']
 }

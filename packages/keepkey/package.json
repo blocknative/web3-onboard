@@ -1,6 +1,6 @@
 {
   "name": "@bn-onboard/keepkey",
-  "version": "2.0.0-alpha.2",
+  "version": "2.0.0-alpha.3",
   "description": "KeepKey module for Onboard.js",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -21,6 +21,7 @@
     "@bn-onboard/common": "^2.0.0-alpha.1",
     "@shapeshiftoss/hdwallet-core": "^1.15.2",
     "@shapeshiftoss/hdwallet-keepkey": "^1.15.2",
-    "@shapeshiftoss/hdwallet-keepkey-webusb": "^1.15.2"
+    "@shapeshiftoss/hdwallet-keepkey-webusb": "^1.15.2",
+    "ethereumjs-util": "^7.1.3"
   }
 }
