@@ -1,4 +1,10 @@
-# Onboard Wallet Module - [Portis](https://docs.portis.io/#/configuration)
+# @bn-onboard/portis
+
+## Wallet module for connecting Portis wallet to Onboard V2
+
+### Install
+
+`npm i @bn-onboard/portis`
 
 ## Options
 
@@ -12,7 +18,7 @@ type PortisOptions {
 
 ```typescript
 import Onboard from '@bn-onboard/core'
-import torusModule from '@bn-onboard/portis'
+import portisModule from '@bn-onboard/portis'
 
 const portis = portisModule({ apiKey: 'API_KEY' })
 

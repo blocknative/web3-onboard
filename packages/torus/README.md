@@ -1,4 +1,10 @@
-# Onboard Wallet Module - [Torus](https://docs.tor.us/wallet/api-reference/class)
+# @bn-onboard/torus
+
+## Wallet module for connecting Torus wallet to Onboard V2
+
+### Install
+
+`npm i @bn-onboard/torus`
 
 ## Options
 

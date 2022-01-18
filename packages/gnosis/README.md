@@ -1,6 +1,12 @@
-# Onboard Wallet Module - [Gnosis Safe](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-sdk)
+# @bn-onboard/gnosis
 
-## Options
+## Wallet module for connecting Gnosis Safe to Onboard V2
+
+### Install
+
+`npm i @bn-onboard/gnosis`
+
+### Options
 
 ```typescript
 type GnosisOptions = {
@@ -8,7 +14,7 @@ type GnosisOptions = {
 }
 ```
 
-## Usage
+### Usage
 
 ```typescript
 import Onboard from '@bn-onboard/core'

@@ -1,4 +1,10 @@
-# Onboard Wallet Module - [WalletLink](https://walletlink.org/)
+# @bn-onboard/walletlink
+
+## Wallet module for connecting WalletLink to Onboard V2
+
+### Install
+
+`npm i @bn-onboard/walletlink`
 
 ## Options
 

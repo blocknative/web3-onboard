@@ -118,7 +118,7 @@ const equal = {
   // Example: window.ethereum.isEQLWallet
   providerIdentityFlag: 'isEQLWallet',
   // A method that returns a string of the wallet icon which will be displayed
-  getIcon: async () => (await import('./injected/icons/equal')).default,
+  getIcon: async () => (await import('<PATH_TO_ICON>')).default,
   // Returns a valid EIP1193 provider. In some cases the provider will need to be patched to satisfy the EIP1193 Provider interface
   getInterface: () => ({
     provider: window.ethereum

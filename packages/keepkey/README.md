@@ -1,23 +1,23 @@
-# @bn-onboard/mew
+# @bn-onboard/keepkey
 
-## Wallet module for connecting Mew wallet to Onboard V2
+## Wallet module for connecting KeepKey hardware wallets to Onboard V2
 
 ### Install
 
-`npm i @bn-onboard/mew`
+`npm i @bn-onboard/keepkey`
 
-## Usage
+### Usage
 
 ```typescript
 import Onboard from '@bn-onboard/core'
-import mewModule from '@bn-onboard/mew'
+import keepkeyModule from '@bn-onboard/keepkey'
 
-const mew = mewModule()
+const keepkey = keepkeyModule()
 
 const onboard = Onboard({
   // ... other Onboard options
   wallets: [
-    mew
+    keepkey
     //... other wallets
   ]
 })
@@ -25,5 +25,3 @@ const onboard = Onboard({
 const connectedWallets = await onboard.connectWallet()
 console.log(connectedWallets)
 ```
-
-_NOTE: Currently not building on M1 Macs_

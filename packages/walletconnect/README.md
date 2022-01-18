@@ -1,4 +1,10 @@
-# Onboard Wallet Module - [WalletConnect](https://docs.walletconnect.com/1.0/quick-start/dapps/client)
+# @bn-onboard/walletconnect
+
+## Wallet module for connecting Ledger hardware wallets to Onboard V2
+
+### Install
+
+`npm i @bn-onboard/walletconnect`
 
 ## Options
 

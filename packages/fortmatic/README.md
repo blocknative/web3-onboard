@@ -1,4 +1,10 @@
-# Onboard Wallet Module - [Fortmatic](https://docs.fortmatic.com/)
+# @bn-onboard/fortmatic
+
+## Wallet module for connecting Ledger hardware wallets to Onboard V2
+
+### Install
+
+`npm i @bn-onboard/fortmatic`
 
 ## Options
 
