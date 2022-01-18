@@ -5,8 +5,7 @@
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
-    "dist",
-    "yarn.lock"
+    "dist"
   ],
   "scripts": {
     "build": "tsc",
@@ -20,7 +19,6 @@
   },
   "dependencies": {
     "@bn-onboard/common": "^2.0.0-alpha.1",
-    "joi": "^17.4.2",
     "lodash.uniqby": "^4.7.0"
   }
 }

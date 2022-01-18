@@ -5,8 +5,7 @@
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
-    "dist",
-    "yarn.lock"
+    "dist"
   ],
   "scripts": {
     "build": "tsc",
@@ -21,7 +20,6 @@
   "dependencies": {
     "@bn-onboard/common": "^2.0.0-alpha.1",
     "@walletconnect/client": "^1.6.6",
-    "@walletconnect/qrcode-modal": "^1.6.6",
-    "rxjs": "^7.4.0"
+    "@walletconnect/qrcode-modal": "^1.6.6"
   }
 }

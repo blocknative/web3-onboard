@@ -17,7 +17,7 @@
     "svelte": "^3.31.2",
     "svelte-loader": "^3.0.0",
     "util": "^0.12.4",
-    "webpack": "^5.16.0",
+    "webpack": "^5.64.4",
     "webpack-cli": "^4.4.0",
     "webpack-dev-server": "^3.11.2"
   },
@@ -27,10 +27,9 @@
     "@bn-onboard/injected-wallets": "^2.0.0-alpha",
     "@bn-onboard/portis": "^2.0.0-alpha",
     "@bn-onboard/torus": "^2.0.0-alpha",
+    "@bn-onboard/trezor": "^2.0.0-alpha",
     "@bn-onboard/walletconnect": "^2.0.0-alpha",
     "@bn-onboard/walletlink": "^2.0.0-alpha",
-    "@bn-onboard/trezor": "^2.0.0-alpha",
-    "rxjs": "^7.4.0",
     "vconsole": "^3.9.5"
   },
   "scripts": {

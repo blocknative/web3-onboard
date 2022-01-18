@@ -5,8 +5,7 @@
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
-    "dist",
-    "yarn.lock"
+    "dist"
   ],
   "scripts": {
     "build": "tsc",
@@ -20,7 +19,6 @@
   },
   "dependencies": {
     "@bn-onboard/common": "^2.0.0-alpha.1",
-    "@myetherwallet/mewconnect-web-client": "^2.2.0-beta.14",
-    "rxjs": "^7.4.0"
+    "@myetherwallet/mewconnect-web-client": "^2.2.0-beta.14"
   }
 }
