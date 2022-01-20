@@ -221,8 +221,91 @@ unsubscribe()
 
 When initializing Onboard you define a list of chains/networks that your app supports. If you would like to prompt the user to switch to one of those chains, you can use the `setChain` method on an initialized instance of Onboard:
 
-```javascript
-const success = await onboard.setChain('0x89')
+```typescript
+type SetChain = (options: SetChainOptions) => Promise<boolean>
+type SetChainOptions = {
+  chainId: string // hex encoded string
+  wallet?: string // the wallet.label of the wallet to set chain
+}
+
+const success = await onboard.setChain({ chainId: '0x89' })
 ```
 
-The `setChain` methods takes a hex encoded string for the chain id to switch to. The chain id must be one of the chains that Onboard was initialized with. If the wallet supports programatically adding and switching the chain, then the user will be prompted to do so, if not, then a modal will be displayed indicating to the user that they need to switch chains to continue. The `setChain` method returns a promise that resolves when either the user has confirmed the chain switch, or has dismissed the modal and resolves with a boolean indicating if the switch network was successful or not.
+The `setChain` methods takes an options object with a `chainId` property hex encoded string for the chain id to switch to. The chain id must be one of the chains that Onboard was initialized with. If the wallet supports programatically adding and switching the chain, then the user will be prompted to do so, if not, then a modal will be displayed indicating to the user that they need to switch chains to continue. The `setChain` method returns a promise that resolves when either the user has confirmed the chain switch, or has dismissed the modal and resolves with a boolean indicating if the switch network was successful or not. The `setChain` method will by default switch the first wallet (the most recently connected) in the `wallets` array. A specific wallet can be targeted by passing in the `wallet.label` in the options object as the `wallet` parameter.
+
+## Custom Styling
+
+The Onboard styles can customized via [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties). The following properties and their default properties can be customized by adding these variables to the `:root` in your CSS file:
+
+```css
+:root {
+  /* COLORS */
+  --onboard-white: white;
+  --onboard-black: black;
+  --onboard-blue-1: #2f80ed;
+  --onboard-blue-100: #eff1fc;
+  --onboard-blue-200: #d0d4f7;
+  --onboard-blue-300: #b1b8f2;
+  --onboard-blue-400: #929bed;
+  --onboard-blue-500: #6370e5;
+  --onboard-blue-600: #454ea0;
+  --onboard-blue-700: #323873;
+  --onboard-gray-100: #ebebed;
+  --onboard-gray-200: #c2c4c9;
+  --onboard-gray-300: #999ca5;
+  --onboard-gray-400: #707481;
+  --onboard-gray-500: #33394b;
+  --onboard-gray-600: #242835;
+  --onboard-gray-700: #1a1d26;
+  --onboard-success-100: #d1fae3;
+  --onboard-success-200: #baf7d5;
+  --onboard-success-300: #a4f4c6;
+  --onboard-success-400: #8df2b8;
+  --onboard-success-500: #5aec99;
+  --onboard-success-600: #18ce66;
+  --onboard-success-700: #129b4d;
+  --onboard-danger-100: #ffe5e6;
+  --onboard-danger-200: #ffcccc;
+  --onboard-danger-300: #ffb3b3;
+  --onboard-danger-400: #ff8080;
+  --onboard-danger-500: #ff4f4f;
+  --onboard-danger-600: #cc0000;
+  --onboard-danger-700: #660000;
+  --onboard-warning-100: #ffefcc;
+  --onboard-warning-200: #ffe7b3;
+  --onboard-warning-300: #ffd780;
+  --onboard-warning-400: #ffc74c;
+  --onboard-warning-500: #ffaf00;
+  --onboard-warning-600: #cc8c00;
+  --onboard-warning-700: #664600;
+
+  /* FONTS */
+  --onboard-font-family-normal: Sofia Pro;
+  --onboard-font-family-semibold: Sofia Pro Semibold;
+  --onboard-font-family-light: Sofia Pro Light;
+
+  --onboard-font-size-1: 3rem;
+  --onboard-font-size-2: 2.25rem;
+  --onboard-font-size-3: 1.5rem;
+  --onboard-font-size-4: 1.25rem;
+  --onboard-font-size-5: 1rem;
+  --onboard-font-size-6: 0.875rem;
+  --onboard-font-size-7: 0.75rem;
+
+  --onboard-font-line-height-1: 24px;
+  --onboard-font-line-height-2: 20px;
+  --onboard-font-line-height-3: 16px;
+  --onboard-font-line-height-4: 12px;
+
+  /* SPACING */
+  --onboard-spacing-1: 3rem;
+  --onboard-spacing-2: 2rem;
+  --onboard-spacing-3: 1.5rem;
+  --onboard-spacing-4: 1rem;
+  --onboard-spacing-5: 0.5rem;
+
+  /* SHADOWS */
+  --onboard-shadow-1: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  --onboard-shadow-2: inset 0px -1px 0px rgba(0, 0, 0, 0.1);
+}
+```
