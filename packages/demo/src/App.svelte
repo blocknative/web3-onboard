@@ -71,15 +71,15 @@
 
   const onboard = Onboard({
     wallets: [
-      keepkey,
+      ledger,
+      trezor,
       walletConnect,
+      keepkey,
       walletLink,
       injected,
       fortmatic,
       portis,
-      torus,
-      ledger,
-      trezor
+      torus
     ],
     chains: [
       {
@@ -197,13 +197,14 @@
   <button on:click={() => onboard.connectWallet()}>Connect Wallet</button>
 
   {#if $wallets$}
-    <button on:click={() => onboard.setChain('0x1')}
+    <button on:click={() => onboard.setChain({ chainId: '0x1' })}
       >Set Chain to Mainnet</button
     >
-    <button on:click={() => onboard.setChain('0x4')}
+    <button on:click={() => onboard.setChain({ chainId: '0x4' })}
       >Set Chain to Rinkeby</button
     >
-    <button on:click={() => onboard.setChain('0x89')}>Set Chain to Matic</button
+    <button on:click={() => onboard.setChain({ chainId: '0x89' })}
+      >Set Chain to Matic</button
     >
   {/if}
 
