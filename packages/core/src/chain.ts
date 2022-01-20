@@ -3,28 +3,40 @@ import { filter, mapTo } from 'rxjs/operators'
 import { addNewChain, switchChain } from './provider'
 import { state } from './store'
 import { switchChainModal$ } from './streams'
-import { validateChainId } from './validation'
+import { validateSetChainOptions } from './validation'
+import type { WalletState } from './types'
 
-async function setChain(chainId: string): Promise<boolean> {
-  const error = validateChainId(chainId)
+async function setChain(options: {
+  chainId: string
+  wallet?: WalletState['label']
+}): Promise<boolean> {
+  const error = validateSetChainOptions(options)
 
   if (error) {
     throw error
   }
 
   const { wallets, chains } = state.get()
-
-  // validate a wallet is connected
-  const [wallet] = wallets
-  if (!wallet) {
-    throw new Error('A wallet must be connected before a chain can be set')
-  }
+  const { chainId, wallet: walletToSet } = options
 
   // validate that chainId has been added to chains
   const chain = chains.find(({ id }) => id === chainId)
   if (!chain) {
     throw new Error(
       `Chain with chainId: ${chainId} has not been set and must be added when Onboard is initialized.`
+    )
+  }
+
+  const wallet = walletToSet
+    ? wallets.find(({ label }) => label === walletToSet)
+    : wallets[0]
+
+  // validate a wallet is connected
+  if (!wallet) {
+    throw new Error(
+      walletToSet
+        ? `Wallet with label ${walletToSet} is not connected`
+        : 'A wallet must be connected before a chain can be set'
     )
   }
 
