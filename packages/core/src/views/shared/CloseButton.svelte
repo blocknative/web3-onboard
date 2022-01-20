@@ -3,8 +3,15 @@
 </script>
 
 <style>
-  .close-button {
+  .close-button-container {
     cursor: pointer;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .close-button {
     width: 2rem;
     height: 2rem;
     box-sizing: border-box;
@@ -18,10 +25,14 @@
   }
 
   .close-icon {
-    height: 100%;
+    width: 14px;
+    display: flex;
+    align-items: center;
   }
 </style>
 
-<div class="close-button">
-  <div class="close-icon">{@html closeIcon}</div>
+<div class="close-button-container">
+  <div class="close-button">
+    <div class="close-icon">{@html closeIcon}</div>
+  </div>
 </div>
