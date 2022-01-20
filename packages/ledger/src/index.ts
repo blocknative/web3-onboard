@@ -20,7 +20,7 @@ const DEFAULT_BASE_PATHS = [
     value: LEDGER_LIVE_PATH
   },
   {
-    label: 'Ethereum',
+    label: 'Ledger Legacy',
     value: LEDGER_DEFAULT_PATH
   }
 ]
@@ -149,53 +149,69 @@ function ledger({
           chainId,
           asset
         }: ScanAccountsOptions): Promise<Account[]> => {
-          currentChain = chains.find(({ id }) => id === chainId) ?? currentChain
-          const provider = new providers.JsonRpcProvider(currentChain.rpcUrl)
+          try {
+            currentChain =
+              chains.find(({ id }) => id === chainId) ?? currentChain
+            const provider = new providers.JsonRpcProvider(currentChain.rpcUrl)
 
-          const { publicKey, chainCode, address } = await eth.getAddress(
-            derivationPath,
-            false,
-            true // set to true to return chainCode
-          )
+            const { publicKey, chainCode, address } = await eth.getAddress(
+              derivationPath,
+              false,
+              true // set to true to return chainCode
+            )
 
-          // Checks to see if this is a custom derivation path
-          // If it is then just return the single account
-          if (
-            derivationPath !== LEDGER_LIVE_PATH &&
-            derivationPath !== LEDGER_DEFAULT_PATH
-          ) {
-            return [
-              {
-                derivationPath,
-                address,
-                balance: {
-                  asset: asset.label,
-                  value: await provider.getBalance(address)
+            // Checks to see if this is a custom derivation path
+            // If it is then just return the single account
+            if (
+              derivationPath !== LEDGER_LIVE_PATH &&
+              derivationPath !== LEDGER_DEFAULT_PATH
+            ) {
+              return [
+                {
+                  derivationPath,
+                  address,
+                  balance: {
+                    asset: asset.label,
+                    value: await provider.getBalance(address)
+                  }
                 }
-              }
-            ]
-          }
+              ]
+            }
 
-          return getAddresses(
-            {
-              publicKey: compress(publicKey),
-              chainCode: chainCode ?? '',
-              derivationPath
-            },
-            asset,
-            provider
-          )
+            return getAddresses(
+              {
+                publicKey: compress(publicKey),
+                chainCode: chainCode ?? '',
+                derivationPath
+              },
+              asset,
+              provider
+            )
+          } catch (error) {
+            const { statusText } = error as { statusText: string }
+            throw new Error(
+              statusText === 'UNKNOWN_ERROR'
+                ? 'Ledger device is locked, please unlock to continue'
+                : statusText
+            )
+          }
         }
 
-        const getAccounts = async () =>
-          accounts ??
-          (accounts = await accountSelect({
+        const getAccounts = async () => {
+          accounts = await accountSelect({
             basePaths: DEFAULT_BASE_PATHS,
             assets,
             chains,
             scanAccounts,
             walletIcon: await getIcon()
-          }))
+          })
+
+          if (accounts.length) {
+            eventEmitter.emit('accountsChanged', [accounts[0].address])
+          }
+
+          return accounts
+        }
 
         const ledgerProvider = {}
 

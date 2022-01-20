@@ -9,12 +9,11 @@ import type {
 } from './types'
 
 const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
-
 const unknownObject = Joi.object().unknown()
 // const address = Joi.string().pattern(/^0x[a-fA-F0-9]{40}$/)
 
 const chain = Joi.object({
-  id: Joi.string().required(),
+  id: chainId.required(),
   rpcUrl: Joi.string().required(),
   label: Joi.string(),
   token: Joi.string()
@@ -93,6 +92,11 @@ const disconnectOptions = Joi.object({
   label: Joi.string().required()
 }).required()
 
+const setChainOptions = Joi.object({
+  chainId: chainId.required(),
+  wallet: Joi.string()
+})
+
 type ValidateReturn = Joi.ValidationResult | null
 
 function validate(validator: Joi.Schema, data: unknown): ValidateReturn {
@@ -128,6 +132,9 @@ export function validateString(str: string): ValidateReturn {
   return validate(Joi.string().required(), str)
 }
 
-export function validateChainId(data: ChainId): ValidateReturn {
-  return validate(chainId, data)
+export function validateSetChainOptions(data: {
+  chainId: ChainId
+  wallet?: WalletState['label']
+}): ValidateReturn {
+  return validate(setChainOptions, data)
 }

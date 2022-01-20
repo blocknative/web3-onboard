@@ -72,7 +72,9 @@ function mountApp() {
     }
   }
 
-  customElements.define('onboard-v2', Onboard)
+  if (!customElements.get('onboard-v2')) {
+    customElements.define('onboard-v2', Onboard)
+  }
 
   // Add Fonts to main page
   const styleEl = document.createElement('style')

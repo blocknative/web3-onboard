@@ -4,7 +4,7 @@
   export let scanAccounts: () => Promise<void>
   export let loadingAccounts: boolean
   export let showEmptyAddresses: boolean
-  export let errorFromScan: boolean
+  export let errorFromScan: string
 
   const filterEmptyAccounts = () => {
     showEmptyAddresses = !showEmptyAddresses
@@ -115,6 +115,10 @@
     background: var(--account-select-gray-100, var(--gray-100));
     border-bottom: 1px solid var(--account-select-gray-200, var(--gray-200));
   }
+
+  .cursor-pointer {
+    cursor: pointer;
+  }
 </style>
 
 <div class="table-controls">
@@ -125,12 +129,12 @@
       on:change={filterEmptyAccounts}
       class="checkbox-input"
     />
-    <label for="legacy" class="ml2 cursor-pointer font-5"
+    <label for="show-empty-addresses" class="ml2 cursor-pointer font-5"
       >Show Empty Addresses</label
     >
   </div>
   {#if errorFromScan}
-    <span class="error-msg">An error occured while scanning wallet</span>
+    <span class="error-msg">{errorFromScan}</span>
   {/if}
   <button
     class="scan-accounts-btn"
