@@ -1,7 +1,7 @@
 import { firstValueFrom, Subject, take } from 'rxjs'
 
 import AccountSelect from './views/AccountSelect.svelte'
-import { accounts$, displayModal$ } from './streams'
+import { accounts$ } from './streams'
 import { validateSelectAccountOptions } from './validation'
 import { SofiaProRegular, SofiaProSemiBold, SofiaProLight } from './fonts'
 
@@ -18,14 +18,10 @@ const accountSelect = async (
     }
   }
 
-  if (!document.querySelector('account-select')) {
-    mountAccountSelect(options, accounts$)
-  }
-
-  displayModal$.next(true)
+  const app = mountAccountSelect(options, accounts$)
 
   accounts$.pipe(take(1)).subscribe(() => {
-    displayModal$.next(false)
+    app.$destroy()
   })
 
   return firstValueFrom(accounts$)
@@ -42,7 +38,9 @@ const mountAccountSelect = (
     }
   }
 
-  customElements.define('account-select', AccountSelectEl)
+  if (!customElements.get('account-select')) {
+    customElements.define('account-select', AccountSelectEl)
+  }
 
   // Add Fonts to main page
   const styleEl = document.createElement('style')

@@ -4,7 +4,6 @@
   import CloseButton from '../elements/CloseButton.svelte'
   import AddressTable from '../elements/AddressTable.svelte'
   import TableHeader from '../elements/TableHeader.svelte'
-  import { displayModal$ } from '../streams'
   import { utils } from 'ethers'
 
   import type { Subject } from 'rxjs'
@@ -26,7 +25,7 @@
   let customDerivationPath = false
   let showEmptyAddresses = false
   let loadingAccounts = false
-  let errorFromScan = false
+  let errorFromScan = ''
 
   let scanAccountOptions: ScanAccountsOptions = {
     derivationPath: basePaths[0]?.value || '',
@@ -52,19 +51,19 @@
 
   const scanAccountsWrap = async (): Promise<void> => {
     try {
-      errorFromScan = false
+      errorFromScan = ''
       loadingAccounts = true
       const allAccounts = await scanAccounts(scanAccountOptions)
       accountsListObject = {
         all: allAccounts,
-        filtered: allAccounts.filter(
-          account => parseInt(utils.formatEther(account?.balance?.value)) > 0
-        )
+        filtered: allAccounts.filter(account => {
+          return parseFloat(utils.formatEther(account?.balance?.value)) > 0
+        })
       }
       loadingAccounts = false
     } catch (err) {
-      console.error(err)
-      errorFromScan = true
+      const { message } = err as { message: string }
+      errorFromScan = message || 'There was an error scanning for accounts'
       loadingAccounts = false
     }
   }
@@ -213,21 +212,31 @@
     border-radius: 40px;
   }
 
-  .hardware-connect-modal {
-    z-index: 20;
+  .container {
     position: absolute;
-    width: 42rem;
+    top: 0;
+    right: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(4px);
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  .hardware-connect-modal {
+    width: 50rem;
     max-height: 51.75rem;
-    margin: 0 auto;
     display: table;
-    right: var(--account-select-right-1, var(--right-1));
-    top: var(--account-select-top-1, var(--top-1));
     background: var(--account-select-white, var(--white));
     box-shadow: var(--account-select-shadow-1, var(--shadow-1));
     border-radius: 1.5rem;
   }
 
   .connect-wallet-header {
+    position: relative;
     background-color: var(--account-select-gray-100, var(--gray-100));
     height: 5rem;
     border-radius: 1.5rem 1.5rem 0 0;
@@ -330,7 +339,7 @@
   }
 </style>
 
-{#if $displayModal$}
+<div class="container">
   <div class="hardware-connect-modal" transition:fade>
     <header class="connect-wallet-header">
       <div class="bn-logo">{@html blocknative}</div>
@@ -441,4 +450,4 @@
       </div>
     </section>
   </div>
-{/if}
+</div>

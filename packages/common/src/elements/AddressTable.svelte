@@ -59,7 +59,7 @@
   .address-table {
     min-height: 4.5rem;
     max-height: 27rem;
-    overflow: scroll;
+    overflow: auto;
   }
 
   .selected-row,
@@ -102,7 +102,9 @@
             class:selected-row={accountSelected?.address === account.address}
             on:click={() => handleSelectedRow(account)}
           >
-            <td>{account?.address}</td>
+            <td style="font-family:'Courier New', Courier, monospace;"
+              >{account?.address}</td
+            >
             <td>{account?.derivationPath}</td>
             <td class="asset-td"
               >{utils.formatEther(account?.balance?.value)}
