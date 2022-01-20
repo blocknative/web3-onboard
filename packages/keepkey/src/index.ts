@@ -202,10 +202,14 @@ function keepkey(): WalletInit {
           if (
             !DEFAULT_BASE_PATHS.find(({ value }) => value === derivationPath)
           ) {
-            const accountIdx = getAccountIdx(derivationPath)
-            const account = await getAccount({ accountIdx, provider, asset })
+            try {
+              const accountIdx = getAccountIdx(derivationPath)
+              const account = await getAccount({ accountIdx, provider, asset })
 
-            return [account]
+              return [account]
+            } catch (error) {
+              throw new Error('Invalid derivation path')
+            }
           }
 
           return getAllAccounts({ derivationPath, asset, provider })
