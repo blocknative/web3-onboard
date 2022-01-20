@@ -171,15 +171,21 @@ function trezor(options: TrezorOptions): WalletInit {
           )
         }
 
-        const getAccountFromAccountSelect = async () =>
-          accounts ??
-          (accounts = await accountSelect({
+        const getAccountFromAccountSelect = async () => {
+          accounts = await accountSelect({
             basePaths: DEFAULT_BASE_PATHS,
             assets,
             chains,
             scanAccounts,
             walletIcon: await getIcon()
-          }))
+          })
+
+          if (accounts.length) {
+            eventEmitter.emit('accountsChanged', [accounts[0].address])
+          }
+
+          return accounts
+        }
 
         async function getAddress(path: string) {
           const errorMsg = `Unable to derive address from path ${path}`
