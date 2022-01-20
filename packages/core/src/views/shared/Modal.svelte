@@ -40,7 +40,7 @@
 
   .relative {
     position: relative;
-    width: 100%;
+    display: flex;
     max-height: calc(100vh - 2rem);
   }
 
