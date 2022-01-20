@@ -444,6 +444,7 @@ export enum ProviderIdentityFlag {
   Bitpie = 'isBitpie',
   BlankWallet = 'isBlank',
   Coinbase = 'isToshi',
+  CoinbaseExtension = 'isCoinbaseWallet',
   Detected = 'request',
   Dcent = 'isDcentWallet',
   Frame = 'isFrame',
