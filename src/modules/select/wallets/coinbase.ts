@@ -13,7 +13,8 @@ function coinbase(options: CommonWalletOptions): WalletModule {
     wallet: async (helpers: Helpers) => {
       const { getProviderName, createLegacyProviderInterface } = helpers
       const provider =
-        (window as any).web3 && (window as any).web3.currentProvider
+        (window as any).ethereum ||
+        ((window as any).web3 && (window as any).web3.currentProvider)
 
       return {
         provider,
