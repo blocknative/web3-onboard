@@ -87,7 +87,8 @@ const coinbase: InjectedWalletModule = {
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
     !!provider?.[ProviderIdentityFlag.Coinbase] ||
-    !!provider?.providers[0]?.[ProviderIdentityFlag.CoinbaseExtension],
+    (!!provider?.providers &&
+      !!provider?.providers[0]?.[ProviderIdentityFlag.CoinbaseExtension]),
   getIcon: async () => (await import('./icons/coinbase')).default,
   getInterface: async () => {
     const provider = window.ethereum as EIP1193Provider

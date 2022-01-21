@@ -38,6 +38,8 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
           qrcodeModalOptions
         })
 
+        console.log({ connector })
+
         class EthProvider extends EventEmitter {
           public request: EIP1193Provider['request']
           public connector: InstanceType<typeof WalletConnect>
@@ -60,6 +62,7 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
 
             // listen for session updates
             fromEvent(this.connector, 'session_update', (error, payload) => {
+              console.log('session update', payload)
               if (error) {
                 throw error
               }
@@ -78,6 +81,7 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
 
             // listen for disconnect event
             fromEvent(this.connector, 'disconnect', (error, payload) => {
+              console.log('disconnect')
               if (error) {
                 throw error
               }
@@ -87,8 +91,11 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
               .pipe(takeUntil(this.disconnected$))
               .subscribe({
                 next: () => {
+                  console.log('disconnect event')
                   this.emit('accountsChanged', [])
                   this.disconnected$.next(true)
+                  typeof localStorage !== 'undefined' &&
+                    localStorage.removeItem('walletconnect')
                 },
                 error: console.warn
               })

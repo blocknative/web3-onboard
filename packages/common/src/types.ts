@@ -78,7 +78,6 @@ export type SelectAccountOptions = {
   assets: Asset[] // the selectable assets to scan for a balance
   chains: Chain[] // the selectable chains/networks to scan for balance
   scanAccounts: ScanAccounts
-  walletIcon: string
 }
 
 export type BasePath = {
