@@ -66,9 +66,9 @@ function network(
           method: 'wallet_switchEthereumChain',
           params: [{ chainId: '0x' + appNetworkId?.toString(16) }]
         })
-      } catch (e:any) {
+      } catch (e) {
         // This error code indicates that the chain has not been added to MetaMask.
-        if (e?.code === 4902 && wallet?.provider) await tryToAddChain(wallet.provider, appNetworkId);
+        if ((e as any)?.code === 4902 && wallet?.provider) await tryToAddChain(wallet.provider, appNetworkId);
         // Could not switch networks so proceed as normal through the checks
       }
     }
