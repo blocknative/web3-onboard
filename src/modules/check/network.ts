@@ -66,7 +66,9 @@ function network(
           method: 'wallet_switchEthereumChain',
           params: [{ chainId: '0x' + appNetworkId?.toString(16) }]
         })
-      } catch (e) {
+      } catch (e:any) {
+        // This error code indicates that the chain has not been added to MetaMask.
+        if (e?.code === 4902 && wallet?.provider) await tryToAddChain(wallet.provider, appNetworkId);
         // Could not switch networks so proceed as normal through the checks
       }
     }
@@ -100,6 +102,51 @@ function network(
         icon: icon || networkIcon
       }
     }
+  }
+}
+
+async function tryToAddChain(provider:any, id:Number) {
+  const index = id.toString() as keyof typeof PROVIDERS;
+  const networkInfo = PROVIDERS[index];
+  if(!networkInfo) return null;
+
+  try {
+    await provider.request({
+      method: 'wallet_addEthereumChain',
+      params: [
+        networkInfo,
+      ],
+    });
+  } catch (addError) {
+    console.log('could not add chain', index);
+    // handle "add" error
+  }
+}
+
+const PROVIDERS = {
+  "80001": { 
+    chainId: '0x' + (80001).toString(16), // Hexadecimal version of 80001, prefixed with 0x
+    chainName: "POLYGON Mumbai",
+    nativeCurrency: {
+        name: "MATIC",
+        symbol: "MATIC",
+        decimals: 18,
+    },
+    rpcUrls: ["https://rpc-mumbai.maticvigil.com/"],
+    blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
+    iconUrls: [""],
+  },
+  "137": { 
+    chainId: '0x' + (137).toString(16), // Hexadecimal version of 80001, prefixed with 0x
+    chainName: "POLYGON",
+    nativeCurrency: {
+        name: "MATIC",
+        symbol: "MATIC",
+        decimals: 18,
+    },
+    rpcUrls: ["https://polygon-rpc.com/"],
+    blockExplorerUrls: ["https://polygonscan.com/"],
+    iconUrls: [""],
   }
 }
 
