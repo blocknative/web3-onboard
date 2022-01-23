@@ -12,7 +12,11 @@ _NOTE: not currently ready for production use_
 
 ## Quickstart
 
-Get started with Onboard supporting all injected wallet modules:
+Install the core Onboard library and the injected wallets module to support browser extension and mobile wallets:
+
+`npm i @bn-onboard/core @bn-onboard/injected-wallets`
+
+Then initialize in your app:
 
 ```javascript
 import Onboard from '@bn-onboard/core'
@@ -68,10 +72,10 @@ For full documentation, check out the README.md for each package:
 
 **Hardware Wallets**
 
-- KeepKey (in active development)
+- [KeepKey](packages/keepkey/README.md)
+- [Ledger](packages/ledger/README.md)
+- [Trezor](packages/trezor/README.md)
 - Keystone (in active development)
-- Ledger (in active development)
-- Trezor (in active development)
 
 ## Test out the demo app
 
