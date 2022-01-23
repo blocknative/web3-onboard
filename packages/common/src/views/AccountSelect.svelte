@@ -1,6 +1,5 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
-  import blocknative from '../icons/blocknative'
   import CloseButton from '../elements/CloseButton.svelte'
   import AddressTable from '../elements/AddressTable.svelte'
   import TableHeader from '../elements/TableHeader.svelte'
@@ -17,8 +16,7 @@
   export let selectAccountOptions: SelectAccountOptions
   export let accounts$: Subject<Account[]>
 
-  const { basePaths, assets, chains, scanAccounts, walletIcon } =
-    selectAccountOptions
+  const { basePaths, assets, chains, scanAccounts } = selectAccountOptions
 
   let accountsListObject: AccountsList | undefined
   let accountSelected: Account | undefined
@@ -203,13 +201,7 @@
   }
 
   .close {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    width: 2rem;
-    height: 2rem;
-    background: var(--account-select-gray-200, var(--gray-200));
-    border-radius: 40px;
+    cursor: pointer;
   }
 
   .container {
@@ -238,22 +230,11 @@
   .connect-wallet-header {
     position: relative;
     background-color: var(--account-select-gray-100, var(--gray-100));
-    height: 5rem;
     border-radius: 1.5rem 1.5rem 0 0;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-  }
-
-  .bn-logo {
-    height: 3.2rem;
-    position: absolute;
-    left: 0.5rem;
-  }
-
-  .wallet-icon {
-    width: 4rem;
-    height: 4rem;
+    width: 100%;
   }
 
   .modal-controls {
@@ -342,9 +323,10 @@
 <div class="container">
   <div class="hardware-connect-modal" transition:fade>
     <header class="connect-wallet-header">
-      <div class="bn-logo">{@html blocknative}</div>
-      <div class="wallet-icon">{@html walletIcon}</div>
-      <div class="close" on:click={dismiss}><CloseButton /></div>
+      <div />
+      <div class="close" on:click={dismiss}>
+        <CloseButton />
+      </div>
     </header>
     <section class="modal-controls">
       <div class="w-100 base-path-container">

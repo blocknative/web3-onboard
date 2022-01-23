@@ -202,8 +202,7 @@ function ledger({
             basePaths: DEFAULT_BASE_PATHS,
             assets,
             chains,
-            scanAccounts,
-            walletIcon: await getIcon()
+            scanAccounts
           })
 
           if (accounts.length) {
