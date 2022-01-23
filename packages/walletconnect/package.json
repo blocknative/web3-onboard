@@ -1,6 +1,6 @@
 {
   "name": "@bn-onboard/walletconnect",
-  "version": "2.0.0-alpha.3",
+  "version": "2.0.0-alpha.4",
   "description": "WalletConnect module for Onboard.js",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
