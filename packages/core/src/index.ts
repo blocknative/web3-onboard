@@ -13,7 +13,16 @@ import type { InitOptions, OnboardAPI } from './types'
 import { getDeviceInfo } from './utils'
 import { SofiaProRegular, SofiaProSemiBold, SofiaProLight } from './fonts'
 
+const API = {
+  connectWallet,
+  disconnectWallet,
+  setChain,
+  state
+}
+
 function init(options: InitOptions): OnboardAPI {
+  if (typeof window === 'undefined') return API
+
   if (options) {
     const error = validateInitOptions(options)
 
@@ -57,12 +66,7 @@ function init(options: InitOptions): OnboardAPI {
     device
   })
 
-  return {
-    connectWallet,
-    disconnectWallet,
-    setChain,
-    state
-  }
+  return API
 }
 
 function mountApp() {

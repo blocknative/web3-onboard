@@ -15,6 +15,8 @@ import { validateWalletOptions } from './validation.js'
 declare const window: CustomWindow
 
 function injected(options?: InjectedWalletOptions): WalletInit {
+  if (typeof window === 'undefined') return () => null
+
   if (options) {
     const result = validateWalletOptions(options)
 
