@@ -11,6 +11,7 @@
   import fortmaticModule from '@bn-onboard/fortmatic'
   import torusModule from '@bn-onboard/torus'
   import keepkeyModule from '@bn-onboard/keepkey'
+  import keystoneModule from '@bn-onboard/keystone'
   import blocknativeIcon from './blocknative-icon'
   import VConsole from 'vconsole'
   import { verifyTypedData, verifyMessage } from 'ethers/lib/utils'
@@ -62,6 +63,7 @@
   const torus = torusModule()
   const ledger = ledgerModule()
   const keepkey = keepkeyModule()
+  const keystone = keystoneModule()
 
   const trezorOptions = {
     email: 'test@test.com',
@@ -75,6 +77,7 @@
       trezor,
       walletConnect,
       keepkey,
+      keystone,
       walletLink,
       injected,
       fortmatic,
