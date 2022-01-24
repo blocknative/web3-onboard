@@ -410,3 +410,83 @@ module.exports = {
   ]
 }
 ```
+
+### SvelteKit
+
+Add the following dev dependencies:
+
+`npm i --save-dev rollup-plugin-polyfill-node`
+
+Then add the following to your `svelte.config.js` file:
+
+```javascript
+import adapter from '@sveltejs/adapter-auto'
+import preprocess from 'svelte-preprocess'
+import nodePolyfills from 'rollup-plugin-polyfill-node'
+
+const MODE = process.env.NODE_ENV
+const development = MODE === 'development'
+
+/** @type {import('@sveltejs/kit').Config} */
+const config = {
+  preprocess: preprocess(),
+  kit: {
+    adapter: adapter(),
+    target: '#svelte',
+    vite: {
+      plugins: [
+        development &&
+          nodePolyfills({
+            include: [
+              'node_modules/**/*.js',
+              new RegExp('node_modules/.vite/.*js')
+            ]
+          })
+      ],
+      build: {
+        rollupOptions: {
+          plugins: [nodePolyfills()]
+        },
+        commonjsOptions: {
+          transformMixedEsModules: true
+        }
+      }
+    }
+  }
+}
+
+export default config
+```
+
+### Vite
+
+Add the following dev dependencies:
+
+`npm i --save-dev rollup-plugin-polyfill-node`
+
+Then add the following to your `vite.config.js` file:
+
+```javascript
+import nodePolyfills from 'rollup-plugin-polyfill-node'
+
+const MODE = process.env.NODE_ENV
+const development = MODE === 'development'
+
+export default {
+  // other config options
+  plugins: [
+    development &&
+      nodePolyfills({
+        include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js')]
+      })
+  ],
+  build: {
+    rollupOptions: {
+      plugins: [nodePolyfills()]
+    },
+    commonjsOptions: {
+      transformMixedEsModules: true
+    }
+  }
+}
+```
