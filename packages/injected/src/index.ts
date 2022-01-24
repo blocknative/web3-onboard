@@ -8,9 +8,9 @@ import type {
 
 import { ProviderLabel } from '@bn-onboard/common'
 
-import standardWallets from './wallets'
-import { remove } from './helpers'
-import { validateWalletOptions } from './validation'
+import standardWallets from './wallets.js'
+import { remove } from './helpers.js'
+import { validateWalletOptions } from './validation.js'
 
 declare const window: CustomWindow
 

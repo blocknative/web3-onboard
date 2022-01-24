@@ -1,5 +1,4 @@
 import { WalletInit } from '@bn-onboard/common'
-import Joi from 'joi'
 
 function walletLink(options?: { darkMode?: boolean }): WalletInit {
   const { darkMode = false } = options || {}
@@ -7,7 +6,7 @@ function walletLink(options?: { darkMode?: boolean }): WalletInit {
   return () => {
     return {
       label: 'Coinbase',
-      getIcon: async () => (await import('./icon')).default,
+      getIcon: async () => (await import('./icon.js')).default,
       getInterface: async ({ chains, appMetadata }) => {
         const [chain] = chains
         const { name, icon } = appMetadata || {}

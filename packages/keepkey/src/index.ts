@@ -38,7 +38,7 @@ const errorMessages = {
 type ErrorCode = 'busy' | 'pairing'
 
 function keepkey(): WalletInit {
-  const getIcon = async () => (await import('./icon')).default
+  const getIcon = async () => (await import('./icon.js')).default
 
   return () => {
     let accounts: Account[] | undefined

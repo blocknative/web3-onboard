@@ -27,7 +27,7 @@ function torus(options?: TorusOptions): WalletInit {
   return () => {
     return {
       label: 'Torus',
-      getIcon: async () => (await import('./icon')).default,
+      getIcon: async () => (await import('./icon.js')).default,
       getInterface: async ({ chains }) => {
         const [chain] = chains
         const { default: Torus } = await import('@toruslabs/torus-embed')

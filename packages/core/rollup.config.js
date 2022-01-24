@@ -11,7 +11,7 @@ const production = !process.env.ROLLUP_WATCH
 export default {
   input: 'src/index.ts',
   output: {
-    format: 'esm',
+    format: 'es',
     dir: 'dist/'
   },
   plugins: [
@@ -38,6 +38,7 @@ export default {
     })
   ],
   external: [
+    'ethers',
     'bowser',
     'joi',
     'rxjs',

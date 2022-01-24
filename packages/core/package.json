@@ -1,6 +1,6 @@
 {
   "name": "@bn-onboard/core",
-  "version": "2.0.0-alpha.8",
+  "version": "2.0.0-alpha.9",
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
@@ -12,10 +12,12 @@
   "files": [
     "dist"
   ],
-  "type": "module",
+  "module": "dist/index.js",
   "browser": "dist/index.js",
+  "main": "dist/index.js",
+  "type": "module",
   "devDependencies": {
-    "@bn-onboard/common": "^2.0.0-alpha",
+    "@bn-onboard/common": "^2.0.0-alpha.5",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
