@@ -43,4 +43,3 @@ workflows:
             branches:
               only:
                 - main
-                - feature/v2
