@@ -1,6 +1,6 @@
 {
   "name": "@bn-onboard/ledger",
-  "version": "2.0.0-alpha.6",
+  "version": "2.0.0-alpha.7",
   "description": "Ledger module for Onboard.js",
   "module": "dist/index.js",
   "browser": "dist/index.js",
@@ -29,6 +29,7 @@
     "@ledgerhq/hw-transport-webusb": "^6.19.0",
     "bip32": "^3.0.1",
     "buffer": "^6.0.3",
+    "eip-712": "^0.4.3",
     "eth-crypto": "^2.1.0",
     "ethereumjs-util": "^7.1.3",
     "tiny-secp256k1": "^2.1.2"
