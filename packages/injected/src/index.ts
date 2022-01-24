@@ -14,10 +14,12 @@ import { validateWalletOptions } from './validation'
 
 declare const window: CustomWindow
 
-function injected(options: InjectedWalletOptions): WalletInit {
-  const result = validateWalletOptions(options)
+function injected(options?: InjectedWalletOptions): WalletInit {
+  if (options) {
+    const result = validateWalletOptions(options)
 
-  if (result?.error) throw result.error
+    if (result?.error) throw result.error
+  }
 
   return helpers => {
     const { device } = helpers
