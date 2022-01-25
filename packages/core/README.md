@@ -415,7 +415,7 @@ module.exports = {
 
 [CRACO](https://www.npmjs.com/package/@craco/craco) provides an easy way to override webpack config which is obfuscated in Creat React App built applications.
 
-The above webpack 5 example can be used in this case.
+The above webpack 5 example can be used in the `craco.config.js` file at the root level in this case.
 
 **Note:** currently still facing some challenges building with CRA and CRACO for hardware wallets
 
