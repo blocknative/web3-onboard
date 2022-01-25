@@ -90,6 +90,7 @@
       }
     } catch (error) {
       // selectWalletError = (error as Error).message
+      console.error(error)
     }
   }
 

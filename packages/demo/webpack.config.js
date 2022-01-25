@@ -66,7 +66,7 @@ module.exports = {
       filename: '[name].css'
     }),
     new webpack.ProvidePlugin({
-      process: 'process/browser',
+      process: 'process',
       Buffer: ['buffer', 'Buffer']
     })
   ],
