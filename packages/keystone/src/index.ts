@@ -72,149 +72,159 @@ function keystone({
   customNetwork?: CustomNetwork
 } = {}): WalletInit {
   const getIcon = async () => (await import('./icon')).default
-  return () => ({
-    label: 'Keystone',
-    getIcon,
-    getInterface: async ({ EventEmitter, chains }: GetInterfaceHelpers) => {
-      const { providers } = await import('ethers')
-      const { default: AirGapedKeyring } = await import(
-        '@keystonehq/eth-keyring'
-      )
-      const { TransactionFactory: Transaction, Capability } = await import(
-        '@ethereumjs/tx'
-      )
-      const ethUtil = await import('ethereumjs-util')
-      const { default: Common, Hardfork } = await import('@ethereumjs/common')
+  return () => {
+    let accounts: Account[] | undefined
+    return {
+      label: 'Keystone',
+      getIcon,
+      getInterface: async ({ EventEmitter, chains }: GetInterfaceHelpers) => {
+        const { providers } = await import('ethers')
+        const { default: AirGapedKeyring } = await import(
+          '@keystonehq/eth-keyring'
+        )
+        const { TransactionFactory: Transaction } = await import(
+          '@ethereumjs/tx'
+        )
 
-      const keyring = AirGapedKeyring.getEmptyKeyring()
+        const { default: Common, Hardfork } = await import('@ethereumjs/common')
 
-      const eventEmitter = new EventEmitter()
-
-      let currentChain: Chain = chains[0]
-      const scanAccounts = async ({
-        derivationPath,
-        chainId,
-        asset
-      }: ScanAccountsOptions): Promise<Account[]> => {
+        const keyring = AirGapedKeyring.getEmptyKeyring()
         await keyring.readKeyring()
-        currentChain =
-          chains.find(({ id }: Chain) => id === chainId) ?? currentChain
 
-        const provider = new providers.JsonRpcProvider(currentChain.rpcUrl)
-        return generateAccounts(keyring, provider)
-      }
+        const eventEmitter = new EventEmitter()
 
-      let accounts: Account[] | undefined
+        let currentChain: Chain = chains[0]
+        const scanAccounts = async ({
+          derivationPath,
+          chainId,
+          asset
+        }: ScanAccountsOptions): Promise<Account[]> => {
+          
+          currentChain =
+            chains.find(({ id }: Chain) => id === chainId) ?? currentChain
 
-      const getAccounts = async () => {
-        let accounts: Account[] = []
-
-        accounts = await accountSelect({
-          basePaths,
-          assets,
-          chains,
-          scanAccounts,
-          walletIcon: await getIcon()
-        })
-
-        if (accounts.length) {
-          eventEmitter.emit('accountsChanged', [accounts[0].address])
+          const provider = new providers.JsonRpcProvider(currentChain.rpcUrl)
+          return generateAccounts(keyring, provider)
         }
 
-        return accounts
-      }
-
-      const keystoneProvider = {}
-      const provider = createEIP1193Provider(keystoneProvider, {
-        eth_requestAccounts: async () => {
-          // Triggers the account select modal if no accounts have been selected
-          const accounts = await getAccounts()
-          if (accounts?.length === 0) {
-            throw new ProviderRpcError({
-              code: 4001,
-              message: 'User rejected the request.'
-            })
-          }
-          return [accounts[0]?.address]
-        },
-        eth_accounts: async () => {
-          return accounts?.[0]?.address ? [accounts[0].address] : []
-        },
-        eth_chainId: async () => {
-          return currentChain?.id ?? ''
-        },
-        eth_signTransaction: async ({ params: [transactionObject] }) => {
-          if (!accounts)
-            throw new Error(
-              'No account selected. Must call eth_requestAccounts first.'
-            )
-
-          const account =
-            accounts.find(
-              account => account.address === transactionObject?.from
-            ) || accounts[0]
-
-          const { address: from, derivationPath } = account
-
-          // Set the `from` field to the currently selected account
-          transactionObject = { ...transactionObject, from }
-
-          const common = new Common({
-            chain: customNetwork || Number.parseInt(currentChain?.id) || 1,
-            // Berlin is the minimum hardfork that will allow for EIP1559
-            hardfork: Hardfork.Berlin,
-            // List of supported EIPS
-            eips: [1559]
+        const getAccounts = async () => {
+          accounts = await accountSelect({
+            basePaths,
+            assets,
+            chains,
+            scanAccounts,
+            walletIcon: await getIcon()
           })
 
-          transactionObject.gasLimit =
-            transactionObject.gas ?? transactionObject.gasLimit
-
-          const transaction = Transaction.fromTxData(
-            {
-              ...transactionObject
-            },
-            { common }
-          )
-
-          let unsignedTx = transaction.getMessageToSign(false)
-
-          // If this is not an EIP1559 transaction then it is legacy and it needs to be
-          // rlp encoded before being passed to ledger
-          if (!transaction.supports(Capability.EIP1559FeeMarket)) {
-            unsignedTx = ethUtil.rlp.encode(unsignedTx)
+          if (accounts.length) {
+            eventEmitter.emit('accountsChanged', [accounts[0].address])
           }
 
-          // const { v, r, s } = await eth.signTransaction(
-          //   derivationPath,
-          //   unsignedTx.toString('hex')
-          // )
+          return accounts
+        }
 
-          const { v, r, s } = await keyring.signTransaction(from, transaction)
+        const keystoneProvider = {}
+        const provider = createEIP1193Provider(keystoneProvider, {
+          eth_requestAccounts: async () => {
+            // Triggers the account select modal if no accounts have been selected
+            const accounts = await getAccounts()
+            if (accounts?.length === 0) {
+              throw new ProviderRpcError({
+                code: 4001,
+                message: 'User rejected the request.'
+              })
+            }
+            return [accounts[0]?.address]
+          },
+          eth_accounts: async () => {
+            return accounts?.[0]?.address ? [accounts[0].address] : []
+          },
+          eth_chainId: async () => {
+            return currentChain?.id ?? ''
+          },
+          eth_signTransaction: async ({ params: [transactionObject] }) => {
+            if (!accounts)
+              throw new Error(
+                'No account selected. Must call eth_requestAccounts first.'
+              )
 
-          // Reconstruct the signed transaction
-          const signedTx = Transaction.fromTxData(
-            {
-              ...transactionObject,
-              v: `0x${v}`,
-              r: `0x${r}`,
-              s: `0x${s}`
-            },
-            { common }
-          )
+            const account =
+              accounts.find(
+                account => account.address === transactionObject?.from
+              ) || accounts[0]
 
-          return signedTx ? `0x${signedTx.serialize().toString('hex')}` : ''
-        },
-        wallet_addEthereumChain: null
-      })
+            const { address: from } = account
 
-      provider.on = eventEmitter.on.bind(eventEmitter)
+            // Set the `from` field to the currently selected account
+            transactionObject = { ...transactionObject, from }
 
-      return {
-        provider
+            const common = new Common({
+              chain: customNetwork || Number.parseInt(currentChain?.id) || 1,
+              // Berlin is the minimum hardfork that will allow for EIP1559
+              hardfork: Hardfork.Berlin,
+              // List of supported EIPS
+              eips: [1559]
+            })
+
+            transactionObject.gasLimit =
+              transactionObject.gas ?? transactionObject.gasLimit
+
+            const transaction = Transaction.fromTxData(
+              {
+                ...transactionObject
+              },
+              { common, freeze: false }
+            )
+
+            // @ts-ignore
+            const signedTx = await keyring.signTransaction(from, transaction)
+
+            return `0x${signedTx?.serialize().toString('hex')}`
+          },
+          eth_sign: async ({ params: [address, message] }) => {
+            if (!(accounts?.length && accounts?.length > 0))
+              throw new Error(
+                'No account selected. Must call eth_requestAccounts first.'
+              )
+
+            const account =
+              accounts.find(account => account.address === address) ||
+              accounts[0]
+
+            return keyring.signMessage(account.address, message)
+          },
+          eth_signTypedData: async ({ params: [address, typedData] }) => {
+            if (!(accounts?.length && accounts?.length > 0))
+              throw new Error(
+                'No account selected. Must call eth_requestAccounts first.'
+              )
+
+            const account =
+              accounts.find(account => account.address === address) ||
+              accounts[0]
+
+            return keyring.signTypedData(account.address, typedData)
+          },
+          wallet_switchEthereumChain: async ({ params: [{ chainId }] }) => {
+            currentChain =
+              chains.find(({ id }) => id === chainId) ?? currentChain
+            if (!currentChain)
+              throw new Error('chain must be set before switching')
+
+            eventEmitter.emit('chainChanged', currentChain.id)
+            return null
+          },
+          wallet_addEthereumChain: null
+        })
+
+        provider.on = eventEmitter.on.bind(eventEmitter)
+
+        return {
+          provider
+        }
       }
     }
-  })
+  }
 }
 
 export default keystone

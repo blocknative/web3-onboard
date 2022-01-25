@@ -281,7 +281,7 @@
     "@ethereumjs/common" "^2.4.0"
     ethereumjs-util "^7.1.0"
 
-"@ethereumjs/tx@^3.2.1", "@ethereumjs/tx@^3.3.0":
+"@ethereumjs/tx@^3.2.1", "@ethereumjs/tx@^3.3.0", "@ethereumjs/tx@^3.4.0":
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/@ethereumjs/tx/-/tx-3.4.0.tgz#7eb1947eefa55eb9cf05b3ca116fb7a3dbd0bce7"
   integrity sha512-WWUwg1PdjHKZZxPPo274ZuPsJCWV3SqATrEKQP1n2DrVYVP1aZIYpo/mFaA0BDoE0tIQmBeimRCEA0Lgil+yYw==
@@ -1176,21 +1176,21 @@
     google-protobuf "^3.7.0-rc.2"
     pbjs "^0.0.5"
 
-"@keystonehq/base-eth-keyring@^0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@keystonehq/base-eth-keyring/-/base-eth-keyring-0.3.1.tgz#c985803f7083f0a2e6ea55846905099c46573142"
-  integrity sha512-lbVLCMD3R4Ki8CThctZOjafKvJn0p2u19csuMrJHBlFllqu88vYoyfv3I/BPtOpnWqeC90Kta23w68FFUnV8Zg==
+"@keystonehq/base-eth-keyring@^0.3.2-alpha.1":
+  version "0.3.2-alpha.1"
+  resolved "https://registry.yarnpkg.com/@keystonehq/base-eth-keyring/-/base-eth-keyring-0.3.2-alpha.1.tgz#60166a5122da8f97965eb70ee046944419ded137"
+  integrity sha512-RKh6y6a4r46X5G6S7xZgpPJy036AT9WnvtLPYFHbxn0mpi7G23UfzREb8GzGs9ctzskzoiveQ/j00ySsC7tMaQ==
   dependencies:
     "@ethereumjs/tx" "3.0.0"
-    "@keystonehq/bc-ur-registry-eth" "^0.7.5"
+    "@keystonehq/bc-ur-registry-eth" "^0.7.6"
     ethereumjs-util "^7.0.8"
     hdkey "^2.0.1"
     uuid "^8.3.2"
 
-"@keystonehq/bc-ur-registry-eth@^0.7.5":
-  version "0.7.5"
-  resolved "https://registry.yarnpkg.com/@keystonehq/bc-ur-registry-eth/-/bc-ur-registry-eth-0.7.5.tgz#30a146e2b6ba01f73380530bbb6bd6a62d540a8b"
-  integrity sha512-9WcIe4WcqJxf/HKxKhnOBgEfre8/BB5Zi68iHFdw/pyfdYBfzU/nAn2/NB/ggqIHNGWO4zsRnBk85vbJ3QwQsQ==
+"@keystonehq/bc-ur-registry-eth@^0.7.6":
+  version "0.7.6"
+  resolved "https://registry.yarnpkg.com/@keystonehq/bc-ur-registry-eth/-/bc-ur-registry-eth-0.7.6.tgz#da7e77b5b45838197c0944a136cdac8f8648c4ac"
+  integrity sha512-VaZgXBfeORCCl/bbrWNs8Id7S7b3lnPhLubvnBJr5yjO71aVLmDU84PpOfSmBdKRrv7/lZ6fai87MOatUx3j3g==
   dependencies:
     "@keystonehq/bc-ur-registry" "^0.4.4"
     ethereumjs-util "^7.0.8"
@@ -1206,25 +1206,25 @@
     base58check "^2.0.0"
     tslib "^2.3.0"
 
-"@keystonehq/eth-keyring@^0.11.1":
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/@keystonehq/eth-keyring/-/eth-keyring-0.11.1.tgz#92215af76ff53fada0654229d2e77e46044495ea"
-  integrity sha512-G+QGpbY7BVM2JYXydvcSPqELWnPGM9SmV6V3E8HWPDER7qWbs9ILSy9ORnnARMmGwe81eQ+ce83s06Uo4xhjHw==
+"@keystonehq/eth-keyring@^0.11.2-alpha.1":
+  version "0.11.2-alpha.1"
+  resolved "https://registry.yarnpkg.com/@keystonehq/eth-keyring/-/eth-keyring-0.11.2-alpha.1.tgz#46d010312ce7f29d7f4695f023937400dedf2294"
+  integrity sha512-CLcSgPNMAhyiy5dDZuvQ/uChX/nvjsQ3FGohrnmw/7yYknMI6zr6nDsEJKCoofo6Zha8qRgsTwCoG56tHKHqzw==
   dependencies:
     "@ethereumjs/tx" "3.0.0"
-    "@keystonehq/base-eth-keyring" "^0.3.1"
-    "@keystonehq/bc-ur-registry-eth" "^0.7.5"
-    "@keystonehq/sdk" "^0.9.0"
+    "@keystonehq/base-eth-keyring" "^0.3.2-alpha.1"
+    "@keystonehq/bc-ur-registry-eth" "^0.7.6"
+    "@keystonehq/sdk" "^0.9.1"
     "@metamask/obs-store" "^7.0.0"
     bs58check "^2.1.2"
     ethereumjs-util "^7.0.8"
     hdkey "^2.0.1"
     uuid "^8.3.2"
 
-"@keystonehq/sdk@^0.9.0":
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/@keystonehq/sdk/-/sdk-0.9.0.tgz#9f813badcb8df09a979d08b03ad2d53023d19aa7"
-  integrity sha512-zl28+a9ADMUFqqH0VvYbNOZsC+47Ug6BSPhO4ZDIwdlBP6/9+tt5Bv8bi0t45ObaRgXH5YzhineA0R25/IpLtg==
+"@keystonehq/sdk@^0.9.1":
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/@keystonehq/sdk/-/sdk-0.9.1.tgz#d1084c967118046257b720fedd8fbe8bb845a1c7"
+  integrity sha512-tcKDvKQVoe/2tibsjF/19VQhq1vldC+DyhC30lA9XJbbh5tXSoNfqqUVbMvDqxino/vBHZQur6rDSHF8+KBoMw==
   dependencies:
     "@ngraveio/bc-ur" "^1.0.0"
     qrcode.react "^1.0.1"
