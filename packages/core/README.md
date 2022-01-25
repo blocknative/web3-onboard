@@ -375,7 +375,7 @@ Many of the wallet modules require dependencies that are not normally included i
 
 Everything should just work since the node builtins are automatically bundled in v4
 
-### Webpack 5 
+### Webpack 5
 
 You'll need to add some dev dependencies with the following command:
 
@@ -405,15 +405,16 @@ module.exports = {
   },
   plugins: [
     new webpack.ProvidePlugin({
+      process: 'process/browser',
       Buffer: ['buffer', 'Buffer']
     })
   ]
 }
 ```
 
-#### If using create-react-app 
+#### If using create-react-app
 
-[CRACO](https://www.npmjs.com/package/@craco/craco) provides an easy way to override webpack config which is obfuscated in Creat React App built applications.
+[CRACO](https://www.npmjs.com/package/@craco/craco) provides an easy way to override webpack config which is obfuscated in Create React App built applications.
 
 The above webpack 5 example can be used in the `craco.config.js` file at the root level in this case.
 
