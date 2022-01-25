@@ -79,6 +79,7 @@ export type SelectAccountOptions = {
   chains: Chain[] // the selectable chains/networks to scan for balance
   scanAccounts: ScanAccounts
   walletIcon: string
+  supportsCustomPath?: boolean
 }
 
 export type BasePath = {

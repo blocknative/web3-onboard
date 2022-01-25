@@ -11,12 +11,12 @@ import {
 } from '@bn-onboard/common'
 import type { providers } from 'ethers'
 
-const DEFAULT_BASE_PATHS = "m/44'/60'/0'/0"
+const DEFAULT_BASE_PATH = "m/44'/60'/0'/0"
 
 const basePaths = [
   {
     label: 'Keystone',
-    value: DEFAULT_BASE_PATHS
+    value: DEFAULT_BASE_PATH
   }
 ]
 
@@ -99,7 +99,6 @@ function keystone({
           chainId,
           asset
         }: ScanAccountsOptions): Promise<Account[]> => {
-          
           currentChain =
             chains.find(({ id }: Chain) => id === chainId) ?? currentChain
 
@@ -113,7 +112,8 @@ function keystone({
             assets,
             chains,
             scanAccounts,
-            walletIcon: await getIcon()
+            walletIcon: await getIcon(),
+            supportsCustomPath: false
           })
 
           if (accounts.length) {

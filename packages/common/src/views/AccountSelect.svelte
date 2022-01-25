@@ -17,8 +17,14 @@
   export let selectAccountOptions: SelectAccountOptions
   export let accounts$: Subject<Account[]>
 
-  const { basePaths, assets, chains, scanAccounts, walletIcon } =
-    selectAccountOptions
+  const {
+    basePaths,
+    assets,
+    chains,
+    scanAccounts,
+    walletIcon,
+    supportsCustomPath = true
+  } = selectAccountOptions
 
   let accountsListObject: AccountsList | undefined
   let accountSelected: Account | undefined
@@ -370,7 +376,9 @@
                 {path.label} - {path.value}
               </option>
             {/each}
-            <option value="customPath"> Custom Derivation Path </option>
+            {#if supportsCustomPath}
+              <option value="customPath"> Custom Derivation Path </option>
+            {/if}
           </select>
         {/if}
       </div>
