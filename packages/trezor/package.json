@@ -26,6 +26,6 @@
     "buffer": "^6.0.3",
     "ethereumjs-util": "^7.1.3",
     "tiny-secp256k1": "^2.1.2",
-    "trezor-connect": "^8.2.4"
+    "trezor-connect": "^8.2.6"
   }
 }
