@@ -4,9 +4,7 @@ import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
 import oneInchIcon from '../wallet-icons/1inch.png'
 import oneInchIcon2x from '../wallet-icons/1inch@2x.png'
 
-function oneInchWallet(
-  options: CommonWalletOptions
-): WalletModule {
+function oneInchWallet(options: CommonWalletOptions): WalletModule {
   const { preferred, label, iconSrc, svg } = options
 
   return {
@@ -16,17 +14,16 @@ function oneInchWallet(
     svg,
     wallet: async (helpers: Helpers) => {
       const { createModernProviderInterface, getProviderName } = helpers
-
+      const windowAsAny = window as any
       const provider =
-          (window as any).ethereum ||
-          ((window as any).web3 && (window as any).web3.currentProvider)
+        windowAsAny || (windowAsAny.web3 && windowAsAny.web3.currentProvider)
 
       return {
         provider,
         interface:
-            provider && getProviderName(provider) === '1inch'
-                ? createModernProviderInterface(provider)
-                : null
+          provider && getProviderName(provider) === '1inch'
+            ? createModernProviderInterface(provider)
+            : null
       }
     },
     type: 'injected',
