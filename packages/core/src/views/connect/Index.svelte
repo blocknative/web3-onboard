@@ -207,7 +207,7 @@
               default: en.connect[step].header,
               values: {
                 connectionRejected,
-                wallet: selectedWallet?.label
+                wallet: selectedWallet && selectWallet.label
               }
             })}
           </h4>

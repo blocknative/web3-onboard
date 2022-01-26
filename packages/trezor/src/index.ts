@@ -141,7 +141,7 @@ function trezor(options: TrezorOptions): WalletInit {
           chainId,
           asset
         }: ScanAccountsOptions): Promise<Account[]> => {
-          currentChain = chains.find(({ id }) => id === chainId) ?? currentChain
+          currentChain = chains.find(({ id }) => id === chainId) || currentChain
           const provider = new providers.JsonRpcProvider(currentChain.rpcUrl)
 
           const { publicKey, chainCode, path } = await getPublicKey(
@@ -165,7 +165,7 @@ function trezor(options: TrezorOptions): WalletInit {
           return getAddresses(
             {
               publicKey: compress(publicKey),
-              chainCode: chainCode ?? '',
+              chainCode: chainCode || '',
               path: derivationPath
             },
             asset,
@@ -394,7 +394,7 @@ function trezor(options: TrezorOptions): WalletInit {
             return accounts?.[0]?.address ? [accounts[0].address] : []
           },
           eth_chainId: async () => {
-            return currentChain?.id ?? ''
+            return currentChain?.id || ''
           },
           eth_signTransaction: async ({ params: [transactionObject] }) => {
             return signTransaction(transactionObject)
@@ -405,7 +405,7 @@ function trezor(options: TrezorOptions): WalletInit {
           },
           wallet_switchEthereumChain: async ({ params: [{ chainId }] }) => {
             currentChain =
-              chains.find(({ id }) => id === chainId) ?? currentChain
+              chains.find(({ id }) => id === chainId) || currentChain
             if (!currentChain)
               throw new Error('chain must be set before switching')
 

@@ -193,8 +193,7 @@ function keepkey(): WalletInit {
         }: ScanAccountsOptions): Promise<Account[]> => {
           if (!keepKeyWallet)
             throw new Error('Device must be connected before scanning accounts')
-
-          currentChain = chains.find(({ id }) => id === chainId) ?? currentChain
+          currentChain = chains.find(({ id }) => id === chainId) || currentChain
           const provider = new providers.JsonRpcProvider(currentChain.rpcUrl)
 
           // Checks to see if this is a custom derivation path
@@ -274,7 +273,9 @@ function keepkey(): WalletInit {
               return accounts?.[0]?.address ? [accounts[0].address] : []
             },
             eth_chainId: async () => {
-              return currentChain?.id ?? '0x0'
+              return currentChain && currentChain.id != undefined
+                ? currentChain.id
+                : '0x0'
             },
             eth_signTransaction: async ({ params: [transactionObject] }) => {
               if (!accounts)
@@ -344,7 +345,8 @@ function keepkey(): WalletInit {
             eth_signTypedData: null,
             wallet_switchEthereumChain: async ({ params: [{ chainId }] }) => {
               currentChain =
-                chains.find(({ id }) => id === chainId) ?? currentChain
+                chains.find(({ id }) => id === chainId) || currentChain
+
               if (!currentChain)
                 throw new Error('chain must be set before switching')
 

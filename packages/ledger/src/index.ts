@@ -151,7 +151,7 @@ function ledger({
         }: ScanAccountsOptions): Promise<Account[]> => {
           try {
             currentChain =
-              chains.find(({ id }) => id === chainId) ?? currentChain
+              chains.find(({ id }) => id === chainId) || currentChain
             const provider = new providers.JsonRpcProvider(currentChain.rpcUrl)
 
             const { publicKey, chainCode, address } = await eth.getAddress(
@@ -181,7 +181,7 @@ function ledger({
             return getAddresses(
               {
                 publicKey: compress(publicKey),
-                chainCode: chainCode ?? '',
+                chainCode: chainCode || '',
                 derivationPath
               },
               asset,
@@ -230,7 +230,7 @@ function ledger({
             return accounts?.[0]?.address ? [accounts[0].address] : []
           },
           eth_chainId: async () => {
-            return currentChain?.id ?? ''
+            return (currentChain && currentChain.id) || ''
           },
           eth_signTransaction: async ({ params: [transactionObject] }) => {
             if (!accounts)
@@ -257,7 +257,7 @@ function ledger({
             })
 
             transactionObject.gasLimit =
-              transactionObject.gas ?? transactionObject.gasLimit
+              transactionObject.gas || transactionObject.gasLimit
 
             const transaction = Transaction.fromTxData(
               {
@@ -355,7 +355,7 @@ function ledger({
           },
           wallet_switchEthereumChain: async ({ params: [{ chainId }] }) => {
             currentChain =
-              chains.find(({ id }) => id === chainId) ?? currentChain
+              chains.find(({ id }) => id === chainId) || currentChain
             if (!currentChain)
               throw new Error('chain must be set before switching')
 

@@ -7,8 +7,8 @@
   export let showEmptyAddresses: boolean
 
   $: accounts = showEmptyAddresses
-    ? accountsListObject?.all
-    : accountsListObject?.filtered
+    ? accountsListObject && accountsListObject.all
+    : accountsListObject && accountsListObject.filtered
 
   const handleSelectedRow = (accountClicked: Account) => {
     accountSelected = accountClicked
@@ -95,20 +95,21 @@
       </tr>
     </thead>
     <tbody>
-      {#if accounts?.length}
+      {#if accounts && accounts.length}
         {#each accounts as account}
           <tr
             class="pointer"
-            class:selected-row={accountSelected?.address === account.address}
+            class:selected-row={accountSelected &&
+              accountSelected.address === account.address}
             on:click={() => handleSelectedRow(account)}
           >
             <td style="font-family:'Courier New', Courier, monospace;"
-              >{account?.address}</td
+              >{account.address}</td
             >
-            <td>{account?.derivationPath}</td>
+            <td>{account.derivationPath}</td>
             <td class="asset-td"
-              >{utils.formatEther(account?.balance?.value)}
-              {account?.balance?.asset}</td
+              >{utils.formatEther(account.balance.value)}
+              {account.balance.asset}</td
             >
           </tr>
         {/each}

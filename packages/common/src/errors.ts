@@ -9,7 +9,7 @@ export class ProviderRpcError extends Error {
     super(error.message)
     this.message = error.message
     this.code = error.code
-    this.data = error?.data
+    this.data = error.data
   }
 }
 

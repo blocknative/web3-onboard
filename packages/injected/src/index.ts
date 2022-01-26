@@ -20,7 +20,7 @@ function injected(options?: InjectedWalletOptions): WalletInit {
   if (options) {
     const result = validateWalletOptions(options)
 
-    if (result?.error) throw result.error
+    if (result && result.error) throw result.error
   }
 
   return helpers => {
@@ -36,8 +36,8 @@ function injected(options?: InjectedWalletOptions): WalletInit {
       const filteredWallet = walletFilters === false
 
       const excludedDevice =
-        typeof walletFilters === 'object' &&
-        (walletFilters?.includes(device.type) ||
+        Array.isArray(walletFilters) &&
+        (walletFilters.includes(device.type) ||
           walletFilters.includes(device.os.name))
 
       const invalidPlatform =

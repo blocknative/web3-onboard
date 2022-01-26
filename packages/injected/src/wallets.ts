@@ -18,7 +18,7 @@ const metamask: InjectedWalletModule = {
   label: ProviderLabel.MetaMask,
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
-    !!provider?.[ProviderIdentityFlag.MetaMask],
+    !!provider && !!provider[ProviderIdentityFlag.MetaMask],
   getIcon: async () => (await import('./icons/metamask.js')).default,
   getInterface: async () => ({
     provider: window.ethereum as EIP1193Provider
@@ -30,7 +30,7 @@ const brave: InjectedWalletModule = {
   label: ProviderLabel.Brave,
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
-    !!(navigator as any).brave && !!provider?._web3Ref,
+    !!(navigator as any).brave && !!provider && !!provider._web3Ref,
   getIcon: async () => (await import('./icons/brave.js')).default,
   getInterface: async () => {
     const provider = window.ethereum
@@ -46,12 +46,12 @@ const binance: InjectedWalletModule = {
   label: ProviderLabel.Binance,
   injectedNamespace: InjectedNameSpace.Binance,
   checkProviderIdentity: ({ provider }) =>
-    !!provider?.[ProviderIdentityFlag.Binance],
+    !!provider && !!provider[ProviderIdentityFlag.Binance],
   getIcon: async () => (await import('./icons/binance.js')).default,
   getInterface: async () => {
     // We add this to the BinanceChain provider as there is currently
     // no way to determine if the wallet is unlocked
-    if (window?.BinanceChain) {
+    if (window.BinanceChain) {
       window.BinanceChain.isUnlocked = false
     }
 
@@ -86,9 +86,11 @@ const coinbase: InjectedWalletModule = {
   label: ProviderLabel.Coinbase,
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
-    !!provider?.[ProviderIdentityFlag.Coinbase] ||
-    (!!provider?.providers &&
-      !!provider?.providers[0]?.[ProviderIdentityFlag.CoinbaseExtension]),
+    (!!provider && !!provider[ProviderIdentityFlag.Coinbase]) ||
+    (!!provider &&
+      !!provider.providers &&
+      !!provider.providers[0] &&
+      !!provider.providers[0][ProviderIdentityFlag.CoinbaseExtension]),
   getIcon: async () => (await import('./icons/coinbase.js')).default,
   getInterface: async () => {
     const provider = window.ethereum as EIP1193Provider
@@ -111,7 +113,7 @@ const detected: InjectedWalletModule = {
   label: ProviderLabel.Detected,
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
-    !!provider?.[ProviderIdentityFlag.Detected],
+    !!provider && !!provider[ProviderIdentityFlag.Detected],
   getIcon: async () => (await import('./icons/detected.js')).default,
   getInterface: async () => ({
     provider: window.ethereum as EIP1193Provider
@@ -123,8 +125,10 @@ const trust: InjectedWalletModule = {
   label: ProviderLabel.Trust,
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
-    !!provider?.[ProviderIdentityFlag.Trust] &&
-    !provider?.[ProviderIdentityFlag.TokenPocket],
+    !!provider &&
+    !!provider[ProviderIdentityFlag.Trust] &&
+    !!provider &&
+    !provider[ProviderIdentityFlag.TokenPocket],
 
   getIcon: async () => (await import('./icons/trust.js')).default,
   getInterface: async () => ({
@@ -153,7 +157,7 @@ const status: InjectedWalletModule = {
   label: ProviderLabel.Status,
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
-    !!provider?.[ProviderIdentityFlag.Status],
+    !!provider && !!provider[ProviderIdentityFlag.Status],
   getIcon: async () => (await import('./icons/status.js')).default,
   getInterface: async () => {
     const provider = window.ethereum
@@ -169,7 +173,7 @@ const alphawallet: InjectedWalletModule = {
   label: ProviderLabel.AlphaWallet,
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
-    !!provider?.[ProviderIdentityFlag.AlphaWallet],
+    !!provider && !!provider[ProviderIdentityFlag.AlphaWallet],
   getIcon: async () => (await import('./icons/alphawallet.js')).default,
   getInterface: async () => ({
     provider: createEIP1193Provider(window.ethereum, {
@@ -183,7 +187,7 @@ const atoken: InjectedWalletModule = {
   label: ProviderLabel.AToken,
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
-    !!provider?.[ProviderIdentityFlag.AToken],
+    !!provider && !!provider[ProviderIdentityFlag.AToken],
   getIcon: async () => (await import('./icons/atoken.js')).default,
   getInterface: async () => ({
     provider: window.ethereum
@@ -208,7 +212,7 @@ const blankwallet: InjectedWalletModule = {
   label: ProviderLabel.BlankWallet,
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
-    !!provider?.[ProviderIdentityFlag.BlankWallet],
+    !!provider && !!provider[ProviderIdentityFlag.BlankWallet],
   getIcon: async () => (await import('./icons/blankwallet.js')).default,
   getInterface: async () => ({
     provider: createEIP1193Provider(window.ethereum, {
@@ -222,7 +226,7 @@ const dcent: InjectedWalletModule = {
   label: ProviderLabel.Dcent,
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
-    !!provider?.[ProviderIdentityFlag.Dcent],
+    !!provider && !!provider[ProviderIdentityFlag.Dcent],
   getIcon: async () => (await import('./icons/dcent.js')).default,
   getInterface: async () => ({
     provider: createEIP1193Provider(window.ethereum, {
@@ -236,7 +240,7 @@ const frame: InjectedWalletModule = {
   label: ProviderLabel.Frame,
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
-    !!provider?.[ProviderIdentityFlag.Frame],
+    !!provider && !!provider[ProviderIdentityFlag.Frame],
   getIcon: async () => (await import('./icons/frame.js')).default,
   getInterface: async () => ({
     provider: window.ethereum
@@ -248,7 +252,7 @@ const huobiwallet: InjectedWalletModule = {
   label: ProviderLabel.HuobiWallet,
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
-    !!provider?.[ProviderIdentityFlag.HuobiWallet],
+    !!provider && !!provider[ProviderIdentityFlag.HuobiWallet],
   getIcon: async () => (await import('./icons/huobiwallet.js')).default,
   getInterface: async () => ({
     provider: createEIP1193Provider(window.ethereum, {
@@ -278,7 +282,7 @@ const imtoken: InjectedWalletModule = {
   label: ProviderLabel.ImToken,
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
-    !!provider?.[ProviderIdentityFlag.ImToken],
+    !!provider && !!provider[ProviderIdentityFlag.ImToken],
   getIcon: async () => (await import('./icons/imtoken.js')).default,
   getInterface: async () => ({
     provider: createEIP1193Provider(window.ethereum, {
@@ -292,7 +296,7 @@ const liquality: InjectedWalletModule = {
   label: ProviderLabel.Liquality,
   injectedNamespace: InjectedNameSpace.Arbitrum,
   checkProviderIdentity: ({ provider }) =>
-    !!provider?.[ProviderIdentityFlag.Liquality],
+    !!provider && !!provider[ProviderIdentityFlag.Liquality],
   getIcon: async () => (await import('./icons/liquality.js')).default,
   getInterface: async () => {
     const provider = window[InjectedNameSpace.Arbitrum]
@@ -306,7 +310,7 @@ const meetone: InjectedWalletModule = {
   label: ProviderLabel.MeetOne,
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
-    provider?.[ProviderIdentityFlag.MeetOne] === 'MEETONE',
+    !!provider && provider[ProviderIdentityFlag.MeetOne] === 'MEETONE',
   getIcon: async () => (await import('./icons/meetone.js')).default,
   getInterface: async () => ({
     provider: window.ethereum
@@ -318,7 +322,7 @@ const mykey: InjectedWalletModule = {
   label: ProviderLabel.MyKey,
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
-    !!provider?.[ProviderIdentityFlag.MyKey],
+    !!provider && !!provider[ProviderIdentityFlag.MyKey],
   getIcon: async () => (await import('./icons/mykey.js')).default,
   getInterface: async () => ({
     provider: window.ethereum
@@ -330,7 +334,7 @@ const ownbit: InjectedWalletModule = {
   label: ProviderLabel.OwnBit,
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
-    !!provider?.[ProviderIdentityFlag.OwnBit],
+    !!provider && !!provider[ProviderIdentityFlag.OwnBit],
   getIcon: async () => (await import('./icons/ownbit.js')).default,
   getInterface: async () => {
     const provider = createEIP1193Provider(window.ethereum, {
@@ -351,15 +355,16 @@ const tokenpocket: InjectedWalletModule = {
   label: ProviderLabel.TokenPocket,
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
-    !!provider?.[ProviderIdentityFlag.TokenPocket] &&
-    !provider?.[ProviderIdentityFlag.TP],
+    !!provider &&
+    !!provider[ProviderIdentityFlag.TokenPocket] &&
+    !provider[ProviderIdentityFlag.TP],
   getIcon: async () => (await import('./icons/tokenpocket.js')).default,
   getInterface: async ({ EventEmitter }) => {
     const emitter = new EventEmitter()
 
     const provider = createEIP1193Provider(window.ethereum, {
       wallet_switchEthereumChain: ({ baseRequest, params }) => {
-        emitter.emit('chainChanged', params?.[0]?.chainId)
+        emitter.emit('chainChanged', params[0].chainId)
         return baseRequest({
           method: 'wallet_switchEthereumChain',
           params
@@ -380,7 +385,7 @@ const tp: InjectedWalletModule = {
   label: ProviderLabel.TP,
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
-    !!provider?.[ProviderIdentityFlag.TP],
+    !!provider && !!provider[ProviderIdentityFlag.TP],
   getIcon: async () => (await import('./icons/tp.js')).default,
   getInterface: async () => ({
     provider: createEIP1193Provider(window.ethereum, {
@@ -394,10 +399,12 @@ const xdefi: InjectedWalletModule = {
   label: ProviderLabel.XDEFI,
   injectedNamespace: InjectedNameSpace.XFI,
   checkProviderIdentity: ({ provider }) =>
-    provider?.ethereum?.[ProviderIdentityFlag.XDEFI],
+    provider &&
+    provider.ethereum &&
+    provider.ethereum[ProviderIdentityFlag.XDEFI],
   getIcon: async () => (await import('./icons/xdefi.js')).default,
   getInterface: async () => ({
-    provider: (window as any)?.xfi?.ethereum
+    provider: (window as any).xfi && (window as any).xfi.ethereum
   }),
   platforms: ['all']
 }

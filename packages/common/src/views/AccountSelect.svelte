@@ -26,8 +26,8 @@
   let errorFromScan = ''
 
   let scanAccountOptions: ScanAccountsOptions = {
-    derivationPath: basePaths[0]?.value || '',
-    chainId: chains[0]?.id || '',
+    derivationPath: (basePaths[0] && basePaths[0].value) || '',
+    chainId: chains[0].id || '',
     asset: assets[0] || null
   }
 
@@ -39,7 +39,7 @@
 
   const toggleDerivationPathToDropdown = () => {
     customDerivationPath = false
-    scanAccountOptions.derivationPath = basePaths[0]?.value
+    scanAccountOptions.derivationPath = basePaths[0].value
   }
 
   const handleCustomPath = (e: Event) => {
@@ -55,7 +55,7 @@
       accountsListObject = {
         all: allAccounts,
         filtered: allAccounts.filter(account => {
-          return parseFloat(utils.formatEther(account?.balance?.value)) > 0
+          return parseFloat(utils.formatEther(account.balance.value)) > 0
         })
       }
       loadingAccounts = false
@@ -81,7 +81,8 @@
     accountSelected = undefined
     accountsListObject = undefined
     showEmptyAddresses = false
-    scanAccountOptions.derivationPath = basePaths[0]?.value || ''
+    scanAccountOptions.derivationPath =
+      (basePaths[0] && basePaths[0].value) || ''
   }
 </script>
 
@@ -401,14 +402,14 @@
     <section>
       <div class="address-found-count">
         {#if showEmptyAddresses}
-          {accountsListObject?.all?.length || 0} total address{accountsListObject
-            ?.all?.length !== 1
+          {(accountsListObject && accountsListObject.all.length) || 0} total address{accountsListObject &&
+          accountsListObject.all.length !== 1
             ? 'es'
             : ''} found
         {/if}
         {#if !showEmptyAddresses}
-          {accountsListObject?.filtered?.length || 0} total address{accountsListObject
-            ?.filtered?.length !== 1
+          {(accountsListObject && accountsListObject.filtered.length) || 0} total
+          address{accountsListObject && accountsListObject.filtered.length !== 1
             ? 'es'
             : ''} found
         {/if}

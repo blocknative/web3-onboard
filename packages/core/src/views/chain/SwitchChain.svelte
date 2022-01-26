@@ -55,7 +55,7 @@
       {$_('chain.switch.paragraph1', {
         default: en.chain.switch.paragraph1,
         values: {
-          app: appMetadata?.name || 'This app',
+          app: (appMetadata && appMetadata.name) || 'This app',
           nextNetworkName
         }
       })}

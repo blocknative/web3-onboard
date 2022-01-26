@@ -127,7 +127,7 @@
         <WalletAppBadge
           size={48}
           border="yellow"
-          icon={appMetadata?.icon || defaultAppIcon}
+          icon={(appMetadata && appMetadata.icon) || defaultAppIcon}
         />
         <div class="centered-flex-column ml">
           <div class="text">
@@ -146,8 +146,8 @@
       <WalletAppBadge
         size={48}
         border="gray"
-        background={appMetadata?.icon ? 'white' : 'lightGray'}
-        icon={appMetadata?.icon || defaultAppIcon}
+        background={appMetadata && appMetadata.icon ? 'white' : 'lightGray'}
+        icon={(appMetadata && appMetadata.icon) || defaultAppIcon}
       >
         <SuccessStatusIcon slot="status" size={17} />
       </WalletAppBadge>
