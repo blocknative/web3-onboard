@@ -35,7 +35,6 @@
     "prettier-plugin-svelte": "^2.4.0",
     "rollup": "^2.3.4",
     "rollup-plugin-svelte": "^7.0.0",
-    "rxjs": "^7.5.2",
     "svelte": "^3.42.5",
     "svelte-check": "^2.2.6",
     "svelte-preprocess": "^4.9.4",
@@ -44,6 +43,6 @@
   },
   "dependencies": {
     "joi": "^17.4.2",
-    "rxjs": "^7.3.0"
+    "rxjs": "^7.5.2"
   }
 }
