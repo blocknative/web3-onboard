@@ -21,6 +21,7 @@ const desktopDefaultWalletNames = [
 ]
 
 const mobileDefaultWalletNames = [
+  '1inch',
   'metamask',
   'coinbase',
   'trust',
@@ -229,6 +230,8 @@ function getModule(name: string): Promise<{
     //   return import('./wallets/mewwallet')
     case 'mathwallet':
       return import('./wallets/mathwallet')
+    case '1inch':
+      return import('./wallets/1inch')
     case 'blankwallet':
       return import('./wallets/blankwallet')
     case 'ronin':
