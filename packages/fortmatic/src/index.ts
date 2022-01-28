@@ -12,7 +12,7 @@ function fortmatic(options: APIKey): WalletInit {
   return () => {
     return {
       label: 'Fortmatic',
-      getIcon: async () => (await import('./icon')).default,
+      getIcon: async () => (await import('./icon.js')).default,
       getInterface: async ({ EventEmitter, BigNumber, chains }) => {
         const { default: Fortmatic } = await import('fortmatic')
 

@@ -121,7 +121,7 @@ function ledger({
 }: {
   customNetwork?: CustomNetwork
 } = {}): WalletInit {
-  const getIcon = async () => (await import('./icon')).default
+  const getIcon = async () => (await import('./icon.js')).default
   return () => {
     let accounts: Account[] | undefined
     return {
@@ -203,8 +203,7 @@ function ledger({
             basePaths: DEFAULT_BASE_PATHS,
             assets,
             chains,
-            scanAccounts,
-            walletIcon: await getIcon()
+            scanAccounts
           })
 
           if (accounts.length) {

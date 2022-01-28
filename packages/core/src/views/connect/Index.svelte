@@ -91,6 +91,7 @@
     } catch (error) {
       console.error(error)
       // selectWalletError = (error as Error).message
+      console.error(error)
     }
   }
 
@@ -148,15 +149,19 @@
   }
 
   .content {
-    overflow-y: auto;
     width: 485px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .scroll-container {
+    overflow-y: auto;
   }
 
   .header {
     position: relative;
     display: flex;
     align-items: center;
-    padding: var(--onboard-spacing-4, var(--spacing-4));
     box-shadow: var(--onboard-shadow-2, var(--shadow-2));
   }
 
@@ -165,12 +170,14 @@
       --onboard-font-family-semibold,
       var(--font-family-semibold)
     );
-    margin: 0;
+    margin: var(--onboard-spacing-4, var(--spacing-4));
+    line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
   }
 
   .button-container {
     position: absolute;
-    right: var(--onboard-spacing-5, var(--spacing-5));
+    right: 0;
+    top: 0;
   }
 
   @media all and (max-width: 520px) {
@@ -209,28 +216,30 @@
             <CloseButton />
           </div>
         </div>
-        {#if step === 'selectingWallet'}
-          {#if wallets.length}
-            <SelectingWallet {selectWallet} {wallets} />
-          {:else}
-            <InstallWallet />
+        <div class="scroll-container">
+          {#if step === 'selectingWallet'}
+            {#if wallets.length}
+              <SelectingWallet {selectWallet} {wallets} />
+            {:else}
+              <InstallWallet />
+            {/if}
           {/if}
-        {/if}
 
-        {#if step === 'connectingWallet' && selectedWallet}
-          <ConnectingWallet
-            on:connectionRejected={({ detail }) => {
-              connectionRejected = String(detail)
-            }}
-            {deselectWallet}
-            {selectedWallet}
-            {updateSelectedWallet}
-          />
-        {/if}
+          {#if step === 'connectingWallet' && selectedWallet}
+            <ConnectingWallet
+              on:connectionRejected={({ detail }) => {
+                connectionRejected = String(detail)
+              }}
+              {deselectWallet}
+              {selectedWallet}
+              {updateSelectedWallet}
+            />
+          {/if}
 
-        {#if step === 'connectedWallet' && selectedWallet}
-          <ConnectedWallet {selectedWallet} />
-        {/if}
+          {#if step === 'connectedWallet' && selectedWallet}
+            <ConnectedWallet {selectedWallet} />
+          {/if}
+        </div>
       </div>
     </div>
   </Modal>

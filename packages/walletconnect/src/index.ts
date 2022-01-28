@@ -21,7 +21,7 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
   return () => {
     return {
       label: 'WalletConnect',
-      getIcon: async () => (await import('./icon')).default,
+      getIcon: async () => (await import('./icon.js')).default,
       getInterface: async ({ chains, EventEmitter }) => {
         const { default: WalletConnect } = await import('@walletconnect/client')
 
@@ -33,9 +33,7 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
         const { takeUntil, take } = await import('rxjs/operators')
 
         const connector = new WalletConnect({
-          bridge,
-          qrcodeModal: QRCodeModal,
-          qrcodeModalOptions
+          bridge
         })
 
         class EthProvider extends EventEmitter {
@@ -89,6 +87,8 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                 next: () => {
                   this.emit('accountsChanged', [])
                   this.disconnected$.next(true)
+                  typeof localStorage !== 'undefined' &&
+                    localStorage.removeItem('walletconnect')
                 },
                 error: console.warn
               })
@@ -107,7 +107,19 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                   // Check if connection is already established
                   if (!this.connector.connected) {
                     // create new session
-                    this.connector.createSession()
+                    this.connector.createSession().then(() => {
+                      QRCodeModal.open(
+                        this.connector.uri,
+                        () =>
+                          reject(
+                            new ProviderRpcError({
+                              code: 4001,
+                              message: 'User rejected the request.'
+                            })
+                          ),
+                        qrcodeModalOptions
+                      )
+                    })
                   } else {
                     const { accounts, chainId } = this.connector.session
                     this.emit('chainChanged', `0x${chainId.toString(16)}`)
@@ -128,6 +140,7 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                         const [{ accounts, chainId }] = params
                         this.emit('accountsChanged', accounts)
                         this.emit('chainChanged', `0x${chainId.toString(16)}`)
+                        QRCodeModal.close()
                         resolve(accounts)
                       },
                       error: reject

@@ -2,19 +2,38 @@
 
 This is the core package that contains all of the UI and logic to be able to seamlessly connect user's wallets to your app and track the state of those wallets. Onboard no longer contains any wallet specific code, so wallets need to be passed in upon initialization.
 
+## Installation
+
+Install the core module:
+
+`npm i @bn-onboard/core`
+
+If you would like to support all wallets, then you can install all of the wallet modules:
+
+`npm i @bn-onboard/injected-wallets @bn-onboard/ledger @bn-onboard/trezor @bn-onboard/keepkey @bn-onboard/walletconnect @bn-onboard/walletlink @bn-onboard/torus @bn-onboard/portis @bn-onboard/mew @bn-onboard/gnosis @bn-onboard/fortmatic`
+
+Note:
+
+- MEW wallet currently fails to install on M1 macs
+- All wallet modules (except for `injected-wallets`) require extra dependencies and may require polyfilling the node built in modules for the browser. See the [Build Environments](##build-environments) section for more info
+
 ## Initialization
 
-Onboard needs to be initialized with options that are static to your app:
+Onboard needs to be initialized with an options object before the API can be used:
 
-- The wallets that your app supports (required)
-- The chains that your app supports (required)
-- Your app's metadata so that it can be displayed in the UI (optional)
-- Customized copy for the rendered UI as well as Internationalization (optional)
+```typescript
+type InitOptions {
+  wallets: WalletInit[]
+  chains: Chain[]
+  appMetadata?: AppMetadata
+  i18n?: i18nOptions
+}
+```
 
 ### Options
 
 **`wallets`**
-An array of wallet modules that you would like to be presented to the user to select from when connecting a wallet. A wallet module is an abstraction that allows for easy interaction without needing to know the specifics of how that wallet works and are separate packages that can be included.
+An array of wallet modules that you would like to be presented to the user to select from when connecting a wallet. A wallet module is an abstraction that allows for easy interaction without needing to know the specifics of how that wallet works and are separate packages that can be included. A list of wallet module packages that can be installed can be found [here](packages/).
 
 **`chains`**
 An array of Chains that your app supports:
@@ -35,7 +54,7 @@ An object that defines your app:
 type AppMetadata = {
   // app name
   name: string
-  // SVG icon string, with height set to 100%, width unset
+  // SVG icon string, with height or width (whichever is larger) set to 100%
   icon: string
   // description of app
   description?: string
@@ -43,7 +62,7 @@ type AppMetadata = {
   gettingStartedGuide?: string
   // url that points to more information about app
   explore?: string
-  // when no injected wallets detected, recommend the user to install some
+  // if your app only supports injected wallets and when no injected wallets detected, recommend the user to install some
   recommendedInjectedWallets?: RecommendedInjectedWallets[]
 }
 
@@ -123,7 +142,7 @@ const onboard = Onboard({
 
 ## Connecting a Wallet
 
-To initiate a user to select and connect a wallet you can call the `connectWallet` function on an initialized Onboard instance. It will return a `Promise` that will resolve when the user either successfully connects a wallet, or when they dismiss the UI. The resolved value from the promise will be the latest state of the `wallets` array. The order of the wallets array is last to first, so the most recently selected wallet will be the first item in the array and can be thought of as the "primary wallet". If no wallet was selected, then `wallets` array will be the same as it was before calling `connectWallet`.
+To initiate a user to select and connect a wallet you can call the `connectWallet` function on an initialized Onboard instance. It will return a `Promise` that will resolve when the user either successfully connects a wallet, or when they dismiss the UI. The resolved value from the promise will be the latest state of the `wallets` array. The order of the wallets array is last to first, so the most recently selected wallet will be the first item in the array and can be thought of as the "primary wallet". If no wallet was selected, then the `wallets` array will have the same state as it had before calling `connectWallet`.
 
 ### Example
 
@@ -134,6 +153,44 @@ async function connectWallet() {
 }
 
 connectWallet()
+```
+
+### Auto Selecting a Wallet
+
+A common UX pattern is to remember the wallet(s) that a user has previously connected by storing them in localStorage and then automatically selecting them for the user next time they visit your app.
+You could enable this in your app by first syncing the `wallets` array to localStorage:
+
+```javascript
+const walletsSub = onboard.selectState('wallets')
+const { unsubscribe } = walletsSub.subscribe(wallets => {
+  const connectedWallets = wallets.map(({ label }) => label)
+  window.localStorage.setItem(
+    'connectedWallets',
+    JSON.stringify(connectedWallets)
+  )
+})
+
+// Don't forget to unsubscribe when your app or component un mounts to prevent memory leaks
+// unsubscribe()
+```
+
+Now that you have the most recent wallets connected saved in local storage, you can auto select those wallet(s) when your app loads:
+
+```javascript
+const previouslyConnectedWallets = JSON.parse(
+  window.localStorage.getItem('connectedWallets')
+)
+
+if (previouslyConnectedWallets) {
+  // Connect the most recently connected wallet (first in the array)
+  await onboard.connectWallet(previouslyConnectedWallets[0])
+
+  // OR - loop through and initiate connection for all previously connected wallets
+  // note: This UX might not be great as the user may need to login to each wallet one after the other
+  // for (walletLabel in previouslyConnectedWallets) {
+  //   await onboard.connectWallet(walletLabel)
+  // }
+}
 ```
 
 ## Disconnecting a Wallet
@@ -201,8 +258,8 @@ const { unsubscribe } = state.subscribe(update =>
   console.log('state update: ', update)
 )
 
-// unsubscribe when updates are no longer needed
-unsubscribe()
+// remember to unsubscribe when updates are no longer needed
+// unsubscribe()
 ```
 
 Specific top level slices of state can be subcribed to. For example you may want to just subscribe to receive updates to the `wallets` array only:
@@ -307,5 +364,138 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   /* SHADOWS */
   --onboard-shadow-1: 0px 4px 12px rgba(0, 0, 0, 0.1);
   --onboard-shadow-2: inset 0px -1px 0px rgba(0, 0, 0, 0.1);
+}
+```
+
+## Build Environments
+
+Many of the wallet modules require dependencies that are not normally included in browser builds (namely the node builtin modules such as `crypto`, `buffer`, `util` etc). If you are having build issues you can try the following bundler configs to resolve these dependency issues:
+
+### Webpack 4
+
+Everything should just work since the node builtins are automatically bundled in v4
+
+### Webpack 5
+
+You'll need to add some dev dependencies with the following command:
+
+`npm i --save-dev assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util`
+
+Then add the following to your `webpack.config.js` file:
+
+```javascript
+const webpack = require('webpack')
+
+module.exports = {
+  resolve: {
+    alias: {
+      assert: 'assert',
+      buffer: 'buffer',
+      crypto: 'crypto-browserify',
+      http: 'stream-http',
+      https: 'https-browserify',
+      os: 'os-browserify/browser',
+      process: 'process/browser',
+      stream: 'stream-browserify',
+      util: 'util'
+    }
+  },
+  experiments: {
+    asyncWebAssembly: true
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+      Buffer: ['buffer', 'Buffer']
+    })
+  ]
+}
+```
+
+#### If using create-react-app
+
+[CRACO](https://www.npmjs.com/package/@craco/craco) provides an easy way to override webpack config which is obfuscated in Create React App built applications.
+
+The above webpack 5 example can be used in the `craco.config.js` file at the root level in this case.
+
+**Note:** currently still facing some challenges building with CRA and CRACO for hardware wallets
+
+### SvelteKit
+
+Add the following dev dependencies:
+
+`npm i --save-dev rollup-plugin-polyfill-node`
+
+Then add the following to your `svelte.config.js` file:
+
+```javascript
+import adapter from '@sveltejs/adapter-auto'
+import preprocess from 'svelte-preprocess'
+import nodePolyfills from 'rollup-plugin-polyfill-node'
+
+const MODE = process.env.NODE_ENV
+const development = MODE === 'development'
+
+/** @type {import('@sveltejs/kit').Config} */
+const config = {
+  preprocess: preprocess(),
+  kit: {
+    adapter: adapter(),
+    target: '#svelte',
+    vite: {
+      plugins: [
+        development &&
+          nodePolyfills({
+            include: [
+              'node_modules/**/*.js',
+              new RegExp('node_modules/.vite/.*js')
+            ]
+          })
+      ],
+      build: {
+        rollupOptions: {
+          plugins: [nodePolyfills()]
+        },
+        commonjsOptions: {
+          transformMixedEsModules: true
+        }
+      }
+    }
+  }
+}
+
+export default config
+```
+
+### Vite
+
+Add the following dev dependencies:
+
+`npm i --save-dev rollup-plugin-polyfill-node`
+
+Then add the following to your `vite.config.js` file:
+
+```javascript
+import nodePolyfills from 'rollup-plugin-polyfill-node'
+
+const MODE = process.env.NODE_ENV
+const development = MODE === 'development'
+
+export default {
+  // other config options
+  plugins: [
+    development &&
+      nodePolyfills({
+        include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js')]
+      })
+  ],
+  build: {
+    rollupOptions: {
+      plugins: [nodePolyfills()]
+    },
+    commonjsOptions: {
+      transformMixedEsModules: true
+    }
+  }
 }
 ```

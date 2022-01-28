@@ -8,16 +8,20 @@ import type {
 
 import { ProviderLabel } from '@bn-onboard/common'
 
-import standardWallets from './wallets'
-import { remove } from './helpers'
-import { validateWalletOptions } from './validation'
+import standardWallets from './wallets.js'
+import { remove } from './helpers.js'
+import { validateWalletOptions } from './validation.js'
 
 declare const window: CustomWindow
 
-function injected(options: InjectedWalletOptions): WalletInit {
-  const result = validateWalletOptions(options)
+function injected(options?: InjectedWalletOptions): WalletInit {
+  if (typeof window === 'undefined') return () => null
 
-  if (result?.error) throw result.error
+  if (options) {
+    const result = validateWalletOptions(options)
+
+    if (result?.error) throw result.error
+  }
 
   return helpers => {
     const { device } = helpers

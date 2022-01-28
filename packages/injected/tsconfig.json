@@ -9,6 +9,7 @@
     "paths": {
       "*": ["./src/*", "./node_modules/*"]
     },
+    "moduleResolution": "node",
     "typeRoots": ["node_modules/@types"]
   }
 }

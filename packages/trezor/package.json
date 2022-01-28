@@ -1,8 +1,11 @@
 {
   "name": "@bn-onboard/trezor",
-  "version": "2.0.0-alpha.3",
+  "version": "2.0.0-alpha.5",
   "description": "Trezor module for Onboard.js",
   "module": "dist/index.js",
+  "browser": "dist/index.js",
+  "main": "dist/index.js",
+  "type": "module",
   "typings": "dist/index.d.ts",
   "files": [
     "dist"
@@ -18,11 +21,11 @@
     "typescript": "^4.4.4"
   },
   "dependencies": {
-    "@bn-onboard/common": "^2.0.0-alpha",
+    "@bn-onboard/common": "^2.0.0-alpha.5",
     "bip32": "^3.0.1",
     "buffer": "^6.0.3",
     "ethereumjs-util": "^7.1.3",
     "tiny-secp256k1": "^2.1.2",
-    "trezor-connect": "^8.2.4"
+    "trezor-connect": "^8.2.6"
   }
 }

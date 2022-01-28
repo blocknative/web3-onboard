@@ -26,7 +26,6 @@ const selectAccountOptions = Joi.object({
   assets: assets,
   chains: chains,
   scanAccounts: Joi.function().arity(1).required(),
-  walletIcon: Joi.string().required(),
   supportsCustomPath: Joi.bool()
 })
 

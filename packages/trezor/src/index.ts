@@ -98,14 +98,14 @@ const getAddresses = async (
 }
 
 function trezor(options: TrezorOptions): WalletInit {
-  const getIcon = async () => (await import('./icon')).default
+  const getIcon = async () => (await import('./icon.js')).default
   return () => {
     let accounts: Account[] | undefined
     return {
       label: 'Trezor',
       getIcon,
       getInterface: async ({ EventEmitter, chains }) => {
-        const { default: TrezorConnect } = await import('trezor-connect')
+        const { default: Trezor } = await import('trezor-connect')
         const { Transaction } = await import('@ethereumjs/tx')
         const { default: Common, Hardfork } = await import('@ethereumjs/common')
         const { accountSelect, createEIP1193Provider, ProviderRpcError } =
@@ -121,6 +121,8 @@ function trezor(options: TrezorOptions): WalletInit {
         }
 
         const { email, appUrl, customNetwork } = options
+        // @ts-ignore
+        const TrezorConnect = Trezor.default
 
         TrezorConnect.manifest({
           email: email,
@@ -176,8 +178,7 @@ function trezor(options: TrezorOptions): WalletInit {
             basePaths: DEFAULT_BASE_PATHS,
             assets,
             chains,
-            scanAccounts,
-            walletIcon: await getIcon()
+            scanAccounts
           })
 
           if (accounts.length) {

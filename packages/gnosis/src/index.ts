@@ -10,7 +10,7 @@ function gnosis(options?: GnosisOptions): WalletInit {
   return () => {
     return {
       label: 'Gnosis Safe',
-      getIcon: async () => (await import('./icon')).default,
+      getIcon: async () => (await import('./icon.js')).default,
       getInterface: async () => {
         const { default: SafeAppsSDK } = await import(
           '@gnosis.pm/safe-apps-sdk'

@@ -1,6 +1,6 @@
 {
   "name": "@bn-onboard/core",
-  "version": "2.0.0-alpha.6",
+  "version": "2.0.0-alpha.10",
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
@@ -8,14 +8,16 @@
     "typescript": "svelte-check --tsconfig ./tsconfig.json",
     "lint": "eslint -c './.eslintrc.cjs' './src' && prettier --check './src/**/*'"
   },
-  "module": "dist/index.js",
-  "browser": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist"
   ],
+  "module": "dist/index.js",
+  "browser": "dist/index.js",
+  "main": "dist/index.js",
+  "type": "module",
   "devDependencies": {
-    "@bn-onboard/common": "^2.0.0-alpha",
+    "@bn-onboard/common": "^2.0.0-alpha.5",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
@@ -39,6 +41,7 @@
     "typescript": "4.3.5"
   },
   "dependencies": {
+    "ethers": "5.5.3",
     "bowser": "^2.11.0",
     "eventemitter3": "^4.0.7",
     "lodash.merge": "^4.6.2",
