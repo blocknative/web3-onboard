@@ -15,5 +15,6 @@ export class ProviderRpcError extends Error {
 
 export enum ErrorCodes {
   ACCOUNT_ACCESS_REJECTED = 4001,
-  ACCOUNT_ACCESS_ALREADY_REQUESTED = -32002
+  ACCOUNT_ACCESS_ALREADY_REQUESTED = -32002,
+  INVALID_PARAMS = -32602
 }

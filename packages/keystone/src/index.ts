@@ -4,6 +4,7 @@ import {
   Chain,
   createEIP1193Provider,
   CustomNetwork,
+  ErrorCodes,
   GetInterfaceHelpers,
   ProviderRpcError,
   ScanAccountsOptions,
@@ -31,7 +32,7 @@ const getAccount = async (
   provider: providers.JsonRpcProvider,
   index: number
 ): Promise<Account> => {
-  const address = (await keyring.addAccounts())?.[index]
+  const address = (await keyring.addAccounts())[index]
   const derivationPath = await keyring._pathFromAddress(address)
   return {
     derivationPath,
@@ -53,7 +54,7 @@ const generateAccounts = async (
 
   while (zeroBalanceAccounts < 5) {
     const account = await getAccount(keyring, provider, index)
-    if (account?.balance?.value?.isZero()) {
+    if (account.balance.value.isZero()) {
       zeroBalanceAccounts++
       accounts.push(account)
     } else {
@@ -79,7 +80,7 @@ function keystone({
       getIcon,
       getInterface: async ({ EventEmitter, chains }: GetInterfaceHelpers) => {
         const { providers } = await import('ethers')
-        const { default: AirGapedKeyring } = await import(
+        const { default: AirGappedKeyring } = await import(
           '@keystonehq/eth-keyring'
         )
         const { TransactionFactory: Transaction } = await import(
@@ -88,7 +89,7 @@ function keystone({
 
         const { default: Common, Hardfork } = await import('@ethereumjs/common')
 
-        const keyring = AirGapedKeyring.getEmptyKeyring()
+        const keyring = AirGappedKeyring.getEmptyKeyring()
         await keyring.readKeyring()
 
         const eventEmitter = new EventEmitter()
@@ -100,7 +101,7 @@ function keystone({
           asset
         }: ScanAccountsOptions): Promise<Account[]> => {
           currentChain =
-            chains.find(({ id }: Chain) => id === chainId) ?? currentChain
+            chains.find(({ id }: Chain) => id === chainId) || currentChain
 
           const provider = new providers.JsonRpcProvider(currentChain.rpcUrl)
           return generateAccounts(keyring, provider)
@@ -128,19 +129,19 @@ function keystone({
           eth_requestAccounts: async () => {
             // Triggers the account select modal if no accounts have been selected
             const accounts = await getAccounts()
-            if (accounts?.length === 0) {
+            if (accounts.length === 0) {
               throw new ProviderRpcError({
-                code: 4001,
+                code: ErrorCodes.ACCOUNT_ACCESS_REJECTED,
                 message: 'User rejected the request.'
               })
             }
-            return [accounts[0]?.address]
+            return accounts[0] ? [accounts[0].address] : []
           },
           eth_accounts: async () => {
-            return accounts?.[0]?.address ? [accounts[0].address] : []
+            return accounts && accounts[0].address ? [accounts[0].address] : []
           },
           eth_chainId: async () => {
-            return currentChain?.id ?? ''
+            return currentChain.id
           },
           eth_signTransaction: async ({ params: [transactionObject] }) => {
             if (!accounts)
@@ -148,9 +149,16 @@ function keystone({
                 'No account selected. Must call eth_requestAccounts first.'
               )
 
+            if (!transactionObject)
+              throw new ProviderRpcError({
+                message: 'Invalid method parameters',
+                code: ErrorCodes.INVALID_PARAMS,
+                data: transactionObject
+              })
+
             const account =
               accounts.find(
-                account => account.address === transactionObject?.from
+                account => account.address === transactionObject.from
               ) || accounts[0]
 
             const { address: from } = account
@@ -159,7 +167,7 @@ function keystone({
             transactionObject = { ...transactionObject, from }
 
             const common = new Common({
-              chain: customNetwork || Number.parseInt(currentChain?.id) || 1,
+              chain: customNetwork || Number.parseInt(currentChain.id) || 1,
               // Berlin is the minimum hardfork that will allow for EIP1559
               hardfork: Hardfork.Berlin,
               // List of supported EIPS
@@ -167,7 +175,7 @@ function keystone({
             })
 
             transactionObject.gasLimit =
-              transactionObject.gas ?? transactionObject.gasLimit
+              transactionObject.gas || transactionObject.gasLimit
 
             const transaction = Transaction.fromTxData(
               {
@@ -179,10 +187,10 @@ function keystone({
             // @ts-ignore
             const signedTx = await keyring.signTransaction(from, transaction)
 
-            return `0x${signedTx?.serialize().toString('hex')}`
+            return `0x${signedTx.serialize().toString('hex')}`
           },
           eth_sign: async ({ params: [address, message] }) => {
-            if (!(accounts?.length && accounts?.length > 0))
+            if (!(accounts && accounts.length && accounts.length > 0))
               throw new Error(
                 'No account selected. Must call eth_requestAccounts first.'
               )
@@ -194,7 +202,7 @@ function keystone({
             return keyring.signMessage(account.address, message)
           },
           eth_signTypedData: async ({ params: [address, typedData] }) => {
-            if (!(accounts?.length && accounts?.length > 0))
+            if (!(accounts && accounts.length && accounts.length > 0))
               throw new Error(
                 'No account selected. Must call eth_requestAccounts first.'
               )
@@ -207,7 +215,7 @@ function keystone({
           },
           wallet_switchEthereumChain: async ({ params: [{ chainId }] }) => {
             currentChain =
-              chains.find(({ id }) => id === chainId) ?? currentChain
+              chains.find(({ id }) => id === chainId) || currentChain
             if (!currentChain)
               throw new Error('chain must be set before switching')
 
