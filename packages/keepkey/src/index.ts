@@ -171,7 +171,7 @@ function keepkey(): WalletInit {
               asset
             })
 
-            if (acc?.balance?.value?.isZero()) {
+            if (acc && acc.balance && acc.balance.value && acc.balance.value.isZero()) {
               zeroBalanceAccounts++
               accounts.push(acc)
             } else {
@@ -221,7 +221,7 @@ function keepkey(): WalletInit {
             chains,
             scanAccounts
           })
-
+          if (!accounts) throw new Error('No accounts were found')
           if (accounts.length) {
             eventEmitter.emit('accountsChanged', [accounts[0].address])
           }
@@ -233,8 +233,10 @@ function keepkey(): WalletInit {
           {},
           {
             eth_requestAccounts: async () => {
-              // cancel any current actions on device
-              keepKeyWallet?.cancel()
+              if (keepKeyWallet && typeof keepKeyWallet.cancel === 'function') {
+                // cancel any current actions on device
+                keepKeyWallet.cancel()
+              }
 
               try {
                 keepKeyWallet =
@@ -260,17 +262,32 @@ function keepkey(): WalletInit {
               // Triggers the account select modal if no accounts have been selected
               const accounts = await getAccounts()
 
-              if (accounts?.length === 0) {
+              if (!accounts || !Array.isArray(accounts)) {
+                throw new Error(
+                  'No accounts were returned from Keepkey device'
+                )
+              }
+              if (!accounts.length) {
                 throw new ProviderRpcError({
                   code: 4001,
                   message: 'User rejected the request.'
                 })
               }
+              if (!accounts[0].hasOwnProperty('address')) {
+                throw new Error(
+                  'The account returned does not have a required address field'
+                )
+              }
 
-              return [accounts[0]?.address]
+              return [accounts[0].address]
             },
             eth_accounts: async () => {
-              return accounts?.[0]?.address ? [accounts[0].address] : []
+              if (!accounts || !Array.isArray(accounts)) {
+                throw new Error(
+                  'No accounts were returned from Keepkey device'
+                )
+              }
+              return accounts[0].hasOwnProperty('address') ? [accounts[0].address] : []
             },
             eth_chainId: async () => {
               return currentChain && currentChain.id != undefined
@@ -278,15 +295,18 @@ function keepkey(): WalletInit {
                 : '0x0'
             },
             eth_signTransaction: async ({ params: [transactionObject] }) => {
-              if (!accounts)
+              if (!accounts || !Array.isArray(accounts) || !accounts.length)
                 throw new Error(
                   'No account selected. Must call eth_requestAccounts first.'
                 )
-
-              const account =
+              // if (!transactionObject || !transactionObject.hasOwnProperty('from'))
+              const account = (!transactionObject || !transactionObject.hasOwnProperty('from')) 
+                ?
+                accounts[0]
+                :
                 accounts.find(
-                  account => account.address === transactionObject?.from
-                ) || accounts[0]
+                  account => account.address === transactionObject.from
+                )
 
               const { derivationPath } = account
               const addressNList = bip32ToAddressNList(derivationPath)
@@ -319,7 +339,7 @@ function keepkey(): WalletInit {
               return serialized
             },
             eth_sign: async ({ params: [address, message] }) => {
-              if (!(accounts?.length && accounts?.length > 0))
+              if (!accounts || !Array.isArray(accounts) || !(accounts.length && accounts.length > 0))
                 throw new Error(
                   'No account selected. Must call eth_requestAccounts first.'
                 )
