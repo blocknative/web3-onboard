@@ -1,12 +1,10 @@
-import { extensionInstallMessage, mobileWalletInstallMessage } from '../content'
+import { extensionInstallMessage } from '../content'
 import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
 
 import tokenaryIcon from '../wallet-icons/icon-tokenary.png'
 import tokenaryIcon2x from '../wallet-icons/icon-tokenary@2x.png'
 
-function tokenary(
-  options: CommonWalletOptions & { isMobile: boolean }
-): WalletModule {
+function tokenary(options: CommonWalletOptions): WalletModule {
   const { preferred, label, iconSrc, svg } = options
 
   return {
@@ -16,7 +14,8 @@ function tokenary(
     svg,
     wallet: async (helpers: Helpers) => {
       const { getProviderName, createModernProviderInterface } = helpers
-      const provider = (window as any).ethereum || (window as any).web3.currentProvider
+      const windowAsAny = window as any
+      const provider = windowAsAny.ethereum || windowAsAny.web3.currentProvider
 
       return {
         provider,
