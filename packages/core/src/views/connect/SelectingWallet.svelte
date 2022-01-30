@@ -20,6 +20,7 @@
     flex-direction: column;
     align-items: center;
     padding: var(--onboard-spacing-4, var(--spacing-4));
+    padding-top: 0;
   }
 
   .wallets-container {
