@@ -11,9 +11,16 @@
   import fortmaticModule from '@bn-onboard/fortmatic'
   import torusModule from '@bn-onboard/torus'
   import keepkeyModule from '@bn-onboard/keepkey'
+  import keystoneModule from '@bn-onboard/keystone'
   import blocknativeIcon from './blocknative-icon'
   import VConsole from 'vconsole'
   import { verifyTypedData, verifyMessage } from 'ethers/lib/utils'
+
+  const toHex = text =>
+    text
+      .split('')
+      .map(c => c.charCodeAt(0).toString(16).padStart(2, '0'))
+      .join('')
 
   if (window.innerWidth < 700) {
     new VConsole()
@@ -62,6 +69,7 @@
   const torus = torusModule()
   const ledger = ledgerModule()
   const keepkey = keepkeyModule()
+  const keystone = keystoneModule()
 
   const trezorOptions = {
     email: 'test@test.com',
@@ -75,6 +83,7 @@
       trezor,
       walletConnect,
       keepkey,
+      keystone,
       walletLink,
       injected,
       fortmatic,
@@ -146,9 +155,11 @@
   const signMessage = async (provider, address) => {
     const signature = await provider.request({
       method: 'eth_sign',
-      params: [address, signMsg]
+      params: [address, toHex(signMsg)]
     })
+
     const recoveredAddress = verifyMessage(signMsg, signature)
+    console.log({ signMsg, signature, recoveredAddress })
   }
 
   const signTypedMessage = async (provider, address) => {
