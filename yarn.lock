@@ -661,6 +661,13 @@
   dependencies:
     "@ethersproject/logger" "^5.5.0"
 
+"@ethersproject/networks@5.5.2":
+  version "5.5.2"
+  resolved "https://registry.yarnpkg.com/@ethersproject/networks/-/networks-5.5.2.tgz#784c8b1283cd2a931114ab428dae1bd00c07630b"
+  integrity sha512-NEqPxbGBfy6O3x4ZTISb90SjEDkWYDUbEeIFhJly0F7sZjoQMnj5KYzMSkMkLKZ+1fGpx00EDpHQCy6PrDupkQ==
+  dependencies:
+    "@ethersproject/logger" "^5.5.0"
+
 "@ethersproject/pbkdf2@5.4.0":
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/@ethersproject/pbkdf2/-/pbkdf2-5.4.0.tgz#ed88782a67fda1594c22d60d0ca911a9d669641c"
@@ -766,7 +773,7 @@
     bech32 "1.1.4"
     ws "7.4.6"
 
-"@ethersproject/providers@^5.5.0":
+"@ethersproject/providers@5.5.2", "@ethersproject/providers@^5.5.0":
   version "5.5.2"
   resolved "https://registry.yarnpkg.com/@ethersproject/providers/-/providers-5.5.2.tgz#131ccf52dc17afd0ab69ed444b8c0e3a27297d99"
   integrity sha512-hkbx7x/MKcRjyrO4StKXCzCpWer6s97xnm34xkfPiarhtEUVAN4TBBpamM+z66WcTt7H5B53YwbRj1n7i8pZoQ==
@@ -803,6 +810,14 @@
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/@ethersproject/random/-/random-5.5.0.tgz#305ed9e033ca537735365ac12eed88580b0f81f9"
   integrity sha512-egGYZwZ/YIFKMHcoBUo8t3a8Hb/TKYX8BCBoLjudVCZh892welR3jOxgOmb48xznc9bTcMm7Tpwc1gHC1PFNFQ==
+  dependencies:
+    "@ethersproject/bytes" "^5.5.0"
+    "@ethersproject/logger" "^5.5.0"
+
+"@ethersproject/random@5.5.1":
+  version "5.5.1"
+  resolved "https://registry.yarnpkg.com/@ethersproject/random/-/random-5.5.1.tgz#7cdf38ea93dc0b1ed1d8e480ccdaf3535c555415"
+  integrity sha512-YaU2dQ7DuhL5Au7KbcQLHxcRHfgyNgvFV4sQOo0HrtW3Zkrc9ctWNz8wXQ4uCSfSDsqX2vcjhroxU5RQRV0nqA==
   dependencies:
     "@ethersproject/bytes" "^5.5.0"
     "@ethersproject/logger" "^5.5.0"
@@ -1176,10 +1191,10 @@
     google-protobuf "^3.7.0-rc.2"
     pbjs "^0.0.5"
 
-"@keystonehq/base-eth-keyring@^0.3.2-alpha.1":
-  version "0.3.2-alpha.1"
-  resolved "https://registry.yarnpkg.com/@keystonehq/base-eth-keyring/-/base-eth-keyring-0.3.2-alpha.1.tgz#60166a5122da8f97965eb70ee046944419ded137"
-  integrity sha512-RKh6y6a4r46X5G6S7xZgpPJy036AT9WnvtLPYFHbxn0mpi7G23UfzREb8GzGs9ctzskzoiveQ/j00ySsC7tMaQ==
+"@keystonehq/base-eth-keyring@^0.3.2-alpha.2":
+  version "0.3.2-alpha.2"
+  resolved "https://registry.yarnpkg.com/@keystonehq/base-eth-keyring/-/base-eth-keyring-0.3.2-alpha.2.tgz#e3ff00eb468e26f1676503e060f7ab3ea453120e"
+  integrity sha512-fUx319c2wqdJL0pBxeYC45cxQPryyA/W2As6SPgOjyAVvRF9AWogNfK6fIptsk+A0wfGPgSa7vCaWNXMp36WuQ==
   dependencies:
     "@ethereumjs/tx" "3.0.0"
     "@keystonehq/bc-ur-registry-eth" "^0.7.6"
@@ -1206,13 +1221,13 @@
     base58check "^2.0.0"
     tslib "^2.3.0"
 
-"@keystonehq/eth-keyring@^0.11.2-alpha.1":
-  version "0.11.2-alpha.1"
-  resolved "https://registry.yarnpkg.com/@keystonehq/eth-keyring/-/eth-keyring-0.11.2-alpha.1.tgz#46d010312ce7f29d7f4695f023937400dedf2294"
-  integrity sha512-CLcSgPNMAhyiy5dDZuvQ/uChX/nvjsQ3FGohrnmw/7yYknMI6zr6nDsEJKCoofo6Zha8qRgsTwCoG56tHKHqzw==
+"@keystonehq/eth-keyring@^0.11.2-alpha.2":
+  version "0.11.2-alpha.2"
+  resolved "https://registry.yarnpkg.com/@keystonehq/eth-keyring/-/eth-keyring-0.11.2-alpha.2.tgz#324f27f1111a237df901ac4498d377ca078afb93"
+  integrity sha512-eXVSZ2TY51FLeEIj7Ropfnfjf1tAsb/EKmdB1MhGQsKIRhAegmQk07JUN7RMfuS9cx5GxBgHHLDgDr0fXL4uZA==
   dependencies:
     "@ethereumjs/tx" "3.0.0"
-    "@keystonehq/base-eth-keyring" "^0.3.2-alpha.1"
+    "@keystonehq/base-eth-keyring" "^0.3.2-alpha.2"
     "@keystonehq/bc-ur-registry-eth" "^0.7.6"
     "@keystonehq/sdk" "^0.9.1"
     "@metamask/obs-store" "^7.0.0"
@@ -6511,6 +6526,42 @@ ethers@5.4.7:
     "@ethersproject/web" "5.4.0"
     "@ethersproject/wordlists" "5.4.0"
 
+ethers@5.5.3:
+  version "5.5.3"
+  resolved "https://registry.yarnpkg.com/ethers/-/ethers-5.5.3.tgz#1e361516711c0c3244b6210e7e3ecabf0c75fca0"
+  integrity sha512-fTT4WT8/hTe/BLwRUtl7I5zlpF3XC3P/Xwqxc5AIP2HGlH15qpmjs0Ou78az93b1rLITzXLFxoNX63B8ZbUd7g==
+  dependencies:
+    "@ethersproject/abi" "5.5.0"
+    "@ethersproject/abstract-provider" "5.5.1"
+    "@ethersproject/abstract-signer" "5.5.0"
+    "@ethersproject/address" "5.5.0"
+    "@ethersproject/base64" "5.5.0"
+    "@ethersproject/basex" "5.5.0"
+    "@ethersproject/bignumber" "5.5.0"
+    "@ethersproject/bytes" "5.5.0"
+    "@ethersproject/constants" "5.5.0"
+    "@ethersproject/contracts" "5.5.0"
+    "@ethersproject/hash" "5.5.0"
+    "@ethersproject/hdnode" "5.5.0"
+    "@ethersproject/json-wallets" "5.5.0"
+    "@ethersproject/keccak256" "5.5.0"
+    "@ethersproject/logger" "5.5.0"
+    "@ethersproject/networks" "5.5.2"
+    "@ethersproject/pbkdf2" "5.5.0"
+    "@ethersproject/properties" "5.5.0"
+    "@ethersproject/providers" "5.5.2"
+    "@ethersproject/random" "5.5.1"
+    "@ethersproject/rlp" "5.5.0"
+    "@ethersproject/sha2" "5.5.0"
+    "@ethersproject/signing-key" "5.5.0"
+    "@ethersproject/solidity" "5.5.0"
+    "@ethersproject/strings" "5.5.0"
+    "@ethersproject/transactions" "5.5.0"
+    "@ethersproject/units" "5.5.0"
+    "@ethersproject/wallet" "5.5.0"
+    "@ethersproject/web" "5.5.1"
+    "@ethersproject/wordlists" "5.5.0"
+
 ethers@^5.4.7:
   version "5.5.1"
   resolved "https://registry.yarnpkg.com/ethers/-/ethers-5.5.1.tgz#d3259a95a42557844aa543906c537106c0406fbf"
@@ -11595,7 +11646,7 @@ rxjs@6, rxjs@^6.4.0, rxjs@^6.6.0, rxjs@^6.6.3:
   dependencies:
     tslib "^1.9.0"
 
-rxjs@^7.3.0, rxjs@^7.4.0, rxjs@^7.5.2:
+rxjs@^7.5.2:
   version "7.5.2"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.5.2.tgz#11e4a3a1dfad85dbf7fb6e33cbba17668497490b"
   integrity sha512-PwDt186XaL3QN5qXj/H9DGyHhP3/RYYgZZwqBv9Tv8rsAaiwFH1IsJJlcgD37J7UW5a6O67qX0KWKS3/pu0m4w==
@@ -12932,10 +12983,10 @@ tr46@~0.0.3:
   resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
   integrity sha1-gYT9NH2snNwYWZLzpmIuFLnZq2o=
 
-trezor-connect@^8.2.4:
-  version "8.2.4"
-  resolved "https://registry.yarnpkg.com/trezor-connect/-/trezor-connect-8.2.4.tgz#e286a87f898b698e62fb7e45a67e14cc8f3d180f"
-  integrity sha512-TKIE7p3/j7SgPS1FLrgohof42h4BXnnw0gWL+d+xzwZb1Hq82SBP7ia4oxdIf81KuTdCkfmhN0afr/4eRs2b6Q==
+trezor-connect@^8.2.6:
+  version "8.2.6"
+  resolved "https://registry.yarnpkg.com/trezor-connect/-/trezor-connect-8.2.6.tgz#2731f9af2837116307672aeba747cf29c02b6229"
+  integrity sha512-ioa/NkwtFHY94VI95q4JPdoDU3HaQFFIqdS47751zHa5q8qVBzwf5vgUrNS+q3vJ2ZNE7mTk/r4FjURtDB1xjA==
   dependencies:
     "@babel/runtime" "^7.15.4"
     cross-fetch "^3.1.4"
