@@ -89,6 +89,7 @@
         chain: '0x1'
       }
     } catch (error) {
+      console.error(error)
       // selectWalletError = (error as Error).message
       console.error(error)
     }

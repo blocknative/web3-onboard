@@ -25,7 +25,8 @@ const selectAccountOptions = Joi.object({
   basePaths: basePaths,
   assets: assets,
   chains: chains,
-  scanAccounts: Joi.function().arity(1).required()
+  scanAccounts: Joi.function().arity(1).required(),
+  supportsCustomPath: Joi.bool()
 })
 
 type ValidateReturn = Joi.ValidationResult | null

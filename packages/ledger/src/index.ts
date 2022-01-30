@@ -4,7 +4,8 @@ import type {
   Asset,
   Chain,
   CustomNetwork,
-  WalletInit
+  WalletInit,
+  GetInterfaceHelpers
 } from '@bn-onboard/common'
 
 import type { BIP32Interface } from 'bip32'
@@ -126,7 +127,7 @@ function ledger({
     return {
       label: 'Ledger',
       getIcon,
-      getInterface: async ({ EventEmitter, chains }) => {
+      getInterface: async ({ EventEmitter, chains }: GetInterfaceHelpers) => {
         const Eth = (await import('@ledgerhq/hw-app-eth')).default
         const { TransactionFactory: Transaction, Capability } = await import(
           '@ethereumjs/tx'
@@ -151,7 +152,7 @@ function ledger({
         }: ScanAccountsOptions): Promise<Account[]> => {
           try {
             currentChain =
-              chains.find(({ id }) => id === chainId) ?? currentChain
+              chains.find(({ id }: Chain) => id === chainId) ?? currentChain
             const provider = new providers.JsonRpcProvider(currentChain.rpcUrl)
 
             const { publicKey, chainCode, address } = await eth.getAddress(
