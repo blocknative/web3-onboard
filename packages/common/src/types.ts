@@ -135,6 +135,14 @@ export interface AppMetadata {
 
   /** When no injected wallets detected, recommend the user to install some*/
   recommendedInjectedWallets?: RecommendedInjectedWallets[]
+
+  agreement: TermsOfServiceAgreementOptions | null
+}
+
+export type TermsOfServiceAgreementOptions = {
+  version: string
+  termsUrl?: string
+  privacyUrl?: string
 }
 
 export type RecommendedInjectedWallets = {

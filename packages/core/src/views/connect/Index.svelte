@@ -19,6 +19,7 @@
   import ConnectedWallet from './ConnectedWallet.svelte'
   import CloseButton from '../shared/CloseButton.svelte'
   import Sidebar from './Sidebar.svelte'
+  import Agreement from './Agreement.svelte'
 
   import { connectWallet$, internalState$ } from '../../streams'
 
@@ -36,6 +37,7 @@
   let connectionRejected = 'false'
   let wallets: WalletWithLoadingIcon[] = []
   let selectedWallet: WalletState | null
+  let agreed: boolean
   // let selectWalletError: string
 
   let windowWidth: number
@@ -156,6 +158,7 @@
 
   .scroll-container {
     overflow-y: auto;
+    transition: opacity 250ms ease-in-out;
   }
 
   .header {
@@ -178,6 +181,11 @@
     position: absolute;
     right: 0;
     top: 0;
+  }
+
+  .disabled {
+    opacity: 0.2;
+    pointer-events: none;
   }
 
   @media all and (max-width: 520px) {
@@ -216,10 +224,15 @@
             <CloseButton />
           </div>
         </div>
+
         <div class="scroll-container">
           {#if step === 'selectingWallet'}
             {#if wallets.length}
-              <SelectingWallet {selectWallet} {wallets} />
+              <Agreement bind:agreed />
+
+              <div class:disabled={!agreed}>
+                <SelectingWallet {selectWallet} {wallets} />
+              </div>
             {:else}
               <InstallWallet />
             {/if}

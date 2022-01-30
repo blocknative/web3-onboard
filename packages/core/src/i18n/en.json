@@ -9,7 +9,13 @@
       },
       "recommendedWalletsPart1": "{app} only supports",
       "recommendedWalletsPart2": "on this platform. Please use or install one of the supported wallets to continue",
-      "installWallet": "You do not have any wallets installed that {app} supports, please use a supported wallet"
+      "installWallet": "You do not have any wallets installed that {app} supports, please use a supported wallet",
+      "agreement": {
+        "agree": "I agree to the",
+        "terms": "Terms & Conditions",
+        "and": "and",
+        "privacy": "Privacy Policy"
+      }
     },
     "connectingWallet": {
       "header": "{connectionRejected, select, false {Connecting to {wallet}...} other {Connection Rejected}}",

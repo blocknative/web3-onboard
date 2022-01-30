@@ -123,7 +123,12 @@
       recommendedInjectedWallets: [
         { name: 'MetaMask', url: 'https://metamask.io' },
         { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
-      ]
+      ],
+      agreement: {
+        version: '1.0.0',
+        termsUrl: 'https://www.blocknative.com/terms-conditions',
+        privacyUrl: 'https://www.blocknative.com/privacy-policy'
+      }
     }
     // example customising copy
     // i18n: {
