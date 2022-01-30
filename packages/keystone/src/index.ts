@@ -113,7 +113,6 @@ function keystone({
             assets,
             chains,
             scanAccounts,
-            walletIcon: await getIcon(),
             supportsCustomPath: false
           })
 
