@@ -72,7 +72,7 @@ function keystone({
 }: {
   customNetwork?: CustomNetwork
 } = {}): WalletInit {
-  const getIcon = async () => (await import('./icon')).default
+  const getIcon = async () => (await import('./icon.js')).default
   return () => {
     let accounts: Account[] | undefined
     return {
