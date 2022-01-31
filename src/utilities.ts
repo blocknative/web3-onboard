@@ -317,6 +317,10 @@ export function getProviderName(provider: any): string | undefined {
     return 'Tally'
   }
 
+  if (provider.isTokenary) {
+    return 'Tokenary'
+  }
+
   if (provider.isFrame) {
     return 'Frame'
   }
