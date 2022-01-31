@@ -357,8 +357,8 @@ export function getProviderName(provider: any): string | undefined {
     return 'tp'
   }
 
-  if (provider.isBlank) {
-    return 'BlankWallet'
+  if (provider.isBlockWallet) {
+    return 'BlockWallet'
   }
 
   if (provider.isOneInchIOSWallet) {

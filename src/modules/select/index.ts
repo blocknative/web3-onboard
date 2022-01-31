@@ -18,7 +18,7 @@ const desktopDefaultWalletNames = [
   'torus',
   'opera',
   'liquality',
-  'blankwallet'
+  'blockwallet'
 ]
 
 const mobileDefaultWalletNames = [
@@ -236,8 +236,8 @@ function getModule(name: string): Promise<{
       return import('./wallets/mathwallet')
     case '1inch':
       return import('./wallets/1inch')
-    case 'blankwallet':
-      return import('./wallets/blankwallet')
+    case 'blockwallet':
+      return import('./wallets/blockwallet')
     case 'ronin':
       return import('./wallets/ronin')
     default:
