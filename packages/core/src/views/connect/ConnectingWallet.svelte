@@ -172,6 +172,7 @@
   <button
     on:click={() => {
       deselectWallet(selectedWallet.label)
+      dispatch('connectionRejected', false)
     }}
     class="onboard-button-primary"
     >{$_('connect.connectingWallet.primaryButton', {

@@ -34,7 +34,7 @@
   const { autoSelect } = options
 
   let loading = true
-  let connectionRejected = 'false'
+  let connectionRejected = false
   let wallets: WalletWithLoadingIcon[] = []
   let selectedWallet: WalletState | null
   let agreed: boolean
@@ -250,7 +250,7 @@
           {#if step === 'connectingWallet' && selectedWallet}
             <ConnectingWallet
               on:connectionRejected={({ detail }) => {
-                connectionRejected = String(detail)
+                connectionRejected = detail
               }}
               {deselectWallet}
               {selectedWallet}
