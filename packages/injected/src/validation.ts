@@ -12,10 +12,10 @@ const walletModule = Joi.object({
 })
 
 const wallets = Joi.array().items(walletModule)
-const filters = Joi.object().pattern(/\w/, Joi.string())
+const filter = Joi.object().pattern(/\w/, Joi.string())
 const walletOptions = Joi.object({
   custom: wallets,
-  filters
+  filter
 })
 
 type ValidateReturn = Joi.ValidationResult | null
