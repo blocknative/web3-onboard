@@ -5,7 +5,7 @@ import gnosisWalletIcon from '../wallet-icons/icon-gnosis'
 
 const getSafe = (sdk: SafeAppsSDK): Promise<SafeInfo | undefined> =>
   Promise.race([
-    sdk.getSafeInfo(),
+    sdk.safe.getInfo(),
     // Timeout need as this method hangs until it can find the safe info
     new Promise<undefined>(resolve => setTimeout(resolve, 200))
   ])
