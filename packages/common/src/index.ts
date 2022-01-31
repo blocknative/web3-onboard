@@ -1,4 +1,4 @@
-import {
+import type {
   RequestPatch,
   EventCallback,
   AccountSelectAPI,
@@ -46,29 +46,31 @@ import {
   EthChainIdRequest,
   EthBalanceRequest,
   EIP1102Request,
+  SelectAccountsRequest,
   EIP3085Request,
   EIP3326Request,
   AddChainParams,
   EIP1193Provider,
   MeetOneProvider,
   BinanceProvider,
-  InjectedNameSpace,
   CustomWindow,
   InjectedProvider,
-  ProviderRpcErrorCode,
   Chain,
   TokenSymbol,
   CustomNetwork
 } from './types'
 
-import { ProviderIdentityFlag, ProviderLabel } from './types'
+export {
+  ProviderIdentityFlag,
+  ProviderLabel,
+  ProviderRpcErrorCode,
+  InjectedNameSpace
+} from './types'
 
-export { ErrorCodes, ProviderRpcError } from './errors'
+export { ProviderRpcError } from './errors'
 export { createEIP1193Provider } from './eip-1193'
 export { default as accountSelect } from './account-select'
 export { entryModal } from './entry-modal'
-
-export { ProviderIdentityFlag, ProviderLabel, InjectedNameSpace }
 
 export type {
   RequestPatch,
@@ -118,6 +120,7 @@ export type {
   EthChainIdRequest,
   EthBalanceRequest,
   EIP1102Request,
+  SelectAccountsRequest,
   EIP3085Request,
   EIP3326Request,
   AddChainParams,
@@ -126,7 +129,6 @@ export type {
   BinanceProvider,
   CustomWindow,
   InjectedProvider,
-  ProviderRpcErrorCode,
   Chain,
   TokenSymbol,
   CustomNetwork

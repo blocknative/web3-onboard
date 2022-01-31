@@ -1,7 +1,7 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
   import { createEventDispatcher } from 'svelte'
-  import { ErrorCodes } from '@bn-onboard/common'
+  import { ProviderRpcErrorCode } from '@bn-onboard/common'
 
   import { getChainId, requestAccounts, trackWallet } from '../../provider'
   import { internalState$ } from '../../streams'
@@ -52,14 +52,14 @@
       const { code } = error as { code: number; message: string }
 
       // user rejected account access
-      if (code === ErrorCodes.ACCOUNT_ACCESS_REJECTED) {
+      if (code === ProviderRpcErrorCode.ACCOUNT_ACCESS_REJECTED) {
         connectionRejected = true
         dispatch('connectionRejected', true)
         return
       }
 
       // account access has already been requested and is awaiting approval
-      if (code === ErrorCodes.ACCOUNT_ACCESS_ALREADY_REQUESTED) {
+      if (code === ProviderRpcErrorCode.ACCOUNT_ACCESS_ALREADY_REQUESTED) {
         return
       }
     }

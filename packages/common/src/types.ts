@@ -25,6 +25,11 @@ export type RequestPatch = {
         baseRequest: EIP1193Provider['request']
       }) => Promise<ProviderAccounts>)
     | null
+  eth_selectAccounts?:
+    | ((args: {
+        baseRequest: EIP1193Provider['request']
+      }) => Promise<ProviderAccounts>)
+    | null
   eth_chainId?:
     | ((args: { baseRequest: EIP1193Provider['request'] }) => Promise<string>)
     | null
@@ -367,6 +372,10 @@ export interface EIP1102Request extends BaseRequest {
   method: 'eth_requestAccounts'
 }
 
+export interface SelectAccountsRequest extends BaseRequest {
+  method: 'eth_selectAccounts'
+}
+
 export interface EIP3085Request {
   method: 'wallet_addEthereumChain'
   params: AddChainParams[]
@@ -397,6 +406,7 @@ export interface EIP1193Provider extends SimpleEventEmitter {
   request(args: EthAccountsRequest): Promise<ProviderAccounts>
   request(args: EthBalanceRequest): Promise<Balance>
   request(args: EIP1102Request): Promise<ProviderAccounts>
+  request(args: SelectAccountsRequest): Promise<ProviderAccounts>
   request(args: EIP3326Request): Promise<null>
   request(args: EIP3085Request): Promise<null>
   request(args: EthChainIdRequest): Promise<ChainId>
@@ -501,21 +511,14 @@ export enum ProviderLabel {
 }
 
 export enum ProviderRpcErrorCode {
-  /** The user rejected the request. */
-  RejectedRequest = '4001',
-
-  /** The requested method and/or 
-       account has not been authorized by the user. */
-  Unauthorized = '4100',
-
-  /** The Provider does not support the requested method. */
-  UnsupportedMethod = '4200',
-
-  /** The Provider is disconnected from all chains. */
-  Disconnected = '4900',
-
-  /** The Provider is not connected to the requested chain. */
-  ChainDisconnected = '4901'
+  ACCOUNT_ACCESS_REJECTED = 4001,
+  ACCOUNT_ACCESS_ALREADY_REQUESTED = -32002,
+  UNAUTHORIZED = 4100,
+  INVALID_PARAMS = -32602,
+  UNSUPPORTED_METHOD = 4200,
+  DISCONNECTED = 4900,
+  CHAIN_DISCONNECTED = 4901,
+  CHAIN_NOT_ADDED = 4902
 }
 
 export interface Chain {

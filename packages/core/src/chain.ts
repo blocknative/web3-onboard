@@ -1,5 +1,6 @@
 import { firstValueFrom } from 'rxjs'
 import { filter, mapTo } from 'rxjs/operators'
+import { ProviderRpcErrorCode } from '@bn-onboard/common'
 import { addNewChain, switchChain } from './provider'
 import { state } from './store'
 import { switchChainModal$ } from './streams'
@@ -55,7 +56,7 @@ async function setChain(options: {
       mapTo(false)
     )
 
-    if (code === 4902) {
+    if (code === ProviderRpcErrorCode.CHAIN_NOT_ADDED) {
       // chain has not been added to wallet
       try {
         await addNewChain(wallet.provider, chain)
@@ -68,7 +69,7 @@ async function setChain(options: {
       }
     }
 
-    if (code === 4200) {
+    if (code === ProviderRpcErrorCode.UNSUPPORTED_METHOD) {
       // method not supported
       switchChainModal$.next({ chain })
       return firstValueFrom(switchChainModalClosed$)

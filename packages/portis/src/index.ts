@@ -20,6 +20,7 @@ function portis(options: APIKey): WalletInit {
 
         const provider = createEIP1193Provider(portisProvider, {
           eth_requestAccounts: portisProvider.enable,
+          eth_selectAccounts: null,
           wallet_switchEthereumChain: async ({ params }) => {
             const chain = chains.find(({ id }) => id === params[0].chainId)
             if (!chain) throw new Error('chain must be set before switching')

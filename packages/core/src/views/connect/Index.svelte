@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { WalletModule } from '@bn-onboard/common'
+  import { ProviderRpcErrorCode, WalletModule } from '@bn-onboard/common'
   import { _ } from 'svelte-i18n'
   import { BigNumber } from 'ethers'
   import EventEmitter from 'eventemitter3'
@@ -26,7 +26,7 @@
   import { state } from '../../store'
   import { addWallet } from '../../store/actions'
   import en from '../../i18n/en.json'
-  import { requestAccounts } from '../../provider'
+  import { selectAccounts } from '../../provider'
 
   export let options: ConnectOptions
 
@@ -67,7 +67,17 @@
       // set as first wallet
       addWallet(existingWallet)
 
-      await requestAccounts(existingWallet.provider)
+      try {
+        await selectAccounts(existingWallet.provider)
+      } catch (error) {
+        const { code } = error as { code: number }
+
+        if (code === ProviderRpcErrorCode.UNSUPPORTED_METHOD) {
+          // SHOW MODAL
+          console.log('show modal')
+        }
+      }
+
       selectedWallet = existingWallet
 
       return
@@ -91,7 +101,6 @@
         chain: '0x1'
       }
     } catch (error) {
-      console.error(error)
       // selectWalletError = (error as Error).message
       console.error(error)
     }
