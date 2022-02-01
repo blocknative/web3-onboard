@@ -50,7 +50,7 @@
     custom: [
       // include custom injected wallet modules here
     ],
-    filters: {
+    filter: {
       // mapping of wallet label to filter here
     }
   })
