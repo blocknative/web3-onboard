@@ -1,6 +1,6 @@
 import {
   createEIP1193Provider,
-  ErrorCodes,
+  ProviderRpcErrorCode,
   ProviderRpcError
 } from '@bn-onboard/common'
 
@@ -36,7 +36,7 @@ function fortmatic(options: APIKey): WalletInit {
                 const { code } = error as { code: number }
                 if (code === -32603) {
                   throw new ProviderRpcError({
-                    code: ErrorCodes.ACCOUNT_ACCESS_REJECTED,
+                    code: ProviderRpcErrorCode.ACCOUNT_ACCESS_REJECTED,
                     message: 'Account access rejected'
                   })
                 }
@@ -44,6 +44,7 @@ function fortmatic(options: APIKey): WalletInit {
                 return []
               }
             },
+            eth_selectAccounts: null,
             eth_getBalance: async () => {
               const [balance] = await instance.user.getBalances()
               return balance

@@ -13,13 +13,7 @@
 <style>
   button {
     position: relative;
-    display: flex;
-    align-items: center;
-    padding: var(--onboard-spacing-4, var(--spacing-4));
-    border-radius: 24px;
     background-color: white;
-    cursor: pointer;
-    font: inherit;
     border: 1px solid var(--onboard-blue-200, var(--blue-200));
     transition: background-color 250ms ease-in-out;
   }

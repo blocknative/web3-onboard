@@ -2,6 +2,7 @@
   import { connectWallet$, switchChainModal$ } from '../streams'
   import Connect from './connect/Index.svelte'
   import SwitchChain from './chain/SwitchChain.svelte'
+  import ActionRequired from './connect/ActionRequired.svelte'
 </script>
 
 <style>
@@ -107,11 +108,26 @@
 
   :global(a) {
     color: var(--onboard-blue-500, var(--blue-500));
+    text-decoration: none;
+  }
+
+  :global(button) {
+    display: flex;
+    align-items: center;
+    padding: var(--onboard-spacing-4, var(--spacing-4));
+    border-radius: 24px;
+    cursor: pointer;
+    font: inherit;
+    border: none;
   }
 </style>
 
 {#if $connectWallet$.inProgress}
-  <Connect options={$connectWallet$} />
+  <Connect autoSelect={$connectWallet$.autoSelect} />
+{/if}
+
+{#if $connectWallet$.actionRequired}
+  <ActionRequired wallet={$connectWallet$.actionRequired} />
 {/if}
 
 {#if $switchChainModal$}

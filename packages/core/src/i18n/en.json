@@ -24,9 +24,9 @@
         "paragraph": "Please approve the connection in your wallet and authorize access to continue."
       },
       "mainText": "Connecting...",
+      "paragraph": "Make sure to select all accounts that you want to grant access to.",
       "rejectedText": "Connection Rejected!",
       "rejectedCTA": "Click here to try again",
-      "warningText": "{app} is waiting for you to connect your wallet, try manually connecting through your wallet menu",
       "primaryButton": "Back to wallets"
     },
     "connectedWallet": {
@@ -43,6 +43,14 @@
       "heading": "Switch Chain",
       "paragraph1": "{app} requires that you switch your wallet to the {nextNetworkName} network to continue.",
       "paragraph2": "*Some wallets may not support changing networks. If you can not change networks in your wallet you may consider switching to a different wallet."
+    }
+  },
+  "modals": {
+    "actionRequired": {
+      "heading": "Action required in {wallet}",
+      "paragraph": "Please switch the active account in your wallet.",
+      "linkText": "Learn more.",
+      "buttonText": "Okay"
     }
   }
 }

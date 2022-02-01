@@ -1,6 +1,6 @@
 import {
   createEIP1193Provider,
-  ErrorCodes,
+  ProviderRpcErrorCode,
   ProviderRpcError
 } from '@bn-onboard/common'
 import { EIP1193Provider, WalletInit } from '@bn-onboard/common'
@@ -31,7 +31,7 @@ function mew(): WalletInit {
             const closed$ = fromEvent(mewConnect, 'popupWindowClosed').pipe(
               map(() => {
                 throw new ProviderRpcError({
-                  code: ErrorCodes.ACCOUNT_ACCESS_REJECTED,
+                  code: ProviderRpcErrorCode.ACCOUNT_ACCESS_REJECTED,
                   message: 'Popup window closed'
                 })
               }),
@@ -42,7 +42,8 @@ function mew(): WalletInit {
               baseRequest({ method: 'eth_requestAccounts' }),
               firstValueFrom(closed$)
             ])
-          }
+          },
+          eth_selectAccounts: null
         })
 
         const events = new EventEmitter()

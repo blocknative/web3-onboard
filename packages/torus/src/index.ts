@@ -1,6 +1,6 @@
 import {
   createEIP1193Provider,
-  ErrorCodes,
+  ProviderRpcErrorCode,
   ProviderRpcError
 } from '@bn-onboard/common'
 
@@ -78,11 +78,12 @@ function torus(options?: TorusOptions): WalletInit {
               return accounts
             } catch (error) {
               throw new ProviderRpcError({
-                code: ErrorCodes.ACCOUNT_ACCESS_REJECTED,
+                code: ProviderRpcErrorCode.ACCOUNT_ACCESS_REJECTED,
                 message: 'Account access rejected'
               })
             }
           },
+          eth_selectAccounts: null,
           wallet_switchEthereumChain: async ({ params }) => {
             const chain = chains.find(({ id }) => id === params[0].chainId)
             if (!chain) throw new Error('chain must be set before switching')

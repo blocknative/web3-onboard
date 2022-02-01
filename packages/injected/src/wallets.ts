@@ -65,6 +65,7 @@ const binance: InjectedWalletModule = {
           window.BinanceChain.isUnlocked = true
           return accts
         }),
+      eth_selectAccounts: UNSUPPORTED_METHOD,
       eth_chainId: ({ baseRequest }) =>
         baseRequest({ method: 'eth_chainId' }).then(
           id => `0x${parseInt(id).toString(16)}`
@@ -129,7 +130,8 @@ const trust: InjectedWalletModule = {
   getIcon: async () => (await import('./icons/trust.js')).default,
   getInterface: async () => ({
     provider: createEIP1193Provider(window.ethereum, {
-      wallet_switchEthereumChain: UNSUPPORTED_METHOD
+      wallet_switchEthereumChain: UNSUPPORTED_METHOD,
+      eth_selectAccounts: UNSUPPORTED_METHOD
     })
   }),
   platforms: ['mobile']
@@ -143,7 +145,8 @@ const opera: InjectedWalletModule = {
   getInterface: async () => ({
     provider: createEIP1193Provider(window.ethereum, {
       eth_requestAccounts: async ({ baseRequest }) =>
-        baseRequest({ method: 'eth_accounts' })
+        baseRequest({ method: 'eth_accounts' }),
+      eth_selectAccounts: UNSUPPORTED_METHOD
     })
   }),
   platforms: ['all']
@@ -173,7 +176,8 @@ const alphawallet: InjectedWalletModule = {
   getIcon: async () => (await import('./icons/alphawallet.js')).default,
   getInterface: async () => ({
     provider: createEIP1193Provider(window.ethereum, {
-      wallet_switchEthereumChain: UNSUPPORTED_METHOD
+      wallet_switchEthereumChain: UNSUPPORTED_METHOD,
+      eth_selectAccounts: UNSUPPORTED_METHOD
     })
   }),
   platforms: ['mobile']
@@ -198,7 +202,8 @@ const bitpie: InjectedWalletModule = {
   getIcon: async () => (await import('./icons/bitpie.js')).default,
   getInterface: async () => ({
     provider: createEIP1193Provider(window.ethereum, {
-      wallet_switchEthereumChain: UNSUPPORTED_METHOD
+      wallet_switchEthereumChain: UNSUPPORTED_METHOD,
+      eth_selectAccounts: UNSUPPORTED_METHOD
     })
   }),
   platforms: ['mobile']
@@ -212,7 +217,8 @@ const blankwallet: InjectedWalletModule = {
   getIcon: async () => (await import('./icons/blankwallet.js')).default,
   getInterface: async () => ({
     provider: createEIP1193Provider(window.ethereum, {
-      wallet_switchEthereumChain: UNSUPPORTED_METHOD
+      wallet_switchEthereumChain: UNSUPPORTED_METHOD,
+      eth_selectAccounts: UNSUPPORTED_METHOD
     })
   }),
   platforms: ['desktop']
@@ -226,7 +232,8 @@ const dcent: InjectedWalletModule = {
   getIcon: async () => (await import('./icons/dcent.js')).default,
   getInterface: async () => ({
     provider: createEIP1193Provider(window.ethereum, {
-      wallet_switchEthereumChain: UNSUPPORTED_METHOD
+      wallet_switchEthereumChain: UNSUPPORTED_METHOD,
+      eth_selectAccounts: UNSUPPORTED_METHOD
     })
   }),
   platforms: ['mobile']
@@ -252,7 +259,8 @@ const huobiwallet: InjectedWalletModule = {
   getIcon: async () => (await import('./icons/huobiwallet.js')).default,
   getInterface: async () => ({
     provider: createEIP1193Provider(window.ethereum, {
-      wallet_switchEthereumChain: UNSUPPORTED_METHOD
+      wallet_switchEthereumChain: UNSUPPORTED_METHOD,
+      eth_selectAccounts: UNSUPPORTED_METHOD
     })
   }),
   platforms: ['mobile']
@@ -268,7 +276,8 @@ const hyperpay: InjectedWalletModule = {
   getIcon: async () => (await import('./icons/hyperpay.js')).default,
   getInterface: async () => ({
     provider: createEIP1193Provider(window.ethereum, {
-      wallet_switchEthereumChain: UNSUPPORTED_METHOD
+      wallet_switchEthereumChain: UNSUPPORTED_METHOD,
+      eth_selectAccounts: UNSUPPORTED_METHOD
     })
   }),
   platforms: ['mobile']
@@ -282,7 +291,8 @@ const imtoken: InjectedWalletModule = {
   getIcon: async () => (await import('./icons/imtoken.js')).default,
   getInterface: async () => ({
     provider: createEIP1193Provider(window.ethereum, {
-      wallet_switchEthereumChain: UNSUPPORTED_METHOD
+      wallet_switchEthereumChain: UNSUPPORTED_METHOD,
+      eth_selectAccounts: UNSUPPORTED_METHOD
     })
   }),
   platforms: ['mobile']
@@ -338,7 +348,8 @@ const ownbit: InjectedWalletModule = {
         baseRequest({ method: 'eth_chainId' }).then(
           id => `0x${parseInt(id).toString(16)}`
         ),
-      wallet_switchEthereumChain: UNSUPPORTED_METHOD
+      wallet_switchEthereumChain: UNSUPPORTED_METHOD,
+      eth_selectAccounts: UNSUPPORTED_METHOD
     })
     provider.removeListener = (event, listener) => {}
     provider.on = (event, listener) => {}
@@ -364,7 +375,8 @@ const tokenpocket: InjectedWalletModule = {
           method: 'wallet_switchEthereumChain',
           params
         })
-      }
+      },
+      eth_selectAccounts: UNSUPPORTED_METHOD
     })
 
     provider.on = emitter.on.bind(emitter)
@@ -384,7 +396,8 @@ const tp: InjectedWalletModule = {
   getIcon: async () => (await import('./icons/tp.js')).default,
   getInterface: async () => ({
     provider: createEIP1193Provider(window.ethereum, {
-      wallet_switchEthereumChain: UNSUPPORTED_METHOD
+      wallet_switchEthereumChain: UNSUPPORTED_METHOD,
+      eth_selectAccounts: UNSUPPORTED_METHOD
     })
   }),
   platforms: ['mobile']

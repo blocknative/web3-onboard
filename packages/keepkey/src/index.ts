@@ -270,6 +270,10 @@ function keepkey(): WalletInit {
 
               return [accounts[0]?.address]
             },
+            eth_selectAccounts: async () => {
+              const accounts = await getAccounts()
+              return accounts.map(({ address }) => address)
+            },
             eth_accounts: async () => {
               return accounts?.[0]?.address ? [accounts[0].address] : []
             },

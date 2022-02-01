@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { WalletModule } from '@bn-onboard/common'
+  import { ProviderRpcErrorCode, WalletModule } from '@bn-onboard/common'
   import { _ } from 'svelte-i18n'
   import { BigNumber } from 'ethers'
   import EventEmitter from 'eventemitter3'
@@ -26,15 +26,14 @@
   import { state } from '../../store'
   import { addWallet } from '../../store/actions'
   import en from '../../i18n/en.json'
-  import { requestAccounts } from '../../provider'
+  import { selectAccounts } from '../../provider'
 
-  export let options: ConnectOptions
+  export let autoSelect: string
 
   const { walletModules, appMetadata } = internalState$.getValue()
-  const { autoSelect } = options
 
   let loading = true
-  let connectionRejected = 'false'
+  let connectionRejected = false
   let wallets: WalletWithLoadingIcon[] = []
   let selectedWallet: WalletState | null
   let agreed: boolean
@@ -67,7 +66,24 @@
       // set as first wallet
       addWallet(existingWallet)
 
-      await requestAccounts(existingWallet.provider)
+      try {
+        console.log('calling select accounts')
+        await selectAccounts(existingWallet.provider)
+        setStep('connectedWallet')
+      } catch (error) {
+        const { code } = error as { code: number }
+
+        if (
+          code === ProviderRpcErrorCode.UNSUPPORTED_METHOD ||
+          code === ProviderRpcErrorCode.DOES_NOT_EXIST
+        ) {
+          connectWallet$.next({
+            inProgress: false,
+            actionRequired: existingWallet.label
+          })
+        }
+      }
+
       selectedWallet = existingWallet
 
       return
@@ -91,10 +107,11 @@
         chain: '0x1'
       }
     } catch (error) {
-      console.error(error)
       // selectWalletError = (error as Error).message
       console.error(error)
     }
+
+    setStep('connectingWallet')
   }
 
   function deselectWallet() {
@@ -129,14 +146,11 @@
     connectWallet$.next({ inProgress: false })
   }
 
-  type Step = keyof i18n['connect']
-  $: step = (
-    !selectedWallet
-      ? 'selectingWallet'
-      : !selectedWallet.accounts.length
-      ? 'connectingWallet'
-      : 'connectedWallet'
-  ) as Step
+  let step: keyof i18n['connect'] = 'selectingWallet'
+
+  function setStep(update: keyof i18n['connect']) {
+    step = update
+  }
 </script>
 
 <style>
@@ -241,8 +255,9 @@
           {#if step === 'connectingWallet' && selectedWallet}
             <ConnectingWallet
               on:connectionRejected={({ detail }) => {
-                connectionRejected = String(detail)
+                connectionRejected = detail
               }}
+              {setStep}
               {deselectWallet}
               {selectedWallet}
               {updateSelectedWallet}

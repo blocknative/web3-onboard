@@ -206,6 +206,13 @@
     font-weight: 300;
   }
 
+  section {
+    font-family: var(
+      --account-select-font-family-normal,
+      var(--font-family-normal)
+    );
+  }
+
   .close {
     cursor: pointer;
   }

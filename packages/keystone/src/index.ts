@@ -4,7 +4,7 @@ import {
   Chain,
   createEIP1193Provider,
   CustomNetwork,
-  ErrorCodes,
+  ProviderRpcErrorCode,
   GetInterfaceHelpers,
   ProviderRpcError,
   ScanAccountsOptions,
@@ -130,11 +130,15 @@ function keystone({
             const accounts = await getAccounts()
             if (accounts.length === 0) {
               throw new ProviderRpcError({
-                code: ErrorCodes.ACCOUNT_ACCESS_REJECTED,
+                code: ProviderRpcErrorCode.ACCOUNT_ACCESS_REJECTED,
                 message: 'User rejected the request.'
               })
             }
             return accounts[0] ? [accounts[0].address] : []
+          },
+          eth_selectAccounts: async () => {
+            const accounts = await getAccounts()
+            return accounts.map(({ address }) => address)
           },
           eth_accounts: async () => {
             return accounts && accounts[0].address ? [accounts[0].address] : []
@@ -151,7 +155,7 @@ function keystone({
             if (!transactionObject)
               throw new ProviderRpcError({
                 message: 'Invalid method parameters',
-                code: ErrorCodes.INVALID_PARAMS,
+                code: ProviderRpcErrorCode.INVALID_PARAMS,
                 data: transactionObject
               })
 

@@ -10,7 +10,8 @@ import type {
   ProviderAccounts,
   Chain,
   AccountsListener,
-  ChainListener
+  ChainListener,
+  SelectAccountsRequest
 } from '@bn-onboard/common'
 
 import { disconnectWallet$ } from './streams'
@@ -24,6 +25,13 @@ export function requestAccounts(
   provider: EIP1193Provider
 ): Promise<ProviderAccounts> {
   const args = { method: 'eth_requestAccounts' } as EIP1102Request
+  return provider.request(args)
+}
+
+export function selectAccounts(
+  provider: EIP1193Provider
+): Promise<ProviderAccounts> {
+  const args = { method: 'eth_selectAccounts' } as SelectAccountsRequest
   return provider.request(args)
 }
 
