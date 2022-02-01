@@ -518,7 +518,8 @@ export enum ProviderRpcErrorCode {
   UNSUPPORTED_METHOD = 4200,
   DISCONNECTED = 4900,
   CHAIN_DISCONNECTED = 4901,
-  CHAIN_NOT_ADDED = 4902
+  CHAIN_NOT_ADDED = 4902,
+  DOES_NOT_EXIST = -32601
 }
 
 export interface Chain {

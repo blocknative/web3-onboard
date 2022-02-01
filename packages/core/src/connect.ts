@@ -27,7 +27,10 @@ async function connect(options?: ConnectOptions): Promise<WalletState[]> {
   connectWallet$.next({ autoSelect, inProgress: true })
 
   const result$ = connectWallet$.pipe(
-    filter(({ inProgress }) => inProgress === false),
+    filter(
+      ({ inProgress, actionRequired }) =>
+        inProgress === false && !actionRequired
+    ),
     withLatestFrom(wallets$),
     pluck(1)
   )

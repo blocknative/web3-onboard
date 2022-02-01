@@ -28,10 +28,9 @@
   import en from '../../i18n/en.json'
   import { selectAccounts } from '../../provider'
 
-  export let options: ConnectOptions
+  export let autoSelect: string
 
   const { walletModules, appMetadata } = internalState$.getValue()
-  const { autoSelect } = options
 
   let loading = true
   let connectionRejected = false
@@ -68,13 +67,20 @@
       addWallet(existingWallet)
 
       try {
+        console.log('calling select accounts')
         await selectAccounts(existingWallet.provider)
+        setStep('connectedWallet')
       } catch (error) {
         const { code } = error as { code: number }
 
-        if (code === ProviderRpcErrorCode.UNSUPPORTED_METHOD) {
-          // SHOW MODAL
-          console.log('show modal')
+        if (
+          code === ProviderRpcErrorCode.UNSUPPORTED_METHOD ||
+          code === ProviderRpcErrorCode.DOES_NOT_EXIST
+        ) {
+          connectWallet$.next({
+            inProgress: false,
+            actionRequired: existingWallet.label
+          })
         }
       }
 
@@ -104,6 +110,8 @@
       // selectWalletError = (error as Error).message
       console.error(error)
     }
+
+    setStep('connectingWallet')
   }
 
   function deselectWallet() {
@@ -138,14 +146,11 @@
     connectWallet$.next({ inProgress: false })
   }
 
-  type Step = keyof i18n['connect']
-  $: step = (
-    !selectedWallet
-      ? 'selectingWallet'
-      : !selectedWallet.accounts.length
-      ? 'connectingWallet'
-      : 'connectedWallet'
-  ) as Step
+  let step: keyof i18n['connect'] = 'selectingWallet'
+
+  function setStep(update: keyof i18n['connect']) {
+    step = update
+  }
 </script>
 
 <style>
@@ -252,6 +257,7 @@
               on:connectionRejected={({ detail }) => {
                 connectionRejected = detail
               }}
+              {setStep}
               {deselectWallet}
               {selectedWallet}
               {updateSelectedWallet}

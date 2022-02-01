@@ -5,7 +5,7 @@
 
   import { getChainId, requestAccounts, trackWallet } from '../../provider'
   import { internalState$ } from '../../streams'
-  import type { WalletState } from '../../types'
+  import type { WalletState, i18n } from '../../types'
 
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import PendingStatusIcon from '../shared/PendingStatusIcon.svelte'
@@ -17,6 +17,7 @@
   export let selectedWallet: WalletState
   export let deselectWallet: (label: string) => void
   export let updateSelectedWallet: (update: Partial<WalletState>) => void
+  export let setStep: (update: keyof i18n['connect']) => void
 
   let connectionRejected = false
 
@@ -48,6 +49,7 @@
       addWallet({ ...selectedWallet, ...update })
       trackWallet(provider, label)
       updateSelectedWallet(update)
+      setStep('connectedWallet')
     } catch (error) {
       const { code } = error as { code: number; message: string }
 
@@ -85,9 +87,9 @@
     transition: background-color 100ms ease-in-out,
       border-color 100ms ease-in-out;
     border-radius: 24px;
-    background-color: var(--onboard-success-100, var(--success-100));
+    background-color: var(--onboard-blue-100, var(--blue-100));
     border: 1px solid;
-    border-color: var(--onboard-success-600, var(--success-600));
+    border-color: var(--onboard-blue-300, var(--blue-300));
     box-sizing: border-box;
   }
 
@@ -96,9 +98,18 @@
     border-color: var(--onboard-warning-400, var(--warning-400));
   }
 
-  .rejected-cta {
+  .icons {
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+
+  .subtext {
     font-size: var(--onboard-font-size-7, var(--font-size-7));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
+  }
+
+  .rejected-cta {
     color: var(--onboard-blue-500, var(--blue-500));
     cursor: pointer;
   }
@@ -122,57 +133,60 @@
 
 <div class="container">
   <div class="connecting-container" class:warning={connectionRejected}>
-    {#if connectionRejected}
-      <div style="display: flex;">
+    <div style="display: flex;">
+      <div class="icons">
         <WalletAppBadge
           size={48}
-          border="yellow"
+          border={connectionRejected ? 'yellow' : 'blue'}
+          background="lightGray"
           icon={appMetadata?.icon || defaultAppIcon}
         />
-        <div class="centered-flex-column ml">
-          <div class="text">
-            {$_('connect.connectingWallet.rejectedText', {
-              default: en.connect.connectingWallet.rejectedText
-            })}
-          </div>
-          <div class="rejected-cta text" on:click={connect}>
+
+        <div style="position: relative; right: 0.5rem;">
+          <WalletAppBadge
+            size={48}
+            border={connectionRejected ? 'yellow' : 'blue'}
+            background="white"
+            icon={selectedWallet.icon}
+          />
+        </div>
+      </div>
+
+      <div class="centered-flex-column ml">
+        <div class="text">
+          {$_(
+            connectionRejected
+              ? 'connect.connectingWallet.rejectedText'
+              : 'connect.connectingWallet.mainText',
+            {
+              default: connectionRejected
+                ? en.connect.connectingWallet.rejectedText
+                : en.connect.connectingWallet.mainText
+            }
+          )}
+        </div>
+        {#if connectionRejected}
+          <div class="rejected-cta subtext" on:click={connect}>
             {$_('connect.connectingWallet.rejectedCTA', {
               default: en.connect.connectingWallet.rejectedCTA
             })}
           </div>
-        </div>
+        {:else}
+          <div class="subtext">
+            {$_('connect.connectingWallet.paragraph', {
+              default: en.connect.connectingWallet.paragraph
+            })}
+          </div>
+        {/if}
       </div>
-    {:else}
-      <WalletAppBadge
-        size={48}
-        border="gray"
-        background={appMetadata?.icon ? 'white' : 'lightGray'}
-        icon={appMetadata?.icon || defaultAppIcon}
-      >
-        <SuccessStatusIcon slot="status" size={17} />
-      </WalletAppBadge>
-
-      <div class="text">
-        {$_('connect.connectingWallet.mainText', {
-          default: en.connect.connectingWallet.mainText
-        })}
-      </div>
-
-      <WalletAppBadge
-        size={48}
-        border="yellow"
-        background="lightGray"
-        icon={selectedWallet.icon}
-      >
-        <PendingStatusIcon slot="status" size={17} />
-      </WalletAppBadge>
-    {/if}
+    </div>
   </div>
 
   <button
     on:click={() => {
       deselectWallet(selectedWallet.label)
       dispatch('connectionRejected', false)
+      setStep('selectingWallet')
     }}
     class="onboard-button-primary"
     >{$_('connect.connectingWallet.primaryButton', {
