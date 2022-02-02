@@ -1,10 +1,4 @@
-import {
-  createEIP1193Provider,
-  ProviderRpcErrorCode,
-  ProviderRpcError
-} from '@bn-onboard/common'
-
-import { WalletInit, APIKey, EIP1193Provider } from '@bn-onboard/common'
+import type { WalletInit, APIKey, EIP1193Provider } from '@bn-onboard/common'
 
 function fortmatic(options: APIKey): WalletInit {
   const { apiKey } = options
@@ -15,6 +9,11 @@ function fortmatic(options: APIKey): WalletInit {
       getIcon: async () => (await import('./icon.js')).default,
       getInterface: async ({ EventEmitter, BigNumber, chains }) => {
         const { default: Fortmatic } = await import('fortmatic')
+        const {
+          createEIP1193Provider,
+          ProviderRpcErrorCode,
+          ProviderRpcError
+        } = await import('@bn-onboard/common')
 
         const emitter = new EventEmitter()
 

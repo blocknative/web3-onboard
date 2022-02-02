@@ -17,7 +17,6 @@
   "main": "dist/index.js",
   "type": "module",
   "devDependencies": {
-    "@bn-onboard/common": "^2.0.0-alpha.5",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
@@ -41,9 +40,11 @@
     "typescript": "4.3.5"
   },
   "dependencies": {
+    "@bn-onboard/common": "^2.0.0-alpha.5",
     "ethers": "5.5.3",
     "bowser": "^2.11.0",
     "eventemitter3": "^4.0.7",
+    "joi": "17.6.0",
     "lodash.merge": "^4.6.2",
     "lodash.partition": "^4.6.0",
     "rxjs": "^7.5.2",

@@ -79,15 +79,16 @@ function keystone({
       label: 'Keystone',
       getIcon,
       getInterface: async ({ EventEmitter, chains }: GetInterfaceHelpers) => {
-        const { providers } = await import('ethers')
+        const { JsonRpcProvider } = await import('@ethersproject/providers')
+        const { default: Common, Hardfork } = await import('@ethereumjs/common')
+
         const { default: AirGappedKeyring } = await import(
           '@keystonehq/eth-keyring'
         )
+
         const { TransactionFactory: Transaction } = await import(
           '@ethereumjs/tx'
         )
-
-        const { default: Common, Hardfork } = await import('@ethereumjs/common')
 
         const keyring = AirGappedKeyring.getEmptyKeyring()
         await keyring.readKeyring()
@@ -103,7 +104,7 @@ function keystone({
           currentChain =
             chains.find(({ id }: Chain) => id === chainId) || currentChain
 
-          const provider = new providers.JsonRpcProvider(currentChain.rpcUrl)
+          const provider = new JsonRpcProvider(currentChain.rpcUrl)
           return generateAccounts(keyring, provider)
         }
 
