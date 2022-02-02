@@ -57,7 +57,7 @@ function select(
   // at the beginning of the list e.g. the top of the wallet select modal
   let detectedProviderName: string | undefined
   let detectedWalletName: string | undefined
-  if (window?.ethereum) {
+  if (window && window.hasOwnProperty('ethereum')) {
     detectedProviderName = getProviderName(window.ethereum)
     if (detectedProviderName) {
       detectedWalletName = providerNameToWalletName(detectedProviderName)
@@ -66,8 +66,9 @@ function select(
 
   if (wallets) {
     const hideWallet = (wallet: WalletInitOptions) =>
-      wallet?.display &&
-      wallet?.display[isMobile ? 'mobile' : 'desktop'] === false
+      wallet &&
+      wallet.hasOwnProperty('display') &&
+      wallet.display[isMobile ? 'mobile' : 'desktop'] === false
 
     // If the detected wallet is already listed as a wallet option then don't inject it
     const walletNotIncluded = wallets.every(

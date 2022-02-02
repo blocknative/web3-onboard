@@ -101,7 +101,7 @@ const getAddresses = async (
   // Then adds 4 more 0 balance accounts to the array
   while (zeroBalanceAccounts < 5) {
     const acc = await getAccount(account, asset, index, provider)
-    if (acc?.balance?.value?.isZero()) {
+    if (acc && acc.hasOwnProperty('balance') && typeof acc.balance.value === 'number' && acc.balance.value === 0) {
       zeroBalanceAccounts++
       accounts.push(acc)
     } else {
@@ -218,38 +218,47 @@ function ledger({
           eth_requestAccounts: async () => {
             // Triggers the account select modal if no accounts have been selected
             const accounts = await getAccounts()
-            if (accounts?.length === 0) {
+            if (!Array.isArray(accounts))
+              throw new Error(
+                'No account selected. Must call eth_requestAccounts first.'
+              )
+            if (accounts.length === 0) {
               throw new ProviderRpcError({
                 code: 4001,
                 message: 'User rejected the request.'
               })
             }
-            return [accounts[0]?.address]
+            if (!accounts[0].hasOwnProperty('address'))
+              throw new Error(
+                'No address property associated with the selected account'
+              )
+            return [accounts[0].address]
           },
           eth_accounts: async () => {
-            return accounts?.[0]?.address ? [accounts[0].address] : []
+            return (Array.isArray(accounts) && accounts.length && accounts[0].hasOwnProperty('address')) ? [accounts[0].address] : []
           },
           eth_chainId: async () => {
             return (currentChain && currentChain.id) || ''
           },
           eth_signTransaction: async ({ params: [transactionObject] }) => {
-            if (!accounts)
+            if (!accounts || !Array.isArray(accounts) || !accounts.length)
               throw new Error(
                 'No account selected. Must call eth_requestAccounts first.'
               )
 
-            const account =
+            const account = transactionObject.hasOwnProperty('from') ?
               accounts.find(
-                account => account.address === transactionObject?.from
-              ) || accounts[0]
+                account => account.address === transactionObject.from
+              ) 
+              : 
+              accounts[0]
 
             const { address: from, derivationPath } = account
 
             // Set the `from` field to the currently selected account
             transactionObject = { ...transactionObject, from }
-
             const common = new Common({
-              chain: customNetwork || Number.parseInt(currentChain?.id) || 1,
+              chain: customNetwork || currentChain.hasOwnProperty('id') ? Number.parseInt(currentChain.id) : 1,
               // Berlin is the minimum hardfork that will allow for EIP1559
               hardfork: Hardfork.Berlin,
               // List of supported EIPS
@@ -293,7 +302,7 @@ function ledger({
             return signedTx ? `0x${signedTx.serialize().toString('hex')}` : ''
           },
           eth_sign: async ({ params: [address, message] }) => {
-            if (!(accounts?.length && accounts?.length > 0))
+            if (!Array.isArray(accounts) || !accounts.length)
               throw new Error(
                 'No account selected. Must call eth_requestAccounts first.'
               )
@@ -317,7 +326,7 @@ function ledger({
               })
           },
           eth_signTypedData: async ({ params: [address, typedData] }) => {
-            if (!(accounts?.length && accounts?.length > 0))
+            if (!Array.isArray(accounts) || !accounts.length)
               throw new Error(
                 'No account selected. Must call eth_requestAccounts first.'
               )
