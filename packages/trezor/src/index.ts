@@ -83,7 +83,7 @@ const getAddresses = async (
   // Then adds 4 more 0 balance accounts to the array
   while (zeroBalanceAccounts < 5) {
     const acc = await getAccount(account, asset, index, provider)
-    if (acc && acc.hasOwnProperty('balance') && typeof acc.balance.value === 'number' && acc.balance.value === 0) {
+    if (acc && acc.hasOwnProperty('balance') && acc.balance.hasOwnProperty('value') && acc.balance.value.isZero()) {
       zeroBalanceAccounts++
       accounts.push(acc)
     } else {
@@ -114,7 +114,7 @@ function trezor(options: TrezorOptions): WalletInit {
         const { compress } = (await import('eth-crypto')).publicKey
         const { providers } = await import('ethers')
 
-        if (!options || !(options.email && options.appUrl)) {
+        if (!options || !options.email || !options.appUrl) {
           throw new Error(
             'Email and AppUrl required in Trezor options for Trezor Wallet Connection'
           )
@@ -123,6 +123,7 @@ function trezor(options: TrezorOptions): WalletInit {
         const { email, appUrl, customNetwork } = options
         // @ts-ignore
         const TrezorConnect = Trezor.default
+        const Common1 = Common
 
         TrezorConnect.manifest({
           email: email,
@@ -181,7 +182,7 @@ function trezor(options: TrezorOptions): WalletInit {
             scanAccounts
           })
 
-          if (accounts.length) {
+          if (Array.isArray(accounts) && accounts.length && accounts[0].hasOwnProperty('address')) {
             eventEmitter.emit('accountsChanged', [accounts[0].address])
           }
 
@@ -292,13 +293,14 @@ function trezor(options: TrezorOptions): WalletInit {
             throw new Error(
               'No account selected. Must call eth_requestAccounts first.'
             )
-          
-          const signingAccount = transactionObject.hasOwnProperty('from') ?
-            accounts.find(
+
+          let signingAccount
+          if (transactionObject.hasOwnProperty('from')) {
+            signingAccount = accounts.find(
               account => account.address === transactionObject.from
             ) 
-            : 
-            accounts[0]
+          }
+          signingAccount = signingAccount ? signingAccount : accounts[0]
 
           const { derivationPath } = signingAccount
 
