@@ -9488,10 +9488,10 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
-walletlink@^2.4.4:
-  version "2.4.4"
-  resolved "https://registry.yarnpkg.com/walletlink/-/walletlink-2.4.4.tgz#dc2a71d1d235335ef844cfb83da7eb9c264521d0"
-  integrity sha512-BzEfSXhykuVYv0Ltv0nQtxkCzBGQk7tJ1D46wF7N/P23USiJap48i8YXa1o+5WmcxonWwA3//HWVkguJ6vHwMg==
+walletlink@^2.4.6:
+  version "2.4.6"
+  resolved "https://registry.yarnpkg.com/walletlink/-/walletlink-2.4.6.tgz#efaa950c16447bf34e186495b55755b3d7157725"
+  integrity sha512-CtfyRa3Tc9yTRFIoE0P0rhiq57WB6/XnJ0Fyc3tmSR4yntFP29sqp+SCDOI0R9Ot20gAKaYb2w/nnmLRrhfiJQ==
   dependencies:
     "@metamask/safe-event-emitter" "2.0.0"
     bind-decorator "^1.0.11"
