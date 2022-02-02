@@ -1,14 +1,16 @@
-import {
+import type {
   CustomWindow,
   EIP1193Provider,
   InjectedWalletModule,
+  ChainListener
+} from '@bn-onboard/common'
+
+import {
+  createEIP1193Provider,
   InjectedNameSpace,
-  ChainListener,
   ProviderIdentityFlag,
   ProviderLabel
 } from '@bn-onboard/common'
-
-import { createEIP1193Provider } from '@bn-onboard/common'
 
 declare const window: CustomWindow
 
