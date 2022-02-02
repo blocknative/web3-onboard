@@ -67,7 +67,6 @@
       addWallet(existingWallet)
 
       try {
-        console.log('calling select accounts')
         await selectAccounts(existingWallet.provider)
         setStep('connectedWallet')
       } catch (error) {
