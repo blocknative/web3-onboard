@@ -15,7 +15,7 @@
   .link {
     font-size: var(--onboard-font-size-7, var(--font-size-7));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
-    color: var(--onboard-blue-500, var(--blue-500));
+    color: var(--onboard-primary-500, var(--primary-500));
     cursor: pointer;
     text-decoration: none;
   }
