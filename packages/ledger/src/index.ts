@@ -8,7 +8,6 @@ import type {
   GetInterfaceHelpers
 } from '@bn-onboard/common'
 
-import type { BIP32Interface } from 'bip32'
 import type Transport from '@ledgerhq/hw-transport'
 import type { providers } from 'ethers'
 
@@ -63,20 +62,20 @@ const getAccount = async (
   index: number,
   provider: providers.JsonRpcProvider
 ): Promise<Account> => {
-  const { BIP32Factory } = await import('bip32')
-  const ecc = await import('tiny-secp256k1')
+  //@ts-ignore
+  const { default: HDKey } = await import('hdkey')
   const { Buffer } = await import('buffer')
   const { publicToAddress, toChecksumAddress } = await import('ethereumjs-util')
 
-  const node: BIP32Interface = BIP32Factory(ecc).fromPublicKey(
-    Buffer.from(publicKey, 'hex'),
-    Buffer.from(chainCode, 'hex')
-  )
+  const hdk = new HDKey()
 
-  const child: BIP32Interface = node.derive(index)
+  hdk.publicKey = Buffer.from(publicKey, 'hex')
+  hdk.chainCode = Buffer.from(chainCode, 'hex')
+
+  const dkey = hdk.deriveChild(index)
 
   const address = toChecksumAddress(
-    `0x${publicToAddress(child.publicKey, true).toString('hex')}`
+    `0x${publicToAddress(dkey.publicKey, true).toString('hex')}`
   )
 
   return {
@@ -102,7 +101,7 @@ const getAddresses = async (
   // Then adds 4 more 0 balance accounts to the array
   while (zeroBalanceAccounts < 5) {
     const acc = await getAccount(account, asset, index, provider)
-    if (acc && acc.hasOwnProperty('balance') && acc.balance.hasOwnProperty('value') && acc.balance.value.isZero()) {
+    if (acc.balance.value.isZero()) {
       zeroBalanceAccounts++
       accounts.push(acc)
     } else {
@@ -132,7 +131,10 @@ function ledger({
         const { default: Common, Hardfork } = await import('@ethereumjs/common')
         const { compress } = (await import('eth-crypto')).publicKey
         const ethUtil = await import('ethereumjs-util')
-        const { getStructHash } = await import('eip-712')
+        const {
+          TypedDataUtils: { hashStruct },
+          SignTypedDataVersion
+        } = await import('@metamask/eth-sig-util')
         const { JsonRpcProvider } = await import('@ethersproject/providers')
 
         const { accountSelect, createEIP1193Provider, ProviderRpcError } =
@@ -154,7 +156,7 @@ function ledger({
         }: ScanAccountsOptions): Promise<Account[]> => {
           try {
             currentChain =
-              chains.find(({ id }) => id === chainId) || currentChain
+              chains.find(({ id }: Chain) => id === chainId) || currentChain
             const provider = new JsonRpcProvider(currentChain.rpcUrl)
 
             const { publicKey, chainCode, address } = await eth.getAddress(
@@ -310,7 +312,7 @@ function ledger({
             return signedTx ? `0x${signedTx.serialize().toString('hex')}` : ''
           },
           eth_sign: async ({ params: [address, message] }) => {
-            if (!Array.isArray(accounts) || !accounts.length)
+            if (!(accounts && accounts.length && accounts.length > 0))
               throw new Error(
                 'No account selected. Must call eth_requestAccounts first.'
               )
@@ -334,7 +336,7 @@ function ledger({
               })
           },
           eth_signTypedData: async ({ params: [address, typedData] }) => {
-            if (!Array.isArray(accounts) || !accounts.length)
+            if (!(accounts && accounts.length && accounts.length > 0))
               throw new Error(
                 'No account selected. Must call eth_requestAccounts first.'
               )
@@ -343,16 +345,18 @@ function ledger({
               accounts.find(account => account.address === address) ||
               accounts[0]
 
-            const domainHash = getStructHash(
-              typedData,
+            const domainHash = hashStruct(
               'EIP712Domain',
-              typedData.domain
+              typedData.domain,
+              typedData.types,
+              SignTypedDataVersion.V3
             ).toString('hex')
 
-            const messageHash = getStructHash(
-              typedData,
+            const messageHash = hashStruct(
               typedData.primaryType,
-              typedData.message
+              typedData.message,
+              typedData.types,
+              SignTypedDataVersion.V3
             ).toString('hex')
 
             return eth
