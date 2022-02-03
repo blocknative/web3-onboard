@@ -44,20 +44,20 @@ const getAccount = async (
   index: number,
   provider: providers.JsonRpcProvider
 ): Promise<Account> => {
-  const { BIP32Factory } = await import('bip32')
-  const ecc = await import('tiny-secp256k1')
+  //@ts-ignore
+  const { default: HDKey } = await import('hdkey')
   const { Buffer } = await import('buffer')
   const { publicToAddress, toChecksumAddress } = await import('ethereumjs-util')
 
-  const node: BIP32Interface = BIP32Factory(ecc).fromPublicKey(
-    Buffer.from(publicKey, 'hex'),
-    Buffer.from(chainCode, 'hex')
-  )
+  const hdk = new HDKey()
 
-  const child: BIP32Interface = node.derive(index)
+  hdk.publicKey = Buffer.from(publicKey, 'hex')
+  hdk.chainCode = Buffer.from(chainCode, 'hex')
+
+  const dkey = hdk.deriveChild(index)
 
   const address = toChecksumAddress(
-    `0x${publicToAddress(child.publicKey, true).toString('hex')}`
+    `0x${publicToAddress(dkey.publicKey, true).toString('hex')}`
   )
 
   return {
