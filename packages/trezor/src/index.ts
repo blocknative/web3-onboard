@@ -123,7 +123,6 @@ function trezor(options: TrezorOptions): WalletInit {
         const { email, appUrl, customNetwork } = options
         // @ts-ignore
         const TrezorConnect = Trezor.default
-        const Common1 = Common
 
         TrezorConnect.manifest({
           email: email,
