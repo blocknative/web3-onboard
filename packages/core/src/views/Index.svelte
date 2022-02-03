@@ -70,7 +70,11 @@
 
   :global(input:focus, textarea.focus, select:focus) {
     border-color: var(--onboard-primary-500, var(--primary-500));
-    box-shadow: 0 0 1px 1px var(--onboard-primary-500, var(--primary-500));
+    box-shadow: 0 0 1px 1px
+      var(
+        --onboard-checkbox-background,
+        var(--onboard-primary-500, var(--primary-500))
+      );
     box-shadow: 0 0 0 1px -moz-mac-focusring;
     outline: none;
   }
