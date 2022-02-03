@@ -307,7 +307,10 @@ function trezor(options: TrezorOptions): WalletInit {
           const transactionData =
             createTrezorTransactionObject(transactionObject)
 
-          const common = new Common({
+          // @ts-ignore
+          const CommonConstructor = Common.default
+
+          const common = new CommonConstructor({
             chain: customNetwork || Number.parseInt(currentChain.id) || 1,
             // Berlin is the minimum hardfork that will allow for EIP1559
             hardfork: Hardfork.Berlin,
