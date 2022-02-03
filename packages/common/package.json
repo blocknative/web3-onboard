@@ -30,6 +30,7 @@
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-svelte3": "^3.2.1",
+    "ethers": "5.5.4",
     "eventemitter3": "^4.0.7",
     "prettier": "^2.4.0",
     "prettier-plugin-svelte": "^2.4.0",

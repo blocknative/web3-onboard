@@ -26,7 +26,7 @@
     align-items: center;
     width: 3rem;
     height: 3rem;
-    background-color: var(--onboard-blue-100, var(--blue-100));
+    background-color: var(--onboard-primary-100, var(--primary-100));
     border-radius: 24px;
   }
 

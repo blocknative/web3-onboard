@@ -23,6 +23,9 @@
   },
   "dependencies": {
     "@bn-onboard/common": "^2.0.0-alpha.5",
+    "@ethereumjs/common": "^2.6.1",
+    "@ethereumjs/tx": "^3.4.0",
+    "@ethersproject/providers": "^5.5.0",
     "@ledgerhq/hw-app-eth": "^6.19.0",
     "@ledgerhq/hw-transport-u2f": "^5.36.0-deprecated",
     "@ledgerhq/hw-transport-webusb": "^6.19.0",

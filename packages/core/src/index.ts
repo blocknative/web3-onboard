@@ -1,4 +1,5 @@
 import type { WalletModule } from '@bn-onboard/common'
+import { SofiaProRegular, SofiaProSemiBold } from '@bn-onboard/common'
 import connectWallet from './connect'
 import disconnectWallet from './disconnect'
 import setChain from './chain'
@@ -11,7 +12,6 @@ import initI18N from './i18n'
 import App from './views/Index.svelte'
 import type { InitOptions, OnboardAPI } from './types'
 import { getDeviceInfo } from './utils'
-import { SofiaProRegular, SofiaProSemiBold, SofiaProLight } from './fonts'
 
 const API = {
   connectWallet,
@@ -86,7 +86,6 @@ function mountApp() {
   styleEl.innerHTML = `
     ${SofiaProRegular}
     ${SofiaProSemiBold}
-    ${SofiaProLight}
   `
   document.body.appendChild(styleEl)
 
@@ -100,14 +99,14 @@ function mountApp() {
           /* COLORS */
           --white: white;
           --black: black;
-          --blue-1: #2F80ED;
-          --blue-100: #eff1fc;
-          --blue-200: #d0d4f7;
-          --blue-300: #b1b8f2;
-          --blue-400: #929bed;
-          --blue-500: #6370e5;
-          --blue-600: #454ea0;
-          --blue-700: #323873;
+          --primary-1: #2F80ED;
+          --primary-100: #eff1fc;
+          --primary-200: #d0d4f7;
+          --primary-300: #b1b8f2;
+          --primary-400: #929bed;
+          --primary-500: #6370e5;
+          --primary-600: #454ea0;
+          --primary-700: #323873;
           --gray-100: #ebebed;
           --gray-200: #c2c4c9;
           --gray-300: #999ca5;
@@ -140,7 +139,6 @@ function mountApp() {
           /* FONTS */
           --font-family-normal: Sofia Pro;
           --font-family-semibold: Sofia Pro Semibold;
-          --font-family-light: Sofia Pro Light;
   
           --font-size-1: 3rem;
           --font-size-2: 2.25rem;

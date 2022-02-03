@@ -296,17 +296,17 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
 
 ```css
 :root {
-  /* COLORS */
+  /* CUSTOMIZE THE COLOR  PALLETTE */
   --onboard-white: white;
   --onboard-black: black;
-  --onboard-blue-1: #2f80ed;
-  --onboard-blue-100: #eff1fc;
-  --onboard-blue-200: #d0d4f7;
-  --onboard-blue-300: #b1b8f2;
-  --onboard-blue-400: #929bed;
-  --onboard-blue-500: #6370e5;
-  --onboard-blue-600: #454ea0;
-  --onboard-blue-700: #323873;
+  --onboard-primary-1: #2f80ed;
+  --onboard-primary-100: #eff1fc;
+  --onboard-primary-200: #d0d4f7;
+  --onboard-primary-300: #b1b8f2;
+  --onboard-primary-400: #929bed;
+  --onboard-primary-500: #6370e5;
+  --onboard-primary-600: #454ea0;
+  --onboard-primary-700: #323873;
   --onboard-gray-100: #ebebed;
   --onboard-gray-200: #c2c4c9;
   --onboard-gray-300: #999ca5;
@@ -335,6 +335,27 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-warning-500: #ffaf00;
   --onboard-warning-600: #cc8c00;
   --onboard-warning-700: #664600;
+
+  /* CUSTOMIZE SECTIONS OF THE CONNECT MODAL */
+  --onboard-connect-content-width
+  --onboard-connect-content-height
+  --onboard-wallet-columns
+  --onboard-connect-sidebar-background
+  --onboard-connect-sidebar-color
+  --onboard-connect-sidebar-progress-background
+  --onboard-connect-sidebar-progress-color
+  --onboard-connect-header-background
+  --onboard-connect-header-color
+  --onboard-link-color
+  --onboard-close-button-background
+  --onboard-close-button-color
+  --onboard-checkbox-background
+  --onboard-checkbox-color
+  --onboard-wallet-button-background
+  --onboard-wallet-button-background-hover
+  --onboard-wallet-button-color
+  --onboard-wallet-button-border-color
+  --onboard-wallet-app-icon-border-color
 
   /* FONTS */
   --onboard-font-family-normal: Sofia Pro;

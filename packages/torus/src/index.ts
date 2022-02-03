@@ -1,10 +1,4 @@
-import {
-  createEIP1193Provider,
-  ProviderRpcErrorCode,
-  ProviderRpcError
-} from '@bn-onboard/common'
-
-import { WalletInit } from '@bn-onboard/common'
+import type { WalletInit } from '@bn-onboard/common'
 import type { TorusCtorArgs, TorusParams } from '@toruslabs/torus-embed'
 
 type TorusOptions = TorusCtorArgs & TorusParams
@@ -29,8 +23,15 @@ function torus(options?: TorusOptions): WalletInit {
       label: 'Torus',
       getIcon: async () => (await import('./icon.js')).default,
       getInterface: async ({ chains }) => {
-        const [chain] = chains
         const { default: Torus } = await import('@toruslabs/torus-embed')
+
+        const {
+          createEIP1193Provider,
+          ProviderRpcErrorCode,
+          ProviderRpcError
+        } = await import('@bn-onboard/common')
+
+        const [chain] = chains
 
         let instance = new Torus({
           buttonPosition,

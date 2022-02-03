@@ -13,13 +13,27 @@
 <style>
   button {
     position: relative;
-    background-color: white;
-    border: 1px solid var(--onboard-blue-200, var(--blue-200));
+    background-color: var(
+      --onboard-wallet-button-background,
+      var(--onboard-white, var(--white))
+    );
+    border: 1px solid
+      var(
+        --onboard-wallet-button-border-color,
+        var(--onboard-primary-200, var(--primary-200))
+      );
     transition: background-color 250ms ease-in-out;
+    color: var(
+      --onboard-wallet-button-color,
+      var(--onboard-black, var(--black))
+    );
   }
 
   button:hover {
-    background-color: var(--onboard-blue-100, var(--blue-100));
+    background-color: var(
+      --onboard-wallet-button-background-hover,
+      var(--onboard-primary-100, var(--primary-100))
+    );
   }
 
   button.connected {

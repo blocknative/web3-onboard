@@ -170,30 +170,31 @@
   }
 
   .connect-btn:disabled {
-    background-color: var(--account-select-blue-300, var(--blue-300));
+    background-color: var(--account-select-primary-300, var(--primary-300));
     cursor: default;
   }
 
   .connect-btn {
-    background-color: var(--account-select-blue-500, var(--blue-500));
+    background-color: var(--account-select-primary-500, var(--primary-500));
     cursor: pointer;
   }
 
   .dismiss-action {
-    color: var(--account-select-blue-500, var(--blue-500));
+    color: var(--account-select-primary-500, var(--primary-500));
     cursor: pointer;
     margin-left: var(--account-select-margin-4, var(--margin-4));
   }
 
   select:hover,
   input:hover {
-    border-color: var(--account-select-blue-300, var(--blue-300));
+    border-color: var(--account-select-primary-300, var(--primary-300));
   }
 
   select:focus,
   input:focus {
-    border-color: var(--account-select-blue-500, var(--blue-500));
-    box-shadow: 0 0 1px 1px var(--account-select-blue-500, var(--blue-500));
+    border-color: var(--account-select-primary-500, var(--primary-500));
+    box-shadow: 0 0 1px 1px
+      var(--account-select-primary-500, var(--primary-500));
     box-shadow: 0 0 0 1px -moz-mac-focusring;
     outline: none;
   }

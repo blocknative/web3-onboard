@@ -87,9 +87,9 @@
     transition: background-color 100ms ease-in-out,
       border-color 100ms ease-in-out;
     border-radius: 24px;
-    background-color: var(--onboard-blue-100, var(--blue-100));
+    background-color: var(--onboard-primary-100, var(--primary-100));
     border: 1px solid;
-    border-color: var(--onboard-blue-300, var(--blue-300));
+    border-color: var(--onboard-primary-300, var(--primary-300));
     box-sizing: border-box;
   }
 
@@ -110,14 +110,13 @@
   }
 
   .rejected-cta {
-    color: var(--onboard-blue-500, var(--blue-500));
+    color: var(--onboard-primary-500, var(--primary-500));
     cursor: pointer;
   }
 
   .onboard-button-primary {
     position: absolute;
     bottom: var(--onboard-spacing-3, var(--spacing-3));
-    cursor: pointer;
   }
 
   .centered-flex-column {

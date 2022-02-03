@@ -1,7 +1,5 @@
-import type { ExternalProvider } from '@ethersproject/providers'
-import type { ethers } from 'ethers'
+import type { ethers, providers, BigNumber } from 'ethers'
 import type EventEmitter from 'eventemitter3'
-import type { BigNumber } from 'ethers'
 import type { TypedData as EIP712TypedData } from 'eip-712'
 export type { TypedData as EIP712TypedData } from 'eip-712'
 
@@ -416,7 +414,7 @@ export interface EIP1193Provider extends SimpleEventEmitter {
   disconnect?(): void
 }
 
-export interface MeetOneProvider extends ExternalProvider {
+export interface MeetOneProvider extends providers.ExternalProvider {
   wallet?: string
 }
 
@@ -438,17 +436,17 @@ export enum InjectedNameSpace {
 export interface CustomWindow extends Window {
   BinanceChain: BinanceProvider
   ethereum: InjectedProvider
-  web3: ExternalProvider | MeetOneProvider
+  web3: providers.ExternalProvider | MeetOneProvider
   arbitrum: InjectedProvider
   xfi: {
     ethereum: InjectedProvider
   }
 }
 
-export type InjectedProvider = ExternalProvider &
+export type InjectedProvider = providers.ExternalProvider &
   BinanceProvider &
   MeetOneProvider &
-  ExternalProvider &
+  providers.ExternalProvider &
   Record<string, boolean>
 
 /**

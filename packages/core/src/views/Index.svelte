@@ -6,21 +6,6 @@
 </script>
 
 <style>
-  :global(.onboard-button-primary) {
-    border-radius: 24px;
-    background: var(--onboard-white, var(--white));
-    padding: var(--onboard-spacing-5, var(--spacing-5))
-      var(--onboard-spacing-4, var(--spacing-4));
-    color: var(--onboard-gray-500, var(--gray-500));
-    font-family: var(
-      --onboard-font-family-semibold,
-      var(--font-family-semibold)
-    );
-    font-size: var(--onboard-font-size-6, var(--font-size-6));
-    line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
-    border: 1px solid var(--onboard-gray-500, var(--gray-500));
-  }
-
   :global(input, textarea) {
     background: var(--onboard-white, var(--white));
   }
@@ -51,29 +36,41 @@
   }
 
   :global(input[type='checkbox']:hover) {
-    border-color: var(--onboard-blue-500, var(--blue-500));
+    border-color: var(
+      --onboard-checkbox-background,
+      var(--onboard-primary-500, var(--primary-500))
+    );
   }
 
   :global(input[type='checkbox']:checked) {
-    background-color: var(--onboard-blue-500, var(--blue-500));
-    border-color: var(--onboard-blue-500, var(--blue-500));
-    color: var(--onboard-white, var(--white));
+    background-color: var(
+      --onboard-checkbox-background,
+      var(--onboard-primary-500, var(--primary-500))
+    );
+    border-color: var(
+      --onboard-checkbox-background,
+      var(--onboard-primary-500, var(--primary-500))
+    );
+    color: var(--onboard-checkbox-color, var(--onboard-white, var(--white)));
   }
 
   :global(input[type='checkbox']:checked:after) {
     content: url("data:image/svg+xml,%3Csvg width='0.885em' height='0.6em' viewBox='0 0 14 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0 6L5 11L14 2L12.59 0.58L5 8.17L1.41 4.59L0 6Z' fill='white'/%3E%3C/svg%3E");
     font-size: 12px;
     position: absolute;
-    color: var(--onboard-white, var(--white));
+    color: var(--onboard-checkbox-color, var(--onboard-white, var(--white)));
   }
 
   :global(input:hover, textarea:hover, select:hover) {
-    border-color: var(--onboard-blue-300, var(--blue-300));
+    border-color: var(
+      --onboard-checkbox-color,
+      var(--onboard-white, var(--white))
+    );
   }
 
   :global(input:focus, textarea.focus, select:focus) {
-    border-color: var(--onboard-blue-500, var(--blue-500));
-    box-shadow: 0 0 1px 1px var(--onboard-blue-500, var(--blue-500));
+    border-color: var(--onboard-primary-500, var(--primary-500));
+    box-shadow: 0 0 1px 1px var(--onboard-primary-500, var(--primary-500));
     box-shadow: 0 0 0 1px -moz-mac-focusring;
     outline: none;
   }
@@ -107,7 +104,10 @@
   }
 
   :global(a) {
-    color: var(--onboard-blue-500, var(--blue-500));
+    color: var(
+      --onboard-link-color,
+      var(--onboard-primary-500, var(--primary-500))
+    );
     text-decoration: none;
   }
 
@@ -119,6 +119,20 @@
     cursor: pointer;
     font: inherit;
     border: none;
+  }
+
+  :global(.onboard-button-primary) {
+    background: var(--onboard-white, var(--white));
+    padding: var(--onboard-spacing-5, var(--spacing-5))
+      var(--onboard-spacing-4, var(--spacing-4));
+    color: var(--onboard-gray-500, var(--gray-500));
+    font-family: var(
+      --onboard-font-family-semibold,
+      var(--font-family-semibold)
+    );
+    font-size: var(--onboard-font-size-6, var(--font-size-6));
+    line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
+    border: 1px solid var(--onboard-gray-500, var(--gray-500));
   }
 </style>
 

@@ -52,7 +52,7 @@
   }
 
   tbody tr:hover {
-    background-color: var(--account-select-blue-100, var(--blue-100));
+    background-color: var(--account-select-primary-100, var(--primary-100));
     color: var(--account-select-black, var(--black));
   }
 
@@ -64,8 +64,8 @@
 
   .selected-row,
   .selected-row:hover {
-    background-color: var(--account-select-blue-500, var(--blue-500));
-    color: var(--account-select-blue-100, var(--blue-100));
+    background-color: var(--account-select-primary-500, var(--primary-500));
+    color: var(--account-select-primary-100, var(--primary-100));
   }
 
   .asset-td {

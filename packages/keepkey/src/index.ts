@@ -6,7 +6,7 @@ import type {
   WalletInit
 } from '@bn-onboard/common'
 
-import type { providers } from 'ethers'
+import type { JsonRpcProvider } from '@ethersproject/providers'
 import type { ETHAccountPath } from '@shapeshiftoss/hdwallet-core'
 import type { KeepKeyHDWallet } from '@shapeshiftoss/hdwallet-keepkey'
 
@@ -59,12 +59,15 @@ function keepkey(): WalletInit {
           HDWalletErrorType
         } = await import('@shapeshiftoss/hdwallet-core')
 
-        const { accountSelect, createEIP1193Provider, ProviderRpcError } =
-          await import('@bn-onboard/common')
+        const {
+          accountSelect,
+          createEIP1193Provider,
+          ProviderRpcError,
+          entryModal
+        } = await import('@bn-onboard/common')
 
-        const { providers } = await import('ethers')
+        const { JsonRpcProvider } = await import('@ethersproject/providers')
         const ethUtil = await import('ethereumjs-util')
-        const { entryModal } = await import('@bn-onboard/common')
 
         const keyring = new Keyring()
         const keepKeyAdapter = WebUSBKeepKeyAdapter.useKeyring(keyring)
@@ -126,7 +129,7 @@ function keepkey(): WalletInit {
           asset
         }: {
           accountIdx: number
-          provider: providers.JsonRpcProvider
+          provider: JsonRpcProvider
           asset: Asset
         }) => {
           const paths = getPaths(accountIdx)
@@ -156,7 +159,7 @@ function keepkey(): WalletInit {
         }: {
           derivationPath: string
           asset: Asset
-          provider: providers.JsonRpcProvider
+          provider: JsonRpcProvider
         }) => {
           let index = getAccountIdx(derivationPath)
           let zeroBalanceAccounts = 0
@@ -195,7 +198,7 @@ function keepkey(): WalletInit {
             throw new Error('Device must be connected before scanning accounts')
 
           currentChain = chains.find(({ id }) => id === chainId) ?? currentChain
-          const provider = new providers.JsonRpcProvider(currentChain.rpcUrl)
+          const provider = new JsonRpcProvider(currentChain.rpcUrl)
 
           // Checks to see if this is a custom derivation path
           // If it is then just return the single account

@@ -112,7 +112,7 @@ function trezor(options: TrezorOptions): WalletInit {
           await import('@bn-onboard/common')
         const ethUtil = await import('ethereumjs-util')
         const { compress } = (await import('eth-crypto')).publicKey
-        const { providers } = await import('ethers')
+        const { JsonRpcProvider } = await import('@ethersproject/providers')
 
         if (!(options?.email && options?.appUrl)) {
           throw new Error(
@@ -142,7 +142,7 @@ function trezor(options: TrezorOptions): WalletInit {
           asset
         }: ScanAccountsOptions): Promise<Account[]> => {
           currentChain = chains.find(({ id }) => id === chainId) ?? currentChain
-          const provider = new providers.JsonRpcProvider(currentChain.rpcUrl)
+          const provider = new JsonRpcProvider(currentChain.rpcUrl)
 
           const { publicKey, chainCode, path } = await getPublicKey(
             derivationPath

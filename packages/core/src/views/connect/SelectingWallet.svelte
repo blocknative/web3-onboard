@@ -25,7 +25,7 @@
 
   .wallets-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(var(--onboard-wallet-columns, 2), 1fr);
     gap: var(--onboard-spacing-5, var(--spacing-5));
     width: 100%;
   }

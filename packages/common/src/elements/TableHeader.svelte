@@ -31,7 +31,7 @@
   .scan-accounts-btn {
     line-height: var(--account-select-font-line-height-1, var(--line-height-1));
     background-color: var(--account-select-gray-500, var(--gray-500));
-    color: var(--account-select-blue-100, var(--blue-100));
+    color: var(--account-select-primary-100, var(--primary-100));
     width: 10rem;
     display: flex;
     justify-content: center;
@@ -40,12 +40,12 @@
   }
 
   input:hover {
-    border-color: var(--account-select-blue-500, var(--blue-300));
+    border-color: var(--account-select-primary-500, var(--primary-300));
   }
 
   input:focus {
-    border-color: var(--blue-500);
-    box-shadow: 0 0 1px 1px var(--blue-500);
+    border-color: var(--primary-500);
+    box-shadow: 0 0 1px 1px var(--primary-500);
     box-shadow: 0 0 0 1px -moz-mac-focusring;
     outline: none;
   }
@@ -71,12 +71,12 @@
   }
 
   input[type='checkbox']:hover {
-    border-color: var(--account-select-blue-500, var(--blue-500));
+    border-color: var(--account-select-primary-500, var(--primary-500));
   }
 
   input[type='checkbox']:checked {
-    background-color: var(--account-select-blue-500, var(--blue-500));
-    border-color: var(--account-select-blue-500, var(--blue-500));
+    background-color: var(--account-select-primary-500, var(--primary-500));
+    border-color: var(--account-select-primary-500, var(--primary-500));
     color: var(--account-select-white, var(--white));
   }
 
