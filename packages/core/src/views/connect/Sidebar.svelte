@@ -20,7 +20,14 @@
   .sidebar {
     padding: var(--onboard-spacing-3, var(--spacing-3));
     border-radius: 24px 0 0 24px;
-    background: var(--onboard-gray-100, var(--gray-100));
+    background: var(
+      --onboard-connect-sidebar-background,
+      var(--onboard-gray-100, var(--gray-100))
+    );
+    color: var(
+      --onboard-connect-sidebar-color,
+      var(--onboard-black, var(--black))
+    );
   }
 
   .inner-container {
@@ -68,13 +75,23 @@
     width: 8px;
     height: 8px;
     border-radius: 8px;
-    background: var(--onboard-gray-200, var(--gray-200));
+    background: var(
+      --onboard-connect-sidebar-progress-background,
+      var(--onboard-gray-200, var(--gray-200))
+    );
     transition: background 250ms ease-in-out;
   }
 
   .indicator.on {
-    background: var(--onboard-blue-600, var(--blue-600));
-    border: 2px solid var(--onboard-gray-200, var(--gray-200));
+    background: var(
+      --onboard-connect-sidebar-progress-color,
+      var(--onboard-primary-600, var(--primary-600))
+    );
+    border: 2px solid
+      var(
+        --onboard-connect-sidebar-progress-background,
+        var(--onboard-gray-200, var(--gray-200))
+      );
   }
 
   .join {
@@ -82,12 +99,18 @@
     z-index: 1;
     right: 4px;
     height: 3px;
-    background: var(--onboard-gray-200, var(--gray-200));
+    background: var(
+      --onboard-connect-sidebar-progress-background,
+      var(--onboard-gray-200, var(--gray-200))
+    );
     transition: background 250ms ease-in-out;
   }
 
   .join.active {
-    background: var(--onboard-blue-600, var(--blue-600));
+    background: var(
+      --onboard-connect-sidebar-progress-color,
+      var(--onboard-primary-600, var(--primary-600))
+    );
   }
 </style>
 

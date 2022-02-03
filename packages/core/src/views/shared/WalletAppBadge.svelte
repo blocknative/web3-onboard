@@ -58,11 +58,19 @@
   }
 
   .border-blue {
-    border: 1px solid var(--onboard-blue-300, var(--blue-300));
+    border: 1px solid
+      var(
+        --onboard-wallet-app-icon-border-color,
+        var(--onboard-primary-300, var(--primary-300))
+      );
   }
 
   .border-dark-blue {
-    border: 1px solid var(--onboard-blue-600, var(--blue-600));
+    border: 1px solid
+      var(
+        --onboard-wallet-app-icon-border-color,
+        var(--onboard-primary-600, var(--primary-600))
+      );
   }
 
   .background-gray {
@@ -74,7 +82,7 @@
   }
 
   .background-light-blue {
-    background: var(--onboard-blue-100, var(--blue-100));
+    background: var(--onboard-primary-100, var(--primary-100));
   }
 
   .background-green {
@@ -108,7 +116,7 @@
   }
 
   .spinner-container {
-    color: var(--onboard-blue-300, var(--blue-300));
+    color: var(--onboard-primary-300, var(--primary-300));
   }
 </style>
 

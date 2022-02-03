@@ -9,7 +9,7 @@
     display: flex;
     border-radius: 50px;
     box-sizing: border-box;
-    color: var(--onboard-blue-500, var(--blue-500));
+    color: var(--onboard-primary-500, var(--primary-500));
   }
 </style>
 

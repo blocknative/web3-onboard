@@ -159,12 +159,12 @@
     font-family: var(--onboard-font-family-normal, var(--font-family-normal));
     line-height: var(--onboard-font-line-height-1, var(--font-line-height-1));
     font-size: var(--onboard-font-size-5, var(--font-size-5));
-    height: 440px;
+    height: var(--onboard-connect-content-height, 440px);
     overflow: hidden;
   }
 
   .content {
-    width: 485px;
+    width: var(--onboard-connect-content-width, 485px);
     display: flex;
     flex-direction: column;
   }
@@ -179,6 +179,14 @@
     display: flex;
     align-items: center;
     box-shadow: var(--onboard-shadow-2, var(--shadow-2));
+    background-color: var(
+      --onboard-connect-header-background,
+      var(--onboard-white, var(--white))
+    );
+    color: var(
+      --onboard-connect-header-color,
+      var(--onboard-black, var(--black))
+    );
   }
 
   .header-heading {

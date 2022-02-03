@@ -62,11 +62,11 @@ const mountAccountSelect = (
         /* COLORS */
         --white: white;
         --black: black;
-        --blue-100: #eff1fc;
-        --blue-200: #d0d4f7;
-        --blue-300: #b1b8f2;
-        --blue-500: #6370e5;
-        --blue-600: #454ea0;
+        --primary-100: #eff1fc;
+        --primary-200: #d0d4f7;
+        --primary-300: #b1b8f2;
+        --primary-500: #6370e5;
+        --primary-600: #454ea0;
         --gray-100: #ebebed;
         --gray-200: #c2c4c9;
         --gray-300: #999ca5;

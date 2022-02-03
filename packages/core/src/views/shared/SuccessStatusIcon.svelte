@@ -22,7 +22,7 @@
   }
 
   .blue {
-    background: var(--onboard-blue-1, var(--blue-1));
+    background: var(--onboard-primary-1, var(--primary-1));
   }
 </style>
 

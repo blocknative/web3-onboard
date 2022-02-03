@@ -19,9 +19,15 @@
     justify-content: center;
     align-items: center;
     padding: 0.4rem;
-    background: var(--onboard-gray-100, var(--gray-100));
+    background: var(
+      --onboard-close-button-background,
+      var(--onboard-gray-100, var(--gray-100))
+    );
     border-radius: 40px;
-    color: var(--onboard-black, var(--black));
+    color: var(
+      --onboard-close-button-color,
+      var(--onboard-black, var(--black))
+    );
   }
 
   .close-icon {
