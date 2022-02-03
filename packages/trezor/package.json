@@ -22,10 +22,9 @@
   },
   "dependencies": {
     "@bn-onboard/common": "^2.0.0-alpha.5",
-    "bip32": "^3.0.1",
     "buffer": "^6.0.3",
     "ethereumjs-util": "^7.1.3",
-    "tiny-secp256k1": "^2.1.2",
+    "hdkey": "^2.0.1",
     "trezor-connect": "^8.2.6"
   }
 }
