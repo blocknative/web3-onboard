@@ -1,7 +1,5 @@
-import type { ExternalProvider } from '@ethersproject/providers'
-import type { ethers } from 'ethers'
+import type { ethers, providers, BigNumber } from 'ethers'
 import type EventEmitter from 'eventemitter3'
-import type { BigNumber } from 'ethers'
 import type { TypedData as EIP712TypedData } from 'eip-712'
 export type { TypedData as EIP712TypedData } from 'eip-712'
 
@@ -21,6 +19,11 @@ export type RequestPatch = {
     | ((args: { baseRequest: EIP1193Provider['request'] }) => Promise<Balance>)
     | null
   eth_requestAccounts?:
+    | ((args: {
+        baseRequest: EIP1193Provider['request']
+      }) => Promise<ProviderAccounts>)
+    | null
+  eth_selectAccounts?:
     | ((args: {
         baseRequest: EIP1193Provider['request']
       }) => Promise<ProviderAccounts>)
@@ -78,6 +81,7 @@ export type SelectAccountOptions = {
   assets: Asset[] // the selectable assets to scan for a balance
   chains: Chain[] // the selectable chains/networks to scan for balance
   scanAccounts: ScanAccounts
+  supportsCustomPath?: boolean
 }
 
 export type BasePath = {
@@ -134,6 +138,14 @@ export interface AppMetadata {
 
   /** When no injected wallets detected, recommend the user to install some*/
   recommendedInjectedWallets?: RecommendedInjectedWallets[]
+
+  agreement: TermsOfServiceAgreementOptions | null
+}
+
+export type TermsOfServiceAgreementOptions = {
+  version: string
+  termsUrl?: string
+  privacyUrl?: string
 }
 
 export type RecommendedInjectedWallets = {
@@ -358,6 +370,10 @@ export interface EIP1102Request extends BaseRequest {
   method: 'eth_requestAccounts'
 }
 
+export interface SelectAccountsRequest extends BaseRequest {
+  method: 'eth_selectAccounts'
+}
+
 export interface EIP3085Request {
   method: 'wallet_addEthereumChain'
   params: AddChainParams[]
@@ -388,6 +404,7 @@ export interface EIP1193Provider extends SimpleEventEmitter {
   request(args: EthAccountsRequest): Promise<ProviderAccounts>
   request(args: EthBalanceRequest): Promise<Balance>
   request(args: EIP1102Request): Promise<ProviderAccounts>
+  request(args: SelectAccountsRequest): Promise<ProviderAccounts>
   request(args: EIP3326Request): Promise<null>
   request(args: EIP3085Request): Promise<null>
   request(args: EthChainIdRequest): Promise<ChainId>
@@ -397,7 +414,7 @@ export interface EIP1193Provider extends SimpleEventEmitter {
   disconnect?(): void
 }
 
-export interface MeetOneProvider extends ExternalProvider {
+export interface MeetOneProvider extends providers.ExternalProvider {
   wallet?: string
 }
 
@@ -419,17 +436,17 @@ export enum InjectedNameSpace {
 export interface CustomWindow extends Window {
   BinanceChain: BinanceProvider
   ethereum: InjectedProvider
-  web3: ExternalProvider | MeetOneProvider
+  web3: providers.ExternalProvider | MeetOneProvider
   arbitrum: InjectedProvider
   xfi: {
     ethereum: InjectedProvider
   }
 }
 
-export type InjectedProvider = ExternalProvider &
+export type InjectedProvider = providers.ExternalProvider &
   BinanceProvider &
   MeetOneProvider &
-  ExternalProvider &
+  providers.ExternalProvider &
   Record<string, boolean>
 
 /**
@@ -492,21 +509,15 @@ export enum ProviderLabel {
 }
 
 export enum ProviderRpcErrorCode {
-  /** The user rejected the request. */
-  RejectedRequest = '4001',
-
-  /** The requested method and/or 
-       account has not been authorized by the user. */
-  Unauthorized = '4100',
-
-  /** The Provider does not support the requested method. */
-  UnsupportedMethod = '4200',
-
-  /** The Provider is disconnected from all chains. */
-  Disconnected = '4900',
-
-  /** The Provider is not connected to the requested chain. */
-  ChainDisconnected = '4901'
+  ACCOUNT_ACCESS_REJECTED = 4001,
+  ACCOUNT_ACCESS_ALREADY_REQUESTED = -32002,
+  UNAUTHORIZED = 4100,
+  INVALID_PARAMS = -32602,
+  UNSUPPORTED_METHOD = 4200,
+  DISCONNECTED = 4900,
+  CHAIN_DISCONNECTED = 4901,
+  CHAIN_NOT_ADDED = 4902,
+  DOES_NOT_EXIST = -32601
 }
 
 export interface Chain {

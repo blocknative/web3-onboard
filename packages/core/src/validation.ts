@@ -58,6 +58,12 @@ const recommendedWallet = Joi.object({
   url: Joi.string().uri().required()
 })
 
+const agreement = Joi.object({
+  version: Joi.string().required(),
+  termsUrl: Joi.string().uri(),
+  privacyUrl: Joi.string().uri()
+})
+
 const appMetadata = Joi.object({
   name: Joi.string().required(),
   description: Joi.string().required(),
@@ -66,7 +72,8 @@ const appMetadata = Joi.object({
   email: Joi.string(),
   appUrl: Joi.string(),
   explore: Joi.string(),
-  recommendedInjectedWallets: Joi.array().items(recommendedWallet)
+  recommendedInjectedWallets: Joi.array().items(recommendedWallet),
+  agreement
 })
 
 const walletModule = Joi.object({

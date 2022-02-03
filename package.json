@@ -25,16 +25,5 @@
     "ts-node": "^10.2.1",
     "typescript": "^4.4.3",
     "window": "^4.2.7"
-  },
-  "dependencies": {
-    "bip32": "^3.0.1",
-    "buffer": "^6.0.3",
-    "eip-712": "^0.4.3",
-    "eth-crypto": "^2.1.0",
-    "ethereumjs-util": "^7.1.3",
-    "ethers": "^5.4.7",
-    "tiny-secp256k1": "^2.1.2",
-    "joi": "^17.4.2",
-    "rxjs": "^7.5.2"
   }
 }

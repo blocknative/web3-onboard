@@ -16,7 +16,13 @@
   export let selectAccountOptions: SelectAccountOptions
   export let accounts$: Subject<Account[]>
 
-  const { basePaths, assets, chains, scanAccounts } = selectAccountOptions
+  const {
+    basePaths,
+    assets,
+    chains,
+    scanAccounts,
+    supportsCustomPath = true
+  } = selectAccountOptions
 
   let accountsListObject: AccountsList | undefined
   let accountSelected: Account | undefined
@@ -165,30 +171,31 @@
   }
 
   .connect-btn:disabled {
-    background-color: var(--account-select-blue-300, var(--blue-300));
+    background-color: var(--account-select-primary-300, var(--primary-300));
     cursor: default;
   }
 
   .connect-btn {
-    background-color: var(--account-select-blue-500, var(--blue-500));
+    background-color: var(--account-select-primary-500, var(--primary-500));
     cursor: pointer;
   }
 
   .dismiss-action {
-    color: var(--account-select-blue-500, var(--blue-500));
+    color: var(--account-select-primary-500, var(--primary-500));
     cursor: pointer;
     margin-left: var(--account-select-margin-4, var(--margin-4));
   }
 
   select:hover,
   input:hover {
-    border-color: var(--account-select-blue-300, var(--blue-300));
+    border-color: var(--account-select-primary-300, var(--primary-300));
   }
 
   select:focus,
   input:focus {
-    border-color: var(--account-select-blue-500, var(--blue-500));
-    box-shadow: 0 0 1px 1px var(--account-select-blue-500, var(--blue-500));
+    border-color: var(--account-select-primary-500, var(--primary-500));
+    box-shadow: 0 0 1px 1px
+      var(--account-select-primary-500, var(--primary-500));
     box-shadow: 0 0 0 1px -moz-mac-focusring;
     outline: none;
   }
@@ -199,6 +206,13 @@
 
   option {
     font-weight: 300;
+  }
+
+  section {
+    font-family: var(
+      --account-select-font-family-normal,
+      var(--font-family-normal)
+    );
   }
 
   .close {
@@ -353,7 +367,9 @@
                 {path.label} - {path.value}
               </option>
             {/each}
-            <option value="customPath"> Custom Derivation Path </option>
+            {#if supportsCustomPath}
+              <option value="customPath"> Custom Derivation Path </option>
+            {/if}
           </select>
         {/if}
       </div>

@@ -12,8 +12,3 @@ export class ProviderRpcError extends Error {
     this.data = error.data
   }
 }
-
-export enum ErrorCodes {
-  ACCOUNT_ACCESS_REJECTED = 4001,
-  ACCOUNT_ACCESS_ALREADY_REQUESTED = -32002
-}

@@ -112,7 +112,7 @@ function trezor(options: TrezorOptions): WalletInit {
           await import('@bn-onboard/common')
         const ethUtil = await import('ethereumjs-util')
         const { compress } = (await import('eth-crypto')).publicKey
-        const { providers } = await import('ethers')
+        const { JsonRpcProvider } = await import('@ethersproject/providers')
 
         if (!options || !options.email || !options.appUrl) {
           throw new Error(
@@ -142,7 +142,7 @@ function trezor(options: TrezorOptions): WalletInit {
           asset
         }: ScanAccountsOptions): Promise<Account[]> => {
           currentChain = chains.find(({ id }) => id === chainId) || currentChain
-          const provider = new providers.JsonRpcProvider(currentChain.rpcUrl)
+          const provider = new JsonRpcProvider(currentChain.rpcUrl)
 
           const { publicKey, chainCode, path } = await getPublicKey(
             derivationPath
@@ -408,6 +408,10 @@ function trezor(options: TrezorOptions): WalletInit {
                 'No address property associated with the selected account'
               )
             return [accounts[0].address]
+          },
+          eth_selectAccounts: async () => {
+            const accounts = await getAccountFromAccountSelect()
+            return accounts.map(({ address }) => address)
           },
           eth_accounts: async () => {
             return (Array.isArray(accounts) && accounts.length && accounts[0].hasOwnProperty('address')) ? [accounts[0].address] : []

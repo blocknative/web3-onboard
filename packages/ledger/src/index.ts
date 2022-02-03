@@ -4,7 +4,8 @@ import type {
   Asset,
   Chain,
   CustomNetwork,
-  WalletInit
+  WalletInit,
+  GetInterfaceHelpers
 } from '@bn-onboard/common'
 
 import type { BIP32Interface } from 'bip32'
@@ -126,18 +127,20 @@ function ledger({
     return {
       label: 'Ledger',
       getIcon,
-      getInterface: async ({ EventEmitter, chains }) => {
+      getInterface: async ({ EventEmitter, chains }: GetInterfaceHelpers) => {
         const Eth = (await import('@ledgerhq/hw-app-eth')).default
-        const { TransactionFactory: Transaction, Capability } = await import(
-          '@ethereumjs/tx'
-        )
         const { default: Common, Hardfork } = await import('@ethereumjs/common')
         const { compress } = (await import('eth-crypto')).publicKey
         const ethUtil = await import('ethereumjs-util')
         const { getStructHash } = await import('eip-712')
+        const { JsonRpcProvider } = await import('@ethersproject/providers')
+
         const { accountSelect, createEIP1193Provider, ProviderRpcError } =
           await import('@bn-onboard/common')
-        const { providers } = await import('ethers')
+
+        const { TransactionFactory: Transaction, Capability } = await import(
+          '@ethereumjs/tx'
+        )
 
         const transport: Transport = await getTransport()
         const eth = new Eth(transport)
@@ -152,7 +155,7 @@ function ledger({
           try {
             currentChain =
               chains.find(({ id }) => id === chainId) || currentChain
-            const provider = new providers.JsonRpcProvider(currentChain.rpcUrl)
+            const provider = new JsonRpcProvider(currentChain.rpcUrl)
 
             const { publicKey, chainCode, address } = await eth.getAddress(
               derivationPath,
@@ -233,6 +236,10 @@ function ledger({
                 'No address property associated with the selected account'
               )
             return [accounts[0].address]
+          },
+          eth_selectAccounts: async () => {
+            const accounts = await getAccounts()
+            return accounts.map(({ address }) => address)
           },
           eth_accounts: async () => {
             return (Array.isArray(accounts) && accounts.length && accounts[0].hasOwnProperty('address')) ? [accounts[0].address] : []

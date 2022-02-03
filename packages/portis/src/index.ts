@@ -1,5 +1,4 @@
-import { createEIP1193Provider } from '@bn-onboard/common'
-import { WalletInit, APIKey } from '@bn-onboard/common'
+import type { WalletInit, APIKey } from '@bn-onboard/common'
 
 function portis(options: APIKey): WalletInit {
   const { apiKey } = options
@@ -10,6 +9,7 @@ function portis(options: APIKey): WalletInit {
       getIcon: async () => (await import('./icon.js')).default,
       getInterface: async ({ chains }) => {
         const { default: Portis } = await import('@portis/web3')
+        const { createEIP1193Provider } = await import('@bn-onboard/common')
 
         const instance = new Portis(apiKey, {
           nodeUrl: chains[0].rpcUrl,
@@ -20,6 +20,7 @@ function portis(options: APIKey): WalletInit {
 
         const provider = createEIP1193Provider(portisProvider, {
           eth_requestAccounts: portisProvider.enable,
+          eth_selectAccounts: null,
           wallet_switchEthereumChain: async ({ params }) => {
             const chain = chains.find(({ id }) => id === params[0].chainId)
             if (!chain) throw new Error('chain must be set before switching')

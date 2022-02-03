@@ -20,11 +20,12 @@
     flex-direction: column;
     align-items: center;
     padding: var(--onboard-spacing-4, var(--spacing-4));
+    padding-top: 0;
   }
 
   .wallets-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(var(--onboard-wallet-columns, 2), 1fr);
     gap: var(--onboard-spacing-5, var(--spacing-5));
     width: 100%;
   }
@@ -47,7 +48,8 @@
         onClick={async () => {
           connecting = label
           const iconLoaded = await icon
-          selectWallet({ label, icon: iconLoaded, getInterface })
+          await selectWallet({ label, icon: iconLoaded, getInterface })
+          connecting = ''
         }}
       />
     {/each}

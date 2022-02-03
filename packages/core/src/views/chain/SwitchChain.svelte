@@ -46,14 +46,14 @@
 <Modal {close}>
   <div class="container">
     <h4>
-      {$_('chain.switch.heading', {
-        default: en.chain.switch.heading
+      {$_('modals.switchChain.heading', {
+        default: en.modals.switchChain.heading
       })}
     </h4>
 
     <p>
-      {$_('chain.switch.paragraph1', {
-        default: en.chain.switch.paragraph1,
+      {$_('modals.switchChain.paragraph1', {
+        default: en.modals.switchChain.paragraph1,
         values: {
           app: (appMetadata && appMetadata.name) || 'This app',
           nextNetworkName
@@ -62,8 +62,8 @@
     </p>
 
     <p>
-      {$_('chain.switch.paragraph2', {
-        default: en.chain.switch.paragraph2
+      {$_('modals.switchChain.paragraph2', {
+        default: en.modals.switchChain.paragraph2
       })}
     </p>
 

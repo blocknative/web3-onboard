@@ -1,10 +1,4 @@
-import {
-  createEIP1193Provider,
-  ErrorCodes,
-  ProviderRpcError
-} from '@bn-onboard/common'
-import { EIP1193Provider, WalletInit } from '@bn-onboard/common'
-import { firstValueFrom, fromEvent, map, take } from 'rxjs'
+import type { WalletInit, EIP1193Provider } from '@bn-onboard/common'
 
 function mew(): WalletInit {
   return () => {
@@ -12,11 +6,20 @@ function mew(): WalletInit {
       label: 'MEW Wallet',
       getIcon: async () => (await import('./icon.js')).default,
       getInterface: async ({ chains, EventEmitter }) => {
-        const [chain] = chains
+        const {
+          createEIP1193Provider,
+          ProviderRpcError,
+          ProviderRpcErrorCode
+        } = await import('@bn-onboard/common')
+
+        const { firstValueFrom, fromEvent } = await import('rxjs')
+        const { map, take } = await import('rxjs/operators')
+
         const { default: MEWWallet } = await import(
           '@myetherwallet/mewconnect-web-client'
         )
 
+        const [chain] = chains
         const mewConnect = new MEWWallet.Provider({
           windowClosedError: true,
           chainId: parseInt(chain.id),
@@ -31,7 +34,7 @@ function mew(): WalletInit {
             const closed$ = fromEvent(mewConnect, 'popupWindowClosed').pipe(
               map(() => {
                 throw new ProviderRpcError({
-                  code: ErrorCodes.ACCOUNT_ACCESS_REJECTED,
+                  code: ProviderRpcErrorCode.ACCOUNT_ACCESS_REJECTED,
                   message: 'Popup window closed'
                 })
               }),
@@ -42,7 +45,8 @@ function mew(): WalletInit {
               baseRequest({ method: 'eth_requestAccounts' }),
               firstValueFrom(closed$)
             ])
-          }
+          },
+          eth_selectAccounts: null
         })
 
         const events = new EventEmitter()

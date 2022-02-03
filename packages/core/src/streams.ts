@@ -26,8 +26,9 @@ export const internalState$ = new BehaviorSubject<InternalState>({
 
 export const connectWallet$ = new BehaviorSubject<{
   autoSelect?: string
+  actionRequired?: string
   inProgress: boolean
-}>({ inProgress: false })
+}>({ inProgress: false, actionRequired: '' })
 
 export const switchChainModal$ = new BehaviorSubject<null | {
   chain: Chain

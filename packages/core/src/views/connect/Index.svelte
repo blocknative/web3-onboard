@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { WalletModule } from '@bn-onboard/common'
+  import { ProviderRpcErrorCode, WalletModule } from '@bn-onboard/common'
   import { _ } from 'svelte-i18n'
   import { BigNumber } from 'ethers'
   import EventEmitter from 'eventemitter3'
@@ -19,23 +19,24 @@
   import ConnectedWallet from './ConnectedWallet.svelte'
   import CloseButton from '../shared/CloseButton.svelte'
   import Sidebar from './Sidebar.svelte'
+  import Agreement from './Agreement.svelte'
 
   import { connectWallet$, internalState$ } from '../../streams'
 
   import { state } from '../../store'
   import { addWallet } from '../../store/actions'
   import en from '../../i18n/en.json'
-  import { requestAccounts } from '../../provider'
+  import { selectAccounts } from '../../provider'
 
-  export let options: ConnectOptions
+  export let autoSelect: string
 
   const { walletModules, appMetadata } = internalState$.getValue()
-  const { autoSelect } = options
 
   let loading = true
-  let connectionRejected = 'false'
+  let connectionRejected = false
   let wallets: WalletWithLoadingIcon[] = []
   let selectedWallet: WalletState | null
+  let agreed: boolean
   // let selectWalletError: string
 
   let windowWidth: number
@@ -65,7 +66,23 @@
       // set as first wallet
       addWallet(existingWallet)
 
-      await requestAccounts(existingWallet.provider)
+      try {
+        await selectAccounts(existingWallet.provider)
+        setStep('connectedWallet')
+      } catch (error) {
+        const { code } = error as { code: number }
+
+        if (
+          code === ProviderRpcErrorCode.UNSUPPORTED_METHOD ||
+          code === ProviderRpcErrorCode.DOES_NOT_EXIST
+        ) {
+          connectWallet$.next({
+            inProgress: false,
+            actionRequired: existingWallet.label
+          })
+        }
+      }
+
       selectedWallet = existingWallet
 
       return
@@ -92,6 +109,8 @@
       // selectWalletError = (error as Error).message
       console.error(error)
     }
+
+    setStep('connectingWallet')
   }
 
   function deselectWallet() {
@@ -126,14 +145,11 @@
     connectWallet$.next({ inProgress: false })
   }
 
-  type Step = keyof i18n['connect']
-  $: step = (
-    !selectedWallet
-      ? 'selectingWallet'
-      : !selectedWallet.accounts.length
-      ? 'connectingWallet'
-      : 'connectedWallet'
-  ) as Step
+  let step: keyof i18n['connect'] = 'selectingWallet'
+
+  function setStep(update: keyof i18n['connect']) {
+    step = update
+  }
 </script>
 
 <style>
@@ -143,18 +159,19 @@
     font-family: var(--onboard-font-family-normal, var(--font-family-normal));
     line-height: var(--onboard-font-line-height-1, var(--font-line-height-1));
     font-size: var(--onboard-font-size-5, var(--font-size-5));
-    height: 440px;
+    height: var(--onboard-connect-content-height, 440px);
     overflow: hidden;
   }
 
   .content {
-    width: 485px;
+    width: var(--onboard-connect-content-width, 485px);
     display: flex;
     flex-direction: column;
   }
 
   .scroll-container {
     overflow-y: auto;
+    transition: opacity 250ms ease-in-out;
   }
 
   .header {
@@ -162,6 +179,14 @@
     display: flex;
     align-items: center;
     box-shadow: var(--onboard-shadow-2, var(--shadow-2));
+    background-color: var(
+      --onboard-connect-header-background,
+      var(--onboard-white, var(--white))
+    );
+    color: var(
+      --onboard-connect-header-color,
+      var(--onboard-black, var(--black))
+    );
   }
 
   .header-heading {
@@ -177,6 +202,11 @@
     position: absolute;
     right: 0;
     top: 0;
+  }
+
+  .disabled {
+    opacity: 0.2;
+    pointer-events: none;
   }
 
   @media all and (max-width: 520px) {
@@ -215,10 +245,15 @@
             <CloseButton />
           </div>
         </div>
+
         <div class="scroll-container">
           {#if step === 'selectingWallet'}
             {#if wallets.length}
-              <SelectingWallet {selectWallet} {wallets} />
+              <Agreement bind:agreed />
+
+              <div class:disabled={!agreed}>
+                <SelectingWallet {selectWallet} {wallets} />
+              </div>
             {:else}
               <InstallWallet />
             {/if}
@@ -227,8 +262,9 @@
           {#if step === 'connectingWallet' && selectedWallet}
             <ConnectingWallet
               on:connectionRejected={({ detail }) => {
-                connectionRejected = String(detail)
+                connectionRejected = detail
               }}
+              {setStep}
               {deselectWallet}
               {selectedWallet}
               {updateSelectedWallet}

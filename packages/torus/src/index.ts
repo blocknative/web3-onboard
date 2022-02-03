@@ -1,10 +1,4 @@
-import {
-  createEIP1193Provider,
-  ErrorCodes,
-  ProviderRpcError
-} from '@bn-onboard/common'
-
-import { WalletInit } from '@bn-onboard/common'
+import type { WalletInit } from '@bn-onboard/common'
 import type { TorusCtorArgs, TorusParams } from '@toruslabs/torus-embed'
 
 type TorusOptions = TorusCtorArgs & TorusParams
@@ -29,8 +23,15 @@ function torus(options?: TorusOptions): WalletInit {
       label: 'Torus',
       getIcon: async () => (await import('./icon.js')).default,
       getInterface: async ({ chains }) => {
-        const [chain] = chains
         const { default: Torus } = await import('@toruslabs/torus-embed')
+
+        const {
+          createEIP1193Provider,
+          ProviderRpcErrorCode,
+          ProviderRpcError
+        } = await import('@bn-onboard/common')
+
+        const [chain] = chains
 
         let instance = new Torus({
           buttonPosition,
@@ -78,11 +79,12 @@ function torus(options?: TorusOptions): WalletInit {
               return accounts
             } catch (error) {
               throw new ProviderRpcError({
-                code: ErrorCodes.ACCOUNT_ACCESS_REJECTED,
+                code: ProviderRpcErrorCode.ACCOUNT_ACCESS_REJECTED,
                 message: 'Account access rejected'
               })
             }
           },
+          eth_selectAccounts: null,
           wallet_switchEthereumChain: async ({ params }) => {
             const chain = chains.find(({ id }) => id === params[0].chainId)
             if (!chain) throw new Error('chain must be set before switching')
