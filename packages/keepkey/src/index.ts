@@ -174,7 +174,12 @@ function keepkey(): WalletInit {
               asset
             })
 
-            if (acc && acc.balance && acc.balance.value && acc.balance.value.isZero()) {
+            if (
+              acc &&
+              acc.balance &&
+              acc.balance.value &&
+              acc.balance.value.isZero()
+            ) {
               zeroBalanceAccounts++
               accounts.push(acc)
             } else {
@@ -266,9 +271,7 @@ function keepkey(): WalletInit {
               const accounts = await getAccounts()
 
               if (!accounts || !Array.isArray(accounts)) {
-                throw new Error(
-                  'No accounts were returned from Keepkey device'
-                )
+                throw new Error('No accounts were returned from Keepkey device')
               }
               if (!accounts.length) {
                 throw new ProviderRpcError({
@@ -290,11 +293,11 @@ function keepkey(): WalletInit {
             },
             eth_accounts: async () => {
               if (!accounts || !Array.isArray(accounts)) {
-                throw new Error(
-                  'No accounts were returned from Keepkey device'
-                )
+                throw new Error('No accounts were returned from Keepkey device')
               }
-              return accounts[0].hasOwnProperty('address') ? [accounts[0].address] : []
+              return accounts[0].hasOwnProperty('address')
+                ? [accounts[0].address]
+                : []
             },
             eth_chainId: async () => {
               return currentChain && currentChain.id != undefined
@@ -306,16 +309,15 @@ function keepkey(): WalletInit {
                 throw new Error(
                   'No account selected. Must call eth_requestAccounts first.'
                 )
-              // if (!transactionObject || !transactionObject.hasOwnProperty('from'))
-              const account = (!transactionObject || !transactionObject.hasOwnProperty('from')) 
-                ?
-                accounts[0]
-                :
-                accounts.find(
-                  account => account.address === transactionObject.from
-                )
 
-              const { derivationPath } = account
+              const account =
+                !transactionObject || !transactionObject.hasOwnProperty('from')
+                  ? accounts[0]
+                  : accounts.find(
+                      account => account.address === transactionObject.from
+                    )
+
+              const { derivationPath } = account || accounts[0]
               const addressNList = bip32ToAddressNList(derivationPath)
 
               const {
@@ -346,7 +348,11 @@ function keepkey(): WalletInit {
               return serialized
             },
             eth_sign: async ({ params: [address, message] }) => {
-              if (!accounts || !Array.isArray(accounts) || !(accounts.length && accounts.length > 0))
+              if (
+                !accounts ||
+                !Array.isArray(accounts) ||
+                !(accounts.length && accounts.length > 0)
+              )
                 throw new Error(
                   'No account selected. Must call eth_requestAccounts first.'
                 )
