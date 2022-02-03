@@ -38,19 +38,17 @@
       "mainText": "Connected"
     }
   },
-  "chain": {
-    "switch": {
-      "heading": "Switch Chain",
-      "paragraph1": "{app} requires that you switch your wallet to the {nextNetworkName} network to continue.",
-      "paragraph2": "*Some wallets may not support changing networks. If you can not change networks in your wallet you may consider switching to a different wallet."
-    }
-  },
   "modals": {
     "actionRequired": {
       "heading": "Action required in {wallet}",
       "paragraph": "Please switch the active account in your wallet.",
       "linkText": "Learn more.",
       "buttonText": "Okay"
+    },
+    "switchChain": {
+      "heading": "Switch Chain",
+      "paragraph1": "{app} requires that you switch your wallet to the {nextNetworkName} network to continue.",
+      "paragraph2": "*Some wallets may not support changing networks. If you can not change networks in your wallet you may consider switching to a different wallet."
     }
   }
 }
