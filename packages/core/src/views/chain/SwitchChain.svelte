@@ -55,7 +55,7 @@
       {$_('modals.switchChain.paragraph1', {
         default: en.modals.switchChain.paragraph1,
         values: {
-          app: appMetadata?.name || 'This app',
+          app: (appMetadata && appMetadata.name) || 'This app',
           nextNetworkName
         }
       })}

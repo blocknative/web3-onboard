@@ -22,6 +22,6 @@
   },
   "dependencies": {
     "@bn-onboard/common": "^2.0.0-alpha.5",
-    "walletlink": "^2.2.8"
+    "walletlink": "^2.4.6"
   }
 }

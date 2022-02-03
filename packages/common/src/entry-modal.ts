@@ -262,10 +262,13 @@ export const entryModal = (
     pinModal.$destroy()
   }
 
-  document.getElementById('pin-phrase-form')?.addEventListener('submit', e => {
-    e.preventDefault()
-    submitValue()
-  })
+  const pinPhraseForm = document.getElementById('pin-phrase-form')
+
+  pinPhraseForm &&
+    pinPhraseForm.addEventListener('submit', e => {
+      e.preventDefault()
+      submitValue()
+    })
 
   // Creates a new Button component used to trigger sending the pin to Keepkey
   const entryEl = document.getElementById('entry')

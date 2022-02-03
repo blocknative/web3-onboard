@@ -83,7 +83,7 @@ const getAddresses = async (
   // Then adds 4 more 0 balance accounts to the array
   while (zeroBalanceAccounts < 5) {
     const acc = await getAccount(account, asset, index, provider)
-    if (acc?.balance?.value?.isZero()) {
+    if (acc && acc.hasOwnProperty('balance') && acc.balance.hasOwnProperty('value') && acc.balance.value.isZero()) {
       zeroBalanceAccounts++
       accounts.push(acc)
     } else {
@@ -114,7 +114,7 @@ function trezor(options: TrezorOptions): WalletInit {
         const { compress } = (await import('eth-crypto')).publicKey
         const { JsonRpcProvider } = await import('@ethersproject/providers')
 
-        if (!(options?.email && options?.appUrl)) {
+        if (!options || !options.email || !options.appUrl) {
           throw new Error(
             'Email and AppUrl required in Trezor options for Trezor Wallet Connection'
           )
@@ -141,7 +141,7 @@ function trezor(options: TrezorOptions): WalletInit {
           chainId,
           asset
         }: ScanAccountsOptions): Promise<Account[]> => {
-          currentChain = chains.find(({ id }) => id === chainId) ?? currentChain
+          currentChain = chains.find(({ id }) => id === chainId) || currentChain
           const provider = new JsonRpcProvider(currentChain.rpcUrl)
 
           const { publicKey, chainCode, path } = await getPublicKey(
@@ -165,7 +165,7 @@ function trezor(options: TrezorOptions): WalletInit {
           return getAddresses(
             {
               publicKey: compress(publicKey),
-              chainCode: chainCode ?? '',
+              chainCode: chainCode || '',
               path: derivationPath
             },
             asset,
@@ -181,7 +181,7 @@ function trezor(options: TrezorOptions): WalletInit {
             scanAccounts
           })
 
-          if (accounts.length) {
+          if (Array.isArray(accounts) && accounts.length && accounts[0].hasOwnProperty('address')) {
             eventEmitter.emit('accountsChanged', [accounts[0].address])
           }
 
@@ -239,7 +239,12 @@ function trezor(options: TrezorOptions): WalletInit {
         function createTrezorTransactionObject(
           transactionData: TransactionObject
         ): EthereumTransactionEIP1559 | EthereumTransaction {
-          const gasLimit = transactionData?.gasLimit || transactionData?.gas
+          if (!transactionData || (!transactionData.hasOwnProperty('gasLimit') && !transactionData.hasOwnProperty('gas'))) {
+            throw new Error(
+              'There was no Transaction Object or both the gasLimit and gas property are missing'
+            )
+          }
+          const gasLimit = transactionData.gasLimit || transactionData.gas
           if (
             transactionData!.maxFeePerGas ||
             transactionData!.maxPriorityFeePerGas
@@ -252,7 +257,7 @@ function trezor(options: TrezorOptions): WalletInit {
               maxPriorityFeePerGas: transactionData.maxPriorityFeePerGas!,
               nonce: transactionData.nonce!,
               chainId: parseInt(currentChain.id),
-              data: transactionData?.data
+              data: transactionData.hasOwnProperty('data') ? transactionData.data : ''
             }
           }
           return {
@@ -262,7 +267,7 @@ function trezor(options: TrezorOptions): WalletInit {
             gasLimit: gasLimit!,
             nonce: transactionData.nonce!,
             chainId: parseInt(currentChain.id),
-            data: transactionData?.data
+            data: transactionData.hasOwnProperty('data') ? transactionData.data : ''
           }
         }
 
@@ -283,15 +288,18 @@ function trezor(options: TrezorOptions): WalletInit {
         }
 
         async function signTransaction(transactionObject: TransactionObject) {
-          if (!(accounts?.length && accounts?.length > 0))
+          if (!Array.isArray(accounts) || !accounts.length)
             throw new Error(
               'No account selected. Must call eth_requestAccounts first.'
             )
 
-          const signingAccount =
-            accounts.find(
-              account => account.address === transactionObject?.from
-            ) || accounts[0]
+          let signingAccount
+          if (transactionObject.hasOwnProperty('from')) {
+            signingAccount = accounts.find(
+              account => account.address === transactionObject.from
+            ) 
+          }
+          signingAccount = signingAccount ? signingAccount : accounts[0]
 
           const { derivationPath } = signingAccount
 
@@ -299,7 +307,10 @@ function trezor(options: TrezorOptions): WalletInit {
           const transactionData =
             createTrezorTransactionObject(transactionObject)
 
-          const common = new Common({
+          // @ts-ignore
+          const CommonConstructor = Common.default
+
+          const common = new CommonConstructor({
             chain: customNetwork || Number.parseInt(currentChain.id) || 1,
             // Berlin is the minimum hardfork that will allow for EIP1559
             hardfork: Hardfork.Berlin,
@@ -342,7 +353,7 @@ function trezor(options: TrezorOptions): WalletInit {
           address: string,
           message: { data: string }
         ): Promise<string> {
-          if (!(accounts?.length && accounts?.length > 0))
+          if (!Array.isArray(accounts) || !accounts.length)
             throw new Error(
               'No account selected. Must call eth_requestAccounts first.'
             )
@@ -382,23 +393,31 @@ function trezor(options: TrezorOptions): WalletInit {
         const provider = createEIP1193Provider(trezorProvider, {
           eth_requestAccounts: async () => {
             const accounts = await getAccountFromAccountSelect()
-            if (accounts?.length === 0) {
+            if (!Array.isArray(accounts))
+              throw new Error(
+                'No account selected. Must call eth_requestAccounts first.'
+              )
+            if (accounts.length === 0) {
               throw new ProviderRpcError({
                 code: 4001,
                 message: 'User rejected the request.'
               })
             }
-            return [accounts[0]?.address]
+            if (!accounts[0].hasOwnProperty('address'))
+              throw new Error(
+                'No address property associated with the selected account'
+              )
+            return [accounts[0].address]
           },
           eth_selectAccounts: async () => {
             const accounts = await getAccountFromAccountSelect()
             return accounts.map(({ address }) => address)
           },
           eth_accounts: async () => {
-            return accounts?.[0]?.address ? [accounts[0].address] : []
+            return (Array.isArray(accounts) && accounts.length && accounts[0].hasOwnProperty('address')) ? [accounts[0].address] : []
           },
           eth_chainId: async () => {
-            return currentChain?.id ?? ''
+            return currentChain.hasOwnProperty('id') ? currentChain.id : ''
           },
           eth_signTransaction: async ({ params: [transactionObject] }) => {
             return signTransaction(transactionObject)
@@ -409,7 +428,7 @@ function trezor(options: TrezorOptions): WalletInit {
           },
           wallet_switchEthereumChain: async ({ params: [{ chainId }] }) => {
             currentChain =
-              chains.find(({ id }) => id === chainId) ?? currentChain
+              chains.find(({ id }) => id === chainId) || currentChain
             if (!currentChain)
               throw new Error('chain must be set before switching')
 

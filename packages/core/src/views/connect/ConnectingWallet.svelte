@@ -136,9 +136,9 @@
       <div class="icons">
         <WalletAppBadge
           size={48}
+          icon={(appMetadata && appMetadata.icon) || defaultAppIcon}
           border={connectionRejected ? 'yellow' : 'blue'}
           background="lightGray"
-          icon={appMetadata?.icon || defaultAppIcon}
         />
 
         <div style="position: relative; right: 0.5rem;">

@@ -247,7 +247,7 @@
             {/if}
 
             {#if ens}
-              <div>ENS Name: {ens?.name || ''}</div>
+              <div>ENS Name: {(ens && ens.name) || ''}</div>
             {/if}
           </div>
           <div>

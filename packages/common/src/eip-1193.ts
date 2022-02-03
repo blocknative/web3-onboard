@@ -40,17 +40,17 @@ export const createEIP1193Provider = (
 
     // If the request method is set to null
     // this indicates this method is not supported
-    if (requestPatch?.[key] === null) {
+    if (requestPatch && requestPatch[key] === null) {
       throw new ProviderRpcError({
         code: 4200,
         message: `The Provider does not support the requested method: ${method}`
       })
     }
 
-    if (requestPatch?.[key]) {
+    if (requestPatch && requestPatch[key]) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore // @TODO - Fix this type error
-      return requestPatch[key]?.({ baseRequest, params })
+      return requestPatch[key]({ baseRequest, params })
     } else if (baseRequest) {
       return baseRequest({ method, params })
     } else {
@@ -86,9 +86,7 @@ const createRequest = (provider: any): EIP1193Provider['request'] =>
           if (error) {
             reject(JSON.parse(error))
           } else {
-            if (result) {
-              resolve((result as any) ?? null)
-            }
+            resolve(result == undefined ? null : (result as any))
           }
         }
       )
