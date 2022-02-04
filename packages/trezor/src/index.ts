@@ -83,7 +83,12 @@ const getAddresses = async (
   // Then adds 4 more 0 balance accounts to the array
   while (zeroBalanceAccounts < 5) {
     const acc = await getAccount(account, asset, index, provider)
-    if (acc && acc.hasOwnProperty('balance') && acc.balance.hasOwnProperty('value') && acc.balance.value.isZero()) {
+    if (
+      acc &&
+      acc.hasOwnProperty('balance') &&
+      acc.balance.hasOwnProperty('value') &&
+      acc.balance.value.isZero()
+    ) {
       zeroBalanceAccounts++
       accounts.push(acc)
     } else {
@@ -181,7 +186,11 @@ function trezor(options: TrezorOptions): WalletInit {
             scanAccounts
           })
 
-          if (Array.isArray(accounts) && accounts.length && accounts[0].hasOwnProperty('address')) {
+          if (
+            Array.isArray(accounts) &&
+            accounts.length &&
+            accounts[0].hasOwnProperty('address')
+          ) {
             eventEmitter.emit('accountsChanged', [accounts[0].address])
           }
 
@@ -239,7 +248,11 @@ function trezor(options: TrezorOptions): WalletInit {
         function createTrezorTransactionObject(
           transactionData: TransactionObject
         ): EthereumTransactionEIP1559 | EthereumTransaction {
-          if (!transactionData || (!transactionData.hasOwnProperty('gasLimit') && !transactionData.hasOwnProperty('gas'))) {
+          if (
+            !transactionData ||
+            (!transactionData.hasOwnProperty('gasLimit') &&
+              !transactionData.hasOwnProperty('gas'))
+          ) {
             throw new Error(
               'There was no Transaction Object or both the gasLimit and gas property are missing'
             )
@@ -257,7 +270,9 @@ function trezor(options: TrezorOptions): WalletInit {
               maxPriorityFeePerGas: transactionData.maxPriorityFeePerGas!,
               nonce: transactionData.nonce!,
               chainId: parseInt(currentChain.id),
-              data: transactionData.hasOwnProperty('data') ? transactionData.data : ''
+              data: transactionData.hasOwnProperty('data')
+                ? transactionData.data
+                : ''
             }
           }
           return {
@@ -267,7 +282,9 @@ function trezor(options: TrezorOptions): WalletInit {
             gasLimit: gasLimit!,
             nonce: transactionData.nonce!,
             chainId: parseInt(currentChain.id),
-            data: transactionData.hasOwnProperty('data') ? transactionData.data : ''
+            data: transactionData.hasOwnProperty('data')
+              ? transactionData.data
+              : ''
           }
         }
 
@@ -297,7 +314,7 @@ function trezor(options: TrezorOptions): WalletInit {
           if (transactionObject.hasOwnProperty('from')) {
             signingAccount = accounts.find(
               account => account.address === transactionObject.from
-            ) 
+            )
           }
           signingAccount = signingAccount ? signingAccount : accounts[0]
 
@@ -323,7 +340,12 @@ function trezor(options: TrezorOptions): WalletInit {
             transactionData
           )
           if (!trezorResult.success) {
-            throw new Error(trezorResult.payload.error)
+            const message =
+              trezorResult.payload.error === 'Unknown message'
+                ? 'This type of transactions is not supported on this device'
+                : trezorResult.payload.error
+
+            throw new Error(message)
           }
 
           const { r, s } = trezorResult.payload
@@ -414,7 +436,11 @@ function trezor(options: TrezorOptions): WalletInit {
             return accounts.map(({ address }) => address)
           },
           eth_accounts: async () => {
-            return (Array.isArray(accounts) && accounts.length && accounts[0].hasOwnProperty('address')) ? [accounts[0].address] : []
+            return Array.isArray(accounts) &&
+              accounts.length &&
+              accounts[0].hasOwnProperty('address')
+              ? [accounts[0].address]
+              : []
           },
           eth_chainId: async () => {
             return currentChain.hasOwnProperty('id') ? currentChain.id : ''
