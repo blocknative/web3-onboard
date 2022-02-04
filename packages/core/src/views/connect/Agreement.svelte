@@ -16,7 +16,7 @@
   const { termsUrl, privacyUrl, version } =
     (appMetadata && appMetadata.agreement) || blankAgreement
 
-  const showTermsOfService: boolean = !!(
+  const showTermsOfService = !!(
     (termsUrl && !termsAgreed) ||
     (privacyUrl && !privacyAgreed) ||
     (version && version !== versionAgreed)
