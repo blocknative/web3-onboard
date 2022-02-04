@@ -30,7 +30,7 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn build
+      - run: lerna exec --scope @bn-onboard/common --scope @bn-onboard/core build
       - run: cd packages/core && echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
       - run: cd packages/core && npm publish --access public
 
