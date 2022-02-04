@@ -4,7 +4,7 @@
   import WalletButton from './WalletButton.svelte'
 
   export let wallets: WalletWithLoadingIcon[]
-  export let selectWallet: (wallet: WalletWithLoadedIcon) => void
+  export let selectWallet: (wallet: WalletWithLoadedIcon) => Promise<void>
 
   let connecting: string
 

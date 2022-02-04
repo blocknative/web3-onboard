@@ -7,8 +7,6 @@
   import { internalState$ } from '../../streams'
   import type { WalletState, i18n } from '../../types'
 
-  import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
-  import PendingStatusIcon from '../shared/PendingStatusIcon.svelte'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
   import defaultAppIcon from '../../icons/default-app-icon'
   import en from '../../i18n/en.json'

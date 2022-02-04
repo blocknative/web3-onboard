@@ -5,7 +5,6 @@
   import EventEmitter from 'eventemitter3'
 
   import type {
-    ConnectOptions,
     WalletWithLoadingIcon,
     WalletWithLoadedIcon,
     i18n,
@@ -237,7 +236,7 @@
               default: en.connect[step].header,
               values: {
                 connectionRejected,
-                wallet: selectedWallet && selectWallet.label
+                wallet: selectedWallet && selectedWallet.label
               }
             })}
           </h4>
