@@ -1,29 +1,13 @@
 {
-  "name": "core",
+  "name": "onboard-v2-monorepo",
   "private": true,
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
-    "setup": "lerna bootstrap",
-    "build": "lerna exec yarn build",
-    "dev": "lerna exec --parallel -- yarn dev",
+    "build": "yarn workspaces foreach run build",
+    "dev": "yarn workspaces foreach run dev",
     "test": "lerna exec yarn test",
     "format": "prettier --write 'packages/**/*.ts'"
-  },
-  "devDependencies": {
-    "@ava/typescript": "^2.0.0",
-    "@swc/cli": "^0.1.51",
-    "@swc/core": "^1.2.92",
-    "@types/lodash.uniqby": "^4.7.6",
-    "@types/node": "^16.10.3",
-    "ava": "^3.15.0",
-    "browser-env": "^3.3.0",
-    "lerna": "^4.0.0",
-    "prettier": "^2.4.1",
-    "prettier-plugin-svelte": "^2.4.0",
-    "ts-node": "^10.2.1",
-    "typescript": "^4.4.3",
-    "window": "^4.2.7"
   }
 }

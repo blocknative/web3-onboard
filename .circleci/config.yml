@@ -1,9 +1,125 @@
 version: 2.1
-setup: true
-orbs:
-  circletron: circletron/circletron@3.0.4
+
+aliases:
+  - &docker-image
+    docker:
+      - image: cimg/node:16.13.1
+
+  - &install_typescript_globally
+    run:
+      name: Install Typescript globally
+      command: yarn global add typescript
+
+  - &deploy
+    run:
+      name: Deploy
+      command: yarn deploy
+
+  - &deploy_production_filters
+    filters:
+      branches:
+        only: enhancement/yarn-workspaces
+
+  - &restore-build-flag
+    restore_cache:
+      keys:
+        - build-flag-{{ checksum "package.json" }}
+
+  - &test-build-flag
+    run:
+      name: Exit if build flag exists
+      command: |
+        FILE=build.flag
+        if test -f "$FILE"; then
+            echo "$FILE exist"
+            circleci step halt
+        fi
+  - &generate-lock-file
+    run:
+      name: Generate lock file
+      command: yarn generate-lock-entry >> yarn.lock
+
+  - &restore-cache
+    restore_cache:
+      keys:
+        - dependencies-cache-{{ checksum "yarn.lock" }}
+
+  - &save-cache
+    save_cache:
+      paths:
+        - node_modules
+      key: dependencies-cache-{{ checksum "yarn.lock" }}
+
+  - &create-npm-config:
+    run:
+      name: Create NPM rc file
+      command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
+  
+  - &publish-npm:
+    run: 
+      name: Publish package to NPM
+      command: npm publish --access public
+
+commands:
+  save-build-flag:
+    steps:
+      - run:
+          name: Create build flag
+          command: touch build.flag
+      - save_cache:
+          paths:
+            - build.flag
+          key: build-flag-{{ checksum "package.json" }}
+
+  node-build-steps:
+    steps:
+      - checkout:
+          # Since our working_directory is deeper than the root,
+          # remind the job where it needs to checkout.
+          path: ~/onboard-v2-monorepo
+      - *restore-build-flag
+      - *test-build-flag
+      # Services and packages in a Workspace don't get their own
+      # yarn.lock so we need to generate them manually.
+      - *generate-lock-file
+      - *restore-cache
+      - run:
+          name: Build
+          command: |
+            yarn
+            yarn build
+      - *save-cache
+      - *create-npm-config
+      - *publish-npm
+      - save-build-flag
+
+jobs:
+  build-core:
+    docker:
+      - image: cimg/node:16.13.1
+
+    # This makes all commands from here on out relative to core
+    working_directory: ~/onboard-v2-monorepo/packages/core
+
+    steps:
+      - node-build-steps
+  build-common:
+    docker:
+      - image: cimg/node:16.13.1
+
+    # This makes all commands from here on out relative to core
+    working_directory: ~/onboard-v2-monorepo/packages/common
+
+    steps:
+      - node-build-steps
 
 workflows:
-  trigger-jobs:
+  version: 2
+  common:
     jobs:
-      - circletron/trigger-jobs
+      - build-common:
+          <<: *deploy_production_filters
+  core:
+    jobs:
+      - build-core:
+          <<: *deploy_production_filters
