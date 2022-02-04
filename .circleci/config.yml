@@ -50,12 +50,12 @@ aliases:
         - node_modules
       key: dependencies-cache-{{ checksum "yarn.lock" }}
 
-  - &create-npm-config:
+  - &create-npm-config
     run:
       name: Create NPM rc file
       command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
   
-  - &publish-npm:
+  - &publish-npm
     run: 
       name: Publish package to NPM
       command: npm publish --access public
