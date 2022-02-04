@@ -1,5 +1,5 @@
 jobs:
-  publish-gnosis:
+  publish-keystone:
     docker:
       - image: cimg/node:16.13.1
     steps:
@@ -14,13 +14,13 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: yarn build
-      - run: cd packages/gnosis && echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
-      - run: cd packages/gnosis && npm publish --access public
+      - run: cd packages/keystone && echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
+      - run: cd packages/keystone && npm publish --access public
 
 workflows:
-  gnosis:
+  keystone:
     jobs:
-      - publish-gnosis:
+      - publish-keystone:
           filters:
             branches:
               only:
