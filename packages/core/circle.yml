@@ -13,7 +13,7 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn build
+      - run: lerna exec --scope @bn-onboard/common --scope @bn-onboard/core build
       - run: cd packages/core && yarn lint
       - run: cd packages/core && yarn typescript
   publish-core:
