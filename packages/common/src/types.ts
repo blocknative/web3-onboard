@@ -139,7 +139,7 @@ export interface AppMetadata {
   /** When no injected wallets detected, recommend the user to install some*/
   recommendedInjectedWallets?: RecommendedInjectedWallets[]
 
-  agreement: TermsOfServiceAgreementOptions | null
+  agreement?: TermsOfServiceAgreementOptions | null
 }
 
 export type TermsOfServiceAgreementOptions = {
