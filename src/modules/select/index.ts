@@ -49,6 +49,8 @@ const providerNameToWalletName = (providerName: string) =>
     ? providerName
     : providerName === 'WalletConnect'
     ? 'walletConnect'
+    : providerName === `D'CENT`
+    ? 'dcent'
     : providerName.toLocaleLowerCase()
 
 function select(
@@ -237,6 +239,7 @@ function getModule(name: string): Promise<{
     case '1inch':
       return import('./wallets/1inch')
     case 'blockwallet':
+    case 'blankwallet':
       return import('./wallets/blockwallet')
     case 'ronin':
       return import('./wallets/ronin')
