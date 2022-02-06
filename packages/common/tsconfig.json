@@ -7,9 +7,9 @@
     "strict": true,
     "declaration": true,
     "declarationDir": "dist",
-    "target": "esnext",
-    "module": "esnext",
+    "target": "ES2018",
+    "module": "ES2020",
     "resolveJsonModule": true
   },
-  "outDir": "dist",
+  "outDir": "dist"
 }
