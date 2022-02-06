@@ -2059,18 +2059,28 @@
   resolved "https://registry.yarnpkg.com/@formatjs/intl-utils/-/intl-utils-2.3.0.tgz#2dc8c57044de0340eb53a7ba602e59abf80dc799"
   integrity sha512-KWk80UPIzPmUg+P0rKh6TqspRw0G6eux1PuJr+zz47ftMaZ9QDwbGzHZbtzWkl5hgayM/qrKRutllRC7D/vVXQ==
 
-"@gnosis.pm/safe-apps-provider@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@gnosis.pm/safe-apps-provider/-/safe-apps-provider-0.5.0.tgz#e0121553ef22c1458eb95cf0afed14e8c2570ae3"
-  integrity sha512-c4OuKV+cIW2aDmv0DZfLOelmyNNZz5Dr3OG5TvnCfmYhZtHyOd1x6bd2xnROCuiZU+QAUGJsm65mBe6iy8NAVQ==
+"@gnosis.pm/safe-apps-provider@^0.9.3":
+  version "0.9.3"
+  resolved "https://registry.yarnpkg.com/@gnosis.pm/safe-apps-provider/-/safe-apps-provider-0.9.3.tgz#d8913b0f8abc15fdca229571eefc5f9385c82ea7"
+  integrity sha512-WzsfEMrOTd7/epEKs7S0QBB+sgw25d1B4SeLCD7q9RYi0vYLaeWT3jTuVXVGqwAlT3tFyedmvXnryLV5SUwiug==
   dependencies:
-    "@gnosis.pm/safe-apps-sdk" "3.0.0"
+    "@gnosis.pm/safe-apps-sdk" "6.2.0"
     events "^3.3.0"
 
-"@gnosis.pm/safe-apps-sdk@3.0.0", "@gnosis.pm/safe-apps-sdk@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@gnosis.pm/safe-apps-sdk/-/safe-apps-sdk-3.0.0.tgz#0f90185c3693f2683322d275e796e61ff99ce87d"
-  integrity sha512-dLCSlniYnxEqCglx4XdhByvi7KKuSYRWJKm1lVXAc4oJqwwVkoCwp0bFIejLZ/dnf7cQSBUUVsTGWhvSda511w==
+"@gnosis.pm/safe-apps-sdk@6.2.0", "@gnosis.pm/safe-apps-sdk@^6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@gnosis.pm/safe-apps-sdk/-/safe-apps-sdk-6.2.0.tgz#05751b4ae4c6cfa7e19839d3655e7d9b5fb72dfe"
+  integrity sha512-dOpVBlu+Nv7bOrOl9llTeRriEpdUnnbXEM/RgTkS1v8Q2swT6+M+WIKTuKB/cadFXbjUsBD/nd3IsihHP24b5g==
+  dependencies:
+    "@gnosis.pm/safe-react-gateway-sdk" "^2.5.6"
+    ethers "^5.4.7"
+
+"@gnosis.pm/safe-react-gateway-sdk@^2.5.6":
+  version "2.8.4"
+  resolved "https://registry.yarnpkg.com/@gnosis.pm/safe-react-gateway-sdk/-/safe-react-gateway-sdk-2.8.4.tgz#93817e7519654c16a88b11a4659c8ef408214284"
+  integrity sha512-e7WSKUFSbw1b9MHOQW8p0aegwVIUcdwiMsa1vPGdkmXsuVYiIvLUFaMDxVbtOuNEW8zAU3DBb6gnE4gOHinW5g==
+  dependencies:
+    isomorphic-unfetch "^3.1.0"
 
 "@keepkey/device-protocol@^7.2.1":
   version "7.2.1"
@@ -6299,6 +6309,14 @@ isobject@^3.0.0, isobject@^3.0.1:
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
   integrity sha1-TkMekrEalzFjaqH5yNHMvP2reN8=
 
+isomorphic-unfetch@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/isomorphic-unfetch/-/isomorphic-unfetch-3.1.0.tgz#87341d5f4f7b63843d468438128cb087b7c3e98f"
+  integrity sha512-geDJjpoZ8N0kWexiwkX8F9NkTsXhetLPVbZFQ+JTW239QNOwvB0gniuR1Wc6f0AMTn7/mFGyXvHTifrCp/GH8Q==
+  dependencies:
+    node-fetch "^2.6.1"
+    unfetch "^4.2.0"
+
 isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
@@ -9277,6 +9295,11 @@ underscore@1.9.1, underscore@^1.12.1:
   resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.13.1.tgz#0c1c6bd2df54b6b69f2314066d65b6cde6fcf9d1"
   integrity sha512-hzSoAVtJF+3ZtiFX0VgfFPHEDRm7Y/QPjGyNo4TVdnDTdft3tr8hEkD25a1jC+TjTuE7tkHGKkhwCgs9dgBB2g==
 
+unfetch@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/unfetch/-/unfetch-4.2.0.tgz#7e21b0ef7d363d8d9af0fb929a5555f6ef97a3be"
+  integrity sha512-F9p7yYCn6cIW9El1zi0HI6vqpeIvBsr3dSuRO6Xuppb1u5rXpCPmMvLSyECLhybr9isec8Ohl0hPekMVrEinDA==
+
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/unicode-canonical-property-names-ecmascript/-/unicode-canonical-property-names-ecmascript-1.0.4.tgz#2619800c4c825800efdd8343af7dd9933cbe2818"
@@ -9465,10 +9488,10 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
-walletlink@^2.4.4:
-  version "2.4.4"
-  resolved "https://registry.yarnpkg.com/walletlink/-/walletlink-2.4.4.tgz#dc2a71d1d235335ef844cfb83da7eb9c264521d0"
-  integrity sha512-BzEfSXhykuVYv0Ltv0nQtxkCzBGQk7tJ1D46wF7N/P23USiJap48i8YXa1o+5WmcxonWwA3//HWVkguJ6vHwMg==
+walletlink@^2.4.6:
+  version "2.4.6"
+  resolved "https://registry.yarnpkg.com/walletlink/-/walletlink-2.4.6.tgz#efaa950c16447bf34e186495b55755b3d7157725"
+  integrity sha512-CtfyRa3Tc9yTRFIoE0P0rhiq57WB6/XnJ0Fyc3tmSR4yntFP29sqp+SCDOI0R9Ot20gAKaYb2w/nnmLRrhfiJQ==
   dependencies:
     "@metamask/safe-event-emitter" "2.0.0"
     bind-decorator "^1.0.11"
