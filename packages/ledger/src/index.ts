@@ -131,10 +131,7 @@ function ledger({
         const { default: Common, Hardfork } = await import('@ethereumjs/common')
         const { compress } = (await import('eth-crypto')).publicKey
         const ethUtil = await import('ethereumjs-util')
-        const {
-          TypedDataUtils: { hashStruct },
-          SignTypedDataVersion
-        } = await import('@metamask/eth-sig-util')
+        const { default: ethSigUtil } = await import('@metamask/eth-sig-util')
         const { JsonRpcProvider } = await import('@ethersproject/providers')
 
         const { accountSelect, createEIP1193Provider, ProviderRpcError } =
@@ -143,6 +140,11 @@ function ledger({
         const { TransactionFactory: Transaction, Capability } = await import(
           '@ethereumjs/tx'
         )
+
+        const {
+          TypedDataUtils: { hashStruct },
+          SignTypedDataVersion
+        } = ethSigUtil
 
         const transport: Transport = await getTransport()
         const eth = new Eth(transport)
@@ -244,7 +246,11 @@ function ledger({
             return accounts.map(({ address }) => address)
           },
           eth_accounts: async () => {
-            return (Array.isArray(accounts) && accounts.length && accounts[0].hasOwnProperty('address')) ? [accounts[0].address] : []
+            return Array.isArray(accounts) &&
+              accounts.length &&
+              accounts[0].hasOwnProperty('address')
+              ? [accounts[0].address]
+              : []
           },
           eth_chainId: async () => {
             return (currentChain && currentChain.id) || ''
@@ -259,7 +265,7 @@ function ledger({
             if (transactionObject.hasOwnProperty('from')) {
               account = accounts.find(
                 account => account.address === transactionObject.from
-              ) 
+              )
             }
             account = account ? account : accounts[0]
 
@@ -268,7 +274,10 @@ function ledger({
             // Set the `from` field to the currently selected account
             transactionObject = { ...transactionObject, from }
             const common = new Common({
-              chain: customNetwork || currentChain.hasOwnProperty('id') ? Number.parseInt(currentChain.id) : 1,
+              chain:
+                customNetwork || currentChain.hasOwnProperty('id')
+                  ? Number.parseInt(currentChain.id)
+                  : 1,
               // Berlin is the minimum hardfork that will allow for EIP1559
               hardfork: Hardfork.Berlin,
               // List of supported EIPS
