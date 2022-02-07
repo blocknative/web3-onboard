@@ -131,7 +131,12 @@ function ledger({
         const { default: Common, Hardfork } = await import('@ethereumjs/common')
         const { compress } = (await import('eth-crypto')).publicKey
         const ethUtil = await import('ethereumjs-util')
-        const { default: ethSigUtil } = await import('@metamask/eth-sig-util')
+
+        const {
+          TypedDataUtils: { hashStruct },
+          SignTypedDataVersion
+        } = await import('@metamask/eth-sig-util')
+
         const { JsonRpcProvider } = await import('@ethersproject/providers')
 
         const { accountSelect, createEIP1193Provider, ProviderRpcError } =
@@ -140,11 +145,6 @@ function ledger({
         const { TransactionFactory: Transaction, Capability } = await import(
           '@ethereumjs/tx'
         )
-
-        const {
-          TypedDataUtils: { hashStruct },
-          SignTypedDataVersion
-        } = ethSigUtil
 
         const transport: Transport = await getTransport()
         const eth = new Eth(transport)
