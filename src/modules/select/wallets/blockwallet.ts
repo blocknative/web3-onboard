@@ -1,15 +1,15 @@
 import { extensionInstallMessage } from '../content'
 import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
 
-import blankwalletIcon from '../wallet-icons/icon-blankwallet'
+import blockWalletIcon from '../wallet-icons/icon-blockwallet'
 
-function blankwallet(options: CommonWalletOptions): WalletModule {
+function blockwallet(options: CommonWalletOptions): WalletModule {
   const { preferred, label, iconSrc, svg } = options
 
   return {
-    name: label || 'Blank Wallet',
+    name: label || 'BlockWallet',
     iconSrc,
-    svg: svg || blankwalletIcon,
+    svg: svg || blockWalletIcon,
     wallet: async (helpers: Helpers) => {
       const {
         getProviderName,
@@ -24,7 +24,7 @@ function blankwallet(options: CommonWalletOptions): WalletModule {
       return {
         provider,
         interface:
-          provider && getProviderName(provider) === 'BlankWallet'
+          provider && getProviderName(provider) === 'BlockWallet'
             ? typeof provider.enable === 'function'
               ? createModernProviderInterface(provider)
               : createLegacyProviderInterface(provider)
@@ -32,7 +32,7 @@ function blankwallet(options: CommonWalletOptions): WalletModule {
       }
     },
     type: 'injected',
-    link: `https://www.goblank.io/`,
+    link: `https://www.blockwallet.io/`,
     installMessage: extensionInstallMessage,
     desktop: true,
     mobile: false,
@@ -40,4 +40,4 @@ function blankwallet(options: CommonWalletOptions): WalletModule {
   }
 }
 
-export default blankwallet
+export default blockwallet
