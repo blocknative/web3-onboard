@@ -36,7 +36,6 @@
   let wallets: WalletWithLoadingIcon[] = []
   let selectedWallet: WalletState | null
   let agreed: boolean
-  // let selectWalletError: string
 
   let windowWidth: number
 
@@ -89,24 +88,19 @@
 
     const { chains } = state.get()
 
-    try {
-      const { provider } = await getInterface({
-        chains,
-        BigNumber,
-        EventEmitter,
-        appMetadata
-      })
+    const { provider } = await getInterface({
+      chains,
+      BigNumber,
+      EventEmitter,
+      appMetadata
+    })
 
-      selectedWallet = {
-        label,
-        icon,
-        provider,
-        accounts: [],
-        chain: '0x1'
-      }
-    } catch (error) {
-      // selectWalletError = (error as Error).message
-      console.error(error)
+    selectedWallet = {
+      label,
+      icon,
+      provider,
+      accounts: [],
+      chain: '0x1'
     }
 
     setStep('connectingWallet')

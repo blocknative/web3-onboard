@@ -80,7 +80,7 @@
   }
 
   :global(input:disabled, textarea:disabled, select:disabled) {
-    background-color: var(--grey-100);
+    background-color: var(--gray-100);
   }
 
   :global(input::-moz-focus-inner) {
@@ -92,19 +92,19 @@
 
   :global(::-webkit-input-placeholder) {
     /* Chrome/Opera/Safari */
-    color: var(--grey-300);
+    color: var(--gray-300);
   }
   :global(::-moz-placeholder) {
     /* Firefox 19+ */
-    color: var(--grey-300);
+    color: var(--gray-300);
   }
   :global(:-ms-input-placeholder) {
     /* IE 10+ */
-    color: var(--grey-300);
+    color: var(--gray-300);
   }
   :global(:-moz-placeholder) {
     /* Firefox 18- */
-    color: var(--grey-300);
+    color: var(--gray-300);
   }
 
   :global(a) {
