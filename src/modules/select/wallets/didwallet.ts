@@ -26,7 +26,9 @@ function didwallet(options: CommonWalletOptions): WalletModule {
       }
     },
     type: 'injected',
-    link: `abt://abtwallet.io/i?action=requestOpenUrl&url=${encodeURIComponent(window.location.href)}`,
+    link: `abt://abtwallet.io/i?action=requestOpenUrl&url=${encodeURIComponent(
+      window.location.href
+    )}`,
     installMessage: mobileWalletInstallMessage,
     mobile: true,
     preferred
