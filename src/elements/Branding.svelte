@@ -53,6 +53,8 @@
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
           viewBox="0 0 380.94 434.03"
+          height="130"
+          width="91"
         >
           <defs>
             <style>
@@ -110,6 +112,8 @@
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
           viewBox="0 0 380.94 434.03"
+          height="130"
+          width="91"
         >
           <defs>
             <style>
