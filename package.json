@@ -2,12 +2,9 @@
   "name": "onboard-v2-monorepo",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "./packages/*"
   ],
   "scripts": {
-    "build": "yarn workspaces foreach run build",
-    "dev": "yarn workspaces foreach run dev",
-    "test": "lerna exec yarn test",
     "format": "prettier --write 'packages/**/*.ts'"
   }
 }

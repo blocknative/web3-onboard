@@ -51,7 +51,7 @@
   }
 
   input:disabled {
-    background-color: var(--grey-100);
+    background-color: var(--gray-100);
   }
 
   input[type='checkbox'] {
