@@ -93,6 +93,8 @@ function mountApp() {
   const onboard = document.createElement('onboard-v2')
   const target = onboard.attachShadow({ mode: 'open' })
 
+  onboard.style.all = 'initial'
+
   target.innerHTML = `
       <style>
         :host {  

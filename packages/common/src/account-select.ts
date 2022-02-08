@@ -56,6 +56,8 @@ const mountAccountSelect = (
   const accountSelectDomElement = document.createElement('account-select')
   const target = accountSelectDomElement.attachShadow({ mode: 'open' })
 
+  accountSelectDomElement.style.all = 'initial'
+
   target.innerHTML = `
     <style>
       :host {  
