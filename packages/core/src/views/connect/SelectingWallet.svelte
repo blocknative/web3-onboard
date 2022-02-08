@@ -17,13 +17,13 @@
 
   function select({ label, icon, getInterface }: WalletWithLoadingIcon) {
     return async () => {
-      errorMessage = ''
       connecting = label
 
       const iconLoaded = await icon
 
       try {
         await selectWallet({ label, icon: iconLoaded, getInterface })
+        errorMessage = ''
       } catch (error) {
         const { message } = error as { message: string }
         errorMessage = message
