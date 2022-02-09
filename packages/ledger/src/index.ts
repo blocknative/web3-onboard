@@ -273,7 +273,11 @@ function ledger({
 
             // Set the `from` field to the currently selected account
             transactionObject = { ...transactionObject, from }
-            const common = new Common({
+
+            // @ts-ignore
+            const CommonConstructor = Common.default
+
+            const common = new CommonConstructor({
               chain:
                 customNetwork || currentChain.hasOwnProperty('id')
                   ? Number.parseInt(currentChain.id)
