@@ -66,7 +66,8 @@
 
       try {
         await selectAccounts(existingWallet.provider)
-        setStep('connectedWallet')
+        // change step on next event loop
+        setTimeout(() => setStep('connectedWallet'), 1)
       } catch (error) {
         const { code } = error as { code: number }
 
@@ -103,7 +104,8 @@
       chain: '0x1'
     }
 
-    setStep('connectingWallet')
+    // change step on next event loop
+    setTimeout(() => setStep('connectingWallet'), 1)
   }
 
   function deselectWallet() {
