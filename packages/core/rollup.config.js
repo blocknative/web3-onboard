@@ -1,5 +1,4 @@
 import svelte from 'rollup-plugin-svelte'
-import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
 import replace from '@rollup/plugin-replace'
 import json from '@rollup/plugin-json'
@@ -31,21 +30,21 @@ export default {
       browser: true,
       dedupe: ['svelte']
     }),
-    commonjs(),
     typescript({
       sourceMap: !production,
       inlineSources: !production
     })
   ],
   external: [
+    '@bn-onboard/common',
     'ethers',
     'bowser',
     'joi',
     'rxjs',
     'rxjs/operators',
     'svelte-i18n',
-    'svelte/store',
     'lodash.merge',
-    'lodash.partition'
+    'lodash.partition',
+    'eventemitter3'
   ]
 }

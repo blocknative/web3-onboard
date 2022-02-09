@@ -1,6 +1,6 @@
 {
   "name": "@bn-onboard/core",
-  "version": "2.0.0-alpha.13",
+  "version": "2.0.0-alpha.14",
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
@@ -17,7 +17,6 @@
   "main": "dist/index.js",
   "type": "module",
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
     "@rollup/plugin-replace": "^3.0.0",
@@ -34,6 +33,7 @@
     "prettier-plugin-svelte": "^2.4.0",
     "rollup": "^2.3.4",
     "rollup-plugin-svelte": "^7.0.0",
+    "svelte": "^3.42.5",
     "svelte-check": "^2.2.6",
     "svelte-preprocess": "^4.9.4",
     "tslib": "^2.0.0",
@@ -48,7 +48,6 @@
     "lodash.merge": "^4.6.2",
     "lodash.partition": "^4.6.0",
     "rxjs": "^7.5.2",
-    "svelte": "^3.42.5",
     "svelte-i18n": "^3.3.13"
   }
 }
