@@ -257,6 +257,10 @@ export function getProviderName(provider: any): string | undefined {
     return 'MathWallet'
   }
 
+  if (provider.isDIDWallet) {
+    return 'DIDWallet'
+  }
+
   if (provider.isWalletIO) {
     return 'wallet.io'
   }
