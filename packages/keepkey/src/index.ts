@@ -369,7 +369,10 @@ function keepkey(): WalletInit {
                 addressNList,
                 message:
                   message.slice(0, 2) === '0x'
-                    ? ethUtil.toBuffer(message).toString('utf8')
+                    ? // @ts-ignore - commonjs weirdness
+                      (ethUtil.default || ethUtil)
+                        .toBuffer(message)
+                        .toString('utf8')
                     : message
               })
 

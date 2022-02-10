@@ -68,7 +68,10 @@ const getAccount = async (
 ): Promise<Account> => {
   //@ts-ignore
   const { default: HDKey } = await import('hdkey')
-  const { publicToAddress, toChecksumAddress } = await import('ethereumjs-util')
+  const ethUtil = await import('ethereumjs-util')
+
+  // @ts-ignore - Commonjs importing weirdness
+  const { publicToAddress, toChecksumAddress } = ethUtil.default || ethUtil
 
   const hdk = new HDKey()
 
