@@ -270,6 +270,11 @@ export interface GnosisOptions extends CommonWalletOptions {
   appUrl?: string
 }
 
+export interface DcentOptions extends CommonWalletOptions {
+  rpcUrl: string
+  customNetwork?: HardwareWalletCustomNetwork
+}
+
 //#region torus
 
 interface VerifierStatus {
@@ -424,6 +429,7 @@ export type WalletInitOptions =
   | LatticeOptions
   | AuthereumOptions
   | LedgerOptions
+  | DcentOptions
   | InjectedWithBalanceOptions
 
 export type AllWalletInitOptions = CommonWalletOptions &
@@ -435,6 +441,7 @@ export type AllWalletInitOptions = CommonWalletOptions &
   AuthereumOptions &
   LedgerOptions &
   WalletLinkOptions &
+  DcentOptions &
   InjectedWithBalanceOptions & { networkId: number } & { isMobile: boolean }
 
 export interface WalletCheckCustomOptions {

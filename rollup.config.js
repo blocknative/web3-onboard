@@ -72,6 +72,7 @@ export default {
     '@ethereumjs/common',
     'ethereumjs-util',
     'eth-lattice-keyring',
+    'eth-dcent-keyring',
     'eth-sig-util',
     '@cvbb/eth-keyring',
     '@keystonehq/eth-keyring',

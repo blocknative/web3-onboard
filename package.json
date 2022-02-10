@@ -73,6 +73,7 @@
     "bignumber.js": "^9.0.0",
     "bnc-sdk": "^3.4.1",
     "bowser": "^2.10.0",
+    "eth-dcent-keyring": "file:./../eth-dcent-keyring",
     "eth-lattice-keyring": "^0.2.7",
     "eth-provider": "^0.6.1",
     "eth-sig-util": "^3.0.1",
