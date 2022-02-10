@@ -60,7 +60,8 @@ import type {
   InjectedProvider,
   Chain,
   TokenSymbol,
-  CustomNetwork
+  CustomNetwork,
+  TransactionObject
 } from './types'
 
 export {
@@ -138,5 +139,6 @@ export type {
   InjectedProvider,
   Chain,
   TokenSymbol,
-  CustomNetwork
+  CustomNetwork,
+  TransactionObject
 }

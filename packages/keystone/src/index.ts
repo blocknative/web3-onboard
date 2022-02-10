@@ -5,7 +5,6 @@ import {
   createEIP1193Provider,
   CustomNetwork,
   ProviderRpcErrorCode,
-  GetInterfaceHelpers,
   ProviderRpcError,
   ScanAccountsOptions,
   WalletInit
@@ -78,7 +77,7 @@ function keystone({
     return {
       label: 'Keystone',
       getIcon,
-      getInterface: async ({ EventEmitter, chains }: GetInterfaceHelpers) => {
+      getInterface: async ({ EventEmitter, chains }) => {
         const { JsonRpcProvider } = await import('@ethersproject/providers')
         const { default: Common, Hardfork } = await import('@ethereumjs/common')
 
@@ -169,6 +168,9 @@ function keystone({
 
             // Set the `from` field to the currently selected account
             transactionObject = { ...transactionObject, from }
+
+            // @ts-ignore -- Due to weird commonjs exports
+            const CommonConstructor = Common.default || Common
 
             const common = new Common({
               chain: customNetwork || Number.parseInt(currentChain.id) || 1,

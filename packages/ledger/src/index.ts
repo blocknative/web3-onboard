@@ -8,6 +8,10 @@ import type {
   GetInterfaceHelpers
 } from '@bn-onboard/common'
 
+// these cannot be dynamically imported
+import { TypedDataUtils } from '@metamask/eth-sig-util'
+import { Buffer } from 'buffer'
+
 import type Transport from '@ledgerhq/hw-transport'
 import type { providers } from 'ethers'
 
@@ -64,7 +68,6 @@ const getAccount = async (
 ): Promise<Account> => {
   //@ts-ignore
   const { default: HDKey } = await import('hdkey')
-  const { Buffer } = await import('buffer')
   const { publicToAddress, toChecksumAddress } = await import('ethereumjs-util')
 
   const hdk = new HDKey()
@@ -132,11 +135,7 @@ function ledger({
         const { compress } = (await import('eth-crypto')).publicKey
         const ethUtil = await import('ethereumjs-util')
 
-        const {
-          TypedDataUtils: { hashStruct },
-          SignTypedDataVersion
-        } = await import('@metamask/eth-sig-util')
-
+        const { SignTypedDataVersion } = await import('@metamask/eth-sig-util')
         const { JsonRpcProvider } = await import('@ethersproject/providers')
 
         const { accountSelect, createEIP1193Provider, ProviderRpcError } =
@@ -275,8 +274,7 @@ function ledger({
             transactionObject = { ...transactionObject, from }
 
             // @ts-ignore
-            const CommonConstructor = Common.default
-
+            const CommonConstructor = Common.default || Common
             const common = new CommonConstructor({
               chain:
                 customNetwork || currentChain.hasOwnProperty('id')
@@ -358,14 +356,14 @@ function ledger({
               accounts.find(account => account.address === address) ||
               accounts[0]
 
-            const domainHash = hashStruct(
+            const domainHash = TypedDataUtils.hashStruct(
               'EIP712Domain',
               typedData.domain,
               typedData.types,
               SignTypedDataVersion.V3
             ).toString('hex')
 
-            const messageHash = hashStruct(
+            const messageHash = TypedDataUtils.hashStruct(
               typedData.primaryType,
               typedData.message,
               typedData.types,

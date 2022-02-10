@@ -1,6 +1,6 @@
 {
   "name": "@bn-onboard/fortmatic",
-  "version": "2.0.0-alpha.5",
+  "version": "2.0.0-alpha.6",
   "description": "Fortmatic module for Onboard.js",
   "module": "dist/index.js",
   "browser": "dist/index.js",

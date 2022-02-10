@@ -6,10 +6,17 @@ import {
   ScanAccountsOptions,
   TransactionObject,
   WalletInit
-} from '@bn-onboard/common/src/types'
-import type { providers } from 'ethers'
-import type { BIP32Interface } from 'bip32'
-import { EthereumTransaction, EthereumTransactionEIP1559 } from 'trezor-connect'
+} from '@bn-onboard/common'
+
+// cannot be dynamically imported
+import { Buffer } from 'buffer'
+
+import type { JsonRpcProvider } from '@ethersproject/providers'
+
+import type {
+  EthereumTransaction,
+  EthereumTransactionEIP1559
+} from 'trezor-connect'
 
 interface TrezorOptions {
   email: string
@@ -42,11 +49,10 @@ const getAccount = async (
   { publicKey, chainCode, path }: AccountData,
   asset: Asset,
   index: number,
-  provider: providers.JsonRpcProvider
+  provider: JsonRpcProvider
 ): Promise<Account> => {
   //@ts-ignore
   const { default: HDKey } = await import('hdkey')
-  const { Buffer } = await import('buffer')
   const { publicToAddress, toChecksumAddress } = await import('ethereumjs-util')
 
   const hdk = new HDKey()
@@ -73,7 +79,7 @@ const getAccount = async (
 const getAddresses = async (
   account: AccountData,
   asset: Asset,
-  provider: providers.JsonRpcProvider
+  provider: JsonRpcProvider
 ): Promise<Account[]> => {
   const accounts = []
   let index = 0
@@ -324,8 +330,8 @@ function trezor(options: TrezorOptions): WalletInit {
           const transactionData =
             createTrezorTransactionObject(transactionObject)
 
-          // @ts-ignore
-          const CommonConstructor = Common.default
+          // @ts-ignore -- Due to weird commonjs exports
+          const CommonConstructor = Common.default || Common
 
           const common = new CommonConstructor({
             chain: customNetwork || Number.parseInt(currentChain.id) || 1,

@@ -1,6 +1,6 @@
 {
   "name": "@bn-onboard/torus",
-  "version": "2.0.0-alpha.5",
+  "version": "2.0.0-alpha.6",
   "description": "Torus module for Onboard.js",
   "module": "dist/index.js",
   "browser": "dist/index.js",
