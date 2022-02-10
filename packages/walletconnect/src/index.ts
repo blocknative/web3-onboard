@@ -157,7 +157,10 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                 })
               }
 
-              if (method === 'wallet_switchEthereumChain') {
+              if (
+                method === 'wallet_switchEthereumChain' ||
+                method === 'eth_selectAccounts'
+              ) {
                 throw new ProviderRpcError({
                   code: 4200,
                   message: `The Provider does not support the requested method: ${method}`
