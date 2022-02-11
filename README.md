@@ -16,6 +16,8 @@ Install the core Onboard library and the injected wallets module to support brow
 
 `npm i @bn-onboard/core @bn-onboard/injected-wallets`
 
+- [@bn-onboard/core Official NPM Documentation](https://www.npmjs.com/package/@bn-onboard/core)
+
 Then initialize in your app:
 
 ```javascript
