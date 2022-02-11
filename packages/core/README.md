@@ -439,8 +439,6 @@ module.exports = {
 
 The above webpack 5 example can be used in the `craco.config.js` file at the root level in this case.
 
-**Note:** currently still facing some challenges building with CRA and CRACO for hardware wallets
-
 ### SvelteKit
 
 Add the following dev dependencies:
@@ -462,7 +460,6 @@ const config = {
   preprocess: preprocess(),
   kit: {
     adapter: adapter(),
-    target: '#svelte',
     vite: {
       plugins: [
         development &&
@@ -470,12 +467,21 @@ const config = {
             include: [
               'node_modules/**/*.js',
               new RegExp('node_modules/.vite/.*js')
-            ]
+            ],
+            http: true,
+            crypto: true
           })
       ],
+      resolve: {
+        alias: {
+          crypto: 'crypto-browserify',
+          stream: 'stream-browserify',
+          assert: 'assert'
+        }
+      },
       build: {
         rollupOptions: {
-          plugins: [nodePolyfills()]
+          plugins: [nodePolyfills({ crypto: true, http: true })]
         },
         commonjsOptions: {
           transformMixedEsModules: true
@@ -507,12 +513,24 @@ export default {
   plugins: [
     development &&
       nodePolyfills({
-        include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js')]
+        include: [
+          'node_modules/**/*.js',
+          new RegExp('node_modules/.vite/.*js')
+        ],
+        http: true,
+        crypto: true
       })
   ],
+  resolve: {
+    alias: {
+      crypto: 'crypto-browserify',
+      stream: 'stream-browserify',
+      assert: 'assert'
+    }
+  },
   build: {
     rollupOptions: {
-      plugins: [nodePolyfills()]
+      plugins: [nodePolyfills({ crypto: true, http: true })]
     },
     commonjsOptions: {
       transformMixedEsModules: true
