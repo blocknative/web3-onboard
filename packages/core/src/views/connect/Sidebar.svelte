@@ -4,6 +4,7 @@
   import { internalState$ } from '../../streams'
   import en from '../../i18n/en.json'
   import type { i18n } from '../../types'
+  import { isUrl } from '../../utils'
 
   export let step: keyof i18n['connect']
 
@@ -118,7 +119,11 @@
   <div class="inner-container">
     <div class="icon-container">
       {#if icon}
-        {@html icon}
+        {#if isUrl(icon)}
+          <img height="100%" src={icon} alt="logo" />
+        {:else}
+          {@html icon}
+        {/if}
       {:else}
         {@html blocknative}
       {/if}

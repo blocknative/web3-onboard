@@ -1,8 +1,9 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
+  import { isUrl } from '../../utils'
   import Spinner from './Spinner.svelte'
   export let size: number // px
-  export let icon: Promise<string> | string // svg string
+  export let icon: Promise<string> | string // svg string or url string
   export let loading = false
 
   export let border:
@@ -148,7 +149,13 @@
       <div class="placeholder-icon" />
     {:then iconLoaded}
       <div in:fade class="icon">
-        {@html iconLoaded}
+        {#if isUrl(iconLoaded)}
+          <!-- load img url -->
+          <img height="100%" src={iconLoaded} alt="logo" />
+        {:else}
+          <!-- render svg string -->
+          {@html iconLoaded}
+        {/if}
       </div>
     {/await}
   {/if}
