@@ -54,7 +54,7 @@ An object that defines your app:
 type AppMetadata = {
   // app name
   name: string
-  // SVG icon string, with height or width (whichever is larger) set to 100%
+  // SVG icon string, with height or width (whichever is larger) set to 100% or a valid image URL
   icon: string
   // description of app
   description?: string
