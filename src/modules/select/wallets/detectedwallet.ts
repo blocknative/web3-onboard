@@ -11,7 +11,7 @@ function injected(options: CommonWalletOptions): WalletModule {
 
   const name =
     label ||
-    Object.keys(provider)
+    Object.keys(provider || {})
       .find(
         key =>
           key.startsWith('is') &&
