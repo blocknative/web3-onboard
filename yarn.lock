@@ -4665,8 +4665,10 @@ eth-block-tracker@4.4.3, eth-block-tracker@^4.4.2:
     pify "^3.0.0"
     safe-event-emitter "^1.0.1"
 
-"eth-dcent-keyring@file:./../eth-dcent-keyring":
+eth-dcent-keyring@^0.2.0:
   version "0.2.0"
+  resolved "https://registry.yarnpkg.com/eth-dcent-keyring/-/eth-dcent-keyring-0.2.0.tgz#0a5ace94315149b22c59af55e71daaa8a22857e6"
+  integrity sha512-Gmp/HjZahru7J880glB2QJ6fgl9Nuq3AmmlbFUrgIeHD8ryeAgS5+tkxEx3xwTC+A6gGIH3zdf8tU4jFnBeidQ==
   dependencies:
     "@ethereumjs/tx" "3.2.1"
     dcent-web-connector "^0.10.5"
