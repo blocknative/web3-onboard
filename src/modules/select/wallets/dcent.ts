@@ -1,4 +1,3 @@
-import { extensionInstallMessage, mobileWalletInstallMessage } from '../content'
 import {
   DcentOptions,
   WalletModule,
@@ -111,8 +110,7 @@ async function DcentProvider(options: DcentProviderOptions) {
     networkId, 
     BigNumber, 
     networkName, 
-    customNetwork,
-    resetWalletState
+    customNetwork
   } = options
   const params = {
   }

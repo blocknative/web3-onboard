@@ -95,15 +95,11 @@ function select(
         // If this is a wallet init object then load the built-in wallet module
         if (isWalletInit(wallet) && !hideWallet(wallet)) {
           const { walletName, ...initParams } = wallet
-          console.log('walletName - ', walletName)
-          console.log('initparam - ', initParams)
-          console.log('setOfWallets - ', setOfWallets)
           // Check to see if we have seen this wallet before
           // prevents duplicated injected wallet from being added
           if (!setOfWallets.has(walletName)) {
             try {
               const inp = { ...initParams, networkId, isMobile }
-              console.log ('inp - ', inp)
                
               const module = getModule(walletName).then((m: any) =>
                m.default({ ...initParams, networkId, isMobile })
