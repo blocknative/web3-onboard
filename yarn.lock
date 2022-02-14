@@ -3360,10 +3360,10 @@ bnb-javascript-sdk-nobroadcast@^2.16.14:
     uuid "^3.3.2"
     websocket-stream "^5.5.0"
 
-bnc-sdk@^3.4.1:
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-3.4.1.tgz#fca070656a6efbfc489889ed0404e1b6289c17ff"
-  integrity sha512-GrZzN3zyqVOmtk++tvq/X1zchO+Bt9TIzw39xv7UkMLEUcs43pwj6XWphLRbqkrrILNSrLwOI0S8opyjffDFAA==
+bnc-sdk@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-4.1.0.tgz#b7bd280a2e0d218b003ed9d227bcc36593bd6f04"
+  integrity sha512-gbW5wRLPB7HDzXof5VrkFSDoyfuD2O9K8dOTRQl2OE/HAj3/epKyccQDtWNLNih7t234VM/sv9t6nxqRnNRJmQ==
   dependencies:
     crypto-es "^1.2.2"
     rxjs "^6.6.3"

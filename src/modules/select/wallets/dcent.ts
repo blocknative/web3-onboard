@@ -79,7 +79,7 @@ function dcent(options: DcentOptions & { networkId: number, isMobile: boolean })
         }
       }
     },
-    type: 'hardware',
+    type: isMobile ? 'injected': 'hardware',
     desktop: true,
     mobile: true,
     preferred
