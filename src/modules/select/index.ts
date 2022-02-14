@@ -99,10 +99,8 @@ function select(
           // prevents duplicated injected wallet from being added
           if (!setOfWallets.has(walletName)) {
             try {
-              const inp = { ...initParams, networkId, isMobile }
-               
               const module = getModule(walletName).then((m: any) =>
-               m.default({ ...initParams, networkId, isMobile })
+                m.default({ ...initParams, networkId, isMobile })
               )
               setOfWallets.add(walletName)
               return module
