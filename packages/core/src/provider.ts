@@ -125,11 +125,12 @@ export function trackWallet(
 
         const { wallets, chains } = state.get()
 
-        const { chain, accounts } = wallets.find(
+        const { chains: walletChains, accounts } = wallets.find(
           wallet => wallet.label === label
         )
 
-        const rpcUrl = getRpcUrl(chain, chains)
+        const currentWalletChain = walletChains['eip155']
+        const rpcUrl = getRpcUrl(currentWalletChain, chains)
 
         if (rpcUrl) {
           const ethersProvider = new providers.JsonRpcProvider(rpcUrl)
@@ -137,14 +138,14 @@ export function trackWallet(
           const balanceProm = getBalance(
             ethersProvider,
             address,
-            chains.find(({ id }) => id === chain)
+            chains.find(({ id }) => id === currentWalletChain)
           )
 
           const account = accounts.find(account => account.address === address)
 
           const ensProm = account.ens
             ? Promise.resolve(account.ens)
-            : validEnsChain(chain)
+            : validEnsChain(currentWalletChain)
             ? getEns(ethersProvider, address)
             : Promise.resolve(null)
 
@@ -163,9 +164,10 @@ export function trackWallet(
   // Update chain on wallet when chainId changed
   chainChanged$.subscribe(chainId => {
     const { wallets } = state.get()
-    const { chain, accounts } = wallets.find(wallet => wallet.label === label)
+    const { chains, accounts } = wallets.find(wallet => wallet.label === label)
+    const chainReference = `${parseInt(chainId)}`
 
-    if (chainId === chain) return
+    if (`eip155:${chainReference}` === chains['eip155']) return
 
     const resetAccounts = accounts.map(
       ({ address }) =>
@@ -176,7 +178,10 @@ export function trackWallet(
         } as Account)
     )
 
-    updateWallet(label, { chain: chainId, accounts: resetAccounts })
+    updateWallet(label, {
+      chains: { ...chains, ['eip155']: chainReference },
+      accounts: resetAccounts
+    })
   })
 
   // when chain changes get ens and balance for each account for wallet

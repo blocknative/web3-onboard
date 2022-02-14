@@ -52,9 +52,14 @@ export interface WalletState {
   icon: string // wallet icon svg string
   provider: EIP1193Provider
   accounts: Account[]
-  chain: ChainId
+  // in future it will be possible that a wallet
+  // is connected to multiple chains at once
+  chains: Record<ChainNameSpace, ChainReference>
   instance?: unknown
 }
+
+type ChainNameSpace = 'eip155'
+type ChainReference = string
 
 export type Account = {
   address: Address

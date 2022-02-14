@@ -8,9 +8,15 @@ import type {
   DisconnectOptions
 } from './types'
 
-const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
+const chainNamespaceRegex = /[-a-z0-9]{3,8}/
+const chainReferenceRegex = /[-a-zA-Z0-9]{1,32}/
+const chainIdRegex = new RegExp(
+  `${chainNamespaceRegex.source}:${chainReferenceRegex.source}`
+)
+
+const chainId = Joi.string().regex(chainIdRegex)
 const unknownObject = Joi.object().unknown()
-// const address = Joi.string().pattern(/^0x[a-fA-F0-9]{40}$/)
+// const address = Joi.string().regex(/^0x[a-fA-F0-9]{40}$/)
 
 const chain = Joi.object({
   id: chainId.required(),
@@ -50,7 +56,7 @@ const wallet = Joi.object({
   icon: Joi.string(),
   provider: unknownObject,
   accounts,
-  chain: Joi.string()
+  chains: Joi.object().pattern(chainNamespaceRegex, chainReferenceRegex)
 })
 
 const recommendedWallet = Joi.object({
