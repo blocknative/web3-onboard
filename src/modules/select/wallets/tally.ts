@@ -1,4 +1,4 @@
-import { extensionInstallMessage, mobileWalletInstallMessage } from '../content'
+import { extensionInstallMessage } from '../content'
 import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
 
 import tallyIcon from '../wallet-icons/icon-tally.png'

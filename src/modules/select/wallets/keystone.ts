@@ -195,7 +195,7 @@ async function keystoneProvider(options: {
     const accounts = [...addressToIndex.entries()]
     const account = accounts.find(
       ([accountAddress]) => accountAddress === address
-    )!
+    )
     const accountIndex = accounts.findIndex(
       ([accountAddress]) => accountAddress === address
     )
