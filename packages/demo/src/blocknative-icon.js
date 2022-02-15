@@ -1,5 +1,5 @@
 export default `
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 790.34 114.51" width="100%">
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 790.34 114.51" width="80%">
   <defs>
     <style>.cls-1{fill:#262a3d;}.cls-2{fill:url(#linear-gradient);}.cls-3{fill:url(#linear-gradient-2);}</style>
     <linearGradient id="linear-gradient" x1="694.45" y1="46.08" x2="741.39" y2="46.08" gradientUnits="userSpaceOnUse">
