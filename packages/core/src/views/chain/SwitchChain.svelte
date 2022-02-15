@@ -26,6 +26,7 @@
     position: absolute;
     top: var(--onboard-spacing-5, var(--spacing-5));
     right: var(--onboard-spacing-5, var(--spacing-5));
+    padding: 0.5rem;
   }
 
   h4 {

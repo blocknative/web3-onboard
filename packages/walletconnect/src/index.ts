@@ -6,6 +6,7 @@ import {
 } from '@bn-onboard/common'
 
 import { ProviderRpcError } from '@bn-onboard/common'
+import { EventEmitter } from 'stream'
 
 interface WalletConnectOptions {
   bridge?: string
@@ -36,13 +37,19 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
           bridge
         })
 
-        class EthProvider extends EventEmitter {
+        const emitter = new EventEmitter()
+
+        class EthProvider {
           public request: EIP1193Provider['request']
           public connector: InstanceType<typeof WalletConnect>
           public chains: Chain[]
           public disconnect: EIP1193Provider['disconnect']
+          public emit: EventEmitter['emit']
+          public on: EventEmitter['on']
+          public removeListener: EventEmitter['removeListener']
 
           private disconnected$: InstanceType<typeof Subject>
+
           constructor({
             connector,
             chains
@@ -50,7 +57,9 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
             connector: InstanceType<typeof WalletConnect>
             chains: Chain[]
           }) {
-            super()
+            this.emit = emitter.emit.bind(emitter)
+            this.on = emitter.on.bind(emitter)
+            this.removeListener = emitter.removeListener.bind(emitter)
 
             this.connector = connector
             this.chains = chains
@@ -148,7 +157,10 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                 })
               }
 
-              if (method === 'wallet_switchEthereumChain') {
+              if (
+                method === 'wallet_switchEthereumChain' ||
+                method === 'eth_selectAccounts'
+              ) {
                 throw new ProviderRpcError({
                   code: 4200,
                   message: `The Provider does not support the requested method: ${method}`
@@ -158,13 +170,14 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
               // @ts-ignore
               if (method === 'eth_sendTransaction') {
                 // @ts-ignore
-                return this.connector.sendTransaction(params)
+                return this.connector.sendTransaction(params[0])
               }
 
               // @ts-ignore
               if (method === 'eth_signTransaction') {
+                console.log({ params })
                 // @ts-ignore
-                return this.connector.signTransaction(params)
+                return this.connector.signTransaction(params[0])
               }
 
               // @ts-ignore

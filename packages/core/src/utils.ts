@@ -43,3 +43,16 @@ export function validEnsChain(chainId: ChainId): boolean {
       return false
   }
 }
+
+export function isUrl(str: string): boolean {
+  let url
+
+  try {
+    url = new URL(str)
+  } catch (_) {
+    console.log(false)
+    return false
+  }
+console.log(url.protocol === 'http:' || url.protocol === 'https:')
+  return url.protocol === 'http:' || url.protocol === 'https:'
+}

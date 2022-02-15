@@ -195,8 +195,8 @@
 
   .button-container {
     position: absolute;
-    right: 0;
-    top: 0;
+    right: var(--onboard-spacing-5, var(--spacing-5));
+    top: var(--onboard-spacing-5, var(--spacing-5));
   }
 
   .disabled {
