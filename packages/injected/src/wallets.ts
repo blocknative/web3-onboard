@@ -424,6 +424,18 @@ const xdefi: InjectedWalletModule = {
   platforms: ['all']
 }
 
+const oneInch: InjectedWalletModule = {
+  label: ProviderLabel.OneInch,
+  injectedNamespace: InjectedNameSpace.OneInch,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.OneInch],
+  getIcon: async () => (await import('./icons/OneInch.js')).default,
+  getInterface: async () => ({
+    provider: (window as any) || ((window as any).web3 && (window as any).web3.currentProvider)
+  }),
+  platforms: ['mobile']
+}
+
 const wallets = [
   metamask,
   binance,
@@ -448,7 +460,8 @@ const wallets = [
   ownbit,
   tokenpocket,
   tp,
-  xdefi
+  xdefi,
+  1inch
 ]
 
 export default wallets
