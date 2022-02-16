@@ -38,8 +38,8 @@
 
   .icon-container {
     height: 3rem;
-    display: inline-block;
-    margin-bottom: var(--onboard-spacing-3, var(--spacing-3));
+    display: flex;
+    margin-bottom: var(--onboard-spacing-4, var(--spacing-4));
   }
 
   .heading {
