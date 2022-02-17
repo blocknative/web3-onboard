@@ -33,7 +33,7 @@
 
   let scanAccountOptions: ScanAccountsOptions = {
     derivationPath: (basePaths[0] && basePaths[0].value) || '',
-    chainId: chains[0].id || '',
+    chainId: `${chains[0].reference}` || '',
     asset: assets[0] || null
   }
 
@@ -392,7 +392,7 @@
           class="network-select"
         >
           {#each chains as chain}
-            <option value={chain.id}>
+            <option value={chain.reference}>
               {chain.label}
             </option>
           {/each}

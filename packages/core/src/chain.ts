@@ -21,7 +21,10 @@ async function setChain(options: {
   const { chainId, wallet: walletToSet } = options
 
   // validate that chainId has been added to chains
-  const chain = chains.find(({ id }) => id === chainId)
+  const chain = chains.find(
+    ({ namespace, reference }) => `${namespace}:${reference}` === chainId
+  )
+
   if (!chain) {
     throw new Error(
       `Chain with chainId: ${chainId} has not been set and must be added when Onboard is initialized.`
@@ -41,8 +44,10 @@ async function setChain(options: {
     )
   }
 
+  const [chainNamespace, chainReference] = chainId.split(':')
+
   // check if wallet is already connected to chainId
-  if (wallet.chain === chainId) {
+  if (parseInt(wallet.chains[chainNamespace]) === parseInt(chainReference)) {
     return true
   }
 

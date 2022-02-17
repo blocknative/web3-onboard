@@ -39,9 +39,11 @@
 
       const chain = await getChainId(provider)
 
-      const update: Pick<WalletState, 'accounts' | 'chain'> = {
+      const update: Pick<WalletState, 'accounts' | 'chains'> = {
         accounts: [{ address, ens: null, balance: null }],
-        chain
+        chains: {
+          eip155: parseInt(chain).toString()
+        }
       }
 
       addWallet({ ...selectedWallet, ...update })

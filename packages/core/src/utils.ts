@@ -1,8 +1,6 @@
 import bowser from 'bowser'
 
 import type {
-  ChainId,
-  Chain,
   Device,
   DeviceBrowser,
   DeviceOS,
@@ -25,19 +23,12 @@ export function getDeviceInfo(): Device {
   }
 }
 
-export function getRpcUrl(chain: string, chains: Chain[]): string | null {
-  const { rpcUrl } =
-    chains.find(({ id }) => parseInt(id) === parseInt(chain)) || {}
-
-  return rpcUrl || null
-}
-
-export function validEnsChain(chainId: ChainId): boolean {
-  switch (chainId) {
-    case '0x1':
-    case '0x3':
-    case '0x4':
-    case '0x5':
+export function validEnsChain(reference: string): boolean {
+  switch (parseInt(reference)) {
+    case 1:
+    case 3:
+    case 4:
+    case 5:
       return true
     default:
       return false
@@ -50,9 +41,8 @@ export function isUrl(str: string): boolean {
   try {
     url = new URL(str)
   } catch (_) {
-    console.log(false)
     return false
   }
-console.log(url.protocol === 'http:' || url.protocol === 'https:')
+
   return url.protocol === 'http:' || url.protocol === 'https:'
 }

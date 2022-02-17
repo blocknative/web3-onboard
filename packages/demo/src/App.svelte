@@ -92,25 +92,29 @@
     ],
     chains: [
       {
-        id: '0x1',
+        namespace: 'eip155',
+        reference: '1',
         token: 'ETH',
         label: 'Ethereum Mainnet',
         rpcUrl: 'https://mainnet.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
       },
       {
-        id: '0x3',
+        namespace: 'eip155',
+        reference: '3',
         token: 'tROP',
         label: 'Ethereum Ropsten Testnet',
         rpcUrl: 'https://ropsten.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
       },
       {
-        id: '0x4',
+        namespace: 'eip155',
+        reference: '4',
         token: 'rETH',
         label: 'Ethereum Rinkeby Testnet',
         rpcUrl: 'https://rinkeby.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
       },
       {
-        id: '0x89',
+        namespace: 'eip155',
+        reference: '137',
         token: 'MATIC',
         label: 'Matic Mainnet',
         rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
@@ -213,26 +217,26 @@
   <button on:click={() => onboard.connectWallet()}>Connect Wallet</button>
 
   {#if $wallets$}
-    <button on:click={() => onboard.setChain({ chainId: '0x1' })}
+    <button on:click={() => onboard.setChain({ chainId: 'eip155:1' })}
       >Set Chain to Mainnet</button
     >
-    <button on:click={() => onboard.setChain({ chainId: '0x4' })}
+    <button on:click={() => onboard.setChain({ chainId: 'eip155:4' })}
       >Set Chain to Rinkeby</button
     >
-    <button on:click={() => onboard.setChain({ chainId: '0x89' })}
+    <button on:click={() => onboard.setChain({ chainId: 'eip155:137' })}
       >Set Chain to Matic</button
     >
   {/if}
 
   {#if $wallets$}
-    {#each $wallets$ as { icon, label, accounts, chain, provider }}
+    {#each $wallets$ as { icon, label, accounts, chains, provider }}
       <div class="connected-wallet">
         <div class="flex-centered" style="width: 10rem;">
           <div style="width: 2rem; height: 2rem">{@html icon}</div>
           <span>{label}</span>
         </div>
 
-        <div>Chain: {chain}</div>
+        <div>Chains: {JSON.stringify(chains, null, 2)}</div>
 
         {#each accounts as { address, ens, balance }}
           <div

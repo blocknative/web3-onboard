@@ -100,7 +100,7 @@ export type ScanAccounts = (options: ScanAccountsOptions) => Promise<Account[]>
 
 export type ScanAccountsOptions = {
   derivationPath: DerivationPath
-  chainId: Chain['id']
+  chainId: Chain['reference']
   asset: Asset
 }
 
@@ -522,7 +522,8 @@ export enum ProviderRpcErrorCode {
 }
 
 export interface Chain {
-  id: ChainId
+  namespace: 'eip155'
+  reference: string
   rpcUrl: string
   label?: string
   token?: TokenSymbol // eg ETH, BNB, MATIC

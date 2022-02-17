@@ -101,7 +101,9 @@
       icon,
       provider,
       accounts: [],
-      chain: '0x1'
+      chains: {
+        eip155: '1'
+      }
     }
 
     // change step on next event loop

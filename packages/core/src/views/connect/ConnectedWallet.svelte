@@ -1,11 +1,10 @@
 <script lang="ts">
-  import { providers } from 'ethers'
   import { _ } from 'svelte-i18n'
 
   import { getBalance, getEns } from '../../provider'
   import { updateAccount } from '../../store/actions'
   import { connectWallet$, internalState$ } from '../../streams'
-  import { getRpcUrl, validEnsChain } from '../../utils'
+  import { validEnsChain } from '../../utils'
   import success from '../../icons/success'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
 
@@ -21,34 +20,34 @@
   const { appMetadata } = internalState$.getValue()
 
   async function updateAccountDetails() {
-    const { accounts, chain } = selectedWallet
-    const chains = state.get().chains
-    const rpcUrl = getRpcUrl(chain, chains)
+    const { accounts, chains: selectedWalletChains } = selectedWallet
+    const appChains = state.get().chains
+    const chainReference = selectedWalletChains.eip155
 
-    if (rpcUrl) {
-      const { address } = accounts[0]
-      let { balance, ens } = accounts[0]
-      const ethersProvider = new providers.JsonRpcProvider(rpcUrl)
+    const appChain = appChains.find(
+      ({ namespace, reference }) =>
+        namespace === 'eip155' && reference === chainReference
+    )
 
-      if (balance === null) {
-        getBalance(
-          ethersProvider,
-          address,
-          chains.find(({ id }) => id === chain)
-        ).then(balance => {
-          updateAccount(label, address, {
-            balance
-          })
+    const { address } = accounts[0]
+    let { balance, ens } = accounts[0]
+
+    console.log({ appChain })
+
+    if (balance === null) {
+      getBalance(address, appChain).then(balance => {
+        updateAccount(label, address, {
+          balance
         })
-      }
+      })
+    }
 
-      if (ens === null && validEnsChain(chain)) {
-        getEns(ethersProvider, address).then(ens => {
-          updateAccount(label, address, {
-            ens
-          })
+    if (ens === null && validEnsChain(chainReference)) {
+      getEns(address, appChain).then(ens => {
+        updateAccount(label, address, {
+          ens
         })
-      }
+      })
     }
 
     setTimeout(() => connectWallet$.next({ inProgress: false }), 1500)

@@ -4,7 +4,6 @@ import type {
   AppMetadata,
   Device,
   WalletInit,
-  ChainId,
   EIP1193Provider,
   WalletModule,
   Chain,
@@ -58,7 +57,7 @@ export interface WalletState {
   instance?: unknown
 }
 
-type ChainNameSpace = 'eip155'
+type ChainNameSpace = string
 type ChainReference = string
 
 export type Account = {

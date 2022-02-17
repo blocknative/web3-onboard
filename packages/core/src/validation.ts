@@ -8,7 +8,9 @@ import type {
   DisconnectOptions
 } from './types'
 
-const chainNamespaceRegex = /[-a-z0-9]{3,8}/
+// const chainNamespaceRegex = /[-a-z0-9]{3,8}/
+// only evm chains are valid at the moment
+const chainNamespaceRegex = /eip155/
 const chainReferenceRegex = /[-a-zA-Z0-9]{1,32}/
 const chainIdRegex = new RegExp(
   `${chainNamespaceRegex.source}:${chainReferenceRegex.source}`
@@ -19,7 +21,8 @@ const unknownObject = Joi.object().unknown()
 // const address = Joi.string().regex(/^0x[a-fA-F0-9]{40}$/)
 
 const chain = Joi.object({
-  id: chainId.required(),
+  namespace: Joi.string().regex(chainNamespaceRegex),
+  reference: Joi.string().regex(chainReferenceRegex),
   rpcUrl: Joi.string().required(),
   label: Joi.string(),
   token: Joi.string()
