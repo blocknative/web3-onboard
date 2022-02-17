@@ -28,7 +28,7 @@ function xdefi(options: CommonWalletOptions): WalletModule {
       }
     },
     type: 'injected',
-    link: 'https://www.xdefi.io/',
+    link: 'https://chrome.google.com/webstore/detail/xdefi-wallet/hmeobnfnfcmdkdcmlblgagmfpfboieaf',
     installMessage: extensionInstallMessage,
     desktop: true,
     mobile: true,
