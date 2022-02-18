@@ -9,6 +9,7 @@ jobs:
             - v2-dependencies-{{ checksum "package.json" }}
             - v2-dependencies-
       - run: yarn
+      - run: yarn setup
       - save_cache:
           paths:
             - node_modules
@@ -25,6 +26,7 @@ jobs:
             - v2-dependencies-{{ checksum "package.json" }}
             - v2-dependencies-
       - run: yarn
+      - run: yarn setup
       - save_cache:
           paths:
             - node_modules
