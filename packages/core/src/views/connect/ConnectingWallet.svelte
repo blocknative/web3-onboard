@@ -89,6 +89,7 @@
     border: 1px solid;
     border-color: var(--onboard-primary-300, var(--primary-300));
     box-sizing: border-box;
+    color: var(--onboard-gray-600, var(--gray-600));
   }
 
   .connecting-container.warning {
@@ -102,9 +103,19 @@
     position: relative;
   }
 
+  .text {
+    line-height: 16px;
+    margin-bottom: var(--onboard-spacing-5, var(--spacing-5));
+  }
+
+  .text.text-rejected {
+    line-height: 24px;
+    margin-bottom: 0;
+  }
+
   .subtext {
     font-size: var(--onboard-font-size-7, var(--font-size-7));
-    line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
+    line-height: 16px;
   }
 
   .rejected-cta {
@@ -133,7 +144,8 @@
     <div style="display: flex;">
       <div class="icons">
         <WalletAppBadge
-          size={48}
+          size={40}
+          padding={8}
           icon={(appMetadata && appMetadata.icon) || defaultAppIcon}
           border={connectionRejected ? 'yellow' : 'blue'}
           background="lightGray"
@@ -141,7 +153,8 @@
 
         <div style="position: relative; right: 0.5rem;">
           <WalletAppBadge
-            size={48}
+            size={40}
+            padding={8}
             border={connectionRejected ? 'yellow' : 'blue'}
             background="white"
             icon={selectedWallet.icon}
@@ -150,7 +163,7 @@
       </div>
 
       <div class="centered-flex-column ml">
-        <div class="text">
+        <div class="text" class:text-rejected={connectionRejected}>
           {$_(
             connectionRejected
               ? 'connect.connectingWallet.rejectedText'

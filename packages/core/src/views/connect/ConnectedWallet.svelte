@@ -51,7 +51,7 @@
       }
     }
 
-    setTimeout(() => connectWallet$.next({ inProgress: false }), 1500)
+    // setTimeout(() => connectWallet$.next({ inProgress: false }), 1500)
   }
 
   updateAccountDetails()
@@ -69,7 +69,7 @@
     padding: var(--onboard-spacing-4, var(--spacing-4));
     border-radius: 24px;
     background: var(--onboard-success-100, var(--success-100));
-    border: 1px solid var(--onboard-success-600, var(--success-600));
+    outline: 1px solid var(--onboard-success-600, var(--success-600));
     width: 100%;
     box-sizing: border-box;
   }
@@ -87,7 +87,7 @@
 
   .tick {
     display: flex;
-    color: var(--onboard-black, var(--black));
+    color: var(--onboard-success-700, var(--success-700));
   }
 
   @media all and (max-width: 520px) {
@@ -99,18 +99,20 @@
     <div class="icons">
       <WalletAppBadge
         size={40}
+        padding={8}
         background={appMetadata && appMetadata.icon ? 'lightBlue' : 'lightGray'}
         border="darkGreen"
         icon={(appMetadata && appMetadata.icon) || defaultAppIcon}
       />
 
-      <div style="position: relative; right: 0.85rem;">
+      <div style="position: relative; right: 0.85rem; top: 2px;">
         <SuccessStatusIcon size={17} right={null} />
       </div>
 
       <div style="position: relative; right: 0.5rem;">
         <WalletAppBadge
           size={40}
+          padding={8}
           border="darkGreen"
           icon={selectedWallet.icon}
         />
@@ -123,7 +125,7 @@
       })}
     </div>
 
-    <div class="tick" style="width: 17.6px; height: 13.4px;">
+    <div class="tick" style="width: 20px;">
       {@html success}
     </div>
   </div>

@@ -13,7 +13,8 @@
   :global(input, textarea, select) {
     width: 100%;
     padding: 0.5rem 1rem;
-    border: 2px solid var(--onboard-gray-200, var(--gray-200));
+    outline: 2px solid var(--onboard-gray-200, var(--gray-200));
+    border: none;
     border-radius: 8px;
     font-size: 1rem;
     line-height: 1.5;
@@ -25,7 +26,8 @@
     -webkit-appearance: none;
     width: auto;
     background-color: var(--onboard-white, var(--white));
-    border: 1px solid var(--onboard-gray-300, var(--gray-300));
+    outline: 1px solid var(--onboard-gray-300, var(--gray-300));
+    border: none;
     padding: 0.5em;
     border-radius: 3px;
     display: flex;
@@ -76,7 +78,6 @@
         var(--onboard-primary-500, var(--primary-500))
       );
     box-shadow: 0 0 0 1px -moz-mac-focusring;
-    outline: none;
   }
 
   :global(input:disabled, textarea:disabled, select:disabled) {
@@ -84,7 +85,7 @@
   }
 
   :global(input::-moz-focus-inner) {
-    border: 0;
+    outline: 0;
     padding: 0;
     margin-top: -2px;
     margin-bottom: -2px;
@@ -130,13 +131,10 @@
     padding: var(--onboard-spacing-5, var(--spacing-5))
       var(--onboard-spacing-4, var(--spacing-4));
     color: var(--onboard-gray-500, var(--gray-500));
-    font-family: var(
-      --onboard-font-family-semibold,
-      var(--font-family-semibold)
-    );
     font-size: var(--onboard-font-size-6, var(--font-size-6));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
-    border: 1px solid var(--onboard-gray-500, var(--gray-500));
+    outline: 1px solid var(--onboard-gray-500, var(--gray-500));
+    font-weight: 700;
   }
 </style>
 

@@ -5,6 +5,7 @@
   export let size: number // px
   export let icon: Promise<string> | string // svg string or url string
   export let loading = false
+  export let padding = size / 6
 
   export let border:
     | 'yellow'
@@ -43,23 +44,23 @@
   }
 
   .border-yellow {
-    border: 1px solid var(--onboard-warning-500, var(--warning-500));
+    outline: 1px solid var(--onboard-warning-500, var(--warning-500));
   }
 
   .border-gray {
-    border: 1px solid var(--onboard-gray-300, var(--gray-300));
+    outline: 1px solid var(--onboard-gray-300, var(--gray-300));
   }
 
   .border-green {
-    border: 1px solid var(--onboard-success-500, var(--success-500));
+    outline: 1px solid var(--onboard-success-500, var(--success-500));
   }
 
   .border-dark-green {
-    border: 1px solid var(--onboard-success-700, var(--success-700));
+    outline: 1px solid var(--onboard-success-700, var(--success-700));
   }
 
   .border-blue {
-    border: 1px solid
+    outline: 1px solid
       var(
         --onboard-wallet-app-icon-border-color,
         var(--onboard-primary-300, var(--primary-300))
@@ -67,7 +68,7 @@
   }
 
   .border-dark-blue {
-    border: 1px solid
+    outline: 1px solid
       var(
         --onboard-wallet-app-icon-border-color,
         var(--onboard-primary-600, var(--primary-600))
@@ -136,9 +137,9 @@
   class:background-white={background === 'white'}
   class:background-transparent={background === 'transparent'}
   class="icon-container"
-  style={`${background === 'custom' ? customBackgroundColor : ''}; padding: ${
-    size / 6
-  }px; width: ${size}px; height: ${size}px;`}
+  style={`${
+    background === 'custom' ? customBackgroundColor : ''
+  }; padding: ${padding}px; width: ${size}px; height: ${size}px;`}
 >
   {#if loading}
     <div class="spinner-container">

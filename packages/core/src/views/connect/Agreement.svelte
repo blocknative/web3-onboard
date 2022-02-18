@@ -44,7 +44,7 @@
     align-items: center;
     padding: var(--onboard-spacing-4, var(--spacing-4));
     font-size: var(--onboard-font-size-6, var(--font-size-6));
-    line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
+    line-height: 24px;
   }
 
   label {

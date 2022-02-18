@@ -1,5 +1,5 @@
 import type { WalletModule } from '@bn-onboard/common'
-import { SofiaProRegular, SofiaProSemiBold } from '@bn-onboard/common'
+import { SofiaProRegular } from '@bn-onboard/common'
 import connectWallet from './connect'
 import disconnectWallet from './disconnect'
 import setChain from './chain'
@@ -85,7 +85,6 @@ function mountApp() {
 
   styleEl.innerHTML = `
     ${SofiaProRegular}
-    ${SofiaProSemiBold}
   `
   document.body.appendChild(styleEl)
 
@@ -140,7 +139,6 @@ function mountApp() {
   
           /* FONTS */
           --font-family-normal: Sofia Pro;
-          --font-family-semibold: Sofia Pro Semibold;
   
           --font-size-1: 3rem;
           --font-size-2: 2.25rem;

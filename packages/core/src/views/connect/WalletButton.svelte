@@ -17,7 +17,7 @@
       --onboard-wallet-button-background,
       var(--onboard-white, var(--white))
     );
-    border: 1px solid
+    outline: 1px solid
       var(
         --onboard-wallet-button-border-color,
         var(--onboard-primary-200, var(--primary-200))
@@ -25,7 +25,7 @@
     transition: background-color 250ms ease-in-out;
     color: var(
       --onboard-wallet-button-color,
-      var(--onboard-black, var(--black))
+      var(--onboard-gray-700, var(--gray-700))
     );
   }
 
@@ -37,14 +37,14 @@
   }
 
   button.connected {
-    border: 1px solid var(--onboard-success-200, var(--success-200));
+    outline: 1px solid var(--onboard-success-200, var(--success-200));
   }
 
   button.connected:hover {
     background-color: var(--onboard-success-100, var(--success-100));
   }
   .name {
-    margin-left: var(--onboard-spacing-5, var(--spacing-5));
+    margin-left: var(--onboard-spacing-4, var(--spacing-4));
   }
 </style>
 

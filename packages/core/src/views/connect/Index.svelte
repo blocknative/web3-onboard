@@ -152,14 +152,15 @@
     position: relative;
     display: flex;
     font-family: var(--onboard-font-family-normal, var(--font-family-normal));
-    line-height: var(--onboard-font-line-height-1, var(--font-line-height-1));
+    line-height: 24px;
+    color: var(--onboard-gray-700, var(--gray-700));
     font-size: var(--onboard-font-size-5, var(--font-size-5));
     height: var(--onboard-connect-content-height, 440px);
     overflow: hidden;
   }
 
   .content {
-    width: var(--onboard-connect-content-width, 485px);
+    width: var(--onboard-connect-content-width, 488px);
     display: flex;
     flex-direction: column;
   }
@@ -167,6 +168,11 @@
   .scroll-container {
     overflow-y: auto;
     transition: opacity 250ms ease-in-out;
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .scroll-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
   }
 
   .header {
@@ -185,12 +191,8 @@
   }
 
   .header-heading {
-    font-family: var(
-      --onboard-font-family-semibold,
-      var(--font-family-semibold)
-    );
     margin: var(--onboard-spacing-4, var(--spacing-4));
-    line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
+    line-height: 16px;
   }
 
   .button-container {

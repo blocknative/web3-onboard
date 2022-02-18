@@ -24,7 +24,7 @@
     border-radius: 40px;
     color: var(
       --onboard-close-button-color,
-      var(--onboard-black, var(--black))
+      var(--onboard-gray-400, var(--gray-400))
     );
   }
 

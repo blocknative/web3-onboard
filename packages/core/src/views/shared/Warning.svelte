@@ -10,8 +10,8 @@
     padding: var(--onboard-spacing-5, var(--spacing-5));
     color: var(--onboard-warning-700, var(--warning-700));
     font-size: var(--onboard-font-size-7, var(--font-size-7));
-    line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
-    border: 1px solid var(--onboard-warning-400, var(--warning-400));
+    line-height: 16px;
+    outline: 1px solid var(--onboard-warning-400, var(--warning-400));
     background-color: var(--onboard-warning-100, var(--warning-100));
     margin: 0;
     border-radius: 12px;
