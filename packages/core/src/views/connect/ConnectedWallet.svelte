@@ -51,7 +51,7 @@
       }
     }
 
-    // setTimeout(() => connectWallet$.next({ inProgress: false }), 1500)
+    setTimeout(() => connectWallet$.next({ inProgress: false }), 1500)
   }
 
   updateAccountDetails()
