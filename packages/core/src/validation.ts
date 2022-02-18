@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import type { ChainId, WalletModule } from '@bn-onboard/common'
+import type { ChainId, WalletModule } from '@web3-onboard/common'
 
 import type {
   InitOptions,

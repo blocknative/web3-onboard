@@ -1,4 +1,4 @@
-import type { WalletInit } from '@bn-onboard/common'
+import type { WalletInit } from '@web3-onboard/common'
 import type { TorusCtorArgs, TorusParams } from '@toruslabs/torus-embed'
 
 type TorusOptions = TorusCtorArgs & TorusParams
@@ -29,7 +29,7 @@ function torus(options?: TorusOptions): WalletInit {
           createEIP1193Provider,
           ProviderRpcErrorCode,
           ProviderRpcError
-        } = await import('@bn-onboard/common')
+        } = await import('@web3-onboard/common')
 
         const [chain] = chains
 

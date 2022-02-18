@@ -1,7 +1,7 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
   import { createEventDispatcher } from 'svelte'
-  import { ProviderRpcErrorCode } from '@bn-onboard/common'
+  import { ProviderRpcErrorCode } from '@web3-onboard/common'
 
   import { getChainId, requestAccounts, trackWallet } from '../../provider'
   import { internalState$ } from '../../streams'

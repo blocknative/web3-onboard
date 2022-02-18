@@ -1,4 +1,4 @@
-import type { WalletInit, APIKey, EIP1193Provider } from '@bn-onboard/common'
+import type { WalletInit, APIKey, EIP1193Provider } from '@web3-onboard/common'
 
 function fortmatic(options: APIKey): WalletInit {
   const { apiKey } = options
@@ -13,7 +13,7 @@ function fortmatic(options: APIKey): WalletInit {
           createEIP1193Provider,
           ProviderRpcErrorCode,
           ProviderRpcError
-        } = await import('@bn-onboard/common')
+        } = await import('@web3-onboard/common')
 
         const emitter = new EventEmitter()
 

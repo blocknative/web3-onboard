@@ -1,4 +1,4 @@
-import type { WalletInit, EIP1193Provider } from '@bn-onboard/common'
+import type { WalletInit, EIP1193Provider } from '@web3-onboard/common'
 
 function mew(): WalletInit {
   return () => {
@@ -10,7 +10,7 @@ function mew(): WalletInit {
           createEIP1193Provider,
           ProviderRpcError,
           ProviderRpcErrorCode
-        } = await import('@bn-onboard/common')
+        } = await import('@web3-onboard/common')
 
         const { firstValueFrom, fromEvent } = await import('rxjs')
         const { map, take } = await import('rxjs/operators')

@@ -6,7 +6,7 @@ import type {
   CustomNetwork,
   WalletInit,
   GetInterfaceHelpers
-} from '@bn-onboard/common'
+} from '@web3-onboard/common'
 
 // these cannot be dynamically imported
 import { TypedDataUtils } from '@metamask/eth-sig-util'
@@ -142,7 +142,7 @@ function ledger({
         const { JsonRpcProvider } = await import('@ethersproject/providers')
 
         const { accountSelect, createEIP1193Provider, ProviderRpcError } =
-          await import('@bn-onboard/common')
+          await import('@web3-onboard/common')
 
         const { TransactionFactory: Transaction, Capability } = await import(
           '@ethereumjs/tx'

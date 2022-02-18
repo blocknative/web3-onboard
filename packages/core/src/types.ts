@@ -9,7 +9,7 @@ import type {
   WalletModule,
   Chain,
   TokenSymbol
-} from '@bn-onboard/common'
+} from '@web3-onboard/common'
 
 import type setChain from './chain'
 import type connect from './connect'
