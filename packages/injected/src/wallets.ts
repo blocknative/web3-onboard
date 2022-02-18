@@ -426,10 +426,10 @@ const xdefi: InjectedWalletModule = {
 
 const oneInch: InjectedWalletModule = {
   label: ProviderLabel.OneInch,
-  injectedNamespace: InjectedNameSpace.OneInch,
+  injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
     !!provider && !!provider[ProviderIdentityFlag.OneInch],
-  getIcon: async () => (await import('./icons/OneInch.js')).default,
+  getIcon: async () => (await import('./icons/oneInch.js')).default,
   getInterface: async () => ({
     provider: (window as any) || ((window as any).web3 && (window as any).web3.currentProvider)
   }),
@@ -461,7 +461,7 @@ const wallets = [
   tokenpocket,
   tp,
   xdefi,
-  1inch
+  oneInch
 ]
 
 export default wallets
