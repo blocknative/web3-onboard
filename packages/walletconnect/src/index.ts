@@ -175,7 +175,6 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
 
               // @ts-ignore
               if (method === 'eth_signTransaction') {
-                console.log({ params })
                 // @ts-ignore
                 return this.connector.signTransaction(params[0])
               }

@@ -30,7 +30,7 @@
     font-size: inherit;
     display: block;
     position: absolute;
-    outline: 3px solid;
+    border: 3px solid;
     border-radius: 50%;
     animation: bn-loading 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
     border-color: currentColor transparent transparent transparent;

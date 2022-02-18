@@ -50,9 +50,8 @@ export function isUrl(str: string): boolean {
   try {
     url = new URL(str)
   } catch (_) {
-    console.log(false)
     return false
   }
-console.log(url.protocol === 'http:' || url.protocol === 'https:')
+
   return url.protocol === 'http:' || url.protocol === 'https:'
 }
