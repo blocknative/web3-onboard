@@ -13,6 +13,7 @@
   import keepkeyModule from '@bn-onboard/keepkey'
   import keystoneModule from '@bn-onboard/keystone'
   import blocknativeIcon from './blocknative-icon'
+  import blocknativeLogo from './blocknative-logo'
   import VConsole from 'vconsole'
   import { verifyTypedData, verifyMessage } from 'ethers/lib/utils'
 
@@ -119,6 +120,7 @@
     appMetadata: {
       name: 'Blocknative',
       icon: blocknativeIcon,
+      // logo: blocknativeLogo,
       description: 'Demo app for Onboard V2',
       recommendedInjectedWallets: [
         { name: 'MetaMask', url: 'https://metamask.io' },
