@@ -17,7 +17,7 @@
       --onboard-wallet-button-background,
       var(--onboard-white, var(--white))
     );
-    outline: 1px solid
+    border: 1px solid
       var(
         --onboard-wallet-button-border-color,
         var(--onboard-primary-200, var(--primary-200))
@@ -37,7 +37,7 @@
   }
 
   button.connected {
-    outline: 1px solid var(--onboard-success-200, var(--success-200));
+    border: 1px solid var(--onboard-success-200, var(--success-200));
   }
 
   button.connected:hover {

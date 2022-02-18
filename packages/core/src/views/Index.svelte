@@ -119,7 +119,7 @@
   :global(button) {
     display: flex;
     align-items: center;
-    padding: var(--onboard-spacing-4, var(--spacing-4));
+    padding: calc(var(--onboard-spacing-4, var(--spacing-4)) - 1px);
     border-radius: 24px;
     cursor: pointer;
     font: inherit;
@@ -128,12 +128,12 @@
 
   :global(.onboard-button-primary) {
     background: var(--onboard-white, var(--white));
-    padding: var(--onboard-spacing-5, var(--spacing-5))
-      var(--onboard-spacing-4, var(--spacing-4));
+    padding: calc(var(--onboard-spacing-5, var(--spacing-5)) - 1px)
+      calc(var(--onboard-spacing-4, var(--spacing-4)) - 1px);
     color: var(--onboard-gray-500, var(--gray-500));
     font-size: var(--onboard-font-size-6, var(--font-size-6));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
-    outline: 1px solid var(--onboard-gray-500, var(--gray-500));
+    border: 1px solid var(--onboard-gray-500, var(--gray-500));
     font-weight: 700;
   }
 </style>

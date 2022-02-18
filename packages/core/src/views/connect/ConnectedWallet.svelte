@@ -69,7 +69,7 @@
     padding: var(--onboard-spacing-4, var(--spacing-4));
     border-radius: 24px;
     background: var(--onboard-success-100, var(--success-100));
-    outline: 1px solid var(--onboard-success-600, var(--success-600));
+    border: 1px solid var(--onboard-success-600, var(--success-600));
     width: 100%;
     box-sizing: border-box;
   }

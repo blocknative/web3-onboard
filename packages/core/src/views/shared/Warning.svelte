@@ -11,7 +11,7 @@
     color: var(--onboard-warning-700, var(--warning-700));
     font-size: var(--onboard-font-size-7, var(--font-size-7));
     line-height: 16px;
-    outline: 1px solid var(--onboard-warning-400, var(--warning-400));
+    border: 1px solid var(--onboard-warning-400, var(--warning-400));
     background-color: var(--onboard-warning-100, var(--warning-100));
     margin: 0;
     border-radius: 12px;
