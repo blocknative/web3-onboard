@@ -1,7 +1,7 @@
 {
-  "name": "@bn-onboard/mew",
-  "version": "2.0.0-alpha.7",
-  "description": "MEW module for Onboard.js",
+  "name": "@web3-onboard/mew",
+  "version": "2.0.0-alpha.1",
+  "description": "MEW module for web3-onboard",
   "module": "dist/index.js",
   "browser": "dist/index.js",
   "main": "dist/index.js",

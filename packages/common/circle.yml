@@ -43,5 +43,4 @@ workflows:
           filters:
             branches:
               only:
-                - main
-                - feature/v2
+                - v2-web3-onboard
