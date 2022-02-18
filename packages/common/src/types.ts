@@ -124,8 +124,11 @@ export interface AppMetadata {
   /* App name */
   name: string
 
-  /* SVG icon string, with height set to 100% */
+  /* SVG icon string or image url, with height set to 100% */
   icon: string
+
+  /* SVG logo (icon and text) string or image url, with width set to 100% */
+  logo?: string
 
   /* Description of app*/
   description?: string

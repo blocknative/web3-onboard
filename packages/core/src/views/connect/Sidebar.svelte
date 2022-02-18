@@ -9,7 +9,7 @@
   export let step: keyof i18n['connect']
 
   const { appMetadata } = internalState$.getValue()
-  const { icon, name = 'This app' } = appMetadata || {}
+  const { icon, logo, name = 'This app' } = appMetadata || {}
 
   const defaultContent = en.connect[step].sidebar
   const { subheading, paragraph } = defaultContent
@@ -110,11 +110,11 @@
 <div class="sidebar">
   <div class="inner-container">
     <div class="icon-container">
-      {#if icon}
-        {#if isUrl(icon)}
-          <img height="100%" src={icon} alt="logo" />
+      {#if logo || icon}
+        {#if isUrl(logo || icon)}
+          <img height="100%" src={logo || icon} alt="logo" />
         {:else}
-          {@html icon}
+          {@html logo || icon}
         {/if}
       {:else}
         {@html blocknative}
