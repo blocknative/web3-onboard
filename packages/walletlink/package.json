@@ -20,7 +20,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@bn-onboard/common": "^2.0.0-alpha.5",
+    "@bn-onboard/common": "^2.0.0-alpha.1",
     "walletlink": "^2.4.7"
   }
 }
