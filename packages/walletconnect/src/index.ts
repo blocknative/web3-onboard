@@ -3,9 +3,9 @@ import {
   EIP1193Provider,
   ProviderAccounts,
   WalletInit
-} from '@bn-onboard/common'
+} from '@web3-onboard/common'
 
-import { ProviderRpcError } from '@bn-onboard/common'
+import { ProviderRpcError } from '@web3-onboard/common'
 import { EventEmitter } from 'stream'
 
 interface WalletConnectOptions {
@@ -175,7 +175,6 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
 
               // @ts-ignore
               if (method === 'eth_signTransaction') {
-                console.log({ params })
                 // @ts-ignore
                 return this.connector.signTransaction(params[0])
               }

@@ -1,4 +1,4 @@
-import type { Chain } from '@bn-onboard/common'
+import type { Chain } from '@web3-onboard/common'
 
 import type {
   Account,

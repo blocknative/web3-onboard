@@ -12,7 +12,7 @@ import type {
   AccountsListener,
   ChainListener,
   SelectAccountsRequest
-} from '@bn-onboard/common'
+} from '@web3-onboard/common'
 
 import { disconnectWallet$ } from './streams'
 import type { Account, Address, Balances, Ens, WalletState } from './types'

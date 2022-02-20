@@ -86,7 +86,7 @@
 
   .tick {
     display: flex;
-    color: var(--onboard-black, var(--black));
+    color: var(--onboard-success-700, var(--success-700));
   }
 
   @media all and (max-width: 520px) {
@@ -98,18 +98,20 @@
     <div class="icons">
       <WalletAppBadge
         size={40}
+        padding={8}
         background={appMetadata && appMetadata.icon ? 'lightBlue' : 'lightGray'}
         border="darkGreen"
         icon={(appMetadata && appMetadata.icon) || defaultAppIcon}
       />
 
-      <div style="position: relative; right: 0.85rem;">
+      <div style="position: relative; right: 0.85rem; top: 2px;">
         <SuccessStatusIcon size={17} right={null} />
       </div>
 
       <div style="position: relative; right: 0.5rem;">
         <WalletAppBadge
           size={40}
+          padding={8}
           border="darkGreen"
           icon={selectedWallet.icon}
         />
@@ -122,7 +124,7 @@
       })}
     </div>
 
-    <div class="tick" style="width: 17.6px; height: 13.4px;">
+    <div class="tick" style="width: 20px;">
       {@html success}
     </div>
   </div>

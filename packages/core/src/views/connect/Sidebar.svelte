@@ -9,7 +9,7 @@
   export let step: keyof i18n['connect']
 
   const { appMetadata } = internalState$.getValue()
-  const { icon, name = 'This app' } = appMetadata || {}
+  const { icon, logo, name = 'This app' } = appMetadata || {}
 
   const defaultContent = en.connect[step].sidebar
   const { subheading, paragraph } = defaultContent
@@ -27,7 +27,7 @@
     );
     color: var(
       --onboard-connect-sidebar-color,
-      var(--onboard-black, var(--black))
+      var(--onboard-gray-700, var(--gray-700))
     );
   }
 
@@ -38,29 +38,21 @@
 
   .icon-container {
     height: 3rem;
-    display: inline-block;
-    margin-bottom: var(--onboard-spacing-3, var(--spacing-3));
+    display: flex;
+    margin-bottom: var(--onboard-spacing-4, var(--spacing-4));
   }
 
   .heading {
     font-size: var(--onboard-font-size-3, var(--font-size-3));
-    font-family: var(
-      --onboard-font-family-semibold,
-      var(--font-family-semibold)
-    );
     margin: 0 0 var(--onboard-spacing-5, var(--spacing-5)) 0;
   }
 
   .subheading {
-    font-family: var(
-      --onboard-font-family-semibold,
-      var(--font-family-semibold)
-    );
     margin: 0 0 var(--onboard-spacing-5, var(--spacing-5)) 0;
   }
 
   .description {
-    line-height: var(--onboard-font-line-height-2, var(--font-line-height-2));
+    line-height: 20px;
     font-size: var(--onboard-font-size-6, var(--font-size-6));
     margin: 0;
   }
@@ -99,7 +91,7 @@
     position: relative;
     z-index: 1;
     right: 4px;
-    height: 3px;
+    height: 2px;
     background: var(
       --onboard-connect-sidebar-progress-background,
       var(--onboard-gray-200, var(--gray-200))
@@ -118,11 +110,11 @@
 <div class="sidebar">
   <div class="inner-container">
     <div class="icon-container">
-      {#if icon}
-        {#if isUrl(icon)}
-          <img height="100%" src={icon} alt="logo" />
+      {#if logo || icon}
+        {#if isUrl(logo || icon)}
+          <img height="100%" src={logo || icon} alt="logo" />
         {:else}
-          {@html icon}
+          {@html logo || icon}
         {/if}
       {:else}
         {@html blocknative}

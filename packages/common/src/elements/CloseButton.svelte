@@ -18,7 +18,7 @@
     align-items: center;
     padding: 0.4rem;
     border-radius: 40px;
-    color: var(--onboard-black, var(--black));
+    color: var(--onboard-gray-400, var(--gray-400));
     background: var(--onboard-white, var(--white));
   }
   .close-icon {

@@ -32,7 +32,6 @@
     line-height: var(--account-select-font-line-height-1, var(--line-height-1));
     background-color: var(--account-select-gray-500, var(--gray-500));
     color: var(--account-select-primary-100, var(--primary-100));
-    width: 10rem;
     display: flex;
     justify-content: center;
     align-items: center;

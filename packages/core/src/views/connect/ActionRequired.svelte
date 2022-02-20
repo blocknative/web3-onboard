@@ -17,7 +17,7 @@
     width: 300px;
     font-family: var(--onboard-font-family-normal, var(--font-family-normal));
     font-size: var(--onboard-font-size-5, var(--font-size-5));
-    line-height: var(--onboard-font-line-height-1, var(--font-line-height-1));
+    line-height: 24px;
   }
 
   .icon-container {
@@ -49,7 +49,7 @@
     width: 100%;
     background-color: var(--onboard-gray-500, var(--gray-500));
     font-weight: 700;
-    line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
+    line-height: 16px;
     color: var(--onboard-white, var(--white));
     justify-content: center;
   }

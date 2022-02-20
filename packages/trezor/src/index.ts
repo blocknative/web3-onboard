@@ -6,7 +6,7 @@ import {
   ScanAccountsOptions,
   TransactionObject,
   WalletInit
-} from '@bn-onboard/common'
+} from '@web3-onboard/common'
 
 // cannot be dynamically imported
 import { Buffer } from 'buffer'
@@ -123,7 +123,7 @@ function trezor(options: TrezorOptions): WalletInit {
         const { Transaction } = await import('@ethereumjs/tx')
         const { default: Common, Hardfork } = await import('@ethereumjs/common')
         const { accountSelect, createEIP1193Provider, ProviderRpcError } =
-          await import('@bn-onboard/common')
+          await import('@web3-onboard/common')
         const ethUtil = await import('ethereumjs-util')
         const { compress } = (await import('eth-crypto')).publicKey
         const { JsonRpcProvider } = await import('@ethersproject/providers')

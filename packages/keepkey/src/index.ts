@@ -4,7 +4,7 @@ import type {
   Asset,
   Chain,
   WalletInit
-} from '@bn-onboard/common'
+} from '@web3-onboard/common'
 
 import type { JsonRpcProvider } from '@ethersproject/providers'
 import type { ETHAccountPath } from '@shapeshiftoss/hdwallet-core'
@@ -64,7 +64,7 @@ function keepkey(): WalletInit {
           createEIP1193Provider,
           ProviderRpcError,
           entryModal
-        } = await import('@bn-onboard/common')
+        } = await import('@web3-onboard/common')
 
         const { JsonRpcProvider } = await import('@ethersproject/providers')
         const ethUtil = await import('ethereumjs-util')

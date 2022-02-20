@@ -1,4 +1,4 @@
-import { WalletInit } from '@bn-onboard/common'
+import { WalletInit } from '@web3-onboard/common'
 
 function walletLink(options?: { darkMode?: boolean }): WalletInit {
   const { darkMode = false } = options || {}

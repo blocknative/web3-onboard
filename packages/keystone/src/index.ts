@@ -8,7 +8,7 @@ import {
   ProviderRpcError,
   ScanAccountsOptions,
   WalletInit
-} from '@bn-onboard/common'
+} from '@web3-onboard/common'
 import type { providers } from 'ethers'
 
 const DEFAULT_BASE_PATH = "m/44'/60'/0'/0"

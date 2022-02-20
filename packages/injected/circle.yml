@@ -6,13 +6,13 @@ jobs:
   #     - checkout
   #     - restore_cache:
   #         keys:
-  #           - v1-dependencies-{{ checksum "package.json" }}
-  #           - v1-dependencies-
+  #           - v2-dependencies-{{ checksum "package.json" }}
+  #           - v2-dependencies-
   #     - run: yarn
   #     - save_cache:
   #         paths:
   #           - node_modules
-  #         key: v1-dependencies-{{ checksum "package.json" }}
+  #         key: v2-dependencies-{{ checksum "package.json" }}
   #     - run: cd packages/injected && yarn test
   publish-injected:
     docker:
@@ -21,13 +21,13 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            - v1-dependencies-
+            - v2-dependencies-{{ checksum "package.json" }}
+            - v2-dependencies-
       - run: yarn
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+          key: v2-dependencies-{{ checksum "package.json" }}
       - run: yarn build
       - run: cd packages/injected && echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
       - run: cd packages/injected && npm publish --access public
@@ -42,5 +42,4 @@ workflows:
           filters:
             branches:
               only:
-                - main
-                - feature/v2
+                - v2-web3-onboard

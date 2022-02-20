@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import type { ChainId, WalletModule } from '@bn-onboard/common'
+import type { ChainId, WalletModule } from '@web3-onboard/common'
 
 import type {
   InitOptions,
@@ -77,6 +77,7 @@ const appMetadata = Joi.object({
   name: Joi.string().required(),
   description: Joi.string().required(),
   icon: Joi.string().required(),
+  logo: Joi.string(),
   gettingStartedGuide: Joi.string(),
   email: Joi.string(),
   appUrl: Joi.string(),

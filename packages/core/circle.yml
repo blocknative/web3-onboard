@@ -6,14 +6,14 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            - v1-dependencies-
+            - v2-dependencies-{{ checksum "package.json" }}
+            - v2-dependencies-
       - run: yarn
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn build
+          key: v2-dependencies-{{ checksum "package.json" }}
+      - run: cd packages/core && yarn build
       - run: cd packages/core && yarn lint
       - run: cd packages/core && yarn typescript
   publish-core:
@@ -23,14 +23,14 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            - v1-dependencies-
+            - v2-dependencies-{{ checksum "package.json" }}
+            - v2-dependencies-
       - run: yarn
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn build
+          key: v2-dependencies-{{ checksum "package.json" }}
+      - run: cd packages/core && yarn build
       - run: cd packages/core && echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
       - run: cd packages/core && npm publish --access public
 
@@ -44,5 +44,4 @@ workflows:
           filters:
             branches:
               only:
-                - main
-                - feature/v2
+                - v2-web3-onboard

@@ -5,6 +5,7 @@
   export let size: number // px
   export let icon: Promise<string> | string // svg string or url string
   export let loading = false
+  export let padding = size / 6
 
   export let border:
     | 'yellow'
@@ -137,7 +138,7 @@
   class:background-transparent={background === 'transparent'}
   class="icon-container"
   style={`${background === 'custom' ? customBackgroundColor : ''}; padding: ${
-    size / 6
+    padding - 1
   }px; width: ${size}px; height: ${size}px;`}
 >
   {#if loading}

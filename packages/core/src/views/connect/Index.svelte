@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ProviderRpcErrorCode, WalletModule } from '@bn-onboard/common'
+  import { ProviderRpcErrorCode, WalletModule } from '@web3-onboard/common'
   import { _ } from 'svelte-i18n'
   import { BigNumber } from 'ethers'
   import EventEmitter from 'eventemitter3'
@@ -154,14 +154,15 @@
     position: relative;
     display: flex;
     font-family: var(--onboard-font-family-normal, var(--font-family-normal));
-    line-height: var(--onboard-font-line-height-1, var(--font-line-height-1));
+    line-height: 24px;
+    color: var(--onboard-gray-700, var(--gray-700));
     font-size: var(--onboard-font-size-5, var(--font-size-5));
     height: var(--onboard-connect-content-height, 440px);
     overflow: hidden;
   }
 
   .content {
-    width: var(--onboard-connect-content-width, 485px);
+    width: var(--onboard-connect-content-width, 488px);
     display: flex;
     flex-direction: column;
   }
@@ -169,6 +170,11 @@
   .scroll-container {
     overflow-y: auto;
     transition: opacity 250ms ease-in-out;
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .scroll-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
   }
 
   .header {
@@ -184,15 +190,12 @@
       --onboard-connect-header-color,
       var(--onboard-black, var(--black))
     );
+    border-radius: 0 24px 0 0;
   }
 
   .header-heading {
-    font-family: var(
-      --onboard-font-family-semibold,
-      var(--font-family-semibold)
-    );
     margin: var(--onboard-spacing-4, var(--spacing-4));
-    line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
+    line-height: 16px;
   }
 
   .button-container {

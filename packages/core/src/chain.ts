@@ -1,6 +1,6 @@
 import { firstValueFrom } from 'rxjs'
 import { filter, mapTo } from 'rxjs/operators'
-import { ProviderRpcErrorCode } from '@bn-onboard/common'
+import { ProviderRpcErrorCode } from '@web3-onboard/common'
 import { addNewChain, switchChain } from './provider'
 import { state } from './store'
 import { switchChainModal$ } from './streams'
