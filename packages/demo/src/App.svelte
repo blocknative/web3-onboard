@@ -227,14 +227,14 @@
   {/if}
 
   {#if $wallets$}
-    {#each $wallets$ as { icon, label, accounts, chain, provider }}
+    {#each $wallets$ as { icon, label, accounts, chains, provider }}
       <div class="connected-wallet">
         <div class="flex-centered" style="width: 10rem;">
           <div style="width: 2rem; height: 2rem">{@html icon}</div>
           <span>{label}</span>
         </div>
 
-        <div>Chain: {chain}</div>
+        <div>Chains: {JSON.stringify(chains, null, 2)}</div>
 
         {#each accounts as { address, ens, balance }}
           <div

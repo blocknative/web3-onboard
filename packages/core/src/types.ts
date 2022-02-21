@@ -4,7 +4,6 @@ import type {
   AppMetadata,
   Device,
   WalletInit,
-  ChainId,
   EIP1193Provider,
   WalletModule,
   Chain,
@@ -47,12 +46,19 @@ export interface WalletWithLoadingIcon
   icon: Promise<string>
 }
 
+export type ConnectedChain = {
+  id: Chain['id']
+  namespace: Chain['namespace']
+}
+
 export interface WalletState {
   label: string //  wallet name
   icon: string // wallet icon svg string
   provider: EIP1193Provider
   accounts: Account[]
-  chain: ChainId
+  // in future it will be possible that a wallet
+  // is connected to multiple chains at once
+  chains: ConnectedChain[]
   instance?: unknown
 }
 

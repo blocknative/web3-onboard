@@ -1,10 +1,10 @@
-# @bn-onboard/gnosis
+# @web3-onboard/gnosis
 
-## Wallet module for connecting Gnosis Safe to Onboard V2
+## Wallet module for connecting Gnosis Safe to web3-onboard
 
 ### Install
 
-`npm i @bn-onboard/gnosis`
+`npm i @web3-onboard/gnosis`
 
 ### Options
 
@@ -17,8 +17,8 @@ type GnosisOptions = {
 ### Usage
 
 ```typescript
-import Onboard from '@bn-onboard/core'
-import gnosisModule from '@bn-onboard/gnosis'
+import Onboard from '@web3-onboard/core'
+import gnosisModule from '@web3-onboard/gnosis'
 
 const gnosis = gnosisModule()
 

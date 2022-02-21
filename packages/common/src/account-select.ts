@@ -13,6 +13,7 @@ const accountSelect = async (
 ): Promise<Account[]> => {
   if (options) {
     const error = validateSelectAccountOptions(options)
+
     if (error) {
       throw error
     }

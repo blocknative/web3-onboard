@@ -1,4 +1,4 @@
-# @bn-onboard/core
+# @web3-onboard/core
 
 This is the core package that contains all of the UI and logic to be able to seamlessly connect user's wallets to your app and track the state of those wallets. Onboard no longer contains any wallet specific code, so wallets need to be passed in upon initialization.
 
@@ -6,11 +6,11 @@ This is the core package that contains all of the UI and logic to be able to sea
 
 Install the core module:
 
-`npm i @bn-onboard/core`
+`npm i @web3-onboard/core`
 
 If you would like to support all wallets, then you can install all of the wallet modules:
 
-`npm i @bn-onboard/injected-wallets @bn-onboard/ledger @bn-onboard/trezor @bn-onboard/keepkey @bn-onboard/walletconnect @bn-onboard/walletlink @bn-onboard/torus @bn-onboard/portis @bn-onboard/mew @bn-onboard/gnosis @bn-onboard/fortmatic`
+`npm i @web3-onboard/injected-wallets @web3-onboard/ledger @web3-onboard/trezor @web3-onboard/keepkey @web3-onboard/walletconnect @web3-onboard/walletlink @web3-onboard/torus @web3-onboard/portis @web3-onboard/mew @web3-onboard/gnosis @web3-onboard/fortmatic`
 
 Note:
 
@@ -41,6 +41,7 @@ An array of Chains that your app supports:
 ```typescript
 type Chain = {
   id: ChainId // hex encoded string, eg '0x1' for Ethereum Mainnet
+  namespace?: 'evm' // string indicating chain namespace. Defaults to 'evm' but will allow other chain namespaces in the future
   rpcUrl: string // used for network requests
   label?: string // used for display, eg Ethereum Mainnet
   token?: TokenSymbol // the native token symbol, eg ETH, BNB, MATIC
@@ -56,6 +57,8 @@ type AppMetadata = {
   name: string
   // SVG icon string, with height or width (whichever is larger) set to 100% or a valid image URL
   icon: string
+  // Optional wide format logo (ie icon and text) to be displayed in the sidebar of connect modal. Defaults to icon if not provided
+  logo?: string
   // description of app
   description?: string
   // url to a getting started guide for app
@@ -88,8 +91,8 @@ Onboard is using the [ICU syntax](https://formatjs.io/docs/core-concepts/icu-syn
 Putting it all together, here is an example initialization with the injected wallet modules:
 
 ```javascript
-import Onboard from '@bn-onboard/core'
-import injectedModule from '@bn-onboard/injected-wallets'
+import Onboard from '@web3-onboard/core'
+import injectedModule from '@web3-onboard/injected-wallets'
 
 const ETH_MAINNET_RPC = `https://mainnet.infura.io/v3/${INFURA_KEY}`
 const ETH_RINKEBY_RPC = `https://rinkeby.infura.io/v3/${INFURA_KEY}`
@@ -223,7 +226,7 @@ type WalletState = {
   icon: string
   provider: EIP1193Provider
   accounts: Account[]
-  chain: ChainId
+  chains: ConnectedChain[]
   instance?: unknown
 }
 
@@ -236,6 +239,11 @@ type Account = {
     getText?: (key: string) => Promise<string | undefined>
   }
   balance: Record<TokenSymbol, string>
+}
+
+type ConnectedChain = {
+  namespace: 'evm'
+  id: ChainId
 }
 
 type ChainId = string
@@ -282,6 +290,7 @@ When initializing Onboard you define a list of chains/networks that your app sup
 type SetChain = (options: SetChainOptions) => Promise<boolean>
 type SetChainOptions = {
   chainId: string // hex encoded string
+  chainNamespace?: 'evm' // defaults to 'evm' (currently the only valid value, but will add more in future updates)
   wallet?: string // the wallet.label of the wallet to set chain
 }
 
@@ -369,11 +378,6 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-font-size-5: 1rem;
   --onboard-font-size-6: 0.875rem;
   --onboard-font-size-7: 0.75rem;
-
-  --onboard-font-line-height-1: 24px;
-  --onboard-font-line-height-2: 20px;
-  --onboard-font-line-height-3: 16px;
-  --onboard-font-line-height-4: 12px;
 
   /* SPACING */
   --onboard-spacing-1: 3rem;

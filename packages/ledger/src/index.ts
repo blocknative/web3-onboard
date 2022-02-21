@@ -64,7 +64,7 @@ const getAccount = async (
   { publicKey, chainCode, derivationPath }: LedgerAccount,
   asset: Asset,
   index: number,
-  provider: providers.JsonRpcProvider
+  provider: providers.StaticJsonRpcProvider
 ): Promise<Account> => {
   //@ts-ignore
   const { default: HDKey } = await import('hdkey')
@@ -97,7 +97,7 @@ const getAccount = async (
 const getAddresses = async (
   account: LedgerAccount,
   asset: Asset,
-  provider: providers.JsonRpcProvider
+  provider: providers.StaticJsonRpcProvider
 ): Promise<Account[]> => {
   const accounts = []
   let index = 0
@@ -139,7 +139,9 @@ function ledger({
         const ethUtil = await import('ethereumjs-util')
 
         const { SignTypedDataVersion } = await import('@metamask/eth-sig-util')
-        const { JsonRpcProvider } = await import('@ethersproject/providers')
+        const { StaticJsonRpcProvider } = await import(
+          '@ethersproject/providers'
+        )
 
         const { accountSelect, createEIP1193Provider, ProviderRpcError } =
           await import('@web3-onboard/common')
@@ -161,7 +163,7 @@ function ledger({
           try {
             currentChain =
               chains.find(({ id }: Chain) => id === chainId) || currentChain
-            const provider = new JsonRpcProvider(currentChain.rpcUrl)
+            const provider = new StaticJsonRpcProvider(currentChain.rpcUrl)
 
             const { publicKey, chainCode, address } = await eth.getAddress(
               derivationPath,

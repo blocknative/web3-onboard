@@ -1,10 +1,10 @@
-# @bn-onboard/ledger
+# @web3-onboard/ledger
 
-## Wallet module for connecting Ledger hardware wallets to Onboard V2
+## Wallet module for connecting Ledger hardware wallets to web3-onboard
 
 ### Install
 
-`npm i @bn-onboard/ledger`
+`npm i @web3-onboard/ledger`
 
 ### Options
 
@@ -49,8 +49,8 @@ interface BootstrapNode {
 ### Usage
 
 ```typescript
-import Onboard from '@bn-onboard/core'
-import ledgerModule from '@bn-onboard/ledger'
+import Onboard from '@web3-onboard/core'
+import ledgerModule from '@web3-onboard/ledger'
 
 const ledger = ledgerModule()
 

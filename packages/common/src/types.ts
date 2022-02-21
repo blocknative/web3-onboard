@@ -525,6 +525,7 @@ export enum ProviderRpcErrorCode {
 }
 
 export interface Chain {
+  namespace: 'evm'
   id: ChainId
   rpcUrl: string
   label?: string

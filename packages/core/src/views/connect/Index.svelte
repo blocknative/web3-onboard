@@ -101,7 +101,7 @@
       icon,
       provider,
       accounts: [],
-      chain: '0x1'
+      chains: [{ namespace: 'evm', id: '0x1' }]
     }
 
     // change step on next event loop

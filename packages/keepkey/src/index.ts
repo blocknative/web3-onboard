@@ -6,7 +6,7 @@ import type {
   WalletInit
 } from '@web3-onboard/common'
 
-import type { JsonRpcProvider } from '@ethersproject/providers'
+import type { StaticJsonRpcProvider } from '@ethersproject/providers'
 import type { ETHAccountPath } from '@shapeshiftoss/hdwallet-core'
 import type { KeepKeyHDWallet } from '@shapeshiftoss/hdwallet-keepkey'
 
@@ -66,7 +66,9 @@ function keepkey(): WalletInit {
           entryModal
         } = await import('@web3-onboard/common')
 
-        const { JsonRpcProvider } = await import('@ethersproject/providers')
+        const { StaticJsonRpcProvider } = await import(
+          '@ethersproject/providers'
+        )
         const ethUtil = await import('ethereumjs-util')
 
         const keyring = new Keyring()
@@ -129,7 +131,7 @@ function keepkey(): WalletInit {
           asset
         }: {
           accountIdx: number
-          provider: JsonRpcProvider
+          provider: StaticJsonRpcProvider
           asset: Asset
         }) => {
           const paths = getPaths(accountIdx)
@@ -159,7 +161,7 @@ function keepkey(): WalletInit {
         }: {
           derivationPath: string
           asset: Asset
-          provider: JsonRpcProvider
+          provider: StaticJsonRpcProvider
         }) => {
           let index = getAccountIdx(derivationPath)
           let zeroBalanceAccounts = 0
@@ -202,7 +204,7 @@ function keepkey(): WalletInit {
           if (!keepKeyWallet)
             throw new Error('Device must be connected before scanning accounts')
           currentChain = chains.find(({ id }) => id === chainId) || currentChain
-          const provider = new JsonRpcProvider(currentChain.rpcUrl)
+          const provider = new StaticJsonRpcProvider(currentChain.rpcUrl)
 
           // Checks to see if this is a custom derivation path
           // If it is then just return the single account

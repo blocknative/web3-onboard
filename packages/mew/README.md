@@ -1,16 +1,16 @@
-# @bn-onboard/mew
+# @web3-onboard/mew
 
-## Wallet module for connecting Mew wallet to Onboard V2
+## Wallet module for connecting Mew wallet to web3-onboard
 
 ### Install
 
-`npm i @bn-onboard/mew`
+`npm i @web3-onboard/mew`
 
 ## Usage
 
 ```typescript
-import Onboard from '@bn-onboard/core'
-import mewModule from '@bn-onboard/mew'
+import Onboard from '@web3-onboard/core'
+import mewModule from '@web3-onboard/mew'
 
 const mew = mewModule()
 
