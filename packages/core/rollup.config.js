@@ -36,7 +36,7 @@ export default {
     })
   ],
   external: [
-    '@bn-onboard/common',
+    '@web3-onboard/common',
     'ethers',
     'bowser',
     'joi',

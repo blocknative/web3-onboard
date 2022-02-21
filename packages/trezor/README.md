@@ -1,10 +1,10 @@
-# @bn-onboard/trezor
+# @web3-onboard/trezor
 
-## Wallet module for connecting Trezor hardware wallets to Onboard V2
+## Wallet module for connecting Trezor hardware wallets to web3-onboard
 
 ### Install
 
-`npm i @bn-onboard/trezor`
+`npm i @web3-onboard/trezor`
 
 ### Options
 
@@ -51,8 +51,8 @@ interface BootstrapNode {
 ### Usage
 
 ```typescript
-import Onboard from '@bn-onboard/core'
-import trezorModule from '@bn-onboard/trezor'
+import Onboard from '@web3-onboard/core'
+import trezorModule from '@web3-onboard/trezor'
 
 const trezor = trezorModule({
   email: '<EMAIL_CONTACT>',

@@ -1,10 +1,10 @@
-# @bn-onboard/walletlink
+# @web3-onboard/walletlink
 
-## Wallet module for connecting WalletLink to Onboard V2
+## Wallet module for connecting WalletLink to web3-onboard
 
 ### Install
 
-`npm i @bn-onboard/walletlink`
+`npm i @web3-onboard/walletlink`
 
 ## Options
 
@@ -17,8 +17,8 @@ type WalletLinkOptions = {
 ## Usage
 
 ```typescript
-import Onboard from '@bn-onboard/core'
-import walletLinkModule from '@bn-onboard/walletlink'
+import Onboard from '@web3-onboard/core'
+import walletLinkModule from '@web3-onboard/walletlink'
 
 // initialize the module with options
 const walletLink = walletLinkModule({ darkMode: true })

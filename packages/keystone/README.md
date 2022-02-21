@@ -1,10 +1,10 @@
-# @bn-onboard/keystone
+# @web3-onboard/keystone
 
-## Wallet module for connecting Keystone hardware wallets to Onboard V2
+## Wallet module for connecting Keystone hardware wallets to web3-onboard
 
 ### Install
 
-`npm i @bn-onboard/keystone`
+`npm i @web3-onboard/keystone`
 
 ### Options
 
@@ -49,8 +49,8 @@ interface BootstrapNode {
 ### Usage
 
 ```typescript
-import Onboard from '@bn-onboard/core'
-import keystoneModule from '@bn-onboard/keystone'
+import Onboard from '@web3-onboard/core'
+import keystoneModule from '@web3-onboard/keystone'
 
 const keystone = keystoneModule()
 

@@ -1,10 +1,10 @@
-# @bn-onboard/portis
+# @web3-onboard/portis
 
-## Wallet module for connecting Portis wallet to Onboard V2
+## Wallet module for connecting Portis wallet to web3-onboard
 
 ### Install
 
-`npm i @bn-onboard/portis`
+`npm i @web3-onboard/portis`
 
 ## Options
 
@@ -17,8 +17,8 @@ type PortisOptions {
 ## Usage
 
 ```typescript
-import Onboard from '@bn-onboard/core'
-import portisModule from '@bn-onboard/portis'
+import Onboard from '@web3-onboard/core'
+import portisModule from '@web3-onboard/portis'
 
 const portis = portisModule({ apiKey: 'API_KEY' })
 

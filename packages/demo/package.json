@@ -22,17 +22,17 @@
     "webpack-dev-server": "4.7.4"
   },
   "dependencies": {
-    "@bn-onboard/core": "^2.0.0-alpha.1",
-    "@bn-onboard/fortmatic": "^2.0.0-alpha",
-    "@bn-onboard/injected-wallets": "^2.0.0-alpha",
-    "@bn-onboard/keepkey": "^2.0.0-alpha.8",
-    "@bn-onboard/keystone": "^2.0.0-alpha.6",
-    "@bn-onboard/ledger": "^2.0.0-alpha.12",
-    "@bn-onboard/portis": "^2.0.0-alpha",
-    "@bn-onboard/torus": "^2.0.0-alpha",
-    "@bn-onboard/trezor": "^2.0.0-alpha",
-    "@bn-onboard/walletconnect": "^2.0.0-alpha",
-    "@bn-onboard/walletlink": "^2.0.0-alpha",
+    "@web3-onboard/core": "^2.0.0-alpha.1",
+    "@web3-onboard/fortmatic": "^2.0.0-alpha",
+    "@web3-onboard/injected-wallets": "^2.0.0-alpha",
+    "@web3-onboard/keepkey": "^2.0.0-alpha.8",
+    "@web3-onboard/keystone": "^2.0.0-alpha.6",
+    "@web3-onboard/ledger": "^2.0.0-alpha.12",
+    "@web3-onboard/portis": "^2.0.0-alpha",
+    "@web3-onboard/torus": "^2.0.0-alpha",
+    "@web3-onboard/trezor": "^2.0.0-alpha",
+    "@web3-onboard/walletconnect": "^2.0.0-alpha",
+    "@web3-onboard/walletlink": "^2.0.0-alpha",
     "vconsole": "^3.9.5"
   },
   "scripts": {

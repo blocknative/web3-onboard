@@ -1,10 +1,10 @@
-# @bn-onboard/torus
+# @web3-onboard/torus
 
-## Wallet module for connecting Torus wallet to Onboard V2
+## Wallet module for connecting Torus wallet to web3-onboard
 
 ### Install
 
-`npm i @bn-onboard/torus`
+`npm i @web3-onboard/torus`
 
 ## Options
 
@@ -13,8 +13,8 @@ See the [Torus Docs](https://docs.tor.us/wallet/api-reference/class) for the ext
 ## Usage
 
 ```typescript
-import Onboard from '@bn-onboard/core'
-import torusModule from '@bn-onboard/torus'
+import Onboard from '@web3-onboard/core'
+import torusModule from '@web3-onboard/torus'
 
 const torus = torusModule()
 

@@ -1,4 +1,4 @@
-# @bn-onboard/core
+# @web3-onboard/core
 
 This is the core package that contains all of the UI and logic to be able to seamlessly connect user's wallets to your app and track the state of those wallets. Onboard no longer contains any wallet specific code, so wallets need to be passed in upon initialization.
 
@@ -6,11 +6,11 @@ This is the core package that contains all of the UI and logic to be able to sea
 
 Install the core module:
 
-`npm i @bn-onboard/core`
+`npm i @web3-onboard/core`
 
 If you would like to support all wallets, then you can install all of the wallet modules:
 
-`npm i @bn-onboard/injected-wallets @bn-onboard/ledger @bn-onboard/trezor @bn-onboard/keepkey @bn-onboard/walletconnect @bn-onboard/walletlink @bn-onboard/torus @bn-onboard/portis @bn-onboard/mew @bn-onboard/gnosis @bn-onboard/fortmatic`
+`npm i @web3-onboard/injected-wallets @web3-onboard/ledger @web3-onboard/trezor @web3-onboard/keepkey @web3-onboard/walletconnect @web3-onboard/walletlink @web3-onboard/torus @web3-onboard/portis @web3-onboard/mew @web3-onboard/gnosis @web3-onboard/fortmatic`
 
 Note:
 
@@ -88,8 +88,8 @@ Onboard is using the [ICU syntax](https://formatjs.io/docs/core-concepts/icu-syn
 Putting it all together, here is an example initialization with the injected wallet modules:
 
 ```javascript
-import Onboard from '@bn-onboard/core'
-import injectedModule from '@bn-onboard/injected-wallets'
+import Onboard from '@web3-onboard/core'
+import injectedModule from '@web3-onboard/injected-wallets'
 
 const ETH_MAINNET_RPC = `https://mainnet.infura.io/v3/${INFURA_KEY}`
 const ETH_RINKEBY_RPC = `https://rinkeby.infura.io/v3/${INFURA_KEY}`
