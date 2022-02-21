@@ -41,6 +41,7 @@ An array of Chains that your app supports:
 ```typescript
 type Chain = {
   id: ChainId // hex encoded string, eg '0x1' for Ethereum Mainnet
+  namespace?: 'evm' // string indicating chain namespace. Defaults to 'evm' but will allow other chain namespaces in the future
   rpcUrl: string // used for network requests
   label?: string // used for display, eg Ethereum Mainnet
   token?: TokenSymbol // the native token symbol, eg ETH, BNB, MATIC
@@ -56,6 +57,8 @@ type AppMetadata = {
   name: string
   // SVG icon string, with height or width (whichever is larger) set to 100% or a valid image URL
   icon: string
+  // Optional wide format logo (ie icon and text) to be displayed in the sidebar of connect modal. Defaults to icon if not provided
+  logo?: string
   // description of app
   description?: string
   // url to a getting started guide for app
@@ -223,7 +226,7 @@ type WalletState = {
   icon: string
   provider: EIP1193Provider
   accounts: Account[]
-  chain: ChainId
+  chains: ConnectedChain[]
   instance?: unknown
 }
 
@@ -236,6 +239,11 @@ type Account = {
     getText?: (key: string) => Promise<string | undefined>
   }
   balance: Record<TokenSymbol, string>
+}
+
+type ConnectedChain = {
+  namespace: 'evm'
+  id: ChainId
 }
 
 type ChainId = string
@@ -282,6 +290,7 @@ When initializing Onboard you define a list of chains/networks that your app sup
 type SetChain = (options: SetChainOptions) => Promise<boolean>
 type SetChainOptions = {
   chainId: string // hex encoded string
+  chainNamespace?: 'evm' // defaults to 'evm' (currently the only valid value, but will add more in future updates)
   wallet?: string // the wallet.label of the wallet to set chain
 }
 
@@ -369,11 +378,6 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-font-size-5: 1rem;
   --onboard-font-size-6: 0.875rem;
   --onboard-font-size-7: 0.75rem;
-
-  --onboard-font-line-height-1: 24px;
-  --onboard-font-line-height-2: 20px;
-  --onboard-font-line-height-3: 16px;
-  --onboard-font-line-height-4: 12px;
 
   /* SPACING */
   --onboard-spacing-1: 3rem;
