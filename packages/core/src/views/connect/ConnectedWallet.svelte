@@ -22,17 +22,16 @@
   async function updateAccountDetails() {
     const { accounts, chains: selectedWalletChains } = selectedWallet
     const appChains = state.get().chains
-    const chainReference = selectedWalletChains.eip155
+    const [connectedWalletChain] = selectedWalletChains
 
     const appChain = appChains.find(
-      ({ namespace, reference }) =>
-        namespace === 'eip155' && reference === chainReference
+      ({ namespace, id }) =>
+        namespace === connectedWalletChain.namespace &&
+        id === connectedWalletChain.id
     )
 
     const { address } = accounts[0]
     let { balance, ens } = accounts[0]
-
-    console.log({ appChain })
 
     if (balance === null) {
       getBalance(address, appChain).then(balance => {
@@ -42,7 +41,7 @@
       })
     }
 
-    if (ens === null && validEnsChain(chainReference)) {
+    if (ens === null && validEnsChain(connectedWalletChain.id)) {
       getEns(address, appChain).then(ens => {
         updateAccount(label, address, {
           ens

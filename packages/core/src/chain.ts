@@ -9,6 +9,7 @@ import type { WalletState } from './types'
 
 async function setChain(options: {
   chainId: string
+  chainNamespace?: string
   wallet?: WalletState['label']
 }): Promise<boolean> {
   const error = validateSetChainOptions(options)
@@ -18,16 +19,16 @@ async function setChain(options: {
   }
 
   const { wallets, chains } = state.get()
-  const { chainId, wallet: walletToSet } = options
+  const { chainId, chainNamespace = 'evm', wallet: walletToSet } = options
 
   // validate that chainId has been added to chains
   const chain = chains.find(
-    ({ namespace, reference }) => `${namespace}:${reference}` === chainId
+    ({ namespace, id }) => namespace === chainNamespace && id === chainId
   )
 
   if (!chain) {
     throw new Error(
-      `Chain with chainId: ${chainId} has not been set and must be added when Onboard is initialized.`
+      `Chain with chainId: ${chainId} and chainNamespace: ${chainNamespace} has not been set and must be added when Onboard is initialized.`
     )
   }
 
@@ -44,10 +45,13 @@ async function setChain(options: {
     )
   }
 
-  const [chainNamespace, chainReference] = chainId.split(':')
+  const [walletConnectedChain] = wallet.chains
 
   // check if wallet is already connected to chainId
-  if (parseInt(wallet.chains[chainNamespace]) === parseInt(chainReference)) {
+  if (
+    walletConnectedChain.namespace === chainNamespace &&
+    walletConnectedChain.id === chainId
+  ) {
     return true
   }
 

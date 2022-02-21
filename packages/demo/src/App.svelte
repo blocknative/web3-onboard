@@ -93,29 +93,29 @@
     ],
     chains: [
       {
-        namespace: 'eip155',
-        reference: '1',
+        // namespace: 'evm',
+        id: '0x1',
         token: 'ETH',
         label: 'Ethereum Mainnet',
-        rpcUrl: 'https://mainnet.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
+        rpcUrl: 'https://mainnet.infura.io/v3/eb347fc6f4b84938bf8b111cc08a4814'
       },
       {
-        namespace: 'eip155',
-        reference: '3',
+        // namespace: 'evm',
+        id: '0x3',
         token: 'tROP',
         label: 'Ethereum Ropsten Testnet',
-        rpcUrl: 'https://ropsten.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
+        rpcUrl: 'https://ropsten.infura.io/v3/eb347fc6f4b84938bf8b111cc08a4814'
       },
       {
-        namespace: 'eip155',
-        reference: '4',
+        // namespace: 'evm',
+        id: '0x4',
         token: 'rETH',
         label: 'Ethereum Rinkeby Testnet',
-        rpcUrl: 'https://rinkeby.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
+        rpcUrl: 'https://rinkeby.infura.io/v3/eb347fc6f4b84938bf8b111cc08a4814'
       },
       {
-        namespace: 'eip155',
-        reference: '137',
+        // namespace: 'evm',
+        id: '0x89',
         token: 'MATIC',
         label: 'Matic Mainnet',
         rpcUrl: 'https://matic-mainnet.chainstacklabs.com'

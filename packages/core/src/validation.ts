@@ -8,24 +8,22 @@ import type {
   DisconnectOptions
 } from './types'
 
-// const chainNamespaceRegex = /[-a-z0-9]{3,8}/
-// only evm chains are valid at the moment
-const chainNamespaceRegex = /eip155/
-const chainReferenceRegex = /[-a-zA-Z0-9]{1,32}/
-const chainIdRegex = new RegExp(
-  `${chainNamespaceRegex.source}:${chainReferenceRegex.source}`
-)
-
-const chainId = Joi.string().regex(chainIdRegex)
+const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
+const chainNamespace = Joi.string().valid('evm')
 const unknownObject = Joi.object().unknown()
 // const address = Joi.string().regex(/^0x[a-fA-F0-9]{40}$/)
 
 const chain = Joi.object({
-  namespace: Joi.string().regex(chainNamespaceRegex),
-  reference: Joi.string().regex(chainReferenceRegex),
+  namespace: chainNamespace,
+  id: chainId.required(),
   rpcUrl: Joi.string().required(),
   label: Joi.string(),
   token: Joi.string()
+})
+
+const connectedChain = Joi.object({
+  namespace: chainNamespace.required(),
+  id: chainId.required()
 })
 
 const ens = Joi.any().allow(
@@ -59,7 +57,7 @@ const wallet = Joi.object({
   icon: Joi.string(),
   provider: unknownObject,
   accounts,
-  chains: Joi.object().pattern(chainNamespaceRegex, chainReferenceRegex)
+  chains: Joi.array().items(connectedChain)
 })
 
 const recommendedWallet = Joi.object({

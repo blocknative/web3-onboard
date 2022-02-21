@@ -46,6 +46,11 @@ export interface WalletWithLoadingIcon
   icon: Promise<string>
 }
 
+export type ConnectedChain = {
+  id: Chain['id']
+  namespace: Chain['namespace']
+}
+
 export interface WalletState {
   label: string //  wallet name
   icon: string // wallet icon svg string
@@ -53,7 +58,7 @@ export interface WalletState {
   accounts: Account[]
   // in future it will be possible that a wallet
   // is connected to multiple chains at once
-  chains: Record<ChainNameSpace, ChainReference>
+  chains: ConnectedChain[]
   instance?: unknown
 }
 

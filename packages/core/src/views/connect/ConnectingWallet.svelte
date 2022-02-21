@@ -41,9 +41,7 @@
 
       const update: Pick<WalletState, 'accounts' | 'chains'> = {
         accounts: [{ address, ens: null, balance: null }],
-        chains: {
-          eip155: parseInt(chain).toString()
-        }
+        chains: [{ namespace: 'evm', id: chain }]
       }
 
       addWallet({ ...selectedWallet, ...update })

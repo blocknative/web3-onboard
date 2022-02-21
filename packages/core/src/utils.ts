@@ -4,7 +4,8 @@ import type {
   Device,
   DeviceBrowser,
   DeviceOS,
-  DeviceType
+  DeviceType,
+  ChainId
 } from '@web3-onboard/common'
 
 export const notNullish = <T>(value: T | null | undefined): value is T =>
@@ -23,12 +24,12 @@ export function getDeviceInfo(): Device {
   }
 }
 
-export function validEnsChain(reference: string): boolean {
-  switch (parseInt(reference)) {
-    case 1:
-    case 3:
-    case 4:
-    case 5:
+export function validEnsChain(chainId: ChainId): boolean {
+  switch (chainId) {
+    case '0x1':
+    case '0x3':
+    case '0x4':
+    case '0x5':
       return true
     default:
       return false
