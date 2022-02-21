@@ -33,7 +33,7 @@
 
   let scanAccountOptions: ScanAccountsOptions = {
     derivationPath: (basePaths[0] && basePaths[0].value) || '',
-    chainId: `${chains[0].id}` || '',
+    chainId: chains[0].id || '',
     asset: assets[0] || null
   }
 
