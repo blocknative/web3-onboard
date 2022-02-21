@@ -93,28 +93,24 @@
     ],
     chains: [
       {
-        // namespace: 'evm',
         id: '0x1',
         token: 'ETH',
         label: 'Ethereum Mainnet',
-        rpcUrl: 'https://mainnet.infura.io/v3/eb347fc6f4b84938bf8b111cc08a4814'
+        rpcUrl: 'https://mainnet.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
       },
       {
-        // namespace: 'evm',
         id: '0x3',
         token: 'tROP',
         label: 'Ethereum Ropsten Testnet',
-        rpcUrl: 'https://ropsten.infura.io/v3/eb347fc6f4b84938bf8b111cc08a4814'
+        rpcUrl: 'https://ropsten.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
       },
       {
-        // namespace: 'evm',
         id: '0x4',
         token: 'rETH',
         label: 'Ethereum Rinkeby Testnet',
-        rpcUrl: 'https://rinkeby.infura.io/v3/eb347fc6f4b84938bf8b111cc08a4814'
+        rpcUrl: 'https://rinkeby.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
       },
       {
-        // namespace: 'evm',
         id: '0x89',
         token: 'MATIC',
         label: 'Matic Mainnet',
@@ -219,13 +215,13 @@
   <button on:click={() => onboard.connectWallet()}>Connect Wallet</button>
 
   {#if $wallets$}
-    <button on:click={() => onboard.setChain({ chainId: 'eip155:1' })}
+    <button on:click={() => onboard.setChain({ chainId: '0x1' })}
       >Set Chain to Mainnet</button
     >
-    <button on:click={() => onboard.setChain({ chainId: 'eip155:4' })}
+    <button on:click={() => onboard.setChain({ chainId: '0x4' })}
       >Set Chain to Rinkeby</button
     >
-    <button on:click={() => onboard.setChain({ chainId: 'eip155:137' })}
+    <button on:click={() => onboard.setChain({ chainId: '0x89' })}
       >Set Chain to Matic</button
     >
   {/if}
