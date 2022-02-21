@@ -62,9 +62,6 @@ export interface WalletState {
   instance?: unknown
 }
 
-type ChainNameSpace = string
-type ChainReference = string
-
 export type Account = {
   address: Address
   ens: Ens | null
