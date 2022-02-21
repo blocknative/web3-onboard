@@ -11,7 +11,7 @@ import {
 // cannot be dynamically imported
 import { Buffer } from 'buffer'
 
-import type { JsonRpcProvider } from '@ethersproject/providers'
+import type { StaticJsonRpcProvider } from '@ethersproject/providers'
 
 import type {
   EthereumTransaction,
@@ -49,7 +49,7 @@ const getAccount = async (
   { publicKey, chainCode, path }: AccountData,
   asset: Asset,
   index: number,
-  provider: JsonRpcProvider
+  provider: StaticJsonRpcProvider
 ): Promise<Account> => {
   //@ts-ignore
   const { default: HDKey } = await import('hdkey')
@@ -82,7 +82,7 @@ const getAccount = async (
 const getAddresses = async (
   account: AccountData,
   asset: Asset,
-  provider: JsonRpcProvider
+  provider: StaticJsonRpcProvider
 ): Promise<Account[]> => {
   const accounts = []
   let index = 0
@@ -126,7 +126,9 @@ function trezor(options: TrezorOptions): WalletInit {
           await import('@web3-onboard/common')
         const ethUtil = await import('ethereumjs-util')
         const { compress } = (await import('eth-crypto')).publicKey
-        const { JsonRpcProvider } = await import('@ethersproject/providers')
+        const { StaticJsonRpcProvider } = await import(
+          '@ethersproject/providers'
+        )
 
         if (!options || !options.email || !options.appUrl) {
           throw new Error(
@@ -156,7 +158,7 @@ function trezor(options: TrezorOptions): WalletInit {
           asset
         }: ScanAccountsOptions): Promise<Account[]> => {
           currentChain = chains.find(({ id }) => id === chainId) || currentChain
-          const provider = new JsonRpcProvider(currentChain.rpcUrl)
+          const provider = new StaticJsonRpcProvider(currentChain.rpcUrl)
 
           const { publicKey, chainCode, path } = await getPublicKey(
             derivationPath

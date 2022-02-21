@@ -28,7 +28,7 @@ const assets = [
 
 const getAccount = async (
   keyring: any,
-  provider: providers.JsonRpcProvider,
+  provider: providers.StaticJsonRpcProvider,
   index: number
 ): Promise<Account> => {
   const address = (await keyring.addAccounts())[index]
@@ -45,7 +45,7 @@ const getAccount = async (
 
 const generateAccounts = async (
   keyring: any,
-  provider: providers.JsonRpcProvider
+  provider: providers.StaticJsonRpcProvider
 ): Promise<Account[]> => {
   const accounts = []
   let zeroBalanceAccounts = 0,
@@ -78,7 +78,9 @@ function keystone({
       label: 'Keystone',
       getIcon,
       getInterface: async ({ EventEmitter, chains }) => {
-        const { JsonRpcProvider } = await import('@ethersproject/providers')
+        const { StaticJsonRpcProvider } = await import(
+          '@ethersproject/providers'
+        )
         const { default: Common, Hardfork } = await import('@ethereumjs/common')
 
         const { default: AirGappedKeyring } = await import(
@@ -103,7 +105,7 @@ function keystone({
           currentChain =
             chains.find(({ id }: Chain) => id === chainId) || currentChain
 
-          const provider = new JsonRpcProvider(currentChain.rpcUrl)
+          const provider = new StaticJsonRpcProvider(currentChain.rpcUrl)
           return generateAccounts(keyring, provider)
         }
 
