@@ -199,137 +199,6 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
 
-"@bn-onboard/common@^2.0.0-alpha.1", "@bn-onboard/common@^2.0.0-alpha.5":
-  version "2.0.0-alpha.13"
-  resolved "https://registry.yarnpkg.com/@bn-onboard/common/-/common-2.0.0-alpha.13.tgz#72e9fbd2ec861a978ef73dd9fb6d05b23e9cf723"
-  integrity sha512-1+1SpjFUAwMWcit77eaAxY72RvBiCBAOotgr/unMr1P3Xk2FhDaKw1wr06lXOY1bx1iDHk/zFe/B+xVqhKVPWg==
-  dependencies:
-    ethers "5.5.4"
-    joi "^17.4.2"
-    rxjs "^7.5.2"
-
-"@bn-onboard/core@^2.0.0-alpha.1":
-  version "2.0.0-alpha.18"
-  resolved "https://registry.yarnpkg.com/@bn-onboard/core/-/core-2.0.0-alpha.18.tgz#50d9472a192e538eeaf6bd874b17113ae3670286"
-  integrity sha512-Om2uSUdmBQqhJ/GDW1FmRoE8WiwafseolJ0hy3jewdQNYzD8ziP+9D4Oxz69vlX8QKBSlI3GroLb3tJmR4oGBw==
-  dependencies:
-    "@bn-onboard/common" "^2.0.0-alpha.5"
-    bowser "^2.11.0"
-    ethers "5.5.3"
-    eventemitter3 "^4.0.7"
-    joi "17.6.0"
-    lodash.merge "^4.6.2"
-    lodash.partition "^4.6.0"
-    rxjs "^7.5.2"
-    svelte "^3.46.4"
-    svelte-i18n "^3.3.13"
-
-"@bn-onboard/fortmatic@^2.0.0-alpha":
-  version "2.0.0-alpha.6"
-  resolved "https://registry.yarnpkg.com/@bn-onboard/fortmatic/-/fortmatic-2.0.0-alpha.6.tgz#d16936869f964196628d1f079a364602a58d043a"
-  integrity sha512-WTRmvh2MnaJh625x1E9AH/6yl00Aj+jIupVZdpSSiRLU5smnm+FxCdp6ONa/qLN/V+grGrkZ+Nx82Acd+LWYsg==
-  dependencies:
-    "@bn-onboard/common" "^2.0.0-alpha.5"
-    fortmatic "^2.2.1"
-
-"@bn-onboard/injected-wallets@^2.0.0-alpha":
-  version "2.0.0-alpha.8"
-  resolved "https://registry.yarnpkg.com/@bn-onboard/injected-wallets/-/injected-wallets-2.0.0-alpha.8.tgz#875488c2ace4e54c0fe14d946a684696468a1124"
-  integrity sha512-oWZZwMV+Tb0hlcZhNpjucj2ixhMf7BNr6D8xiyeg+IZthyLuIgO/sVnBrpxM1MLW1lx2IT7RNv9am5npvFJEDQ==
-  dependencies:
-    "@bn-onboard/common" "^2.0.0-alpha.5"
-    joi "^17.4.2"
-    lodash.uniqby "^4.7.0"
-
-"@bn-onboard/keepkey@^2.0.0-alpha.8":
-  version "2.0.0-alpha.10"
-  resolved "https://registry.yarnpkg.com/@bn-onboard/keepkey/-/keepkey-2.0.0-alpha.10.tgz#4869ce219bfbbdc5e0ddd92d5016b664889cc51c"
-  integrity sha512-z+ECwmNsKem9i5RfXb29vmSWVEjw0piEcUM31dTReVP9mmaJKts4M4Y30NN7A78Bf50B17+alCsGsfbp0Hx0fw==
-  dependencies:
-    "@bn-onboard/common" "^2.0.0-alpha.5"
-    "@ethersproject/providers" "^5.5.0"
-    "@shapeshiftoss/hdwallet-core" "^1.15.2"
-    "@shapeshiftoss/hdwallet-keepkey-webusb" "^1.15.2"
-    ethereumjs-util "^7.1.3"
-
-"@bn-onboard/keystone@^2.0.0-alpha.6":
-  version "2.0.0-alpha.7"
-  resolved "https://registry.yarnpkg.com/@bn-onboard/keystone/-/keystone-2.0.0-alpha.7.tgz#d2c54b62593782a1104ecded4e61461e2c46f4b3"
-  integrity sha512-mQQkvrvdeScXLPjGwAjjidnYzLM04IMrAhNVGvWfGFoqHeVeosQXWAo7byymoSX6DCJ5WPSrDdBRpIU9GnDlTw==
-  dependencies:
-    "@bn-onboard/common" "^2.0.0-alpha.5"
-    "@ethereumjs/common" "^2.6.1"
-    "@ethereumjs/tx" "^3.4.0"
-    "@ethersproject/providers" "^5.5.0"
-    "@keystonehq/eth-keyring" "^0.11.2-alpha.2"
-
-"@bn-onboard/ledger@^2.0.0-alpha.12":
-  version "2.0.0-alpha.14"
-  resolved "https://registry.yarnpkg.com/@bn-onboard/ledger/-/ledger-2.0.0-alpha.14.tgz#35e58565b8ea32f8059f3a8a76dd976f912477f9"
-  integrity sha512-a1DWwah+eIYE6u4NWkQqj1IE55DcI0/BfugUsskV7eMzkuzHSd9gDsnwoParps28kW12w4M27FostM/gCyJSnA==
-  dependencies:
-    "@bn-onboard/common" "^2.0.0-alpha.5"
-    "@ethereumjs/common" "^2.6.1"
-    "@ethereumjs/tx" "^3.4.0"
-    "@ethersproject/providers" "^5.5.0"
-    "@ledgerhq/hw-app-eth" "^6.19.0"
-    "@ledgerhq/hw-transport-u2f" "^5.36.0-deprecated"
-    "@ledgerhq/hw-transport-webusb" "^6.19.0"
-    "@metamask/eth-sig-util" "^4.0.0"
-    buffer "^6.0.3"
-    eth-crypto "^2.1.0"
-    ethereumjs-util "^7.1.3"
-    hdkey "^2.0.1"
-
-"@bn-onboard/portis@^2.0.0-alpha":
-  version "2.0.0-alpha.6"
-  resolved "https://registry.yarnpkg.com/@bn-onboard/portis/-/portis-2.0.0-alpha.6.tgz#d4ec4e8cd8ba4f4dc7de66370a9cc53c60de9075"
-  integrity sha512-Hnj0CZc5lxxf+72okqOTt69ESU6Dn3Lhqg6uIomuAbog2KzEP9fL05zeubXJVHvI7JzFVm7Zl+lAPWarr+B80A==
-  dependencies:
-    "@bn-onboard/common" "^2.0.0-alpha.5"
-    "@portis/web3" "^4.0.6"
-
-"@bn-onboard/torus@^2.0.0-alpha":
-  version "2.0.0-alpha.6"
-  resolved "https://registry.yarnpkg.com/@bn-onboard/torus/-/torus-2.0.0-alpha.6.tgz#39b1271c90ff9c728d198f49f6d7a8f539585656"
-  integrity sha512-aBV/gXHRi0knb/HOJb8eOH6JgELAwczi7He9498XHy9te+9W/8beCwuT5KCnOjFKOMLw+dcASTfspUQFun8EWA==
-  dependencies:
-    "@bn-onboard/common" "^2.0.0-alpha.5"
-    "@toruslabs/torus-embed" "^1.18.3"
-
-"@bn-onboard/trezor@^2.0.0-alpha":
-  version "2.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@bn-onboard/trezor/-/trezor-2.0.0-alpha.9.tgz#88da08eba73a3bbbee6e0c2ae3e3515b9298b2ec"
-  integrity sha512-bR/FdFai6YwLW9pV9AHiqbOTSMB2tIomQflAMEmxJlSdH0azfvyFokSEnjDzcxQZ5MUPm6JpfgCRGure3kj8OA==
-  dependencies:
-    "@bn-onboard/common" "^2.0.0-alpha.5"
-    "@ethereumjs/common" "^2.6.1"
-    "@ethereumjs/tx" "^3.4.0"
-    "@ethersproject/providers" "^5.5.0"
-    buffer "^6.0.3"
-    eth-crypto "^2.1.0"
-    ethereumjs-util "^7.1.3"
-    hdkey "^2.0.1"
-    trezor-connect "^8.2.6"
-
-"@bn-onboard/walletconnect@^2.0.0-alpha":
-  version "2.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@bn-onboard/walletconnect/-/walletconnect-2.0.0-alpha.9.tgz#51c2d77cd3e94603d6b1e569c6dc88501167740e"
-  integrity sha512-VqDUQFKrGLabfaehSR89fvmhlkn+VEk7WlcbNj5obipekWpKQ3OFPgXZXjGdcXJmDSY0zD52t/jcZnFuagHTVA==
-  dependencies:
-    "@bn-onboard/common" "^2.0.0-alpha.5"
-    "@walletconnect/client" "^1.7.1"
-    "@walletconnect/qrcode-modal" "^1.7.1"
-    rxjs "^7.5.2"
-
-"@bn-onboard/walletlink@^2.0.0-alpha":
-  version "2.0.0-alpha.6"
-  resolved "https://registry.yarnpkg.com/@bn-onboard/walletlink/-/walletlink-2.0.0-alpha.6.tgz#b88666f0ad6543586c3845c1bdbd6892d2fb13b9"
-  integrity sha512-bGL5nX06Vd31yiQs6LO0b6Hx4+FoFDL6rHgKIULjoui+A2lizsIRZkYh8QP84C4H9UCn7adDyritG4ScryIJFA==
-  dependencies:
-    "@bn-onboard/common" "^2.0.0-alpha.5"
-    walletlink "^2.4.6"
-
 "@concordance/react@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@concordance/react/-/react-2.0.0.tgz#aef913f27474c53731f4fd79cc2f54897de90fde"
@@ -12174,7 +12043,7 @@ w3c-xmlserializer@^1.0.1:
     webidl-conversions "^4.0.2"
     xml-name-validator "^3.0.0"
 
-walletlink@^2.4.6, walletlink@^2.4.7:
+walletlink@^2.4.7:
   version "2.4.7"
   resolved "https://registry.yarnpkg.com/walletlink/-/walletlink-2.4.7.tgz#3dd034f7cd6e9d9f4cc1d677bb951869dc743e20"
   integrity sha512-jhLVOMly9oWiSE8mZ4/+uMyVsAKHw71kGbgC1xYp50SQpuLT2pfa6Hiw2VQ0omP/WHsDAPFuBo8hJGxggr768w==
