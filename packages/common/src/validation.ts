@@ -8,6 +8,7 @@ const basePath = Joi.object({
 const basePaths = Joi.array().items(basePath)
 
 const chain = Joi.object({
+  namespace: Joi.string(),
   id: Joi.string().required(),
   label: Joi.string(),
   token: Joi.string().required(),
