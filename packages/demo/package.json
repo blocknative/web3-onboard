@@ -27,7 +27,7 @@
     "@web3-onboard/injected-wallets": "^2.0.0-alpha.1",
     "@web3-onboard/keepkey": "^2.0.0-alpha.1",
     "@web3-onboard/keystone": "^2.0.0-alpha.1",
-    "@web3-onboard/ledger": "^2.0.0-alpha.12",
+    "@web3-onboard/ledger": "^2.0.0-alpha.1",
     "@web3-onboard/portis": "^2.0.0-alpha.1",
     "@web3-onboard/torus": "^2.0.0-alpha.1",
     "@web3-onboard/trezor": "^2.0.0-alpha.1",
