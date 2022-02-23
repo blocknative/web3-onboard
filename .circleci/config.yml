@@ -18,7 +18,7 @@ aliases:
   - &deploy_production_filters
     filters:
       branches:
-        only: enhancement/yarn-workspaces
+        only: v2-web3-onboard
 
   - &restore-build-flag
     restore_cache:
