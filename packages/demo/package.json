@@ -35,6 +35,7 @@
     "@web3-onboard/walletlink": "^2.0.0-alpha.3",
     "vconsole": "^3.9.5"
   },
+  "license": "MIT",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack",
     "dev": "webpack serve"

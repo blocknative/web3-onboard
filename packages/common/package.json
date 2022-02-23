@@ -16,6 +16,7 @@
   "files": [
     "dist"
   ],
+  "license": "MIT",
   "devDependencies": {
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
