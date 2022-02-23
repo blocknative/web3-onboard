@@ -436,6 +436,18 @@ const oneInch: InjectedWalletModule = {
   platforms: ['mobile']
 }
 
+const tokenary: InjectedWalletModule = {
+  label: ProviderLabel.Tokenary,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Tokenary],
+  getIcon: async () => (await import('./icons/tokenary.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.ethereum)
+  }),
+  platforms: ['mobile']
+}
+
 const wallets = [
   metamask,
   binance,
@@ -461,7 +473,8 @@ const wallets = [
   tokenpocket,
   tp,
   xdefi,
-  oneInch
+  oneInch,
+  tokenary
 ]
 
 export default wallets
