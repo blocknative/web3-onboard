@@ -34,6 +34,8 @@ function gnosis(options?: GnosisOptions): WalletInit {
           appsSdk
         )
 
+        provider.removeListener = () => {}
+
         return {
           provider,
           instance: appsSdk
