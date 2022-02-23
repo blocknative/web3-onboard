@@ -424,6 +424,30 @@ const xdefi: InjectedWalletModule = {
   platforms: ['all']
 }
 
+const oneInch: InjectedWalletModule = {
+  label: ProviderLabel.OneInch,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.OneInch],
+  getIcon: async () => (await import('./icons/oneInch.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.ethereum)
+  }),
+  platforms: ['mobile']
+}
+
+const tokenary: InjectedWalletModule = {
+  label: ProviderLabel.Tokenary,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Tokenary],
+  getIcon: async () => (await import('./icons/tokenary.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.ethereum)
+  }),
+  platforms: ['mobile']
+}
+
 const wallets = [
   metamask,
   binance,
@@ -448,7 +472,9 @@ const wallets = [
   ownbit,
   tokenpocket,
   tp,
-  xdefi
+  xdefi,
+  oneInch,
+  tokenary
 ]
 
 export default wallets
