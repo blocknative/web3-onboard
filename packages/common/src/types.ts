@@ -479,7 +479,7 @@ export enum ProviderIdentityFlag {
   TP = 'isTp',
   WalletIo = 'isWalletIO',
   XDEFI = 'isXDEFI',
-  OneInch = '1inch'
+  OneInch = 'isOneInchIOSWallet'
 }
 
 export enum ProviderLabel {

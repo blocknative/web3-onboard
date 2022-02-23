@@ -431,7 +431,7 @@ const oneInch: InjectedWalletModule = {
     !!provider && !!provider[ProviderIdentityFlag.OneInch],
   getIcon: async () => (await import('./icons/oneInch.js')).default,
   getInterface: async () => ({
-    provider: (window as any) || ((window as any).web3 && (window as any).web3.currentProvider)
+    provider: (window as any) || ((window as any).ethereum && (window as any).ethereum.currentProvider)
   }),
   platforms: ['mobile']
 }
