@@ -1,16 +1,7 @@
-import type {
-  CustomWindow,
-  EIP1193Provider,
-  InjectedWalletModule,
-  ChainListener
-} from '@web3-onboard/common'
-
-import {
-  createEIP1193Provider,
-  InjectedNameSpace,
-  ProviderIdentityFlag,
-  ProviderLabel
-} from '@web3-onboard/common'
+import type { EIP1193Provider, ChainListener } from '@web3-onboard/common'
+import { createEIP1193Provider } from '@web3-onboard/common'
+import type { InjectedWalletModule, CustomWindow } from './types'
+import { InjectedNameSpace, ProviderIdentityFlag, ProviderLabel } from './types'
 
 declare const window: CustomWindow
 
