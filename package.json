@@ -7,11 +7,13 @@
   "scripts": {
     "install-m1-mac": "yarn install --ignore-optional",
     "format": "prettier --write 'packages/**/*.ts'",
-    "dev": "yarn wsrun dev"
+    "dev": "yarn wsrun dev",
+    "build": "yarn wsrun build"
   },
   "devDependencies": {
     "prettier": "^2.4.1",
     "prettier-plugin-svelte": "^2.4.0",
-    "typescript": "^4.5.5"
+    "typescript": "^4.5.5",
+    "wsrun": "^5.2.4"
   }
 }
