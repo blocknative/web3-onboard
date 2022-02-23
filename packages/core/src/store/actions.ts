@@ -1,4 +1,4 @@
-import type { Chain } from '@bn-onboard/common'
+import type { Chain } from '@web3-onboard/common'
 
 import type {
   Account,
@@ -27,7 +27,10 @@ export function addChains(chains: Chain[]): void {
   // chains are validated on init
   const action = {
     type: ADD_CHAINS,
-    payload: chains
+    payload: chains.map(({ namespace = 'evm', ...rest }) => ({
+      ...rest,
+      namespace
+    }))
   }
 
   dispatch(action as AddChainsAction)

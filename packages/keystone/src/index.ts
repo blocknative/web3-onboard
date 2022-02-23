@@ -5,11 +5,10 @@ import {
   createEIP1193Provider,
   CustomNetwork,
   ProviderRpcErrorCode,
-  GetInterfaceHelpers,
   ProviderRpcError,
   ScanAccountsOptions,
   WalletInit
-} from '@bn-onboard/common'
+} from '@web3-onboard/common'
 import type { providers } from 'ethers'
 
 const DEFAULT_BASE_PATH = "m/44'/60'/0'/0"
@@ -29,7 +28,7 @@ const assets = [
 
 const getAccount = async (
   keyring: any,
-  provider: providers.JsonRpcProvider,
+  provider: providers.StaticJsonRpcProvider,
   index: number
 ): Promise<Account> => {
   const address = (await keyring.addAccounts())[index]
@@ -46,7 +45,7 @@ const getAccount = async (
 
 const generateAccounts = async (
   keyring: any,
-  provider: providers.JsonRpcProvider
+  provider: providers.StaticJsonRpcProvider
 ): Promise<Account[]> => {
   const accounts = []
   let zeroBalanceAccounts = 0,
@@ -78,8 +77,10 @@ function keystone({
     return {
       label: 'Keystone',
       getIcon,
-      getInterface: async ({ EventEmitter, chains }: GetInterfaceHelpers) => {
-        const { JsonRpcProvider } = await import('@ethersproject/providers')
+      getInterface: async ({ EventEmitter, chains }) => {
+        const { StaticJsonRpcProvider } = await import(
+          '@ethersproject/providers'
+        )
         const { default: Common, Hardfork } = await import('@ethereumjs/common')
 
         const { default: AirGappedKeyring } = await import(
@@ -104,7 +105,7 @@ function keystone({
           currentChain =
             chains.find(({ id }: Chain) => id === chainId) || currentChain
 
-          const provider = new JsonRpcProvider(currentChain.rpcUrl)
+          const provider = new StaticJsonRpcProvider(currentChain.rpcUrl)
           return generateAccounts(keyring, provider)
         }
 
@@ -169,6 +170,9 @@ function keystone({
 
             // Set the `from` field to the currently selected account
             transactionObject = { ...transactionObject, from }
+
+            // @ts-ignore -- Due to weird commonjs exports
+            const CommonConstructor = Common.default || Common
 
             const common = new Common({
               chain: customNetwork || Number.parseInt(currentChain.id) || 1,

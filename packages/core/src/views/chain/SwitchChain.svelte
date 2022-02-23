@@ -18,7 +18,7 @@
     position: relative;
     padding: var(--onboard-spacing-4, var(--spacing-4));
     font-family: var(--onboard-font-family-normal, var(--font-family-normal));
-    line-height: var(--onboard-font-line-height-1, var(--font-line-height-1));
+    line-height: 16px;
     font-size: var(--onboard-font-size-5, var(--font-size-5));
   }
 
@@ -26,20 +26,17 @@
     position: absolute;
     top: var(--onboard-spacing-5, var(--spacing-5));
     right: var(--onboard-spacing-5, var(--spacing-5));
+    padding: 0.5rem;
   }
 
   h4 {
     font-size: var(--onboard-font-size-3, var(--font-size-3));
-    font-family: var(
-      --onboard-font-family-semibold,
-      var(--font-family-semibold)
-    );
     margin: var(--onboard-spacing-4, var(--spacing-4)) 0;
   }
 
   p {
     margin: 0 0 var(--onboard-spacing-4, var(--spacing-4)) 0;
-    max-width: 485px;
+    max-width: 488px;
   }
 </style>
 

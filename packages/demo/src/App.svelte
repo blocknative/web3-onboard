@@ -1,18 +1,19 @@
 <script>
   import { share } from 'rxjs/operators'
-  import Onboard from '@bn-onboard/core'
-  import injectedModule from '@bn-onboard/injected-wallets'
+  import Onboard from '@web3-onboard/core'
+  import injectedModule from '@web3-onboard/injected-wallets'
 
-  import trezorModule from '@bn-onboard/trezor'
-  import ledgerModule from '@bn-onboard/ledger'
-  import walletConnectModule from '@bn-onboard/walletconnect'
-  import walletLinkModule from '@bn-onboard/walletlink'
-  import portisModule from '@bn-onboard/portis'
-  import fortmaticModule from '@bn-onboard/fortmatic'
-  import torusModule from '@bn-onboard/torus'
-  import keepkeyModule from '@bn-onboard/keepkey'
-  import keystoneModule from '@bn-onboard/keystone'
+  import trezorModule from '@web3-onboard/trezor'
+  import ledgerModule from '@web3-onboard/ledger'
+  import walletConnectModule from '@web3-onboard/walletconnect'
+  import walletLinkModule from '@web3-onboard/walletlink'
+  import portisModule from '@web3-onboard/portis'
+  import fortmaticModule from '@web3-onboard/fortmatic'
+  import torusModule from '@web3-onboard/torus'
+  import keepkeyModule from '@web3-onboard/keepkey'
+  import keystoneModule from '@web3-onboard/keystone'
   import blocknativeIcon from './blocknative-icon'
+  import blocknativeLogo from './blocknative-logo'
   import VConsole from 'vconsole'
   import { verifyTypedData, verifyMessage } from 'ethers/lib/utils'
 
@@ -119,6 +120,7 @@
     appMetadata: {
       name: 'Blocknative',
       icon: blocknativeIcon,
+      logo: blocknativeLogo,
       description: 'Demo app for Onboard V2',
       recommendedInjectedWallets: [
         { name: 'MetaMask', url: 'https://metamask.io' },
@@ -225,14 +227,14 @@
   {/if}
 
   {#if $wallets$}
-    {#each $wallets$ as { icon, label, accounts, chain, provider }}
+    {#each $wallets$ as { icon, label, accounts, chains, provider }}
       <div class="connected-wallet">
         <div class="flex-centered" style="width: 10rem;">
           <div style="width: 2rem; height: 2rem">{@html icon}</div>
           <span>{label}</span>
         </div>
 
-        <div>Chain: {chain}</div>
+        <div>Chains: {JSON.stringify(chains, null, 2)}</div>
 
         {#each accounts as { address, ens, balance }}
           <div

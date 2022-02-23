@@ -1,10 +1,10 @@
-# @bn-onboard/fortmatic
+# @web3-onboard/fortmatic
 
-## Wallet module for connecting Ledger hardware wallets to Onboard V2
+## Wallet module for connecting Ledger hardware wallets to web3-onboard
 
 ### Install
 
-`npm i @bn-onboard/fortmatic`
+`npm i @web3-onboard/fortmatic`
 
 ## Options
 
@@ -17,8 +17,8 @@ type FortmaticOptions = {
 ## Usage
 
 ```typescript
-import Onboard from '@bn-onboard/core'
-import fortmaticModule from '@bn-onboard/fortmatic'
+import Onboard from '@web3-onboard/core'
+import fortmaticModule from '@web3-onboard/fortmatic'
 
 const fortmatic = fortmaticModule({ apiKey: 'API_KEY' })
 

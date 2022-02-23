@@ -8,7 +8,7 @@
 
 <style>
   button {
-    border: none;
+    outline: none;
     background: inherit;
     font-size: 0.889em;
     font-family: inherit;
@@ -38,7 +38,7 @@
     opacity: 0.4;
   }
   .cta {
-    border: 1px solid #4a90e2;
+    outline: 1px solid #4a90e2;
     border-radius: 40px;
   }
   .cta:hover {

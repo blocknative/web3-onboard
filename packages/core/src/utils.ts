@@ -1,13 +1,12 @@
 import bowser from 'bowser'
 
 import type {
-  ChainId,
-  Chain,
   Device,
   DeviceBrowser,
   DeviceOS,
-  DeviceType
-} from '@bn-onboard/common'
+  DeviceType,
+  ChainId
+} from '@web3-onboard/common'
 
 export const notNullish = <T>(value: T | null | undefined): value is T =>
   value != null
@@ -25,13 +24,6 @@ export function getDeviceInfo(): Device {
   }
 }
 
-export function getRpcUrl(chain: string, chains: Chain[]): string | null {
-  const { rpcUrl } =
-    chains.find(({ id }) => parseInt(id) === parseInt(chain)) || {}
-
-  return rpcUrl || null
-}
-
 export function validEnsChain(chainId: ChainId): boolean {
   switch (chainId) {
     case '0x1':
@@ -42,4 +34,16 @@ export function validEnsChain(chainId: ChainId): boolean {
     default:
       return false
   }
+}
+
+export function isUrl(str: string): boolean {
+  let url
+
+  try {
+    url = new URL(str)
+  } catch (_) {
+    return false
+  }
+
+  return url.protocol === 'http:' || url.protocol === 'https:'
 }

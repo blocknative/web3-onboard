@@ -1,16 +1,16 @@
-# @bn-onboard/keepkey
+# @web3-onboard/keepkey
 
-## Wallet module for connecting KeepKey hardware wallets to Onboard V2
+## Wallet module for connecting KeepKey hardware wallets to web3-onboard
 
 ### Install
 
-`npm i @bn-onboard/keepkey`
+`npm i @web3-onboard/keepkey`
 
 ### Usage
 
 ```typescript
-import Onboard from '@bn-onboard/core'
-import keepkeyModule from '@bn-onboard/keepkey'
+import Onboard from '@web3-onboard/core'
+import keepkeyModule from '@web3-onboard/keepkey'
 
 const keepkey = keepkeyModule()
 

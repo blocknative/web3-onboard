@@ -1,15 +1,15 @@
-# @web3-onboard/ledger
+# @web3-onboard/keystone
 
-## Wallet module for connecting Ledger hardware wallets to web3-onboard
+## Wallet module for connecting Keystone hardware wallets to web3-onboard
 
 ### Install
 
-`npm i @web3-onboard/ledger`
+`npm i @web3-onboard/keystone`
 
 ### Options
 
 ```typescript
-type LedgerOptions = {
+type KeystoneOptions = {
   customNetwork?: CustomNetwork
 }
 
@@ -50,14 +50,14 @@ interface BootstrapNode {
 
 ```typescript
 import Onboard from '@web3-onboard/core'
-import ledgerModule from '@web3-onboard/ledger'
+import keystoneModule from '@web3-onboard/keystone'
 
-const ledger = ledgerModule()
+const keystone = keystoneModule()
 
 const onboard = Onboard({
   // ... other Onboard options
   wallets: [
-    ledger
+    keystone
     //... other wallets
   ]
 })

@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import type { ChainId, WalletModule } from '@bn-onboard/common'
+import type { ChainId, WalletModule } from '@web3-onboard/common'
 
 import type {
   InitOptions,
@@ -9,14 +9,21 @@ import type {
 } from './types'
 
 const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
+const chainNamespace = Joi.string().valid('evm')
 const unknownObject = Joi.object().unknown()
-// const address = Joi.string().pattern(/^0x[a-fA-F0-9]{40}$/)
+// const address = Joi.string().regex(/^0x[a-fA-F0-9]{40}$/)
 
 const chain = Joi.object({
+  namespace: chainNamespace,
   id: chainId.required(),
   rpcUrl: Joi.string().required(),
   label: Joi.string(),
   token: Joi.string()
+})
+
+const connectedChain = Joi.object({
+  namespace: chainNamespace.required(),
+  id: chainId.required()
 })
 
 const ens = Joi.any().allow(
@@ -50,7 +57,7 @@ const wallet = Joi.object({
   icon: Joi.string(),
   provider: unknownObject,
   accounts,
-  chain: Joi.string()
+  chains: Joi.array().items(connectedChain)
 })
 
 const recommendedWallet = Joi.object({
@@ -68,6 +75,7 @@ const appMetadata = Joi.object({
   name: Joi.string().required(),
   description: Joi.string().required(),
   icon: Joi.string().required(),
+  logo: Joi.string(),
   gettingStartedGuide: Joi.string(),
   email: Joi.string(),
   appUrl: Joi.string(),

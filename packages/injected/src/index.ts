@@ -4,9 +4,9 @@ import type {
   WalletInit,
   InjectedWalletOptions,
   CustomWindow
-} from '@bn-onboard/common'
+} from '@web3-onboard/common'
 
-import { ProviderLabel } from '@bn-onboard/common'
+import { ProviderLabel } from '@web3-onboard/common'
 
 import standardWallets from './wallets.js'
 import { remove } from './helpers.js'

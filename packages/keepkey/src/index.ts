@@ -4,9 +4,9 @@ import type {
   Asset,
   Chain,
   WalletInit
-} from '@bn-onboard/common'
+} from '@web3-onboard/common'
 
-import type { JsonRpcProvider } from '@ethersproject/providers'
+import type { StaticJsonRpcProvider } from '@ethersproject/providers'
 import type { ETHAccountPath } from '@shapeshiftoss/hdwallet-core'
 import type { KeepKeyHDWallet } from '@shapeshiftoss/hdwallet-keepkey'
 
@@ -64,9 +64,11 @@ function keepkey(): WalletInit {
           createEIP1193Provider,
           ProviderRpcError,
           entryModal
-        } = await import('@bn-onboard/common')
+        } = await import('@web3-onboard/common')
 
-        const { JsonRpcProvider } = await import('@ethersproject/providers')
+        const { StaticJsonRpcProvider } = await import(
+          '@ethersproject/providers'
+        )
         const ethUtil = await import('ethereumjs-util')
 
         const keyring = new Keyring()
@@ -129,7 +131,7 @@ function keepkey(): WalletInit {
           asset
         }: {
           accountIdx: number
-          provider: JsonRpcProvider
+          provider: StaticJsonRpcProvider
           asset: Asset
         }) => {
           const paths = getPaths(accountIdx)
@@ -159,7 +161,7 @@ function keepkey(): WalletInit {
         }: {
           derivationPath: string
           asset: Asset
-          provider: JsonRpcProvider
+          provider: StaticJsonRpcProvider
         }) => {
           let index = getAccountIdx(derivationPath)
           let zeroBalanceAccounts = 0
@@ -202,7 +204,7 @@ function keepkey(): WalletInit {
           if (!keepKeyWallet)
             throw new Error('Device must be connected before scanning accounts')
           currentChain = chains.find(({ id }) => id === chainId) || currentChain
-          const provider = new JsonRpcProvider(currentChain.rpcUrl)
+          const provider = new StaticJsonRpcProvider(currentChain.rpcUrl)
 
           // Checks to see if this is a custom derivation path
           // If it is then just return the single account
@@ -369,7 +371,10 @@ function keepkey(): WalletInit {
                 addressNList,
                 message:
                   message.slice(0, 2) === '0x'
-                    ? ethUtil.toBuffer(message).toString('utf8')
+                    ? // @ts-ignore - commonjs weirdness
+                      (ethUtil.default || ethUtil)
+                        .toBuffer(message)
+                        .toString('utf8')
                     : message
               })
 

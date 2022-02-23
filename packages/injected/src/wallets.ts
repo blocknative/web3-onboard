@@ -3,14 +3,14 @@ import type {
   EIP1193Provider,
   InjectedWalletModule,
   ChainListener
-} from '@bn-onboard/common'
+} from '@web3-onboard/common'
 
 import {
   createEIP1193Provider,
   InjectedNameSpace,
   ProviderIdentityFlag,
   ProviderLabel
-} from '@bn-onboard/common'
+} from '@web3-onboard/common'
 
 declare const window: CustomWindow
 

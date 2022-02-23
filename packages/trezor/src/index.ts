@@ -6,10 +6,17 @@ import {
   ScanAccountsOptions,
   TransactionObject,
   WalletInit
-} from '@bn-onboard/common/src/types'
-import type { providers } from 'ethers'
-import type { BIP32Interface } from 'bip32'
-import { EthereumTransaction, EthereumTransactionEIP1559 } from 'trezor-connect'
+} from '@web3-onboard/common'
+
+// cannot be dynamically imported
+import { Buffer } from 'buffer'
+
+import type { StaticJsonRpcProvider } from '@ethersproject/providers'
+
+import type {
+  EthereumTransaction,
+  EthereumTransactionEIP1559
+} from 'trezor-connect'
 
 interface TrezorOptions {
   email: string
@@ -42,12 +49,14 @@ const getAccount = async (
   { publicKey, chainCode, path }: AccountData,
   asset: Asset,
   index: number,
-  provider: providers.JsonRpcProvider
+  provider: StaticJsonRpcProvider
 ): Promise<Account> => {
   //@ts-ignore
   const { default: HDKey } = await import('hdkey')
-  const { Buffer } = await import('buffer')
-  const { publicToAddress, toChecksumAddress } = await import('ethereumjs-util')
+  const ethUtil = await import('ethereumjs-util')
+
+  // @ts-ignore - Commonjs importing weirdness
+  const { publicToAddress, toChecksumAddress } = ethUtil.default || ethUtil
 
   const hdk = new HDKey()
 
@@ -73,7 +82,7 @@ const getAccount = async (
 const getAddresses = async (
   account: AccountData,
   asset: Asset,
-  provider: providers.JsonRpcProvider
+  provider: StaticJsonRpcProvider
 ): Promise<Account[]> => {
   const accounts = []
   let index = 0
@@ -114,10 +123,12 @@ function trezor(options: TrezorOptions): WalletInit {
         const { Transaction } = await import('@ethereumjs/tx')
         const { default: Common, Hardfork } = await import('@ethereumjs/common')
         const { accountSelect, createEIP1193Provider, ProviderRpcError } =
-          await import('@bn-onboard/common')
+          await import('@web3-onboard/common')
         const ethUtil = await import('ethereumjs-util')
         const { compress } = (await import('eth-crypto')).publicKey
-        const { JsonRpcProvider } = await import('@ethersproject/providers')
+        const { StaticJsonRpcProvider } = await import(
+          '@ethersproject/providers'
+        )
 
         if (!options || !options.email || !options.appUrl) {
           throw new Error(
@@ -147,7 +158,7 @@ function trezor(options: TrezorOptions): WalletInit {
           asset
         }: ScanAccountsOptions): Promise<Account[]> => {
           currentChain = chains.find(({ id }) => id === chainId) || currentChain
-          const provider = new JsonRpcProvider(currentChain.rpcUrl)
+          const provider = new StaticJsonRpcProvider(currentChain.rpcUrl)
 
           const { publicKey, chainCode, path } = await getPublicKey(
             derivationPath
@@ -324,8 +335,8 @@ function trezor(options: TrezorOptions): WalletInit {
           const transactionData =
             createTrezorTransactionObject(transactionObject)
 
-          // @ts-ignore
-          const CommonConstructor = Common.default
+          // @ts-ignore -- Due to weird commonjs exports
+          const CommonConstructor = Common.default || Common
 
           const common = new CommonConstructor({
             chain: customNetwork || Number.parseInt(currentChain.id) || 1,

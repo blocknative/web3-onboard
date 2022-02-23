@@ -2,7 +2,7 @@ import {
   ProviderRpcErrorCode,
   WalletModule,
   ProviderLabel
-} from '@bn-onboard/common'
+} from '@web3-onboard/common'
 
 export class ProviderRpcError extends Error {
   message: string

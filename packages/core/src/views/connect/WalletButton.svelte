@@ -25,7 +25,7 @@
     transition: background-color 250ms ease-in-out;
     color: var(
       --onboard-wallet-button-color,
-      var(--onboard-black, var(--black))
+      var(--onboard-gray-700, var(--gray-700))
     );
   }
 
@@ -44,7 +44,7 @@
     background-color: var(--onboard-success-100, var(--success-100));
   }
   .name {
-    margin-left: var(--onboard-spacing-5, var(--spacing-5));
+    margin-left: var(--onboard-spacing-4, var(--spacing-4));
   }
 </style>
 

@@ -43,12 +43,15 @@ import type {
   AccountsListener,
   Balance,
   EthAccountsRequest,
-  EthChainIdRequest,
   EthBalanceRequest,
   EIP1102Request,
   SelectAccountsRequest,
-  EIP3085Request,
   EIP3326Request,
+  EIP3085Request,
+  EthChainIdRequest,
+  EthSignTransactionRequest,
+  EthSignMessageRequest,
+  EIP712Request,
   AddChainParams,
   EIP1193Provider,
   MeetOneProvider,
@@ -57,7 +60,8 @@ import type {
   InjectedProvider,
   Chain,
   TokenSymbol,
-  CustomNetwork
+  CustomNetwork,
+  TransactionObject
 } from './types'
 
 export {
@@ -118,12 +122,15 @@ export type {
   AccountsListener,
   Balance,
   EthAccountsRequest,
-  EthChainIdRequest,
   EthBalanceRequest,
   EIP1102Request,
   SelectAccountsRequest,
-  EIP3085Request,
   EIP3326Request,
+  EIP3085Request,
+  EthChainIdRequest,
+  EthSignTransactionRequest,
+  EthSignMessageRequest,
+  EIP712Request,
   AddChainParams,
   EIP1193Provider,
   MeetOneProvider,
@@ -132,5 +139,6 @@ export type {
   InjectedProvider,
   Chain,
   TokenSymbol,
-  CustomNetwork
+  CustomNetwork,
+  TransactionObject
 }

@@ -6,7 +6,11 @@ import type {
   CustomNetwork,
   WalletInit,
   GetInterfaceHelpers
-} from '@bn-onboard/common'
+} from '@web3-onboard/common'
+
+// these cannot be dynamically imported
+import { TypedDataUtils } from '@metamask/eth-sig-util'
+import { Buffer } from 'buffer'
 
 import type Transport from '@ledgerhq/hw-transport'
 import type { providers } from 'ethers'
@@ -60,12 +64,14 @@ const getAccount = async (
   { publicKey, chainCode, derivationPath }: LedgerAccount,
   asset: Asset,
   index: number,
-  provider: providers.JsonRpcProvider
+  provider: providers.StaticJsonRpcProvider
 ): Promise<Account> => {
   //@ts-ignore
   const { default: HDKey } = await import('hdkey')
-  const { Buffer } = await import('buffer')
-  const { publicToAddress, toChecksumAddress } = await import('ethereumjs-util')
+  const ethUtil = await import('ethereumjs-util')
+
+  // @ts-ignore - Commonjs importing weirdness
+  const { publicToAddress, toChecksumAddress } = ethUtil.default || ethUtil
 
   const hdk = new HDKey()
 
@@ -91,7 +97,7 @@ const getAccount = async (
 const getAddresses = async (
   account: LedgerAccount,
   asset: Asset,
-  provider: providers.JsonRpcProvider
+  provider: providers.StaticJsonRpcProvider
 ): Promise<Account[]> => {
   const accounts = []
   let index = 0
@@ -132,15 +138,13 @@ function ledger({
         const { compress } = (await import('eth-crypto')).publicKey
         const ethUtil = await import('ethereumjs-util')
 
-        const {
-          TypedDataUtils: { hashStruct },
-          SignTypedDataVersion
-        } = await import('@metamask/eth-sig-util')
-
-        const { JsonRpcProvider } = await import('@ethersproject/providers')
+        const { SignTypedDataVersion } = await import('@metamask/eth-sig-util')
+        const { StaticJsonRpcProvider } = await import(
+          '@ethersproject/providers'
+        )
 
         const { accountSelect, createEIP1193Provider, ProviderRpcError } =
-          await import('@bn-onboard/common')
+          await import('@web3-onboard/common')
 
         const { TransactionFactory: Transaction, Capability } = await import(
           '@ethereumjs/tx'
@@ -159,7 +163,7 @@ function ledger({
           try {
             currentChain =
               chains.find(({ id }: Chain) => id === chainId) || currentChain
-            const provider = new JsonRpcProvider(currentChain.rpcUrl)
+            const provider = new StaticJsonRpcProvider(currentChain.rpcUrl)
 
             const { publicKey, chainCode, address } = await eth.getAddress(
               derivationPath,
@@ -273,7 +277,10 @@ function ledger({
 
             // Set the `from` field to the currently selected account
             transactionObject = { ...transactionObject, from }
-            const common = new Common({
+
+            // @ts-ignore
+            const CommonConstructor = Common.default || Common
+            const common = new CommonConstructor({
               chain:
                 customNetwork || currentChain.hasOwnProperty('id')
                   ? Number.parseInt(currentChain.id)
@@ -354,14 +361,14 @@ function ledger({
               accounts.find(account => account.address === address) ||
               accounts[0]
 
-            const domainHash = hashStruct(
+            const domainHash = TypedDataUtils.hashStruct(
               'EIP712Domain',
               typedData.domain,
               typedData.types,
               SignTypedDataVersion.V3
             ).toString('hex')
 
-            const messageHash = hashStruct(
+            const messageHash = TypedDataUtils.hashStruct(
               typedData.primaryType,
               typedData.message,
               typedData.types,

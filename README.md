@@ -16,6 +16,8 @@ Install the core Onboard library and the injected wallets module to support brow
 
 `npm i @bn-onboard/core @bn-onboard/injected-wallets`
 
+- [@bn-onboard/core Official NPM Documentation](https://www.npmjs.com/package/@bn-onboard/core)
+
 Then initialize in your app:
 
 ```javascript
@@ -69,13 +71,14 @@ For full documentation, check out the README.md for each package:
 - [Torus](packages/torus/README.md)
 - [WalletConnect](packages/walletconnect/README.md)
 - [WalletLink](packages/walletlink/README.md)
+- Magic (in active development)
 
 **Hardware Wallets**
 
 - [KeepKey](packages/keepkey/README.md)
 - [Ledger](packages/ledger/README.md)
 - [Trezor](packages/trezor/README.md)
-- Keystone (in active development)
+- [Keystone](packages/keystone/README.md)
 
 ## Test out the demo app
 

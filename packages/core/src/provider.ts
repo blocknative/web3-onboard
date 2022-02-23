@@ -1,7 +1,7 @@
 import { fromEventPattern, Observable } from 'rxjs'
 import { filter, takeUntil, take, share, switchMap } from 'rxjs/operators'
 import partition from 'lodash.partition'
-import { providers, utils } from 'ethers'
+import { utils, providers } from 'ethers'
 
 import type {
   ChainId,
@@ -12,14 +12,18 @@ import type {
   AccountsListener,
   ChainListener,
   SelectAccountsRequest
-} from '@bn-onboard/common'
+} from '@web3-onboard/common'
 
 import { disconnectWallet$ } from './streams'
 import type { Account, Address, Balances, Ens, WalletState } from './types'
 import { updateAccount, updateWallet } from './store/actions'
-import { getRpcUrl, validEnsChain } from './utils'
+import { validEnsChain } from './utils'
 import disconnect from './disconnect'
 import { state } from './store'
+
+export const ethersProviders: {
+  [key: string]: providers.StaticJsonRpcProvider
+} = {}
 
 export function requestAccounts(
   provider: EIP1193Provider
@@ -125,34 +129,32 @@ export function trackWallet(
 
         const { wallets, chains } = state.get()
 
-        const { chain, accounts } = wallets.find(
+        const { chains: walletChains, accounts } = wallets.find(
           wallet => wallet.label === label
         )
 
-        const rpcUrl = getRpcUrl(chain, chains)
+        const [connectedWalletChain] = walletChains
 
-        if (rpcUrl) {
-          const ethersProvider = new providers.JsonRpcProvider(rpcUrl)
+        const chain = chains.find(
+          ({ namespace, id }) =>
+            namespace === 'evm' && id === connectedWalletChain.id
+        )
 
-          const balanceProm = getBalance(
-            ethersProvider,
-            address,
-            chains.find(({ id }) => id === chain)
-          )
+        const balanceProm = getBalance(address, chain)
+        const account = accounts.find(account => account.address === address)
 
-          const account = accounts.find(account => account.address === address)
+        const ensProm = account.ens
+          ? Promise.resolve(account.ens)
+          : validEnsChain(connectedWalletChain.id)
+          ? getEns(address, chain)
+          : Promise.resolve(null)
 
-          const ensProm = account.ens
-            ? Promise.resolve(account.ens)
-            : validEnsChain(chain)
-            ? getEns(ethersProvider, address)
-            : Promise.resolve(null)
-
-          return Promise.all([Promise.resolve(address), balanceProm, ensProm])
-        }
+        return Promise.all([Promise.resolve(address), balanceProm, ensProm])
       })
     )
-    .subscribe(([address, balance, ens]) => {
+    .subscribe(res => {
+      if (!res) return
+      const [address, balance, ens] = res
       updateAccount(label, address, { balance, ens })
     })
 
@@ -163,9 +165,10 @@ export function trackWallet(
   // Update chain on wallet when chainId changed
   chainChanged$.subscribe(chainId => {
     const { wallets } = state.get()
-    const { chain, accounts } = wallets.find(wallet => wallet.label === label)
+    const { chains, accounts } = wallets.find(wallet => wallet.label === label)
+    const [connectedWalletChain] = chains
 
-    if (chainId === chain) return
+    if (chainId === connectedWalletChain.id) return
 
     const resetAccounts = accounts.map(
       ({ address }) =>
@@ -176,7 +179,10 @@ export function trackWallet(
         } as Account)
     )
 
-    updateWallet(label, { chain: chainId, accounts: resetAccounts })
+    updateWallet(label, {
+      chains: [{ namespace: 'evm', id: chainId }],
+      accounts: resetAccounts
+    })
   })
 
   // when chain changes get ens and balance for each account for wallet
@@ -185,33 +191,28 @@ export function trackWallet(
       switchMap(async chainId => {
         const { wallets, chains } = state.get()
         const { accounts } = wallets.find(wallet => wallet.label === label)
-        const rpcUrl = getRpcUrl(chainId, chains)
 
-        if (rpcUrl) {
-          const ethersProvider = new providers.JsonRpcProvider(rpcUrl)
+        const chain = chains.find(
+          ({ namespace, id }) => namespace === 'evm' && id === chainId
+        )
 
-          return Promise.all(
-            accounts.map(async ({ address }) => {
-              const balanceProm = getBalance(
-                ethersProvider,
-                address,
-                chains.find(({ id }) => id === chainId)
-              )
+        return Promise.all(
+          accounts.map(async ({ address }) => {
+            const balanceProm = getBalance(address, chain)
 
-              const ensProm = validEnsChain(chainId)
-                ? getEns(ethersProvider, address)
-                : Promise.resolve(null)
+            const ensProm = validEnsChain(chainId)
+              ? getEns(address, chain)
+              : Promise.resolve(null)
 
-              const [balance, ens] = await Promise.all([balanceProm, ensProm])
+            const [balance, ens] = await Promise.all([balanceProm, ensProm])
 
-              return {
-                address,
-                balance,
-                ens
-              }
-            })
-          )
-        }
+            return {
+              address,
+              balance,
+              ens
+            }
+          })
+        )
       })
     )
     .subscribe(updatedAccounts => {
@@ -224,40 +225,65 @@ export function trackWallet(
 }
 
 export async function getEns(
-  ethersProvider: providers.JsonRpcProvider,
-  address: Address
+  address: Address,
+  chain: Chain
 ): Promise<Ens | null> {
-  const name = await ethersProvider.lookupAddress(address)
-  let ens = null
-
-  if (name) {
-    const resolver = await ethersProvider.getResolver(name)
-
-    if (resolver) {
-      const contentHash = await resolver.getContentHash()
-      const getText = resolver.getText.bind(resolver)
-
-      ens = {
-        name,
-        contentHash,
-        getText
-      }
-    }
+  if (!ethersProviders[chain.rpcUrl]) {
+    ethersProviders[chain.rpcUrl] = new providers.StaticJsonRpcProvider(
+      chain.rpcUrl
+    )
   }
 
-  return ens
+  const provider = ethersProviders[chain.rpcUrl]
+
+  try {
+    const name = await provider.lookupAddress(address)
+    let ens = null
+
+    if (name) {
+      const resolver = await provider.getResolver(name)
+
+      if (resolver) {
+        const contentHash = await resolver.getContentHash()
+        const getText = resolver.getText.bind(resolver)
+
+        ens = {
+          name,
+          contentHash,
+          getText
+        }
+      }
+    }
+
+    return ens
+  } catch (error) {
+    console.error(error)
+    return null
+  }
 }
 
 export async function getBalance(
-  ethersProvider: providers.JsonRpcProvider,
   address: string,
   chain: Chain
 ): Promise<Balances | null> {
-  const balanceWei = await ethersProvider.getBalance(address)
+  if (!ethersProviders[chain.rpcUrl]) {
+    ethersProviders[chain.rpcUrl] = new providers.StaticJsonRpcProvider(
+      chain.rpcUrl
+    )
+  }
 
-  return balanceWei
-    ? { [chain.token || 'eth']: utils.formatEther(balanceWei) }
-    : null
+  const provider = ethersProviders[chain.rpcUrl]
+
+  try {
+    const balanceWei = await provider.getBalance(address)
+
+    return balanceWei
+      ? { [chain.token || 'eth']: utils.formatEther(balanceWei) }
+      : null
+  } catch (error) {
+    console.error(error)
+    return null
+  }
 }
 
 export function switchChain(

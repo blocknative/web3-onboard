@@ -1,10 +1,10 @@
-# @bn-onboard/walletconnect
+# @web3-onboard/walletconnect
 
-## Wallet module for connecting Ledger hardware wallets to Onboard V2
+## Wallet module for connecting Ledger hardware wallets to web3-onboard
 
 ### Install
 
-`npm i @bn-onboard/walletconnect`
+`npm i @web3-onboard/walletconnect`
 
 ## Options
 
@@ -20,8 +20,8 @@ type WalletConnectOptions = {
 ## Usage
 
 ```typescript
-import Onboard from '@bn-onboard/core'
-import walletConnectModule from '@bn-onboard/walletconnect'
+import Onboard from '@web3-onboard/core'
+import walletConnectModule from '@web3-onboard/walletconnect'
 
 // initialize the module with options
 const walletConnect = walletConnectModule({

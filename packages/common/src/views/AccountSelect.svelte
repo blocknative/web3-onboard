@@ -211,6 +211,7 @@
 
   .close {
     cursor: pointer;
+    padding: 0.5rem;
   }
 
   .container {

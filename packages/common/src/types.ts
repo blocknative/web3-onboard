@@ -124,8 +124,11 @@ export interface AppMetadata {
   /* App name */
   name: string
 
-  /* SVG icon string, with height set to 100% */
+  /* SVG icon string or image url, with height set to 100% */
   icon: string
+
+  /* SVG logo (icon and text) string or image url, with width set to 100% */
+  logo?: string
 
   /* Description of app*/
   description?: string
@@ -325,6 +328,7 @@ export interface TransactionObject {
   gasLimit?: string
   gasPrice?: string
   to: string
+  chainId: number
   value?: string
   maxFeePerGas?: string
   maxPriorityFeePerGas?: string
@@ -521,6 +525,7 @@ export enum ProviderRpcErrorCode {
 }
 
 export interface Chain {
+  namespace: 'evm'
   id: ChainId
   rpcUrl: string
   label?: string
