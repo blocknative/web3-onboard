@@ -122,8 +122,7 @@
       description: 'Demo app for Onboard V2',
       recommendedInjectedWallets: [
         { name: 'MetaMask', url: 'https://metamask.io' },
-        { name: 'Coinbase', url: 'https://wallet.coinbase.com/' },
-        { name: 'OneInch', url: `https://wallet.1inch.io?url=${window.location.host}`}
+        { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
       ],
       agreement: {
         version: '1.0.0',

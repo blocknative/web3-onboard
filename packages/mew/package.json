@@ -1,0 +1,27 @@
+{
+  "name": "@bn-onboard/mew",
+  "version": "2.0.0-alpha.7",
+  "description": "MEW module for Onboard.js",
+  "module": "dist/index.js",
+  "browser": "dist/index.js",
+  "main": "dist/index.js",
+  "type": "module",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w",
+    "test": "ava"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "@bn-onboard/common": "^2.0.0-alpha.5",
+    "@myetherwallet/mewconnect-web-client": "^2.2.0-beta.14",
+    "rxjs": "^7.5.2"
+  }
+}
