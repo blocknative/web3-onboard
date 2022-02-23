@@ -4,11 +4,3 @@ dist/
 package-lock.json
 .rpt2_cache
 .vscode
-*.patch
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
