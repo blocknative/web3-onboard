@@ -1,10 +1,24 @@
 {
-  "name": "onboard-v2-monorepo",
+  "name": "web3-onboard-monorepo",
   "private": true,
   "workspaces": [
     "./packages/*"
   ],
   "scripts": {
-    "format": "prettier --write 'packages/**/*.ts'"
+    "format": "prettier --write 'packages/**/*.ts'",
+    "dev": "yarn wsrun dev"
+  },
+  "devDependencies": {
+    "@ava/typescript": "^2.0.0",
+    "@swc/cli": "^0.1.51",
+    "@swc/core": "^1.2.92",
+    "@types/node": "^16.10.3",
+    "ava": "^3.15.0",
+    "browser-env": "^3.3.0",
+    "prettier": "^2.4.1",
+    "prettier-plugin-svelte": "^2.4.0",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.5.5",
+    "window": "^4.2.7"
   }
 }

@@ -86,8 +86,7 @@ If you would like to test out the current functionality of V2 in a small browser
 
 - Clone the repo: `git clone git@github.com:blocknative/onboard.git`
 - Change in to the onboard directory: `cd onboard`
-- Checkout the V2 feature branch: `git checkout feature/v2`
+- Checkout the V2 feature branch: `git checkout v2-web-onboard`
 - Install the dependencies: `yarn`
-- Setup the monorepo symlinks: `yarn setup`
 - Run all packages in dev mode: `yarn dev`
 - [View demo app in the browser](http://localhost:8080)
