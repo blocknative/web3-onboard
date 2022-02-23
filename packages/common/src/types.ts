@@ -481,7 +481,8 @@ export enum ProviderIdentityFlag {
   TokenPocket = 'isTokenPocket',
   TP = 'isTp',
   WalletIo = 'isWalletIO',
-  XDEFI = 'isXDEFI'
+  XDEFI = 'isXDEFI',
+  OneInch = 'isOneInchIOSWallet'
 }
 
 export enum ProviderLabel {
@@ -509,7 +510,8 @@ export enum ProviderLabel {
   TokenPocket = 'TokenPocket',
   TP = 'TP Wallet',
   WalletIo = 'Wallet.io',
-  XDEFI = 'XDEFI Wallet'
+  XDEFI = 'XDEFI Wallet',
+  OneInch = '1inch Wallet'
 }
 
 export enum ProviderRpcErrorCode {
