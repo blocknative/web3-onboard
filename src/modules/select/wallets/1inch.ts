@@ -16,7 +16,7 @@ function oneInchWallet(options: CommonWalletOptions): WalletModule {
       const { createModernProviderInterface, getProviderName } = helpers
       const windowAsAny = window as any
       const provider =
-        windowAsAny || (windowAsAny.web3 && windowAsAny.web3.currentProvider)
+        windowAsAny.ethereum
 
       return {
         provider,

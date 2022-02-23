@@ -369,10 +369,6 @@ export function getProviderName(provider: any): string | undefined {
     return '1inch'
   }
 
-  if (provider.isOneInchIOSWallet) {
-    return '1inch'
-  }
-
   // =====================================
   // When adding new wallet place above this metamask check as some providers
   // have an isMetaMask property in addition to the wallet's own `is[WalletName]`
