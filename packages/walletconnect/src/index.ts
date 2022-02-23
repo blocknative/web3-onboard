@@ -6,7 +6,6 @@ import {
 } from '@web3-onboard/common'
 
 import { ProviderRpcError } from '@web3-onboard/common'
-import { EventEmitter } from 'stream'
 
 interface WalletConnectOptions {
   bridge?: string
@@ -44,9 +43,9 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
           public connector: InstanceType<typeof WalletConnect>
           public chains: Chain[]
           public disconnect: EIP1193Provider['disconnect']
-          public emit: EventEmitter['emit']
-          public on: EventEmitter['on']
-          public removeListener: EventEmitter['removeListener']
+          public emit: typeof EventEmitter['emit']
+          public on: typeof EventEmitter['on']
+          public removeListener: typeof EventEmitter['removeListener']
 
           private disconnected$: InstanceType<typeof Subject>
 

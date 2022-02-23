@@ -81,7 +81,7 @@ commands:
       - *test-build-flag
       # Services and packages in a Workspace don't get their own
       # yarn.lock so we need to generate them manually.
-      # - *generate-lock-file
+      - *generate-lock-file
       - *restore-cache
       - run:
           name: Build
