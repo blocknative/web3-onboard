@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/core",
-  "version": "2.0.0-alpha.2",
+  "version": "2.0.0-alpha.3",
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
@@ -39,7 +39,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.0.0-alpha.1",
+    "@web3-onboard/common": "^2.0.0-alpha.3",
     "bowser": "^2.11.0",
     "ethers": "5.5.3",
     "eventemitter3": "^4.0.7",
