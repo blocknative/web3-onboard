@@ -1,4 +1,4 @@
-import type { WalletInit, EIP1193Provider } from '@web3-onboard/common'
+import type { WalletInit } from '@web3-onboard/common'
 
 type GnosisOptions = {
   whitelistedDomains: RegExp[]
@@ -28,13 +28,11 @@ function gnosis(options?: GnosisOptions): WalletInit {
 
         const safe = await appsSdk.safe.getInfo()
 
-        const provider: EIP1193Provider = new SafeAppProvider(
+        const provider = new SafeAppProvider(
           safe,
           // @ts-ignore
           appsSdk
         )
-
-        provider.removeListener = () => {}
 
         return {
           provider,
