@@ -42,13 +42,13 @@ aliases:
   - &restore-cache
     restore_cache:
       keys:
-        - dependencies-cache-{{ checksum "yarn.lock" }}
+        - dependencies-cache-v1-{{ checksum "yarn.lock" }}
 
   - &save-cache
     save_cache:
       paths:
         - node_modules
-      key: dependencies-cache-{{ checksum "yarn.lock" }}
+      key: dependencies-cache-v1-{{ checksum "yarn.lock" }}
 
   - &create-npm-config
     run:
