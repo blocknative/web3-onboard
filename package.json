@@ -5,6 +5,7 @@
     "./packages/*"
   ],
   "scripts": {
+    "install-m1-mac": "yarn install --ignore-optional",
     "format": "prettier --write 'packages/**/*.ts'",
     "dev": "yarn wsrun dev"
   },

@@ -19,9 +19,11 @@
   "devDependencies": {
     "typescript": "^4.5.5"
   },
+  "optionalDependencies": {
+    "@myetherwallet/mewconnect-web-client": "^2.2.0-beta.14"
+  },
   "dependencies": {
     "@web3-onboard/common": "^2.0.0-alpha.3",
-    "@myetherwallet/mewconnect-web-client": "^2.2.0-beta.14",
     "rxjs": "^7.5.2"
   }
 }
