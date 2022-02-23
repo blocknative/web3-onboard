@@ -21,6 +21,6 @@
   },
   "dependencies": {
     "@web3-onboard/common": "^2.0.0-alpha.1",
-    "walletlink": "^2.4.7"
+    "walletlink": "^2.5.0"
   }
 }
