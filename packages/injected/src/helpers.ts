@@ -1,5 +1,5 @@
 import { ProviderRpcErrorCode, WalletModule } from '@web3-onboard/common'
-import { ProviderLabel } from './types'
+import { ProviderLabel } from './types.js'
 
 export class ProviderRpcError extends Error {
   message: string
