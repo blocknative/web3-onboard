@@ -1,6 +1,5 @@
 import type {
   RequestPatch,
-  EventCallback,
   AccountSelectAPI,
   SelectAccountOptions,
   BasePath,
@@ -15,13 +14,10 @@ import type {
   RecommendedInjectedWallets,
   WalletInit,
   WalletHelpers,
-  WalletExclusions,
-  InjectedWalletOptions,
   APIKey,
   Device,
   WalletModule,
   GetInterfaceHelpers,
-  InjectedWalletModule,
   Platform,
   DeviceOS,
   DeviceBrowser,
@@ -54,23 +50,13 @@ import type {
   EIP712Request,
   AddChainParams,
   EIP1193Provider,
-  MeetOneProvider,
-  BinanceProvider,
-  CustomWindow,
-  InjectedProvider,
   Chain,
   TokenSymbol,
   CustomNetwork,
   TransactionObject
 } from './types'
 
-export {
-  ProviderIdentityFlag,
-  ProviderLabel,
-  ProviderRpcErrorCode,
-  InjectedNameSpace
-} from './types'
-
+export { ProviderRpcErrorCode } from './types'
 export { ProviderRpcError } from './errors'
 export { createEIP1193Provider } from './eip-1193'
 export { default as accountSelect } from './account-select'
@@ -79,7 +65,6 @@ export { SofiaProLight, SofiaProRegular, SofiaProSemiBold } from './fonts'
 
 export type {
   RequestPatch,
-  EventCallback,
   AccountSelectAPI,
   SelectAccountOptions,
   BasePath,
@@ -94,13 +79,10 @@ export type {
   RecommendedInjectedWallets,
   WalletInit,
   WalletHelpers,
-  WalletExclusions,
-  InjectedWalletOptions,
   APIKey,
   Device,
   WalletModule,
   GetInterfaceHelpers,
-  InjectedWalletModule,
   Platform,
   DeviceOS,
   DeviceBrowser,
@@ -133,10 +115,6 @@ export type {
   EIP712Request,
   AddChainParams,
   EIP1193Provider,
-  MeetOneProvider,
-  BinanceProvider,
-  CustomWindow,
-  InjectedProvider,
   Chain,
   TokenSymbol,
   CustomNetwork,

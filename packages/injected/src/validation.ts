@@ -1,4 +1,4 @@
-import { InjectedWalletOptions } from '@web3-onboard/common'
+import { InjectedWalletOptions } from './types'
 
 import Joi from 'joi'
 

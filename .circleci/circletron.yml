@@ -1,2 +1,0 @@
-# @TODO - remove "feature/v2" once finished testing CI
-targetBranches: ^(release/|main$|develop$|feature/v2)

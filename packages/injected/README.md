@@ -40,8 +40,7 @@ Injected wallets that you do not want to support can be filtered based on the `P
 
 ```javascript
 import Onboard from '@web3-onboard/core'
-import injectedModule from '@web3-onboard/injected-wallets'
-import { ProviderLabel } from '@web3-onboard/common'
+import injectedModule, { ProviderLabel } from '@web3-onboard/injected-wallets'
 
 const MAINNET_RPC_URL = 'https://mainnet.infura.io/v3/<INFURA_KEY>'
 
@@ -61,8 +60,7 @@ Or you may want to only filter the 'Detected Wallet' on a select few platforms:
 
 ```javascript
 import Onboard from '@web3-onboard/core'
-import injectedModule from '@web3-onboard/injected-wallets'
-import { ProviderLabel } from '@web3-onboard/common'
+import injectedModule, { ProviderLabel } from '@web3-onboard/injected-wallets'
 
 const MAINNET_RPC_URL = 'https://mainnet.infura.io/v3/<INFURA_KEY>'
 

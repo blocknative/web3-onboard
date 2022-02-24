@@ -1,4 +1,4 @@
-import type { ethers, providers, BigNumber } from 'ethers'
+import type { ethers, BigNumber } from 'ethers'
 import type EventEmitter from 'eventemitter3'
 import type { TypedData as EIP712TypedData } from 'eip-712'
 export type { TypedData as EIP712TypedData } from 'eip-712'
@@ -61,14 +61,6 @@ export type RequestPatch = {
         params: EIP3085Request['params']
       }) => Promise<null>)
     | null
-}
-
-export interface EventCallback {
-  connect?: <T = ProviderInfo>(info: T) => ProviderInfo
-  disconnect?: <T = ProviderRpcError>(error: T) => ProviderRpcError
-  message?: <T = ProviderMessage>(message: T) => ProviderMessage
-  chainChanged?: <T = ChainId>(chainId: T) => ChainId
-  accountsChanged?: <T = ProviderAccounts>(accounts: T) => ProviderAccounts
 }
 
 // eslint-disable-next-line max-len
@@ -168,23 +160,6 @@ export type WalletHelpers = {
   device: Device
 }
 
-export type WalletExclusions = {
-  // A provider label mapped to a list of excluded platforms
-  // or a boolean indicating if it should be included.
-  [key in ProviderLabel | string]?: Platform[] | boolean
-}
-
-export interface InjectedWalletOptions {
-  // A list of injected wallets to include that
-  // are not included by default here: ./packages/injected/
-  custom?: InjectedWalletModule[]
-  // A mapping of a provider label to a list of filtered platforms
-  // or a boolean indicating if it should be included or not.
-  // By default all wallets listed in ./packages/injected/
-  // are included add them to here to remove them.
-  filter?: WalletExclusions
-}
-
 export interface APIKey {
   apiKey: string
 }
@@ -193,33 +168,6 @@ export type Device = {
   os: DeviceOS
   type: DeviceType
   browser: DeviceBrowser
-}
-
-export interface WalletModule {
-  // The label of the wallet
-  label: ProviderLabel | string
-  /**
-   * Gets the icon of the wallet
-   * @returns
-   */
-  getIcon: () => Promise<string>
-  /**
-   * @returns the wallet interface associated with the module
-   */
-  getInterface: (helpers: GetInterfaceHelpers) => Promise<WalletInterface>
-}
-
-export type GetInterfaceHelpers = {
-  chains: Chain[]
-  appMetadata: AppMetadata | null
-  BigNumber: typeof ethers.BigNumber
-  EventEmitter: typeof EventEmitter
-}
-
-export interface InjectedWalletModule extends WalletModule {
-  injectedNamespace: InjectedNameSpace
-  checkProviderIdentity: (helpers: { provider: any; device: Device }) => boolean
-  platforms: Platform[]
 }
 
 export type Platform = DeviceOSName | DeviceBrowserName | DeviceType | 'all'
@@ -253,6 +201,27 @@ export type DeviceBrowserName =
   | 'Safari'
 
 export type DeviceType = 'desktop' | 'mobile' | 'tablet'
+
+export interface WalletModule {
+  // The label of the wallet
+  label: string
+  /**
+   * Gets the icon of the wallet
+   * @returns
+   */
+  getIcon: () => Promise<string>
+  /**
+   * @returns the wallet interface associated with the module
+   */
+  getInterface: (helpers: GetInterfaceHelpers) => Promise<WalletInterface>
+}
+
+export type GetInterfaceHelpers = {
+  chains: Chain[]
+  appMetadata: AppMetadata | null
+  BigNumber: typeof ethers.BigNumber
+  EventEmitter: typeof EventEmitter
+}
 
 export type ChainId = string
 
@@ -418,104 +387,6 @@ export interface EIP1193Provider extends SimpleEventEmitter {
   disconnect?(): void
 }
 
-export interface MeetOneProvider extends providers.ExternalProvider {
-  wallet?: string
-}
-
-export interface BinanceProvider extends EIP1193Provider {
-  bbcSignTx: () => void
-  requestAccounts: () => Promise<ProviderAccounts>
-  isUnlocked: boolean
-}
-
-export enum InjectedNameSpace {
-  Ethereum = 'ethereum',
-  Binance = 'BinanceChain',
-  Web3 = 'web3',
-  Arbitrum = 'arbitrum',
-  XFI = 'xfi'
-}
-
-//   Arbitrum = 'arbitrum'
-export interface CustomWindow extends Window {
-  BinanceChain: BinanceProvider
-  ethereum: InjectedProvider
-  web3: providers.ExternalProvider | MeetOneProvider
-  arbitrum: InjectedProvider
-  xfi: {
-    ethereum: InjectedProvider
-  }
-}
-
-export type InjectedProvider = providers.ExternalProvider &
-  BinanceProvider &
-  MeetOneProvider &
-  providers.ExternalProvider &
-  Record<string, boolean>
-
-/**
- * The `ProviderIdentityFlag` is a property on an injected provider
- * that uniquely identifies that provider
- */
-export enum ProviderIdentityFlag {
-  AlphaWallet = 'isAlphaWallet',
-  AToken = 'isAToken',
-  Binance = 'bbcSignTx',
-  Bitpie = 'isBitpie',
-  BlankWallet = 'isBlank',
-  Coinbase = 'isToshi',
-  CoinbaseExtension = 'isCoinbaseWallet',
-  Detected = 'request',
-  Dcent = 'isDcentWallet',
-  Frame = 'isFrame',
-  HuobiWallet = 'isHbWallet',
-  HyperPay = 'isHyperPay',
-  ImToken = 'isImToken',
-  Liquality = 'isLiquality',
-  MeetOne = 'wallet',
-  MetaMask = 'isMetaMask',
-  MyKey = 'isMYKEY',
-  OwnBit = 'isOwnbit',
-  Status = 'isStatus',
-  Trust = 'isTrust',
-  TokenPocket = 'isTokenPocket',
-  TP = 'isTp',
-  WalletIo = 'isWalletIO',
-  XDEFI = 'isXDEFI',
-  OneInch = 'isOneInchIOSWallet',
-  Tokenary = 'isTokenary'
-}
-
-export enum ProviderLabel {
-  AlphaWallet = 'AlphaWallet',
-  AToken = 'AToken',
-  Binance = 'Binance Smart Wallet',
-  Bitpie = 'Bitpie',
-  BlankWallet = 'BlankWallet',
-  Brave = 'Brave Wallet',
-  Coinbase = 'Coinbase Wallet',
-  Dcent = `D'CENT`,
-  Detected = 'Detected Wallet',
-  Frame = 'Frame',
-  HuobiWallet = 'Huobi Wallet',
-  HyperPay = 'HyperPay',
-  ImToken = 'imToken',
-  Liquality = 'Liquality',
-  MeetOne = 'MeetOne',
-  MetaMask = 'MetaMask',
-  MyKey = 'MyKey',
-  Opera = 'Opera Wallet',
-  OwnBit = 'OwnBit',
-  Status = 'Status Wallet',
-  Trust = 'Trust Wallet',
-  TokenPocket = 'TokenPocket',
-  TP = 'TP Wallet',
-  WalletIo = 'Wallet.io',
-  XDEFI = 'XDEFI Wallet',
-  OneInch = '1inch Wallet',
-  Tokenary = 'Tokenary Wallet'
-}
-
 export enum ProviderRpcErrorCode {
   ACCOUNT_ACCESS_REJECTED = 4001,
   ACCOUNT_ACCESS_ALREADY_REQUESTED = -32002,
@@ -529,7 +400,7 @@ export enum ProviderRpcErrorCode {
 }
 
 export interface Chain {
-  namespace: 'evm'
+  namespace?: 'evm'
   id: ChainId
   rpcUrl: string
   label?: string

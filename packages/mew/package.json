@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/mew",
-  "version": "2.0.0-alpha.1",
+  "version": "2.0.0-alpha.4",
   "description": "MEW module for web3-onboard",
   "module": "dist/index.js",
   "browser": "dist/index.js",
@@ -19,9 +19,11 @@
   "devDependencies": {
     "typescript": "^4.5.5"
   },
+  "optionalDependencies": {
+    "@myetherwallet/mewconnect-web-client": "^2.2.0-beta.14"
+  },
   "dependencies": {
-    "@web3-onboard/common": "^2.0.0-alpha.1",
-    "@myetherwallet/mewconnect-web-client": "^2.2.0-beta.14",
+    "@web3-onboard/common": "^2.0.0-alpha.4",
     "rxjs": "^7.5.2"
   }
 }

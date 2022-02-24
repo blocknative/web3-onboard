@@ -27,8 +27,12 @@ function gnosis(options?: GnosisOptions): WalletInit {
         const appsSdk = new SafeAppsSDK(opts)
 
         const safe = await appsSdk.safe.getInfo()
-        // @ts-ignore
-        const provider = new SafeAppProvider(safe, appsSdk)
+
+        const provider = new SafeAppProvider(
+          safe,
+          // @ts-ignore
+          appsSdk
+        )
 
         return {
           provider,

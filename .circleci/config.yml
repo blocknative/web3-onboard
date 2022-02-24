@@ -1,9 +1,240 @@
 version: 2.1
-setup: true
-orbs:
-  circletron: circletron/circletron@3.0.4
+
+aliases:
+  - &docker-image
+    docker:
+      - image: cimg/node:16.13.1
+
+  - &install_typescript_globally
+    run:
+      name: Install Typescript globally
+      command: yarn global add typescript
+
+  - &deploy
+    run:
+      name: Deploy
+      command: yarn deploy
+
+  - &deploy_production_filters
+    filters:
+      branches:
+        only: v2-web3-onboard
+
+  - &restore-build-flag
+    restore_cache:
+      keys:
+        - build-flag-{{ checksum "package.json" }}
+
+  - &test-build-flag
+    run:
+      name: Exit if build flag exists
+      command: |
+        FILE=build.flag
+        if test -f "$FILE"; then
+            echo "$FILE exist"
+            circleci step halt
+        fi
+  - &generate-lock-file
+    run:
+      name: Generate lock file
+      command: yarn generate-lock-entry >> yarn.lock
+
+  - &restore-cache
+    restore_cache:
+      keys:
+        - dependencies-cache-v1-{{ checksum "yarn.lock" }}
+
+  - &save-cache
+    save_cache:
+      paths:
+        - node_modules
+      key: dependencies-cache-v1-{{ checksum "yarn.lock" }}
+
+  - &create-npm-config
+    run:
+      name: Create NPM rc file
+      command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
+
+  - &publish-npm
+    run:
+      name: Publish package to NPM
+      command: npm publish --access public
+
+commands:
+  save-build-flag:
+    steps:
+      - run:
+          name: Create build flag
+          command: touch build.flag
+      - save_cache:
+          paths:
+            - build.flag
+          key: build-flag-{{ checksum "package.json" }}
+
+  node-build-steps:
+    steps:
+      - checkout:
+          # Since our working_directory is deeper than the root,
+          # remind the job where it needs to checkout.
+          path: ~/web3-onboard-monorepo
+      - *restore-build-flag
+      - *test-build-flag
+      # Services and packages in a Workspace don't get their own
+      # yarn.lock so we need to generate them manually.
+      - *generate-lock-file
+      - *restore-cache
+      - run:
+          name: Build
+          command: |
+            yarn
+            yarn build
+      - *save-cache
+      - *create-npm-config
+      - *publish-npm
+      - save-build-flag
+
+jobs:
+  build-core:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/core
+    steps:
+      - node-build-steps
+  build-common:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/common
+    steps:
+      - node-build-steps
+  build-fortmatic:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/fortmatic
+    steps:
+      - node-build-steps
+  build-gnosis:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/gnosis
+    steps:
+      - node-build-steps
+  build-injected:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/injected
+    steps:
+      - node-build-steps
+  build-keepkey:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/keepkey
+    steps:
+      - node-build-steps
+  build-keystone:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/keystone
+    steps:
+      - node-build-steps
+  build-ledger:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/ledger
+    steps:
+      - node-build-steps
+  build-mew:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/mew
+    steps:
+      - node-build-steps
+  build-portis:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/portis
+    steps:
+      - node-build-steps
+  build-torus:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/torus
+    steps:
+      - node-build-steps
+  build-trezor:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/trezor
+    steps:
+      - node-build-steps
+  build-walletconnect:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/walletconnect
+    steps:
+      - node-build-steps
+  build-walletlink:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/walletlink
+    steps:
+      - node-build-steps
 
 workflows:
-  trigger-jobs:
+  version: 2
+  common:
     jobs:
-      - circletron/trigger-jobs
+      - build-common:
+          <<: *deploy_production_filters
+  core:
+    jobs:
+      - build-core:
+          <<: *deploy_production_filters
+
+  fortmatic:
+    jobs:
+      - build-fortmatic:
+          <<: *deploy_production_filters
+  gnosis:
+    jobs:
+      - build-gnosis:
+          <<: *deploy_production_filters
+  injected:
+    jobs:
+      - build-injected:
+          <<: *deploy_production_filters
+  keepkey:
+    jobs:
+      - build-keepkey:
+          <<: *deploy_production_filters
+  keystone:
+    jobs:
+      - build-keystone:
+          <<: *deploy_production_filters
+  ledger:
+    jobs:
+      - build-ledger:
+          <<: *deploy_production_filters
+  mew:
+    jobs:
+      - build-mew:
+          <<: *deploy_production_filters
+  portis:
+    jobs:
+      - build-portis:
+          <<: *deploy_production_filters
+  torus:
+    jobs:
+      - build-torus:
+          <<: *deploy_production_filters
+  trezor:
+    jobs:
+      - build-trezor:
+          <<: *deploy_production_filters
+  walletconnect:
+    jobs:
+      - build-walletconnect:
+          <<: *deploy_production_filters
+  walletlink:
+    jobs:
+      - build-walletlink:
+          <<: *deploy_production_filters
