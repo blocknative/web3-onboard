@@ -1,7 +1,11 @@
 import type { EIP1193Provider, ChainListener } from '@web3-onboard/common'
 import { createEIP1193Provider } from '@web3-onboard/common'
-import type { InjectedWalletModule, CustomWindow } from './types'
-import { InjectedNameSpace, ProviderIdentityFlag, ProviderLabel } from './types'
+import type { InjectedWalletModule, CustomWindow } from './types.js'
+import {
+  InjectedNameSpace,
+  ProviderIdentityFlag,
+  ProviderLabel
+} from './types.js'
 
 declare const window: CustomWindow
 

@@ -1,4 +1,4 @@
-import { InjectedWalletOptions } from './types'
+import { InjectedWalletOptions } from './types.js'
 
 import Joi from 'joi'
 
