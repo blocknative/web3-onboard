@@ -83,7 +83,7 @@ function select(
       // This wallet is built into onboard so add the walletName and
       // the code below will load it as a wallet module
       wallets.unshift({ walletName: detectedWalletName })
-    } else if (!detectedWalletName && detectedProviderName) {
+    } else if (window?.ethereum && !detectedWalletName) {
       // A provider has been detected but there is not a walletName therefore
       // this wallet is not built into onboard so add it as a generic injected wallet
       wallets.unshift({ walletName: 'detectedwallet' })
@@ -132,7 +132,7 @@ function select(
   if (detectedWalletName && !defaultWalletNames.includes(detectedWalletName)) {
     defaultWalletNames.unshift(detectedWalletName)
     // If we detected a provider but it is not builtin add the generic injected provider
-  } else if (!detectedWalletName && detectedProviderName) {
+  } else if (window?.ethereum && !detectedWalletName) {
     defaultWalletNames.unshift('detectedwallet')
   }
   return Promise.all(
