@@ -1,6 +1,4 @@
-# Onboard V2
-
-_NOTE: not currently ready for production use_
+# Web3-Onboard
 
 ## Features
 
@@ -14,15 +12,15 @@ _NOTE: not currently ready for production use_
 
 Install the core Onboard library and the injected wallets module to support browser extension and mobile wallets:
 
-`npm i @bn-onboard/core @bn-onboard/injected-wallets`
+`npm i @web3-onboard/core @web3-onboard/injected-wallets`
 
-- [@bn-onboard/core Official NPM Documentation](https://www.npmjs.com/package/@bn-onboard/core)
+- [@web3-onboard/core Official NPM Documentation](https://www.npmjs.com/package/@web3-onboard/core)
 
 Then initialize in your app:
 
 ```javascript
-import Onboard from '@bn-onboard/core'
-import injectedModule from '@bn-onboard/injected-wallets'
+import Onboard from '@web3-onboard/core'
+import injectedModule from '@web3-onboard/injected-wallets'
 
 const MAINNET_RPC_URL = 'https://mainnet.infura.io/v3/<INFURA_KEY>'
 

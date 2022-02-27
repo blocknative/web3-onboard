@@ -164,7 +164,7 @@ A common UX pattern is to remember the wallet(s) that a user has previously conn
 You could enable this in your app by first syncing the `wallets` array to localStorage:
 
 ```javascript
-const walletsSub = onboard.selectState('wallets')
+const walletsSub = onboard.state.select('wallets')
 const { unsubscribe } = walletsSub.subscribe(wallets => {
   const connectedWallets = wallets.map(({ label }) => label)
   window.localStorage.setItem(
@@ -186,12 +186,12 @@ const previouslyConnectedWallets = JSON.parse(
 
 if (previouslyConnectedWallets) {
   // Connect the most recently connected wallet (first in the array)
-  await onboard.connectWallet(previouslyConnectedWallets[0])
+  await onboard.connectWallet({ autoSelect: previouslyConnectedWallets[0] })
 
   // OR - loop through and initiate connection for all previously connected wallets
   // note: This UX might not be great as the user may need to login to each wallet one after the other
   // for (walletLabel in previouslyConnectedWallets) {
-  //   await onboard.connectWallet(walletLabel)
+  //   await onboard.connectWallet({ autoSelect: walletLabel })
   // }
 }
 ```
@@ -203,7 +203,7 @@ A wallet can be disconnected, which will cleanup any background operations the w
 ```javascript
 // disconnect the first wallet in the wallets array
 const [primaryWallet] = onboard.state.get().wallets
-await onboard.disconnectWallet(primaryWallet.label)
+await onboard.disconnectWallet({ label: primaryWallet.label })
 ```
 
 The `disconnectWallet` method takes the `wallet.label` value and returns a `Promise` that resolves to the current state of the `wallets` array.
