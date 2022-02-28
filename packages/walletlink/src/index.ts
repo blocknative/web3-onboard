@@ -11,7 +11,7 @@ function walletLink(options?: { darkMode?: boolean }): WalletInit {
         const [chain] = chains
         const { name, icon } = appMetadata || {}
 
-        const { default: WalletLink } = await import('walletlink')
+        const { WalletLink } = await import('walletlink')
 
         const base64 = window.btoa(icon || '')
         const appLogoUrl = `data:image/svg+xml;base64,${base64}`

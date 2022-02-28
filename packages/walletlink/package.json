@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/walletlink",
-  "version": "2.0.0-alpha.4",
+  "version": "2.0.0-alpha.5",
   "description": "WalletLink module for web3-onboard",
   "module": "dist/index.js",
   "browser": "dist/index.js",
