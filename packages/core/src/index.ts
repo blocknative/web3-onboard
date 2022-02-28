@@ -20,7 +20,13 @@ const API = {
   state
 }
 
-export * from './types'
+export type {
+  InitOptions,
+  OnboardAPI,
+  ConnectOptions,
+  WalletState,
+  ConnectedChain
+} from './types'
 
 function init(options: InitOptions): OnboardAPI {
   if (typeof window === 'undefined') return API
