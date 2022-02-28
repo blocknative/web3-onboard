@@ -178,6 +178,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/walletlink
     steps:
       - node-build-steps
+  build-react:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/react
+    steps:
+      - node-build-steps
 
 workflows:
   version: 2
@@ -237,4 +243,8 @@ workflows:
   walletlink:
     jobs:
       - build-walletlink:
+          <<: *deploy_production_filters
+  react:
+    jobs:
+      - build-react:
           <<: *deploy_production_filters
