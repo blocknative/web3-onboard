@@ -160,7 +160,7 @@ import { useConnectWallet } from '@web3-onboard/react'
 type UseConnectWallet = (): [
   { wallet: WalletState | null; connecting: boolean },
   (options: ConnectOptions) => Promise<void>,
-  (wallet: WalletOptions) => Promise<void>
+  (wallet: DisconnectOptions) => Promise<void>
 ]
 
 type ConnectOptions = {
@@ -182,7 +182,7 @@ const [
     connecting // boolean indicating if connection is in progress
   },
   connect, // function to call to initiate user to connect wallet
-  disconnect // function to call to with wallet<Wallet Options> to disconnect wallet
+  disconnect // function to call to with wallet<DisconnectOptions> to disconnect wallet
 ] = useConnectWallet()
 ```
 

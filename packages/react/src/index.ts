@@ -10,6 +10,7 @@ import type {
 } from '@web3-onboard/core'
 
 import { Chain } from '@web3-onboard/common'
+import { DisconnectOptions } from '@web3-onboard/core/dist/types'
 
 export let web3Onboard: OnboardAPI | null = null
 
@@ -21,7 +22,7 @@ export const init = (options: InitOptions): OnboardAPI => {
 export const useConnectWallet = (): [
   { wallet: WalletState | null; connecting: boolean },
   (options: ConnectOptions) => Promise<void>,
-  (wallet: WalletState) => Promise<void>
+  (wallet: DisconnectOptions) => Promise<void>
 ] => {
   if (!web3Onboard) throw new Error('Must initialize before using hooks.')
 
@@ -42,17 +43,14 @@ export const useConnectWallet = (): [
     }
   }, [])
 
-  const disconnect = useCallback(async wallet => {
+  const disconnect = useCallback(async ({label}) => {
     setConnecting(true)
 
-    await (
-      web3Onboard as OnboardAPI
-    ).disconnectWallet({ label: wallet.label })
+    await (web3Onboard as OnboardAPI).disconnectWallet({label})
 
     setConnectedWallet(null)
 
     setConnecting(false)
-
   }, [])
 
   return [{ wallet, connecting }, connect, disconnect]
