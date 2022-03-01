@@ -167,6 +167,10 @@ type ConnectOptions = {
   autoSelect?: string // wallet name to autoselect for user
 }
 
+type DisconnectOptions = {
+  label: string  // wallet label
+}
+
 type WalletState = {
   label: string
   icon: string
