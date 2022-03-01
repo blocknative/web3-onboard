@@ -24,6 +24,7 @@ export type {
   InitOptions,
   OnboardAPI,
   ConnectOptions,
+  DisconnectOptions,
   WalletState,
   ConnectedChain
 } from './types'
