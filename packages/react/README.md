@@ -125,6 +125,9 @@ function App() {
               })}
             </select>
           )}
+          <button onClick={() => disconnect(wallet)}>
+            Disconnect Wallet
+          </button>
         </div>
       )}
 
