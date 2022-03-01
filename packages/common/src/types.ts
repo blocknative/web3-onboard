@@ -403,8 +403,8 @@ export interface Chain {
   namespace?: 'evm'
   id: ChainId
   rpcUrl: string
-  label?: string
-  token?: TokenSymbol // eg ETH, BNB, MATIC
+  label: string
+  token: TokenSymbol // eg ETH, BNB, MATIC
 }
 
 export type TokenSymbol = string // eg ETH
