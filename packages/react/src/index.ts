@@ -20,7 +20,8 @@ export const init = (options: InitOptions): OnboardAPI => {
 
 export const useConnectWallet = (): [
   { wallet: WalletState | null; connecting: boolean },
-  (options: ConnectOptions) => Promise<void>
+  (options: ConnectOptions) => Promise<void>,
+  (wallet: WalletState) => Promise<void>
 ] => {
   if (!web3Onboard) throw new Error('Must initialize before using hooks.')
 
@@ -41,7 +42,18 @@ export const useConnectWallet = (): [
     }
   }, [])
 
-  return [{ wallet, connecting }, connect]
+  const disconnect = useCallback(async wallet => {
+    setConnecting(true)
+
+    await web3Onboard.disconnectWallet({ label: wallet.label })
+
+    setConnectedWallet(null)
+
+    setConnecting(false)
+
+  }, [])
+
+  return [{ wallet, connecting }, connect, disconnect]
 }
 
 type SetChainOptions = {
