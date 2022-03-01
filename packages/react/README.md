@@ -99,7 +99,7 @@ const web3Onboard = init({
 })
 
 function App() {
-  const [{ wallet, connecting }, connect] = useConnectWallet()
+  const [{ wallet, connecting }, connect, disconnect] = useConnectWallet()
   const [{ chains, connectedChain, settingChain }, setChain] = useSetChain()
   const connectedWallets = useWallets()
 
@@ -156,7 +156,8 @@ import { useConnectWallet } from '@web3-onboard/react'
 
 type UseConnectWallet = (): [
   { wallet: WalletState | null; connecting: boolean },
-  (options: ConnectOptions) => Promise<void>
+  (options: ConnectOptions) => Promise<void>,
+  (wallet: WalletOptions) => Promise<void>
 ]
 
 type ConnectOptions = {
@@ -177,7 +178,8 @@ const [
     wallet, // the wallet that has been connected or null if not yet connected
     connecting // boolean indicating if connection is in progress
   },
-  connect // function to call to initiate user to connect wallet
+  connect, // function to call to initiate user to connect wallet
+  disconnect // function to call to with wallet<Wallet Options> to disconnect wallet
 ] = useConnectWallet()
 ```
 
