@@ -266,6 +266,9 @@ export async function getBalance(
   address: string,
   chain: Chain
 ): Promise<Balances | null> {
+  // chain we don't recognize
+  if (!chain) return null
+
   if (!ethersProviders[chain.rpcUrl]) {
     ethersProviders[chain.rpcUrl] = new providers.StaticJsonRpcProvider(
       chain.rpcUrl
