@@ -6,7 +6,7 @@ A collection of React hooks for implementing web3-onboard in to a React project
 
 `npm i @web3-onboard/react`
 
-## Usage
+## Example Usage
 
 ```javascript
 import React from 'react'
@@ -141,4 +141,91 @@ function App() {
 }
 
 export default App
+```
+
+## `init`
+
+The `init` function must be called before any hooks can be used. The `init` function just initializes `web3-onboard` and makes it available for all hooks to use. For reference check out the [initialization docs for `@web3-onboard/core`](../core/README.md#initialization)
+
+## `useConnectWallet`
+
+This hook allows you to connect the user's wallet and track the state of the connection status and the wallet that is connected.
+
+```typescript
+import { useConnectWallet } from '@web3-onboard/react'
+
+type UseConnectWallet = (): [
+  { wallet: WalletState | null; connecting: boolean },
+  (options: ConnectOptions) => Promise<void>
+]
+
+type ConnectOptions = {
+  autoSelect?: string // wallet name to autoselect for user
+}
+
+type WalletState = {
+  label: string
+  icon: string
+  provider: EIP1193Provider
+  accounts: Account[]
+  chains: ConnectedChain[]
+  instance?: unknown
+}
+
+const [
+  {
+    wallet, // the wallet that has been connected or null if not yet connected
+    connecting // boolean indicating if connection is in progress
+  },
+  connect // function to call to initiate user to connect wallet
+] = useConnectWallet()
+```
+
+## `useSetChain`
+
+This hook allows you to set the chain of a user's connected wallet, keep track of the current chain the user is connected to and the status of setting the chain.
+
+```typescript
+import { useSetChain } from '@web3-onboard/react'
+
+type UseSetChain = (
+  walletLabel?: string
+): [
+  {
+    chains: Chain[]
+    connectedChain: ConnectedChain | null
+    settingChain: boolean
+  },
+  (options: SetChainOptions) => Promise<void>
+]
+
+type SetChainOptions = {
+  chainId: string
+  chainNamespace?: string
+  wallet?: WalletState['label']
+}
+
+const [
+  {
+    chains, // the list of chains that web3-onboard was initialized with
+    connectedChain, // the current chain the user's wallet is connected to
+    settingChain // boolean indicating if the chain is in the process of being set
+  },
+  setChain // function to call to initiate user to switch chains in their wallet
+] = useSetChain()
+```
+
+## `useWallets`
+
+This hook allows you to track the state of all the currently connected wallets.
+
+```typescript
+import { useWallets } from '@web3-onboard/react'
+
+type UseWallets = (): WalletState[]
+
+const [
+  wallets, //
+  setChain // function to call to initiate user to switch chains in their wallet
+] = useSetChain()
 ```
