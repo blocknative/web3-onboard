@@ -183,7 +183,7 @@ const [
 
 ## `useSetChain`
 
-This hook allows you to set the chain of a user's connected wallet, keep track of the current chain the user is connected to and the status of setting the chain.
+This hook allows you to set the chain of a user's connected wallet, keep track of the current chain the user is connected to and the status of setting the chain. Passing in a wallet label will operate on that connected wallet, otherwise it will default to the last connected wallet.
 
 ```typescript
 import { useSetChain } from '@web3-onboard/react'
@@ -224,8 +224,5 @@ import { useWallets } from '@web3-onboard/react'
 
 type UseWallets = (): WalletState[]
 
-const [
-  wallets, //
-  setChain // function to call to initiate user to switch chains in their wallet
-] = useSetChain()
+const connectedWallets = useWallets()
 ```
