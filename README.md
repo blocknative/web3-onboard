@@ -78,6 +78,10 @@ For full documentation, check out the README.md for each package:
 - [Trezor](packages/trezor/README.md)
 - [Keystone](packages/keystone/README.md)
 
+**Frameworks**
+
+- [React](packages/react/README.md)
+
 ## Test out the demo app
 
 If you would like to test out the current functionality of V2 in a small browser demo, then:
