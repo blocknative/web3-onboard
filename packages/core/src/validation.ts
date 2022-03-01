@@ -17,8 +17,8 @@ const chain = Joi.object({
   namespace: chainNamespace,
   id: chainId.required(),
   rpcUrl: Joi.string().required(),
-  label: Joi.string(),
-  token: Joi.string()
+  label: Joi.string().required(),
+  token: Joi.string().required()
 })
 
 const connectedChain = Joi.object({

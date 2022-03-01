@@ -43,8 +43,8 @@ type Chain = {
   id: ChainId // hex encoded string, eg '0x1' for Ethereum Mainnet
   namespace?: 'evm' // string indicating chain namespace. Defaults to 'evm' but will allow other chain namespaces in the future
   rpcUrl: string // used for network requests
-  label?: string // used for display, eg Ethereum Mainnet
-  token?: TokenSymbol // the native token symbol, eg ETH, BNB, MATIC
+  label: string // used for display, eg Ethereum Mainnet
+  token: TokenSymbol // the native token symbol, eg ETH, BNB, MATIC
 }
 ```
 
