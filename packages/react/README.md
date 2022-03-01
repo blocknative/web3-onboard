@@ -99,7 +99,7 @@ const web3Onboard = init({
 })
 
 function App() {
-  const [{ wallet, connecting }, connect] = useConnectWallet()
+  const [{ wallet, connecting }, connect, disconnect] = useConnectWallet()
   const [{ chains, connectedChain, settingChain }, setChain] = useSetChain()
   const connectedWallets = useWallets()
 
@@ -125,6 +125,9 @@ function App() {
               })}
             </select>
           )}
+          <button onClick={() => disconnect(wallet)}>
+            Disconnect Wallet
+          </button>
         </div>
       )}
 
@@ -156,11 +159,16 @@ import { useConnectWallet } from '@web3-onboard/react'
 
 type UseConnectWallet = (): [
   { wallet: WalletState | null; connecting: boolean },
-  (options: ConnectOptions) => Promise<void>
+  (options: ConnectOptions) => Promise<void>,
+  (wallet: DisconnectOptions) => Promise<void>
 ]
 
 type ConnectOptions = {
   autoSelect?: string // wallet name to autoselect for user
+}
+
+type DisconnectOptions = {
+  label: string  // wallet label
 }
 
 type WalletState = {
@@ -177,7 +185,8 @@ const [
     wallet, // the wallet that has been connected or null if not yet connected
     connecting // boolean indicating if connection is in progress
   },
-  connect // function to call to initiate user to connect wallet
+  connect, // function to call to initiate user to connect wallet
+  disconnect // function to call to with wallet<DisconnectOptions> to disconnect wallet
 ] = useConnectWallet()
 ```
 
