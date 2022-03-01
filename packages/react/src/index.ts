@@ -5,12 +5,12 @@ import type {
   InitOptions,
   OnboardAPI,
   ConnectOptions,
+  DisconnectOptions,
   WalletState,
   ConnectedChain
 } from '@web3-onboard/core'
 
 import { Chain } from '@web3-onboard/common'
-import { DisconnectOptions } from '@web3-onboard/core/dist/types'
 
 export let web3Onboard: OnboardAPI | null = null
 
@@ -29,27 +29,39 @@ export const useConnectWallet = (): [
   const [wallet, setConnectedWallet] = useState<WalletState | null>(null)
   const [connecting, setConnecting] = useState(false)
 
+  useEffect(() => {
+    const subscription = (web3Onboard as OnboardAPI).state
+      .select('wallets')
+      .subscribe(wallets => {
+        if (!wallet) return
+
+        const updatedWallet = wallets.find(
+          ({ label }) => label === wallet.label
+        )
+
+        updatedWallet && setConnectedWallet(updatedWallet)
+      })
+
+    return () => subscription.unsubscribe()
+  }, [wallet])
+
   const connect = useCallback(async (options: ConnectOptions) => {
     setConnecting(true)
 
-    const [lastConnectedWallet] = await (
-      web3Onboard as OnboardAPI
-    ).connectWallet(options)
+    const [connectedWallet] = await (web3Onboard as OnboardAPI).connectWallet(
+      options
+    )
 
     setConnecting(false)
-
-    if (lastConnectedWallet) {
-      setConnectedWallet(lastConnectedWallet)
-    }
+    setConnectedWallet(connectedWallet || null)
   }, [])
 
-  const disconnect = useCallback(async ({label}) => {
+  const disconnect = useCallback(async ({ label }) => {
     setConnecting(true)
 
-    await (web3Onboard as OnboardAPI).disconnectWallet({label})
+    await (web3Onboard as OnboardAPI).disconnectWallet({ label })
 
     setConnectedWallet(null)
-
     setConnecting(false)
   }, [])
 
@@ -83,14 +95,14 @@ export const useSetChain = (
   const chains = useMemo(() => state.get().chains, [])
 
   useEffect(() => {
-    const { unsubscribe } = state.select('wallets').subscribe(wallets => {
+    const subscription = state.select('wallets').subscribe(wallets => {
       const wallet =
         wallets.find(({ label }) => label === walletLabel) || wallets[0]
 
       wallet && setConnectedChain(wallet.chains[0])
     })
 
-    return unsubscribe
+    return () => subscription.unsubscribe()
   }, [])
 
   const set = useCallback(async (options: SetChainOptions) => {
@@ -111,9 +123,9 @@ export const useWallets = (): WalletState[] => {
 
   useEffect(() => {
     const wallets$ = (web3Onboard as OnboardAPI).state.select('wallets')
-    const { unsubscribe } = wallets$.subscribe(setConnectedWallets)
+    const subscription = wallets$.subscribe(setConnectedWallets)
 
-    return unsubscribe
+    return () => subscription.unsubscribe()
   }, [])
 
   return wallets
