@@ -45,7 +45,9 @@ export const useConnectWallet = (): [
   const disconnect = useCallback(async wallet => {
     setConnecting(true)
 
-    await web3Onboard.disconnectWallet({ label: wallet.label })
+    await (
+      web3Onboard as OnboardAPI
+    ).disconnectWallet({ label: wallet.label })
 
     setConnectedWallet(null)
 
