@@ -4,7 +4,7 @@
   import { internalState$ } from '../../streams'
   import en from '../../i18n/en.json'
   import type { i18n } from '../../types'
-  import { isUrl } from '../../utils'
+  import { isSVG } from '../../utils'
 
   export let step: keyof i18n['connect']
 
@@ -111,10 +111,10 @@
   <div class="inner-container">
     <div class="icon-container">
       {#if logo || icon}
-        {#if isUrl(logo || icon)}
-          <img height="100%" src={logo || icon} alt="logo" />
-        {:else}
+        {#if isSVG(logo || icon)}
           {@html logo || icon}
+        {:else}
+          <img height="100%" src={logo || icon} alt="logo" />
         {/if}
       {:else}
         {@html blocknative}
