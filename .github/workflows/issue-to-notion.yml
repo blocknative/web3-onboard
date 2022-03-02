@@ -1,0 +1,30 @@
+name: Github issue -> Notion card
+on:
+  workflow_dispatch:
+  issues: 
+    types: [opened]
+jobs:
+  issue:
+    name: "Issue to Notion"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          people=$(for i in $(echo $NOTION_USER_IDS | tr "," " "); do echo -n '{"object":"user","id":"'$i'"},'; done)
+          curl 'https://api.notion.com/v1/pages' \
+          -H 'Authorization: Bearer '"$NOTION_TOKEN"'' \
+          -H "Content-Type: application/json" \
+          -H "Notion-Version: 2022-02-22" \
+          --data '{"parent":{"type":"database_id","database_id":"'"$DATABASE_ID"'"},"icon":{"type":"emoji","emoji":"🐛"},"properties":{"Name":{"type":"title","title":[{"type":"text","text":{"content":"'"$TITLE"'"}}]},"Assigned":{"people":['${people:0:-1}']},"Status":{"select":{"name":"'"$STATUS"'"}},"Type":{"multi_select":[{"name":"bug"}]},"Project":{"multi_select":[{"name":"'"$PROJECT_NAME"'"}]}},"children":[{"object":"block","type":"bookmark","bookmark":{"url":"'"$ISSUE_URL"'"}}]}'
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          STATE: ${{ github.event.issue.state }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+          TITLE: ${{ github.event.issue.title }}
+          STATUS: Current Sprint
+          # Product Work Board
+          DATABASE_ID: 29876f9a9b864ca39a984f42e17fd345
+          PROJECT_NAME: Onboard.js
+          # User ids of who to assign the card to in notion: Taylor, Adam, Aaron
+          NOTION_USER_IDS: f6cbb362-4908-4138-9ef0-434003d9a9f8,8a3a2287-5d2c-4665-906d-02ae9a113340,3b407adf-6552-40de-b22f-5efa852c34a2
+        shell: bash
