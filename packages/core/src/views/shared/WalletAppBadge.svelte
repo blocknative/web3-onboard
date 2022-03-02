@@ -120,6 +120,11 @@
   .spinner-container {
     color: var(--onboard-primary-300, var(--primary-300));
   }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 </style>
 
 <div
@@ -155,7 +160,7 @@
           {@html iconLoaded}
         {:else}
           <!-- load img url -->
-          <img height="100%" src={iconLoaded} alt="logo" />
+          <img src={iconLoaded} alt="logo" />
         {/if}
       </div>
     {/await}

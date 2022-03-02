@@ -105,6 +105,11 @@
       var(--onboard-primary-600, var(--primary-600))
     );
   }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 </style>
 
 <div class="sidebar">
@@ -114,7 +119,7 @@
         {#if isSVG(logo || icon)}
           {@html logo || icon}
         {:else}
-          <img height="100%" src={logo || icon} alt="logo" />
+          <img src={logo || icon} alt="logo" />
         {/if}
       {:else}
         {@html blocknative}
