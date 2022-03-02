@@ -16,6 +16,7 @@ Note:
 
 - MEW wallet currently fails to install on M1 macs
 - All wallet modules (except for `injected-wallets`) require extra dependencies and may require polyfilling the node built in modules for the browser. See the [Build Environments](##build-environments) section for more info
+- **If using React** you may be interested in checking out the React Hooks package here - https://www.npmjs.com/package/@web3-onboard/react
 
 ## Initialization
 
@@ -107,24 +108,43 @@ const onboard = Onboard({
       id: '0x1',
       token: 'ETH',
       label: 'Ethereum Mainnet',
-      rpcUrl: ETH_MAINNET_RPC
+      rpcUrl: `https://mainnet.infura.io/v3/${INFURA_ID}`
+    },
+    {
+      id: '0x3',
+      token: 'tROP',
+      label: 'Ethereum Ropsten Testnet',
+      rpcUrl: `https://ropsten.infura.io/v3/${INFURA_ID}`
     },
     {
       id: '0x4',
       token: 'rETH',
       label: 'Ethereum Rinkeby Testnet',
-      rpcUrl: ETH_RINKEBY_RPC
+      rpcUrl: `https://rinkeby.infura.io/v3/${INFURA_ID}`
+    },
+    {
+      id: '0x38',
+      token: 'BNB',
+      label: 'Binance Smart Chain',
+      rpcUrl: 'https://bsc-dataseed.binance.org/'
     },
     {
       id: '0x89',
       token: 'MATIC',
       label: 'Matic Mainnet',
-      rpcUrl: MATIC_MAINNET_RPC
+      rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+    },
+    {
+      id: '0xfa',
+      token: 'FTM',
+      label: 'Fantom Mainnet',
+      rpcUrl: 'https://rpc.ftm.tools/'
     }
   ],
   appMetadata: {
     name: 'Token Swap',
     icon: myIcon, // svg string icon
+    logo: myLogo, // svg string logo
     description: 'Swap tokens for other tokens',
     recommendedInjectedWallets: [
       { name: 'MetaMask', url: 'https://metamask.io' },
