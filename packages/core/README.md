@@ -15,7 +15,7 @@ If you would like to support all wallets, then you can install all of the wallet
 Note:
 
 - MEW wallet currently fails to install on M1 macs
-- All wallet modules (except for `injected-wallets`) require extra dependencies and may require polyfilling the node built in modules for the browser. See the [Build Environments](##build-environments) section for more info
+- All wallet modules (except for `injected-wallets`) require extra dependencies and may require polyfilling the node built in modules for the browser. See the [Build Environments](#build-environments) section for more info
 - **If using React** you may be interested in checking out the React Hooks package here - https://www.npmjs.com/package/@web3-onboard/react
 
 ## Initialization
