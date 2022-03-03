@@ -59,6 +59,7 @@ function injected(options?: InjectedWalletOptions): WalletInit {
 
         if (
           walletExists &&
+          provider &&
           provider.isMetaMask &&
           label !== ProviderLabel.MetaMask &&
           label !== 'Detected Wallet'
