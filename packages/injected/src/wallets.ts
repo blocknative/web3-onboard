@@ -443,6 +443,24 @@ const tokenary: InjectedWalletModule = {
   platforms: ['mobile']
 }
 
+const tally: InjectedWalletModule = {
+  label: ProviderLabel.Tally,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Tally],
+  getIcon: async () => (await import('./icons/tallywallet.js')).default,
+  getInterface: async () => {
+    const provider = createEIP1193Provider(window.ethereum, {
+      eth_chainId: ({ baseRequest }) => baseRequest({ method: 'eth_chainId' }).then(id => `0x${parseInt(id).toString(16)}`),
+    });
+    provider.removeListener = (event, func) => { };
+    return {
+        provider
+    };
+},
+  platforms: ['desktop']
+}
+
 const wallets = [
   metamask,
   binance,
@@ -469,7 +487,8 @@ const wallets = [
   tp,
   xdefi,
   oneInch,
-  tokenary
+  tokenary,
+  tally
 ]
 
 export default wallets
