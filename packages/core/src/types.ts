@@ -71,10 +71,15 @@ export type Account = {
 export type Balances = Record<TokenSymbol, string> | null
 
 export interface Ens {
-  name?: string
-  avatar?: string
-  contentHash?: string
-  getText?: (key: string) => Promise<string | undefined>
+  name: string
+  avatar: Avatar | null
+  contentHash: string | null
+  getText: (key: string) => Promise<string | undefined>
+}
+
+export type Avatar = {
+  url: string
+  linkage: Array<{ type: string; content: string }>
 }
 
 export type Address = string
