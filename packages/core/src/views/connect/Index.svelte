@@ -253,7 +253,7 @@
               <div class:disabled={!agreed}>
                 <SelectingWallet {selectWallet} {wallets} {scrollToTop} />
               </div>
-            {:else}
+            {:else if !autoSelect}
               <InstallWallet />
             {/if}
           {/if}
