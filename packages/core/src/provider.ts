@@ -244,11 +244,16 @@ export async function getEns(
       const resolver = await provider.getResolver(name)
 
       if (resolver) {
-        const contentHash = await resolver.getContentHash()
+        const [contentHash, avatar] = await Promise.all([
+          resolver.getContentHash(),
+          resolver.getAvatar()
+        ])
+
         const getText = resolver.getText.bind(resolver)
 
         ens = {
           name,
+          avatar,
           contentHash,
           getText
         }
