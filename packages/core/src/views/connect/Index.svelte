@@ -1,31 +1,27 @@
 <script lang="ts">
   import { ProviderRpcErrorCode, WalletModule } from '@web3-onboard/common'
-  import { _ } from 'svelte-i18n'
   import { BigNumber } from 'ethers'
   import EventEmitter from 'eventemitter3'
-
-  import type {
-    WalletWithLoadingIcon,
-    WalletWithLoadedIcon,
-    i18n,
-    WalletState
-  } from '../../types'
-
-  import Modal from '../shared/Modal.svelte'
-  import SelectingWallet from './SelectingWallet.svelte'
-  import InstallWallet from './InstallWallet.svelte'
-  import ConnectingWallet from './ConnectingWallet.svelte'
-  import ConnectedWallet from './ConnectedWallet.svelte'
-  import CloseButton from '../shared/CloseButton.svelte'
-  import Sidebar from './Sidebar.svelte'
-  import Agreement from './Agreement.svelte'
-
-  import { connectWallet$, internalState$ } from '../../streams'
-
-  import { state } from '../../store'
-  import { addWallet } from '../../store/actions'
+  import { _ } from 'svelte-i18n'
   import en from '../../i18n/en.json'
   import { selectAccounts } from '../../provider'
+  import { state } from '../../store'
+  import { addWallet } from '../../store/actions'
+  import { connectWallet$, internalState$ } from '../../streams'
+  import type {
+    i18n,
+    WalletState,
+    WalletWithLoadedIcon,
+    WalletWithLoadingIcon
+  } from '../../types'
+  import CloseButton from '../shared/CloseButton.svelte'
+  import Modal from '../shared/Modal.svelte'
+  import Agreement from './Agreement.svelte'
+  import ConnectedWallet from './ConnectedWallet.svelte'
+  import ConnectingWallet from './ConnectingWallet.svelte'
+  import InstallWallet from './InstallWallet.svelte'
+  import SelectingWallet from './SelectingWallet.svelte'
+  import Sidebar from './Sidebar.svelte'
 
   export let autoSelect: string
 
@@ -38,6 +34,7 @@
   let agreed: boolean
 
   let windowWidth: number
+  let scrollContainer: HTMLElement
 
   const walletToAutoSelect =
     autoSelect &&
@@ -145,6 +142,10 @@
   function setStep(update: keyof i18n['connect']) {
     step = update
   }
+
+  function scrollToTop() {
+    scrollContainer && scrollContainer.scrollTo(0, 0)
+  }
 </script>
 
 <style>
@@ -244,13 +245,13 @@
           </div>
         </div>
 
-        <div class="scroll-container">
+        <div class="scroll-container" bind:this={scrollContainer}>
           {#if step === 'selectingWallet'}
             {#if wallets.length}
               <Agreement bind:agreed />
 
               <div class:disabled={!agreed}>
-                <SelectingWallet {selectWallet} {wallets} />
+                <SelectingWallet {selectWallet} {wallets} {scrollToTop} />
               </div>
             {:else}
               <InstallWallet />
