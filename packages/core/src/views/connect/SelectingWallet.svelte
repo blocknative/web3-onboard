@@ -1,11 +1,12 @@
 <script lang="ts">
-  import type { WalletWithLoadedIcon, WalletWithLoadingIcon } from '../../types'
   import { state } from '../../store'
-  import WalletButton from './WalletButton.svelte'
+  import type { WalletWithLoadedIcon, WalletWithLoadingIcon } from '../../types'
   import Warning from '../shared/Warning.svelte'
+  import WalletButton from './WalletButton.svelte'
 
   export let wallets: WalletWithLoadingIcon[]
   export let selectWallet: (wallet: WalletWithLoadedIcon) => Promise<void>
+  export let scrollToTop: () => void
 
   let connecting: string // the wallet label that is connecting
   let errorMessage: string
@@ -27,6 +28,7 @@
       } catch (error) {
         const { message } = error as { message: string }
         errorMessage = message
+        scrollToTop()
       } finally {
         connecting = ''
       }
@@ -63,7 +65,7 @@
 <div class="outer-container">
   {#if errorMessage}
     <div class="warning-container">
-      <Warning>{errorMessage}</Warning>
+      <Warning>{@html errorMessage}</Warning>
     </div>
   {/if}
 
