@@ -39,6 +39,7 @@
   "license": "MIT",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack",
-    "dev": "webpack serve"
+    "dev": "webpack serve",
+    "type-check": "exit 0"
   }
 }
