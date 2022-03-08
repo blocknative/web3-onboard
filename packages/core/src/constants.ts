@@ -2,7 +2,13 @@ import type { AppState } from './types'
 
 export const APP_INITIAL_STATE: AppState = {
   wallets: [],
-  chains: []
+  chains: [],
+  dashboard: {
+    enabled: true,
+    displayed: false,
+    position: 'topRight',
+    expanded: false
+  }
 }
 
 export const STORAGE_KEYS = {

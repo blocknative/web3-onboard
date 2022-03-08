@@ -1,8 +1,15 @@
 <script lang="ts">
+  import { startWith } from 'rxjs/operators'
   import { connectWallet$, switchChainModal$ } from '../streams'
+  import { state } from '../store'
   import Connect from './connect/Index.svelte'
   import SwitchChain from './chain/SwitchChain.svelte'
   import ActionRequired from './connect/ActionRequired.svelte'
+  import Dashboard from './dashboard/Index.svelte'
+
+  const dashboard$ = state
+    .select('dashboard')
+    .pipe(startWith(state.get().dashboard))
 </script>
 
 <style>
@@ -148,4 +155,8 @@
 
 {#if $switchChainModal$}
   <SwitchChain />
+{/if}
+
+{#if $dashboard$.enabled}
+  <Dashboard dashboard={$dashboard$} />
 {/if}

@@ -4,7 +4,7 @@ import connectWallet from './connect'
 import disconnectWallet from './disconnect'
 import setChain from './chain'
 import { state } from './store'
-import { addChains } from './store/actions'
+import { addChains, updateDashboard } from './store/actions'
 import { reset$, internalState$ } from './streams'
 import { validateInitOptions } from './validation'
 import initI18N from './i18n'
@@ -40,10 +40,16 @@ function init(options: InitOptions): OnboardAPI {
     }
   }
 
-  const { wallets, chains, appMetadata = null, i18n } = options
+  const { wallets, chains, appMetadata = null, i18n, dashboard } = options
 
   initI18N(i18n)
   addChains(chains)
+
+  if (typeof dashboard !== 'undefined') {
+    const dashboardUpdate =
+      typeof dashboard === 'boolean' ? { enabled: dashboard } : dashboard
+    updateDashboard(dashboardUpdate)
+  }
 
   const { svelteInstance } = internalState$.getValue()
 
@@ -168,10 +174,13 @@ function mountApp() {
           --spacing-3: 1.5rem;
           --spacing-4: 1rem;
           --spacing-5: 0.5rem;
+          --spacing-6: 0.25rem;
   
           /* SHADOWS */
           --shadow-1: 0px 4px 12px rgba(0, 0, 0, 0.1);
           --shadow-2: inset 0px -1px 0px rgba(0, 0, 0, 0.1);
+
+          --z-index: 10;
         }
       </style>
     `

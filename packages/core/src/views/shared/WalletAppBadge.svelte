@@ -27,12 +27,12 @@
 
   export let customBackgroundColor = ''
   export let backgroundOpaque = false
+  export let radius = 12
 </script>
 
 <style>
   .icon-container {
     position: relative;
-    border-radius: 12px;
     box-sizing: border-box;
   }
 
@@ -144,7 +144,7 @@
   class="icon-container"
   style={`${background === 'custom' ? customBackgroundColor : ''}; padding: ${
     padding - 1
-  }px; width: ${size}px; height: ${size}px;`}
+  }px; width: ${size}px; height: ${size}px; border-radius: ${radius}px;`}
 >
   {#if loading}
     <div class="spinner-container">

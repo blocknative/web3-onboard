@@ -5,7 +5,8 @@ import type {
   InitOptions,
   WalletState,
   ConnectOptions,
-  DisconnectOptions
+  DisconnectOptions,
+  DashboardState
 } from './types'
 
 const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
@@ -92,11 +93,24 @@ const walletModule = Joi.object({
 
 const walletModules = Joi.array().items(Joi.function()).required()
 
+const dashboardPosition = Joi.string().valid(
+  'topRight',
+  'bottomRight',
+  'bottomLeft',
+  'topLeft'
+)
+
 const initOptions = Joi.object({
   wallets: walletModules,
   chains: chains.required(),
   appMetadata: appMetadata,
-  i18n: Joi.object().unknown()
+  i18n: Joi.object().unknown(),
+  dashboard: Joi.any().valid(
+    Joi.boolean(),
+    Joi.object({
+      position: dashboardPosition
+    })
+  )
 })
 
 const connectOptions = Joi.object({
@@ -110,6 +124,13 @@ const disconnectOptions = Joi.object({
 const setChainOptions = Joi.object({
   chainId: chainId.required(),
   wallet: Joi.string()
+})
+
+const dashboard = Joi.object({
+  enabled: Joi.boolean(),
+  displayed: Joi.boolean(),
+  position: dashboardPosition,
+  expanded: Joi.boolean()
 })
 
 type ValidateReturn = Joi.ValidationResult | null
@@ -152,4 +173,10 @@ export function validateSetChainOptions(data: {
   wallet?: WalletState['label']
 }): ValidateReturn {
   return validate(setChainOptions, data)
+}
+
+export function validateDashboardUpdate(
+  data: DashboardState | Partial<DashboardState>
+): ValidateReturn {
+  return validate(dashboard, data)
 }

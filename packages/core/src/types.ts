@@ -21,6 +21,7 @@ export interface InitOptions {
   chains: Chain[]
   appMetadata?: AppMetadata
   i18n?: i18nOptions
+  dashboard?: DashboardOptions
 }
 
 export interface OnboardAPI {
@@ -87,6 +88,7 @@ export type Address = string
 export interface AppState {
   chains: Chain[]
   wallets: WalletState[]
+  dashboard: DashboardState
 }
 
 export type InternalState = {
@@ -100,6 +102,23 @@ export type Locale = string
 export type i18nOptions = Record<Locale, i18n>
 export type i18n = typeof en
 
+export type DashboardPosition =
+  | 'topRight'
+  | 'bottomRight'
+  | 'bottomLeft'
+  | 'topLeft'
+
+export type DashboardOptions =
+  | DashboardState['enabled']
+  | { position?: DashboardPosition }
+
+export type DashboardState = {
+  enabled: boolean
+  displayed: boolean
+  position: DashboardPosition
+  expanded: boolean
+}
+
 // ==== ACTIONS ==== //
 export type Action =
   | AddChainsAction
@@ -108,6 +127,7 @@ export type Action =
   | RemoveWalletAction
   | ResetStoreAction
   | UpdateAccountAction
+  | UpdateDashboardAction
 
 export type AddChainsAction = { type: 'add_chains'; payload: Chain[] }
 export type AddWalletAction = { type: 'add_wallet'; payload: WalletState }
@@ -130,4 +150,9 @@ export type ResetStoreAction = {
 export type UpdateAccountAction = {
   type: 'update_account'
   payload: { id: string; address: string } & Partial<Account>
+}
+
+export type UpdateDashboardAction = {
+  type: 'update_dashboard'
+  payload: DashboardState | Partial<DashboardState>
 }
