@@ -13,7 +13,8 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc -w",
-    "test": "ava"
+    "test": "ava",
+    "type-check": "tsc --noEmit"
   },
   "license": "MIT",
   "devDependencies": {
