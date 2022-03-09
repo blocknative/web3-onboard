@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "include": ["src/**/*"],
+
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "declarationDir": "dist",
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "*": ["./src/*", "./node_modules/*"]
+    },
+    "moduleResolution": "node",
+    "typeRoots": ["node_modules/@types"]
+  }
+}
