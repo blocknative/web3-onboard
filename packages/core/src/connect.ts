@@ -2,10 +2,12 @@ import { firstValueFrom } from 'rxjs'
 import { filter, withLatestFrom, pluck } from 'rxjs/operators'
 import { state } from './store'
 import { connectWallet$, wallets$ } from './streams'
-import type { ConnectOptions, WalletState } from './types'
+import type { ConnectOptions, ConnectOptionsString, WalletState } from './types'
 import { validateConnectOptions } from './validation'
 
-async function connect(options?: ConnectOptions): Promise<WalletState[]> {
+async function connect(
+  options?: ConnectOptions | ConnectOptionsString
+): Promise<WalletState[]> {
   if (options) {
     const error = validateConnectOptions(options)
     if (error) {
@@ -22,9 +24,17 @@ async function connect(options?: ConnectOptions): Promise<WalletState[]> {
       'At least one chain must be set before attempting to connect a wallet'
     )
 
-  const { autoSelect } = options || { autoSelect: '' }
+  const { autoSelect } = options || {
+    autoSelect: { label: '', disableModals: false }
+  }
 
-  connectWallet$.next({ autoSelect, inProgress: true })
+  connectWallet$.next({
+    autoSelect:
+      typeof autoSelect === 'string'
+        ? { label: autoSelect, disableModals: false }
+        : autoSelect,
+    inProgress: true
+  })
 
   const result$ = connectWallet$.pipe(
     filter(

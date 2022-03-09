@@ -1,71 +1,19 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
-  import { createEventDispatcher } from 'svelte'
-  import { ProviderRpcErrorCode } from '@web3-onboard/common'
-
-  import { getChainId, requestAccounts, trackWallet } from '../../provider'
   import { internalState$ } from '../../streams'
   import type { WalletState, i18n } from '../../types'
 
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
   import defaultAppIcon from '../../icons/default-app-icon'
   import en from '../../i18n/en.json'
-  import { addWallet } from '../../store/actions'
 
+  export let connectWallet: () => Promise<void>
   export let selectedWallet: WalletState
   export let deselectWallet: (label: string) => void
-  export let updateSelectedWallet: (update: Partial<WalletState>) => void
   export let setStep: (update: keyof i18n['connect']) => void
-
-  let connectionRejected = false
+  export let connectionRejected: boolean
 
   const { appMetadata } = internalState$.getValue()
-
-  const dispatch = createEventDispatcher<{ connectionRejected: boolean }>()
-
-  async function connect() {
-    dispatch('connectionRejected', false)
-    connectionRejected = false
-
-    const { provider, label } = selectedWallet
-
-    try {
-      const [address] = await requestAccounts(provider)
-
-      // canceled previous request
-      if (!address) {
-        return
-      }
-
-      const chain = await getChainId(provider)
-
-      const update: Pick<WalletState, 'accounts' | 'chains'> = {
-        accounts: [{ address, ens: null, balance: null }],
-        chains: [{ namespace: 'evm', id: chain }]
-      }
-
-      addWallet({ ...selectedWallet, ...update })
-      trackWallet(provider, label)
-      updateSelectedWallet(update)
-      setStep('connectedWallet')
-    } catch (error) {
-      const { code } = error as { code: number; message: string }
-
-      // user rejected account access
-      if (code === ProviderRpcErrorCode.ACCOUNT_ACCESS_REJECTED) {
-        connectionRejected = true
-        dispatch('connectionRejected', true)
-        return
-      }
-
-      // account access has already been requested and is awaiting approval
-      if (code === ProviderRpcErrorCode.ACCOUNT_ACCESS_ALREADY_REQUESTED) {
-        return
-      }
-    }
-  }
-
-  connect()
 </script>
 
 <style>
@@ -176,7 +124,7 @@
           )}
         </div>
         {#if connectionRejected}
-          <div class="rejected-cta subtext" on:click={connect}>
+          <div class="rejected-cta subtext" on:click={connectWallet}>
             {$_('connect.connectingWallet.rejectedCTA', {
               default: en.connect.connectingWallet.rejectedCTA
             })}
@@ -195,7 +143,6 @@
   <button
     on:click={() => {
       deselectWallet(selectedWallet.label)
-      dispatch('connectionRejected', false)
       setStep('selectingWallet')
     }}
     class="onboard-button-primary"
