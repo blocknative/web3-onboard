@@ -23,6 +23,8 @@ function magic(options: APIKey): WalletInit {
 
         const emitter = new EventEmitter()
 
+        let currentChain = chains[0].id
+
         let customNodeOptions = {
           chainId: parseInt(chains[0].id, 10),
           rpcUrl: chains[0].rpcUrl
@@ -33,8 +35,12 @@ function magic(options: APIKey): WalletInit {
         })
 
         const loginWithEmail = async (emailAddress: string) => {
-          await magicInstance.auth.loginWithMagicLink({ email: emailAddress })
-          return await magicInstance.user.isLoggedIn()
+          try {
+            await magicInstance.auth.loginWithMagicLink({ email: emailAddress })
+            return await magicInstance.user.isLoggedIn()
+          } catch(err) {
+            throw new Error(`$An error occured while connecting your Magic wallet, please try again: ${err}`)
+          }
         }
 
         const handleLogin = async () => {
@@ -44,11 +50,15 @@ function magic(options: APIKey): WalletInit {
             emailLoginFunction: loginWithEmail
           })
         }
-
+        try {
+          loggedIn = await magicInstance.user.isLoggedIn()
+        } catch (err) {
+          throw new Error(`$An error occured while connecting your Magic wallet, please try again: ${err}`)
+        }
+        
         if (!loggedIn) handleLogin()
-
+        
         let magicProvider = new Web3(magicInstance.rpcProvider)
-
         let provider: EIP1193Provider
 
         function patchProvider(): EIP1193Provider {
@@ -57,7 +67,6 @@ function magic(options: APIKey): WalletInit {
               try {
                 if (!loggedIn) handleLogin()
                 const accounts = await magicProvider.eth.getAccounts()
-                console.log('accounts', accounts)
                 return accounts
               } catch (error) {
                 console.error('error in request accounts', error)
@@ -78,7 +87,6 @@ function magic(options: APIKey): WalletInit {
               const balance = magicProvider.utils.fromWei(
                 await magicProvider.eth.getBalance(address) // Balance is in wei
               )
-              console.log(balance, address)
               return balance
                 ? BigNumber.from(balance).mul('1000000000000000000').toString()
                 : '0'
@@ -86,7 +94,7 @@ function magic(options: APIKey): WalletInit {
             wallet_switchEthereumChain: async ({ params }) => {
               const chain = chains.find(({ id }) => id === params[0].chainId)
               if (!chain) throw new Error('Chain must be set before switching')
-
+              currentChain = chain.id
               // re-instantiate instance with new network
               customNodeOptions = {
                 chainId: parseInt(chains[0].id, 10),
@@ -106,7 +114,38 @@ function magic(options: APIKey): WalletInit {
               patchProvider()
 
               return null
-            }
+            },
+            eth_accounts: async () => {
+              const accounts =  (await magicProvider.eth.getAccounts())[0];
+              return Array.isArray(accounts) &&
+              accounts.length
+              ? [accounts[0]]
+              : []
+            },
+            eth_sign: async ({ params: [address, message] }) => {
+              return await magicProvider.eth.sign(message, address);
+            },
+            eth_chainId: async () => {
+              return currentChain ? currentChain : ''
+            },
+
+            eth_signTransaction: async ({ params: [transactionObject] }) => {
+              const fromAddress = (await magicProvider.eth.getAccounts())[0];
+
+              let destination
+              if (transactionObject.hasOwnProperty('to')) {
+                destination = transactionObject.to
+              }
+
+              const receipt = await magicProvider.eth.sendTransaction({
+                ...transactionObject,
+                nonce: parseInt(transactionObject.nonce),
+                from: fromAddress,
+                to: destination,
+              });
+              return receipt ? receipt.transactionHash : ''
+            },
+            
           })
 
           provider.on = emitter.on.bind(emitter)

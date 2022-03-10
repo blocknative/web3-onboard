@@ -2,7 +2,7 @@
   import { fade } from 'svelte/transition'
   import type { Subject } from 'rxjs'
 
-  import CloseButton from '@web3-onboard/common'
+  import CloseButton from '../elements/CloseButton.svelte'
   import type { LoginOptions } from '../types'
 
   let credentials: string = ''
