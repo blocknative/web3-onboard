@@ -5,7 +5,8 @@ import type {
   InitOptions,
   WalletState,
   ConnectOptions,
-  DisconnectOptions
+  DisconnectOptions,
+  ConnectOptionsString
 } from './types'
 
 const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
@@ -100,7 +101,13 @@ const initOptions = Joi.object({
 })
 
 const connectOptions = Joi.object({
-  autoSelect: Joi.string()
+  autoSelect: [
+    Joi.object({
+      label: Joi.string().required(),
+      disableModals: Joi.boolean()
+    }),
+    Joi.string()
+  ]
 })
 
 const disconnectOptions = Joi.object({
@@ -133,7 +140,9 @@ export function validateWalletModule(data: WalletModule): ValidateReturn {
   return validate(walletModule, data)
 }
 
-export function validateConnectOptions(data: ConnectOptions): ValidateReturn {
+export function validateConnectOptions(
+  data: ConnectOptions | ConnectOptionsString
+): ValidateReturn {
   return validate(connectOptions, data)
 }
 

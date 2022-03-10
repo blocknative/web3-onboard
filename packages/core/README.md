@@ -208,6 +208,11 @@ if (previouslyConnectedWallets) {
   // Connect the most recently connected wallet (first in the array)
   await onboard.connectWallet({ autoSelect: previouslyConnectedWallets[0] })
 
+  // You can also auto connect "silently" and disable all onboard modals to avoid them flashing on page load
+  await onboard.connectWallet({
+    autoSelect: { label: previouslyConnectedWallets[0], disableModals: true }
+  })
+
   // OR - loop through and initiate connection for all previously connected wallets
   // note: This UX might not be great as the user may need to login to each wallet one after the other
   // for (walletLabel in previouslyConnectedWallets) {

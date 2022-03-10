@@ -6,14 +6,17 @@
   import en from '../../i18n/en.json'
   import { selectAccounts } from '../../provider'
   import { state } from '../../store'
-  import { addWallet } from '../../store/actions'
   import { connectWallet$, internalState$ } from '../../streams'
-  import type {
-    i18n,
-    WalletState,
-    WalletWithLoadedIcon,
-    WalletWithLoadingIcon
-  } from '../../types'
+  import {
+    getChainId,
+    requestAccounts,
+    trackWallet,
+    getBalance,
+    getEns
+  } from '../../provider'
+  import { addWallet, updateAccount } from '../../store/actions'
+  import { validEnsChain } from '../../utils'
+
   import CloseButton from '../shared/CloseButton.svelte'
   import Modal from '../shared/Modal.svelte'
   import Agreement from './Agreement.svelte'
@@ -22,16 +25,23 @@
   import InstallWallet from './InstallWallet.svelte'
   import SelectingWallet from './SelectingWallet.svelte'
   import Sidebar from './Sidebar.svelte'
+  import type {
+    ConnectOptions,
+    i18n,
+    WalletState,
+    WalletWithLoadingIcon
+  } from '../../types'
 
-  export let autoSelect: string
+  export let autoSelect: ConnectOptions['autoSelect']
 
   const { walletModules, appMetadata } = internalState$.getValue()
 
-  let loading = true
   let connectionRejected = false
   let wallets: WalletWithLoadingIcon[] = []
   let selectedWallet: WalletState | null
   let agreed: boolean
+  let connectingWalletLabel: string
+  let connectingErrorMessage: string
 
   let windowWidth: number
   let scrollContainer: HTMLElement
@@ -39,70 +49,79 @@
   const walletToAutoSelect =
     autoSelect &&
     walletModules.find(
-      ({ label }) => label.toLowerCase() === autoSelect.toLowerCase()
+      ({ label }) => label.toLowerCase() === autoSelect.label.toLowerCase()
     )
 
-  if (walletToAutoSelect) {
-    autoSelectWallet(walletToAutoSelect)
-  } else {
-    loadWalletsForSelection()
-  }
-
+  // ==== SELECT WALLET ==== //
   async function selectWallet({
     label,
     icon,
     getInterface
-  }: WalletWithLoadedIcon): Promise<void> {
-    const existingWallet = state
-      .get()
-      .wallets.find(wallet => wallet.label === label)
+  }: WalletWithLoadingIcon): Promise<void> {
+    connectingWalletLabel = label
 
-    if (existingWallet) {
-      // set as first wallet
-      addWallet(existingWallet)
+    try {
+      const existingWallet = state
+        .get()
+        .wallets.find(wallet => wallet.label === label)
 
-      try {
-        await selectAccounts(existingWallet.provider)
-        // change step on next event loop
-        setTimeout(() => setStep('connectedWallet'), 1)
-      } catch (error) {
-        const { code } = error as { code: number }
+      if (existingWallet) {
+        // set as first wallet
+        addWallet(existingWallet)
 
-        if (
-          code === ProviderRpcErrorCode.UNSUPPORTED_METHOD ||
-          code === ProviderRpcErrorCode.DOES_NOT_EXIST
-        ) {
-          connectWallet$.next({
-            inProgress: false,
-            actionRequired: existingWallet.label
-          })
+        try {
+          await selectAccounts(existingWallet.provider)
+          // change step on next event loop
+          setTimeout(() => setStep('connectedWallet'), 1)
+        } catch (error) {
+          const { code } = error as { code: number }
+
+          if (
+            code === ProviderRpcErrorCode.UNSUPPORTED_METHOD ||
+            code === ProviderRpcErrorCode.DOES_NOT_EXIST
+          ) {
+            connectWallet$.next({
+              inProgress: false,
+              actionRequired: existingWallet.label
+            })
+          }
         }
+
+        selectedWallet = existingWallet
+
+        return
       }
 
-      selectedWallet = existingWallet
+      const { chains } = state.get()
 
-      return
+      const { provider } = await getInterface({
+        chains,
+        BigNumber,
+        EventEmitter,
+        appMetadata
+      })
+
+      const loadedIcon = await icon
+
+      selectedWallet = {
+        label,
+        icon: loadedIcon,
+        provider,
+        accounts: [],
+        chains: [{ namespace: 'evm', id: '0x1' }]
+      }
+
+      connectingErrorMessage = ''
+
+      // change step on next event loop
+      setTimeout(() => setStep('connectingWallet'), 1)
+    } catch (error) {
+      const { message } = error as { message: string }
+      connectingErrorMessage = message
+      scrollToTop()
+    } finally {
+      connectingWalletLabel = ''
     }
-
-    const { chains } = state.get()
-
-    const { provider } = await getInterface({
-      chains,
-      BigNumber,
-      EventEmitter,
-      appMetadata
-    })
-
-    selectedWallet = {
-      label,
-      icon,
-      provider,
-      accounts: [],
-      chains: [{ namespace: 'evm', id: '0x1' }]
-    }
-
-    // change step on next event loop
-    setTimeout(() => setStep('connectingWallet'), 1)
   }
 
   function deselectWallet() {
@@ -115,10 +134,8 @@
 
   async function autoSelectWallet(wallet: WalletModule): Promise<void> {
     const { getIcon, getInterface, label } = wallet
-    const icon = await getIcon()
+    const icon = getIcon()
     selectWallet({ label, icon, getInterface })
-
-    loading = false
   }
 
   async function loadWalletsForSelection() {
@@ -129,15 +146,109 @@
         getInterface
       }
     })
-
-    loading = false
   }
 
   function close() {
     connectWallet$.next({ inProgress: false })
   }
 
+  // ==== CONNECT WALLET ==== //
+  async function connectWallet() {
+    connectionRejected = false
+
+    const { provider, label } = selectedWallet
+
+    try {
+      const [address] = await requestAccounts(provider)
+
+      // canceled previous request
+      if (!address) {
+        return
+      }
+
+      const chain = await getChainId(provider)
+
+      const update: Pick<WalletState, 'accounts' | 'chains'> = {
+        accounts: [{ address, ens: null, balance: null }],
+        chains: [{ namespace: 'evm', id: chain }]
+      }
+
+      addWallet({ ...selectedWallet, ...update })
+      trackWallet(provider, label)
+      updateSelectedWallet(update)
+      setStep('connectedWallet')
+    } catch (error) {
+      const { code } = error as { code: number; message: string }
+
+      // user rejected account access
+      if (code === ProviderRpcErrorCode.ACCOUNT_ACCESS_REJECTED) {
+        connectionRejected = true
+        return
+      }
+
+      // account access has already been requested and is awaiting approval
+      if (code === ProviderRpcErrorCode.ACCOUNT_ACCESS_ALREADY_REQUESTED) {
+        return
+      }
+    }
+  }
+
+  // ==== CONNECTED WALLET ==== //
+  async function updateAccountDetails() {
+    const { accounts, chains: selectedWalletChains } = selectedWallet
+    const appChains = state.get().chains
+    const [connectedWalletChain] = selectedWalletChains
+
+    const appChain = appChains.find(
+      ({ namespace, id }) =>
+        namespace === connectedWalletChain.namespace &&
+        id === connectedWalletChain.id
+    )
+
+    const { address } = accounts[0]
+    let { balance, ens } = accounts[0]
+
+    if (balance === null) {
+      getBalance(address, appChain).then(balance => {
+        updateAccount(selectedWallet.label, address, {
+          balance
+        })
+      })
+    }
+
+    if (ens === null && validEnsChain(connectedWalletChain.id)) {
+      getEns(address, appChain).then(ens => {
+        updateAccount(selectedWallet.label, address, {
+          ens
+        })
+      })
+    }
+
+    setTimeout(() => connectWallet$.next({ inProgress: false }), 1500)
+  }
+
   let step: keyof i18n['connect'] = 'selectingWallet'
+
+  // ==== STEP HANDLING LOGIC ==== //
+  $: switch (step) {
+    case 'selectingWallet': {
+      if (walletToAutoSelect) {
+        autoSelectWallet(walletToAutoSelect)
+      } else {
+        loadWalletsForSelection()
+      }
+
+      break
+    }
+    case 'connectingWallet': {
+      connectWallet()
+      break
+    }
+    case 'connectedWallet': {
+      updateAccountDetails()
+      break
+    }
+  }
 
   function setStep(update: keyof i18n['connect']) {
     step = update
@@ -222,7 +333,7 @@
 
 <svelte:window bind:innerWidth={windowWidth} />
 
-{#if !loading}
+{#if !autoSelect || (autoSelect && !autoSelect.disableModals)}
   <Modal {close}>
     <div class="container">
       {#if windowWidth >= 809}
@@ -251,7 +362,12 @@
               <Agreement bind:agreed />
 
               <div class:disabled={!agreed}>
-                <SelectingWallet {selectWallet} {wallets} {scrollToTop} />
+                <SelectingWallet
+                  {selectWallet}
+                  {wallets}
+                  {connectingWalletLabel}
+                  {connectingErrorMessage}
+                />
               </div>
             {:else if !autoSelect}
               <InstallWallet />
@@ -260,13 +376,11 @@
 
           {#if step === 'connectingWallet' && selectedWallet}
             <ConnectingWallet
-              on:connectionRejected={({ detail }) => {
-                connectionRejected = detail
-              }}
+              {connectWallet}
+              {connectionRejected}
               {setStep}
               {deselectWallet}
               {selectedWallet}
-              {updateSelectedWallet}
             />
           {/if}
 

@@ -30,7 +30,11 @@ export interface OnboardAPI {
   state: typeof state
 }
 export interface ConnectOptions {
-  autoSelect?: string // wallet name to autoselect for user
+  autoSelect?: { label: string; disableModals: boolean }
+}
+
+export interface ConnectOptionsString {
+  autoSelect?: string
 }
 
 export interface DisconnectOptions {
