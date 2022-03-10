@@ -46,6 +46,8 @@
 <style>
   .login-modal {
     position: relative;
+    background-color: var(--login-modal-white, var(--white));
+    color: var(--login-modal-black, var(--black));
   }
 
   input[type='text'] {
@@ -58,14 +60,14 @@
     width: 32rem;
     padding: 0.5rem 2.6rem 0.5rem 1rem;
     border-radius: 8px;
-    font-size: var(--account-select-font-size-5, var(--font-size-5));
+    font-size: var(--login-modal-font-size-5, var(--font-size-5));
     line-height: var(
-      --account-select-font-line-height-1,
+      --login-modal-font-line-height-1,
       var(--font-line-height-1)
     );
-    color: var(--account-select-gray-600, var(--gray-600));
+    color: var(--login-modal-gray-500, var(--gray-500));
     transition: all 200ms ease-in-out;
-    border: 2px solid var(--account-select-gray-200, var(--gray-200));
+    border: 2px solid var(--login-modal-gray-200, var(--gray-200));
     box-sizing: border-box;
     height: 3rem;
     -ms-overflow-style: none;
@@ -80,26 +82,26 @@
   button {
     align-items: center;
     padding: 0.75rem 1.5rem;
-    color: var(--account-select-white, var(--white));
+    color: var(--login-modal-white, var(--white));
     border-radius: 1.5rem;
     font-family: var(
-      --account-select-font-family-normal,
+      --login-modal-font-family-normal,
       var(--font-family-normal)
     );
     font-style: normal;
     font-weight: bold;
-    font-size: var(--account-select-font-size-5, var(--font-size-5));
-    line-height: var(--account-select-font-line-height-1, var(--line-height-1));
+    font-size: var(--login-modal-font-size-5, var(--font-size-5));
+    line-height: var(--login-modal-font-line-height-1, var(--line-height-1));
     border: none;
   }
 
   .login-btn:disabled {
-    background-color: var(--account-select-primary-300, var(--primary-300));
+    background-color: var(--login-modal-primary-300, var(--primary-300));
     cursor: default;
   }
 
   .login-btn {
-    background-color: var(--account-select-primary-500, var(--primary-500));
+    background-color: var(--login-modal-primary-500, var(--primary-500));
     cursor: pointer;
   }
 
@@ -113,10 +115,10 @@
 
   .container {
     font-family: var(
-      --account-select-font-family-normal,
+      --login-modal-font-family-normal,
       var(--font-family-normal)
     );
-    color: var(--account-select-black, var(--black));
+    color: var(--login-modal-black, var(--black));
     position: absolute;
     top: 0;
     right: 0;
@@ -134,8 +136,8 @@
     min-width: 36rem;
     max-height: 51.75rem;
     display: table;
-    background: var(--account-select-white, var(--white));
-    box-shadow: var(--account-select-shadow-1, var(--shadow-1));
+    background: var(--login-modal-white, var(--white));
+    box-shadow: var(--login-modal-shadow-1, var(--shadow-1));
     border-radius: 1.5rem;
     text-align: center;
   }
@@ -150,16 +152,16 @@
   }
 
   .branding {
-    margin: 0.5rem;
+    margin:  var(--login-modal-margin-5, var(--margin-5));
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
   .error-msg {
-    color: var(--account-select-danger-500, var(--danger-500));
+    color: var(--login-modal-danger-500, var(--danger-500));
     font-family: var(
-      --account-select-font-family-light,
+      --login-modal-font-family-light,
       var(--font-family-light)
     );
   }

@@ -62,35 +62,21 @@ const mountLoginModal = (
         /* COLORS */
         --white: white;
         --black: black;
-        --primary-100: #eff1fc;
-        --primary-200: #d0d4f7;
         --primary-300: #b1b8f2;
         --primary-500: #6370e5;
-        --primary-600: #454ea0;
-        --gray-100: #ebebed;
         --gray-200: #c2c4c9;
-        --gray-300: #999ca5;
         --gray-500: #33394b;
-        --gray-700: #1a1d26;
         --danger-500: #ff4f4f;
 
         /* FONTS */
         --font-family-normal: Sofia Pro;
         --font-family-light: Sofia Pro Light;
         --font-size-5: 1rem;
-        --font-size-7: .75rem;
         --font-line-height-1: 24px;
 
         /* SPACING */
         --margin-4: 1rem;
         --margin-5: 0.5rem;
-
-        /* MODAL POSITION */
-        --top-1: 1rem;
-        --right-1: 1rem;
-
-        /* SHADOWS */
-        --shadow-1: 0px 4px 12px rgba(0, 0, 0, 0.1);
       }
 
     </style>
