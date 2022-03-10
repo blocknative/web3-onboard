@@ -8,6 +8,7 @@ import type {
   RemoveWalletAction,
   ResetStoreAction,
   UpdateAccountAction,
+  UpdateDashboardAction,
   UpdateWalletAction,
   WalletState
 } from '../types'
@@ -111,9 +112,10 @@ export function updateAccount(
   dispatch(action as UpdateAccountAction)
 }
 
-export function updateDashboard(
-  update: DashboardState | Partial<DashboardState>
-): void {
+export function updateDashboard(update: {
+  mobile: DashboardState | Partial<DashboardState>
+  desktop: DashboardState | Partial<DashboardState>
+}): void {
   const error = validateDashboardUpdate(update)
 
   if (error) {
@@ -125,7 +127,7 @@ export function updateDashboard(
     payload: update
   }
 
-  dispatch(action as UpdateAccountAction)
+  dispatch(action as UpdateDashboardAction)
 }
 
 export function resetStore(): void {

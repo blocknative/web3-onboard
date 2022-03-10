@@ -48,8 +48,13 @@ function init(options: InitOptions): OnboardAPI {
   addChains(chains)
 
   if (typeof dashboard !== 'undefined') {
+    const mobileDashboard = { mobile: { enabled: false } }
+
     const dashboardUpdate =
-      typeof dashboard === 'boolean' ? { enabled: dashboard } : dashboard
+      typeof dashboard.desktop === 'boolean'
+        ? { ...mobileDashboard, desktop: { enabled: dashboard.desktop } }
+        : { ...mobileDashboard, desktop: dashboard.desktop }
+
     updateDashboard(dashboardUpdate)
   }
 

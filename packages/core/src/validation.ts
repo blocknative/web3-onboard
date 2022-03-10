@@ -106,12 +106,16 @@ const initOptions = Joi.object({
   chains: chains.required(),
   appMetadata: appMetadata,
   i18n: Joi.object().unknown(),
-  dashboard: Joi.any().valid(
-    Joi.boolean(),
-    Joi.object({
+  dashboard: Joi.object({
+    desktop: Joi.object({
+      enabled: Joi.boolean(),
+      position: dashboardPosition
+    }),
+    mobile: Joi.object({
+      enabled: Joi.boolean(),
       position: dashboardPosition
     })
-  )
+  })
 })
 
 const connectOptions = Joi.object({
@@ -184,8 +188,9 @@ export function validateSetChainOptions(data: {
   return validate(setChainOptions, data)
 }
 
-export function validateDashboardUpdate(
-  data: DashboardState | Partial<DashboardState>
-): ValidateReturn {
+export function validateDashboardUpdate(data: {
+  mobile: DashboardState | Partial<DashboardState>
+  desktop: DashboardState | Partial<DashboardState>
+}): ValidateReturn {
   return validate(dashboard, data)
 }

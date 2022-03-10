@@ -92,7 +92,7 @@ export type Address = string
 export interface AppState {
   chains: Chain[]
   wallets: WalletState[]
-  dashboard: DashboardState
+  dashboard: Dashboard
 }
 
 export type InternalState = {
@@ -112,15 +112,20 @@ export type DashboardPosition =
   | 'bottomLeft'
   | 'topLeft'
 
-export type DashboardOptions =
-  | DashboardState['enabled']
-  | { position?: DashboardPosition }
+export type DashboardOptions = {
+  desktop: { position?: DashboardPosition; enabled?: DashboardState['enabled'] }
+}
 
 export type DashboardState = {
   enabled: boolean
   displayed: boolean
   position: DashboardPosition
   expanded: boolean
+}
+
+export type Dashboard = {
+  mobile: DashboardState
+  desktop: DashboardState
 }
 
 // ==== ACTIONS ==== //
@@ -158,5 +163,8 @@ export type UpdateAccountAction = {
 
 export type UpdateDashboardAction = {
   type: 'update_dashboard'
-  payload: DashboardState | Partial<DashboardState>
+  payload: {
+    mobile: DashboardState | Partial<DashboardState>
+    desktop: DashboardState | Partial<DashboardState>
+  }
 }

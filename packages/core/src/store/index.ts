@@ -106,10 +106,13 @@ function reducer(state: AppState, action: Action): AppState {
     }
 
     case UPDATE_DASHBOARD: {
-      const update = payload as UpdateDashboardAction
+      const update = payload as UpdateDashboardAction['payload']
       return {
         ...state,
-        dashboard: { ...state.dashboard, ...update }
+        dashboard: {
+          desktop: { ...state.dashboard.desktop, ...update.desktop },
+          mobile: { ...state.dashboard.mobile, ...update.mobile }
+        }
       }
     }
 
