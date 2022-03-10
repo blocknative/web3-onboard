@@ -228,7 +228,8 @@ export type ChainId = string
 export type RpcUrl = string
 
 export type WalletInterface = {
-  provider: EIP1193Provider
+  provider: EIP1193Provider,
+  instance?: unknown
 }
 
 export interface ProviderRpcError extends Error {
