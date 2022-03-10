@@ -224,7 +224,11 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                 )
               }
 
-              return this.providers[chainId].send(method, params)
+              return this.providers[chainId].send(
+                method,
+                // @ts-ignore
+                params
+              )
             }
           }
         }

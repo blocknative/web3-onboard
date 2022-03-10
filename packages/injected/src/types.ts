@@ -104,7 +104,7 @@ export type InjectedProvider = ExternalProvider &
   MeetOneProvider &
   Record<string, boolean>
 
-export type WalletExclusions = {
+export type WalletFilters = {
   // A provider label mapped to a list of excluded platforms
   // or a boolean indicating if it should be included.
   [key in ProviderLabel | string]?: Platform[] | boolean
@@ -118,7 +118,7 @@ export interface InjectedWalletOptions {
   // or a boolean indicating if it should be included or not.
   // By default all wallets listed in ./packages/injected/
   // are included add them to here to remove them.
-  filter?: WalletExclusions
+  filter?: WalletFilters
 }
 
 export interface InjectedWalletModule extends WalletModule {

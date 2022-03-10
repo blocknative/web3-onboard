@@ -87,6 +87,7 @@ commands:
           name: Build
           command: |
             yarn
+            yarn type-check
             yarn build
       - *save-cache
       - *create-npm-config

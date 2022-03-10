@@ -44,7 +44,7 @@ function torus(options?: TorusOptions): WalletInit {
           enableLogging,
           network: {
             host: chain.rpcUrl,
-            chainId: parseInt(chain.id, 10),
+            chainId: parseInt(chain.id),
             networkName: chain.label
           },
           showTorusButton: showTorusButton,
@@ -91,7 +91,7 @@ function torus(options?: TorusOptions): WalletInit {
 
             await instance.setProvider({
               host: chain.rpcUrl,
-              chainId: parseInt(chain.id, 10),
+              chainId: parseInt(chain.id),
               networkName: chain.label
             })
 

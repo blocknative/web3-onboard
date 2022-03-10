@@ -34,7 +34,7 @@ const connectedWallets = await onboard.connectWallet()
 console.log(connectedWallets)
 ```
 
-## Excluding Wallets
+## Filtering Wallets
 
 Injected wallets that you do not want to support can be filtered based on the `Platform` the user is on. For example you may not want to support the 'Detected Wallet' that is detected automatically and filter it via all platforms by passing `false`:
 
@@ -45,7 +45,7 @@ import injectedModule, { ProviderLabel } from '@web3-onboard/injected-wallets'
 const MAINNET_RPC_URL = 'https://mainnet.infura.io/v3/<INFURA_KEY>'
 
 const injected = injectedModule({
-  exclude: {
+  filter: {
     [ProviderLabel.Detected]: false
   }
 })
@@ -77,7 +77,7 @@ const onboard = Onboard({
 })
 ```
 
-The following platforms can be used to exclude wallets:
+The following platforms can be used to filter wallets:
 
 ```typescript
 type Platform =
