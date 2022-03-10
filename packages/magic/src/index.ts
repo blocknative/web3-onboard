@@ -65,7 +65,7 @@ function magic(options: APIKey): WalletInit {
           provider = createEIP1193Provider(magicProvider, {
             eth_requestAccounts: async () => {
               try {
-                if (!loggedIn) handleLogin()
+                if (!loggedIn) await handleLogin()
                 const accounts = await magicProvider.eth.getAccounts()
                 return accounts
               } catch (error) {
@@ -77,7 +77,6 @@ function magic(options: APIKey): WalletInit {
                     message: 'Account access rejected'
                   })
                 }
-
                 return []
               }
             },

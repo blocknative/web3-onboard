@@ -14,7 +14,25 @@
     emailLoginFunction
   } = loginOptions
 
+  let errorInEmail = false
+
+  const setErrorInEmail = () => {
+    if (!errorInEmail) return
+    errorInEmail = false
+  }
+
+  const emailRegex =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
+  const validateEmail = (value: string) => {
+    return emailRegex.test(value)
+  }
+
   const login = async () => {
+    if (!validateEmail(credentials)) {
+      errorInEmail = true
+      return
+    }
     const loginResponse = await emailLoginFunction(credentials)
     loggedIn$.next(loginResponse)
   }
@@ -137,11 +155,21 @@
     align-items: center;
     justify-content: center;
   }
+
+  .error-msg {
+    color: var(--account-select-danger-500, var(--danger-500));
+    font-family: var(
+      --account-select-font-family-light,
+      var(--font-family-light)
+    );
+  }
+
 </style>
 
 <div class="container">
   <div class="login-modal" transition:fade>
     <div class="close-action-container close" on:click={dismiss}>
+      <CloseButton/>
     </div>
     <h2>{walletName} Login</h2>
     <section class="modal-controls">
@@ -150,7 +178,11 @@
         class="login-credentials form-element"
         placeholder="Email address"
         bind:value={credentials}
+        on:input={() => setErrorInEmail()}
       />
+      {#if errorInEmail}
+        <span class="error-msg">Please enter a valid email address</span>
+      {/if}
       <button
         class="login-btn form-element"
         id="connect-accounts"
