@@ -1,4 +1,4 @@
-import type { WalletInit, APIKey, EIP1193Provider } from '@bn-onboard/common'
+import type { WalletInit, APIKey, EIP1193Provider } from '@web3-onboard/common'
 
 function magic(options: APIKey): WalletInit {
   const { apiKey } = options
@@ -11,7 +11,7 @@ function magic(options: APIKey): WalletInit {
       getInterface: async ({ EventEmitter, BigNumber, chains }) => {
         const { Magic } = await import('magic-sdk')
         const { default: Web3 } = await import('web3')
-        const loginModal = (await import('./login-modal')).default
+        const loginModal = (await import('./login-modal.js')).default
         const brandingHTML = (await import('./branding.js')).default
         let loggedIn: boolean = false
 
@@ -19,7 +19,7 @@ function magic(options: APIKey): WalletInit {
           createEIP1193Provider,
           ProviderRpcErrorCode,
           ProviderRpcError
-        } = await import('@bn-onboard/common')
+        } = await import('@web3-onboard/common')
 
         const emitter = new EventEmitter()
 
