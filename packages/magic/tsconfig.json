@@ -10,7 +10,8 @@
     "module": "esnext",
     "resolveJsonModule": true,
     "strictNullChecks": false,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "types": ["node", "svelte"]
   },
   "outDir": "dist"
 }
