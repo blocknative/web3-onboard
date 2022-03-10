@@ -1,0 +1,80 @@
+Arguments: 
+  /Users/adam/.nvm/versions/node/v17.2.0/bin/node /Users/adam/.nvm/versions/node/v17.2.0/bin/yarn install --force
+
+PATH: 
+  /Users/adam/.nvm/versions/node/v17.2.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/adam/.nvm/versions/node/v17.2.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin
+
+Yarn version: 
+  1.22.17
+
+Node version: 
+  17.2.0
+
+Platform: 
+  darwin arm64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/@web3-onboard%2fmagic: Not found
+      at Request.params.callback [as _callback] (/Users/adam/.nvm/versions/node/v17.2.0/lib/node_modules/yarn/lib/cli.js:67029:18)
+      at Request.self.callback (/Users/adam/.nvm/versions/node/v17.2.0/lib/node_modules/yarn/lib/cli.js:140883:22)
+      at Request.emit (node:events:390:28)
+      at Request.<anonymous> (/Users/adam/.nvm/versions/node/v17.2.0/lib/node_modules/yarn/lib/cli.js:141855:10)
+      at Request.emit (node:events:390:28)
+      at IncomingMessage.<anonymous> (/Users/adam/.nvm/versions/node/v17.2.0/lib/node_modules/yarn/lib/cli.js:141777:12)
+      at Object.onceWrapper (node:events:509:28)
+      at IncomingMessage.emit (node:events:402:35)
+      at endReadableNT (node:internal/streams/readable:1343:12)
+      at processTicksAndRejections (node:internal/process/task_queues:83:21)
+
+npm manifest: 
+  {
+    "name": "demo",
+    "version": "2.0.1",
+    "devDependencies": {
+      "assert": "^2.0.0",
+      "buffer": "^6.0.3",
+      "cross-env": "^7.0.3",
+      "crypto-browserify": "^3.12.0",
+      "css-loader": "^5.0.1",
+      "http": "^0.0.1-security",
+      "https-browserify": "^1.0.0",
+      "mini-css-extract-plugin": "^1.3.4",
+      "os-browserify": "^0.3.0",
+      "process": "^0.11.10",
+      "stream-browserify": "^3.0.0",
+      "stream-http": "^3.2.0",
+      "svelte": "^3.31.2",
+      "svelte-loader": "^3.0.0",
+      "util": "^0.12.4",
+      "webpack": "^5.64.4",
+      "webpack-cli": "^4.4.0",
+      "webpack-dev-server": "4.7.4"
+    },
+    "dependencies": {
+      "@web3-onboard/core": "^2.0.4",
+      "@web3-onboard/fortmatic": "^2.0.0",
+      "@web3-onboard/gnosis": "^2.0.0",
+      "@web3-onboard/injected-wallets": "^2.0.0",
+      "@web3-onboard/keepkey": "^2.0.0",
+      "@web3-onboard/keystone": "^2.0.0",
+      "@web3-onboard/ledger": "^2.0.0",
+      "@web3-onboard/portis": "^2.0.0",
+      "@web3-onboard/torus": "^2.0.0",
+      "@web3-onboard/trezor": "^2.0.0",
+      "@web3-onboard/walletconnect": "^2.0.0",
+      "@web3-onboard/walletlink": "^2.0.0",
+      "@web3-onboard/magic": "^2.0.0",
+      "vconsole": "^3.9.5"
+    },
+    "license": "MIT",
+    "scripts": {
+      "build": "cross-env NODE_ENV=production webpack",
+      "dev": "webpack serve"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
