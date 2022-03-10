@@ -415,7 +415,7 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-shadow-1: 0px 4px 12px rgba(0, 0, 0, 0.1);
   --onboard-shadow-2: inset 0px -1px 0px rgba(0, 0, 0, 0.1);
 
-  --onboard-modals-z-index
+  --onboard-modal-z-index
 }
 ```
 
