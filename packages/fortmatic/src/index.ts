@@ -18,7 +18,7 @@ function fortmatic(options: APIKey): WalletInit {
         const emitter = new EventEmitter()
 
         let instance = new Fortmatic(apiKey, {
-          chainId: parseInt(chains[0].id, 10),
+          chainId: parseInt(chains[0].id),
           rpcUrl: chains[0].rpcUrl
         })
 
@@ -58,7 +58,7 @@ function fortmatic(options: APIKey): WalletInit {
 
               // re-instantiate instance with new network
               instance = new Fortmatic(apiKey, {
-                chainId: parseInt(chain.id, 10),
+                chainId: parseInt(chain.id),
                 rpcUrl: chain.rpcUrl
               })
 
