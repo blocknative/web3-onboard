@@ -6,7 +6,7 @@
 
   export let wallets: WalletWithLoadingIcon[]
   export let selectWallet: (wallet: WalletWithLoadingIcon) => Promise<void>
-  export let connectingWallet: string
+  export let connectingWalletLabel: string
   export let connectingErrorMessage: string
 
   function checkConnected(label: string) {
@@ -52,7 +52,7 @@
     {#each wallets as wallet}
       <WalletButton
         connected={checkConnected(wallet.label)}
-        connecting={connectingWallet === wallet.label}
+        connecting={connectingWalletLabel === wallet.label}
         label={wallet.label}
         icon={wallet.icon}
         onClick={() => selectWallet(wallet)}

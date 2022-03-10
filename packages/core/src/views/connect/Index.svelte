@@ -40,7 +40,7 @@
   let wallets: WalletWithLoadingIcon[] = []
   let selectedWallet: WalletState | null
   let agreed: boolean
-  let connectingWallet: string // the wallet label that is connecting
+  let connectingWalletLabel: string
   let connectingErrorMessage: string
 
   let windowWidth: number
@@ -58,7 +58,7 @@
     icon,
     getInterface
   }: WalletWithLoadingIcon): Promise<void> {
-    connectingWallet = label
+    connectingWalletLabel = label
 
     try {
       const existingWallet = state
@@ -120,7 +120,7 @@
       connectingErrorMessage = message
       scrollToTop()
     } finally {
-      connectingWallet = ''
+      connectingWalletLabel = ''
     }
   }
 
@@ -365,7 +365,7 @@
                 <SelectingWallet
                   {selectWallet}
                   {wallets}
-                  {connectingWallet}
+                  {connectingWalletLabel}
                   {connectingErrorMessage}
                 />
               </div>
