@@ -1,10 +1,10 @@
-# @bn-onboard/magic
+# @web3-onboard/magic
 
 ## Wallet module for connecting Ledger hardware wallets to Onboard V2
 
 ### Install
 
-`npm i @bn-onboard/magic`
+`npm i @web3-onboard/magic`
 
 ## Options
 
@@ -17,8 +17,8 @@ type magicOptions = {
 ## Usage
 
 ```typescript
-import Onboard from '@bn-onboard/core'
-import magicModule from '@bn-onboard/magic'
+import Onboard from '@web3-onboard/core'
+import magicModule from '@web3-onboard/magic'
 
 const magic = magicModule({ apiKey: 'API_KEY' })
 
