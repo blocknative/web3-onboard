@@ -76,7 +76,7 @@
   .close-action-container {
     position: absolute;
     right: 0;
-    padding: 0.25rem 0.75rem;
+    padding: 0.5rem 0.75rem;
   }
 
   button {
