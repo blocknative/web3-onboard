@@ -59,14 +59,15 @@ function magic(options: APIKey): WalletInit {
         if (!loggedIn) handleLogin()
         
         let magicProvider = new Web3(magicInstance.rpcProvider)
+        let magicProvider2 = magicInstance.rpcProvider
         let provider: EIP1193Provider
 
         function patchProvider(): EIP1193Provider {
-          provider = createEIP1193Provider(magicProvider, {
+          provider = createEIP1193Provider(magicProvider2.enable(), {
             eth_requestAccounts: async () => {
               try {
                 if (!loggedIn) await handleLogin()
-                const accounts = await magicProvider.eth.getAccounts()
+                const accounts = await magicProvider2.request({ method: 'eth_accounts' })
                 return accounts
               } catch (error) {
                 console.error('error in request accounts', error)
@@ -157,7 +158,7 @@ function magic(options: APIKey): WalletInit {
 
         return {
           provider,
-          magicInstance
+          instance: magicInstance
         }
       }
     }
