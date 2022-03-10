@@ -228,6 +228,9 @@ export async function getEns(
   address: Address,
   chain: Chain
 ): Promise<Ens | null> {
+  // chain we don't recognize and don't have a rpcUrl for requests
+  if (!chain) return null
+
   if (!ethersProviders[chain.rpcUrl]) {
     ethersProviders[chain.rpcUrl] = new providers.StaticJsonRpcProvider(
       chain.rpcUrl
@@ -271,7 +274,7 @@ export async function getBalance(
   address: string,
   chain: Chain
 ): Promise<Balances | null> {
-  // chain we don't recognize
+  // chain we don't recognize and don't have a rpcUrl for requests
   if (!chain) return null
 
   if (!ethersProviders[chain.rpcUrl]) {

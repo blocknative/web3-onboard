@@ -208,6 +208,11 @@ if (previouslyConnectedWallets) {
   // Connect the most recently connected wallet (first in the array)
   await onboard.connectWallet({ autoSelect: previouslyConnectedWallets[0] })
 
+  // You can also auto connect "silently" and disable all onboard modals to avoid them flashing on page load
+  await onboard.connectWallet({
+    autoSelect: { label: previouslyConnectedWallets[0], disableModals: true }
+  })
+
   // OR - loop through and initiate connection for all previously connected wallets
   // note: This UX might not be great as the user may need to login to each wallet one after the other
   // for (walletLabel in previouslyConnectedWallets) {
@@ -409,6 +414,8 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   /* SHADOWS */
   --onboard-shadow-1: 0px 4px 12px rgba(0, 0, 0, 0.1);
   --onboard-shadow-2: inset 0px -1px 0px rgba(0, 0, 0, 0.1);
+
+  --onboard-modal-z-index
 }
 ```
 

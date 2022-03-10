@@ -384,6 +384,7 @@ export interface EIP1193Provider extends SimpleEventEmitter {
   request(args: EthSignTransactionRequest): Promise<string>
   request(args: EthSignMessageRequest): Promise<string>
   request(args: EIP712Request): Promise<string>
+  request(args: { method: string; params?: Array<unknown> }): Promise<unknown>
   disconnect?(): void
 }
 

@@ -1,58 +1,17 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
-
-  import { getBalance, getEns } from '../../provider'
-  import { updateAccount } from '../../store/actions'
-  import { connectWallet$, internalState$ } from '../../streams'
-  import { validEnsChain } from '../../utils'
+  import { internalState$ } from '../../streams'
   import success from '../../icons/success'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
 
   import type { WalletState } from '../../types'
   import defaultAppIcon from '../../icons/default-app-icon'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
-  import { state } from '../../store'
   import en from '../../i18n/en.json'
 
   export let selectedWallet: WalletState
 
-  const { label } = selectedWallet
   const { appMetadata } = internalState$.getValue()
-
-  async function updateAccountDetails() {
-    const { accounts, chains: selectedWalletChains } = selectedWallet
-    const appChains = state.get().chains
-    const [connectedWalletChain] = selectedWalletChains
-
-    const appChain = appChains.find(
-      ({ namespace, id }) =>
-        namespace === connectedWalletChain.namespace &&
-        id === connectedWalletChain.id
-    )
-
-    const { address } = accounts[0]
-    let { balance, ens } = accounts[0]
-
-    if (balance === null) {
-      getBalance(address, appChain).then(balance => {
-        updateAccount(label, address, {
-          balance
-        })
-      })
-    }
-
-    if (ens === null && validEnsChain(connectedWalletChain.id)) {
-      getEns(address, appChain).then(ens => {
-        updateAccount(label, address, {
-          ens
-        })
-      })
-    }
-
-    setTimeout(() => connectWallet$.next({ inProgress: false }), 1500)
-  }
-
-  updateAccountDetails()
 </script>
 
 <style>

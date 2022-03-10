@@ -25,7 +25,7 @@
     top: 0;
     left: 0;
     pointer-events: none;
-    z-index: 10;
+    z-index: var(--onboard-modal-z-index, var(--modal-z-index));
   }
 
   .background {
