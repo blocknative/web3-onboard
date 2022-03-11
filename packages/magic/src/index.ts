@@ -84,9 +84,7 @@ function magic(options: APIKey): WalletInit {
             eth_selectAccounts: null,
             eth_getBalance: async () => {
               const address = (await magicInstance.rpcProvider.request({ method: 'eth_accounts' }))[0]
-              const balance = magicProvider.utils.fromWei(
-                await magicProvider.eth.getBalance(address) // Balance is in wei
-              )
+              const balance = await magicInstance.rpcProvider.request({ method: 'eth_getBalance', params: [address, 'latest'] })
               return balance
                 ? BigNumber.from(balance).mul('1000000000000000000').toString()
                 : '0'
