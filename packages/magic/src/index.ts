@@ -38,8 +38,10 @@ function magic(options: APIKey): WalletInit {
           try {
             await magicInstance.auth.loginWithMagicLink({ email: emailAddress })
             return await magicInstance.user.isLoggedIn()
-          } catch(err) {
-            throw new Error(`$An error occured while connecting your Magic wallet, please try again: ${err}`)
+          } catch (err) {
+            throw new Error(
+              `$An error occured while connecting your Magic wallet, please try again: ${err}`
+            )
           }
         }
 
@@ -50,24 +52,20 @@ function magic(options: APIKey): WalletInit {
             emailLoginFunction: loginWithEmail
           })
         }
-        try {
-          loggedIn = await magicInstance.user.isLoggedIn()
-        } catch (err) {
-          throw new Error(`$An error occured while connecting your Magic wallet, please try again: ${err}`)
-        }
-        
-        if (!loggedIn) handleLogin()
-        
-        let magicProvider = new Web3(magicInstance.rpcProvider)
+
+        if (!loggedIn) await handleLogin()
+
+        let magicProvider = magicInstance.rpcProvider
         let provider: EIP1193Provider
 
         function patchProvider(): EIP1193Provider {
-          provider = createEIP1193Provider(magicInstance.rpcProvider.enable(), {
+          provider = createEIP1193Provider(magicProvider.enable(), {
             eth_requestAccounts: async () => {
               try {
                 if (!loggedIn) await handleLogin()
-                const accounts = await magicInstance.rpcProvider.request({ method: 'eth_accounts' })
-                console.log(accounts)
+                const accounts = await magicProvider.request({
+                  method: 'eth_accounts'
+                })
                 return accounts
               } catch (error) {
                 console.error('error in request accounts', error)
@@ -83,8 +81,15 @@ function magic(options: APIKey): WalletInit {
             },
             eth_selectAccounts: null,
             eth_getBalance: async () => {
-              const address = (await magicInstance.rpcProvider.request({ method: 'eth_accounts' }))[0]
-              const balance = await magicInstance.rpcProvider.request({ method: 'eth_getBalance', params: [address, 'latest'] })
+              const address = (
+                await magicProvider.request({
+                  method: 'eth_accounts'
+                })
+              )[0]
+              const balance = await magicProvider.request({
+                method: 'eth_getBalance',
+                params: [address, 'latest']
+              })
               return balance
                 ? BigNumber.from(balance).mul('1000000000000000000').toString()
                 : '0'
@@ -103,47 +108,83 @@ function magic(options: APIKey): WalletInit {
                 network: customNodeOptions
               })
 
-              // get the provider again
-              magicProvider = new Web3(magicInstance.rpcProvider)
+              magicProvider = magicInstance.rpcProvider
 
               emitter.emit('chainChanged', chain.id)
 
-              // patch the provider
               patchProvider()
 
               return null
             },
             eth_accounts: async () => {
-              const accounts =  (await magicInstance.rpcProvider.request({ method: 'eth_accounts' }))[0];
-              return Array.isArray(accounts) &&
-              accounts.length
-              ? [accounts[0]]
-              : []
+              const accounts = (
+                await magicProvider.request({
+                  method: 'eth_accounts'
+                })
+              )[0]
+              return Array.isArray(accounts) && accounts.length
+                ? [accounts[0]]
+                : []
             },
             eth_sign: async ({ params: [address, message] }) => {
-              return await magicProvider.eth.sign(message, address);
+              const receipt = await magicProvider.send('eth_sign', [
+                address,
+                message
+              ])
+              return receipt &&
+                receipt.hasOwnProperty('tx') &&
+                receipt.tx.hasOwnProperty('hash')
+                ? receipt.tx.hash
+                : ''
+            },
+            eth_signTypedData: async ({ params: [address, typedData] }) => {
+              const receipt = await magicProvider.send('eth_sign', [
+                address,
+                typedData
+              ])
+              return receipt &&
+                receipt.hasOwnProperty('tx') &&
+                receipt.tx.hasOwnProperty('hash')
+                ? receipt.tx.hash
+                : ''
             },
             eth_chainId: async () => {
               return currentChain ? currentChain : ''
             },
 
             eth_signTransaction: async ({ params: [transactionObject] }) => {
-              const fromAddress = (await magicInstance.rpcProvider.request({ method: 'eth_accounts' }))[0];
+              const fromAddress = (
+                await magicProvider.request({
+                  method: 'eth_accounts'
+                })
+              )[0]
 
               let destination
               if (transactionObject.hasOwnProperty('to')) {
                 destination = transactionObject.to
               }
 
-              const receipt = await magicProvider.eth.sendTransaction({
-                ...transactionObject,
-                nonce: parseInt(transactionObject.nonce),
-                from: fromAddress,
-                to: destination,
-              });
-              return receipt ? receipt.transactionHash : ''
-            },
-            
+              const receipt = await magicProvider.send(
+                'eth_signTransaction',
+                [
+                  {
+                    ...transactionObject,
+                    nonce:
+                      transactionObject.hasOwnProperty('nonce') &&
+                      typeof transactionObject.nonce === 'number'
+                        ? parseInt(transactionObject.nonce)
+                        : '',
+                    from: fromAddress,
+                    to: destination
+                  }
+                ]
+              )
+              return receipt &&
+                receipt.hasOwnProperty('tx') &&
+                receipt.tx.hasOwnProperty('hash')
+                ? receipt.tx.hash
+                : ''
+            }
           })
 
           provider.on = emitter.on.bind(emitter)
@@ -156,7 +197,7 @@ function magic(options: APIKey): WalletInit {
 
         return {
           provider,
-          instance:magicInstance
+          instance: magicInstance
         }
       }
     }
