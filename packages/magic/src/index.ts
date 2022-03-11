@@ -22,11 +22,12 @@ function magic(options: APIKey): WalletInit {
 
         const emitter = new EventEmitter()
 
-        let currentChain = chains[0].id
+        let currentChain = chains[0]
+        console.log(currentChain)
 
         let customNodeOptions = {
-          chainId: parseInt(chains[0].id, 10),
-          rpcUrl: chains[0].rpcUrl
+          chainId: parseInt(currentChain.id, 10),
+          rpcUrl: currentChain.rpcUrl
         }
 
         let magicInstance = new Magic(apiKey, {
@@ -54,6 +55,7 @@ function magic(options: APIKey): WalletInit {
 
         let magicProvider = magicInstance.rpcProvider
         let provider: EIP1193Provider
+        let activeAddress: string
 
         function patchProvider(): EIP1193Provider {
           provider = createEIP1193Provider(magicProvider, {
@@ -61,6 +63,7 @@ function magic(options: APIKey): WalletInit {
               try {
                 if (!loggedIn) await handleLogin()
                 const accounts = await baseRequest({ method: 'eth_accounts' })
+                activeAddress = accounts[0]
                 return accounts
               } catch (error) {
                 console.error('error in request accounts', error)
@@ -75,15 +78,10 @@ function magic(options: APIKey): WalletInit {
               }
             },
             eth_selectAccounts: null,
-            eth_getBalance: async () => {
-              const [address] = (
-                await magicProvider.request({
-                  method: 'eth_accounts'
-                })
-              )
-              const balance = await magicProvider.request({
+            eth_getBalance: async ({ baseRequest }) => {
+              const balance = await baseRequest({
                 method: 'eth_getBalance',
-                params: [address, 'latest']
+                params: [activeAddress, 'latest']
               })
               return balance
                 ? BigNumber.from(balance).mul('1000000000000000000').toString()
@@ -92,11 +90,11 @@ function magic(options: APIKey): WalletInit {
             wallet_switchEthereumChain: async ({ params }) => {
               const chain = chains.find(({ id }) => id === params[0].chainId)
               if (!chain) throw new Error('Chain must be set before switching')
-              currentChain = chain.id
+              currentChain = chain
               // re-instantiate instance with new network
               customNodeOptions = {
-                chainId: parseInt(chains[0].id, 10),
-                rpcUrl: chains[0].rpcUrl
+                chainId: parseInt(currentChain.id, 10),
+                rpcUrl: currentChain.rpcUrl
               }
 
               magicInstance = new Magic(apiKey, {
@@ -105,7 +103,7 @@ function magic(options: APIKey): WalletInit {
 
               magicProvider = magicInstance.rpcProvider
 
-              emitter.emit('chainChanged', chain.id)
+              emitter.emit('chainChanged', currentChain.id)
 
               patchProvider()
 
@@ -140,36 +138,27 @@ function magic(options: APIKey): WalletInit {
                 : ''
             },
             eth_chainId: async () => {
-              return currentChain ? currentChain : '0x1'
+              return currentChain.id ? currentChain.id : '0x1'
             },
 
             eth_signTransaction: async ({ params: [transactionObject] }) => {
-              const [fromAddress] = (
-                await magicProvider.request({
-                  method: 'eth_accounts'
-                })
-              )
-
               let destination
               if (transactionObject.hasOwnProperty('to')) {
                 destination = transactionObject.to
               }
 
-              const receipt = await magicProvider.send(
-                'eth_signTransaction',
-                [
-                  {
-                    ...transactionObject,
-                    nonce:
-                      transactionObject.hasOwnProperty('nonce') &&
-                      typeof transactionObject.nonce === 'number'
-                        ? parseInt(transactionObject.nonce)
-                        : '',
-                    from: fromAddress,
-                    to: destination
-                  }
-                ]
-              )
+              const receipt = await magicProvider.send('eth_signTransaction', [
+                {
+                  ...transactionObject,
+                  nonce:
+                    transactionObject.hasOwnProperty('nonce') &&
+                    typeof transactionObject.nonce === 'number'
+                      ? parseInt(transactionObject.nonce)
+                      : '',
+                  from: activeAddress,
+                  to: destination
+                }
+              ])
               return receipt &&
                 receipt.hasOwnProperty('tx') &&
                 receipt.tx.hasOwnProperty('hash')
