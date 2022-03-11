@@ -44,7 +44,6 @@
   "dependencies": {
     "@web3-onboard/common": "^2.0.3",
     "magic-sdk": "^8.1.0",
-    "web3": "^1.7.1",
     "rxjs": "^7.5.2"
   }
 }

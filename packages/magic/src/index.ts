@@ -10,7 +10,6 @@ function magic(options: APIKey): WalletInit {
       getIcon: async () => (await import('./icon.js')).default,
       getInterface: async ({ EventEmitter, BigNumber, chains }) => {
         const { Magic } = await import('magic-sdk')
-        const { default: Web3 } = await import('web3')
         const loginModal = (await import('./login-modal.js')).default
         const brandingHTML = (await import('./branding.js')).default
         let loggedIn: boolean = false
