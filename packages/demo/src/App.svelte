@@ -168,8 +168,8 @@
       params: [address, toHex(signMsg)]
     })
 
-    // const recoveredAddress = verifyMessage(signMsg, signature)
-    // console.log({ signMsg, signature, recoveredAddress })
+    const recoveredAddress = verifyMessage(signMsg, signature)
+    console.log({ signMsg, signature, recoveredAddress })
   }
 
   const signTypedMessage = async (provider, address) => {
