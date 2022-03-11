@@ -59,15 +59,15 @@ function magic(options: APIKey): WalletInit {
         if (!loggedIn) handleLogin()
         
         let magicProvider = new Web3(magicInstance.rpcProvider)
-        let magicProvider2 = magicInstance.rpcProvider
         let provider: EIP1193Provider
 
         function patchProvider(): EIP1193Provider {
-          provider = createEIP1193Provider(magicProvider2.enable(), {
+          provider = createEIP1193Provider(magicInstance.rpcProvider.enable(), {
             eth_requestAccounts: async () => {
               try {
                 if (!loggedIn) await handleLogin()
-                const accounts = await magicProvider2.request({ method: 'eth_accounts' })
+                const accounts = await magicInstance.rpcProvider.request({ method: 'eth_accounts' })
+                console.log(accounts)
                 return accounts
               } catch (error) {
                 console.error('error in request accounts', error)
@@ -83,7 +83,7 @@ function magic(options: APIKey): WalletInit {
             },
             eth_selectAccounts: null,
             eth_getBalance: async () => {
-              const address = (await magicProvider.eth.getAccounts())[0]
+              const address = (await magicInstance.rpcProvider.request({ method: 'eth_accounts' }))[0]
               const balance = magicProvider.utils.fromWei(
                 await magicProvider.eth.getBalance(address) // Balance is in wei
               )
@@ -116,7 +116,7 @@ function magic(options: APIKey): WalletInit {
               return null
             },
             eth_accounts: async () => {
-              const accounts =  (await magicProvider.eth.getAccounts())[0];
+              const accounts =  (await magicInstance.rpcProvider.request({ method: 'eth_accounts' }))[0];
               return Array.isArray(accounts) &&
               accounts.length
               ? [accounts[0]]
@@ -130,7 +130,7 @@ function magic(options: APIKey): WalletInit {
             },
 
             eth_signTransaction: async ({ params: [transactionObject] }) => {
-              const fromAddress = (await magicProvider.eth.getAccounts())[0];
+              const fromAddress = (await magicInstance.rpcProvider.request({ method: 'eth_accounts' }))[0];
 
               let destination
               if (transactionObject.hasOwnProperty('to')) {
@@ -158,7 +158,7 @@ function magic(options: APIKey): WalletInit {
 
         return {
           provider,
-          instance: magicInstance
+          instance:magicInstance
         }
       }
     }
