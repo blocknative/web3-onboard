@@ -120,7 +120,7 @@ function magic(options: APIKey): WalletInit {
                 await magicProvider.request({
                   method: 'eth_accounts'
                 })
-              )[0]
+              )
               return Array.isArray(accounts) && accounts.length
                 ? [accounts[0]]
                 : []
