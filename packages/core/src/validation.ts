@@ -6,8 +6,8 @@ import type {
   WalletState,
   ConnectOptions,
   DisconnectOptions,
-  DashboardState,
-  ConnectOptionsString
+  ConnectOptionsString,
+  Dashboard
 } from './types'
 
 const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
@@ -139,7 +139,6 @@ const setChainOptions = Joi.object({
 
 const dashboard = Joi.object({
   enabled: Joi.boolean(),
-  displayed: Joi.boolean(),
   position: dashboardPosition,
   expanded: Joi.boolean()
 })
@@ -188,9 +187,8 @@ export function validateSetChainOptions(data: {
   return validate(setChainOptions, data)
 }
 
-export function validateDashboardUpdate(data: {
-  mobile: DashboardState | Partial<DashboardState>
-  desktop: DashboardState | Partial<DashboardState>
-}): ValidateReturn {
+export function validateDashboardUpdate(
+  data: Dashboard | Partial<Dashboard>
+): ValidateReturn {
   return validate(dashboard, data)
 }

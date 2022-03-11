@@ -11,7 +11,7 @@ import initI18N from './i18n'
 
 import App from './views/Index.svelte'
 import type { InitOptions, OnboardAPI } from './types'
-import { getDeviceInfo } from './utils'
+import { device } from './utils'
 
 const API = {
   connectWallet,
@@ -47,16 +47,17 @@ function init(options: InitOptions): OnboardAPI {
   initI18N(i18n)
   addChains(chains)
 
-  if (typeof dashboard !== 'undefined') {
-    const mobileDashboard = { mobile: { enabled: false } }
+  let dashboardUpdate
 
-    const dashboardUpdate =
-      typeof dashboard.desktop === 'boolean'
-        ? { ...mobileDashboard, desktop: { enabled: dashboard.desktop } }
-        : { ...mobileDashboard, desktop: dashboard.desktop }
-
-    updateDashboard(dashboardUpdate)
+  if (device.type === 'mobile') {
+    dashboardUpdate = {
+      enabled: false
+    }
+  } else if (typeof dashboard !== 'undefined' && dashboard.desktop) {
+    dashboardUpdate = dashboard.desktop
   }
+
+  dashboardUpdate && updateDashboard(dashboardUpdate)
 
   const { svelteInstance } = internalState$.getValue()
 
@@ -65,8 +66,6 @@ function init(options: InitOptions): OnboardAPI {
     console.warn('Re-initializing Onboard and resetting back to initial state')
     reset$.next()
   }
-
-  const device = getDeviceInfo()
 
   const walletModules = wallets.reduce((acc, walletInit) => {
     const initialized = walletInit({ device })

@@ -4,7 +4,7 @@ import type {
   Account,
   AddChainsAction,
   AddWalletAction,
-  DashboardState,
+  Dashboard,
   RemoveWalletAction,
   ResetStoreAction,
   UpdateAccountAction,
@@ -112,10 +112,7 @@ export function updateAccount(
   dispatch(action as UpdateAccountAction)
 }
 
-export function updateDashboard(update: {
-  mobile: DashboardState | Partial<DashboardState>
-  desktop: DashboardState | Partial<DashboardState>
-}): void {
+export function updateDashboard(update: Dashboard | Partial<Dashboard>): void {
   const error = validateDashboardUpdate(update)
 
   if (error) {

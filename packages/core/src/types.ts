@@ -113,19 +113,16 @@ export type DashboardPosition =
   | 'topLeft'
 
 export type DashboardOptions = {
-  desktop: { position?: DashboardPosition; enabled?: DashboardState['enabled'] }
-}
-
-export type DashboardState = {
-  enabled: boolean
-  displayed: boolean
-  position: DashboardPosition
-  expanded: boolean
+  desktop: {
+    position?: DashboardPosition
+    enabled?: Dashboard['enabled']
+  }
 }
 
 export type Dashboard = {
-  mobile: DashboardState
-  desktop: DashboardState
+  enabled: boolean
+  position: DashboardPosition
+  expanded: boolean
 }
 
 // ==== ACTIONS ==== //
@@ -163,8 +160,5 @@ export type UpdateAccountAction = {
 
 export type UpdateDashboardAction = {
   type: 'update_dashboard'
-  payload: {
-    mobile: DashboardState | Partial<DashboardState>
-    desktop: DashboardState | Partial<DashboardState>
-  }
+  payload: Dashboard | Partial<Dashboard>
 }

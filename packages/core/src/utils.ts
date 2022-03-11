@@ -8,21 +8,19 @@ import type {
   ChainId
 } from '@web3-onboard/common'
 
+const parsed = bowser.getParser(window.navigator.userAgent)
+const os = parsed.getOS()
+const browser = parsed.getBrowser()
+const { type } = parsed.getPlatform()
+
+export const device: Device = {
+  type: type as DeviceType,
+  os: os as DeviceOS,
+  browser: browser as DeviceBrowser
+}
+
 export const notNullish = <T>(value: T | null | undefined): value is T =>
   value != null
-
-export function getDeviceInfo(): Device {
-  const parsed = bowser.getParser(window.navigator.userAgent)
-  const os = parsed.getOS()
-  const browser = parsed.getBrowser()
-  const { type } = parsed.getPlatform()
-
-  return {
-    type: type as DeviceType,
-    os: os as DeviceOS,
-    browser: browser as DeviceBrowser
-  }
-}
 
 export function validEnsChain(chainId: ChainId): boolean {
   switch (chainId) {
@@ -38,4 +36,8 @@ export function validEnsChain(chainId: ChainId): boolean {
 
 export function isSVG(str: string): boolean {
   return str.includes('<svg')
+}
+
+export function shortenAddress(add: string): string {
+  return `${add.slice(0, 6)}...${add.slice(-4)}`
 }

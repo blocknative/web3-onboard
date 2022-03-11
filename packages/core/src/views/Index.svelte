@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { startWith } from 'rxjs/operators'
+  import { shareReplay, startWith } from 'rxjs/operators'
   import { connectWallet$, switchChainModal$ } from '../streams'
   import { state } from '../store'
   import Connect from './connect/Index.svelte'
@@ -9,7 +9,7 @@
 
   const dashboard$ = state
     .select('dashboard')
-    .pipe(startWith(state.get().dashboard))
+    .pipe(startWith(state.get().dashboard), shareReplay(1))
 </script>
 
 <style>
@@ -158,5 +158,5 @@
 {/if}
 
 {#if $dashboard$.enabled}
-  <Dashboard dashboard={$dashboard$} />
+  <Dashboard settings={$dashboard$} />
 {/if}

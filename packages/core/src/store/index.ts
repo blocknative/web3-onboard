@@ -110,8 +110,8 @@ function reducer(state: AppState, action: Action): AppState {
       return {
         ...state,
         dashboard: {
-          desktop: { ...state.dashboard.desktop, ...update.desktop },
-          mobile: { ...state.dashboard.mobile, ...update.mobile }
+          ...state.dashboard,
+          ...update
         }
       }
     }
