@@ -168,14 +168,14 @@
       params: [address, toHex(signMsg)]
     })
 
-    const recoveredAddress = verifyMessage(signMsg, signature)
-    console.log({ signMsg, signature, recoveredAddress })
+    // const recoveredAddress = verifyMessage(signMsg, signature)
+    // console.log({ signMsg, signature, recoveredAddress })
   }
 
   const signTypedMessage = async (provider, address) => {
     const data = JSON.parse(signTypedMsg)
     const signature = await provider.request({
-      method: 'eth_signTypedData',
+      method: 'eth_signTypedData_v4',
       params: [address, data]
     })
     const { domain, types, message } = data
