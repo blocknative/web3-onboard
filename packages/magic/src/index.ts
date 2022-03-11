@@ -39,7 +39,7 @@ function magic(options: APIKey): WalletInit {
             return await magicInstance.user.isLoggedIn()
           } catch (err) {
             throw new Error(
-              `$An error occured while connecting your Magic wallet, please try again: ${err}`
+              `$An error occurred while connecting your Magic wallet, please try again: ${err}`
             )
           }
         }
@@ -52,19 +52,15 @@ function magic(options: APIKey): WalletInit {
           })
         }
 
-        if (!loggedIn) await handleLogin()
-
         let magicProvider = magicInstance.rpcProvider
         let provider: EIP1193Provider
 
         function patchProvider(): EIP1193Provider {
-          provider = createEIP1193Provider(magicProvider.enable(), {
-            eth_requestAccounts: async () => {
+          provider = createEIP1193Provider(magicProvider, {
+            eth_requestAccounts: async ({ baseRequest }) => {
               try {
                 if (!loggedIn) await handleLogin()
-                const accounts = await magicProvider.request({
-                  method: 'eth_accounts'
-                })
+                const accounts = await baseRequest({ method: 'eth_accounts' })
                 return accounts
               } catch (error) {
                 console.error('error in request accounts', error)
@@ -80,11 +76,11 @@ function magic(options: APIKey): WalletInit {
             },
             eth_selectAccounts: null,
             eth_getBalance: async () => {
-              const address = (
+              const [address] = (
                 await magicProvider.request({
                   method: 'eth_accounts'
                 })
-              )[0]
+              )
               const balance = await magicProvider.request({
                 method: 'eth_getBalance',
                 params: [address, 'latest']
@@ -115,12 +111,8 @@ function magic(options: APIKey): WalletInit {
 
               return null
             },
-            eth_accounts: async () => {
-              const accounts = (
-                await magicProvider.request({
-                  method: 'eth_accounts'
-                })
-              )
+            eth_accounts: async ({ baseRequest }) => {
+              const accounts = await baseRequest({ method: 'eth_accounts' })
               return Array.isArray(accounts) && accounts.length
                 ? [accounts[0]]
                 : []
@@ -148,15 +140,15 @@ function magic(options: APIKey): WalletInit {
                 : ''
             },
             eth_chainId: async () => {
-              return currentChain ? currentChain : ''
+              return currentChain ? currentChain : '0x1'
             },
 
             eth_signTransaction: async ({ params: [transactionObject] }) => {
-              const fromAddress = (
+              const [fromAddress] = (
                 await magicProvider.request({
                   method: 'eth_accounts'
                 })
-              )[0]
+              )
 
               let destination
               if (transactionObject.hasOwnProperty('to')) {
