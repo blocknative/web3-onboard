@@ -26,7 +26,7 @@ function magic(options: APIKey): WalletInit {
         console.log(currentChain)
 
         let customNodeOptions = {
-          chainId: parseInt(currentChain.id, 10),
+          chainId: parseInt(currentChain.id),
           rpcUrl: currentChain.rpcUrl
         }
 
@@ -58,7 +58,7 @@ function magic(options: APIKey): WalletInit {
         let activeAddress: string
 
         function patchProvider(): EIP1193Provider {
-          provider = createEIP1193Provider(magicProvider, {
+          const patchedProvider = createEIP1193Provider(magicProvider, {
             eth_requestAccounts: async ({ baseRequest }) => {
               try {
                 if (!loggedIn) await handleLogin()
@@ -93,7 +93,7 @@ function magic(options: APIKey): WalletInit {
               currentChain = chain
               // re-instantiate instance with new network
               customNodeOptions = {
-                chainId: parseInt(currentChain.id, 10),
+                chainId: parseInt(currentChain.id),
                 rpcUrl: currentChain.rpcUrl
               }
 
@@ -167,10 +167,22 @@ function magic(options: APIKey): WalletInit {
             }
           })
 
-          provider.on = emitter.on.bind(emitter)
-          provider.disconnect = () => magicInstance.user.logout()
+          if (!provider) {
+            patchedProvider.on = emitter.on.bind(emitter)
+            patchedProvider.disconnect = () => magicInstance.user.logout()
 
-          return provider
+            return patchedProvider
+          } else {
+            provider.request = patchedProvider.request.bind(patchedProvider)
+
+            // @ts-ignore - bind old methods for backwards compat
+            provider.send = patchedProvider.send.bind(patchedProvider)
+
+            // @ts-ignore - bind old methods for backwards compat
+            provider.sendAsync = patchedProvider.sendAsync.bind(patchedProvider)
+
+            return provider
+          }
         }
 
         provider = patchProvider()
