@@ -57,6 +57,7 @@ const wallet = Joi.object({
   label: Joi.string(),
   icon: Joi.string(),
   provider: unknownObject,
+  instance: unknownObject.optional(),
   accounts,
   chains: Joi.array().items(connectedChain)
 })
