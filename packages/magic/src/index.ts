@@ -115,7 +115,6 @@ function magic(options: APIKey): WalletInit {
 
               return null
             },
-
             eth_sign: async ({ params }) => {
               const receipt = await magicProvider.send('eth_sign', params)
               return receipt &&
