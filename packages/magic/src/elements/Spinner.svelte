@@ -12,7 +12,7 @@
     font-family: inherit;
     font-size: inherit;
     color: inherit;
-    margin-left: auto;
+    margin: auto;
   }
 
   span {

@@ -106,7 +106,7 @@
     cursor: pointer;
     display: inline-flex;
     justify-content: space-around;
-    width: 7.5rem;
+    width: 6rem;
   }
 
   .close {
@@ -192,9 +192,10 @@
         disabled={!credentials}
         on:click={() => login()}
       >
-        Login
         {#if loading}
-          <Spinner size="1.5rem" />
+          <Spinner size="1.5rem"/>
+        {:else}
+          Login
         {/if}
       </button>
     </section>
