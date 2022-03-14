@@ -115,12 +115,7 @@ function magic(options: APIKey): WalletInit {
 
               return null
             },
-            eth_accounts: async ({ baseRequest }) => {
-              const accounts = await baseRequest({ method: 'eth_accounts' })
-              return Array.isArray(accounts) && accounts.length
-                ? [accounts[0]]
-                : []
-            },
+
             eth_sign: async ({ params }) => {
               const receipt = await magicProvider.send('eth_sign', params)
               return receipt &&
