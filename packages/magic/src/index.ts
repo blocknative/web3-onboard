@@ -1,3 +1,4 @@
+import { MagicRPCError } from '@magic-sdk/provider'
 import type { WalletInit, APIKey, EIP1193Provider } from '@web3-onboard/common'
 
 function magic(options: APIKey): WalletInit {
@@ -9,7 +10,7 @@ function magic(options: APIKey): WalletInit {
       label: walletName,
       getIcon: async () => (await import('./icon.js')).default,
       getInterface: async ({ EventEmitter, BigNumber, chains }) => {
-        const { Magic } = await import('magic-sdk')
+        const { Magic, RPCErrorCode } = await import('magic-sdk')
         const loginModal = (await import('./login-modal.js')).default
         const brandingHTML = (await import('./branding.js')).default
         let loggedIn: boolean = false
@@ -21,6 +22,11 @@ function magic(options: APIKey): WalletInit {
         } = await import('@web3-onboard/common')
 
         const emitter = new EventEmitter()
+
+        if (!chains.length)
+          throw new Error(
+            'Atleast one Chain must be passed to onboard in order to connect'
+          )
 
         let currentChain = chains[0]
         console.log(currentChain)
@@ -40,7 +46,7 @@ function magic(options: APIKey): WalletInit {
             return await magicInstance.user.isLoggedIn()
           } catch (err) {
             throw new Error(
-              `$An error occurred while connecting your Magic wallet, please try again: ${err}`
+              `An error occurred while connecting your Magic wallet, please try again: ${err}`
             )
           }
         }
@@ -68,7 +74,7 @@ function magic(options: APIKey): WalletInit {
               } catch (error) {
                 console.error('error in request accounts', error)
                 const { code } = error as { code: number }
-                if (code === -32603) {
+                if (code === RPCErrorCode.InternalError) {
                   throw new ProviderRpcError({
                     code: ProviderRpcErrorCode.ACCOUNT_ACCESS_REJECTED,
                     message: 'Account access rejected'
@@ -115,31 +121,26 @@ function magic(options: APIKey): WalletInit {
                 ? [accounts[0]]
                 : []
             },
-            eth_sign: async ({ params: [address, message] }) => {
-              const receipt = await magicProvider.send('eth_sign', [
-                address,
-                message
-              ])
+            eth_sign: async ({ params }) => {
+              const receipt = await magicProvider.send('eth_sign', params)
               return receipt &&
                 receipt.hasOwnProperty('tx') &&
                 receipt.tx.hasOwnProperty('hash')
                 ? receipt.tx.hash
                 : ''
             },
-            eth_signTypedData: async ({ params: [address, typedData] }) => {
-              const receipt = await magicProvider.send('eth_sign', [
-                address,
-                typedData
-              ])
+            eth_signTypedData: async ({ params }) => {
+              const receipt = await magicProvider.send('eth_sign', params)
               return receipt &&
                 receipt.hasOwnProperty('tx') &&
                 receipt.tx.hasOwnProperty('hash')
                 ? receipt.tx.hash
                 : ''
             },
-            eth_chainId: async () => {
-              return currentChain.id ? currentChain.id : '0x1'
-            },
+            eth_chainId: async () =>
+              currentChain && currentChain.hasOwnProperty('id')
+                ? currentChain.id
+                : '0x1',
 
             eth_signTransaction: async ({ params: [transactionObject] }) => {
               let destination

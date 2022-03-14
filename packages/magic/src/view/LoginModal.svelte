@@ -3,18 +3,16 @@
   import type { Subject } from 'rxjs'
 
   import CloseButton from '../elements/CloseButton.svelte'
+  import Spinner from '../elements/Spinner.svelte'
   import type { LoginOptions } from '../types'
 
   let credentials: string = ''
   export let loginOptions: LoginOptions
   export let loggedIn$: Subject<boolean>
-  const {
-    walletName,
-    brandingHTMLString,
-    emailLoginFunction
-  } = loginOptions
+  const { walletName, brandingHTMLString, emailLoginFunction } = loginOptions
 
   let errorInEmail = false
+  let loading = false
 
   const setErrorInEmail = () => {
     if (!errorInEmail) return
@@ -29,18 +27,21 @@
   }
 
   const login = async () => {
+    loading = true
     if (!validateEmail(credentials)) {
       errorInEmail = true
+      loading = false
       return
     }
     const loginResponse = await emailLoginFunction(credentials)
+    loading = false
     loggedIn$.next(loginResponse)
   }
 
   const dismiss = () => {
     loggedIn$.next(false)
+    loading = false
   }
-
 </script>
 
 <style>
@@ -103,6 +104,9 @@
   .login-btn {
     background-color: var(--login-modal-primary-500, var(--primary-500));
     cursor: pointer;
+    display: inline-flex;
+    justify-content: space-around;
+    width: 7.5rem;
   }
 
   .close {
@@ -152,7 +156,7 @@
   }
 
   .branding {
-    margin:  var(--login-modal-margin-5, var(--margin-5));
+    margin: var(--login-modal-margin-5, var(--margin-5));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -160,18 +164,14 @@
 
   .error-msg {
     color: var(--login-modal-danger-500, var(--danger-500));
-    font-family: var(
-      --login-modal-font-family-light,
-      var(--font-family-light)
-    );
+    font-family: var(--login-modal-font-family-light, var(--font-family-light));
   }
-
 </style>
 
 <div class="container">
   <div class="login-modal" transition:fade>
     <div class="close-action-container close" on:click={dismiss}>
-      <CloseButton/>
+      <CloseButton />
     </div>
     <h2>{walletName} Login</h2>
     <section class="modal-controls">
@@ -185,15 +185,19 @@
       {#if errorInEmail}
         <span class="error-msg">Please enter a valid email address</span>
       {/if}
+
       <button
         class="login-btn form-element"
         id="connect-accounts"
         disabled={!credentials}
-        on:click={login}
+        on:click={() => login()}
       >
         Login
+        {#if loading}
+          <Spinner size="1.5rem" />
+        {/if}
       </button>
     </section>
-    <div class='branding'> {@html brandingHTMLString}</div>
+    <div class="branding">{@html brandingHTMLString}</div>
   </div>
 </div>
