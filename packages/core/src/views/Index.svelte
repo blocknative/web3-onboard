@@ -13,11 +13,11 @@
 </script>
 
 <style>
-  :global(input, textarea) {
+  :global(input) {
     background: var(--onboard-white, var(--white));
   }
 
-  :global(input, textarea, select) {
+  :global(input) {
     width: 100%;
     padding: 0.5rem 1rem;
     outline: 2px solid var(--onboard-gray-200, var(--gray-200));
@@ -70,14 +70,14 @@
     color: var(--onboard-checkbox-color, var(--onboard-white, var(--white)));
   }
 
-  :global(input:hover, textarea:hover, select:hover) {
+  :global(input:hover) {
     border-color: var(
       --onboard-checkbox-color,
       var(--onboard-white, var(--white))
     );
   }
 
-  :global(input:focus, textarea.focus, select:focus) {
+  :global(input:focus) {
     border-color: var(--onboard-primary-500, var(--primary-500));
     box-shadow: 0 0 1px 1px
       var(
@@ -96,23 +96,6 @@
     padding: 0;
     margin-top: -2px;
     margin-bottom: -2px;
-  }
-
-  :global(::-webkit-input-placeholder) {
-    /* Chrome/Opera/Safari */
-    color: var(--gray-300);
-  }
-  :global(::-moz-placeholder) {
-    /* Firefox 19+ */
-    color: var(--gray-300);
-  }
-  :global(:-ms-input-placeholder) {
-    /* IE 10+ */
-    color: var(--gray-300);
-  }
-  :global(:-moz-placeholder) {
-    /* Firefox 18- */
-    color: var(--gray-300);
   }
 
   :global(a) {

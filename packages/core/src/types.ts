@@ -162,3 +162,13 @@ export type UpdateDashboardAction = {
   type: 'update_dashboard'
   payload: Dashboard | Partial<Dashboard>
 }
+
+// ==== MISC ==== //
+export type ChainStyle = {
+  icon: string
+  badgeColor: string
+  fontColor: string
+  backgroundColor: string
+  borderColor: string
+  caretColor: string
+}

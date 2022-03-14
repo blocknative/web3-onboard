@@ -1,22 +1,28 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
-  import { shortenAddress } from '../../utils'
+  import { internalState$, wallets$ } from '../../streams'
+  import questionIcon from '../../icons/question'
+  import { shortenAddress, shortenEns } from '../../utils'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
-  import { wallets$ } from '../../streams'
+  import NetworkBadgeSelector from '../shared/NetworkBadgeSelector.svelte'
 
-  export let appIcon: string
+  const { appMetadata } = internalState$.getValue()
+  const appIcon = (appMetadata && appMetadata.icon) || questionIcon
 
   $: [primaryWallet] = $wallets$
   $: [firstAccount] = primaryWallet ? primaryWallet.accounts : []
   $: ensName = firstAccount && firstAccount.ens && firstAccount.ens.name
+
   $: shortenedFirstAddress = firstAccount
     ? shortenAddress(firstAccount.address)
     : ''
+
   $: [firstAddressAsset] =
     firstAccount && firstAccount.balance
       ? Object.keys(firstAccount.balance)
       : []
+
   $: firstAddressBalance =
     firstAccount && firstAccount.balance
       ? firstAccount.balance[firstAddressAsset]
@@ -66,6 +72,16 @@
     line-height: var(--onboard-font-line-height-2, var(--font-line-height-2));
     color: var(--onboard-gray-400, var(--gray-400));
   }
+
+  .address-balance {
+    display: flex;
+    flex-direction: column;
+    margin-left: 0.5rem;
+  }
+
+  .network {
+    margin-left: 0.5rem;
+  }
 </style>
 
 <div class="minimized shadow radius padding-5">
@@ -104,7 +120,7 @@
       </div>
 
       <!-- address and balance -->
-      <div style="height: 40px; margin-top: 2px">
+      <div class="address-balance" style="height: 40px; margin-top: 2px">
         <div class="address">{ensName || shortenedFirstAddress}</div>
         {#if firstAddressBalance}
           <div in:fade class="balance">
@@ -116,8 +132,8 @@
     </div>
 
     <!-- network badge -->
-    <div>
-      <!--  -->
+    <div class="network">
+      <NetworkBadgeSelector wallet={primaryWallet} />
     </div>
   </div>
 </div>

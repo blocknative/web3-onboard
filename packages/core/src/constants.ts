@@ -5,7 +5,6 @@ export const APP_INITIAL_STATE: AppState = {
   chains: [],
   dashboard: {
     enabled: true,
-    displayed: false,
     position: 'topRight',
     expanded: false
   }

@@ -4,7 +4,7 @@
   import type { WalletState, i18n } from '../../types'
 
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
-  import defaultAppIcon from '../../icons/default-app-icon'
+  import questionIcon from '../../icons/question'
   import en from '../../i18n/en.json'
 
   export let connectWallet: () => Promise<void>
@@ -94,7 +94,7 @@
         <WalletAppBadge
           size={40}
           padding={8}
-          icon={(appMetadata && appMetadata.icon) || defaultAppIcon}
+          icon={(appMetadata && appMetadata.icon) || questionIcon}
           border={connectionRejected ? 'yellow' : 'blue'}
           background="lightGray"
         />

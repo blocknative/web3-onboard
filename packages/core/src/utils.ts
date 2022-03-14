@@ -8,6 +8,13 @@ import type {
   ChainId
 } from '@web3-onboard/common'
 
+import ethereumIcon from './icons/ethereum'
+import polygonIcon from './icons/polygon'
+import questionIcon from './icons/question'
+import warningIcon from './icons/warning'
+
+import type { ChainStyle } from './types'
+
 const parsed = bowser.getParser(window.navigator.userAgent)
 const os = parsed.getOS()
 const browser = parsed.getBrowser()
@@ -40,4 +47,84 @@ export function isSVG(str: string): boolean {
 
 export function shortenAddress(add: string): string {
   return `${add.slice(0, 6)}...${add.slice(-4)}`
+}
+
+export function shortenEns(ens: string): string {
+  return `${ens.slice(0, 4)}...${ens.slice(-6)}`
+}
+
+export const chainIdToLabel: Record<string, string> = {
+  '0x1': 'Ethereum',
+  '0x89': 'Polygon'
+}
+
+export const chainStyles: Record<string, ChainStyle> = {
+  '0x1': {
+    icon: ethereumIcon,
+    badgeColor: '#627EEA',
+    fontColor: '#454EA0',
+    backgroundColor: '#EFF1FC',
+    borderColor: '#D0D4F7',
+    caretColor: '#323873'
+  },
+  '0x3': {
+    icon: ethereumIcon,
+    badgeColor: '#627EEA',
+    fontColor: '#454EA0',
+    backgroundColor: '#EFF1FC',
+    borderColor: '#D0D4F7',
+    caretColor: '#323873'
+  },
+  '0x4': {
+    icon: ethereumIcon,
+    badgeColor: '#627EEA',
+    fontColor: '#454EA0',
+    backgroundColor: '#EFF1FC',
+    borderColor: '#D0D4F7',
+    caretColor: '#323873'
+  },
+  '0x5': {
+    icon: ethereumIcon,
+    badgeColor: '#627EEA',
+    fontColor: '#454EA0',
+    backgroundColor: '#EFF1FC',
+    borderColor: '#D0D4F7',
+    caretColor: '#323873'
+  },
+  '0x2a': {
+    icon: ethereumIcon,
+    badgeColor: '#627EEA',
+    fontColor: '#454EA0',
+    backgroundColor: '#EFF1FC',
+    borderColor: '#D0D4F7',
+    caretColor: '#323873'
+  },
+  '0x89': {
+    icon: polygonIcon,
+    badgeColor: '#8247E5',
+    fontColor: '#4721A6',
+    backgroundColor: '#EFEAFB',
+    borderColor: '#DED4F7',
+    caretColor: '#4721A6'
+  },
+  unknown: {
+    icon: questionIcon,
+    badgeColor: '#33394B',
+    fontColor: '#33394B',
+    backgroundColor: '#EBEBED',
+    borderColor: '#C2C4C9',
+    caretColor: '#33394B'
+  },
+  unsupported: {
+    icon: warningIcon,
+    badgeColor: '#FFE7B3',
+    fontColor: '#664600',
+    backgroundColor: '#FFEFCC',
+    borderColor: '#FFAF00',
+    caretColor: '#664600'
+  }
+}
+
+export function getChainStyles(chainId: string): ChainStyle {
+  return chainStyles[chainId] || chainStyles.unknown
 }

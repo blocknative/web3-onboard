@@ -134,6 +134,7 @@ const disconnectOptions = Joi.object({
 
 const setChainOptions = Joi.object({
   chainId: chainId.required(),
+  chainNamespace: chainNamespace,
   wallet: Joi.string()
 })
 

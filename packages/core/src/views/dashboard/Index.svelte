@@ -1,13 +1,10 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
-  import { internalState$, wallets$ } from '../../streams'
-  import defaultAppIcon from '../../icons/default-app-icon'
+  import { wallets$ } from '../../streams'
   import type { Dashboard } from '../../types'
   import Minimized from './Minimized.svelte'
 
   export let settings: Dashboard
-
-  const { appMetadata } = internalState$.getValue()
 
   const dashboardPositions = {
     topLeft: 'top: 0; left: 0;',
@@ -21,8 +18,8 @@
   .container {
     position: absolute;
     padding: 12px 24px;
-    width: 100%;
-    max-width: 364px;
+    display: flex;
+    max-width: 400px;
     box-sizing: border-box;
     font-family: var(--onboard-font-family-normal, var(--font-family-normal));
   }
@@ -40,9 +37,7 @@
   >
     {#if !settings.expanded}
       <!-- minimized -->
-      <Minimized
-        appIcon={(appMetadata && appMetadata.icon) || defaultAppIcon}
-      />
+      <Minimized />
     {:else}
       <!-- maximized -->
       <div class="radius z-index" style={dashboardPositions[settings.position]}>

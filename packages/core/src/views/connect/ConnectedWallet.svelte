@@ -5,7 +5,7 @@
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
 
   import type { WalletState } from '../../types'
-  import defaultAppIcon from '../../icons/default-app-icon'
+  import questionIcon from '../../icons/question'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import en from '../../i18n/en.json'
 
@@ -59,7 +59,7 @@
         padding={8}
         background={appMetadata && appMetadata.icon ? 'lightBlue' : 'lightGray'}
         border="darkGreen"
-        icon={(appMetadata && appMetadata.icon) || defaultAppIcon}
+        icon={(appMetadata && appMetadata.icon) || questionIcon}
       />
 
       <div style="position: relative; right: 0.85rem; top: 2px;">
