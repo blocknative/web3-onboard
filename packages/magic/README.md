@@ -39,3 +39,25 @@ const onboard = Onboard({
 const connectedWallets = await onboard.connectWallet()
 console.log(connectedWallets)
 ```
+
+### Accessing the Magic Wallet Internals
+When a Magic wallet is connect the Magic instance is exposed. 
+This can be used to get information such as user MetaData, update a user's email address or handle the user's token.
+```typescript
+const wallet = {
+  label,
+  icon: loadedIcon,
+  provider,
+  accounts: [],
+  chains: [{ namespace: 'evm', id: '0x1' }],
+  instance
+}
+
+// Assumes a user is already logged in
+try {
+  const { email, publicAddress } = await m.user.getMetadata();
+} catch {
+  // Handle errors if required!
+}
+```
+For full documentation and examples please visit Magic's official docs at https://magic.link/docs/api-reference/client-side-sdks/web#user-module
