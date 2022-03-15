@@ -1,13 +1,15 @@
 import { firstValueFrom, Subject, take } from 'rxjs'
 import LoginModal from './view/LoginModal.svelte'
 import { loggedIn$ } from './streams'
-import { SofiaProRegular, SofiaProSemiBold, SofiaProLight } from '@web3-onboard/common'
+import {
+  SofiaProRegular,
+  SofiaProSemiBold,
+  SofiaProLight
+} from '@web3-onboard/common'
 import type { LoginOptions } from './types'
 
 // eslint-disable-next-line max-len
-const loginModal = async (
-  options: LoginOptions
-): Promise<boolean> => {
+const loginModal = async (options: LoginOptions): Promise<boolean> => {
   if (options) {
     const error = !options
 
@@ -20,6 +22,9 @@ const loginModal = async (
 
   loggedIn$.pipe(take(1)).subscribe(() => {
     app.$destroy()
+    document.body.removeChild(
+      document.body.querySelector('onboard-magic-login-modal')
+    )
   })
 
   return firstValueFrom(loggedIn$)
@@ -51,7 +56,9 @@ const mountLoginModal = (
   document.body.appendChild(styleEl)
 
   // add to DOM
-  const loginModalDomElement = document.createElement('onboard-magic-login-modal')
+  const loginModalDomElement = document.createElement(
+    'onboard-magic-login-modal'
+  )
   const target = loginModalDomElement.attachShadow({ mode: 'open' })
 
   loginModalDomElement.style.all = 'initial'
