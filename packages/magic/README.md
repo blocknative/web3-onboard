@@ -12,6 +12,8 @@ in the same fashion that all other web3-onboard UI components are
 
 `npm i @web3-onboard/magic`
 
+Head over to https://magic.link/ and signup to get an API key
+
 ## Options
 
 ```typescript
@@ -60,4 +62,4 @@ try {
   // Handle errors if required!
 }
 ```
-For full documentation and examples please visit Magic's official docs at https://magic.link/docs/api-reference/client-side-sdks/web#user-module
+For full documentation and examples please visit [Magic's official docs](https://magic.link/docs/api-reference/client-side-sdks/web#user-module)
