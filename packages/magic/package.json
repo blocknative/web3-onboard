@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/magic",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Magic module for Onboard.js",
   "scripts": {
     "build": "rollup -c",
