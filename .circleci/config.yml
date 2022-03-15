@@ -185,6 +185,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/react
     steps:
       - node-build-steps
+  build-magic:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/magic
+    steps:
+      - node-build-steps
 
 workflows:
   version: 2
@@ -248,4 +254,8 @@ workflows:
   react:
     jobs:
       - build-react:
+          <<: *deploy_production_filters
+  magic:
+    jobs:
+      - build-magic:
           <<: *deploy_production_filters

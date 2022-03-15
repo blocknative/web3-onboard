@@ -22,9 +22,8 @@ const loginModal = async (options: LoginOptions): Promise<boolean> => {
 
   loggedIn$.pipe(take(1)).subscribe(() => {
     app.$destroy()
-    document.body.removeChild(
-      document.body.querySelector('onboard-magic-login-modal')
-    )
+    const modalEl = document.body.querySelector('onboard-magic-login-modal')
+    modalEl && document.body.removeChild(modalEl)
   })
 
   return firstValueFrom(loggedIn$)
