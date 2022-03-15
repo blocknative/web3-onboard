@@ -26,20 +26,15 @@
     | 'custom' = 'white'
 
   export let customBackgroundColor = ''
-  export let backgroundOpaque = false
   export let radius = 12
 </script>
 
 <style>
   .icon-container {
-    position: relative;
     box-sizing: border-box;
   }
 
   .icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100%;
   }
 
@@ -128,7 +123,6 @@
 </style>
 
 <div
-  class:opaque={backgroundOpaque}
   class:border-yellow={border === 'yellow'}
   class:border-gray={border === 'gray'}
   class:border-green={border === 'green'}
@@ -141,7 +135,7 @@
   class:background-green={background === 'green'}
   class:background-white={background === 'white'}
   class:background-transparent={background === 'transparent'}
-  class="icon-container"
+  class="icon-container relative"
   style={`${background === 'custom' ? customBackgroundColor : ''}; padding: ${
     padding - 1
   }px; width: ${size}px; height: ${size}px; border-radius: ${radius}px;`}
@@ -154,7 +148,7 @@
     {#await icon}
       <div class="placeholder-icon" />
     {:then iconLoaded}
-      <div in:fade class="icon">
+      <div in:fade class="icon flex justify-center items-center">
         {#if isSVG(iconLoaded)}
           <!-- render svg string -->
           {@html iconLoaded}

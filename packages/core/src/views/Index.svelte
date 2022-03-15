@@ -13,6 +13,45 @@
 </script>
 
 <style>
+  :global(.flex) {
+    display: flex;
+  }
+
+  :global(.flex-column) {
+    flex-direction: column;
+  }
+
+  :global(.items-center) {
+    align-items: center;
+  }
+
+  :global(.justify-center) {
+    justify-content: center;
+  }
+
+  :global(.justify-between) {
+    justify-content: space-between;
+  }
+
+  :global(.justify-around) {
+    justify-content: space-around;
+  }
+
+  :global(.relative) {
+    position: relative;
+  }
+
+  :global(.absolute) {
+    position: absolute;
+  }
+
+  :global(.fixed) {
+    position: fixed;
+  }
+
+  :global(.pointer) {
+    cursor: pointer;
+  }
   :global(input) {
     background: var(--onboard-white, var(--white));
   }

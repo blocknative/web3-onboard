@@ -3,7 +3,6 @@
   import type { ConnectedChain, WalletState } from '../../types'
   import { chainIdToLabel, getChainStyles } from '../../utils'
   import caretIcon from '../../icons/caret'
-  import { switchChain } from '../../provider'
   import setChain from '../../chain'
 
   export let wallet: WalletState
@@ -11,8 +10,12 @@
   const chains = state.get().chains
   let { id: connectedId, namespace: connectedNamespace } = wallet.chains[0]
   let switching: boolean
+  let selectElement: HTMLSelectElement
 
-  $: chainStyles = getChainStyles(connectedId)
+  $: chainStyles = getChainStyles(
+    connectedId,
+    connectedToValidAppChain({ id: connectedId, namespace: connectedNamespace })
+  )
 
   $: if (connectedId !== wallet.chains[0].id) {
     syncChains()
@@ -48,14 +51,13 @@
 
 <style>
   .container {
-    display: flex;
-    align-items: center;
     border: 1px solid transparent;
     border-radius: 16px;
     padding: 1px;
     transition: border-color 250ms ease-in-out, backround 250ms ease-in-out;
     box-shadow: var(--onboard-shadow-1, var(--shadow-1));
-    max-width: 105px;
+    max-width: 116px;
+    cursor: default;
   }
 
   select {
@@ -68,10 +70,7 @@
     appearance: none;
     font-size: var(--onboard-font-size-7, var(--font-size-7));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    max-width: 56px;
+    max-width: 72px;
   }
 
   select:focus {
@@ -90,33 +89,25 @@
     border-radius: 25px;
     margin-right: 4px;
     box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .icon-network {
-    display: flex;
-    align-items: center;
   }
 
   .caret {
     width: 10px;
     margin: 0 4px;
-    display: flex;
   }
 </style>
 
 <div
-  class="container"
+  on:click|stopPropagation
+  class="container flex items-center"
   style={chainStyles
     ? `border-color: ${chainStyles.borderColor}; background-color: ${chainStyles.backgroundColor}`
     : ''}
 >
-  <div class="icon-network">
+  <div class="flex items-center">
     {#if chainStyles.icon}
       <div
-        class="chain-icon"
+        class="chain-icon flex justify-center items-center"
         style={`background-color: ${chainStyles.badgeColor};`}
       >
         {@html chainStyles.icon}
@@ -129,6 +120,8 @@
       >
     {:else}
       <select
+        class="flex justify-center items-center pointer"
+        bind:this={selectElement}
         bind:value={connectedId}
         style={chainStyles ? `color: ${chainStyles.fontColor}` : ''}
       >
@@ -146,7 +139,7 @@
 
   <div
     style={chainStyles ? `color: ${chainStyles.caretColor}` : ''}
-    class="caret"
+    class="caret flex"
   >
     {@html caretIcon}
   </div>

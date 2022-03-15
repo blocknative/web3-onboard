@@ -5,10 +5,6 @@
 
 <style>
   .loading-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     font-family: inherit;
     font-size: inherit;
     color: inherit;
@@ -22,7 +18,6 @@
 
   .loading {
     display: inline-block;
-    position: relative;
   }
 
   .loading div {
@@ -58,8 +53,10 @@
   }
 </style>
 
-<div class="loading-container absolute">
-  <div class="loading" style={`height: ${size}; width: ${size};`}>
+<div
+  class="loading-container flex flex-column justify-center items-center absolute"
+>
+  <div class="loading relative" style={`height: ${size}; width: ${size};`}>
     <div class="loading-first" style={`height: ${size}; width: ${size};`} />
     <div class="loading-second" style={`height: ${size}; width: ${size};`} />
     <div class="loading-third" style={`height: ${size}; width: ${size};`} />

@@ -6,13 +6,12 @@
 
 <style>
   .icon {
-    display: flex;
     border-radius: 50px;
     box-sizing: border-box;
     color: var(--onboard-primary-500, var(--primary-500));
   }
 </style>
 
-<div class="icon" style={`width: ${size}px; height: ${size}px;`}>
+<div class="icon flex" style={`width: ${size}px; height: ${size}px;`}>
   {@html infoIcon}
 </div>

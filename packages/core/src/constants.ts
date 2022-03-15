@@ -6,7 +6,7 @@ export const APP_INITIAL_STATE: AppState = {
   dashboard: {
     enabled: true,
     position: 'topRight',
-    expanded: false
+    expanded: true
   }
 }
 

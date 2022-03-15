@@ -21,9 +21,6 @@
   }
 
   .icon-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 3rem;
     height: 3rem;
     background-color: var(--onboard-primary-100, var(--primary-100));
@@ -51,13 +48,12 @@
     font-weight: 700;
     line-height: 16px;
     color: var(--onboard-white, var(--white));
-    justify-content: center;
   }
 </style>
 
 <Modal {close}>
   <div class="content">
-    <div class="icon-container">
+    <div class="icon-container flex justify-center items-center">
       <InfoIcon />
     </div>
 

@@ -40,16 +40,9 @@
 
 <style>
   .container {
-    display: flex;
-    align-items: center;
     padding: var(--onboard-spacing-4, var(--spacing-4));
     font-size: var(--onboard-font-size-6, var(--font-size-6));
     line-height: 24px;
-  }
-
-  label {
-    display: flex;
-    align-items: center;
   }
 
   input {
@@ -64,8 +57,8 @@
 </style>
 
 {#if showTermsOfService}
-  <div class="container">
-    <label>
+  <div class="container flex items-center">
+    <label class="flex items-center">
       <input class="" type="checkbox" bind:checked={agreed} />
       <span>
         {$_('connect.selectingWallet.agreement.agree')}

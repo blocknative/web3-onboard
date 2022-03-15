@@ -20,9 +20,6 @@
   }
 
   .connecting-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding: var(--onboard-spacing-4, var(--spacing-4));
     border-radius: 24px;
     background: var(--onboard-success-100, var(--success-100));
@@ -31,19 +28,11 @@
     box-sizing: border-box;
   }
 
-  .icons {
-    display: flex;
-    justify-content: center;
-    position: relative;
-  }
-
   .text {
-    position: relative;
     right: var(--onboard-spacing-5, var(--spacing-5));
   }
 
   .tick {
-    display: flex;
     color: var(--onboard-success-700, var(--success-700));
   }
 
@@ -52,8 +41,8 @@
 </style>
 
 <div class="container">
-  <div class="connecting-container">
-    <div class="icons">
+  <div class="connecting-container flex justify-between items-center">
+    <div class="flex justify-center relative">
       <WalletAppBadge
         size={40}
         padding={8}
@@ -62,11 +51,11 @@
         icon={(appMetadata && appMetadata.icon) || questionIcon}
       />
 
-      <div style="position: relative; right: 0.85rem; top: 2px;">
+      <div class="relative" style="right: 0.85rem; top: 2px;">
         <SuccessStatusIcon size={17} right={null} />
       </div>
 
-      <div style="position: relative; right: 0.5rem;">
+      <div class="relative" style="right: 0.5rem;">
         <WalletAppBadge
           size={40}
           padding={8}
@@ -76,13 +65,13 @@
       </div>
     </div>
 
-    <div class="text">
+    <div class="text relative">
       {$_('connect.connectedWallet.mainText', {
         default: en.connect.connectedWallet.mainText
       })}
     </div>
 
-    <div class="tick" style="width: 20px;">
+    <div class="tick flex" style="width: 20px;">
       {@html success}
     </div>
   </div>

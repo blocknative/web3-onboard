@@ -21,7 +21,6 @@
 
 <style>
   section {
-    position: absolute;
     top: 0;
     left: 0;
     pointer-events: none;
@@ -31,29 +30,20 @@
   .background {
     width: 100vw;
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     background: rgba(0, 0, 0, 0.6);
     pointer-events: all;
   }
 
-  .relative {
-    position: relative;
-    display: flex;
+  .max-height {
     max-height: calc(100vh - 2rem);
   }
 
   .modal-overflow {
-    position: relative;
     overflow: hidden;
     border-radius: 24px;
-    display: flex;
-    justify-content: center;
   }
 
   .modal {
-    position: relative;
     border-radius: 24px;
     overflow-y: auto;
     background: white;
@@ -74,11 +64,11 @@
   }
 </style>
 
-<section transition:fade>
-  <div on:click={close} class="background">
-    <div on:click|stopPropagation class="relative">
-      <div class="modal-overflow">
-        <div class="modal">
+<section class="absolute" transition:fade>
+  <div on:click={close} class="background flex justify-center items-center">
+    <div on:click|stopPropagation class="flex relative max-height">
+      <div class="modal-overflow relative flex justify-center">
+        <div class="modal relative">
           <slot />
         </div>
       </div>

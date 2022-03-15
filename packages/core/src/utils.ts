@@ -50,11 +50,15 @@ export function shortenAddress(add: string): string {
 }
 
 export function shortenEns(ens: string): string {
-  return `${ens.slice(0, 4)}...${ens.slice(-6)}`
+  return ens.length > 13 ? `${ens.slice(0, 4)}...${ens.slice(-6)}` : ens
 }
 
 export const chainIdToLabel: Record<string, string> = {
   '0x1': 'Ethereum',
+  '0x3': 'Ropsten',
+  '0x4': 'Rinkeby',
+  '0x5': 'Goerli',
+  '0x2a': 'Kovan',
   '0x89': 'Polygon'
 }
 
@@ -125,6 +129,11 @@ export const chainStyles: Record<string, ChainStyle> = {
   }
 }
 
-export function getChainStyles(chainId: string): ChainStyle {
-  return chainStyles[chainId] || chainStyles.unknown
+export function getChainStyles(
+  chainId: string,
+  validChain: boolean
+): ChainStyle {
+  return !validChain
+    ? chainStyles.unsupported
+    : chainStyles[chainId] || chainStyles.unknown
 }

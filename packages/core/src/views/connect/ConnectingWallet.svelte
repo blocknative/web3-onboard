@@ -18,16 +18,10 @@
 
 <style>
   .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     padding: var(--onboard-spacing-4, var(--spacing-4));
   }
 
   .connecting-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     width: 100%;
     padding: var(--onboard-spacing-4, var(--spacing-4));
     transition: background-color 100ms ease-in-out,
@@ -43,12 +37,6 @@
   .connecting-container.warning {
     background-color: var(--onboard-warning-100, var(--warning-100));
     border-color: var(--onboard-warning-400, var(--warning-400));
-  }
-
-  .icons {
-    display: flex;
-    justify-content: center;
-    position: relative;
   }
 
   .text {
@@ -68,18 +56,10 @@
 
   .rejected-cta {
     color: var(--onboard-primary-500, var(--primary-500));
-    cursor: pointer;
   }
 
   .onboard-button-primary {
-    position: absolute;
     bottom: var(--onboard-spacing-3, var(--spacing-3));
-  }
-
-  .centered-flex-column {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
   }
 
   .ml {
@@ -87,10 +67,13 @@
   }
 </style>
 
-<div class="container">
-  <div class="connecting-container" class:warning={connectionRejected}>
-    <div style="display: flex;">
-      <div class="icons">
+<div class="container flex flex-column items-center">
+  <div
+    class="connecting-container flex justify-between items-center"
+    class:warning={connectionRejected}
+  >
+    <div class="flex">
+      <div class="flex justify-center relative">
         <WalletAppBadge
           size={40}
           padding={8}
@@ -99,7 +82,7 @@
           background="lightGray"
         />
 
-        <div style="position: relative; right: 0.5rem;">
+        <div class="relative" style="right: 0.5rem;">
           <WalletAppBadge
             size={40}
             padding={8}
@@ -110,7 +93,7 @@
         </div>
       </div>
 
-      <div class="centered-flex-column ml">
+      <div class="flex flex-column justify-center ml">
         <div class="text" class:text-rejected={connectionRejected}>
           {$_(
             connectionRejected
@@ -124,7 +107,7 @@
           )}
         </div>
         {#if connectionRejected}
-          <div class="rejected-cta subtext" on:click={connectWallet}>
+          <div class="rejected-cta pointer subtext" on:click={connectWallet}>
             {$_('connect.connectingWallet.rejectedCTA', {
               default: en.connect.connectingWallet.rejectedCTA
             })}
@@ -145,7 +128,7 @@
       deselectWallet(selectedWallet.label)
       setStep('selectingWallet')
     }}
-    class="onboard-button-primary"
+    class="onboard-button-primary absolute"
     >{$_('connect.connectingWallet.primaryButton', {
       default: en.connect.connectingWallet.primaryButton
     })}</button

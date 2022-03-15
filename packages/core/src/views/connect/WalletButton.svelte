@@ -12,7 +12,6 @@
 
 <style>
   button {
-    position: relative;
     background-color: var(
       --onboard-wallet-button-background,
       var(--onboard-white, var(--white))
@@ -48,7 +47,7 @@
   }
 </style>
 
-<button class:connected in:fade on:click={onClick}>
+<button class="relative" class:connected in:fade on:click={onClick}>
   <WalletAppBadge
     size={48}
     {icon}

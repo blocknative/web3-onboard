@@ -6,13 +6,15 @@
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
   import NetworkBadgeSelector from '../shared/NetworkBadgeSelector.svelte'
+  import { updateDashboard } from '../../store/actions'
 
   const { appMetadata } = internalState$.getValue()
   const appIcon = (appMetadata && appMetadata.icon) || questionIcon
 
   $: [primaryWallet] = $wallets$
   $: [firstAccount] = primaryWallet ? primaryWallet.accounts : []
-  $: ensName = firstAccount && firstAccount.ens && firstAccount.ens.name
+  $: ensName =
+    firstAccount && firstAccount.ens && shortenEns(firstAccount.ens.name)
 
   $: shortenedFirstAddress = firstAccount
     ? shortenAddress(firstAccount.address)
@@ -27,9 +29,16 @@
     firstAccount && firstAccount.balance
       ? firstAccount.balance[firstAddressAsset]
       : null
+
+  function maximize() {
+    updateDashboard({ expanded: true })
+  }
 </script>
 
 <style>
+  .minimized {
+    background-color: var(--onboard-white, var(--white));
+  }
   .shadow {
     box-shadow: var(--onboard-shadow-1, var(--shadow-1));
   }
@@ -40,22 +49,6 @@
 
   .padding-5 {
     padding: var(--onboard-spacing-5, var(--spacing-5));
-  }
-
-  .flex {
-    display: flex;
-  }
-
-  .items-center {
-    align-items: center;
-  }
-
-  .justify-between {
-    justify-content: space-between;
-  }
-
-  .minimized {
-    background-color: var(--onboard-white, var(--white));
   }
 
   .drop-shadow {
@@ -74,8 +67,6 @@
   }
 
   .address-balance {
-    display: flex;
-    flex-direction: column;
     margin-left: 0.5rem;
   }
 
@@ -84,7 +75,7 @@
   }
 </style>
 
-<div class="minimized shadow radius padding-5">
+<div class="minimized pointer shadow radius padding-5" on:click={maximize}>
   <div class="flex items-center justify-between">
     <div class="flex items-center" style="margin-left: 2px;">
       <!-- app and wallet icon badge -->
@@ -100,7 +91,7 @@
           />
         </div>
 
-        <div style="position: relative; right: 0.5rem;" class="drop-shadow">
+        <div style="right: 0.5rem;" class="drop-shadow relative">
           <WalletAppBadge
             size={32}
             padding={4}
@@ -111,16 +102,16 @@
           />
         </div>
 
-        <div
-          style="position: relative; right: 1rem; bottom: -24px;"
-          class="drop-shadow"
-        >
+        <div style="right: 1rem; bottom: -24px;" class="drop-shadow relative">
           <SuccessStatusIcon size={12} bottom={null} right={null} />
         </div>
       </div>
 
       <!-- address and balance -->
-      <div class="address-balance" style="height: 40px; margin-top: 2px">
+      <div
+        class="address-balance flex flex-column"
+        style="height: 40px; margin-top: 2px"
+      >
         <div class="address">{ensName || shortenedFirstAddress}</div>
         {#if firstAddressBalance}
           <div in:fade class="balance">
