@@ -24,7 +24,7 @@
         radius={8}
         icon={wallet.icon}
       />
-      <div style="right: 1rem; bottom: -24px;" class="drop-shadow relative">
+      <div style="right: 8px; bottom: -12px;" class="drop-shadow relative">
         <SuccessStatusIcon size={12} />
       </div>
 

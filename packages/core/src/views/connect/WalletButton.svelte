@@ -57,6 +57,8 @@
   />
   <span class="name">{label}</span>
   {#if connected}
-    <SuccessStatusIcon size={16} bottom={null} right={16} />
+    <div class="absolute" style="right: 16px;">
+      <SuccessStatusIcon size={16} />
+    </div>
   {/if}
 </button>
