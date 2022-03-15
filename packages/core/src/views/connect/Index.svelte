@@ -107,12 +107,10 @@
         label,
         icon: loadedIcon,
         provider,
+        instance,
         accounts: [],
         chains: [{ namespace: 'evm', id: '0x1' }]
       }
-
-      if (instance)
-        selectedWallet.instance = instance
 
       connectingErrorMessage = ''
 

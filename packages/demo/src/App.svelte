@@ -86,7 +86,6 @@
 
   const onboard = Onboard({
     wallets: [
-      magic,
       ledger,
       trezor,
       walletConnect,
@@ -94,6 +93,7 @@
       keystone,
       walletLink,
       injected,
+      magic,
       fortmatic,
       portis,
       torus,

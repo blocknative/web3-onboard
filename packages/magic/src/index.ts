@@ -1,4 +1,3 @@
-import { MagicRPCError } from '@magic-sdk/provider'
 import type { WalletInit, APIKey, EIP1193Provider } from '@web3-onboard/common'
 
 function magic(options: APIKey): WalletInit {
@@ -29,7 +28,6 @@ function magic(options: APIKey): WalletInit {
           )
 
         let currentChain = chains[0]
-        console.log(currentChain)
 
         let customNodeOptions = {
           chainId: parseInt(currentChain.id),
@@ -72,7 +70,6 @@ function magic(options: APIKey): WalletInit {
                 activeAddress = accounts[0]
                 return accounts
               } catch (error) {
-                console.error('error in request accounts', error)
                 const { code } = error as { code: number }
                 if (code === RPCErrorCode.InternalError) {
                   throw new ProviderRpcError({

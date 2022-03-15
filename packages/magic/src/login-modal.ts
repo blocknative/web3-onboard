@@ -36,8 +36,8 @@ const mountLoginModal = (
     }
   }
 
-  if (!customElements.get('login-modal')) {
-    customElements.define('login-modal', loginModalEl)
+  if (!customElements.get('onboard-magic-login-modal')) {
+    customElements.define('onboard-magic-login-modal', loginModalEl)
   }
 
   // Add Fonts to main page
@@ -51,7 +51,7 @@ const mountLoginModal = (
   document.body.appendChild(styleEl)
 
   // add to DOM
-  const loginModalDomElement = document.createElement('login-modal')
+  const loginModalDomElement = document.createElement('onboard-magic-login-modal')
   const target = loginModalDomElement.attachShadow({ mode: 'open' })
 
   loginModalDomElement.style.all = 'initial'
