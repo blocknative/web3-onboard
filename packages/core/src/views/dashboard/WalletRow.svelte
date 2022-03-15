@@ -25,7 +25,7 @@
         icon={wallet.icon}
       />
       <div style="right: 1rem; bottom: -24px;" class="drop-shadow relative">
-        <SuccessStatusIcon size={12} bottom={null} right={null} />
+        <SuccessStatusIcon size={12} />
       </div>
 
       <!-- ADDRESS / ENS -->

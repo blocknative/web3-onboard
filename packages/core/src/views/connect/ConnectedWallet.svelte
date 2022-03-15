@@ -42,7 +42,7 @@
 
 <div class="container">
   <div class="connecting-container flex justify-between items-center">
-    <div class="flex justify-center relative">
+    <div class="flex justify-center items-end relative">
       <WalletAppBadge
         size={40}
         padding={8}
@@ -51,11 +51,11 @@
         icon={(appMetadata && appMetadata.icon) || questionIcon}
       />
 
-      <div class="relative" style="right: 0.85rem; top: 2px;">
-        <SuccessStatusIcon size={17} right={null} />
+      <div class="relative" style="right: 1rem; top: 4px; z-index: 1;">
+        <SuccessStatusIcon size={17} />
       </div>
 
-      <div class="relative" style="right: 0.5rem;">
+      <div class="relative" style="right: 1.75rem;">
         <WalletAppBadge
           size={40}
           padding={8}

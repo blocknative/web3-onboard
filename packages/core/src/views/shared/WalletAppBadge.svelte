@@ -136,7 +136,9 @@
   class:background-white={background === 'white'}
   class:background-transparent={background === 'transparent'}
   class="icon-container relative"
-  style={`${background === 'custom' ? customBackgroundColor : ''}; padding: ${
+  style={`${
+    background === 'custom' ? `background-color: ${customBackgroundColor}` : ''
+  }; padding: ${
     padding - 1
   }px; width: ${size}px; height: ${size}px; border-radius: ${radius}px;`}
 >

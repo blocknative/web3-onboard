@@ -25,6 +25,10 @@
     align-items: center;
   }
 
+  :global(.items-end) {
+    align-items: flex-end;
+  }
+
   :global(.justify-center) {
     justify-content: center;
   }
