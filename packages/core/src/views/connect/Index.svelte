@@ -94,7 +94,7 @@
 
       const { chains } = state.get()
 
-      const { provider } = await getInterface({
+      const { provider, instance } = await getInterface({
         chains,
         BigNumber,
         EventEmitter,
@@ -107,6 +107,7 @@
         label,
         icon: loadedIcon,
         provider,
+        instance,
         accounts: [],
         chains: [{ namespace: 'evm', id: '0x1' }]
       }
