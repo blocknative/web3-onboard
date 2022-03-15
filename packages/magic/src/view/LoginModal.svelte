@@ -45,12 +45,6 @@
 </script>
 
 <style>
-  .login-modal {
-    position: relative;
-    background-color: var(--login-modal-white, var(--white));
-    color: var(--login-modal-black, var(--black));
-  }
-
   input[type='text'] {
     display: block;
     margin: 0;
@@ -144,6 +138,9 @@
     box-shadow: var(--login-modal-shadow-1, var(--shadow-1));
     border-radius: 1.5rem;
     text-align: center;
+    position: relative;
+    background-color: var(--login-modal-white, var(--white));
+    color: var(--login-modal-black, var(--black));
   }
 
   .modal-controls {
