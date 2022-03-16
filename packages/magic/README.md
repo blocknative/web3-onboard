@@ -1,6 +1,6 @@
 # @web3-onboard/magic
 
-## Wallet module for connecting Ledger hardware wallets to Onboard V2
+## Wallet module for connecting Magic wallets to Onboard V2
 
 ### Login options
 
@@ -53,4 +53,5 @@ try {
 } catch {
   // Handle errors if required!
 }
+```
 For full documentation and examples please visit [Magic's official docs](https://magic.link/docs/api-reference/client-side-sdks/web#user-module)
