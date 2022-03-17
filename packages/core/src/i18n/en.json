@@ -54,6 +54,13 @@
   "dashboard": {
     "connectAnotherWallet": "Connect another Wallet",
     "disconnectAllWallets": "Disconnect all Wallets",
-    "currentNetwork": "Current Network"
+    "currentNetwork": "Current Network",
+    "appInfo": "App Info",
+    "learnMore": "Learn More",
+    "gettingStartedGuide": "Getting Started Guide",
+    "smartContracts": "Smart Contract(s)",
+    "explore": "Explore",
+    "backToApp": "Back to App",
+    "poweredBy": "powered by"
   }
 }

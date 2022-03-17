@@ -132,7 +132,9 @@
         version: '1.0.0',
         termsUrl: 'https://www.blocknative.com/terms-conditions',
         privacyUrl: 'https://www.blocknative.com/privacy-policy'
-      }
+      },
+      gettingStartedGuide: 'https://blocknative.com',
+      explore: 'https://blocknative.com'
     }
     // example customising copy
     // i18n: {

@@ -15,6 +15,7 @@
     | 'blue'
     | 'darkBlue'
     | 'transparent'
+    | 'black'
     | 'none' = 'transparent'
 
   export let background:
@@ -69,6 +70,10 @@
 
   .border-transparent {
     border: 1px solid transparent;
+  }
+
+  .border-black {
+    border: 1px solid var(--onboard-gray-600, var(--gray-600));
   }
 
   .background-gray {
@@ -131,6 +136,7 @@
   class:border-blue={border === 'blue'}
   class:border-dark-blue={border === 'darkBlue'}
   class:border-transparent={border === 'transparent'}
+  class:border-black={border === 'black'}
   class:background-gray={background === 'gray'}
   class:background-light-gray={background === 'lightGray'}
   class:background-light-blue={background === 'lightBlue'}

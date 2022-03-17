@@ -181,6 +181,7 @@ function mountApp() {
           --spacing-4: 1rem;
           --spacing-5: 0.5rem;
           --spacing-6: 0.25rem;
+          --spacing-7: 0.125rem;
   
           /* SHADOWS */
           --shadow-1: 0px 4px 12px rgba(0, 0, 0, 0.1);

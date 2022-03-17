@@ -29,6 +29,10 @@
     align-items: flex-end;
   }
 
+  :global(.items-start) {
+    align-items: flex-start;
+  }
+
   :global(.justify-center) {
     justify-content: center;
   }
