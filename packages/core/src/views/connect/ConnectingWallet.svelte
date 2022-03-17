@@ -30,7 +30,6 @@
     background-color: var(--onboard-primary-100, var(--primary-100));
     border: 1px solid;
     border-color: var(--onboard-primary-300, var(--primary-300));
-    box-sizing: border-box;
     color: var(--onboard-gray-600, var(--gray-600));
   }
 

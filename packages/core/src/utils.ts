@@ -5,7 +5,8 @@ import type {
   DeviceBrowser,
   DeviceOS,
   DeviceType,
-  ChainId
+  ChainId,
+  Chain
 } from '@web3-onboard/common'
 
 import ethereumIcon from './icons/ethereum'
@@ -13,7 +14,7 @@ import polygonIcon from './icons/polygon'
 import questionIcon from './icons/question'
 import warningIcon from './icons/warning'
 
-import type { ChainStyle } from './types'
+import type { ChainStyle, ConnectedChain } from './types'
 
 const parsed = bowser.getParser(window.navigator.userAgent)
 const os = parsed.getOS()
@@ -136,4 +137,15 @@ export function getChainStyles(
   return !validChain
     ? chainStyles.unsupported
     : chainStyles[chainId] || chainStyles.unknown
+}
+
+export function connectedToValidAppChain(
+  walletConnectedChain: ConnectedChain,
+  chains: Chain[]
+): boolean {
+  return !!chains.find(
+    ({ id, namespace }) =>
+      id === walletConnectedChain.id &&
+      namespace === walletConnectedChain.namespace
+  )
 }

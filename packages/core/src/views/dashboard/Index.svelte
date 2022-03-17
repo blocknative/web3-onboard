@@ -19,7 +19,7 @@
   .container {
     padding: 12px 24px;
     max-width: 400px;
-    box-sizing: border-box;
+    min-width: 364px;
     font-family: var(--onboard-font-family-normal, var(--font-family-normal));
   }
 </style>

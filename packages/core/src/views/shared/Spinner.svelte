@@ -21,7 +21,6 @@
   }
 
   .loading div {
-    box-sizing: border-box;
     font-size: inherit;
     display: block;
     position: absolute;

@@ -9,7 +9,6 @@
   .icon {
     color: var(--onboard-white, var(--white));
     border-radius: 50px;
-    box-sizing: border-box;
   }
 
   .green {

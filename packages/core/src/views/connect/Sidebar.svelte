@@ -61,6 +61,7 @@
   }
 
   .indicator {
+    box-sizing: content-box;
     width: 8px;
     height: 8px;
     border-radius: 8px;
@@ -84,6 +85,7 @@
   }
 
   .join {
+    box-sizing: content-box;
     z-index: 1;
     right: 4px;
     height: 2px;

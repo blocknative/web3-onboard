@@ -25,7 +25,6 @@
     background: var(--onboard-success-100, var(--success-100));
     border: 1px solid var(--onboard-success-600, var(--success-600));
     width: 100%;
-    box-sizing: border-box;
   }
 
   .text {
@@ -60,6 +59,7 @@
           size={40}
           padding={8}
           border="darkGreen"
+          background="white"
           icon={selectedWallet.icon}
         />
       </div>

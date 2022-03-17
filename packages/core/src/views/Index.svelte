@@ -56,6 +56,15 @@
   :global(.pointer) {
     cursor: pointer;
   }
+
+  :global(.shadow-1) {
+    box-shadow: var(--onboard-shadow-1, var(--shadow-1));
+  }
+
+  :global(*) {
+    box-sizing: border-box;
+  }
+
   :global(input) {
     background: var(--onboard-white, var(--white));
   }

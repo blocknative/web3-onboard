@@ -52,6 +52,16 @@ const binance: InjectedWalletModule = {
       window.BinanceChain.isUnlocked = false
     }
 
+    const addListener = window.BinanceChain.on.bind(window.BinanceChain)
+    window.BinanceChain.on = (event, func) => {
+      if (event === 'chainChanged') {
+        addListener(event, chainId => {
+          const cb = func as ChainListener
+          cb(`0x${parseInt(chainId).toString(16)}`)
+        })
+      }
+    }
+
     const provider = createEIP1193Provider(window.BinanceChain, {
       // If the wallet is unlocked then we don't need to patch this request
       ...(!window.BinanceChain.isUnlocked && {

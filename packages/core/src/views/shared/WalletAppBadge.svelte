@@ -14,7 +14,8 @@
     | 'darkGreen'
     | 'blue'
     | 'darkBlue'
-    | 'none' = 'blue'
+    | 'transparent'
+    | 'none' = 'transparent'
 
   export let background:
     | 'gray'
@@ -23,17 +24,13 @@
     | 'green'
     | 'white'
     | 'transparent'
-    | 'custom' = 'white'
+    | 'custom' = 'transparent'
 
   export let customBackgroundColor = ''
   export let radius = 12
 </script>
 
 <style>
-  .icon-container {
-    box-sizing: border-box;
-  }
-
   .icon {
     height: 100%;
   }
@@ -43,7 +40,7 @@
   }
 
   .border-gray {
-    border: 1px solid var(--onboard-gray-300, var(--gray-300));
+    border: 1px solid var(--onboard-gray-400, var(--gray-400));
   }
 
   .border-green {
@@ -68,6 +65,10 @@
         --onboard-wallet-app-icon-border-color,
         var(--onboard-primary-600, var(--primary-600))
       );
+  }
+
+  .border-transparent {
+    border: 1px solid transparent;
   }
 
   .background-gray {
@@ -129,13 +130,14 @@
   class:border-dark-green={border === 'darkGreen'}
   class:border-blue={border === 'blue'}
   class:border-dark-blue={border === 'darkBlue'}
+  class:border-transparent={border === 'transparent'}
   class:background-gray={background === 'gray'}
   class:background-light-gray={background === 'lightGray'}
   class:background-light-blue={background === 'lightBlue'}
   class:background-green={background === 'green'}
   class:background-white={background === 'white'}
   class:background-transparent={background === 'transparent'}
-  class="icon-container relative"
+  class="relative"
   style={`${
     background === 'custom' ? `background-color: ${customBackgroundColor}` : ''
   }; padding: ${

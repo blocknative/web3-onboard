@@ -6,7 +6,6 @@
   .close-button {
     width: 2rem;
     height: 2rem;
-    box-sizing: border-box;
     padding: 0.4rem;
     background: var(
       --onboard-close-button-background,
