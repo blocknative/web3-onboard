@@ -64,7 +64,7 @@
   }
 </style>
 
-<section class="absolute" transition:fade>
+<section class="fixed" transition:fade>
   <div on:click={close} class="background flex justify-center items-center">
     <div on:click|stopPropagation class="flex relative max-height">
       <div class="modal-overflow relative flex justify-center">

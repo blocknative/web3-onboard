@@ -1,6 +1,7 @@
 <script lang="ts">
+  import { onDestroy } from 'svelte'
   import { fade } from 'svelte/transition'
-  import { wallets$ } from '../../streams'
+  import { updateDashboard } from '../../store/actions'
   import type { Dashboard } from '../../types'
   import Maximized from './Maximized.svelte'
   import Minimized from './Minimized.svelte'
@@ -13,6 +14,8 @@
     bottomRight: 'bottom: 0; right: 0;',
     bottomLeft: 'bottom: 0; left: 0;'
   }
+
+  onDestroy(() => updateDashboard({ expanded: false }))
 </script>
 
 <style>
@@ -24,18 +27,16 @@
   }
 </style>
 
-{#if $wallets$.length}
-  <div
-    class="container flex absolute"
-    transition:fade
-    style={dashboardPositions[settings.position]}
-  >
-    {#if !settings.expanded}
-      <!-- minimized -->
-      <Minimized />
-    {:else}
-      <!-- maximized -->
-      <Maximized />
-    {/if}
-  </div>
-{/if}
+<div
+  class="container flex absolute"
+  transition:fade
+  style={dashboardPositions[settings.position]}
+>
+  {#if !settings.expanded}
+    <!-- minimized -->
+    <Minimized />
+  {:else}
+    <!-- maximized -->
+    <Maximized />
+  {/if}
+</div>

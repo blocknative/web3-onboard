@@ -1,11 +1,12 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
-  import type { WalletState } from '../../types'
+  import type { Account, WalletState } from '../../types'
   import { shortenAddress, shortenEns } from '../../utils'
 
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
   import elipsisIcon from '../../icons/elipsis'
+  import { addWallet } from '../../store/actions'
 
   export let wallet: WalletState
   export let primary: boolean
@@ -16,6 +17,14 @@
     const [asset] = Object.keys(balance)
     return `${balance[asset].slice(0, 4)} ${asset}`
   }
+
+  function setPrimaryWallet(wallet: WalletState, account: Account): void {
+    wallet.accounts = [
+      account,
+      ...wallet.accounts.filter(({ address }) => address !== account.address)
+    ]
+    addWallet(wallet)
+  }
 </script>
 
 <style>
@@ -25,6 +34,16 @@
     width: 100%;
     font-size: var(--onboard-font-size-5, var(--font-size-5));
     line-height: var(--onboard-font-line-height-2, var(--font-line-height-20));
+    border-radius: 12px;
+    transition: background-color 150ms ease-in-out;
+  }
+
+  .container:hover {
+    background-color: var(--onboard-gray-500, var(--gray-500));
+  }
+
+  .container.primary:hover {
+    background-color: var(--onboard-gray-700, var(--gray-700));
   }
 
   .address-ens {
@@ -46,7 +65,11 @@
 </style>
 
 {#each wallet.accounts as { address, ens, balance }, i}
-  <div class="container flex items-center justify-between">
+  <div
+    on:click={() => setPrimaryWallet(wallet, { address, ens, balance })}
+    class:primary={primary && i === 0}
+    class="container flex items-center justify-between pointer"
+  >
     <div class="flex items-center">
       <div class="flex items-center relative">
         <!-- WALLET ICON -->

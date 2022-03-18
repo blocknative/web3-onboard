@@ -1,6 +1,6 @@
 <script lang="ts">
   import { shareReplay, startWith } from 'rxjs/operators'
-  import { connectWallet$, switchChainModal$ } from '../streams'
+  import { connectWallet$, switchChainModal$, wallets$ } from '../streams'
   import { state } from '../store'
   import Connect from './connect/Index.svelte'
   import SwitchChain from './chain/SwitchChain.svelte'
@@ -63,6 +63,10 @@
 
   :global(.shadow-1) {
     box-shadow: var(--onboard-shadow-1, var(--shadow-1));
+  }
+
+  :global(.w-100) {
+    width: 100%;
   }
 
   :global(*) {
@@ -196,6 +200,6 @@
   <SwitchChain />
 {/if}
 
-{#if $dashboard$.enabled}
+{#if $dashboard$.enabled && $wallets$.length}
   <Dashboard settings={$dashboard$} />
 {/if}

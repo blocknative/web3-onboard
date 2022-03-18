@@ -1,28 +1,30 @@
 <script lang="ts">
+  import { BehaviorSubject, merge } from 'rxjs'
   import type { Chain } from '@web3-onboard/common'
-  import type { WalletState } from '../../types'
   import { chainIdToLabel, connectedToValidAppChain } from '../../utils'
   import setChain from '../../chain'
   import { wallets$ } from '../../streams'
-  import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
+  import { distinctUntilChanged, debounceTime, skip } from 'rxjs/operators'
 
   export let color = '#33394B'
   export let chains: Chain[]
   export let bold = false
 
-  let switching: boolean
+  const switching$ = new BehaviorSubject<boolean>(false)
   let selectElement: HTMLSelectElement
 
   $: [wallet] = $wallets$
 
-  const chainId$ = wallets$.pipe(
+  const resize$ = merge(wallets$, switching$.pipe(skip(1))).pipe(
     debounceTime(50),
-    distinctUntilChanged(
-      (prev, next) => prev[0].chains[0].id === next[0].chains[0].id
+    distinctUntilChanged((prev, next) =>
+      typeof prev === 'boolean' || typeof next === 'boolean'
+        ? false
+        : prev[0] && next[0] && prev[0].chains[0].id === next[0].chains[0].id
     )
   )
 
-  $: if ($chainId$) {
+  $: if ($resize$) {
     resizeSelect()
   }
 
@@ -30,7 +32,7 @@
     const selectedChain = selectElement.selectedOptions[0].value
 
     if (selectedChain !== wallet.chains[0].id) {
-      switching = true
+      switching$.next(true)
 
       await setChain({
         chainId: selectedChain,
@@ -38,11 +40,12 @@
         wallet: wallet.label
       })
 
-      switching = false
+      switching$.next(false)
     }
   }
 
   function resizeSelect() {
+    if (!selectElement) return
     let tempOption = document.createElement('option')
     tempOption.textContent = selectElement.selectedOptions[0].textContent
 
@@ -67,7 +70,7 @@
     appearance: none;
     font-size: var(--onboard-font-size-7, var(--font-size-7));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
-    max-width: 72px;
+    max-width: 90px;
   }
 
   select:focus {
@@ -80,23 +83,25 @@
   }
 </style>
 
-{#if switching}
-  <span style={`color: ${color};`}>switching...</span>
-{:else}
-  <select
-    class="flex justify-center items-center pointer"
-    bind:this={selectElement}
-    value={wallet.chains[0].id}
-    on:change={handleSelect}
-    style={`color: ${color}; ${bold ? 'font-weight: 700;' : ''}`}
-  >
-    {#if !connectedToValidAppChain(wallet.chains[0], chains)}
-      <option value={wallet.chains[0].id}
-        >{chainIdToLabel[wallet.chains[0].id] || 'unrecognized'}</option
-      >
-    {/if}
-    {#each chains as chain (chain.id)}
-      <option value={chain.id}>{chain.label}</option>
-    {/each}
-  </select>
+{#if wallet}
+  {#if $switching$}
+    <span style={`color: ${color};`}>switching...</span>
+  {:else}
+    <select
+      class="flex justify-center items-center pointer"
+      bind:this={selectElement}
+      value={wallet.chains[0].id}
+      on:change={handleSelect}
+      style={`color: ${color}; ${bold ? 'font-weight: 700;' : ''}`}
+    >
+      {#if !connectedToValidAppChain(wallet.chains[0], chains)}
+        <option value={wallet.chains[0].id}
+          >{chainIdToLabel[wallet.chains[0].id] || 'unrecognized'}</option
+        >
+      {/if}
+      {#each chains as chain (chain.id)}
+        <option value={chain.id}>{chain.label}</option>
+      {/each}
+    </select>
+  {/if}
 {/if}

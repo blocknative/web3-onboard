@@ -2,8 +2,7 @@
   import { fade } from 'svelte/transition'
   import { internalState$, wallets$ } from '../../streams'
   import {
-    connectedToValidAppChain,
-    getChainStyles,
+    getDefaultChainStyles,
     shortenAddress,
     shortenEns
   } from '../../utils'
@@ -21,6 +20,7 @@
 
   $: [primaryWallet] = $wallets$
   $: [firstAccount] = primaryWallet ? primaryWallet.accounts : []
+
   $: ensName =
     firstAccount && firstAccount.ens && shortenEns(firstAccount.ens.name)
 
@@ -40,10 +40,13 @@
 
   $: primaryChain = primaryWallet.chains[0]
 
-  $: chainStyles = getChainStyles(
-    primaryChain.id,
-    connectedToValidAppChain(primaryChain, chains)
+  $: recognizedChain = chains.find(({ id, namespace }) =>
+    primaryChain
+      ? id === primaryChain.id && namespace === primaryChain.namespace
+      : false
   )
+
+  $: defaultChainStyles = getDefaultChainStyles(primaryChain.id)
 
   function maximize() {
     updateDashboard({ expanded: true })
@@ -158,27 +161,26 @@
       <div
         on:click|stopPropagation
         class="container shadow-1 flex items-center"
-        style={chainStyles
-          ? `border-color: ${chainStyles.borderColor}; background-color: ${chainStyles.backgroundColor}`
-          : ''}
+        style={`border-color: ${
+          recognizedChain || defaultChainStyles ? '#D0D4F7' : '#C2C4C9'
+        }; background-color: ${
+          recognizedChain || defaultChainStyles ? '#EFF1FC' : '#EBEBED'
+        }`}
       >
         <div class="flex items-center">
-          {#if chainStyles.icon}
+          {#if defaultChainStyles.icon}
             <div
               class="chain-icon flex justify-center items-center"
-              style={`background-color: ${chainStyles.badgeColor};`}
+              style={`background-color: ${defaultChainStyles.color};`}
             >
-              {@html chainStyles.icon}
+              {@html defaultChainStyles.icon}
             </div>
           {/if}
 
-          <NetworkSelector {chains} color={chainStyles.fontColor} />
+          <NetworkSelector {chains} color="#33394B" />
         </div>
 
-        <div
-          style={chainStyles ? `color: ${chainStyles.caretColor}` : ''}
-          class="caret flex"
-        >
+        <div class="caret flex">
           {@html caretIcon}
         </div>
       </div>

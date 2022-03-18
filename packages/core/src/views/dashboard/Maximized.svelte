@@ -9,13 +9,14 @@
   import disconnect from '../../disconnect'
   import { state } from '../../store'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
-  import { getChainStyles } from '../../utils'
+  import { getDefaultChainStyles } from '../../utils'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import NetworkBadgeSelector from '../shared/NetworkSelector.svelte'
   import caretLightIcon from '../../icons/caret-light'
   import questionIcon from '../../icons/question'
   import { updateDashboard } from '../../store/actions'
   import blocknative from '../../icons/blocknative'
+  import DisconnectAllConfirm from './DisconnectAllConfirm.svelte'
 
   function disconnectAllWallets() {
     $wallets$.forEach(({ label }) => disconnect({ label }))
@@ -23,16 +24,20 @@
 
   const { chains: appChains } = state.get()
   const { appMetadata } = internalState$.getValue()
+  let disconnectConfirmModal = false
 
   $: [primaryWallet] = $wallets$
-  $: [connectedChain] = primaryWallet.chains
+  $: [connectedChain] = primaryWallet ? primaryWallet.chains : []
 
-  $: recognizedChain = appChains.find(
-    ({ id, namespace }) =>
-      id === connectedChain.id && namespace === connectedChain.namespace
+  $: recognizedChain = appChains.find(({ id, namespace }) =>
+    connectedChain
+      ? id === connectedChain.id && namespace === connectedChain.namespace
+      : false
   )
 
-  $: chainStyles = getChainStyles(connectedChain.id, !!recognizedChain)
+  $: defaultChainStyles = getDefaultChainStyles(
+    connectedChain && connectedChain.id
+  )
 </script>
 
 <style>
@@ -175,6 +180,11 @@
     background-color: var(--onboard-gray-500, var(--gray-500));
     color: var(--onboard-white, var(--white));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
+    transition: background-color 150ms ease-in-out;
+  }
+
+  .app-button:hover {
+    background-color: var(--onboard-gray-700, var(--gray-700));
   }
 
   .powered-by-container {
@@ -187,6 +197,13 @@
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
   }
 </style>
+
+{#if disconnectConfirmModal}
+  <DisconnectAllConfirm
+    onClose={() => (disconnectConfirmModal = false)}
+    onConfirm={disconnectAllWallets}
+  />
+{/if}
 
 <div class="outer-container">
   <!-- wallets section -->
@@ -218,7 +235,7 @@
 
         <!-- disconnect all wallets -->
         <div
-          on:click|stopPropagation={disconnectAllWallets}
+          on:click|stopPropagation={() => (disconnectConfirmModal = true)}
           class="flex items-center mt pointer"
         >
           <div class="arrow-forward flex items-center justify-center">
@@ -246,15 +263,16 @@
             size={32}
             padding={4}
             background={(recognizedChain && recognizedChain.color) ||
-            chainStyles.backgroundColor
+            defaultChainStyles
               ? 'custom'
               : 'transparent'}
             customBackgroundColor={(recognizedChain && recognizedChain.color) ||
-              chainStyles.badgeColor ||
+              defaultChainStyles.color ||
               ''}
             border="transparent"
             radius={8}
-            icon={(recognizedChain && recognizedChain.icon) || chainStyles.icon}
+            icon={(recognizedChain && recognizedChain.icon) ||
+              defaultChainStyles.icon}
           />
 
           <div

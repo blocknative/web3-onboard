@@ -66,77 +66,32 @@ export const chainIdToLabel: Record<string, string> = {
 export const chainStyles: Record<string, ChainStyle> = {
   '0x1': {
     icon: ethereumIcon,
-    badgeColor: '#627EEA',
-    fontColor: '#454EA0',
-    backgroundColor: '#EFF1FC',
-    borderColor: '#D0D4F7',
-    caretColor: '#323873'
+    color: '#627EEA'
   },
   '0x3': {
     icon: ethereumIcon,
-    badgeColor: '#627EEA',
-    fontColor: '#454EA0',
-    backgroundColor: '#EFF1FC',
-    borderColor: '#D0D4F7',
-    caretColor: '#323873'
+    color: '#627EEA'
   },
   '0x4': {
     icon: ethereumIcon,
-    badgeColor: '#627EEA',
-    fontColor: '#454EA0',
-    backgroundColor: '#EFF1FC',
-    borderColor: '#D0D4F7',
-    caretColor: '#323873'
+    color: '#627EEA'
   },
   '0x5': {
     icon: ethereumIcon,
-    badgeColor: '#627EEA',
-    fontColor: '#454EA0',
-    backgroundColor: '#EFF1FC',
-    borderColor: '#D0D4F7',
-    caretColor: '#323873'
+    color: '#627EEA'
   },
   '0x2a': {
     icon: ethereumIcon,
-    badgeColor: '#627EEA',
-    fontColor: '#454EA0',
-    backgroundColor: '#EFF1FC',
-    borderColor: '#D0D4F7',
-    caretColor: '#323873'
+    color: '#627EEA'
   },
   '0x89': {
     icon: polygonIcon,
-    badgeColor: '#8247E5',
-    fontColor: '#4721A6',
-    backgroundColor: '#EFEAFB',
-    borderColor: '#DED4F7',
-    caretColor: '#4721A6'
-  },
-  unknown: {
-    icon: questionIcon,
-    badgeColor: '#33394B',
-    fontColor: '#33394B',
-    backgroundColor: '#EBEBED',
-    borderColor: '#C2C4C9',
-    caretColor: '#33394B'
-  },
-  unsupported: {
-    icon: warningIcon,
-    badgeColor: '#FFE7B3',
-    fontColor: '#664600',
-    backgroundColor: '#FFEFCC',
-    borderColor: '#FFAF00',
-    caretColor: '#664600'
+    color: '#8247E5'
   }
 }
 
-export function getChainStyles(
-  chainId: string,
-  validChain: boolean
-): ChainStyle {
-  return !validChain
-    ? chainStyles.unsupported
-    : chainStyles[chainId] || chainStyles.unknown
+export function getDefaultChainStyles(chainId: string): ChainStyle | null {
+  return chainStyles[chainId] || null
 }
 
 export function connectedToValidAppChain(
