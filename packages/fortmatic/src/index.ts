@@ -26,7 +26,7 @@ function fortmatic(options: APIKey): WalletInit {
         let provider: EIP1193Provider
 
         function patchProvider(): EIP1193Provider {
-          provider = createEIP1193Provider(fortmaticProvider, {
+          const patchedProvider = createEIP1193Provider(fortmaticProvider, {
             eth_requestAccounts: async () => {
               try {
                 const accounts = await instance.user.login()
@@ -74,10 +74,22 @@ function fortmatic(options: APIKey): WalletInit {
             }
           })
 
-          provider.on = emitter.on.bind(emitter)
-          provider.disconnect = () => instance.user.logout()
+          if (!provider) {
+            patchedProvider.on = emitter.on.bind(emitter)
+            patchedProvider.disconnect = () => () => instance.user.logout()
 
-          return provider
+            return patchedProvider
+          } else {
+            provider.request = patchedProvider.request.bind(patchedProvider)
+
+            // @ts-ignore - bind old methods for backwards compat
+            provider.send = patchedProvider.send.bind(patchedProvider)
+
+            // @ts-ignore - bind old methods for backwards compat
+            provider.sendAsync = patchedProvider.sendAsync.bind(patchedProvider)
+
+            return provider
+          }
         }
 
         provider = patchProvider()

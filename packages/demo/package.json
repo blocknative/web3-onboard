@@ -34,6 +34,7 @@
     "@web3-onboard/trezor": "^2.0.0",
     "@web3-onboard/walletconnect": "^2.0.0",
     "@web3-onboard/walletlink": "^2.0.0",
+    "@web3-onboard/magic": "^2.0.0",
     "vconsole": "^3.9.5"
   },
   "license": "MIT",

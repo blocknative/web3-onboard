@@ -11,6 +11,7 @@
   import trezorModule from '@web3-onboard/trezor'
   import walletConnectModule from '@web3-onboard/walletconnect'
   import walletLinkModule from '@web3-onboard/walletlink'
+  import magicModule from '@web3-onboard/magic'
   import { verifyMessage, verifyTypedData } from 'ethers/lib/utils'
   import { share } from 'rxjs/operators'
   import VConsole from 'vconsole'
@@ -79,6 +80,10 @@
   }
   const trezor = trezorModule(trezorOptions)
 
+  const magic = magicModule({
+    apiKey: 'pk_live_02207D744E81C2BA'
+  })
+
   const onboard = Onboard({
     wallets: [
       ledger,
@@ -88,6 +93,7 @@
       keystone,
       walletLink,
       injected,
+      magic,
       fortmatic,
       portis,
       torus,
