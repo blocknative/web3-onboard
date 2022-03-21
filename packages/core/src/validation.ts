@@ -20,7 +20,9 @@ const chain = Joi.object({
   id: chainId.required(),
   rpcUrl: Joi.string().required(),
   label: Joi.string().required(),
-  token: Joi.string().required()
+  token: Joi.string().required(),
+  icon: Joi.string(),
+  color: Joi.string()
 })
 
 const connectedChain = Joi.object({

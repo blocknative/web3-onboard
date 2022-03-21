@@ -104,7 +104,7 @@
     border-radius: 16px;
     padding: 1px;
     transition: border-color 250ms ease-in-out, backround 250ms ease-in-out;
-    max-width: 116px;
+    max-width: 128px;
     cursor: default;
   }
 </style>
@@ -171,9 +171,13 @@
           {#if defaultChainStyles.icon}
             <div
               class="chain-icon flex justify-center items-center"
-              style={`background-color: ${defaultChainStyles.color};`}
+              style={`background-color: ${
+                (recognizedChain && recognizedChain.color) ||
+                defaultChainStyles.color
+              };`}
             >
-              {@html defaultChainStyles.icon}
+              {@html (recognizedChain && recognizedChain.icon) ||
+                defaultChainStyles.icon}
             </div>
           {/if}
 

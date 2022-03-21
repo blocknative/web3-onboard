@@ -90,8 +90,8 @@ export const chainStyles: Record<string, ChainStyle> = {
   }
 }
 
-export function getDefaultChainStyles(chainId: string): ChainStyle | null {
-  return chainStyles[chainId] || null
+export function getDefaultChainStyles(chainId: string): ChainStyle {
+  return chainStyles[chainId] || { icon: questionIcon, color: '#33394B' }
 }
 
 export function connectedToValidAppChain(

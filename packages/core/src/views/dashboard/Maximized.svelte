@@ -211,7 +211,7 @@
     <!-- connected accounts -->
     <div class="p5">
       <div class="wallets">
-        {#each $wallets$ as wallet, i}
+        {#each $wallets$ as wallet, i (wallet.label)}
           <WalletRow {wallet} primary={i === 0} />
         {/each}
       </div>

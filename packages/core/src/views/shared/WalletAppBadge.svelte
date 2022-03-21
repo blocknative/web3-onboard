@@ -6,6 +6,7 @@
   export let icon: Promise<string> | string // svg string or url string
   export let loading = false
   export let padding = size / 6
+  export let color: string = 'black'
 
   export let border:
     | 'yellow'
@@ -148,7 +149,7 @@
     background === 'custom' ? `background-color: ${customBackgroundColor}` : ''
   }; padding: ${
     padding - 1
-  }px; width: ${size}px; height: ${size}px; border-radius: ${radius}px;`}
+  }px; width: ${size}px; height: ${size}px; border-radius: ${radius}px; color: ${color};`}
 >
   {#if loading}
     <div class="spinner-container">
