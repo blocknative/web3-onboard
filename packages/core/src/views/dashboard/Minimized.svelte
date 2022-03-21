@@ -149,7 +149,9 @@
         <div class="address">{ensName || shortenedFirstAddress}</div>
         {#if firstAddressBalance}
           <div in:fade class="balance">
-            {firstAddressBalance.slice(0, 4)}
+            {firstAddressBalance.length > 8
+              ? firstAddressBalance.slice(0, 8)
+              : firstAddressBalance}
             {firstAddressAsset}
           </div>
         {/if}

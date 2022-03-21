@@ -1,15 +1,16 @@
 <script lang="ts">
+  import { _ } from 'svelte-i18n'
   import { fade } from 'svelte/transition'
+  import { ProviderRpcErrorCode } from '@web3-onboard/common'
   import type { Account, WalletState } from '../../types'
   import { shortenAddress, shortenEns } from '../../utils'
-
+  import en from '../../i18n/en.json'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
   import elipsisIcon from '../../icons/elipsis'
   import { addWallet } from '../../store/actions'
   import disconnect from '../../disconnect'
   import { selectAccounts } from '../../provider'
-  import { ProviderRpcErrorCode } from '@web3-onboard/common'
   import { connectWallet$ } from '../../streams'
 
   export let wallet: WalletState
@@ -21,7 +22,9 @@
     balance: WalletState['accounts']['0']['balance']
   ): string {
     const [asset] = Object.keys(balance)
-    return `${balance[asset].slice(0, 4)} ${asset}`
+    return `${
+      balance[asset].length > 8 ? balance[asset].slice(0, 8) : balance[asset]
+    } ${asset}`
   }
 
   function setPrimaryWallet(wallet: WalletState, account: Account): void {
@@ -171,15 +174,23 @@
 
         {#if showMenu === address}
           <ul transition:fade class="menu absolute">
-            <li on:click={() => selectAnotherAccount(wallet)}>Add Account</li>
-            <li
-              on:click={() =>
-                setPrimaryWallet(wallet, { address, ens, balance })}
-            >
-              Set Primary Account
+            <li on:click={() => selectAnotherAccount(wallet)}>
+              {$_('dashboard.addAccount', { default: en.dashboard.addAccount })}
             </li>
+            {#if !(primary && i === 0)}
+              <li
+                on:click={() =>
+                  setPrimaryWallet(wallet, { address, ens, balance })}
+              >
+                {$_('dashboard.setPrimaryAccount', {
+                  default: en.dashboard.setPrimaryAccount
+                })}
+              </li>
+            {/if}
             <li on:click={() => disconnect({ label: wallet.label })}>
-              Disconnect Wallet
+              {$_('dashboard.disconnectWallet', {
+                default: en.dashboard.disconnectWallet
+              })}
             </li>
           </ul>
         {/if}
