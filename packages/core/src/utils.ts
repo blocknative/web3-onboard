@@ -12,7 +12,8 @@ import type {
 import ethereumIcon from './icons/ethereum'
 import polygonIcon from './icons/polygon'
 import questionIcon from './icons/question'
-import warningIcon from './icons/warning'
+import binanceIcon from './icons/binance'
+import fantomIcon from './icons/fantom'
 
 import type { ChainStyle, ConnectedChain } from './types'
 
@@ -60,7 +61,9 @@ export const chainIdToLabel: Record<string, string> = {
   '0x4': 'Rinkeby',
   '0x5': 'Goerli',
   '0x2a': 'Kovan',
-  '0x89': 'Polygon'
+  '0x38': 'Binance',
+  '0x89': 'Polygon',
+  '0xfa': 'Fantom'
 }
 
 export const chainStyles: Record<string, ChainStyle> = {
@@ -84,9 +87,17 @@ export const chainStyles: Record<string, ChainStyle> = {
     icon: ethereumIcon,
     color: '#627EEA'
   },
+  '0x38': {
+    icon: binanceIcon,
+    color: '#F3BA2F'
+  },
   '0x89': {
     icon: polygonIcon,
     color: '#8247E5'
+  },
+  '0xfa': {
+    icon: fantomIcon,
+    color: '#1969FF'
   }
 }
 
