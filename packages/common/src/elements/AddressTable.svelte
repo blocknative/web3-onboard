@@ -3,7 +3,7 @@
   import { utils } from 'ethers'
 
   export let accountsListObject: AccountsList | undefined
-  export let accountSelected: Account | undefined
+  export let accountSelected: Account | undefined = undefined
   export let showEmptyAddresses: boolean
 
   $: accounts = showEmptyAddresses
