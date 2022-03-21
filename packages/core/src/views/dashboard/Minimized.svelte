@@ -10,6 +10,7 @@
   import questionIcon from '../../icons/question'
   import caretIcon from '../../icons/caret'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
+  import warningIcon from '../../icons/warning'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
   import NetworkSelector from '../shared/NetworkSelector.svelte'
   import { state } from '../../store'
@@ -40,7 +41,7 @@
 
   $: primaryChain = primaryWallet.chains[0]
 
-  $: recognizedChain = chains.find(({ id, namespace }) =>
+  $: validAppChain = chains.find(({ id, namespace }) =>
     primaryChain
       ? id === primaryChain.id && namespace === primaryChain.namespace
       : false
@@ -164,24 +165,22 @@
         on:click|stopPropagation
         class="container shadow-1 flex items-center"
         style={`border-color: ${
-          recognizedChain || defaultChainStyles ? '#D0D4F7' : '#C2C4C9'
-        }; background-color: ${
-          recognizedChain || defaultChainStyles ? '#EFF1FC' : '#EBEBED'
-        }`}
+          validAppChain ? '#D0D4F7' : '#FFAF00'
+        }; background-color: ${validAppChain ? '#EFF1FC' : '#FFEFCC'}`}
       >
         <div class="flex items-center">
-          {#if defaultChainStyles.icon}
-            <div
-              class="chain-icon flex justify-center items-center"
-              style={`background-color: ${
-                (recognizedChain && recognizedChain.color) ||
-                defaultChainStyles.color
-              };`}
-            >
-              {@html (recognizedChain && recognizedChain.icon) ||
-                defaultChainStyles.icon}
-            </div>
-          {/if}
+          <div
+            class="chain-icon flex justify-center items-center"
+            style={`background-color: ${
+              validAppChain
+                ? validAppChain.color || defaultChainStyles.color
+                : '#FFE7B3'
+            };`}
+          >
+            {@html validAppChain
+              ? validAppChain.icon || defaultChainStyles.icon
+              : warningIcon}
+          </div>
 
           <NetworkSelector {chains} color="#33394B" />
         </div>
