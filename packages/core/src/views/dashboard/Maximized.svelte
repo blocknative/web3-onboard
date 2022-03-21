@@ -13,6 +13,7 @@
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import NetworkBadgeSelector from '../shared/NetworkSelector.svelte'
   import caretLightIcon from '../../icons/caret-light'
+  import warningIcon from '../../icons/warning'
   import questionIcon from '../../icons/question'
   import { updateDashboard } from '../../store/actions'
   import blocknative from '../../icons/blocknative'
@@ -262,17 +263,15 @@
           <WalletAppBadge
             size={32}
             padding={4}
-            background={(recognizedChain && recognizedChain.color) ||
-            defaultChainStyles
-              ? 'custom'
-              : 'transparent'}
-            customBackgroundColor={(recognizedChain && recognizedChain.color) ||
-              defaultChainStyles.color ||
-              ''}
+            background="custom"
+            customBackgroundColor={recognizedChain
+              ? recognizedChain.color || defaultChainStyles.color
+              : '#FFE7B3'}
             border="transparent"
             radius={8}
-            icon={(recognizedChain && recognizedChain.icon) ||
-              defaultChainStyles.icon}
+            icon={recognizedChain
+              ? recognizedChain.icon || defaultChainStyles.icon
+              : warningIcon}
           />
 
           <div
