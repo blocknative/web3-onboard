@@ -34,15 +34,7 @@ export const useConnectWallet = (): [
   useEffect(() => {
     const subscription = (web3Onboard as OnboardAPI).state
       .select('wallets')
-      .subscribe(wallets => {
-        if (!wallet) return
-
-        const updatedWallet = wallets.find(
-          ({ label }) => label === wallet.label
-        )
-
-        updatedWallet && setConnectedWallet(updatedWallet)
-      })
+      .subscribe(wallets => setConnectedWallet(wallets[0] || null))
 
     return () => subscription.unsubscribe()
   }, [wallet])
