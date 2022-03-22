@@ -3,7 +3,8 @@ import type {
   Account,
   Asset,
   Chain,
-  WalletInit
+  WalletInit,
+  EIP1193Provider
 } from '@web3-onboard/common'
 
 import type { StaticJsonRpcProvider } from '@ethersproject/providers'
@@ -239,161 +240,193 @@ function keepkey(): WalletInit {
           return accounts
         }
 
-        const provider = createEIP1193Provider(
-          {},
-          {
-            eth_requestAccounts: async () => {
-              if (keepKeyWallet && typeof keepKeyWallet.cancel === 'function') {
-                // cancel any current actions on device
-                keepKeyWallet.cancel()
-              }
+        const request: EIP1193Provider['request'] = async ({
+          method,
+          params
+        }) => {
+          const response = await fetch(currentChain.rpcUrl, {
+            method: 'POST',
+            body: JSON.stringify({
+              id: '42',
+              method,
+              params
+            })
+          }).then(res => res.json())
 
-              try {
-                keepKeyWallet =
-                  (await keepKeyAdapter.pairDevice()) as KeepKeyHDWallet
-              } catch (error) {
-                const { name } = error as { name: string }
-                // This error indicates that the keepkey is paired with another app
-                if (name === HDWalletErrorType.ConflictingApp) {
-                  throw new ProviderRpcError({
-                    code: 4001,
-                    message: errorMessages[ERROR_BUSY]
-                  })
+          if (response.result) {
+            return response.result
+          } else {
+            throw response.error
+          }
+        }
 
-                  // This error indicates that for some reason we can't claim the usb device
-                } else if (name === HDWalletErrorType.WebUSBCouldNotPair) {
-                  throw new ProviderRpcError({
-                    code: 4001,
-                    message: errorMessages[ERROR_PAIRING]
-                  })
-                }
-              }
+        const keepKeyProvider = { request }
 
-              // Triggers the account select modal if no accounts have been selected
-              const accounts = await getAccounts()
+        const provider = createEIP1193Provider(keepKeyProvider, {
+          eth_requestAccounts: async () => {
+            if (keepKeyWallet && typeof keepKeyWallet.cancel === 'function') {
+              // cancel any current actions on device
+              keepKeyWallet.cancel()
+            }
 
-              if (!accounts || !Array.isArray(accounts)) {
-                throw new Error('No accounts were returned from Keepkey device')
-              }
-              if (!accounts.length) {
+            try {
+              keepKeyWallet =
+                (await keepKeyAdapter.pairDevice()) as KeepKeyHDWallet
+            } catch (error) {
+              const { name } = error as { name: string }
+              // This error indicates that the keepkey is paired with another app
+              if (name === HDWalletErrorType.ConflictingApp) {
                 throw new ProviderRpcError({
                   code: 4001,
-                  message: 'User rejected the request.'
+                  message: errorMessages[ERROR_BUSY]
+                })
+
+                // This error indicates that for some reason we can't claim the usb device
+              } else if (name === HDWalletErrorType.WebUSBCouldNotPair) {
+                throw new ProviderRpcError({
+                  code: 4001,
+                  message: errorMessages[ERROR_PAIRING]
                 })
               }
-              if (!accounts[0].hasOwnProperty('address')) {
-                throw new Error(
-                  'The account returned does not have a required address field'
-                )
-              }
+            }
 
-              return [accounts[0].address]
-            },
-            eth_selectAccounts: async () => {
-              const accounts = await getAccounts()
-              return accounts.map(({ address }) => address)
-            },
-            eth_accounts: async () => {
-              if (!accounts || !Array.isArray(accounts)) {
-                throw new Error('No accounts were returned from Keepkey device')
-              }
-              return accounts[0].hasOwnProperty('address')
-                ? [accounts[0].address]
-                : []
-            },
-            eth_chainId: async () => {
-              return currentChain && currentChain.id != undefined
-                ? currentChain.id
-                : '0x0'
-            },
-            eth_signTransaction: async ({ params: [transactionObject] }) => {
-              if (!accounts || !Array.isArray(accounts) || !accounts.length)
-                throw new Error(
-                  'No account selected. Must call eth_requestAccounts first.'
-                )
+            // Triggers the account select modal if no accounts have been selected
+            const accounts = await getAccounts()
 
-              const account =
-                !transactionObject || !transactionObject.hasOwnProperty('from')
-                  ? accounts[0]
-                  : accounts.find(
-                      account => account.address === transactionObject.from
-                    )
-
-              const { derivationPath } = account || accounts[0]
-              const addressNList = bip32ToAddressNList(derivationPath)
-
-              const {
-                nonce,
-                gasPrice,
-                gas,
-                gasLimit,
-                to,
-                value,
-                data,
-                maxFeePerGas,
-                maxPriorityFeePerGas
-              } = transactionObject
-
-              const { serialized } = await keepKeyWallet.ethSignTx({
-                addressNList,
-                nonce: nonce || '0x0',
-                gasPrice,
-                gasLimit: gasLimit || gas || '0x5208',
-                to,
-                value: value || '0x0',
-                data: data || '',
-                maxFeePerGas,
-                maxPriorityFeePerGas,
-                chainId: parseInt(currentChain.id)
+            if (!accounts || !Array.isArray(accounts)) {
+              throw new Error('No accounts were returned from Keepkey device')
+            }
+            if (!accounts.length) {
+              throw new ProviderRpcError({
+                code: 4001,
+                message: 'User rejected the request.'
               })
-
-              return serialized
-            },
-            eth_sign: async ({ params: [address, message] }) => {
-              if (
-                !accounts ||
-                !Array.isArray(accounts) ||
-                !(accounts.length && accounts.length > 0)
+            }
+            if (!accounts[0].hasOwnProperty('address')) {
+              throw new Error(
+                'The account returned does not have a required address field'
               )
-                throw new Error(
-                  'No account selected. Must call eth_requestAccounts first.'
-                )
+            }
 
-              const account =
-                accounts.find(account => account.address === address) ||
-                accounts[0]
+            return [accounts[0].address]
+          },
+          eth_selectAccounts: async () => {
+            const accounts = await getAccounts()
+            return accounts.map(({ address }) => address)
+          },
+          eth_accounts: async () => {
+            if (!accounts || !Array.isArray(accounts)) {
+              throw new Error('No accounts were returned from Keepkey device')
+            }
+            return accounts[0].hasOwnProperty('address')
+              ? [accounts[0].address]
+              : []
+          },
+          eth_chainId: async () => {
+            return currentChain && currentChain.id != undefined
+              ? currentChain.id
+              : '0x0'
+          },
+          eth_signTransaction: async ({ params: [transactionObject] }) => {
+            if (!accounts || !Array.isArray(accounts) || !accounts.length)
+              throw new Error(
+                'No account selected. Must call eth_requestAccounts first.'
+              )
 
-              const { derivationPath } = account
-              const accountIdx = getAccountIdx(derivationPath)
-              const { addressNList } = getPaths(accountIdx)
+            const account =
+              !transactionObject || !transactionObject.hasOwnProperty('from')
+                ? accounts[0]
+                : accounts.find(
+                    account => account.address === transactionObject.from
+                  )
 
-              const { signature } = await keepKeyWallet.ethSignMessage({
-                addressNList,
-                message:
-                  message.slice(0, 2) === '0x'
-                    ? // @ts-ignore - commonjs weirdness
-                      (ethUtil.default || ethUtil)
-                        .toBuffer(message)
-                        .toString('utf8')
-                    : message
-              })
+            const { derivationPath } = account || accounts[0]
+            const addressNList = bip32ToAddressNList(derivationPath)
 
-              return signature
-            },
-            eth_signTypedData: null,
-            wallet_switchEthereumChain: async ({ params: [{ chainId }] }) => {
-              currentChain =
-                chains.find(({ id }) => id === chainId) || currentChain
+            const {
+              nonce,
+              gasPrice,
+              gas,
+              gasLimit,
+              to,
+              value,
+              data,
+              maxFeePerGas,
+              maxPriorityFeePerGas
+            } = transactionObject
 
-              if (!currentChain)
-                throw new Error('chain must be set before switching')
+            const { serialized } = await keepKeyWallet.ethSignTx({
+              addressNList,
+              nonce: nonce || '0x0',
+              gasPrice,
+              gasLimit: gasLimit || gas || '0x5208',
+              to,
+              value: value || '0x0',
+              data: data || '',
+              maxFeePerGas,
+              maxPriorityFeePerGas,
+              chainId: parseInt(currentChain.id)
+            })
 
-              eventEmitter.emit('chainChanged', currentChain.id)
-              return null
-            },
-            wallet_addEthereumChain: null
-          }
-        )
+            return serialized
+          },
+          eth_sendTransaction: async ({ baseRequest, params }) => {
+            const signedTx = await provider.request({
+              method: 'eth_signTransaction',
+              params
+            })
+
+            const transactionHash = await baseRequest({
+              method: 'eth_sendRawTransaction',
+              params: [signedTx]
+            })
+
+            return transactionHash as string
+          },
+          eth_sign: async ({ params: [address, message] }) => {
+            if (
+              !accounts ||
+              !Array.isArray(accounts) ||
+              !(accounts.length && accounts.length > 0)
+            )
+              throw new Error(
+                'No account selected. Must call eth_requestAccounts first.'
+              )
+
+            const account =
+              accounts.find(account => account.address === address) ||
+              accounts[0]
+
+            const { derivationPath } = account
+            const accountIdx = getAccountIdx(derivationPath)
+            const { addressNList } = getPaths(accountIdx)
+
+            const { signature } = await keepKeyWallet.ethSignMessage({
+              addressNList,
+              message:
+                message.slice(0, 2) === '0x'
+                  ? // @ts-ignore - commonjs weirdness
+                    (ethUtil.default || ethUtil)
+                      .toBuffer(message)
+                      .toString('utf8')
+                  : message
+            })
+
+            return signature
+          },
+          eth_signTypedData: null,
+          wallet_switchEthereumChain: async ({ params: [{ chainId }] }) => {
+            currentChain =
+              chains.find(({ id }) => id === chainId) || currentChain
+
+            if (!currentChain)
+              throw new Error('chain must be set before switching')
+
+            eventEmitter.emit('chainChanged', currentChain.id)
+            return null
+          },
+          wallet_addEthereumChain: null
+        })
 
         provider.on = eventEmitter.on.bind(eventEmitter)
 
