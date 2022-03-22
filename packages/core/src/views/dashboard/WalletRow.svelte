@@ -174,20 +174,32 @@
 
         {#if showMenu === address}
           <ul transition:fade class="menu absolute">
-            <li on:click={() => selectAnotherAccount(wallet)}>
+            <li
+              on:click|stopPropagation={() => {
+                showMenu = ''
+                selectAnotherAccount(wallet)
+              }}
+            >
               {$_('dashboard.addAccount', { default: en.dashboard.addAccount })}
             </li>
             {#if !(primary && i === 0)}
               <li
-                on:click={() =>
-                  setPrimaryWallet(wallet, { address, ens, balance })}
+                on:click|stopPropagation={() => {
+                  showMenu = ''
+                  setPrimaryWallet(wallet, { address, ens, balance })
+                }}
               >
                 {$_('dashboard.setPrimaryAccount', {
                   default: en.dashboard.setPrimaryAccount
                 })}
               </li>
             {/if}
-            <li on:click={() => disconnect({ label: wallet.label })}>
+            <li
+              on:click|stopPropagation={() => {
+                showMenu = ''
+                disconnect({ label: wallet.label })
+              }}
+            >
               {$_('dashboard.disconnectWallet', {
                 default: en.dashboard.disconnectWallet
               })}
