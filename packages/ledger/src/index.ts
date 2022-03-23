@@ -15,7 +15,7 @@ import { Buffer } from 'buffer'
 import type Transport from '@ledgerhq/hw-transport'
 import type { providers } from 'ethers'
 
-const LEDGER_LIVE_PATH = `m/44'/60'`
+const LEDGER_LIVE_PATH = `m/44'/60'/0'/0`
 const LEDGER_DEFAULT_PATH = `m/44'/60'/0'`
 
 const DEFAULT_BASE_PATHS = [
