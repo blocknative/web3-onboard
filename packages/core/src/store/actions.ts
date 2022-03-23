@@ -4,17 +4,17 @@ import type {
   Account,
   AddChainsAction,
   AddWalletAction,
-  Dashboard,
+  AccountCenter,
   RemoveWalletAction,
   ResetStoreAction,
   UpdateAccountAction,
-  UpdateDashboardAction,
+  UpdateAccountCenterAction,
   UpdateWalletAction,
   WalletState
 } from '../types'
 
 import {
-  validateDashboardUpdate,
+  validateAccountCenterUpdate,
   validateString,
   validateWallet
 } from '../validation'
@@ -26,7 +26,7 @@ import {
   ADD_WALLET,
   REMOVE_WALLET,
   UPDATE_ACCOUNT,
-  UPDATE_DASHBOARD
+  UPDATE_ACCOUNT_CENTER
 } from './constants'
 import { dispatch } from './index'
 
@@ -112,19 +112,21 @@ export function updateAccount(
   dispatch(action as UpdateAccountAction)
 }
 
-export function updateDashboard(update: Dashboard | Partial<Dashboard>): void {
-  const error = validateDashboardUpdate(update)
+export function updateAccountCenter(
+  update: AccountCenter | Partial<AccountCenter>
+): void {
+  const error = validateAccountCenterUpdate(update)
 
   if (error) {
     throw error
   }
 
   const action = {
-    type: UPDATE_DASHBOARD,
+    type: UPDATE_ACCOUNT_CENTER,
     payload: update
   }
 
-  dispatch(action as UpdateDashboardAction)
+  dispatch(action as UpdateAccountCenterAction)
 }
 
 export function resetStore(): void {

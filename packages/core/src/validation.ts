@@ -7,7 +7,7 @@ import type {
   ConnectOptions,
   DisconnectOptions,
   ConnectOptionsString,
-  Dashboard
+  AccountCenter
 } from './types'
 
 const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
@@ -97,7 +97,7 @@ const walletModule = Joi.object({
 
 const walletModules = Joi.array().items(Joi.function()).required()
 
-const dashboardPosition = Joi.string().valid(
+const accountCenterPosition = Joi.string().valid(
   'topRight',
   'bottomRight',
   'bottomLeft',
@@ -109,14 +109,14 @@ const initOptions = Joi.object({
   chains: chains.required(),
   appMetadata: appMetadata,
   i18n: Joi.object().unknown(),
-  dashboard: Joi.object({
+  accountCenter: Joi.object({
     desktop: Joi.object({
       enabled: Joi.boolean(),
-      position: dashboardPosition
+      position: accountCenterPosition
     }),
     mobile: Joi.object({
       enabled: Joi.boolean(),
-      position: dashboardPosition
+      position: accountCenterPosition
     })
   })
 })
@@ -141,9 +141,9 @@ const setChainOptions = Joi.object({
   wallet: Joi.string()
 })
 
-const dashboard = Joi.object({
+const accountCenter = Joi.object({
   enabled: Joi.boolean(),
-  position: dashboardPosition,
+  position: accountCenterPosition,
   expanded: Joi.boolean()
 })
 
@@ -191,8 +191,8 @@ export function validateSetChainOptions(data: {
   return validate(setChainOptions, data)
 }
 
-export function validateDashboardUpdate(
-  data: Dashboard | Partial<Dashboard>
+export function validateAccountCenterUpdate(
+  data: AccountCenter | Partial<AccountCenter>
 ): ValidateReturn {
-  return validate(dashboard, data)
+  return validate(accountCenter, data)
 }

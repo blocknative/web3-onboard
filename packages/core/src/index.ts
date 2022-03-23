@@ -4,7 +4,7 @@ import connectWallet from './connect'
 import disconnectWallet from './disconnect'
 import setChain from './chain'
 import { state } from './store'
-import { addChains, updateDashboard } from './store/actions'
+import { addChains, updateAccountCenter } from './store/actions'
 import { reset$, internalState$, chains$ } from './streams'
 import { validateInitOptions } from './validation'
 import initI18N from './i18n'
@@ -42,22 +42,22 @@ function init(options: InitOptions): OnboardAPI {
     }
   }
 
-  const { wallets, chains, appMetadata = null, i18n, dashboard } = options
+  const { wallets, chains, appMetadata = null, i18n, accountCenter } = options
 
   initI18N(i18n)
   addChains(chains)
 
-  let dashboardUpdate
+  let accountCenterUpdate
 
   if (device.type === 'mobile') {
-    dashboardUpdate = {
+    accountCenterUpdate = {
       enabled: false
     }
-  } else if (typeof dashboard !== 'undefined' && dashboard.desktop) {
-    dashboardUpdate = dashboard.desktop
+  } else if (typeof accountCenter !== 'undefined' && accountCenter.desktop) {
+    accountCenterUpdate = accountCenter.desktop
   }
 
-  dashboardUpdate && updateDashboard(dashboardUpdate)
+  accountCenterUpdate && updateAccountCenter(accountCenterUpdate)
 
   const { svelteInstance } = internalState$.getValue()
 

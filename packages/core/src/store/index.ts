@@ -10,7 +10,7 @@ import type {
   UpdateWalletAction,
   AddWalletAction,
   UpdateAccountAction,
-  UpdateDashboardAction
+  UpdateAccountCenterAction
 } from '../types'
 
 import {
@@ -20,7 +20,7 @@ import {
   REMOVE_WALLET,
   RESET_STORE,
   UPDATE_ACCOUNT,
-  UPDATE_DASHBOARD
+  UPDATE_ACCOUNT_CENTER
 } from './constants'
 
 import { APP_INITIAL_STATE } from '../constants'
@@ -105,12 +105,12 @@ function reducer(state: AppState, action: Action): AppState {
       }
     }
 
-    case UPDATE_DASHBOARD: {
-      const update = payload as UpdateDashboardAction['payload']
+    case UPDATE_ACCOUNT_CENTER: {
+      const update = payload as UpdateAccountCenterAction['payload']
       return {
         ...state,
-        dashboard: {
-          ...state.dashboard,
+        accountCenter: {
+          ...state.accountCenter,
           ...update
         }
       }

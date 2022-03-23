@@ -21,7 +21,7 @@ export interface InitOptions {
   chains: Chain[]
   appMetadata?: AppMetadata
   i18n?: i18nOptions
-  dashboard?: DashboardOptions
+  accountCenter?: AccountCenterOptions
 }
 
 export interface OnboardAPI {
@@ -92,7 +92,7 @@ export type Address = string
 export interface AppState {
   chains: Chain[]
   wallets: WalletState[]
-  dashboard: Dashboard
+  accountCenter: AccountCenter
 }
 
 export type InternalState = {
@@ -106,22 +106,22 @@ export type Locale = string
 export type i18nOptions = Record<Locale, i18n>
 export type i18n = typeof en
 
-export type DashboardPosition =
+export type AccountCenterPosition =
   | 'topRight'
   | 'bottomRight'
   | 'bottomLeft'
   | 'topLeft'
 
-export type DashboardOptions = {
+export type AccountCenterOptions = {
   desktop: {
-    position?: DashboardPosition
-    enabled?: Dashboard['enabled']
+    position?: AccountCenterPosition
+    enabled?: AccountCenter['enabled']
   }
 }
 
-export type Dashboard = {
+export type AccountCenter = {
   enabled: boolean
-  position: DashboardPosition
+  position: AccountCenterPosition
   expanded: boolean
 }
 
@@ -133,7 +133,7 @@ export type Action =
   | RemoveWalletAction
   | ResetStoreAction
   | UpdateAccountAction
-  | UpdateDashboardAction
+  | UpdateAccountCenterAction
 
 export type AddChainsAction = { type: 'add_chains'; payload: Chain[] }
 export type AddWalletAction = { type: 'add_wallet'; payload: WalletState }
@@ -158,9 +158,9 @@ export type UpdateAccountAction = {
   payload: { id: string; address: string } & Partial<Account>
 }
 
-export type UpdateDashboardAction = {
-  type: 'update_dashboard'
-  payload: Dashboard | Partial<Dashboard>
+export type UpdateAccountCenterAction = {
+  type: 'update_accountCenter'
+  payload: AccountCenter | Partial<AccountCenter>
 }
 
 // ==== MISC ==== //

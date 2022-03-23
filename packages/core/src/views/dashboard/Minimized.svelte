@@ -6,7 +6,7 @@
     shortenAddress,
     shortenEns
   } from '../../utils'
-  import { updateDashboard } from '../../store/actions'
+  import { updateAccountCenter } from '../../store/actions'
   import questionIcon from '../../icons/question'
   import caretIcon from '../../icons/caret'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
@@ -50,7 +50,7 @@
   $: defaultChainStyles = getDefaultChainStyles(primaryChain.id)
 
   function maximize() {
-    updateDashboard({ expanded: true })
+    updateAccountCenter({ expanded: true })
   }
 </script>
 

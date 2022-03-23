@@ -57,7 +57,7 @@
       "cancel": "Cancel"
     }
   },
-  "dashboard": {
+  "accountCenter": {
     "connectAnotherWallet": "Connect another Wallet",
     "disconnectAllWallets": "Disconnect all Wallets",
     "currentNetwork": "Current Network",

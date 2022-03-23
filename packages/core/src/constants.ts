@@ -3,7 +3,7 @@ import type { AppState } from './types'
 export const APP_INITIAL_STATE: AppState = {
   wallets: [],
   chains: [],
-  dashboard: {
+  accountCenter: {
     enabled: true,
     position: 'topRight',
     expanded: false

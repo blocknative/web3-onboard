@@ -5,11 +5,11 @@
   import Connect from './connect/Index.svelte'
   import SwitchChain from './chain/SwitchChain.svelte'
   import ActionRequired from './connect/ActionRequired.svelte'
-  import Dashboard from './dashboard/Index.svelte'
+  import AccountCenter from './accountCenter/Index.svelte'
 
-  const dashboard$ = state
-    .select('dashboard')
-    .pipe(startWith(state.get().dashboard), shareReplay(1))
+  const accountCenter$ = state
+    .select('accountCenter')
+    .pipe(startWith(state.get().accountCenter), shareReplay(1))
 </script>
 
 <style>
@@ -200,6 +200,6 @@
   <SwitchChain />
 {/if}
 
-{#if $dashboard$.enabled && $wallets$.length}
-  <Dashboard settings={$dashboard$} />
+{#if $accountCenter$.enabled && $wallets$.length}
+  <AccountCenter settings={$accountCenter$} />
 {/if}

@@ -180,7 +180,7 @@
                 selectAnotherAccount(wallet)
               }}
             >
-              {$_('dashboard.addAccount', { default: en.dashboard.addAccount })}
+              {$_('accountCenter.addAccount', { default: en.accountCenter.addAccount })}
             </li>
             {#if !(primary && i === 0)}
               <li
@@ -189,8 +189,8 @@
                   setPrimaryWallet(wallet, { address, ens, balance })
                 }}
               >
-                {$_('dashboard.setPrimaryAccount', {
-                  default: en.dashboard.setPrimaryAccount
+                {$_('accountCenter.setPrimaryAccount', {
+                  default: en.accountCenter.setPrimaryAccount
                 })}
               </li>
             {/if}
@@ -200,8 +200,8 @@
                 disconnect({ label: wallet.label })
               }}
             >
-              {$_('dashboard.disconnectWallet', {
-                default: en.dashboard.disconnectWallet
+              {$_('accountCenter.disconnectWallet', {
+                default: en.accountCenter.disconnectWallet
               })}
             </li>
           </ul>

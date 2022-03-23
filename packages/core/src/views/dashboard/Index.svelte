@@ -1,21 +1,21 @@
 <script lang="ts">
   import { onDestroy } from 'svelte'
   import { fade } from 'svelte/transition'
-  import { updateDashboard } from '../../store/actions'
-  import type { Dashboard } from '../../types'
+  import { updateAccountCenter } from '../../store/actions'
+  import type { AccountCenter } from '../../types'
   import Maximized from './Maximized.svelte'
   import Minimized from './Minimized.svelte'
 
-  export let settings: Dashboard
+  export let settings: AccountCenter
 
-  const dashboardPositions = {
+  const accountCenterPositions = {
     topLeft: 'top: 0; left: 0;',
     topRight: 'top: 0; right: 0;',
     bottomRight: 'bottom: 0; right: 0;',
     bottomLeft: 'bottom: 0; left: 0;'
   }
 
-  onDestroy(() => updateDashboard({ expanded: false }))
+  onDestroy(() => updateAccountCenter({ expanded: false }))
 </script>
 
 <style>
@@ -30,7 +30,7 @@
 <div
   class="container flex absolute"
   transition:fade
-  style={dashboardPositions[settings.position]}
+  style={accountCenterPositions[settings.position]}
 >
   {#if !settings.expanded}
     <!-- minimized -->

@@ -15,7 +15,7 @@
   import caretLightIcon from '../../icons/caret-light'
   import warningIcon from '../../icons/warning'
   import questionIcon from '../../icons/question'
-  import { updateDashboard } from '../../store/actions'
+  import { updateAccountCenter } from '../../store/actions'
   import blocknative from '../../icons/blocknative'
   import DisconnectAllConfirm from './DisconnectAllConfirm.svelte'
 
@@ -228,8 +228,8 @@
             {@html plusCircleIcon}
           </div>
           <span class="ml action-text"
-            >{$_('dashboard.connectAnotherWallet', {
-              default: en.dashboard.connectAnotherWallet
+            >{$_('accountCenter.connectAnotherWallet', {
+              default: en.accountCenter.connectAnotherWallet
             })}</span
           >
         </div>
@@ -243,8 +243,8 @@
             {@html arrowForwardIcon}
           </div>
           <span class="ml  action-text"
-            >{$_('dashboard.disconnectAllWallets', {
-              default: en.dashboard.disconnectAllWallets
+            >{$_('accountCenter.disconnectAllWallets', {
+              default: en.accountCenter.disconnectAllWallets
             })}</span
           >
         </div>
@@ -285,8 +285,8 @@
         <!-- network selector -->
         <div class="network-selector-container">
           <div class="network-selector-label">
-            {$_('dashboard.currentNetwork', {
-              default: en.dashboard.currentNetwork
+            {$_('accountCenter.currentNetwork', {
+              default: en.accountCenter.currentNetwork
             })}
           </div>
           <div class="flex items-center">
@@ -339,16 +339,16 @@
         {#if appMetadata && (appMetadata.gettingStartedGuide || appMetadata.explore)}
           <div class="app-info">
             <h4 class="app-info-heading">
-              {$_('dashboard.appInfo', {
-                default: en.dashboard.appInfo
+              {$_('accountCenter.appInfo', {
+                default: en.accountCenter.appInfo
               })}
             </h4>
 
             {#if appMetadata.gettingStartedGuide}
               <div class="flex justify-between items-center mt7">
                 <div>
-                  {$_('dashboard.learnMore', {
-                    default: en.dashboard.learnMore
+                  {$_('accountCenter.learnMore', {
+                    default: en.accountCenter.learnMore
                   })}
                 </div>
                 <a
@@ -356,8 +356,8 @@
                   target="_blank"
                   rel="noreferrer noopener"
                 >
-                  {$_('dashboard.gettingStartedGuide', {
-                    default: en.dashboard.gettingStartedGuide
+                  {$_('accountCenter.gettingStartedGuide', {
+                    default: en.accountCenter.gettingStartedGuide
                   })}
                 </a>
               </div>
@@ -366,8 +366,8 @@
             {#if appMetadata.explore}
               <div class="flex justify-between items-center mt7">
                 <div>
-                  {$_('dashboard.smartContracts', {
-                    default: en.dashboard.smartContracts
+                  {$_('accountCenter.smartContracts', {
+                    default: en.accountCenter.smartContracts
                   })}
                 </div>
                 <a
@@ -375,8 +375,8 @@
                   target="_blank"
                   rel="noreferrer noopener"
                 >
-                  {$_('dashboard.explore', {
-                    default: en.dashboard.explore
+                  {$_('accountCenter.explore', {
+                    default: en.accountCenter.explore
                   })}
                 </a>
               </div>
@@ -386,16 +386,16 @@
 
         <button
           class="app-button"
-          on:click={() => updateDashboard({ expanded: false })}
-          >{$_('dashboard.backToApp', {
-            default: en.dashboard.backToApp
+          on:click={() => updateAccountCenter({ expanded: false })}
+          >{$_('accountCenter.backToApp', {
+            default: en.accountCenter.backToApp
           })}</button
         >
 
         <div class="flex justify-center items-center powered-by-container">
           <span class="powered-by"
-            >{$_('dashboard.poweredBy', {
-              default: en.dashboard.poweredBy
+            >{$_('accountCenter.poweredBy', {
+              default: en.accountCenter.poweredBy
             })}</span
           >
           <div class="flex items-center" style="width: 83px; margin-left: 4px;">
