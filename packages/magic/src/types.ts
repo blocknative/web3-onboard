@@ -1,6 +1,6 @@
 export type LoginOptions = {
-  walletName: string,
-  brandingHTMLString: string,
+  walletName: string
+  brandingHTMLString: string
   emailLoginFunction: EmailLoginFunction
 }
 
