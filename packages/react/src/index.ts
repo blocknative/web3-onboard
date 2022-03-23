@@ -85,11 +85,12 @@ export const useSetChain = (
   const [connectedChain, setConnectedChain] = useState<ConnectedChain | null>(
     () => {
       const initialWallets = (web3Onboard as OnboardAPI).state.get().wallets
+      if (initialWallets.length === 0) return null
       return (
         (
           initialWallets.find(({ label }) => label === walletLabel) ||
           initialWallets[0]
-        )?.chains[0] || null
+        ).chains[0] || null
       )
     }
   )
