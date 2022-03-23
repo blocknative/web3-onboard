@@ -185,7 +185,7 @@
           <NetworkSelector {chains} color="#33394B" />
         </div>
 
-        <div class="caret flex">
+        <div class="caret flex items-center">
           {@html caretIcon}
         </div>
       </div>

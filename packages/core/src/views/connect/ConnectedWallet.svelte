@@ -71,7 +71,7 @@
       })}
     </div>
 
-    <div class="tick flex" style="width: 20px;">
+    <div class="tick flex items-center" style="width: 20px;">
       {@html success}
     </div>
   </div>
