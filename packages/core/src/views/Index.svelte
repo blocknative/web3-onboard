@@ -5,7 +5,7 @@
   import Connect from './connect/Index.svelte'
   import SwitchChain from './chain/SwitchChain.svelte'
   import ActionRequired from './connect/ActionRequired.svelte'
-  import AccountCenter from './accountCenter/Index.svelte'
+  import AccountCenter from './account-center/Index.svelte'
 
   const accountCenter$ = state
     .select('accountCenter')
