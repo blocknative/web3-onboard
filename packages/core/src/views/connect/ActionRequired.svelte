@@ -61,11 +61,14 @@
 
     <p>
       {$_('modals.actionRequired.paragraph')}
-      <a
-        href="https://blocknative.com/blog"
-        target="_blank"
-        rel="noreferrer noopener">{$_('modals.actionRequired.linkText')}</a
-      >
+
+      {#if wallet === 'MetaMask'}
+        <a
+          href="https://metamask.zendesk.com/hc/en-us/articles/360061346311-Switching-accounts-in-MetaMask"
+          target="_blank"
+          rel="noreferrer noopener">{$_('modals.actionRequired.linkText')}</a
+        >
+      {/if}
     </p>
 
     <button class="flex justify-center" on:click={close}
