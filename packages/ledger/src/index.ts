@@ -14,6 +14,7 @@ import { Buffer } from 'buffer'
 
 import type Transport from '@ledgerhq/hw-transport'
 import type { providers } from 'ethers'
+import type Eth from '@ledgerhq/hw-app-eth'
 
 const LEDGER_LIVE_PATH = `m/44'/60'`
 const LEDGER_DEFAULT_PATH = `m/44'/60'/0'`
@@ -60,32 +61,44 @@ interface LedgerAccount {
   chainCode: string
 }
 
+const getLedgerLiveAccount = () => {}
+
 const getAccount = async (
   { publicKey, chainCode, derivationPath }: LedgerAccount,
   asset: Asset,
   index: number,
-  provider: providers.StaticJsonRpcProvider
+  provider: providers.StaticJsonRpcProvider,
+  eth: Eth
 ): Promise<Account> => {
-  //@ts-ignore
-  const { default: HDKey } = await import('hdkey')
-  const ethUtil = await import('ethereumjs-util')
+  let dPath
+  let address
+  if (derivationPath === LEDGER_LIVE_PATH) {
+    dPath = `${derivationPath}/${index}'/0/0`
+    ;({ address } = await eth.getAddress(dPath))
+  } else {
+    //@ts-ignore
+    const { default: HDKey } = await import('hdkey')
+    const ethUtil = await import('ethereumjs-util')
 
-  // @ts-ignore - Commonjs importing weirdness
-  const { publicToAddress, toChecksumAddress } = ethUtil.default || ethUtil
+    // @ts-ignore - Commonjs importing weirdness
+    const { publicToAddress, toChecksumAddress } = ethUtil.default || ethUtil
 
-  const hdk = new HDKey()
+    const hdk = new HDKey()
 
-  hdk.publicKey = Buffer.from(publicKey, 'hex')
-  hdk.chainCode = Buffer.from(chainCode, 'hex')
+    hdk.publicKey = Buffer.from(publicKey, 'hex')
+    hdk.chainCode = Buffer.from(chainCode, 'hex')
 
-  const dkey = hdk.deriveChild(index)
+    const dkey = hdk.deriveChild(index)
 
-  const address = toChecksumAddress(
-    `0x${publicToAddress(dkey.publicKey, true).toString('hex')}`
-  )
+    address = toChecksumAddress(
+      `0x${publicToAddress(dkey.publicKey, true).toString('hex')}`
+    )
+
+    dPath = `${derivationPath}/${index}`
+  }
 
   return {
-    derivationPath: `${derivationPath}/${index}`,
+    derivationPath: dPath,
     address,
     balance: {
       asset: asset.label,
@@ -97,7 +110,8 @@ const getAccount = async (
 const getAddresses = async (
   account: LedgerAccount,
   asset: Asset,
-  provider: providers.StaticJsonRpcProvider
+  provider: providers.StaticJsonRpcProvider,
+  eth: Eth
 ): Promise<Account[]> => {
   const accounts = []
   let index = 0
@@ -106,7 +120,7 @@ const getAddresses = async (
   // Iterates until a 0 balance account is found
   // Then adds 4 more 0 balance accounts to the array
   while (zeroBalanceAccounts < 5) {
-    const acc = await getAccount(account, asset, index, provider)
+    const acc = await getAccount(account, asset, index, provider, eth)
     if (acc.balance.value.isZero()) {
       zeroBalanceAccounts++
       accounts.push(acc)
@@ -196,7 +210,8 @@ function ledger({
                 derivationPath
               },
               asset,
-              provider
+              provider,
+              eth
             )
           } catch (error) {
             const { statusText } = error as { statusText: string }
