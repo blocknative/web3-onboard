@@ -16,6 +16,10 @@
   export let wallet: WalletState
   export let primary: boolean
 
+  export function hideMenu() {
+    showMenu = ''
+  }
+
   let showMenu = ''
 
   function formatBalance(
@@ -69,6 +73,10 @@
     background-color: var(--onboard-gray-500, var(--gray-500));
   }
 
+  .container:hover > div > span.balance {
+    color: var(--onboard-gray-100, var(--gray-100));
+  }
+
   .container.primary:hover {
     background-color: var(--onboard-gray-700, var(--gray-700));
   }
@@ -80,26 +88,30 @@
   }
 
   .balance {
+    margin-left: 0.5rem;
     color: var(--onboard-gray-300, var(--gray-300));
-  }
-
-  .elipsis {
-    height: 24px;
-    width: 24px;
-    padding: 4px;
-    margin: 0 4px 0 8px;
-    border-radius: 24px;
-    color: var(--onboard-gray-400, var(--gray-400));
     transition: color 150ms ease-in-out, background-color 150ms ease-in-out;
   }
 
-  .elipsis:hover {
+  .elipsis-container {
+    padding: 0.25rem;
+    margin-left: 0.5rem;
+    border-radius: 24px;
+    transition: color 150ms ease-in-out, background-color 150ms ease-in-out;
+    background-color: transparent;
+    color: var(--onboard-gray-400, var(--gray-400));
+  }
+
+  .elipsis {
+    width: 24px;
+  }
+
+  .elipsis-container:hover {
     color: var(--onboard-gray-100, var(--gray-100));
   }
 
-  .elipsis.active {
-    background-color: var(--onboard-gray-400, var(--gray-400));
-    color: var(--onboard-gray-100, var(--gray-100));
+  .elipsis-container.active {
+    background-color: var(--onboard-gray-700, var(--gray-700));
   }
 
   .menu {
@@ -107,8 +119,8 @@
     border: 1px solid var(--onboard-gray-100, var(--gray-100));
     border-radius: 8px;
     list-style-type: none;
-    right: 0.25rem;
-    top: 1.75rem;
+    right: 0rem;
+    top: 2rem;
     margin: 0;
     padding: 0;
     width: max-content;
@@ -145,8 +157,8 @@
           icon={wallet.icon}
         />
         {#if primary && i === 0}
-          <div style="right: -4px; bottom: -4px;" class="drop-shadow absolute">
-            <SuccessStatusIcon size={12} />
+          <div style="right: -5px; bottom: -5px;" class="drop-shadow absolute">
+            <SuccessStatusIcon size={14} />
           </div>
         {/if}
       </div>
@@ -164,13 +176,16 @@
       {/if}
 
       <!-- ELIPSIS -->
-      <div
-        on:click|stopPropagation={() =>
-          (showMenu = showMenu === address ? '' : address)}
-        class:active={showMenu === address}
-        class="elipsis pointer flex items-center justify-center relative"
-      >
-        {@html elipsisIcon}
+      <div class="relative">
+        <div class="elipsis-container" class:active={showMenu === address}>
+          <div
+            on:click|stopPropagation={() =>
+              (showMenu = showMenu === address ? '' : address)}
+            class="elipsis pointer flex items-center justify-center relative"
+          >
+            {@html elipsisIcon}
+          </div>
+        </div>
 
         {#if showMenu === address}
           <ul transition:fade class="menu absolute">
@@ -180,7 +195,9 @@
                 selectAnotherAccount(wallet)
               }}
             >
-              {$_('accountCenter.addAccount', { default: en.accountCenter.addAccount })}
+              {$_('accountCenter.addAccount', {
+                default: en.accountCenter.addAccount
+              })}
             </li>
             {#if !(primary && i === 0)}
               <li

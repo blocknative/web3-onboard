@@ -26,6 +26,7 @@
   const { chains: appChains } = state.get()
   const { appMetadata } = internalState$.getValue()
   let disconnectConfirmModal = false
+  let hideWalletRowMenu: () => void
 
   $: [primaryWallet] = $wallets$
   $: [connectedChain] = primaryWallet ? primaryWallet.chains : []
@@ -46,6 +47,7 @@
     background-color: var(--onboard-gray-600, var(--gray-600));
     border-radius: 16px;
     width: 100%;
+    filter: drop-shadow(0px 4px 16px rgba(178, 178, 178, 0.2));
   }
 
   .wallets-section {
@@ -63,24 +65,25 @@
 
   .actions {
     color: var(--onboard-primary-400, var(--primary-400));
-    padding: var(--onboard-spacing-6, var(--spacing-6))
-      var(--onboard-spacing-5, var(--spacing-5));
+    padding-left: 2px;
+  }
+
+  .action-container {
+    padding: 4px 12px 4px 8px;
+    border-radius: 8px;
+    transition: background-color 150ms ease-in-out;
+  }
+
+  .action-container:hover {
+    background-color: rgba(146, 155, 237, 0.2);
   }
 
   .plus-icon {
-    width: 24px;
-    height: 24px;
-    padding: 2px;
+    width: 20px;
   }
 
   .arrow-forward {
-    width: 24px;
-    height: 24px;
-    padding: 3px;
-  }
-
-  .ml {
-    margin-left: 0.25rem;
+    width: 20px;
   }
 
   .mt {
@@ -90,6 +93,7 @@
   .action-text {
     font-size: var(--onboard-font-size-6, var(--font-size-6));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
+    margin-left: 0.5rem;
   }
 
   .background-blue {
@@ -121,8 +125,6 @@
 
   .caret {
     width: 16px;
-    height: 16px;
-    padding: 4px;
   }
 
   .app-info-container {
@@ -206,28 +208,32 @@
   />
 {/if}
 
-<div class="outer-container">
+<div on:click|stopPropagation={hideWalletRowMenu} class="outer-container">
   <!-- wallets section -->
-  <div class="wallets-section shadow-1">
+  <div class="wallets-section">
     <!-- connected accounts -->
     <div class="p5">
       <div class="wallets">
         {#each $wallets$ as wallet, i (wallet.label)}
-          <WalletRow {wallet} primary={i === 0} />
+          <WalletRow
+            bind:hideMenu={hideWalletRowMenu}
+            {wallet}
+            primary={i === 0}
+          />
         {/each}
       </div>
 
       <!-- actions -->
-      <div class="actions">
+      <div class="actions flex flex-column items-start">
         <!-- connect another wallet -->
         <div
-          on:click|stopPropagation={() => connect()}
-          class="flex items-center pointer"
+          on:click={() => connect()}
+          class="action-container flex items-center pointer"
         >
           <div class="plus-icon flex items-center justify-center">
             {@html plusCircleIcon}
           </div>
-          <span class="ml action-text"
+          <span class="action-text"
             >{$_('accountCenter.connectAnotherWallet', {
               default: en.accountCenter.connectAnotherWallet
             })}</span
@@ -236,13 +242,13 @@
 
         <!-- disconnect all wallets -->
         <div
-          on:click|stopPropagation={() => (disconnectConfirmModal = true)}
-          class="flex items-center mt pointer"
+          on:click={() => (disconnectConfirmModal = true)}
+          class="action-container flex items-center mt pointer"
         >
           <div class="arrow-forward flex items-center justify-center">
             {@html arrowForwardIcon}
           </div>
-          <span class="ml  action-text"
+          <span class="action-text"
             >{$_('accountCenter.disconnectAllWallets', {
               default: en.accountCenter.disconnectAllWallets
             })}</span
@@ -274,11 +280,8 @@
               : warningIcon}
           />
 
-          <div
-            style="right: -0.25rem; bottom: -0.25rem;"
-            class="drop-shadow absolute"
-          >
-            <SuccessStatusIcon size={12} />
+          <div style="right: -5px; bottom: -5px;" class="drop-shadow absolute">
+            <SuccessStatusIcon size={14} />
           </div>
         </div>
 
@@ -289,7 +292,7 @@
               default: en.accountCenter.currentNetwork
             })}
           </div>
-          <div class="flex items-center">
+          <div on:click class="flex items-center">
             <NetworkBadgeSelector
               chains={appChains}
               color="#33394B"
@@ -317,10 +320,10 @@
             />
 
             <div
-              style="right: -0.25rem; bottom: -0.25rem;"
+              style="right: -5px; bottom: -5px;"
               class="drop-shadow absolute"
             >
-              <SuccessStatusIcon size={12} color="blue" />
+              <SuccessStatusIcon size={14} color="blue" />
             </div>
           </div>
 

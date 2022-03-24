@@ -4,9 +4,7 @@
 
 <style>
   .close-button {
-    width: 2rem;
-    height: 2rem;
-    padding: 0.4rem;
+    padding: 0.25rem;
     background: var(
       --onboard-close-button-background,
       var(--onboard-gray-100, var(--gray-100))
@@ -19,7 +17,7 @@
   }
 
   .close-icon {
-    width: 14px;
+    width: 24px;
   }
 </style>
 

@@ -57,7 +57,9 @@
 <style>
   .minimized {
     background-color: var(--onboard-white, var(--white));
+    border: 1px solid var(--onboard-gray-100, var(--gray-100));
     width: 100%;
+    box-shadow: var(--onboard-shadow-3, var(--shadow-3));
   }
 
   .radius {
@@ -96,8 +98,7 @@
   }
 
   .caret {
-    width: 10px;
-    margin: 0 4px;
+    width: 24px;
   }
 
   .container {
@@ -110,9 +111,12 @@
   }
 </style>
 
-<div class="minimized pointer shadow-1 radius padding-5" on:click={maximize}>
-  <div class="flex items-center justify-between">
-    <div class="flex items-center" style="margin-left: 2px;">
+<div
+  class="minimized pointer radius padding-5"
+  on:click|stopPropagation={maximize}
+>
+  <div class="flex items-center justify-between" style="padding: 0 4px;">
+    <div class="flex items-center w-100">
       <!-- app and wallet icon badge -->
       <div class="flex items-centered relative">
         <div class="drop-shadow">
@@ -137,17 +141,16 @@
           />
         </div>
 
-        <div
-          style="right: 0.25rem; bottom: -0.25rem;"
-          class="drop-shadow absolute"
-        >
-          <SuccessStatusIcon size={12} />
+        <div style="right: 5px; bottom: -5px;" class="drop-shadow absolute">
+          <SuccessStatusIcon size={14} />
         </div>
       </div>
 
       <!-- address and balance -->
-      <div class="flex flex-column" style="height: 40px; margin-top: 2px">
-        <div class="address">{ensName || shortenedFirstAddress}</div>
+      <div class="flex flex-column" style="height: 40px;">
+        <div class="address">
+          {ensName ? shortenEns(ensName) : shortenedFirstAddress}
+        </div>
         {#if firstAddressBalance}
           <div in:fade class="balance">
             {firstAddressBalance.length > 8

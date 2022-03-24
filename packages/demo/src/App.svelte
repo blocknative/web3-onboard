@@ -125,6 +125,11 @@
         rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
       }
     ],
+    // accountCenter: {
+    //   desktop: {
+    //     position: 'bottomLeft'
+    //   }
+    // },
     appMetadata: {
       name: 'Blocknative',
       icon: blocknativeIcon,

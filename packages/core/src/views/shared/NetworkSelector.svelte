@@ -72,6 +72,8 @@
     font-size: var(--onboard-font-size-7, var(--font-size-7));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
     max-width: 90px;
+    width: 54px;
+    transition: width 250ms ease-in-out;
   }
 
   select:focus {

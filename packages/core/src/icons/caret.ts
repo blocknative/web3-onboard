@@ -1,5 +1,5 @@
 export default `
-  <svg width="100%" viewBox="0 0 10 5" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0 0L5 5L10 0H0Z" fill="currentColor"/>
+  <svg width="100%" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M7 10L12 15L17 10H7Z" fill="currentColor"/>
   </svg>
 `

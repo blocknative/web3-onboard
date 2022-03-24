@@ -52,7 +52,7 @@ export function shortenAddress(add: string): string {
 }
 
 export function shortenEns(ens: string): string {
-  return ens.length > 13 ? `${ens.slice(0, 4)}...${ens.slice(-6)}` : ens
+  return ens.length > 11 ? `${ens.slice(0, 4)}...${ens.slice(-6)}` : ens
 }
 
 export const chainIdToLabel: Record<string, string> = {
