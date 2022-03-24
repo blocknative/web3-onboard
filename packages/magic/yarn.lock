@@ -913,9 +913,9 @@
     eslint-visitor-keys "^2.0.0"
 
 "@web3-onboard/common@^2.0.3":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/common/-/common-2.0.2.tgz#e5bcda22a6e14bd66d2f7d9b7ef9329f0c086cac"
-  integrity sha512-foFyWJIqmv83lhqyXqwW8vUdOULdRvIvj4ScxFcd3hGDYJArKnnocvAIcAAfP7Rmte3TDWejuFKz+H4dmaoUUA==
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/common/-/common-2.0.3.tgz#fdd062f8c168a35fefd97831b72fc3ad20c810fc"
+  integrity sha512-KmlZx9pbx0oCiDKtKdPNYl/OFbA2wMRUQmXEvTVZXAfwKN/UnzmJc1Mr1GbOHyLrrR29WZx7xa51f8Yyj3UUnw==
   dependencies:
     ethers "5.5.4"
     joi "^17.4.2"
@@ -2292,9 +2292,9 @@ minimatch@^3.0.4:
     brace-expansion "^1.1.7"
 
 minimist@^1.2.0, minimist@^1.2.5:
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.5.tgz#67d66014b66a6a8aaa0c083c5fd58df4e4e97602"
-  integrity sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.6.tgz#8637a5b759ea0d6e98702cfb3a9283323c93af44"
+  integrity sha512-Jsjnk4bw3YJqYzbdyBiNsPWHPfO++UGG749Cxs6peCu5Xg4nrena6OVxOYxrQTqww0Jmwt+Ref8rggumkTLz9Q==
 
 mkdirp@^0.5.1:
   version "0.5.5"
