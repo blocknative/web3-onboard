@@ -55,12 +55,6 @@ const getTransport = async () =>
     : (await import('@ledgerhq/hw-transport-u2f')).default
   ).create()
 
-interface LedgerAccount {
-  publicKey: string
-  derivationPath: string
-  chainCode: string
-}
-
 const getAccount = async (
   derivationPath: string,
   asset: Asset,
@@ -68,7 +62,10 @@ const getAccount = async (
   provider: providers.StaticJsonRpcProvider,
   eth: Eth
 ): Promise<Account> => {
-  const dPath = derivationPath === LEDGER_LIVE_PATH ? `${derivationPath}/${index}'/0/0` : `${derivationPath}/${index}`
+  const dPath =
+    derivationPath === LEDGER_LIVE_PATH
+      ? `${derivationPath}/${index}'/0/0`
+      : `${derivationPath}/${index}`
   const { address } = await eth.getAddress(dPath)
   return {
     derivationPath: dPath,
@@ -122,7 +119,6 @@ function ledger({
       getInterface: async ({ EventEmitter, chains }: GetInterfaceHelpers) => {
         const Eth = (await import('@ledgerhq/hw-app-eth')).default
         const { default: Common, Hardfork } = await import('@ethereumjs/common')
-        const { compress } = (await import('eth-crypto')).publicKey
         const ethUtil = await import('ethereumjs-util')
 
         const { SignTypedDataVersion } = await import('@metamask/eth-sig-util')
@@ -152,7 +148,6 @@ function ledger({
               chains.find(({ id }: Chain) => id === chainId) || currentChain
             const provider = new StaticJsonRpcProvider(currentChain.rpcUrl)
 
-
             // Checks to see if this is a custom derivation path
             // If it is then just return the single account
             if (
@@ -172,12 +167,7 @@ function ledger({
               ]
             }
 
-            return getAddresses(
-              derivationPath,
-              asset,
-              provider,
-              eth
-            )
+            return getAddresses(derivationPath, asset, provider, eth)
           } catch (error) {
             const { statusText } = error as { statusText: string }
             throw new Error(
