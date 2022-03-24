@@ -62,39 +62,14 @@ interface LedgerAccount {
 }
 
 const getAccount = async (
-  { publicKey, chainCode, derivationPath }: LedgerAccount,
+  derivationPath: string,
   asset: Asset,
   index: number,
   provider: providers.StaticJsonRpcProvider,
   eth: Eth
 ): Promise<Account> => {
-  let dPath
-  let address
-  if (derivationPath === LEDGER_LIVE_PATH) {
-    dPath = `${derivationPath}/${index}'/0/0`
-    ;({ address } = await eth.getAddress(dPath))
-  } else {
-    //@ts-ignore
-    const { default: HDKey } = await import('hdkey')
-    const ethUtil = await import('ethereumjs-util')
-
-    // @ts-ignore - Commonjs importing weirdness
-    const { publicToAddress, toChecksumAddress } = ethUtil.default || ethUtil
-
-    const hdk = new HDKey()
-
-    hdk.publicKey = Buffer.from(publicKey, 'hex')
-    hdk.chainCode = Buffer.from(chainCode, 'hex')
-
-    const dkey = hdk.deriveChild(index)
-
-    address = toChecksumAddress(
-      `0x${publicToAddress(dkey.publicKey, true).toString('hex')}`
-    )
-
-    dPath = `${derivationPath}/${index}`
-  }
-
+  const dPath = derivationPath === LEDGER_LIVE_PATH ? `${derivationPath}/${index}'/0/0` : `${derivationPath}/${index}`
+  const { address } = await eth.getAddress(dPath)
   return {
     derivationPath: dPath,
     address,
@@ -106,7 +81,7 @@ const getAccount = async (
 }
 
 const getAddresses = async (
-  account: LedgerAccount,
+  derivationPath: string,
   asset: Asset,
   provider: providers.StaticJsonRpcProvider,
   eth: Eth
@@ -118,7 +93,7 @@ const getAddresses = async (
   // Iterates until a 0 balance account is found
   // Then adds 4 more 0 balance accounts to the array
   while (zeroBalanceAccounts < 5) {
-    const acc = await getAccount(account, asset, index, provider, eth)
+    const acc = await getAccount(derivationPath, asset, index, provider, eth)
     if (acc.balance.value.isZero()) {
       zeroBalanceAccounts++
       accounts.push(acc)
@@ -177,11 +152,6 @@ function ledger({
               chains.find(({ id }: Chain) => id === chainId) || currentChain
             const provider = new StaticJsonRpcProvider(currentChain.rpcUrl)
 
-            const { publicKey, chainCode, address } = await eth.getAddress(
-              derivationPath,
-              false,
-              true // set to true to return chainCode
-            )
 
             // Checks to see if this is a custom derivation path
             // If it is then just return the single account
@@ -189,6 +159,7 @@ function ledger({
               derivationPath !== LEDGER_LIVE_PATH &&
               derivationPath !== LEDGER_DEFAULT_PATH
             ) {
+              const { address } = await eth.getAddress(derivationPath)
               return [
                 {
                   derivationPath,
@@ -202,11 +173,7 @@ function ledger({
             }
 
             return getAddresses(
-              {
-                publicKey: compress(publicKey),
-                chainCode: chainCode || '',
-                derivationPath
-              },
+              derivationPath,
               asset,
               provider,
               eth
