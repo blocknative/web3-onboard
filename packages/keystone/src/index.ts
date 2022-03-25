@@ -127,9 +127,12 @@ function keystone({
           return accounts
         }
 
-        const request: EIP1193Provider['request'] = async ({
+        const request = async ({
           method,
           params
+        }: {
+          method: string
+          params: any
         }) => {
           const response = await fetch(currentChain.rpcUrl, {
             method: 'POST',
