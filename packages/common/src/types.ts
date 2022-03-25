@@ -37,6 +37,12 @@ export type RequestPatch = {
         params: EthSignTransactionRequest['params']
       }) => Promise<string>)
     | null
+  eth_sendTransaction?:
+    | ((args: {
+        baseRequest: EIP1193Provider['request']
+        params: EthSignTransactionRequest['params']
+      }) => Promise<string>)
+    | null
   eth_sign?:
     | ((args: {
         baseRequest: EIP1193Provider['request']
@@ -228,7 +234,7 @@ export type ChainId = string
 export type RpcUrl = string
 
 export type WalletInterface = {
-  provider: EIP1193Provider,
+  provider: EIP1193Provider
   instance?: unknown
 }
 

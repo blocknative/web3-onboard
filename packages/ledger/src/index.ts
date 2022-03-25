@@ -5,7 +5,8 @@ import type {
   Chain,
   CustomNetwork,
   WalletInit,
-  GetInterfaceHelpers
+  GetInterfaceHelpers,
+  EIP1193Provider
 } from '@web3-onboard/common'
 
 // these cannot be dynamically imported
@@ -138,6 +139,7 @@ function ledger({
         const eventEmitter = new EventEmitter()
 
         let currentChain: Chain = chains[0]
+
         const scanAccounts = async ({
           derivationPath,
           chainId,
@@ -193,7 +195,27 @@ function ledger({
           return accounts
         }
 
-        const ledgerProvider = {}
+        const request: EIP1193Provider['request'] = async ({
+          method,
+          params
+        }) => {
+          const response = await fetch(currentChain.rpcUrl, {
+            method: 'POST',
+            body: JSON.stringify({
+              id: '42',
+              method,
+              params
+            })
+          }).then(res => res.json())
+
+          if (response.result) {
+            return response.result
+          } else {
+            throw response.error
+          }
+        }
+
+        const ledgerProvider = { request }
 
         const provider = createEIP1193Provider(ledgerProvider, {
           eth_requestAccounts: async () => {
@@ -296,6 +318,19 @@ function ledger({
             )
 
             return signedTx ? `0x${signedTx.serialize().toString('hex')}` : ''
+          },
+          eth_sendTransaction: async ({ baseRequest, params }) => {
+            const signedTx = await provider.request({
+              method: 'eth_signTransaction',
+              params
+            })
+
+            const transactionHash = await baseRequest({
+              method: 'eth_sendRawTransaction',
+              params: [signedTx]
+            })
+
+            return transactionHash as string
           },
           eth_sign: async ({ params: [address, message] }) => {
             if (!(accounts && accounts.length && accounts.length > 0))
