@@ -1,6 +1,6 @@
 import { WalletInit } from '@web3-onboard/common'
 
-function walletLink(options?: { darkMode?: boolean }): WalletInit {
+function coinbaseWallet(options?: { darkMode?: boolean }): WalletInit {
   const { darkMode = false } = options || {}
 
   return () => {
@@ -11,25 +11,25 @@ function walletLink(options?: { darkMode?: boolean }): WalletInit {
         const [chain] = chains
         const { name, icon } = appMetadata || {}
 
-        const { WalletLink } = await import('walletlink')
+        const { CoinbaseWalletSDK } = await import('@coinbase/wallet-sdk')
 
         const base64 = window.btoa(icon || '')
         const appLogoUrl = `data:image/svg+xml;base64,${base64}`
 
-        const instance = new WalletLink({
+        const instance = new CoinbaseWalletSDK({
           appName: name || '',
           appLogoUrl,
           darkMode
         })
 
-        const walletLinkProvider = instance.makeWeb3Provider(
+        const coinbaseWalletProvider = instance.makeWeb3Provider(
           chain.rpcUrl,
           parseInt(chain.id)
         )
 
         // patch the chainChanged event
-        const on = walletLinkProvider.on.bind(walletLinkProvider)
-        walletLinkProvider.on = (event, listener) => {
+        const on = coinbaseWalletProvider.on.bind(coinbaseWalletProvider)
+        coinbaseWalletProvider.on = (event, listener) => {
           on(event, val => {
             if (event === 'chainChanged') {
               listener(`0x${(val as number).toString(16)}`)
@@ -39,11 +39,11 @@ function walletLink(options?: { darkMode?: boolean }): WalletInit {
             listener(val)
           })
 
-          return walletLinkProvider
+          return coinbaseWalletProvider
         }
 
         return {
-          provider: walletLinkProvider,
+          provider: coinbaseWalletProvider,
           instance
         }
       }
@@ -51,7 +51,4 @@ function walletLink(options?: { darkMode?: boolean }): WalletInit {
   }
 }
 
-/**
- * @deprecated Use coinbasewallet
- */
-export default walletLink
+export default coinbaseWallet
