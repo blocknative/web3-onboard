@@ -119,8 +119,8 @@
     border: 1px solid var(--onboard-gray-100, var(--gray-100));
     border-radius: 8px;
     list-style-type: none;
-    right: 0rem;
-    top: 2rem;
+    right: 0.25rem;
+    top: 2.25rem;
     margin: 0;
     padding: 0;
     width: max-content;
@@ -136,47 +136,50 @@
 </style>
 
 {#each wallet.accounts as { address, ens, balance }, i}
-  <div
-    on:click={() => setPrimaryWallet(wallet, { address, ens, balance })}
-    class:primary={primary && i === 0}
-    class="container flex items-center justify-between pointer"
-  >
-    <div class="flex items-center">
-      <div class="flex items-center relative">
-        <!-- WALLET ICON -->
-        <WalletAppBadge
-          size={32}
-          padding={4}
-          background="custom"
-          color="#EFF1FC"
-          customBackgroundColor={primary && i === 0
-            ? 'rgba(24, 206, 102, 0.2)'
-            : 'rgba(235, 235, 237, 0.1)'}
-          border={primary && i === 0 ? 'green' : 'gray'}
-          radius={8}
-          icon={wallet.icon}
-        />
-        {#if primary && i === 0}
-          <div style="right: -5px; bottom: -5px;" class="drop-shadow absolute">
-            <SuccessStatusIcon size={14} />
-          </div>
-        {/if}
+  <div class="relative">
+    <div
+      on:click={() => setPrimaryWallet(wallet, { address, ens, balance })}
+      class:primary={primary && i === 0}
+      class="container flex items-center justify-between pointer"
+    >
+      <div class="flex items-center">
+        <div class="flex items-center relative">
+          <!-- WALLET ICON -->
+          <WalletAppBadge
+            size={32}
+            padding={4}
+            background="custom"
+            color="#EFF1FC"
+            customBackgroundColor={primary && i === 0
+              ? 'rgba(24, 206, 102, 0.2)'
+              : 'rgba(235, 235, 237, 0.1)'}
+            border={primary && i === 0 ? 'green' : 'gray'}
+            radius={8}
+            icon={wallet.icon}
+          />
+          {#if primary && i === 0}
+            <div
+              style="right: -5px; bottom: -5px;"
+              class="drop-shadow absolute"
+            >
+              <SuccessStatusIcon size={14} />
+            </div>
+          {/if}
+        </div>
+
+        <!-- ADDRESS / ENS -->
+        <span class="address-ens"
+          >{ens ? shortenEns(ens.name) : shortenAddress(address)}</span
+        >
       </div>
 
-      <!-- ADDRESS / ENS -->
-      <span class="address-ens"
-        >{ens ? shortenEns(ens.name) : shortenAddress(address)}</span
-      >
-    </div>
+      <div class="flex items-center">
+        <!-- BALANCE -->
+        {#if balance}
+          <span in:fade class="balance">{formatBalance(balance)}</span>
+        {/if}
 
-    <div class="flex items-center">
-      <!-- BALANCE -->
-      {#if balance}
-        <span in:fade class="balance">{formatBalance(balance)}</span>
-      {/if}
-
-      <!-- ELIPSIS -->
-      <div class="relative">
+        <!-- ELIPSIS -->
         <div class="elipsis-container" class:active={showMenu === address}>
           <div
             on:click|stopPropagation={() =>
@@ -186,44 +189,44 @@
             {@html elipsisIcon}
           </div>
         </div>
-
-        {#if showMenu === address}
-          <ul transition:fade class="menu absolute">
-            <li
-              on:click|stopPropagation={() => {
-                showMenu = ''
-                selectAnotherAccount(wallet)
-              }}
-            >
-              {$_('accountCenter.addAccount', {
-                default: en.accountCenter.addAccount
-              })}
-            </li>
-            {#if !(primary && i === 0)}
-              <li
-                on:click|stopPropagation={() => {
-                  showMenu = ''
-                  setPrimaryWallet(wallet, { address, ens, balance })
-                }}
-              >
-                {$_('accountCenter.setPrimaryAccount', {
-                  default: en.accountCenter.setPrimaryAccount
-                })}
-              </li>
-            {/if}
-            <li
-              on:click|stopPropagation={() => {
-                showMenu = ''
-                disconnect({ label: wallet.label })
-              }}
-            >
-              {$_('accountCenter.disconnectWallet', {
-                default: en.accountCenter.disconnectWallet
-              })}
-            </li>
-          </ul>
-        {/if}
       </div>
     </div>
+
+    {#if showMenu === address}
+      <ul in:fade class="menu absolute">
+        <li
+          on:click|stopPropagation={() => {
+            showMenu = ''
+            selectAnotherAccount(wallet)
+          }}
+        >
+          {$_('accountCenter.addAccount', {
+            default: en.accountCenter.addAccount
+          })}
+        </li>
+        {#if !(primary && i === 0)}
+          <li
+            on:click|stopPropagation={() => {
+              showMenu = ''
+              setPrimaryWallet(wallet, { address, ens, balance })
+            }}
+          >
+            {$_('accountCenter.setPrimaryAccount', {
+              default: en.accountCenter.setPrimaryAccount
+            })}
+          </li>
+        {/if}
+        <li
+          on:click|stopPropagation={() => {
+            showMenu = ''
+            disconnect({ label: wallet.label })
+          }}
+        >
+          {$_('accountCenter.disconnectWallet', {
+            default: en.accountCenter.disconnectWallet
+          })}
+        </li>
+      </ul>
+    {/if}
   </div>
 {/each}

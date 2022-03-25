@@ -14,6 +14,12 @@ import polygonIcon from './icons/polygon'
 import questionIcon from './icons/question'
 import binanceIcon from './icons/binance'
 import fantomIcon from './icons/fantom'
+import optimismIcon from './icons/optimism'
+import avalancheIcon from './icons/avalanche'
+import celoIcon from './icons/celo'
+import gnosisIcon from './icons/gnosis'
+import harmonyOneIcon from './icons/harmony-one'
+import arbitrumIcon from './icons/arbitrum'
 
 import type { ChainStyle, ConnectedChain } from './types'
 
@@ -98,11 +104,37 @@ export const chainStyles: Record<string, ChainStyle> = {
   '0xfa': {
     icon: fantomIcon,
     color: '#1969FF'
+  },
+  '0xa': {
+    icon: optimismIcon,
+    color: '#FF0420'
+  },
+  '0xa86a': {
+    icon: avalancheIcon,
+    color: '#E84142'
+  },
+  '0xa4ec': {
+    icon: celoIcon,
+    color: '#FBCC5C'
+  },
+  '0x64': {
+    icon: gnosisIcon,
+    color: '#04795B'
+  },
+  '0x63564C40': {
+    icon: harmonyOneIcon,
+    color: '#ffffff'
+  },
+  '0xa4b1': {
+    icon: arbitrumIcon,
+    color: '#33394B'
   }
 }
 
-export function getDefaultChainStyles(chainId: string): ChainStyle {
-  return chainStyles[chainId] || { icon: questionIcon, color: '#33394B' }
+export const unrecognizedChainStyle = { icon: questionIcon, color: '#33394B' }
+
+export function getDefaultChainStyles(chainId: string): ChainStyle | undefined {
+  return chainId ? chainStyles[chainId.toLowerCase()] : undefined
 }
 
 export function connectedToValidAppChain(

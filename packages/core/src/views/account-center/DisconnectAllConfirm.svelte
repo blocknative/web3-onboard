@@ -1,8 +1,8 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
   import Modal from '../shared/Modal.svelte'
-  import InfoIcon from '../shared/InfoIcon.svelte'
   import en from '../../i18n/en.json'
+  import warningIcon from '../../icons/warning'
 
   export let onConfirm: () => void
   export let onClose: () => void
@@ -20,8 +20,10 @@
   .icon-container {
     width: 3rem;
     height: 3rem;
-    background-color: var(--onboard-primary-100, var(--primary-100));
+    background-color: var(--onboard-warning-100, var(--warning-100));
     border-radius: 24px;
+    padding: 12px;
+    color: var(--onboard-warning-500, var(--warning-500));
   }
 
   h4 {
@@ -36,23 +38,20 @@
 
   button {
     margin-top: 1.5rem;
-    background-color: var(--onboard-gray-500, var(--gray-500));
+    width: 50%;
     font-weight: 700;
-    line-height: 16px;
-    color: var(--onboard-white, var(--white));
-    padding: 1rem 2rem;
   }
 
-  .button-light {
-    background-color: var(--onboard-gray-100, var(--gray-100));
-    color: var(--onboard-gray-500, var(--gray-500));
+  .right {
+    margin-left: 0.5rem;
+    width: 60%;
   }
 </style>
 
 <Modal close={onClose}>
   <div class="content">
     <div class="icon-container flex justify-center items-center">
-      <InfoIcon />
+      {@html warningIcon}
     </div>
 
     <h4>
@@ -66,12 +65,12 @@
     </p>
 
     <div class="flex justify-between items-center w-100">
-      <button class="button-light flex justify-center" on:click={onClose}
+      <button class="button-neutral-solid-b rounded" on:click={onClose}
         >{$_('modals.confirmDisconnectAll.cancel', {
           default: en.modals.confirmDisconnectAll.cancel
         })}</button
       >
-      <button class="flex justify-center" on:click={onConfirm}
+      <button class="right button-neutral-solid rounded" on:click={onConfirm}
         >{$_('modals.confirmDisconnectAll.confirm', {
           default: en.modals.confirmDisconnectAll.confirm
         })}</button

@@ -123,6 +123,12 @@
         token: 'MATIC',
         label: 'Polygon',
         rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+      },
+      {
+        id: '0xa',
+        token: 'OETH',
+        label: 'Optimism',
+        rpcUrl: 'https://mainnet.optimism.io'
       }
     ],
     // accountCenter: {

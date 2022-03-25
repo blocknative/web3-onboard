@@ -4,7 +4,8 @@
   import {
     getDefaultChainStyles,
     shortenAddress,
-    shortenEns
+    shortenEns,
+    unrecognizedChainStyle
   } from '../../utils'
   import { updateAccountCenter } from '../../store/actions'
   import questionIcon from '../../icons/question'
@@ -109,9 +110,19 @@
     max-width: 128px;
     cursor: default;
   }
+
+  .color-yellow {
+    color: var(--onboard-warning-500, var(--warning-500));
+  }
+
+  .color-white {
+    color: var(--onboard-primary-100, var(--primary-100));
+  }
 </style>
 
 <div
+  in:fade={{ duration: 250 }}
+  out:fade={{ duration: 100 }}
   class="minimized pointer radius padding-5"
   on:click|stopPropagation={maximize}
 >
@@ -173,15 +184,21 @@
       >
         <div class="flex items-center">
           <div
+            class:color-yellow={!validAppChain}
+            class:color-white={validAppChain && !validAppChain.icon}
             class="chain-icon flex justify-center items-center"
             style={`background-color: ${
               validAppChain
-                ? validAppChain.color || defaultChainStyles.color
+                ? validAppChain.color ||
+                  (defaultChainStyles && defaultChainStyles.color) ||
+                  unrecognizedChainStyle.color
                 : '#FFE7B3'
             };`}
           >
             {@html validAppChain
-              ? validAppChain.icon || defaultChainStyles.icon
+              ? validAppChain.icon ||
+                (defaultChainStyles && defaultChainStyles.icon) ||
+                unrecognizedChainStyle.icon
               : warningIcon}
           </div>
 

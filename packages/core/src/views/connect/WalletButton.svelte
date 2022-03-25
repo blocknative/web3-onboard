@@ -47,7 +47,12 @@
   }
 </style>
 
-<button class="relative" class:connected in:fade on:click={onClick}>
+<button
+  class="relative justify-start"
+  class:connected
+  in:fade
+  on:click={onClick}
+>
   <WalletAppBadge
     size={48}
     {icon}

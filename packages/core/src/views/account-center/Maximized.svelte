@@ -1,5 +1,7 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
+  import { fly } from 'svelte/transition'
+  import { quintOut } from 'svelte/easing'
   import { internalState$, wallets$ } from '../../streams'
   import en from '../../i18n/en.json'
   import WalletRow from './WalletRow.svelte'
@@ -9,7 +11,7 @@
   import disconnect from '../../disconnect'
   import { state } from '../../store'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
-  import { getDefaultChainStyles } from '../../utils'
+  import { getDefaultChainStyles, unrecognizedChainStyle } from '../../utils'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import NetworkBadgeSelector from '../shared/NetworkSelector.svelte'
   import caretLightIcon from '../../icons/caret-light'
@@ -31,7 +33,7 @@
   $: [primaryWallet] = $wallets$
   $: [connectedChain] = primaryWallet ? primaryWallet.chains : []
 
-  $: recognizedChain = appChains.find(({ id, namespace }) =>
+  $: validAppChain = appChains.find(({ id, namespace }) =>
     connectedChain
       ? id === connectedChain.id && namespace === connectedChain.namespace
       : false
@@ -61,6 +63,7 @@
 
   .wallets {
     width: 100%;
+    margin-bottom: 0.5rem;
   }
 
   .actions {
@@ -102,6 +105,10 @@
 
   .background-gray {
     background-color: var(--onboard-gray-100, var(--gray-100));
+  }
+
+  .background-yellow {
+    background-color: var(--onboard-warning-100, var(--warning-100));
   }
 
   .network-container {
@@ -162,9 +169,7 @@
   }
 
   a {
-    color: var(--onboard-primary-500, var(--primary-500));
     font-weight: 700;
-    text-decoration: none;
   }
 
   .mt7 {
@@ -177,17 +182,6 @@
 
   .app-button {
     margin-top: var(--onboard-spacing-5, var(--spacing-5));
-    width: 100%;
-    justify-content: center;
-    border-radius: 8px;
-    background-color: var(--onboard-gray-500, var(--gray-500));
-    color: var(--onboard-white, var(--white));
-    line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
-    transition: background-color 150ms ease-in-out;
-  }
-
-  .app-button:hover {
-    background-color: var(--onboard-gray-700, var(--gray-700));
   }
 
   .powered-by-container {
@@ -208,7 +202,17 @@
   />
 {/if}
 
-<div on:click|stopPropagation={hideWalletRowMenu} class="outer-container">
+<div
+  in:fly={{
+    delay: 100,
+    duration: 500,
+    y: 56,
+    // easing: quintOut,
+    opacity: 0
+  }}
+  on:click|stopPropagation={hideWalletRowMenu}
+  class="outer-container"
+>
   <!-- wallets section -->
   <div class="wallets-section">
     <!-- connected accounts -->
@@ -260,8 +264,10 @@
     <!-- network section -->
     <div
       class="network-container shadow-1"
-      class:background-blue={recognizedChain}
-      class:background-gray={!recognizedChain}
+      class:background-blue={(validAppChain && validAppChain.icon) ||
+        defaultChainStyles}
+      class:background-yellow={!validAppChain}
+      class:background-gray={validAppChain && !defaultChainStyles}
     >
       <div class="flex items-center p5-5">
         <!-- network icon -->
@@ -270,19 +276,33 @@
             size={32}
             padding={4}
             background="custom"
-            customBackgroundColor={recognizedChain
-              ? recognizedChain.color || defaultChainStyles.color
+            color={!validAppChain
+              ? '#FFAF00'
+              : !validAppChain.icon
+              ? '#EFF1FC'
+              : undefined}
+            customBackgroundColor={validAppChain
+              ? validAppChain.color ||
+                (defaultChainStyles && defaultChainStyles.color) ||
+                unrecognizedChainStyle.color
               : '#FFE7B3'}
             border="transparent"
             radius={8}
-            icon={recognizedChain
-              ? recognizedChain.icon || defaultChainStyles.icon
+            icon={validAppChain
+              ? validAppChain.icon ||
+                (defaultChainStyles && defaultChainStyles.icon) ||
+                unrecognizedChainStyle.icon
               : warningIcon}
           />
 
-          <div style="right: -5px; bottom: -5px;" class="drop-shadow absolute">
-            <SuccessStatusIcon size={14} />
-          </div>
+          {#if validAppChain}
+            <div
+              style="right: -5px; bottom: -5px;"
+              class="drop-shadow absolute"
+            >
+              <SuccessStatusIcon size={14} />
+            </div>
+          {/if}
         </div>
 
         <!-- network selector -->
@@ -388,7 +408,7 @@
         {/if}
 
         <button
-          class="app-button"
+          class="app-button button-neutral-solid"
           on:click={() => updateAccountCenter({ expanded: false })}
           >{$_('accountCenter.backToApp', {
             default: en.accountCenter.backToApp

@@ -43,11 +43,7 @@
 
   button {
     margin-top: 1.5rem;
-    width: 100%;
-    background-color: var(--onboard-gray-500, var(--gray-500));
     font-weight: 700;
-    line-height: 16px;
-    color: var(--onboard-white, var(--white));
   }
 </style>
 
@@ -71,7 +67,7 @@
       {/if}
     </p>
 
-    <button class="flex justify-center" on:click={close}
+    <button class="button-neutral-solid rounded" on:click={close}
       >{$_('modals.actionRequired.buttonText')}</button
     >
   </div>

@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onDestroy } from 'svelte'
-  import { fade } from 'svelte/transition'
   import { updateAccountCenter } from '../../store/actions'
   import type { AccountCenter } from '../../types'
   import Maximized from './Maximized.svelte'
@@ -34,8 +33,7 @@
 <svelte:window on:click={minimize} />
 
 <div
-  class="container flex absolute"
-  transition:fade
+  class="container flex flex-column absolute"
   style={accountCenterPositions[settings.position]}
 >
   {#if !settings.expanded}
