@@ -123,15 +123,21 @@
     top: 2.25rem;
     margin: 0;
     padding: 0;
-    width: max-content;
-    z-index: 1;
+    border: none;
+    overflow: hidden;
   }
 
   .menu li {
     color: var(--onboard-primary-500, var(--primary-500));
     font-size: var(--onboard-font-size-5, var(--font-size-5));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
-    margin: 12px 16px;
+    padding: 12px 16px;
+    background-color: var(--onboard-white, var(--white));
+    transition: background-color 150ms ease-in-out;
+    cursor: pointer;
+  }
+  .menu li:hover {
+    background-color: var(--onboard-primary-200, var(--primary-200));
   }
 </style>
 
