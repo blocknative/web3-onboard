@@ -153,6 +153,11 @@
       gettingStartedGuide: 'https://blocknative.com',
       explore: 'https://blocknative.com'
     }
+    // accountCenter: {
+    //   desktop: {
+    //     position: 'topLeft'
+    //   }
+    // }
     // example customising copy
     // i18n: {
     //   en: {
