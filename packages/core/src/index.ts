@@ -5,7 +5,7 @@ import disconnectWallet from './disconnect'
 import setChain from './chain'
 import { state } from './store'
 import { addChains, updateAccountCenter } from './store/actions'
-import { reset$, internalState$, chains$ } from './streams'
+import { reset$, internalState$ } from './streams'
 import { validateInitOptions } from './validation'
 import initI18N from './i18n'
 
