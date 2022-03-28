@@ -7,8 +7,10 @@ import {
   ProviderRpcErrorCode,
   ProviderRpcError,
   ScanAccountsOptions,
-  WalletInit
+  WalletInit,
+  EIP1193Provider
 } from '@web3-onboard/common'
+
 import type { providers } from 'ethers'
 
 const DEFAULT_BASE_PATH = "m/44'/60'/0'/0"
@@ -125,7 +127,31 @@ function keystone({
           return accounts
         }
 
-        const keystoneProvider = {}
+        const request = async ({
+          method,
+          params
+        }: {
+          method: string
+          params: any
+        }) => {
+          const response = await fetch(currentChain.rpcUrl, {
+            method: 'POST',
+            body: JSON.stringify({
+              id: '42',
+              method,
+              params
+            })
+          }).then(res => res.json())
+
+          if (response.result) {
+            return response.result
+          } else {
+            throw response.error
+          }
+        }
+
+        const keystoneProvider = { request }
+
         const provider = createEIP1193Provider(keystoneProvider, {
           eth_requestAccounts: async () => {
             // Triggers the account select modal if no accounts have been selected
@@ -196,6 +222,19 @@ function keystone({
             const signedTx = await keyring.signTransaction(from, transaction)
 
             return `0x${signedTx.serialize().toString('hex')}`
+          },
+          eth_sendTransaction: async ({ baseRequest, params }) => {
+            const signedTx = await provider.request({
+              method: 'eth_signTransaction',
+              params
+            })
+
+            const transactionHash = await baseRequest({
+              method: 'eth_sendRawTransaction',
+              params: [signedTx]
+            })
+
+            return transactionHash as string
           },
           eth_sign: async ({ params: [address, message] }) => {
             if (!(accounts && accounts.length && accounts.length > 0))
