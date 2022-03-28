@@ -90,12 +90,12 @@ export type Address = string
 
 export interface AppState {
   chains: Chain[]
+  walletModules: WalletModule[]
   wallets: WalletState[]
 }
 
 export type InternalState = {
   svelteInstance: SvelteComponent | null
-  walletModules: WalletModule[]
   appMetadata: AppMetadata | null
   device: Device | null
 }
@@ -112,6 +112,7 @@ export type Action =
   | RemoveWalletAction
   | ResetStoreAction
   | UpdateAccountAction
+  | SetWalletModulesAction
 
 export type AddChainsAction = { type: 'add_chains'; payload: Chain[] }
 export type AddWalletAction = { type: 'add_wallet'; payload: WalletState }
@@ -134,4 +135,9 @@ export type ResetStoreAction = {
 export type UpdateAccountAction = {
   type: 'update_account'
   payload: { id: string; address: string } & Partial<Account>
+}
+
+export type SetWalletModulesAction = {
+  type: 'set_wallet_modules'
+  payload: WalletModule[]
 }

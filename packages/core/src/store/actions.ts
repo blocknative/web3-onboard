@@ -1,4 +1,5 @@
-import type { Chain } from '@web3-onboard/common'
+import type { Chain, WalletInit } from '@web3-onboard/common'
+import { internalState$ } from '../streams'
 
 import type {
   Account,
@@ -6,12 +7,18 @@ import type {
   AddWalletAction,
   RemoveWalletAction,
   ResetStoreAction,
+  SetWalletModulesAction,
   UpdateAccountAction,
   UpdateWalletAction,
   WalletState
 } from '../types'
+import { initializeWalletModules } from '../utils'
 
-import { validateString, validateWallet } from '../validation'
+import {
+  validateString,
+  validateWallet,
+  validateWalletInit
+} from '../validation'
 
 import {
   ADD_CHAINS,
@@ -19,7 +26,8 @@ import {
   RESET_STORE,
   ADD_WALLET,
   REMOVE_WALLET,
-  UPDATE_ACCOUNT
+  UPDATE_ACCOUNT,
+  SET_WALLET_MODULES
 } from './constants'
 import { dispatch } from './index'
 
@@ -111,4 +119,24 @@ export function resetStore(): void {
   }
 
   dispatch(action as ResetStoreAction)
+}
+
+export function setWalletModules(wallets: WalletInit[]): void {
+  const error = validateWalletInit(wallets)
+
+  if (error) {
+    throw error
+  }
+
+  const modules = initializeWalletModules(
+    wallets,
+    internalState$.getValue().device
+  )
+
+  const action = {
+    type: SET_WALLET_MODULES,
+    payload: modules
+  }
+
+  dispatch(action as SetWalletModulesAction)
 }

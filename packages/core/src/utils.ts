@@ -5,7 +5,9 @@ import type {
   DeviceBrowser,
   DeviceOS,
   DeviceType,
-  ChainId
+  ChainId,
+  WalletInit,
+  WalletModule
 } from '@web3-onboard/common'
 
 export const notNullish = <T>(value: T | null | undefined): value is T =>
@@ -38,4 +40,20 @@ export function validEnsChain(chainId: ChainId): boolean {
 
 export function isSVG(str: string): boolean {
   return str.includes('<svg')
+}
+
+export function initializeWalletModules(
+  modules: WalletInit[],
+  device: Device
+): WalletModule[] {
+  return modules.reduce((acc, walletInit) => {
+    const initialized = walletInit({ device })
+
+    if (initialized) {
+      // injected wallets is an array of wallets
+      acc.push(...(Array.isArray(initialized) ? initialized : [initialized]))
+    }
+
+    return acc
+  }, [] as WalletModule[])
 }
