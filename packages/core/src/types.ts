@@ -113,7 +113,7 @@ export type AccountCenterPosition =
   | 'topLeft'
 
 export type AccountCenterOptions = {
-  desktop: {
+  desktop?: {
     position?: AccountCenterPosition
     enabled?: AccountCenter['enabled']
   }
@@ -159,7 +159,7 @@ export type UpdateAccountAction = {
 }
 
 export type UpdateAccountCenterAction = {
-  type: 'update_accountCenter'
+  type: 'update_account_center'
   payload: AccountCenter | Partial<AccountCenter>
 }
 
