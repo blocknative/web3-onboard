@@ -1,7 +1,7 @@
 import { BehaviorSubject, Subject, Observable } from 'rxjs'
 import { distinctUntilKeyChanged, pluck, filter } from 'rxjs/operators'
 
-import type { Chain } from '@web3-onboard/common'
+import type { Chain, WalletModule } from '@web3-onboard/common'
 
 import type {
   AppState,
@@ -18,17 +18,12 @@ import {
   UPDATE_WALLET,
   REMOVE_WALLET,
   RESET_STORE,
-  UPDATE_ACCOUNT
+  UPDATE_ACCOUNT,
+  SET_WALLET_MODULES
 } from './constants'
 
 import { APP_INITIAL_STATE } from '../constants'
 import { notNullish } from '../utils'
-
-// observable to log actions or do sideeffects after every state change
-export const actions$ = new Subject<{
-  action: Action
-  state: AppState
-}>()
 
 function reducer(state: AppState, action: Action): AppState {
   const { type, payload } = action
@@ -103,6 +98,13 @@ function reducer(state: AppState, action: Action): AppState {
       }
     }
 
+    case SET_WALLET_MODULES: {
+      return {
+        ...state,
+        walletModules: payload as WalletModule[]
+      }
+    }
+
     case RESET_STORE:
       return APP_INITIAL_STATE
 
@@ -118,8 +120,6 @@ _stateUpdates.subscribe(_store)
 
 export function dispatch(action: Action): void {
   const state = _store.getValue()
-  actions$.next({ action, state })
-
   _stateUpdates.next(reducer(state, action))
 }
 
