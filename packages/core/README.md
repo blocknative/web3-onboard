@@ -267,6 +267,7 @@ Onboard currently keeps track of the following state:
 
 - `wallets`: The wallets connected to Onboard
 - `chains`: The chains that Onboard has been initialized with
+- `accountCenter`: The current state of the account center UI
 
 ```typescript
 type AppState = {
