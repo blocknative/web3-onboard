@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/gnosis",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Gnosis module for web3-onboard",
   "module": "dist/index.js",
   "browser": "dist/index.js",
@@ -13,7 +13,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc -w",
-    "test": "ava"
+    "type-check": "tsc --noEmit"
   },
   "license": "MIT",
   "devDependencies": {

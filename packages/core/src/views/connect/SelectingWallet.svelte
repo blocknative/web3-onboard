@@ -1,36 +1,17 @@
 <script lang="ts">
-  import type { WalletWithLoadedIcon, WalletWithLoadingIcon } from '../../types'
   import { state } from '../../store'
-  import WalletButton from './WalletButton.svelte'
+  import type { WalletWithLoadingIcon } from '../../types'
   import Warning from '../shared/Warning.svelte'
+  import WalletButton from './WalletButton.svelte'
 
   export let wallets: WalletWithLoadingIcon[]
-  export let selectWallet: (wallet: WalletWithLoadedIcon) => Promise<void>
-
-  let connecting: string // the wallet label that is connecting
-  let errorMessage: string
+  export let selectWallet: (wallet: WalletWithLoadingIcon) => Promise<void>
+  export let connectingWalletLabel: string
+  export let connectingErrorMessage: string
 
   function checkConnected(label: string) {
     const { wallets } = state.get()
     return !!wallets.find(wallet => wallet.label === label)
-  }
-
-  function select({ label, icon, getInterface }: WalletWithLoadingIcon) {
-    return async () => {
-      connecting = label
-
-      const iconLoaded = await icon
-
-      try {
-        await selectWallet({ label, icon: iconLoaded, getInterface })
-        errorMessage = ''
-      } catch (error) {
-        const { message } = error as { message: string }
-        errorMessage = message
-      } finally {
-        connecting = ''
-      }
-    }
   }
 </script>
 
@@ -61,9 +42,9 @@
 </style>
 
 <div class="outer-container">
-  {#if errorMessage}
+  {#if connectingErrorMessage}
     <div class="warning-container">
-      <Warning>{errorMessage}</Warning>
+      <Warning>{@html connectingErrorMessage}</Warning>
     </div>
   {/if}
 
@@ -71,10 +52,10 @@
     {#each wallets as wallet}
       <WalletButton
         connected={checkConnected(wallet.label)}
-        connecting={connecting === wallet.label}
+        connecting={connectingWalletLabel === wallet.label}
         label={wallet.label}
         icon={wallet.icon}
-        onClick={select(wallet)}
+        onClick={() => selectWallet(wallet)}
       />
     {/each}
   </div>

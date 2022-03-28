@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/keystone",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Keystone module for web3-onboard",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -11,7 +11,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc -w",
-    "test": "ava"
+    "type-check": "tsc --noEmit"
   },
   "license": "MIT",
   "devDependencies": {

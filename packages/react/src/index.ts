@@ -26,21 +26,15 @@ export const useConnectWallet = (): [
 ] => {
   if (!web3Onboard) throw new Error('Must initialize before using hooks.')
 
-  const [wallet, setConnectedWallet] = useState<WalletState | null>(null)
+  const [wallet, setConnectedWallet] = useState<WalletState | null>(
+    () => (web3Onboard as OnboardAPI).state.get().wallets[0] || null
+  )
   const [connecting, setConnecting] = useState(false)
 
   useEffect(() => {
     const subscription = (web3Onboard as OnboardAPI).state
       .select('wallets')
-      .subscribe(wallets => {
-        if (!wallet) return
-
-        const updatedWallet = wallets.find(
-          ({ label }) => label === wallet.label
-        )
-
-        updatedWallet && setConnectedWallet(updatedWallet)
-      })
+      .subscribe(wallets => setConnectedWallet(wallets[0] || null))
 
     return () => subscription.unsubscribe()
   }, [wallet])
@@ -89,7 +83,16 @@ export const useSetChain = (
   const [settingChain, setInProgress] = useState<boolean>(false)
 
   const [connectedChain, setConnectedChain] = useState<ConnectedChain | null>(
-    null
+    () => {
+      const initialWallets = (web3Onboard as OnboardAPI).state.get().wallets
+      if (initialWallets.length === 0) return null
+      return (
+        (
+          initialWallets.find(({ label }) => label === walletLabel) ||
+          initialWallets[0]
+        ).chains[0] || null
+      )
+    }
   )
 
   const chains = useMemo(() => state.get().chains, [])
@@ -119,7 +122,9 @@ export const useSetChain = (
 export const useWallets = (): WalletState[] => {
   if (!web3Onboard) throw new Error('Must initialize before using hooks.')
 
-  const [wallets, setConnectedWallets] = useState<WalletState[]>([])
+  const [wallets, setConnectedWallets] = useState<WalletState[]>(
+    () => (web3Onboard as OnboardAPI).state.get().wallets
+  )
 
   useEffect(() => {
     const wallets$ = (web3Onboard as OnboardAPI).state.select('wallets')

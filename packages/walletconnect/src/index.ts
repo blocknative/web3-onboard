@@ -1,11 +1,13 @@
+import { StaticJsonRpcProvider } from '@ethersproject/providers'
+
 import {
   Chain,
-  EIP1193Provider,
   ProviderAccounts,
-  WalletInit
+  WalletInit,
+  EIP1193Provider,
+  ProviderRpcError,
+  ProviderRpcErrorCode
 } from '@web3-onboard/common'
-
-import { ProviderRpcError } from '@web3-onboard/common'
 
 interface WalletConnectOptions {
   bridge?: string
@@ -48,6 +50,7 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
           public removeListener: typeof EventEmitter['removeListener']
 
           private disconnected$: InstanceType<typeof Subject>
+          private providers: Record<string, StaticJsonRpcProvider>
 
           constructor({
             connector,
@@ -63,6 +66,7 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
             this.connector = connector
             this.chains = chains
             this.disconnected$ = new Subject()
+            this.providers = {}
 
             // listen for session updates
             fromEvent(this.connector, 'session_update', (error, payload) => {
@@ -103,11 +107,9 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
 
             this.disconnect = () => this.connector.killSession()
 
-            this.request = ({ method, params }) => {
+            this.request = async ({ method, params }) => {
               if (method === 'eth_chainId') {
-                return Promise.resolve(
-                  `0x${this.connector.chainId.toString(16)}`
-                )
+                return `0x${this.connector.chainId.toString(16)}`
               }
 
               if (method === 'eth_requestAccounts') {
@@ -161,7 +163,7 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                 method === 'eth_selectAccounts'
               ) {
                 throw new ProviderRpcError({
-                  code: 4200,
+                  code: ProviderRpcErrorCode.UNSUPPORTED_METHOD,
                   message: `The Provider does not support the requested method: ${method}`
                 })
               }
@@ -196,12 +198,37 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                 return this.connector.signTypedData(params)
               }
 
-              return this.connector.sendCustomRequest({
-                id: 1337,
-                jsonrpc: '2.0',
+              if (method === 'eth_accounts') {
+                return this.connector.sendCustomRequest({
+                  id: 1337,
+                  jsonrpc: '2.0',
+                  method,
+                  params
+                })
+              }
+
+              const chainId = await this.request({ method: 'eth_chainId' })
+
+              if (!this.providers[chainId]) {
+                const currentChain = chains.find(({ id }) => id === chainId)
+
+                if (!currentChain) {
+                  throw new ProviderRpcError({
+                    code: ProviderRpcErrorCode.CHAIN_NOT_ADDED,
+                    message: `The Provider does not have a rpcUrl to make a request for the requested method: ${method}`
+                  })
+                }
+
+                this.providers[chainId] = new StaticJsonRpcProvider(
+                  currentChain.rpcUrl
+                )
+              }
+
+              return this.providers[chainId].send(
                 method,
+                // @ts-ignore
                 params
-              })
+              )
             }
           }
         }

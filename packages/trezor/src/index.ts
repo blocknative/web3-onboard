@@ -3,6 +3,7 @@ import {
   Asset,
   Chain,
   CustomNetwork,
+  EIP1193Provider,
   ScanAccountsOptions,
   TransactionObject,
   WalletInit
@@ -422,7 +423,27 @@ function trezor(options: TrezorOptions): WalletInit {
           })
         }
 
-        const trezorProvider = {}
+        const request: EIP1193Provider['request'] = async ({
+          method,
+          params
+        }) => {
+          const response = await fetch(currentChain.rpcUrl, {
+            method: 'POST',
+            body: JSON.stringify({
+              id: '42',
+              method,
+              params
+            })
+          }).then(res => res.json())
+
+          if (response.result) {
+            return response.result
+          } else {
+            throw response.error
+          }
+        }
+
+        const trezorProvider = { request }
 
         const provider = createEIP1193Provider(trezorProvider, {
           eth_requestAccounts: async () => {
@@ -459,6 +480,19 @@ function trezor(options: TrezorOptions): WalletInit {
           },
           eth_signTransaction: async ({ params: [transactionObject] }) => {
             return signTransaction(transactionObject)
+          },
+          eth_sendTransaction: async ({ baseRequest, params }) => {
+            const signedTx = await provider.request({
+              method: 'eth_signTransaction',
+              params
+            })
+
+            const transactionHash = await baseRequest({
+              method: 'eth_sendRawTransaction',
+              params: [signedTx]
+            })
+
+            return transactionHash as string
           },
           eth_sign: async ({ params: [address, message] }) => {
             let messageData = { data: message }

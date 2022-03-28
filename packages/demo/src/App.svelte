@@ -1,21 +1,22 @@
 <script>
-  import { share } from 'rxjs/operators'
   import Onboard from '@web3-onboard/core'
-  import injectedModule from '@web3-onboard/injected-wallets'
-
-  import trezorModule from '@web3-onboard/trezor'
-  import ledgerModule from '@web3-onboard/ledger'
-  import walletConnectModule from '@web3-onboard/walletconnect'
-  import walletLinkModule from '@web3-onboard/walletlink'
-  import portisModule from '@web3-onboard/portis'
   import fortmaticModule from '@web3-onboard/fortmatic'
-  import torusModule from '@web3-onboard/torus'
+  import gnosisModule from '@web3-onboard/gnosis'
+  import injectedModule from '@web3-onboard/injected-wallets'
   import keepkeyModule from '@web3-onboard/keepkey'
   import keystoneModule from '@web3-onboard/keystone'
+  import ledgerModule from '@web3-onboard/ledger'
+  import portisModule from '@web3-onboard/portis'
+  import torusModule from '@web3-onboard/torus'
+  import trezorModule from '@web3-onboard/trezor'
+  import walletConnectModule from '@web3-onboard/walletconnect'
+  import walletLinkModule from '@web3-onboard/walletlink'
+  import magicModule from '@web3-onboard/magic'
+  import { verifyMessage, verifyTypedData } from 'ethers/lib/utils'
+  import { share } from 'rxjs/operators'
+  import VConsole from 'vconsole'
   import blocknativeIcon from './blocknative-icon'
   import blocknativeLogo from './blocknative-logo'
-  import VConsole from 'vconsole'
-  import { verifyTypedData, verifyMessage } from 'ethers/lib/utils'
 
   const toHex = text =>
     text
@@ -71,12 +72,17 @@
   const ledger = ledgerModule()
   const keepkey = keepkeyModule()
   const keystone = keystoneModule()
+  const gnosis = gnosisModule()
 
   const trezorOptions = {
     email: 'test@test.com',
     appUrl: 'https://www.blocknative.com'
   }
   const trezor = trezorModule(trezorOptions)
+
+  const magic = magicModule({
+    apiKey: 'pk_live_02207D744E81C2BA'
+  })
 
   const onboard = Onboard({
     wallets: [
@@ -87,9 +93,11 @@
       keystone,
       walletLink,
       injected,
+      magic,
       fortmatic,
       portis,
-      torus
+      torus,
+      gnosis
     ],
     chains: [
       {

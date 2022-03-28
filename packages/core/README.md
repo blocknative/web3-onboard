@@ -10,7 +10,7 @@ Install the core module:
 
 If you would like to support all wallets, then you can install all of the wallet modules:
 
-`npm i @web3-onboard/injected-wallets @web3-onboard/ledger @web3-onboard/trezor @web3-onboard/keepkey @web3-onboard/walletconnect @web3-onboard/walletlink @web3-onboard/torus @web3-onboard/portis @web3-onboard/mew @web3-onboard/gnosis @web3-onboard/fortmatic`
+`npm i @web3-onboard/injected-wallets @web3-onboard/ledger @web3-onboard/trezor @web3-onboard/keepkey @web3-onboard/walletconnect @web3-onboard/walletlink @web3-onboard/torus @web3-onboard/portis @web3-onboard/mew @web3-onboard/gnosis @web3-onboard/magic @web3-onboard/fortmatic`
 
 Note:
 
@@ -208,6 +208,11 @@ const previouslyConnectedWallets = JSON.parse(
 if (previouslyConnectedWallets) {
   // Connect the most recently connected wallet (first in the array)
   await onboard.connectWallet({ autoSelect: previouslyConnectedWallets[0] })
+
+  // You can also auto connect "silently" and disable all onboard modals to avoid them flashing on page load
+  await onboard.connectWallet({
+    autoSelect: { label: previouslyConnectedWallets[0], disableModals: true }
+  })
 
   // OR - loop through and initiate connection for all previously connected wallets
   // note: This UX might not be great as the user may need to login to each wallet one after the other
@@ -410,6 +415,8 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   /* SHADOWS */
   --onboard-shadow-1: 0px 4px 12px rgba(0, 0, 0, 0.1);
   --onboard-shadow-2: inset 0px -1px 0px rgba(0, 0, 0, 0.1);
+
+  --onboard-modal-z-index
 }
 ```
 

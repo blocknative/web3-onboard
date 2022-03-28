@@ -29,6 +29,8 @@ export type {
   ConnectedChain
 } from './types'
 
+export type { EIP1193Provider } from '@web3-onboard/common'
+
 function init(options: InitOptions): OnboardAPI {
   if (typeof window === 'undefined') return API
 
@@ -172,6 +174,8 @@ function mountApp() {
           /* SHADOWS */
           --shadow-1: 0px 4px 12px rgba(0, 0, 0, 0.1);
           --shadow-2: inset 0px -1px 0px rgba(0, 0, 0, 0.1);
+
+          --modal-z-index: 10;
         }
       </style>
     `
