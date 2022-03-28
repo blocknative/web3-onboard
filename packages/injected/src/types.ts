@@ -87,7 +87,8 @@ export enum InjectedNameSpace {
   Binance = 'BinanceChain',
   Web3 = 'web3',
   Arbitrum = 'arbitrum',
-  XFI = 'xfi'
+  XFI = 'xfi',
+  Tally = 'tally'
 }
 
 //   Arbitrum = 'arbitrum'
