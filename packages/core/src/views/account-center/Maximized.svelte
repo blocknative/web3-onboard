@@ -1,7 +1,7 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
   import { fly } from 'svelte/transition'
-  import { quintOut } from 'svelte/easing'
+  import { quartOut } from 'svelte/easing'
   import { internalState$, wallets$ } from '../../streams'
   import en from '../../i18n/en.json'
   import WalletRow from './WalletRow.svelte'
@@ -205,9 +205,9 @@
 <div
   in:fly={{
     delay: 100,
-    duration: 500,
+    duration: 600,
     y: 56,
-    // easing: quintOut,
+    easing: quartOut,
     opacity: 0
   }}
   on:click|stopPropagation={hideWalletRowMenu}
