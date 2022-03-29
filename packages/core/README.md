@@ -96,10 +96,6 @@ Putting it all together, here is an example initialization with the injected wal
 import Onboard from '@web3-onboard/core'
 import injectedModule from '@web3-onboard/injected-wallets'
 
-const ETH_MAINNET_RPC = `https://mainnet.infura.io/v3/${INFURA_KEY}`
-const ETH_RINKEBY_RPC = `https://rinkeby.infura.io/v3/${INFURA_KEY}`
-const MATIC_MAINNET_RPC = 'https://matic-mainnet.chainstacklabs.com'
-
 const injected = injectedModule()
 
 const onboard = Onboard({
@@ -240,11 +236,13 @@ Onboard currently keeps track of the following state:
 
 - `wallets`: The wallets connected to Onboard
 - `chains`: The chains that Onboard has been initialized with
+- `walletModules`: The wallet modules that are currently set and will be rendered in the wallet selection modal
 
 ```typescript
 type AppState = {
   chains: Chain[]
   wallets: WalletState[]
+  walletModules: WalletModule[]
 }
 
 type WalletState = {
@@ -274,13 +272,23 @@ type ConnectedChain = {
 
 type ChainId = string
 type TokenSymbol = string
+
+type WalletModule {
+  label: string
+  getIcon: () => Promise<string>
+  getInterface: (helpers: GetInterfaceHelpers) => Promise<WalletInterface>
+}
 ```
+
+### Get Current State
 
 The current state of Onboard can be accessed at any time using the `state.get()` method:
 
 ```javascript
 const currentState = onboard.state.get()
 ```
+
+### Subscribe to State Updates
 
 State can also be subscribed to using the `state.select()` method. The `select` method will return an [RXJS Observable](https://rxjs.dev/guide/observable). Understanding of RXJS observables is not necessary to subscribe to state updates, but allows for composable functionality if wanted. The key point to understand is that if you subscribe for updates, remember to unsubscribe when you are finished to prevent memory leaks.
 
@@ -306,6 +314,43 @@ const { unsubscribe } = wallets.subscribe(update =>
 
 // unsubscribe when updates are no longer needed
 unsubscribe()
+```
+
+### Actions to Modify State
+
+A limited subset of internal actions are exposed to update the Onboard state.
+
+**setWalletModules**
+For updating the wallets that are displayed in the wallet selection modal. This can be used if the wallets you want to support is conditional on another user action within your app. The `setWalletModules` action is called with an updated array of wallets (the same wallets that are passed in on initialization)
+
+```typescript
+import Onboard from '@web3-onboard/core'
+import injectedModule from '@web3-onboard/injected-wallets'
+import ledgerModule from '@web3-onboard/ledger'
+import trezorModule from '@web3-onboard/trezor'
+
+const injected = injectedModule()
+const ledger = ledgerModule()
+const trezor = trezorModule({
+  email: '<EMAIL_CONTACT>',
+  appUrl: '<APP_URL>'
+})
+
+// initialize with injected and hardware wallets
+const onboard = Onboard({
+  wallets: [injected, trezor, ledger],
+  chains: [
+    {
+      id: '0x1',
+      token: 'ETH',
+      label: 'Ethereum Mainnet',
+      rpcUrl: `https://mainnet.infura.io/v3/${INFURA_ID}`
+    }
+  ]
+})
+
+// then after a user action, you may decide to only display hardware wallets on the next call to onboard.connectWallet
+onboard.state.actions.setWalletModules([ledger, trezor])
 ```
 
 ## Setting the User's Chain/Network

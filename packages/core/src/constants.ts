@@ -1,8 +1,9 @@
 import type { AppState } from './types'
 
 export const APP_INITIAL_STATE: AppState = {
-  wallets: [],
-  chains: []
+  chains: [],
+  walletModules: [],
+  wallets: []
 }
 
 export const STORAGE_KEYS = {
