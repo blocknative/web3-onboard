@@ -85,16 +85,17 @@ export interface BinanceProvider extends EIP1193Provider {
 export enum InjectedNameSpace {
   Ethereum = 'ethereum',
   Binance = 'BinanceChain',
+  Tally = 'tally',
   Web3 = 'web3',
   Arbitrum = 'arbitrum',
-  XFI = 'xfi',
-  Tally = 'tally'
+  XFI = 'xfi'
 }
 
 //   Arbitrum = 'arbitrum'
 export interface CustomWindow extends Window {
   BinanceChain: BinanceProvider
   ethereum: InjectedProvider
+  tally: InjectedProvider
   web3: ExternalProvider | MeetOneProvider
   arbitrum: InjectedProvider
   xfi: {

@@ -449,18 +449,10 @@ const tally: InjectedWalletModule = {
   checkProviderIdentity: ({ provider }) =>
     !!provider && !!provider[ProviderIdentityFlag.Tally],
   getIcon: async () => (await import('./icons/tallywallet.js')).default,
-  getInterface: async () => {
-    const provider = createEIP1193Provider((window as any).tally, {
-      eth_chainId: ({ baseRequest }) => baseRequest({ method: 'eth_chainId' }).then(id => `0x${parseInt(id).toString(16)}`),
-      wallet_switchEthereumChain: UNSUPPORTED_METHOD,
-      eth_selectAccounts: UNSUPPORTED_METHOD
-    });
-    provider.removeListener = (event, func) => { };
-    return {
-        provider
-    };
-  },
-    platforms: ['desktop']
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.tally)
+  }),
+  platforms: ['desktop']
 }
 
 const wallets = [
