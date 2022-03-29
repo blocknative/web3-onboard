@@ -445,19 +445,17 @@ const tokenary: InjectedWalletModule = {
 
 const tally: InjectedWalletModule = {
   label: ProviderLabel.Tally,
-  injectedNamespace: InjectedNameSpace.Ethereum,
+  injectedNamespace: InjectedNameSpace.Tally,
   checkProviderIdentity: ({ provider }) =>
     !!provider && !!provider[ProviderIdentityFlag.Tally],
   getIcon: async () => (await import('./icons/tallywallet.js')).default,
   getInterface: async () => {
-    const provider = createEIP1193Provider(window.ethereum, {
-      eth_chainId: ({ baseRequest }) => baseRequest({ method: 'eth_chainId' }).then(id => `0x${parseInt(id).toString(16)}`),
-    });
-    provider.removeListener = (event, func) => { };
+    const provider = createEIP1193Provider(window.tally)
+    provider.removeListener = (event, func) => {}
     return {
-        provider
-    };
-},
+      provider
+    }
+  },
   platforms: ['desktop']
 }
 
