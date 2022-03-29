@@ -102,7 +102,8 @@ export interface CustomWindow extends Window {
 export type InjectedProvider = ExternalProvider &
   BinanceProvider &
   MeetOneProvider &
-  Record<string, boolean>
+  Record<string, boolean> &
+  Record<string, InjectedProvider[]>
 
 export type WalletFilters = {
   // A provider label mapped to a list of excluded platforms

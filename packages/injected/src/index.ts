@@ -55,12 +55,22 @@ function injected(options?: InjectedWalletOptions): WalletInit {
       ({ injectedNamespace, checkProviderIdentity, label }) => {
         const provider = window[injectedNamespace] as CustomWindow['ethereum']
 
-        const walletExists = checkProviderIdentity({ provider, device })
+        if (!provider) return
+
+        let walletExists
+
+        if (provider.providers) {
+          walletExists = !!provider.providers.filter(provider =>
+            checkProviderIdentity({ provider, device })
+          ).length
+        } else {
+          walletExists = checkProviderIdentity({ provider, device })
+        }
 
         if (
           walletExists &&
-          provider &&
           provider.isMetaMask &&
+          !provider.overrideIsMetaMask &&
           label !== ProviderLabel.MetaMask &&
           label !== 'Detected Wallet'
         ) {

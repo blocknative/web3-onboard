@@ -11,15 +11,23 @@ declare const window: CustomWindow
 
 const UNSUPPORTED_METHOD = null
 
+function getInjectedInterface(
+  identity: string
+): () => Promise<{ provider: EIP1193Provider }> {
+  return async () => ({
+    provider: (window.ethereum.providers
+      ? window.ethereum.providers.find(provider => !!provider[identity])
+      : window.ethereum) as EIP1193Provider
+  })
+}
+
 const metamask: InjectedWalletModule = {
   label: ProviderLabel.MetaMask,
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
     !!provider && !!provider[ProviderIdentityFlag.MetaMask],
   getIcon: async () => (await import('./icons/metamask.js')).default,
-  getInterface: async () => ({
-    provider: window.ethereum as EIP1193Provider
-  }),
+  getInterface: getInjectedInterface(ProviderIdentityFlag.MetaMask),
   platforms: ['all']
 }
 
@@ -30,8 +38,12 @@ const brave: InjectedWalletModule = {
     !!(navigator as any).brave && !!provider && !!provider._web3Ref,
   getIcon: async () => (await import('./icons/brave.js')).default,
   getInterface: async () => {
-    const provider = window.ethereum
+    const { provider } = await getInjectedInterface(
+      ProviderIdentityFlag.MetaMask
+    )()
+
     provider.removeListener = (event, listener) => {}
+
     return {
       provider
     }
@@ -91,8 +103,12 @@ const coinbase: InjectedWalletModule = {
       !!provider.providers[0][ProviderIdentityFlag.CoinbaseExtension]),
   getIcon: async () => (await import('./icons/coinbase.js')).default,
   getInterface: async () => {
-    const provider = window.ethereum as EIP1193Provider
+    const { provider } = await getInjectedInterface(
+      ProviderIdentityFlag.CoinbaseExtension
+    )()
+
     const addListener = provider.on.bind(provider)
+
     provider.on = (event, func) => {
       if (event === 'chainChanged') {
         addListener(event, chainId => {
