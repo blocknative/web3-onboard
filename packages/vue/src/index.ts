@@ -7,37 +7,13 @@ import type {
   WalletState,
   ConnectedChain
 } from '@web3-onboard/core'
-import type { Chain } from '@web3-onboard/common'
 
 // We use vue-demi to automatically use the correct reactivity API for both Vue 2 and Vue 3
 import { ref, computed, readonly } from 'vue-demi'
-import type { Ref, ComputedRef } from 'vue-demi'
+import type { SetChainOptions, OnboardComposable } from './types'
 
 // Vueuse helper to streamline the use of rxjs observables as vue refs
 import { useObservable } from '@vueuse/rxjs'
-
-// Syntax sugar for Readonly Refs
-type ReadonlyRef<T> = Readonly<Ref<T>>
-
-type SetChainOptions = {
-  chainId: string
-  chainNamespace?: string
-  wallet: string
-}
-
-interface OnboardComposable {
-  chains: ReadonlyRef<Chain[]>
-  connectWallet: (options: ConnectOptions) => Promise<void>
-  connectedChain: ComputedRef<ConnectedChain | null>
-  connectedWallet: ComputedRef<WalletState | null>
-  connectingWallet: ReadonlyRef<boolean>
-  disconnectWallet: (wallet: DisconnectOptions) => Promise<void>
-  disconnectConnectedWallet: () => Promise<void>
-  getChain: (walletLabel: string) => ConnectedChain | null
-  setChain: (options: SetChainOptions) => Promise<void>
-  settingChain: ReadonlyRef<boolean>
-  wallets: ReadonlyRef<WalletState[]>
-}
 
 // Onboard will be kept here to be reused every time that we access the composable
 let web3Onboard: OnboardAPI | null = null
