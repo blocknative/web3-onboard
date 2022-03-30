@@ -126,7 +126,7 @@ export default {
     return { chains }
   }
 }
-<script>
+</script>
 
 <template>
   <div v-for="chain in chains">
@@ -150,7 +150,7 @@ export default {
     return { connect }
   }
 }
-<script>
+</script>
 
 <template>
   <button type="button" @click="connect">
@@ -172,7 +172,7 @@ export default {
     return { connectedChain }
   }
 }
-<script>
+</script>
 
 <template>
   <span>Connected Chain: {{connectedChain.id}}</span>
@@ -192,7 +192,7 @@ export default {
     return { connectedWallet }
   }
 }
-<script>
+</script>
 
 <template>
   <span>Connected Wallet: {{connectedWallet.label}}</span>
@@ -212,7 +212,7 @@ export default {
     return { connectingWallet }
   }
 }
-<script>
+</script>
 
 <template>
   <span v-if="connectingWallet">Connecting...</span>
@@ -233,7 +233,7 @@ export default {
     return { disconnect }
   }
 }
-<script>
+</script>
 
 <template>
   <button type="button" @click="disconnect">
@@ -255,7 +255,7 @@ export default {
     return { disconnectConnectedWallet }
   }
 }
-<script>
+</script>
 
 <template>
   <button type="button" @click="disconnectConnectedWallet">
@@ -277,7 +277,7 @@ export default {
     return { getChain }
   }
 }
-<script>
+</script>
 
 <template>
   <span>MetaMask is connected to: {{getChain('MetaMask')}}</span>
@@ -298,7 +298,7 @@ export default {
     return { set }
   }
 }
-<script>
+</script>
 
 <template>
   <button type="button" @click="set">
@@ -320,7 +320,7 @@ export default {
     return { settingChain }
   }
 }
-<script>
+</script>
 
 <template>
   <span v-if="settingChain">Setting chain...</span>
@@ -340,7 +340,7 @@ export default {
     return { wallets }
   }
 }
-<script>
+</script>
 
 <template>
   <div v-for="wallet in wallets">
