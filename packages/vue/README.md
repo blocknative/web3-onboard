@@ -10,7 +10,7 @@ A collection of composable functions for implementing web3-onboard in to a Vue p
 
 ## `init`
 
-The `init` function must be called before the composable can be used. The `init` function just initializes `web3-onboard` and makes it available for usage in the composable. For reference check out the [initialization docs for `@web3-onboard/core`](../core/README.md#initialization)
+The `init` function initializes `web3-onboard` and makes it available to the `useOnboard()` composable. For references check out the [initialization docs for `@web3-onboard/core`](../core/README.md#initialization)
 
 
 ### Example usage
@@ -101,7 +101,7 @@ const web3Onboard = init({
 
 ## `useOnboard`
 
-The `useOnboard` function is the composable function that you will need to call; it raise an error if `init` hasn't been called yet, if `init` has been called it will return an object that can destructured to obtain the following reactive variables and functions:
+`useOnboard` must be used after the `init` function has been called - it will return an object that can be destructured to obtain the following reactive variables and functions:
 
 ### Example usage
 ```typescript
@@ -137,7 +137,7 @@ export default {
 ```
 
 ### `connectWallet`
-Function to open the onboard modal and connect a modal. For reference check out the [connecting a wallet for `@web3-onboard/core`](../core/README.md#connecting-a-wallet)
+Function to open the onboard modal and connect to a wallet provider. For reference check out the [connecting a wallet for `@web3-onboard/core`](../core/README.md#connecting-a-wallet)
 
 ### Example usage
 ```vue
@@ -265,7 +265,7 @@ export default {
 ```
 
 ### `getChain`
-Function that returns the current chain that a wallet is connected to
+Function that returns the current chain a wallet is connected to
 
 ### Example usage
 ```vue
