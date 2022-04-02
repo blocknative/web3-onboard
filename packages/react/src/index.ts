@@ -30,18 +30,18 @@ const useAppState: {
 
   const { select, get } = web3Onboard.state
 
-  const subscribe = (onStoreChange: () => void) => {
+  const subscribe = useCallback((onStoreChange: () => void) => {
     const { unsubscribe } = stateKey
       ? select(stateKey).subscribe(onStoreChange)
       : select().subscribe(onStoreChange)
 
     return () => unsubscribe
-  }
+  }, [stateKey])
 
-  const getSnapshot = () => {
+  const getSnapshot = useCallback(() => {
     const snapshot = get()
     return stateKey ? snapshot[stateKey] : snapshot
-  }
+  }, [stateKey])
 
   return useSyncExternalStore(subscribe, getSnapshot)
   }
