@@ -7,7 +7,7 @@ import type {
   ConnectOptions,
   DisconnectOptions,
   WalletState,
-  ConnectedChain,
+  ConnectedChain
 } from '@web3-onboard/core'
 
 import type { Chain } from '@web3-onboard/common'
