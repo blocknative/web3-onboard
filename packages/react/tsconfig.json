@@ -9,6 +9,7 @@
     "paths": {
       "*": ["./src/*", "./node_modules/*"]
     },
+    "types": ["react/next"],
     "typeRoots": ["node_modules/@types"]
   }
 }
