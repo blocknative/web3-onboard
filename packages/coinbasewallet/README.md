@@ -1,6 +1,7 @@
 # @web3-onboard/coinbase-wallet-sdk
 
-## Wallet module for connecting WalletLink to web3-onboard
+## Wallet module for connecting Coinbase Wallet SDK to web3-onboard
+See [Coinbase Wallet Developer Docs](https://docs.cloud.coinbase.com/wallet-sdk/docs)
 
 ### Install
 
