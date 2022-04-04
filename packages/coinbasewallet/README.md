@@ -10,7 +10,7 @@ See [Coinbase Wallet Developer Docs](https://docs.cloud.coinbase.com/wallet-sdk/
 ## Options
 
 ```typescript
-type WalletLinkOptions = {
+type CoinbaseWalletOptions = {
   darkMode: boolean // default = false
 }
 ```
