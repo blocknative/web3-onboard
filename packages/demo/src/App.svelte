@@ -131,11 +131,6 @@
         rpcUrl: 'https://mainnet.optimism.io'
       }
     ],
-    // accountCenter: {
-    //   desktop: {
-    //     position: 'bottomLeft'
-    //   }
-    // },
     appMetadata: {
       name: 'Blocknative',
       icon: blocknativeIcon,
@@ -153,12 +148,13 @@
       gettingStartedGuide: 'https://blocknative.com',
       explore: 'https://blocknative.com'
     }
+    // example customizing account center
     // accountCenter: {
     //   desktop: {
-    //     position: 'topLeft'
+    //     position: 'bottomRight'
     //   }
     // }
-    // example customising copy
+    // example customizing copy
     // i18n: {
     //   en: {
     //     connect: {
