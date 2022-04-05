@@ -415,7 +415,12 @@
           })}</button
         >
 
-        <div class="flex justify-center items-center powered-by-container">
+        <a
+          href="https://blocknative.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex justify-center items-center powered-by-container"
+        >
           <span class="powered-by"
             >{$_('accountCenter.poweredBy', {
               default: en.accountCenter.poweredBy
@@ -424,7 +429,7 @@
           <div class="flex items-center" style="width: 83px; margin-left: 4px;">
             {@html blocknative}
           </div>
-        </div>
+        </a>
       </div>
     </div>
   </div>
