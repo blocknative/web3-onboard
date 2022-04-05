@@ -71,7 +71,13 @@ export const chainIdToLabel: Record<string, string> = {
   '0x2a': 'Kovan',
   '0x38': 'Binance',
   '0x89': 'Polygon',
-  '0xfa': 'Fantom'
+  '0xfa': 'Fantom',
+  '0xa': 'Optimism',
+  '0xa86a': 'Avalanche',
+  '0xa4ec': 'Celo',
+  '0x64': 'Gnosis',
+  '0x63564C40': 'Harmony One',
+  '0xa4b1': 'Arbitrum'
 }
 
 export const chainStyles: Record<string, ChainStyle> = {
