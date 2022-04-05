@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import type { ChainId, WalletModule } from '@web3-onboard/common'
+import type { ChainId, WalletInit, WalletModule } from '@web3-onboard/common'
 
 import type {
   InitOptions,
@@ -95,7 +95,7 @@ const walletModule = Joi.object({
   getInterface: Joi.function().arity(1).required()
 })
 
-const walletModules = Joi.array().items(Joi.function()).required()
+const walletInit = Joi.array().items(Joi.function()).required()
 
 const accountCenterPosition = Joi.string().valid(
   'topRight',
@@ -105,7 +105,7 @@ const accountCenterPosition = Joi.string().valid(
 )
 
 const initOptions = Joi.object({
-  wallets: walletModules,
+  wallets: walletInit,
   chains: chains.required(),
   appMetadata: appMetadata,
   i18n: Joi.object().unknown(),
@@ -195,4 +195,8 @@ export function validateAccountCenterUpdate(
   data: AccountCenter | Partial<AccountCenter>
 ): ValidateReturn {
   return validate(accountCenter, data)
+}
+
+export function validateWalletInit(data: WalletInit[]): ValidateReturn {
+  return validate(walletInit, data)
 }

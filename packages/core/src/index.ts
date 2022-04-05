@@ -1,10 +1,13 @@
-import type { WalletModule } from '@web3-onboard/common'
 import { SofiaProRegular } from '@web3-onboard/common'
 import connectWallet from './connect'
 import disconnectWallet from './disconnect'
 import setChain from './chain'
 import { state } from './store'
-import { addChains, updateAccountCenter } from './store/actions'
+import {
+  addChains,
+  setWalletModules,
+  updateAccountCenter
+} from './store/actions'
 import { reset$, internalState$ } from './streams'
 import { validateInitOptions } from './validation'
 import initI18N from './i18n'
@@ -17,7 +20,13 @@ const API = {
   connectWallet,
   disconnectWallet,
   setChain,
-  state
+  state: {
+    get: state.get,
+    select: state.select,
+    actions: {
+      setWalletModules
+    }
+  }
 }
 
 export type {
@@ -67,25 +76,15 @@ function init(options: InitOptions): OnboardAPI {
     reset$.next()
   }
 
-  const walletModules = wallets.reduce((acc, walletInit) => {
-    const initialized = walletInit({ device })
-
-    if (initialized) {
-      // injected wallets is an array of wallets
-      acc.push(...(Array.isArray(initialized) ? initialized : [initialized]))
-    }
-
-    return acc
-  }, [] as WalletModule[])
-
   const app = svelteInstance || mountApp()
 
   internalState$.next({
     appMetadata,
     svelteInstance: app,
-    walletModules,
     device
   })
+
+  setWalletModules(wallets)
 
   return API
 }

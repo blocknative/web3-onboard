@@ -2,6 +2,7 @@ import type { AppState } from './types'
 
 export const APP_INITIAL_STATE: AppState = {
   wallets: [],
+  walletModules: [],
   chains: [],
   accountCenter: {
     enabled: true,

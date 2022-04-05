@@ -6,7 +6,9 @@ import type {
   DeviceOS,
   DeviceType,
   ChainId,
-  Chain
+  Chain,
+  WalletInit,
+  WalletModule
 } from '@web3-onboard/common'
 
 import ethereumIcon from './icons/ethereum'
@@ -146,4 +148,20 @@ export function connectedToValidAppChain(
       id === walletConnectedChain.id &&
       namespace === walletConnectedChain.namespace
   )
+}
+
+export function initializeWalletModules(
+  modules: WalletInit[],
+  device: Device
+): WalletModule[] {
+  return modules.reduce((acc, walletInit) => {
+    const initialized = walletInit({ device })
+
+    if (initialized) {
+      // injected wallets is an array of wallets
+      acc.push(...(Array.isArray(initialized) ? initialized : [initialized]))
+    }
+
+    return acc
+  }, [] as WalletModule[])
 }

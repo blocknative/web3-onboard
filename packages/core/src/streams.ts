@@ -19,7 +19,6 @@ export const disconnectWallet$ = new Subject<WalletState['label']>()
 
 export const internalState$ = new BehaviorSubject<InternalState>({
   svelteInstance: null,
-  walletModules: [],
   appMetadata: null,
   device: null
 })

@@ -34,7 +34,8 @@
 
   export let autoSelect: ConnectOptions['autoSelect']
 
-  const { walletModules, appMetadata } = internalState$.getValue()
+  const { appMetadata } = internalState$.getValue()
+  const { walletModules } = state.get()
 
   let connectionRejected = false
   let wallets: WalletWithLoadingIcon[] = []

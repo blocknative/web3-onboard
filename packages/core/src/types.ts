@@ -91,13 +91,13 @@ export type Address = string
 
 export interface AppState {
   chains: Chain[]
+  walletModules: WalletModule[]
   wallets: WalletState[]
   accountCenter: AccountCenter
 }
 
 export type InternalState = {
   svelteInstance: SvelteComponent | null
-  walletModules: WalletModule[]
   appMetadata: AppMetadata | null
   device: Device | null
 }
@@ -134,6 +134,7 @@ export type Action =
   | ResetStoreAction
   | UpdateAccountAction
   | UpdateAccountCenterAction
+  | SetWalletModulesAction
 
 export type AddChainsAction = { type: 'add_chains'; payload: Chain[] }
 export type AddWalletAction = { type: 'add_wallet'; payload: WalletState }
@@ -167,4 +168,9 @@ export type UpdateAccountCenterAction = {
 export type ChainStyle = {
   icon: string
   color: string
+}
+
+export type SetWalletModulesAction = {
+  type: 'set_wallet_modules'
+  payload: WalletModule[]
 }
