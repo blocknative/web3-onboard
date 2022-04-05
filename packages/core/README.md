@@ -112,9 +112,6 @@ type AccountCenterPosition =
   | 'topLeft'
 ```
 
-To see a list of all of the text values that can be internationalized or replaced, check out the [default en file](src/i18n/en.json).
-Onboard is using the [ICU syntax](https://formatjs.io/docs/core-concepts/icu-syntax/) for formatting under the hood.
-
 ### Initialization Example
 
 Putting it all together, here is an example initialization with the injected wallet modules:
