@@ -164,13 +164,13 @@ export type UpdateAccountCenterAction = {
   payload: AccountCenter | Partial<AccountCenter>
 }
 
+export type SetWalletModulesAction = {
+  type: 'set_wallet_modules'
+  payload: WalletModule[]
+}
+
 // ==== MISC ==== //
 export type ChainStyle = {
   icon: string
   color: string
-}
-
-export type SetWalletModulesAction = {
-  type: 'set_wallet_modules'
-  payload: WalletModule[]
 }
