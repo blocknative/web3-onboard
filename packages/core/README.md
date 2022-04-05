@@ -265,9 +265,10 @@ Onboard currently keeps track of the following state:
 
 ```typescript
 type AppState = {
-  chains: Chain[]
   wallets: WalletState[]
+  chains: Chain[]
   accountCenter: AccountCenter
+  walletModules: WalletModule[]
 }
 
 type Chain {
@@ -278,7 +279,6 @@ type Chain {
   token: TokenSymbol
   color?: string
   icon?: string
-  walletModules: WalletModule[]
 }
 
 type WalletState = {
