@@ -42,6 +42,8 @@
   $: defaultChainStyles = getDefaultChainStyles(
     connectedChain && connectedChain.id
   )
+
+  const { position } = state.get().accountCenter
 </script>
 
 <style>
@@ -204,9 +206,9 @@
 
 <div
   in:fly={{
-    delay: 100,
+    delay: position.includes('top') ? 100 : 0,
     duration: 600,
-    y: 56,
+    y: position.includes('top') ? 56 : -76,
     easing: quartOut,
     opacity: 0
   }}
