@@ -37,7 +37,8 @@ export enum ProviderIdentityFlag {
   WalletIo = 'isWalletIO',
   XDEFI = 'isXDEFI',
   OneInch = 'isOneInchIOSWallet',
-  Tokenary = 'isTokenary'
+  Tokenary = 'isTokenary',
+  BraveWallet = 'isBraveWallet'
 }
 
 export enum ProviderLabel {
