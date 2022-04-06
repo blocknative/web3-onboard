@@ -59,7 +59,7 @@ function injected(options?: InjectedWalletOptions): WalletInit {
 
         let walletExists
 
-        if (provider.providers) {
+        if (provider.providers && Array.isArray(provider.providers)) {
           walletExists = !!provider.providers.filter(provider =>
             checkProviderIdentity({ provider, device })
           ).length
