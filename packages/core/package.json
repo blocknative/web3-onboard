@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/core",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
@@ -22,6 +22,7 @@
     "@rollup/plugin-node-resolve": "^11.0.0",
     "@rollup/plugin-replace": "^3.0.0",
     "@rollup/plugin-typescript": "^8.0.0",
+    "@rollup-extras/plugin-copy": "~1.2.2",
     "@tsconfig/svelte": "^2.0.0",
     "@types/lodash.merge": "^4.6.6",
     "@types/lodash.partition": "^4.6.6",
