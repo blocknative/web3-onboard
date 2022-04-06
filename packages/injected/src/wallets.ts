@@ -15,7 +15,8 @@ function getInjectedInterface(
   identity: string
 ): () => Promise<{ provider: EIP1193Provider }> {
   return async () => ({
-    provider: ((window.ethereum.providers && Array.isArray(window.ethereum.providers))
+    provider: (window.ethereum.providers &&
+    Array.isArray(window.ethereum.providers)
       ? window.ethereum.providers.find(provider => !!provider[identity])
       : window.ethereum) as EIP1193Provider
   })
