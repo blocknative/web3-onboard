@@ -52,6 +52,6 @@ function walletLink(options?: { darkMode?: boolean }): WalletInit {
 }
 
 /**
- * @deprecated Use @web3-onboard/coinbase-wallet-sdk
+ * @deprecated Use @web3-onboard/coinbase
  */
 export default walletLink

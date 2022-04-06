@@ -1,5 +1,5 @@
 {
-  "name": "@web3-onboard/coinbase-wallet-sdk",
+  "name": "@web3-onboard/coinbase",
   "version": "2.0.0",
   "description": "Coinbase Wallet module for web3-onboard",
   "module": "dist/index.js",

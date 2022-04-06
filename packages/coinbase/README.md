@@ -1,11 +1,11 @@
-# @web3-onboard/coinbase-wallet-sdk
+# @web3-onboard/coinbase
 
 ## Wallet module for connecting Coinbase Wallet SDK to web3-onboard
 See [Coinbase Wallet Developer Docs](https://docs.cloud.coinbase.com/wallet-sdk/docs)
 
 ### Install
 
-`npm i @web3-onboard/coinbase-wallet-sdk`
+`npm i @web3-onboard/coinbase`
 
 ## Options
 
@@ -19,7 +19,7 @@ type CoinbaseWalletOptions = {
 
 ```typescript
 import Onboard from '@web3-onboard/core'
-import coinbaseWalletModule from '@web3-onboard/coinbase-wallet-sdk'
+import coinbaseWalletModule from '@web3-onboard/coinbase'
 
 // initialize the module with options
 const coinbaseWalletSdk = coinbaseWalletModule({ darkMode: true })
