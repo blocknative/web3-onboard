@@ -10,7 +10,7 @@
   import torusModule from '@web3-onboard/torus'
   import trezorModule from '@web3-onboard/trezor'
   import walletConnectModule from '@web3-onboard/walletconnect'
-  import walletLinkModule from '@web3-onboard/walletlink'
+  import coinbaseModule from '@web3-onboard/coinbase'
   import magicModule from '@web3-onboard/magic'
   import { verifyMessage, verifyTypedData } from 'ethers/lib/utils'
   import { share } from 'rxjs/operators'
@@ -57,7 +57,7 @@
     }
   })
 
-  const walletLink = walletLinkModule()
+  const coinbaseWallet = coinbaseModule()
 
   const walletConnect = walletConnectModule()
   const portis = portisModule({
@@ -91,7 +91,7 @@
       walletConnect,
       keepkey,
       keystone,
-      walletLink,
+      coinbaseWallet,
       injected,
       magic,
       fortmatic,
