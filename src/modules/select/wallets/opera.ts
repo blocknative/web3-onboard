@@ -13,16 +13,15 @@ function opera(options: CommonWalletOptions): WalletModule {
     iconSrcSet: iconSrc || operaIcon2x,
     svg,
     wallet: async (helpers: Helpers) => {
-      const { getProviderName, createModernProviderInterface } = helpers
+      const { getProviderName, createModernProviderInterface, browser } =
+        helpers
 
-      const provider =
-        (window as any).ethereum ||
-        ((window as any).web3 && (window as any).web3.currentProvider)
+      const provider = (window as any).ethereum
 
       return {
         provider,
         interface:
-          provider && getProviderName(provider) === undefined
+          provider && browser.name === 'Opera'
             ? createModernProviderInterface(provider)
             : null
       }
