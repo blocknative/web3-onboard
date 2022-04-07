@@ -191,6 +191,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/magic
     steps:
       - node-build-steps
+  build-coinbase:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/coinbase
+    steps:
+      - node-build-steps
 
 workflows:
   version: 2
@@ -258,4 +264,8 @@ workflows:
   magic:
     jobs:
       - build-magic:
+          <<: *deploy_production_filters
+  coinbase:
+    jobs:
+      - build-coinbase:
           <<: *deploy_production_filters

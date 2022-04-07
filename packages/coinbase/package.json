@@ -1,7 +1,7 @@
 {
-  "name": "@web3-onboard/walletlink",
-  "version": "2.0.1",
-  "description": "WalletLink module for web3-onboard",
+  "name": "@web3-onboard/coinbase",
+  "version": "2.0.0",
+  "description": "Coinbase Wallet module for web3-onboard",
   "module": "dist/index.js",
   "browser": "dist/index.js",
   "main": "dist/index.js",
@@ -21,6 +21,6 @@
   },
   "dependencies": {
     "@web3-onboard/common": "^2.0.0",
-    "walletlink": "^2.5.0"
+    "@coinbase/wallet-sdk": "^3.0.5"
   }
 }

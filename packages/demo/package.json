@@ -25,7 +25,7 @@
     "@web3-onboard/core": "^2.0.4",
     "@web3-onboard/fortmatic": "^2.0.0",
     "@web3-onboard/gnosis": "^2.0.0",
-    "@web3-onboard/injected-wallets": "^2.0.0",
+    "@web3-onboard/injected-wallets": "^2.0.3",
     "@web3-onboard/keepkey": "^2.0.0",
     "@web3-onboard/keystone": "^2.0.0",
     "@web3-onboard/ledger": "^2.0.0",
@@ -33,7 +33,7 @@
     "@web3-onboard/torus": "^2.0.0",
     "@web3-onboard/trezor": "^2.0.0",
     "@web3-onboard/walletconnect": "^2.0.0",
-    "@web3-onboard/walletlink": "^2.0.0",
+    "@web3-onboard/coinbase": "^2.0.0",
     "@web3-onboard/magic": "^2.0.0",
     "vconsole": "^3.9.5"
   },

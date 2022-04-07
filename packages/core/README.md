@@ -615,3 +615,13 @@ export default {
   }
 }
 ```
+
+### Nuxt.js
+
+Add the following to your `nuxt.config.js`:
+
+```javascript
+build: {
+  standalone: true,
+}
+```
