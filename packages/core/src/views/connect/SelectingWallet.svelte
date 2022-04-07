@@ -17,8 +17,6 @@
 
 <style>
   .outer-container {
-    display: flex;
-    flex-direction: column;
     padding: var(--onboard-spacing-4, var(--spacing-4));
     padding-top: 0;
   }
@@ -41,7 +39,7 @@
   }
 </style>
 
-<div class="outer-container">
+<div class="outer-container flex flex-column">
   {#if connectingErrorMessage}
     <div class="warning-container">
       <Warning>{@html connectingErrorMessage}</Warning>

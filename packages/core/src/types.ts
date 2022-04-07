@@ -21,6 +21,7 @@ export interface InitOptions {
   chains: Chain[]
   appMetadata?: AppMetadata
   i18n?: i18nOptions
+  accountCenter?: AccountCenterOptions
 }
 
 export interface OnboardAPI {
@@ -92,6 +93,7 @@ export interface AppState {
   chains: Chain[]
   walletModules: WalletModule[]
   wallets: WalletState[]
+  accountCenter: AccountCenter
 }
 
 export type InternalState = {
@@ -104,6 +106,25 @@ export type Locale = string
 export type i18nOptions = Record<Locale, i18n>
 export type i18n = typeof en
 
+export type AccountCenterPosition =
+  | 'topRight'
+  | 'bottomRight'
+  | 'bottomLeft'
+  | 'topLeft'
+
+export type AccountCenterOptions = {
+  desktop?: {
+    position?: AccountCenterPosition
+    enabled?: AccountCenter['enabled']
+  }
+}
+
+export type AccountCenter = {
+  enabled: boolean
+  position: AccountCenterPosition
+  expanded: boolean
+}
+
 // ==== ACTIONS ==== //
 export type Action =
   | AddChainsAction
@@ -112,6 +133,7 @@ export type Action =
   | RemoveWalletAction
   | ResetStoreAction
   | UpdateAccountAction
+  | UpdateAccountCenterAction
   | SetWalletModulesAction
 
 export type AddChainsAction = { type: 'add_chains'; payload: Chain[] }
@@ -137,7 +159,18 @@ export type UpdateAccountAction = {
   payload: { id: string; address: string } & Partial<Account>
 }
 
+export type UpdateAccountCenterAction = {
+  type: 'update_account_center'
+  payload: AccountCenter | Partial<AccountCenter>
+}
+
 export type SetWalletModulesAction = {
   type: 'set_wallet_modules'
   payload: WalletModule[]
+}
+
+// ==== MISC ==== //
+export type ChainStyle = {
+  icon: string
+  color: string
 }

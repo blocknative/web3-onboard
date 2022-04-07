@@ -12,7 +12,6 @@
 
 <style>
   button {
-    position: relative;
     background-color: var(
       --onboard-wallet-button-background,
       var(--onboard-white, var(--white))
@@ -48,7 +47,12 @@
   }
 </style>
 
-<button class:connected in:fade on:click={onClick}>
+<button
+  class="relative justify-start"
+  class:connected
+  in:fade
+  on:click={onClick}
+>
   <WalletAppBadge
     size={48}
     {icon}
@@ -58,6 +62,8 @@
   />
   <span class="name">{label}</span>
   {#if connected}
-    <SuccessStatusIcon size={16} bottom={null} right={16} />
+    <div class="absolute" style="right: 16px;">
+      <SuccessStatusIcon size={16} />
+    </div>
   {/if}
 </button>

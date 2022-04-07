@@ -5,8 +5,6 @@
 
 <style>
   .container {
-    display: flex;
-    justify-content: space-between;
     padding: var(--onboard-spacing-5, var(--spacing-5));
     color: var(--onboard-warning-700, var(--warning-700));
     font-size: var(--onboard-font-size-7, var(--font-size-7));
@@ -30,7 +28,7 @@
   }
 </style>
 
-<div in:fade class="container">
+<div in:fade class="container flex justify-between">
   <p>
     <slot />
   </p>

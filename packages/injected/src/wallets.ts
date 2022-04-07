@@ -1,6 +1,12 @@
-import type { EIP1193Provider, ChainListener } from '@web3-onboard/common'
+import type {
+  EIP1193Provider,
+  ChainListener,
+  SimpleEventEmitter
+} from '@web3-onboard/common'
+
 import { createEIP1193Provider } from '@web3-onboard/common'
 import type { InjectedWalletModule, CustomWindow } from './types.js'
+
 import {
   InjectedNameSpace,
   ProviderIdentityFlag,
@@ -55,6 +61,22 @@ const binance: InjectedWalletModule = {
       window.BinanceChain.isUnlocked = false
     }
 
+    const addListener: SimpleEventEmitter['on'] = window.BinanceChain.on.bind(
+      window.BinanceChain
+    )
+
+    window.BinanceChain.on = (event, func) => {
+      // intercept chainChanged event and format string
+      if (event === 'chainChanged') {
+        addListener(event, (chainId: string) => {
+          const cb = func as ChainListener
+          cb(`0x${parseInt(chainId).toString(16)}`)
+        })
+      } else {
+        addListener(event, func)
+      }
+    }
+
     const provider = createEIP1193Provider(window.BinanceChain, {
       // If the wallet is unlocked then we don't need to patch this request
       ...(!window.BinanceChain.isUnlocked && {
@@ -98,14 +120,16 @@ const coinbase: InjectedWalletModule = {
       ProviderIdentityFlag.CoinbaseExtension
     )()
 
-    const addListener = provider.on.bind(provider)
-
+    const addListener: SimpleEventEmitter['on'] = provider.on.bind(provider)
     provider.on = (event, func) => {
+      // intercept chainChanged event and format string
       if (event === 'chainChanged') {
-        addListener(event, chainId => {
+        addListener(event, (chainId: string) => {
           const cb = func as ChainListener
           cb(`0x${parseInt(chainId).toString(16)}`)
         })
+      } else {
+        addListener(event, func)
       }
     }
 

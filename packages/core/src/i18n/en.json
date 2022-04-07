@@ -49,6 +49,27 @@
       "heading": "Switch Chain",
       "paragraph1": "{app} requires that you switch your wallet to the {nextNetworkName} network to continue.",
       "paragraph2": "*Some wallets may not support changing networks. If you can not change networks in your wallet you may consider switching to a different wallet."
+    },
+    "confirmDisconnectAll": {
+      "heading": "Disconnect all Wallets",
+      "description": "Are you sure that you would like to disconnect all your wallets?",
+      "confirm": "Confirm",
+      "cancel": "Cancel"
     }
+  },
+  "accountCenter": {
+    "connectAnotherWallet": "Connect another Wallet",
+    "disconnectAllWallets": "Disconnect all Wallets",
+    "currentNetwork": "Current Network",
+    "appInfo": "App Info",
+    "learnMore": "Learn More",
+    "gettingStartedGuide": "Getting Started Guide",
+    "smartContracts": "Smart Contract(s)",
+    "explore": "Explore",
+    "backToApp": "Back to App",
+    "poweredBy": "powered by",
+    "addAccount": "Add Account",
+    "setPrimaryAccount": "Set Primary Account",
+    "disconnectWallet": "Disconnect Wallet"
   }
 }

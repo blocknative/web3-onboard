@@ -28,6 +28,7 @@ type InitOptions {
   chains: Chain[]
   appMetadata?: AppMetadata
   i18n?: i18nOptions
+  accountCenter?: AccountCenterOptions
 }
 ```
 
@@ -46,6 +47,8 @@ type Chain = {
   rpcUrl: string // used for network requests
   label: string // used for display, eg Ethereum Mainnet
   token: TokenSymbol // the native token symbol, eg ETH, BNB, MATIC
+  color?: string // the color used to represent the chain and will be used as a background for the icon
+  icon?: string // the icon to represent the chain
 }
 ```
 
@@ -87,6 +90,30 @@ type i18nOptions = Record<Locale, i18n>
 
 To see a list of all of the text values that can be internationalized or replaced, check out the [default en file](src/i18n/en.json).
 Onboard is using the [ICU syntax](https://formatjs.io/docs/core-concepts/icu-syntax/) for formatting under the hood.
+
+**`accountCenter`**
+An object that defines whether the account center UI is enabled and it's position on the screen. Currently the account center is disabled for mobile devices, so only desktop options are available.
+
+```typescript
+type AccountCenterOptions = {
+  desktop: {
+    position?: AccountCenterPosition // default: 'topRight'
+    enabled?: AccountCenter['enabled'] // default: true
+  }
+}
+
+type AccountCenter = {
+  enabled: boolean
+  position: AccountCenterPosition
+  expanded: boolean
+}
+
+type AccountCenterPosition =
+  | 'topRight'
+  | 'bottomRight'
+  | 'bottomLeft'
+  | 'topLeft'
+```
 
 ### Initialization Example
 
@@ -236,13 +263,25 @@ Onboard currently keeps track of the following state:
 
 - `wallets`: The wallets connected to Onboard
 - `chains`: The chains that Onboard has been initialized with
+- `accountCenter`: The current state of the account center UI
 - `walletModules`: The wallet modules that are currently set and will be rendered in the wallet selection modal
 
 ```typescript
 type AppState = {
-  chains: Chain[]
   wallets: WalletState[]
+  chains: Chain[]
+  accountCenter: AccountCenter
   walletModules: WalletModule[]
+}
+
+type Chain {
+  namespace?: 'evm'
+  id: ChainId
+  rpcUrl: string
+  label: string
+  token: TokenSymbol
+  color?: string
+  icon?: string
 }
 
 type WalletState = {
@@ -272,6 +311,18 @@ type ConnectedChain = {
 
 type ChainId = string
 type TokenSymbol = string
+
+type AccountCenter = {
+  enabled: boolean
+  position: AccountCenterPosition
+  expanded: boolean
+}
+
+type AccountCenterPosition =
+  | 'topRight'
+  | 'bottomRight'
+  | 'bottomLeft'
+  | 'topLeft'
 
 type WalletModule {
   label: string

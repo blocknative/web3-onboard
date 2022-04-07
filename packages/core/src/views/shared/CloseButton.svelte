@@ -3,20 +3,8 @@
 </script>
 
 <style>
-  .close-button-container {
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
   .close-button {
-    width: 2rem;
-    height: 2rem;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0.4rem;
+    padding: 0.25rem;
     background: var(
       --onboard-close-button-background,
       var(--onboard-gray-100, var(--gray-100))
@@ -29,14 +17,12 @@
   }
 
   .close-icon {
-    width: 14px;
-    display: flex;
-    align-items: center;
+    width: 24px;
   }
 </style>
 
-<div class="close-button-container">
-  <div class="close-button">
-    <div class="close-icon">{@html closeIcon}</div>
+<div class="flex justify-center items-center pointer">
+  <div class="close-button flex justify-center items-center">
+    <div class="close-icon flex items-center">{@html closeIcon}</div>
   </div>
 </div>

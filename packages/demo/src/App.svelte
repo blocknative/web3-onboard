@@ -103,26 +103,32 @@
       {
         id: '0x1',
         token: 'ETH',
-        label: 'Ethereum Mainnet',
+        label: 'Ethereum',
         rpcUrl: 'https://mainnet.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
       },
       {
         id: '0x3',
         token: 'tROP',
-        label: 'Ethereum Ropsten Testnet',
+        label: 'Ropsten',
         rpcUrl: 'https://ropsten.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
       },
       {
         id: '0x4',
         token: 'rETH',
-        label: 'Ethereum Rinkeby Testnet',
+        label: 'Rinkeby',
         rpcUrl: 'https://rinkeby.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
       },
       {
         id: '0x89',
         token: 'MATIC',
-        label: 'Matic Mainnet',
+        label: 'Polygon',
         rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+      },
+      {
+        id: '0xa',
+        token: 'OETH',
+        label: 'Optimism',
+        rpcUrl: 'https://mainnet.optimism.io'
       }
     ],
     appMetadata: {
@@ -138,9 +144,17 @@
         version: '1.0.0',
         termsUrl: 'https://www.blocknative.com/terms-conditions',
         privacyUrl: 'https://www.blocknative.com/privacy-policy'
-      }
+      },
+      gettingStartedGuide: 'https://blocknative.com',
+      explore: 'https://blocknative.com'
     }
-    // example customising copy
+    // example customizing account center
+    // accountCenter: {
+    //   desktop: {
+    //     position: 'bottomRight'
+    //   }
+    // }
+    // example customizing copy
     // i18n: {
     //   en: {
     //     connect: {

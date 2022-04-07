@@ -263,8 +263,6 @@
 
 <style>
   .container {
-    position: relative;
-    display: flex;
     font-family: var(--onboard-font-family-normal, var(--font-family-normal));
     line-height: 24px;
     color: var(--onboard-gray-700, var(--gray-700));
@@ -275,8 +273,6 @@
 
   .content {
     width: var(--onboard-connect-content-width, 488px);
-    display: flex;
-    flex-direction: column;
   }
 
   .scroll-container {
@@ -290,9 +286,6 @@
   }
 
   .header {
-    position: relative;
-    display: flex;
-    align-items: center;
     box-shadow: var(--onboard-shadow-2, var(--shadow-2));
     background-color: var(
       --onboard-connect-header-background,
@@ -311,7 +304,6 @@
   }
 
   .button-container {
-    position: absolute;
     right: var(--onboard-spacing-5, var(--spacing-5));
     top: var(--onboard-spacing-5, var(--spacing-5));
   }
@@ -337,13 +329,13 @@
 
 {#if !autoSelect || (autoSelect && !autoSelect.disableModals)}
   <Modal {close}>
-    <div class="container">
+    <div class="container relative flex">
       {#if windowWidth >= 809}
         <Sidebar {step} />
       {/if}
 
-      <div class="content">
-        <div class="header">
+      <div class="content flex flex-column">
+        <div class="header relative flex items-center">
           <h4 class="header-heading">
             {$_(`connect.${step}.header`, {
               default: en.connect[step].header,
@@ -353,7 +345,7 @@
               }
             })}
           </h4>
-          <div on:click={close} class="button-container">
+          <div on:click={close} class="button-container absolute">
             <CloseButton />
           </div>
         </div>

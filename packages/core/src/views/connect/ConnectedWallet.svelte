@@ -5,7 +5,7 @@
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
 
   import type { WalletState } from '../../types'
-  import defaultAppIcon from '../../icons/default-app-icon'
+  import questionIcon from '../../icons/question'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import en from '../../i18n/en.json'
 
@@ -20,30 +20,18 @@
   }
 
   .connecting-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding: var(--onboard-spacing-4, var(--spacing-4));
     border-radius: 24px;
     background: var(--onboard-success-100, var(--success-100));
     border: 1px solid var(--onboard-success-600, var(--success-600));
     width: 100%;
-    box-sizing: border-box;
-  }
-
-  .icons {
-    display: flex;
-    justify-content: center;
-    position: relative;
   }
 
   .text {
-    position: relative;
     right: var(--onboard-spacing-5, var(--spacing-5));
   }
 
   .tick {
-    display: flex;
     color: var(--onboard-success-700, var(--success-700));
   }
 
@@ -52,37 +40,41 @@
 </style>
 
 <div class="container">
-  <div class="connecting-container">
-    <div class="icons">
-      <WalletAppBadge
-        size={40}
-        padding={8}
-        background={appMetadata && appMetadata.icon ? 'lightBlue' : 'lightGray'}
-        border="darkGreen"
-        icon={(appMetadata && appMetadata.icon) || defaultAppIcon}
-      />
-
-      <div style="position: relative; right: 0.85rem; top: 2px;">
-        <SuccessStatusIcon size={17} right={null} />
-      </div>
-
-      <div style="position: relative; right: 0.5rem;">
+  <div class="connecting-container flex justify-between items-center">
+    <div class="flex items-center">
+      <div class="flex justify-center items-end relative">
         <WalletAppBadge
           size={40}
           padding={8}
+          background={appMetadata && appMetadata.icon
+            ? 'lightBlue'
+            : 'lightGray'}
           border="darkGreen"
-          icon={selectedWallet.icon}
+          icon={(appMetadata && appMetadata.icon) || questionIcon}
         />
+
+        <div class="relative" style="right: 1rem; top: 4px; z-index: 1;">
+          <SuccessStatusIcon size={17} />
+        </div>
+
+        <div class="relative" style="right: 1.75rem;">
+          <WalletAppBadge
+            size={40}
+            padding={8}
+            border="darkGreen"
+            background="white"
+            icon={selectedWallet.icon}
+          />
+        </div>
+      </div>
+      <div class="text relative">
+        {$_('connect.connectedWallet.mainText', {
+          default: en.connect.connectedWallet.mainText
+        })}
       </div>
     </div>
 
-    <div class="text">
-      {$_('connect.connectedWallet.mainText', {
-        default: en.connect.connectedWallet.mainText
-      })}
-    </div>
-
-    <div class="tick" style="width: 20px;">
+    <div class="tick flex items-center" style="width: 24px;">
       {@html success}
     </div>
   </div>
