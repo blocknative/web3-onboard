@@ -35,7 +35,7 @@ const metamask: InjectedWalletModule = {
 const brave: InjectedWalletModule = {
   label: ProviderLabel.Brave,
   injectedNamespace: InjectedNameSpace.Ethereum,
-  checkProviderIdentity: ({ provider }) => 
+  checkProviderIdentity: ({ provider }) =>
     !!provider && !!provider[ProviderIdentityFlag.BraveWallet],
   getIcon: async () => (await import('./icons/brave.js')).default,
   getInterface: getInjectedInterface(ProviderIdentityFlag.BraveWallet),
