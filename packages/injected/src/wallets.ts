@@ -38,9 +38,15 @@ const brave: InjectedWalletModule = {
   checkProviderIdentity: ({ provider }) => 
     !!provider && !!provider[ProviderIdentityFlag.BraveWallet],
   getIcon: async () => (await import('./icons/brave.js')).default,
-  getInterface: async () => ({
-    provider: window.ethereum as EIP1193Provider
-  }),
+  getInterface: async () => {
+    const { provider } = await getInjectedInterface(
+      ProviderIdentityFlag.BraveWallet
+    )()
+
+    return {
+      provider
+    }
+  },
   platforms: ['all']
 }
 
