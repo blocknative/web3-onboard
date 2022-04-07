@@ -57,6 +57,7 @@ type AppMetadata = {
   // app name
   name: string
   // SVG icon string, with height or width (whichever is larger) set to 100% or a valid image URL
+  // note: if using an emoji make sure to send base64 string
   icon: string
   // Optional wide format logo (ie icon and text) to be displayed in the sidebar of connect modal. Defaults to icon if not provided
   logo?: string
