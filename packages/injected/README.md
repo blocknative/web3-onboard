@@ -34,8 +34,6 @@ const connectedWallets = await onboard.connectWallet()
 console.log(connectedWallets)
 ```
 
-*Note: When working with Coinbase wallet is should be known that their current implementation overrides the provider space at `window.ethereum`. An array is created that allows the MetaMask provider to persist along with the Coinbase provider but we have not seen the persistence by the Coinbase wallet with other providers who inject at the `window.ethereum` level. If a user disables the Coinbase wallet the most recently injected provider will the option shown in the in the available wallets list within the Web3-onboard modal*
-
 ## Filtering Wallets
 
 Injected wallets that you do not want to support can be filtered based on the `Platform` the user is on. For example you may not want to support the 'Detected Wallet' that is detected automatically and filter it via all platforms by passing `false`:
