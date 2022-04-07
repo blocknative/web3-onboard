@@ -47,6 +47,8 @@ type Chain = {
   rpcUrl: string // used for network requests
   label: string // used for display, eg Ethereum Mainnet
   token: TokenSymbol // the native token symbol, eg ETH, BNB, MATIC
+  color?: string // the color used to represent the chain and will be used as a background for the icon
+  icon?: string // the icon to represent the chain
 }
 ```
 
