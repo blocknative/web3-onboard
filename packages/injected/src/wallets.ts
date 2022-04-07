@@ -38,15 +38,7 @@ const brave: InjectedWalletModule = {
   checkProviderIdentity: ({ provider }) => 
     !!provider && !!provider[ProviderIdentityFlag.BraveWallet],
   getIcon: async () => (await import('./icons/brave.js')).default,
-  getInterface: async () => {
-    const { provider } = await getInjectedInterface(
-      ProviderIdentityFlag.BraveWallet
-    )()
-
-    return {
-      provider
-    }
-  },
+  getInterface: getInjectedInterface(ProviderIdentityFlag.BraveWallet),
   platforms: ['all']
 }
 
@@ -225,18 +217,13 @@ const bitpie: InjectedWalletModule = {
   platforms: ['mobile']
 }
 
-const blankwallet: InjectedWalletModule = {
-  label: ProviderLabel.BlankWallet,
+const blockwallet: InjectedWalletModule = {
+  label: ProviderLabel.BlockWallet,
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
-    !!provider && !!provider[ProviderIdentityFlag.BlankWallet],
-  getIcon: async () => (await import('./icons/blankwallet.js')).default,
-  getInterface: async () => ({
-    provider: createEIP1193Provider(window.ethereum, {
-      wallet_switchEthereumChain: UNSUPPORTED_METHOD,
-      eth_selectAccounts: UNSUPPORTED_METHOD
-    })
-  }),
+    !!provider && !!provider[ProviderIdentityFlag.BlockWallet],
+  getIcon: async () => (await import('./icons/blockwallet.js')).default,
+  getInterface: getInjectedInterface(ProviderIdentityFlag.BlockWallet),
   platforms: ['desktop']
 }
 
@@ -481,7 +468,7 @@ const wallets = [
   alphawallet,
   atoken,
   bitpie,
-  blankwallet,
+  blockwallet,
   brave,
   dcent,
   frame,
