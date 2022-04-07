@@ -413,6 +413,8 @@ export interface Chain {
   rpcUrl: string
   label: string
   token: TokenSymbol // eg ETH, BNB, MATIC
+  color?: string
+  icon?: string // svg string
 }
 
 export type TokenSymbol = string // eg ETH

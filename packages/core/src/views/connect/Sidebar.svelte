@@ -38,7 +38,6 @@
 
   .icon-container {
     height: 3rem;
-    display: flex;
     margin-bottom: var(--onboard-spacing-4, var(--spacing-4));
   }
 
@@ -58,13 +57,11 @@
   }
 
   .indicators {
-    display: flex;
-    align-items: center;
     margin-top: var(--onboard-spacing-2, var(--spacing-2));
   }
 
   .indicator {
-    position: relative;
+    box-sizing: content-box;
     width: 8px;
     height: 8px;
     border-radius: 8px;
@@ -88,7 +85,7 @@
   }
 
   .join {
-    position: relative;
+    box-sizing: content-box;
     z-index: 1;
     right: 4px;
     height: 2px;
@@ -114,7 +111,7 @@
 
 <div class="sidebar">
   <div class="inner-container">
-    <div class="icon-container">
+    <div class="icon-container flex">
       {#if logo || icon}
         {#if isSVG(logo || icon)}
           {@html logo || icon}
@@ -146,11 +143,11 @@
       })}
     </p>
 
-    <div class="indicators">
-      <div class="indicator" class:on={true} />
+    <div class="indicators flex items-center">
+      <div class="indicator relative" class:on={true} />
       <div
         class:active={step !== 'selectingWallet'}
-        class="join"
+        class="join relative"
         style={`${
           step !== 'selectingWallet'
             ? 'right: 4px; width: 52px;'
@@ -158,13 +155,13 @@
         }`}
       />
       <div
-        class="indicator"
+        class="indicator relative"
         style={`right: 8px;`}
         class:on={step !== 'selectingWallet'}
       />
       <div
         class:active={step === 'connectedWallet'}
-        class="join"
+        class="join relative"
         style={`${
           step === 'connectedWallet'
             ? 'right: 12px; width: 52px;'
@@ -173,7 +170,7 @@
       />
       <div
         style={`right: 16px;`}
-        class="indicator"
+        class="indicator relative"
         class:on={step === 'connectedWallet'}
       />
     </div>

@@ -21,9 +21,6 @@
   }
 
   .icon-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 3rem;
     height: 3rem;
     background-color: var(--onboard-primary-100, var(--primary-100));
@@ -46,18 +43,13 @@
 
   button {
     margin-top: 1.5rem;
-    width: 100%;
-    background-color: var(--onboard-gray-500, var(--gray-500));
     font-weight: 700;
-    line-height: 16px;
-    color: var(--onboard-white, var(--white));
-    justify-content: center;
   }
 </style>
 
 <Modal {close}>
   <div class="content">
-    <div class="icon-container">
+    <div class="icon-container flex justify-center items-center">
       <InfoIcon />
     </div>
 
@@ -65,13 +57,18 @@
 
     <p>
       {$_('modals.actionRequired.paragraph')}
-      <a
-        href="https://blocknative.com/blog"
-        target="_blank"
-        rel="noreferrer noopener">{$_('modals.actionRequired.linkText')}</a
-      >
+
+      {#if wallet === 'MetaMask'}
+        <a
+          href="https://metamask.zendesk.com/hc/en-us/articles/360061346311-Switching-accounts-in-MetaMask"
+          target="_blank"
+          rel="noreferrer noopener">{$_('modals.actionRequired.linkText')}</a
+        >
+      {/if}
     </p>
 
-    <button on:click={close}>{$_('modals.actionRequired.buttonText')}</button>
+    <button class="button-neutral-solid rounded" on:click={close}
+      >{$_('modals.actionRequired.buttonText')}</button
+    >
   </div>
 </Modal>
