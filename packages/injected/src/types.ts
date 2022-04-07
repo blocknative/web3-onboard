@@ -16,7 +16,7 @@ export enum ProviderIdentityFlag {
   AToken = 'isAToken',
   Binance = 'bbcSignTx',
   Bitpie = 'isBitpie',
-  BlankWallet = 'isBlank',
+  BlockWallet = 'isBlockWallet',
   Coinbase = 'isToshi',
   CoinbaseExtension = 'isCoinbaseWallet',
   Detected = 'request',
@@ -47,7 +47,7 @@ export enum ProviderLabel {
   AToken = 'AToken',
   Binance = 'Binance Smart Wallet',
   Bitpie = 'Bitpie',
-  BlankWallet = 'BlankWallet',
+  BlockWallet = 'BlockWallet',
   Brave = 'Brave Wallet',
   Coinbase = 'Coinbase Wallet',
   Dcent = `D'CENT`,
@@ -107,7 +107,8 @@ export interface CustomWindow extends Window {
 export type InjectedProvider = ExternalProvider &
   BinanceProvider &
   MeetOneProvider &
-  Record<string, boolean>
+  Record<string, boolean> &
+  Record<string, InjectedProvider[]>
 
 export type WalletFilters = {
   // A provider label mapped to a list of excluded platforms
