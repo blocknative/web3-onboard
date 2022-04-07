@@ -439,6 +439,18 @@ const tokenary: InjectedWalletModule = {
   platforms: ['mobile']
 }
 
+const tally: InjectedWalletModule = {
+  label: ProviderLabel.Tally,
+  injectedNamespace: InjectedNameSpace.Tally,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Tally],
+  getIcon: async () => (await import('./icons/tallywallet.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.tally)
+  }),
+  platforms: ['desktop']
+}
+
 const wallets = [
   metamask,
   binance,
@@ -465,7 +477,8 @@ const wallets = [
   tp,
   xdefi,
   oneInch,
-  tokenary
+  tokenary,
+  tally
 ]
 
 export default wallets
