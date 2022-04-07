@@ -37,7 +37,9 @@ export enum ProviderIdentityFlag {
   WalletIo = 'isWalletIO',
   XDEFI = 'isXDEFI',
   OneInch = 'isOneInchIOSWallet',
-  Tokenary = 'isTokenary'
+  Tokenary = 'isTokenary',
+  Tally = 'isTally',
+  BraveWallet = 'isBraveWallet'
 }
 
 export enum ProviderLabel {
@@ -67,7 +69,8 @@ export enum ProviderLabel {
   WalletIo = 'Wallet.io',
   XDEFI = 'XDEFI Wallet',
   OneInch = '1inch Wallet',
-  Tokenary = 'Tokenary Wallet'
+  Tokenary = 'Tokenary Wallet',
+  Tally = 'Tally Wallet'
 }
 
 export interface MeetOneProvider extends ExternalProvider {
@@ -83,6 +86,7 @@ export interface BinanceProvider extends EIP1193Provider {
 export enum InjectedNameSpace {
   Ethereum = 'ethereum',
   Binance = 'BinanceChain',
+  Tally = 'tally',
   Web3 = 'web3',
   Arbitrum = 'arbitrum',
   XFI = 'xfi'
@@ -92,6 +96,7 @@ export enum InjectedNameSpace {
 export interface CustomWindow extends Window {
   BinanceChain: BinanceProvider
   ethereum: InjectedProvider
+  tally: InjectedProvider
   web3: ExternalProvider | MeetOneProvider
   arbitrum: InjectedProvider
   xfi: {
