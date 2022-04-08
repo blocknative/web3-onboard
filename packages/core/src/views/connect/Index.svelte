@@ -127,7 +127,6 @@
   }
 
   function deselectWallet() {
-    state
     selectedWallet = null
   }
 
