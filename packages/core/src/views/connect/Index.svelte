@@ -127,6 +127,7 @@
   }
 
   function deselectWallet() {
+    state
     selectedWallet = null
   }
 
@@ -234,7 +235,7 @@
   // ==== STEP HANDLING LOGIC ==== //
   $: switch (step) {
     case 'selectingWallet': {
-      if (walletToAutoSelect) {
+      if (walletToAutoSelect && !connectionRejected) {
         autoSelectWallet(walletToAutoSelect)
       } else {
         loadWalletsForSelection()
