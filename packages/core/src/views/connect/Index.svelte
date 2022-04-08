@@ -47,7 +47,7 @@
   let windowWidth: number
   let scrollContainer: HTMLElement
 
-  const walletToAutoSelect =
+  let walletToAutoSelect =
     autoSelect &&
     walletModules.find(
       ({ label }) => label.toLowerCase() === autoSelect.label.toLowerCase()
@@ -185,6 +185,12 @@
       // user rejected account access
       if (code === ProviderRpcErrorCode.ACCOUNT_ACCESS_REJECTED) {
         connectionRejected = true
+        if (autoSelect && walletToAutoSelect && walletToAutoSelect.label === label){
+            deselectWallet();
+            console.log(autoSelect, label)
+            walletToAutoSelect = null;
+            setStep('selectingWallet');
+          }
         return
       }
 
@@ -234,7 +240,7 @@
   // ==== STEP HANDLING LOGIC ==== //
   $: switch (step) {
     case 'selectingWallet': {
-      if (walletToAutoSelect && !connectionRejected) {
+      if (walletToAutoSelect) {
         autoSelectWallet(walletToAutoSelect)
       } else {
         loadWalletsForSelection()
