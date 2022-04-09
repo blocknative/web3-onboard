@@ -30,13 +30,16 @@ const useAppState: {
 
   const { select, get } = web3Onboard.state
 
-  const subscribe = useCallback((onStoreChange: () => void) => {
-    const { unsubscribe } = stateKey
-      ? select(stateKey).subscribe(onStoreChange)
-      : select().subscribe(onStoreChange)
+  const subscribe = useCallback(
+    (onStoreChange: () => void) => {
+      const { unsubscribe } = stateKey
+        ? select(stateKey).subscribe(onStoreChange)
+        : select().subscribe(onStoreChange)
 
-    return () => unsubscribe
-  }, [stateKey])
+      return () => unsubscribe
+    },
+    [stateKey]
+  )
 
   const getSnapshot = useCallback(() => {
     const snapshot = get()
@@ -44,7 +47,7 @@ const useAppState: {
   }, [stateKey])
 
   return useSyncExternalStore(subscribe, getSnapshot)
-  }
+}
 
 export const useConnectWallet = (): [
   { wallet: WalletState | null; connecting: boolean },
@@ -68,7 +71,7 @@ export const useConnectWallet = (): [
     setConnecting(false)
   }, [])
 
-  const disconnect = useCallback(async ({ label }) => {
+  const disconnect = useCallback(async ({ label }: DisconnectOptions) => {
     setConnecting(true)
 
     await disconnectWallet({ label })
