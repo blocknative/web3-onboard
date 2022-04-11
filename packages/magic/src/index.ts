@@ -3,6 +3,13 @@ import type { MagicInitOptions } from './types'
 import { validateMagicInitOptions } from './validation'
 
 function magic(options: MagicInitOptions): WalletInit {
+  if (options) {
+    const error = validateMagicInitOptions(options)
+
+    if (error) {
+      throw error
+    }
+  }
   const { apiKey, userEmail } = options
   const walletName = 'Magic Wallet'
 
@@ -15,14 +22,6 @@ function magic(options: MagicInitOptions): WalletInit {
         const loginModal = (await import('./login-modal.js')).default
         const brandingHTML = (await import('./branding.js')).default
 
-        if (options) {
-          const error = validateMagicInitOptions(options)
-
-          if (error) {
-            throw error
-          }
-        }
-
         const {
           createEIP1193Provider,
           ProviderRpcErrorCode,
@@ -33,7 +32,7 @@ function magic(options: MagicInitOptions): WalletInit {
 
         if (!chains.length)
           throw new Error(
-            'Atleast one Chain must be passed to onboard in order to connect'
+            'At least one Chain must be passed to onboard in order to connect'
           )
 
         let currentChain = chains[0]

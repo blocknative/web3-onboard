@@ -1,9 +1,9 @@
 import Joi from 'joi'
 import type { MagicInitOptions } from './types'
 
-const magicInitOptions = Joi.object({
-  userEmail: Joi.string().required(),
-  apiKey: Joi.string()
+const magicOptions = Joi.object({
+  apiKey: Joi.string().required(),
+  userEmail: Joi.string()
 })
 
 type ValidateReturn = Joi.ValidationResult | null
@@ -16,5 +16,5 @@ const validate = (validator: Joi.Schema, data: unknown): ValidateReturn => {
 export const validateMagicInitOptions = (
   data: MagicInitOptions
 ): ValidateReturn => {
-  return validate(magicInitOptions, data)
+  return validate(magicOptions, data)
 }

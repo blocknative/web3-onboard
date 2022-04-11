@@ -42,6 +42,12 @@
     loggedIn$.next(false)
     loading = false
   }
+
+  const submitOnEnter = (e: KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      login();
+    }
+  }
 </script>
 
 <style>
@@ -178,6 +184,7 @@
         placeholder="Email address"
         bind:value={credentials}
         on:input={() => setErrorInEmail()}
+        on:keydown={submitOnEnter}
       />
       {#if errorInEmail}
         <span class="error-msg">Please enter a valid email address</span>
