@@ -171,7 +171,6 @@
 
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
-  wallets$.subscribe(val => console.log(val))
 
   const signTransactionMessage = provider => {
     provider.request({
