@@ -1,7 +1,9 @@
-import type { WalletInit, APIKey, EIP1193Provider } from '@web3-onboard/common'
+import type { WalletInit, EIP1193Provider } from '@web3-onboard/common'
+import type { MagicInitOptions } from './types'
+import { validateMagicInitOptions } from './validation'
 
-function magic(options: APIKey): WalletInit {
-  const { apiKey } = options
+function magic(options: MagicInitOptions): WalletInit {
+  const { apiKey, userEmail } = options
   const walletName = 'Magic Wallet'
 
   return () => {
@@ -12,32 +14,41 @@ function magic(options: APIKey): WalletInit {
         const { Magic, RPCErrorCode } = await import('magic-sdk')
         const loginModal = (await import('./login-modal.js')).default
         const brandingHTML = (await import('./branding.js')).default
-        let loggedIn: boolean = false
 
+        if (options) {
+          const error = validateMagicInitOptions(options)
+      
+          if (error) {
+            throw error
+          }
+        }
+        
         const {
           createEIP1193Provider,
           ProviderRpcErrorCode,
           ProviderRpcError
         } = await import('@web3-onboard/common')
-
+        
         const emitter = new EventEmitter()
-
+        
         if (!chains.length)
-          throw new Error(
-            'Atleast one Chain must be passed to onboard in order to connect'
+        throw new Error(
+          'Atleast one Chain must be passed to onboard in order to connect'
           )
-
-        let currentChain = chains[0]
-
-        let customNodeOptions = {
-          chainId: parseInt(currentChain.id),
-          rpcUrl: currentChain.rpcUrl
-        }
-
-        let magicInstance = new Magic(apiKey, {
+          
+          let currentChain = chains[0]
+          
+          let customNodeOptions = {
+            chainId: parseInt(currentChain.id),
+            rpcUrl: currentChain.rpcUrl
+          }
+          
+          let magicInstance = new Magic(apiKey, {
           network: customNodeOptions
         })
 
+        let loggedIn: boolean
+        
         const loginWithEmail = async (emailAddress: string) => {
           try {
             await magicInstance.auth.loginWithMagicLink({ email: emailAddress })
@@ -48,6 +59,9 @@ function magic(options: APIKey): WalletInit {
             )
           }
         }
+
+        if (userEmail)
+          loggedIn = await loginWithEmail('adam@blocknative.com')
 
         const handleLogin = async () => {
           loggedIn = await loginModal({

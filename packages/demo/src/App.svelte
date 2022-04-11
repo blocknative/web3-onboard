@@ -81,7 +81,10 @@
   const trezor = trezorModule(trezorOptions)
 
   const magic = magicModule({
-    apiKey: 'pk_live_02207D744E81C2BA'
+    apiKey: 'pk_live_02207D744E81C2BA',
+    // userEmail: 'test@test.com' 
+    // userEmail is optional - if user has already logged in and/or session is still active a login modal will not appear
+    // for more info see the @web3-onboard/magic docs
   })
 
   const onboard = Onboard({
@@ -168,6 +171,7 @@
 
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
+  wallets$.subscribe(val => console.log(val))
 
   const signTransactionMessage = provider => {
     provider.request({
