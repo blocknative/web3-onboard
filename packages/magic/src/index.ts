@@ -17,38 +17,38 @@ function magic(options: MagicInitOptions): WalletInit {
 
         if (options) {
           const error = validateMagicInitOptions(options)
-      
+
           if (error) {
             throw error
           }
         }
-        
+
         const {
           createEIP1193Provider,
           ProviderRpcErrorCode,
           ProviderRpcError
         } = await import('@web3-onboard/common')
-        
+
         const emitter = new EventEmitter()
-        
+
         if (!chains.length)
-        throw new Error(
-          'Atleast one Chain must be passed to onboard in order to connect'
+          throw new Error(
+            'Atleast one Chain must be passed to onboard in order to connect'
           )
-          
-          let currentChain = chains[0]
-          
-          let customNodeOptions = {
-            chainId: parseInt(currentChain.id),
-            rpcUrl: currentChain.rpcUrl
-          }
-          
-          let magicInstance = new Magic(apiKey, {
+
+        let currentChain = chains[0]
+
+        let customNodeOptions = {
+          chainId: parseInt(currentChain.id),
+          rpcUrl: currentChain.rpcUrl
+        }
+
+        let magicInstance = new Magic(apiKey, {
           network: customNodeOptions
         })
 
         let loggedIn: boolean
-        
+
         const loginWithEmail = async (emailAddress: string) => {
           try {
             await magicInstance.auth.loginWithMagicLink({ email: emailAddress })
@@ -60,8 +60,7 @@ function magic(options: MagicInitOptions): WalletInit {
           }
         }
 
-        if (userEmail)
-          loggedIn = await loginWithEmail('adam@blocknative.com')
+        if (userEmail) loggedIn = await loginWithEmail('adam@blocknative.com')
 
         const handleLogin = async () => {
           loggedIn = await loginModal({
