@@ -126,7 +126,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    z-index: var(--login-modal-z-index, var(--z-index));
+    z-index: var(--magic-login-modal-z-index, var(--z-index));
     display: flex;
     align-items: center;
     justify-content: center;
