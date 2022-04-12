@@ -59,7 +59,7 @@ function magic(options: MagicInitOptions): WalletInit {
           }
         }
 
-        if (userEmail) loggedIn = await loginWithEmail('adam@blocknative.com')
+        if (userEmail) loggedIn = await loginWithEmail(userEmail)
 
         const handleLogin = async () => {
           loggedIn = await loginModal({
