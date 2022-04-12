@@ -341,6 +341,7 @@
     color: var(--account-select-gray-500, var(--gray-500));
   }
 </style>
+
 <div class="container modal-positioning">
   <div class="hardware-connect-modal modal-margin" transition:fade>
     <header class="connect-wallet-header">
