@@ -29,7 +29,7 @@ type MagicInitOptions = {
 import Onboard from '@web3-onboard/core'
 import magicModule from '@web3-onboard/magic'
 
-const magic = magicModule({ apiKey: 'API_KEY', userEmail: 'test@email.com' })
+const magic = magicModule({ apiKey: 'API_KEY', userEmail: localStorage.getItem('magicUserEmail') })
 
 const onboard = Onboard({
   // ... other Onboard options
