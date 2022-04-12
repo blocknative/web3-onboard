@@ -12,7 +12,7 @@ in the same fashion that all other web3-onboard UI components are
 
 `npm i @web3-onboard/magic`
 
-Head over to https://magic.link/ and signup to get an API key
+Head over to https://magic.link/ and sign up to get an API key
 
 ## Options
 
@@ -46,7 +46,7 @@ console.log(connectedWallets)
 ### Accessing the Magic Wallet Internals
 When a Magic wallet is connected the Magic instance is exposed. 
 This can be used to get information such as user MetaData, update a user's email address or handle the user's token.
-The user's email can be set in local storage and passed through the `MagicInitOptions` to avoid a user having to login again if they are revisting the DApp within the set user session time. 
+The user's email can be set in local storage and passed through the `MagicInitOptions` to avoid a user having to login again if they are returning to the DApp within the set user session time. 
 Magic has a default time of 7 days and this can be configured through your Magic API Key settings.
 ```typescript
 const [magicWallet] = await onboard.connectWallet()

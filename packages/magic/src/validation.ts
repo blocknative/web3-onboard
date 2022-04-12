@@ -3,7 +3,7 @@ import type { MagicInitOptions } from './types'
 
 const magicOptions = Joi.object({
   apiKey: Joi.string().required(),
-  userEmail: Joi.string()
+  userEmail: Joi.string().email({ tlds: { allow: false } }).allow(null)
 })
 
 type ValidateReturn = Joi.ValidationResult | null

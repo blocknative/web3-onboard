@@ -82,7 +82,7 @@
 
   const magic = magicModule({
     apiKey: 'pk_live_02207D744E81C2BA',
-    // userEmail: 'adam@blocknative.com' 
+    // userEmail: 'test@test.com' 
     // userEmail is optional - if user has already logged in and/or session is still active a login modal will not appear
     // for more info see the @web3-onboard/magic docs
   })
