@@ -61,14 +61,14 @@
     width: 32rem;
     padding: 0.5rem 2.6rem 0.5rem 1rem;
     border-radius: 8px;
-    font-size: var(--login-modal-font-size-5, var(--font-size-5));
+    font-size: var(--onboard-magic-login-modal-font-size-5, var(--font-size-5));
     line-height: var(
-      --login-modal-font-line-height-1,
+      --onboard-magic-login-modal-font-line-height-1,
       var(--font-line-height-1)
     );
-    color: var(--login-modal-gray-500, var(--gray-500));
+    color: var(--onboard-magic-login-modal-gray-500, var(--gray-500));
     transition: all 200ms ease-in-out;
-    border: 2px solid var(--login-modal-gray-200, var(--gray-200));
+    border: 2px solid var(--onboard-magic-login-modal-gray-200, var(--gray-200));
     box-sizing: border-box;
     height: 3rem;
     -ms-overflow-style: none;
@@ -83,26 +83,26 @@
   button {
     align-items: center;
     padding: 0.75rem 1.5rem;
-    color: var(--login-modal-white, var(--white));
+    color: var(--onboard-magic-login-modal-white, var(--white));
     border-radius: 1.5rem;
     font-family: var(
-      --login-modal-font-family-normal,
+      --onboard-magic-login-modal-font-family-normal,
       var(--font-family-normal)
     );
     font-style: normal;
     font-weight: bold;
-    font-size: var(--login-modal-font-size-5, var(--font-size-5));
-    line-height: var(--login-modal-font-line-height-1, var(--line-height-1));
+    font-size: var(--onboard-magic-login-modal-font-size-5, var(--font-size-5));
+    line-height: var(--onboard-magic-login-modal-font-line-height-1, var(--line-height-1));
     border: none;
   }
 
   .login-btn:disabled {
-    background-color: var(--login-modal-primary-300, var(--primary-300));
+    background-color: var(--onboard-magic-login-modal-primary-300, var(--primary-300));
     cursor: default;
   }
 
   .login-btn {
-    background-color: var(--login-modal-primary-500, var(--primary-500));
+    background-color: var(--onboard-magic-login-modal-primary-500, var(--primary-500));
     cursor: pointer;
     display: inline-flex;
     justify-content: space-around;
@@ -119,14 +119,14 @@
 
   .container {
     font-family: var(
-      --login-modal-font-family-normal,
+      --onboard-magic-login-modal-font-family-normal,
       var(--font-family-normal)
     );
-    color: var(--login-modal-black, var(--black));
+    color: var(--onboard-magic-login-modal-black, var(--black));
     position: absolute;
     top: 0;
     right: 0;
-    z-index: var(--magic-login-modal-z-index, var(--z-index));
+    z-index: var(--onboard-magic-login-modal-z-index, var(--z-index));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -136,17 +136,17 @@
     background-color: rgba(0, 0, 0, 0.2);
   }
 
-  .login-modal {
+  .onboard-magic-login-modal {
     min-width: 36rem;
     max-height: 51.75rem;
     display: table;
-    background: var(--login-modal-white, var(--white));
-    box-shadow: var(--login-modal-shadow-1, var(--shadow-1));
+    background: var(--onboard-magic-login-modal-white, var(--white));
+    box-shadow: var(--onboard-magic-login-modal-shadow-1, var(--shadow-1));
     border-radius: 1.5rem;
     text-align: center;
     position: relative;
-    background-color: var(--login-modal-white, var(--white));
-    color: var(--login-modal-black, var(--black));
+    background-color: var(--onboard-magic-login-modal-white, var(--white));
+    color: var(--onboard-magic-login-modal-black, var(--black));
   }
 
   .modal-controls {
@@ -159,20 +159,20 @@
   }
 
   .branding {
-    margin: var(--login-modal-margin-5, var(--margin-5));
+    margin: var(--onboard-magic-login-modal-margin-5, var(--margin-5));
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
   .error-msg {
-    color: var(--login-modal-danger-500, var(--danger-500));
-    font-family: var(--login-modal-font-family-light, var(--font-family-light));
+    color: var(--onboard-magic-login-modal-danger-500, var(--danger-500));
+    font-family: var(--onboard-magic-login-modal-font-family-light, var(--font-family-light));
   }
 </style>
 
 <div class="container">
-  <div class="login-modal" transition:fade>
+  <div class="onboard-magic-login-modal" transition:fade>
     <div class="close-action-container close" on:click={dismiss}>
       <CloseButton />
     </div>
