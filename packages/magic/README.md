@@ -53,7 +53,7 @@ const [magicWallet] = await onboard.connectWallet()
 
 try {
   const { email, publicAddress } = await magicWallet.instance.user.getMetadata();
-  localStorage.set('magicUserEmail': email) 
+  localStorage.setItem('magicUserEmail', email) 
   // This email can then be passed through the MagicInitOptions to continue the users session and avoid having to login again
 } catch {
   // Handle errors if required!
