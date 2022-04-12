@@ -189,7 +189,11 @@ function mountApp() {
           --shadow-2: inset 0px -1px 0px rgba(0, 0, 0, 0.1);
           --shadow-3: 0px 4px 16px rgba(179, 179, 179, 0.2);
 
+          /* MODAL POSITIONING */
           --modal-z-index: 10;
+          --modal-positioning-justify-content: center; /* start | center | end | .... */
+          --modal-positioning-align-items: center; /* start | center | end | .... */
+          --modal-positioning-margin: 12px 12px 12px 12px;
         }
       </style>
     `

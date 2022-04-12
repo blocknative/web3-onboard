@@ -122,12 +122,19 @@
     right: 0;
     z-index: 20;
     display: flex;
-    align-items: center;
-    justify-content: center;
     width: 100vw;
     height: 100vh;
     backdrop-filter: blur(4px);
     background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  .modal-positioning {
+    justify-content: var(--login-modal-modal-positioning-justify-content, var(--modal-positioning-justify-content));
+    align-items: var(--login-modal-modal-positioning-align-items, var(--modal-positioning-align-items));
+  }
+
+  .modal-margin {
+    margin: var(--login-modal-modal-positioning-margin, var(--modal-positioning-margin));
   }
 
   .login-modal {
@@ -165,8 +172,8 @@
   }
 </style>
 
-<div class="container">
-  <div class="login-modal" transition:fade>
+<div class="container modal-positioning">
+  <div class="login-modal modal-margin" transition:fade>
     <div class="close-action-container close" on:click={dismiss}>
       <CloseButton />
     </div>

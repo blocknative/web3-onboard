@@ -209,6 +209,15 @@
     font-weight: 300;
   }
 
+  .modal-positioning {
+    justify-content: var(--account-select-modal-positioning-justify-content, var(--modal-positioning-justify-content));
+    align-items: var(--account-select-modal-positioning-align-items, var(--modal-positioning-align-items));
+  }
+
+  .modal-margin {
+    margin: var(--account-select-modal-positioning-margin, var(--modal-positioning-margin));
+  }
+
   .close {
     cursor: pointer;
     padding: 0.5rem;
@@ -223,10 +232,8 @@
     position: absolute;
     top: 0;
     right: 0;
-    z-index: 20;
+    z-index: var(--account-select-modal-z-index, var(--modal-z-index));
     display: flex;
-    align-items: center;
-    justify-content: center;
     width: 100vw;
     height: 100vh;
     backdrop-filter: blur(4px);
@@ -334,9 +341,8 @@
     color: var(--account-select-gray-500, var(--gray-500));
   }
 </style>
-
-<div class="container">
-  <div class="hardware-connect-modal" transition:fade>
+<div class="container modal-positioning">
+  <div class="hardware-connect-modal modal-margin" transition:fade>
     <header class="connect-wallet-header">
       <div />
       <div class="close" on:click={dismiss}>

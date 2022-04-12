@@ -83,6 +83,12 @@ const mountLoginModal = (
         /* SPACING */
         --margin-4: 1rem;
         --margin-5: 0.5rem;
+
+        /* MODAL POSITION */
+        --modal-z-index: 20;
+        --modal-positioning-justify-content: center; /* start | center | end | .... */
+        --modal-positioning-align-items: center; /* start | center | end | .... */
+        --modal-positioning-margin: 12px 12px 12px 12px;
       }
 
     </style>

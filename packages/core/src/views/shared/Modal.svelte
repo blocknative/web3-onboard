@@ -38,6 +38,15 @@
     max-height: calc(100vh - 2rem);
   }
 
+  .modal-positioning {
+    justify-content: var(--onboard-modal-positioning-justify-content, var(--modal-positioning-justify-content));
+    align-items: var(--onboard-modal-positioning-align-items, var(--modal-positioning-align-items));
+  }
+
+  .modal-margin {
+    margin: var(--onboard-modal-positioning-margin, var(--modal-positioning-margin));
+  }
+
   .modal-overflow {
     overflow: hidden;
     border-radius: 24px;
@@ -65,11 +74,13 @@
 </style>
 
 <section class="fixed" transition:fade>
-  <div on:click={close} class="background flex justify-center items-center">
-    <div on:click|stopPropagation class="flex relative max-height">
-      <div class="modal-overflow relative flex justify-center">
-        <div class="modal relative">
-          <slot />
+  <div on:click={close} class="background flex modal-positioning">
+    <div class="flex items-center justify-center modal-margin">
+      <div on:click|stopPropagation class="flex relative max-height">
+        <div class="modal-overflow relative flex justify-center">
+          <div class="modal relative">
+            <slot />
+          </div>
         </div>
       </div>
     </div>
