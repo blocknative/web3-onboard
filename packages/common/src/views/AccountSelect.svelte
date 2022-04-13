@@ -109,14 +109,21 @@
     width: 100%;
     padding: 0.5rem 1.8rem 0.5rem 1rem;
     border-radius: 8px;
-    font-size: var(--account-select-font-size-5, var(--font-size-5));
+    font-size: var(
+      --account-select-font-size-5,
+      var(--onboard-font-size-5, var(--font-size-5))
+    );
     line-height: var(
       --account-select-font-line-height-1,
       var(--font-line-height-1)
     );
-    color: var(--account-select-gray-600, var(--gray-600));
+    color: var(
+      --account-select-gray-600,
+      var(--onboard-gray-600, var(--gray-600))
+    );
     transition: all 200ms ease-in-out;
-    border: 2px solid var(--account-select-gray-200, var(--gray-200));
+    border: 2px solid
+      var(--account-select-gray-200, var(--onboard-gray-200, var(--gray-200)));
     box-sizing: border-box;
     height: 3rem;
     -ms-overflow-style: none;
@@ -142,14 +149,21 @@
     width: 100%;
     padding: 0.5rem 2.6rem 0.5rem 1rem;
     border-radius: 8px;
-    font-size: var(--account-select-font-size-5, var(--font-size-5));
+    font-size: var(
+      --account-select-font-size-5,
+      var(--onboard-font-size-5, var(--font-size-5))
+    );
     line-height: var(
       --account-select-font-line-height-1,
       var(--font-line-height-1)
     );
-    color: var(--account-select-gray-600, var(--gray-600));
+    color: var(
+      --account-select-gray-600,
+      var(--onboard-gray-600, var(--gray-600))
+    );
     transition: all 200ms ease-in-out;
-    border: 2px solid var(--account-select-gray-200, var(--gray-200));
+    border: 2px solid
+      var(--account-select-gray-200, var(--onboard-gray-200, var(--gray-200)));
     box-sizing: border-box;
     height: 3rem;
     -ms-overflow-style: none;
@@ -158,7 +172,7 @@
   button {
     align-items: center;
     padding: 0.75rem 1.5rem;
-    color: var(--account-select-white, var(--white));
+    color: var(--account-select-white, var(--onboard-white, var(--white)));
     border-radius: 1.5rem;
     font-family: var(
       --account-select-font-family-normal,
@@ -166,56 +180,77 @@
     );
     font-style: normal;
     font-weight: bold;
-    font-size: var(--account-select-font-size-5, var(--font-size-5));
-    line-height: var(--account-select-font-line-height-1, var(--line-height-1));
+    font-size: var(
+      --account-select-font-size-5,
+      var(--onboard-font-size-5, var(--font-size-5))
+    );
+    line-height: var(
+      --account-select-font-line-height-1,
+      var(--onboard-line-height-1, var(--line-height-1))
+    );
     border: none;
   }
 
   .connect-btn:disabled {
-    background-color: var(--account-select-primary-300, var(--primary-300));
+    background-color: var(
+      --account-select-primary-300,
+      var(--onboard-primary-300, var(--primary-300))
+    );
     cursor: default;
   }
 
   .connect-btn {
-    background-color: var(--account-select-primary-500, var(--primary-500));
+    background-color: var(
+      --account-select-primary-500,
+      var(--onboard-primary-500, var(--primary-500))
+    );
     cursor: pointer;
   }
 
   .dismiss-action {
-    color: var(--account-select-primary-500, var(--primary-500));
+    color: var(
+      --account-select-primary-500,
+      var(--onboard-primary-500, var(--primary-500))
+    );
     cursor: pointer;
-    margin-left: var(--account-select-margin-4, var(--margin-4));
+    margin-left: var(
+      --account-select-margin-4,
+      var(--onboard-margin-4, var(--margin-4))
+    );
   }
 
   select:hover,
   input:hover {
-    border-color: var(--account-select-primary-300, var(--primary-300));
+    border-color: var(
+      --account-select-primary-300,
+      var(--onboard-primary-300, var(--primary-300))
+    );
   }
 
   select:focus,
   input:focus {
-    border-color: var(--account-select-primary-500, var(--primary-500));
+    border-color: var(
+      --account-select-primary-500,
+      var(--onboard-primary-500, var(--primary-500))
+    );
     box-shadow: 0 0 1px 1px
-      var(--account-select-primary-500, var(--primary-500));
+      var(
+        --account-select-primary-500,
+        var(--onboard-primary-500, var(--primary-500))
+      );
     box-shadow: 0 0 0 1px -moz-mac-focusring;
     outline: none;
   }
 
   select:disabled {
-    background-color: var(--account-select-gray-100, var(--gray-100));
+    background-color: var(
+      --account-select-gray-100,
+      var(--onboard-gray-100, var(--gray-100))
+    );
   }
 
   option {
     font-weight: 300;
-  }
-
-  .modal-positioning {
-    justify-content: var(--account-select-modal-positioning-justify-content, var(--modal-positioning-justify-content));
-    align-items: var(--account-select-modal-positioning-align-items, var(--modal-positioning-align-items));
-  }
-
-  .modal-margin {
-    margin: var(--account-select-modal-positioning-margin, var(--modal-positioning-margin));
   }
 
   .close {
@@ -228,14 +263,19 @@
       --account-select-font-family-normal,
       var(--font-family-normal)
     );
-    color: var(--account-select-black, var(--black));
+    color: var(--account-select-black, var(--onboard-black, var(--black)));
     position: absolute;
     top: 0;
     right: 0;
-    z-index: var(--account-select-modal-z-index, var(--modal-z-index));
+    z-index: var(
+      --account-select-modal-z-index,
+      var(--account-select-modal-z-index)
+    );
     display: flex;
     width: 100vw;
     height: 100vh;
+    align-items: center;
+    justify-content: center;
     backdrop-filter: blur(4px);
     background-color: rgba(0, 0, 0, 0.2);
   }
@@ -244,14 +284,40 @@
     width: 50rem;
     max-height: 51.75rem;
     display: table;
-    background: var(--account-select-white, var(--white));
-    box-shadow: var(--account-select-shadow-1, var(--shadow-1));
+    background: var(--account-select-white, var(--onboard-white, var(--white)));
+    box-shadow: var(
+      --account-select-shadow-1,
+      var(--onboard-shadow-1, var(--shadow-1))
+    );
     border-radius: 1.5rem;
+  }
+
+  .account-select-modal-position {
+    position: absolute;
+    top: var(
+      --onboard-account-select-modal-top,
+      var(--account-select-modal-top)
+    );
+    bottom: var(
+      --onboard-account-select-modal-bottom,
+      var(--account-select-modal-bottom)
+    );
+    left: var(
+      --onboard-account-select-modal-left,
+      var(--account-select-modal-left)
+    );
+    right: var(
+      --onboard-account-select-modal-right,
+      var(--account-select-modal-right)
+    );
   }
 
   .connect-wallet-header {
     position: relative;
-    background-color: var(--account-select-gray-100, var(--gray-100));
+    background-color: var(
+      --account-select-gray-100,
+      var(--onboard-gray-100, var(--gray-100))
+    );
     border-radius: 1.5rem 1.5rem 0 0;
     display: flex;
     justify-content: space-between;
@@ -274,14 +340,26 @@
     );
     font-style: normal;
     font-weight: bold;
-    font-size: var(--account-select-font-size-5, var(--font-size-5));
+    font-size: var(
+      --account-select-font-size-5,
+      var(--onboard-font-size-5, var(--font-size-5))
+    );
     line-height: var(
       --account-select-font-line-height-1,
       var(--font-line-height-1)
     );
-    margin-top: var(--account-select-margin-5, var(--margin-5));
-    margin-bottom: var(--account-select-margin-5, var(--margin-5));
-    color: var(--account-select-gray-700, var(--gray-700));
+    margin-top: var(
+      --account-select-margin-5,
+      var(--onboard-margin-5, var(--margin-5))
+    );
+    margin-bottom: var(
+      --account-select-margin-5,
+      var(--onboard-margin-5, var(--margin-5))
+    );
+    color: var(
+      --account-select-gray-700,
+      var(--onboard-gray-700, var(--gray-700))
+    );
   }
 
   .base-path-select {
@@ -302,7 +380,10 @@
 
   .base-path-container {
     position: relative;
-    margin-right: var(--account-select-margin-5, var(--margin-5));
+    margin-right: var(
+      --account-select-margin-5,
+      var(--onboard-margin-5, var(--margin-5))
+    );
   }
 
   .input-select {
@@ -316,12 +397,18 @@
     right: 0.2rem;
     width: 2.5rem;
     height: 2.5rem;
-    background-color: var(--account-select-white, var(--white));
+    background-color: var(
+      --account-select-white,
+      var(--onboard-white, var(--white))
+    );
     border-radius: 1rem;
   }
 
   .asset-container {
-    margin-right: var(--account-select-margin-5, var(--margin-5));
+    margin-right: var(
+      --account-select-margin-5,
+      var(--onboard-margin-5, var(--margin-5))
+    );
   }
 
   .table-section {
@@ -330,20 +417,27 @@
   }
 
   .table-container {
-    background: var(--account-select-white, var(--white));
-    border: 2px solid var(--account-select-gray-200, var(--gray-200));
+    background: var(--account-select-white, var(--onboard-white, var(--white)));
+    border: 2px solid
+      var(--account-select-gray-200, var(--onboard-gray-200, var(--gray-200)));
     box-sizing: border-box;
     border-radius: 0.5rem;
   }
 
   .address-found-count {
     padding: 1rem;
-    color: var(--account-select-gray-500, var(--gray-500));
+    color: var(
+      --account-select-gray-500,
+      var(--onboard-gray-500, var(--gray-500))
+    );
   }
 </style>
 
-<div class="container modal-positioning">
-  <div class="hardware-connect-modal modal-margin" transition:fade>
+<div class="container">
+  <div
+    class="hardware-connect-modal account-select-modal-position"
+    transition:fade
+  >
     <header class="connect-wallet-header">
       <div />
       <div class="close" on:click={dismiss}>

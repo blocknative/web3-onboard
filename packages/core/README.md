@@ -512,7 +512,57 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-shadow-1: 0px 4px 12px rgba(0, 0, 0, 0.1);
   --onboard-shadow-2: inset 0px -1px 0px rgba(0, 0, 0, 0.1);
 
+  /* MAIN MODAL POSITIONING */
   --onboard-modal-z-index
+  --onboard-modal-top
+  --onboard-modal-bottom
+  --onboard-modal-right
+  --onboard-modal-left
+
+  /* HD WALLET ACCOUNT SELECT MODAL POSITIONING */
+  --onboard-account-select-modal-z-index
+  --onboard-account-select-modal-top
+  --onboard-account-select-modal-bottom
+  --onboard-account-select-modal-right
+  --onboard-account-select-modal-left
+
+
+  /* MAGIC WALLET MODAL POSITIONING */
+  --onboard-magic-wallet-login-modal-z-index
+  --onboard-magic-wallet-login-modal-top
+  --onboard-magic-wallet-login-modal-bottom
+  --onboard-magic-wallet-login-modal-right
+  --onboard-magic-wallet-login-modal-left
+
+
+  /* HARDWARE WALLET STYLES  */
+  /* *if not set will fallback to variables with `--onboard` prefix shown above */
+
+  /* COLORS */
+  --onboard-account-select-modal-white: white;
+  --onboard-account-select-modal-black: black;
+  --onboard-account-select-modal-primary-100: #eff1fc;
+  --onboard-account-select-modal-primary-200: #d0d4f7;
+  --onboard-account-select-modal-primary-300: #b1b8f2;
+  --onboard-account-select-modal-primary-500: #6370e5;
+  --onboard-account-select-modal-primary-600: #454ea0;
+  --onboard-account-select-modal-gray-100: #ebebed;
+  --onboard-account-select-modal-gray-200: #c2c4c9;
+  --onboard-account-select-modal-gray-300: #999ca5;
+  --onboard-account-select-modal-gray-500: #33394b;
+  --onboard-account-select-modal-gray-700: #1a1d26;
+  --onboard-account-select-modal-danger-500: #ff4f4f;
+
+  /* FONTS */
+  --onboard-account-select-modal-font-family-normal: Sofia Pro;
+  --onboard-account-select-modal-font-family-light: Sofia Pro Light;
+  --onboard-account-select-modal-font-size-5: 1rem;
+  --onboard-account-select-modal-font-size-7: .75rem;
+  --onboard-account-select-modal-font-line-height-1: 24px;
+
+  /* SPACING */
+  --onboard-account-select-modal-margin-4: 1rem;
+  --onboard-account-select-modal-margin-5: 0.5rem;
 }
 ```
 

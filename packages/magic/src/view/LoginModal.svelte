@@ -42,6 +42,12 @@
     loggedIn$.next(false)
     loading = false
   }
+
+  const submitOnEnter = (e: KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      login();
+    }
+  }
 </script>
 
 <style>
@@ -55,14 +61,14 @@
     width: 32rem;
     padding: 0.5rem 2.6rem 0.5rem 1rem;
     border-radius: 8px;
-    font-size: var(--login-modal-font-size-5, var(--font-size-5));
+    font-size: var(--magic-wallet-login-modal-font-size-5, var(--onboard-font-size-5, var(--font-size-5)));
     line-height: var(
-      --login-modal-font-line-height-1,
+      --magic-wallet-login-modal-font-line-height-1,
       var(--font-line-height-1)
     );
-    color: var(--login-modal-gray-500, var(--gray-500));
+    color: var(--magic-wallet-login-modal-gray-500, var(--onboard-gray-500, var(--gray-500)));
     transition: all 200ms ease-in-out;
-    border: 2px solid var(--login-modal-gray-200, var(--gray-200));
+    border: 2px solid var(--magic-wallet-login-modal-gray-200, var(--onboard-gray-200, var(--gray-200)));
     box-sizing: border-box;
     height: 3rem;
     -ms-overflow-style: none;
@@ -77,26 +83,26 @@
   button {
     align-items: center;
     padding: 0.75rem 1.5rem;
-    color: var(--login-modal-white, var(--white));
+    color: var(--magic-wallet-login-modal-white, var(--onboard-white, var(--white)));
     border-radius: 1.5rem;
     font-family: var(
-      --login-modal-font-family-normal,
+      --magic-wallet-login-modal-font-family-normal,
       var(--font-family-normal)
     );
     font-style: normal;
     font-weight: bold;
-    font-size: var(--login-modal-font-size-5, var(--font-size-5));
-    line-height: var(--login-modal-font-line-height-1, var(--line-height-1));
+    font-size: var(--magic-wallet-login-modal-font-size-5, var(--onboard-font-size-5, var(--font-size-5)));
+    line-height: var(--magic-wallet-login-modal-font-line-height-1, var(--onboard-line-height-1, var(--line-height-1)));
     border: none;
   }
 
   .login-btn:disabled {
-    background-color: var(--login-modal-primary-300, var(--primary-300));
+    background-color: var(--magic-wallet-login-modal-primary-300, var(--onboard-primary-300, var(--primary-300)));
     cursor: default;
   }
 
   .login-btn {
-    background-color: var(--login-modal-primary-500, var(--primary-500));
+    background-color: var(--magic-wallet-login-modal-primary-500, var(--onboard-primary-500, var(--primary-500)));
     cursor: pointer;
     display: inline-flex;
     justify-content: space-around;
@@ -113,41 +119,41 @@
 
   .container {
     font-family: var(
-      --login-modal-font-family-normal,
+      --magic-wallet-login-modal-font-family-normal,
       var(--font-family-normal)
     );
-    color: var(--login-modal-black, var(--black));
-    position: absolute;
+    color: var(--magic-wallet-login-modal-black, var(--onboard-black, var(--black)));
     top: 0;
     right: 0;
-    z-index: 20;
+    z-index: var(--magic-login-modal-z-index, var(--login-modal-z-index));
+    position: absolute;
     display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100vw;
     height: 100vh;
     backdrop-filter: blur(4px);
     background-color: rgba(0, 0, 0, 0.2);
   }
 
-  .modal-positioning {
-    justify-content: var(--login-modal-modal-positioning-justify-content, var(--modal-positioning-justify-content));
-    align-items: var(--login-modal-modal-positioning-align-items, var(--modal-positioning-align-items));
-  }
-
-  .modal-margin {
-    margin: var(--login-modal-modal-positioning-margin, var(--modal-positioning-margin));
-  }
-
   .login-modal {
     min-width: 36rem;
     max-height: 51.75rem;
     display: table;
-    background: var(--login-modal-white, var(--white));
-    box-shadow: var(--login-modal-shadow-1, var(--shadow-1));
+    background: var(--magic-wallet-login-modal-white, var(--onboard-white, var(--white)));
+    box-shadow: var(--magic-wallet-login-modal-shadow-1, var(--onboard-shadow-1, var(--shadow-1)));
     border-radius: 1.5rem;
     text-align: center;
-    position: relative;
-    background-color: var(--login-modal-white, var(--white));
-    color: var(--login-modal-black, var(--black));
+    background-color: var(--magic-wallet-login-modal-white, var(--onboard-white, var(--white)));
+    color: var(--magic-wallet-login-modal-black, var(--onboard-black, var(--black)));
+  }
+
+  .login-modal-position {
+    position: absolute;
+    top: var(--magic-wallet-login-modal-top, var(--login-modal-top));
+    bottom: var(--magic-wallet-login-modal-bottom, var(--login-modal-bottom));
+    left: var(--magic-wallet-login-modal-left, var(--login-modal-left));
+    right: var(--magic-wallet-login-modal-right, var(--login-modal-right));
   }
 
   .modal-controls {
@@ -160,20 +166,20 @@
   }
 
   .branding {
-    margin: var(--login-modal-margin-5, var(--margin-5));
+    margin: var(--magic-wallet-login-modal-margin-5, var(--onboard-margin-5, var(--margin-5)));
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
   .error-msg {
-    color: var(--login-modal-danger-500, var(--danger-500));
-    font-family: var(--login-modal-font-family-light, var(--font-family-light));
+    color: var(--magic-wallet-login-modal-danger-500, var(--onboard-danger-500, var(--danger-500)));
+    font-family: var(--magic-wallet-login-modal-font-family-light, var(--onboard-font-family-light, var(--font-family-light)));
   }
 </style>
 
-<div class="container modal-positioning">
-  <div class="login-modal modal-margin" transition:fade>
+<div class="container">
+  <div class="login-modal login-modal-position" transition:fade>
     <div class="close-action-container close" on:click={dismiss}>
       <CloseButton />
     </div>
@@ -185,6 +191,7 @@
         placeholder="Email address"
         bind:value={credentials}
         on:input={() => setErrorInEmail()}
+        on:keydown={submitOnEnter}
       />
       {#if errorInEmail}
         <span class="error-msg">Please enter a valid email address</span>

@@ -85,10 +85,11 @@ const mountLoginModal = (
         --margin-5: 0.5rem;
 
         /* MODAL POSITION */
-        --modal-z-index: 20;
-        --modal-positioning-justify-content: center; /* start | center | end | .... */
-        --modal-positioning-align-items: center; /* start | center | end | .... */
-        --modal-positioning-margin: 12px 12px 12px 12px;
+        --login-modal-z-index: 20;
+        --login-modal-top: unset;
+        --login-modal-right: unset;
+        --login-modal-bottom: unset;
+        --login-modal-left: unset;
       }
 
     </style>

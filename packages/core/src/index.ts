@@ -191,9 +191,10 @@ function mountApp() {
 
           /* MODAL POSITIONING */
           --modal-z-index: 10;
-          --modal-positioning-justify-content: center; /* start | center | end | .... */
-          --modal-positioning-align-items: center; /* start | center | end | .... */
-          --modal-positioning-margin: 12px 12px 12px 12px;
+          --modal-top: unset;
+          --modal-right: unset;
+          --modal-bottom: unset;
+          --modal-left: unset;
         }
       </style>
     `
