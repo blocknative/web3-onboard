@@ -539,30 +539,30 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   /* *if not set will fallback to variables with `--onboard` prefix shown above */
 
   /* COLORS */
-  --onboard-account-select-modal-white: white;
-  --onboard-account-select-modal-black: black;
-  --onboard-account-select-modal-primary-100: #eff1fc;
-  --onboard-account-select-modal-primary-200: #d0d4f7;
-  --onboard-account-select-modal-primary-300: #b1b8f2;
-  --onboard-account-select-modal-primary-500: #6370e5;
-  --onboard-account-select-modal-primary-600: #454ea0;
-  --onboard-account-select-modal-gray-100: #ebebed;
-  --onboard-account-select-modal-gray-200: #c2c4c9;
-  --onboard-account-select-modal-gray-300: #999ca5;
-  --onboard-account-select-modal-gray-500: #33394b;
-  --onboard-account-select-modal-gray-700: #1a1d26;
-  --onboard-account-select-modal-danger-500: #ff4f4f;
+  --account-select-modal-white: white;
+  --account-select-modal-black: black;
+  --account-select-modal-primary-100: #eff1fc;
+  --account-select-modal-primary-200: #d0d4f7;
+  --account-select-modal-primary-300: #b1b8f2;
+  --account-select-modal-primary-500: #6370e5;
+  --account-select-modal-primary-600: #454ea0;
+  --account-select-modal-gray-100: #ebebed;
+  --account-select-modal-gray-200: #c2c4c9;
+  --account-select-modal-gray-300: #999ca5;
+  --account-select-modal-gray-500: #33394b;
+  --account-select-modal-gray-700: #1a1d26;
+  --account-select-modal-danger-500: #ff4f4f;
 
   /* FONTS */
-  --onboard-account-select-modal-font-family-normal: Sofia Pro;
-  --onboard-account-select-modal-font-family-light: Sofia Pro Light;
-  --onboard-account-select-modal-font-size-5: 1rem;
-  --onboard-account-select-modal-font-size-7: .75rem;
-  --onboard-account-select-modal-font-line-height-1: 24px;
+  --account-select-modal-font-family-normal: Sofia Pro;
+  --account-select-modal-font-family-light: Sofia Pro Light;
+  --account-select-modal-font-size-5: 1rem;
+  --account-select-modal-font-size-7: .75rem;
+  --account-select-modal-font-line-height-1: 24px;
 
   /* SPACING */
-  --onboard-account-select-modal-margin-4: 1rem;
-  --onboard-account-select-modal-margin-5: 0.5rem;
+  --account-select-modal-margin-4: 1rem;
+  --account-select-modal-margin-5: 0.5rem;
 }
 ```
 
