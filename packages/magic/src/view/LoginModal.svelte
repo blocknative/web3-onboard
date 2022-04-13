@@ -75,10 +75,7 @@
     );
     transition: all 200ms ease-in-out;
     border: 2px solid
-      var(
-        --login-modal-gray-200,
-        var(--onboard-gray-200, var(--gray-200))
-      );
+      var(--login-modal-gray-200, var(--onboard-gray-200, var(--gray-200)));
     box-sizing: border-box;
     height: 3rem;
     -ms-overflow-style: none;
@@ -93,10 +90,7 @@
   button {
     align-items: center;
     padding: 0.75rem 1.5rem;
-    color: var(
-      --login-modal-white,
-      var(--onboard-white, var(--white))
-    );
+    color: var(--login-modal-white, var(--onboard-white, var(--white)));
     border-radius: 1.5rem;
     font-family: var(
       --login-modal-font-family-normal,
@@ -145,12 +139,9 @@
   .container {
     font-family: var(
       --login-modal-font-family-normal,
-      var(--font-family-normal)
+      var(--onboard-font-family-normal, var(--font-family-normal))
     );
-    color: var(
-      --login-modal-black,
-      var(--onboard-black, var(--black))
-    );
+    color: var(--login-modal-black, var(--onboard-black, var(--black)));
     top: 0;
     right: 0;
     z-index: var(--onboard-login-modal-z-index, var(--login-modal-z-index));
@@ -168,10 +159,7 @@
     min-width: 36rem;
     max-height: 51.75rem;
     display: table;
-    background: var(
-      --login-modal-white,
-      var(--onboard-white, var(--white))
-    );
+    background: var(--login-modal-white, var(--onboard-white, var(--white)));
     box-shadow: var(
       --login-modal-shadow-1,
       var(--onboard-shadow-1, var(--shadow-1))
@@ -182,10 +170,7 @@
       --login-modal-white,
       var(--onboard-white, var(--white))
     );
-    color: var(
-      --login-modal-black,
-      var(--onboard-black, var(--black))
-    );
+    color: var(--login-modal-black, var(--onboard-black, var(--black)));
   }
 
   .login-modal-position {
