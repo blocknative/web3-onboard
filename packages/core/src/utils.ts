@@ -25,15 +25,17 @@ import arbitrumIcon from './icons/arbitrum'
 
 import type { ChainStyle, ConnectedChain } from './types'
 
-const parsed = bowser.getParser(window.navigator.userAgent)
-const os = parsed.getOS()
-const browser = parsed.getBrowser()
-const { type } = parsed.getPlatform()
+export function getDevice(): Device {
+  const parsed = bowser.getParser(window.navigator.userAgent)
+  const os = parsed.getOS()
+  const browser = parsed.getBrowser()
+  const { type } = parsed.getPlatform()
 
-export const device: Device = {
-  type: type as DeviceType,
-  os: os as DeviceOS,
-  browser: browser as DeviceBrowser
+  return {
+    type: type as DeviceType,
+    os: os as DeviceOS,
+    browser: browser as DeviceBrowser
+  }
 }
 
 export const notNullish = <T>(value: T | null | undefined): value is T =>

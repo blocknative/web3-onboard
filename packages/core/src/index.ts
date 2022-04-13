@@ -14,7 +14,7 @@ import initI18N from './i18n'
 
 import App from './views/Index.svelte'
 import type { InitOptions, OnboardAPI } from './types'
-import { device } from './utils'
+import { getDevice } from './utils'
 
 const API = {
   connectWallet,
@@ -57,6 +57,8 @@ function init(options: InitOptions): OnboardAPI {
   addChains(chains)
 
   let accountCenterUpdate
+
+  const device = getDevice()
 
   if (device.type === 'mobile') {
     accountCenterUpdate = {

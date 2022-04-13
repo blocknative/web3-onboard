@@ -125,6 +125,7 @@
     padding: 0;
     border: none;
     overflow: hidden;
+    z-index: 1;
   }
 
   .menu li {
