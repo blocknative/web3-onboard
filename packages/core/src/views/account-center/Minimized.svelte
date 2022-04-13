@@ -40,7 +40,10 @@
       ? firstAccount.balance[firstAddressAsset]
       : null
 
-  $: primaryChain = primaryWallet.chains[0]
+  $: primaryChain =
+    primaryWallet && primaryWallet.chains && primaryWallet.chains.length
+      ? primaryWallet.chains[0]
+      : undefined
 
   $: validAppChain = chains.find(({ id, namespace }) =>
     primaryChain
@@ -48,7 +51,7 @@
       : false
   )
 
-  $: defaultChainStyles = getDefaultChainStyles(primaryChain.id)
+  $: defaultChainStyles = getDefaultChainStyles((primaryChain && primaryChain.id) ? primaryChain.id : undefined)
 
   function maximize() {
     updateAccountCenter({ expanded: true })
