@@ -477,6 +477,7 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-connect-sidebar-progress-color
   --onboard-connect-header-background
   --onboard-connect-header-color
+  --onboard-main-scroll-container-background
   --onboard-link-color
   --onboard-close-button-background
   --onboard-close-button-color
