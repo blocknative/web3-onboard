@@ -2,6 +2,7 @@
   import { fade } from 'svelte/transition'
   import type { Subject } from 'rxjs'
 
+  import { validateUserEmail } from '../validation'
   import CloseButton from '../elements/CloseButton.svelte'
   import Spinner from '../elements/Spinner.svelte'
   import type { LoginOptions } from '../types'
@@ -19,16 +20,13 @@
     errorInEmail = false
   }
 
-  const emailRegex =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-
   const validateEmail = (value: string) => {
-    return emailRegex.test(value)
+    return validateUserEmail(value)
   }
 
   const login = async () => {
     loading = true
-    if (!validateEmail(credentials)) {
+    if (validateEmail(credentials)) {
       errorInEmail = true
       loading = false
       return
