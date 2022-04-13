@@ -63,30 +63,30 @@ The Magic Wallet Login styles can customized via [CSS variables](https://develop
 ```css
 :root {
   /* CUSTOMIZE THE COLOR  PALLETTE */
-  --magic-wallet-login-modal-white: white;
-  --magic-wallet-login-modal-black: black;
-  --magic-wallet-login-modal-primary-300: #b1b8f2;
-  --magic-wallet-login-modal-primary-500: #6370e5;
-  --magic-wallet-login-modal-gray-200: #c2c4c9;
-  --magic-wallet-login-modal-gray-500: #33394b;
-  --magic-wallet-login-modal-danger-500: #ff4f4f;
+  --login-modal-white: white;
+  --login-modal-black: black;
+  --login-modal-primary-300: #b1b8f2;
+  --login-modal-primary-500: #6370e5;
+  --login-modal-gray-200: #c2c4c9;
+  --login-modal-gray-500: #33394b;
+  --login-modal-danger-500: #ff4f4f;
 
   /* FONTS */
-  --magic-wallet-login-modal-font-family-normal: Sofia Pro;
-  --magic-wallet-login-modal-font-family-light: Sofia Pro Light;
-  --magic-wallet-login-modal-font-size-5: 1rem;
-  --magic-wallet-login-modal-font-line-height-1: 24px;
+  --login-modal-font-family-normal: Sofia Pro;
+  --login-modal-font-family-light: Sofia Pro Light;
+  --login-modal-font-size-5: 1rem;
+  --login-modal-font-line-height-1: 24px;
 
   /* SPACING */
-  --magic-wallet-login-modal-margin-4: 1rem;
-  --magic-wallet-login-modal-margin-5: 0.5rem;
+  --login-modal-margin-4: 1rem;
+  --login-modal-margin-5: 0.5rem;
 
   /* MAGIC WALLET MODAL POSITIONING */
-  --magic-wallet-login-modal-z-index
-  --magic-wallet-login-modal-top
-  --magic-wallet-login-modal-bottom
-  --magic-wallet-login-modal-right
-  --magic-wallet-login-modal-left
+  --onboard-login-modal-z-index
+  --onboard-login-modal-top
+  --onboard-login-modal-bottom
+  --onboard-login-modal-right
+  --onboard-login-modal-left
 
 }
 ```

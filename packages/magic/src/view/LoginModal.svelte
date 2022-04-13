@@ -62,21 +62,21 @@
     padding: 0.5rem 2.6rem 0.5rem 1rem;
     border-radius: 8px;
     font-size: var(
-      --magic-wallet-login-modal-font-size-5,
+      --login-modal-font-size-5,
       var(--onboard-font-size-5, var(--font-size-5))
     );
     line-height: var(
-      --magic-wallet-login-modal-font-line-height-1,
+      --login-modal-font-line-height-1,
       var(--font-line-height-1)
     );
     color: var(
-      --magic-wallet-login-modal-gray-500,
+      --login-modal-gray-500,
       var(--onboard-gray-500, var(--gray-500))
     );
     transition: all 200ms ease-in-out;
     border: 2px solid
       var(
-        --magic-wallet-login-modal-gray-200,
+        --login-modal-gray-200,
         var(--onboard-gray-200, var(--gray-200))
       );
     box-sizing: border-box;
@@ -94,22 +94,22 @@
     align-items: center;
     padding: 0.75rem 1.5rem;
     color: var(
-      --magic-wallet-login-modal-white,
+      --login-modal-white,
       var(--onboard-white, var(--white))
     );
     border-radius: 1.5rem;
     font-family: var(
-      --magic-wallet-login-modal-font-family-normal,
+      --login-modal-font-family-normal,
       var(--font-family-normal)
     );
     font-style: normal;
     font-weight: bold;
     font-size: var(
-      --magic-wallet-login-modal-font-size-5,
+      --login-modal-font-size-5,
       var(--onboard-font-size-5, var(--font-size-5))
     );
     line-height: var(
-      --magic-wallet-login-modal-font-line-height-1,
+      --login-modal-font-line-height-1,
       var(--onboard-line-height-1, var(--line-height-1))
     );
     border: none;
@@ -117,7 +117,7 @@
 
   .login-btn:disabled {
     background-color: var(
-      --magic-wallet-login-modal-primary-300,
+      --login-modal-primary-300,
       var(--onboard-primary-300, var(--primary-300))
     );
     cursor: default;
@@ -125,7 +125,7 @@
 
   .login-btn {
     background-color: var(
-      --magic-wallet-login-modal-primary-500,
+      --login-modal-primary-500,
       var(--onboard-primary-500, var(--primary-500))
     );
     cursor: pointer;
@@ -144,16 +144,16 @@
 
   .container {
     font-family: var(
-      --magic-wallet-login-modal-font-family-normal,
+      --login-modal-font-family-normal,
       var(--font-family-normal)
     );
     color: var(
-      --magic-wallet-login-modal-black,
+      --login-modal-black,
       var(--onboard-black, var(--black))
     );
     top: 0;
     right: 0;
-    z-index: var(--magic-login-modal-z-index, var(--login-modal-z-index));
+    z-index: var(--onboard-login-modal-z-index, var(--login-modal-z-index));
     position: absolute;
     display: flex;
     align-items: center;
@@ -169,31 +169,31 @@
     max-height: 51.75rem;
     display: table;
     background: var(
-      --magic-wallet-login-modal-white,
+      --login-modal-white,
       var(--onboard-white, var(--white))
     );
     box-shadow: var(
-      --magic-wallet-login-modal-shadow-1,
+      --login-modal-shadow-1,
       var(--onboard-shadow-1, var(--shadow-1))
     );
     border-radius: 1.5rem;
     text-align: center;
     background-color: var(
-      --magic-wallet-login-modal-white,
+      --login-modal-white,
       var(--onboard-white, var(--white))
     );
     color: var(
-      --magic-wallet-login-modal-black,
+      --login-modal-black,
       var(--onboard-black, var(--black))
     );
   }
 
   .login-modal-position {
     position: absolute;
-    top: var(--magic-wallet-login-modal-top, var(--login-modal-top));
-    bottom: var(--magic-wallet-login-modal-bottom, var(--login-modal-bottom));
-    left: var(--magic-wallet-login-modal-left, var(--login-modal-left));
-    right: var(--magic-wallet-login-modal-right, var(--login-modal-right));
+    top: var(--onboard-login-modal-top, var(--login-modal-top));
+    bottom: var(--onboard-login-modal-bottom, var(--login-modal-bottom));
+    left: var(--onboard-login-modal-left, var(--login-modal-left));
+    right: var(--onboard-login-modal-right, var(--login-modal-right));
   }
 
   .modal-controls {
@@ -207,7 +207,7 @@
 
   .branding {
     margin: var(
-      --magic-wallet-login-modal-margin-5,
+      --login-modal-margin-5,
       var(--onboard-margin-5, var(--margin-5))
     );
     display: flex;
@@ -217,11 +217,11 @@
 
   .error-msg {
     color: var(
-      --magic-wallet-login-modal-danger-500,
+      --login-modal-danger-500,
       var(--onboard-danger-500, var(--danger-500))
     );
     font-family: var(
-      --magic-wallet-login-modal-font-family-light,
+      --login-modal-font-family-light,
       var(--onboard-font-family-light, var(--font-family-light))
     );
   }

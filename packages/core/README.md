@@ -528,11 +528,11 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
 
 
   /* MAGIC WALLET MODAL POSITIONING */
-  --onboard-magic-wallet-login-modal-z-index
-  --onboard-magic-wallet-login-modal-top
-  --onboard-magic-wallet-login-modal-bottom
-  --onboard-magic-wallet-login-modal-right
-  --onboard-magic-wallet-login-modal-left
+  --onboard-login-modal-z-index
+  --onboard-login-modal-top
+  --onboard-login-modal-bottom
+  --onboard-login-modal-right
+  --onboard-login-modal-left
 
 
   /* HARDWARE WALLET STYLES  */

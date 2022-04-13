@@ -268,7 +268,7 @@
     top: 0;
     right: 0;
     z-index: var(
-      --account-select-modal-z-index,
+      --onboard-account-select-modal-z-index,
       var(--account-select-modal-z-index)
     );
     display: flex;
