@@ -49,7 +49,7 @@
       : false
   )
 
-  $: defaultChainStyles = getDefaultChainStyles((primaryChain && primaryChain.id) ? primaryChain.id : undefined)
+  $: defaultChainStyles = getDefaultChainStyles(primaryChain && primaryChain.id)
 
   function maximize() {
     updateAccountCenter({ expanded: true })
