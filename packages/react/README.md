@@ -164,7 +164,7 @@ type UseConnectWallet = (): [
 ]
 
 type ConnectOptions = {
-  autoSelect?: string // wallet name to autoselect for user
+  autoSelect?: string // wallet name to auto-select for user
 }
 
 type DisconnectOptions = {

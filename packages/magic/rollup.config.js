@@ -35,5 +35,5 @@ export default {
       inlineSources: !production
     })
   ],
-  external: ['rxjs', 'magic-sdk', '@web3-onboard/common']
+  external: ['joi', 'rxjs', 'magic-sdk', '@web3-onboard/common']
 }

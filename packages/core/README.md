@@ -355,7 +355,7 @@ const { unsubscribe } = state.subscribe(update =>
 // unsubscribe()
 ```
 
-Specific top level slices of state can be subcribed to. For example you may want to just subscribe to receive updates to the `wallets` array only:
+Specific top level slices of state can be subscribed to. For example you may want to just subscribe to receive updates to the `wallets` array only:
 
 ```javascript
 const wallets = onboard.state.select('wallets')
@@ -573,7 +573,7 @@ Many of the wallet modules require dependencies that are not normally included i
 
 ### Webpack 4
 
-Everything should just work since the node builtins are automatically bundled in v4
+Everything should just work since the node built-ins are automatically bundled in v4
 
 ### Webpack 5
 
