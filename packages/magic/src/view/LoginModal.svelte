@@ -2,6 +2,7 @@
   import { fade } from 'svelte/transition'
   import type { Subject } from 'rxjs'
 
+  import { validateUserEmail } from '../validation'
   import CloseButton from '../elements/CloseButton.svelte'
   import Spinner from '../elements/Spinner.svelte'
   import type { LoginOptions } from '../types'
@@ -19,16 +20,13 @@
     errorInEmail = false
   }
 
-  const emailRegex =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-
   const validateEmail = (value: string) => {
-    return emailRegex.test(value)
+    return validateUserEmail(value)
   }
 
   const login = async () => {
     loading = true
-    if (!validateEmail(credentials)) {
+    if (validateEmail(credentials)) {
       errorInEmail = true
       loading = false
       return
@@ -41,6 +39,12 @@
   const dismiss = () => {
     loggedIn$.next(false)
     loading = false
+  }
+
+  const submitOnEnter = (e: KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      login();
+    }
   }
 </script>
 
@@ -120,7 +124,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    z-index: 20;
+    z-index: var(--login-modal-z-index, var(--z-index));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -130,7 +134,7 @@
     background-color: rgba(0, 0, 0, 0.2);
   }
 
-  .login-modal {
+  .onboard-magic-login-modal {
     min-width: 36rem;
     max-height: 51.75rem;
     display: table;
@@ -166,7 +170,7 @@
 </style>
 
 <div class="container">
-  <div class="login-modal" transition:fade>
+  <div class="onboard-magic-login-modal" transition:fade>
     <div class="close-action-container close" on:click={dismiss}>
       <CloseButton />
     </div>
@@ -178,6 +182,7 @@
         placeholder="Email address"
         bind:value={credentials}
         on:input={() => setErrorInEmail()}
+        on:keydown={submitOnEnter}
       />
       {#if errorInEmail}
         <span class="error-msg">Please enter a valid email address</span>
