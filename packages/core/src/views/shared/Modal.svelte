@@ -76,7 +76,7 @@
     on:click={close}
     class="background flex items-center justify-center relative"
   >
-    <div class="flex modal-position">
+    <div class="flex modal-position absolute">
       <div on:click|stopPropagation class="flex relative max-height">
         <div class="modal-overflow relative flex justify-center">
           <div class="modal relative">
