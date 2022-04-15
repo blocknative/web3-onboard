@@ -319,10 +319,11 @@
               chains={appChains}
               color="#33394B"
               bold={true}
+              selectIcon={caretLightIcon}
             />
-            <div class="caret flex items-center justify-center">
+            <!-- <div class="caret flex items-center justify-center">
               {@html caretLightIcon}
-            </div>
+            </div> -->
           </div>
         </div>
       </div>

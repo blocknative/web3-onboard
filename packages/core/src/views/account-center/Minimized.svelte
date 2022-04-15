@@ -203,12 +203,13 @@
               : warningIcon}
           </div>
 
-          <NetworkSelector {chains} color="#33394B" />
+          <NetworkSelector {chains} color="#33394B" selectIcon={caretIcon}
+          />
         </div>
 
-        <div class="caret flex items-center">
+        <!-- <div class="caret flex items-center">
           {@html caretIcon}
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
