@@ -40,8 +40,7 @@
       ? firstAccount.balance[firstAddressAsset]
       : null
 
-  $: primaryChain =
-    primaryWallet && primaryWallet.chains[0]
+  $: primaryChain = primaryWallet && primaryWallet.chains[0]
 
   $: validAppChain = chains.find(({ id, namespace }) =>
     primaryChain
@@ -203,8 +202,7 @@
               : warningIcon}
           </div>
 
-          <NetworkSelector {chains} color="#33394B" selectIcon={caretIcon}
-          />
+          <NetworkSelector {chains} color="#33394B" selectIcon={caretIcon} />
         </div>
       </div>
     </div>

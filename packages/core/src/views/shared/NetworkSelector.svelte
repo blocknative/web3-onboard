@@ -102,7 +102,9 @@
       bind:this={selectElement}
       value={wallet.chains[0].id}
       on:change={handleSelect}
-      style={`color: ${color}; background-image: url('data:image/svg+xml;utf8,${selectIcon}'); ${bold ? 'font-weight: 700;' : ''}`}
+      style={`color: ${color}; background-image: url('data:image/svg+xml;utf8,${selectIcon}'); ${
+        bold ? 'font-weight: 700;' : ''
+      }`}
     >
       {#if !connectedToValidAppChain(wallet.chains[0], chains)}
         <option value={wallet.chains[0].id}
