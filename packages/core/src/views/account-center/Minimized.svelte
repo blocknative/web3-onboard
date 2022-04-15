@@ -206,10 +206,6 @@
           <NetworkSelector {chains} color="#33394B" selectIcon={caretIcon}
           />
         </div>
-
-        <!-- <div class="caret flex items-center">
-          {@html caretIcon}
-        </div> -->
       </div>
     </div>
   </div>
