@@ -1,4 +1,4 @@
-import {
+import type {
   Account,
   Asset,
   Chain,
@@ -122,8 +122,7 @@ function trezor(options: TrezorOptions): WalletInit {
       getInterface: async ({ EventEmitter, chains }) => {
         const { default: Trezor } = await import('trezor-connect')
         const { Transaction } = await import('@ethereumjs/tx')
-        const { default: Common, Hardfork } = await import('@ethereumjs/common')
-        const { accountSelect, createEIP1193Provider, ProviderRpcError } =
+        const { accountSelect, createEIP1193Provider, ProviderRpcError, getCommon } =
           await import('@web3-onboard/common')
         const ethUtil = await import('ethereumjs-util')
         const { compress } = (await import('eth-crypto')).publicKey
@@ -337,16 +336,10 @@ function trezor(options: TrezorOptions): WalletInit {
           const transactionData =
             createTrezorTransactionObject(transactionObject)
 
-          // @ts-ignore -- Due to weird commonjs exports
-          const CommonConstructor = Common.default || Common
-
-          const common = new CommonConstructor({
-            chain: customNetwork || Number.parseInt(currentChain.id) || 1,
-            // Berlin is the minimum hardfork that will allow for EIP1559
-            hardfork: Hardfork.Berlin,
-            // List of supported EIPS
-            eips: [1559]
-          })
+            const chainId = currentChain.hasOwnProperty('id')
+            ? Number.parseInt(currentChain.id)
+            : 1
+          const common = await getCommon({ customNetwork, chainId })
 
           const trezorResult = await trezorSignTransaction(
             derivationPath,

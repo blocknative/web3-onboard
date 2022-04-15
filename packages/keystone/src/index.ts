@@ -1,14 +1,9 @@
-import {
+import type {
   Account,
-  accountSelect,
   Chain,
-  createEIP1193Provider,
   CustomNetwork,
-  ProviderRpcErrorCode,
-  ProviderRpcError,
   ScanAccountsOptions,
-  WalletInit,
-  EIP1193Provider
+  WalletInit
 } from '@web3-onboard/common'
 
 import type { providers } from 'ethers'
@@ -83,7 +78,6 @@ function keystone({
         const { StaticJsonRpcProvider } = await import(
           '@ethersproject/providers'
         )
-        const { default: Common, Hardfork } = await import('@ethereumjs/common')
 
         const { default: AirGappedKeyring } = await import(
           '@keystonehq/eth-keyring'
@@ -92,6 +86,14 @@ function keystone({
         const { TransactionFactory: Transaction } = await import(
           '@ethereumjs/tx'
         )
+
+        const {
+          accountSelect,
+          createEIP1193Provider,
+          ProviderRpcError,
+          ProviderRpcErrorCode,
+          getCommon
+        } = await import('@web3-onboard/common')
 
         const keyring = AirGappedKeyring.getEmptyKeyring()
         await keyring.readKeyring()
@@ -197,16 +199,10 @@ function keystone({
             // Set the `from` field to the currently selected account
             transactionObject = { ...transactionObject, from }
 
-            // @ts-ignore -- Due to weird commonjs exports
-            const CommonConstructor = Common.default || Common
-
-            const common = new Common({
-              chain: customNetwork || Number.parseInt(currentChain.id) || 1,
-              // Berlin is the minimum hardfork that will allow for EIP1559
-              hardfork: Hardfork.Berlin,
-              // List of supported EIPS
-              eips: [1559]
-            })
+            const chainId = currentChain.hasOwnProperty('id')
+              ? Number.parseInt(currentChain.id)
+              : 1
+            const common = await getCommon({ customNetwork, chainId })
 
             transactionObject.gasLimit =
               transactionObject.gas || transactionObject.gasLimit
