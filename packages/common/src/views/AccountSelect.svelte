@@ -115,7 +115,8 @@
     );
     line-height: var(
       --account-select-font-line-height-1,
-      var(--font-line-height-1)
+      var(--onboard-font-line-height-1,
+      var(--font-line-height-1))
     );
     color: var(
       --account-select-gray-600,
@@ -155,8 +156,8 @@
     );
     line-height: var(
       --account-select-font-line-height-1,
-      var(--font-line-height-1)
-    );
+      var(--onboard-font-line-height-1,
+      var(--font-line-height-1))    );
     color: var(
       --account-select-gray-600,
       var(--onboard-gray-600, var(--gray-600))
@@ -176,7 +177,8 @@
     border-radius: 1.5rem;
     font-family: var(
       --account-select-font-family-normal,
-      var(--font-family-normal)
+      var(--onboard-font-family-normal,
+      var(--font-family-normal))
     );
     font-style: normal;
     font-weight: bold;
@@ -337,7 +339,8 @@
   .control-label {
     font-family: var(
       --account-select-font-family-normal,
-      var(--font-family-normal)
+      var(--onboard-font-family-normal,
+      var(--font-family-normal))
     );
     font-style: normal;
     font-weight: bold;
@@ -347,7 +350,8 @@
     );
     line-height: var(
       --account-select-font-line-height-1,
-      var(--font-line-height-1)
+      var(--onboard-font-line-height-1,
+      var(--font-line-height-1))
     );
     margin-top: var(
       --account-select-margin-5,
