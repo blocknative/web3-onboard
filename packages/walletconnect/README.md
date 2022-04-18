@@ -13,6 +13,10 @@ type WalletConnectOptions = {
   bridge?: string // default = 'https://bridge.walletconnect.org'
   qrcodeModalOptions?: {
     mobileLinks: string[] // set the order and list of mobile linking wallets
+  },
+  moduleCustomizations?: {
+    customIconSVG: string
+    customDisplayName: string
   }
 }
 ```

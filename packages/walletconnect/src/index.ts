@@ -14,16 +14,30 @@ interface WalletConnectOptions {
   qrcodeModalOptions?: {
     mobileLinks: string[]
   }
+  moduleCustomizations?: {
+    customIconSVG: string
+    customDisplayName: string
+  }
 }
 
 function walletConnect(options?: WalletConnectOptions): WalletInit {
-  const { bridge = 'https://bridge.walletconnect.org', qrcodeModalOptions } =
-    options || {}
+  const {
+    bridge = 'https://bridge.walletconnect.org',
+    qrcodeModalOptions,
+    moduleCustomizations
+  } = options || {}
 
   return () => {
     return {
-      label: 'WalletConnect',
-      getIcon: async () => (await import('./icon.js')).default,
+      label:
+        moduleCustomizations && moduleCustomizations.customDisplayName
+          ? moduleCustomizations.customDisplayName
+          : 'WalletConnect',
+      getIcon: async () => {
+        return moduleCustomizations && moduleCustomizations.customIconSVG
+          ? moduleCustomizations.customIconSVG
+          : (await import('./icon.js')).default
+      },
       getInterface: async ({ chains, EventEmitter }) => {
         const { default: WalletConnect } = await import('@walletconnect/client')
 
