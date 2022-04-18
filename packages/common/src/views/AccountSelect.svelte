@@ -261,7 +261,8 @@
   .container {
     font-family: var(
       --account-select-font-family-normal,
-      var(--font-family-normal)
+      var(--onboard-font-family-normal,
+      var(--font-family-normal))
     );
     color: var(--account-select-black, var(--onboard-black, var(--black)));
     position: absolute;
