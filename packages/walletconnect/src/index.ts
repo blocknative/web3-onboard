@@ -30,13 +30,13 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
   return () => {
     return {
       label:
-        moduleCustomizations && moduleCustomizations.customDisplayName
-          ? moduleCustomizations.customDisplayName
-          : 'WalletConnect',
+        (moduleCustomizations && moduleCustomizations.customDisplayName) ||
+        'WalletConnect',
       getIcon: async () => {
-        return moduleCustomizations && moduleCustomizations.customIconSVG
-          ? moduleCustomizations.customIconSVG
-          : (await import('./icon.js')).default
+        return (
+          (moduleCustomizations && moduleCustomizations.customIconSVG) ||
+          (await import('./icon.js')).default
+        )
       },
       getInterface: async ({ chains, EventEmitter }) => {
         const { default: WalletConnect } = await import('@walletconnect/client')
