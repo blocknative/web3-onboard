@@ -194,6 +194,30 @@ function ledger({
           return accounts
         }
 
+        const signMessage = async (address: string, message: string) => {
+          if (!(accounts && accounts.length && accounts.length > 0))
+            throw new Error(
+              'No account selected. Must call eth_requestAccounts first.'
+            )
+
+          const account =
+            accounts.find(account => account.address === address) || accounts[0]
+
+          return eth
+            .signPersonalMessage(
+              account.derivationPath,
+              Buffer.from(message).toString('hex')
+            )
+            .then(result => {
+              let v = (result['v'] - 27).toString(16)
+              if (v.length < 2) {
+                v = '0' + v
+              }
+
+              return `0x${result['r']}${result['s']}${v}`
+            })
+        }
+
         const request: EIP1193Provider['request'] = async ({
           method,
           params
@@ -323,30 +347,10 @@ function ledger({
 
             return transactionHash as string
           },
-          eth_sign: async ({ params: [address, message] }) => {
-            if (!(accounts && accounts.length && accounts.length > 0))
-              throw new Error(
-                'No account selected. Must call eth_requestAccounts first.'
-              )
-
-            const account =
-              accounts.find(account => account.address === address) ||
-              accounts[0]
-
-            return eth
-              .signPersonalMessage(
-                account.derivationPath,
-                Buffer.from(message).toString('hex')
-              )
-              .then(result => {
-                let v = (result['v'] - 27).toString(16)
-                if (v.length < 2) {
-                  v = '0' + v
-                }
-
-                return `0x${result['r']}${result['s']}${v}`
-              })
-          },
+          eth_sign: async ({ params: [address, message] }) =>
+            signMessage(address, message),
+          personal_sign: async ({ params: [message, address] }) =>
+            signMessage(address, message),
           eth_signTypedData: async ({ params: [address, typedData] }) => {
             if (!(accounts && accounts.length && accounts.length > 0))
               throw new Error(

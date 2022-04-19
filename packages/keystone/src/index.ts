@@ -129,6 +129,18 @@ function keystone({
           return accounts
         }
 
+        const signMessage = (address: string, message: string) => {
+          if (!(accounts && accounts.length && accounts.length > 0))
+            throw new Error(
+              'No account selected. Must call eth_requestAccounts first.'
+            )
+
+          const account =
+            accounts.find(account => account.address === address) || accounts[0]
+
+          return keyring.signMessage(account.address, message)
+        }
+
         const request = async ({
           method,
           params
@@ -170,12 +182,9 @@ function keystone({
             const accounts = await getAccounts()
             return accounts.map(({ address }) => address)
           },
-          eth_accounts: async () => {
-            return accounts && accounts[0].address ? [accounts[0].address] : []
-          },
-          eth_chainId: async () => {
-            return currentChain.id
-          },
+          eth_accounts: async () =>
+            accounts && accounts[0].address ? [accounts[0].address] : [],
+          eth_chainId: async () => currentChain.id,
           eth_signTransaction: async ({ params: [transactionObject] }) => {
             if (!accounts)
               throw new Error(
@@ -232,18 +241,10 @@ function keystone({
 
             return transactionHash as string
           },
-          eth_sign: async ({ params: [address, message] }) => {
-            if (!(accounts && accounts.length && accounts.length > 0))
-              throw new Error(
-                'No account selected. Must call eth_requestAccounts first.'
-              )
-
-            const account =
-              accounts.find(account => account.address === address) ||
-              accounts[0]
-
-            return keyring.signMessage(account.address, message)
-          },
+          eth_sign: async ({ params: [address, message] }) =>
+            signMessage(address, message),
+          personal_sign: async ({ params: [message, address] }) =>
+            signMessage(address, message),
           eth_signTypedData: async ({ params: [address, typedData] }) => {
             if (!(accounts && accounts.length && accounts.length > 0))
               throw new Error(

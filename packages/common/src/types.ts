@@ -49,6 +49,12 @@ export type RequestPatch = {
         params: EthSignMessageRequest['params']
       }) => Promise<string>)
     | null
+  personal_sign?:
+    | ((args: {
+        baseRequest: EIP1193Provider['request']
+        params: PersonalSignMessageRequest['params']
+      }) => Promise<string>)
+    | null
   eth_signTypedData?:
     | ((args: {
         baseRequest: EIP1193Provider['request']
@@ -335,6 +341,12 @@ export interface EthSignMessageRequest {
   params: [Address, Message]
 }
 
+//https://geth.ethereum.org/docs/rpc/ns-personal#personal_sign
+export interface PersonalSignMessageRequest {
+  method: 'personal_sign'
+  params: [Message, Address]
+}
+
 // request -> signTypedData_v3`
 export interface EIP712Request {
   method: 'eth_signTypedData'
@@ -390,6 +402,7 @@ export interface EIP1193Provider extends SimpleEventEmitter {
   request(args: EthChainIdRequest): Promise<ChainId>
   request(args: EthSignTransactionRequest): Promise<string>
   request(args: EthSignMessageRequest): Promise<string>
+  request(args: PersonalSignMessageRequest): Promise<string>
   request(args: EIP712Request): Promise<string>
   request(args: { method: string; params?: Array<unknown> }): Promise<unknown>
   disconnect?(): void

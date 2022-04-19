@@ -461,19 +461,16 @@ function trezor(options: TrezorOptions): WalletInit {
             const accounts = await getAccountFromAccountSelect()
             return accounts.map(({ address }) => address)
           },
-          eth_accounts: async () => {
-            return Array.isArray(accounts) &&
-              accounts.length &&
-              accounts[0].hasOwnProperty('address')
+          eth_accounts: async () =>
+            Array.isArray(accounts) &&
+            accounts.length &&
+            accounts[0].hasOwnProperty('address')
               ? [accounts[0].address]
-              : []
-          },
-          eth_chainId: async () => {
-            return currentChain.hasOwnProperty('id') ? currentChain.id : ''
-          },
-          eth_signTransaction: async ({ params: [transactionObject] }) => {
-            return signTransaction(transactionObject)
-          },
+              : [],
+          eth_chainId: async () =>
+            currentChain.hasOwnProperty('id') ? currentChain.id : '',
+          eth_signTransaction: async ({ params: [transactionObject] }) =>
+            signTransaction(transactionObject),
           eth_sendTransaction: async ({ baseRequest, params }) => {
             const signedTx = await provider.request({
               method: 'eth_signTransaction',
@@ -487,10 +484,10 @@ function trezor(options: TrezorOptions): WalletInit {
 
             return transactionHash as string
           },
-          eth_sign: async ({ params: [address, message] }) => {
-            let messageData = { data: message }
-            return signMessage(address, messageData)
-          },
+          eth_sign: async ({ params: [address, message] }) =>
+            signMessage(address, { data: message }),
+          personal_sign: async ({ params: [message, address] }) =>
+            signMessage(address, { data: message }),
           wallet_switchEthereumChain: async ({ params: [{ chainId }] }) => {
             currentChain =
               chains.find(({ id }) => id === chainId) || currentChain
