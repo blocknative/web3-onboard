@@ -26,8 +26,12 @@ export const getCommon = async ({
       // List of supported EIPS
       eips: [1559]
     })
-  } catch (e) {
-    common = CommonConstructor.custom({ chainId })
+  } catch (e: any) {
+    if (e.message && /Chain.*not supported/.test(e.message)) {
+      common = CommonConstructor.custom({ chainId })
+    } else {
+      throw e
+    }
   }
   return common
 }
