@@ -1,4 +1,5 @@
-import { useState, useCallback, useSyncExternalStore } from 'react'
+import { useState, useCallback } from 'react'
+import { useSyncExternalStore } from 'use-sync-external-store'
 
 import Web3Onboard from '@web3-onboard/core'
 import type {
