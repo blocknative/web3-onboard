@@ -275,6 +275,10 @@
     font-size: var(--onboard-font-size-5, var(--font-size-5));
     height: var(--onboard-connect-content-height, 440px);
     overflow: hidden;
+    background: var(
+      --onboard-main-scroll-container-background,
+      var(--onboard-white, var(--white))
+    );
   }
 
   .content {
@@ -293,7 +297,7 @@
 
   .header {
     box-shadow: var(--onboard-shadow-2, var(--shadow-2));
-    background-color: var(
+    background: var(
       --onboard-connect-header-background,
       var(--onboard-white, var(--white))
     );

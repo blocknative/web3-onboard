@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/magic",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "description": "Magic module for Onboard.js",
   "scripts": {
     "build": "rollup -c",
@@ -42,8 +42,9 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.0.3",
+    "@web3-onboard/common": "^2.0.6",
     "magic-sdk": "^8.1.0",
-    "rxjs": "^7.5.2"
+    "rxjs": "^7.5.2",
+    "joi": "^17.4.2"
   }
 }
