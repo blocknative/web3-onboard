@@ -477,6 +477,7 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-connect-sidebar-progress-color
   --onboard-connect-header-background
   --onboard-connect-header-color
+  --onboard-main-scroll-container-background
   --onboard-link-color
   --onboard-close-button-background
   --onboard-close-button-color
@@ -512,7 +513,56 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-shadow-1: 0px 4px 12px rgba(0, 0, 0, 0.1);
   --onboard-shadow-2: inset 0px -1px 0px rgba(0, 0, 0, 0.1);
 
+  /* MAIN MODAL POSITIONING */
   --onboard-modal-z-index
+  --onboard-modal-top
+  --onboard-modal-bottom
+  --onboard-modal-right
+  --onboard-modal-left
+
+  /* HD WALLET ACCOUNT SELECT MODAL POSITIONING */
+  --onboard-account-select-modal-z-index
+  --onboard-account-select-modal-top
+  --onboard-account-select-modal-bottom
+  --onboard-account-select-modal-right
+  --onboard-account-select-modal-left
+
+  /* MAGIC WALLET MODAL POSITIONING */
+  --onboard-login-modal-z-index
+  --onboard-login-modal-top
+  --onboard-login-modal-bottom
+  --onboard-login-modal-right
+  --onboard-login-modal-left
+
+
+  /* HARDWARE WALLET STYLES  */
+  /* *if not set will fallback to variables with `--onboard` prefix shown above */
+
+  /* COLORS */
+  --account-select-modal-white: white;
+  --account-select-modal-black: black;
+  --account-select-modal-primary-100: #eff1fc;
+  --account-select-modal-primary-200: #d0d4f7;
+  --account-select-modal-primary-300: #b1b8f2;
+  --account-select-modal-primary-500: #6370e5;
+  --account-select-modal-primary-600: #454ea0;
+  --account-select-modal-gray-100: #ebebed;
+  --account-select-modal-gray-200: #c2c4c9;
+  --account-select-modal-gray-300: #999ca5;
+  --account-select-modal-gray-500: #33394b;
+  --account-select-modal-gray-700: #1a1d26;
+  --account-select-modal-danger-500: #ff4f4f;
+
+  /* FONTS */
+  --account-select-modal-font-family-normal: Sofia Pro;
+  --account-select-modal-font-family-light: Sofia Pro Light;
+  --account-select-modal-font-size-5: 1rem;
+  --account-select-modal-font-size-7: .75rem;
+  --account-select-modal-font-line-height-1: 24px;
+
+  /* SPACING */
+  --account-select-modal-margin-4: 1rem;
+  --account-select-modal-margin-5: 0.5rem;
 }
 ```
 

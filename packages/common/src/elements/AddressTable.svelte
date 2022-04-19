@@ -24,7 +24,7 @@
     position: sticky;
     inset-block-start: 0; /* "top" */
     box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1);
-    background-color: var(--account-select-white, var(--white));
+    background: var(--account-select-white, var(--onboard-white, var(--white)));
   }
 
   th,
@@ -40,10 +40,13 @@
     );
     font-style: normal;
     font-weight: normal;
-    font-size: var(--account-select-font-size-5, var(--font-size-5));
+    font-size: var(
+      --account-select-font-size-5,
+      var(--onboard-font-size-5, var(--font-size-5))
+    );
     line-height: var(
       --account-select-font-line-height-1,
-      var(--font-line-height-1)
+      var(--onboard-font-line-height-1, var(--font-line-height-1))
     );
   }
 
@@ -52,8 +55,11 @@
   }
 
   tbody tr:hover {
-    background-color: var(--account-select-primary-100, var(--primary-100));
-    color: var(--account-select-black, var(--black));
+    background-color: var(
+      --account-select-primary-100,
+      var(--onboard-primary-100, var(--primary-100))
+    );
+    color: var(--account-select-black, var(--onboard-black, var(--black)));
   }
 
   .address-table {
@@ -64,8 +70,14 @@
 
   .selected-row,
   .selected-row:hover {
-    background-color: var(--account-select-primary-500, var(--primary-500));
-    color: var(--account-select-primary-100, var(--primary-100));
+    background-color: var(
+      --account-select-primary-500,
+      var(--onboard-primary-500, var(--primary-500))
+    );
+    color: var(
+      --account-select-primary-100,
+      var(--onboard-primary-100, var(--primary-100))
+    );
   }
 
   .asset-td {
