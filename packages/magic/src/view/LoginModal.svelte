@@ -108,7 +108,7 @@
   }
 
   .login-btn:disabled {
-    background-color: var(
+    background: var(
       --login-modal-primary-300,
       var(--onboard-primary-300, var(--primary-300))
     );
@@ -116,7 +116,7 @@
   }
 
   .login-btn {
-    background-color: var(
+    background: var(
       --login-modal-primary-500,
       var(--onboard-primary-500, var(--primary-500))
     );
@@ -150,7 +150,7 @@
     width: 100vw;
     height: 100vh;
     backdrop-filter: blur(4px);
-    background-color: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.2);
   }
 
   .onboard-magic-login-modal {
@@ -164,7 +164,7 @@
     );
     border-radius: 1.5rem;
     text-align: center;
-    background-color: var(
+    background: var(
       --login-modal-white,
       var(--onboard-white, var(--white))
     );

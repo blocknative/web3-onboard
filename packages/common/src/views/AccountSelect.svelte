@@ -192,7 +192,7 @@
   }
 
   .connect-btn:disabled {
-    background-color: var(
+    background: var(
       --account-select-primary-300,
       var(--onboard-primary-300, var(--primary-300))
     );
@@ -200,7 +200,7 @@
   }
 
   .connect-btn {
-    background-color: var(
+    background: var(
       --account-select-primary-500,
       var(--onboard-primary-500, var(--primary-500))
     );
@@ -314,7 +314,7 @@
 
   .connect-wallet-header {
     position: relative;
-    background-color: var(
+    background: var(
       --account-select-gray-100,
       var(--onboard-gray-100, var(--gray-100))
     );
