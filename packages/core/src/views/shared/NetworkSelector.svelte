@@ -95,7 +95,7 @@
 
 {#if wallet}
   {#if $switching$}
-    <span style={`color: ${color};`}>switching...</span>
+    <span style={`color: ${color}; padding: 0 12px 0 8px;`}>switching...</span>
   {:else}
     <select
       class="flex justify-center items-center pointer"
