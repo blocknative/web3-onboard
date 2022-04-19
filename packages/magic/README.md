@@ -67,6 +67,7 @@ The Magic Wallet Login styles can customized via [CSS variables](https://develop
 
 ```css
 :root {
+  /* *if not set will fallback to variables with `--onboard` prefix shown above */
   /* CUSTOMIZE THE COLOR  PALLETTE */
   --login-modal-white: white;
   --login-modal-black: black;

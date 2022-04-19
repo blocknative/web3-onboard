@@ -527,7 +527,6 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-account-select-modal-right
   --onboard-account-select-modal-left
 
-
   /* MAGIC WALLET MODAL POSITIONING */
   --onboard-login-modal-z-index
   --onboard-login-modal-top
