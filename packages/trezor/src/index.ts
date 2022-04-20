@@ -13,6 +13,7 @@ import {
 import { Buffer } from 'buffer'
 
 import type { StaticJsonRpcProvider } from '@ethersproject/providers'
+import type { TransactionRequest } from '@ethersproject/providers'
 
 import type {
   EthereumTransaction,
@@ -154,13 +155,14 @@ function trezor(options: TrezorOptions): WalletInit {
           | { publicKey: string; chainCode: string; path: string }
           | undefined
 
+        let ethersProvider: StaticJsonRpcProvider
         const scanAccounts = async ({
           derivationPath,
           chainId,
           asset
         }: ScanAccountsOptions): Promise<Account[]> => {
           currentChain = chains.find(({ id }) => id === chainId) || currentChain
-          const provider = new StaticJsonRpcProvider(currentChain.rpcUrl)
+          ethersProvider = new StaticJsonRpcProvider(currentChain.rpcUrl)
 
           const { publicKey, chainCode, path } = await getPublicKey(
             derivationPath
@@ -174,7 +176,7 @@ function trezor(options: TrezorOptions): WalletInit {
                 address,
                 balance: {
                   asset: asset.label,
-                  value: await provider.getBalance(address)
+                  value: await ethersProvider.getBalance(address)
                 }
               }
             ]
@@ -187,7 +189,7 @@ function trezor(options: TrezorOptions): WalletInit {
               path: derivationPath
             },
             asset,
-            provider
+            ethersProvider
           )
         }
 
@@ -260,7 +262,7 @@ function trezor(options: TrezorOptions): WalletInit {
 
         function createTrezorTransactionObject(
           transactionData: TransactionObject
-        ): EthereumTransactionEIP1559 | EthereumTransaction {
+        ): Partial<TransactionObject> {
           if (
             !transactionData ||
             (!transactionData.hasOwnProperty('gasLimit') &&
@@ -303,7 +305,7 @@ function trezor(options: TrezorOptions): WalletInit {
 
         function trezorSignTransaction(
           path: string,
-          transactionData: EthereumTransactionEIP1559 | EthereumTransaction
+          transactionData: TransactionRequest
         ) {
           try {
             return TrezorConnect.ethereumSignTransaction({
@@ -331,7 +333,7 @@ function trezor(options: TrezorOptions): WalletInit {
           }
           signingAccount = signingAccount ? signingAccount : accounts[0]
 
-          const { derivationPath } = signingAccount
+          const { derivationPath, address } = signingAccount
 
           // Set the `from` field to the currently selected account
           const transactionData =
@@ -348,9 +350,12 @@ function trezor(options: TrezorOptions): WalletInit {
             eips: [1559]
           })
 
+          const signer = ethersProvider.getSigner(address)
+          const populatedTransaction = await signer.populateTransaction(transactionData)
+
           const trezorResult = await trezorSignTransaction(
             derivationPath,
-            transactionData
+            populatedTransaction
           )
           if (!trezorResult.success) {
             const message =
@@ -374,7 +379,7 @@ function trezor(options: TrezorOptions): WalletInit {
 
           const signedTx = Transaction.fromTxData(
             {
-              ...transactionData,
+              ...populatedTransaction,
               v: `0x${v}`,
               r: r,
               s: s

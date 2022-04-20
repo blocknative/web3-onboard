@@ -7,11 +7,10 @@ import {
   ProviderRpcErrorCode,
   ProviderRpcError,
   ScanAccountsOptions,
-  WalletInit,
-  EIP1193Provider
+  WalletInit
 } from '@web3-onboard/common'
 
-import type { providers } from 'ethers'
+import type { StaticJsonRpcProvider } from '@ethersproject/providers'
 
 const DEFAULT_BASE_PATH = "m/44'/60'/0'/0"
 
@@ -30,7 +29,7 @@ const assets = [
 
 const getAccount = async (
   keyring: any,
-  provider: providers.StaticJsonRpcProvider,
+  provider: StaticJsonRpcProvider,
   index: number
 ): Promise<Account> => {
   const address = (await keyring.addAccounts())[index]
@@ -47,7 +46,7 @@ const getAccount = async (
 
 const generateAccounts = async (
   keyring: any,
-  provider: providers.StaticJsonRpcProvider
+  provider: StaticJsonRpcProvider
 ): Promise<Account[]> => {
   const accounts = []
   let zeroBalanceAccounts = 0,
@@ -98,17 +97,17 @@ function keystone({
 
         const eventEmitter = new EventEmitter()
 
+        let ethersProvider: StaticJsonRpcProvider
+
         let currentChain: Chain = chains[0]
         const scanAccounts = async ({
-          derivationPath,
-          chainId,
-          asset
+          chainId
         }: ScanAccountsOptions): Promise<Account[]> => {
           currentChain =
             chains.find(({ id }: Chain) => id === chainId) || currentChain
 
-          const provider = new StaticJsonRpcProvider(currentChain.rpcUrl)
-          return generateAccounts(keyring, provider)
+          ethersProvider = new StaticJsonRpcProvider(currentChain.rpcUrl)
+          return generateAccounts(keyring, ethersProvider)
         }
 
         const getAccounts = async () => {
@@ -211,10 +210,13 @@ function keystone({
             transactionObject.gasLimit =
               transactionObject.gas || transactionObject.gasLimit
 
+            const signer = ethersProvider.getSigner(from)
+            const populatedTransaction = await signer.populateTransaction(
+              transactionObject
+            )
+
             const transaction = Transaction.fromTxData(
-              {
-                ...transactionObject
-              },
+              populatedTransaction,
               { common, freeze: false }
             )
 

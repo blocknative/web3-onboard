@@ -196,7 +196,7 @@ function keepkey(): WalletInit {
 
           return accounts
         }
-
+        let ethersProvider: StaticJsonRpcProvider
         const scanAccounts = async ({
           derivationPath,
           chainId,
@@ -205,7 +205,7 @@ function keepkey(): WalletInit {
           if (!keepKeyWallet)
             throw new Error('Device must be connected before scanning accounts')
           currentChain = chains.find(({ id }) => id === chainId) || currentChain
-          const provider = new StaticJsonRpcProvider(currentChain.rpcUrl)
+          ethersProvider = new StaticJsonRpcProvider(currentChain.rpcUrl)
 
           // Checks to see if this is a custom derivation path
           // If it is then just return the single account
@@ -214,7 +214,11 @@ function keepkey(): WalletInit {
           ) {
             try {
               const accountIdx = getAccountIdx(derivationPath)
-              const account = await getAccount({ accountIdx, provider, asset })
+              const account = await getAccount({
+                accountIdx,
+                provider: ethersProvider,
+                asset
+              })
 
               return [account]
             } catch (error) {
@@ -222,7 +226,11 @@ function keepkey(): WalletInit {
             }
           }
 
-          return getAllAccounts({ derivationPath, asset, provider })
+          return getAllAccounts({
+            derivationPath,
+            asset,
+            provider: ethersProvider
+          })
         }
 
         const getAccounts = async () => {
@@ -343,28 +351,32 @@ function keepkey(): WalletInit {
             const { derivationPath } = account || accounts[0]
             const addressNList = bip32ToAddressNList(derivationPath)
 
+            const signer = ethersProvider.getSigner(account?.address)
+            const populatedTransaction = await signer.populateTransaction(
+              transactionObject
+            )
+
             const {
               nonce,
               gasPrice,
-              gas,
               gasLimit,
               to,
               value,
               data,
               maxFeePerGas,
               maxPriorityFeePerGas
-            } = transactionObject
+            } = populatedTransaction
 
             const { serialized } = await keepKeyWallet.ethSignTx({
               addressNList,
-              nonce: nonce || '0x0',
-              gasPrice,
-              gasLimit: gasLimit || gas || '0x5208',
-              to,
-              value: value || '0x0',
-              data: data || '',
-              maxFeePerGas,
-              maxPriorityFeePerGas,
+              nonce: nonce?.toString() || '0x0',
+              gasPrice: gasPrice?.toString(),
+              gasLimit: gasLimit?.toString() || '0x5208',
+              to: to || '',
+              value: value?.toString() || '0x0',
+              data: data?.toString() || '',
+              maxFeePerGas: maxFeePerGas?.toString(),
+              maxPriorityFeePerGas: maxPriorityFeePerGas?.toString(),
               chainId: parseInt(currentChain.id)
             })
 

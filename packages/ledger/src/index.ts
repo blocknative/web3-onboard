@@ -14,7 +14,7 @@ import { TypedDataUtils } from '@metamask/eth-sig-util'
 import { Buffer } from 'buffer'
 
 import type Transport from '@ledgerhq/hw-transport'
-import type { providers } from 'ethers'
+import type { StaticJsonRpcProvider } from '@ethersproject/providers'
 import type Eth from '@ledgerhq/hw-app-eth'
 
 const LEDGER_LIVE_PATH = `m/44'/60'`
@@ -60,7 +60,7 @@ const getAccount = async (
   derivationPath: string,
   asset: Asset,
   index: number,
-  provider: providers.StaticJsonRpcProvider,
+  provider: StaticJsonRpcProvider,
   eth: Eth
 ): Promise<Account> => {
   const dPath =
@@ -81,7 +81,7 @@ const getAccount = async (
 const getAddresses = async (
   derivationPath: string,
   asset: Asset,
-  provider: providers.StaticJsonRpcProvider,
+  provider: StaticJsonRpcProvider,
   eth: Eth
 ): Promise<Account[]> => {
   const accounts = []
@@ -138,6 +138,8 @@ function ledger({
         const eth = new Eth(transport)
         const eventEmitter = new EventEmitter()
 
+        let ethersProvider: StaticJsonRpcProvider
+
         let currentChain: Chain = chains[0]
 
         const scanAccounts = async ({
@@ -148,7 +150,7 @@ function ledger({
           try {
             currentChain =
               chains.find(({ id }: Chain) => id === chainId) || currentChain
-            const provider = new StaticJsonRpcProvider(currentChain.rpcUrl)
+            ethersProvider = new StaticJsonRpcProvider(currentChain.rpcUrl)
 
             // Checks to see if this is a custom derivation path
             // If it is then just return the single account
@@ -163,13 +165,13 @@ function ledger({
                   address,
                   balance: {
                     asset: asset.label,
-                    value: await provider.getBalance(address)
+                    value: await ethersProvider.getBalance(address)
                   }
                 }
               ]
             }
 
-            return getAddresses(derivationPath, asset, provider, eth)
+            return getAddresses(derivationPath, asset, ethersProvider, eth)
           } catch (error) {
             const { statusText } = error as { statusText: string }
             throw new Error(
@@ -286,10 +288,11 @@ function ledger({
             transactionObject.gasLimit =
               transactionObject.gas || transactionObject.gasLimit
 
+            const signer = ethersProvider.getSigner(from)
+            const populatedTransaction = await signer.populateTransaction(transactionObject)
+ 
             const transaction = Transaction.fromTxData(
-              {
-                ...transactionObject
-              },
+              populatedTransaction,
               { common }
             )
 
@@ -309,7 +312,7 @@ function ledger({
             // Reconstruct the signed transaction
             const signedTx = Transaction.fromTxData(
               {
-                ...transactionObject,
+                ...populatedTransaction,
                 v: `0x${v}`,
                 r: `0x${r}`,
                 s: `0x${s}`
