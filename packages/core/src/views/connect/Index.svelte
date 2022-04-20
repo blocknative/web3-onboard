@@ -354,6 +354,7 @@
                 wallet: selectedWallet && selectedWallet.label
               }
             })}
+            Working!!!
           </h4>
           <div on:click={close} class="button-container absolute">
             <CloseButton />
