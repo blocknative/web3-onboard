@@ -59,8 +59,6 @@ function magic(options: MagicInitOptions): WalletInit {
           }
         }
 
-        if (userEmail) loggedIn = await loginWithEmail(userEmail)
-
         const handleLogin = async () => {
           loggedIn = await loginModal({
             walletName: walletName,
@@ -77,6 +75,7 @@ function magic(options: MagicInitOptions): WalletInit {
           const patchedProvider = createEIP1193Provider(magicProvider, {
             eth_requestAccounts: async ({ baseRequest }) => {
               try {
+                if (userEmail) loggedIn = await loginWithEmail(userEmail)
                 if (!loggedIn) await handleLogin()
                 const accounts = await baseRequest({ method: 'eth_accounts' })
                 activeAddress = accounts[0]

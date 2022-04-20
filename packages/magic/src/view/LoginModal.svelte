@@ -208,6 +208,16 @@
       var(--onboard-font-family-light, var(--font-family-light))
     );
   }
+
+  @media all and (max-width: 520px) {
+    .onboard-magic-login-modal {
+      min-width: 22rem;
+      width: 98vw;
+    }
+    input[type='text'] {
+      width: 21rem;
+    }
+  }
 </style>
 
 <div class="container">

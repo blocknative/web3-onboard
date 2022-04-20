@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@web3-onboard/common": "^2.0.6",
-    "@web3-onboard/core": "^2.2.4"
+    "@web3-onboard/core": "^2.2.5"
   },
   "peerDependencies": {
     "react": "^17.0.2"
