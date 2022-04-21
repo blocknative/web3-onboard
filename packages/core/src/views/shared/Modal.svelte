@@ -58,7 +58,7 @@
 
   @media all and (max-width: 520px) {
     .relative {
-      width: calc(100% - 1rem);
+      width: 100vw;
     }
 
     .modal-overflow {

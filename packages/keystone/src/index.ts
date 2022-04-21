@@ -1,11 +1,7 @@
-import {
+import type {
   Account,
-  accountSelect,
   Chain,
-  createEIP1193Provider,
   CustomNetwork,
-  ProviderRpcErrorCode,
-  ProviderRpcError,
   ScanAccountsOptions,
   WalletInit
 } from '@web3-onboard/common'
@@ -82,7 +78,6 @@ function keystone({
         const { StaticJsonRpcProvider } = await import(
           '@ethersproject/providers'
         )
-        const { default: Common, Hardfork } = await import('@ethereumjs/common')
 
         const { default: AirGappedKeyring } = await import(
           '@keystonehq/eth-keyring'
@@ -91,6 +86,14 @@ function keystone({
         const { TransactionFactory: Transaction } = await import(
           '@ethereumjs/tx'
         )
+
+        const {
+          accountSelect,
+          createEIP1193Provider,
+          ProviderRpcError,
+          ProviderRpcErrorCode,
+          getCommon
+        } = await import('@web3-onboard/common')
 
         const keyring = AirGappedKeyring.getEmptyKeyring()
         await keyring.readKeyring()
@@ -124,6 +127,18 @@ function keystone({
           }
 
           return accounts
+        }
+
+        const signMessage = (address: string, message: string) => {
+          if (!(accounts && accounts.length && accounts.length > 0))
+            throw new Error(
+              'No account selected. Must call eth_requestAccounts first.'
+            )
+
+          const account =
+            accounts.find(account => account.address === address) || accounts[0]
+
+          return keyring.signMessage(account.address, message)
         }
 
         const request = async ({
@@ -167,12 +182,9 @@ function keystone({
             const accounts = await getAccounts()
             return accounts.map(({ address }) => address)
           },
-          eth_accounts: async () => {
-            return accounts && accounts[0].address ? [accounts[0].address] : []
-          },
-          eth_chainId: async () => {
-            return currentChain.id
-          },
+          eth_accounts: async () =>
+            accounts && accounts[0].address ? [accounts[0].address] : [],
+          eth_chainId: async () => currentChain.id,
           eth_signTransaction: async ({ params: [transactionObject] }) => {
             if (!accounts)
               throw new Error(
@@ -196,16 +208,10 @@ function keystone({
             // Set the `from` field to the currently selected account
             transactionObject = { ...transactionObject, from }
 
-            // @ts-ignore -- Due to weird commonjs exports
-            const CommonConstructor = Common.default || Common
-
-            const common = new Common({
-              chain: customNetwork || Number.parseInt(currentChain.id) || 1,
-              // Berlin is the minimum hardfork that will allow for EIP1559
-              hardfork: Hardfork.Berlin,
-              // List of supported EIPS
-              eips: [1559]
-            })
+            const chainId = currentChain.hasOwnProperty('id')
+              ? Number.parseInt(currentChain.id)
+              : 1
+            const common = await getCommon({ customNetwork, chainId })
 
             transactionObject.gasLimit =
               transactionObject.gas || transactionObject.gasLimit
@@ -238,18 +244,10 @@ function keystone({
 
             return transactionHash as string
           },
-          eth_sign: async ({ params: [address, message] }) => {
-            if (!(accounts && accounts.length && accounts.length > 0))
-              throw new Error(
-                'No account selected. Must call eth_requestAccounts first.'
-              )
-
-            const account =
-              accounts.find(account => account.address === address) ||
-              accounts[0]
-
-            return keyring.signMessage(account.address, message)
-          },
+          eth_sign: async ({ params: [address, message] }) =>
+            signMessage(address, message),
+          personal_sign: async ({ params: [message, address] }) =>
+            signMessage(address, message),
           eth_signTypedData: async ({ params: [address, typedData] }) => {
             if (!(accounts && accounts.length && accounts.length > 0))
               throw new Error(
