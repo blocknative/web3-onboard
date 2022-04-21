@@ -35,5 +35,5 @@ export default {
       inlineSources: !production
     })
   ],
-  external: ['joi', 'rxjs', 'ethers']
+  external: ['joi', 'rxjs', 'ethers', '@ethereumjs/common']
 }

@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@ethersproject/providers": "^5.5.0",
-    "@web3-onboard/common": "^2.0.0",
+    "@web3-onboard/common": "^2.0.7",
     "@walletconnect/client": "^1.7.1",
     "@walletconnect/qrcode-modal": "^1.7.1",
     "rxjs": "^7.5.2"
