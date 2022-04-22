@@ -45,10 +45,15 @@
   .name {
     margin-left: var(--onboard-spacing-4, var(--spacing-4));
   }
+
+  button.wallet-button-styling {
+    border-radius: var(--onboard-wallet-button-border-radius, var(--wallet-button-border-radius));
+    box-shadow: var(--onboard-wallet-button-box-shadow, var(--wallet-button-box-shadow));
+  }
 </style>
 
 <button
-  class="relative justify-start"
+  class="relative justify-start wallet-button-styling"
   class:connected
   in:fade
   on:click={onClick}

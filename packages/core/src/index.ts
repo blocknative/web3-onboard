@@ -195,6 +195,15 @@ function mountApp() {
           --modal-right: unset;
           --modal-bottom: unset;
           --modal-left: unset;
+          
+          /* MODAL STYLES */
+          --modal-border-radius: 24px;
+          --modal-backdrop: rgba(0, 0, 0, 0.6);
+          --modal-box-shadow: none;
+          
+          /* WALLET BUTTON STYLES */
+          --wallet-button-border-radius: 24px;
+          --wallet-button-box-shadow: none;
         }
       </style>
     `

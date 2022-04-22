@@ -30,7 +30,7 @@
   .background {
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.6);
+    background: var(--onboard-modal-backdrop, var(--modal-backdrop));
     pointer-events: all;
   }
 
@@ -47,11 +47,15 @@
 
   .modal-overflow {
     overflow: hidden;
-    border-radius: 24px;
+  }
+  
+  .modal-styling {
+    border-radius: var(--onboard-modal-border-radius, var(--modal-border-radius));
+    box-shadow: var(--onboard-modal-box-shadow, var(--modal-box-shadow));
   }
 
   .modal {
-    border-radius: 24px;
+    border-radius: var(--onboard-modal-border-radius, var(--modal-border-radius));
     overflow-y: auto;
     background: white;
   }
@@ -78,7 +82,7 @@
   >
     <div class="flex modal-position absolute">
       <div on:click|stopPropagation class="flex relative max-height">
-        <div class="modal-overflow relative flex justify-center">
+        <div class="modal-overflow modal-styling relative flex justify-center">
           <div class="modal relative">
             <slot />
           </div>
