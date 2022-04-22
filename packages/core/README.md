@@ -517,6 +517,9 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-spacing-5: 0.5rem;
 
   /* SHADOWS */
+  --onboard-border-radius-1: 24px;
+
+  /* SHADOWS */
   --onboard-shadow-0: none;
   --onboard-shadow-1: 0px 4px 12px rgba(0, 0, 0, 0.1);
   --onboard-shadow-2: inset 0px -1px 0px rgba(0, 0, 0, 0.1);

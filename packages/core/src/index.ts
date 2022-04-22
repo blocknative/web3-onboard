@@ -185,7 +185,7 @@ function mountApp() {
           --spacing-7: 0.125rem;
   
           /* BORDER RADIUS */
-          --border-radius: 24px;  
+          --border-radius-1: 24px;  
 
           /* SHADOWS */
           --shadow-0: none;
