@@ -50,12 +50,12 @@
   }
   
   .modal-styling {
-    border-radius: var(--onboard-modal-border-radius, var(--modal-border-radius));
-    box-shadow: var(--onboard-modal-box-shadow, var(--modal-box-shadow));
+    border-radius: var(--onboard-modal-border-radius, var(--border-radius));
+    box-shadow: var(--onboard-modal-box-shadow, var(--box-shadow-0));
   }
 
   .modal {
-    border-radius: var(--onboard-modal-border-radius, var(--modal-border-radius));
+    border-radius: var(--onboard-modal-border-radius, var(--border-radius));
     overflow-y: auto;
     background: white;
   }

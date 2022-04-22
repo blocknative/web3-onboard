@@ -184,7 +184,11 @@ function mountApp() {
           --spacing-6: 0.25rem;
           --spacing-7: 0.125rem;
   
+          /* BORDER RADIUS */
+          --border-radius: 24px;  
+
           /* SHADOWS */
+          --shadow-0: none;
           --shadow-1: 0px 4px 12px rgba(0, 0, 0, 0.1);
           --shadow-2: inset 0px -1px 0px rgba(0, 0, 0, 0.1);
           --shadow-3: 0px 4px 16px rgba(179, 179, 179, 0.2);
@@ -197,13 +201,7 @@ function mountApp() {
           --modal-left: unset;
           
           /* MODAL STYLES */
-          --modal-border-radius: 24px;
           --modal-backdrop: rgba(0, 0, 0, 0.6);
-          --modal-box-shadow: none;
-          
-          /* WALLET BUTTON STYLES */
-          --wallet-button-border-radius: 24px;
-          --wallet-button-box-shadow: none;
         }
       </style>
     `

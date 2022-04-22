@@ -47,8 +47,8 @@
   }
 
   button.wallet-button-styling {
-    border-radius: var(--onboard-wallet-button-border-radius, var(--wallet-button-border-radius));
-    box-shadow: var(--onboard-wallet-button-box-shadow, var(--wallet-button-box-shadow));
+    border-radius: var(--onboard-wallet-button-border-radius, var(--border-radius));
+    box-shadow: var(--onboard-wallet-button-box-shadow, var(--box-shadow-0));
   }
 </style>
 
