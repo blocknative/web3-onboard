@@ -383,6 +383,13 @@ function keepkey(): WalletInit {
             const addressNList = bip32ToAddressNList(derivationPath)
 
             const signer = ethersProvider.getSigner(account?.address)
+
+            transactionObject.gasLimit =
+              transactionObject.gas || transactionObject.gasLimit
+
+            // 'gas' is an invalid property for the TransactionRequest type
+            delete transactionObject.gas
+
             const populatedTransaction = await signer.populateTransaction(
               transactionObject
             )

@@ -216,6 +216,9 @@ function keystone({
             transactionObject.gasLimit =
               transactionObject.gas || transactionObject.gasLimit
 
+            // 'gas' is an invalid property for the TransactionRequest type
+            delete transactionObject.gas
+
             const signer = ethersProvider.getSigner(from)
             const populatedTransaction = await signer.populateTransaction(
               transactionObject

@@ -11,11 +11,14 @@ import type {
 
 // these cannot be dynamically imported
 import { TypedDataUtils } from '@metamask/eth-sig-util'
-import { Buffer } from 'buffer'
 
 import type Transport from '@ledgerhq/hw-transport'
-import type { StaticJsonRpcProvider } from '@ethersproject/providers'
+import type {
+  StaticJsonRpcProvider,
+  TransactionRequest
+} from '@ethersproject/providers'
 import type Eth from '@ledgerhq/hw-app-eth'
+import type { BigNumber } from 'ethers'
 
 const LEDGER_LIVE_PATH = `m/44'/60'`
 const LEDGER_DEFAULT_PATH = `m/44'/60'/0'`
@@ -307,13 +310,37 @@ function ledger({
             transactionObject.gasLimit =
               transactionObject.gas || transactionObject.gasLimit
 
+            // 'gas' is an invalid property for the TransactionRequest type
+            delete transactionObject.gas
+
             const signer = ethersProvider.getSigner(from)
-            const populatedTransaction = await signer.populateTransaction(transactionObject)
- 
-            const transaction = Transaction.fromTxData(
-              populatedTransaction,
-              { common }
+            let populatedTransaction = await signer.populateTransaction(
+              transactionObject
             )
+
+            populatedTransaction = Object.keys(populatedTransaction).reduce(
+              (transaction, txnProperty) => ({
+                ...transaction,
+                ...((
+                  populatedTransaction[
+                    txnProperty as keyof TransactionRequest
+                  ] as BigNumber
+                ).toHexString
+                  ? {
+                      [txnProperty]: (
+                        populatedTransaction[
+                          txnProperty as keyof TransactionRequest
+                        ] as BigNumber
+                      ).toHexString()
+                    }
+                  : {})
+              }),
+              populatedTransaction
+            )
+
+            const transaction = Transaction.fromTxData(populatedTransaction, {
+              common
+            })
 
             let unsignedTx = transaction.getMessageToSign(false)
 

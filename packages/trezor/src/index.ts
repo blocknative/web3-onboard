@@ -123,8 +123,12 @@ function trezor(options: TrezorOptions): WalletInit {
       getInterface: async ({ EventEmitter, chains }) => {
         const { default: Trezor } = await import('trezor-connect')
         const { Transaction } = await import('@ethereumjs/tx')
-        const { accountSelect, createEIP1193Provider, ProviderRpcError, getCommon } =
-          await import('@web3-onboard/common')
+        const {
+          accountSelect,
+          createEIP1193Provider,
+          ProviderRpcError,
+          getCommon
+        } = await import('@web3-onboard/common')
         const ethUtil = await import('ethereumjs-util')
         const { compress } = (await import('eth-crypto')).publicKey
         const { StaticJsonRpcProvider } = await import(
@@ -338,13 +342,22 @@ function trezor(options: TrezorOptions): WalletInit {
           const transactionData =
             createTrezorTransactionObject(transactionObject)
 
-            const chainId = currentChain.hasOwnProperty('id')
+          const chainId = currentChain.hasOwnProperty('id')
             ? Number.parseInt(currentChain.id)
             : 1
           const common = await getCommon({ customNetwork, chainId })
 
           const signer = ethersProvider.getSigner(address)
-          const populatedTransaction = await signer.populateTransaction(transactionData)
+
+          transactionObject.gasLimit =
+            transactionObject.gas || transactionObject.gasLimit
+
+          // 'gas' is an invalid property for the TransactionRequest type
+          delete transactionObject.gas
+
+          const populatedTransaction = await signer.populateTransaction(
+            transactionData
+          )
 
           const trezorResult = await trezorSignTransaction(
             derivationPath,

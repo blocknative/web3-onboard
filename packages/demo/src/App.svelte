@@ -172,11 +172,16 @@
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
 
-  const signTransactionMessage = provider => {
-    provider.request({
-      method: 'eth_signTransaction',
-      params: [JSON.parse(transactionObject)]
+  const signTransactionMessage = async provider => {
+    const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
+
+    const signer = ethersProvider.getSigner()
+
+    const signature = await signer.signTransaction({
+      to: '0x518AC04a5Bbc5846F0de774458565Ad5957c9017',
+      value: 1000000000000000
     })
+    console.log(signature)
   }
 
   const signMessage = async (provider, address) => {
