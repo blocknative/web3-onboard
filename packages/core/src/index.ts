@@ -184,7 +184,11 @@ function mountApp() {
           --spacing-6: 0.25rem;
           --spacing-7: 0.125rem;
   
+          /* BORDER RADIUS */
+          --border-radius-1: 24px;  
+
           /* SHADOWS */
+          --shadow-0: none;
           --shadow-1: 0px 4px 12px rgba(0, 0, 0, 0.1);
           --shadow-2: inset 0px -1px 0px rgba(0, 0, 0, 0.1);
           --shadow-3: 0px 4px 16px rgba(179, 179, 179, 0.2);
@@ -195,6 +199,9 @@ function mountApp() {
           --modal-right: unset;
           --modal-bottom: unset;
           --modal-left: unset;
+          
+          /* MODAL STYLES */
+          --modal-backdrop: rgba(0, 0, 0, 0.6);
         }
       </style>
     `

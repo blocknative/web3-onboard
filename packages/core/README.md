@@ -487,7 +487,14 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-wallet-button-background-hover
   --onboard-wallet-button-color
   --onboard-wallet-button-border-color
+  --onboard-wallet-button-border-radius
+  --onboard-wallet-button-box-shadow
   --onboard-wallet-app-icon-border-color
+
+  /* CUSTOMIZE THE CONNECT MODAL */
+  --onboard-modal-border-radius
+  --onboard-modal-backdrop
+  --onboard-modal-box-shadow
 
   /* FONTS */
   --onboard-font-family-normal: Sofia Pro;
@@ -510,6 +517,10 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-spacing-5: 0.5rem;
 
   /* SHADOWS */
+  --onboard-border-radius-1: 24px;
+
+  /* SHADOWS */
+  --onboard-shadow-0: none;
   --onboard-shadow-1: 0px 4px 12px rgba(0, 0, 0, 0.1);
   --onboard-shadow-2: inset 0px -1px 0px rgba(0, 0, 0, 0.1);
 

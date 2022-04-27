@@ -20,7 +20,6 @@
 <style>
   .sidebar {
     padding: var(--onboard-spacing-3, var(--spacing-3));
-    border-radius: 24px 0 0 24px;
     background: var(
       --onboard-connect-sidebar-background,
       var(--onboard-gray-100, var(--gray-100))
