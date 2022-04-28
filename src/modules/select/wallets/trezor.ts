@@ -84,7 +84,7 @@ async function trezorProvider(options: {
   const { default: Common } = await import('@ethereumjs/common')
   const ethUtil = await import('ethereumjs-util')
   const { default: createProvider } = await import('./providerEngine')
-  const { generateAddresses, isValidPath } = await import('./hd-wallet')
+  const { generateAddresses } = await import('./hd-wallet')
 
   const { default: TrezorConnect, DEVICE_EVENT, DEVICE } = TrezorConnectLibrary
 
@@ -178,10 +178,6 @@ async function trezorProvider(options: {
   }
 
   async function setPath(path: string, custom?: boolean) {
-    if (!isValidPath(path)) {
-      return false
-    }
-
     if (path !== dPath) {
       // clear any exsting addresses if different path
       addressToPath = new Map()
@@ -323,7 +319,7 @@ async function trezorProvider(options: {
       addresses.map(
         address =>
           new Promise(async resolve => {
-            const balance = await getBalance(address)
+            const balance = await getBalance(address.toLowerCase())
             resolve({ address, balance })
           })
       )
