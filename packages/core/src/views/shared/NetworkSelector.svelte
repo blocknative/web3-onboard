@@ -5,7 +5,9 @@
   import setChain from '../../chain'
   import { wallets$ } from '../../streams'
   import { distinctUntilChanged, debounceTime, skip } from 'rxjs/operators'
+  import caretIcon from '../../icons/caret'
 
+  export let selectIcon: string = caretIcon
   export let color = '#33394B'
   export let chains: Chain[]
   export let bold = false
@@ -72,8 +74,13 @@
     font-size: var(--onboard-font-size-7, var(--font-size-7));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
     max-width: 90px;
-    width: 54px;
+    min-width: 72px;
     transition: width 250ms ease-in-out;
+    background-repeat: no-repeat, repeat;
+    background-position: right 0px top 0px, 0 0;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 0 16px 0 0;
   }
 
   select:focus {
@@ -88,14 +95,16 @@
 
 {#if wallet}
   {#if $switching$}
-    <span style={`color: ${color};`}>switching...</span>
+    <span style={`color: ${color}; padding: 0 12px 0 8px;`}>switching...</span>
   {:else}
     <select
       class="flex justify-center items-center pointer"
       bind:this={selectElement}
       value={wallet.chains[0].id}
       on:change={handleSelect}
-      style={`color: ${color}; ${bold ? 'font-weight: 700;' : ''}`}
+      style={`color: ${color}; background-image: url('data:image/svg+xml;utf8,${selectIcon}'); ${
+        bold ? 'font-weight: 700;' : ''
+      }`}
     >
       {#if !connectedToValidAppChain(wallet.chains[0], chains)}
         <option value={wallet.chains[0].id}
