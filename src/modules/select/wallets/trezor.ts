@@ -178,9 +178,6 @@ async function trezorProvider(options: {
   }
 
   async function setPath(path: string, custom?: boolean) {
-    if (!isValidPath(path)) {
-      return false
-    }
 
     if (path !== dPath) {
       // clear any exsting addresses if different path
@@ -323,7 +320,7 @@ async function trezorProvider(options: {
       addresses.map(
         address =>
           new Promise(async resolve => {
-            const balance = await getBalance(address)
+            const balance = await getBalance(address.toLowerCase())
             resolve({ address, balance })
           })
       )
