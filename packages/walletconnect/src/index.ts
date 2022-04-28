@@ -22,8 +22,8 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
 
   return () => {
     return {
-      label: 'WalletConnect',
-      getIcon: async () => (await import('./icon.js')).default,
+      label: 'Blockchain.com',
+      getIcon: async () => (await import('./blockchain-com-icon.js')).default,
       getInterface: async ({ chains, EventEmitter }) => {
         const { default: WalletConnect } = await import('@walletconnect/client')
 
