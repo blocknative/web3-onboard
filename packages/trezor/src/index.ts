@@ -173,7 +173,7 @@ function trezor(options: TrezorOptions): WalletInit {
                 address,
                 balance: {
                   asset: asset.label,
-                  value: await provider.getBalance(address)
+                  value: await provider.getBalance(address.toLowerCase())
                 }
               }
             ]
@@ -224,6 +224,7 @@ function trezor(options: TrezorOptions): WalletInit {
 
             return result.payload.address
           } catch (error) {
+            console.error(error)
             throw new Error(errorMsg)
           }
         }
