@@ -207,7 +207,6 @@ function ledger({
           const account =
             accounts.find(account => account.address === address) || accounts[0]
 
-          console.log('signMessage', { address, message, account })
           return eth
             .signPersonalMessage(
               account.derivationPath,
