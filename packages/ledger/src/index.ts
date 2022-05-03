@@ -126,8 +126,12 @@ function ledger({
           '@ethersproject/providers'
         )
 
-        const { accountSelect, createEIP1193Provider, ProviderRpcError, getCommon } =
-          await import('@web3-onboard/common')
+        const {
+          accountSelect,
+          createEIP1193Provider,
+          ProviderRpcError,
+          getCommon
+        } = await import('@web3-onboard/common')
 
         const { TransactionFactory: Transaction, Capability } = await import(
           '@ethereumjs/tx'
@@ -206,14 +210,13 @@ function ledger({
           return eth
             .signPersonalMessage(
               account.derivationPath,
-              Buffer.from(message).toString('hex')
+              ethUtil.stripHexPrefix(message)
             )
             .then(result => {
               let v = (result['v'] - 27).toString(16)
               if (v.length < 2) {
                 v = '0' + v
               }
-
               return `0x${result['r']}${result['s']}${v}`
             })
         }
