@@ -119,7 +119,6 @@ function ledger({
       getIcon,
       getInterface: async ({ EventEmitter, chains }: GetInterfaceHelpers) => {
         const Eth = (await import('@ledgerhq/hw-app-eth')).default
-        const { default: Common, Hardfork } = await import('@ethereumjs/common')
         const ethUtil = await import('ethereumjs-util')
 
         const { SignTypedDataVersion } = await import('@metamask/eth-sig-util')
@@ -127,8 +126,12 @@ function ledger({
           '@ethersproject/providers'
         )
 
-        const { accountSelect, createEIP1193Provider, ProviderRpcError } =
-          await import('@web3-onboard/common')
+        const {
+          accountSelect,
+          createEIP1193Provider,
+          ProviderRpcError,
+          getCommon
+        } = await import('@web3-onboard/common')
 
         const { TransactionFactory: Transaction, Capability } = await import(
           '@ethereumjs/tx'
@@ -207,14 +210,13 @@ function ledger({
           return eth
             .signPersonalMessage(
               account.derivationPath,
-              Buffer.from(message).toString('hex')
+              ethUtil.stripHexPrefix(message)
             )
             .then(result => {
               let v = (result['v'] - 27).toString(16)
               if (v.length < 2) {
                 v = '0' + v
               }
-
               return `0x${result['r']}${result['s']}${v}`
             })
         }
@@ -294,18 +296,10 @@ function ledger({
             // Set the `from` field to the currently selected account
             transactionObject = { ...transactionObject, from }
 
-            // @ts-ignore
-            const CommonConstructor = Common.default || Common
-            const common = new CommonConstructor({
-              chain:
-                customNetwork || currentChain.hasOwnProperty('id')
-                  ? Number.parseInt(currentChain.id)
-                  : 1,
-              // Berlin is the minimum hardfork that will allow for EIP1559
-              hardfork: Hardfork.Berlin,
-              // List of supported EIPS
-              eips: [1559]
-            })
+            const chainId = currentChain.hasOwnProperty('id')
+              ? Number.parseInt(currentChain.id)
+              : 1
+            const common = await getCommon({ customNetwork, chainId })
 
             transactionObject.gasLimit =
               transactionObject.gas || transactionObject.gasLimit

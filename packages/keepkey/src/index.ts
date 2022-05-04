@@ -386,19 +386,35 @@ function keepkey(): WalletInit {
               maxPriorityFeePerGas
             } = transactionObject
 
-            const { serialized } = await keepKeyWallet.ethSignTx({
+            const gasData = gasPrice
+              ? {
+                  gasPrice
+                }
+              : {
+                  maxFeePerGas,
+                  maxPriorityFeePerGas
+                }
+            const txn = {
               addressNList,
               nonce: nonce || '0x0',
-              gasPrice,
               gasLimit: gasLimit || gas || '0x5208',
               to,
               value: value || '0x0',
               data: data || '',
-              maxFeePerGas,
-              maxPriorityFeePerGas,
-              chainId: parseInt(currentChain.id)
-            })
+              chainId: parseInt(currentChain.id),
+              ...gasData
+            }
 
+            let serialized
+            try {
+              ;({ serialized } = await keepKeyWallet.ethSignTx(txn))
+            } catch (error: any) {
+              if (error.message && error.message.message) {
+                throw new Error(error.message.message)
+              } else {
+                throw new Error(error)
+              }
+            }
             return serialized
           },
           eth_sendTransaction: async ({ baseRequest, params }) => {
