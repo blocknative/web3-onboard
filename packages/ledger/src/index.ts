@@ -133,7 +133,8 @@ function ledger({
           accountSelect,
           createEIP1193Provider,
           ProviderRpcError,
-          getCommon
+          getCommon,
+          bigNumberFieldsToStrings
         } = await import('@web3-onboard/common')
 
         const { TransactionFactory: Transaction, Capability } = await import(
@@ -318,25 +319,7 @@ function ledger({
               transactionObject
             )
 
-            populatedTransaction = Object.keys(populatedTransaction).reduce(
-              (transaction, txnProperty) => ({
-                ...transaction,
-                ...((
-                  populatedTransaction[
-                    txnProperty as keyof TransactionRequest
-                  ] as BigNumber
-                ).toHexString
-                  ? {
-                      [txnProperty]: (
-                        populatedTransaction[
-                          txnProperty as keyof TransactionRequest
-                        ] as BigNumber
-                      ).toHexString()
-                    }
-                  : {})
-              }),
-              populatedTransaction
-            )
+            populatedTransaction = bigNumberFieldsToStrings(populatedTransaction)
 
             const transaction = Transaction.fromTxData(populatedTransaction, {
               common
