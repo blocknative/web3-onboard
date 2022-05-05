@@ -15,7 +15,32 @@
 
 <script lang="ts">
   import { fade } from 'svelte/transition'
+  import { onDestroy, onMount } from 'svelte'
 
+  const body = document.body
+  onMount(() => {
+    window.addEventListener(
+      'scroll',
+      () => {
+        document.documentElement.style.setProperty(
+          '--scroll-y',
+          `${window.scrollY}px`
+        )
+      },
+      { passive: true }
+    )
+    const scrollY =
+      document.documentElement.style.getPropertyValue('--scroll-y')
+    body.style.position = 'fixed'
+    body.style.top = `-${scrollY}`
+  })
+
+  onDestroy(() => {
+    const scrollY = body.style.top
+    body.style.position = ''
+    body.style.top = ''
+    window.scrollTo(0, parseInt(scrollY || '0') * -1)
+  })
   export let close: () => void
 </script>
 
@@ -48,7 +73,7 @@
   .modal-overflow {
     overflow: hidden;
   }
-  
+
   .modal-styling {
     border-radius: var(--onboard-modal-border-radius, var(--border-radius-1));
     box-shadow: var(--onboard-modal-box-shadow, var(--box-shadow-0));

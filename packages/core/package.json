@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/core",
-  "version": "2.2.6",
+  "version": "2.2.7",
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
