@@ -15,11 +15,6 @@ import { Buffer } from 'buffer'
 import type { StaticJsonRpcProvider } from '@ethersproject/providers'
 import type { TransactionRequest } from '@ethersproject/providers'
 
-import type {
-  EthereumTransaction,
-  EthereumTransactionEIP1559
-} from 'trezor-connect'
-
 interface TrezorOptions {
   email: string
   appUrl: string
@@ -179,7 +174,7 @@ function trezor(options: TrezorOptions): WalletInit {
                 address,
                 balance: {
                   asset: asset.label,
-                  value: await ethersProvider.getBalance(address)
+                  value: await provider.getBalance(address.toLowerCase())
                 }
               }
             ]
@@ -230,6 +225,7 @@ function trezor(options: TrezorOptions): WalletInit {
 
             return result.payload.address
           } catch (error) {
+            console.error(error)
             throw new Error(errorMsg)
           }
         }

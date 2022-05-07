@@ -15,7 +15,32 @@
 
 <script lang="ts">
   import { fade } from 'svelte/transition'
+  import { onDestroy, onMount } from 'svelte'
 
+  const body = document.body
+  onMount(() => {
+    window.addEventListener(
+      'scroll',
+      () => {
+        document.documentElement.style.setProperty(
+          '--scroll-y',
+          `${window.scrollY}px`
+        )
+      },
+      { passive: true }
+    )
+    const scrollY =
+      document.documentElement.style.getPropertyValue('--scroll-y')
+    body.style.position = 'fixed'
+    body.style.top = `-${scrollY}`
+  })
+
+  onDestroy(() => {
+    const scrollY = body.style.top
+    body.style.position = ''
+    body.style.top = ''
+    window.scrollTo(0, parseInt(scrollY || '0') * -1)
+  })
   export let close: () => void
 </script>
 
@@ -30,7 +55,7 @@
   .background {
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.6);
+    background: var(--onboard-modal-backdrop, var(--modal-backdrop));
     pointer-events: all;
   }
 
@@ -47,11 +72,15 @@
 
   .modal-overflow {
     overflow: hidden;
-    border-radius: 24px;
+  }
+
+  .modal-styling {
+    border-radius: var(--onboard-modal-border-radius, var(--border-radius-1));
+    box-shadow: var(--onboard-modal-box-shadow, var(--box-shadow-0));
   }
 
   .modal {
-    border-radius: 24px;
+    border-radius: var(--onboard-modal-border-radius, var(--border-radius-1));
     overflow-y: auto;
     background: white;
   }
@@ -78,7 +107,7 @@
   >
     <div class="flex modal-position absolute">
       <div on:click|stopPropagation class="flex relative max-height">
-        <div class="modal-overflow relative flex justify-center">
+        <div class="modal-overflow modal-styling relative flex justify-center">
           <div class="modal relative">
             <slot />
           </div>
