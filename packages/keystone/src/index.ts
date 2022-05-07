@@ -79,9 +79,13 @@ function keystone({
           '@ethersproject/providers'
         )
 
-        const { default: AirGappedKeyring } = await import(
+        let { default: AirGappedKeyring } = await import(
           '@keystonehq/eth-keyring'
         )
+
+        // @ts-ignore super weird esm issue where the default export is an object with a property default on it
+        // if that is the case then we just grab the default value
+        AirGappedKeyring = AirGappedKeyring?.default || AirGappedKeyring
 
         const { TransactionFactory: Transaction } = await import(
           '@ethereumjs/tx'
@@ -92,7 +96,8 @@ function keystone({
           createEIP1193Provider,
           ProviderRpcError,
           ProviderRpcErrorCode,
-          getCommon
+          getCommon,
+          bigNumberFieldsToStrings
         } = await import('@web3-onboard/common')
 
         const keyring = AirGappedKeyring.getEmptyKeyring()
@@ -220,14 +225,15 @@ function keystone({
             delete transactionObject.gas
 
             const signer = ethersProvider.getSigner(from)
-            const populatedTransaction = await signer.populateTransaction(
-              transactionObject
+
+            let populatedTransaction = bigNumberFieldsToStrings(
+              await signer.populateTransaction(transactionObject)
             )
 
-            const transaction = Transaction.fromTxData(
-              populatedTransaction,
-              { common, freeze: false }
-            )
+            const transaction = Transaction.fromTxData(populatedTransaction, {
+              common,
+              freeze: false
+            })
 
             // @ts-ignore
             const signedTx = await keyring.signTransaction(from, transaction)

@@ -64,8 +64,11 @@ function keepkey(): WalletInit {
           accountSelect,
           createEIP1193Provider,
           ProviderRpcError,
-          entryModal
+          entryModal,
+          bigNumberFieldsToStrings
         } = await import('@web3-onboard/common')
+
+        const { utils } = await import('ethers')
 
         const { StaticJsonRpcProvider } = await import(
           '@ethersproject/providers'
@@ -372,17 +375,21 @@ function keepkey(): WalletInit {
                 'No account selected. Must call eth_requestAccounts first.'
               )
 
+            // Per the code above if accounts is empty or undefined then this line of code won't execute
+            // ∴ account must be defined here which is why it is cast without the 'undefined' type
             const account =
               !transactionObject || !transactionObject.hasOwnProperty('from')
                 ? accounts[0]
-                : accounts.find(
-                    account => account.address === transactionObject.from
-                  )
+                : (accounts.find(
+                    account =>
+                      account.address.toLocaleLowerCase() ===
+                      transactionObject.from.toLocaleLowerCase()
+                  ) as Account)
 
-            const { derivationPath } = account || accounts[0]
+            const { derivationPath, address } = account
             const addressNList = bip32ToAddressNList(derivationPath)
 
-            const signer = ethersProvider.getSigner(account?.address)
+            const signer = ethersProvider.getSigner(address)
 
             transactionObject.gasLimit =
               transactionObject.gas || transactionObject.gasLimit
@@ -390,32 +397,34 @@ function keepkey(): WalletInit {
             // 'gas' is an invalid property for the TransactionRequest type
             delete transactionObject.gas
 
-            const populatedTransaction = await signer.populateTransaction(
+            transactionObject.gasLimit = undefined
+
+            let populatedTransaction = await signer.populateTransaction(
               transactionObject
             )
 
             const {
-              nonce,
-              gasPrice,
-              gasLimit,
               to,
               value,
-              data,
+              nonce,
+              gasLimit,
+              gasPrice,
               maxFeePerGas,
-              maxPriorityFeePerGas
-            } = populatedTransaction
+              maxPriorityFeePerGas,
+              data
+            } = bigNumberFieldsToStrings(populatedTransaction)
 
             const { serialized } = await keepKeyWallet.ethSignTx({
               addressNList,
-              nonce: nonce?.toString() || '0x0',
-              gasPrice: gasPrice?.toString(),
-              gasLimit: gasLimit?.toString() || '0x5208',
+              chainId: parseInt(currentChain.id),
               to: to || '',
-              value: value?.toString() || '0x0',
-              data: data?.toString() || '',
-              maxFeePerGas: maxFeePerGas?.toString(),
-              maxPriorityFeePerGas: maxPriorityFeePerGas?.toString(),
-              chainId: parseInt(currentChain.id)
+              value: value || '',
+              nonce: utils.hexValue(nonce),
+              gasLimit: gasLimit || '0x0',
+              gasPrice,
+              maxFeePerGas,
+              maxPriorityFeePerGas,
+              data: data?.toString() || ''
             })
 
             return serialized

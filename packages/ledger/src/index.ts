@@ -319,7 +319,8 @@ function ledger({
               transactionObject
             )
 
-            populatedTransaction = bigNumberFieldsToStrings(populatedTransaction)
+            populatedTransaction =
+              bigNumberFieldsToStrings(populatedTransaction)
 
             const transaction = Transaction.fromTxData(populatedTransaction, {
               common

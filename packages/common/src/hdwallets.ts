@@ -38,14 +38,31 @@ export const getCommon = async ({
   return common
 }
 
+type StringifiedTransactionRequest = Omit<
+  TransactionRequest,
+  | 'nonce'
+  | 'gasLimit'
+  | 'gasPrice'
+  | 'value'
+  | 'maxPriorityFeePerGas'
+  | 'maxFeePerGas'
+> & {
+  nonce: string
+  gasLimit: string
+  gasPrice?: string
+  value: string
+  maxPriorityFeePerGas?: string
+  maxFeePerGas?: string
+}
+
 /**
  * Takes in TransactionRequest and converts all BigNumber values to strings
- * @param transaction 
+ * @param transaction
  * @returns a transaction where all BigNumber properties are now strings
  */
 export const bigNumberFieldsToStrings = (
   transaction: TransactionRequest
-): TransactionRequest =>
+): StringifiedTransactionRequest =>
   Object.keys(transaction).reduce(
     (transaction, txnProperty) => ({
       ...transaction,
@@ -59,4 +76,4 @@ export const bigNumberFieldsToStrings = (
         : {})
     }),
     transaction
-  )
+  ) as StringifiedTransactionRequest
