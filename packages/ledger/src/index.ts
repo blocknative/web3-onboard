@@ -13,12 +13,8 @@ import type {
 import { TypedDataUtils } from '@metamask/eth-sig-util'
 
 import type Transport from '@ledgerhq/hw-transport'
-import type {
-  StaticJsonRpcProvider,
-  TransactionRequest
-} from '@ethersproject/providers'
+import type { StaticJsonRpcProvider } from '@ethersproject/providers'
 import type Eth from '@ledgerhq/hw-app-eth'
-import type { BigNumber } from 'ethers'
 
 const LEDGER_LIVE_PATH = `m/44'/60'`
 const LEDGER_DEFAULT_PATH = `m/44'/60'/0'`
@@ -213,7 +209,6 @@ function ledger({
           const account =
             accounts.find(account => account.address === address) || accounts[0]
 
-          console.log('signMessage', { address, message, account })
           return eth
             .signPersonalMessage(
               account.derivationPath,

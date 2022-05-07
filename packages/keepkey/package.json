@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/keepkey",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "KeepKey module for web3-onboard",
   "module": "dist/index.js",
   "browser": "dist/index.js",

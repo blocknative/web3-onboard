@@ -174,7 +174,7 @@ function trezor(options: TrezorOptions): WalletInit {
                 address,
                 balance: {
                   asset: asset.label,
-                  value: await provider.getBalance(address.toLowerCase())
+                  value: await ethersProvider.getBalance(address.toLowerCase())
                 }
               }
             ]
