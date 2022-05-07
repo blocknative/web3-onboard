@@ -235,8 +235,17 @@ function keystone({
               freeze: false
             })
 
-            // @ts-ignore
-            const signedTx = await keyring.signTransaction(from, transaction)
+            let signedTx
+            try {
+              // @ts-ignore
+              signedTx = await keyring.signTransaction(from, transaction)
+            } catch (error: any) {
+              if (error.message && error.message.message) {
+                throw new Error(error.message.message)
+              } else {
+                throw new Error(error)
+              }
+            }
 
             return `0x${signedTx.serialize().toString('hex')}`
           },
