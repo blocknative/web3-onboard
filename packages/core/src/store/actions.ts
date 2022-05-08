@@ -20,6 +20,7 @@ import type {
 
 import {
   validateAccountCenterUpdate,
+  validateLocale,
   validateString,
   validateWallet,
   validateWalletInit
@@ -165,6 +166,12 @@ export function setWalletModules(wallets: WalletInit[]): void {
 }
 
 export function setLocale(locale: string): void {
+  const error = validateLocale(locale)
+
+  if (error) {
+    throw error
+  }
+
   const action = {
     type: SET_LOCALE,
     payload: locale
