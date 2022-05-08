@@ -174,7 +174,7 @@ const onboard = Onboard({
       { name: 'MetaMask', url: 'https://metamask.io' },
       { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
     ]
-  }
+  },
   i18n: {
     en: {
       connect: {

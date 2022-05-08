@@ -8,7 +8,8 @@ export const APP_INITIAL_STATE: AppState = {
     enabled: true,
     position: 'topRight',
     expanded: false
-  }
+  },
+  locale: ''
 }
 
 export const STORAGE_KEYS = {
