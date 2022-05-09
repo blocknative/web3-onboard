@@ -34,11 +34,12 @@ aliases:
         | head -1 \
         | awk -F: '{ print $2 }' \
         | sed 's/[",]//g'); 
-        echo "$PACKAGE_VERSION for STAGING";
         if [[ $PACKAGE_VERSION =~ "alpha" ]];
         then
-          true; return
+          echo true
           circleci step halt
+        else
+          echo false
         fi;
 
   - &restore-build-flag
