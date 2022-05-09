@@ -57,8 +57,6 @@
     }
   })
 
-  const coinbaseWallet = coinbaseModule()
-
   const walletConnect = walletConnectModule()
   const portis = portisModule({
     apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
@@ -94,7 +92,6 @@
       walletConnect,
       keepkey,
       keystone,
-      coinbaseWallet,
       injected,
       magic,
       fortmatic,

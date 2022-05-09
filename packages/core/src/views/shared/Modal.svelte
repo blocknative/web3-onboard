@@ -15,7 +15,10 @@
 
 <script lang="ts">
   import { fade } from 'svelte/transition'
-  import { onDestroy, onMount } from 'svelte'
+  import { onDestroy, onMount } from 'svelte'  
+  import { getDevice } from '../../utils'
+  
+  const device = getDevice()
 
   const body = document.body
   onMount(() => {
@@ -31,13 +34,21 @@
     )
     const scrollY =
       document.documentElement.style.getPropertyValue('--scroll-y')
-    body.style.position = 'fixed'
+    if (device.type === 'mobile') {
+      body.style.position = 'fixed'
+    } else {
+      body.style.overflow = 'hidden'
+    }
     body.style.top = `-${scrollY}`
   })
 
   onDestroy(() => {
     const scrollY = body.style.top
-    body.style.position = ''
+    if (device.type === 'mobile') {
+      body.style.position = ''
+    } else {
+      body.style.overflow = 'auto'
+    }
     body.style.top = ''
     window.scrollTo(0, parseInt(scrollY || '0') * -1)
   })
