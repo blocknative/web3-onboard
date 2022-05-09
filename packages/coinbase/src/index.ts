@@ -1,10 +1,12 @@
 import { WalletInit } from '@web3-onboard/common'
 
-function coinbaseWallet(options?: { darkMode?: boolean }): WalletInit {
-  const { darkMode = false } = options || {}
-
-  return ({ device }) => {
-    return device.type === 'mobile'
+function coinbaseWallet({
+  darkMode = false
+}: {
+  darkMode?: boolean
+}): WalletInit {
+  return ({ device }) =>
+    device.type === 'mobile'
       ? {
           label: 'Coinbase',
           getIcon: async () => (await import('./icon.js')).default,
@@ -50,7 +52,6 @@ function coinbaseWallet(options?: { darkMode?: boolean }): WalletInit {
           }
         }
       : null
-  }
 }
 
 export default coinbaseWallet
