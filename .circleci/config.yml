@@ -124,8 +124,6 @@ commands:
           path: ~/web3-onboard-monorepo
       - *restore-build-flag
       - *test-build-flag
-      # when:
-      #   equal: [ true, *test_package_version_for_alpha_tag ]
       - *test_package_version_for_alpha_tag
       # Services and packages in a Workspace don't get their own
       # yarn.lock so we need to generate them manually.
@@ -138,9 +136,9 @@ commands:
             yarn type-check
             yarn build
       - *save-cache
-      # - *create-npm-config
-      # - *publish-npm
-      # - save-build-flag
+      - *create-npm-config
+      - *publish-npm
+      - save-build-flag
 
 jobs:
   build-core:
