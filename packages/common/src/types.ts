@@ -225,7 +225,7 @@ export interface WalletModule {
   /**
    * @returns the wallet interface associated with the module
    */
-  getInterface: (helpers?: GetInterfaceHelpers) => Promise<WalletInterface>
+  getInterface: (helpers: GetInterfaceHelpers) => Promise<WalletInterface>
 }
 
 export type GetInterfaceHelpers = {
