@@ -37,9 +37,9 @@ aliases:
         if [[ $PACKAGE_VERSION =~ "alpha" ]];
         then
           echo true
-          circleci step halt
         else
           echo false
+          circleci step halt
         fi;
 
   - &restore-build-flag
