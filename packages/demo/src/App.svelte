@@ -12,6 +12,7 @@
   import walletConnectModule from '@web3-onboard/walletconnect'
   import coinbaseModule from '@web3-onboard/coinbase'
   import magicModule from '@web3-onboard/magic'
+  import dcentModule from '@web3-onboard/dcent'
   import { verifyMessage, verifyTypedData } from 'ethers/lib/utils'
   import { share } from 'rxjs/operators'
   import VConsole from 'vconsole'
@@ -84,6 +85,8 @@
     apiKey: 'pk_live_02207D744E81C2BA'
   })
 
+  const dcent = dcentModule()
+
   const onboard = Onboard({
     wallets: [
       ledger,
@@ -97,7 +100,8 @@
       fortmatic,
       portis,
       torus,
-      gnosis
+      gnosis,
+      dcent 
     ],
     chains: [
       {
