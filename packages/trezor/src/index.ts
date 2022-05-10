@@ -120,6 +120,7 @@ function trezor(options: TrezorOptions): WalletInit {
         const { Transaction } = await import('@ethereumjs/tx')
         const {
           accountSelect,
+          bigNumberFieldsToStrings,
           createEIP1193Provider,
           ProviderRpcError,
           getCommon
@@ -334,31 +335,43 @@ function trezor(options: TrezorOptions): WalletInit {
 
           const { derivationPath, address } = signingAccount
 
-          // Set the `from` field to the currently selected account
-          const transactionData =
-            createTrezorTransactionObject(transactionObject)
-
-          const chainId = currentChain.hasOwnProperty('id')
-            ? Number.parseInt(currentChain.id)
-            : 1
-          const common = await getCommon({ customNetwork, chainId })
-
-          const signer = ethersProvider.getSigner(address)
-
           transactionObject.gasLimit =
             transactionObject.gas || transactionObject.gasLimit
 
           // 'gas' is an invalid property for the TransactionRequest type
           delete transactionObject.gas
 
+          const signer = ethersProvider.getSigner(address)
+
           const populatedTransaction = await signer.populateTransaction(
-            transactionData
+            transactionObject
           )
+
+          if (
+            populatedTransaction.hasOwnProperty('nonce') &&
+            typeof populatedTransaction.nonce === 'number'
+          ) {
+            populatedTransaction.nonce = populatedTransaction.nonce.toString(16)
+          }
+
+          const updateBigNumberFields =
+            bigNumberFieldsToStrings(populatedTransaction)
+
+          // Set the `from` field to the currently selected account
+          const transactionData = createTrezorTransactionObject(
+            updateBigNumberFields as TransactionObject
+          )
+
+          const chainId = currentChain.hasOwnProperty('id')
+            ? Number.parseInt(currentChain.id)
+            : 1
+          const common = await getCommon({ customNetwork, chainId })
 
           const trezorResult = await trezorSignTransaction(
             derivationPath,
-            populatedTransaction
+            transactionData
           )
+
           if (!trezorResult.success) {
             const message =
               trezorResult.payload.error === 'Unknown message'
