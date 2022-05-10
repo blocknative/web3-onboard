@@ -4,7 +4,7 @@ function coinbaseWallet({
   darkMode = false
 }: {
   darkMode?: boolean
-}): WalletInit {
+} = {}): WalletInit {
   return ({ device }) =>
     device.type === 'mobile'
       ? {
