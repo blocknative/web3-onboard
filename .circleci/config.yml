@@ -34,7 +34,7 @@ aliases:
         | head -1 \
         | awk -F: '{ print $2 }' \
         | sed 's/[",]//g'); 
-        if [[ $PACKAGE_VERSION =~ "alpha" ]];
+        if [[ $PACKAGE_VERSION =~ "-alpha" ]];
         then
           echo true
         else
