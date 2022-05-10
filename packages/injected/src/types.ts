@@ -49,7 +49,7 @@ export enum ProviderLabel {
   Bitpie = 'Bitpie',
   BlockWallet = 'BlockWallet',
   Brave = 'Brave Wallet',
-  Coinbase = 'Coinbase Wallet',
+  Coinbase = 'Coinbase',
   Dcent = `D'CENT`,
   Detected = 'Detected Wallet',
   Frame = 'Frame',
