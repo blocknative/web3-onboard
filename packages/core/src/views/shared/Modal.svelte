@@ -21,33 +21,32 @@
   const device = getDevice()
 
   const body = document.body
-  onMount(() => {
-    window.addEventListener(
-      'scroll',
-      () => {
-        document.documentElement.style.setProperty(
-          '--scroll-y',
-          `${window.scrollY}px`
-        )
-      },
-      { passive: true }
+  const html = document.documentElement
+  const trackYScrollPosition = () => {
+    document.documentElement.style.setProperty(
+      '--scroll-y',
+      `${window.scrollY}px`
     )
-    const scrollY =
-      document.documentElement.style.getPropertyValue('--scroll-y')
+  }
+
+  onMount(() => {
+    window.addEventListener('scroll', trackYScrollPosition, { passive: true })
+    const scrollY = html.style.getPropertyValue('--scroll-y')
     device.type === 'mobile'
-      ? (body.style.position = 'fixed')
-      : (body.style.overflow = 'hidden')
+      ? (html.style.position = 'fixed')
+      : (html.style.overflow = 'hidden')
 
     body.style.top = `-${scrollY}`
   })
 
   onDestroy(() => {
     device.type === 'mobile'
-      ? (body.style.position = '')
-      : (body.style.overflow = 'auto')
+      ? (html.style.position = '')
+      : (html.style.overflow = 'auto')
     const scrollY = body.style.top
     body.style.top = ''
     window.scrollTo(0, parseInt(scrollY || '0') * -1)
+    window.removeEventListener('scroll', trackYScrollPosition)
   })
   export let close: () => void
 </script>

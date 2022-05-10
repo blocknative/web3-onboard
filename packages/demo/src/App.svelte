@@ -57,7 +57,6 @@
     }
   })
 
-  const coinbaseWallet = coinbaseModule()
 
   const walletConnect = walletConnectModule()
   const portis = portisModule({
@@ -94,7 +93,6 @@
       walletConnect,
       keepkey,
       keystone,
-      coinbaseWallet,
       injected,
       magic,
       fortmatic,
