@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/injected-wallets",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Injected wallets module for web3-onboard",
   "module": "dist/index.js",
   "browser": "dist/index.js",
@@ -25,7 +25,7 @@
     "window": "^4.2.7"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.0.2",
+    "@web3-onboard/common": "^2.0.7",
     "joi": "^17.4.2",
     "lodash.uniqby": "^4.7.0"
   }

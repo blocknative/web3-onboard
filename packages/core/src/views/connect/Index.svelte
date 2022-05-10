@@ -1,12 +1,13 @@
 <script lang="ts">
   import { ProviderRpcErrorCode, WalletModule } from '@web3-onboard/common'
   import { BigNumber } from 'ethers'
+  import { BehaviorSubject, takeUntil } from 'rxjs'
   import EventEmitter from 'eventemitter3'
   import { _ } from 'svelte-i18n'
   import en from '../../i18n/en.json'
   import { selectAccounts } from '../../provider'
   import { state } from '../../store'
-  import { connectWallet$, internalState$ } from '../../streams'
+  import { connectWallet$, internalState$, onDestroy$ } from '../../streams'
   import {
     getChainId,
     requestAccounts,
@@ -47,11 +48,15 @@
   let windowWidth: number
   let scrollContainer: HTMLElement
 
-  const walletToAutoSelect =
+  let walletToAutoSelect =
     autoSelect &&
     walletModules.find(
       ({ label }) => label.toLowerCase() === autoSelect.label.toLowerCase()
     )
+
+  const modalStep$ = new BehaviorSubject<keyof i18n['connect']>(
+    'selectingWallet'
+  )
 
   // ==== SELECT WALLET ==== //
   async function selectWallet({
@@ -185,6 +190,9 @@
       // user rejected account access
       if (code === ProviderRpcErrorCode.ACCOUNT_ACCESS_REJECTED) {
         connectionRejected = true
+        if (autoSelect) {
+          walletToAutoSelect = null
+        }
         return
       }
 
@@ -229,31 +237,29 @@
     setTimeout(() => connectWallet$.next({ inProgress: false }), 1500)
   }
 
-  let step: keyof i18n['connect'] = 'selectingWallet'
-
-  // ==== STEP HANDLING LOGIC ==== //
-  $: switch (step) {
-    case 'selectingWallet': {
-      if (walletToAutoSelect) {
-        autoSelectWallet(walletToAutoSelect)
-      } else {
-        loadWalletsForSelection()
+  modalStep$.pipe(takeUntil(onDestroy$)).subscribe(step => {
+    switch (step) {
+      case 'selectingWallet': {
+        if (walletToAutoSelect) {
+          autoSelectWallet(walletToAutoSelect)
+        } else {
+          loadWalletsForSelection()
+        }
+        break
       }
-
-      break
+      case 'connectingWallet': {
+        connectWallet()
+        break
+      }
+      case 'connectedWallet': {
+        updateAccountDetails()
+        break
+      }
     }
-    case 'connectingWallet': {
-      connectWallet()
-      break
-    }
-    case 'connectedWallet': {
-      updateAccountDetails()
-      break
-    }
-  }
+  })
 
   function setStep(update: keyof i18n['connect']) {
-    step = update
+    modalStep$.next(update)
   }
 
   function scrollToTop() {
@@ -269,6 +275,10 @@
     font-size: var(--onboard-font-size-5, var(--font-size-5));
     height: var(--onboard-connect-content-height, 440px);
     overflow: hidden;
+    background: var(
+      --onboard-main-scroll-container-background,
+      var(--onboard-white, var(--white))
+    );
   }
 
   .content {
@@ -287,7 +297,7 @@
 
   .header {
     box-shadow: var(--onboard-shadow-2, var(--shadow-2));
-    background-color: var(
+    background: var(
       --onboard-connect-header-background,
       var(--onboard-white, var(--white))
     );
@@ -331,14 +341,14 @@
   <Modal {close}>
     <div class="container relative flex">
       {#if windowWidth >= 809}
-        <Sidebar {step} />
+        <Sidebar step={$modalStep$} />
       {/if}
 
       <div class="content flex flex-column">
         <div class="header relative flex items-center">
           <h4 class="header-heading">
-            {$_(`connect.${step}.header`, {
-              default: en.connect[step].header,
+            {$_(`connect.${$modalStep$}.header`, {
+              default: en.connect[$modalStep$].header,
               values: {
                 connectionRejected,
                 wallet: selectedWallet && selectedWallet.label
@@ -351,7 +361,7 @@
         </div>
 
         <div class="scroll-container" bind:this={scrollContainer}>
-          {#if step === 'selectingWallet'}
+          {#if $modalStep$ === 'selectingWallet'}
             {#if wallets.length}
               <Agreement bind:agreed />
 
@@ -368,7 +378,7 @@
             {/if}
           {/if}
 
-          {#if step === 'connectingWallet' && selectedWallet}
+          {#if $modalStep$ === 'connectingWallet' && selectedWallet}
             <ConnectingWallet
               {connectWallet}
               {connectionRejected}
@@ -378,7 +388,7 @@
             />
           {/if}
 
-          {#if step === 'connectedWallet' && selectedWallet}
+          {#if $modalStep$ === 'connectedWallet' && selectedWallet}
             <ConnectedWallet {selectedWallet} />
           {/if}
         </div>

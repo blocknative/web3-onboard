@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/common",
-  "version": "2.0.5",
+  "version": "2.0.9",
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
@@ -41,6 +41,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
+    "@ethereumjs/common": "2.6.2",
     "ethers": "5.5.4",
     "joi": "^17.4.2",
     "rxjs": "^7.5.2"

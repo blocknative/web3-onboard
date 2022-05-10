@@ -240,6 +240,37 @@ function keepkey(): WalletInit {
           return accounts
         }
 
+        const signMessage = async (address: string, message: string) => {
+          if (
+            !accounts ||
+            !Array.isArray(accounts) ||
+            !(accounts.length && accounts.length > 0)
+          )
+            throw new Error(
+              'No account selected. Must call eth_requestAccounts first.'
+            )
+
+          const account =
+            accounts.find(account => account.address === address) || accounts[0]
+
+          const { derivationPath } = account
+          const accountIdx = getAccountIdx(derivationPath)
+          const { addressNList } = getPaths(accountIdx)
+
+          const { signature } = await keepKeyWallet.ethSignMessage({
+            addressNList,
+            message:
+              message.slice(0, 2) === '0x'
+                ? // @ts-ignore - commonjs weirdness
+                  (ethUtil.default || ethUtil)
+                    .toBuffer(message)
+                    .toString('utf8')
+                : message
+          })
+
+          return signature
+        }
+
         const request: EIP1193Provider['request'] = async ({
           method,
           params
@@ -355,19 +386,35 @@ function keepkey(): WalletInit {
               maxPriorityFeePerGas
             } = transactionObject
 
-            const { serialized } = await keepKeyWallet.ethSignTx({
+            const gasData = gasPrice
+              ? {
+                  gasPrice
+                }
+              : {
+                  maxFeePerGas,
+                  maxPriorityFeePerGas
+                }
+            const txn = {
               addressNList,
               nonce: nonce || '0x0',
-              gasPrice,
               gasLimit: gasLimit || gas || '0x5208',
               to,
               value: value || '0x0',
               data: data || '',
-              maxFeePerGas,
-              maxPriorityFeePerGas,
-              chainId: parseInt(currentChain.id)
-            })
+              chainId: parseInt(currentChain.id),
+              ...gasData
+            }
 
+            let serialized
+            try {
+              ;({ serialized } = await keepKeyWallet.ethSignTx(txn))
+            } catch (error: any) {
+              if (error.message && error.message.message) {
+                throw new Error(error.message.message)
+              } else {
+                throw new Error(error)
+              }
+            }
             return serialized
           },
           eth_sendTransaction: async ({ baseRequest, params }) => {
@@ -383,37 +430,10 @@ function keepkey(): WalletInit {
 
             return transactionHash as string
           },
-          eth_sign: async ({ params: [address, message] }) => {
-            if (
-              !accounts ||
-              !Array.isArray(accounts) ||
-              !(accounts.length && accounts.length > 0)
-            )
-              throw new Error(
-                'No account selected. Must call eth_requestAccounts first.'
-              )
-
-            const account =
-              accounts.find(account => account.address === address) ||
-              accounts[0]
-
-            const { derivationPath } = account
-            const accountIdx = getAccountIdx(derivationPath)
-            const { addressNList } = getPaths(accountIdx)
-
-            const { signature } = await keepKeyWallet.ethSignMessage({
-              addressNList,
-              message:
-                message.slice(0, 2) === '0x'
-                  ? // @ts-ignore - commonjs weirdness
-                    (ethUtil.default || ethUtil)
-                      .toBuffer(message)
-                      .toString('utf8')
-                  : message
-            })
-
-            return signature
-          },
+          eth_sign: async ({ params: [address, message] }) =>
+            signMessage(address, message),
+          personal_sign: async ({ params: [message, address] }) =>
+            signMessage(address, message),
           eth_signTypedData: null,
           wallet_switchEthereumChain: async ({ params: [{ chainId }] }) => {
             currentChain =

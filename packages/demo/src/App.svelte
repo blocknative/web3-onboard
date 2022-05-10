@@ -13,17 +13,17 @@
   import coinbaseModule from '@web3-onboard/coinbase'
   import magicModule from '@web3-onboard/magic'
   import dcentModule from '@web3-onboard/dcent'
-  import { verifyMessage, verifyTypedData } from 'ethers/lib/utils'
+  import {
+    recoverAddress,
+    arrayify,
+    hashMessage,
+    verifyTypedData
+  } from 'ethers/lib/utils'
+  import { ethers } from 'ethers'
   import { share } from 'rxjs/operators'
   import VConsole from 'vconsole'
   import blocknativeIcon from './blocknative-icon'
   import blocknativeLogo from './blocknative-logo'
-
-  const toHex = text =>
-    text
-      .split('')
-      .map(c => c.charCodeAt(0).toString(16).padStart(2, '0'))
-      .join('')
 
   if (window.innerWidth < 700) {
     new VConsole()
@@ -83,6 +83,9 @@
 
   const magic = magicModule({
     apiKey: 'pk_live_02207D744E81C2BA'
+    // userEmail: 'test@test.com'
+    // userEmail is optional - if user has already logged in and/or session is still active a login modal will not appear
+    // for more info see the @web3-onboard/magic docs
   })
 
   const dcent = dcentModule()
@@ -181,13 +184,24 @@
   }
 
   const signMessage = async (provider, address) => {
-    const signature = await provider.request({
-      method: 'eth_sign',
-      params: [address, toHex(signMsg)]
-    })
+    const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 
-    const recoveredAddress = verifyMessage(signMsg, signature)
-    console.log({ signMsg, signature, recoveredAddress })
+    const signer = ethersProvider?.getSigner()
+    const addr = await signer?.getAddress()
+    const signature = await signer?.signMessage(signMsg)
+
+    const recoveredAddress = recoverAddress(
+      arrayify(hashMessage(signMsg)),
+      signature
+    )
+
+    if (recoveredAddress !== address) {
+      console.error(
+        "Signature failed. Recovered address doesn' match signing address."
+      )
+    }
+
+    console.log({ signMsg, signature, recoveredAddress, addr })
   }
 
   const signTypedMessage = async (provider, address) => {

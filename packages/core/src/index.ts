@@ -14,7 +14,7 @@ import initI18N from './i18n'
 
 import App from './views/Index.svelte'
 import type { InitOptions, OnboardAPI } from './types'
-import { device } from './utils'
+import { getDevice } from './utils'
 
 const API = {
   connectWallet,
@@ -57,6 +57,8 @@ function init(options: InitOptions): OnboardAPI {
   addChains(chains)
 
   let accountCenterUpdate
+
+  const device = getDevice()
 
   if (device.type === 'mobile') {
     accountCenterUpdate = {
@@ -182,12 +184,24 @@ function mountApp() {
           --spacing-6: 0.25rem;
           --spacing-7: 0.125rem;
   
+          /* BORDER RADIUS */
+          --border-radius-1: 24px;  
+
           /* SHADOWS */
+          --shadow-0: none;
           --shadow-1: 0px 4px 12px rgba(0, 0, 0, 0.1);
           --shadow-2: inset 0px -1px 0px rgba(0, 0, 0, 0.1);
           --shadow-3: 0px 4px 16px rgba(179, 179, 179, 0.2);
 
+          /* MODAL POSITIONING */
           --modal-z-index: 10;
+          --modal-top: unset;
+          --modal-right: unset;
+          --modal-bottom: unset;
+          --modal-left: unset;
+          
+          /* MODAL STYLES */
+          --modal-backdrop: rgba(0, 0, 0, 0.6);
         }
       </style>
     `

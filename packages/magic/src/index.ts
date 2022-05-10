@@ -1,7 +1,16 @@
-import type { WalletInit, APIKey, EIP1193Provider } from '@web3-onboard/common'
+import type { WalletInit, EIP1193Provider } from '@web3-onboard/common'
+import type { MagicInitOptions } from './types'
+import { validateMagicInitOptions } from './validation'
 
-function magic(options: APIKey): WalletInit {
-  const { apiKey } = options
+function magic(options: MagicInitOptions): WalletInit {
+  if (options) {
+    const error = validateMagicInitOptions(options)
+
+    if (error) {
+      throw error
+    }
+  }
+  const { apiKey, userEmail } = options
   const walletName = 'Magic Wallet'
 
   return () => {
@@ -12,7 +21,6 @@ function magic(options: APIKey): WalletInit {
         const { Magic, RPCErrorCode } = await import('magic-sdk')
         const loginModal = (await import('./login-modal.js')).default
         const brandingHTML = (await import('./branding.js')).default
-        let loggedIn: boolean = false
 
         const {
           createEIP1193Provider,
@@ -24,7 +32,7 @@ function magic(options: APIKey): WalletInit {
 
         if (!chains.length)
           throw new Error(
-            'Atleast one Chain must be passed to onboard in order to connect'
+            'At least one Chain must be passed to onboard in order to connect'
           )
 
         let currentChain = chains[0]
@@ -37,6 +45,8 @@ function magic(options: APIKey): WalletInit {
         let magicInstance = new Magic(apiKey, {
           network: customNodeOptions
         })
+
+        let loggedIn: boolean
 
         const loginWithEmail = async (emailAddress: string) => {
           try {
@@ -65,6 +75,7 @@ function magic(options: APIKey): WalletInit {
           const patchedProvider = createEIP1193Provider(magicProvider, {
             eth_requestAccounts: async ({ baseRequest }) => {
               try {
+                if (userEmail) loggedIn = await loginWithEmail(userEmail)
                 if (!loggedIn) await handleLogin()
                 const accounts = await baseRequest({ method: 'eth_accounts' })
                 activeAddress = accounts[0]
