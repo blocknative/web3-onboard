@@ -27,7 +27,7 @@ aliases:
 
   - &test_package_version_for_alpha_tag
     run:
-      name: Is tagged as Alpha version
+      name: Tagged as Alpha version
       command: |
         PACKAGE_VERSION=$(cat package.json \
         | grep version \
