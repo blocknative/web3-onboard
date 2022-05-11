@@ -83,7 +83,7 @@ aliases:
       name: Publish package to NPM
       command: npm publish --access public
 
-  - &publish-npm-next
+  - &publish-npm-tag-as-next
     run:
       name: Publish package to NPM
       command: npm publish --tag next --access public
@@ -143,7 +143,7 @@ commands:
             yarn build
       - *save-cache
       - *create-npm-config
-      - *publish-npm
+      - *publish-npm-tag-as-next
       - save-build-flag
 
 jobs:
