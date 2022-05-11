@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/mew",
-  "version": "2.0.0",
+  "version": "2.0.0-alpha",
   "description": "MEW module for web3-onboard",
   "module": "dist/index.js",
   "browser": "dist/index.js",
