@@ -4213,10 +4213,10 @@ eth-crypto@^2.1.0:
     ethers "5.5.4"
     secp256k1 "4.0.3"
 
-eth-dcent-keyring@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/eth-dcent-keyring/-/eth-dcent-keyring-0.2.1.tgz#6e7f8d53fb90fa58ba589bbc0befcd6d78acf246"
-  integrity sha512-OcKAUd7frrwsrySq2FH1JBLUnk80LvViaggl3iV67Wrg6M6ElbFqXsKEzPOHkc5RKktKwDCXG3atkvC7bGHm1g==
+eth-dcent-keyring@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/eth-dcent-keyring/-/eth-dcent-keyring-0.2.2.tgz#4af7ccd9089411b0ca8366a7401a7c0d0acb6ef7"
+  integrity sha512-dPrR2Umx/OnOeycaoYx7O0Tzejzpya7dy0cx9+tjwsXTU8j1yIPfgUhfpHGX4k3xifK0u48OB47jyZdaGXNgVA==
   dependencies:
     "@ethereumjs/tx" "3.2.1"
     dcent-web-connector "^0.11.2"

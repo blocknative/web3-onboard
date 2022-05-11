@@ -12,6 +12,8 @@ import {
 } from '@web3-onboard/common'
 
 import type { providers } from 'ethers'
+import type { CustomWindow } from '@web3-onboard/injected-wallets/src/types'
+declare const window: CustomWindow
 
 const DEFAULT_BASE_PATH = "m/44'/60'/0'/0/0"
 
@@ -66,6 +68,20 @@ function dcent({
       label: 'D\'CENT',
       getIcon,
       getInterface: async ({ EventEmitter, chains }) => {
+
+        const eventEmitter = new EventEmitter()
+
+        if (isMobile) {
+          const provider = window.ethereum as EIP1193Provider 
+          if(isMobile && (!provider)) {
+            location.replace("https://link.dcentwallet.com/DAppBrowser/?url=" + document.location)
+          }
+          provider.on = eventEmitter.on.bind(eventEmitter)
+          return {
+            provider
+          }
+        } 
+
         const { StaticJsonRpcProvider } = await import(
           '@ethersproject/providers'
         )
@@ -73,13 +89,12 @@ function dcent({
 
         const { default: EthDcentKeyring } = await import('eth-dcent-keyring')
         const dcentKeyring = new EthDcentKeyring({})
-
+        
+        console.log('dcentKeyring ', dcentKeyring)
         const { TransactionFactory: Transaction } = await import(
           '@ethereumjs/tx'
         )
         
-        const eventEmitter = new EventEmitter()
-
         let currentChain: Chain = chains[0]
         const scanAccounts = async ({
           derivationPath,
@@ -102,8 +117,6 @@ function dcent({
             scanAccounts,
             supportsCustomPath: false
           })
-
-          console.log('accounts = ', accounts)
           if (accounts.length) {
             eventEmitter.emit('accountsChanged', [accounts[0].address])
           }
@@ -133,10 +146,8 @@ function dcent({
             throw response.error
           }
         }
-
         const dcentProvider = { request }
-
-        const provider = isMobile ? window.ethereum : createEIP1193Provider(dcentProvider, {
+        const provider = createEIP1193Provider(dcentProvider, {
           eth_requestAccounts: async () => {
             // Triggers the account select modal if no accounts have been selected
             const accounts = await getAccounts()
@@ -218,14 +229,14 @@ function dcent({
             const signedTx = await provider.request({
               method: 'eth_signTransaction',
               params
-            })
+            }) as string
 
             const transactionHash = await baseRequest({
               method: 'eth_sendRawTransaction',
               params: [signedTx]
-            })
+            }) as string
 
-            return transactionHash as string
+            return transactionHash
           },
           eth_sign: async ({ params: [address, message] }) => {
             if (!(accounts && accounts.length && accounts.length > 0))
@@ -238,6 +249,18 @@ function dcent({
               accounts[0]
 
             return dcentKeyring.signMessage(account.address, message)
+          },
+          personal_sign: async ({ params: [message, address] }) => {
+            if (!(accounts && accounts.length && accounts.length > 0))
+              throw new Error(
+                'No account selected. Must call eth_requestAccounts first.'
+              )
+
+            const account =
+              accounts.find(account => account.address === address) ||
+              accounts[0]
+
+            return dcentKeyring.signPersonalMessage(account.address, message)
           },
           eth_signTypedData: async ({ params: [address, typedData] }) => {
             if (!(accounts && accounts.length && accounts.length > 0))
@@ -266,16 +289,12 @@ function dcent({
           wallet_addEthereumChain: null
         })
 
-        console.log
-        if(isMobile && (!provider || !provider.isDcentWallet)) {
-          location.replace("https://link.dcentwallet.com/DAppBrowser/?url=" + document.location)
-        }
-        
         provider.on = eventEmitter.on.bind(eventEmitter)
-        
+      
         return {
           provider
         }
+      
       }
     }
   }
