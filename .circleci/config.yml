@@ -83,6 +83,11 @@ aliases:
       name: Publish package to NPM
       command: npm publish --access public
 
+  - &publish-npm-next
+    run:
+      name: Publish package to NPM
+      command: npm publish --tag next --access public
+
 commands:
   save-build-flag:
     steps:
