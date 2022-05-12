@@ -25,9 +25,9 @@ aliases:
       branches:
         only: v2-web3-onboard-develop
 
-  - &test_package_version_for_alpha_tag
+  - &test_package_version_for_alpha_tag_break_false
     run:
-      name: Tagged as Alpha version
+      name: Tagged as Alpha version if True Continue Flow
       command: |
         PACKAGE_VERSION=$(cat package.json \
         | grep version \
@@ -40,6 +40,23 @@ aliases:
         else
           echo false
           circleci step halt
+        fi;
+
+  - &test_package_version_for_alpha_tag_break_true
+    run:
+      name: Tagged as Alpha version if True Stop Flow
+      command: |
+        PACKAGE_VERSION=$(cat package.json \
+        | grep version \
+        | head -1 \
+        | awk -F: '{ print $2 }' \
+        | sed 's/[",]//g'); 
+        if [[ $PACKAGE_VERSION =~ "-alpha" ]];
+        then
+          echo true
+          circleci step halt
+        else
+          echo false
         fi;
 
   - &restore-build-flag
@@ -107,6 +124,7 @@ commands:
           path: ~/web3-onboard-monorepo
       - *restore-build-flag
       - *test-build-flag
+      - *test_package_version_for_alpha_tag_break_true
       # Services and packages in a Workspace don't get their own
       # yarn.lock so we need to generate them manually.
       - *generate-lock-file
@@ -130,7 +148,7 @@ commands:
           path: ~/web3-onboard-monorepo
       - *restore-build-flag
       - *test-build-flag
-      - *test_package_version_for_alpha_tag
+      - *test_package_version_for_alpha_tag_break_false
       # Services and packages in a Workspace don't get their own
       # yarn.lock so we need to generate them manually.
       - *generate-lock-file
