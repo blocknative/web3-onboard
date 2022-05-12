@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/vue",
-  "version": "2.0.6",
+  "version": "2.2.8",
   "description": "Vue Composable for web3-onboard",
   "module": "dist/index.js",
   "browser": "dist/index.js",
@@ -21,9 +21,10 @@
     "vue": "^3.2.31"
   },
   "dependencies": {
+    "@vueuse/core": "^8.4.2",
     "@vueuse/rxjs": "^8.2.0",
-    "@web3-onboard/common": "^2.0.3",
-    "@web3-onboard/core": "^2.1.0",
+    "@web3-onboard/common": "^2.0.9",
+    "@web3-onboard/core": "^2.2.8",
     "vue-demi": "^0.12.4"
   },
   "peerDependencies": {

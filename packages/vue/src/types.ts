@@ -4,7 +4,6 @@ import type {
   WalletState,
   ConnectedChain
 } from '@web3-onboard/core'
-import type { Chain } from '@web3-onboard/common'
 import type { Ref, ComputedRef } from 'vue-demi'
 
 // Syntax sugar for Readonly Refs
@@ -17,14 +16,15 @@ type SetChainOptions = {
 }
 
 interface OnboardComposable {
-  chains: ReadonlyRef<Chain[]>
-  connectWallet: (options: ConnectOptions) => Promise<void>
+  alreadyConnectedWallets: ReadonlyRef<string[]>
+  connectWallet: (options?: ConnectOptions) => Promise<void>
   connectedChain: ComputedRef<ConnectedChain | null>
   connectedWallet: ComputedRef<WalletState | null>
   connectingWallet: ReadonlyRef<boolean>
   disconnectWallet: (wallet: DisconnectOptions) => Promise<void>
   disconnectConnectedWallet: () => Promise<void>
   getChain: (walletLabel: string) => ConnectedChain | null
+  lastConnectionTimestamp: ReadonlyRef<number>
   setChain: (options: SetChainOptions) => Promise<void>
   settingChain: ReadonlyRef<boolean>
   wallets: ReadonlyRef<WalletState[]>

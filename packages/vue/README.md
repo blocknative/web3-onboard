@@ -109,31 +109,8 @@ import { useOnboard } from '@web3-onboard/vue'
 // Use the composable
 const onboard = useOnboard()
 // Or destructure it
-const { wallets, chains, connectWallet, disconnectConnectedWallet, connectedWallet } = useOnboard()
+const { wallets, connectWallet, disconnectConnectedWallet, connectedWallet } = useOnboard()
 // do stuff
-```
-
-### `chains`
-Readonly ref that contains every configured chain
-
-### Example usage
-```vue
-<script>
-import { useOnboard } from '@web3-onboard/vue'
-export default {
-  setup() {
-    const { chains } = useOnboard()
-    return { chains }
-  }
-}
-</script>
-
-<template>
-  <div v-for="chain in chains">
-    <span>Id: {{chain.id}}</span>
-    <span>Namespace: {{chain.namespace}}</span>
-  </div>
-</template>
 ```
 
 ### `connectWallet`
@@ -340,11 +317,48 @@ export default {
     return { wallets }
   }
 }
+```
+
+### `alreadyConnectedWallets`
+Readonly ref that contains every wallet that user connected to in the past; useful to reconnect wallets automatically after a reload
+
+### Example usage
+```
+vue
+<script>
+import { useOnboard } from '@web3-onboard/vue'
+export default {
+  setup() {
+    const { alreadyConnectedWallets } = useOnboard()
+    return { alreadyConnectedWallets }
+  }
+}
 </script>
 
 <template>
   <div v-for="wallet in wallets">
     <span>Label: {{wallet.label}}</span>
   </div>
+</template>
+```
+
+### `lastConnectedTimestamp`
+Readonly ref that contains the last time that the user connected a wallet in milliseconds
+
+### Example usage
+```
+vue
+<script>
+import { useOnboard } from '@web3-onboard/vue'
+export default {
+  setup() {
+    const { lastConnectedTimestamp } = useOnboard()
+    return { lastConnectedTimestamp }
+  }
+}
+</script>
+
+<template>
+  <span>Your last connection timestamp was: {{ lastConnectedTimestamp }}</span>
 </template>
 ```
