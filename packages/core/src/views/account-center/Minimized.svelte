@@ -151,60 +151,8 @@
             icon={primaryWallet ? primaryWallet.icon : ''}
           />
         </div>
-
-        <div style="right: 5px; bottom: -5px;" class="drop-shadow absolute">
-          <SuccessStatusIcon size={14} />
-        </div>
       </div>
 
-      <!-- address and balance -->
-      <div class="flex flex-column" style="height: 40px;">
-        <div class="address">
-          {ensName ? shortenEns(ensName) : shortenedFirstAddress}
-        </div>
-        {#if firstAddressBalance}
-          <div in:fade class="balance">
-            {firstAddressBalance.length > 8
-              ? firstAddressBalance.slice(0, 8)
-              : firstAddressBalance}
-            {firstAddressAsset}
-          </div>
-        {/if}
-      </div>
-    </div>
-
-    <!-- network badge -->
-    <div class="network">
-      <div
-        on:click|stopPropagation
-        class="container shadow-1 flex items-center"
-        style={`border-color: ${
-          validAppChain ? '#D0D4F7' : '#FFAF00'
-        }; background-color: ${validAppChain ? '#EFF1FC' : '#FFEFCC'}`}
-      >
-        <div class="flex items-center">
-          <div
-            class:color-yellow={!validAppChain}
-            class:color-white={validAppChain && !validAppChain.icon}
-            class="chain-icon flex justify-center items-center"
-            style={`background-color: ${
-              validAppChain
-                ? validAppChain.color ||
-                  (defaultChainStyles && defaultChainStyles.color) ||
-                  unrecognizedChainStyle.color
-                : '#FFE7B3'
-            };`}
-          >
-            {@html validAppChain
-              ? validAppChain.icon ||
-                (defaultChainStyles && defaultChainStyles.icon) ||
-                unrecognizedChainStyle.icon
-              : warningIcon}
-          </div>
-
-          <NetworkSelector {chains} color="#33394B" selectIcon={caretIcon} />
-        </div>
-      </div>
     </div>
   </div>
 </div>
