@@ -20,6 +20,28 @@ aliases:
       branches:
         only: v2-web3-onboard
 
+  - &deploy_staging_filters
+    filters:
+      branches:
+        only: v2-web3-onboard-develop
+
+  - &test_package_version_for_alpha_tag
+    run:
+      name: Tagged as Alpha version
+      command: |
+        PACKAGE_VERSION=$(cat package.json \
+        | grep version \
+        | head -1 \
+        | awk -F: '{ print $2 }' \
+        | sed 's/[",]//g'); 
+        if [[ $PACKAGE_VERSION =~ "-alpha" ]];
+        then
+          echo true
+        else
+          echo false
+          circleci step halt
+        fi;
+
   - &restore-build-flag
     restore_cache:
       keys:
@@ -34,6 +56,7 @@ aliases:
             echo "$FILE exist"
             circleci step halt
         fi
+  
   - &generate-lock-file
     run:
       name: Generate lock file
@@ -59,6 +82,11 @@ aliases:
     run:
       name: Publish package to NPM
       command: npm publish --access public
+
+  - &publish-npm-tag-as-next
+    run:
+      name: Publish package to NPM
+      command: npm publish --tag next --access public
 
 commands:
   save-build-flag:
@@ -92,6 +120,30 @@ commands:
       - *save-cache
       - *create-npm-config
       - *publish-npm
+      - save-build-flag
+
+  node-staging-build-steps:
+    steps:
+      - checkout:
+          # Since our working_directory is deeper than the root,
+          # remind the job where it needs to checkout.
+          path: ~/web3-onboard-monorepo
+      - *restore-build-flag
+      - *test-build-flag
+      - *test_package_version_for_alpha_tag
+      # Services and packages in a Workspace don't get their own
+      # yarn.lock so we need to generate them manually.
+      - *generate-lock-file
+      - *restore-cache
+      - run:
+          name: Build
+          command: |
+            yarn
+            yarn type-check
+            yarn build
+      - *save-cache
+      - *create-npm-config
+      - *publish-npm-tag-as-next
       - save-build-flag
 
 jobs:
@@ -198,74 +250,212 @@ jobs:
     steps:
       - node-build-steps
 
+  # Build staging/Alpha releases
+  build-staging-core:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/core
+    steps:
+      - node-staging-build-steps
+  build-staging-common:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/common
+    steps:
+      - node-staging-build-steps
+  build-staging-fortmatic:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/fortmatic
+    steps:
+      - node-staging-build-steps
+  build-staging-gnosis:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/gnosis
+    steps:
+      - node-staging-build-steps
+  build-staging-injected:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/injected
+    steps:
+      - node-staging-build-steps
+  build-staging-keepkey:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/keepkey
+    steps:
+      - node-staging-build-steps
+  build-staging-keystone:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/keystone
+    steps:
+      - node-staging-build-steps
+  build-staging-ledger:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/ledger
+    steps:
+      - node-staging-build-steps
+  build-staging-mew:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/mew
+    steps:
+      - node-staging-build-steps
+  build-staging-portis:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/portis
+    steps:
+      - node-staging-build-steps
+  build-staging-torus:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/torus
+    steps:
+      - node-staging-build-steps
+  build-staging-trezor:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/trezor
+    steps:
+      - node-staging-build-steps
+  build-staging-walletconnect:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/walletconnect
+    steps:
+      - node-staging-build-steps
+  build-staging-walletlink:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/walletlink
+    steps:
+      - node-staging-build-steps
+  build-staging-react:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/react
+    steps:
+      - node-staging-build-steps
+  build-staging-magic:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/magic
+    steps:
+      - node-staging-build-steps
+  build-staging-coinbase:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/coinbase
+    steps:
+      - node-staging-build-steps
+
 workflows:
   version: 2
   common:
     jobs:
       - build-common:
           <<: *deploy_production_filters
+      - build-staging-common:
+          <<: *deploy_staging_filters
   core:
     jobs:
       - build-core:
           <<: *deploy_production_filters
+      - build-staging-core:
+          <<: *deploy_staging_filters
 
   fortmatic:
     jobs:
       - build-fortmatic:
           <<: *deploy_production_filters
+      - build-staging-fortmatic:
+          <<: *deploy_staging_filters
   gnosis:
     jobs:
       - build-gnosis:
           <<: *deploy_production_filters
+      - build-staging-gnosis:
+          <<: *deploy_staging_filters
   injected:
     jobs:
       - build-injected:
           <<: *deploy_production_filters
+      - build-staging-injected:
+          <<: *deploy_staging_filters
   keepkey:
     jobs:
       - build-keepkey:
           <<: *deploy_production_filters
+      - build-staging-keepkey:
+          <<: *deploy_staging_filters
   keystone:
     jobs:
       - build-keystone:
           <<: *deploy_production_filters
+      - build-staging-keystone:
+          <<: *deploy_staging_filters
   ledger:
     jobs:
       - build-ledger:
           <<: *deploy_production_filters
+      - build-staging-ledger:
+          <<: *deploy_staging_filters
   mew:
     jobs:
       - build-mew:
           <<: *deploy_production_filters
+      - build-staging-mew:
+          <<: *deploy_staging_filters
   portis:
     jobs:
       - build-portis:
           <<: *deploy_production_filters
+      - build-staging-portis:
+          <<: *deploy_staging_filters
   torus:
     jobs:
       - build-torus:
           <<: *deploy_production_filters
+      - build-staging-torus:
+          <<: *deploy_staging_filters
   trezor:
     jobs:
       - build-trezor:
           <<: *deploy_production_filters
+      - build-staging-trezor:
+          <<: *deploy_staging_filters
   walletconnect:
     jobs:
       - build-walletconnect:
           <<: *deploy_production_filters
+      - build-staging-walletconnect:
+          <<: *deploy_staging_filters
   walletlink:
     jobs:
       - build-walletlink:
           <<: *deploy_production_filters
+      - build-staging-walletlink:
+          <<: *deploy_staging_filters
   react:
     jobs:
       - build-react:
           <<: *deploy_production_filters
+      - build-staging-react:
+          <<: *deploy_staging_filters
   magic:
     jobs:
       - build-magic:
           <<: *deploy_production_filters
+      - build-staging-magic:
+          <<: *deploy_staging_filters
   coinbase:
     jobs:
       - build-coinbase:
           <<: *deploy_production_filters
+      - build-staging-coinbase:
+          <<: *deploy_staging_filters
