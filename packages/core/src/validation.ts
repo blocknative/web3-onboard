@@ -6,7 +6,8 @@ import type {
   WalletState,
   ConnectOptions,
   DisconnectOptions,
-  ConnectOptionsString
+  ConnectOptionsString,
+  AccountCenter
 } from './types'
 
 const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
@@ -19,7 +20,9 @@ const chain = Joi.object({
   id: chainId.required(),
   rpcUrl: Joi.string().required(),
   label: Joi.string().required(),
-  token: Joi.string().required()
+  token: Joi.string().required(),
+  icon: Joi.string(),
+  color: Joi.string()
 })
 
 const connectedChain = Joi.object({
@@ -44,11 +47,11 @@ const balance = Joi.any().allow(
   null
 )
 
-const account = {
+const account = Joi.object({
   address: Joi.string().required(),
   ens,
   balance
-}
+})
 
 const chains = Joi.array().items(chain)
 const accounts = Joi.array().items(account)
@@ -94,11 +97,28 @@ const walletModule = Joi.object({
 
 const walletInit = Joi.array().items(Joi.function()).required()
 
+const accountCenterPosition = Joi.string().valid(
+  'topRight',
+  'bottomRight',
+  'bottomLeft',
+  'topLeft'
+)
+
 const initOptions = Joi.object({
   wallets: walletInit,
   chains: chains.required(),
   appMetadata: appMetadata,
-  i18n: Joi.object().unknown()
+  i18n: Joi.object().unknown(),
+  accountCenter: Joi.object({
+    desktop: Joi.object({
+      enabled: Joi.boolean(),
+      position: accountCenterPosition
+    }),
+    mobile: Joi.object({
+      enabled: Joi.boolean(),
+      position: accountCenterPosition
+    })
+  })
 })
 
 const connectOptions = Joi.object({
@@ -117,7 +137,14 @@ const disconnectOptions = Joi.object({
 
 const setChainOptions = Joi.object({
   chainId: chainId.required(),
+  chainNamespace: chainNamespace,
   wallet: Joi.string()
+})
+
+const accountCenter = Joi.object({
+  enabled: Joi.boolean(),
+  position: accountCenterPosition,
+  expanded: Joi.boolean()
 })
 
 type ValidateReturn = Joi.ValidationResult | null
@@ -162,6 +189,12 @@ export function validateSetChainOptions(data: {
   wallet?: WalletState['label']
 }): ValidateReturn {
   return validate(setChainOptions, data)
+}
+
+export function validateAccountCenterUpdate(
+  data: AccountCenter | Partial<AccountCenter>
+): ValidateReturn {
+  return validate(accountCenter, data)
 }
 
 export function validateWalletInit(data: WalletInit[]): ValidateReturn {

@@ -16,7 +16,6 @@
     font-size: var(--onboard-font-size-7, var(--font-size-7));
     line-height: 16px;
     color: var(--onboard-primary-500, var(--primary-500));
-    cursor: pointer;
     text-decoration: none;
   }
 </style>
@@ -31,7 +30,11 @@
         }
       })}
       {#each recommendedInjectedWallets as { name, url }, i}
-        <a class="link" href={url} target="_blank" rel="noreferrer noopener"
+        <a
+          class="link pointer"
+          href={url}
+          target="_blank"
+          rel="noreferrer noopener"
           >{name}{i < recommendedInjectedWallets.length - 1 ? ', ' : ''}
         </a>
       {/each}

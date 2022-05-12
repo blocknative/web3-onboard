@@ -1,6 +1,7 @@
 import { BehaviorSubject, Subject, Observable } from 'rxjs'
 import { distinctUntilKeyChanged, pluck, filter } from 'rxjs/operators'
-
+import { APP_INITIAL_STATE } from '../constants'
+import { notNullish } from '../utils'
 import type { Chain, WalletModule } from '@web3-onboard/common'
 
 import type {
@@ -9,7 +10,8 @@ import type {
   Action,
   UpdateWalletAction,
   AddWalletAction,
-  UpdateAccountAction
+  UpdateAccountAction,
+  UpdateAccountCenterAction
 } from '../types'
 
 import {
@@ -19,11 +21,9 @@ import {
   REMOVE_WALLET,
   RESET_STORE,
   UPDATE_ACCOUNT,
+  UPDATE_ACCOUNT_CENTER,
   SET_WALLET_MODULES
 } from './constants'
-
-import { APP_INITIAL_STATE } from '../constants'
-import { notNullish } from '../utils'
 
 function reducer(state: AppState, action: Action): AppState {
   const { type, payload } = action
@@ -98,6 +98,16 @@ function reducer(state: AppState, action: Action): AppState {
       }
     }
 
+    case UPDATE_ACCOUNT_CENTER: {
+      const update = payload as UpdateAccountCenterAction['payload']
+      return {
+        ...state,
+        accountCenter: {
+          ...state.accountCenter,
+          ...update
+        }
+      }
+    }
     case SET_WALLET_MODULES: {
       return {
         ...state,

@@ -12,7 +12,6 @@
 
 <style>
   button {
-    position: relative;
     background-color: var(
       --onboard-wallet-button-background,
       var(--onboard-white, var(--white))
@@ -46,9 +45,19 @@
   .name {
     margin-left: var(--onboard-spacing-4, var(--spacing-4));
   }
+
+  button.wallet-button-styling {
+    border-radius: var(--onboard-wallet-button-border-radius, var(--border-radius-1));
+    box-shadow: var(--onboard-wallet-button-box-shadow, var(--box-shadow-0));
+  }
 </style>
 
-<button class:connected in:fade on:click={onClick}>
+<button
+  class="relative justify-start wallet-button-styling"
+  class:connected
+  in:fade
+  on:click={onClick}
+>
   <WalletAppBadge
     size={48}
     {icon}
@@ -58,6 +67,8 @@
   />
   <span class="name">{label}</span>
   {#if connected}
-    <SuccessStatusIcon size={16} bottom={null} right={16} />
+    <div class="absolute" style="right: 16px;">
+      <SuccessStatusIcon size={16} />
+    </div>
   {/if}
 </button>

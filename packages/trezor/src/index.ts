@@ -1,4 +1,4 @@
-import {
+import type {
   Account,
   Asset,
   Chain,
@@ -122,8 +122,7 @@ function trezor(options: TrezorOptions): WalletInit {
       getInterface: async ({ EventEmitter, chains }) => {
         const { default: Trezor } = await import('trezor-connect')
         const { Transaction } = await import('@ethereumjs/tx')
-        const { default: Common, Hardfork } = await import('@ethereumjs/common')
-        const { accountSelect, createEIP1193Provider, ProviderRpcError } =
+        const { accountSelect, createEIP1193Provider, ProviderRpcError, getCommon } =
           await import('@web3-onboard/common')
         const ethUtil = await import('ethereumjs-util')
         const { compress } = (await import('eth-crypto')).publicKey
@@ -174,7 +173,7 @@ function trezor(options: TrezorOptions): WalletInit {
                 address,
                 balance: {
                   asset: asset.label,
-                  value: await provider.getBalance(address)
+                  value: await provider.getBalance(address.toLowerCase())
                 }
               }
             ]
@@ -225,6 +224,7 @@ function trezor(options: TrezorOptions): WalletInit {
 
             return result.payload.address
           } catch (error) {
+            console.error(error)
             throw new Error(errorMsg)
           }
         }
@@ -337,16 +337,10 @@ function trezor(options: TrezorOptions): WalletInit {
           const transactionData =
             createTrezorTransactionObject(transactionObject)
 
-          // @ts-ignore -- Due to weird commonjs exports
-          const CommonConstructor = Common.default || Common
-
-          const common = new CommonConstructor({
-            chain: customNetwork || Number.parseInt(currentChain.id) || 1,
-            // Berlin is the minimum hardfork that will allow for EIP1559
-            hardfork: Hardfork.Berlin,
-            // List of supported EIPS
-            eips: [1559]
-          })
+            const chainId = currentChain.hasOwnProperty('id')
+            ? Number.parseInt(currentChain.id)
+            : 1
+          const common = await getCommon({ customNetwork, chainId })
 
           const trezorResult = await trezorSignTransaction(
             derivationPath,
@@ -468,19 +462,16 @@ function trezor(options: TrezorOptions): WalletInit {
             const accounts = await getAccountFromAccountSelect()
             return accounts.map(({ address }) => address)
           },
-          eth_accounts: async () => {
-            return Array.isArray(accounts) &&
-              accounts.length &&
-              accounts[0].hasOwnProperty('address')
+          eth_accounts: async () =>
+            Array.isArray(accounts) &&
+            accounts.length &&
+            accounts[0].hasOwnProperty('address')
               ? [accounts[0].address]
-              : []
-          },
-          eth_chainId: async () => {
-            return currentChain.hasOwnProperty('id') ? currentChain.id : ''
-          },
-          eth_signTransaction: async ({ params: [transactionObject] }) => {
-            return signTransaction(transactionObject)
-          },
+              : [],
+          eth_chainId: async () =>
+            currentChain.hasOwnProperty('id') ? currentChain.id : '',
+          eth_signTransaction: async ({ params: [transactionObject] }) =>
+            signTransaction(transactionObject),
           eth_sendTransaction: async ({ baseRequest, params }) => {
             const signedTx = await provider.request({
               method: 'eth_signTransaction',
@@ -494,10 +485,10 @@ function trezor(options: TrezorOptions): WalletInit {
 
             return transactionHash as string
           },
-          eth_sign: async ({ params: [address, message] }) => {
-            let messageData = { data: message }
-            return signMessage(address, messageData)
-          },
+          eth_sign: async ({ params: [address, message] }) =>
+            signMessage(address, { data: message }),
+          personal_sign: async ({ params: [message, address] }) =>
+            signMessage(address, { data: message }),
           wallet_switchEthereumChain: async ({ params: [{ chainId }] }) => {
             currentChain =
               chains.find(({ id }) => id === chainId) || currentChain

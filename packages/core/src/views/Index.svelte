@@ -1,16 +1,87 @@
 <script lang="ts">
-  import { connectWallet$, switchChainModal$ } from '../streams'
+  import { shareReplay, startWith } from 'rxjs/operators'
+  import { connectWallet$, switchChainModal$, wallets$ } from '../streams'
+  import { state } from '../store'
   import Connect from './connect/Index.svelte'
   import SwitchChain from './chain/SwitchChain.svelte'
   import ActionRequired from './connect/ActionRequired.svelte'
+  import AccountCenter from './account-center/Index.svelte'
+
+  const accountCenter$ = state
+    .select('accountCenter')
+    .pipe(startWith(state.get().accountCenter), shareReplay(1))
 </script>
 
 <style>
-  :global(input, textarea) {
+  :global(.flex) {
+    display: flex;
+  }
+
+  :global(.flex-column) {
+    flex-direction: column;
+  }
+
+  :global(.items-center) {
+    align-items: center;
+  }
+
+  :global(.items-end) {
+    align-items: flex-end;
+  }
+
+  :global(.items-start) {
+    align-items: flex-start;
+  }
+
+  :global(.justify-center) {
+    justify-content: center;
+  }
+
+  :global(.justify-start) {
+    justify-content: flex-start;
+  }
+
+  :global(.justify-between) {
+    justify-content: space-between;
+  }
+
+  :global(.justify-around) {
+    justify-content: space-around;
+  }
+
+  :global(.relative) {
+    position: relative;
+  }
+
+  :global(.absolute) {
+    position: absolute;
+  }
+
+  :global(.fixed) {
+    position: fixed;
+  }
+
+  :global(.pointer) {
+    cursor: pointer;
+  }
+
+  :global(.shadow-1) {
+    box-shadow: var(--onboard-shadow-1, var(--shadow-1));
+  }
+
+  :global(.w-100) {
+    width: 100%;
+  }
+
+  :global(*) {
+    box-sizing: border-box;
+  }
+
+  :global(input) {
     background: var(--onboard-white, var(--white));
   }
 
-  :global(input, textarea, select) {
+  :global(input) {
     width: 100%;
     padding: 0.5rem 1rem;
     outline: 2px solid var(--onboard-gray-200, var(--gray-200));
@@ -63,14 +134,14 @@
     color: var(--onboard-checkbox-color, var(--onboard-white, var(--white)));
   }
 
-  :global(input:hover, textarea:hover, select:hover) {
+  :global(input:hover) {
     border-color: var(
       --onboard-checkbox-color,
       var(--onboard-white, var(--white))
     );
   }
 
-  :global(input:focus, textarea.focus, select:focus) {
+  :global(input:focus) {
     border-color: var(--onboard-primary-500, var(--primary-500));
     box-shadow: 0 0 1px 1px
       var(
@@ -91,23 +162,6 @@
     margin-bottom: -2px;
   }
 
-  :global(::-webkit-input-placeholder) {
-    /* Chrome/Opera/Safari */
-    color: var(--gray-300);
-  }
-  :global(::-moz-placeholder) {
-    /* Firefox 19+ */
-    color: var(--gray-300);
-  }
-  :global(:-ms-input-placeholder) {
-    /* IE 10+ */
-    color: var(--gray-300);
-  }
-  :global(:-moz-placeholder) {
-    /* Firefox 18- */
-    color: var(--gray-300);
-  }
-
   :global(a) {
     color: var(
       --onboard-link-color,
@@ -116,14 +170,20 @@
     text-decoration: none;
   }
 
+  :global(a:hover) {
+    text-decoration: underline;
+  }
+
   :global(button) {
     display: flex;
     align-items: center;
+    justify-content: center;
     padding: calc(var(--onboard-spacing-4, var(--spacing-4)) - 1px);
     border-radius: 24px;
     cursor: pointer;
     font: inherit;
     border: none;
+    transition: background-color 150ms ease-in-out, color 150ms ease-in-out;
   }
 
   :global(.onboard-button-primary) {
@@ -135,6 +195,41 @@
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
     border: 1px solid var(--onboard-gray-500, var(--gray-500));
     font-weight: 700;
+  }
+
+  :global(.button-neutral-solid) {
+    width: 100%;
+    border-radius: 8px;
+    background-color: var(--onboard-gray-500, var(--gray-500));
+    color: var(--onboard-white, var(--white));
+    line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
+  }
+
+  :global(.button-neutral-solid-b) {
+    width: 100%;
+    background-color: var(--onboard-gray-100, var(--gray-100));
+    color: var(--onboard-gray-500, var(--gray-500));
+    line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
+  }
+
+  :global(button.rounded) {
+    border-radius: 24px;
+  }
+
+  :global(.button-neutral-solid:hover) {
+    background-color: var(--onboard-gray-700, var(--gray-700));
+  }
+  :global(.button-neutral-solid-b:hover) {
+    background-color: var(--onboard-gray-200, var(--gray-200));
+  }
+
+  :global(.button-neutral-solid:active) {
+    color: var(--onboard-gray-300, var(--gray-300));
+  }
+
+  :global(.button-neutral-solid-b:active) {
+    color: var(--onboard-gray-600, var(--gray-600));
+    background-color: var(--onboard-gray-300, var(--gray-300));
   }
 </style>
 
@@ -148,4 +243,8 @@
 
 {#if $switchChainModal$}
   <SwitchChain />
+{/if}
+
+{#if $accountCenter$.enabled && $wallets$.length}
+  <AccountCenter settings={$accountCenter$} />
 {/if}

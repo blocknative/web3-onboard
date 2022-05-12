@@ -1,6 +1,7 @@
 # @web3-onboard/walletlink
 
-## Wallet module for connecting WalletLink to web3-onboard
+## (Deprecated) Wallet module for connecting WalletLink to web3-onboard
+_Use [@web3-onboard/coinbase](../coinbase/README.md)_
 
 ### Install
 
