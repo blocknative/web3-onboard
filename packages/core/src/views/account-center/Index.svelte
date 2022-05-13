@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onDestroy } from 'svelte'
+  import { state } from '../../store'
   import { updateAccountCenter } from '../../store/actions'
   import type { AccountCenter } from '../../types'
   import Maximized from './Maximized.svelte'
@@ -17,7 +18,10 @@
   onDestroy(minimize)
 
   function minimize() {
-    updateAccountCenter({ expanded: false })
+    const { accountCenter } = state.get()
+    if (accountCenter.expanded) {
+      updateAccountCenter({ expanded: false })
+    }
   }
 </script>
 

@@ -47,11 +47,11 @@ const balance = Joi.any().allow(
   null
 )
 
-const account = {
+const account = Joi.object({
   address: Joi.string().required(),
   ens,
   balance
-}
+})
 
 const chains = Joi.array().items(chain)
 const accounts = Joi.array().items(account)
