@@ -44,7 +44,11 @@
   )
 
   const { position } = state.get().accountCenter
+
+  $: innerWidth = 0
 </script>
+
+<svelte:window bind:innerWidth />
 
 <style>
   .outer-container {
@@ -229,40 +233,45 @@
         {/each}
       </div>
 
+      
       <!-- actions -->
       <div class="actions flex flex-column items-start">
-        <!-- connect another wallet -->
-        <div
-          on:click={() => connect()}
-          class="action-container flex items-center pointer"
-        >
-          <div class="plus-icon flex items-center justify-center">
-            {@html plusCircleIcon}
-          </div>
-          <span class="action-text"
-            >{$_('accountCenter.connectAnotherWallet', {
-              default: en.accountCenter.connectAnotherWallet
-            })}</span
+        <!-- Mobile  -->
+        {#if innerWidth > 480}
+          <!-- connect another wallet -->
+          <div
+            on:click={() => connect()}
+            class="action-container flex items-center pointer"
           >
-        </div>
+            <div class="plus-icon flex items-center justify-center">
+              {@html plusCircleIcon}
+            </div>
+            <span class="action-text"
+              >{$_('accountCenter.connectAnotherWallet', {
+                default: en.accountCenter.connectAnotherWallet
+              })}</span
+            >
+          </div>
 
-        <!-- disconnect all wallets -->
-        <div
-          on:click={() => (disconnectConfirmModal = true)}
-          class="action-container flex items-center mt pointer"
-        >
-          <div class="arrow-forward flex items-center justify-center">
-            {@html arrowForwardIcon}
-          </div>
-          <span class="action-text"
-            >{$_('accountCenter.disconnectAllWallets', {
-              default: en.accountCenter.disconnectAllWallets
-            })}</span
+          <!-- disconnect all wallets -->
+          <div
+            on:click={() => (disconnectConfirmModal = true)}
+            class="action-container flex items-center mt pointer"
           >
-        </div>
+            <div class="arrow-forward flex items-center justify-center">
+              {@html arrowForwardIcon}
+            </div>
+            <span class="action-text"
+              >{$_('accountCenter.disconnectAllWallets', {
+                default: en.accountCenter.disconnectAllWallets
+              })}</span
+            >
+          </div>
+        {/if}
+
       </div>
-    </div>
-
+      </div>
+    
     <!-- network section -->
     <div
       class="network-container shadow-1"
