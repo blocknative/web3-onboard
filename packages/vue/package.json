@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/vue",
-  "version": "2.2.8",
+  "version": "2.2.8-alpha.1",
   "description": "Vue Composable for web3-onboard",
   "module": "dist/index.js",
   "browser": "dist/index.js",
