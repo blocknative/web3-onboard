@@ -209,13 +209,7 @@
 {/if}
 
 <div
-  in:fly={{
-    delay: position.includes('top') ? 100 : 0,
-    duration: 600,
-    y: position.includes('top') ? 56 : -76,
-    easing: quartOut,
-    opacity: 0
-  }}
+  
   on:click|stopPropagation={hideWalletRowMenu}
   class="outer-container"
 >
