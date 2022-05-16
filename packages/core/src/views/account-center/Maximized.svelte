@@ -48,8 +48,6 @@
   $: innerWidth = 0
 </script>
 
-<svelte:window bind:innerWidth />
-
 <style>
   .outer-container {
     background-color: var(--onboard-gray-600, var(--gray-600));
@@ -201,6 +199,8 @@
   }
 </style>
 
+<svelte:window bind:innerWidth />
+
 {#if disconnectConfirmModal}
   <DisconnectAllConfirm
     onClose={() => (disconnectConfirmModal = false)}
@@ -208,11 +208,7 @@
   />
 {/if}
 
-<div
-  
-  on:click|stopPropagation={hideWalletRowMenu}
-  class="outer-container"
->
+<div on:click|stopPropagation={hideWalletRowMenu} class="outer-container">
   <!-- wallets section -->
   <div class="wallets-section">
     <!-- connected accounts -->
@@ -227,7 +223,6 @@
         {/each}
       </div>
 
-      
       <!-- actions -->
       <div class="actions flex flex-column items-start">
         <!-- Hide for Mobile  -->
@@ -262,10 +257,9 @@
             >
           </div>
         {/if}
+      </div>
+    </div>
 
-      </div>
-      </div>
-    
     <!-- network section -->
     <div
       class="network-container shadow-1"
