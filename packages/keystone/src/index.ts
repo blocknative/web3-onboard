@@ -6,7 +6,7 @@ import type {
   WalletInit
 } from '@web3-onboard/common'
 
-import type { providers } from 'ethers'
+import type { StaticJsonRpcProvider } from '@ethersproject/providers'
 
 const DEFAULT_BASE_PATH = "m/44'/60'/0'/0"
 
@@ -25,7 +25,7 @@ const assets = [
 
 const getAccount = async (
   keyring: any,
-  provider: providers.StaticJsonRpcProvider,
+  provider: StaticJsonRpcProvider,
   index: number
 ): Promise<Account> => {
   const address = (await keyring.addAccounts())[index]
@@ -42,7 +42,7 @@ const getAccount = async (
 
 const generateAccounts = async (
   keyring: any,
-  provider: providers.StaticJsonRpcProvider
+  provider: StaticJsonRpcProvider
 ): Promise<Account[]> => {
   const accounts = []
   let zeroBalanceAccounts = 0,
@@ -83,6 +83,10 @@ function keystone({
           '@keystonehq/eth-keyring'
         )
 
+        // @ts-ignore super weird esm issue where the default export is an object with a property default on it
+        // if that is the case then we just grab the default value
+        AirGappedKeyring = AirGappedKeyring?.default || AirGappedKeyring
+
         const { TransactionFactory: Transaction } = await import(
           '@ethereumjs/tx'
         )
@@ -92,7 +96,8 @@ function keystone({
           createEIP1193Provider,
           ProviderRpcError,
           ProviderRpcErrorCode,
-          getCommon
+          getCommon,
+          bigNumberFieldsToStrings
         } = await import('@web3-onboard/common')
 
         const keyring = AirGappedKeyring.getEmptyKeyring()
@@ -100,17 +105,17 @@ function keystone({
 
         const eventEmitter = new EventEmitter()
 
+        let ethersProvider: StaticJsonRpcProvider
+
         let currentChain: Chain = chains[0]
         const scanAccounts = async ({
-          derivationPath,
-          chainId,
-          asset
+          chainId
         }: ScanAccountsOptions): Promise<Account[]> => {
           currentChain =
             chains.find(({ id }: Chain) => id === chainId) || currentChain
 
-          const provider = new StaticJsonRpcProvider(currentChain.rpcUrl)
-          return generateAccounts(keyring, provider)
+          ethersProvider = new StaticJsonRpcProvider(currentChain.rpcUrl)
+          return generateAccounts(keyring, ethersProvider)
         }
 
         const getAccounts = async () => {
@@ -216,15 +221,31 @@ function keystone({
             transactionObject.gasLimit =
               transactionObject.gas || transactionObject.gasLimit
 
-            const transaction = Transaction.fromTxData(
-              {
-                ...transactionObject
-              },
-              { common, freeze: false }
+            // 'gas' is an invalid property for the TransactionRequest type
+            delete transactionObject.gas
+
+            const signer = ethersProvider.getSigner(from)
+
+            let populatedTransaction = bigNumberFieldsToStrings(
+              await signer.populateTransaction(transactionObject)
             )
 
-            // @ts-ignore
-            const signedTx = await keyring.signTransaction(from, transaction)
+            const transaction = Transaction.fromTxData(populatedTransaction, {
+              common,
+              freeze: false
+            })
+
+            let signedTx
+            try {
+              // @ts-ignore
+              signedTx = await keyring.signTransaction(from, transaction)
+            } catch (error: any) {
+              if (error.message && error.message.message) {
+                throw new Error(error.message.message)
+              } else {
+                throw new Error(error)
+              }
+            }
 
             return `0x${signedTx.serialize().toString('hex')}`
           },
