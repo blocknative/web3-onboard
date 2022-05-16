@@ -1,8 +1,10 @@
 import { BehaviorSubject, Subject, Observable } from 'rxjs'
 import { distinctUntilKeyChanged, pluck, filter } from 'rxjs/operators'
+import { locale } from 'svelte-i18n'
+import type { Chain, WalletModule } from '@web3-onboard/common'
+
 import { APP_INITIAL_STATE } from '../constants'
 import { notNullish } from '../utils'
-import type { Chain, WalletModule } from '@web3-onboard/common'
 
 import type {
   AppState,
@@ -11,7 +13,8 @@ import type {
   UpdateWalletAction,
   AddWalletAction,
   UpdateAccountAction,
-  UpdateAccountCenterAction
+  UpdateAccountCenterAction,
+  Locale
 } from '../types'
 
 import {
@@ -22,7 +25,8 @@ import {
   RESET_STORE,
   UPDATE_ACCOUNT,
   UPDATE_ACCOUNT_CENTER,
-  SET_WALLET_MODULES
+  SET_WALLET_MODULES,
+  SET_LOCALE
 } from './constants'
 
 function reducer(state: AppState, action: Action): AppState {
@@ -112,6 +116,15 @@ function reducer(state: AppState, action: Action): AppState {
       return {
         ...state,
         walletModules: payload as WalletModule[]
+      }
+    }
+
+    case SET_LOCALE: {
+      // Set the locale in the svelte-i18n internal state
+      locale.set(payload as Locale)
+      return {
+        ...state,
+        locale: payload as Locale
       }
     }
 
