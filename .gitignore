@@ -4,4 +4,3 @@ dist/
 package-lock.json
 .rpt2_cache
 .vscode
-packages/demo/yarn.lock
