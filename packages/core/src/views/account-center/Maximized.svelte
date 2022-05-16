@@ -230,7 +230,7 @@
       
       <!-- actions -->
       <div class="actions flex flex-column items-start">
-        <!-- Mobile  -->
+        <!-- Hide for Mobile  -->
         {#if innerWidth > 480}
           <!-- connect another wallet -->
           <div
