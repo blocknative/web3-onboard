@@ -14,13 +14,16 @@ import type {
   SetLocaleAction,
   UpdateAccountAction,
   UpdateAccountCenterAction,
+  UpdateNotifyAction,
   UpdateWalletAction,
-  WalletState
+  WalletState,
+  NotifyOptions
 } from '../types'
 
 import {
   validateAccountCenterUpdate,
   validateLocale,
+  validateNotifyUpdate,
   validateString,
   validateWallet,
   validateWalletInit
@@ -34,6 +37,7 @@ import {
   REMOVE_WALLET,
   UPDATE_ACCOUNT,
   UPDATE_ACCOUNT_CENTER,
+  UPDATE_NOTIFY,
   SET_WALLET_MODULES,
   SET_LOCALE
 } from './constants'
@@ -135,6 +139,23 @@ export function updateAccountCenter(
   }
 
   dispatch(action as UpdateAccountCenterAction)
+}
+
+export function updateNotify(
+  update: NotifyOptions | Partial<NotifyOptions>
+): void {
+  const error = validateNotifyUpdate(update)
+
+  if (error) {
+    throw error
+  }
+
+  const action = {
+    type: UPDATE_NOTIFY,
+    payload: update
+  }
+
+  dispatch(action as UpdateNotifyAction)
 }
 
 export function resetStore(): void {

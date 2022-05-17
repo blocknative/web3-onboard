@@ -14,6 +14,7 @@ import type {
   AddWalletAction,
   UpdateAccountAction,
   UpdateAccountCenterAction,
+  UpdateNotify,
   Locale
 } from '../types'
 
@@ -25,6 +26,7 @@ import {
   RESET_STORE,
   UPDATE_ACCOUNT,
   UPDATE_ACCOUNT_CENTER,
+  UPDATE_NOTIFY,
   SET_WALLET_MODULES,
   SET_LOCALE
 } from './constants'
@@ -106,12 +108,24 @@ function reducer(state: AppState, action: Action): AppState {
       const update = payload as UpdateAccountCenterAction['payload']
       return {
         ...state,
+        notify: {
+          ...state.notify,
+          ...update
+        }
+      }
+    }
+
+    case UPDATE_NOTIFY: {
+      const update = payload as UpdateNotify['payload']
+      return {
+        ...state,
         accountCenter: {
           ...state.accountCenter,
           ...update
         }
       }
     }
+
     case SET_WALLET_MODULES: {
       return {
         ...state,

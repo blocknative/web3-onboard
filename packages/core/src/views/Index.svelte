@@ -6,6 +6,7 @@
   import SwitchChain from './chain/SwitchChain.svelte'
   import ActionRequired from './connect/ActionRequired.svelte'
   import AccountCenter from './account-center/Index.svelte'
+  import Notify from './notify/views/Notify.svelte';
 
   const accountCenter$ = state
     .select('accountCenter')
@@ -247,4 +248,8 @@
 
 {#if $accountCenter$.enabled && $wallets$.length}
   <AccountCenter settings={$accountCenter$} />
+{/if}
+
+{#if $accountCenter$.enabled && $wallets$.length}
+  <Notify settings={$accountCenter$} />
 {/if}

@@ -7,6 +7,7 @@ import {
   addChains,
   setWalletModules,
   updateAccountCenter,
+  updateNotify,
   setLocale
 } from './store/actions'
 import { reset$, internalState$ } from './streams'
@@ -53,7 +54,7 @@ function init(options: InitOptions): OnboardAPI {
     }
   }
 
-  const { wallets, chains, appMetadata = null, i18n, accountCenter } = options
+  const { wallets, chains, appMetadata = null, i18n, accountCenter, notify } = options
 
   initI18N(i18n)
   addChains(chains)
@@ -71,6 +72,14 @@ function init(options: InitOptions): OnboardAPI {
   }
 
   accountCenterUpdate && updateAccountCenter(accountCenterUpdate)
+
+  let notifyUpdate
+
+  if (typeof notify !== 'undefined' && notify.desktop) {
+    notifyUpdate = notify.desktop
+  }
+
+  notifyUpdate && updateNotify(notifyUpdate)
 
   const { svelteInstance } = internalState$.getValue()
 

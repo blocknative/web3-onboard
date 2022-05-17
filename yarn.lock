@@ -790,6 +790,17 @@
     google-protobuf "^3.7.0-rc.2"
     pbjs "^0.0.5"
 
+"@keystonehq/base-eth-keyring@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@keystonehq/base-eth-keyring/-/base-eth-keyring-0.3.2.tgz#71efe1495d4931fab5fd0016c8722fe5d9657da9"
+  integrity sha512-y/kv8XNRSzqcSl7fvZklBKr4MVir1OJHzqM5vC+3yvzkh3mVtN8vUjAAxHtmVVVyM8rsdqK7aYZ7paexYdpnag==
+  dependencies:
+    "@ethereumjs/tx" "3.0.0"
+    "@keystonehq/bc-ur-registry-eth" "^0.7.7"
+    ethereumjs-util "^7.0.8"
+    hdkey "^2.0.1"
+    uuid "^8.3.2"
+
 "@keystonehq/base-eth-keyring@^0.6.0-alpha.1":
   version "0.6.0-alpha.1"
   resolved "https://registry.yarnpkg.com/@keystonehq/base-eth-keyring/-/base-eth-keyring-0.6.0-alpha.1.tgz#ff19689eb07a54aefdc21394a51c117660f7a0d2"
@@ -811,6 +822,25 @@
     hdkey "^2.0.1"
     uuid "^8.3.2"
 
+"@keystonehq/bc-ur-registry-eth@^0.7.7":
+  version "0.7.7"
+  resolved "https://registry.yarnpkg.com/@keystonehq/bc-ur-registry-eth/-/bc-ur-registry-eth-0.7.7.tgz#45267510900049050ef860a1e78fde9087b75972"
+  integrity sha512-2gZf18ogSCLjsn3PxGqwiOMz/G11v7byRnTLv5/wNJGzCqkMf86OKaVbUgsVokq0B5KAZtpCFQxj96rrFhPRiQ==
+  dependencies:
+    "@keystonehq/bc-ur-registry" "^0.4.4"
+    ethereumjs-util "^7.0.8"
+    hdkey "^2.0.1"
+    uuid "^8.3.2"
+
+"@keystonehq/bc-ur-registry@^0.4.4":
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/@keystonehq/bc-ur-registry/-/bc-ur-registry-0.4.4.tgz#3073fdd4b33cdcbd04526a313a7685891a4b4583"
+  integrity sha512-SBdKdAZfp3y14GTGrKjfJJHf4iXObjcm4/qKUZ92lj8HVR8mxHHGmHksjE328bJPTAsJPloLix4rTnWg+qgS2w==
+  dependencies:
+    "@ngraveio/bc-ur" "^1.1.5"
+    base58check "^2.0.0"
+    tslib "^2.3.0"
+
 "@keystonehq/bc-ur-registry@^0.5.0-alpha.5":
   version "0.5.0-alpha.6"
   resolved "https://registry.yarnpkg.com/@keystonehq/bc-ur-registry/-/bc-ur-registry-0.5.0-alpha.6.tgz#56868a7deeeaf5315a7fff6c0b42f3d31555a5c2"
@@ -819,6 +849,21 @@
     "@ngraveio/bc-ur" "^1.1.5"
     base58check "^2.0.0"
     tslib "^2.3.0"
+
+"@keystonehq/eth-keyring@^0.11.2-alpha.2":
+  version "0.11.2"
+  resolved "https://registry.yarnpkg.com/@keystonehq/eth-keyring/-/eth-keyring-0.11.2.tgz#92b2d54b82cb107170a34592fa923bce28051493"
+  integrity sha512-2fuO/8PdWTcXIyPK0jI1nNG0mj9x3c1wcsob7dUcwiHme5yDMUb1OX9vPfSD0TCiYJYLOzuU6WDL9s6d/lWGOg==
+  dependencies:
+    "@ethereumjs/tx" "3.0.0"
+    "@keystonehq/base-eth-keyring" "^0.3.2"
+    "@keystonehq/bc-ur-registry-eth" "^0.7.7"
+    "@keystonehq/sdk" "^0.9.1"
+    "@metamask/obs-store" "^7.0.0"
+    bs58check "^2.1.2"
+    ethereumjs-util "^7.0.8"
+    hdkey "^2.0.1"
+    uuid "^8.3.2"
 
 "@keystonehq/eth-keyring@^0.14.0-alpha.10.3":
   version "0.14.0-alpha.10.3"
@@ -848,6 +893,19 @@
     react-qr-reader "^2.2.1"
     rxjs "^6.6.3"
     typescript "^4.6.2"
+
+"@keystonehq/sdk@^0.9.1":
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/@keystonehq/sdk/-/sdk-0.9.1.tgz#d1084c967118046257b720fedd8fbe8bb845a1c7"
+  integrity sha512-tcKDvKQVoe/2tibsjF/19VQhq1vldC+DyhC30lA9XJbbh5tXSoNfqqUVbMvDqxino/vBHZQur6rDSHF8+KBoMw==
+  dependencies:
+    "@ngraveio/bc-ur" "^1.0.0"
+    qrcode.react "^1.0.1"
+    react "16.13.1"
+    react-dom "16.13.1"
+    react-modal "^3.12.1"
+    react-qr-reader "^2.2.1"
+    rxjs "^6.6.3"
 
 "@ledgerhq/cryptoassets@^6.25.0":
   version "6.25.0"
@@ -1935,6 +1993,82 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.0"
 
+"@web3-onboard/common@^2.0.7":
+  version "2.0.9"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/common/-/common-2.0.9.tgz#b53bf12f8a644f55fe8b09c5deb73531c2b90e9c"
+  integrity sha512-6qTIPAmLAkhcVPtSOyIUzscJ/rq3/xI42kVt8I4ZsUErd32QjhuydIndJJHWrEFAXT/6ZY6tFH2GZix9Fe8YzQ==
+  dependencies:
+    "@ethereumjs/common" "2.6.2"
+    ethers "5.5.4"
+    joi "^17.4.2"
+    rxjs "^7.5.2"
+
+"@web3-onboard/core@^2.2.7":
+  version "2.2.8"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.2.8.tgz#0a2c6aa991ea2ac0a0a471d5ee3bbf84aafd79df"
+  integrity sha512-nEEQR0/EyMbtMOz2yngyr992ElbYlICm7tZOwKfvq4nknGdnkEVmx74nr80H5M6/9nfZ5gJug2v8i/M3/YxcbQ==
+  dependencies:
+    "@web3-onboard/common" "^2.0.7"
+    bowser "^2.11.0"
+    ethers "5.5.3"
+    eventemitter3 "^4.0.7"
+    joi "17.6.0"
+    lodash.merge "^4.6.2"
+    lodash.partition "^4.6.0"
+    rxjs "^7.5.2"
+    svelte "^3.46.4"
+    svelte-i18n "^3.3.13"
+
+"@web3-onboard/keepkey@^2.0.1":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/keepkey/-/keepkey-2.0.3.tgz#c7a0e9242385a7ce54d7314cd402caa63751c988"
+  integrity sha512-q6lSTujDCc22xTejpdT44jna7ZQQBbN4YEywush+iimq9ZBP9AcNqnddxtfqZvG1R3nssPFmpO/i5w0DVpL11A==
+  dependencies:
+    "@ethersproject/providers" "^5.5.0"
+    "@shapeshiftoss/hdwallet-core" "^1.15.2"
+    "@shapeshiftoss/hdwallet-keepkey-webusb" "^1.15.2"
+    "@web3-onboard/common" "^2.0.7"
+    ethereumjs-util "^7.1.3"
+
+"@web3-onboard/keystone@^2.0.1":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/keystone/-/keystone-2.0.3.tgz#da34e53f3a982d5954101e1e223c589d79afbd65"
+  integrity sha512-FWnBMoiJmKb0ZVCCns3OoQEMh2heM8RPkZ/pnEBnKKVZg2YDyefDmr5QqYR6Zlb3x6wgP/uq2brBlbPpoH/SLg==
+  dependencies:
+    "@ethereumjs/tx" "^3.4.0"
+    "@ethersproject/providers" "^5.5.0"
+    "@keystonehq/eth-keyring" "^0.11.2-alpha.2"
+    "@web3-onboard/common" "^2.0.7"
+
+"@web3-onboard/ledger@^2.0.1":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/ledger/-/ledger-2.0.4.tgz#306952ddce5b17c25de3e9643465083d28281218"
+  integrity sha512-eRh9C9/+c7Kkgk6TsSMNz1n31X5SLIn8Ip4cnxo8/z2/jS1I/KRpiKsUPXRF2X0EL0A3yhk0aCeiJR9+70sFqQ==
+  dependencies:
+    "@ethereumjs/tx" "^3.4.0"
+    "@ethersproject/providers" "^5.5.0"
+    "@ledgerhq/hw-app-eth" "^6.19.0"
+    "@ledgerhq/hw-transport-u2f" "^5.36.0-deprecated"
+    "@ledgerhq/hw-transport-webusb" "^6.19.0"
+    "@metamask/eth-sig-util" "^4.0.0"
+    "@web3-onboard/common" "^2.0.7"
+    buffer "^6.0.3"
+    ethereumjs-util "^7.1.3"
+
+"@web3-onboard/trezor@^2.0.2":
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/trezor/-/trezor-2.0.5.tgz#9d381b05abc7861e2b2ed9283fcb04296f09b33b"
+  integrity sha512-ES7p7Tub5GoW/AjC8McIWsIOTKXO3NkkLjPS/VcBGslp5HM+KdRn3xmBGlGU6wQ4VGYQh66A8BJzd+27QGB7tA==
+  dependencies:
+    "@ethereumjs/tx" "^3.4.0"
+    "@ethersproject/providers" "^5.5.0"
+    "@web3-onboard/common" "^2.0.7"
+    buffer "^6.0.3"
+    eth-crypto "^2.1.0"
+    ethereumjs-util "^7.1.3"
+    hdkey "^2.0.1"
+    trezor-connect "^8.2.6"
+
 "@webassemblyjs/ast@1.11.1":
   version "1.11.1"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.11.1.tgz#2bfd767eae1a6996f432ff7e8d7fc75679c0b6a7"
@@ -2670,6 +2804,16 @@ bnb-javascript-sdk-nobroadcast@^2.16.14:
     uuid "^3.3.2"
     websocket-stream "^5.5.0"
 
+bnc-sdk@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-4.2.0.tgz#cabc70eaf4a49dd2f695c6fcee50c833aa2af6b2"
+  integrity sha512-uoe40jLL+eYxeCAOqLgWLOowU9kyUuXyLURVgSSfIBjUNuszlz+I2wZYtvdWF+YkYphSr7L3E6WFtmwFrne+Pw==
+  dependencies:
+    crypto-es "^1.2.2"
+    nanoid "^3.3.1"
+    rxjs "^6.6.3"
+    sturdy-websocket "^0.1.12"
+
 body-parser@1.19.2, body-parser@^1.16.0:
   version "1.19.2"
   resolved "https://registry.yarnpkg.com/body-parser/-/body-parser-1.19.2.tgz#4714ccd9c157d44797b8b5607d72c0b89952f26e"
@@ -3398,6 +3542,11 @@ crypto-browserify@3.12.0, crypto-browserify@^3.12.0:
     public-encrypt "^4.0.0"
     randombytes "^2.0.0"
     randomfill "^1.0.3"
+
+crypto-es@^1.2.2:
+  version "1.2.7"
+  resolved "https://registry.yarnpkg.com/crypto-es/-/crypto-es-1.2.7.tgz#754a6d52319a94fb4eb1f119297f17196b360f88"
+  integrity sha512-UUqiVJ2gUuZFmbFsKmud3uuLcNP2+Opt+5ysmljycFCyhA0+T16XJmo1ev/t5kMChMqWh7IEvURNCqsg+SjZGQ==
 
 crypto-js@^3.1.9-1:
   version "3.3.0"
@@ -6201,6 +6350,11 @@ lodash.debounce@^4.0.8:
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
   integrity sha1-gteb/zCmfEAF/9XiUVMArZyk168=
 
+lodash.defaults@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/lodash.defaults/-/lodash.defaults-4.2.0.tgz#d09178716ffea4dde9e5fb7b37f6f0802274580c"
+  integrity sha1-0JF4cW/+pN3p5ft7N/bwgCJ0WAw=
+
 lodash.merge@^4.6.2:
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
@@ -6643,6 +6797,11 @@ nanoid@^3.2.0:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.1.tgz#6347a18cac88af88f58af0b3594b723d5e99bb35"
   integrity sha512-n6Vs/3KGyxPQd6uO0eH4Bv0ojGSUvuLlIHtC3Y0kEO23YRge8H9x1GCzLn28YX0H66pMkxuaeESFq4tKISKwdw==
+
+nanoid@^3.3.1:
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.4.tgz#730b67e3cd09e2deacf03c027c81c9d9dbc5e8ab"
+  integrity sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==
 
 natural-compare@^1.4.0:
   version "1.4.0"
@@ -8540,6 +8699,13 @@ strip-json-comments@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
   integrity sha1-PFMZQukIwml8DsNEhYwobHygpgo=
+
+sturdy-websocket@^0.1.12:
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/sturdy-websocket/-/sturdy-websocket-0.1.12.tgz#84bb779f948b585a695f76961dc7d1c4a5e87629"
+  integrity sha512-PA7h8LdjaMoIlC5HAwLVzae4raGWgyroscV4oUpEiTtEFINcNa47/CKYT3e98o+FfsJgrclI2pYpaJrz0aaoew==
+  dependencies:
+    lodash.defaults "^4.2.0"
 
 superstruct@^0.10.12:
   version "0.10.13"
