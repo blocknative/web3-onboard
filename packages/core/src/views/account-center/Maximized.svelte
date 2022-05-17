@@ -20,6 +20,7 @@
   import { updateAccountCenter } from '../../store/actions'
   import blocknative from '../../icons/blocknative'
   import DisconnectAllConfirm from './DisconnectAllConfirm.svelte'
+  import { getDevice } from '../../utils'
 
   function disconnectAllWallets() {
     $wallets$.forEach(({ label }) => disconnect({ label }))
@@ -45,13 +46,13 @@
 
   const { position } = state.get().accountCenter
 
-  $: innerWidth = 0
+  const device = getDevice()
 </script>
 
 <style>
   .outer-container {
     background-color: var(--onboard-gray-600, var(--gray-600));
-    border-radius: 16px;
+    border-radius: var(--onboard-border-radius-3, var(--border-radius-3));
     width: 100%;
     filter: drop-shadow(0px 4px 16px rgba(178, 178, 178, 0.2));
   }
@@ -199,8 +200,6 @@
   }
 </style>
 
-<svelte:window bind:innerWidth />
-
 {#if disconnectConfirmModal}
   <DisconnectAllConfirm
     onClose={() => (disconnectConfirmModal = false)}
@@ -226,7 +225,7 @@
       <!-- actions -->
       <div class="actions flex flex-column items-start">
         <!-- Hide for Mobile  -->
-        {#if innerWidth > 480}
+        {#if device.type === 'desktop'}
           <!-- connect another wallet -->
           <div
             on:click={() => connect()}
