@@ -4,7 +4,8 @@
   import { updateAccountCenter } from '../../store/actions'
   import type { AccountCenter } from '../../types'
   import Maximized from './Maximized.svelte'
-  import Minimized from './Micro.svelte'
+  import Minimized from './Minimized.svelte'
+  import Micro from './Micro.svelte'
 
   export let settings: AccountCenter
 
@@ -38,9 +39,12 @@
   class="container flex flex-column absolute"
   style={accountCenterPositions[settings.position]}
 >
-  {#if !settings.expanded}
+  {#if !settings.expanded && !settings.minimal}
     <!-- minimized -->
     <Minimized />
+  {:else if !settings.expanded && settings.minimal}
+    <!-- micro -->
+    <Micro />
   {:else}
     <!-- maximized -->
     <Maximized />

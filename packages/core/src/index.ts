@@ -14,6 +14,7 @@ import initI18N from './i18n'
 
 import App from './views/Index.svelte'
 import type { InitOptions, OnboardAPI } from './types'
+import { APP_INITIAL_STATE } from './constants'
 import { getDevice } from './utils'
 
 const API = {
@@ -56,19 +57,27 @@ function init(options: InitOptions): OnboardAPI {
   initI18N(i18n)
   addChains(chains)
 
-  let accountCenterUpdate
-
   const device = getDevice()
+  
+  // update accountCenter
+  if (typeof accountCenter !== 'undefined') {
+    let accountCenterUpdate
 
-  if (device.type === 'mobile') {
-    accountCenterUpdate = {
-      enabled: false
+    if (device.type === 'mobile' && accountCenter.mobile) {
+      accountCenterUpdate = {
+        ...APP_INITIAL_STATE.accountCenter,
+        ...accountCenter.mobile
+      }
+    } else if (accountCenter.desktop) {
+      accountCenterUpdate = {
+        ...APP_INITIAL_STATE.accountCenter,
+        ...accountCenter.desktop
+      }
     }
-  } else if (typeof accountCenter !== 'undefined' && accountCenter.desktop) {
-    accountCenterUpdate = accountCenter.desktop
-  }
 
-  accountCenterUpdate && updateAccountCenter(accountCenterUpdate)
+    updateAccountCenter(accountCenterUpdate)
+  }
+  
 
   const { svelteInstance } = internalState$.getValue()
 

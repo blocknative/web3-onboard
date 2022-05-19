@@ -154,7 +154,14 @@
     // example customizing account center
     // accountCenter: {
     //   desktop: {
-    //     position: 'bottomRight'
+    //     position: 'topRight',
+    //     enabled: true,
+    //     minimal: true
+    //   },
+    //   mobile: {
+    //     position: 'topRight',
+    //     enabled: true,
+    //     minimal: true
     //   }
     // }
     // example customizing copy
