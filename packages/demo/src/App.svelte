@@ -150,20 +150,20 @@
       },
       gettingStartedGuide: 'https://blocknative.com',
       explore: 'https://blocknative.com'
-    }
+    },
     // example customizing account center
-    // accountCenter: {
-    //   desktop: {
-    //     position: 'topRight',
-    //     enabled: true,
-    //     minimal: true
-    //   },
-    //   mobile: {
-    //     position: 'topRight',
-    //     enabled: true,
-    //     minimal: true
-    //   }
-    // }
+    accountCenter: {
+      desktop: {
+        position: 'topRight',
+        enabled: true,
+        minimal: true
+      },
+      mobile: {
+        position: 'topRight',
+        enabled: true,
+        minimal: true
+      }
+    }
     // example customizing copy
     // i18n: {
     //   en: {

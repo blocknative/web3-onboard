@@ -156,7 +156,6 @@ type ValidateReturn = Joi.ValidationResult | null
 
 function validate(validator: Joi.Schema, data: unknown): ValidateReturn {
   const result = validator.validate(data)
-  console.log(data, result)
   return result.error ? result : null
 }
 

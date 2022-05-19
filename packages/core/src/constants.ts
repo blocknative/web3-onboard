@@ -1,6 +1,5 @@
 import type { AppState } from './types'
 import { getDevice } from './utils'
-const device = getDevice()
 
 export const APP_INITIAL_STATE: AppState = {
   wallets: [],
@@ -10,7 +9,7 @@ export const APP_INITIAL_STATE: AppState = {
     enabled: true,
     position: 'topRight',
     expanded: false,
-    minimal: device.type === 'mobile' ? true : false
+    minimal: getDevice().type === 'mobile'
   }
 }
 
