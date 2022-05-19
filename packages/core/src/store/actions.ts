@@ -11,6 +11,7 @@ import type {
   RemoveWalletAction,
   ResetStoreAction,
   SetWalletModulesAction,
+  SetLocaleAction,
   UpdateAccountAction,
   UpdateAccountCenterAction,
   UpdateWalletAction,
@@ -19,6 +20,7 @@ import type {
 
 import {
   validateAccountCenterUpdate,
+  validateLocale,
   validateString,
   validateWallet,
   validateWalletInit
@@ -32,7 +34,8 @@ import {
   REMOVE_WALLET,
   UPDATE_ACCOUNT,
   UPDATE_ACCOUNT_CENTER,
-  SET_WALLET_MODULES
+  SET_WALLET_MODULES,
+  SET_LOCALE
 } from './constants'
 
 export function addChains(chains: Chain[]): void {
@@ -160,4 +163,19 @@ export function setWalletModules(wallets: WalletInit[]): void {
   }
 
   dispatch(action as SetWalletModulesAction)
+}
+
+export function setLocale(locale: string): void {
+  const error = validateLocale(locale)
+
+  if (error) {
+    throw error
+  }
+
+  const action = {
+    type: SET_LOCALE,
+    payload: locale
+  }
+
+  dispatch(action as SetLocaleAction)
 }
