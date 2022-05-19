@@ -11,10 +11,9 @@ import type {
 
 // these cannot be dynamically imported
 import { TypedDataUtils } from '@metamask/eth-sig-util'
-import { Buffer } from 'buffer'
 
 import type Transport from '@ledgerhq/hw-transport'
-import type { providers } from 'ethers'
+import type { StaticJsonRpcProvider } from '@ethersproject/providers'
 import type Eth from '@ledgerhq/hw-app-eth'
 
 const LEDGER_LIVE_PATH = `m/44'/60'`
@@ -60,7 +59,7 @@ const getAccount = async (
   derivationPath: string,
   asset: Asset,
   index: number,
-  provider: providers.StaticJsonRpcProvider,
+  provider: StaticJsonRpcProvider,
   eth: Eth
 ): Promise<Account> => {
   const dPath =
@@ -81,7 +80,7 @@ const getAccount = async (
 const getAddresses = async (
   derivationPath: string,
   asset: Asset,
-  provider: providers.StaticJsonRpcProvider,
+  provider: StaticJsonRpcProvider,
   eth: Eth
 ): Promise<Account[]> => {
   const accounts = []
@@ -119,7 +118,6 @@ function ledger({
       getIcon,
       getInterface: async ({ EventEmitter, chains }: GetInterfaceHelpers) => {
         const Eth = (await import('@ledgerhq/hw-app-eth')).default
-        const { default: Common, Hardfork } = await import('@ethereumjs/common')
         const ethUtil = await import('ethereumjs-util')
 
         const { SignTypedDataVersion } = await import('@metamask/eth-sig-util')
@@ -127,8 +125,13 @@ function ledger({
           '@ethersproject/providers'
         )
 
-        const { accountSelect, createEIP1193Provider, ProviderRpcError } =
-          await import('@web3-onboard/common')
+        const {
+          accountSelect,
+          createEIP1193Provider,
+          ProviderRpcError,
+          getCommon,
+          bigNumberFieldsToStrings
+        } = await import('@web3-onboard/common')
 
         const { TransactionFactory: Transaction, Capability } = await import(
           '@ethereumjs/tx'
@@ -137,6 +140,8 @@ function ledger({
         const transport: Transport = await getTransport()
         const eth = new Eth(transport)
         const eventEmitter = new EventEmitter()
+
+        let ethersProvider: StaticJsonRpcProvider
 
         let currentChain: Chain = chains[0]
 
@@ -148,7 +153,7 @@ function ledger({
           try {
             currentChain =
               chains.find(({ id }: Chain) => id === chainId) || currentChain
-            const provider = new StaticJsonRpcProvider(currentChain.rpcUrl)
+            ethersProvider = new StaticJsonRpcProvider(currentChain.rpcUrl)
 
             // Checks to see if this is a custom derivation path
             // If it is then just return the single account
@@ -163,13 +168,13 @@ function ledger({
                   address,
                   balance: {
                     asset: asset.label,
-                    value: await provider.getBalance(address)
+                    value: await ethersProvider.getBalance(address)
                   }
                 }
               ]
             }
 
-            return getAddresses(derivationPath, asset, provider, eth)
+            return getAddresses(derivationPath, asset, ethersProvider, eth)
           } catch (error) {
             const { statusText } = error as { statusText: string }
             throw new Error(
@@ -193,6 +198,29 @@ function ledger({
           }
 
           return accounts
+        }
+
+        const signMessage = async (address: string, message: string) => {
+          if (!(accounts && accounts.length && accounts.length > 0))
+            throw new Error(
+              'No account selected. Must call eth_requestAccounts first.'
+            )
+
+          const account =
+            accounts.find(account => account.address === address) || accounts[0]
+
+          return eth
+            .signPersonalMessage(
+              account.derivationPath,
+              ethUtil.stripHexPrefix(message)
+            )
+            .then(result => {
+              let v = (result['v'] - 27).toString(16)
+              if (v.length < 2) {
+                v = '0' + v
+              }
+              return `0x${result['r']}${result['s']}${v}`
+            })
         }
 
         const request: EIP1193Provider['request'] = async ({
@@ -270,28 +298,28 @@ function ledger({
             // Set the `from` field to the currently selected account
             transactionObject = { ...transactionObject, from }
 
-            // @ts-ignore
-            const CommonConstructor = Common.default || Common
-            const common = new CommonConstructor({
-              chain:
-                customNetwork || currentChain.hasOwnProperty('id')
-                  ? Number.parseInt(currentChain.id)
-                  : 1,
-              // Berlin is the minimum hardfork that will allow for EIP1559
-              hardfork: Hardfork.Berlin,
-              // List of supported EIPS
-              eips: [1559]
-            })
+            const chainId = currentChain.hasOwnProperty('id')
+              ? Number.parseInt(currentChain.id)
+              : 1
+            const common = await getCommon({ customNetwork, chainId })
 
             transactionObject.gasLimit =
               transactionObject.gas || transactionObject.gasLimit
 
-            const transaction = Transaction.fromTxData(
-              {
-                ...transactionObject
-              },
-              { common }
+            // 'gas' is an invalid property for the TransactionRequest type
+            delete transactionObject.gas
+
+            const signer = ethersProvider.getSigner(from)
+            let populatedTransaction = await signer.populateTransaction(
+              transactionObject
             )
+
+            populatedTransaction =
+              bigNumberFieldsToStrings(populatedTransaction)
+
+            const transaction = Transaction.fromTxData(populatedTransaction, {
+              common
+            })
 
             let unsignedTx = transaction.getMessageToSign(false)
 
@@ -309,7 +337,7 @@ function ledger({
             // Reconstruct the signed transaction
             const signedTx = Transaction.fromTxData(
               {
-                ...transactionObject,
+                ...populatedTransaction,
                 v: `0x${v}`,
                 r: `0x${r}`,
                 s: `0x${s}`
@@ -332,30 +360,10 @@ function ledger({
 
             return transactionHash as string
           },
-          eth_sign: async ({ params: [address, message] }) => {
-            if (!(accounts && accounts.length && accounts.length > 0))
-              throw new Error(
-                'No account selected. Must call eth_requestAccounts first.'
-              )
-
-            const account =
-              accounts.find(account => account.address === address) ||
-              accounts[0]
-
-            return eth
-              .signPersonalMessage(
-                account.derivationPath,
-                Buffer.from(message).toString('hex')
-              )
-              .then(result => {
-                let v = (result['v'] - 27).toString(16)
-                if (v.length < 2) {
-                  v = '0' + v
-                }
-
-                return `0x${result['r']}${result['s']}${v}`
-              })
-          },
+          eth_sign: async ({ params: [address, message] }) =>
+            signMessage(address, message),
+          personal_sign: async ({ params: [message, address] }) =>
+            signMessage(address, message),
           eth_signTypedData: async ({ params: [address, typedData] }) => {
             if (!(accounts && accounts.length && accounts.length > 0))
               throw new Error(

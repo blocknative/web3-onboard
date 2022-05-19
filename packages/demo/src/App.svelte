@@ -10,19 +10,19 @@
   import torusModule from '@web3-onboard/torus'
   import trezorModule from '@web3-onboard/trezor'
   import walletConnectModule from '@web3-onboard/walletconnect'
-  import walletLinkModule from '@web3-onboard/walletlink'
+  import coinbaseModule from '@web3-onboard/coinbase'
   import magicModule from '@web3-onboard/magic'
-  import { verifyMessage, verifyTypedData } from 'ethers/lib/utils'
+  import {
+    recoverAddress,
+    arrayify,
+    hashMessage,
+    verifyTypedData
+  } from 'ethers/lib/utils'
+  import { ethers } from 'ethers'
   import { share } from 'rxjs/operators'
   import VConsole from 'vconsole'
   import blocknativeIcon from './blocknative-icon'
   import blocknativeLogo from './blocknative-logo'
-
-  const toHex = text =>
-    text
-      .split('')
-      .map(c => c.charCodeAt(0).toString(16).padStart(2, '0'))
-      .join('')
 
   if (window.innerWidth < 700) {
     new VConsole()
@@ -57,7 +57,7 @@
     }
   })
 
-  const walletLink = walletLinkModule()
+  const coinbaseWallet = coinbaseModule()
 
   const walletConnect = walletConnectModule()
   const portis = portisModule({
@@ -82,6 +82,9 @@
 
   const magic = magicModule({
     apiKey: 'pk_live_02207D744E81C2BA'
+    // userEmail: 'test@test.com'
+    // userEmail is optional - if user has already logged in and/or session is still active a login modal will not appear
+    // for more info see the @web3-onboard/magic docs
   })
 
   const onboard = Onboard({
@@ -91,7 +94,7 @@
       walletConnect,
       keepkey,
       keystone,
-      walletLink,
+      coinbaseWallet,
       injected,
       magic,
       fortmatic,
@@ -103,26 +106,32 @@
       {
         id: '0x1',
         token: 'ETH',
-        label: 'Ethereum Mainnet',
+        label: 'Ethereum',
         rpcUrl: 'https://mainnet.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
       },
       {
         id: '0x3',
         token: 'tROP',
-        label: 'Ethereum Ropsten Testnet',
+        label: 'Ropsten',
         rpcUrl: 'https://ropsten.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
       },
       {
         id: '0x4',
         token: 'rETH',
-        label: 'Ethereum Rinkeby Testnet',
+        label: 'Rinkeby',
         rpcUrl: 'https://rinkeby.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
       },
       {
         id: '0x89',
         token: 'MATIC',
-        label: 'Matic Mainnet',
+        label: 'Polygon',
         rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+      },
+      {
+        id: '0xa',
+        token: 'OETH',
+        label: 'Optimism',
+        rpcUrl: 'https://mainnet.optimism.io'
       }
     ],
     appMetadata: {
@@ -138,9 +147,17 @@
         version: '1.0.0',
         termsUrl: 'https://www.blocknative.com/terms-conditions',
         privacyUrl: 'https://www.blocknative.com/privacy-policy'
-      }
+      },
+      gettingStartedGuide: 'https://blocknative.com',
+      explore: 'https://blocknative.com'
     }
-    // example customising copy
+    // example customizing account center
+    // accountCenter: {
+    //   desktop: {
+    //     position: 'bottomRight'
+    //   }
+    // }
+    // example customizing copy
     // i18n: {
     //   en: {
     //     connect: {
@@ -155,21 +172,37 @@
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
 
-  const signTransactionMessage = provider => {
-    provider.request({
-      method: 'eth_signTransaction',
-      params: [JSON.parse(transactionObject)]
+  const signTransactionMessage = async provider => {
+    const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
+
+    const signer = ethersProvider.getSigner()
+
+    const signature = await signer.signTransaction({
+      to: '',
+      value: 1000000000000000
     })
+    console.log(signature)
   }
 
   const signMessage = async (provider, address) => {
-    const signature = await provider.request({
-      method: 'eth_sign',
-      params: [address, toHex(signMsg)]
-    })
+    const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 
-    const recoveredAddress = verifyMessage(signMsg, signature)
-    console.log({ signMsg, signature, recoveredAddress })
+    const signer = ethersProvider?.getSigner()
+    const addr = await signer?.getAddress()
+    const signature = await signer?.signMessage(signMsg)
+
+    const recoveredAddress = recoverAddress(
+      arrayify(hashMessage(signMsg)),
+      signature
+    )
+
+    if (recoveredAddress !== address) {
+      console.error(
+        "Signature failed. Recovered address doesn' match signing address."
+      )
+    }
+
+    console.log({ signMsg, signature, recoveredAddress, addr })
   }
 
   const signTypedMessage = async (provider, address) => {

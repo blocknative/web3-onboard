@@ -28,6 +28,7 @@ type InitOptions {
   chains: Chain[]
   appMetadata?: AppMetadata
   i18n?: i18nOptions
+  accountCenter?: AccountCenterOptions
 }
 ```
 
@@ -46,6 +47,8 @@ type Chain = {
   rpcUrl: string // used for network requests
   label: string // used for display, eg Ethereum Mainnet
   token: TokenSymbol // the native token symbol, eg ETH, BNB, MATIC
+  color?: string // the color used to represent the chain and will be used as a background for the icon
+  icon?: string // the icon to represent the chain
 }
 ```
 
@@ -57,6 +60,7 @@ type AppMetadata = {
   // app name
   name: string
   // SVG icon string, with height or width (whichever is larger) set to 100% or a valid image URL
+  // note: if using an emoji make sure to send base64 string
   icon: string
   // Optional wide format logo (ie icon and text) to be displayed in the sidebar of connect modal. Defaults to icon if not provided
   logo?: string
@@ -86,6 +90,30 @@ type i18nOptions = Record<Locale, i18n>
 
 To see a list of all of the text values that can be internationalized or replaced, check out the [default en file](src/i18n/en.json).
 Onboard is using the [ICU syntax](https://formatjs.io/docs/core-concepts/icu-syntax/) for formatting under the hood.
+
+**`accountCenter`**
+An object that defines whether the account center UI is enabled and it's position on the screen. Currently the account center is disabled for mobile devices, so only desktop options are available.
+
+```typescript
+type AccountCenterOptions = {
+  desktop: {
+    position?: AccountCenterPosition // default: 'topRight'
+    enabled?: AccountCenter['enabled'] // default: true
+  }
+}
+
+type AccountCenter = {
+  enabled: boolean
+  position: AccountCenterPosition
+  expanded: boolean
+}
+
+type AccountCenterPosition =
+  | 'topRight'
+  | 'bottomRight'
+  | 'bottomLeft'
+  | 'topLeft'
+```
 
 ### Initialization Example
 
@@ -146,7 +174,7 @@ const onboard = Onboard({
       { name: 'MetaMask', url: 'https://metamask.io' },
       { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
     ]
-  }
+  },
   i18n: {
     en: {
       connect: {
@@ -235,13 +263,25 @@ Onboard currently keeps track of the following state:
 
 - `wallets`: The wallets connected to Onboard
 - `chains`: The chains that Onboard has been initialized with
+- `accountCenter`: The current state of the account center UI
 - `walletModules`: The wallet modules that are currently set and will be rendered in the wallet selection modal
 
 ```typescript
 type AppState = {
-  chains: Chain[]
   wallets: WalletState[]
+  chains: Chain[]
+  accountCenter: AccountCenter
   walletModules: WalletModule[]
+}
+
+type Chain {
+  namespace?: 'evm'
+  id: ChainId
+  rpcUrl: string
+  label: string
+  token: TokenSymbol
+  color?: string
+  icon?: string
 }
 
 type WalletState = {
@@ -271,6 +311,18 @@ type ConnectedChain = {
 
 type ChainId = string
 type TokenSymbol = string
+
+type AccountCenter = {
+  enabled: boolean
+  position: AccountCenterPosition
+  expanded: boolean
+}
+
+type AccountCenterPosition =
+  | 'topRight'
+  | 'bottomRight'
+  | 'bottomLeft'
+  | 'topLeft'
 
 type WalletModule {
   label: string
@@ -303,7 +355,7 @@ const { unsubscribe } = state.subscribe(update =>
 // unsubscribe()
 ```
 
-Specific top level slices of state can be subcribed to. For example you may want to just subscribe to receive updates to the `wallets` array only:
+Specific top level slices of state can be subscribed to. For example you may want to just subscribe to receive updates to the `wallets` array only:
 
 ```javascript
 const wallets = onboard.state.select('wallets')
@@ -425,6 +477,7 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-connect-sidebar-progress-color
   --onboard-connect-header-background
   --onboard-connect-header-color
+  --onboard-main-scroll-container-background
   --onboard-link-color
   --onboard-close-button-background
   --onboard-close-button-color
@@ -434,7 +487,14 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-wallet-button-background-hover
   --onboard-wallet-button-color
   --onboard-wallet-button-border-color
+  --onboard-wallet-button-border-radius
+  --onboard-wallet-button-box-shadow
   --onboard-wallet-app-icon-border-color
+
+  /* CUSTOMIZE THE CONNECT MODAL */
+  --onboard-modal-border-radius
+  --onboard-modal-backdrop
+  --onboard-modal-box-shadow
 
   /* FONTS */
   --onboard-font-family-normal: Sofia Pro;
@@ -457,10 +517,63 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-spacing-5: 0.5rem;
 
   /* SHADOWS */
+  --onboard-border-radius-1: 24px;
+
+  /* SHADOWS */
+  --onboard-shadow-0: none;
   --onboard-shadow-1: 0px 4px 12px rgba(0, 0, 0, 0.1);
   --onboard-shadow-2: inset 0px -1px 0px rgba(0, 0, 0, 0.1);
 
+  /* MAIN MODAL POSITIONING */
   --onboard-modal-z-index
+  --onboard-modal-top
+  --onboard-modal-bottom
+  --onboard-modal-right
+  --onboard-modal-left
+
+  /* HD WALLET ACCOUNT SELECT MODAL POSITIONING */
+  --onboard-account-select-modal-z-index
+  --onboard-account-select-modal-top
+  --onboard-account-select-modal-bottom
+  --onboard-account-select-modal-right
+  --onboard-account-select-modal-left
+
+  /* MAGIC WALLET MODAL POSITIONING */
+  --onboard-login-modal-z-index
+  --onboard-login-modal-top
+  --onboard-login-modal-bottom
+  --onboard-login-modal-right
+  --onboard-login-modal-left
+
+
+  /* HARDWARE WALLET STYLES  */
+  /* *if not set will fallback to variables with `--onboard` prefix shown above */
+
+  /* COLORS */
+  --account-select-modal-white: white;
+  --account-select-modal-black: black;
+  --account-select-modal-primary-100: #eff1fc;
+  --account-select-modal-primary-200: #d0d4f7;
+  --account-select-modal-primary-300: #b1b8f2;
+  --account-select-modal-primary-500: #6370e5;
+  --account-select-modal-primary-600: #454ea0;
+  --account-select-modal-gray-100: #ebebed;
+  --account-select-modal-gray-200: #c2c4c9;
+  --account-select-modal-gray-300: #999ca5;
+  --account-select-modal-gray-500: #33394b;
+  --account-select-modal-gray-700: #1a1d26;
+  --account-select-modal-danger-500: #ff4f4f;
+
+  /* FONTS */
+  --account-select-modal-font-family-normal: Sofia Pro;
+  --account-select-modal-font-family-light: Sofia Pro Light;
+  --account-select-modal-font-size-5: 1rem;
+  --account-select-modal-font-size-7: .75rem;
+  --account-select-modal-font-line-height-1: 24px;
+
+  /* SPACING */
+  --account-select-modal-margin-4: 1rem;
+  --account-select-modal-margin-5: 0.5rem;
 }
 ```
 
@@ -470,7 +583,7 @@ Many of the wallet modules require dependencies that are not normally included i
 
 ### Webpack 4
 
-Everything should just work since the node builtins are automatically bundled in v4
+Everything should just work since the node built-ins are automatically bundled in v4
 
 ### Webpack 5
 

@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/core",
-  "version": "2.1.0",
+  "version": "2.2.9-alpha.2",
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
@@ -18,6 +18,7 @@
   "type": "module",
   "license": "MIT",
   "devDependencies": {
+    "@rollup-extras/plugin-copy": "~1.2.2",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
     "@rollup/plugin-replace": "^3.0.0",
@@ -40,7 +41,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.0.2",
+    "@web3-onboard/common": "^2.0.7",
     "bowser": "^2.11.0",
     "ethers": "5.5.3",
     "eventemitter3": "^4.0.7",
@@ -48,7 +49,7 @@
     "lodash.merge": "^4.6.2",
     "lodash.partition": "^4.6.0",
     "rxjs": "^7.5.2",
-    "svelte-i18n": "^3.3.13",
-    "svelte": "^3.46.4"
+    "svelte": "^3.46.4",
+    "svelte-i18n": "^3.3.13"
   }
 }

@@ -3,14 +3,19 @@ import connectWallet from './connect'
 import disconnectWallet from './disconnect'
 import setChain from './chain'
 import { state } from './store'
-import { addChains, setWalletModules } from './store/actions'
+import {
+  addChains,
+  setWalletModules,
+  updateAccountCenter,
+  setLocale
+} from './store/actions'
 import { reset$, internalState$ } from './streams'
 import { validateInitOptions } from './validation'
 import initI18N from './i18n'
 
 import App from './views/Index.svelte'
 import type { InitOptions, OnboardAPI } from './types'
-import { getDeviceInfo } from './utils'
+import { getDevice } from './utils'
 
 const API = {
   connectWallet,
@@ -20,7 +25,8 @@ const API = {
     get: state.get,
     select: state.select,
     actions: {
-      setWalletModules
+      setWalletModules,
+      setLocale
     }
   }
 }
@@ -47,10 +53,24 @@ function init(options: InitOptions): OnboardAPI {
     }
   }
 
-  const { wallets, chains, appMetadata = null, i18n } = options
+  const { wallets, chains, appMetadata = null, i18n, accountCenter } = options
 
   initI18N(i18n)
   addChains(chains)
+
+  let accountCenterUpdate
+
+  const device = getDevice()
+
+  if (device.type === 'mobile') {
+    accountCenterUpdate = {
+      enabled: false
+    }
+  } else if (typeof accountCenter !== 'undefined' && accountCenter.desktop) {
+    accountCenterUpdate = accountCenter.desktop
+  }
+
+  accountCenterUpdate && updateAccountCenter(accountCenterUpdate)
 
   const { svelteInstance } = internalState$.getValue()
 
@@ -60,7 +80,6 @@ function init(options: InitOptions): OnboardAPI {
     reset$.next()
   }
 
-  const device = getDeviceInfo()
   const app = svelteInstance || mountApp()
 
   internalState$.next({
@@ -164,12 +183,27 @@ function mountApp() {
           --spacing-3: 1.5rem;
           --spacing-4: 1rem;
           --spacing-5: 0.5rem;
+          --spacing-6: 0.25rem;
+          --spacing-7: 0.125rem;
   
+          /* BORDER RADIUS */
+          --border-radius-1: 24px;  
+
           /* SHADOWS */
+          --shadow-0: none;
           --shadow-1: 0px 4px 12px rgba(0, 0, 0, 0.1);
           --shadow-2: inset 0px -1px 0px rgba(0, 0, 0, 0.1);
+          --shadow-3: 0px 4px 16px rgba(179, 179, 179, 0.2);
 
+          /* MODAL POSITIONING */
           --modal-z-index: 10;
+          --modal-top: unset;
+          --modal-right: unset;
+          --modal-bottom: unset;
+          --modal-left: unset;
+          
+          /* MODAL STYLES */
+          --modal-backdrop: rgba(0, 0, 0, 0.6);
         }
       </style>
     `

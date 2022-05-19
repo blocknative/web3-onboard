@@ -6,6 +6,7 @@
   export let icon: Promise<string> | string // svg string or url string
   export let loading = false
   export let padding = size / 6
+  export let color: string = 'black'
 
   export let border:
     | 'yellow'
@@ -14,7 +15,9 @@
     | 'darkGreen'
     | 'blue'
     | 'darkBlue'
-    | 'none' = 'blue'
+    | 'transparent'
+    | 'black'
+    | 'none' = 'transparent'
 
   export let background:
     | 'gray'
@@ -23,23 +26,14 @@
     | 'green'
     | 'white'
     | 'transparent'
-    | 'custom' = 'white'
+    | 'custom' = 'transparent'
 
   export let customBackgroundColor = ''
-  export let backgroundOpaque = false
+  export let radius = 12
 </script>
 
 <style>
-  .icon-container {
-    position: relative;
-    border-radius: 12px;
-    box-sizing: border-box;
-  }
-
   .icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100%;
   }
 
@@ -48,7 +42,7 @@
   }
 
   .border-gray {
-    border: 1px solid var(--onboard-gray-300, var(--gray-300));
+    border: 1px solid var(--onboard-gray-400, var(--gray-400));
   }
 
   .border-green {
@@ -73,6 +67,14 @@
         --onboard-wallet-app-icon-border-color,
         var(--onboard-primary-600, var(--primary-600))
       );
+  }
+
+  .border-transparent {
+    border: 1px solid transparent;
+  }
+
+  .border-black {
+    border: 1px solid var(--onboard-gray-600, var(--gray-600));
   }
 
   .background-gray {
@@ -128,23 +130,26 @@
 </style>
 
 <div
-  class:opaque={backgroundOpaque}
   class:border-yellow={border === 'yellow'}
   class:border-gray={border === 'gray'}
   class:border-green={border === 'green'}
   class:border-dark-green={border === 'darkGreen'}
   class:border-blue={border === 'blue'}
   class:border-dark-blue={border === 'darkBlue'}
+  class:border-transparent={border === 'transparent'}
+  class:border-black={border === 'black'}
   class:background-gray={background === 'gray'}
   class:background-light-gray={background === 'lightGray'}
   class:background-light-blue={background === 'lightBlue'}
   class:background-green={background === 'green'}
   class:background-white={background === 'white'}
   class:background-transparent={background === 'transparent'}
-  class="icon-container"
-  style={`${background === 'custom' ? customBackgroundColor : ''}; padding: ${
+  class="relative"
+  style={`${
+    background === 'custom' ? `background-color: ${customBackgroundColor}` : ''
+  }; padding: ${
     padding - 1
-  }px; width: ${size}px; height: ${size}px;`}
+  }px; width: ${size}px; height: ${size}px; border-radius: ${radius}px; color: ${color};`}
 >
   {#if loading}
     <div class="spinner-container">
@@ -154,7 +159,7 @@
     {#await icon}
       <div class="placeholder-icon" />
     {:then iconLoaded}
-      <div in:fade class="icon">
+      <div in:fade class="icon flex justify-center items-center">
         {#if isSVG(iconLoaded)}
           <!-- render svg string -->
           {@html iconLoaded}

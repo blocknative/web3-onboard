@@ -15,13 +15,44 @@
 
 <script lang="ts">
   import { fade } from 'svelte/transition'
+  import { onDestroy, onMount } from 'svelte'
+  import { getDevice } from '../../utils'
 
+  const device = getDevice()
+
+  const body = document.body
+  const html = document.documentElement
+  const trackYScrollPosition = () => {
+    document.documentElement.style.setProperty(
+      '--scroll-y',
+      `${window.scrollY}px`
+    )
+  }
+
+  onMount(() => {
+    window.addEventListener('scroll', trackYScrollPosition, { passive: true })
+    const scrollY = html.style.getPropertyValue('--scroll-y')
+    device.type === 'mobile'
+      ? (html.style.position = 'fixed')
+      : (html.style.overflow = 'hidden')
+
+    body.style.top = `-${scrollY}`
+  })
+
+  onDestroy(() => {
+    device.type === 'mobile'
+      ? (html.style.position = '')
+      : (html.style.overflow = 'auto')
+    const scrollY = body.style.top
+    body.style.top = ''
+    window.scrollTo(0, parseInt(scrollY || '0') * -1)
+    window.removeEventListener('scroll', trackYScrollPosition)
+  })
   export let close: () => void
 </script>
 
 <style>
   section {
-    position: absolute;
     top: 0;
     left: 0;
     pointer-events: none;
@@ -31,37 +62,39 @@
   .background {
     width: 100vw;
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.6);
+    background: var(--onboard-modal-backdrop, var(--modal-backdrop));
     pointer-events: all;
   }
 
-  .relative {
-    position: relative;
-    display: flex;
+  .max-height {
     max-height: calc(100vh - 2rem);
   }
 
+  .modal-position {
+    top: var(--onboard-modal-top, var(--modal-top));
+    bottom: var(--onboard-modal-bottom, var(--modal-bottom));
+    left: var(--onboard-modal-left, var(--modal-left));
+    right: var(--onboard-modal-right, var(--modal-right));
+  }
+
   .modal-overflow {
-    position: relative;
     overflow: hidden;
-    border-radius: 24px;
-    display: flex;
-    justify-content: center;
+  }
+
+  .modal-styling {
+    border-radius: var(--onboard-modal-border-radius, var(--border-radius-1));
+    box-shadow: var(--onboard-modal-box-shadow, var(--box-shadow-0));
   }
 
   .modal {
-    position: relative;
-    border-radius: 24px;
+    border-radius: var(--onboard-modal-border-radius, var(--border-radius-1));
     overflow-y: auto;
     background: white;
   }
 
   @media all and (max-width: 520px) {
     .relative {
-      width: calc(100% - 1rem);
+      width: 100vw;
     }
 
     .modal-overflow {
@@ -74,12 +107,17 @@
   }
 </style>
 
-<section transition:fade>
-  <div on:click={close} class="background">
-    <div on:click|stopPropagation class="relative">
-      <div class="modal-overflow">
-        <div class="modal">
-          <slot />
+<section class="fixed" transition:fade>
+  <div
+    on:click={close}
+    class="background flex items-center justify-center relative"
+  >
+    <div class="flex modal-position absolute">
+      <div on:click|stopPropagation class="flex relative max-height">
+        <div class="modal-overflow modal-styling relative flex justify-center">
+          <div class="modal relative">
+            <slot />
+          </div>
         </div>
       </div>
     </div>

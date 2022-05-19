@@ -1,20 +1,26 @@
 import type { Chain, WalletInit } from '@web3-onboard/common'
 import { internalState$ } from '../streams'
+import { initializeWalletModules } from '../utils'
+import { dispatch } from './index'
 
 import type {
   Account,
   AddChainsAction,
   AddWalletAction,
+  AccountCenter,
   RemoveWalletAction,
   ResetStoreAction,
   SetWalletModulesAction,
+  SetLocaleAction,
   UpdateAccountAction,
+  UpdateAccountCenterAction,
   UpdateWalletAction,
   WalletState
 } from '../types'
-import { initializeWalletModules } from '../utils'
 
 import {
+  validateAccountCenterUpdate,
+  validateLocale,
   validateString,
   validateWallet,
   validateWalletInit
@@ -27,9 +33,10 @@ import {
   ADD_WALLET,
   REMOVE_WALLET,
   UPDATE_ACCOUNT,
-  SET_WALLET_MODULES
+  UPDATE_ACCOUNT_CENTER,
+  SET_WALLET_MODULES,
+  SET_LOCALE
 } from './constants'
-import { dispatch } from './index'
 
 export function addChains(chains: Chain[]): void {
   // chains are validated on init
@@ -113,6 +120,23 @@ export function updateAccount(
   dispatch(action as UpdateAccountAction)
 }
 
+export function updateAccountCenter(
+  update: AccountCenter | Partial<AccountCenter>
+): void {
+  const error = validateAccountCenterUpdate(update)
+
+  if (error) {
+    throw error
+  }
+
+  const action = {
+    type: UPDATE_ACCOUNT_CENTER,
+    payload: update
+  }
+
+  dispatch(action as UpdateAccountCenterAction)
+}
+
 export function resetStore(): void {
   const action = {
     type: RESET_STORE
@@ -139,4 +163,19 @@ export function setWalletModules(wallets: WalletInit[]): void {
   }
 
   dispatch(action as SetWalletModulesAction)
+}
+
+export function setLocale(locale: string): void {
+  const error = validateLocale(locale)
+
+  if (error) {
+    throw error
+  }
+
+  const action = {
+    type: SET_LOCALE,
+    payload: locale
+  }
+
+  dispatch(action as SetLocaleAction)
 }

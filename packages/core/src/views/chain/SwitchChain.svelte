@@ -15,7 +15,6 @@
 
 <style>
   .container {
-    position: relative;
     padding: var(--onboard-spacing-4, var(--spacing-4));
     font-family: var(--onboard-font-family-normal, var(--font-family-normal));
     line-height: 16px;
@@ -23,7 +22,6 @@
   }
 
   .close {
-    position: absolute;
     top: var(--onboard-spacing-5, var(--spacing-5));
     right: var(--onboard-spacing-5, var(--spacing-5));
     padding: 0.5rem;
@@ -41,7 +39,7 @@
 </style>
 
 <Modal {close}>
-  <div class="container">
+  <div class="container relative">
     <h4>
       {$_('modals.switchChain.heading', {
         default: en.modals.switchChain.heading
@@ -64,6 +62,6 @@
       })}
     </p>
 
-    <div class="close" on:click={close}><CloseButton /></div>
+    <div class="close absolute" on:click={close}><CloseButton /></div>
   </div>
 </Modal>

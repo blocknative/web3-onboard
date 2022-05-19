@@ -64,8 +64,11 @@ function keepkey(): WalletInit {
           accountSelect,
           createEIP1193Provider,
           ProviderRpcError,
-          entryModal
+          entryModal,
+          bigNumberFieldsToStrings
         } = await import('@web3-onboard/common')
+
+        const { utils } = await import('ethers')
 
         const { StaticJsonRpcProvider } = await import(
           '@ethersproject/providers'
@@ -196,7 +199,7 @@ function keepkey(): WalletInit {
 
           return accounts
         }
-
+        let ethersProvider: StaticJsonRpcProvider
         const scanAccounts = async ({
           derivationPath,
           chainId,
@@ -205,7 +208,7 @@ function keepkey(): WalletInit {
           if (!keepKeyWallet)
             throw new Error('Device must be connected before scanning accounts')
           currentChain = chains.find(({ id }) => id === chainId) || currentChain
-          const provider = new StaticJsonRpcProvider(currentChain.rpcUrl)
+          ethersProvider = new StaticJsonRpcProvider(currentChain.rpcUrl)
 
           // Checks to see if this is a custom derivation path
           // If it is then just return the single account
@@ -214,7 +217,11 @@ function keepkey(): WalletInit {
           ) {
             try {
               const accountIdx = getAccountIdx(derivationPath)
-              const account = await getAccount({ accountIdx, provider, asset })
+              const account = await getAccount({
+                accountIdx,
+                provider: ethersProvider,
+                asset
+              })
 
               return [account]
             } catch (error) {
@@ -222,7 +229,11 @@ function keepkey(): WalletInit {
             }
           }
 
-          return getAllAccounts({ derivationPath, asset, provider })
+          return getAllAccounts({
+            derivationPath,
+            asset,
+            provider: ethersProvider
+          })
         }
 
         const getAccounts = async () => {
@@ -238,6 +249,37 @@ function keepkey(): WalletInit {
           }
 
           return accounts
+        }
+
+        const signMessage = async (address: string, message: string) => {
+          if (
+            !accounts ||
+            !Array.isArray(accounts) ||
+            !(accounts.length && accounts.length > 0)
+          )
+            throw new Error(
+              'No account selected. Must call eth_requestAccounts first.'
+            )
+
+          const account =
+            accounts.find(account => account.address === address) || accounts[0]
+
+          const { derivationPath } = account
+          const accountIdx = getAccountIdx(derivationPath)
+          const { addressNList } = getPaths(accountIdx)
+
+          const { signature } = await keepKeyWallet.ethSignMessage({
+            addressNList,
+            message:
+              message.slice(0, 2) === '0x'
+                ? // @ts-ignore - commonjs weirdness
+                  (ethUtil.default || ethUtil)
+                    .toBuffer(message)
+                    .toString('utf8')
+                : message
+          })
+
+          return signature
         }
 
         const request: EIP1193Provider['request'] = async ({
@@ -333,41 +375,75 @@ function keepkey(): WalletInit {
                 'No account selected. Must call eth_requestAccounts first.'
               )
 
+            // Per the code above if accounts is empty or undefined then this line of code won't execute
+            // ∴ account must be defined here which is why it is cast without the 'undefined' type
             const account =
               !transactionObject || !transactionObject.hasOwnProperty('from')
                 ? accounts[0]
-                : accounts.find(
-                    account => account.address === transactionObject.from
-                  )
+                : (accounts.find(
+                    account =>
+                      account.address.toLocaleLowerCase() ===
+                      transactionObject.from.toLocaleLowerCase()
+                  ) as Account)
 
-            const { derivationPath } = account || accounts[0]
+            const { derivationPath, address } = account
             const addressNList = bip32ToAddressNList(derivationPath)
 
+            const signer = ethersProvider.getSigner(address)
+
+            transactionObject.gasLimit =
+              transactionObject.gas || transactionObject.gasLimit
+
+            // 'gas' is an invalid property for the TransactionRequest type
+            delete transactionObject.gas
+
+            transactionObject.gasLimit = undefined
+
+            let populatedTransaction = await signer.populateTransaction(
+              transactionObject
+            )
+
             const {
-              nonce,
-              gasPrice,
-              gas,
-              gasLimit,
               to,
               value,
-              data,
-              maxFeePerGas,
-              maxPriorityFeePerGas
-            } = transactionObject
-
-            const { serialized } = await keepKeyWallet.ethSignTx({
-              addressNList,
-              nonce: nonce || '0x0',
+              nonce,
+              gasLimit,
               gasPrice,
-              gasLimit: gasLimit || gas || '0x5208',
-              to,
-              value: value || '0x0',
-              data: data || '',
               maxFeePerGas,
               maxPriorityFeePerGas,
-              chainId: parseInt(currentChain.id)
-            })
+              data
+            } = bigNumberFieldsToStrings(populatedTransaction)
 
+            const gasData = gasPrice
+              ? {
+                  gasPrice
+                }
+              : {
+                  maxFeePerGas,
+                  maxPriorityFeePerGas
+                }
+
+            const txn = {
+              addressNList,
+              chainId: parseInt(currentChain.id),
+              to: to || '',
+              value: value || '',
+              nonce: utils.hexValue(nonce),
+              gasLimit: gasLimit || '0x0',
+              data: data?.toString() || '',
+              ...gasData
+            }
+
+            let serialized
+            try {
+              ;({ serialized } = await keepKeyWallet.ethSignTx(txn))
+            } catch (error: any) {
+              if (error.message && error.message.message) {
+                throw new Error(error.message.message)
+              } else {
+                throw new Error(error)
+              }
+            }
             return serialized
           },
           eth_sendTransaction: async ({ baseRequest, params }) => {
@@ -383,37 +459,10 @@ function keepkey(): WalletInit {
 
             return transactionHash as string
           },
-          eth_sign: async ({ params: [address, message] }) => {
-            if (
-              !accounts ||
-              !Array.isArray(accounts) ||
-              !(accounts.length && accounts.length > 0)
-            )
-              throw new Error(
-                'No account selected. Must call eth_requestAccounts first.'
-              )
-
-            const account =
-              accounts.find(account => account.address === address) ||
-              accounts[0]
-
-            const { derivationPath } = account
-            const accountIdx = getAccountIdx(derivationPath)
-            const { addressNList } = getPaths(accountIdx)
-
-            const { signature } = await keepKeyWallet.ethSignMessage({
-              addressNList,
-              message:
-                message.slice(0, 2) === '0x'
-                  ? // @ts-ignore - commonjs weirdness
-                    (ethUtil.default || ethUtil)
-                      .toBuffer(message)
-                      .toString('utf8')
-                  : message
-            })
-
-            return signature
-          },
+          eth_sign: async ({ params: [address, message] }) =>
+            signMessage(address, message),
+          personal_sign: async ({ params: [message, address] }) =>
+            signMessage(address, message),
           eth_signTypedData: null,
           wallet_switchEthereumChain: async ({ params: [{ chainId }] }) => {
             currentChain =

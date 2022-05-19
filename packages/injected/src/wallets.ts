@@ -1,6 +1,12 @@
-import type { EIP1193Provider, ChainListener } from '@web3-onboard/common'
+import type {
+  EIP1193Provider,
+  ChainListener,
+  SimpleEventEmitter
+} from '@web3-onboard/common'
+
 import { createEIP1193Provider } from '@web3-onboard/common'
 import type { InjectedWalletModule, CustomWindow } from './types.js'
+
 import {
   InjectedNameSpace,
   ProviderIdentityFlag,
@@ -11,15 +17,24 @@ declare const window: CustomWindow
 
 const UNSUPPORTED_METHOD = null
 
+function getInjectedInterface(
+  identity: string
+): () => Promise<{ provider: EIP1193Provider }> {
+  return async () => ({
+    provider: (window.ethereum.providers &&
+    Array.isArray(window.ethereum.providers)
+      ? window.ethereum.providers.find(provider => !!provider[identity])
+      : window.ethereum) as EIP1193Provider
+  })
+}
+
 const metamask: InjectedWalletModule = {
   label: ProviderLabel.MetaMask,
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
     !!provider && !!provider[ProviderIdentityFlag.MetaMask],
   getIcon: async () => (await import('./icons/metamask.js')).default,
-  getInterface: async () => ({
-    provider: window.ethereum as EIP1193Provider
-  }),
+  getInterface: getInjectedInterface(ProviderIdentityFlag.MetaMask),
   platforms: ['all']
 }
 
@@ -27,15 +42,9 @@ const brave: InjectedWalletModule = {
   label: ProviderLabel.Brave,
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
-    !!(navigator as any).brave && !!provider && !!provider._web3Ref,
+    !!provider && !!provider[ProviderIdentityFlag.BraveWallet],
   getIcon: async () => (await import('./icons/brave.js')).default,
-  getInterface: async () => {
-    const provider = window.ethereum
-    provider.removeListener = (event, listener) => {}
-    return {
-      provider
-    }
-  },
+  getInterface: getInjectedInterface(ProviderIdentityFlag.BraveWallet),
   platforms: ['all']
 }
 
@@ -50,6 +59,22 @@ const binance: InjectedWalletModule = {
     // no way to determine if the wallet is unlocked
     if (window.BinanceChain) {
       window.BinanceChain.isUnlocked = false
+    }
+
+    const addListener: SimpleEventEmitter['on'] = window.BinanceChain.on.bind(
+      window.BinanceChain
+    )
+
+    window.BinanceChain.on = (event, func) => {
+      // intercept chainChanged event and format string
+      if (event === 'chainChanged') {
+        addListener(event, (chainId: string) => {
+          const cb = func as ChainListener
+          cb(`0x${parseInt(chainId).toString(16)}`)
+        })
+      } else {
+        addListener(event, func)
+      }
     }
 
     const provider = createEIP1193Provider(window.BinanceChain, {
@@ -91,14 +116,20 @@ const coinbase: InjectedWalletModule = {
       !!provider.providers[0][ProviderIdentityFlag.CoinbaseExtension]),
   getIcon: async () => (await import('./icons/coinbase.js')).default,
   getInterface: async () => {
-    const provider = window.ethereum as EIP1193Provider
-    const addListener = provider.on.bind(provider)
+    const { provider } = await getInjectedInterface(
+      ProviderIdentityFlag.CoinbaseExtension
+    )()
+
+    const addListener: SimpleEventEmitter['on'] = provider.on.bind(provider)
     provider.on = (event, func) => {
+      // intercept chainChanged event and format string
       if (event === 'chainChanged') {
-        addListener(event, chainId => {
+        addListener(event, (chainId: string) => {
           const cb = func as ChainListener
           cb(`0x${parseInt(chainId).toString(16)}`)
         })
+      } else {
+        addListener(event, func)
       }
     }
 
@@ -210,18 +241,13 @@ const bitpie: InjectedWalletModule = {
   platforms: ['mobile']
 }
 
-const blankwallet: InjectedWalletModule = {
-  label: ProviderLabel.BlankWallet,
+const blockwallet: InjectedWalletModule = {
+  label: ProviderLabel.BlockWallet,
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
-    !!provider && !!provider[ProviderIdentityFlag.BlankWallet],
-  getIcon: async () => (await import('./icons/blankwallet.js')).default,
-  getInterface: async () => ({
-    provider: createEIP1193Provider(window.ethereum, {
-      wallet_switchEthereumChain: UNSUPPORTED_METHOD,
-      eth_selectAccounts: UNSUPPORTED_METHOD
-    })
-  }),
+    !!provider && !!provider[ProviderIdentityFlag.BlockWallet],
+  getIcon: async () => (await import('./icons/blockwallet.js')).default,
+  getInterface: getInjectedInterface(ProviderIdentityFlag.BlockWallet),
   platforms: ['desktop']
 }
 
@@ -443,6 +469,18 @@ const tokenary: InjectedWalletModule = {
   platforms: ['mobile']
 }
 
+const tally: InjectedWalletModule = {
+  label: ProviderLabel.Tally,
+  injectedNamespace: InjectedNameSpace.Tally,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Tally],
+  getIcon: async () => (await import('./icons/tallywallet.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.tally)
+  }),
+  platforms: ['desktop']
+}
+
 const wallets = [
   metamask,
   binance,
@@ -454,7 +492,7 @@ const wallets = [
   alphawallet,
   atoken,
   bitpie,
-  blankwallet,
+  blockwallet,
   brave,
   dcent,
   frame,
@@ -469,7 +507,8 @@ const wallets = [
   tp,
   xdefi,
   oneInch,
-  tokenary
+  tokenary,
+  tally
 ]
 
 export default wallets
