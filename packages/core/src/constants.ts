@@ -9,6 +9,9 @@ export const APP_INITIAL_STATE: AppState = {
     position: 'topRight',
     expanded: false
   },
+  notify: {
+    enabled: true,
+  },
   locale: ''
 }
 

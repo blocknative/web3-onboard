@@ -116,6 +116,7 @@ const initOptions = Joi.object({
   accountCenter: Joi.object({
     desktop: Joi.object({
       enabled: Joi.boolean(),
+      minimal: Joi.boolean(),
       position: accountCenterPosition
     }),
     mobile: Joi.object({
@@ -124,7 +125,7 @@ const initOptions = Joi.object({
     })
   }),
   notify: Joi.object({
-    transactionHandler: Joi.function().required(),
+    transactionHandler: Joi.function(),
     enabled: Joi.boolean(),
     onerror: Joi.function(),
   })

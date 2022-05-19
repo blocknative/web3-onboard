@@ -1,306 +1,307 @@
-import 'regenerator-runtime/runtime'
-import BlocknativeSdk from 'bnc-sdk'
-import type { TransactionHandler } from 'bnc-sdk/dist/types/src/interfaces'
-import { get } from 'svelte/store'
 
-import uuid from 'uuid/v4'
-import { locale, dictionary, getClientLocale } from 'svelte-i18n'
+// import 'regenerator-runtime/runtime'
+// // import BlocknativeSdk from 'bnc-sdk'
+// import type { TransactionHandler } from 'bnc-sdk/dist/types/src/interfaces'
+// import { get } from 'svelte/store'
 
-import Notify from './views/notify/views/Notify.svelte'
+// import uuid from 'uuid/v4'
+// // import { locale, dictionary, getClientLocale } from 'svelte-i18n'
 
-import { app, notifications } from './stores'
-import { handleTransactionEvent, preflightTransaction } from './transactions'
-import { createNotification } from './notifications'
+// import Notify from '../src/views/notify/Notify.svelte'
 
-import type {
-  NotifyInitOptions,
-  AppStore,
-  API,
-  Emitter,
-  TransactionOptions,
-  CustomNotificationObject,
-  UpdateNotification,
-  ConfigOptions,
-  LocaleMessages
-} from './types'
+// // import { app, notifications } from './stores'
+// import { handleTransactionEvent, preflightTransaction } from './transactions'
+// import { createNotification } from './notifications'
 
-export {
-  NotifyInitOptions,
-  TransactionEvent,
-  System,
-  TransactionEventCode,
-  TransactionData,
-  NotificationType,
-  CustomNotificationObject,
-  BitcoinInputOutput,
-  NotificationObject,
-  ContractCall,
-  DecodedContractCall,
-  NotifyMessages,
-  LocaleMessages,
-  TransactionOptions,
-  PreflightEvent,
-  UpdateNotification,
-  ConfigOptions,
-  Hash,
-  Transaction,
-  NotifyAccount,
-  Unsubscribe,
-  Notification,
-  Config,
-  API,
-  EmitterListener,
-  Emitter,
-  NotificationDetails
-} from './types'
+// import type {
+//   NotifyInitOptions,
+//   AppStore,
+//   API,
+//   Emitter,
+//   TransactionOptions,
+//   CustomNotificationObject,
+//   UpdateNotification,
+//   ConfigOptions,
+//   LocaleMessages
+// } from './types'
 
-import {
-  validateInit,
-  validateTransactionOptions,
-  validateNotificationObject,
-  validateConfig
-} from './validation'
+// // export {
+// //   NotifyInitOptions,
+// //   TransactionEvent,
+// //   System,
+// //   TransactionEventCode,
+// //   TransactionData,
+// //   NotificationType,
+// //   CustomNotificationObject,
+// //   BitcoinInputOutput,
+// //   NotificationObject,
+// //   ContractCall,
+// //   DecodedContractCall,
+// //   NotifyMessages,
+// //   LocaleMessages,
+// //   TransactionOptions,
+// //   PreflightEvent,
+// //   UpdateNotification,
+// //   ConfigOptions,
+// //   Hash,
+// //   Transaction,
+// //   NotifyAccount,
+// //   Unsubscribe,
+// //   Notification,
+// //   Config,
+// //   API,
+// //   EmitterListener,
+// //   Emitter,
+// //   NotificationDetails
+// // } from './types'
 
-import { createEmitter } from './utils'
+// import {
+//   validateInit,
+//   validateTransactionOptions,
+//   validateNotificationObject,
+//   validateConfig
+// } from './validation'
 
-import { version } from '../package.json'
+// import { createEmitter } from './utils'
 
-let notify: any
-let blocknative
+// import { version } from '../package.json'
 
-function init(options: NotifyInitOptions): API {
-  if (notify) {
-    console.warn('notify has already been initialized')
-    notify.$destroy()
-    blocknative && blocknative.destroy()
-  }
+// let notify: any
+// // let blocknative
 
-  validateInit(options)
+// function init(options: NotifyInitOptions): API {
+//   if (notify) {
+//     console.warn('notify has already been initialized')
+//     notify.$destroy()
+//     // blocknative && blocknative.destroy()
+//   }
 
-  const { system, transactionHandler, apiUrl, ...appOptions } = options
-  const { dappId, networkId, name, clientLocale, onerror } = appOptions
+//   validateInit(options)
 
-  const transactionHandlers: TransactionHandler[] = [handleTransactionEvent]
+//   const { system, transactionHandler, apiUrl, ...appOptions } = options
+//   const { dappId, networkId, name, clientLocale, onerror } = appOptions
 
-  if (transactionHandler) {
-    transactionHandlers.push(transactionHandler)
-  }
+//   const transactionHandlers: TransactionHandler[] = [handleTransactionEvent]
 
-  if (dappId) {
-    blocknative = new BlocknativeSdk({
-      dappId,
-      networkId,
-      onerror,
-      transactionHandlers,
-      name: name || 'Notify',
-      apiUrl,
-      system
-    })
+//   if (transactionHandler) {
+//     transactionHandlers.push(transactionHandler)
+//   }
 
-    // filter out pending simulation events
-    blocknative
-      .configuration({
-        scope: 'global',
-        filters: [{ status: 'pending-simulation', _not: true }]
-      })
-      .catch(() => {
-        // swallow server timeout response error as we are not waiting on it
-      })
-  }
+//   if (dappId) {
+//     // blocknative = new BlocknativeSdk({
+//     //   dappId,
+//     //   networkId,
+//     //   onerror,
+//     //   transactionHandlers,
+//     //   name: name || 'Notify',
+//     //   apiUrl,
+//     //   system
+//     // })
 
-  // save config to app store
-  app.update((store: AppStore) => ({
-    ...store,
-    ...appOptions,
-    version,
-    clientLocale:
-      clientLocale ||
-      getClientLocale({
-        fallback: 'en',
-        navigator: true
-      })
-  }))
+//     // filter out pending simulation events
+//     // blocknative
+//     //   .configuration({
+//     //     scope: 'global',
+//     //     filters: [{ status: 'pending-simulation', _not: true }]
+//     //   })
+//     //   .catch(() => {
+//     //     // swallow server timeout response error as we are not waiting on it
+//     //   })
+//   }
 
-  // initialize App
-  notify = new Notify({
-    target: document.body
-  })
+//   // save config to app store
+//   // app.update((store: AppStore) => ({
+//   //   ...store,
+//   //   ...appOptions,
+//   //   version,
+//   //   clientLocale:
+//   //     clientLocale ||
+//   //     getClientLocale({
+//   //       fallback: 'en',
+//   //       navigator: true
+//   //     })
+//   // }))
 
-  app.subscribe((store: AppStore) => {
-    const { notifyMessages, clientLocale } = store
+//   // initialize App
+//   notify = new Notify({
+//     target: document.body
+//   })
 
-    // set the dictionary for i18n
-    dictionary.set(notifyMessages)
+//   // app.subscribe((store: AppStore) => {
+//   //   const { notifyMessages, clientLocale } = store
 
-    const availableLocale: LocaleMessages | undefined =
-      notifyMessages[clientLocale] || notifyMessages[clientLocale.slice(0, 2)]
-    locale.set(availableLocale ? clientLocale : 'en')
-  })
+//   //   // set the dictionary for i18n
+//   //   dictionary.set(notifyMessages)
 
-  return {
-    hash,
-    transaction,
-    account,
-    unsubscribe,
-    notification,
-    config
-  }
+//   //   const availableLocale: LocaleMessages | undefined =
+//   //     notifyMessages[clientLocale] || notifyMessages[clientLocale.slice(0, 2)]
+//   //   locale.set(availableLocale ? clientLocale : 'en')
+//   // })
 
-  function account(
-    address: string
-  ): { details: { address: string }; emitter: Emitter } | never {
-    if (!blocknative) {
-      throw new Error(
-        'A dappId needs to be passed in when intializing Notify to use the account function'
-      )
-    }
+//   return {
+//     hash,
+//     transaction,
+//     account,
+//     unsubscribe,
+//     notification,
+//     config
+//   }
 
-    const result = blocknative.account(address)
-    return result
-  }
+//   function account(
+//     address: string
+//   ): { details: { address: string }; emitter: Emitter } | never {
+//     if (!blocknative) {
+//       throw new Error(
+//         'A dappId needs to be passed in when intializing Notify to use the account function'
+//       )
+//     }
 
-  function hash(hash: string, id?: string) {
-    if (!blocknative) {
-      throw new Error(
-        'A dappId needs to be passed in when intializing Notify to use the hash function'
-      )
-    }
+//     const result = blocknative.account(address)
+//     return result
+//   }
 
-    const result = blocknative.transaction(hash, id)
-    return result
-  }
+//   function hash(hash: string, id?: string) {
+//     if (!blocknative) {
+//       throw new Error(
+//         'A dappId needs to be passed in when intializing Notify to use the hash function'
+//       )
+//     }
 
-  function transaction(
-    options: TransactionOptions
-  ): { result: Promise<string>; emitter: Emitter } {
-    if (!blocknative) {
-      throw new Error(
-        'A dappId needs to be passed in when intializing Notify to use the transaction function'
-      )
-    }
+//     const result = blocknative.transaction(hash, id)
+//     return result
+//   }
 
-    validateTransactionOptions(options)
+//   function transaction(
+//     options: TransactionOptions
+//   ): { result: Promise<string>; emitter: Emitter } {
+//     if (!blocknative) {
+//       throw new Error(
+//         'A dappId needs to be passed in when intializing Notify to use the transaction function'
+//       )
+//     }
 
-    const emitter = createEmitter()
+//     validateTransactionOptions(options)
 
-    const result = preflightTransaction(blocknative, options, emitter).catch(
-      err => {
-        const { onerror } = get(app)
-        onerror && onerror(err)
-        return err
-      }
-    )
+//     const emitter = createEmitter()
 
-    return {
-      emitter,
-      result
-    }
-  }
+//     const result = preflightTransaction(blocknative, options, emitter).catch(
+//       err => {
+//         const { onerror } = get(app)
+//         onerror && onerror(err)
+//         return err
+//       }
+//     )
 
-  function unsubscribe(addressOrHash: string) {
-    if (!blocknative) {
-      throw new Error(
-        'A dappId needs to be passed in when intializing Notify to use the unsubscribe function'
-      )
-    }
+//     return {
+//       emitter,
+//       result
+//     }
+//   }
 
-    blocknative.unsubscribe(addressOrHash)
-  }
+//   function unsubscribe(addressOrHash: string) {
+//     if (!blocknative) {
+//       throw new Error(
+//         'A dappId needs to be passed in when intializing Notify to use the unsubscribe function'
+//       )
+//     }
 
-  function notification(
-    notificationObject: CustomNotificationObject
-  ): {
-    dismiss: () => void
-    update: UpdateNotification
-  } {
-    validateNotificationObject(notificationObject)
+//     blocknative.unsubscribe(addressOrHash)
+//   }
 
-    let key = 0
+//   function notification(
+//     notificationObject: CustomNotificationObject
+//   ): {
+//     dismiss: () => void
+//     update: UpdateNotification
+//   } {
+//     validateNotificationObject(notificationObject)
 
-    const id: string = uuid()
-    const startTime: number = Date.now()
-    const { eventCode = `customNotification${key++}` } = notificationObject
+//     let key = 0
 
-    const dismiss = () => notifications.remove(id, eventCode)
+//     const id: string = uuid()
+//     const startTime: number = Date.now()
+//     const { eventCode = `customNotification${key++}` } = notificationObject
 
-    function update(
-      notificationUpdate: CustomNotificationObject
-    ): {
-      dismiss: () => void
-      update: UpdateNotification
-    } {
-      validateNotificationObject(notificationUpdate)
+//     const dismiss = () => notifications.remove(id, eventCode)
 
-      const { eventCode = `customNotification${key++}` } = notificationUpdate
-      createNotification({ id, startTime, eventCode }, notificationUpdate)
+//     function update(
+//       notificationUpdate: CustomNotificationObject
+//     ): {
+//       dismiss: () => void
+//       update: UpdateNotification
+//     } {
+//       validateNotificationObject(notificationUpdate)
 
-      return {
-        dismiss,
-        update
-      }
-    }
+//       const { eventCode = `customNotification${key++}` } = notificationUpdate
+//       createNotification({ id, startTime, eventCode }, notificationUpdate)
 
-    createNotification({ id, startTime, eventCode }, notificationObject)
+//       return {
+//         dismiss,
+//         update
+//       }
+//     }
 
-    return {
-      dismiss,
-      update
-    }
-  }
+//     createNotification({ id, startTime, eventCode }, notificationObject)
 
-  function config(options: ConfigOptions): void {
-    validateConfig(options)
+//     return {
+//       dismiss,
+//       update
+//     }
+//   }
 
-    const {
-      notifyMessages,
-      networkId: newNetworkId,
-      system: newSystem,
-      ...otherOptions
-    } = options
+//   function config(options: ConfigOptions): void {
+//     validateConfig(options)
 
-    const { networkId, system, dappId, transactionHandler, name, apiUrl } = get(
-      app
-    )
+//     const {
+//       notifyMessages,
+//       networkId: newNetworkId,
+//       system: newSystem,
+//       ...otherOptions
+//     } = options
 
-    // networkId or system has changed
-    if (
-      (newNetworkId && newNetworkId !== networkId) ||
-      (newSystem && newSystem !== system)
-    ) {
-      if (!blocknative) {
-        throw new Error(
-          'A dappId needs to be passed in when intializing Notify to be able to connect to a system and network'
-        )
-      }
+//     const { networkId, system, dappId, transactionHandler, name, apiUrl } = get(
+//       app
+//     )
 
-      // close existing SDK connection
-      blocknative.destroy()
+//     // networkId or system has changed
+//     if (
+//       (newNetworkId && newNetworkId !== networkId) ||
+//       (newSystem && newSystem !== system)
+//     ) {
+//       if (!blocknative) {
+//         throw new Error(
+//           'A dappId needs to be passed in when intializing Notify to be able to connect to a system and network'
+//         )
+//       }
 
-      // create new connection with new values
-      blocknative = new BlocknativeSdk({
-        dappId,
-        networkId: newNetworkId || networkId,
-        transactionHandlers: transactionHandler
-          ? [handleTransactionEvent, transactionHandler]
-          : [handleTransactionEvent],
-        name: name || 'Notify',
-        apiUrl,
-        system: newSystem || system
-      })
-    }
+//       // close existing SDK connection
+//       blocknative.destroy()
 
-    app.update((store: AppStore) => {
-      return {
-        ...store,
-        networkId: newNetworkId || networkId,
-        system: newSystem || system,
-        ...otherOptions,
-        notifyMessages: notifyMessages
-          ? { ...store.notifyMessages, ...notifyMessages }
-          : store.notifyMessages
-      }
-    })
-  }
-}
+//       // create new connection with new values
+//       blocknative = new BlocknativeSdk({
+//         dappId,
+//         networkId: newNetworkId || networkId,
+//         transactionHandlers: transactionHandler
+//           ? [handleTransactionEvent, transactionHandler]
+//           : [handleTransactionEvent],
+//         name: name || 'Notify',
+//         apiUrl,
+//         system: newSystem || system
+//       })
+//     }
 
-export default init
+//     app.update((store: AppStore) => {
+//       return {
+//         ...store,
+//         networkId: newNetworkId || networkId,
+//         system: newSystem || system,
+//         ...otherOptions,
+//         notifyMessages: notifyMessages
+//           ? { ...store.notifyMessages, ...notifyMessages }
+//           : store.notifyMessages
+//       }
+//     })
+//   }
+// }
+
+// export default init

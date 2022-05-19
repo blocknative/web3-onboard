@@ -54,7 +54,15 @@ function init(options: InitOptions): OnboardAPI {
     }
   }
 
-  const { wallets, chains, appMetadata = null, i18n, accountCenter, notify } = options
+  const {
+    wallets,
+    chains,
+    appMetadata = null,
+    i18n,
+    accountCenter,
+    notify,
+    dappId
+  } = options
 
   initI18N(i18n)
   addChains(chains)
@@ -75,8 +83,10 @@ function init(options: InitOptions): OnboardAPI {
 
   let notifyUpdate
 
-  if (typeof notify !== 'undefined' && notify.desktop) {
-    notifyUpdate = notify.desktop
+  if (notify && notify.enabled && !dappId) {
+    notifyUpdate = {
+      enabled: false
+    }
   }
 
   notifyUpdate && updateNotify(notifyUpdate)
@@ -197,6 +207,9 @@ function mountApp() {
   
           /* BORDER RADIUS */
           --border-radius-1: 24px;  
+          --border-radius-2: 20px;  
+          --border-radius-3: 16px;  
+          --border-radius-4: 12px;  
 
           /* SHADOWS */
           --shadow-0: none;

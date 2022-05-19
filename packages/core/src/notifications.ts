@@ -1,7 +1,7 @@
 import { _ } from 'svelte-i18n'
 import BigNumber from 'bignumber.js'
 import { notifications } from './stores'
-import { eventToType, typeToDismissTimeout } from './notifyDefaults'
+import { eventToType, typeToDismissTimeout } from './notifyDefaultsfaults'
 import { defaultNotifyMessages } from './i18n'
 
 import type {

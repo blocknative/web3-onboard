@@ -14,7 +14,7 @@ import type {
   AddWalletAction,
   UpdateAccountAction,
   UpdateAccountCenterAction,
-  UpdateNotify,
+  UpdateNotifyAction,
   Locale
 } from '../types'
 
@@ -116,11 +116,11 @@ function reducer(state: AppState, action: Action): AppState {
     }
 
     case UPDATE_NOTIFY: {
-      const update = payload as UpdateNotify['payload']
+      const update = payload as UpdateNotifyAction['payload']
       return {
         ...state,
-        accountCenter: {
-          ...state.accountCenter,
+        notify: {
+          ...state.notify,
           ...update
         }
       }

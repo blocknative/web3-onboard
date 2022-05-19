@@ -42,7 +42,6 @@
   },
   "dependencies": {
     "@web3-onboard/common": "^2.0.7",
-    "bnc-sdk": "^4.2.0",
     "bowser": "^2.11.0",
     "ethers": "5.5.3",
     "eventemitter3": "^4.0.7",
