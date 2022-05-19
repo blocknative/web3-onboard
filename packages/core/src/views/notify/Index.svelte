@@ -6,6 +6,7 @@ import type { NotifyInitOptions } from '../../types';
 import CloseButton from '../shared/CloseButton.svelte';
 import { TransactionDescription } from 'ethers/lib/utils';
 import { shortenAddress, shortenEns } from '../../utils'
+import Pending from './Pending.svelte';
 
   // import debounce from 'lodash.debounce'
 
@@ -98,6 +99,8 @@ import { shortenAddress, shortenEns } from '../../utils'
   //   justifyContent = 'justify-content: flex-end;'
   //   positioning = 'bottom: 0; right: 0;'
   // }
+
+  const hash = "0xc572779D7839B998DF24fc316c89BeD3D450ED13"
 </script>
 
 <style>
@@ -154,15 +157,7 @@ import { shortenAddress, shortenEns } from '../../utils'
 
   /* .bn-notify-notification */
   li {
-
-
-    position: relative;
-    display: flex;
-    padding: 0.75em;
-    font-size: 0.889em;
     font-family: inherit;
-    border-radius: 10px;
-    color: inherit;
     transition: background 300ms ease-in-out, color 300ms ease-in-out;
     pointer-events: all;
     backdrop-filter: blur(5px);
@@ -172,15 +167,37 @@ import { shortenAddress, shortenEns } from '../../utils'
     background: #242835;
     padding: 12px;
     border-radius: var(--onboard-border-radius-4, var(--border-radius-4));
+    display: flex;
   }
 
   /* .bn-notify-notification-close */
-  div {
+  /* div {
     position: absolute;
     top: 0.75em;
     right: 0.75em;
     font-size: inherit;
     font-family: inherit;
+  } */
+  div.notify-transaction-data {
+    font-size: var(--onboard-font-size-6, var(--font-size-6));
+    font-family: inherit;
+  }
+
+  .hash-time {
+    font-size: var(--onboard-font-size-7, var(--font-size-7));
+    display: inline-flex;
+  }
+  a {
+  }
+
+  .address-hash {
+    color: var(--onboard-primary-400, var(--primary-400))
+  }
+  div.notify-close-btn {
+    margin-left: auto;
+    margin-bottom: auto;
+    height: 32px;
+    width: 32px;
   }
 
   a {
@@ -207,17 +224,22 @@ import { shortenAddress, shortenEns } from '../../utils'
         out:fly={{ duration: 400, x, y, easing: quintIn }}>
 
         <!-- statusIconBadge -->
+        <Pending/>
+        <div class="notify-transaction-data">
 
-        Transaction is pending 
-        <!-- {eventCode} -->
-        <!-- ADDRESS / ENS -->
-        <span class="address-ens">
-          {shortenAddress('0xc572779D7839B998DF24fc316c89BeD3D450ED13')}
-          <!-- {ens ? shortenEns(ens.name) : shortenAddress(address)} -->
-        </span>
-        - 
-        <!-- time since event - get from v1 -->
-        2s ago
+          Transaction is pending 
+          <!-- {eventCode} -->
+          <!-- ADDRESS / ENS / transaction hash -->
+          <div class="hash-time">
+            <a class="address-hash" href="https://etherscan.io/address/{hash}">
+              {shortenAddress(hash)}
+              <!-- {ens ? shortenEns(ens.name) : shortenAddress(address)} -->
+            </a>
+            - 2s ago
+            <!-- time since event - get from v1 -->
+            
+          </div>
+        </div>
 
 
         <!-- {#if notification.link}
@@ -239,7 +261,9 @@ import { shortenAddress, shortenEns } from '../../utils'
           <CloseIcon />
         </div> -->
         <!-- <AutoDismiss {notification} /> -->
-        <CloseButton/>
+        <div class="notify-close-btn">
+          <CloseButton/>
+        </div>
       </li>
     <!-- {/each} -->
   </ul>
