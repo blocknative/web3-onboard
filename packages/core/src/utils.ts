@@ -22,6 +22,12 @@ import celoIcon from './icons/celo'
 import gnosisIcon from './icons/gnosis'
 import harmonyOneIcon from './icons/harmony-one'
 import arbitrumIcon from './icons/arbitrum'
+import hecoIcon from './icons/heco'
+import hscIcon from './icons/hsc'
+import kccIcon from './icons/kcc'
+import klaytnIcon from './icons/klaytn'
+import moonbeamIcon from './icons/moonbeam'
+import okxchainIcon from './icons/okxchain'
 
 import type { ChainStyle, ConnectedChain } from './types'
 
@@ -79,7 +85,14 @@ export const chainIdToLabel: Record<string, string> = {
   '0xa4ec': 'Celo',
   '0x64': 'Gnosis',
   '0x63564C40': 'Harmony One',
-  '0xa4b1': 'Arbitrum'
+  '0xa4b1': 'Arbitrum',
+  '0x80': "Heco",
+  '0x46': "Hsc",
+  '0x141': "Kcc",
+  '0x2019': "Klaytn",
+  '0x504': "Moonbeam",
+  '0x42': "OKXChain",
+
 }
 
 export const chainStyles: Record<string, ChainStyle> = {
@@ -138,6 +151,30 @@ export const chainStyles: Record<string, ChainStyle> = {
   '0xa4b1': {
     icon: arbitrumIcon,
     color: '#33394B'
+  },
+  '0x80': {
+    icon: hecoIcon,
+    color: '#00943e'
+  },
+  '0x46': {
+    icon: hscIcon,
+    color: '#00c0ab'
+  },
+  '0x141': {
+    icon: kccIcon,
+    color: '#bfffea'
+  },
+  '0x2019': {
+    icon: klaytnIcon,
+    color: '#ffffff'
+  },
+  '0x504': {
+    icon: moonbeamIcon,
+    color: '#1D2549'
+  },
+  '0x42': {
+    icon: okxchainIcon,
+    color: '#000000'
   }
 }
 
