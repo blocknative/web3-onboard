@@ -45,7 +45,6 @@
   )
 
   const { position } = state.get().accountCenter
-
   const device = getDevice()
 </script>
 
@@ -231,7 +230,6 @@
           />
         {/each}
       </div>
-
       <!-- actions -->
       <div class="actions flex flex-column items-start">
         <!-- Hide for Mobile  -->
@@ -420,7 +418,6 @@
             default: en.accountCenter.backToApp
           })}</button
         >
-
         <a
           href="https://blocknative.com"
           target="_blank"

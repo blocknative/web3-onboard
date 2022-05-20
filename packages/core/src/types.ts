@@ -124,7 +124,6 @@ export type AccountCenterOptions = {
     mobile: Omit<AccountCenter, 'expanded'>
 }
 
-
 // ==== ACTIONS ==== //
 export type Action =
   | AddChainsAction

@@ -76,8 +76,7 @@ function init(options: InitOptions): OnboardAPI {
     }
 
     updateAccountCenter(accountCenterUpdate)
-  }
-  
+  }  
 
   const { svelteInstance } = internalState$.getValue()
 
