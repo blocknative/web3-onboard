@@ -1,5 +1,7 @@
 <script>
   import closeIcon from '../../icons/close'
+
+  export let width = '24px'
 </script>
 
 <style>
@@ -12,17 +14,16 @@
     border-radius: 40px;
     color: var(
       --onboard-close-button-color,
-      var(--onboard-gray-400, var(--gray-400))
+      var(--onboard-gray-600, var(--gray-600))
     );
   }
 
-  .close-icon {
-    width: 24px;
-  }
 </style>
 
 <div class="flex justify-center items-center pointer">
   <div class="close-button flex justify-center items-center">
-    <div class="close-icon flex items-center">{@html closeIcon}</div>
+    <div class="flex items-center" style="width:{width};">
+      {@html closeIcon}
+    </div>
   </div>
 </div>

@@ -7,28 +7,27 @@
 </script>
 
 <style>
-  div {
+  div.status-icons-wrapper {
     height: 32px;
-    width: 32px;
+    min-width: 32px;
   }
 
   .border {
     border: 2px solid;
     border-radius: 8px;
-    overflow: hidden;
   }
 
-  .protocol-border {
-    border: 2px solid #33394b;
-    border-radius: 50%;
+  div.status-icon {
+    height: 14px
   }
+
 </style>
 
-<div class="inline-flex border" style="background:{backgroundColor}; border:{borderColor};">
-  <div class="plus-icon flex items-center justify-center">
+<div class="flex items-center justify-center border relative status-icons-wrapper" style="background:{backgroundColor}; border:2px solid {borderColor};">
+  <div class="status-icon flex items-center justify-center">
     {@html statusIcon}
   </div>
-  <div class="relative" style="left: -16px; top: 16px;">
-    <ProtocolLogo icon={chainIcon} size={16} />
+  <div class="absolute" style="left: 16px; top: 16px;">
+    <ProtocolLogo icon={chainIcon} size={16} background={'#627EEA'} borderColorVar={"--onboard-gray-600, var(--gray-600)"} padding={4}/>
   </div>
 </div>

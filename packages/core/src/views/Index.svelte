@@ -21,6 +21,10 @@
     display: flex;
   }
 
+  :global(.inline-flex) {
+    display: inline-flex;
+  }
+
   :global(.flex-column) {
     flex-direction: column;
   }

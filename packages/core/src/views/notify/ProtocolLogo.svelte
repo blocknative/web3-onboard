@@ -1,9 +1,9 @@
 <script lang='ts'>
-  export let icon
-  export let borderColorVar = ''
-  export let size
-  export let padding = 0
-  export let background = 'transparent'
+  export let icon: string
+  export let borderColorVar: string
+  export let size: number
+  export let padding: number = 0
+  export let background: string = 'transparent'
 </script>
 
 <style>
@@ -17,21 +17,19 @@
     overflow: hidden;
   }
 
-  .protocol-border {
-    border: 2px solid #33394b;
-    border-radius: 50%;
-  }
 </style>
 
 <div 
-  class={size === 24 ? 'border protocol-border' : 'border'}
-  class:border={borderColorVar} 
+  class='border'
   style={`
     width: ${size - padding * 2}px; 
     height: ${size - padding * 2}px; 
     border-color: var(${borderColorVar}); 
     padding: ${padding}px; 
-    background-color: ${background}
+    background-color: ${background};
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
   `}>
   {@html icon}
 </div>

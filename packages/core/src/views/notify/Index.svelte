@@ -170,24 +170,25 @@ import Pending from './Pending.svelte';
     display: flex;
   }
 
-  /* .bn-notify-notification-close */
-  /* div {
-    position: absolute;
-    top: 0.75em;
-    right: 0.75em;
-    font-size: inherit;
-    font-family: inherit;
-  } */
   div.notify-transaction-data {
     font-size: var(--onboard-font-size-6, var(--font-size-6));
     font-family: inherit;
+    margin: 0px 8px;
+    justify-content: space-between;
   }
 
   .hash-time {
-    font-size: var(--onboard-font-size-7, var(--font-size-7));
     display: inline-flex;
+    margin-top: 2px;
+    font-size: var(--onboard-font-size-7, var(--font-size-7));
+    line-height: var(--onboard-line-height-4, var(--line-height-4));
   }
   a {
+  }
+
+  .time {
+    color: var(--onboard-gray-300, var(--gray-300));
+    margin-left: 4px;
   }
 
   .address-hash {
@@ -196,14 +197,19 @@ import Pending from './Pending.svelte';
   div.notify-close-btn {
     margin-left: auto;
     margin-bottom: auto;
-    height: 32px;
-    width: 32px;
+    height: 24px;
+    width: 24px;
   }
 
   a {
     display: flex;
     text-decoration: none;
     color: inherit;
+  }
+
+  .transaction-status {
+    color: var(--onboard-primary-100, var(--primary-100));
+    line-height: 14px;
   }
 </style>
 
@@ -213,8 +219,7 @@ import Pending from './Pending.svelte';
     style={`${positioning} ${justifyContent}`}>
     <!-- {#each $notifications as notification (notification.key)} -->
 
-    <!-- on:click={e => notification.onclick && notification.onclick(e)} -->
-    <!-- class:bn-notify-dark-mode={$app.darkMode}
+    <!-- on:click={e => notification.onclick && notification.onclick(e)}
     class:bn-notify-clickable={notification.onclick} -->
     <!-- animate:flip={{ duration: 500 }} -->
       <li
@@ -225,20 +230,24 @@ import Pending from './Pending.svelte';
 
         <!-- statusIconBadge -->
         <Pending/>
-        <div class="notify-transaction-data">
+        <div class="flex flex-column notify-transaction-data">
 
-          Transaction is pending 
+          <span class='transaction-status'>
+            Transaction is pending
+          </span> 
           <!-- {eventCode} -->
           <!-- ADDRESS / ENS / transaction hash -->
-          <div class="hash-time">
+          <span class="hash-time">
             <a class="address-hash" href="https://etherscan.io/address/{hash}">
               {shortenAddress(hash)}
               <!-- {ens ? shortenEns(ens.name) : shortenAddress(address)} -->
             </a>
-            - 2s ago
+            <span class='time'>
+              - 2s ago
+            </span>
             <!-- time since event - get from v1 -->
             
-          </div>
+          </span>
         </div>
 
 
@@ -260,9 +269,8 @@ import Pending from './Pending.svelte';
           on:click|stopPropagation={() => notifications.remove(notification.id, notification.eventCode)}>
           <CloseIcon />
         </div> -->
-        <!-- <AutoDismiss {notification} /> -->
         <div class="notify-close-btn">
-          <CloseButton/>
+          <CloseButton width={"14px"}/>
         </div>
       </li>
     <!-- {/each} -->
