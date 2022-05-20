@@ -175,12 +175,12 @@ export function initializeWalletModules(
 }
 
 export function uniqueWalletsByLabel(
-  array: WalletModule[]
+  walletModuleList: WalletModule[]
 ): WalletModule[] {
-  return array.filter(
-    (element, i) =>
-      array.findIndex(
-        (a: WalletModule) => a.label === element.label
+  return walletModuleList.filter(
+    (wallet, i) =>
+      walletModuleList.findIndex(
+        (innerWallet: WalletModule) => innerWallet.label === wallet.label
       ) === i
   )
 }
