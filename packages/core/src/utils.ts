@@ -173,3 +173,14 @@ export function initializeWalletModules(
     return acc
   }, [] as WalletModule[])
 }
+
+export function uniqueWalletsByLabel(
+  array: WalletModule[]
+): WalletModule[] {
+  return array.filter(
+    (element, i) =>
+      array.findIndex(
+        (a: WalletModule) => a.label === element.label
+      ) === i
+  )
+}
