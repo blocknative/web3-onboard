@@ -123,26 +123,7 @@ export type AccountCenterOptions = {
     desktop: Omit<AccountCenter, 'expanded'>
     mobile: Omit<AccountCenter, 'expanded'>
 }
-  
-// export type AccountCenterOptions = {
-//   desktop?: {
-//     position?: AccountCenterPosition
-//     enabled?: AccountCenter['enabled'],
-//     minimal?: AccountCenter['minimal'],
-//   },
-//   mobile?: {
-//     position?: AccountCenterPosition
-//     enabled?: AccountCenter['enabled']
-//     minimal?: AccountCenter['minimal'],
-//   }
-// }
 
-// export type AccountCenter = {
-//   enabled: boolean
-//   position: AccountCenterPosition
-//   expanded: boolean
-//   minimal: boolean
-// }
 
 // ==== ACTIONS ==== //
 export type Action =
