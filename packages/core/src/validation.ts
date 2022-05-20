@@ -114,13 +114,11 @@ const initOptions = Joi.object({
       enabled: Joi.boolean(),
       minimal: Joi.boolean(),
       position: accountCenterPosition
-
     }),
     mobile: Joi.object({
       enabled: Joi.boolean(),
       minimal: Joi.boolean(),
       position: accountCenterPosition,
-
     })
   })
 })
@@ -155,7 +153,7 @@ const accountCenter = Joi.object({
 type ValidateReturn = Joi.ValidationResult | null
 
 function validate(validator: Joi.Schema, data: unknown): ValidateReturn {
-  const result = validator.validate(data)
+  const result = validator.validate(data) 
   return result.error ? result : null
 }
 
