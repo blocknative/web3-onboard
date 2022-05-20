@@ -3,7 +3,8 @@
   import hourglass from '../../icons/hourglass'
   import polygonIcon from '../../icons/polygon'
   import ethereumIcon from '../../icons/ethereum'
+  import binanceIcon from '../../icons/binance'
 
 </script>
 
-<StatusChain chainIcon={ethereumIcon} statusIcon={hourglass}/>
+<StatusChain chainIcon={binanceIcon} statusIcon={hourglass}/>
