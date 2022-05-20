@@ -49,6 +49,11 @@
     top: -25%;
     animation: rotate 2s infinite linear;
   }
+
+  div.chain-icon-container {
+    left: 18px; 
+    top: 18px;
+  }
   @keyframes rotate {
     100% {
       transform: rotate(-360deg);
@@ -77,7 +82,7 @@
       {@html statusIcon}
     </div>
   </div>
-  <div class="absolute" style="left: 16px; top: 16px;">
+  <div class="absolute chain-icon-container">
     <ProtocolLogo
       icon={chainIcon}
       size={16}
