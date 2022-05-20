@@ -152,8 +152,6 @@ export function setWalletModules(wallets: WalletInit[]): void {
     throw error
   }
 
-  console.log(wallets)
-
   const modules = initializeWalletModules(
     wallets,
     internalState$.getValue().device
