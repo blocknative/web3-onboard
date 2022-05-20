@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/react",
-  "version": "2.1.7-alpha.3",
+  "version": "2.1.7-alpha.4",
   "description": "Collection of React Hooks for web3-onboard",
   "module": "dist/index.js",
   "browser": "dist/index.js",

@@ -115,11 +115,9 @@ export const useSetChain = (
   const set = useCallback(async (options: SetChainOptions) => {
     setInProgress(true)
 
-    const success = await setChain({ ...options, wallet: walletLabel })
+    await setChain({ ...options, wallet: walletLabel })
 
     setInProgress(false)
-
-    return success;
   }, [])
 
   return [{ chains, connectedChain, settingChain }, set]
