@@ -1,39 +1,13 @@
 <script lang="ts">
-  import { fade } from 'svelte/transition'
   import { internalState$, wallets$ } from '../../streams'
-  import {
-    getDefaultChainStyles,
-    shortenAddress,
-    shortenEns,
-    unrecognizedChainStyle
-  } from '../../utils'
   import { updateAccountCenter } from '../../store/actions'
   import questionIcon from '../../icons/question'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
-  import { state } from '../../store'
 
   const { appMetadata } = internalState$.getValue()
   const appIcon = (appMetadata && appMetadata.icon) || questionIcon
-  const chains = state.get().chains
-
   $: [primaryWallet] = $wallets$
-  $: [firstAccount] = primaryWallet ? primaryWallet.accounts : []
-
-  $: [firstAddressAsset] =
-    firstAccount && firstAccount.balance
-      ? Object.keys(firstAccount.balance)
-      : []
-
-  $: primaryChain = primaryWallet && primaryWallet.chains[0]
-
-  $: validAppChain = chains.find(({ id, namespace }) =>
-    primaryChain
-      ? id === primaryChain.id && namespace === primaryChain.namespace
-      : false
-  )
-
-  $: defaultChainStyles = getDefaultChainStyles(primaryChain && primaryChain.id)
 
   function maximize() {
     updateAccountCenter({ expanded: true })
