@@ -81,6 +81,7 @@ For full documentation, check out the README.md for each package:
 **Frameworks**
 
 - [React](packages/react/README.md)
+- [Vue](packages/vue/README.md)
 
 ## Test out the demo app
 

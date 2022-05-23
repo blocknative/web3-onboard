@@ -2,11 +2,11 @@
   import { fly } from 'svelte/transition'
   import { quintIn } from 'svelte/easing'
   import { flip } from 'svelte/animate'
-import type { NotifyInitOptions } from '../../types';
+import type { NotifyInitOptions, NotificationObject } from '../../types';
 import CloseButton from '../shared/CloseButton.svelte';
 import { TransactionDescription } from 'ethers/lib/utils';
-import { shortenAddress, shortenEns } from '../../utils'
-import Pending from './Pending.svelte';
+import { shortenAddress, shortenEns, chainStyles } from '../../utils'
+import StatusChain from './StatusChain.svelte';
 
   // import debounce from 'lodash.debounce'
 
@@ -100,7 +100,18 @@ import Pending from './Pending.svelte';
   //   positioning = 'bottom: 0; right: 0;'
   // }
 
+
   const hash = "0xc572779D7839B998DF24fc316c89BeD3D450ED13"
+  const currentChain = '0x89'
+  const status: NotificationObject  = {
+    id: 'testing123',
+    type: 'success',
+    key: 'keytesting',
+    // startTime?: number
+    // eventCode?: string
+    message: 'test message'
+    // autoDismiss?: number
+  }
 </script>
 
 <style>
@@ -110,7 +121,6 @@ import Pending from './Pending.svelte';
     flex-flow: column nowrap;
     position: fixed;
     font-size: 16px;
-    padding: 0 0.75em;
     margin: 0;
     list-style-type: none;
     width: 18rem;
@@ -129,7 +139,7 @@ import Pending from './Pending.svelte';
     z-index: 99999999;
 
 
-    padding: 16px;
+    padding: 80px 16px;
     max-width: 364px;
     min-width: 348px;
     font-family: var(--onboard-font-family-normal, var(--font-family-normal));
@@ -229,7 +239,7 @@ import Pending from './Pending.svelte';
         out:fly={{ duration: 400, x, y, easing: quintIn }}>
 
         <!-- statusIconBadge -->
-        <Pending/>
+        <StatusChain notification={status} chainStyles={chainStyles[currentChain]}/>
         <div class="flex flex-column notify-transaction-data">
 
           <span class='transaction-status'>

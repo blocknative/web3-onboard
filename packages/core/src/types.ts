@@ -191,7 +191,11 @@ export type ChainStyle = {
   color: string
 }
 
-
+export type NotifyEventStyles = {
+  backgroundColor: string
+  borderColor: string
+  eventIcon: string
+}
 
 
 

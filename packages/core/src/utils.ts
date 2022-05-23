@@ -23,7 +23,11 @@ import gnosisIcon from './icons/gnosis'
 import harmonyOneIcon from './icons/harmony-one'
 import arbitrumIcon from './icons/arbitrum'
 
-import type { ChainStyle, ConnectedChain } from './types'
+import hourglass from './icons/hourglass'
+import checkmark from './icons/checkmark'
+import error from './icons/error'
+
+import type { ChainStyle, ConnectedChain, NotifyEventStyles } from './types'
 
 export function getDevice(): Device {
   const parsed = bowser.getParser(window.navigator.userAgent)
@@ -172,6 +176,24 @@ export function initializeWalletModules(
 
     return acc
   }, [] as WalletModule[])
+}
+
+export const defaultNotifyEventStyles: Record<string, NotifyEventStyles> = {
+  'pending' : {
+    backgroundColor: 'var(--onboard-primary-700, var(--primary-700))',
+    borderColor: '#6370E5',
+    eventIcon: hourglass,
+  },
+  'success' : {
+    backgroundColor: '#052E17',
+    borderColor: 'var(--onboard-success-300, var(--success-300))',
+    eventIcon: checkmark
+  },
+  'error' : {
+    backgroundColor: '#FDB1B11A',
+    borderColor: 'var(--onboard-danger-300, var(--danger-300))',
+    eventIcon: error
+  }  
 }
 
 
