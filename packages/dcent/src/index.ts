@@ -49,7 +49,7 @@ const generateAccounts = async (
 
   accounts.push(account)
   
-  console.log('generateAccounts/accounts = ', accounts)
+  // console.log('generateAccounts/accounts = ', accounts)
   return accounts
 }
 
@@ -62,7 +62,7 @@ function dcent({
   return helpers => {
     const { device } = helpers
     const isMobile = device.type === 'mobile'
-    console.log('device.type ', device.type)
+    // console.log('device.type ', device.type)
     let accounts: Account[] | undefined
     return {
       label: 'D\'CENT',
@@ -90,7 +90,7 @@ function dcent({
         const { default: EthDcentKeyring } = await import('eth-dcent-keyring')
         const dcentKeyring = new EthDcentKeyring({})
         
-        console.log('dcentKeyring ', dcentKeyring)
+        // console.log('dcentKeyring ', dcentKeyring)
         const { TransactionFactory: Transaction } = await import(
           '@ethereumjs/tx'
         )
@@ -219,7 +219,7 @@ function dcent({
                 transaction
               )
         
-              console.log(`0x${result.serialize().toString('hex')}`)
+              // console.log(`0x${result.serialize().toString('hex')}`)
               return `0x${result.serialize().toString('hex')}`
             } catch (err) {
               throw err
