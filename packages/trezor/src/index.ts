@@ -13,11 +13,7 @@ import type {
 import { Buffer } from 'buffer'
 
 import type { StaticJsonRpcProvider } from '@ethersproject/providers'
-
-import type {
-  EthereumTransaction,
-  EthereumTransactionEIP1559
-} from 'trezor-connect'
+import type { TransactionRequest } from '@ethersproject/providers'
 
 interface TrezorOptions {
   email: string
@@ -122,8 +118,13 @@ function trezor(options: TrezorOptions): WalletInit {
       getInterface: async ({ EventEmitter, chains }) => {
         const { default: Trezor } = await import('trezor-connect')
         const { Transaction } = await import('@ethereumjs/tx')
-        const { accountSelect, createEIP1193Provider, ProviderRpcError, getCommon } =
-          await import('@web3-onboard/common')
+        const {
+          accountSelect,
+          bigNumberFieldsToStrings,
+          createEIP1193Provider,
+          ProviderRpcError,
+          getCommon
+        } = await import('@web3-onboard/common')
         const ethUtil = await import('ethereumjs-util')
         const { compress } = (await import('eth-crypto')).publicKey
         const { StaticJsonRpcProvider } = await import(
@@ -153,13 +154,14 @@ function trezor(options: TrezorOptions): WalletInit {
           | { publicKey: string; chainCode: string; path: string }
           | undefined
 
+        let ethersProvider: StaticJsonRpcProvider
         const scanAccounts = async ({
           derivationPath,
           chainId,
           asset
         }: ScanAccountsOptions): Promise<Account[]> => {
           currentChain = chains.find(({ id }) => id === chainId) || currentChain
-          const provider = new StaticJsonRpcProvider(currentChain.rpcUrl)
+          ethersProvider = new StaticJsonRpcProvider(currentChain.rpcUrl)
 
           const { publicKey, chainCode, path } = await getPublicKey(
             derivationPath
@@ -173,7 +175,7 @@ function trezor(options: TrezorOptions): WalletInit {
                 address,
                 balance: {
                   asset: asset.label,
-                  value: await provider.getBalance(address.toLowerCase())
+                  value: await ethersProvider.getBalance(address.toLowerCase())
                 }
               }
             ]
@@ -186,7 +188,7 @@ function trezor(options: TrezorOptions): WalletInit {
               path: derivationPath
             },
             asset,
-            provider
+            ethersProvider
           )
         }
 
@@ -260,7 +262,7 @@ function trezor(options: TrezorOptions): WalletInit {
 
         function createTrezorTransactionObject(
           transactionData: TransactionObject
-        ): EthereumTransactionEIP1559 | EthereumTransaction {
+        ): Partial<TransactionObject> {
           if (
             !transactionData ||
             (!transactionData.hasOwnProperty('gasLimit') &&
@@ -303,7 +305,7 @@ function trezor(options: TrezorOptions): WalletInit {
 
         function trezorSignTransaction(
           path: string,
-          transactionData: EthereumTransactionEIP1559 | EthereumTransaction
+          transactionData: TransactionRequest
         ) {
           try {
             return TrezorConnect.ethereumSignTransaction({
@@ -331,13 +333,36 @@ function trezor(options: TrezorOptions): WalletInit {
           }
           signingAccount = signingAccount ? signingAccount : accounts[0]
 
-          const { derivationPath } = signingAccount
+          const { derivationPath, address } = signingAccount
+
+          transactionObject.gasLimit =
+            transactionObject.gas || transactionObject.gasLimit
+
+          // 'gas' is an invalid property for the TransactionRequest type
+          delete transactionObject.gas
+
+          const signer = ethersProvider.getSigner(address)
+
+          const populatedTransaction = await signer.populateTransaction(
+            transactionObject
+          )
+
+          if (
+            populatedTransaction.hasOwnProperty('nonce') &&
+            typeof populatedTransaction.nonce === 'number'
+          ) {
+            populatedTransaction.nonce = populatedTransaction.nonce.toString(16)
+          }
+
+          const updateBigNumberFields =
+            bigNumberFieldsToStrings(populatedTransaction)
 
           // Set the `from` field to the currently selected account
-          const transactionData =
-            createTrezorTransactionObject(transactionObject)
+          const transactionData = createTrezorTransactionObject(
+            updateBigNumberFields as TransactionObject
+          )
 
-            const chainId = currentChain.hasOwnProperty('id')
+          const chainId = currentChain.hasOwnProperty('id')
             ? Number.parseInt(currentChain.id)
             : 1
           const common = await getCommon({ customNetwork, chainId })
@@ -346,6 +371,7 @@ function trezor(options: TrezorOptions): WalletInit {
             derivationPath,
             transactionData
           )
+
           if (!trezorResult.success) {
             const message =
               trezorResult.payload.error === 'Unknown message'
@@ -368,7 +394,7 @@ function trezor(options: TrezorOptions): WalletInit {
 
           const signedTx = Transaction.fromTxData(
             {
-              ...transactionData,
+              ...populatedTransaction,
               v: `0x${v}`,
               r: r,
               s: s

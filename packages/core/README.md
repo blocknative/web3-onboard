@@ -174,6 +174,7 @@ const onboard = Onboard({
       { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
     ]
   },
+<<<<<<< HEAD
   accountCenter: {
     desktop: {
       position: 'topRight',
@@ -186,6 +187,8 @@ const onboard = Onboard({
       minimal: true
     }
   },
+=======
+>>>>>>> v2-web3-onboard-develop
   i18n: {
     en: {
       connect: {

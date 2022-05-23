@@ -94,6 +94,7 @@ export interface AppState {
   walletModules: WalletModule[]
   wallets: WalletState[]
   accountCenter: AccountCenter
+  locale: Locale
 }
 
 export type InternalState = {
@@ -134,6 +135,7 @@ export type Action =
   | UpdateAccountAction
   | UpdateAccountCenterAction
   | SetWalletModulesAction
+  | SetLocaleAction
 
 export type AddChainsAction = { type: 'add_chains'; payload: Chain[] }
 export type AddWalletAction = { type: 'add_wallet'; payload: WalletState }
@@ -166,6 +168,11 @@ export type UpdateAccountCenterAction = {
 export type SetWalletModulesAction = {
   type: 'set_wallet_modules'
   payload: WalletModule[]
+}
+
+export type SetLocaleAction = {
+  type: 'set_locale'
+  payload: string
 }
 
 // ==== MISC ==== //

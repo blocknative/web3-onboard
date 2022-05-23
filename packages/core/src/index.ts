@@ -6,7 +6,8 @@ import { state } from './store'
 import {
   addChains,
   setWalletModules,
-  updateAccountCenter
+  updateAccountCenter,
+  setLocale
 } from './store/actions'
 import { reset$, internalState$ } from './streams'
 import { validateInitOptions } from './validation'
@@ -25,7 +26,8 @@ const API = {
     get: state.get,
     select: state.select,
     actions: {
-      setWalletModules
+      setWalletModules,
+      setLocale
     }
   }
 }
