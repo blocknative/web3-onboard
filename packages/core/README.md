@@ -92,7 +92,7 @@ To see a list of all of the text values that can be internationalized or replace
 Onboard is using the [ICU syntax](https://formatjs.io/docs/core-concepts/icu-syntax/) for formatting under the hood.
 
 **`accountCenter`**
-An object that defines whether the account center UI is enabled and it's position on the screen. Currently the account center is enabled for both desktop and mobile devices.
+An object that defines whether the account center UI (default and minimal) is enabled and it's position on the screen. Currently the account center is enabled for both desktop and mobile devices.
 
 ```typescript
 export type AccountCenter = {
@@ -174,7 +174,6 @@ const onboard = Onboard({
       { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
     ]
   },
-<<<<<<< HEAD
   accountCenter: {
     desktop: {
       position: 'topRight',
@@ -187,8 +186,6 @@ const onboard = Onboard({
       minimal: true
     }
   },
-=======
->>>>>>> v2-web3-onboard-develop
   i18n: {
     en: {
       connect: {
