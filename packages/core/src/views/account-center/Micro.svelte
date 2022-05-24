@@ -18,7 +18,6 @@
   .minimized {
     background-color: var(--onboard-white, var(--white));
     border: 1px solid var(--onboard-gray-100, var(--gray-100));
-    width: 100%;
     box-shadow: var(--onboard-shadow-3, var(--shadow-3));
   }
 
@@ -26,48 +25,55 @@
     border-radius: var(--onboard-border-radius-3, var(--border-radius-3));
   }
 
-  .padding-5 {
-    padding: 10px 2px 10px 8px;
-  }
-
   .drop-shadow {
     filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.2));
   }
+
+  .inner-box-wrapper {
+    display: flex;
+    flex-flow: row nowrap;
+    padding: 12px;
+  }
+
+  .wallet-square-wrapper {
+    position: relative;
+    margin-left: -8px;
+  }
+
+  .check-icon-wrapper {
+    position: absolute;
+    right: -4px;
+    bottom: -4px;
+  }
 </style>
 
-<div
-  class="minimized pointer radius padding-5"
-  on:click|stopPropagation={maximize}
->
-  <div class="flex items-center justify-between" style="padding: 0 4px;">
-    <div class="flex items-center w-100">
-      <!-- app and wallet icon badge -->
-      <div class="flex items-centered relative">
-        <div class="drop-shadow">
-          <WalletAppBadge
-            size={32}
-            padding={4}
-            background={'white'}
-            border="darkGreen"
-            radius={8}
-            icon={appIcon}
-          />
-        </div>
+<div class="minimized pointer radius" on:click|stopPropagation={maximize}>
+  <div class="inner-box-wrapper">
+    <!-- app and wallet icon badge -->
+    <div class="drop-shadow">
+      <WalletAppBadge
+        size={32}
+        padding={4}
+        background={'white'}
+        border="darkGreen"
+        radius={8}
+        icon={appIcon}
+      />
+    </div>
+    <div class="wallet-square-wrapper">
+      <div class="drop-shadow">
+        <WalletAppBadge
+          size={32}
+          padding={4}
+          background="green"
+          border="darkGreen"
+          radius={8}
+          icon={primaryWallet ? primaryWallet.icon : ''}
+        />
+      </div>
 
-        <div style="right: 0.5rem;" class="drop-shadow relative">
-          <WalletAppBadge
-            size={32}
-            padding={4}
-            background="green"
-            border="darkGreen"
-            radius={8}
-            icon={primaryWallet ? primaryWallet.icon : ''}
-          />
-        </div>
-
-        <div style="right: 5px; bottom: -5px;" class="drop-shadow absolute">
-          <SuccessStatusIcon size={14} />
-        </div>
+      <div class="check-icon-wrapper drop-shadow">
+        <SuccessStatusIcon size={14} />
       </div>
     </div>
   </div>

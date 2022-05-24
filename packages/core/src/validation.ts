@@ -155,7 +155,7 @@ const accountCenter = Joi.object({
 type ValidateReturn = Joi.ValidationResult | null
 
 function validate(validator: Joi.Schema, data: unknown): ValidateReturn {
-  const result = validator.validate(data) 
+  const result = validator.validate(data)
   return result.error ? result : null
 }
 
