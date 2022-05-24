@@ -107,15 +107,23 @@ import { _ } from 'svelte-i18n'
 
   const hash = "0xc572779D7839B998DF24fc316c89BeD3D450ED13"
   const currentChain = '0x89'
-  const status: NotificationObject  = {
+  const statuses: NotificationObject[]  = [{
     id: 'testing123',
     type: 'error',
-    key: 'keytesting',
+    key: 'keytesting1',
     // startTime?: number
-    // eventCode?: string
+    eventCode: 'txPool',
     message: 'test message'
     // autoDismiss?: number
-  }
+  }, {
+    id: 'testing123',
+    type: 'pending',
+    key: 'keytesting2',
+    // startTime?: number
+    eventCode: 'txConfirmReminder',
+    message: 'test message'
+    // autoDismiss?: number
+  }]
   import { tweened } from 'svelte/motion';
   let original = 5 * 60; // TYPE NUMBER OF SECONDS HERE
 	let timer = tweened(original)
@@ -128,6 +136,8 @@ import { _ } from 'svelte-i18n'
   $: minutes = Math.floor($timer / 60);
   $: minname = minutes > 1 ? "mins" : "min";
   $: seconds = Math.floor($timer - minutes * 60)
+
+  const transactionMsg = 'txPool'
 
   // '0x1': {
   //   icon: ethereumIcon,
@@ -181,7 +191,6 @@ import { _ } from 'svelte-i18n'
     width: 18rem;
     bottom: 0;
     right: 0;
-    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
     max-height: 100vh;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -191,10 +200,8 @@ import { _ } from 'svelte-i18n'
     box-sizing: border-box;
     height: 100vh;
     pointer-events: none;
-    z-index: 99999999;
-
-
-    padding: 80px 16px;
+    z-index: 300;
+    padding: 74px 16px;
     max-width: 364px;
     min-width: 348px;
     font-family: var(--onboard-font-family-normal, var(--font-family-normal));
@@ -204,12 +211,6 @@ import { _ } from 'svelte-i18n'
     ul {
       width: 100%;
     }
-  }
-
-  :global(.bn-notify-custom.bn-notify-dark-mode) {
-    background: #283944;
-    color: #ffffff;
-    background: rgba(40, 57, 68, 0.9);
   }
 
   :global(.bn-notify-clickable:hover) {
@@ -226,12 +227,12 @@ import { _ } from 'svelte-i18n'
     transition: background 300ms ease-in-out, color 300ms ease-in-out;
     pointer-events: all;
     backdrop-filter: blur(5px);
-
     width: 100%;
-    height: 56px;
-    background: #242835;
+    min-height: 56px;
+    background: var(--onboard-gray-600, var(--gray-600));
     padding: 12px;
     border-radius: var(--onboard-border-radius-4, var(--border-radius-4));
+    margin-top: 8px;
     display: flex;
   }
 
@@ -280,11 +281,11 @@ import { _ } from 'svelte-i18n'
   
 </style>
 
-<!-- {#if $notifications.length > 0} -->
+{#if statuses.length > 0}
   <ul
     class="bn-notify-custom bn-notify-notifications"
     style={`${positioning} ${justifyContent}`}>
-    <!-- {#each $notifications as notification (notification.key)} -->
+    {#each statuses as status (status.key)}
 
     <!-- on:click={e => notification.onclick && notification.onclick(e)}
     class:bn-notify-clickable={notification.onclick} -->
@@ -300,13 +301,9 @@ import { _ } from 'svelte-i18n'
         <div class="flex flex-column notify-transaction-data">
 
           <span class='transaction-status'>
-            Transaction is pending
-            {$_(
-              en.defaultNotifyMessages.en.transaction['txPool'],
-              {
-                default: en.defaultNotifyMessages.en.transaction['txPool']
-              }
-            )}
+            {$_(`notify.transaction[${transactionMsg}]`, {
+              default: en.notify.transaction[transactionMsg]
+            })}
           </span> 
           <!-- {eventCode} -->
           <!-- ADDRESS / ENS / transaction hash -->
@@ -346,6 +343,6 @@ import { _ } from 'svelte-i18n'
           <CloseButton width={"14px"}/>
         </div>
       </li>
-    <!-- {/each} -->
+    {/each}
   </ul>
-<!-- {/if} -->
+{/if}

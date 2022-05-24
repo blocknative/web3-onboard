@@ -348,3 +348,13 @@ export function localNetwork(networkId: number) {
       return true
   }
 }
+export function uniqueWalletsByLabel(
+  walletModuleList: WalletModule[]
+): WalletModule[] {
+  return walletModuleList.filter(
+    (wallet, i) =>
+      walletModuleList.findIndex(
+        (innerWallet: WalletModule) => innerWallet.label === wallet.label
+      ) === i
+  )
+}
