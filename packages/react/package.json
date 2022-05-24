@@ -21,7 +21,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@web3-onboard/core": "^2.2.9-alpha.3",
+    "@web3-onboard/core": "^2.2.9-alpha.4",
     "@web3-onboard/common": "^2.1.0-alpha.1"
   },
   "peerDependencies": {
