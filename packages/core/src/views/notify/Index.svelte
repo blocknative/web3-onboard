@@ -8,6 +8,10 @@ import { TransactionDescription } from 'ethers/lib/utils';
 import { shortenAddress, shortenEns, chainStyles } from '../../utils'
 import StatusChain from './StatusChain.svelte';
 
+
+import { _ } from 'svelte-i18n'
+
+  import en from '../../i18n/en.json'
   // import debounce from 'lodash.debounce'
 
   // import CloseIcon from '../components/CloseIcon.svelte'
@@ -105,13 +109,64 @@ import StatusChain from './StatusChain.svelte';
   const currentChain = '0x89'
   const status: NotificationObject  = {
     id: 'testing123',
-    type: 'success',
+    type: 'error',
     key: 'keytesting',
     // startTime?: number
     // eventCode?: string
     message: 'test message'
     // autoDismiss?: number
   }
+  import { tweened } from 'svelte/motion';
+  let original = 5 * 60; // TYPE NUMBER OF SECONDS HERE
+	let timer = tweened(original)
+
+  // ------ dont need to modify code below
+  setInterval(() => {
+    if ($timer > 0) $timer++;
+  }, 1000);
+
+  $: minutes = Math.floor($timer / 60);
+  $: minname = minutes > 1 ? "mins" : "min";
+  $: seconds = Math.floor($timer - minutes * 60)
+
+  // '0x1': {
+  //   icon: ethereumIcon,
+  //   color: '#627EEA'
+  // },
+  // '0x3': {
+  //   icon: ethereumIcon,
+  //   color: '#627EEA'
+  // },
+  // '0x4': {
+  //   icon: ethereumIcon,
+  //   color: '#627EEA'
+  // },
+  // '0x5': {
+  //   icon: ethereumIcon,
+  //   color: '#627EEA'
+  // },
+  // '0x2a': {
+  //   icon: ethereumIcon,
+  //   color: '#627EEA'
+  // },
+  // '0x38': {
+  //   icon: binanceIcon,
+  //   color: '#F3BA2F'
+  // },
+  // '0x89': {
+  //   icon: polygonIcon,
+  //   color: '#8247E5'
+  // },
+
+  // function timeString(): string {
+  //   var start = Date.now();
+  //  var textNode = document.createTextNode('0');
+  //  document.getElementById('seconds').appendChild(textNode);
+  //  return function() {
+  //       textNode.data = Math.floor((Date.now()-start)/1000);
+  //       };
+      
+  // }
 </script>
 
 <style>
@@ -221,6 +276,8 @@ import StatusChain from './StatusChain.svelte';
     color: var(--onboard-primary-100, var(--primary-100));
     line-height: 14px;
   }
+
+  
 </style>
 
 <!-- {#if $notifications.length > 0} -->
@@ -244,6 +301,12 @@ import StatusChain from './StatusChain.svelte';
 
           <span class='transaction-status'>
             Transaction is pending
+            {$_(
+              en.defaultNotifyMessages.en.transaction['txPool'],
+              {
+                default: en.defaultNotifyMessages.en.transaction['txPool']
+              }
+            )}
           </span> 
           <!-- {eventCode} -->
           <!-- ADDRESS / ENS / transaction hash -->
@@ -253,7 +316,7 @@ import StatusChain from './StatusChain.svelte';
               <!-- {ens ? shortenEns(ens.name) : shortenAddress(address)} -->
             </a>
             <span class='time'>
-              - 2s ago
+              - {seconds}s ago
             </span>
             <!-- time since event - get from v1 -->
             
