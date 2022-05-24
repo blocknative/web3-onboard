@@ -10,7 +10,8 @@ export const APP_INITIAL_STATE: AppState = {
     position: 'topRight',
     expanded: false,
     minimal: getDevice().type === 'mobile'
-  }
+  },
+  locale: ''
 }
 
 export const STORAGE_KEYS = {
