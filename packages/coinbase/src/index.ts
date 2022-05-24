@@ -8,7 +8,7 @@ function coinbaseWallet({
   return ({ device }) =>
     device.type === 'mobile'
       ? {
-          label: 'Coinbase',
+          label: 'Coinbase Wallet',
           getIcon: async () => (await import('./icon.js')).default,
           getInterface: async ({ chains, appMetadata }) => {
             const [chain] = chains
