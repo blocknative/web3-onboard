@@ -6,7 +6,7 @@ import type { NotifyInitOptions, NotificationObject } from '../../types';
 import CloseButton from '../shared/CloseButton.svelte';
 import { TransactionDescription } from 'ethers/lib/utils';
 import { shortenAddress, shortenEns, chainStyles } from '../../utils'
-import StatusChain from './StatusChain.svelte';
+import StatusIconBadge from './StatusIconBadge.svelte';
 
 
 import { _ } from 'svelte-i18n'
@@ -293,11 +293,11 @@ import { _ } from 'svelte-i18n'
       <li
         style={notificationMargin}
         class="bn-notify-custom bn-notify-notification "
+        animate:flip={{ duration: 500 }}
         in:fly={{ duration: 1200, delay: 300, x, y, easing: elasticOut }}
         out:fly={{ duration: 400, x, y, easing: quintIn }}>
 
-        <!-- statusIconBadge -->
-        <StatusChain notification={status} chainStyles={chainStyles[currentChain]}/>
+        <StatusIconBadge notification={status} chainStyles={chainStyles[currentChain]}/>
         <div class="flex flex-column notify-transaction-data">
 
           <span class='transaction-status'>
