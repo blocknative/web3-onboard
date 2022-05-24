@@ -14,6 +14,9 @@
   const notify$ = state
     .select('notify')
     .pipe(startWith(state.get().notify), shareReplay(1))
+
+  notify$.subscribe(x => console.log(x))
+  accountCenter$.subscribe(x => console.log(x))
 </script>
 
 <style>
@@ -258,5 +261,5 @@
 {/if}
 
 {#if $notify$.enabled}
-  <Notify settings={$notify$} />
+  <Notify settings={$notify$} dappId={} />
 {/if}

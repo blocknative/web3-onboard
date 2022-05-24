@@ -152,11 +152,11 @@
       explore: 'https://blocknative.com'
     },
     // example customizing account center
-    // accountCenter: {
-    //   desktop: {
-    //     position: 'bottomRight'
-    //   }
-    // }
+    accountCenter: {
+      desktop: {
+        position: 'bottomRight'
+      }
+    },
     // example customizing copy
     // i18n: {
     //   en: {

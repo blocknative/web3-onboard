@@ -158,7 +158,9 @@ const accountCenter = Joi.object({
 })
 
 const notify = Joi.object({
-  transactionHandler: Joi.function().required(),
+  //Transaction handler will be required?
+  transactionHandler: Joi.function(),
+  dappId: Joi.string().required(),
   enabled: Joi.boolean(),
   onerror: Joi.function(),
 })

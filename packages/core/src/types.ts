@@ -207,7 +207,7 @@ import type {
 } from 'bnc-sdk/dist/types/src/interfaces'
 
 export interface NotifyOptions extends ConfigOptions {
-  dappId?: string
+  dappId: string
   transactionHandler?: TransactionHandler
   name?: string
   apiUrl?: string

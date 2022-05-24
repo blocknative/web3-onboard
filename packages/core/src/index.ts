@@ -15,7 +15,7 @@ import { validateInitOptions } from './validation'
 import initI18N from './i18n'
 
 import App from './views/Index.svelte'
-import type { InitOptions, OnboardAPI } from './types'
+import type { InitOptions, NotifyInitOptions, NotifyOptions, OnboardAPI } from './types'
 import { getDevice } from './utils'
 
 const API = {
@@ -81,12 +81,9 @@ function init(options: InitOptions): OnboardAPI {
 
   accountCenterUpdate && updateAccountCenter(accountCenterUpdate)
 
-  let notifyUpdate
-
+  const notifyUpdate: NotifyOptions = { ...notify, dappId }
   if (notify && notify.enabled && !dappId) {
-    notifyUpdate = {
-      enabled: false
-    }
+    notifyUpdate.enabled = false
   }
 
   notifyUpdate && updateNotify(notifyUpdate)
