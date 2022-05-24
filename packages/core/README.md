@@ -10,7 +10,7 @@ Install the core module:
 
 If you would like to support all wallets, then you can install all of the wallet modules:
 
-`npm i @web3-onboard/injected-wallets @web3-onboard/ledger @web3-onboard/trezor @web3-onboard/keepkey @web3-onboard/walletconnect @web3-onboard/walletlink @web3-onboard/torus @web3-onboard/portis @web3-onboard/mew @web3-onboard/gnosis @web3-onboard/magic @web3-onboard/fortmatic`
+`npm i @web3-onboard/injected-wallets @web3-onboard/coinbase @web3-onboard/ledger @web3-onboard/trezor @web3-onboard/keepkey @web3-onboard/walletconnect @web3-onboard/torus @web3-onboard/portis @web3-onboard/mew @web3-onboard/gnosis @web3-onboard/magic @web3-onboard/fortmatic`
 
 Note:
 
