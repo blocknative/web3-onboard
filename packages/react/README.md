@@ -95,6 +95,18 @@ const web3Onboard = init({
       { name: 'MetaMask', url: 'https://metamask.io' },
       { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
     ]
+  },
+  accountCenter: {
+    desktop: {
+      position: 'topRight',
+      enabled: true,
+      minimal: true
+    },
+    mobile: {
+      position: 'topRight',
+      enabled: true,
+      minimal: true
+    }
   }
 })
 
@@ -125,9 +137,7 @@ function App() {
               })}
             </select>
           )}
-          <button onClick={() => disconnect(wallet)}>
-            Disconnect Wallet
-          </button>
+          <button onClick={() => disconnect(wallet)}>Disconnect Wallet</button>
         </div>
       )}
 

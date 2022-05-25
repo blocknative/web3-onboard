@@ -64,7 +64,7 @@
   }
 
   .radius {
-    border-radius: 16px;
+    border-radius: var(--onboard-border-radius-3, var(--border-radius-3));
   }
 
   .padding-5 {

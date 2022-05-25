@@ -114,11 +114,13 @@ const initOptions = Joi.object({
   accountCenter: Joi.object({
     desktop: Joi.object({
       enabled: Joi.boolean(),
+      minimal: Joi.boolean(),
       position: accountCenterPosition
     }),
     mobile: Joi.object({
       enabled: Joi.boolean(),
-      position: accountCenterPosition
+      minimal: Joi.boolean(),
+      position: accountCenterPosition,
     })
   })
 })
@@ -146,7 +148,8 @@ const setChainOptions = Joi.object({
 const accountCenter = Joi.object({
   enabled: Joi.boolean(),
   position: accountCenterPosition,
-  expanded: Joi.boolean()
+  expanded: Joi.boolean(),
+  minimal: Joi.boolean()
 })
 
 type ValidateReturn = Joi.ValidationResult | null
