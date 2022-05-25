@@ -44,7 +44,9 @@
 
 <div
   class="container flex flex-column absolute"
-  style={accountCenterPositions[settings.position]}
+  style="{accountCenterPositions[
+    settings.position
+  ]} width: {!settings.expanded && settings.minimal ? 'auto' : '100%'}"
 >
   {#if !settings.expanded && !settings.minimal}
     <!-- minimized -->
