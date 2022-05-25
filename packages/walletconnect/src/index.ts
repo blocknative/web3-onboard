@@ -27,7 +27,7 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
       getInterface: async ({ chains, EventEmitter }) => {
         const { default: WalletConnect } = await import('@walletconnect/client')
 
-        const { default: QRCodeModal } = await import(
+        const QRCodeModal = await import(
           '@walletconnect/qrcode-modal'
         )
 
