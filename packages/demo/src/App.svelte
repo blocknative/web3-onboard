@@ -151,12 +151,12 @@
       gettingStartedGuide: 'https://blocknative.com',
       explore: 'https://blocknative.com'
     }
-    // example customizing account center
+    // // example customizing account center
     // accountCenter: {
     //   desktop: {
     //     position: 'topRight',
     //     enabled: true,
-    //     minimal: false
+    //     minimal: true
     //   },
     //   mobile: {
     //     position: 'topRight',
