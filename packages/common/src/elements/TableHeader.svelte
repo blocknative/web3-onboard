@@ -5,10 +5,6 @@
   export let loadingAccounts: boolean
   export let showEmptyAddresses: boolean
   export let errorFromScan: string
-
-  const filterEmptyAccounts = () => {
-    showEmptyAddresses = !showEmptyAddresses
-  }
 </script>
 
 <style>
@@ -176,7 +172,7 @@
     <input
       id="show-empty-addresses"
       type="checkbox"
-      on:change={filterEmptyAccounts}
+      bind:checked={showEmptyAddresses}
       class="checkbox-input"
     />
     <label for="show-empty-addresses" class="ml2 cursor-pointer font-5"
