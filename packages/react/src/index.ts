@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { useSyncExternalStore } from 'use-sync-external-store'
+import { useSyncExternalStore } from 'use-sync-external-store/shim'
 
 import Web3Onboard from '@web3-onboard/core'
 import type {
@@ -10,7 +10,6 @@ import type {
   WalletState,
   ConnectedChain
 } from '@web3-onboard/core'
-
 import type { Chain } from '@web3-onboard/common'
 import type { AppState } from '@web3-onboard/core/dist/types'
 
@@ -96,7 +95,7 @@ export const useSetChain = (
     connectedChain: ConnectedChain | null
     settingChain: boolean
   },
-  (options: SetChainOptions) => Promise<void>
+  (options: SetChainOptions) => Promise<boolean>
 ] => {
   if (!web3Onboard) throw new Error(HOOK_ERROR_MESSAGE)
 
@@ -115,9 +114,11 @@ export const useSetChain = (
   const set = useCallback(async (options: SetChainOptions) => {
     setInProgress(true)
 
-    await setChain({ ...options, wallet: walletLabel })
+    const success = await setChain({ ...options, wallet: walletLabel })
 
     setInProgress(false)
+
+    return success
   }, [])
 
   return [{ chains, connectedChain, settingChain }, set]
