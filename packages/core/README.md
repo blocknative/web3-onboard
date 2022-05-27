@@ -508,6 +508,9 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-modal-backdrop
   --onboard-modal-box-shadow
 
+  /* CUSTOMIZE THE ACTION REQUIRED MODAL */
+  --onboard-action-required-modal-background
+
   /* FONTS */
   --onboard-font-family-normal: Sofia Pro;
   --onboard-font-family-semibold: Sofia Pro Semibold;
