@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/react",
-  "version": "2.1.7-alpha.5",
+  "version": "2.1.7-alpha.6",
   "description": "Collection of React Hooks for web3-onboard",
   "module": "dist/index.js",
   "browser": "dist/index.js",
@@ -21,7 +21,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@web3-onboard/core": "^2.2.9-alpha.4",
+    "@web3-onboard/core": "^2.2.9-alpha.5",
     "@web3-onboard/common": "^2.1.0-alpha.1"
   },
   "peerDependencies": {
