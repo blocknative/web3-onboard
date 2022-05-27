@@ -110,10 +110,7 @@ const coinbase: InjectedWalletModule = {
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
     (!!provider && !!provider[ProviderIdentityFlag.Coinbase]) ||
-    (!!provider &&
-      !!provider.providers &&
-      !!provider.providers[0] &&
-      !!provider.providers[0][ProviderIdentityFlag.CoinbaseExtension]),
+    (!!provider && !!provider[ProviderIdentityFlag.CoinbaseExtension]),
   getIcon: async () => (await import('./icons/coinbase.js')).default,
   getInterface: async () => {
     const { provider } = await getInjectedInterface(

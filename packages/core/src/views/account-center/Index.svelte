@@ -43,7 +43,7 @@
 <svelte:window on:click={minimize} />
 
 <div
-  class="container flex flex-column absolute"
+  class="container flex flex-column fixed"
   style="{accountCenterPositions[
     settings.position
   ]} width: {!settings.expanded && settings.minimal ? 'auto' : '100%'}"

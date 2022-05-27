@@ -173,3 +173,14 @@ export function initializeWalletModules(
     return acc
   }, [] as WalletModule[])
 }
+
+export function uniqueWalletsByLabel(
+  walletModuleList: WalletModule[]
+): WalletModule[] {
+  return walletModuleList.filter(
+    (wallet, i) =>
+      walletModuleList.findIndex(
+        (innerWallet: WalletModule) => innerWallet.label === wallet.label
+      ) === i
+  )
+}

@@ -1,6 +1,6 @@
 import type { Chain, WalletInit } from '@web3-onboard/common'
 import { internalState$ } from '../streams'
-import { initializeWalletModules } from '../utils'
+import { initializeWalletModules, uniqueWalletsByLabel } from '../utils'
 import { dispatch } from './index'
 
 import type {
@@ -156,10 +156,11 @@ export function setWalletModules(wallets: WalletInit[]): void {
     wallets,
     internalState$.getValue().device
   )
+  const dedupedWallets = uniqueWalletsByLabel(modules)
 
   const action = {
     type: SET_WALLET_MODULES,
-    payload: modules
+    payload: dedupedWallets
   }
 
   dispatch(action as SetWalletModulesAction)

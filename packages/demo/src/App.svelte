@@ -156,7 +156,7 @@
     //   desktop: {
     //     position: 'topRight',
     //     enabled: true,
-    //     minimal: true
+    //     minimal: false
     //   },
     //   mobile: {
     //     position: 'topRight',
