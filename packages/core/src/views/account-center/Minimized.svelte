@@ -64,7 +64,7 @@
   }
 
   .radius {
-    border-radius: 16px;
+    border-radius: var(--onboard-border-radius-3, var(--border-radius-3));
   }
 
   .padding-5 {
@@ -96,10 +96,6 @@
     padding: 4px;
     border-radius: 25px;
     margin-right: 4px;
-  }
-
-  .caret {
-    width: 24px;
   }
 
   .container {

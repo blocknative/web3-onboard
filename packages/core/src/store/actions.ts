@@ -1,6 +1,6 @@
 import type { Chain, WalletInit } from '@web3-onboard/common'
 import { internalState$ } from '../streams'
-import { initializeWalletModules } from '../utils'
+import { initializeWalletModules, uniqueWalletsByLabel } from '../utils'
 import { dispatch } from './index'
 
 import type {
@@ -11,6 +11,7 @@ import type {
   RemoveWalletAction,
   ResetStoreAction,
   SetWalletModulesAction,
+  SetLocaleAction,
   UpdateAccountAction,
   UpdateAccountCenterAction,
   UpdateWalletAction,
@@ -19,6 +20,7 @@ import type {
 
 import {
   validateAccountCenterUpdate,
+  validateLocale,
   validateString,
   validateWallet,
   validateWalletInit
@@ -32,7 +34,8 @@ import {
   REMOVE_WALLET,
   UPDATE_ACCOUNT,
   UPDATE_ACCOUNT_CENTER,
-  SET_WALLET_MODULES
+  SET_WALLET_MODULES,
+  SET_LOCALE
 } from './constants'
 
 export function addChains(chains: Chain[]): void {
@@ -153,11 +156,27 @@ export function setWalletModules(wallets: WalletInit[]): void {
     wallets,
     internalState$.getValue().device
   )
+  const dedupedWallets = uniqueWalletsByLabel(modules)
 
   const action = {
     type: SET_WALLET_MODULES,
-    payload: modules
+    payload: dedupedWallets
   }
 
   dispatch(action as SetWalletModulesAction)
+}
+
+export function setLocale(locale: string): void {
+  const error = validateLocale(locale)
+
+  if (error) {
+    throw error
+  }
+
+  const action = {
+    type: SET_LOCALE,
+    payload: locale
+  }
+
+  dispatch(action as SetLocaleAction)
 }

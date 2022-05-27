@@ -6,7 +6,8 @@ import { state } from './store'
 import {
   addChains,
   setWalletModules,
-  updateAccountCenter
+  updateAccountCenter,
+  setLocale
 } from './store/actions'
 import { reset$, internalState$ } from './streams'
 import { validateInitOptions } from './validation'
@@ -14,6 +15,7 @@ import initI18N from './i18n'
 
 import App from './views/Index.svelte'
 import type { InitOptions, OnboardAPI } from './types'
+import { APP_INITIAL_STATE } from './constants'
 import { getDevice } from './utils'
 
 const API = {
@@ -24,7 +26,8 @@ const API = {
     get: state.get,
     select: state.select,
     actions: {
-      setWalletModules
+      setWalletModules,
+      setLocale
     }
   }
 }
@@ -56,19 +59,26 @@ function init(options: InitOptions): OnboardAPI {
   initI18N(i18n)
   addChains(chains)
 
-  let accountCenterUpdate
-
   const device = getDevice()
+  
+  // update accountCenter
+  if (typeof accountCenter !== 'undefined') {
+    let accountCenterUpdate
 
-  if (device.type === 'mobile') {
-    accountCenterUpdate = {
-      enabled: false
+    if (device.type === 'mobile' && accountCenter.mobile) {
+      accountCenterUpdate = {
+        ...APP_INITIAL_STATE.accountCenter,
+        ...accountCenter.mobile
+      }
+    } else if (accountCenter.desktop) {
+      accountCenterUpdate = {
+        ...APP_INITIAL_STATE.accountCenter,
+        ...accountCenter.desktop
+      }
     }
-  } else if (typeof accountCenter !== 'undefined' && accountCenter.desktop) {
-    accountCenterUpdate = accountCenter.desktop
-  }
 
-  accountCenterUpdate && updateAccountCenter(accountCenterUpdate)
+    updateAccountCenter(accountCenterUpdate)
+  }  
 
   const { svelteInstance } = internalState$.getValue()
 
@@ -185,7 +195,10 @@ function mountApp() {
           --spacing-7: 0.125rem;
   
           /* BORDER RADIUS */
-          --border-radius-1: 24px;  
+          --border-radius-1: 24px;
+          --border-radius-2: 20px;
+          --border-radius-3: 16px;
+
 
           /* SHADOWS */
           --shadow-0: none;

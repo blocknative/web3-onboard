@@ -20,7 +20,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.0.7",
-    "@toruslabs/torus-embed": "^1.18.3"
+    "@toruslabs/torus-embed": "^1.18.3",
+    "@web3-onboard/common": "^2.0.7"
   }
 }

@@ -1,4 +1,5 @@
 import type { AppState } from './types'
+import { getDevice } from './utils'
 
 export const APP_INITIAL_STATE: AppState = {
   wallets: [],
@@ -7,8 +8,10 @@ export const APP_INITIAL_STATE: AppState = {
   accountCenter: {
     enabled: true,
     position: 'topRight',
-    expanded: false
-  }
+    expanded: false,
+    minimal: getDevice().type === 'mobile'
+  },
+  locale: ''
 }
 
 export const STORAGE_KEYS = {
