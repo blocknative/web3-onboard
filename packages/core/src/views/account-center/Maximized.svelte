@@ -134,10 +134,6 @@
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
   }
 
-  .caret {
-    width: 16px;
-  }
-
   .app-info-container {
     background: var(--onboard-white, var(--white));
     border-radius: 16px;
