@@ -98,10 +98,6 @@
     margin-right: 4px;
   }
 
-  .caret {
-    width: 24px;
-  }
-
   .container {
     border: 1px solid transparent;
     border-radius: 16px;
