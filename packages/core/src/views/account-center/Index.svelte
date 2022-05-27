@@ -1,12 +1,15 @@
 <script lang="ts">
   import { onDestroy } from 'svelte'
+import { fix_position } from 'svelte/internal'
   import { state } from '../../store'
   import { updateAccountCenter } from '../../store/actions'
   import type { AccountCenter } from '../../types'
   import Maximized from './Maximized.svelte'
   import Minimized from './Minimized.svelte'
 
-  export let settings: AccountCenter
+  export let settings: {AccountCenter, Notify}
+
+  const {notifySettings, accountCenterSettings} = settings
 
   const accountCenterPositions = {
     topLeft: 'top: 0; left: 0;',
@@ -38,13 +41,20 @@
 
 <div
   class="container flex flex-column absolute"
-  style={accountCenterPositions[settings.position]}
+  style={accountCenterPositions[accountCenterSettings.position]}
 >
-  {#if !settings.expanded}
+  {#if notifySettings.enabled && accountCenterSettings.fix_position.contains('bottom')}
+    <Notify settings={notifySettings} dappId={} />
+  {/if}
+  {#if !accountCenterSettings.expanded}
     <!-- minimized -->
     <Minimized />
   {:else}
     <!-- maximized -->
     <Maximized />
+  {/if}
+
+  {#if notifySettings.enabled && accountCenterSettings.fix_position.contains('top')}
+    <Notify settings={notifySettings} dappId={} />
   {/if}
 </div>
