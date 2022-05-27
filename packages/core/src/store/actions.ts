@@ -15,7 +15,8 @@ import type {
   UpdateAccountAction,
   UpdateAccountCenterAction,
   UpdateWalletAction,
-  WalletState
+  WalletState,
+  UpdateBalancesAction
 } from '../types'
 
 import {
@@ -23,7 +24,8 @@ import {
   validateLocale,
   validateString,
   validateWallet,
-  validateWalletInit
+  validateWalletInit,
+  validateUpdateBalances
 } from '../validation'
 
 import {
@@ -35,7 +37,8 @@ import {
   UPDATE_ACCOUNT,
   UPDATE_ACCOUNT_CENTER,
   SET_WALLET_MODULES,
-  SET_LOCALE
+  SET_LOCALE,
+  UPDATE_BALANCES
 } from './constants'
 
 export function addChains(chains: Chain[]): void {
@@ -179,4 +182,20 @@ export function setLocale(locale: string): void {
   }
 
   dispatch(action as SetLocaleAction)
+}
+
+export function updateBalances(addresses?: string[]): void {
+
+  const error = validateUpdateBalances(addresses)
+
+  if (error) {
+    throw error
+  }
+
+  const action = {
+    type: UPDATE_BALANCES,
+    payload: addresses
+  }
+
+  dispatch(action as UpdateBalancesAction)
 }

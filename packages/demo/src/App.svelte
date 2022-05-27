@@ -177,6 +177,16 @@
   })
 
   // Subscribe to wallet updates
+  // const wallets$ = Promise.resolve([])
+
+  // async function fetchWalletUpdates() {
+  //   return await onboard.state
+  //     .select('wallets')
+  //     .pipe(share()) /*Ωignore_startΩ*/
+  // }
+
+  // wallets$ = fetchWalletUpdates
+
   const wallets$ = onboard.state.select('wallets').pipe(share())
 
   const signTransactionMessage = async provider => {

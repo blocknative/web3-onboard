@@ -6,6 +6,8 @@ import type { Chain, WalletModule } from '@web3-onboard/common'
 import { APP_INITIAL_STATE } from '../constants'
 import { notNullish } from '../utils'
 
+import { getBalance } from '../provider'
+
 import type {
   AppState,
   WalletState,
@@ -14,7 +16,8 @@ import type {
   AddWalletAction,
   UpdateAccountAction,
   UpdateAccountCenterAction,
-  Locale
+  Locale,
+  UpdateBalancesAction
 } from '../types'
 
 import {
@@ -26,10 +29,11 @@ import {
   UPDATE_ACCOUNT,
   UPDATE_ACCOUNT_CENTER,
   SET_WALLET_MODULES,
-  SET_LOCALE
+  SET_LOCALE,
+  UPDATE_BALANCES
 } from './constants'
 
-function reducer(state: AppState, action: Action): AppState {
+async function reducer(state: AppState, action: Action): Promise<AppState> {
   const { type, payload } = action
 
   switch (type) {
@@ -62,6 +66,37 @@ function reducer(state: AppState, action: Action): AppState {
 
       const updatedWallets = state.wallets.map(wallet =>
         wallet.label === id ? { ...wallet, ...walletUpdate } : wallet
+      )
+
+      return {
+        ...state,
+        wallets: updatedWallets
+      }
+    }
+
+    case UPDATE_BALANCES: {
+      const addresses = payload as UpdateBalancesAction['payload']
+      const { wallets, chains } = state
+
+      const updatedWallets = await Promise.all(
+        wallets.map(async wallet => {
+          const chain = chains.find(({ id }) => id === wallet.chains[0].id)
+
+          const updatedAccounts = await Promise.all(
+            wallet.accounts.map(async account => {
+              // if no addresses then we want to update all address balances
+              // otherwise check if address is in the supplied addresses array
+              if (!addresses || addresses.includes(account.address)) {
+                const updatedBalance = await getBalance(account.address, chain)
+                return { ...account, balance: updatedBalance }
+              }
+
+              return account
+            })
+          )
+
+          return { ...wallet, accounts: updatedAccounts }
+        })
       )
 
       return {
@@ -141,20 +176,22 @@ const _stateUpdates = new Subject<AppState>()
 
 _stateUpdates.subscribe(_store)
 
-export function dispatch(action: Action): void {
-  const state = _store.getValue()
-  _stateUpdates.next(reducer(state, action))
+export async function dispatch(action: Action): Promise<void> {
+  const state = await _store.getValue()
+  const nextState = await reducer(state, action)
+  _stateUpdates.next(nextState)
 }
 
-function select(): Observable<AppState>
-function select<T extends keyof AppState>(stateKey: T): Observable<AppState[T]>
-function select<T extends keyof AppState>(
+async function select(): Promise<Observable<AppState>>
+async function select<T extends keyof AppState>(stateKey: T): 
+  Promise<Observable<AppState[T]>>
+async function select<T extends keyof AppState>(
   stateKey?: keyof AppState
-): Observable<AppState[T]> | Observable<AppState> {
+): Promise<Observable<AppState> | Observable<AppState[T]>> {
   if (!stateKey) return _stateUpdates.asObservable()
 
-  const validStateKeys = Object.keys(_store.getValue())
-
+  const validStateKeys = await Object.keys(_store.getValue())
+    
   if (!validStateKeys.includes(String(stateKey))) {
     throw new Error(`key: ${stateKey} does not exist on this store`)
   }
