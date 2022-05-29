@@ -795,17 +795,6 @@
     google-protobuf "^3.7.0-rc.2"
     pbjs "^0.0.5"
 
-"@keystonehq/base-eth-keyring@^0.3.2":
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/@keystonehq/base-eth-keyring/-/base-eth-keyring-0.3.2.tgz#71efe1495d4931fab5fd0016c8722fe5d9657da9"
-  integrity sha512-y/kv8XNRSzqcSl7fvZklBKr4MVir1OJHzqM5vC+3yvzkh3mVtN8vUjAAxHtmVVVyM8rsdqK7aYZ7paexYdpnag==
-  dependencies:
-    "@ethereumjs/tx" "3.0.0"
-    "@keystonehq/bc-ur-registry-eth" "^0.7.7"
-    ethereumjs-util "^7.0.8"
-    hdkey "^2.0.1"
-    uuid "^8.3.2"
-
 "@keystonehq/base-eth-keyring@^0.6.0-alpha.1":
   version "0.6.0-alpha.1"
   resolved "https://registry.yarnpkg.com/@keystonehq/base-eth-keyring/-/base-eth-keyring-0.6.0-alpha.1.tgz#ff19689eb07a54aefdc21394a51c117660f7a0d2"
@@ -827,25 +816,6 @@
     hdkey "^2.0.1"
     uuid "^8.3.2"
 
-"@keystonehq/bc-ur-registry-eth@^0.7.7":
-  version "0.7.7"
-  resolved "https://registry.yarnpkg.com/@keystonehq/bc-ur-registry-eth/-/bc-ur-registry-eth-0.7.7.tgz#45267510900049050ef860a1e78fde9087b75972"
-  integrity sha512-2gZf18ogSCLjsn3PxGqwiOMz/G11v7byRnTLv5/wNJGzCqkMf86OKaVbUgsVokq0B5KAZtpCFQxj96rrFhPRiQ==
-  dependencies:
-    "@keystonehq/bc-ur-registry" "^0.4.4"
-    ethereumjs-util "^7.0.8"
-    hdkey "^2.0.1"
-    uuid "^8.3.2"
-
-"@keystonehq/bc-ur-registry@^0.4.4":
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/@keystonehq/bc-ur-registry/-/bc-ur-registry-0.4.4.tgz#3073fdd4b33cdcbd04526a313a7685891a4b4583"
-  integrity sha512-SBdKdAZfp3y14GTGrKjfJJHf4iXObjcm4/qKUZ92lj8HVR8mxHHGmHksjE328bJPTAsJPloLix4rTnWg+qgS2w==
-  dependencies:
-    "@ngraveio/bc-ur" "^1.1.5"
-    base58check "^2.0.0"
-    tslib "^2.3.0"
-
 "@keystonehq/bc-ur-registry@^0.5.0-alpha.5":
   version "0.5.0-alpha.6"
   resolved "https://registry.yarnpkg.com/@keystonehq/bc-ur-registry/-/bc-ur-registry-0.5.0-alpha.6.tgz#56868a7deeeaf5315a7fff6c0b42f3d31555a5c2"
@@ -854,21 +824,6 @@
     "@ngraveio/bc-ur" "^1.1.5"
     base58check "^2.0.0"
     tslib "^2.3.0"
-
-"@keystonehq/eth-keyring@^0.11.2-alpha.2":
-  version "0.11.2"
-  resolved "https://registry.yarnpkg.com/@keystonehq/eth-keyring/-/eth-keyring-0.11.2.tgz#92b2d54b82cb107170a34592fa923bce28051493"
-  integrity sha512-2fuO/8PdWTcXIyPK0jI1nNG0mj9x3c1wcsob7dUcwiHme5yDMUb1OX9vPfSD0TCiYJYLOzuU6WDL9s6d/lWGOg==
-  dependencies:
-    "@ethereumjs/tx" "3.0.0"
-    "@keystonehq/base-eth-keyring" "^0.3.2"
-    "@keystonehq/bc-ur-registry-eth" "^0.7.7"
-    "@keystonehq/sdk" "^0.9.1"
-    "@metamask/obs-store" "^7.0.0"
-    bs58check "^2.1.2"
-    ethereumjs-util "^7.0.8"
-    hdkey "^2.0.1"
-    uuid "^8.3.2"
 
 "@keystonehq/eth-keyring@^0.14.0-alpha.10.3":
   version "0.14.0-alpha.10.3"
@@ -898,19 +853,6 @@
     react-qr-reader "^2.2.1"
     rxjs "^6.6.3"
     typescript "^4.6.2"
-
-"@keystonehq/sdk@^0.9.1":
-  version "0.9.1"
-  resolved "https://registry.yarnpkg.com/@keystonehq/sdk/-/sdk-0.9.1.tgz#d1084c967118046257b720fedd8fbe8bb845a1c7"
-  integrity sha512-tcKDvKQVoe/2tibsjF/19VQhq1vldC+DyhC30lA9XJbbh5tXSoNfqqUVbMvDqxino/vBHZQur6rDSHF8+KBoMw==
-  dependencies:
-    "@ngraveio/bc-ur" "^1.0.0"
-    qrcode.react "^1.0.1"
-    react "16.13.1"
-    react-dom "16.13.1"
-    react-modal "^3.12.1"
-    react-qr-reader "^2.2.1"
-    rxjs "^6.6.3"
 
 "@ledgerhq/cryptoassets@^6.25.0":
   version "6.25.0"
@@ -2124,30 +2066,12 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.0"
 
-"@web3-onboard/coinbase@^2.0.0":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/coinbase/-/coinbase-2.0.2.tgz#31a5b7f4afa04dddb34ddd748753f9f08a9de80a"
-  integrity sha512-LHEIG88+mwXua5wVQF0Cf3ECAjEede8R1/j+OBn11aIr1lrnKtUcuLnpFbyXnJbsaqRuE7fgJeUpJhVFFvTk2A==
+"@web3-onboard/core@^2.2.9":
+  version "2.2.9"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.2.9.tgz#16039143b9227fd7e456bfed72f46a7f19781a2d"
+  integrity sha512-bxOdiqw0fnk7jR2KqArLT5qyNoGqJe6zOUJyPFXIn+clt/OLZxKB6w9/rClkjRZoARbJUw9U7oMDnkZxtWqZIw==
   dependencies:
-    "@coinbase/wallet-sdk" "^3.0.5"
-    "@web3-onboard/common" "^2.0.7"
-
-"@web3-onboard/common@^2.0.7", "@web3-onboard/common@^2.0.9":
-  version "2.0.9"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/common/-/common-2.0.9.tgz#b53bf12f8a644f55fe8b09c5deb73531c2b90e9c"
-  integrity sha512-6qTIPAmLAkhcVPtSOyIUzscJ/rq3/xI42kVt8I4ZsUErd32QjhuydIndJJHWrEFAXT/6ZY6tFH2GZix9Fe8YzQ==
-  dependencies:
-    "@ethereumjs/common" "2.6.2"
-    ethers "5.5.4"
-    joi "^17.4.2"
-    rxjs "^7.5.2"
-
-"@web3-onboard/core@^2.2.8":
-  version "2.2.8"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.2.8.tgz#0a2c6aa991ea2ac0a0a471d5ee3bbf84aafd79df"
-  integrity sha512-nEEQR0/EyMbtMOz2yngyr992ElbYlICm7tZOwKfvq4nknGdnkEVmx74nr80H5M6/9nfZ5gJug2v8i/M3/YxcbQ==
-  dependencies:
-    "@web3-onboard/common" "^2.0.7"
+    "@web3-onboard/common" "^2.1.0"
     bowser "^2.11.0"
     ethers "5.5.3"
     eventemitter3 "^4.0.7"
@@ -2157,56 +2081,6 @@
     rxjs "^7.5.2"
     svelte "^3.46.4"
     svelte-i18n "^3.3.13"
-
-"@web3-onboard/keepkey@^2.0.1":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/keepkey/-/keepkey-2.0.3.tgz#c7a0e9242385a7ce54d7314cd402caa63751c988"
-  integrity sha512-q6lSTujDCc22xTejpdT44jna7ZQQBbN4YEywush+iimq9ZBP9AcNqnddxtfqZvG1R3nssPFmpO/i5w0DVpL11A==
-  dependencies:
-    "@ethersproject/providers" "^5.5.0"
-    "@shapeshiftoss/hdwallet-core" "^1.15.2"
-    "@shapeshiftoss/hdwallet-keepkey-webusb" "^1.15.2"
-    "@web3-onboard/common" "^2.0.7"
-    ethereumjs-util "^7.1.3"
-
-"@web3-onboard/keystone@^2.0.1":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/keystone/-/keystone-2.0.3.tgz#da34e53f3a982d5954101e1e223c589d79afbd65"
-  integrity sha512-FWnBMoiJmKb0ZVCCns3OoQEMh2heM8RPkZ/pnEBnKKVZg2YDyefDmr5QqYR6Zlb3x6wgP/uq2brBlbPpoH/SLg==
-  dependencies:
-    "@ethereumjs/tx" "^3.4.0"
-    "@ethersproject/providers" "^5.5.0"
-    "@keystonehq/eth-keyring" "^0.11.2-alpha.2"
-    "@web3-onboard/common" "^2.0.7"
-
-"@web3-onboard/ledger@^2.0.1":
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/ledger/-/ledger-2.0.4.tgz#306952ddce5b17c25de3e9643465083d28281218"
-  integrity sha512-eRh9C9/+c7Kkgk6TsSMNz1n31X5SLIn8Ip4cnxo8/z2/jS1I/KRpiKsUPXRF2X0EL0A3yhk0aCeiJR9+70sFqQ==
-  dependencies:
-    "@ethereumjs/tx" "^3.4.0"
-    "@ethersproject/providers" "^5.5.0"
-    "@ledgerhq/hw-app-eth" "^6.19.0"
-    "@ledgerhq/hw-transport-u2f" "^5.36.0-deprecated"
-    "@ledgerhq/hw-transport-webusb" "^6.19.0"
-    "@metamask/eth-sig-util" "^4.0.0"
-    "@web3-onboard/common" "^2.0.7"
-    buffer "^6.0.3"
-    ethereumjs-util "^7.1.3"
-
-"@web3-onboard/trezor@^2.0.2":
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/trezor/-/trezor-2.0.5.tgz#9d381b05abc7861e2b2ed9283fcb04296f09b33b"
-  integrity sha512-ES7p7Tub5GoW/AjC8McIWsIOTKXO3NkkLjPS/VcBGslp5HM+KdRn3xmBGlGU6wQ4VGYQh66A8BJzd+27QGB7tA==
-  dependencies:
-    "@ethereumjs/tx" "^3.4.0"
-    "@ethersproject/providers" "^5.5.0"
-    "@web3-onboard/common" "^2.0.7"
-    buffer "^6.0.3"
-    eth-crypto "^2.1.0"
-    ethereumjs-util "^7.1.3"
-    hdkey "^2.0.1"
-    trezor-connect "^8.2.6"
 
 "@webassemblyjs/ast@1.11.1":
   version "1.11.1"

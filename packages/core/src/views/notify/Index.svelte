@@ -2,28 +2,18 @@
   import { fly } from 'svelte/transition'
   import { quintIn } from 'svelte/easing'
   import { flip } from 'svelte/animate'
-import type { NotifyInitOptions, NotificationObject } from '../../types';
-import CloseButton from '../shared/CloseButton.svelte';
-import { TransactionDescription } from 'ethers/lib/utils';
-import { shortenAddress, shortenEns, chainStyles } from '../../utils'
-import StatusIconBadge from './StatusIconBadge.svelte';
-
-
-import { _ } from 'svelte-i18n'
-
+  import type { NotifyInitOptions, NotificationObject } from '../../types'
+  import CloseButton from '../shared/CloseButton.svelte'
+  import { TransactionDescription } from 'ethers/lib/utils'
+  import { shortenAddress, shortenEns, chainStyles } from '../../utils'
+  import StatusIconBadge from './StatusIconBadge.svelte'
+  import { _ } from 'svelte-i18n'
   import en from '../../i18n/en.json'
-  // import debounce from 'lodash.debounce'
 
-  // import CloseIcon from '../components/CloseIcon.svelte'
-  // import NotificationContent from '../components/NotificationContent.svelte'
-  // import TypeIcon from '../components/TypeIcon.svelte'
   // import AutoDismiss from '../components/AutoDismiss.svelte'
   // import { notifications, app } from '../stores'
 
   export let settings: NotifyInitOptions
-
-
-  let smallScreen: boolean = window.outerWidth < 450
 
   let positioning: string
   let x: number
@@ -53,7 +43,6 @@ import { _ } from 'svelte-i18n'
       1.0
     )
   }
-  
 
   // $: if ($app.desktopPosition && !smallScreen) {
   //   positioning =
@@ -104,79 +93,42 @@ import { _ } from 'svelte-i18n'
   //   positioning = 'bottom: 0; right: 0;'
   // }
 
-
-  const hash = "0xc572779D7839B998DF24fc316c89BeD3D450ED13"
+  const hash = '0xc572779D7839B998DF24fc316c89BeD3D450ED13'
   const currentChain = '0x89'
-  const statuses: NotificationObject[]  = [{
-    id: 'testing123',
-    type: 'error',
-    key: 'keytesting1',
-    // startTime?: number
-    eventCode: 'txPool',
-    message: 'test message'
-    // autoDismiss?: number
-  }, {
-    id: 'testing123',
-    type: 'pending',
-    key: 'keytesting2',
-    // startTime?: number
-    eventCode: 'txConfirmReminder',
-    message: 'test message'
-    // autoDismiss?: number
-  }]
-  import { tweened } from 'svelte/motion';
-  let original = 5 * 60; // TYPE NUMBER OF SECONDS HERE
-	let timer = tweened(original)
+  const statuses: NotificationObject[] = [
+    {
+      id: 'testing123',
+      type: 'error',
+      key: 'keytesting1',
+      // startTime?: number
+      eventCode: 'txPool',
+      message: 'test message'
+      // autoDismiss?: number
+    },
+    {
+      id: 'testing123',
+      type: 'pending',
+      key: 'keytesting2',
+      // startTime?: number
+      eventCode: 'txConfirmReminder',
+      message: 'test message'
+      // autoDismiss?: number
+    }
+  ]
+  import { tweened } from 'svelte/motion'
+  let original = 5 * 60 // TYPE NUMBER OF SECONDS HERE
+  let timer = tweened(original)
 
   // ------ dont need to modify code below
   setInterval(() => {
-    if ($timer > 0) $timer++;
-  }, 1000);
+    if ($timer > 0) $timer++
+  }, 1000)
 
-  $: minutes = Math.floor($timer / 60);
-  $: minname = minutes > 1 ? "mins" : "min";
+  $: minutes = Math.floor($timer / 60)
+  $: minname = minutes > 1 ? 'mins' : 'min'
   $: seconds = Math.floor($timer - minutes * 60)
 
   const transactionMsg = 'txPool'
-
-  // '0x1': {
-  //   icon: ethereumIcon,
-  //   color: '#627EEA'
-  // },
-  // '0x3': {
-  //   icon: ethereumIcon,
-  //   color: '#627EEA'
-  // },
-  // '0x4': {
-  //   icon: ethereumIcon,
-  //   color: '#627EEA'
-  // },
-  // '0x5': {
-  //   icon: ethereumIcon,
-  //   color: '#627EEA'
-  // },
-  // '0x2a': {
-  //   icon: ethereumIcon,
-  //   color: '#627EEA'
-  // },
-  // '0x38': {
-  //   icon: binanceIcon,
-  //   color: '#F3BA2F'
-  // },
-  // '0x89': {
-  //   icon: polygonIcon,
-  //   color: '#8247E5'
-  // },
-
-  // function timeString(): string {
-  //   var start = Date.now();
-  //  var textNode = document.createTextNode('0');
-  //  document.getElementById('seconds').appendChild(textNode);
-  //  return function() {
-  //       textNode.data = Math.floor((Date.now()-start)/1000);
-  //       };
-      
-  // }
 </script>
 
 <style>
@@ -221,7 +173,6 @@ import { _ } from 'svelte-i18n'
     display: none;
   }
 
-  /* .bn-notify-notification */
   li {
     font-family: inherit;
     transition: background 300ms ease-in-out, color 300ms ease-in-out;
@@ -249,8 +200,6 @@ import { _ } from 'svelte-i18n'
     font-size: var(--onboard-font-size-7, var(--font-size-7));
     line-height: var(--onboard-line-height-4, var(--line-height-4));
   }
-  a {
-  }
 
   .time {
     color: var(--onboard-gray-300, var(--gray-300));
@@ -258,7 +207,7 @@ import { _ } from 'svelte-i18n'
   }
 
   .address-hash {
-    color: var(--onboard-primary-400, var(--primary-400))
+    color: var(--onboard-primary-400, var(--primary-400));
   }
   div.notify-close-btn {
     margin-left: auto;
@@ -277,34 +226,34 @@ import { _ } from 'svelte-i18n'
     color: var(--onboard-primary-100, var(--primary-100));
     line-height: 14px;
   }
-
-  
 </style>
 
 {#if statuses.length > 0}
   <ul
     class="bn-notify-custom bn-notify-notifications"
-    style={`${positioning} ${justifyContent}`}>
+    style={`${positioning} ${justifyContent}`}
+  >
     {#each statuses as status (status.key)}
-
-    <!-- on:click={e => notification.onclick && notification.onclick(e)}
+      <!-- on:click={e => notification.onclick && notification.onclick(e)}
     class:bn-notify-clickable={notification.onclick} -->
-    <!-- animate:flip={{ duration: 500 }} -->
+      <!-- animate:flip={{ duration: 500 }} -->
       <li
         style={notificationMargin}
         class="bn-notify-custom bn-notify-notification "
         animate:flip={{ duration: 500 }}
         in:fly={{ duration: 1200, delay: 300, x, y, easing: elasticOut }}
-        out:fly={{ duration: 400, x, y, easing: quintIn }}>
-
-        <StatusIconBadge notification={status} chainStyles={chainStyles[currentChain]}/>
+        out:fly={{ duration: 400, x, y, easing: quintIn }}
+      >
+        <StatusIconBadge
+          notification={status}
+          chainStyles={chainStyles[currentChain]}
+        />
         <div class="flex flex-column notify-transaction-data">
-
-          <span class='transaction-status'>
+          <span class="transaction-status">
             {$_(`notify.transaction[${transactionMsg}]`, {
               default: en.notify.transaction[transactionMsg]
             })}
-          </span> 
+          </span>
           <!-- {eventCode} -->
           <!-- ADDRESS / ENS / transaction hash -->
           <span class="hash-time">
@@ -312,14 +261,12 @@ import { _ } from 'svelte-i18n'
               {shortenAddress(hash)}
               <!-- {ens ? shortenEns(ens.name) : shortenAddress(address)} -->
             </a>
-            <span class='time'>
+            <span class="time">
               - {seconds}s ago
             </span>
             <!-- time since event - get from v1 -->
-            
           </span>
         </div>
-
 
         <!-- {#if notification.link}
           <a
@@ -340,7 +287,7 @@ import { _ } from 'svelte-i18n'
           <CloseIcon />
         </div> -->
         <div class="notify-close-btn">
-          <CloseButton width={"14px"}/>
+          <CloseButton width={'14px'} />
         </div>
       </li>
     {/each}

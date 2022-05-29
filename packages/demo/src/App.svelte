@@ -174,10 +174,10 @@
     //     }
     //   }
     // }
-    notify: {
-      onerror: error => console.log(`Notify error: ${error.message}`),
-      enabled: true
-    },
+    // notify: {
+    //   onerror: error => console.log(`Notify error: ${error.message}`),
+    //   enabled: true
+    // },
     dappId: '12153f55-f29e-4f11-aa07-90f10da5d778'
   })
 

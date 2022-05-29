@@ -15,7 +15,7 @@ import { validateInitOptions } from './validation'
 import initI18N from './i18n'
 
 import App from './views/Index.svelte'
-import type { InitOptions, NotifyInitOptions, NotifyOptions, OnboardAPI } from './types'
+import type { InitOptions, NotifyOptions, OnboardAPI } from './types'
 import { APP_INITIAL_STATE } from './constants'
 import { getDevice } from './utils'
 

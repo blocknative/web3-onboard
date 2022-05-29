@@ -14,7 +14,6 @@ import type {
 const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
 const chainNamespace = Joi.string().valid('evm')
 const unknownObject = Joi.object().unknown()
-// const address = Joi.string().regex(/^0x[a-fA-F0-9]{40}$/)
 
 const chain = Joi.object({
   namespace: chainNamespace,
@@ -236,28 +235,9 @@ export function validateLocale(data: string): ValidateReturn {
 
 
 import type {
-  NotifyInitOptions,
   TransactionOptions,
   CustomNotificationObject,
-  ConfigOptions
 } from './types'
-
-const validInitKeys = [
-  'dappId',
-  'networkId',
-  'system',
-  'transactionHandler',
-  'name',
-  'onerror',
-  'mobilePosition',
-  'desktopPosition',
-  'darkMode',
-  'txApproveReminderTimeout',
-  'txStallPendingTimeout',
-  'txStallConfirmedTimeout',
-  'notifyMessages',
-  'clientLocale'
-]
 
 const validNotificationKeys = [
   'eventCode',
@@ -324,69 +304,6 @@ export function validateType({
   if (typeof value !== 'undefined' && customValidation) {
     customValidation(value)
   }
-}
-
-export function validateInit(init: NotifyInitOptions): void {
-  validateType({ name: 'init', value: init, type: 'object' })
-
-  const {
-    dappId,
-    system,
-    networkId,
-    transactionHandler,
-    name,
-    apiUrl,
-    onerror,
-    ...otherParams
-  } = init
-
-  validateType({
-    name: 'dappId',
-    value: dappId,
-    type: 'string',
-    optional: true
-  })
-
-  validateType({
-    name: 'system',
-    value: system,
-    type: 'string',
-    // defaults to ethereum so optional
-    optional: true
-  })
-
-  // if no dappId provided then optional, otherwise required
-  validateType({
-    name: 'networkId (if dappId provided)',
-    value: networkId,
-    type: 'number',
-    optional: !dappId
-  })
-
-  validateType({ name: 'name', value: name, type: 'string', optional: true })
-
-  validateType({
-    name: 'apiUrl',
-    value: apiUrl,
-    type: 'string',
-    optional: true
-  })
-
-  validateType({
-    name: 'transactionHandler',
-    value: transactionHandler,
-    type: 'function',
-    optional: true
-  })
-
-  validateType({
-    name: 'onerror',
-    value: onerror,
-    type: 'function',
-    optional: true
-  })
-
-  validateConfig(otherParams)
 }
 
 function stringOrNumber(val: string | number): boolean {
@@ -564,135 +481,6 @@ export function validateNotificationObject(
   })
 }
 
-export function validateConfig(config: ConfigOptions): void {
-  validateType({ name: 'config', value: config, type: 'object' })
-
-  const {
-    networkId,
-    system,
-    mobilePosition,
-    desktopPosition,
-    darkMode,
-    notifyMessages,
-    clientLocale,
-    txApproveReminderTimeout,
-    txStallPendingTimeout,
-    txStallConfirmedTimeout,
-    ...otherParams
-  } = config
-
-  invalidParams(otherParams, validInitKeys, 'config / initialize')
-
-  validateType({
-    name: 'networkId',
-    value: networkId,
-    type: 'number',
-    optional: true
-  })
-
-  validateType({
-    name: 'system',
-    value: system,
-    type: 'string',
-    optional: true
-  })
-
-  validateType({
-    name: 'mobilePosition',
-    value: mobilePosition,
-    type: 'string',
-    optional: true,
-    customValidation: validMobilePosition
-  })
-
-  validateType({
-    name: 'desktopPosition',
-    value: desktopPosition,
-    type: 'string',
-    optional: true,
-    customValidation: validDesktopPosition
-  })
-
-  validateType({
-    name: 'darkMode',
-    value: darkMode,
-    type: 'boolean',
-    optional: true
-  })
-
-  validateType({
-    name: 'notifyMessages',
-    value: notifyMessages,
-    type: 'object',
-    optional: true
-  })
-
-  if (notifyMessages) {
-    Object.keys(notifyMessages).forEach(locale => {
-      validateType({
-        name: locale,
-        value: notifyMessages[locale],
-        type: 'object'
-      })
-
-      const { transaction, watched, time, ...otherParams } = notifyMessages[
-        locale
-      ]
-
-      invalidParams(otherParams, ['transaction', 'watched', 'time'], locale)
-
-      validateType({
-        name: `notifyMessages.${locale}.transaction`,
-        value: transaction,
-        type: 'object',
-        optional: true
-      })
-
-      validateType({
-        name: `notifyMessages.${locale}.watched`,
-        value: watched,
-        type: 'object',
-        optional: true
-      })
-
-      validateType({
-        name: `notifyMessages.${locale}.time`,
-        value: time,
-        type: 'object',
-        optional: true
-      })
-    })
-  }
-
-  validateType({
-    name: 'clientLocale',
-    value: clientLocale,
-    type: 'string',
-    optional: true
-  })
-
-  validateType({
-    name: 'txApproveReminderTimeout',
-    value: txApproveReminderTimeout,
-    type: 'number',
-    optional: true
-  })
-
-  validateType({
-    name: 'txStallPendingTimeout',
-    value: txStallPendingTimeout,
-    type: 'number',
-    optional: true
-  })
-
-  validateType({
-    name: 'txStallConfirmedTimeout',
-    value: txStallConfirmedTimeout,
-    type: 'number',
-    optional: true
-  })
-}
-
 function validNotificationType(type: string): void | never {
   switch (type) {
     case 'hint':
@@ -703,32 +491,6 @@ function validNotificationType(type: string): void | never {
     default:
       throw new Error(
         `${type} is not a valid notification type, must be one of: 'hint', 'pending', 'error' or 'success'.`
-      )
-  }
-}
-
-function validMobilePosition(position: string): void | never {
-  switch (position) {
-    case 'top':
-    case 'bottom':
-      return
-    default:
-      throw new Error(
-        `${position} is not a valid mobile notification position, must be one of: 'top' or 'bottom'.`
-      )
-  }
-}
-
-function validDesktopPosition(position: string): void | never {
-  switch (position) {
-    case 'bottomLeft':
-    case 'bottomRight':
-    case 'topLeft':
-    case 'topRight':
-      return
-    default:
-      throw new Error(
-        `${position} is not a valid desktop notification position, must be one of: 'bottomLeft', 'bottomRight', 'topLeft' or 'topRight'.`
       )
   }
 }

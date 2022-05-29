@@ -198,25 +198,25 @@ export type NotifyEventStyles = {
 
 
 
-import type {
-  BitcoinTransactionLog,
-  EthereumTransactionLog,
-  SDKError,
-  TransactionHandler
-} from 'bnc-sdk/dist/types/src/interfaces'
+// import type {
+//   BitcoinTransactionLog,
+//   EthereumTransactionLog,
+//   SDKError,
+//   TransactionHandler
+// } from 'bnc-sdk/dist/types/src/interfaces'
 
 export interface NotifyOptions extends ConfigOptions {
-  dappId: string
-  transactionHandler?: TransactionHandler
+  dappId?: string
+  // transactionHandler?: TransactionHandler
   name?: string
   apiUrl?: string
-  onerror?: ErrorHandler
+  // onerror?: ErrorHandler
   enabled: boolean
 }
 
 export type NotifyInitOptions = Omit<NotifyOptions, 'dappId' | 'name' | 'apiUrl'>
 
-export type ErrorHandler = (error: SDKError) => void
+// export type ErrorHandler = (error: SDKError) => void
 
 export interface TransactionEvent {
   emitterResult: void | boolean | CustomNotificationObject
@@ -324,7 +324,7 @@ export interface AppStore {
   name?: string
   networkId?: number
   nodeSynced: boolean
-  onerror?: ErrorHandler
+  // onerror?: ErrorHandler
   mobilePosition: 'bottom' | 'top'
   desktopPosition: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight'
   darkMode: boolean
@@ -401,7 +401,7 @@ export interface Hash {
   (hash: string, id?: string):
     | never
     | {
-        details: BitcoinTransactionLog | EthereumTransactionLog
+        // details: BitcoinTransactionLog | EthereumTransactionLog
         emitter: Emitter
       }
 }

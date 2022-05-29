@@ -1,16 +1,19 @@
 <script lang="ts">
   import { onDestroy } from 'svelte'
-import { fix_position } from 'svelte/internal'
   import { state } from '../../store'
   import { updateAccountCenter } from '../../store/actions'
-  import type { AccountCenter } from '../../types'
+  import type { AccountCenter, NotifyInitOptions } from '../../types'
   import Maximized from './Maximized.svelte'
   import Minimized from './Minimized.svelte'
   import Micro from './Micro.svelte'
+  import Notify from '../notify/Index.svelte'
 
-  export let settings: {AccountCenter, Notify}
+  export let settings: {
+    accountCenterSettings: AccountCenter
+    notifySettings: NotifyInitOptions
+  }
 
-  const {notifySettings, accountCenterSettings} = settings
+  const { notifySettings, accountCenterSettings } = settings
 
   const accountCenterPositions = {
     topLeft: 'top: 0; left: 0;',
@@ -23,7 +26,7 @@ import { fix_position } from 'svelte/internal'
 
   function minimize() {
     const { accountCenter } = state.get()
-    if (accountCenter.expanded) {
+    if (accountCenterSettings.expanded) {
       updateAccountCenter({ expanded: false })
     }
   }
@@ -48,16 +51,19 @@ import { fix_position } from 'svelte/internal'
 <div
   class="container flex flex-column fixed"
   style="{accountCenterPositions[
-    settings.position
-  ]} width: {!settings.expanded && settings.minimal ? 'auto' : '100%'}"
+    accountCenterSettings.position
+  ]} width: {!accountCenterSettings.expanded && accountCenterSettings.minimal
+    ? 'auto'
+    : '100%'}"
 >
-  {#if notifySettings.enabled && accountCenterSettings.fix_position.contains('bottom')}
-    <Notify settings={notifySettings} dappId={} />
+  {#if notifySettings.enabled && accountCenterSettings.position.includes('bottom')}
+    <Notify settings={notifySettings} />
   {/if}
-  {#if !settings.expanded && !settings.minimal}
+
+  {#if !accountCenterSettings.expanded && !accountCenterSettings.minimal}
     <!-- minimized -->
     <Minimized />
-  {:else if !settings.expanded && settings.minimal}
+  {:else if !accountCenterSettings.expanded && accountCenterSettings.minimal}
     <!-- micro -->
     <Micro />
   {:else}
@@ -65,7 +71,7 @@ import { fix_position } from 'svelte/internal'
     <Maximized />
   {/if}
 
-  {#if notifySettings.enabled && accountCenterSettings.fix_position.contains('top')}
-    <Notify settings={notifySettings} dappId={} />
+  {#if notifySettings.enabled && accountCenterSettings.position.includes('top')}
+    <Notify settings={notifySettings} />
   {/if}
 </div>
