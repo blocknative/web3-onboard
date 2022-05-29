@@ -129,7 +129,7 @@
     height: 100vh;
     pointer-events: none;
     z-index: 300;
-    font-family: var(--onboard-font-family-normal, var(--font-family-normal));
+    font-family: var(--notify-onboard-font-family-normal, var(--onboard-font-family-normal, var(--font-family-normal)));
     margin: 8px 0;
   }
 
@@ -154,15 +154,15 @@
     backdrop-filter: blur(5px);
     width: 100%;
     min-height: 56px;
-    background: var(--onboard-gray-600, var(--gray-600));
+    background: var(--notify-onboard-gray-600, var(--onboard-gray-600, var(--gray-600)));
     padding: 12px;
-    border-radius: var(--onboard-border-radius-4, var(--border-radius-4));
+    border-radius: var(--notify-onboard-border-radius-4, var(--onboard-border-radius-4, var(--border-radius-4)));
     margin-top: 8px;
     display: flex;
   }
 
   div.notify-transaction-data {
-    font-size: var(--onboard-font-size-6, var(--font-size-6));
+    font-size: var(--notify-onboard-font-size-6, var(--onboard-font-size-6, var(--font-size-6)));
     font-family: inherit;
     margin: 0px 8px;
     justify-content: space-between;
@@ -171,17 +171,17 @@
   .hash-time {
     display: inline-flex;
     margin-top: 2px;
-    font-size: var(--onboard-font-size-7, var(--font-size-7));
-    line-height: var(--onboard-line-height-4, var(--line-height-4));
+    font-size: var(--notify-onboard-font-size-7, var(--onboard-font-size-7, var(--font-size-7)));
+    line-height: var(--notify-onboard-line-height-4, var(--onboard-line-height-4, var(--line-height-4)));
   }
 
   .time {
-    color: var(--onboard-gray-300, var(--gray-300));
+    color: var(--notify-onboard-gray-300, var(--onboard-gray-300, var(--gray-300)));
     margin-left: 4px;
   }
 
   .address-hash {
-    color: var(--onboard-primary-400, var(--primary-400));
+    color: var(--notify-onboard-primary-400, var(--onboard-primary-400, var(--primary-400)));
   }
   div.notify-close-btn {
     margin-left: auto;
@@ -197,7 +197,7 @@
   }
 
   .transaction-status {
-    color: var(--onboard-primary-100, var(--primary-100));
+    color: var(--notify-onboard-primary-100, var(--onboard-primary-100, var(--primary-100)));
     line-height: 14px;
   }
 </style>
