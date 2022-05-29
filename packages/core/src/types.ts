@@ -116,17 +116,16 @@ export type AccountCenterPosition =
   | 'bottomLeft'
   | 'topLeft'
 
-export type AccountCenterOptions = {
-  desktop?: {
-    position?: AccountCenterPosition
-    enabled?: AccountCenter['enabled']
-  }
-}
-
 export type AccountCenter = {
-  enabled: boolean
-  position: AccountCenterPosition
-  expanded: boolean
+    enabled: boolean
+    position?: AccountCenterPosition
+    expanded?: boolean
+    minimal?: boolean
+}
+  
+export type AccountCenterOptions = {
+    desktop: Omit<AccountCenter, 'expanded'>
+    mobile: Omit<AccountCenter, 'expanded'>
 }
 
 // ==== ACTIONS ==== //

@@ -17,17 +17,17 @@ import {
   useWallets
 } from '@web3-onboard/react'
 import injectedModule from '@web3-onboard/injected-wallets'
+import coinbaseModule from '@web3-onboard/coinbase'
 import trezorModule from '@web3-onboard/trezor'
 import ledgerModule from '@web3-onboard/ledger'
 import walletConnectModule from '@web3-onboard/walletconnect'
-import walletLinkModule from '@web3-onboard/walletlink'
 import portisModule from '@web3-onboard/portis'
 import fortmaticModule from '@web3-onboard/fortmatic'
 import torusModule from '@web3-onboard/torus'
 import keepkeyModule from '@web3-onboard/keepkey'
 
 const injected = injectedModule()
-const walletLink = walletLinkModule()
+const coinbase = coinbaseModule()
 const walletConnect = walletConnectModule()
 
 const portis = portisModule({
@@ -51,12 +51,12 @@ const trezor = trezorModule(trezorOptions)
 
 const web3Onboard = init({
   wallets: [
+    injected,
+    coinbase,
     ledger,
     trezor,
     walletConnect,
     keepkey,
-    walletLink,
-    injected,
     fortmatic,
     portis,
     torus
@@ -95,6 +95,18 @@ const web3Onboard = init({
       { name: 'MetaMask', url: 'https://metamask.io' },
       { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
     ]
+  },
+  accountCenter: {
+    desktop: {
+      position: 'topRight',
+      enabled: true,
+      minimal: true
+    },
+    mobile: {
+      position: 'topRight',
+      enabled: true,
+      minimal: true
+    }
   }
 })
 
@@ -125,9 +137,7 @@ function App() {
               })}
             </select>
           )}
-          <button onClick={() => disconnect(wallet)}>
-            Disconnect Wallet
-          </button>
+          <button onClick={() => disconnect(wallet)}>Disconnect Wallet</button>
         </div>
       )}
 

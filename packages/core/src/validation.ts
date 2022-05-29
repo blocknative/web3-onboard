@@ -121,7 +121,8 @@ const initOptions = Joi.object({
     }),
     mobile: Joi.object({
       enabled: Joi.boolean(),
-      position: accountCenterPosition
+      minimal: Joi.boolean(),
+      position: accountCenterPosition,
     })
   }),
   notify: Joi.object({
@@ -154,7 +155,8 @@ const setChainOptions = Joi.object({
 const accountCenter = Joi.object({
   enabled: Joi.boolean(),
   position: accountCenterPosition,
-  expanded: Joi.boolean()
+  expanded: Joi.boolean(),
+  minimal: Joi.boolean()
 })
 
 const notify = Joi.object({

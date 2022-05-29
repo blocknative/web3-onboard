@@ -6,6 +6,7 @@ import { fix_position } from 'svelte/internal'
   import type { AccountCenter } from '../../types'
   import Maximized from './Maximized.svelte'
   import Minimized from './Minimized.svelte'
+  import Micro from './Micro.svelte'
 
   export let settings: {AccountCenter, Notify}
 
@@ -31,24 +32,34 @@ import { fix_position } from 'svelte/internal'
 <style>
   .container {
     padding: 16px;
-    max-width: 364px;
-    min-width: 348px;
     font-family: var(--onboard-font-family-normal, var(--font-family-normal));
+    width: 100%;
+  }
+
+  @media all and (min-width: 428px) {
+    .container {
+      max-width: 352px;
+    }
   }
 </style>
 
 <svelte:window on:click={minimize} />
 
 <div
-  class="container flex flex-column absolute"
-  style={accountCenterPositions[accountCenterSettings.position]}
+  class="container flex flex-column fixed"
+  style="{accountCenterPositions[
+    settings.position
+  ]} width: {!settings.expanded && settings.minimal ? 'auto' : '100%'}"
 >
   {#if notifySettings.enabled && accountCenterSettings.fix_position.contains('bottom')}
     <Notify settings={notifySettings} dappId={} />
   {/if}
-  {#if !accountCenterSettings.expanded}
+  {#if !settings.expanded && !settings.minimal}
     <!-- minimized -->
     <Minimized />
+  {:else if !settings.expanded && settings.minimal}
+    <!-- micro -->
+    <Micro />
   {:else}
     <!-- maximized -->
     <Maximized />
