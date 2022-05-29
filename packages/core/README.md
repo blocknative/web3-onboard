@@ -591,6 +591,17 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   /* SPACING */
   --account-select-modal-margin-4: 1rem;
   --account-select-modal-margin-5: 0.5rem;
+
+  /* NOTIFY STYLES */
+  --notify-onboard-font-family-normal
+  --notify-onboard-gray-300
+  --notify-onboard-gray-600
+  --notify-onboard-border-radius
+  --notify-onboard-font-size-7
+  --notify-onboard-font-size-6
+  --notify-onboard-line-height-4
+  --notify-onboard-primary-100
+  --notify-onboard-primary-400
 }
 ```
 

@@ -9,7 +9,7 @@
 
   const accountCenter$ = state
     .select('accountCenter')
-    .pipe(startWith(state.get().accountCenter), shareReplay(2))
+    .pipe(startWith(state.get().accountCenter), shareReplay(1))
 
 </script>
 

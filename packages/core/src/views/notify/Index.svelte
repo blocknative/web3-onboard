@@ -10,6 +10,7 @@
   import { _ } from 'svelte-i18n'
   import en from '../../i18n/en.json'
   import { tweened } from 'svelte/motion'
+  import Timer from './Timer.svelte'
 
   export let settings: { notifySettings: NotifyOptions; position: string }
   const { notifySettings, position } = settings
@@ -75,21 +76,21 @@
 
   const hash = '0xc572779D7839B998DF24fc316c89BeD3D450ED13'
   const currentChain = '0x89'
-  const statuses: NotificationObject[] = [
+  const notifications: NotificationObject[] = [
     {
       id: 'testing123',
       type: 'error',
       key: 'keytesting1',
-      // startTime?: number
+      startTime: Date.now(),
       eventCode: 'txPool',
       message: 'test message'
       // autoDismiss?: number
     },
     {
-      id: 'testing123',
+      id: 'testing1232',
       type: 'pending',
       key: 'keytesting2',
-      // startTime?: number
+      startTime: Date.now(),
       eventCode: 'txConfirmReminder',
       message: 'test message'
       // autoDismiss?: number
@@ -156,7 +157,7 @@
     min-height: 56px;
     background: var(--notify-onboard-gray-600, var(--onboard-gray-600, var(--gray-600)));
     padding: 12px;
-    border-radius: var(--notify-onboard-border-radius-4, var(--onboard-border-radius-4, var(--border-radius-4)));
+    border-radius: var(--notify-onboard-border-radius, var(--onboard-border-radius-4, var(--border-radius-4)));
     margin-top: 8px;
     display: flex;
   }
@@ -175,10 +176,6 @@
     line-height: var(--notify-onboard-line-height-4, var(--onboard-line-height-4, var(--line-height-4)));
   }
 
-  .time {
-    color: var(--notify-onboard-gray-300, var(--onboard-gray-300, var(--gray-300)));
-    margin-left: 4px;
-  }
 
   .address-hash {
     color: var(--notify-onboard-primary-400, var(--onboard-primary-400, var(--primary-400)));
@@ -202,45 +199,43 @@
   }
 </style>
 
-{#if statuses.length > 0}
+{#if notifications.length > 0}
   <ul
     class="bn-notify-custom bn-notify-notifications"
     style={`justify-content:${
       position.includes('top') ? 'flex-start' : 'flex-end'
     };`}
   >
-    {#each statuses as status (status.key)}
+    {#each notifications as notification (notification.key)}
       <!-- on:click={e => notification.onclick && notification.onclick(e)}
     class:bn-notify-clickable={notification.onclick} -->
-      <!-- animate:flip={{ duration: 500 }} -->
+    <!-- animate:flip={{ duration: 500 }} -->
       <li
-        class="bn-notify-custom bn-notify-notification "
-        in:fly={{ duration: 1200, delay: 300, x, y, easing: elasticOut }}
-        out:fly={{ duration: 400, x, y, easing: quintIn }}
-      >
-        <StatusIconBadge
-          notification={status}
-          chainStyles={chainStyles[currentChain]}
-        />
-        <div class="flex flex-column notify-transaction-data">
-          <span class="transaction-status">
-            {$_(`notify.transaction[${transactionMsg}]`, {
-              default: en.notify.transaction[transactionMsg]
-            })}
-          </span>
-
-          <!-- {eventCode} -->
-          <!-- ADDRESS / ENS / transaction hash -->
-          <span class="hash-time">
-            <a class="address-hash" href="https://etherscan.io/address/{hash}">
-              {shortenAddress(hash)}
-              <!-- {ens ? shortenEns(ens.name) : shortenAddress(address)} -->
-            </a>
-            <span class="time">
-              - {seconds}s ago
+          class="bn-notify-custom bn-notify-notification "
+          in:fly={{ duration: 1200, delay: 300, x, y, easing: elasticOut }}
+          out:fly={{ duration: 400, x, y, easing: quintIn }}
+        >
+          <StatusIconBadge
+            notification={notification}
+            chainStyles={chainStyles[currentChain]}
+          />
+          <div class="flex flex-column notify-transaction-data">
+            <span class="transaction-status">
+              {$_(`notify.transaction[${transactionMsg}]`, {
+                default: en.notify.transaction[transactionMsg]
+              })}
             </span>
-          </span>
-        </div>
+
+            <!-- {eventCode} -->
+            <!-- ADDRESS / ENS / transaction hash -->
+            <span class="hash-time">
+              <a class="address-hash" href="https://etherscan.io/address/{hash}">
+                {shortenAddress(hash)}
+                <!-- {ens ? shortenEns(ens.name) : shortenAddress(address)} -->
+              </a>
+              <Timer notification={notification}/>
+            </span>
+          </div>
 
         <!-- {#if notification.link}
           <a
@@ -261,7 +256,7 @@
           <CloseIcon />
         </div> -->
         <div class="notify-close-btn">
-          <CloseButton width={'14px'} />
+          <CloseButton width={'12px'} />
         </div>
       </li>
     {/each}
