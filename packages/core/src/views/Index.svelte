@@ -9,13 +9,8 @@
 
   const accountCenter$ = state
     .select('accountCenter')
-    .pipe(startWith(state.get().accountCenter), shareReplay(1))
-  const notify$ = state
-    .select('notify')
-    .pipe(startWith(state.get().notify), shareReplay(1))
+    .pipe(startWith(state.get().accountCenter), shareReplay(2))
 
-  notify$.subscribe(x => console.log(x))
-  accountCenter$.subscribe(x => console.log(x))
 </script>
 
 <style>
@@ -256,5 +251,5 @@
 {/if}
 
 {#if $accountCenter$.enabled && $wallets$.length}
-  <AccountCenter settings={{ accountCenterSettings: $accountCenter$, notifySettings: $notify$ }} />
+  <AccountCenter settings={$accountCenter$} />
 {/if}

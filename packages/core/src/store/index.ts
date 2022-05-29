@@ -108,8 +108,8 @@ function reducer(state: AppState, action: Action): AppState {
       const update = payload as UpdateAccountCenterAction['payload']
       return {
         ...state,
-        notify: {
-          ...state.notify,
+        accountCenter: {
+          ...state.accountCenter,
           ...update
         }
       }

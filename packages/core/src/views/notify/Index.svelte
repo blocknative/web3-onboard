@@ -2,40 +2,20 @@
   import { fly } from 'svelte/transition'
   import { quintIn } from 'svelte/easing'
   import { flip } from 'svelte/animate'
-  import type { NotifyInitOptions, NotificationObject } from '../../types'
+  import type { NotifyOptions, NotificationObject } from '../../types'
   import CloseButton from '../shared/CloseButton.svelte'
   import { TransactionDescription } from 'ethers/lib/utils'
   import { shortenAddress, shortenEns, chainStyles } from '../../utils'
   import StatusIconBadge from './StatusIconBadge.svelte'
   import { _ } from 'svelte-i18n'
   import en from '../../i18n/en.json'
+  import { tweened } from 'svelte/motion'
 
-  // import AutoDismiss from '../components/AutoDismiss.svelte'
-  // import { notifications, app } from '../stores'
+  export let settings: { notifySettings: NotifyOptions; position: string }
+  const { notifySettings, position } = settings
 
-  export let settings: NotifyInitOptions
-
-  let positioning: string
   let x: number
   let y: number
-  let notificationMargin: string
-  let justifyContent: string
-
-  // listen for screen resize events
-  // window.addEventListener(
-  //   'resize',
-  //   debounce(() => {
-  //     if (window.outerWidth < 450) {
-  //       if (!smallScreen) {
-  //         smallScreen = true
-  //       }
-  //     } else {
-  //       if (smallScreen) {
-  //         smallScreen = false
-  //       }
-  //     }
-  //   }, 300)
-  // )
 
   function elasticOut(t: number): number {
     return (
@@ -115,7 +95,7 @@
       // autoDismiss?: number
     }
   ]
-  import { tweened } from 'svelte/motion'
+
   let original = 5 * 60 // TYPE NUMBER OF SECONDS HERE
   let timer = tweened(original)
 
@@ -132,17 +112,13 @@
 </script>
 
 <style>
-  /* .bn-notify-notifications */
   ul {
+    padding-left: 0;
     display: flex;
     flex-flow: column nowrap;
-    position: fixed;
     font-size: 16px;
-    margin: 0;
     list-style-type: none;
-    width: 18rem;
-    bottom: 0;
-    right: 0;
+    width: 100%;
     max-height: 100vh;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -153,10 +129,8 @@
     height: 100vh;
     pointer-events: none;
     z-index: 300;
-    padding: 74px 16px;
-    max-width: 364px;
-    min-width: 348px;
     font-family: var(--onboard-font-family-normal, var(--font-family-normal));
+    margin: 8px 0;
   }
 
   @media only screen and (max-width: 450px) {
@@ -231,16 +205,16 @@
 {#if statuses.length > 0}
   <ul
     class="bn-notify-custom bn-notify-notifications"
-    style={`${positioning} ${justifyContent}`}
+    style={`justify-content:${
+      position.includes('top') ? 'flex-start' : 'flex-end'
+    };`}
   >
     {#each statuses as status (status.key)}
       <!-- on:click={e => notification.onclick && notification.onclick(e)}
     class:bn-notify-clickable={notification.onclick} -->
       <!-- animate:flip={{ duration: 500 }} -->
       <li
-        style={notificationMargin}
         class="bn-notify-custom bn-notify-notification "
-        animate:flip={{ duration: 500 }}
         in:fly={{ duration: 1200, delay: 300, x, y, easing: elasticOut }}
         out:fly={{ duration: 400, x, y, easing: quintIn }}
       >
@@ -254,6 +228,7 @@
               default: en.notify.transaction[transactionMsg]
             })}
           </span>
+
           <!-- {eventCode} -->
           <!-- ADDRESS / ENS / transaction hash -->
           <span class="hash-time">
@@ -264,7 +239,6 @@
             <span class="time">
               - {seconds}s ago
             </span>
-            <!-- time since event - get from v1 -->
           </span>
         </div>
 

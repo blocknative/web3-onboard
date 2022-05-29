@@ -2,18 +2,20 @@
   import { onDestroy } from 'svelte'
   import { state } from '../../store'
   import { updateAccountCenter } from '../../store/actions'
-  import type { AccountCenter, NotifyInitOptions } from '../../types'
+  import type { AccountCenter } from '../../types'
   import Maximized from './Maximized.svelte'
   import Minimized from './Minimized.svelte'
   import Micro from './Micro.svelte'
   import Notify from '../notify/Index.svelte'
+  import { shareReplay, startWith } from 'rxjs'
 
-  export let settings: {
-    accountCenterSettings: AccountCenter
-    notifySettings: NotifyInitOptions
-  }
+  export let settings: AccountCenter
 
-  const { notifySettings, accountCenterSettings } = settings
+  const notify$ = state
+    .select('notify')
+    .pipe(startWith(state.get().notify), shareReplay(1))
+
+  notify$.subscribe(x => console.log('notify sub', x))
 
   const accountCenterPositions = {
     topLeft: 'top: 0; left: 0;',
@@ -26,7 +28,7 @@
 
   function minimize() {
     const { accountCenter } = state.get()
-    if (accountCenterSettings.expanded) {
+    if (settings.expanded) {
       updateAccountCenter({ expanded: false })
     }
   }
@@ -51,19 +53,19 @@
 <div
   class="container flex flex-column fixed"
   style="{accountCenterPositions[
-    accountCenterSettings.position
-  ]} width: {!accountCenterSettings.expanded && accountCenterSettings.minimal
-    ? 'auto'
-    : '100%'}"
+    settings.position
+  ]} width: {!settings.expanded && settings.minimal ? 'auto' : '100%'}"
 >
-  {#if notifySettings.enabled && accountCenterSettings.position.includes('bottom')}
-    <Notify settings={notifySettings} />
+  {#if $notify$.enabled && settings.position.includes('bottom')}
+    <Notify
+      settings={{ notifySettings: $notify$, position: settings.position }}
+    />
   {/if}
 
-  {#if !accountCenterSettings.expanded && !accountCenterSettings.minimal}
+  {#if !settings.expanded && !settings.minimal}
     <!-- minimized -->
     <Minimized />
-  {:else if !accountCenterSettings.expanded && accountCenterSettings.minimal}
+  {:else if !settings.expanded && settings.minimal}
     <!-- micro -->
     <Micro />
   {:else}
@@ -71,7 +73,9 @@
     <Maximized />
   {/if}
 
-  {#if notifySettings.enabled && accountCenterSettings.position.includes('top')}
-    <Notify settings={notifySettings} />
+  {#if $notify$.enabled && settings.position.includes('top')}
+    <Notify
+      settings={{ notifySettings: $notify$, position: settings.position }}
+    />
   {/if}
 </div>

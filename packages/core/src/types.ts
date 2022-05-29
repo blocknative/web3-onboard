@@ -23,7 +23,7 @@ export interface InitOptions {
   appMetadata?: AppMetadata
   i18n?: i18nOptions
   accountCenter?: AccountCenterOptions
-  notify: NotifyInitOptions
+  notify?: NotifyInitOptions
 }
 
 export interface OnboardAPI {
@@ -205,13 +205,13 @@ export type NotifyEventStyles = {
 //   TransactionHandler
 // } from 'bnc-sdk/dist/types/src/interfaces'
 
-export interface NotifyOptions extends ConfigOptions {
+export interface NotifyOptions {
   dappId?: string
   // transactionHandler?: TransactionHandler
   name?: string
   apiUrl?: string
   // onerror?: ErrorHandler
-  enabled: boolean
+  enabled?: boolean
 }
 
 export type NotifyInitOptions = Omit<NotifyOptions, 'dappId' | 'name' | 'apiUrl'>
