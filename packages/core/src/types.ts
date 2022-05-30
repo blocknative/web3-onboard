@@ -384,19 +384,6 @@ export interface UpdateNotification {
   }
 }
 
-export interface ConfigOptions {
-  system?: System
-  networkId?: number
-  mobilePosition?: 'bottom' | 'top'
-  desktopPosition?: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight'
-  darkMode?: boolean
-  txApproveReminderTimeout?: number
-  txStallPendingTimeout?: number
-  txStallConfirmedTimeout?: number
-  notifyMessages?: NotifyMessages
-  clientLocale?: string
-}
-
 export interface Hash {
   (hash: string, id?: string):
     | never
@@ -423,19 +410,6 @@ export interface Notification {
     dismiss: () => void
     update: UpdateNotification
   }
-}
-
-export interface Config {
-  (options: ConfigOptions): void
-}
-
-export interface API {
-  hash: Hash
-  transaction: Transaction
-  account: Account
-  unsubscribe: Unsubscribe
-  notification: Notification
-  config: Config
 }
 
 export interface EmitterListener {

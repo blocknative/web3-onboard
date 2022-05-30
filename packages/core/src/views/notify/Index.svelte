@@ -9,11 +9,13 @@
   import StatusIconBadge from './StatusIconBadge.svelte'
   import { _ } from 'svelte-i18n'
   import en from '../../i18n/en.json'
-  import { tweened } from 'svelte/motion'
   import Timer from './Timer.svelte'
+  import { internalState$ } from '../../streams'
 
   export let settings: { notifySettings: NotifyOptions; position: string }
   const { notifySettings, position } = settings
+
+  const { appMetadata } = internalState$.getValue()
 
   let x: number
   let y: number
@@ -25,54 +27,23 @@
     )
   }
 
-  // $: if ($app.desktopPosition && !smallScreen) {
-  //   positioning =
-  //     $app.desktopPosition === 'bottomRight'
-  //       ? 'bottom: 0; right: 0;'
-  //       : $app.desktopPosition === 'bottomLeft'
-  //       ? 'left: 0; right: unset;'
-  //       : $app.desktopPosition === 'topRight'
-  //       ? 'top: 0;'
-  //       : 'top: 0; bottom: unset; left: 0; right: unset;'
+  x = position && position.includes('left') ? -321 : 321
+  y = 0
 
-  //   x = positioning && positioning.includes('left') ? -321 : 321
-  //   y = 0
+  $: if ($app.mobilePosition && smallScreen) {
+    x = 0
 
-  //   if ($app.desktopPosition.includes('top')) {
-  //     justifyContent = 'justify-content: unset;'
-  //     notificationMargin = 'margin: 0.75rem 0 0 0;'
-  //   } else {
-  //     justifyContent = 'justify-content: flex-end;'
-  //     notificationMargin = 'margin: 0 0 0.75rem 0;'
-  //   }
-  // }
+    if ($app.mobilePosition === 'top') {
+      y = -50
+    } else {
+      y = 50
+    }
+  }
 
-  // $: if ($app.mobilePosition && smallScreen) {
-  //   positioning =
-  //     $app.mobilePosition === 'top'
-  //       ? 'top: 0; bottom: unset;'
-  //       : 'bottom: 0; top: unset;'
-
-  //   x = 0
-
-  //   if ($app.mobilePosition === 'top') {
-  //     y = -50
-  //     justifyContent = 'justify-content: unset;'
-  //     notificationMargin = 'margin: 0.75rem 0 0 0;'
-  //   } else {
-  //     y = 50
-  //     justifyContent = 'justify-content: flex-end;'
-  //     notificationMargin = 'margin: 0 0 0.75rem 0;'
-  //   }
-  // }
-
-  // $: if (!$app.desktopPosition && !$app.mobilePosition) {
-  //   x = smallScreen ? 0 : 321
-  //   y = smallScreen ? 50 : 0
-  //   notificationMargin = 'margin: 0 0 0.75rem 0;'
-  //   justifyContent = 'justify-content: flex-end;'
-  //   positioning = 'bottom: 0; right: 0;'
-  // }
+  $: if (!$app.desktopPosition && !$app.mobilePosition) {
+    x = smallScreen ? 0 : 321
+    y = smallScreen ? 50 : 0
+  }
 
   const hash = '0xc572779D7839B998DF24fc316c89BeD3D450ED13'
   const currentChain = '0x89'
@@ -96,20 +67,6 @@
       // autoDismiss?: number
     }
   ]
-
-  let original = 5 * 60 // TYPE NUMBER OF SECONDS HERE
-  let timer = tweened(original)
-
-  // ------ dont need to modify code below
-  setInterval(() => {
-    if ($timer > 0) $timer++
-  }, 1000)
-
-  $: minutes = Math.floor($timer / 60)
-  $: minname = minutes > 1 ? 'mins' : 'min'
-  $: seconds = Math.floor($timer - minutes * 60)
-
-  const transactionMsg = 'txPool'
 </script>
 
 <style>
@@ -130,7 +87,10 @@
     height: 100vh;
     pointer-events: none;
     z-index: 300;
-    font-family: var(--notify-onboard-font-family-normal, var(--onboard-font-family-normal, var(--font-family-normal)));
+    font-family: var(
+      --notify-onboard-font-family-normal,
+      var(--onboard-font-family-normal, var(--font-family-normal))
+    );
     margin: 8px 0;
   }
 
@@ -155,15 +115,24 @@
     backdrop-filter: blur(5px);
     width: 100%;
     min-height: 56px;
-    background: var(--notify-onboard-gray-600, var(--onboard-gray-600, var(--gray-600)));
+    background: var(
+      --notify-onboard-gray-600,
+      var(--onboard-gray-600, var(--gray-600))
+    );
     padding: 12px;
-    border-radius: var(--notify-onboard-border-radius, var(--onboard-border-radius-4, var(--border-radius-4)));
+    border-radius: var(
+      --notify-onboard-border-radius,
+      var(--onboard-border-radius-4, var(--border-radius-4))
+    );
     margin-top: 8px;
     display: flex;
   }
 
   div.notify-transaction-data {
-    font-size: var(--notify-onboard-font-size-6, var(--onboard-font-size-6, var(--font-size-6)));
+    font-size: var(
+      --notify-onboard-font-size-6,
+      var(--onboard-font-size-6, var(--font-size-6))
+    );
     font-family: inherit;
     margin: 0px 8px;
     justify-content: space-between;
@@ -172,13 +141,21 @@
   .hash-time {
     display: inline-flex;
     margin-top: 2px;
-    font-size: var(--notify-onboard-font-size-7, var(--onboard-font-size-7, var(--font-size-7)));
-    line-height: var(--notify-onboard-line-height-4, var(--onboard-line-height-4, var(--line-height-4)));
+    font-size: var(
+      --notify-onboard-font-size-7,
+      var(--onboard-font-size-7, var(--font-size-7))
+    );
+    line-height: var(
+      --notify-onboard-line-height-4,
+      var(--onboard-line-height-4, var(--line-height-4))
+    );
   }
 
-
   .address-hash {
-    color: var(--notify-onboard-primary-400, var(--onboard-primary-400, var(--primary-400)));
+    color: var(
+      --notify-onboard-primary-400,
+      var(--onboard-primary-400, var(--primary-400))
+    );
   }
   div.notify-close-btn {
     margin-left: auto;
@@ -194,7 +171,10 @@
   }
 
   .transaction-status {
-    color: var(--notify-onboard-primary-100, var(--onboard-primary-100, var(--primary-100)));
+    color: var(
+      --notify-onboard-primary-100,
+      var(--onboard-primary-100, var(--primary-100))
+    );
     line-height: 14px;
   }
 </style>
@@ -209,33 +189,34 @@
     {#each notifications as notification (notification.key)}
       <!-- on:click={e => notification.onclick && notification.onclick(e)}
     class:bn-notify-clickable={notification.onclick} -->
-    <!-- animate:flip={{ duration: 500 }} -->
       <li
-          class="bn-notify-custom bn-notify-notification "
-          in:fly={{ duration: 1200, delay: 300, x, y, easing: elasticOut }}
-          out:fly={{ duration: 400, x, y, easing: quintIn }}
-        >
-          <StatusIconBadge
-            notification={notification}
-            chainStyles={chainStyles[currentChain]}
-          />
-          <div class="flex flex-column notify-transaction-data">
-            <span class="transaction-status">
-              {$_(`notify.transaction[${transactionMsg}]`, {
-                default: en.notify.transaction[transactionMsg]
-              })}
-            </span>
+        animate:flip={{ duration: 500 }}
+        class="bn-notify-custom bn-notify-notification {`bn-notify-notification-${notification.type}`}
+          {appMetadata.name ? `bn-notify-${appMetadata.name}` : ''}"
+        in:fly={{ duration: 1200, delay: 300, x, y, easing: elasticOut }}
+        out:fly={{ duration: 400, x, y, easing: quintIn }}
+      >
+        <StatusIconBadge
+          {notification}
+          chainStyles={chainStyles[currentChain]}
+        />
+        <div class="flex flex-column notify-transaction-data">
+          <span class="transaction-status">
+            {$_(`notify.transaction[${transactionMsg}]`, {
+              default: en.notify.transaction[transactionMsg]
+            })}
+          </span>
 
-            <!-- {eventCode} -->
-            <!-- ADDRESS / ENS / transaction hash -->
-            <span class="hash-time">
-              <a class="address-hash" href="https://etherscan.io/address/{hash}">
-                {shortenAddress(hash)}
-                <!-- {ens ? shortenEns(ens.name) : shortenAddress(address)} -->
-              </a>
-              <Timer notification={notification}/>
-            </span>
-          </div>
+          <!-- {eventCode} -->
+          <!-- ADDRESS / ENS / transaction hash -->
+          <span class="hash-time">
+            <a class="address-hash" href="https://etherscan.io/address/{hash}">
+              {shortenAddress(hash)}
+              <!-- {ens ? shortenEns(ens.name) : shortenAddress(address)} -->
+            </a>
+            <Timer {notification} />
+          </span>
+        </div>
 
         <!-- {#if notification.link}
           <a
