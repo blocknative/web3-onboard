@@ -233,7 +233,7 @@ export function validateLocale(data: string): ValidateReturn {
 
 
 
-// Notify Validations
+// Notify V1 Validations
 
 import type {
   TransactionOptions,
