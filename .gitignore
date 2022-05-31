@@ -4,3 +4,4 @@ dist/
 package-lock.json
 .rpt2_cache
 .vscode
+/.idea

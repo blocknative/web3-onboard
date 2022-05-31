@@ -1,4 +1,5 @@
 import type { ethers, BigNumber } from 'ethers'
+import type { ConnectionInfo } from 'ethers/lib/utils'
 import type EventEmitter from 'eventemitter3'
 import type { TypedData as EIP712TypedData } from 'eip-712'
 export type { TypedData as EIP712TypedData } from 'eip-712'
@@ -428,6 +429,7 @@ export interface Chain {
   token: TokenSymbol // eg ETH, BNB, MATIC
   color?: string
   icon?: string // svg string
+  providerConnectionInfo?: ConnectionInfo
 }
 
 export type TokenSymbol = string // eg ETH
