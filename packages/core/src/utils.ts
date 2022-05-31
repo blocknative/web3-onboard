@@ -27,7 +27,16 @@ import hourglass from './icons/hourglass'
 import checkmark from './icons/checkmark'
 import error from './icons/error'
 
-import type { ChainStyle, ConnectedChain, NotifyEventStyles } from './types'
+import type {
+  ChainStyle,
+  ConnectedChain,
+  NotifyEventStyles,
+  NotificationType,
+  Emitter,
+  EmitterListener,
+  TransactionData,
+  TransactionEventCode
+} from './types'
 
 export function getDevice(): Device {
   const parsed = bowser.getParser(window.navigator.userAgent)
@@ -179,33 +188,24 @@ export function initializeWalletModules(
 }
 
 export const defaultNotifyEventStyles: Record<string, NotifyEventStyles> = {
-  'pending' : {
+  pending: {
     backgroundColor: 'var(--onboard-primary-700, var(--primary-700))',
     borderColor: '#6370E5',
-    eventIcon: hourglass,
+    eventIcon: hourglass
   },
-  'success' : {
+  success: {
     backgroundColor: '#052E17',
     borderColor: 'var(--onboard-success-300, var(--success-300))',
     eventIcon: checkmark
   },
-  'error' : {
+  error: {
     backgroundColor: '#FDB1B11A',
     borderColor: 'var(--onboard-danger-300, var(--danger-300))',
     eventIcon: error
-  }  
+  }
 }
 
-
-
-
-
-import type {
-  Emitter,
-  EmitterListener,
-  TransactionData,
-  TransactionEventCode
-} from './types'
+// Notify utils
 
 export function argsEqual(args1: any, args2: any): boolean {
   return JSON.stringify(args1) === JSON.stringify(args2)
@@ -224,7 +224,7 @@ export function replaceOrAdd(
   if (index !== -1) {
     const { startTime, contractCall, status, id } = clone[index]
 
-    // if current transaction is a speedup or cancel 
+    // if current transaction is a speedup or cancel
     // and new status is pending, ignore update
     if (
       data.status === 'pending' &&
@@ -357,4 +357,43 @@ export function uniqueWalletsByLabel(
         (innerWallet: WalletModule) => innerWallet.label === wallet.label
       ) === i
   )
+}
+
+export function eventToType(eventCode: string | undefined): NotificationType {
+  switch (eventCode) {
+    case 'txSent':
+    case 'txPool':
+    case 'txSpeedUp':
+    case 'txCancel':
+      return 'pending'
+    case 'txRequest':
+    case 'txRepeat':
+    case 'txAwaitingApproval':
+    case 'txConfirmReminder':
+    case 'txStallPending':
+    case 'txStallConfirmed':
+    case 'txStuck':
+      return 'hint'
+    case 'txError':
+    case 'txSendFail':
+    case 'txFailed':
+    case 'txDropped':
+    case 'nsfFail':
+    case 'txUnderpriced':
+      return 'error'
+    case 'txConfirmed':
+      return 'success'
+    default:
+      return 'hint'
+  }
+}
+
+export function typeToDismissTimeout(type: string): number {
+  switch (type) {
+    case 'success':
+    case 'hint':
+      return 4000
+    default:
+      return 0
+  }
 }

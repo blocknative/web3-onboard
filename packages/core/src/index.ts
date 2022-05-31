@@ -18,6 +18,7 @@ import App from './views/Index.svelte'
 import type { InitOptions, NotifyOptions, OnboardAPI } from './types'
 import { APP_INITIAL_STATE } from './constants'
 import { getDevice } from './utils'
+import { initMultiChainSDK } from './multiChainSDK'
 
 const API = {
   connectWallet,
@@ -95,6 +96,9 @@ function init(options: InitOptions): OnboardAPI {
   }
 
   notifyUpdate && updateNotify(notifyUpdate)
+
+  // if (notifyUpdate.enabled) 
+    // initMultiChainSDK(dappId)
 
   const { svelteInstance } = internalState$.getValue()
 

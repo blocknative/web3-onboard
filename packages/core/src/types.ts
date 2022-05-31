@@ -98,6 +98,7 @@ export interface AppState {
   accountCenter: AccountCenter
   locale: Locale
   notify: NotifyOptions
+  notifications: NotificationObject[]
 }
 
 export type InternalState = {
@@ -138,6 +139,7 @@ export type Action =
   | UpdateAccountAction
   | UpdateAccountCenterAction
   | UpdateNotifyAction
+  | UpdateNotificationsAction
   | SetWalletModulesAction
   | SetLocaleAction
 
@@ -174,6 +176,11 @@ export type UpdateNotifyAction = {
   payload: NotifyOptions | Partial<NotifyOptions>
 }
 
+export type UpdateNotificationsAction = {
+  type: 'update_notifications'
+  payload: NotificationObject[]
+}
+
 export type SetWalletModulesAction = {
   type: 'set_wallet_modules'
   payload: WalletModule[]
@@ -208,7 +215,6 @@ export type NotifyEventStyles = {
 export interface NotifyOptions {
   dappId?: string
   // transactionHandler?: TransactionHandler
-  name?: string
   apiUrl?: string
   // onerror?: ErrorHandler
   enabled?: boolean
@@ -304,6 +310,7 @@ export interface NotificationObject {
   eventCode?: string
   message: string
   autoDismiss?: number
+  link?: string
 }
 
 export interface ContractCall {

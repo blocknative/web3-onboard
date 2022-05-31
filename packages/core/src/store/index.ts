@@ -28,7 +28,8 @@ import {
   UPDATE_ACCOUNT_CENTER,
   UPDATE_NOTIFY,
   SET_WALLET_MODULES,
-  SET_LOCALE
+  SET_LOCALE,
+  UPDATE_NOTIFICATIONS
 } from './constants'
 
 function reducer(state: AppState, action: Action): AppState {
@@ -123,6 +124,16 @@ function reducer(state: AppState, action: Action): AppState {
           ...state.notify,
           ...update
         }
+      }
+    }
+
+    case UPDATE_NOTIFICATIONS: {
+      const update = payload as UpdateNotificationsAction['payload']
+      return {
+        ...state,
+        notifications: [
+          ...update
+        ]
       }
     }
 

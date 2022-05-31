@@ -51,6 +51,7 @@ export default {
     'svelte/store',
     'lodash.merge',
     'lodash.partition',
-    'eventemitter3'
+    'eventemitter3',
+    'bignumber.js'
   ]
 }

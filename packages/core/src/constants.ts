@@ -14,6 +14,7 @@ export const APP_INITIAL_STATE: AppState = {
   notify: {
     enabled: true,
   },
+  notifications: [],
   locale: ''
 }
 

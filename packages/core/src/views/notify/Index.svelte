@@ -4,13 +4,13 @@
   import { flip } from 'svelte/animate'
   import type { NotifyOptions, NotificationObject } from '../../types'
   import CloseButton from '../shared/CloseButton.svelte'
-  import { TransactionDescription } from 'ethers/lib/utils'
   import { shortenAddress, shortenEns, chainStyles } from '../../utils'
   import StatusIconBadge from './StatusIconBadge.svelte'
   import { _ } from 'svelte-i18n'
   import en from '../../i18n/en.json'
   import Timer from './Timer.svelte'
-  import { internalState$ } from '../../streams'
+  import { internalState$, wallets$ } from '../../streams'
+  import NotificationContent from './NotificationContent.svelte'
 
   export let settings: { notifySettings: NotifyOptions; position: string }
   const { notifySettings, position } = settings
@@ -29,21 +29,6 @@
 
   x = position && position.includes('left') ? -321 : 321
   y = 0
-
-  $: if ($app.mobilePosition && smallScreen) {
-    x = 0
-
-    if ($app.mobilePosition === 'top') {
-      y = -50
-    } else {
-      y = 50
-    }
-  }
-
-  $: if (!$app.desktopPosition && !$app.mobilePosition) {
-    x = smallScreen ? 0 : 321
-    y = smallScreen ? 50 : 0
-  }
 
   const hash = '0xc572779D7839B998DF24fc316c89BeD3D450ED13'
   const currentChain = '0x89'
@@ -67,6 +52,22 @@
       // autoDismiss?: number
     }
   ]
+
+  // Animation Code from V1
+  // $: if ($app.mobilePosition && smallScreen) {
+  //   x = 0
+
+  //   if ($app.mobilePosition === 'top') {
+  //     y = -50
+  //   } else {
+  //     y = 50
+  //   }
+  // }
+
+  // $: if (!$app.desktopPosition && !$app.mobilePosition) {
+  //   x = smallScreen ? 0 : 321
+  //   y = smallScreen ? 50 : 0
+  // }
 </script>
 
 <style>
@@ -128,35 +129,6 @@
     display: flex;
   }
 
-  div.notify-transaction-data {
-    font-size: var(
-      --notify-onboard-font-size-6,
-      var(--onboard-font-size-6, var(--font-size-6))
-    );
-    font-family: inherit;
-    margin: 0px 8px;
-    justify-content: space-between;
-  }
-
-  .hash-time {
-    display: inline-flex;
-    margin-top: 2px;
-    font-size: var(
-      --notify-onboard-font-size-7,
-      var(--onboard-font-size-7, var(--font-size-7))
-    );
-    line-height: var(
-      --notify-onboard-line-height-4,
-      var(--onboard-line-height-4, var(--line-height-4))
-    );
-  }
-
-  .address-hash {
-    color: var(
-      --notify-onboard-primary-400,
-      var(--onboard-primary-400, var(--primary-400))
-    );
-  }
   div.notify-close-btn {
     margin-left: auto;
     margin-bottom: auto;
@@ -189,54 +161,37 @@
     {#each notifications as notification (notification.key)}
       <!-- on:click={e => notification.onclick && notification.onclick(e)}
     class:bn-notify-clickable={notification.onclick} -->
+      <!-- animate:flip={{ duration: 500 }} -->
       <li
-        animate:flip={{ duration: 500 }}
         class="bn-notify-custom bn-notify-notification {`bn-notify-notification-${notification.type}`}
           {appMetadata.name ? `bn-notify-${appMetadata.name}` : ''}"
         in:fly={{ duration: 1200, delay: 300, x, y, easing: elasticOut }}
         out:fly={{ duration: 400, x, y, easing: quintIn }}
       >
-        <StatusIconBadge
-          {notification}
-          chainStyles={chainStyles[currentChain]}
-        />
-        <div class="flex flex-column notify-transaction-data">
-          <span class="transaction-status">
-            {$_(`notify.transaction[${transactionMsg}]`, {
-              default: en.notify.transaction[transactionMsg]
-            })}
-          </span>
-
-          <!-- {eventCode} -->
-          <!-- ADDRESS / ENS / transaction hash -->
-          <span class="hash-time">
-            <a class="address-hash" href="https://etherscan.io/address/{hash}">
-              {shortenAddress(hash)}
-              <!-- {ens ? shortenEns(ens.name) : shortenAddress(address)} -->
-            </a>
-            <Timer {notification} />
-          </span>
-        </div>
-
-        <!-- {#if notification.link}
-          <a
-            class="bn-notify-notification-link"
-            href={notification.link}
-            target="_blank"
-            rel="noreferrer noopener">
-            <TypeIcon type={notification.type} />
-            <NotificationContent {notification} />
+        {#if notification.link}
+          <a href={notification.link} target="_blank" rel="noreferrer noopener">
+            <StatusIconBadge
+              {notification}
+              chainStyles={chainStyles[currentChain]}
+            />
+            <NotificationContent notification={notification} hash={hash}/>
           </a>
         {:else}
-          <TypeIcon type={notification.type} />
-          <NotificationContent {notification} />
-        {/if} -->
-        <!-- <div
-          class="bn-notify-custom bn-notify-notification-close {$app.name ? `bn-notify-${$app.name}` : ''}"
+          <StatusIconBadge
+            {notification}
+            chainStyles={chainStyles[currentChain]}
+          />
+          <NotificationContent notification={notification} hash={hash}/>
+        {/if}
+        <!-- 
+          To handle close button
           on:click|stopPropagation={() => notifications.remove(notification.id, notification.eventCode)}>
-          <CloseIcon />
-        </div> -->
-        <div class="notify-close-btn">
+        -->
+        <div
+          class="notify-close-btn {appMetadata.name
+            ? `bn-notify-${appMetadata.name}`
+            : ''}"
+        >
           <CloseButton width={'12px'} />
         </div>
       </li>

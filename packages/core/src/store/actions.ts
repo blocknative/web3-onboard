@@ -17,12 +17,15 @@ import type {
   UpdateNotifyAction,
   UpdateWalletAction,
   WalletState,
-  NotifyOptions
+  NotifyOptions,
+  NotificationObject,
+  UpdateNotificationsAction
 } from '../types'
 
 import {
   validateAccountCenterUpdate,
   validateLocale,
+  validateNotificationObject,
   validateNotifyUpdate,
   validateString,
   validateWallet,
@@ -39,7 +42,8 @@ import {
   UPDATE_ACCOUNT_CENTER,
   UPDATE_NOTIFY,
   SET_WALLET_MODULES,
-  SET_LOCALE
+  SET_LOCALE,
+  UPDATE_NOTIFICATIONS
 } from './constants'
 
 export function addChains(chains: Chain[]): void {
@@ -156,6 +160,23 @@ export function updateNotify(
   }
 
   dispatch(action as UpdateNotifyAction)
+}
+
+export function updateNotifications(
+  update: NotificationObject[]
+): void {
+  // const error = validateNotificationObject(update)
+
+  // if (error) {
+  //   throw error
+  // }
+
+  const action = {
+    type: UPDATE_NOTIFICATIONS,
+    payload: update
+  }
+
+  dispatch(action as UpdateNotificationsAction)
 }
 
 export function resetStore(): void {

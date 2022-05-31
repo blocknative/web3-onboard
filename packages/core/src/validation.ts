@@ -8,7 +8,8 @@ import type {
   DisconnectOptions,
   ConnectOptionsString,
   AccountCenter,
-  NotifyOptions
+  NotifyOptions,
+  NotificationObject
 } from './types'
 
 const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
@@ -232,7 +233,7 @@ export function validateLocale(data: string): ValidateReturn {
 
 
 
-
+// Notify Validations
 
 import type {
   TransactionOptions,

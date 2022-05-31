@@ -1027,10 +1027,10 @@
     "@typescript-eslint/types" "4.33.0"
     eslint-visitor-keys "^2.0.0"
 
-"@web3-onboard/common@^2.0.7":
-  version "2.0.9"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/common/-/common-2.0.9.tgz#b53bf12f8a644f55fe8b09c5deb73531c2b90e9c"
-  integrity sha512-6qTIPAmLAkhcVPtSOyIUzscJ/rq3/xI42kVt8I4ZsUErd32QjhuydIndJJHWrEFAXT/6ZY6tFH2GZix9Fe8YzQ==
+"@web3-onboard/common@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/common/-/common-2.1.0.tgz#6ff5c6841e4261743ad6ea4c5aed77c146410ce7"
+  integrity sha512-60Fyh+XfkvAEE21FudLFNrxt7SjTkawR8ogKNg9AsBfFwr6zaNam+yL8u3P/7U9WxTw8qPm4SgiljEaDx4tvag==
   dependencies:
     "@ethereumjs/common" "2.6.2"
     ethers "5.5.4"
