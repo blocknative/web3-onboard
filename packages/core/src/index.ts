@@ -42,6 +42,7 @@ export type {
 } from './types'
 
 export type { EIP1193Provider } from '@web3-onboard/common'
+export { connectWallet$ } from './streams'
 
 function init(options: InitOptions): OnboardAPI {
   if (typeof window === 'undefined') return API
