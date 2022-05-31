@@ -15,6 +15,7 @@ import type {
   UpdateAccountAction,
   UpdateAccountCenterAction,
   UpdateNotifyAction,
+  UpdateNotificationsAction,
   Locale
 } from '../types'
 

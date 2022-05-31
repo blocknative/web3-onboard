@@ -7,9 +7,7 @@
   import { shortenAddress, shortenEns, chainStyles } from '../../utils'
   import StatusIconBadge from './StatusIconBadge.svelte'
   import { _ } from 'svelte-i18n'
-  import en from '../../i18n/en.json'
-  import Timer from './Timer.svelte'
-  import { internalState$, wallets$ } from '../../streams'
+  import { internalState$ } from '../../streams'
   import NotificationContent from './NotificationContent.svelte'
 
   export let settings: { notifySettings: NotifyOptions; position: string }
