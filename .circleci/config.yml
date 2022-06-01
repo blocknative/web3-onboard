@@ -40,7 +40,50 @@ jobs:
       - run: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
       - run: npm publish --access public
   deploy_demo:
+    docker:version: 2
+jobs:
+  test:
     docker:
+      - image: circleci/node:12-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run: yarn
+      - run: yarn lint
+      - run: yarn test
+      - run: yarn build
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+  deploy_prod:
+    docker:
+      - image: circleci/node:12-browsers
+        user: root
+    steps:
+      - checkout
+      - run: sudo apt update && sudo apt install awscli
+      - run: yarn
+      - run: yarn build
+      - run: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
+      - run: npm publish --access public
+
+workflows:
+  version: 2
+  test_build:
+    jobs:
+      - test
+      - deploy_prod:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - v1-onboard
+
       - image: circleci/node:12-browsers
         user: root
     steps:
