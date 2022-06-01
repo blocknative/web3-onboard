@@ -3,6 +3,7 @@ import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
 
 import operaIcon from '../wallet-icons/icon-opera.png'
 import operaIcon2x from '../wallet-icons/icon-opera@2x.png'
+import { getProviderName } from '../../../utilities'
 
 function opera(options: CommonWalletOptions): WalletModule {
   const { preferred, label, iconSrc, svg } = options
@@ -19,7 +20,7 @@ function opera(options: CommonWalletOptions): WalletModule {
       return {
         provider,
         interface:
-          provider && browser.name === 'Opera'
+          provider && getProviderName(provider) === 'Opera'
             ? createModernProviderInterface(provider)
             : null
       }
