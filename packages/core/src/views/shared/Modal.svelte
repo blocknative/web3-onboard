@@ -16,9 +16,9 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
   import { onDestroy, onMount } from 'svelte'
-  import { getDevice } from '../../utils'
+  import { internalState } from '../../internals'
 
-  const device = getDevice()
+  const { device } = internalState
 
   const body = document.body
   const html = document.documentElement
