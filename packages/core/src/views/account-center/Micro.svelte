@@ -1,11 +1,12 @@
 <script lang="ts">
-  import { internalState$, wallets$ } from '../../streams'
+  import { wallets$ } from '../../streams'
   import { updateAccountCenter } from '../../store/actions'
   import questionIcon from '../../icons/question'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
+  import { internalState } from '../../internals'
 
-  const { appMetadata } = internalState$.getValue()
+  const { appMetadata } = internalState
   const appIcon = (appMetadata && appMetadata.icon) || questionIcon
   $: [primaryWallet] = $wallets$
 

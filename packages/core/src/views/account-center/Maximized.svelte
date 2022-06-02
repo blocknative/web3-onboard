@@ -2,7 +2,7 @@
   import { _ } from 'svelte-i18n'
   import { fly } from 'svelte/transition'
   import { quartOut } from 'svelte/easing'
-  import { internalState$, wallets$ } from '../../streams'
+  import { wallets$ } from '../../streams'
   import en from '../../i18n/en.json'
   import WalletRow from './WalletRow.svelte'
   import plusCircleIcon from '../../icons/plus-circle'
@@ -20,14 +20,14 @@
   import { updateAccountCenter } from '../../store/actions'
   import blocknative from '../../icons/blocknative'
   import DisconnectAllConfirm from './DisconnectAllConfirm.svelte'
-  import { getDevice } from '../../utils'
+  import { internalState } from '../../internals'
 
   function disconnectAllWallets() {
     $wallets$.forEach(({ label }) => disconnect({ label }))
   }
 
   const { chains: appChains } = state.get()
-  const { appMetadata } = internalState$.getValue()
+  const { appMetadata } = internalState
   let disconnectConfirmModal = false
   let hideWalletRowMenu: () => void
 
@@ -45,7 +45,7 @@
   )
 
   const { position } = state.get().accountCenter
-  const device = getDevice()
+  const { device } = internalState
 </script>
 
 <style>
