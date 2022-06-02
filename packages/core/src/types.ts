@@ -136,7 +136,7 @@ export type Action =
   | UpdateAccountCenterAction
   | SetWalletModulesAction
   | SetLocaleAction
-  | UpdateBalancesAction
+  | UpdateAllWalletsAction
 
 export type AddChainsAction = { type: 'add_chains'; payload: Chain[] }
 export type AddWalletAction = { type: 'add_wallet'; payload: WalletState }
@@ -176,10 +176,14 @@ export type SetLocaleAction = {
   payload: string
 }
 
-export type UpdateBalancesAction = {
+export type UpdateAllWalletsAction = {
   type: 'update_balance'
-  payload: string[]
+  payload: WalletState[]
+  // payload: AppState['wallets']
+  // payload?: string[]
 }
+
+
 
 // ==== MISC ==== //
 export type ChainStyle = {

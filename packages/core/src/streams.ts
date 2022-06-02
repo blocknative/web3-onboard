@@ -1,6 +1,6 @@
 import type { Chain } from '@web3-onboard/common'
 import { onDestroy, onMount, beforeUpdate, afterUpdate } from 'svelte'
-import { Observable, Subject, defer, BehaviorSubject, empty } from 'rxjs'
+import { Observable, Subject, defer, BehaviorSubject } from 'rxjs'
 import {
   take,
   takeUntil,
@@ -33,29 +33,11 @@ export const switchChainModal$ = new BehaviorSubject<null | {
   chain: Chain
 }>(null)
 
-
-async function fetchWalletUpdates() {
-  const walletsA$ = await state.select('wallets')
-  return walletsA$
-}
-
-let walt$
-
-(async () => {
-try {
-  walt$ = await fetchWalletUpdates()
-}catch (e) {
-  console.log(e)
-}
-})();
-
 export const wallets$ = (
-  walt$ as Observable<WalletState[]>
+  state.select('wallets') as Observable<WalletState[]>
 ).pipe(shareReplay(1))
 
-// export const wallets$ = (
-//   state.select('wallets') as Observable<WalletState[]>
-// ).pipe(shareReplay(1))
+
 
 // reset logic
 reset$.pipe(withLatestFrom(wallets$), pluck('1')).subscribe(wallets => {

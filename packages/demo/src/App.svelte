@@ -356,6 +356,9 @@
         >
           Disconnect Wallet
         </button>
+        <button on:click={() => onboard.state.actions.updateBalances()}
+          >Update Wallet Balance</button
+        >
       </div>
     {/each}
   {/if}

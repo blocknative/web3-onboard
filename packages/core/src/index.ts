@@ -7,7 +7,7 @@ import {
   addChains,
   setWalletModules,
   updateAccountCenter,
-  setLocale
+  setLocale,
 } from './store/actions'
 import { reset$, internalState$ } from './streams'
 import { validateInitOptions } from './validation'
@@ -18,6 +18,8 @@ import type { InitOptions, OnboardAPI } from './types'
 import { APP_INITIAL_STATE } from './constants'
 import { getDevice } from './utils'
 
+import updateBalances from './updateBalances'
+
 const API = {
   connectWallet,
   disconnectWallet,
@@ -27,7 +29,8 @@ const API = {
     select: state.select,
     actions: {
       setWalletModules,
-      setLocale
+      setLocale,
+      updateBalances
     }
   }
 }

@@ -65,6 +65,9 @@ const wallet = Joi.object({
   chains: Joi.array().items(connectedChain)
 })
 
+const wallets = Joi.array().items(wallet)
+
+
 const recommendedWallet = Joi.object({
   name: Joi.string().required(),
   url: Joi.string().uri().required()
@@ -212,6 +215,10 @@ export function validateLocale(data: string): ValidateReturn {
   return validate(locale, data)
 }
 
-export function validateUpdateBalances(data: string[]): ValidateReturn {
-  return validate(addresses, data)
+export function validateUpdateBalances(data: 
+WalletState[]): ValidateReturn {
+  return validate(wallets, data)
 }
+// export function validateUpdateBalances(data?: string[]): ValidateReturn {
+//   return validate(addresses, data)
+// }

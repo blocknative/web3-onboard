@@ -14,7 +14,8 @@ import type {
   AddWalletAction,
   UpdateAccountAction,
   UpdateAccountCenterAction,
-  Locale
+  Locale,
+  UpdateAllWalletsAction
 } from '../types'
 
 import {
@@ -26,7 +27,8 @@ import {
   UPDATE_ACCOUNT,
   UPDATE_ACCOUNT_CENTER,
   SET_WALLET_MODULES,
-  SET_LOCALE
+  SET_LOCALE,
+  UPDATE_ALL_WALLETS
 } from './constants'
 
 function reducer(state: AppState, action: Action): AppState {
@@ -102,6 +104,14 @@ function reducer(state: AppState, action: Action): AppState {
       }
     }
 
+    case UPDATE_ALL_WALLETS : {
+      const updatedWallets = payload as UpdateAllWalletsAction['payload']
+      return {
+        ...state,
+        wallets: updatedWallets
+      }
+    }
+
     case UPDATE_ACCOUNT_CENTER: {
       const update = payload as UpdateAccountCenterAction['payload']
       return {
@@ -112,6 +122,7 @@ function reducer(state: AppState, action: Action): AppState {
         }
       }
     }
+
     case SET_WALLET_MODULES: {
       return {
         ...state,
