@@ -12,6 +12,8 @@
   import walletConnectModule from '@web3-onboard/walletconnect'
   import coinbaseModule from '@web3-onboard/coinbase'
   import magicModule from '@web3-onboard/magic'
+  import web3authModule from '@web3-onboard/web3auth'
+
   import {
     recoverAddress,
     arrayify,
@@ -68,6 +70,10 @@
     apiKey: 'pk_test_886ADCAB855632AA'
   })
 
+  const web3auth = web3authModule({
+    clientId: 'BJuUOKvmNnlzy6ruVgeWYWIMKLRyYtjYa9Y10VCeJzWZcygDlrYLyXsBQjpJ2hxlBO9dnl8t9GmAC2rOP5vnIGo'
+  })
+
   const torus = torusModule()
   const ledger = ledgerModule()
   const keepkey = keepkeyModule()
@@ -89,6 +95,7 @@
 
   const onboard = Onboard({
     wallets: [
+      web3auth,
       ledger,
       trezor,
       walletConnect,
@@ -177,8 +184,8 @@
 
     const signer = ethersProvider.getSigner()
 
-    const signature = await signer.signTransaction({
-      to: '',
+    const signature = await signer.sendTransaction({
+      to: '0x518AC04a5Bbc5846F0de774458565Ad5957c9017',
       value: 1000000000000000
     })
     console.log(signature)
