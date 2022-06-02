@@ -1,5 +1,5 @@
+import { internalState } from './internals'
 import type { AppState } from './types'
-import { getDevice } from './utils'
 
 export const APP_INITIAL_STATE: AppState = {
   wallets: [],
@@ -9,7 +9,7 @@ export const APP_INITIAL_STATE: AppState = {
     enabled: true,
     position: 'topRight',
     expanded: false,
-    minimal: getDevice().type === 'mobile'
+    minimal: internalState.device.type === 'mobile'
   },
   locale: ''
 }

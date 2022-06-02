@@ -12,16 +12,10 @@ import {
 import { resetStore } from './store/actions'
 import { state } from './store'
 
-import type { WalletState, InternalState, ConnectOptions } from './types'
+import type { WalletState, ConnectOptions } from './types'
 
 export const reset$ = new Subject<void>()
 export const disconnectWallet$ = new Subject<WalletState['label']>()
-
-export const internalState$ = new BehaviorSubject<InternalState>({
-  svelteInstance: null,
-  appMetadata: null,
-  device: null
-})
 
 export const connectWallet$ = new BehaviorSubject<{
   autoSelect?: ConnectOptions['autoSelect']

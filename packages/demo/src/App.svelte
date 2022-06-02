@@ -151,7 +151,7 @@
       gettingStartedGuide: 'https://blocknative.com',
       explore: 'https://blocknative.com'
     }
-    // example customizing account center
+    // // example customizing account center
     // accountCenter: {
     //   desktop: {
     //     position: 'topRight',

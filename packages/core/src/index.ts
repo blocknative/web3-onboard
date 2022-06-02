@@ -9,14 +9,14 @@ import {
   updateAccountCenter,
   setLocale,
 } from './store/actions'
-import { reset$, internalState$ } from './streams'
+import { reset$ } from './streams'
 import { validateInitOptions } from './validation'
 import initI18N from './i18n'
 
 import App from './views/Index.svelte'
 import type { InitOptions, OnboardAPI } from './types'
 import { APP_INITIAL_STATE } from './constants'
-import { getDevice } from './utils'
+import { internalState } from './internals'
 
 import updateBalances from './updateBalances'
 
@@ -62,8 +62,8 @@ function init(options: InitOptions): OnboardAPI {
   initI18N(i18n)
   addChains(chains)
 
-  const device = getDevice()
-  
+  const { device, svelteInstance } = internalState
+
   // update accountCenter
   if (typeof accountCenter !== 'undefined') {
     let accountCenterUpdate
@@ -81,9 +81,7 @@ function init(options: InitOptions): OnboardAPI {
     }
 
     updateAccountCenter(accountCenterUpdate)
-  }  
-
-  const { svelteInstance } = internalState$.getValue()
+  }
 
   if (svelteInstance) {
     // if already initialized, need to cleanup old instance
@@ -93,11 +91,9 @@ function init(options: InitOptions): OnboardAPI {
 
   const app = svelteInstance || mountApp()
 
-  internalState$.next({
-    appMetadata,
-    svelteInstance: app,
-    device
-  })
+  // update metadata and app internal state
+  internalState.appMetadata = appMetadata
+  internalState.svelteInstance = app
 
   setWalletModules(wallets)
 

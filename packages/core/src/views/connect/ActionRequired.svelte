@@ -18,6 +18,10 @@
     font-family: var(--onboard-font-family-normal, var(--font-family-normal));
     font-size: var(--onboard-font-size-5, var(--font-size-5));
     line-height: 24px;
+    background: var(
+      --onboard-action-required-modal-background,
+      var(--onboard-white, var(--white))
+    );
   }
 
   .icon-container {
