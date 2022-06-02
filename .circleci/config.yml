@@ -267,6 +267,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/coinbase
     steps:
       - node-build-steps
+  build-vue:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/vue
+    steps:
+      - node-build-steps
 
   # Build staging/Alpha releases
   build-staging-core:
@@ -369,6 +375,12 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/coinbase
+    steps:
+      - node-staging-build-steps
+  build-staging-vue:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/vue
     steps:
       - node-staging-build-steps
 
@@ -476,4 +488,10 @@ workflows:
       - build-coinbase:
           <<: *deploy_production_filters
       - build-staging-coinbase:
+          <<: *deploy_staging_filters
+  vue:
+    jobs:
+      - build-vue:
+          <<: *deploy_production_filters
+      - build-staging-vue:
           <<: *deploy_staging_filters
