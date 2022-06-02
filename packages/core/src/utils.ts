@@ -6,9 +6,7 @@ import type {
   DeviceOS,
   DeviceType,
   ChainId,
-  Chain,
-  WalletInit,
-  WalletModule
+  Chain
 } from '@web3-onboard/common'
 
 import ethereumIcon from './icons/ethereum'
@@ -23,18 +21,26 @@ import gnosisIcon from './icons/gnosis'
 import harmonyOneIcon from './icons/harmony-one'
 import arbitrumIcon from './icons/arbitrum'
 
-import type { ChainStyle, ConnectedChain } from './types'
+import type { ChainStyle, ConnectedChain, DeviceNotBrowser } from './types'
 
-export function getDevice(): Device {
-  const parsed = bowser.getParser(window.navigator.userAgent)
-  const os = parsed.getOS()
-  const browser = parsed.getBrowser()
-  const { type } = parsed.getPlatform()
+export function getDevice(): Device | DeviceNotBrowser {
+  if (typeof window !== 'undefined') {
+    const parsed = bowser.getParser(window.navigator.userAgent)
+    const os = parsed.getOS()
+    const browser = parsed.getBrowser()
+    const { type } = parsed.getPlatform()
 
-  return {
-    type: type as DeviceType,
-    os: os as DeviceOS,
-    browser: browser as DeviceBrowser
+    return {
+      type: type as DeviceType,
+      os: os as DeviceOS,
+      browser: browser as DeviceBrowser
+    }
+  } else {
+    return {
+      type: null,
+      os: null,
+      browser: null
+    }
   }
 }
 
@@ -156,20 +162,4 @@ export function connectedToValidAppChain(
       id === walletConnectedChain.id &&
       namespace === walletConnectedChain.namespace
   )
-}
-
-export function initializeWalletModules(
-  modules: WalletInit[],
-  device: Device
-): WalletModule[] {
-  return modules.reduce((acc, walletInit) => {
-    const initialized = walletInit({ device })
-
-    if (initialized) {
-      // injected wallets is an array of wallets
-      acc.push(...(Array.isArray(initialized) ? initialized : [initialized]))
-    }
-
-    return acc
-  }, [] as WalletModule[])
 }

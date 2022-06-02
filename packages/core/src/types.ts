@@ -100,7 +100,7 @@ export interface AppState {
 export type InternalState = {
   svelteInstance: SvelteComponent | null
   appMetadata: AppMetadata | null
-  device: Device | null
+  device: Device | DeviceNotBrowser
 }
 
 export type Locale = string
@@ -113,17 +113,16 @@ export type AccountCenterPosition =
   | 'bottomLeft'
   | 'topLeft'
 
-export type AccountCenterOptions = {
-  desktop?: {
-    position?: AccountCenterPosition
-    enabled?: AccountCenter['enabled']
-  }
-}
-
 export type AccountCenter = {
   enabled: boolean
-  position: AccountCenterPosition
-  expanded: boolean
+  position?: AccountCenterPosition
+  expanded?: boolean
+  minimal?: boolean
+}
+
+export type AccountCenterOptions = {
+  desktop: Omit<AccountCenter, 'expanded'>
+  mobile: Omit<AccountCenter, 'expanded'>
 }
 
 // ==== ACTIONS ==== //
@@ -180,4 +179,10 @@ export type SetLocaleAction = {
 export type ChainStyle = {
   icon: string
   color: string
+}
+
+export type DeviceNotBrowser = {
+  type: null
+  os: null
+  browser: null
 }

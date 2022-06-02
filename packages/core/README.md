@@ -10,7 +10,7 @@ Install the core module:
 
 If you would like to support all wallets, then you can install all of the wallet modules:
 
-`npm i @web3-onboard/injected-wallets @web3-onboard/ledger @web3-onboard/trezor @web3-onboard/keepkey @web3-onboard/walletconnect @web3-onboard/walletlink @web3-onboard/torus @web3-onboard/portis @web3-onboard/mew @web3-onboard/gnosis @web3-onboard/magic @web3-onboard/fortmatic`
+`npm i @web3-onboard/injected-wallets @web3-onboard/coinbase @web3-onboard/ledger @web3-onboard/trezor @web3-onboard/keepkey @web3-onboard/walletconnect @web3-onboard/torus @web3-onboard/portis @web3-onboard/mew @web3-onboard/gnosis @web3-onboard/magic @web3-onboard/fortmatic`
 
 Note:
 
@@ -92,20 +92,19 @@ To see a list of all of the text values that can be internationalized or replace
 Onboard is using the [ICU syntax](https://formatjs.io/docs/core-concepts/icu-syntax/) for formatting under the hood.
 
 **`accountCenter`**
-An object that defines whether the account center UI is enabled and it's position on the screen. Currently the account center is disabled for mobile devices, so only desktop options are available.
+An object that defines whether the account center UI (default and minimal) is enabled and it's position on the screen. Currently the account center is enabled for both desktop and mobile devices.
 
 ```typescript
-type AccountCenterOptions = {
-  desktop: {
-    position?: AccountCenterPosition // default: 'topRight'
-    enabled?: AccountCenter['enabled'] // default: true
-  }
+export type AccountCenter = {
+  enabled: boolean
+  position?: AccountCenterPosition // default: 'topRight'
+  expanded?: boolean // default: true
+  minimal?: boolean // enabled by default for mobile
 }
 
-type AccountCenter = {
-  enabled: boolean
-  position: AccountCenterPosition
-  expanded: boolean
+export type AccountCenterOptions = {
+  desktop: Omit<AccountCenter, 'expanded'>
+  mobile: Omit<AccountCenter, 'expanded'>
 }
 
 type AccountCenterPosition =
@@ -174,6 +173,18 @@ const onboard = Onboard({
       { name: 'MetaMask', url: 'https://metamask.io' },
       { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
     ]
+  },
+  accountCenter: {
+    desktop: {
+      position: 'topRight',
+      enabled: true,
+      minimal: true
+    },
+    mobile: {
+      position: 'topRight',
+      enabled: true,
+      minimal: true
+    }
   },
   i18n: {
     en: {
@@ -316,6 +327,7 @@ type AccountCenter = {
   enabled: boolean
   position: AccountCenterPosition
   expanded: boolean
+  minimal: boolean
 }
 
 type AccountCenterPosition =
@@ -496,6 +508,9 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-modal-backdrop
   --onboard-modal-box-shadow
 
+  /* CUSTOMIZE THE ACTION REQUIRED MODAL */
+  --onboard-action-required-modal-background
+
   /* FONTS */
   --onboard-font-family-normal: Sofia Pro;
   --onboard-font-family-semibold: Sofia Pro Semibold;
@@ -516,8 +531,10 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-spacing-4: 1rem;
   --onboard-spacing-5: 0.5rem;
 
-  /* SHADOWS */
+  /* BORDER RADIUS */
   --onboard-border-radius-1: 24px;
+  --onboard-border-radius-2: 20px;
+  --onboard-border-radius-3: 16px;
 
   /* SHADOWS */
   --onboard-shadow-0: none;

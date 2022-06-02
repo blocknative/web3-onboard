@@ -1,3 +1,4 @@
+import { internalState } from './internals'
 import type { AppState } from './types'
 
 export const APP_INITIAL_STATE: AppState = {
@@ -7,7 +8,8 @@ export const APP_INITIAL_STATE: AppState = {
   accountCenter: {
     enabled: true,
     position: 'topRight',
-    expanded: false
+    expanded: false,
+    minimal: internalState.device.type === 'mobile'
   },
   locale: ''
 }

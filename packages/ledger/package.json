@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/ledger",
-  "version": "2.1.0-alpha.1",
+  "version": "2.1.0",
   "description": "Ledger module for web3-onboard",
   "module": "dist/index.js",
   "browser": "dist/index.js",
@@ -27,7 +27,7 @@
     "@ledgerhq/hw-transport-u2f": "^5.36.0-deprecated",
     "@ledgerhq/hw-transport-webusb": "^6.19.0",
     "@metamask/eth-sig-util": "^4.0.0",
-    "@web3-onboard/common": "^2.1.0-alpha.1",
+    "@web3-onboard/common": "^2.1.0",
     "buffer": "^6.0.3",
     "ethereumjs-util": "^7.1.3"
   }
