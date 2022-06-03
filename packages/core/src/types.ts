@@ -15,6 +15,7 @@ import type connect from './connect'
 import type disconnect from './disconnect'
 import type { state } from './store'
 import type en from './i18n/en.json'
+import type { EthereumTransactionData } from 'bnc-sdk/dist/types/src/interfaces'
 
 export interface InitOptions {
   dappId?: string
@@ -23,7 +24,7 @@ export interface InitOptions {
   appMetadata?: AppMetadata
   i18n?: i18nOptions
   accountCenter?: AccountCenterOptions
-  notify?: NotifyInitOptions
+  notify?: NotifyOptions
 }
 
 export interface OnboardAPI {
@@ -97,8 +98,6 @@ export interface AppState {
   wallets: WalletState[]
   accountCenter: AccountCenter
   locale: Locale
-  notify: NotifyOptions
-  notifications: NotificationObject[]
 }
 
 export type InternalState = {
@@ -129,6 +128,36 @@ export type AccountCenterOptions = {
   mobile: Omit<AccountCenter, 'expanded'>
 }
 
+export type NotifyOptions = {
+  /**
+   * Disable transaction notifications, defaults to false
+   */
+  disable?: boolean
+  /**
+   * Return a custom notification object for a transaction event
+   * Return false to disable notification for transaction event
+   * Return undefined for the default notification
+   */
+  customizer?: (
+    event: EthereumTransactionData
+  ) => CustomNotification | void | boolean
+}
+
+export type Notification = {
+  id: string
+  type: NotificationType
+  startTime?: number
+  eventCode: string
+  message: string
+  autoDismiss: number
+  onclick?: (event: Event) => void
+  link?: string
+}
+
+export type CustomNotification = Partial<Omit<Notification, 'id' | 'startTime'>>
+
+export type NotificationType = 'pending' | 'success' // | 'error' | 'hint'
+
 // ==== ACTIONS ==== //
 export type Action =
   | AddChainsAction
@@ -138,8 +167,6 @@ export type Action =
   | ResetStoreAction
   | UpdateAccountAction
   | UpdateAccountCenterAction
-  | UpdateNotifyAction
-  | UpdateNotificationsAction
   | SetWalletModulesAction
   | SetLocaleAction
 
@@ -171,16 +198,6 @@ export type UpdateAccountCenterAction = {
   payload: AccountCenter | Partial<AccountCenter>
 }
 
-export type UpdateNotifyAction = {
-  type: 'update_notify'
-  payload: NotifyOptions | Partial<NotifyOptions>
-}
-
-export type UpdateNotificationsAction = {
-  type: 'update_notifications'
-  payload: NotificationObject[]
-}
-
 export type SetWalletModulesAction = {
   type: 'set_wallet_modules'
   payload: WalletModule[]
@@ -201,246 +218,4 @@ export type NotifyEventStyles = {
   backgroundColor: string
   borderColor: string
   eventIcon: string
-}
-
-// Notify V1
-
-// import type {
-//   BitcoinTransactionLog,
-//   EthereumTransactionLog,
-//   SDKError,
-//   TransactionHandler
-// } from 'bnc-sdk/dist/types/src/interfaces'
-
-export interface NotifyOptions {
-  dappId?: string
-  // transactionHandler?: TransactionHandler
-  apiUrl?: string
-  // onerror?: ErrorHandler
-  enabled?: boolean
-}
-
-export type NotifyInitOptions = Omit<
-  NotifyOptions,
-  'dappId' | 'name' | 'apiUrl'
->
-
-// export type ErrorHandler = (error: SDKError) => void
-
-export interface TransactionEvent {
-  emitterResult: void | boolean | CustomNotificationObject
-  transaction: TransactionData
-}
-
-export type System = 'bitcoin' | 'ethereum'
-
-export type TransactionEventCode =
-  | 'txSent'
-  | 'txPool'
-  | 'txConfirmed'
-  | 'txSpeedUp'
-  | 'txCancel'
-  | 'txFailed'
-  | 'txRequest'
-  | 'nsfFail'
-  | 'txRepeat'
-  | 'txAwaitingApproval'
-  | 'txConfirmReminder'
-  | 'txSendFail'
-  | 'txError'
-  | 'txUnderPriced'
-  | 'all'
-
-export interface TransactionData {
-  asset?: string
-  blockHash?: string
-  blockNumber?: number
-  contractCall?: ContractCall | DecodedContractCall
-  counterparty?: string
-  eventCode?: string
-  from?: string
-  gas?: string
-  gasPrice?: string
-  hash?: string
-  txid?: string
-  id?: string
-  input?: string
-  monitorId?: string
-  monitorVersion?: string
-  nonce?: number
-  replaceHash?: string
-  r?: string
-  s?: string
-  status?: string
-  to?: string
-  transactionIndex?: number
-  v?: string
-  value?: string | number
-  startTime?: number
-  watchedAddress?: string
-  originalHash?: string
-  direction?: string
-  system?: string
-  inputs?: BitcoinInputOutput[]
-  outputs?: BitcoinInputOutput[]
-  baseFeePerGasGwei?: number
-  maxPriorityFeePerGasGwei?: number
-  maxFeePerGasGwei?: number
-  gasPriceGwei?: number
-}
-
-export type NotificationType = 'pending' | 'success' | 'error' | 'hint'
-
-export interface CustomNotificationObject {
-  type?: NotificationType
-  message?: string
-  autoDismiss?: number
-  onclick?: (event: any) => void
-  eventCode?: string
-  link?: string
-}
-
-export interface BitcoinInputOutput {
-  address: string
-  value: string
-}
-
-export interface NotificationObject {
-  id: string
-  type: NotificationType
-  key: string
-  startTime?: number
-  eventCode?: string
-  message: string
-  autoDismiss?: number
-  link?: string
-}
-
-export interface ContractCall {
-  methodName: string
-  params: string[]
-}
-
-export interface DecodedContractCall {
-  contractAddress?: string
-  contractType?: string
-  params: Record<string, unknown>
-  methodName: string
-}
-
-export interface AppStore {
-  version: string
-  dappId?: string
-  name?: string
-  networkId?: number
-  nodeSynced: boolean
-  // onerror?: ErrorHandler
-  mobilePosition: 'bottom' | 'top'
-  desktopPosition: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight'
-  darkMode: boolean
-  txApproveReminderTimeout: number
-  txStallPendingTimeout: number
-  txStallConfirmedTimeout: number
-  clientLocale: string
-  notifyMessages: NotifyMessages
-}
-
-export interface NotifyMessages {
-  [key: string]: LocaleMessages
-}
-
-export interface LocaleMessages {
-  transaction: {
-    [key: string]: string
-  }
-  watched: {
-    [key: string]: string
-  }
-  time: {
-    [key: string]: string
-  }
-}
-
-export interface TransactionOptions {
-  sendTransaction?: () => Promise<string>
-  estimateGas?: () => Promise<string>
-  gasPrice?: () => Promise<string>
-  balance?: string
-  contractCall?: ContractCall
-  txDetails?: {
-    to?: string
-    from?: string
-    value: string
-  }
-}
-
-export interface PreflightEvent {
-  eventCode: string
-  contractCall?: ContractCall
-  balance: string
-  txDetails?: {
-    to?: string
-    from?: string
-    value: string | number
-  }
-  emitter: Emitter
-  status?: string
-}
-
-export interface UpdateNotification {
-  (notificationObject: CustomNotificationObject): {
-    dismiss: () => void
-    update: UpdateNotification
-  }
-}
-
-export interface Hash {
-  (hash: string, id?: string):
-    | never
-    | {
-        // details: BitcoinTransactionLog | EthereumTransactionLog
-        emitter: Emitter
-      }
-}
-
-export interface Transaction {
-  (options: TransactionOptions): { result: Promise<string>; emitter: Emitter }
-}
-
-export interface NotifyAccount {
-  (address: string): never | { details: { address: string }; emitter: Emitter }
-}
-
-export interface Unsubscribe {
-  (addressOrHash: string): void
-}
-
-export interface Notification {
-  (notificationObject: CustomNotificationObject): {
-    dismiss: () => void
-    update: UpdateNotification
-  }
-}
-
-export interface EmitterListener {
-  (state: TransactionData): boolean | void | CustomNotificationObject
-}
-
-export interface Emitter {
-  listeners: {
-    [key: string]: EmitterListener
-  }
-  on: (eventCode: TransactionEventCode, listener: EmitterListener) => void
-  emit: (state: TransactionData) => boolean | void | CustomNotificationObject
-}
-
-export interface NotificationDetails {
-  id: string
-  hash?: string
-  startTime: number
-  eventCode: string
-  direction?: string
-  counterparty?: string
-  value?: string
-  asset?: string
 }
