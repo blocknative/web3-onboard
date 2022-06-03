@@ -27,27 +27,26 @@ import hourglass from './icons/hourglass'
 import checkmark from './icons/checkmark'
 import error from './icons/error'
 
-import type {
-  ChainStyle,
-  ConnectedChain,
-  NotifyEventStyles,
-  NotificationType,
-  Emitter,
-  EmitterListener,
-  TransactionData,
-  TransactionEventCode
-} from './types'
+import type { ChainStyle, ConnectedChain, DeviceNotBrowser } from './types'
 
-export function getDevice(): Device {
-  const parsed = bowser.getParser(window.navigator.userAgent)
-  const os = parsed.getOS()
-  const browser = parsed.getBrowser()
-  const { type } = parsed.getPlatform()
+export function getDevice(): Device | DeviceNotBrowser {
+  if (typeof window !== 'undefined') {
+    const parsed = bowser.getParser(window.navigator.userAgent)
+    const os = parsed.getOS()
+    const browser = parsed.getBrowser()
+    const { type } = parsed.getPlatform()
 
-  return {
-    type: type as DeviceType,
-    os: os as DeviceOS,
-    browser: browser as DeviceBrowser
+    return {
+      type: type as DeviceType,
+      os: os as DeviceOS,
+      browser: browser as DeviceBrowser
+    }
+  } else {
+    return {
+      type: null,
+      os: null,
+      browser: null
+    }
   }
 }
 

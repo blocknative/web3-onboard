@@ -103,7 +103,7 @@ export interface AppState {
 export type InternalState = {
   svelteInstance: SvelteComponent | null
   appMetadata: AppMetadata | null
-  device: Device | null
+  device: Device | DeviceNotBrowser
 }
 
 export type Locale = string
@@ -128,35 +128,9 @@ export type AccountCenterOptions = {
   mobile: Omit<AccountCenter, 'expanded'>
 }
 
-export type NotifyOptions = {
-  /**
-   * Disable transaction notifications, defaults to false
-   */
-  disable?: boolean
-  /**
-   * Return a custom notification object for a transaction event
-   * Return false to disable notification for transaction event
-   * Return undefined for the default notification
-   */
-  customizer?: (
-    event: EthereumTransactionData
-  ) => CustomNotification | void | boolean
-}
-
-export type Notification = {
-  id: string
-  type: NotificationType
-  startTime?: number
-  eventCode: string
-  message: string
-  autoDismiss: number
-  onclick?: (event: Event) => void
-  link?: string
-}
-
 export type CustomNotification = Partial<Omit<Notification, 'id' | 'startTime'>>
 
-export type NotificationType = 'pending' | 'success' // | 'error' | 'hint'
+export type NotificationType = 'pending' | 'success' | 'error' // | 'hint'
 
 // ==== ACTIONS ==== //
 export type Action =
@@ -218,4 +192,10 @@ export type NotifyEventStyles = {
   backgroundColor: string
   borderColor: string
   eventIcon: string
+}
+
+export type DeviceNotBrowser = {
+  type: null
+  os: null
+  browser: null
 }

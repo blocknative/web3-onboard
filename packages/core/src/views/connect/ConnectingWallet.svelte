@@ -1,11 +1,11 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
-  import { internalState$ } from '../../streams'
   import type { WalletState, i18n } from '../../types'
 
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
   import questionIcon from '../../icons/question'
   import en from '../../i18n/en.json'
+  import { internalState } from '../../internals'
 
   export let connectWallet: () => Promise<void>
   export let selectedWallet: WalletState
@@ -13,7 +13,7 @@
   export let setStep: (update: keyof i18n['connect']) => void
   export let connectionRejected: boolean
 
-  const { appMetadata } = internalState$.getValue()
+  const { appMetadata } = internalState
 </script>
 
 <style>

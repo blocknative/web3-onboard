@@ -3,22 +3,20 @@ import connectWallet from './connect'
 import disconnectWallet from './disconnect'
 import setChain from './chain'
 import { state } from './store'
+import { reset$ } from './streams'
+import { validateInitOptions } from './validation'
+import initI18N from './i18n'
+import App from './views/Index.svelte'
+import type { InitOptions, OnboardAPI } from './types'
+import { APP_INITIAL_STATE } from './constants'
+import { internalState } from './internals'
+
 import {
   addChains,
   setWalletModules,
   updateAccountCenter,
-  updateNotify,
   setLocale
 } from './store/actions'
-import { reset$, internalState$ } from './streams'
-import { validateInitOptions } from './validation'
-import initI18N from './i18n'
-
-import App from './views/Index.svelte'
-import type { InitOptions, NotifyOptions, OnboardAPI } from './types'
-import { APP_INITIAL_STATE } from './constants'
-import { getDevice } from './utils'
-import { initMultiChainSDK } from './multiChainSDK'
 
 const API = {
   connectWallet,
@@ -56,21 +54,13 @@ function init(options: InitOptions): OnboardAPI {
     }
   }
 
-  const {
-    wallets,
-    chains,
-    appMetadata = null,
-    i18n,
-    accountCenter,
-    notify,
-    dappId
-  } = options
+  const { wallets, chains, appMetadata = null, i18n, accountCenter } = options
 
   initI18N(i18n)
   addChains(chains)
 
-  const device = getDevice()
-  
+  const { device, svelteInstance } = internalState
+
   // update accountCenter
   if (typeof accountCenter !== 'undefined') {
     let accountCenterUpdate
@@ -88,19 +78,7 @@ function init(options: InitOptions): OnboardAPI {
     }
 
     updateAccountCenter(accountCenterUpdate)
-  }  
-
-  const notifyUpdate: NotifyOptions = { ...notify, dappId }
-  if (notify && notify.enabled && !dappId) {
-    notifyUpdate.enabled = false
   }
-
-  notifyUpdate && updateNotify(notifyUpdate)
-
-  // if (notifyUpdate.enabled) 
-    // initMultiChainSDK(dappId)
-
-  const { svelteInstance } = internalState$.getValue()
 
   if (svelteInstance) {
     // if already initialized, need to cleanup old instance
@@ -110,11 +88,9 @@ function init(options: InitOptions): OnboardAPI {
 
   const app = svelteInstance || mountApp()
 
-  internalState$.next({
-    appMetadata,
-    svelteInstance: app,
-    device
-  })
+  // update metadata and app internal state
+  internalState.appMetadata = appMetadata
+  internalState.svelteInstance = app
 
   setWalletModules(wallets)
 

@@ -1,11 +1,11 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
+  import { internalState } from '../../internals'
   import en from '../../i18n/en.json'
-  import { internalState$ } from '../../streams'
+
   import Warning from '../shared/Warning.svelte'
 
-  const { recommendedInjectedWallets, name } =
-    internalState$.getValue().appMetadata || {}
+  const { recommendedInjectedWallets, name } = internalState.appMetadata || {}
 </script>
 
 <style>

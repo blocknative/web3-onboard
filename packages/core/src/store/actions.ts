@@ -1,6 +1,4 @@
-import type { Chain, WalletInit } from '@web3-onboard/common'
-import { internalState$ } from '../streams'
-import { initializeWalletModules, uniqueWalletsByLabel } from '../utils'
+import type { Chain, WalletInit, WalletModule } from '@web3-onboard/common'
 import { dispatch } from './index'
 
 import type {
@@ -45,6 +43,7 @@ import {
   SET_LOCALE,
   UPDATE_NOTIFICATIONS
 } from './constants'
+import { internalState } from '../internals'
 
 export function addChains(chains: Chain[]): void {
   // chains are validated on init
@@ -194,10 +193,7 @@ export function setWalletModules(wallets: WalletInit[]): void {
     throw error
   }
 
-  const modules = initializeWalletModules(
-    wallets,
-    internalState$.getValue().device
-  )
+  const modules = initializeWalletModules(wallets)
   const dedupedWallets = uniqueWalletsByLabel(modules)
 
   const action = {
@@ -221,4 +217,30 @@ export function setLocale(locale: string): void {
   }
 
   dispatch(action as SetLocaleAction)
+}
+
+// ==== HELPERS ==== //
+export function initializeWalletModules(modules: WalletInit[]): WalletModule[] {
+  const { device } = internalState
+  return modules.reduce((acc, walletInit) => {
+    const initialized = walletInit({ device })
+
+    if (initialized) {
+      // injected wallets is an array of wallets
+      acc.push(...(Array.isArray(initialized) ? initialized : [initialized]))
+    }
+
+    return acc
+  }, [] as WalletModule[])
+}
+
+export function uniqueWalletsByLabel(
+  walletModuleList: WalletModule[]
+): WalletModule[] {
+  return walletModuleList.filter(
+    (wallet, i) =>
+      walletModuleList.findIndex(
+        (innerWallet: WalletModule) => innerWallet.label === wallet.label
+      ) === i
+  )
 }
