@@ -179,8 +179,6 @@ export type SetLocaleAction = {
 export type UpdateAllWalletsAction = {
   type: 'update_balance'
   payload: WalletState[]
-  // payload: AppState['wallets']
-  // payload?: string[]
 }
 
 

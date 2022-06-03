@@ -414,6 +414,14 @@ const onboard = Onboard({
 
 // then after a user action, you may decide to only display hardware wallets on the next call to onboard.connectWallet
 onboard.state.actions.setWalletModules([ledger, trezor])
+
+//or you may decide to get updated balances after a user action using the `updatedBalances` function
+onboard.state.actions.updateBalances() // update all balances for all connected addresses
+onboard.state.actions.updateBalances(['0xfdadfadsadsadsadasdsa']) // update balance for one address
+onboard.state.actions.updateBalances([
+  '0xfdadfadsadsadsadasdsa',
+  '0xfdsafdsfdsfdsfds'
+]) // update balance for two addresses
 ```
 
 ## Setting the User's Chain/Network

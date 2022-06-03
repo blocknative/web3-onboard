@@ -182,7 +182,7 @@ export function setLocale(locale: string): void {
 
 export function updateAllWallets(wallets: WalletState[]): void {
   const error = validateUpdateBalances(wallets)
-
+  
   if (error) {
     throw error
   }
@@ -191,8 +191,6 @@ export function updateAllWallets(wallets: WalletState[]): void {
     type: UPDATE_ALL_WALLETS,
     payload: wallets
   }
-
-  console.log(4, wallets)
 
   dispatch(action as UpdateAllWalletsAction)
 

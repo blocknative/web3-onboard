@@ -102,7 +102,8 @@ const walletInit = Joi.array().items(Joi.function()).required()
 
 const locale = Joi.string()
 
-const addresses = Joi.array().items(Joi.string().pattern(/^0x[a-fA-F0-9]{40}$/))
+// const addresses = 
+//Joi.array().items(Joi.string().pattern(/^0x[a-fA-F0-9]{40}$/))
 
 const accountCenterPosition = Joi.string().valid(
   'topRight',
@@ -219,6 +220,3 @@ export function validateUpdateBalances(data:
 WalletState[]): ValidateReturn {
   return validate(wallets, data)
 }
-// export function validateUpdateBalances(data?: string[]): ValidateReturn {
-//   return validate(addresses, data)
-// }

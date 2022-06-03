@@ -1,8 +1,8 @@
 import { state } from './store'
-import type { AppState, WalletState } from './types'
 import { getBalance } from './provider'
+import { updateAllWallets } from './store/actions'
 
-async function updateBalances(addresses?: string[]): Promise<any>  {
+async function updateBalances(addresses?: string[]): Promise<void>  {
     const { wallets, chains } = state.get()
 
     const updatedWallets = await Promise.all(
@@ -11,13 +11,11 @@ async function updateBalances(addresses?: string[]): Promise<any>  {
 
           const updatedAccounts = await Promise.all(
             wallet.accounts.map(async account => {
-              // if no addresses then we want to update all address balances
+              // if no provided addresses, we want to update all balances
               // otherwise check if address is in addresses array
               if (!addresses || addresses.includes(account.address)) {
 
                 const updatedBalance = await getBalance(account.address, chain)
-
-                console.log(1, updatedBalance)
 
                 return { ...account, balance: updatedBalance }
               }
@@ -25,17 +23,11 @@ async function updateBalances(addresses?: string[]): Promise<any>  {
               return account
             })
           )
-          console.log(2, updatedAccounts)
           return { ...wallet, accounts: updatedAccounts }
         })
       )
         
-      console.log(3, updatedWallets)
-      return {
-        ...state,
-        wallets: updatedWallets
-      }
-  
+      updateAllWallets(updatedWallets)
 }
 
 export default updateBalances
