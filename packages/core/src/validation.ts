@@ -67,7 +67,6 @@ const wallet = Joi.object({
 
 const wallets = Joi.array().items(wallet)
 
-
 const recommendedWallet = Joi.object({
   name: Joi.string().required(),
   url: Joi.string().uri().required()

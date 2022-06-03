@@ -31,8 +31,6 @@ export const wallets$ = (
   state.select('wallets') as Observable<WalletState[]>
 ).pipe(shareReplay(1))
 
-
-
 // reset logic
 reset$.pipe(withLatestFrom(wallets$), pluck('1')).subscribe(wallets => {
   // disconnect all wallets
