@@ -1,21 +1,12 @@
 <script lang="ts">
   import { onDestroy } from 'svelte'
-  import { state } from '../../store'
   import { updateAccountCenter } from '../../store/actions'
   import type { AccountCenter } from '../../types'
   import Maximized from './Maximized.svelte'
   import Minimized from './Minimized.svelte'
   import Micro from './Micro.svelte'
-  import Notify from '../notify/Index.svelte'
-  import { shareReplay, startWith } from 'rxjs'
 
   export let settings: AccountCenter
-
-  const notify$ = state
-    .select('notify')
-    .pipe(startWith(state.get().notify), shareReplay(1))
-
-  notify$.subscribe(x => console.log('notify sub', x))
 
   const accountCenterPositions = {
     topLeft: 'top: 0; left: 0;',
@@ -27,7 +18,6 @@
   onDestroy(minimize)
 
   function minimize() {
-    const { accountCenter } = state.get()
     if (settings.expanded) {
       updateAccountCenter({ expanded: false })
     }
@@ -56,11 +46,8 @@
     settings.position
   ]} width: {!settings.expanded && settings.minimal ? 'auto' : '100%'}"
 >
-  {#if $notify$.enabled && settings.position.includes('bottom')}
-    <Notify
-      settings={{ notifySettings: $notify$, position: settings.position }}
-    />
-  {/if}
+  <!-- Renders Notify above account center if AC is set to bottom -->
+  <slot name="notify-top" />
 
   {#if !settings.expanded && !settings.minimal}
     <!-- minimized -->
@@ -73,9 +60,6 @@
     <Maximized />
   {/if}
 
-  {#if $notify$.enabled && settings.position.includes('top')}
-    <Notify
-      settings={{ notifySettings: $notify$, position: settings.position }}
-    />
-  {/if}
+  <!-- Renders Notify below account center if AC is set to top -->
+  <slot name="notify-bottom" />
 </div>

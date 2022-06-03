@@ -118,15 +118,15 @@ export type AccountCenterPosition =
   | 'topLeft'
 
 export type AccountCenter = {
-    enabled: boolean
-    position?: AccountCenterPosition
-    expanded?: boolean
-    minimal?: boolean
+  enabled: boolean
+  position?: AccountCenterPosition
+  expanded?: boolean
+  minimal?: boolean
 }
-  
+
 export type AccountCenterOptions = {
-    desktop: Omit<AccountCenter, 'expanded'>
-    mobile: Omit<AccountCenter, 'expanded'>
+  desktop: Omit<AccountCenter, 'expanded'>
+  mobile: Omit<AccountCenter, 'expanded'>
 }
 
 // ==== ACTIONS ==== //
@@ -203,9 +203,7 @@ export type NotifyEventStyles = {
   eventIcon: string
 }
 
-
 // Notify V1
-
 
 // import type {
 //   BitcoinTransactionLog,
@@ -222,7 +220,10 @@ export interface NotifyOptions {
   enabled?: boolean
 }
 
-export type NotifyInitOptions = Omit<NotifyOptions, 'dappId' | 'name' | 'apiUrl'>
+export type NotifyInitOptions = Omit<
+  NotifyOptions,
+  'dappId' | 'name' | 'apiUrl'
+>
 
 // export type ErrorHandler = (error: SDKError) => void
 
@@ -323,7 +324,7 @@ export interface ContractCall {
 export interface DecodedContractCall {
   contractAddress?: string
   contractType?: string
-  params: object
+  params: Record<string, unknown>
   methodName: string
 }
 

@@ -10,8 +10,8 @@
   import { internalState$ } from '../../streams'
   import NotificationContent from './NotificationContent.svelte'
 
-  export let settings: { notifySettings: NotifyOptions; position: string }
-  const { notifySettings, position } = settings
+  export let settings: NotifyOptions
+  export let position: string
 
   const { appMetadata } = internalState$.getValue()
 
@@ -172,14 +172,14 @@
               {notification}
               chainStyles={chainStyles[currentChain]}
             />
-            <NotificationContent notification={notification} hash={hash}/>
+            <NotificationContent {notification} {hash} />
           </a>
         {:else}
           <StatusIconBadge
             {notification}
             chainStyles={chainStyles[currentChain]}
           />
-          <NotificationContent notification={notification} hash={hash}/>
+          <NotificationContent {notification} {hash} />
         {/if}
         <!-- 
           To handle close button
