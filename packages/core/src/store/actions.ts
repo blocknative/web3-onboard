@@ -193,7 +193,6 @@ export function updateAllWallets(wallets: WalletState[]): void {
   }
 
   dispatch(action as UpdateAllWalletsAction)
-
 }
 
 // ==== HELPERS ==== //

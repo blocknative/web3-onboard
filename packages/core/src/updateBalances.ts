@@ -27,7 +27,7 @@ async function updateBalances(addresses?: string[]): Promise<void>  {
         })
       )
         
-      updateAllWallets(updatedWallets)
+    updateAllWallets(updatedWallets)
 }
 
 export default updateBalances
