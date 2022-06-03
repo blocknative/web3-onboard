@@ -181,8 +181,6 @@ export type UpdateAllWalletsAction = {
   payload: WalletState[]
 }
 
-
-
 // ==== MISC ==== //
 export type ChainStyle = {
   icon: string
