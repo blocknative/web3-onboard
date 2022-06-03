@@ -20,6 +20,8 @@ import { updateAccount, updateWallet } from './store/actions'
 import { validEnsChain } from './utils'
 import disconnect from './disconnect'
 import { state } from './store'
+import { internalState } from './internals'
+import { getBlocknativeSdk } from './services'
 
 export const ethersProviders: {
   [key: string]: providers.StaticJsonRpcProvider
@@ -95,7 +97,7 @@ export function trackWallet(
   }).pipe(share())
 
   // when account changed, set it to first account
-  accountsChanged$.subscribe(([address]) => {
+  accountsChanged$.subscribe(async ([address]) => {
     // no address, then no account connected, so disconnect wallet
     // this could happen if user locks wallet,
     // or if disconnects app from wallet
@@ -119,9 +121,26 @@ export function trackWallet(
         ...restAccounts
       ]
     })
+
+    // if not existing account and notify, then subscribe to transaction events
+    if (!internalState.notify.disabled && !existingAccount) {
+      const sdk = await getBlocknativeSdk()
+
+      if (sdk) {
+        const wallet = state
+          .get()
+          .wallets.find(wallet => wallet.label === label)
+
+        sdk.subscribe({
+          id: address,
+          chainId: wallet.chains[0].id,
+          type: 'account'
+        })
+      }
+    }
   })
 
-  // also when accounts change update Balance and ENS
+  // also when accounts change, update Balance and ENS,
   accountsChanged$
     .pipe(
       switchMap(async ([address]) => {
@@ -163,12 +182,39 @@ export function trackWallet(
   )
 
   // Update chain on wallet when chainId changed
-  chainChanged$.subscribe(chainId => {
+  chainChanged$.subscribe(async chainId => {
     const { wallets } = state.get()
     const { chains, accounts } = wallets.find(wallet => wallet.label === label)
     const [connectedWalletChain] = chains
 
     if (chainId === connectedWalletChain.id) return
+
+    if (!internalState.notify.disabled) {
+      const sdk = await getBlocknativeSdk()
+
+      if (sdk) {
+        const wallet = state
+          .get()
+          .wallets.find(wallet => wallet.label === label)
+
+        // Unsubscribe
+        wallet.accounts.forEach(({ address }) => {
+          sdk.unsubscribe({
+            id: address,
+            chainId: wallet.chains[0].id
+          })
+        })
+
+        // resubscribe for new chainId
+        wallet.accounts.forEach(({ address }) => {
+          sdk.subscribe({
+            id: address,
+            chainId: chainId,
+            type: 'account'
+          })
+        })
+      }
+    }
 
     const resetAccounts = accounts.map(
       ({ address }) =>

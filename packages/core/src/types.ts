@@ -15,15 +15,37 @@ import type connect from './connect'
 import type disconnect from './disconnect'
 import type { state } from './store'
 import type en from './i18n/en.json'
-import type { EthereumTransactionData } from 'bnc-sdk/dist/types/src/interfaces'
+import type { EthereumTransactionData } from 'bnc-sdk'
 
 export interface InitOptions {
-  dappId?: string
+  /**
+   * Wallet modules to be initialized and added to wallet selection modal
+   */
   wallets: WalletInit[]
+  /**
+   * The chains that your app works with
+   */
   chains: Chain[]
+  /**
+   * Additional metadata about your app to be displayed in the Onboard UI
+   */
   appMetadata?: AppMetadata
+  /**
+   * Define custom copy for the 'en' locale or add locales to i18n your app
+   */
   i18n?: i18nOptions
+  /**
+   * Customize the account center UI
+   */
   accountCenter?: AccountCenterOptions
+  /**
+   * Opt in to Blocknative value add services (transaction updates) by providing
+   * your Blocknative API key, head to https://explorer.blocknative.com/account
+   */
+  apiKey?: string
+  /**
+   * Transaction notification options
+   */
   notify?: NotifyOptions
 }
 
@@ -104,6 +126,8 @@ export type InternalState = {
   svelteInstance: SvelteComponent | null
   appMetadata: AppMetadata | null
   device: Device | DeviceNotBrowser
+  apiKey: string
+  notify: NotifyOptions
 }
 
 export type Locale = string
@@ -126,6 +150,31 @@ export type AccountCenter = {
 export type AccountCenterOptions = {
   desktop: Omit<AccountCenter, 'expanded'>
   mobile: Omit<AccountCenter, 'expanded'>
+}
+
+export type NotifyOptions = {
+  /**
+   * Disable all transaction notifications, default: false
+   */
+  disabled?: boolean
+  /**
+   * Callback that receives all transaction events
+   * Return a custom notification based on the event
+   * Or return false to disable notification for this event
+   * Or return undefined for a default notification
+   */
+  customizer?: (
+    event: EthereumTransactionData
+  ) => CustomNotification | boolean | void
+}
+
+export type Notification = {
+  id: string
+  type: NotificationType
+  startTime?: number
+  eventCode: string
+  message: string
+  autoDismiss: number
 }
 
 export type CustomNotification = Partial<Omit<Notification, 'id' | 'startTime'>>

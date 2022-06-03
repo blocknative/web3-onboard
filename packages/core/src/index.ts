@@ -54,7 +54,15 @@ function init(options: InitOptions): OnboardAPI {
     }
   }
 
-  const { wallets, chains, appMetadata = null, i18n, accountCenter } = options
+  const {
+    wallets,
+    chains,
+    appMetadata = null,
+    i18n,
+    accountCenter,
+    apiKey,
+    notify
+  } = options
 
   initI18N(i18n)
   addChains(chains)
@@ -88,9 +96,11 @@ function init(options: InitOptions): OnboardAPI {
 
   const app = svelteInstance || mountApp()
 
-  // update metadata and app internal state
+  // update internal state
   internalState.appMetadata = appMetadata
   internalState.svelteInstance = app
+  internalState.apiKey = apiKey
+  internalState.notify = notify
 
   setWalletModules(wallets)
 

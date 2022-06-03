@@ -1,13 +1,23 @@
-import type Blocknative from 'bnc-sdk'
+import type { MultichainSDK } from 'bnc-sdk'
+import { internalState } from './internals'
 
-let blocknativeSdk: Blocknative
+let blocknativeSdk: MultichainSDK
 
-export async function getBlocknativeSdk() {
+/**
+ *
+ * @returns SDK if apikey
+ */
+export async function getBlocknativeSdk(): Promise<MultichainSDK | null> {
+  const { apiKey } = internalState
+
+  if (!apiKey) return null
+
   if (!blocknativeSdk) {
-    const { default: SDK } = await import('bnc-sdk')
-    blocknativeSdk = new SDK({
-      dappId: '',
-      multichain: true
+    const { MultichainSDK } = await import('bnc-sdk')
+    blocknativeSdk = new MultichainSDK({
+      apiKey: internalState.apiKey
     })
   }
+
+  return blocknativeSdk
 }
