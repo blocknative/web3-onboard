@@ -272,6 +272,9 @@
     <button on:click={() => onboard.setChain({ chainId: '0x89' })}
       >Set Chain to Matic</button
     >
+    <button on:click={() => onboard.state.actions.updateBalances()}
+      >Update Wallet Balance</button
+    >
   {/if}
 
   {#if $wallets$}
@@ -346,9 +349,6 @@
         >
           Disconnect Wallet
         </button>
-        <button on:click={() => onboard.state.actions.updateBalances()}
-          >Update Wallet Balance</button
-        >
       </div>
     {/each}
   {/if}
