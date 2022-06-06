@@ -46,7 +46,7 @@
     settings.position
   ]} width: {!settings.expanded && settings.minimal ? 'auto' : '100%'}"
 >
-  <!-- Renders Notify above account center if AC is set to bottom -->
+  <!-- Renders notify above account center if AC is set to bottom -->
   <slot name="notify-top" />
 
   {#if !settings.expanded && !settings.minimal}
@@ -60,6 +60,6 @@
     <Maximized />
   {/if}
 
-  <!-- Renders Notify below account center if AC is set to top -->
+  <!-- Renders notify below account center if AC is set to top -->
   <slot name="notify-bottom" />
 </div>

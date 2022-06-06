@@ -1,13 +1,12 @@
 <script lang="ts">
   import { _ as formatter, locale } from 'svelte-i18n'
   import { onDestroy } from 'svelte'
-  import {internalState$} from '../../streams'
-  import type { NotificationObject } from '../../types';
+  import { configuration } from '../../configuration'
+  import type { Notification } from '../../types'
 
-  export let notification: NotificationObject
+  export let notification: Notification
 
-  const { appMetadata } = internalState$.getValue()
-
+  const { appMetadata } = configuration
 
   function timeString(time: number): string {
     const seconds = Math.floor(time / 1000)
@@ -51,13 +50,19 @@
   }
 
   .time {
-    color: var(--notify-onboard-gray-300, var(--onboard-gray-300, var(--gray-300)));
+    color: var(
+      --notify-onboard-gray-300,
+      var(--onboard-gray-300, var(--gray-300))
+    );
     margin-left: 4px;
   }
 </style>
 
 <div
-  class="time bn-notify-custom bn-notify-notification-info {appMetadata.name ? `bn-notify-${appMetadata.name}` : ''}">
+  class="time bn-notify-custom bn-notify-notification-info {appMetadata.name
+    ? `bn-notify-${appMetadata.name}`
+    : ''}"
+>
   {#if notification.type === 'pending' && notification.startTime}
     -
     <span

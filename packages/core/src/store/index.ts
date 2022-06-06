@@ -1,10 +1,9 @@
 import { BehaviorSubject, Subject, Observable } from 'rxjs'
 import { distinctUntilKeyChanged, pluck, filter } from 'rxjs/operators'
 import { locale } from 'svelte-i18n'
-import type { Chain, WalletModule } from '@web3-onboard/common'
-
 import { APP_INITIAL_STATE } from '../constants'
 import { notNullish } from '../utils'
+import type { Chain, WalletModule } from '@web3-onboard/common'
 
 import type {
   AppState,
@@ -14,7 +13,10 @@ import type {
   AddWalletAction,
   UpdateAccountAction,
   UpdateAccountCenterAction,
-  Locale
+  Locale,
+  UpdateNotifyAction,
+  AddNotificationAction,
+  RemoveNotificationAction
 } from '../types'
 
 import {
@@ -28,7 +30,8 @@ import {
   UPDATE_NOTIFY,
   SET_WALLET_MODULES,
   SET_LOCALE,
-  UPDATE_NOTIFICATIONS
+  ADD_NOTIFICATION,
+  REMOVE_NOTIFICATION
 } from './constants'
 
 function reducer(state: AppState, action: Action): AppState {
@@ -74,6 +77,7 @@ function reducer(state: AppState, action: Action): AppState {
 
     case REMOVE_WALLET: {
       const update = payload as { id: string }
+
       return {
         ...state,
         wallets: state.wallets.filter(({ label }) => label !== update.id)
@@ -106,6 +110,7 @@ function reducer(state: AppState, action: Action): AppState {
 
     case UPDATE_ACCOUNT_CENTER: {
       const update = payload as UpdateAccountCenterAction['payload']
+
       return {
         ...state,
         accountCenter: {
@@ -115,11 +120,48 @@ function reducer(state: AppState, action: Action): AppState {
       }
     }
 
-    case UPDATE_NOTIFICATIONS: {
-      const update = payload as UpdateNotificationsAction['payload']
+    case UPDATE_NOTIFY: {
+      const update = payload as UpdateNotifyAction['payload']
+
       return {
         ...state,
-        notifications: [...update]
+        notify: {
+          ...state.notify,
+          ...update
+        }
+      }
+    }
+
+    case ADD_NOTIFICATION: {
+      const update = payload as AddNotificationAction['payload']
+      const notificationsUpdate = [...state.notifications]
+
+      const notificationExistsIndex = notificationsUpdate.findIndex(
+        ({ id }) => id === update.id
+      )
+
+      if (notificationExistsIndex !== -1) {
+        // if notification with same id, replace it with update
+        notificationsUpdate[notificationExistsIndex] = update
+      } else {
+        // otherwise add it to the end of array as new notification
+        notificationsUpdate.push(update)
+      }
+
+      return {
+        ...state,
+        notifications: notificationsUpdate
+      }
+    }
+
+    case REMOVE_NOTIFICATION: {
+      const id = payload as RemoveNotificationAction['payload']
+
+      return {
+        ...state,
+        notifications: state.notifications.filter(
+          notification => notification.id !== id
+        )
       }
     }
 

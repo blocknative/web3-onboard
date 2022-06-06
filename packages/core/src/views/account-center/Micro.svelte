@@ -4,9 +4,9 @@
   import questionIcon from '../../icons/question'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
-  import { internalState } from '../../internals'
+  import { configuration } from '../../configuration'
 
-  const { appMetadata } = internalState
+  const { appMetadata } = configuration
   const appIcon = (appMetadata && appMetadata.icon) || questionIcon
   $: [primaryWallet] = $wallets$
 

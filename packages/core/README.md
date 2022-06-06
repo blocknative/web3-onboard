@@ -592,7 +592,7 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --account-select-modal-margin-4: 1rem;
   --account-select-modal-margin-5: 0.5rem;
 
-  /* NOTIFY STYLES */
+  /* notify STYLES */
   --notify-onboard-font-family-normal
   --notify-onboard-gray-300
   --notify-onboard-gray-600

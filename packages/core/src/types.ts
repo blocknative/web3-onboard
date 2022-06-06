@@ -15,7 +15,7 @@ import type connect from './connect'
 import type disconnect from './disconnect'
 import type { state } from './store'
 import type en from './i18n/en.json'
-import type { EthereumTransactionData } from 'bnc-sdk'
+import type { EthereumTransactionData, Network } from 'bnc-sdk'
 
 export interface InitOptions {
   /**
@@ -46,7 +46,7 @@ export interface InitOptions {
   /**
    * Transaction notification options
    */
-  notify?: NotifyOptions
+  notify?: Partial<NotifyOptions>
 }
 
 export interface OnboardAPI {
@@ -120,14 +120,15 @@ export interface AppState {
   wallets: WalletState[]
   accountCenter: AccountCenter
   locale: Locale
+  notify: NotifyOptions
+  notifications: Notification[]
 }
 
-export type InternalState = {
+export type Configuration = {
   svelteInstance: SvelteComponent | null
   appMetadata: AppMetadata | null
   device: Device | DeviceNotBrowser
   apiKey: string
-  notify: NotifyOptions
 }
 
 export type Locale = string
@@ -154,32 +155,39 @@ export type AccountCenterOptions = {
 
 export type NotifyOptions = {
   /**
-   * Disable all transaction notifications, default: false
+   * Defines whether whether to subscribe to transaction events or not
+   * default: true
    */
-  disabled?: boolean
+  enabled: boolean
   /**
    * Callback that receives all transaction events
    * Return a custom notification based on the event
    * Or return false to disable notification for this event
    * Or return undefined for a default notification
    */
-  customizer?: (
+  transactionHandler: (
     event: EthereumTransactionData
-  ) => CustomNotification | boolean | void
+  ) => TransactionHandlerReturn
 }
 
 export type Notification = {
   id: string
+  key: string
   type: NotificationType
+  network: Network
   startTime?: number
   eventCode: string
   message: string
   autoDismiss: number
+  link?: string
+  onclick?: (event: Event) => void
 }
+
+export type TransactionHandlerReturn = CustomNotification | boolean | void
 
 export type CustomNotification = Partial<Omit<Notification, 'id' | 'startTime'>>
 
-export type NotificationType = 'pending' | 'success' | 'error' // | 'hint'
+export type NotificationType = 'pending' | 'success' | 'error' | 'hint'
 
 // ==== ACTIONS ==== //
 export type Action =
@@ -192,6 +200,9 @@ export type Action =
   | UpdateAccountCenterAction
   | SetWalletModulesAction
   | SetLocaleAction
+  | UpdateNotifyAction
+  | AddNotificationAction
+  | RemoveNotificationAction
 
 export type AddChainsAction = { type: 'add_chains'; payload: Chain[] }
 export type AddWalletAction = { type: 'add_wallet'; payload: WalletState }
@@ -229,6 +240,21 @@ export type SetWalletModulesAction = {
 export type SetLocaleAction = {
   type: 'set_locale'
   payload: string
+}
+
+export type UpdateNotifyAction = {
+  type: 'update_notify'
+  payload: Partial<NotifyOptions>
+}
+
+export type AddNotificationAction = {
+  type: 'add_notification'
+  payload: Notification
+}
+
+export type RemoveNotificationAction = {
+  type: 'remove_notification'
+  payload: Notification['id']
 }
 
 // ==== MISC ==== //

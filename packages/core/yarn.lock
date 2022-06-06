@@ -1163,10 +1163,9 @@ bn.js@^5.1.2, bn.js@^5.2.0:
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-5.2.0.tgz#358860674396c6997771a9d051fcc1b57d4ae002"
   integrity sha512-D7iWRBvnZE8ecXiLj/9wbxH7Tk79fAh8IHaTNq1RWRixsS02W+5qS+iE9yq6RYl0asXx5tw0bLhmT5pIfbSquw==
 
-bnc-sdk@^4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-4.2.0.tgz#cabc70eaf4a49dd2f695c6fcee50c833aa2af6b2"
-  integrity sha512-uoe40jLL+eYxeCAOqLgWLOowU9kyUuXyLURVgSSfIBjUNuszlz+I2wZYtvdWF+YkYphSr7L3E6WFtmwFrne+Pw==
+"bnc-sdk@https://github.com/blocknative/sdk#feature/multichain-sdk":
+  version "4.2.0-0.2.0"
+  resolved "https://github.com/blocknative/sdk#eeea5977c87e33d4b01c5e1fc07635889fcb8327"
   dependencies:
     crypto-es "^1.2.2"
     nanoid "^3.3.1"

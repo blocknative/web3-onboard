@@ -1,4 +1,3 @@
-import { internalState } from './internals'
 import { getBlocknativeSdk } from './services'
 import { state } from './store'
 import { removeWallet } from './store/actions'
@@ -14,7 +13,7 @@ async function disconnect(options: DisconnectOptions): Promise<WalletState[]> {
 
   const { label } = options
 
-  if (!internalState.notify.disabled) {
+  if (state.get().notify.enabled) {
     // handle unwatching addresses
     const sdk = await getBlocknativeSdk()
 

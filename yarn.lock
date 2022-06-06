@@ -2066,22 +2066,6 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.0"
 
-"@web3-onboard/core@^2.2.9":
-  version "2.2.9"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.2.9.tgz#16039143b9227fd7e456bfed72f46a7f19781a2d"
-  integrity sha512-bxOdiqw0fnk7jR2KqArLT5qyNoGqJe6zOUJyPFXIn+clt/OLZxKB6w9/rClkjRZoARbJUw9U7oMDnkZxtWqZIw==
-  dependencies:
-    "@web3-onboard/common" "^2.1.0"
-    bowser "^2.11.0"
-    ethers "5.5.3"
-    eventemitter3 "^4.0.7"
-    joi "17.6.0"
-    lodash.merge "^4.6.2"
-    lodash.partition "^4.6.0"
-    rxjs "^7.5.2"
-    svelte "^3.46.4"
-    svelte-i18n "^3.3.13"
-
 "@webassemblyjs/ast@1.11.1":
   version "1.11.1"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.11.1.tgz#2bfd767eae1a6996f432ff7e8d7fc75679c0b6a7"
@@ -2817,6 +2801,15 @@ bnb-javascript-sdk-nobroadcast@^2.16.14:
     uuid "^3.3.2"
     websocket-stream "^5.5.0"
 
+"bnc-sdk@https://github.com/blocknative/sdk#feature/multichain-sdk":
+  version "4.2.0-0.2.0"
+  resolved "https://github.com/blocknative/sdk#eeea5977c87e33d4b01c5e1fc07635889fcb8327"
+  dependencies:
+    crypto-es "^1.2.2"
+    nanoid "^3.3.1"
+    rxjs "^6.6.3"
+    sturdy-websocket "^0.1.12"
+
 body-parser@1.19.2, body-parser@^1.16.0:
   version "1.19.2"
   resolved "https://registry.yarnpkg.com/body-parser/-/body-parser-1.19.2.tgz#4714ccd9c157d44797b8b5607d72c0b89952f26e"
@@ -3545,6 +3538,11 @@ crypto-browserify@3.12.0, crypto-browserify@^3.12.0:
     public-encrypt "^4.0.0"
     randombytes "^2.0.0"
     randomfill "^1.0.3"
+
+crypto-es@^1.2.2:
+  version "1.2.7"
+  resolved "https://registry.yarnpkg.com/crypto-es/-/crypto-es-1.2.7.tgz#754a6d52319a94fb4eb1f119297f17196b360f88"
+  integrity sha512-UUqiVJ2gUuZFmbFsKmud3uuLcNP2+Opt+5ysmljycFCyhA0+T16XJmo1ev/t5kMChMqWh7IEvURNCqsg+SjZGQ==
 
 crypto-js@^3.1.9-1:
   version "3.3.0"
@@ -6353,6 +6351,11 @@ lodash.debounce@^4.0.8:
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
   integrity sha1-gteb/zCmfEAF/9XiUVMArZyk168=
 
+lodash.defaults@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/lodash.defaults/-/lodash.defaults-4.2.0.tgz#d09178716ffea4dde9e5fb7b37f6f0802274580c"
+  integrity sha512-qjxPLHd3r5DnsdGacqOMU6pb/avJzdh9tFX2ymgoZE27BmjXrNy/y4LoaiTeAb+O3gL8AfpJGtqfX/ae2leYYQ==
+
 lodash.merge@^4.6.2:
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
@@ -8706,6 +8709,13 @@ strip-json-comments@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
   integrity sha1-PFMZQukIwml8DsNEhYwobHygpgo=
+
+sturdy-websocket@^0.1.12:
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/sturdy-websocket/-/sturdy-websocket-0.1.12.tgz#84bb779f948b585a695f76961dc7d1c4a5e87629"
+  integrity sha512-PA7h8LdjaMoIlC5HAwLVzae4raGWgyroscV4oUpEiTtEFINcNa47/CKYT3e98o+FfsJgrclI2pYpaJrz0aaoew==
+  dependencies:
+    lodash.defaults "^4.2.0"
 
 superstruct@^0.10.12:
   version "0.10.13"

@@ -20,7 +20,7 @@ import { updateAccount, updateWallet } from './store/actions'
 import { validEnsChain } from './utils'
 import disconnect from './disconnect'
 import { state } from './store'
-import { internalState } from './internals'
+import { configuration } from './configuration'
 import { getBlocknativeSdk } from './services'
 
 export const ethersProviders: {
@@ -122,8 +122,9 @@ export function trackWallet(
       ]
     })
 
-    // if not existing account and notify, then subscribe to transaction events
-    if (!internalState.notify.disabled && !existingAccount) {
+    // if not existing account and notifications,
+    // then subscribe to transaction events
+    if (state.get().notify.enabled && !existingAccount) {
       const sdk = await getBlocknativeSdk()
 
       if (sdk) {
@@ -189,7 +190,7 @@ export function trackWallet(
 
     if (chainId === connectedWalletChain.id) return
 
-    if (!internalState.notify.disabled) {
+    if (state.get().notify.enabled) {
       const sdk = await getBlocknativeSdk()
 
       if (sdk) {

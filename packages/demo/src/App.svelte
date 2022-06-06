@@ -157,7 +157,7 @@
         position: 'topRight',
         enabled: true,
         minimal: false
-      },
+      }
     },
     // example customizing copy
     // i18n: {
@@ -170,10 +170,12 @@
     //   }
     // }
     notify: {
-      onerror: error => console.log(`Notify error: ${error.message}`),
-      enabled: true
+      enabled: true,
+      transactionHandler: transaction => {
+        console.log({ transaction })
+      }
     },
-    dappId: '12153f55-f29e-4f11-aa07-90f10da5d778'
+    apiKey: '12153f55-f29e-4f11-aa07-90f10da5d778'
   })
 
   // Subscribe to wallet updates

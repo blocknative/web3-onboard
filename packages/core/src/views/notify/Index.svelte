@@ -2,18 +2,19 @@
   import { fly } from 'svelte/transition'
   import { quintIn } from 'svelte/easing'
   import { flip } from 'svelte/animate'
-  import type { NotifyOptions, NotificationObject } from '../../types'
+  import type { NotifyOptions, Notification } from '../../types'
   import CloseButton from '../shared/CloseButton.svelte'
   import { shortenAddress, shortenEns, chainStyles } from '../../utils'
   import StatusIconBadge from './StatusIconBadge.svelte'
   import { _ } from 'svelte-i18n'
-  import { internalState$ } from '../../streams'
   import NotificationContent from './NotificationContent.svelte'
+  import { configuration } from '../../configuration'
+  import { state } from '../../store'
 
-  export let settings: NotifyOptions
   export let position: string
 
-  const { appMetadata } = internalState$.getValue()
+  const { appMetadata } = configuration
+  const notifications$ = state.select('notifications')
 
   let x: number
   let y: number
@@ -27,29 +28,6 @@
 
   x = position && position.includes('left') ? -321 : 321
   y = 0
-
-  const hash = '0xc572779D7839B998DF24fc316c89BeD3D450ED13'
-  const currentChain = '0x89'
-  const notifications: NotificationObject[] = [
-    {
-      id: 'testing123',
-      type: 'error',
-      key: 'keytesting1',
-      startTime: Date.now(),
-      eventCode: 'txPool',
-      message: 'test message'
-      // autoDismiss?: number
-    },
-    {
-      id: 'testing1232',
-      type: 'pending',
-      key: 'keytesting2',
-      startTime: Date.now(),
-      eventCode: 'txConfirmReminder',
-      message: 'test message'
-      // autoDismiss?: number
-    }
-  ]
 
   // Animation Code from V1
   // $: if ($app.mobilePosition && smallScreen) {
@@ -149,14 +127,14 @@
   }
 </style>
 
-{#if notifications.length > 0}
+{#if $notifications$.length}
   <ul
-    class="bn-notify-custom bn-notify-notifications"
+    class="bn-notify-custom bn-notify-notify"
     style={`justify-content:${
       position.includes('top') ? 'flex-start' : 'flex-end'
     };`}
   >
-    {#each notifications as notification (notification.key)}
+    {#each $notifications$ as notification (notification.key)}
       <!-- on:click={e => notification.onclick && notification.onclick(e)}
     class:bn-notify-clickable={notification.onclick} -->
       <!-- animate:flip={{ duration: 500 }} -->
@@ -170,20 +148,20 @@
           <a href={notification.link} target="_blank" rel="noreferrer noopener">
             <StatusIconBadge
               {notification}
-              chainStyles={chainStyles[currentChain]}
+              chainStyles={chainStyles[notification.network]}
             />
-            <NotificationContent {notification} {hash} />
+            <NotificationContent {notification} />
           </a>
         {:else}
           <StatusIconBadge
             {notification}
-            chainStyles={chainStyles[currentChain]}
+            chainStyles={chainStyles[notification.network]}
           />
-          <NotificationContent {notification} {hash} />
+          <NotificationContent {notification} />
         {/if}
         <!-- 
           To handle close button
-          on:click|stopPropagation={() => notifications.remove(notification.id, notification.eventCode)}>
+          on:click|stopPropagation={() => notify.remove(notification.id, notification.eventCode)}>
         -->
         <div
           class="notify-close-btn {appMetadata.name

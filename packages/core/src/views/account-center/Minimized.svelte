@@ -15,9 +15,9 @@
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
   import NetworkSelector from '../shared/NetworkSelector.svelte'
   import { state } from '../../store'
-  import { internalState } from '../../internals'
+  import { configuration } from '../../configuration'
 
-  const { appMetadata } = internalState
+  const { appMetadata } = configuration
   const appIcon = (appMetadata && appMetadata.icon) || questionIcon
   const chains = state.get().chains
 

@@ -20,14 +20,14 @@
   import { updateAccountCenter } from '../../store/actions'
   import blocknative from '../../icons/blocknative'
   import DisconnectAllConfirm from './DisconnectAllConfirm.svelte'
-  import { internalState } from '../../internals'
+  import { configuration } from '../../configuration'
 
   function disconnectAllWallets() {
     $wallets$.forEach(({ label }) => disconnect({ label }))
   }
 
   const { chains: appChains } = state.get()
-  const { appMetadata } = internalState
+  const { appMetadata } = configuration
   let disconnectConfirmModal = false
   let hideWalletRowMenu: () => void
 
@@ -45,7 +45,7 @@
   )
 
   const { position } = state.get().accountCenter
-  const { device } = internalState
+  const { device } = configuration
 </script>
 
 <style>

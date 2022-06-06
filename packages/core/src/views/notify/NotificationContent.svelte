@@ -1,13 +1,11 @@
 <script lang="ts">
-  import type { NotificationObject } from '../../types'
+  import type { Notification } from '../../types'
   import { shortenAddress, shortenEns } from '../../utils'
   import { _ } from 'svelte-i18n'
   import en from '../../i18n/en.json'
   import Timer from './Timer.svelte'
 
-  export let notification: NotificationObject
-  export let hash: string
-
+  export let notification: Notification
 </script>
 
 <style>
@@ -58,22 +56,16 @@
 
 <div class="flex flex-column notify-transaction-data">
   <span class="transaction-status">
-    {$_(`notify.transaction[${notification.eventCode}]`, {
-      default: en.notify.transaction[notification.eventCode]
-    })}
+    {notification.message}
   </span>
 
   <!-- {eventCode} -->
   <!-- ADDRESS / ENS / transaction hash -->
   <span class="hash-time">
-    <a
-      class="address-hash"
-      href="https://etherscan.io/address/{hash}"
-    >
+    <!-- <a class="address-hash" href="https://etherscan.io/address/{hash}">
       {shortenAddress(hash)}
-      <!-- {ens ? shortenEns(ens.name) : shortenAddress(address)} -->
-    </a>
+       {ens ? shortenEns(ens.name) : shortenAddress(address)} 
+    </a> -->
     <Timer {notification} />
   </span>
 </div>
-

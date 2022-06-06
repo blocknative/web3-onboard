@@ -8,8 +8,9 @@ import type {
   DisconnectOptions,
   ConnectOptionsString,
   AccountCenter,
+  TransactionHandlerReturn,
   NotifyOptions,
-  NotificationObject
+  Notification
 } from './types'
 
 const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
@@ -107,12 +108,17 @@ const accountCenterPosition = Joi.string().valid(
   'topLeft'
 )
 
+const notify = Joi.object({
+  transactionHandler: Joi.function(),
+  enabled: Joi.boolean()
+})
+
 const initOptions = Joi.object({
   wallets: walletInit,
   chains: chains.required(),
   appMetadata: appMetadata,
   i18n: Joi.object().unknown(),
-  dappId: Joi.string(),
+  apiKey: Joi.string(),
   accountCenter: Joi.object({
     desktop: Joi.object({
       enabled: Joi.boolean(),
@@ -122,14 +128,10 @@ const initOptions = Joi.object({
     mobile: Joi.object({
       enabled: Joi.boolean(),
       minimal: Joi.boolean(),
-      position: accountCenterPosition,
+      position: accountCenterPosition
     })
   }),
-  notify: Joi.object({
-    transactionHandler: Joi.function(),
-    enabled: Joi.boolean(),
-    onerror: Joi.function(),
-  })
+  notify
 })
 
 const connectOptions = Joi.object({
@@ -159,13 +161,28 @@ const accountCenter = Joi.object({
   minimal: Joi.boolean()
 })
 
-const notify = Joi.object({
-  //Transaction handler will be required?
-  transactionHandler: Joi.function(),
-  dappId: Joi.string().required(),
-  enabled: Joi.boolean(),
-  onerror: Joi.function(),
+const customNotification = Joi.object({
+  key: Joi.string(),
+  type: Joi.string().allow('pending', 'error', 'success', 'hint'),
+  eventCode: Joi.string(),
+  message: Joi.string(),
+  autoDismiss: Joi.number()
 })
+
+const notification = Joi.object({
+  id: Joi.string().required(),
+  key: Joi.string().required(),
+  type: Joi.string().allow('pending', 'error', 'success', 'hint').required(),
+  eventCode: Joi.string().required(),
+  message: Joi.string().required(),
+  autoDismiss: Joi.number().required(),
+  startTime: Joi.number()
+})
+
+const transactionHandlerReturn = Joi.any().allow(
+  customNotification,
+  Joi.boolean().allow(false)
+)
 
 type ValidateReturn = Joi.ValidationResult | null
 
@@ -217,12 +234,6 @@ export function validateAccountCenterUpdate(
   return validate(accountCenter, data)
 }
 
-export function validateNotifyUpdate(
-  data: NotifyOptions | Partial<NotifyOptions>
-): ValidateReturn {
-  return validate(notify, data)
-}
-
 export function validateWalletInit(data: WalletInit[]): ValidateReturn {
   return validate(walletInit, data)
 }
@@ -231,273 +242,18 @@ export function validateLocale(data: string): ValidateReturn {
   return validate(locale, data)
 }
 
-
-
-// Notify V1 Validations
-
-import type {
-  TransactionOptions,
-  CustomNotificationObject,
-} from './types'
-
-const validNotificationKeys = [
-  'eventCode',
-  'type',
-  'message',
-  'autoDismiss',
-  'onclick',
-  'link'
-]
-
-const validTransactionKeys = [
-  'sendTransaction',
-  'estimateGas',
-  'gasPrice',
-  'balance',
-  'contractCall',
-  'txDetails'
-]
-
-function invalidParams(
-  params: any,
-  validParams: string[],
-  functionName: string
-): void | never {
-  const invalid = Object.keys(params)
-
-  if (invalid.length > 0) {
-    throw new Error(
-      `${
-        invalid[0]
-      } is not a valid parameter for ${functionName}, must be one of the following valid parameters: ${validParams.join(
-        ', '
-      )}`
-    )
-  }
+export function validateNotifyOptions(
+  data: Partial<NotifyOptions>
+): ValidateReturn {
+  return validate(notify, data)
 }
 
-export function validateType({
-  name,
-  value,
-  type,
-  optional,
-  customValidation
-}: {
-  name: string
-  value: any
-  type: string
-  optional?: boolean
-  customValidation?: (val: any) => void | never
-}): never | void {
-  if (!optional && typeof value === 'undefined') {
-    throw new Error(`"${name}" is required`)
-  }
-
-  if (
-    typeof value !== 'undefined' &&
-    (type === 'array' ? Array.isArray(type) : typeof value !== type)
-  ) {
-    throw new Error(
-      `"${name}" must be of type: ${type}, received type: ${typeof value} from value: ${value}`
-    )
-  }
-
-  if (typeof value !== 'undefined' && customValidation) {
-    customValidation(value)
-  }
+export function validateTransactionHandlerReturn(
+  data: TransactionHandlerReturn
+): ValidateReturn {
+  return validate(transactionHandlerReturn, data)
 }
 
-function stringOrNumber(val: string | number): boolean {
-  return typeof val === 'string' || typeof val === 'number'
-}
-
-export function validateTransactionOptions(options: TransactionOptions): void {
-  validateType({ name: 'transaction options', value: options, type: 'object' })
-
-  const {
-    sendTransaction,
-    estimateGas,
-    gasPrice,
-    balance,
-    contractCall,
-    txDetails,
-    ...otherParams
-  } = options
-
-  invalidParams(otherParams, validTransactionKeys, 'Transaction Options')
-
-  validateType({
-    name: 'sendTransaction',
-    value: sendTransaction,
-    type: 'function',
-    optional: true
-  })
-
-  validateType({
-    name: 'estimateGas',
-    value: estimateGas,
-    type: 'function',
-    optional: true
-  })
-
-  validateType({
-    name: 'gasPrice',
-    value: gasPrice,
-    type: 'function',
-    optional: true
-  })
-
-  validateType({
-    name: 'balance',
-    value: balance,
-    type: 'string',
-    optional: true
-  })
-
-  validateType({
-    name: 'contractCall',
-    value: contractCall,
-    type: 'object',
-    optional: true
-  })
-
-  if (contractCall) {
-    const { methodName, params, ...otherParams } = contractCall
-    invalidParams(otherParams, ['methodName', 'params'], 'contractCall')
-
-    validateType({
-      name: 'methodName',
-      value: methodName,
-      type: 'string',
-      optional: true
-    })
-
-    validateType({
-      name: 'params',
-      value: params,
-      type: 'array',
-      optional: true
-    })
-  }
-
-  validateType({
-    name: 'txDetails',
-    value: txDetails,
-    type: 'object',
-    optional: true
-  })
-
-  if (txDetails) {
-    const { to, value, from, ...otherParams } = txDetails
-
-    invalidParams(otherParams, ['to', 'value', 'from'], 'txDetails')
-
-    validateType({
-      name: 'to',
-      value: to,
-      type: 'string',
-      optional: true,
-      customValidation: isAddress
-    })
-
-    if (typeof value !== 'undefined' && !stringOrNumber(value)) {
-      throw new Error(
-        `"value" must be of type: string | number, received type: ${typeof value} from value: ${value}`
-      )
-    }
-
-    validateType({
-      name: 'from',
-      value: from,
-      type: 'string',
-      optional: true,
-      customValidation: isAddress
-    })
-  }
-}
-
-export function validateNotificationObject(
-  notification: CustomNotificationObject | boolean | undefined
-): void {
-  validateType({
-    name: 'notification',
-    value: notification,
-    type: 'object'
-  })
-
-  if (typeof notification !== 'object') return
-
-  const {
-    eventCode,
-    type,
-    message,
-    autoDismiss,
-    onclick,
-    link,
-    ...otherParams
-  } = notification
-
-  invalidParams(otherParams, validNotificationKeys, 'notification')
-
-  validateType({
-    name: 'eventCode',
-    value: eventCode,
-    type: 'string',
-    optional: true
-  })
-
-  validateType({
-    name: 'type',
-    value: type,
-    type: 'string',
-    optional: true,
-    customValidation: validNotificationType
-  })
-
-  validateType({
-    name: 'message',
-    value: message,
-    type: 'string'
-  })
-
-  validateType({
-    name: 'autoDismiss',
-    value: autoDismiss,
-    type: 'number',
-    optional: true
-  })
-
-  validateType({
-    name: 'onclick',
-    value: onclick,
-    type: 'function',
-    optional: true
-  })
-
-  validateType({
-    name: 'link',
-    value: link,
-    type: 'string',
-    optional: true
-  })
-}
-
-function validNotificationType(type: string): void | never {
-  switch (type) {
-    case 'hint':
-    case 'pending':
-    case 'error':
-    case 'success':
-      return
-    default:
-      throw new Error(
-        `${type} is not a valid notification type, must be one of: 'hint', 'pending', 'error' or 'success'.`
-      )
-  }
-}
-
-function isAddress(address: string): void | never {
-  if (!/^(0x)?[0-9a-fA-F]{40}$/.test(address)) {
-    throw new Error(`${address} is not a valid ethereum address.`)
-  }
+export function validateNotification(data: Notification): ValidateReturn {
+  return validate(notification, data)
 }

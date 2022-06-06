@@ -9,12 +9,13 @@ import initI18N from './i18n'
 import App from './views/Index.svelte'
 import type { InitOptions, OnboardAPI } from './types'
 import { APP_INITIAL_STATE } from './constants'
-import { internalState } from './internals'
+import { configuration, updateConfiguration } from './configuration'
 
 import {
   addChains,
   setWalletModules,
   updateAccountCenter,
+  updateNotify,
   setLocale
 } from './store/actions'
 
@@ -27,7 +28,8 @@ const API = {
     select: state.select,
     actions: {
       setWalletModules,
-      setLocale
+      setLocale,
+      updateNotify
     }
   }
 }
@@ -67,7 +69,7 @@ function init(options: InitOptions): OnboardAPI {
   initI18N(i18n)
   addChains(chains)
 
-  const { device, svelteInstance } = internalState
+  const { device, svelteInstance } = configuration
 
   // update accountCenter
   if (typeof accountCenter !== 'undefined') {
@@ -88,6 +90,11 @@ function init(options: InitOptions): OnboardAPI {
     updateAccountCenter(accountCenterUpdate)
   }
 
+  // update notify
+  if (typeof notify !== undefined) {
+    updateNotify(notify)
+  }
+
   if (svelteInstance) {
     // if already initialized, need to cleanup old instance
     console.warn('Re-initializing Onboard and resetting back to initial state')
@@ -96,11 +103,11 @@ function init(options: InitOptions): OnboardAPI {
 
   const app = svelteInstance || mountApp()
 
-  // update internal state
-  internalState.appMetadata = appMetadata
-  internalState.svelteInstance = app
-  internalState.apiKey = apiKey
-  internalState.notify = notify
+  updateConfiguration({
+    appMetadata,
+    svelteInstance: app,
+    apiKey
+  })
 
   setWalletModules(wallets)
 

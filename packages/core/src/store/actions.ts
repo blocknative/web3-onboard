@@ -1,5 +1,6 @@
 import type { Chain, WalletInit, WalletModule } from '@web3-onboard/common'
 import { dispatch } from './index'
+import { configuration } from '../configuration'
 
 import type {
   Account,
@@ -12,19 +13,20 @@ import type {
   SetLocaleAction,
   UpdateAccountAction,
   UpdateAccountCenterAction,
-  UpdateNotifyAction,
   UpdateWalletAction,
   WalletState,
   NotifyOptions,
-  NotificationObject,
-  UpdateNotificationsAction
+  UpdateNotifyAction,
+  Notification,
+  AddNotificationAction,
+  RemoveNotificationAction
 } from '../types'
 
 import {
   validateAccountCenterUpdate,
   validateLocale,
-  validateNotificationObject,
-  validateNotifyUpdate,
+  validateNotification,
+  validateNotifyOptions,
   validateString,
   validateWallet,
   validateWalletInit
@@ -41,9 +43,9 @@ import {
   UPDATE_NOTIFY,
   SET_WALLET_MODULES,
   SET_LOCALE,
-  UPDATE_NOTIFICATIONS
+  ADD_NOTIFICATION,
+  REMOVE_NOTIFICATION
 } from './constants'
-import { internalState } from '../internals'
 
 export function addChains(chains: Chain[]): void {
   // chains are validated on init
@@ -144,10 +146,8 @@ export function updateAccountCenter(
   dispatch(action as UpdateAccountCenterAction)
 }
 
-export function updateNotify(
-  update: NotifyOptions | Partial<NotifyOptions>
-): void {
-  const error = validateNotifyUpdate(update)
+export function updateNotify(update: Partial<NotifyOptions>): void {
+  const error = validateNotifyOptions(update)
 
   if (error) {
     throw error
@@ -161,21 +161,32 @@ export function updateNotify(
   dispatch(action as UpdateNotifyAction)
 }
 
-export function updateNotifications(
-  update: NotificationObject[]
-): void {
-  // const error = validateNotificationObject(update)
+export function addNotification(notification: Notification): void {
+  const error = validateNotification(notification)
 
-  // if (error) {
-  //   throw error
-  // }
-
-  const action = {
-    type: UPDATE_NOTIFICATIONS,
-    payload: update
+  if (error) {
+    throw error
   }
 
-  dispatch(action as UpdateNotificationsAction)
+  const action = {
+    type: ADD_NOTIFICATION,
+    payload: notification
+  }
+
+  dispatch(action as AddNotificationAction)
+}
+
+export function removeNotification(id: Notification['id']): void {
+  if (typeof id !== 'string') {
+    throw new Error('Notification id must be of type string')
+  }
+
+  const action = {
+    type: REMOVE_NOTIFICATION,
+    payload: id
+  }
+
+  dispatch(action as RemoveNotificationAction)
 }
 
 export function resetStore(): void {
@@ -221,7 +232,7 @@ export function setLocale(locale: string): void {
 
 // ==== HELPERS ==== //
 export function initializeWalletModules(modules: WalletInit[]): WalletModule[] {
-  const { device } = internalState
+  const { device } = configuration
   return modules.reduce((acc, walletInit) => {
     const initialized = walletInit({ device })
 

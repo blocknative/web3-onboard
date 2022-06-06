@@ -26,17 +26,19 @@
   import InstallWallet from './InstallWallet.svelte'
   import SelectingWallet from './SelectingWallet.svelte'
   import Sidebar from './Sidebar.svelte'
+  import { configuration } from '../../configuration'
+
   import type {
     ConnectOptions,
     i18n,
     WalletState,
     WalletWithLoadingIcon
   } from '../../types'
-  import { internalState } from '../../internals'
+  import { getBlocknativeSdk } from '../../services'
 
   export let autoSelect: ConnectOptions['autoSelect']
 
-  const { appMetadata } = internalState
+  const { appMetadata } = configuration
   const { walletModules } = state.get()
 
   let connectionRejected = false
@@ -172,6 +174,22 @@
       // canceled previous request
       if (!address) {
         return
+      }
+
+      if (state.get().notify.enabled) {
+        const sdk = await getBlocknativeSdk()
+
+        if (sdk) {
+          const wallet = state
+            .get()
+            .wallets.find(wallet => wallet.label === label)
+
+          sdk.subscribe({
+            id: address,
+            chainId: wallet.chains[0].id,
+            type: 'account'
+          })
+        }
       }
 
       const chain = await getChainId(provider)
