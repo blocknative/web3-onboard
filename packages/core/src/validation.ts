@@ -13,7 +13,6 @@ import type {
 const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
 const chainNamespace = Joi.string().valid('evm')
 const unknownObject = Joi.object().unknown()
-// const address = Joi.string().regex(/^0x[a-fA-F0-9]{40}$/)
 
 const chain = Joi.object({
   namespace: chainNamespace,
@@ -100,9 +99,6 @@ const walletModule = Joi.object({
 const walletInit = Joi.array().items(Joi.function()).required()
 
 const locale = Joi.string()
-
-// const addresses = 
-//Joi.array().items(Joi.string().pattern(/^0x[a-fA-F0-9]{40}$/))
 
 const accountCenterPosition = Joi.string().valid(
   'topRight',
