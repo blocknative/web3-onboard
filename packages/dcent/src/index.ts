@@ -61,7 +61,6 @@ function dcent({
   return helpers => {
     const { device } = helpers
     const isMobile = device.type === 'mobile'
-    // console.log('device.type ', device.type)
     let accounts: Account[] | undefined
     return {
       label: "D'CENT",
@@ -91,7 +90,6 @@ function dcent({
         const { default: EthDcentKeyring } = await import('eth-dcent-keyring')
         const dcentKeyring = new EthDcentKeyring({})
 
-        // console.log('dcentKeyring ', dcentKeyring)
         const { TransactionFactory: Transaction } = await import(
           '@ethereumjs/tx'
         )
