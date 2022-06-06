@@ -255,7 +255,7 @@
     crc-32 "^1.2.0"
     ethereumjs-util "^7.1.4"
 
-"@ethereumjs/common@^2.3.0", "@ethereumjs/common@^2.6.3":
+"@ethereumjs/common@^2.3.0", "@ethereumjs/common@^2.3.1", "@ethereumjs/common@^2.6.3":
   version "2.6.3"
   resolved "https://registry.yarnpkg.com/@ethereumjs/common/-/common-2.6.3.tgz#39ddece7300b336276bad6c02f6a9f1a082caa05"
   integrity sha512-mQwPucDL7FDYIg9XQ8DL31CnIYZwGhU5hyOO5E+BMmT71G0+RHvIT5rIkLBirJEKxV6+Rcf9aEIY0kXInxUWpQ==
@@ -270,6 +270,14 @@
   dependencies:
     "@ethereumjs/common" "^2.0.0"
     ethereumjs-util "^7.0.7"
+
+"@ethereumjs/tx@3.2.1":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@ethereumjs/tx/-/tx-3.2.1.tgz#65f5f1c11541764f08377a94ba4b0dcbbd67739e"
+  integrity sha512-i9V39OtKvwWos1uVNZxdVhd7zFOyzFLjgt69CoiOY0EmXugS0HjO3uxpLBSglDKFMRriuGqw6ddKEv+RP1UNEw==
+  dependencies:
+    "@ethereumjs/common" "^2.3.1"
+    ethereumjs-util "^7.0.10"
 
 "@ethereumjs/tx@3.4.0":
   version "3.4.0"
@@ -3607,6 +3615,13 @@ data-urls@^1.1.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
+dcent-web-connector@^0.11.2:
+  version "0.11.3"
+  resolved "https://registry.yarnpkg.com/dcent-web-connector/-/dcent-web-connector-0.11.3.tgz#7decb528f4db16edfc199d0a45fd702920459ea7"
+  integrity sha512-5sXBLwthDWsieJeJa9zkqiP9aspybeD/fc1RLij1sfzR2vJjDeLDIfXJKyYc0Tqk73GijllrHpasgKxhO2qKEw==
+  dependencies:
+    events "^3.0.0"
+
 debug@2.6.9, debug@^2.2.0:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
@@ -4335,6 +4350,15 @@ eth-crypto@^2.1.0:
     ethers "5.5.4"
     secp256k1 "4.0.3"
 
+eth-dcent-keyring@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/eth-dcent-keyring/-/eth-dcent-keyring-0.2.2.tgz#4af7ccd9089411b0ca8366a7401a7c0d0acb6ef7"
+  integrity sha512-dPrR2Umx/OnOeycaoYx7O0Tzejzpya7dy0cx9+tjwsXTU8j1yIPfgUhfpHGX4k3xifK0u48OB47jyZdaGXNgVA==
+  dependencies:
+    "@ethereumjs/tx" "3.2.1"
+    dcent-web-connector "^0.11.2"
+    ethereumjs-util "7.0.9"
+
 eth-ens-namehash@2.0.8:
   version "2.0.8"
   resolved "https://registry.yarnpkg.com/eth-ens-namehash/-/eth-ens-namehash-2.0.8.tgz#229ac46eca86d52e0c991e7cb2aef83ff0f68bcf"
@@ -4559,6 +4583,18 @@ ethereumjs-util@5.2.0:
     rlp "^2.0.0"
     safe-buffer "^5.1.1"
     secp256k1 "^3.0.1"
+
+ethereumjs-util@7.0.9:
+  version "7.0.9"
+  resolved "https://registry.yarnpkg.com/ethereumjs-util/-/ethereumjs-util-7.0.9.tgz#2038baeb30f370a3e576ec175bd70bbbb6807d42"
+  integrity sha512-cRqvYYKJoitq6vMKMf8pXeVwvTrX+dRD0JwHaYqm8jvogK14tqIoCWH/KUHcRwnVxVXEYF/o6pup5jRG4V0xzg==
+  dependencies:
+    "@types/bn.js" "^5.1.0"
+    bn.js "^5.1.2"
+    create-hash "^1.1.2"
+    ethereum-cryptography "^0.1.3"
+    ethjs-util "0.1.6"
+    rlp "^2.2.4"
 
 ethereumjs-util@7.1.3:
   version "7.1.3"
