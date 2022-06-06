@@ -1,0 +1,27 @@
+{
+  "name": "@web3-onboard/dcent",
+  "version": "1.0.0-alpha.1",
+  "description": "D'CENT module for web3-onboard",
+  "module": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w",
+    "type-check": "tsc --noEmit"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "@web3-onboard/common": "^2.0.0",
+    "@ethereumjs/common": "^2.6.1",
+    "@ethereumjs/tx": "^3.4.0",
+    "@ethersproject/providers": "^5.5.0",
+    "eth-dcent-keyring": "^0.2.2"
+  }
+}
