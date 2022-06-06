@@ -35,7 +35,7 @@ const generateAccounts = async (
   provider: providers.StaticJsonRpcProvider
 ): Promise<Account[]> => {
   const accounts = []
-  
+
   const addressList = await keyring.addAccounts()
   const derivationPath = DEFAULT_BASE_PATH
   const account = {
@@ -48,8 +48,7 @@ const generateAccounts = async (
   }
 
   accounts.push(account)
-  
-  // console.log('generateAccounts/accounts = ', accounts)
+
   return accounts
 }
 
@@ -65,22 +64,24 @@ function dcent({
     // console.log('device.type ', device.type)
     let accounts: Account[] | undefined
     return {
-      label: 'D\'CENT',
+      label: "D'CENT",
       getIcon,
       getInterface: async ({ EventEmitter, chains }) => {
-
         const eventEmitter = new EventEmitter()
 
         if (isMobile) {
-          const provider = window.ethereum as EIP1193Provider 
-          if(isMobile && (!provider)) {
-            location.replace("https://link.dcentwallet.com/DAppBrowser/?url=" + document.location)
+          const provider = window.ethereum as EIP1193Provider
+          if (isMobile && !provider) {
+            location.replace(
+              'https://link.dcentwallet.com/DAppBrowser/?url=' +
+                document.location
+            )
           }
           provider.on = eventEmitter.on.bind(eventEmitter)
           return {
             provider
           }
-        } 
+        }
 
         const { StaticJsonRpcProvider } = await import(
           '@ethersproject/providers'
@@ -89,23 +90,21 @@ function dcent({
 
         const { default: EthDcentKeyring } = await import('eth-dcent-keyring')
         const dcentKeyring = new EthDcentKeyring({})
-        
+
         // console.log('dcentKeyring ', dcentKeyring)
         const { TransactionFactory: Transaction } = await import(
           '@ethereumjs/tx'
         )
-        
+
         let currentChain: Chain = chains[0]
         const scanAccounts = async ({
-          derivationPath,
-          chainId,
-          asset
+          chainId
         }: ScanAccountsOptions): Promise<Account[]> => {
           currentChain =
             chains.find(({ id }: Chain) => id === chainId) || currentChain
 
           const provider = new StaticJsonRpcProvider(currentChain.rpcUrl)
-          
+
           return generateAccounts(dcentKeyring, provider)
         }
 
@@ -218,23 +217,22 @@ function dcent({
                 from,
                 transaction
               )
-        
-              // console.log(`0x${result.serialize().toString('hex')}`)
+
               return `0x${result.serialize().toString('hex')}`
             } catch (err) {
               throw err
             }
           },
           eth_sendTransaction: async ({ baseRequest, params }) => {
-            const signedTx = await provider.request({
+            const signedTx = (await provider.request({
               method: 'eth_signTransaction',
               params
-            }) as string
+            })) as string
 
-            const transactionHash = await baseRequest({
+            const transactionHash = (await baseRequest({
               method: 'eth_sendRawTransaction',
               params: [signedTx]
-            }) as string
+            })) as string
 
             return transactionHash
           },
@@ -273,7 +271,7 @@ function dcent({
               accounts[0]
 
             const opt = {
-              version: "V4"
+              version: 'V4'
             }
             return dcentKeyring.signTypedData(account.address, typedData, opt)
           },
@@ -290,11 +288,10 @@ function dcent({
         })
 
         provider.on = eventEmitter.on.bind(eventEmitter)
-      
+
         return {
           provider
         }
-      
       }
     }
   }
