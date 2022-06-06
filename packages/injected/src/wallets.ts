@@ -248,21 +248,6 @@ const blockwallet: InjectedWalletModule = {
   platforms: ['desktop']
 }
 
-const dcent: InjectedWalletModule = {
-  label: ProviderLabel.Dcent,
-  injectedNamespace: InjectedNameSpace.Ethereum,
-  checkProviderIdentity: ({ provider }) =>
-    !!provider && !!provider[ProviderIdentityFlag.Dcent],
-  getIcon: async () => (await import('./icons/dcent.js')).default,
-  getInterface: async () => ({
-    provider: createEIP1193Provider(window.ethereum, {
-      wallet_switchEthereumChain: UNSUPPORTED_METHOD,
-      eth_selectAccounts: UNSUPPORTED_METHOD
-    })
-  }),
-  platforms: ['mobile']
-}
-
 const frame: InjectedWalletModule = {
   label: ProviderLabel.Frame,
   injectedNamespace: InjectedNameSpace.Ethereum,
@@ -491,7 +476,6 @@ const wallets = [
   bitpie,
   blockwallet,
   brave,
-  dcent,
   frame,
   huobiwallet,
   hyperpay,
