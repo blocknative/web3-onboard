@@ -12,7 +12,11 @@ import {
 } from '@web3-onboard/common'
 
 import type { providers } from 'ethers'
-import type { CustomWindow } from '@web3-onboard/injected-wallets/src/types'
+
+interface CustomWindow extends Window {
+  ethereum: EIP1193Provider
+}
+  
 declare const window: CustomWindow
 
 const DEFAULT_BASE_PATH = "m/44'/60'/0'/0/0"
