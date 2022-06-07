@@ -15,6 +15,13 @@
   const notify$ = state
     .select('notify')
     .pipe(startWith(state.get().notify), shareReplay(1))
+
+  const accountCenterPositions = {
+    topLeft: 'top: 0; left: 0;',
+    topRight: 'top: 0; right: 0;',
+    bottomRight: 'bottom: 0; right: 0;',
+    bottomLeft: 'bottom: 0; left: 0;'
+  }
 </script>
 
 <style>
@@ -240,6 +247,18 @@
     color: var(--onboard-gray-600, var(--gray-600));
     background-color: var(--onboard-gray-300, var(--gray-300));
   }
+
+  .container {
+    padding: 16px;
+    font-family: var(--onboard-font-family-normal, var(--font-family-normal));
+    width: 100%;
+  }
+
+  @media all and (min-width: 428px) {
+    .container {
+      max-width: 352px;
+    }
+  }
 </style>
 
 {#if $connectWallet$.inProgress}
@@ -254,22 +273,23 @@
   <SwitchChain />
 {/if}
 
-{#if $accountCenter$.enabled && $wallets$.length}
-  <AccountCenter settings={$accountCenter$}>
-    {#if $notify$.enabled}
-      {#if $accountCenter$.position.includes('bottom')}
-        <Notify
-          slot="notify-top"
-          settings={$notify$}
-          position={$accountCenter$.position}
-        />
-      {:else}
-        <Notify
-          slot="notify-bottom"
-          settings={$notify$}
-          position={$accountCenter$.position}
-        />
-      {/if}
-    {/if}
-  </AccountCenter>
-{/if}
+<div
+  class="container flex flex-column fixed"
+  style="{accountCenterPositions[
+    $accountCenter$.position
+  ]} width: {!$accountCenter$.expanded && $accountCenter$.minimal
+    ? 'auto'
+    : '100%'}"
+>
+  {#if $notify$.enabled && $accountCenter$.position.includes('bottom')}
+    <Notify position={$accountCenter$.position} />
+  {/if}
+
+  {#if $accountCenter$.enabled && $wallets$.length}
+    <AccountCenter settings={$accountCenter$} />
+  {/if}
+
+  {#if $notify$.enabled && $accountCenter$.position.includes('top')}
+    <Notify position={$accountCenter$.position} />
+  {/if}
+</div>

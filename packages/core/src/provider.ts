@@ -20,7 +20,6 @@ import { updateAccount, updateWallet } from './store/actions'
 import { validEnsChain } from './utils'
 import disconnect from './disconnect'
 import { state } from './store'
-import { configuration } from './configuration'
 import { getBlocknativeSdk } from './services'
 
 export const ethersProviders: {

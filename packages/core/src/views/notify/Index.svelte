@@ -4,17 +4,23 @@
   import { flip } from 'svelte/animate'
   import type { NotifyOptions, Notification } from '../../types'
   import CloseButton from '../shared/CloseButton.svelte'
-  import { shortenAddress, shortenEns, chainStyles } from '../../utils'
+  import {
+    shortenAddress,
+    shortenEns,
+    chainStyles,
+    networkToChainId
+  } from '../../utils'
   import StatusIconBadge from './StatusIconBadge.svelte'
   import { _ } from 'svelte-i18n'
   import NotificationContent from './NotificationContent.svelte'
   import { configuration } from '../../configuration'
   import { state } from '../../store'
+  import { removeNotification } from '../../store/actions'
+  import { startWith } from 'rxjs'
 
   export let position: string
 
-  const { appMetadata } = configuration
-  const notifications$ = state.select('notifications')
+  const notifications$ = state.select('notifications').pipe(startWith([]))
 
   let x: number
   let y: number
@@ -135,12 +141,14 @@
     };`}
   >
     {#each $notifications$ as notification (notification.key)}
-      <!-- on:click={e => notification.onclick && notification.onclick(e)}
-    class:bn-notify-clickable={notification.onclick} -->
-      <!-- animate:flip={{ duration: 500 }} -->
       <li
+        class:bn-notify-clickable={notification.onclick}
+        animate:flip={{ duration: 500 }}
+        on:click={e => notification.onclick && notification.onclick(e)}
         class="bn-notify-custom bn-notify-notification {`bn-notify-notification-${notification.type}`}
-          {appMetadata.name ? `bn-notify-${appMetadata.name}` : ''}"
+          {configuration.appMetadata.name
+          ? `bn-notify-${configuration.appMetadata.name}`
+          : ''}"
         in:fly={{ duration: 1200, delay: 300, x, y, easing: elasticOut }}
         out:fly={{ duration: 400, x, y, easing: quintIn }}
       >
@@ -148,24 +156,22 @@
           <a href={notification.link} target="_blank" rel="noreferrer noopener">
             <StatusIconBadge
               {notification}
-              chainStyles={chainStyles[notification.network]}
+              chainStyles={chainStyles[networkToChainId[notification.network]]}
             />
             <NotificationContent {notification} />
           </a>
         {:else}
           <StatusIconBadge
             {notification}
-            chainStyles={chainStyles[notification.network]}
+            chainStyles={chainStyles[networkToChainId[notification.network]]}
           />
           <NotificationContent {notification} />
         {/if}
-        <!-- 
-          To handle close button
-          on:click|stopPropagation={() => notify.remove(notification.id, notification.eventCode)}>
-        -->
+
         <div
-          class="notify-close-btn {appMetadata.name
-            ? `bn-notify-${appMetadata.name}`
+          on:click|stopPropagation={() => removeNotification(notification.id)}
+          class="notify-close-btn {configuration.appMetadata.name
+            ? `bn-notify-${configuration.appMetadata.name}`
             : ''}"
         >
           <CloseButton width={'12px'} />

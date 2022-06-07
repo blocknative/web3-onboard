@@ -94,6 +94,19 @@ export const chainIdToLabel: Record<string, string> = {
   '0xa4b1': 'Arbitrum'
 }
 
+export const networkToChainId: Record<string, ChainId> = {
+  main: '0x1',
+  ropsten: '0x3',
+  rinkeby: '0x4',
+  goerli: '0x5',
+  kovan: '0x2a',
+  xdai: '0x64',
+  'bsc-main': '0x38',
+  'matic-main': '0x89',
+  'fantom-main': '0xfa',
+  'matic-mumbai': '0x80001'
+}
+
 export const chainStyles: Record<string, ChainStyle> = {
   '0x1': {
     icon: ethereumIcon,

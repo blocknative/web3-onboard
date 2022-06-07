@@ -176,23 +176,19 @@
         return
       }
 
+      const chain = await getChainId(provider)
+
       if (state.get().notify.enabled) {
         const sdk = await getBlocknativeSdk()
 
         if (sdk) {
-          const wallet = state
-            .get()
-            .wallets.find(wallet => wallet.label === label)
-
           sdk.subscribe({
             id: address,
-            chainId: wallet.chains[0].id,
+            chainId: chain,
             type: 'account'
           })
         }
       }
-
-      const chain = await getChainId(provider)
 
       const update: Pick<WalletState, 'accounts' | 'chains'> = {
         accounts: [{ address, ens: null, balance: null }],

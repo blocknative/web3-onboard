@@ -2803,7 +2803,7 @@ bnb-javascript-sdk-nobroadcast@^2.16.14:
 
 "bnc-sdk@https://github.com/blocknative/sdk#feature/multichain-sdk":
   version "4.2.0-0.2.0"
-  resolved "https://github.com/blocknative/sdk#eeea5977c87e33d4b01c5e1fc07635889fcb8327"
+  resolved "https://github.com/blocknative/sdk#05ed1038c4f486454b0f48721fc8ed3a80b62cfb"
   dependencies:
     crypto-es "^1.2.2"
     nanoid "^3.3.1"

@@ -1,5 +1,6 @@
 import type { MultichainSDK } from 'bnc-sdk'
 import { configuration } from './configuration'
+import { handleTransactionUpdates } from './notify'
 
 let blocknativeSdk: MultichainSDK
 
@@ -17,6 +18,8 @@ export async function getBlocknativeSdk(): Promise<MultichainSDK | null> {
     blocknativeSdk = new MultichainSDK({
       apiKey: configuration.apiKey
     })
+
+    blocknativeSdk.transactions$.subscribe(handleTransactionUpdates)
   }
 
   return blocknativeSdk

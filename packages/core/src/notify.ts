@@ -3,31 +3,31 @@ import { get } from 'svelte/store'
 import { _ } from 'svelte-i18n'
 import defaultCopy from './i18n/en.json'
 import type { EthereumTransactionData } from 'bnc-sdk'
-import type { Observable } from 'rxjs'
 
 import type {
   CustomNotification,
   Notification,
   NotificationType
 } from './types'
-import { configuration } from './configuration'
+
 import { validateTransactionHandlerReturn } from './validation'
 import { state } from './store'
+import { addNotification } from './store/actions'
 
 export function handleTransactionUpdates(
-  transactions$: Observable<EthereumTransactionData>
+  transaction: EthereumTransactionData
 ): void {
-  transactions$.subscribe(transaction => {
-    const customized = state.get().notify.transactionHandler(transaction)
-    const invalid = validateTransactionHandlerReturn(customized)
+  const customized = state.get().notify.transactionHandler(transaction)
+  const invalid = validateTransactionHandlerReturn(customized)
 
-    if (invalid) {
-      console.error(invalid)
-      return
-    }
+  if (invalid) {
+    console.error(invalid)
+    return
+  }
 
-    const notification = transactionEventToNotification(transaction, customized)
-  })
+  const notification = transactionEventToNotification(transaction, customized)
+
+  addNotification(notification)
 }
 
 export function transactionEventToNotification(
@@ -65,7 +65,7 @@ export function transactionEventToNotification(
   const formatterOptions =
     counterparty && value
       ? {
-          messageId: `watched['${eventCode}']`,
+          messageId: `notify.watched['${eventCode}']`,
           values: {
             verb:
               eventCode === 'txConfirmed'
@@ -82,7 +82,7 @@ export function transactionEventToNotification(
           }
         }
       : {
-          messageId: `transaction['${eventCode}']`,
+          messageId: `notify.transaction['${eventCode}']`,
           values: { formattedValue, asset }
         }
 

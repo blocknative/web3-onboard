@@ -176,6 +176,7 @@ const notification = Joi.object({
   eventCode: Joi.string().required(),
   message: Joi.string().required(),
   autoDismiss: Joi.number().required(),
+  network: Joi.string().required(),
   startTime: Joi.number()
 })
 
