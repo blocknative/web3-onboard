@@ -58,7 +58,7 @@
 
   .wallets-section {
     width: 100%;
-    border-radius: 16px;
+    border-radius: var(--onboard-border-radius-3, var(--border-radius-3));
   }
 
   .p5 {
@@ -117,7 +117,7 @@
 
   .network-container {
     margin: 0 1px 1px 1px;
-    border-radius: 15px;
+    border-radius: var(--onboard-border-radius-3, var(--border-radius-3));
     color: var(--onboard-gray-500, var(--gray-500));
   }
 
