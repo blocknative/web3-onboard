@@ -2074,6 +2074,31 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.0"
 
+"@web3-onboard/core@^2.2.10-alpha.1", "@web3-onboard/core@^2.2.9":
+  version "2.2.10"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.2.10.tgz#61dcc912062548db38d67e228637a27c59122080"
+  integrity sha512-sQF14OkT+4ibefXPQ7ueZW7DcKbbCzQXZW64FZ+ETEpgKCYjVarqpcMlp5YB4jv49cWWqM8qXRoskaqz01PktQ==
+  dependencies:
+    "@web3-onboard/common" "^2.1.0"
+    bowser "^2.11.0"
+    ethers "5.5.3"
+    eventemitter3 "^4.0.7"
+    joi "17.6.0"
+    lodash.merge "^4.6.2"
+    lodash.partition "^4.6.0"
+    rxjs "^7.5.2"
+    svelte "^3.46.4"
+    svelte-i18n "^3.3.13"
+
+"@web3-onboard/injected-wallets@^2.0.7":
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.0.7.tgz#d0f29adbf96b95b45bffb495fdd0c56821378e3d"
+  integrity sha512-jP7e6jpM2y/m88AxT40m3Nzc378gEympUXaKU1BESq1DWWJSkjNsaYKdp/2ADTajHUqoPB99jwiAPB0DNs2dLg==
+  dependencies:
+    "@web3-onboard/common" "^2.0.7"
+    joi "^17.4.2"
+    lodash.uniqby "^4.7.0"
+
 "@webassemblyjs/ast@1.11.1":
   version "1.11.1"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.11.1.tgz#2bfd767eae1a6996f432ff7e8d7fc75679c0b6a7"
