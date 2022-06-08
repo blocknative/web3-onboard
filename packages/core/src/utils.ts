@@ -27,7 +27,12 @@ import hourglass from './icons/hourglass'
 import checkmark from './icons/checkmark'
 import error from './icons/error'
 
-import type { ChainStyle, ConnectedChain, DeviceNotBrowser } from './types'
+import type {
+  ChainStyle,
+  ConnectedChain,
+  DeviceNotBrowser,
+  NotifyEventStyles
+} from './types'
 
 export function getDevice(): Device | DeviceNotBrowser {
   if (typeof window !== 'undefined') {
@@ -199,7 +204,7 @@ export function initializeWalletModules(
   }, [] as WalletModule[])
 }
 
-export const defaultNotifyEventStyles = {
+export const defaultNotifyEventStyles: Record<string, NotifyEventStyles> = {
   pending: {
     backgroundColor: 'var(--onboard-primary-700, var(--primary-700))',
     borderColor: '#6370E5',
