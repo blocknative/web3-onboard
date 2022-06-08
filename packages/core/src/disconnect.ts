@@ -21,7 +21,11 @@ async function disconnect(options: DisconnectOptions): Promise<WalletState[]> {
       const wallet = state.get().wallets.find(wallet => wallet.label === label)
 
       wallet.accounts.forEach(({ address }) => {
-        sdk.unsubscribe({ id: address, chainId: wallet.chains[0].id })
+        sdk.unsubscribe({
+          id: address,
+          chainId: wallet.chains[0].id,
+          timeout: 60000
+        })
       })
     }
   }
