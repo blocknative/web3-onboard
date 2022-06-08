@@ -79,7 +79,7 @@ function keystone({
           '@ethersproject/providers'
         )
 
-        const { default: AirGappedKeyring } = await import(
+        let { default: AirGappedKeyring } = await import(
           '@keystonehq/eth-keyring'
         )
 
