@@ -207,6 +207,10 @@
         connectionRejected = true
         if (autoSelect) {
           walletToAutoSelect = null
+
+          if (autoSelect.disableModals) {
+            connectWallet$.next({ inProgress: false })
+          }
         }
         return
       }

@@ -203,6 +203,7 @@ export type Action =
   | UpdateNotifyAction
   | AddNotificationAction
   | RemoveNotificationAction
+  | UpdateAllWalletsAction
 
 export type AddChainsAction = { type: 'add_chains'; payload: Chain[] }
 export type AddWalletAction = { type: 'add_wallet'; payload: WalletState }
@@ -255,6 +256,11 @@ export type AddNotificationAction = {
 export type RemoveNotificationAction = {
   type: 'remove_notification'
   payload: Notification['id']
+}
+
+export type UpdateAllWalletsAction = {
+  type: 'update_balance'
+  payload: WalletState[]
 }
 
 // ==== MISC ==== //

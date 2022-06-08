@@ -12,6 +12,7 @@
   import walletConnectModule from '@web3-onboard/walletconnect'
   import coinbaseModule from '@web3-onboard/coinbase'
   import magicModule from '@web3-onboard/magic'
+  import dcentModule from '@web3-onboard/dcent'
   import {
     recoverAddress,
     arrayify,
@@ -87,6 +88,8 @@
     // for more info see the @web3-onboard/magic docs
   })
 
+  const dcent = dcentModule()
+
   const onboard = Onboard({
     wallets: [
       ledger,
@@ -100,7 +103,8 @@
       fortmatic,
       portis,
       torus,
-      gnosis
+      gnosis,
+      dcent 
     ],
     chains: [
       {
@@ -273,6 +277,9 @@
     >
     <button on:click={() => onboard.setChain({ chainId: '0x89' })}
       >Set Chain to Matic</button
+    >
+    <button on:click={() => onboard.state.actions.updateBalances()}
+      >Update Wallet Balance</button
     >
   {/if}
 

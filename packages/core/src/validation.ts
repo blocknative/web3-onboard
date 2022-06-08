@@ -67,6 +67,8 @@ const wallet = Joi.object({
   chains: Joi.array().items(connectedChain)
 })
 
+const wallets = Joi.array().items(wallet)
+
 const recommendedWallet = Joi.object({
   name: Joi.string().required(),
   url: Joi.string().uri().required()
@@ -257,4 +259,8 @@ export function validateTransactionHandlerReturn(
 
 export function validateNotification(data: Notification): ValidateReturn {
   return validate(notification, data)
+}
+
+export function validateUpdateBalances(data: WalletState[]): ValidateReturn {
+  return validate(wallets, data)
 }

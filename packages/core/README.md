@@ -416,6 +416,18 @@ const onboard = Onboard({
 onboard.state.actions.setWalletModules([ledger, trezor])
 ```
 
+**updatedBalances**
+You may decide to get updated balances for connected wallets after a user action by calling the `updatedBalances` function, which expects a conditional array of addresses.
+
+```
+onboard.state.actions.updateBalances() // update all balances for all connected addresses
+onboard.state.actions.updateBalances(['0xfdadfadsadsadsadasdsa']) // update balance for one address
+onboard.state.actions.updateBalances([
+  '0xfdadfadsadsadsadasdsa',
+  '0xfdsafdsfdsfdsfds'
+]) // update balance for two addresses
+```
+
 ## Setting the User's Chain/Network
 
 When initializing Onboard you define a list of chains/networks that your app supports. If you would like to prompt the user to switch to one of those chains, you can use the `setChain` method on an initialized instance of Onboard:

@@ -19,6 +19,8 @@ import {
   setLocale
 } from './store/actions'
 
+import updateBalances from './updateBalances'
+
 const API = {
   connectWallet,
   disconnectWallet,
@@ -29,7 +31,8 @@ const API = {
     actions: {
       setWalletModules,
       setLocale,
-      updateNotify
+      updateNotify,
+      updateBalances
     }
   }
 }

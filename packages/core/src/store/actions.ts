@@ -19,7 +19,8 @@ import type {
   UpdateNotifyAction,
   Notification,
   AddNotificationAction,
-  RemoveNotificationAction
+  RemoveNotificationAction,
+  UpdateAllWalletsAction
 } from '../types'
 
 import {
@@ -29,7 +30,8 @@ import {
   validateNotifyOptions,
   validateString,
   validateWallet,
-  validateWalletInit
+  validateWalletInit,
+  validateUpdateBalances
 } from '../validation'
 
 import {
@@ -44,7 +46,8 @@ import {
   SET_WALLET_MODULES,
   SET_LOCALE,
   ADD_NOTIFICATION,
-  REMOVE_NOTIFICATION
+  REMOVE_NOTIFICATION,
+  UPDATE_ALL_WALLETS
 } from './constants'
 
 export function addChains(chains: Chain[]): void {
@@ -228,6 +231,21 @@ export function setLocale(locale: string): void {
   }
 
   dispatch(action as SetLocaleAction)
+}
+
+export function updateAllWallets(wallets: WalletState[]): void {
+  const error = validateUpdateBalances(wallets)
+
+  if (error) {
+    throw error
+  }
+
+  const action = {
+    type: UPDATE_ALL_WALLETS,
+    payload: wallets
+  }
+
+  dispatch(action as UpdateAllWalletsAction)
 }
 
 // ==== HELPERS ==== //

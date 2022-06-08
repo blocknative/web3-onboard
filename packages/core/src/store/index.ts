@@ -16,7 +16,8 @@ import type {
   Locale,
   UpdateNotifyAction,
   AddNotificationAction,
-  RemoveNotificationAction
+  RemoveNotificationAction,
+  UpdateAllWalletsAction
 } from '../types'
 
 import {
@@ -31,7 +32,8 @@ import {
   SET_WALLET_MODULES,
   SET_LOCALE,
   ADD_NOTIFICATION,
-  REMOVE_NOTIFICATION
+  REMOVE_NOTIFICATION,
+  UPDATE_ALL_WALLETS
 } from './constants'
 
 function reducer(state: AppState, action: Action): AppState {
@@ -102,6 +104,14 @@ function reducer(state: AppState, action: Action): AppState {
         return wallet
       })
 
+      return {
+        ...state,
+        wallets: updatedWallets
+      }
+    }
+
+    case UPDATE_ALL_WALLETS: {
+      const updatedWallets = payload as UpdateAllWalletsAction['payload']
       return {
         ...state,
         wallets: updatedWallets
