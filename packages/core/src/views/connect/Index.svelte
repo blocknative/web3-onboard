@@ -182,11 +182,15 @@
         const sdk = await getBlocknativeSdk()
 
         if (sdk) {
-          sdk.subscribe({
-            id: address,
-            chainId: chain,
-            type: 'account'
-          })
+          try {
+            sdk.subscribe({
+              id: address,
+              chainId: chain,
+              type: 'account'
+            })
+          } catch (error) {
+            // unsupported network for transaction events
+          }
         }
       }
 

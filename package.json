@@ -2,7 +2,7 @@
   "name": "web3-onboard-monorepo",
   "private": true,
   "workspaces": [
-    "./packages/*"
+    "packages/*"
   ],
   "scripts": {
     "install-m1-mac": "yarn install --ignore-optional",

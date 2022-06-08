@@ -130,12 +130,15 @@ export function trackWallet(
         const wallet = state
           .get()
           .wallets.find(wallet => wallet.label === label)
-
-        sdk.subscribe({
-          id: address,
-          chainId: wallet.chains[0].id,
-          type: 'account'
-        })
+        try {
+          sdk.subscribe({
+            id: address,
+            chainId: wallet.chains[0].id,
+            type: 'account'
+          })
+        } catch (error) {
+          // unsupported network for transaction events
+        }
       }
     }
   })
@@ -209,11 +212,15 @@ export function trackWallet(
 
         // resubscribe for new chainId
         wallet.accounts.forEach(({ address }) => {
-          sdk.subscribe({
-            id: address,
-            chainId: chainId,
-            type: 'account'
-          })
+          try {
+            sdk.subscribe({
+              id: address,
+              chainId: chainId,
+              type: 'account'
+            })
+          } catch (error) {
+            // unsupported network for transaction events
+          }
         })
       }
     }

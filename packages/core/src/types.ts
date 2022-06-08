@@ -185,7 +185,9 @@ export type Notification = {
 
 export type TransactionHandlerReturn = CustomNotification | boolean | void
 
-export type CustomNotification = Partial<Omit<Notification, 'id' | 'startTime'>>
+export type CustomNotification = Partial<
+  Omit<Notification, 'id' | 'startTime' | 'network'>
+>
 
 export type NotificationType = 'pending' | 'success' | 'error' | 'hint'
 
