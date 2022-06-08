@@ -21,8 +21,7 @@ export function handleTransactionUpdates(
   const invalid = validateTransactionHandlerReturn(customized)
 
   if (invalid) {
-    console.error(invalid)
-    return
+    throw invalid
   }
 
   const notification = transactionEventToNotification(transaction, customized)
