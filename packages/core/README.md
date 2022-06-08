@@ -118,6 +118,14 @@ type AccountCenterPosition =
 
 **`notify`**
 An object that defines whether transaction notifications will display(defaults to true if an API key is provided) and a transactionHandler which is a callback that can disable or allow customizations of notifications. Currently notifications positions in the same location as the account center(either below - if the Account Center is positioned along the top, or above if positioned on the bottom of the view).
+The transactionHandler can react off any property of the Ethereum TransactionData returned to the callback from the event(see console.log in example init) and in turn can return a Custom Notification object to define the verbiage, styling or add functionality:
+ - `Notification.message` - to completely customize the message shown 
+ - `Notification.eventCode` see the notify props in the [default en file here](src/i18n/en.json)
+  of the notification and how it will be styled:
+ - `Notification.type` - icon type ()
+ - `Notification.autoDismiss` - time on screen 
+ - `Notification.link` - add link to hash 
+ - `Notification.onClick()` - click event for notification
 
 ```typescript
 export type NotifyOptions = {
@@ -134,6 +142,25 @@ export type NotifyOptions = {
 }
 
 export type TransactionHandlerReturn = CustomNotification | boolean | void
+
+export type CustomNotification = Partial<Omit<Notification, 'id' | 'startTime'>>
+
+export type Notification = {
+  id: string
+  key: string
+  type: NotificationType
+  network: Network
+  startTime?: number
+  eventCode: string
+  message: string
+  autoDismiss: number
+  link?: string
+  onclick?: (event: Event) => void
+}
+
+export type NotificationType = 'pending' | 'success' | 'error' | 'hint'
+
+export declare type Network = 'main' | 'testnet' | 'ropsten' | 'rinkeby' | 'goerli' | 'kovan' | 'xdai' | 'bsc-main' | 'matic-main' | 'fantom-main' | 'matic-mumbai' | 'local';
 ```
 
 ### Initialization Example
@@ -201,6 +228,12 @@ const onboard = Onboard({
     enabled: true,
     transactionHandler: transaction => {
       console.log({ transaction })
+      if (transaction.eventCode === 'txPool') {
+        return {
+          type: 'success',
+          message: 'Your transaction from #1 DApp is in the mempool',
+        }
+      }
     }
   },
   accountCenter: {
@@ -225,6 +258,10 @@ const onboard = Onboard({
       notify: {
         transaction: {
           txStuck: 'custom text for this notification event'
+        },
+        watched: {
+          // Any words in brackets can be re-ordered or removed to fit your dapps desired verbiage
+          "txPool": "Your account is {verb} {formattedValue} {asset} {preposition} {counterpartyShortened}" 
         }
       }
     },

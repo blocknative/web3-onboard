@@ -164,22 +164,31 @@
       }
     },
     // example customizing copy
-    // i18n: {
-    //   en: {
-    //     connect: {
-    //       selectingWallet: {
-    //         header: 'custom text header'
-    //       }
-    //     }
-    //   }
-    // }
+    i18n: {
+      en: {
+        notify: {
+          watched: {
+            "txConfirmed": "you paid a sucka {formattedValue} {asset}!"
+          }
+        }
+      }
+    },
     notify: {
       enabled: true,
       transactionHandler: transaction => {
         console.log({ transaction })
+        if (transaction.eventCode === 'txPool') {
+          return {
+            type: 'error',
+            message: 'what dis foo?',
+            id: '123',
+            key: '321',
+            network: 'bsc-main'
+          }
+        }
       }
     },
-    apiKey: '12153f55-f29e-4f11-aa07-90f10da5d778'
+    apiKey: '25b387fb-bf21-42ec-a093-9d37e4267a7a'
   })
 
   // Subscribe to wallet updates
