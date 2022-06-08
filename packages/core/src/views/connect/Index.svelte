@@ -8,16 +8,8 @@
   import { selectAccounts } from '../../provider'
   import { state } from '../../store'
   import { connectWallet$, onDestroy$ } from '../../streams'
-  import {
-    getChainId,
-    requestAccounts,
-    trackWallet,
-    getBalance,
-    getEns
-  } from '../../provider'
   import { addWallet, updateAccount } from '../../store/actions'
   import { validEnsChain } from '../../utils'
-
   import CloseButton from '../shared/CloseButton.svelte'
   import Modal from '../shared/Modal.svelte'
   import Agreement from './Agreement.svelte'
@@ -27,6 +19,15 @@
   import SelectingWallet from './SelectingWallet.svelte'
   import Sidebar from './Sidebar.svelte'
   import { configuration } from '../../configuration'
+  import { getBlocknativeSdk } from '../../services'
+
+  import {
+    getChainId,
+    requestAccounts,
+    trackWallet,
+    getBalance,
+    getEns
+  } from '../../provider'
 
   import type {
     ConnectOptions,
@@ -34,7 +35,6 @@
     WalletState,
     WalletWithLoadingIcon
   } from '../../types'
-  import { getBlocknativeSdk } from '../../services'
 
   export let autoSelect: ConnectOptions['autoSelect']
 
