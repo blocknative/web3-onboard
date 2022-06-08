@@ -95,7 +95,7 @@ export function trackWallet(
     disconnected$
   }).pipe(share())
 
-  // when account changed, set it to first account
+  // when account changed, set it to first account and subscribe to events
   accountsChanged$.subscribe(async ([address]) => {
     // no address, then no account connected, so disconnect wallet
     // this could happen if user locks wallet,
@@ -140,7 +140,7 @@ export function trackWallet(
     }
   })
 
-  // also when accounts change, update Balance and ENS,
+  // also when accounts change, update Balance and ENS
   accountsChanged$
     .pipe(
       switchMap(async ([address]) => {
