@@ -29,6 +29,8 @@ type InitOptions {
   appMetadata?: AppMetadata
   i18n?: i18nOptions
   accountCenter?: AccountCenterOptions
+  apiKey?: string
+  notify?: Partial<NotifyOptions>
 }
 ```
 
@@ -114,6 +116,26 @@ type AccountCenterPosition =
   | 'topLeft'
 ```
 
+**`notify`**
+An object that defines whether transaction notifications will display(defaults to true if an API key is provided) and a transactionHandler which is a callback that can disable or allow customizations of notifications. Currently notifications positions in the same location as the account center(either below - if the Account Center is positioned along the top, or above if positioned on the bottom of the view).
+
+```typescript
+export type NotifyOptions = {
+  enabled: boolean  // default: true
+  /**
+   * Callback that receives all transaction events
+   * Return a custom notification based on the event
+   * Or return false to disable notification for this event
+   * Or return undefined for a default notification
+   */
+  transactionHandler: (
+    event: EthereumTransactionData
+  ) => TransactionHandlerReturn
+}
+
+export type TransactionHandlerReturn = CustomNotification | boolean | void
+```
+
 ### Initialization Example
 
 Putting it all together, here is an example initialization with the injected wallet modules:
@@ -174,6 +196,13 @@ const onboard = Onboard({
       { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
     ]
   },
+  apiKey: 'xxx387fb-bxx1-4xxc-a0x3-9d37e426xxxx'
+  notify: {
+    enabled: true,
+    transactionHandler: transaction => {
+      console.log({ transaction })
+    }
+  },
   accountCenter: {
     desktop: {
       position: 'topRight',
@@ -192,6 +221,16 @@ const onboard = Onboard({
         selectingWallet: {
           header: 'custom text header'
         }
+      },
+      notify: {
+        transaction: {
+          txStuck: 'custom text for this notification event'
+        }
+      }
+    },
+    es: {
+      transaction: {
+        txRequest: 'Su transacción está esperando que confirme'
       }
     }
   }
