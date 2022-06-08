@@ -75,7 +75,6 @@
       --notify-onboard-border-radius,
       var(--onboard-border-radius-4, var(--border-radius-4))
     );
-    margin-top: 8px;
     display: flex;
   }
 

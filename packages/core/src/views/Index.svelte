@@ -256,7 +256,7 @@
 
   @media all and (min-width: 428px) {
     .container {
-      max-width: 352px;
+      max-width: 348px;
     }
   }
 </style>
@@ -273,23 +273,32 @@
   <SwitchChain />
 {/if}
 
-<div
-  class="container flex flex-column fixed"
-  style="{accountCenterPositions[
-    $accountCenter$.position
-  ]} width: {!$accountCenter$.expanded && $accountCenter$.minimal
-    ? 'auto'
-    : '100%'}"
->
-  {#if $notify$.enabled && $accountCenter$.position.includes('bottom')}
-    <Notify position={$accountCenter$.position} />
-  {/if}
+{#if ($notify$.enabled || $accountCenter$.enabled) && $wallets$.length}
+  <div
+    class="container flex flex-column fixed"
+    style="{accountCenterPositions[$accountCenter$.position]} "
+  >
+    {#if $notify$.enabled && $accountCenter$.position.includes('bottom')}
+      <Notify position={$accountCenter$.position} />
+    {/if}
+    <div
+      style={!$accountCenter$.expanded &&
+      $accountCenter$.minimal &&
+      $accountCenter$.position.includes('Right')
+        ? 'margin-left: auto'
+        : !$accountCenter$.expanded &&
+          $accountCenter$.minimal &&
+          $accountCenter$.position.includes('Left')
+        ? 'margin-right: auto'
+        : ''}
+    >
+      {#if $accountCenter$.enabled && $wallets$.length}
+        <AccountCenter settings={$accountCenter$} />
+      {/if}
+    </div>
 
-  {#if $accountCenter$.enabled && $wallets$.length}
-    <AccountCenter settings={$accountCenter$} />
-  {/if}
-
-  {#if $notify$.enabled && $accountCenter$.position.includes('top')}
-    <Notify position={$accountCenter$.position} />
-  {/if}
-</div>
+    {#if $notify$.enabled && $accountCenter$.position.includes('top')}
+      <Notify position={$accountCenter$.position} />
+    {/if}
+  </div>
+{/if}

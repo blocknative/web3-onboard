@@ -158,7 +158,7 @@
     // // example customizing account center
     accountCenter: {
       desktop: {
-        position: 'topRight',
+        position: 'bottomLeft',
         enabled: true,
         minimal: false
       }
@@ -177,15 +177,23 @@
       enabled: true,
       transactionHandler: transaction => {
         console.log({ transaction })
-        if (transaction.eventCode === 'txPool') {
-          return {
-            type: 'error',
-            message: 'what dis foo?',
-            id: '123',
-            key: '321',
-            network: 'bsc-main'
-          }
-        }
+        // if (transaction.eventCode === 'txPool') {
+        //   return {
+        //     type: 'error',
+        //     message: 'what dis foo?',
+        //     id: '123',
+        //     key: '321',
+        //     network: 'bsc-main'
+        //   }
+        // }        if (transaction.eventCode === 'txConfirmed') {
+        //   return {
+        //     type: 'error',
+        //     message: 'PArty and a reallly realllllly realllllllly long message, PArty and a reallly realllllly realllllllly long message',
+        //     id: '123234',
+        //     key: '321432',
+        //     network: 'bsc-main'
+        //   }
+        // }
       }
     },
     apiKey: '25b387fb-bf21-42ec-a093-9d37e4267a7a'

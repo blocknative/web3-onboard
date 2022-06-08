@@ -17,22 +17,20 @@
     flex-flow: column nowrap;
     font-size: 16px;
     list-style-type: none;
-    width: 100%;
+    width: 316px;
     max-height: 100vh;
     overflow-y: scroll;
-    overflow-x: hidden;
     color: #4a4a4a;
     background: transparent;
     scrollbar-width: none;
     box-sizing: border-box;
-    height: 100vh;
     pointer-events: none;
     z-index: 300;
     font-family: var(
       --notify-onboard-font-family-normal,
       var(--onboard-font-family-normal, var(--font-family-normal))
     );
-    margin: 8px 0;
+    margin: 0 0;
   }
 
   @media only screen and (max-width: 450px) {
@@ -58,7 +56,10 @@
     };`}
   >
     {#each $notifications$ as notification (notification.key)}
-      <li animate:flip={{ duration: 500 }}>
+      <li
+        animate:flip={{ duration: 500 }}
+        style={`margin:${position.includes('top') ? '8px 0 0' : '0 0 8px'};`}
+      >
         <Notification {position} {notification} />
       </li>
     {/each}
