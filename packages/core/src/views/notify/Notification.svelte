@@ -78,21 +78,11 @@
   class="bn-notify-notification bn-notify-notification-{notification.type}}"
 
 >
-  {#if notification.link}
-    <a href={notification.link} target="_blank" rel="noreferrer noopener">
-      <StatusIconBadge
-        {notification}
-        chainStyles={chainStyles[networkToChainId[notification.network]]}
-      />
-      <NotificationContent {notification} />
-    </a>
-  {:else}
-    <StatusIconBadge
-      {notification}
-      chainStyles={chainStyles[networkToChainId[notification.network]]}
-    />
-    <NotificationContent {notification} />
-  {/if}
+  <StatusIconBadge
+    {notification}
+    chainStyles={chainStyles[networkToChainId[notification.network]]}
+  />
+  <NotificationContent {notification} />
 
   <div
     on:click|stopPropagation={() => removeNotification(notification.id)}

@@ -59,9 +59,15 @@
   </span>
 
   <span class="hash-time">
-    <a class="address-hash" href="https://etherscan.io/tx/{notification.id}" target="_blank">
-      {shortenAddress(notification.id)}
-    </a>
+    {#if notification.link}
+      <a class="address-hash" href={notification.link} target="_blank" rel="noreferrer noopener">
+        {shortenAddress(notification.id)}
+      </a>
+    {:else}
+      <div>
+        {shortenAddress(notification.id)}
+      </div>
+    {/if}
     <Timer startTime={notification.startTime} />
   </span>
 </div>

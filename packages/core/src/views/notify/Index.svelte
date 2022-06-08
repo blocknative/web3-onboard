@@ -57,7 +57,7 @@
     );
     margin: 0 0;
   }
-  
+
   @media only screen and (max-width: 450px) {
     ul {
       width: 100%;
@@ -82,7 +82,7 @@
   >
     {#each $notifications$ as notification (notification.key)}
       <li animate:flip={{ duration: 500 }}
-        in:fly={{ duration: 12000, delay: 300, x, y, easing: elasticOut }}
+        in:fly={{ duration: 1200, delay: 300, x, y, easing: elasticOut }}
         out:fly={{ duration: 400, x, y, easing: quintIn }}
         style={`margin:${
         position.includes('top') ? '8px 0 0' : '0 0 8px'
