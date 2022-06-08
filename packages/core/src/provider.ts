@@ -197,11 +197,13 @@ export function trackWallet(
           .get()
           .wallets.find(wallet => wallet.label === label)
 
-        // Unsubscribe
+        // Unsubscribe with timeout of 60 seconds
+        // to allow for any currently inflight transactions
         wallet.accounts.forEach(({ address }) => {
           sdk.unsubscribe({
             id: address,
-            chainId: wallet.chains[0].id
+            chainId: wallet.chains[0].id,
+            timeout: 60000
           })
         })
 
