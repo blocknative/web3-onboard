@@ -32,7 +32,7 @@
     );
     margin: 0 0;
   }
-
+  
   @media only screen and (max-width: 450px) {
     ul {
       width: 100%;
@@ -56,10 +56,10 @@
     };`}
   >
     {#each $notifications$ as notification (notification.key)}
-      <li
-        animate:flip={{ duration: 500 }}
-        style={`margin:${position.includes('top') ? '8px 0 0' : '0 0 8px'};`}
-      >
+      <li animate:flip={{ duration: 500 }}     
+        style={`margin:${
+        position.includes('top') ? '8px 0 0' : '0 0 8px'
+      };`}>
         <Notification {position} {notification} />
       </li>
     {/each}

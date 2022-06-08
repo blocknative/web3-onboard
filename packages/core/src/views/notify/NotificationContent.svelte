@@ -1,8 +1,7 @@
 <script lang="ts">
   import type { Notification } from '../../types'
-  import { shortenAddress, shortenEns } from '../../utils'
+  import { shortenAddress } from '../../utils'
   import { _ } from 'svelte-i18n'
-  import en from '../../i18n/en.json'
   import Timer from './Timer.svelte'
 
   export let notification: Notification
@@ -59,13 +58,10 @@
     {notification.message}
   </span>
 
-  <!-- {eventCode} -->
-  <!-- ADDRESS / ENS / transaction hash -->
   <span class="hash-time">
-    <!-- <a class="address-hash" href="https://etherscan.io/address/{hash}">
-      {shortenAddress(hash)}
-       {ens ? shortenEns(ens.name) : shortenAddress(address)} 
-    </a> -->
-    <Timer {notification} />
+    <a class="address-hash" href="https://etherscan.io/tx/{notification.id}" target="_blank">
+      {shortenAddress(notification.id)}
+    </a>
+    <Timer startTime={notification.startTime} />
   </span>
 </div>

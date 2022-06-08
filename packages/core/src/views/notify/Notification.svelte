@@ -4,12 +4,10 @@
   import { removeNotification } from '../../store/actions'
   import { fly } from 'svelte/transition'
   import { quintIn } from 'svelte/easing'
-  import type { NotifyOptions, Notification } from '../../types'
+  import type { Notification } from '../../types'
   import CloseButton from '../shared/CloseButton.svelte'
 
   import {
-    shortenAddress,
-    shortenEns,
     chainStyles,
     networkToChainId
   } from '../../utils'
@@ -29,7 +27,6 @@
     )
   }
 
-  // Animation Code from V1
   $: if (configuration.device.type === 'mobile') {
     x = 0
 

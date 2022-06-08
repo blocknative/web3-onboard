@@ -1,12 +1,8 @@
 <script lang="ts">
   import { _ as formatter, locale } from 'svelte-i18n'
   import { onDestroy } from 'svelte'
-  import { configuration } from '../../configuration'
-  import type { Notification } from '../../types'
 
-  export let notification: Notification
-
-  const { appMetadata } = configuration
+  export let startTime: number = Date.now()
 
   function timeString(time: number): string {
     const seconds = Math.floor(time / 1000)
@@ -32,7 +28,6 @@
 </script>
 
 <style>
-  /* .bn-notify-notification-info */
   div {
     display: flex;
     justify-content: center;
@@ -41,7 +36,6 @@
     margin: 0 1.5rem 0 0.75rem;
   }
 
-  /* .bn-notify-notification-info-meta-duration */
   span {
     font-family: inherit;
     display: flex;
@@ -58,19 +52,11 @@
   }
 </style>
 
-<div
-  class="time bn-notify-custom bn-notify-notification-info {appMetadata.name
-    ? `bn-notify-${appMetadata.name}`
-    : ''}"
->
-  {#if notification.type === 'pending' && notification.startTime}
+<div class="time">
+  {#if startTime}
     -
-    <span
-      class="bn-notify-custom bn-notify-notification-info-meta-duration-time {appMetadata.name
-        ? `bn-notify-${appMetadata.name}`
-        : ''}"
-    >
-      {timeString(currentTime - notification.startTime)}
+    <span>
+      {timeString(currentTime - startTime)}
     </span>
     ago
   {/if}

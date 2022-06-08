@@ -160,7 +160,7 @@
       desktop: {
         position: 'bottomLeft',
         enabled: true,
-        minimal: false
+        minimal: true
       }
     },
     // example customizing copy
@@ -168,7 +168,7 @@
       en: {
         notify: {
           watched: {
-            "txConfirmed": "you paid a sucka {formattedValue} {asset}!"
+            // "txConfirmed": "you paid a sucka {formattedValue} {asset}!"
           }
         }
       }
