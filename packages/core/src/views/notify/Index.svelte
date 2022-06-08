@@ -1,11 +1,37 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
   import { flip } from 'svelte/animate'
+  import { fly } from 'svelte/transition'
+  import { quintIn } from 'svelte/easing'
   import { state } from '../../store'
   import { startWith } from 'rxjs'
   import Notification from './Notification.svelte'
+  import { configuration } from '../../configuration'
 
   export let position: string
+
+  let x: number
+  let y: number
+
+  function elasticOut(t: number): number {
+    return (
+      Math.sin((-13.0 * (t + 1.0) * Math.PI) / 2) * Math.pow(2.0, -35.0 * t) +
+      1.0
+    )
+  }
+
+  $: if (configuration.device.type === 'mobile') {
+    x = 0
+
+    if (position.includes('top')) {
+      y = -50
+    } else {
+      y = 50
+    }
+  }
+
+  x = position.includes('left') ? -321 : 321
+  y = 0
 
   const notifications$ = state.select('notifications').pipe(startWith([]))
 </script>
@@ -17,9 +43,8 @@
     flex-flow: column nowrap;
     font-size: 16px;
     list-style-type: none;
-    width: 316px;
     max-height: 100vh;
-    overflow-y: scroll;
+    overflow: visible;
     color: #4a4a4a;
     background: transparent;
     scrollbar-width: none;
@@ -56,11 +81,13 @@
     };`}
   >
     {#each $notifications$ as notification (notification.key)}
-      <li animate:flip={{ duration: 500 }}     
+      <li animate:flip={{ duration: 500 }}
+        in:fly={{ duration: 12000, delay: 300, x, y, easing: elasticOut }}
+        out:fly={{ duration: 400, x, y, easing: quintIn }}
         style={`margin:${
         position.includes('top') ? '8px 0 0' : '0 0 8px'
       };`}>
-        <Notification {position} {notification} />
+        <Notification {notification} />
       </li>
     {/each}
   </ul>

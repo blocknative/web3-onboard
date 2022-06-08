@@ -108,7 +108,7 @@ export function transactionEventToNotification(
     type,
     key,
     network,
-    startTime,
+    startTime : startTime || Date.now(),
     eventCode,
     message,
     autoDismiss: typeToDismissTimeout(

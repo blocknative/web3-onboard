@@ -2,7 +2,7 @@
   import { _ as formatter, locale } from 'svelte-i18n'
   import { onDestroy } from 'svelte'
 
-  export let startTime: number = Date.now()
+  export let startTime: number
 
   function timeString(time: number): string {
     const seconds = Math.floor(time / 1000)

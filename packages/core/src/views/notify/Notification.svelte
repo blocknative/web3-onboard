@@ -2,8 +2,7 @@
   import StatusIconBadge from './StatusIconBadge.svelte'
   import NotificationContent from './NotificationContent.svelte'
   import { removeNotification } from '../../store/actions'
-  import { fly } from 'svelte/transition'
-  import { quintIn } from 'svelte/easing'
+
   import type { Notification } from '../../types'
   import CloseButton from '../shared/CloseButton.svelte'
 
@@ -11,34 +10,10 @@
     chainStyles,
     networkToChainId
   } from '../../utils'
-  import { configuration } from '../../configuration'
   import { onDestroy, onMount } from 'svelte'
 
   export let notification: Notification
-  export let position: string
 
-  let x: number
-  let y: number
-
-  function elasticOut(t: number): number {
-    return (
-      Math.sin((-13.0 * (t + 1.0) * Math.PI) / 2) * Math.pow(2.0, -35.0 * t) +
-      1.0
-    )
-  }
-
-  $: if (configuration.device.type === 'mobile') {
-    x = 0
-
-    if (position.includes('top')) {
-      y = -50
-    } else {
-      y = 50
-    }
-  }
-
-  x = position.includes('left') ? -321 : 321
-  y = 0
 
   let timeoutId: NodeJS.Timeout
 
@@ -101,8 +76,7 @@
   class:bn-notify-clickable={notification.onclick}
   on:click={e => notification.onclick && notification.onclick(e)}
   class="bn-notify-notification bn-notify-notification-{notification.type}}"
-  in:fly={{ duration: 1200, delay: 300, x, y, easing: elasticOut }}
-  out:fly={{ duration: 400, x, y, easing: quintIn }}
+
 >
   {#if notification.link}
     <a href={notification.link} target="_blank" rel="noreferrer noopener">
