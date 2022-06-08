@@ -14,6 +14,7 @@
     networkToChainId
   } from '../../utils'
   import { configuration } from '../../configuration'
+  import { onDestroy, onMount } from 'svelte'
 
   export let notification: Notification
   export let position: string
@@ -41,6 +42,20 @@
 
   x = position.includes('left') ? -321 : 321
   y = 0
+
+  let timeoutId: NodeJS.Timeout
+
+  onMount(() => {
+    if (notification.autoDismiss) {
+      timeoutId = setTimeout(() => {
+        removeNotification(notification.id)
+      }, notification.autoDismiss)
+    }
+  })
+
+  onDestroy(() => {
+    clearTimeout(timeoutId)
+  })
 </script>
 
 <style>
@@ -113,6 +128,6 @@
     on:click|stopPropagation={() => removeNotification(notification.id)}
     class="notify-close-btn"
   >
-    <CloseButton width={'12px'} />
+    <CloseButton width="12px" />
   </div>
 </div>
