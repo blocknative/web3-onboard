@@ -156,7 +156,7 @@ export function typeToDismissTimeout(type: string): number {
   switch (type) {
     case 'success':
     case 'hint':
-      return 0
+      return 4000
     default:
       return 0
   }
