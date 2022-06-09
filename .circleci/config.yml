@@ -73,7 +73,7 @@ aliases:
             echo "$FILE exist"
             circleci step halt
         fi
-  
+
   - &generate-lock-file
     run:
       name: Generate lock file
@@ -502,6 +502,7 @@ workflows:
       - build-dcent:
           <<: *deploy_production_filters
       - build-staging-dcent:
+          <<: *deploy_staging_filters
   vue:
     jobs:
       - build-vue:
