@@ -33,6 +33,13 @@
 
   .address-hash {
     color: var(
+      --notify-onboard-primary-200,
+      var(--onboard-primary-200, var(--primary-200))
+    );
+  }
+  
+  a.address-hash {
+    color: var(
       --notify-onboard-primary-400,
       var(--onboard-primary-400, var(--primary-400))
     );
@@ -64,7 +71,7 @@
         {shortenAddress(notification.id)}
       </a>
     {:else}
-      <div>
+      <div class="address-hash">
         {shortenAddress(notification.id)}
       </div>
     {/if}
