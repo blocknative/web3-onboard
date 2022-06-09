@@ -30,7 +30,7 @@
     }
   }
 
-  x = position.includes('left') ? -321 : 321
+  x = position.includes('Left') ? -321 : 321
   y = 0
 
   const notifications$ = state.select('notifications').pipe(startWith([]))

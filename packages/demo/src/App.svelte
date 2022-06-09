@@ -104,7 +104,7 @@
       portis,
       torus,
       gnosis,
-      dcent 
+      dcent
     ],
     chains: [
       {

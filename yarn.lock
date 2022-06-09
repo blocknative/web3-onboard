@@ -2079,10 +2079,20 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.0"
 
-"@web3-onboard/core@^2.2.9":
-  version "2.2.10"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.2.10.tgz#61dcc912062548db38d67e228637a27c59122080"
-  integrity sha512-sQF14OkT+4ibefXPQ7ueZW7DcKbbCzQXZW64FZ+ETEpgKCYjVarqpcMlp5YB4jv49cWWqM8qXRoskaqz01PktQ==
+"@web3-onboard/common@2.1.0", "@web3-onboard/common@^2.0.7", "@web3-onboard/common@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/common/-/common-2.1.0.tgz#6ff5c6841e4261743ad6ea4c5aed77c146410ce7"
+  integrity sha512-60Fyh+XfkvAEE21FudLFNrxt7SjTkawR8ogKNg9AsBfFwr6zaNam+yL8u3P/7U9WxTw8qPm4SgiljEaDx4tvag==
+  dependencies:
+    "@ethereumjs/common" "2.6.2"
+    ethers "5.5.4"
+    joi "^17.4.2"
+    rxjs "^7.5.2"
+
+"@web3-onboard/core@^2.2.11":
+  version "2.2.11"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.2.11.tgz#e64ecbad9de9687c4c3c2f790d8a75428495a6b9"
+  integrity sha512-jrWirV5wsXkuQnZw7W+TrhgFxdDBXZd1T3YflbMrB7TwfLc/US2rmBD2p3POLocEqVgmMZ/HYjpmYVyVabp5hQ==
   dependencies:
     "@web3-onboard/common" "^2.1.0"
     bowser "^2.11.0"
@@ -2094,15 +2104,6 @@
     rxjs "^7.5.2"
     svelte "^3.46.4"
     svelte-i18n "^3.3.13"
-
-"@web3-onboard/injected-wallets@^2.0.7":
-  version "2.0.7"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.0.7.tgz#d0f29adbf96b95b45bffb495fdd0c56821378e3d"
-  integrity sha512-jP7e6jpM2y/m88AxT40m3Nzc378gEympUXaKU1BESq1DWWJSkjNsaYKdp/2ADTajHUqoPB99jwiAPB0DNs2dLg==
-  dependencies:
-    "@web3-onboard/common" "^2.0.7"
-    joi "^17.4.2"
-    lodash.uniqby "^4.7.0"
 
 "@webassemblyjs/ast@1.11.1":
   version "1.11.1"

@@ -26,6 +26,20 @@ export const ethersProviders: {
   [key: string]: providers.StaticJsonRpcProvider
 } = {}
 
+export function getProvider(chain: Chain): providers.StaticJsonRpcProvider {
+  if (!chain) return null
+
+  if (!ethersProviders[chain.rpcUrl]) {
+    ethersProviders[chain.rpcUrl] = new providers.StaticJsonRpcProvider(
+      chain.providerConnectionInfo?.url
+        ? chain.providerConnectionInfo
+        : chain.rpcUrl
+    )
+  }
+
+  return ethersProviders[chain.rpcUrl]
+}
+
 export function requestAccounts(
   provider: EIP1193Provider
 ): Promise<ProviderAccounts> {
@@ -286,13 +300,7 @@ export async function getEns(
   // chain we don't recognize and don't have a rpcUrl for requests
   if (!chain) return null
 
-  if (!ethersProviders[chain.rpcUrl]) {
-    ethersProviders[chain.rpcUrl] = new providers.StaticJsonRpcProvider(
-      chain.rpcUrl
-    )
-  }
-
-  const provider = ethersProviders[chain.rpcUrl]
+  const provider = getProvider(chain);
 
   try {
     const name = await provider.lookupAddress(address)
@@ -332,13 +340,7 @@ export async function getBalance(
   // chain we don't recognize and don't have a rpcUrl for requests
   if (!chain) return null
 
-  if (!ethersProviders[chain.rpcUrl]) {
-    ethersProviders[chain.rpcUrl] = new providers.StaticJsonRpcProvider(
-      chain.rpcUrl
-    )
-  }
-
-  const provider = ethersProviders[chain.rpcUrl]
+  const provider = getProvider(chain);
 
   try {
     const balanceWei = await provider.getBalance(address)
