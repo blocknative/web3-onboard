@@ -41,12 +41,13 @@
     padding-left: 0;
     display: flex;
     flex-flow: column nowrap;
-    font-size: 16px;
+    font-size: var(
+      --notify-onboard-font-size-5,
+      var(--onboard-font-size-5, var(--font-size-5))
+    );
     list-style-type: none;
-    max-height: 100vh;
+    max-height: calc(100vh - 64px);
     overflow: visible;
-    color: #4a4a4a;
-    background: transparent;
     scrollbar-width: none;
     box-sizing: border-box;
     pointer-events: none;

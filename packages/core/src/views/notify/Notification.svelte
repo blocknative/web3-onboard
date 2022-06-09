@@ -42,7 +42,10 @@
       --notify-onboard-gray-600,
       var(--onboard-gray-600, var(--gray-600))
     );
-    padding: 12px;
+    padding: var(
+      --notify-onboard-main-padding,
+      var(--onboard-spacing-4, var(--spacing-4))
+    );
     border-radius: var(
       --notify-onboard-border-radius,
       var(--onboard-border-radius-4, var(--border-radius-4))
@@ -76,7 +79,6 @@
   class:bn-notify-clickable={notification.onclick}
   on:click={e => notification.onclick && notification.onclick(e)}
   class="bn-notify-notification bn-notify-notification-{notification.type}}"
-
 >
   <StatusIconBadge
     {notification}

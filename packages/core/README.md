@@ -117,15 +117,17 @@ type AccountCenterPosition =
 ```
 
 **`notify`**
-An object that defines whether transaction notifications will display(defaults to true if an API key is provided) and a transactionHandler which is a callback that can disable or allow customizations of notifications. Currently notifications positions in the same location as the account center(either below - if the Account Center is positioned along the top, or above if positioned on the bottom of the view).
+An object that defines whether transaction notifications will display (defaults to true if an API key is provided). This object contains an `enabled` flag prop and an optional `transactionHandler` which is a callback that can disable or allow customizations of notifications. 
+Currently notifications positions in the same location as the account center(either below - if the Account Center is positioned along the top, or above if positioned on the bottom of the view).
 The transactionHandler can react off any property of the Ethereum TransactionData returned to the callback from the event(see console.log in example init) and in turn can return a Custom Notification object to define the verbiage, styling or add functionality:
  - `Notification.message` - to completely customize the message shown 
- - `Notification.eventCode` see the notify props in the [default en file here](src/i18n/en.json)
-  of the notification and how it will be styled:
- - `Notification.type` - icon type ()
+ - `Notification.eventCode` - Handle codes in your own way - see codes here under the notify prop [default en file here](src/i18n/en.json)
+ - `Notification.type` - icon type displayed (see NotificationType below for options)
  - `Notification.autoDismiss` - time on screen 
  - `Notification.link` - add link to hash 
- - `Notification.onClick()` - click event for notification
+ - `Notification.onClick()` - notification body click event
+
+ Notify can also be completely styled by using the CSS variables found below. These are setup to allow for maximum customization with base styling variables setting to global the global more themed styling (i.e. `--onboard-grey-600`) as well as a more precise component level styling available (`--notify-onboard-grey-600`) with the latter taking precedent if defined
 
 ```typescript
 export type NotifyOptions = {
@@ -136,7 +138,7 @@ export type NotifyOptions = {
    * Or return false to disable notification for this event
    * Or return undefined for a default notification
    */
-  transactionHandler: (
+  transactionHandler?: (
     event: EthereumTransactionData
   ) => TransactionHandlerReturn
 }
@@ -682,6 +684,7 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
 
   /* notify STYLES */
   --notify-onboard-font-family-normal
+  --notify-onboard-font-size-5
   --notify-onboard-gray-300
   --notify-onboard-gray-600
   --notify-onboard-border-radius
@@ -690,6 +693,7 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --notify-onboard-line-height-4
   --notify-onboard-primary-100
   --notify-onboard-primary-400
+  --notify-onboard-main-padding
 }
 ```
 
