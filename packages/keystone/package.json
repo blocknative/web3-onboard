@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/keystone",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Keystone module for web3-onboard",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
