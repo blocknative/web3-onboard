@@ -73,7 +73,7 @@ aliases:
             echo "$FILE exist"
             circleci step halt
         fi
-  
+
   - &generate-lock-file
     run:
       name: Generate lock file
@@ -267,6 +267,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/coinbase
     steps:
       - node-build-steps
+  build-dcent:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/dcent
+    steps:
+      - node-build-steps
   build-vue:
     docker:
       - image: cimg/node:16.13.1
@@ -375,6 +381,12 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/coinbase
+    steps:
+      - node-staging-build-steps
+  build-staging-dcent:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/dcent
     steps:
       - node-staging-build-steps
   build-staging-vue:
@@ -488,6 +500,12 @@ workflows:
       - build-coinbase:
           <<: *deploy_production_filters
       - build-staging-coinbase:
+          <<: *deploy_staging_filters
+  dcent:
+    jobs:
+      - build-dcent:
+          <<: *deploy_production_filters
+      - build-staging-dcent:
           <<: *deploy_staging_filters
   vue:
     jobs:

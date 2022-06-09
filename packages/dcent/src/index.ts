@@ -1,18 +1,29 @@
-import type {
+import {
   Account,
+  accountSelect,
   Chain,
+  createEIP1193Provider,
   CustomNetwork,
+  ProviderRpcErrorCode,
+  ProviderRpcError,
   ScanAccountsOptions,
-  WalletInit
+  WalletInit,
+  EIP1193Provider
 } from '@web3-onboard/common'
 
-import type { StaticJsonRpcProvider } from '@ethersproject/providers'
+import type { providers } from 'ethers'
 
-const DEFAULT_BASE_PATH = "m/44'/60'/0'/0"
+interface CustomWindow extends Window {
+  ethereum: EIP1193Provider
+}
+  
+declare const window: CustomWindow
+
+const DEFAULT_BASE_PATH = "m/44'/60'/0'/0/0"
 
 const basePaths = [
   {
-    label: 'Keystone',
+    label: `D'CENT`,
     value: DEFAULT_BASE_PATH
   }
 ]
@@ -23,89 +34,69 @@ const assets = [
   }
 ]
 
-const getAccount = async (
-  keyring: any,
-  provider: StaticJsonRpcProvider,
-  index: number
-): Promise<Account> => {
-  const address = (await keyring.addAccounts())[index]
-  const derivationPath = await keyring._pathFromAddress(address)
-  return {
-    derivationPath,
-    address,
-    balance: {
-      asset: '',
-      value: await provider.getBalance(address)
-    }
-  }
-}
-
 const generateAccounts = async (
   keyring: any,
-  provider: StaticJsonRpcProvider
+  provider: providers.StaticJsonRpcProvider
 ): Promise<Account[]> => {
   const accounts = []
-  let zeroBalanceAccounts = 0,
-    index = 0
 
-  while (zeroBalanceAccounts < 5) {
-    const account = await getAccount(keyring, provider, index)
-    if (account.balance.value.isZero()) {
-      zeroBalanceAccounts++
-      accounts.push(account)
-    } else {
-      accounts.push(account)
-      // Reset the number of 0 balance accounts
-      zeroBalanceAccounts = 0
+  const addressList = await keyring.addAccounts()
+  const derivationPath = DEFAULT_BASE_PATH
+  const account = {
+    derivationPath,
+    address: addressList[0],
+    balance: {
+      asset: '',
+      value: await provider.getBalance(addressList[0])
     }
-    index++
   }
+
+  accounts.push(account)
+
   return accounts
 }
 
-function keystone({
+function dcent({
   customNetwork
 }: {
   customNetwork?: CustomNetwork
 } = {}): WalletInit {
   const getIcon = async () => (await import('./icon.js')).default
-  return () => {
+  return helpers => {
+    const { device } = helpers
+    const isMobile = device.type === 'mobile'
     let accounts: Account[] | undefined
     return {
-      label: 'Keystone',
+      label: "D'CENT",
       getIcon,
       getInterface: async ({ EventEmitter, chains }) => {
+        const eventEmitter = new EventEmitter()
+
+        if (isMobile) {
+          const provider = window.ethereum as EIP1193Provider
+          if (isMobile && !provider) {
+            location.replace(
+              'https://link.dcentwallet.com/DAppBrowser/?url=' +
+                document.location
+            )
+          }
+          provider.on = eventEmitter.on.bind(eventEmitter)
+          return {
+            provider
+          }
+        }
+
         const { StaticJsonRpcProvider } = await import(
           '@ethersproject/providers'
         )
+        const { default: Common, Hardfork } = await import('@ethereumjs/common')
 
-        let { default: AirGappedKeyring } = await import(
-          '@keystonehq/eth-keyring'
-        )
-
-        // @ts-ignore super weird esm issue where the default export is an object with a property default on it
-        // if that is the case then we just grab the default value
-        AirGappedKeyring = AirGappedKeyring?.default || AirGappedKeyring
+        const { default: EthDcentKeyring } = await import('eth-dcent-keyring')
+        const dcentKeyring = new EthDcentKeyring({})
 
         const { TransactionFactory: Transaction } = await import(
           '@ethereumjs/tx'
         )
-
-        const {
-          accountSelect,
-          createEIP1193Provider,
-          ProviderRpcError,
-          ProviderRpcErrorCode,
-          getCommon,
-          bigNumberFieldsToStrings
-        } = await import('@web3-onboard/common')
-
-        const keyring = AirGappedKeyring.getEmptyKeyring()
-        await keyring.readKeyring()
-
-        const eventEmitter = new EventEmitter()
-
-        let ethersProvider: StaticJsonRpcProvider
 
         let currentChain: Chain = chains[0]
         const scanAccounts = async ({
@@ -114,8 +105,9 @@ function keystone({
           currentChain =
             chains.find(({ id }: Chain) => id === chainId) || currentChain
 
-          ethersProvider = new StaticJsonRpcProvider(currentChain.rpcUrl)
-          return generateAccounts(keyring, ethersProvider)
+          const provider = new StaticJsonRpcProvider(currentChain.rpcUrl)
+
+          return generateAccounts(dcentKeyring, provider)
         }
 
         const getAccounts = async () => {
@@ -126,24 +118,11 @@ function keystone({
             scanAccounts,
             supportsCustomPath: false
           })
-
           if (accounts.length) {
             eventEmitter.emit('accountsChanged', [accounts[0].address])
           }
 
           return accounts
-        }
-
-        const signMessage = (address: string, message: string) => {
-          if (!(accounts && accounts.length && accounts.length > 0))
-            throw new Error(
-              'No account selected. Must call eth_requestAccounts first.'
-            )
-
-          const account =
-            accounts.find(account => account.address === address) || accounts[0]
-
-          return keyring.signMessage(account.address, message)
         }
 
         const request = async ({
@@ -168,10 +147,8 @@ function keystone({
             throw response.error
           }
         }
-
-        const keystoneProvider = { request }
-
-        const provider = createEIP1193Provider(keystoneProvider, {
+        const dcentProvider = { request }
+        const provider = createEIP1193Provider(dcentProvider, {
           eth_requestAccounts: async () => {
             // Triggers the account select modal if no accounts have been selected
             const accounts = await getAccounts()
@@ -187,9 +164,12 @@ function keystone({
             const accounts = await getAccounts()
             return accounts.map(({ address }) => address)
           },
-          eth_accounts: async () =>
-            accounts && accounts[0].address ? [accounts[0].address] : [],
-          eth_chainId: async () => currentChain.id,
+          eth_accounts: async () => {
+            return accounts && accounts[0].address ? [accounts[0].address] : []
+          },
+          eth_chainId: async () => {
+            return currentChain.id
+          },
           eth_signTransaction: async ({ params: [transactionObject] }) => {
             if (!accounts)
               throw new Error(
@@ -213,59 +193,75 @@ function keystone({
             // Set the `from` field to the currently selected account
             transactionObject = { ...transactionObject, from }
 
-            const chainId = currentChain.hasOwnProperty('id')
-              ? Number.parseInt(currentChain.id)
-              : 1
-            const common = await getCommon({ customNetwork, chainId })
+            // @ts-ignore -- Due to weird commonjs exports
+            const CommonConstructor = Common.default || Common
+
+            const common = new CommonConstructor({
+              chain: customNetwork || Number.parseInt(currentChain.id) || 1,
+              // Berlin is the minimum hardfork that will allow for EIP1559
+              hardfork: Hardfork.Berlin,
+              // List of supported EIPS
+              eips: [1559]
+            })
 
             transactionObject.gasLimit =
               transactionObject.gas || transactionObject.gasLimit
 
-            // 'gas' is an invalid property for the TransactionRequest type
-            delete transactionObject.gas
-
-            const signer = ethersProvider.getSigner(from)
-
-            let populatedTransaction = bigNumberFieldsToStrings(
-              await signer.populateTransaction(transactionObject)
+            const transaction = Transaction.fromTxData(
+              {
+                ...transactionObject
+              },
+              { common, freeze: false }
             )
 
-            const transaction = Transaction.fromTxData(populatedTransaction, {
-              common,
-              freeze: false
-            })
-
-            let signedTx
             try {
-              // @ts-ignore
-              signedTx = await keyring.signTransaction(from, transaction)
-            } catch (error: any) {
-              if (error.message && error.message.message) {
-                throw new Error(error.message.message)
-              } else {
-                throw new Error(error)
-              }
-            }
+              const result = await dcentKeyring.signTransaction(
+                from,
+                transaction
+              )
 
-            return `0x${signedTx.serialize().toString('hex')}`
+              return `0x${result.serialize().toString('hex')}`
+            } catch (err) {
+              throw err
+            }
           },
           eth_sendTransaction: async ({ baseRequest, params }) => {
-            const signedTx = await provider.request({
+            const signedTx = (await provider.request({
               method: 'eth_signTransaction',
               params
-            })
+            })) as string
 
-            const transactionHash = await baseRequest({
+            const transactionHash = (await baseRequest({
               method: 'eth_sendRawTransaction',
               params: [signedTx]
-            })
+            })) as string
 
-            return transactionHash as string
+            return transactionHash
           },
-          eth_sign: async ({ params: [address, message] }) =>
-            signMessage(address, message),
-          personal_sign: async ({ params: [message, address] }) =>
-            signMessage(address, message),
+          eth_sign: async ({ params: [address, message] }) => {
+            if (!(accounts && accounts.length && accounts.length > 0))
+              throw new Error(
+                'No account selected. Must call eth_requestAccounts first.'
+              )
+
+            const account =
+              accounts.find(account => account.address === address) ||
+              accounts[0]
+
+            return dcentKeyring.signMessage(account.address, message)
+          },
+          personal_sign: async ({ params: [message, address] }) => {
+            if (!(accounts && accounts.length && accounts.length > 0))
+              throw new Error(
+                'No account selected. Must call eth_requestAccounts first.'
+              )
+
+            const account =
+              accounts.find(account => account.address === address) ||
+              accounts[0]
+
+            return dcentKeyring.signPersonalMessage(account.address, message)
+          },
           eth_signTypedData: async ({ params: [address, typedData] }) => {
             if (!(accounts && accounts.length && accounts.length > 0))
               throw new Error(
@@ -276,7 +272,10 @@ function keystone({
               accounts.find(account => account.address === address) ||
               accounts[0]
 
-            return keyring.signTypedData(account.address, typedData)
+            const opt = {
+              version: 'V4'
+            }
+            return dcentKeyring.signTypedData(account.address, typedData, opt)
           },
           wallet_switchEthereumChain: async ({ params: [{ chainId }] }) => {
             currentChain =
@@ -300,4 +299,4 @@ function keystone({
   }
 }
 
-export default keystone
+export default dcent

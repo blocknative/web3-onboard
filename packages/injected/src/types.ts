@@ -92,7 +92,6 @@ export enum InjectedNameSpace {
   XFI = 'xfi'
 }
 
-//   Arbitrum = 'arbitrum'
 export interface CustomWindow extends Window {
   BinanceChain: BinanceProvider
   ethereum: InjectedProvider

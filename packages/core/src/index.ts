@@ -17,6 +17,7 @@ import App from './views/Index.svelte'
 import type { InitOptions, OnboardAPI } from './types'
 import { APP_INITIAL_STATE } from './constants'
 import { internalState } from './internals'
+import updateBalances from './updateBalances'
 
 const API = {
   connectWallet,
@@ -27,7 +28,8 @@ const API = {
     select: state.select,
     actions: {
       setWalletModules,
-      setLocale
+      setLocale,
+      updateBalances
     }
   }
 }

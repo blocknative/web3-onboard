@@ -77,7 +77,7 @@ For full documentation, check out the README.md for each package:
 - [Ledger](packages/ledger/README.md)
 - [Trezor](packages/trezor/README.md)
 - [Keystone](packages/keystone/README.md)
-
+- [D'CENT](packages/dcent/README.md)
 **Frameworks**
 
 - [React](packages/react/README.md)
