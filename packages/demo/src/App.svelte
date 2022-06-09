@@ -158,9 +158,9 @@
     // // example customizing account center
     accountCenter: {
       desktop: {
-        position: 'bottomLeft',
+        position: 'topRight',
         enabled: true,
-        minimal: true
+        minimal: false
       }
     },
     // example customizing copy
@@ -168,7 +168,7 @@
       en: {
         notify: {
           watched: {
-            // "txConfirmed": "you paid a sucka {formattedValue} {asset}!"
+            // "txConfirmed": "you paid a foo {formattedValue} {asset}!"
           }
         }
       }
@@ -180,23 +180,14 @@
         // if (transaction.eventCode === 'txPool') {
         //   return {
         //     type: 'error',
-        //     message: 'what dis foo?',
+        //     message: 'Your in the pool, hope you brought a towel!',
         //     id: '123',
         //     key: '321',
-        //     network: 'bsc-main'
-        //   }
-        // }        if (transaction.eventCode === 'txConfirmed') {
-        //   return {
-        //     type: 'error',
-        //     message: 'PArty and a reallly realllllly realllllllly long message, PArty and a reallly realllllly realllllllly long message',
-        //     id: '123234',
-        //     key: '321432',
-        //     network: 'bsc-main'
         //   }
         // }
       }
     },
-    apiKey: '25b387fb-bf21-42ec-a093-9d37e4267a7a'
+    apiKey: 'xxxx87fb-bf21-42ec-a093-9d37e4267xxx'
   })
 
   // Subscribe to wallet updates
@@ -261,13 +252,14 @@
     align-items: center;
   }
 
-  /* CUSTOMIZE CSS VARIABLES */
-  :root {
-    /* --onboard-gray-100: pink; */
+  .account-info div {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   .text-input {
-    width: 24rem;
+    width: 18rem;
   }
 
   .sign-transaction {
@@ -312,6 +304,7 @@
 
         {#each accounts as { address, ens, balance }}
           <div
+            class="account-info"
             style="margin-top: 0.25rem; margin-bottom: 0.25rem; padding: 0.25rem; border: 1px solid gray;"
           >
             <div>Address: {address}</div>
