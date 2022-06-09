@@ -66,7 +66,7 @@ function alphawallet(options: InjectedWithBalanceOptions): WalletModule {
       }
     },
     type: 'injected',
-    link: `https://alphawallet.com`,
+    link: `https://aw.app/openurl?url=${window.location.href}`,
     installMessage: mobileWalletInstallMessage,
     mobile: true,
     preferred
