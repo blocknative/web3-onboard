@@ -271,6 +271,10 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/dcent
+  build-vue:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/vue
     steps:
       - node-build-steps
 
@@ -381,6 +385,10 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/dcent
+  build-staging-vue:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/vue
     steps:
       - node-staging-build-steps
 
@@ -494,4 +502,9 @@ workflows:
       - build-dcent:
           <<: *deploy_production_filters
       - build-staging-dcent:
+  vue:
+    jobs:
+      - build-vue:
+          <<: *deploy_production_filters
+      - build-staging-vue:
           <<: *deploy_staging_filters
