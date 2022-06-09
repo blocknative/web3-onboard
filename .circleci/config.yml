@@ -271,6 +271,8 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/dcent
+    steps:
+      - node-build-steps
   build-vue:
     docker:
       - image: cimg/node:16.13.1
@@ -385,6 +387,8 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/dcent
+    steps:
+      - node-staging-build-steps
   build-staging-vue:
     docker:
       - image: cimg/node:16.13.1
