@@ -54,6 +54,7 @@
     border-radius: var(--onboard-border-radius-3, var(--border-radius-3));
     width: 100%;
     filter: drop-shadow(0px 4px 16px rgba(178, 178, 178, 0.2));
+    padding: 0 1px 1px 1px;
   }
 
   .wallets-section {
@@ -116,7 +117,6 @@
   }
 
   .network-container {
-    margin: 0 1px 1px 1px;
     border-radius: 15px;
     color: var(--onboard-gray-500, var(--gray-500));
   }
