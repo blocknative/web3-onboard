@@ -21,6 +21,9 @@
   }
   div.pending-icon {
     animation: blink 2s ease-in infinite;
+    height: 100%;
+    width: 100%;
+    padding: 7px;
   }
 
   @keyframes blink {
@@ -73,7 +76,7 @@
       defaultNotifyEventStyles[notification.type]['iconColor'] || ''
     }; ${
       notification.type === 'pending'
-        ? 'height: 28px; min-width: 28px; margin: 2px;'
+        ? 'height: 28px; width: 28px; margin: 2px;'
         : `border: 2px solid ${
             defaultNotifyEventStyles[notification.type]['borderColor']
           }`
