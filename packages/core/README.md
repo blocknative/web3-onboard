@@ -129,6 +129,17 @@ The transactionHandler can react off any property of the Ethereum TransactionDat
 
  Notify can also be completely styled by using the CSS variables found below. These are setup to allow for maximum customization with base styling variables setting to global the global more themed styling (i.e. `--onboard-grey-600`) as well as a more precise component level styling available (`--notify-onboard-grey-600`) with the latter taking precedent if defined
 
+ If notifications are enabled the notifications can be handled through onboard app state as seen below.
+ ```javascript
+const wallets = onboard.state.select('notifications')
+const { unsubscribe } = wallets.subscribe(update =>
+  console.log('transaction notifications: ', update)
+)
+
+// unsubscribe when updates are no longer needed
+unsubscribe()
+```
+
 ```typescript
 export type NotifyOptions = {
   enabled: boolean  // default: true
@@ -361,6 +372,9 @@ type AppState = {
   chains: Chain[]
   accountCenter: AccountCenter
   walletModules: WalletModule[]
+  locale: Locale
+  notify: NotifyOptions
+  notifications: Notification[]
 }
 
 type Chain {
