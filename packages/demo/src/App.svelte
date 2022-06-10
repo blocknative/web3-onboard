@@ -184,8 +184,8 @@
 
     const signer = ethersProvider.getSigner()
 
-    const signature = await signer.sendTransaction({
-      to: '0x518AC04a5Bbc5846F0de774458565Ad5957c9017',
+    const signature = await signer.signTransaction({
+      to: '',
       value: 1000000000000000
     })
     console.log(signature)
