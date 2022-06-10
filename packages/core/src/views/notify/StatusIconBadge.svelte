@@ -9,7 +9,7 @@
 <style>
   div.notification-icons-wrapper {
     height: 32px;
-    min-width: 32px;
+    width: 32px;
   }
 
   .border {
@@ -17,7 +17,7 @@
   }
 
   div.notification-icon {
-    height: 14px;
+    padding: 2px;
   }
   div.pending-icon {
     animation: blink 2s ease-in infinite;
@@ -69,7 +69,9 @@
     class="flex items-center justify-center border relative notification-icons-wrapper"
     style={`background:${
       defaultNotifyEventStyles[notification.type]['backgroundColor']
-    };  ${
+    }; color: ${
+      defaultNotifyEventStyles[notification.type]['iconColor'] || ''
+    }; ${
       notification.type === 'pending'
         ? 'height: 28px; min-width: 28px; margin: 2px;'
         : `border: 2px solid ${

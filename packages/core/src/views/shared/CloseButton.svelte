@@ -22,7 +22,7 @@
 <div class="flex justify-center items-center pointer">
   <div
     class="close-button flex justify-center items-center"
-    style={`background:${backgroundColor}`}
+    style={`color:${backgroundColor}`}
   >
     <div class="flex items-center" style="width:{width};">
       {@html closeIcon}

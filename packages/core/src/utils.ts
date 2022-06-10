@@ -26,6 +26,7 @@ import arbitrumIcon from './icons/arbitrum'
 import hourglass from './icons/hourglass'
 import checkmark from './icons/checkmark'
 import error from './icons/error'
+import info from './icons/info'
 
 import type {
   ChainStyle,
@@ -219,5 +220,11 @@ export const defaultNotifyEventStyles: Record<string, NotifyEventStyles> = {
     backgroundColor: '#FDB1B11A',
     borderColor: 'var(--onboard-danger-300, var(--danger-300))',
     eventIcon: error
+  },
+  hint: {
+    backgroundColor: 'var(--onboard-gray-800, var(--gray-800))',
+    borderColor: 'var(--onboard-gray-200, var(--gray-200))',
+    iconColor: 'var(--onboard-gray-200, var(--gray-200))',
+    eventIcon: info
   }
 }

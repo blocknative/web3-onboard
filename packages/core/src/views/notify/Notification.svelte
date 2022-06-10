@@ -4,7 +4,6 @@
   import { removeNotification } from '../../store/actions'
 
   import type { Notification } from '../../types'
-  import CloseButton from '../shared/CloseButton.svelte'
   import closeIcon from '../../icons/close-circle'
 
   import { chainStyles, networkToChainId } from '../../utils'
@@ -92,7 +91,7 @@
 
   <div
     on:click|stopPropagation={() => removeNotification(notification.id)}
-    class="notify-close-btn"
+    class="notify-close-btn pointer"
   >
     <div class="flex items-center close-icon">
       {@html closeIcon}

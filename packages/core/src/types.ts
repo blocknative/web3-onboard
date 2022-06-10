@@ -275,6 +275,7 @@ export type NotifyEventStyles = {
   backgroundColor: string
   borderColor: string
   eventIcon: string
+  iconColor?: string
 }
 
 export type DeviceNotBrowser = {
