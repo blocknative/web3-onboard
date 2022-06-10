@@ -5,15 +5,12 @@
 
   import type { Notification } from '../../types'
   import CloseButton from '../shared/CloseButton.svelte'
+  import closeIcon from '../../icons/close-circle'
 
-  import {
-    chainStyles,
-    networkToChainId
-  } from '../../utils'
+  import { chainStyles, networkToChainId } from '../../utils'
   import { onDestroy, onMount } from 'svelte'
 
   export let notification: Notification
-
 
   let timeoutId: NodeJS.Timeout
 
@@ -42,10 +39,7 @@
       --notify-onboard-gray-600,
       var(--onboard-gray-600, var(--gray-600))
     );
-    padding: var(
-      --notify-onboard-main-padding,
-      var(--onboard-spacing-4, var(--spacing-4))
-    );
+    padding: 0.75rem;
     border-radius: var(
       --notify-onboard-border-radius,
       var(--onboard-border-radius-4, var(--border-radius-4))
@@ -53,17 +47,27 @@
     display: flex;
   }
 
+  .bn-notify-notification:hover > div.notify-close-btn {
+    visibility: visible;
+    opacity: 1;
+  }
+
   div.notify-close-btn {
     margin-left: auto;
     margin-bottom: auto;
     height: 24px;
     width: 24px;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.15s linear, opacity 0.15s linear;
   }
 
-  a {
-    display: flex;
-    text-decoration: none;
-    color: inherit;
+  .notify-close-btn .close-icon {
+    width:24px; 
+    color: var(
+      --notify-onboard-gray-200,
+      var(--onboard-gray-200, var(--gray-200))
+    );
   }
 
   .transaction-status {
@@ -90,6 +94,8 @@
     on:click|stopPropagation={() => removeNotification(notification.id)}
     class="notify-close-btn"
   >
-    <CloseButton width="12px" />
+    <div class="flex items-center close-icon">
+      {@html closeIcon}
+    </div>
   </div>
 </div>

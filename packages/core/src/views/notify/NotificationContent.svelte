@@ -57,6 +57,7 @@
       var(--onboard-primary-100, var(--primary-100))
     );
     line-height: 14px;
+    font-weight: 400;
   }
 </style>
 

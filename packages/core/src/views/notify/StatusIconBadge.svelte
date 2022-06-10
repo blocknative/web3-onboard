@@ -91,7 +91,7 @@
       size={16}
       background={chainStyles.color}
       borderColorVar={'--onboard-gray-600, var(--gray-600)'}
-      padding={4}
+      padding={3}
     />
   </div>
 </div>
