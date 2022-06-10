@@ -1,5 +1,5 @@
 import type {
-  Account,
+  Chain,
   EIP1193Provider,
   ProviderAccounts,
   WalletInit
@@ -18,62 +18,111 @@ function web3auth(options: Web3AuthModuleOptions): WalletInit {
   return () => ({
     label: 'Web3Auth',
     getIcon: async () => (await import('./icon.js')).default,
-    getInterface: async ({ chains }) => {
+    getInterface: async ({ EventEmitter, chains }) => {
       const { Web3Auth } = await import('@web3auth/web3auth')
       const { CHAIN_NAMESPACES, ADAPTER_EVENTS } = await import(
         '@web3auth/base'
       )
       const { createEIP1193Provider, ProviderRpcError, ProviderRpcErrorCode } =
         await import('@web3-onboard/common')
-      console.log('getInterface')
-      const [chain] = chains
-      chain.namespace
 
-      const web3auth = new Web3Auth({
+      const emitter = new EventEmitter()
+
+      let [currentChain] = chains
+
+      const getChainConfig = ({
+        rpcUrl,
+        namespace,
+        id,
+        token,
+        label
+      }: Chain) => ({
         chainConfig: {
+          ticker: token,
+          tickerName: label,
+          chainId: id,
+          rpcTarget: rpcUrl,
           chainNamespace:
-            chain.namespace === 'evm'
+            namespace === 'evm'
               ? CHAIN_NAMESPACES.EIP155
               : CHAIN_NAMESPACES.OTHER
-        },
-        ...options
+        }
       })
 
-      web3auth.on(ADAPTER_EVENTS.CONNECTED, (data: CONNECTED_EVENT_DATA) => {
-        console.log('connected to wallet', data)
-        // web3auth.provider will be available here after user is connected
-      })
+      const web3authOptions = {
+        ...options,
+        ...getChainConfig(currentChain)
+      }
 
-      
-      let provider: EIP1193Provider
+      let web3auth = new Web3Auth(web3authOptions)
 
       const { modalConfig } = options || {}
       await web3auth.initModal(modalConfig)
 
+      let provider: EIP1193Provider
 
-      const web3AuthProvider = await web3auth.connect()
+      let web3AuthProvider = await web3auth.connect()
 
-      provider = createEIP1193Provider(web3AuthProvider, {
-        eth_selectAccounts: null,
-        eth_requestAccounts: async () => {
-          try {
-            console.log('web3AuthProvider', { web3AuthProvider })
-            const accounts = await web3AuthProvider?.request({
-              method: 'eth_accounts'
+      function patchProvider(): EIP1193Provider {
+        const patchedProvider = createEIP1193Provider(web3AuthProvider, {
+          eth_selectAccounts: null,
+          eth_requestAccounts: async ({ baseRequest }) => {
+            try {
+              const accounts = await baseRequest({
+                method: 'eth_accounts'
+              })
+              return accounts as ProviderAccounts
+            } catch (error) {
+              console.error(error)
+              throw new ProviderRpcError({
+                code: ProviderRpcErrorCode.ACCOUNT_ACCESS_REJECTED,
+                message: 'Account access rejected'
+              })
+            }
+          },
+
+          wallet_switchEthereumChain: async ({ params }) => {
+            const chain = chains.find(({ id }) => id === params[0].chainId)
+            if (!chain) throw new Error('Chain must be set before switching')
+            currentChain = chain
+
+            // re-instantiate instance with new network
+            web3auth = new Web3Auth({
+              ...web3authOptions,
+              ...getChainConfig(currentChain)
             })
-            console.log({ accounts })
-            return accounts as ProviderAccounts
-          } catch (error) {
-            console.error(error)
-            throw new ProviderRpcError({
-              code: ProviderRpcErrorCode.ACCOUNT_ACCESS_REJECTED,
-              message: 'Account access rejected'
-            })
+
+            await web3auth.initModal(modalConfig)
+
+            web3AuthProvider = await web3auth.connect()
+
+            emitter.emit('chainChanged', currentChain.id)
+
+            patchProvider()
+
+            return null
           }
-        }
-      })
+        })
 
-      provider.disconnect = () => web3auth.logout()
+        if (!provider) {
+          patchedProvider.on = emitter.on.bind(emitter)
+          patchedProvider.disconnect = () => web3auth.logout()
+
+          return patchedProvider
+        } else {
+          provider.request = patchedProvider.request.bind(patchedProvider)
+
+          // @ts-ignore - bind old methods for backwards compat
+          provider.send = patchedProvider.send.bind(patchedProvider)
+
+          // @ts-ignore - bind old methods for backwards compat
+          provider.sendAsync = patchedProvider.sendAsync.bind(patchedProvider)
+
+          return provider
+        }
+      }
+
+      provider = patchProvider()
 
       return {
         provider,

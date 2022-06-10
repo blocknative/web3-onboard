@@ -73,7 +73,7 @@ aliases:
             echo "$FILE exist"
             circleci step halt
         fi
-  
+
   - &generate-lock-file
     run:
       name: Generate lock file
@@ -267,6 +267,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/coinbase
     steps:
       - node-build-steps
+  build-web3auth:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/web3auth
+    steps:
+      - node-build-steps
 
   # Build staging/Alpha releases
   build-staging-core:
@@ -369,6 +375,12 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/coinbase
+    steps:
+      - node-staging-build-steps
+  build-staging-web3auth:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/web3auth
     steps:
       - node-staging-build-steps
 
@@ -476,4 +488,10 @@ workflows:
       - build-coinbase:
           <<: *deploy_production_filters
       - build-staging-coinbase:
+          <<: *deploy_staging_filters
+  web3auth:
+    jobs:
+      - build-web3auth:
+          <<: *deploy_production_filters
+      - build-staging-web3auth:
           <<: *deploy_staging_filters
