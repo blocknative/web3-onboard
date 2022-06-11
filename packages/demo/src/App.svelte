@@ -12,6 +12,8 @@
   import walletConnectModule from '@web3-onboard/walletconnect'
   import coinbaseModule from '@web3-onboard/coinbase'
   import magicModule from '@web3-onboard/magic'
+  import web3authModule from '@web3-onboard/web3auth'
+
   import dcentModule from '@web3-onboard/dcent'
   import {
     recoverAddress,
@@ -69,6 +71,10 @@
     apiKey: 'pk_test_886ADCAB855632AA'
   })
 
+  const web3auth = web3authModule({
+    clientId: 'BJuUOKvmNnlzy6ruVgeWYWIMKLRyYtjYa9Y10VCeJzWZcygDlrYLyXsBQjpJ2hxlBO9dnl8t9GmAC2rOP5vnIGo'
+  })
+
   const torus = torusModule()
   const ledger = ledgerModule()
   const keepkey = keepkeyModule()
@@ -92,6 +98,7 @@
 
   const onboard = Onboard({
     wallets: [
+      web3auth,
       ledger,
       trezor,
       walletConnect,

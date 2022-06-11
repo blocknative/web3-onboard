@@ -267,6 +267,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/coinbase
     steps:
       - node-build-steps
+  build-web3auth:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/web3auth
+    steps:
+      - node-build-steps
   build-dcent:
     docker:
       - image: cimg/node:16.13.1
@@ -383,6 +389,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/coinbase
     steps:
       - node-staging-build-steps
+  build-staging-web3auth:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/web3auth
+    steps:
+      - node-build-steps
   build-staging-dcent:
     docker:
       - image: cimg/node:16.13.1
@@ -500,6 +512,12 @@ workflows:
       - build-coinbase:
           <<: *deploy_production_filters
       - build-staging-coinbase:
+          <<: *deploy_staging_filters
+  web3auth:
+    jobs:
+      - build-web3auth:
+          <<: *deploy_production_filters
+      - build-staging-web3auth:
           <<: *deploy_staging_filters
   dcent:
     jobs:
