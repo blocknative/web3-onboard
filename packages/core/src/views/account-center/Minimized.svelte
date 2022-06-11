@@ -1,6 +1,6 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
-  import { internalState$, wallets$ } from '../../streams'
+  import { wallets$ } from '../../streams'
   import {
     getDefaultChainStyles,
     shortenAddress,
@@ -15,8 +15,9 @@
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
   import NetworkSelector from '../shared/NetworkSelector.svelte'
   import { state } from '../../store'
+  import { internalState } from '../../internals'
 
-  const { appMetadata } = internalState$.getValue()
+  const { appMetadata } = internalState
   const appIcon = (appMetadata && appMetadata.icon) || questionIcon
   const chains = state.get().chains
 
@@ -64,7 +65,7 @@
   }
 
   .radius {
-    border-radius: 16px;
+    border-radius: var(--onboard-border-radius-3, var(--border-radius-3));
   }
 
   .padding-5 {
@@ -96,10 +97,6 @@
     padding: 4px;
     border-radius: 25px;
     margin-right: 4px;
-  }
-
-  .caret {
-    width: 24px;
   }
 
   .container {

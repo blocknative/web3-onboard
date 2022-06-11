@@ -21,6 +21,7 @@ export enum ProviderIdentityFlag {
   CoinbaseExtension = 'isCoinbaseWallet',
   Detected = 'request',
   Dcent = 'isDcentWallet',
+  Exodus = 'isExodus',
   Frame = 'isFrame',
   HuobiWallet = 'isHbWallet',
   HyperPay = 'isHyperPay',
@@ -52,6 +53,7 @@ export enum ProviderLabel {
   Coinbase = 'Coinbase Wallet',
   Dcent = `D'CENT`,
   Detected = 'Detected Wallet',
+  Exodus = 'Exodus',
   Frame = 'Frame',
   HuobiWallet = 'Huobi Wallet',
   HyperPay = 'HyperPay',
@@ -92,7 +94,6 @@ export enum InjectedNameSpace {
   XFI = 'xfi'
 }
 
-//   Arbitrum = 'arbitrum'
 export interface CustomWindow extends Window {
   BinanceChain: BinanceProvider
   ethereum: InjectedProvider

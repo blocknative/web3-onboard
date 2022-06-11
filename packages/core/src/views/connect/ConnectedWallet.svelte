@@ -1,6 +1,5 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
-  import { internalState$ } from '../../streams'
   import success from '../../icons/success'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
 
@@ -8,10 +7,11 @@
   import questionIcon from '../../icons/question'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import en from '../../i18n/en.json'
+  import { internalState } from '../../internals'
 
   export let selectedWallet: WalletState
 
-  const { appMetadata } = internalState$.getValue()
+  const { appMetadata } = internalState
 </script>
 
 <style>

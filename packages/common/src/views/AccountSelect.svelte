@@ -27,7 +27,7 @@
   let accountsListObject: AccountsList | undefined
   let accountSelected: Account | undefined
   let customDerivationPath = false
-  let showEmptyAddresses = false
+  let showEmptyAddresses = true
   let loadingAccounts = false
   let errorFromScan = ''
 
@@ -86,7 +86,7 @@
   const resetModal = () => {
     accountSelected = undefined
     accountsListObject = undefined
-    showEmptyAddresses = false
+    showEmptyAddresses = true
     scanAccountOptions.derivationPath =
       (basePaths[0] && basePaths[0].value) || ''
   }

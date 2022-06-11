@@ -7,7 +7,7 @@
   import en from '../../i18n/en.json'
   import { selectAccounts } from '../../provider'
   import { state } from '../../store'
-  import { connectWallet$, internalState$, onDestroy$ } from '../../streams'
+  import { connectWallet$, onDestroy$ } from '../../streams'
   import {
     getChainId,
     requestAccounts,
@@ -32,10 +32,11 @@
     WalletState,
     WalletWithLoadingIcon
   } from '../../types'
+  import { internalState } from '../../internals'
 
   export let autoSelect: ConnectOptions['autoSelect']
 
-  const { appMetadata } = internalState$.getValue()
+  const { appMetadata } = internalState
   const { walletModules } = state.get()
 
   let connectionRejected = false
@@ -192,6 +193,10 @@
         connectionRejected = true
         if (autoSelect) {
           walletToAutoSelect = null
+
+          if (autoSelect.disableModals) {
+            connectWallet$.next({ inProgress: false })
+          }
         }
         return
       }

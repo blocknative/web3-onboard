@@ -9,13 +9,15 @@ import {
   updateAccountCenter,
   setLocale
 } from './store/actions'
-import { reset$, internalState$ } from './streams'
+import { reset$ } from './streams'
 import { validateInitOptions } from './validation'
 import initI18N from './i18n'
 
 import App from './views/Index.svelte'
 import type { InitOptions, OnboardAPI } from './types'
-import { getDevice } from './utils'
+import { APP_INITIAL_STATE } from './constants'
+import { internalState } from './internals'
+import updateBalances from './updateBalances'
 
 const API = {
   connectWallet,
@@ -26,7 +28,8 @@ const API = {
     select: state.select,
     actions: {
       setWalletModules,
-      setLocale
+      setLocale,
+      updateBalances
     }
   }
 }
@@ -58,21 +61,26 @@ function init(options: InitOptions): OnboardAPI {
   initI18N(i18n)
   addChains(chains)
 
-  let accountCenterUpdate
+  const { device, svelteInstance } = internalState
 
-  const device = getDevice()
+  // update accountCenter
+  if (typeof accountCenter !== 'undefined') {
+    let accountCenterUpdate
 
-  if (device.type === 'mobile') {
-    accountCenterUpdate = {
-      enabled: false
+    if (device.type === 'mobile' && accountCenter.mobile) {
+      accountCenterUpdate = {
+        ...APP_INITIAL_STATE.accountCenter,
+        ...accountCenter.mobile
+      }
+    } else if (accountCenter.desktop) {
+      accountCenterUpdate = {
+        ...APP_INITIAL_STATE.accountCenter,
+        ...accountCenter.desktop
+      }
     }
-  } else if (typeof accountCenter !== 'undefined' && accountCenter.desktop) {
-    accountCenterUpdate = accountCenter.desktop
+
+    updateAccountCenter(accountCenterUpdate)
   }
-
-  accountCenterUpdate && updateAccountCenter(accountCenterUpdate)
-
-  const { svelteInstance } = internalState$.getValue()
 
   if (svelteInstance) {
     // if already initialized, need to cleanup old instance
@@ -82,11 +90,9 @@ function init(options: InitOptions): OnboardAPI {
 
   const app = svelteInstance || mountApp()
 
-  internalState$.next({
-    appMetadata,
-    svelteInstance: app,
-    device
-  })
+  // update metadata and app internal state
+  internalState.appMetadata = appMetadata
+  internalState.svelteInstance = app
 
   setWalletModules(wallets)
 
@@ -187,7 +193,10 @@ function mountApp() {
           --spacing-7: 0.125rem;
   
           /* BORDER RADIUS */
-          --border-radius-1: 24px;  
+          --border-radius-1: 24px;
+          --border-radius-2: 20px;
+          --border-radius-3: 16px;
+
 
           /* SHADOWS */
           --shadow-0: none;

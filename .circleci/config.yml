@@ -273,6 +273,18 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/web3auth
     steps:
       - node-build-steps
+  build-dcent:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/dcent
+    steps:
+      - node-build-steps
+  build-vue:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/vue
+    steps:
+      - node-build-steps
 
   # Build staging/Alpha releases
   build-staging-core:
@@ -381,6 +393,18 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/web3auth
+    steps:
+      - node-build-steps
+  build-staging-dcent:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/dcent
+    steps:
+      - node-staging-build-steps
+  build-staging-vue:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/vue
     steps:
       - node-staging-build-steps
 
@@ -494,4 +518,16 @@ workflows:
       - build-web3auth:
           <<: *deploy_production_filters
       - build-staging-web3auth:
+          <<: *deploy_staging_filters
+  dcent:
+    jobs:
+      - build-dcent:
+          <<: *deploy_production_filters
+      - build-staging-dcent:
+          <<: *deploy_staging_filters
+  vue:
+    jobs:
+      - build-vue:
+          <<: *deploy_production_filters
+      - build-staging-vue:
           <<: *deploy_staging_filters

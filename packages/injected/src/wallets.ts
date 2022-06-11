@@ -38,6 +38,16 @@ const metamask: InjectedWalletModule = {
   platforms: ['all']
 }
 
+const exodus: InjectedWalletModule = {
+  label: ProviderLabel.Exodus,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+      !!provider && !!provider[ProviderIdentityFlag.Exodus],
+  getIcon: async () => (await import('./icons/exodus.js')).default,
+  getInterface: getInjectedInterface(ProviderIdentityFlag.Exodus),
+  platforms: ['all']
+}
+
 const brave: InjectedWalletModule = {
   label: ProviderLabel.Brave,
   injectedNamespace: InjectedNameSpace.Ethereum,
@@ -110,10 +120,7 @@ const coinbase: InjectedWalletModule = {
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
     (!!provider && !!provider[ProviderIdentityFlag.Coinbase]) ||
-    (!!provider &&
-      !!provider.providers &&
-      !!provider.providers[0] &&
-      !!provider.providers[0][ProviderIdentityFlag.CoinbaseExtension]),
+    (!!provider && !!provider[ProviderIdentityFlag.CoinbaseExtension]),
   getIcon: async () => (await import('./icons/coinbase.js')).default,
   getInterface: async () => {
     const { provider } = await getInjectedInterface(
@@ -249,21 +256,6 @@ const blockwallet: InjectedWalletModule = {
   getIcon: async () => (await import('./icons/blockwallet.js')).default,
   getInterface: getInjectedInterface(ProviderIdentityFlag.BlockWallet),
   platforms: ['desktop']
-}
-
-const dcent: InjectedWalletModule = {
-  label: ProviderLabel.Dcent,
-  injectedNamespace: InjectedNameSpace.Ethereum,
-  checkProviderIdentity: ({ provider }) =>
-    !!provider && !!provider[ProviderIdentityFlag.Dcent],
-  getIcon: async () => (await import('./icons/dcent.js')).default,
-  getInterface: async () => ({
-    provider: createEIP1193Provider(window.ethereum, {
-      wallet_switchEthereumChain: UNSUPPORTED_METHOD,
-      eth_selectAccounts: UNSUPPORTED_METHOD
-    })
-  }),
-  platforms: ['mobile']
 }
 
 const frame: InjectedWalletModule = {
@@ -482,6 +474,7 @@ const tally: InjectedWalletModule = {
 }
 
 const wallets = [
+  exodus,
   metamask,
   binance,
   coinbase,
@@ -494,7 +487,6 @@ const wallets = [
   bitpie,
   blockwallet,
   brave,
-  dcent,
   frame,
   huobiwallet,
   hyperpay,

@@ -2,7 +2,7 @@
   import { _ } from 'svelte-i18n'
   import { fly } from 'svelte/transition'
   import { quartOut } from 'svelte/easing'
-  import { internalState$, wallets$ } from '../../streams'
+  import { wallets$ } from '../../streams'
   import en from '../../i18n/en.json'
   import WalletRow from './WalletRow.svelte'
   import plusCircleIcon from '../../icons/plus-circle'
@@ -20,13 +20,14 @@
   import { updateAccountCenter } from '../../store/actions'
   import blocknative from '../../icons/blocknative'
   import DisconnectAllConfirm from './DisconnectAllConfirm.svelte'
+  import { internalState } from '../../internals'
 
   function disconnectAllWallets() {
     $wallets$.forEach(({ label }) => disconnect({ label }))
   }
 
   const { chains: appChains } = state.get()
-  const { appMetadata } = internalState$.getValue()
+  const { appMetadata } = internalState
   let disconnectConfirmModal = false
   let hideWalletRowMenu: () => void
 
@@ -44,19 +45,20 @@
   )
 
   const { position } = state.get().accountCenter
+  const { device } = internalState
 </script>
 
 <style>
   .outer-container {
     background-color: var(--onboard-gray-600, var(--gray-600));
-    border-radius: 16px;
+    border-radius: var(--onboard-border-radius-3, var(--border-radius-3));
     width: 100%;
     filter: drop-shadow(0px 4px 16px rgba(178, 178, 178, 0.2));
   }
 
   .wallets-section {
     width: 100%;
-    border-radius: 16px;
+    border-radius: var(--onboard-border-radius-3, var(--border-radius-3));
   }
 
   .p5 {
@@ -115,7 +117,7 @@
 
   .network-container {
     margin: 0 1px 1px 1px;
-    border-radius: 15px;
+    border-radius: var(--onboard-border-radius-3, var(--border-radius-3));
     color: var(--onboard-gray-500, var(--gray-500));
   }
 
@@ -130,10 +132,6 @@
   .network-selector-label {
     font-size: var(--onboard-font-size-7, var(--font-size-7));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
-  }
-
-  .caret {
-    width: 16px;
   }
 
   .app-info-container {
@@ -228,38 +226,40 @@
           />
         {/each}
       </div>
-
       <!-- actions -->
       <div class="actions flex flex-column items-start">
-        <!-- connect another wallet -->
-        <div
-          on:click={() => connect()}
-          class="action-container flex items-center pointer"
-        >
-          <div class="plus-icon flex items-center justify-center">
-            {@html plusCircleIcon}
-          </div>
-          <span class="action-text"
-            >{$_('accountCenter.connectAnotherWallet', {
-              default: en.accountCenter.connectAnotherWallet
-            })}</span
+        <!-- Hide for Mobile  -->
+        {#if device.type === 'desktop'}
+          <!-- connect another wallet -->
+          <div
+            on:click={() => connect()}
+            class="action-container flex items-center pointer"
           >
-        </div>
+            <div class="plus-icon flex items-center justify-center">
+              {@html plusCircleIcon}
+            </div>
+            <span class="action-text"
+              >{$_('accountCenter.connectAnotherWallet', {
+                default: en.accountCenter.connectAnotherWallet
+              })}</span
+            >
+          </div>
 
-        <!-- disconnect all wallets -->
-        <div
-          on:click={() => (disconnectConfirmModal = true)}
-          class="action-container flex items-center mt pointer"
-        >
-          <div class="arrow-forward flex items-center justify-center">
-            {@html arrowForwardIcon}
-          </div>
-          <span class="action-text"
-            >{$_('accountCenter.disconnectAllWallets', {
-              default: en.accountCenter.disconnectAllWallets
-            })}</span
+          <!-- disconnect all wallets -->
+          <div
+            on:click={() => (disconnectConfirmModal = true)}
+            class="action-container flex items-center mt pointer"
           >
-        </div>
+            <div class="arrow-forward flex items-center justify-center">
+              {@html arrowForwardIcon}
+            </div>
+            <span class="action-text"
+              >{$_('accountCenter.disconnectAllWallets', {
+                default: en.accountCenter.disconnectAllWallets
+              })}</span
+            >
+          </div>
+        {/if}
       </div>
     </div>
 
@@ -414,7 +414,6 @@
             default: en.accountCenter.backToApp
           })}</button
         >
-
         <a
           href="https://blocknative.com"
           target="_blank"

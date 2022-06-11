@@ -13,7 +13,21 @@ import type {
 const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
 const chainNamespace = Joi.string().valid('evm')
 const unknownObject = Joi.object().unknown()
+
 // const address = Joi.string().regex(/^0x[a-fA-F0-9]{40}$/)
+/** Related to ConnectionInfo from 'ethers/lib/utils' */
+const providerConnectionInfo = Joi.object({
+  url: Joi.string().required(),
+  headers: Joi.object(),
+  user: Joi.string(),
+  password: Joi.string(),
+  allowInsecureAuthentication: Joi.boolean(),
+  allowGzip: Joi.boolean(),
+  throttleLimit: Joi.number(),
+  throttleSlotInterval: Joi.number(),
+  throttleCallback: Joi.function(),
+  timeout: Joi.number()
+})
 
 const chain = Joi.object({
   namespace: chainNamespace,
@@ -22,7 +36,8 @@ const chain = Joi.object({
   label: Joi.string().required(),
   token: Joi.string().required(),
   icon: Joi.string(),
-  color: Joi.string()
+  color: Joi.string(),
+  providerConnectionInfo: providerConnectionInfo
 })
 
 const connectedChain = Joi.object({
@@ -64,6 +79,8 @@ const wallet = Joi.object({
   accounts,
   chains: Joi.array().items(connectedChain)
 })
+
+const wallets = Joi.array().items(wallet)
 
 const recommendedWallet = Joi.object({
   name: Joi.string().required(),
@@ -114,11 +131,13 @@ const initOptions = Joi.object({
   accountCenter: Joi.object({
     desktop: Joi.object({
       enabled: Joi.boolean(),
+      minimal: Joi.boolean(),
       position: accountCenterPosition
     }),
     mobile: Joi.object({
       enabled: Joi.boolean(),
-      position: accountCenterPosition
+      minimal: Joi.boolean(),
+      position: accountCenterPosition,
     })
   })
 })
@@ -146,7 +165,8 @@ const setChainOptions = Joi.object({
 const accountCenter = Joi.object({
   enabled: Joi.boolean(),
   position: accountCenterPosition,
-  expanded: Joi.boolean()
+  expanded: Joi.boolean(),
+  minimal: Joi.boolean()
 })
 
 type ValidateReturn = Joi.ValidationResult | null
@@ -205,4 +225,9 @@ export function validateWalletInit(data: WalletInit[]): ValidateReturn {
 
 export function validateLocale(data: string): ValidateReturn {
   return validate(locale, data)
+}
+
+export function validateUpdateBalances(data: 
+WalletState[]): ValidateReturn {
+  return validate(wallets, data)
 }

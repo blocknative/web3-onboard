@@ -25,6 +25,7 @@ import portisModule from '@web3-onboard/portis'
 import fortmaticModule from '@web3-onboard/fortmatic'
 import torusModule from '@web3-onboard/torus'
 import keepkeyModule from '@web3-onboard/keepkey'
+import dcentModule from '@web3-onboard/dcent'
 
 const injected = injectedModule()
 const coinbase = coinbaseModule()
@@ -49,6 +50,8 @@ const trezorOptions = {
 
 const trezor = trezorModule(trezorOptions)
 
+const dcent = dcentModule()
+
 const web3Onboard = init({
   wallets: [
     injected,
@@ -59,7 +62,8 @@ const web3Onboard = init({
     keepkey,
     fortmatic,
     portis,
-    torus
+    torus,
+    dcent
   ],
   chains: [
     {
@@ -95,6 +99,18 @@ const web3Onboard = init({
       { name: 'MetaMask', url: 'https://metamask.io' },
       { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
     ]
+  },
+  accountCenter: {
+    desktop: {
+      position: 'topRight',
+      enabled: true,
+      minimal: true
+    },
+    mobile: {
+      position: 'topRight',
+      enabled: true,
+      minimal: true
+    }
   }
 })
 
@@ -125,9 +141,7 @@ function App() {
               })}
             </select>
           )}
-          <button onClick={() => disconnect(wallet)}>
-            Disconnect Wallet
-          </button>
+          <button onClick={() => disconnect(wallet)}>Disconnect Wallet</button>
         </div>
       )}
 

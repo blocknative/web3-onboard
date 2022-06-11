@@ -14,6 +14,7 @@
   import magicModule from '@web3-onboard/magic'
   import web3authModule from '@web3-onboard/web3auth'
 
+  import dcentModule from '@web3-onboard/dcent'
   import {
     recoverAddress,
     arrayify,
@@ -93,6 +94,8 @@
     // for more info see the @web3-onboard/magic docs
   })
 
+  const dcent = dcentModule()
+
   const onboard = Onboard({
     wallets: [
       web3auth,
@@ -107,7 +110,8 @@
       fortmatic,
       portis,
       torus,
-      gnosis
+      gnosis,
+      dcent
     ],
     chains: [
       {
@@ -158,10 +162,17 @@
       gettingStartedGuide: 'https://blocknative.com',
       explore: 'https://blocknative.com'
     }
-    // example customizing account center
+    // // example customizing account center
     // accountCenter: {
     //   desktop: {
-    //     position: 'bottomRight'
+    //     position: 'topRight',
+    //     enabled: true,
+    //     minimal: false
+    //   },
+    //   mobile: {
+    //     position: 'topRight',
+    //     enabled: true,
+    //     minimal: false
     //   }
     // }
     // example customizing copy
@@ -271,6 +282,9 @@
     >
     <button on:click={() => onboard.setChain({ chainId: '0x89' })}
       >Set Chain to Matic</button
+    >
+    <button on:click={() => onboard.state.actions.updateBalances()}
+      >Update Wallet Balance</button
     >
   {/if}
 

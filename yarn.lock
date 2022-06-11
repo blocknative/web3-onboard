@@ -262,7 +262,7 @@
     crc-32 "^1.2.0"
     ethereumjs-util "^7.1.4"
 
-"@ethereumjs/common@^2.3.0", "@ethereumjs/common@^2.6.3":
+"@ethereumjs/common@^2.3.0", "@ethereumjs/common@^2.3.1", "@ethereumjs/common@^2.6.3":
   version "2.6.3"
   resolved "https://registry.yarnpkg.com/@ethereumjs/common/-/common-2.6.3.tgz#39ddece7300b336276bad6c02f6a9f1a082caa05"
   integrity sha512-mQwPucDL7FDYIg9XQ8DL31CnIYZwGhU5hyOO5E+BMmT71G0+RHvIT5rIkLBirJEKxV6+Rcf9aEIY0kXInxUWpQ==
@@ -285,6 +285,14 @@
   dependencies:
     "@ethereumjs/common" "^2.0.0"
     ethereumjs-util "^7.0.7"
+
+"@ethereumjs/tx@3.2.1":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@ethereumjs/tx/-/tx-3.2.1.tgz#65f5f1c11541764f08377a94ba4b0dcbbd67739e"
+  integrity sha512-i9V39OtKvwWos1uVNZxdVhd7zFOyzFLjgt69CoiOY0EmXugS0HjO3uxpLBSglDKFMRriuGqw6ddKEv+RP1UNEw==
+  dependencies:
+    "@ethereumjs/common" "^2.3.1"
+    ethereumjs-util "^7.0.10"
 
 "@ethereumjs/tx@3.4.0":
   version "3.4.0"
@@ -1874,10 +1882,10 @@
   resolved "https://registry.yarnpkg.com/@types/range-parser/-/range-parser-1.2.4.tgz#cd667bcfdd025213aafb7ca5915a932590acdcdc"
   integrity sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==
 
-"@types/react@^17.0.39":
-  version "17.0.43"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.43.tgz#4adc142887dd4a2601ce730bc56c3436fdb07a55"
-  integrity sha512-8Q+LNpdxf057brvPu1lMtC5Vn7J119xrP1aq4qiaefNioQUYANF/CYeK4NsKorSZyUGJ66g0IM+4bbjwx45o2A==
+"@types/react@^18.0.2":
+  version "18.0.9"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.9.tgz#d6712a38bd6cd83469603e7359511126f122e878"
+  integrity sha512-9bjbg1hJHUm4De19L1cHiW0Jvx3geel6Qczhjd0qY5VKVE2X5+x77YxAepuCwVh4vrgZJdgEJw48zrhRIeF4Nw==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -1942,6 +1950,10 @@
   integrity sha512-JQbbmxZTZehdc2iszGKs5oC3NFnjeay7mtAWrdt7qNtAVK0g19muApzAy4bm9byz79xa2ZnO/BOBC2R8RC5Lww==
   dependencies:
     "@types/node" "*"
+"@types/use-sync-external-store@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@types/use-sync-external-store/-/use-sync-external-store-0.0.3.tgz#b6725d5f4af24ace33b36fafd295136e75509f43"
+  integrity sha512-EwmlvuaxPNej9+T4v5AuBPJa2x2UOJVdjCtDHgcDqitUeOtjnJKJ+apYjVcAoBEMjKW1VVFGZLUb5+qqa09XFA==
 
 "@types/ws@^8.2.2":
   version "8.2.3"
@@ -2400,28 +2412,10 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.0"
 
-"@web3-onboard/coinbase@^2.0.0":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/coinbase/-/coinbase-2.0.3.tgz#970523985af641afc84e0ae88c8ba4c94bbaa16f"
-  integrity sha512-2IuIeNRCBANtEDdhGwYzzY/VwckG7GuTtCdI19XtI8tXgv++Jp4CRIT9xkjfK0sXy86Uyijc5E0STtiqPqywjQ==
-  dependencies:
-    "@coinbase/wallet-sdk" "^3.0.5"
-    "@web3-onboard/common" "2.1.0"
-
-"@web3-onboard/common@2.1.0", "@web3-onboard/common@^2.0.7", "@web3-onboard/common@^2.0.9", "@web3-onboard/common@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/common/-/common-2.1.0.tgz#6ff5c6841e4261743ad6ea4c5aed77c146410ce7"
-  integrity sha512-60Fyh+XfkvAEE21FudLFNrxt7SjTkawR8ogKNg9AsBfFwr6zaNam+yL8u3P/7U9WxTw8qPm4SgiljEaDx4tvag==
-  dependencies:
-    "@ethereumjs/common" "2.6.2"
-    ethers "5.5.4"
-    joi "^17.4.2"
-    rxjs "^7.5.2"
-
-"@web3-onboard/core@^2.2.7", "@web3-onboard/core@^2.2.8":
-  version "2.2.9"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.2.9.tgz#16039143b9227fd7e456bfed72f46a7f19781a2d"
-  integrity sha512-bxOdiqw0fnk7jR2KqArLT5qyNoGqJe6zOUJyPFXIn+clt/OLZxKB6w9/rClkjRZoARbJUw9U7oMDnkZxtWqZIw==
+"@web3-onboard/core@^2.2.9":
+  version "2.2.10"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.2.10.tgz#61dcc912062548db38d67e228637a27c59122080"
+  integrity sha512-sQF14OkT+4ibefXPQ7ueZW7DcKbbCzQXZW64FZ+ETEpgKCYjVarqpcMlp5YB4jv49cWWqM8qXRoskaqz01PktQ==
   dependencies:
     "@web3-onboard/common" "^2.1.0"
     bowser "^2.11.0"
@@ -2434,7 +2428,7 @@
     svelte "^3.46.4"
     svelte-i18n "^3.3.13"
 
-"@web3-onboard/injected-wallets@^2.0.5":
+"@web3-onboard/injected-wallets@^2.0.7":
   version "2.0.7"
   resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.0.7.tgz#d0f29adbf96b95b45bffb495fdd0c56821378e3d"
   integrity sha512-jP7e6jpM2y/m88AxT40m3Nzc378gEympUXaKU1BESq1DWWJSkjNsaYKdp/2ADTajHUqoPB99jwiAPB0DNs2dLg==
@@ -2443,18 +2437,7 @@
     joi "^17.4.2"
     lodash.uniqby "^4.7.0"
 
-"@web3-onboard/keepkey@^2.0.1":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/keepkey/-/keepkey-2.1.0.tgz#5bed61bf913f6ed8b41dbbe6b72b97619267b4fb"
-  integrity sha512-5RtOKZz9mAGE+rLzinUYcsz3+oTuwKI5yQpZGWSfJMlFKS7Tr9VqV5SzbaMXVucsswRTpMWw7ftvxo6gvAn8bg==
-  dependencies:
-    "@ethersproject/providers" "^5.5.0"
-    "@shapeshiftoss/hdwallet-core" "^1.15.2"
-    "@shapeshiftoss/hdwallet-keepkey-webusb" "^1.15.2"
-    "@web3-onboard/common" "^2.1.0"
-    ethereumjs-util "^7.1.3"
-
-"@web3-onboard/keystone@^2.0.1":
+"@web3-onboard/keystone@^2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@web3-onboard/keystone/-/keystone-2.1.0.tgz#21799e814485719586f4a6df615bd276437e8270"
   integrity sha512-o9jJ37SKEsish6aJwViUY61olXhW6zmB52lf3MH6tiKx4wKriO2zErnAUK4Exw+xf2wyTuqciwtgzAOLQMpPkA==
@@ -2463,195 +2446,6 @@
     "@ethersproject/providers" "^5.5.0"
     "@keystonehq/eth-keyring" "^0.14.0-alpha.10.3"
     "@web3-onboard/common" "^2.1.0"
-
-"@web3-onboard/ledger@^2.0.1":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/ledger/-/ledger-2.1.0.tgz#4b24c4673fcafe8b150cd0bfd20e78a87b902b39"
-  integrity sha512-8BEBGMkxUME1F05TQAY74rGOK2UyLV9uz/xR3mOkqk+leNJFW0AHZ2gHNC44DF9JxsLab2TqqxpUEY/e/rb0bg==
-  dependencies:
-    "@ethereumjs/tx" "^3.4.0"
-    "@ethersproject/providers" "^5.5.0"
-    "@ledgerhq/hw-app-eth" "^6.19.0"
-    "@ledgerhq/hw-transport-u2f" "^5.36.0-deprecated"
-    "@ledgerhq/hw-transport-webusb" "^6.19.0"
-    "@metamask/eth-sig-util" "^4.0.0"
-    "@web3-onboard/common" "^2.1.0"
-    buffer "^6.0.3"
-    ethereumjs-util "^7.1.3"
-
-"@web3-onboard/trezor@^2.0.2":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/trezor/-/trezor-2.1.0.tgz#57dc8564f52c77da9377222c9b953e6fa41a6807"
-  integrity sha512-zN/zn0KpH49V763F19XYVZ4iv0bHtXAAnYQ9Zs7UKjqIVjx+uiOkD7LzNmOaaVymU3tfszhdu+EdbfJgEVE7iA==
-  dependencies:
-    "@ethereumjs/tx" "^3.4.0"
-    "@ethersproject/providers" "^5.5.0"
-    "@web3-onboard/common" "^2.1.0"
-    buffer "^6.0.3"
-    eth-crypto "^2.1.0"
-    ethereumjs-util "^7.1.3"
-    hdkey "^2.0.1"
-    trezor-connect "^8.2.6"
-
-"@web3auth/base-plugin@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@web3auth/base-plugin/-/base-plugin-1.0.0.tgz#d65270fb11ab3013fab340b673f5e8b284eec8ee"
-  integrity sha512-fXosmTXd/Vs4Xd8cgmUOmfUxT7wT4EFhpwdVhsOUPKBr7LUasPip6ObQjSHsWQWLFaNdIdGkY5kyBzHoWpjhRA==
-  dependencies:
-    "@web3auth/base" "^1.0.0"
-
-"@web3auth/base-provider@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@web3auth/base-provider/-/base-provider-1.0.0.tgz#e13990554048e6dbcbe072080b7c3c9fbb4d69b7"
-  integrity sha512-YvsYCqrp9LogC0K6v6sXENdgvDMyW6ZX62lmo4ch7rWabUOxIk8coNrpAEhUoKsQQ2kWUvVtVOByng6XxDvnJQ==
-  dependencies:
-    "@toruslabs/base-controllers" "^2.0.0"
-    "@toruslabs/openlogin-jrpc" "^2.0.0"
-    "@web3auth/base" "^1.0.0"
-    eth-rpc-errors "^4.0.3"
-    json-rpc-random-id "^1.0.1"
-
-"@web3auth/base@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@web3auth/base/-/base-1.0.0.tgz#f33a501cad5ab5197790237c6a0b2b596463519d"
-  integrity sha512-NDHSZROFKiUqze92pYJRpZC0zvw5hc/10kAdN+hRl/mOrwU70X+/csRRicdP06P/SZqKTn/vPnQBqs5OV4gmbw==
-  dependencies:
-    "@toruslabs/openlogin-jrpc" "^2.0.0"
-    loglevel "^1.8.0"
-    ts-custom-error "^3.2.0"
-
-"@web3auth/core@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@web3auth/core/-/core-1.0.0.tgz#bcb5b6b7b7b99df4071a2e217472bab21c90e254"
-  integrity sha512-zI/ZuIU44PcF27wfbP1aXSBeYD/ewGAmWDSqGp2UJveZzVbMHi7mZDfFNnVa+h/ZXRWdiITqGJa0mlZd9ailjA==
-  dependencies:
-    "@toruslabs/openlogin-jrpc" "^2.0.0"
-    "@web3auth/base" "^1.0.0"
-    "@web3auth/base-plugin" "^1.0.0"
-
-"@web3auth/ethereum-provider@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@web3auth/ethereum-provider/-/ethereum-provider-1.0.0.tgz#cabe98b015380cc6b770d35ff25d595143c84972"
-  integrity sha512-QyOL2L+L+QSFqWyCBV9X3osQsN8LU/agcrO/5IlN4LeQO7cs/ICXS4BHeu+/VsOpLNXAsWZnp/R6vXG/uBRi+A==
-  dependencies:
-    "@ethereumjs/common" "^2.6.4"
-    "@ethereumjs/tx" "^3.5.1"
-    "@metamask/eth-sig-util" "^4.0.1"
-    "@toruslabs/base-controllers" "^2.0.0"
-    "@toruslabs/http-helpers" "^3.0.0"
-    "@toruslabs/openlogin-jrpc" "^2.0.0"
-    "@walletconnect/types" "~1.7.8"
-    "@web3auth/base" "^1.0.0"
-    "@web3auth/base-provider" "^1.0.0"
-    bignumber.js "^9.0.2"
-    eth-rpc-errors "^4.0.3"
-    ethereumjs-util "^7.1.4"
-
-"@web3auth/metamask-adapter@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@web3auth/metamask-adapter/-/metamask-adapter-1.0.0.tgz#82dbe85d010f1a9c735df149baf8c2ec2a0213a9"
-  integrity sha512-j82c3mcpDE5Zw1+nJrUoZioi/fe53T/aaaQdrqUIsad3kEMRVPl3pPzboCossukqDfHX4yMaDFw8dbLnq2LLjQ==
-  dependencies:
-    "@metamask/detect-provider" "^1.2.0"
-    "@web3auth/base" "^1.0.0"
-
-"@web3auth/openlogin-adapter@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@web3auth/openlogin-adapter/-/openlogin-adapter-1.0.0.tgz#0b00870cb21acd9c6c11aee5e6e27881a904c2b0"
-  integrity sha512-S53uZHcUWxcK8ZfbQVjgqmuPn19Pjl967OqIBaqNyZfDpx8nJMhuPtDh+GmG8cbYUJRcLYUMKO4vhkoMEZSMgg==
-  dependencies:
-    "@toruslabs/openlogin" "^2.0.0"
-    "@toruslabs/openlogin-ed25519" "^2.0.0"
-    "@web3auth/base" "^1.0.0"
-    "@web3auth/base-provider" "^1.0.0"
-    "@web3auth/ethereum-provider" "^1.0.0"
-    "@web3auth/solana-provider" "^1.0.0"
-    lodash.merge "^4.6.2"
-
-"@web3auth/phantom-adapter@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@web3auth/phantom-adapter/-/phantom-adapter-1.0.0.tgz#0a9b644b07afec4ea319bf23afbba649eea10e06"
-  integrity sha512-3MtymxD9zMHz+/NamMtefH9Bs20A1417I6IucgXV0UrytQoUzwHYWEFrn0rQOMonp74RNxjmjAl30UXvGT9QuQ==
-  dependencies:
-    "@web3auth/base" "^1.0.0"
-    "@web3auth/base-provider" "^1.0.0"
-    "@web3auth/solana-provider" "^1.0.0"
-    bn.js "^5.2.0"
-
-"@web3auth/solana-provider@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@web3auth/solana-provider/-/solana-provider-1.0.0.tgz#fbd2378b388e494fdc85207a03b2b9735f9b2719"
-  integrity sha512-ZSqmJoANu1TbJqwM71vGW3zYxEQlH/XgYZu4ORSr/0uD66LmPEGhzCbx5+GQD/aPf8EK85fBrjMCncgnnmvHGg==
-  dependencies:
-    "@solana/web3.js" "^1.43.1"
-    "@toruslabs/base-controllers" "^2.0.0"
-    "@toruslabs/openlogin-jrpc" "^2.0.0"
-    "@toruslabs/tweetnacl-js" "^1.0.3"
-    "@web3auth/base" "^1.0.0"
-    "@web3auth/base-provider" "^1.0.0"
-    bn.js "^5.2.0"
-    bs58 "^4.0.1"
-    eth-rpc-errors "^4.0.3"
-    json-rpc-random-id "^1.0.1"
-
-"@web3auth/torus-evm-adapter@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@web3auth/torus-evm-adapter/-/torus-evm-adapter-1.0.0.tgz#cbf30566bba94513a6bf773ae2f85a5a15581cc5"
-  integrity sha512-Y/6iLnutA7O2wnY53yhOWvRfY4xIzzk+94aVoXO9hrLJ0D99QuLwF4W69l9Ylb3E8pKXWu6qQEmzwE2kXh5KZw==
-  dependencies:
-    "@toruslabs/torus-embed" "^1.23.0"
-    "@web3auth/base" "^1.0.0"
-
-"@web3auth/torus-solana-adapter@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@web3auth/torus-solana-adapter/-/torus-solana-adapter-1.0.0.tgz#6266133322f06668f3840463ceb5967bdcec4808"
-  integrity sha512-RSpr5ZvIQ1aiFub37AukKgFJg6C7VAcF//8Sjh1culFe1OO407lEyPt0AiKZvp8KYFM1WyxwycJu2EZte/B3fA==
-  dependencies:
-    "@toruslabs/solana-embed" "^0.2.0"
-    "@web3auth/base" "^1.0.0"
-    "@web3auth/base-provider" "^1.0.0"
-    "@web3auth/solana-provider" "^1.0.0"
-
-"@web3auth/ui@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@web3auth/ui/-/ui-1.0.0.tgz#aafa2b45a343b839bb03af73015d45d53efdd0f1"
-  integrity sha512-xT2EnJxdXGKPDK2KjDCb5LtRQ1+JtE+SlCfMa4Eo9F6V9ots8Os5dgtm3iXu3oU4o9bMW2TaW+BzEcBfyVmt9w==
-  dependencies:
-    "@toruslabs/openlogin" "^2.0.0"
-    "@toruslabs/openlogin-jrpc" "^2.0.0"
-    "@web3auth/base" "^1.0.0"
-    bowser "^2.11.0"
-    classnames "^2.3.1"
-    lodash.clonedeep "^4.5.0"
-    lodash.merge "^4.6.2"
-    react "^17.0.2"
-    react-dom "^17.0.2"
-    react-qr-code "^2.0.7"
-
-"@web3auth/wallet-connect-v1-adapter@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@web3auth/wallet-connect-v1-adapter/-/wallet-connect-v1-adapter-1.0.0.tgz#023ee64f534658cefc253729907d7c33c0ea0139"
-  integrity sha512-AVj6rn+t1iMOWKsemGJkQO9z+LBJnVV1p09dIw8P71rNm9LjJ52D2zWOBsqTApBZwo4gRk150VbCtMLngUI5Yw==
-  dependencies:
-    "@walletconnect/client" "~1.7.8"
-    "@walletconnect/types" "~1.7.8"
-    "@web3auth/base" "^1.0.0"
-    "@web3auth/ethereum-provider" "^1.0.0"
-
-"@web3auth/web3auth@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@web3auth/web3auth/-/web3auth-1.0.0.tgz#f71995a447e0d2bab614c04fffeeda099099ef90"
-  integrity sha512-waU1cvkcRNwWpmfZMZg0g5Vt7FF11oBYQVtrBJZ8ZbL/VlzgMLOOgok2LdHbL/fODve6TFIolhh1wPp0CpzbDA==
-  dependencies:
-    "@web3auth/base" "^1.0.0"
-    "@web3auth/core" "^1.0.0"
-    "@web3auth/metamask-adapter" "^1.0.0"
-    "@web3auth/openlogin-adapter" "^1.0.0"
-    "@web3auth/phantom-adapter" "^1.0.0"
-    "@web3auth/torus-evm-adapter" "^1.0.0"
-    "@web3auth/torus-solana-adapter" "^1.0.0"
-    "@web3auth/ui" "^1.0.0"
-    "@web3auth/wallet-connect-v1-adapter" "^1.0.0"
 
 "@webassemblyjs/ast@1.11.1":
   version "1.11.1"
@@ -4110,12 +3904,12 @@ cross-env@^7.0.3:
     cross-spawn "^7.0.1"
 
 cross-fetch@^2.1.0:
-  version "2.2.5"
-  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-2.2.5.tgz#afaf5729f3b6c78d89c9296115c9f142541a5705"
-  integrity sha512-xqYAhQb4NhCJSRym03dwxpP1bYXpK3y7UN83Bo2WFi3x1Zmzn0SL/6xGoPr+gpt4WmNrgCCX3HPysvOwFOW36w==
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-2.2.6.tgz#2ef0bb39a24ac034787965c457368a28730e220a"
+  integrity sha512-9JZz+vXCmfKUZ68zAptS7k4Nu8e2qcibe7WVZYps7sAgk5R8GYTc+T1WR0v1rlP9HxgARmOX1UTIJZFytajpNA==
   dependencies:
-    node-fetch "2.6.1"
-    whatwg-fetch "2.0.4"
+    node-fetch "^2.6.7"
+    whatwg-fetch "^2.0.4"
 
 cross-fetch@^3.1.4:
   version "3.1.5"
@@ -4237,6 +4031,13 @@ data-urls@^1.1.0:
     abab "^2.0.0"
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
+
+dcent-web-connector@^0.11.2:
+  version "0.11.3"
+  resolved "https://registry.yarnpkg.com/dcent-web-connector/-/dcent-web-connector-0.11.3.tgz#7decb528f4db16edfc199d0a45fd702920459ea7"
+  integrity sha512-5sXBLwthDWsieJeJa9zkqiP9aspybeD/fc1RLij1sfzR2vJjDeLDIfXJKyYc0Tqk73GijllrHpasgKxhO2qKEw==
+  dependencies:
+    events "^3.0.0"
 
 debug@2.6.9, debug@^2.2.0:
   version "2.6.9"
@@ -4994,6 +4795,15 @@ eth-crypto@^2.1.0:
     ethers "5.5.4"
     secp256k1 "4.0.3"
 
+eth-dcent-keyring@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/eth-dcent-keyring/-/eth-dcent-keyring-0.2.2.tgz#4af7ccd9089411b0ca8366a7401a7c0d0acb6ef7"
+  integrity sha512-dPrR2Umx/OnOeycaoYx7O0Tzejzpya7dy0cx9+tjwsXTU8j1yIPfgUhfpHGX4k3xifK0u48OB47jyZdaGXNgVA==
+  dependencies:
+    "@ethereumjs/tx" "3.2.1"
+    dcent-web-connector "^0.11.2"
+    ethereumjs-util "7.0.9"
+
 eth-ens-namehash@2.0.8:
   version "2.0.8"
   resolved "https://registry.yarnpkg.com/eth-ens-namehash/-/eth-ens-namehash-2.0.8.tgz#229ac46eca86d52e0c991e7cb2aef83ff0f68bcf"
@@ -5218,6 +5028,18 @@ ethereumjs-util@5.2.0:
     rlp "^2.0.0"
     safe-buffer "^5.1.1"
     secp256k1 "^3.0.1"
+
+ethereumjs-util@7.0.9:
+  version "7.0.9"
+  resolved "https://registry.yarnpkg.com/ethereumjs-util/-/ethereumjs-util-7.0.9.tgz#2038baeb30f370a3e576ec175bd70bbbb6807d42"
+  integrity sha512-cRqvYYKJoitq6vMKMf8pXeVwvTrX+dRD0JwHaYqm8jvogK14tqIoCWH/KUHcRwnVxVXEYF/o6pup5jRG4V0xzg==
+  dependencies:
+    "@types/bn.js" "^5.1.0"
+    bn.js "^5.1.2"
+    create-hash "^1.1.2"
+    ethereum-cryptography "^0.1.3"
+    ethjs-util "0.1.6"
+    rlp "^2.2.4"
 
 ethereumjs-util@7.1.3:
   version "7.1.3"
@@ -7547,7 +7369,7 @@ node-addon-api@^2.0.0:
   resolved "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-2.0.2.tgz#432cfa82962ce494b132e9d72a15b29f71ff5d32"
   integrity sha512-Ntyt4AIXyaLIuMHF6IOoTakB3K+RWxwtsHNRxllEoA6vPwP9o4866g6YWDLUdnucilZhmkxiHwHr11gAENw+QA==
 
-node-fetch@2, node-fetch@2.6.7, node-fetch@^2.6.0, node-fetch@^2.6.1:
+node-fetch@2.6.7, node-fetch@^2.6.0, node-fetch@^2.6.1, node-fetch@^2.6.7:
   version "2.6.7"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
   integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
@@ -8473,13 +8295,12 @@ react@16.13.1:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
 
-react@^17.0.2:
-  version "17.0.2"
-  resolved "https://registry.yarnpkg.com/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"
-  integrity sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==
+react@^18.0.0:
+  version "18.0.0"
+  resolved "https://registry.yarnpkg.com/react/-/react-18.0.0.tgz#b468736d1f4a5891f38585ba8e8fb29f91c3cb96"
+  integrity sha512-x+VL6wbT4JRVPm7EGxXhZ8w8LTROaxPXOqhlGyVSrv0sB1jkyFGgXxJ8LVoPRLvPR6/CIZGFmfzqUa2NYeMr2A==
   dependencies:
     loose-envify "^1.1.0"
-    object-assign "^4.1.1"
 
 readable-stream@^1.0.33:
   version "1.1.14"
@@ -9984,6 +9805,11 @@ url@^0.11.0:
     punycode "1.3.2"
     querystring "0.2.0"
 
+use-sync-external-store@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.0.0.tgz#d98f4a9c2e73d0f958e7e2d2c2bfb5f618cbd8fd"
+  integrity sha512-AFVsxg5GkFg8GDcxnl+Z0lMAz9rE8DGJCc28qnBuQF7lac57B5smLcT37aXpXIIPz75rW4g3eXHPjhHwdGskOw==
+
 utf-8-validate@^5.0.2:
   version "5.0.8"
   resolved "https://registry.yarnpkg.com/utf-8-validate/-/utf-8-validate-5.0.8.tgz#4a735a61661dbb1c59a0868c397d2fe263f14e58"
@@ -10961,7 +10787,7 @@ whatwg-encoding@^1.0.1, whatwg-encoding@^1.0.5:
   dependencies:
     iconv-lite "0.4.24"
 
-whatwg-fetch@2.0.4:
+whatwg-fetch@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.4.tgz#dde6a5df315f9d39991aa17621853d720b85566f"
   integrity sha512-dcQ1GWpOD/eEQ97k66aiEVpNnapVj90/+R+SXTPYGHpYBBypfKJEQjLrvMZ7YXbKm21gXd4NcuxUTjiv1YtLng==
