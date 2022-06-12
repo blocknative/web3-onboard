@@ -324,7 +324,8 @@ export function addNewChain(
           symbol: chain.token,
           decimals: 18
         },
-        rpcUrls: [chain.rpcUrl]
+        rpcUrls: [chain.publicRpcUrl || chain.rpcUrl],
+        blockExplorerUrls: chain.blockExplorerUrl ? [chain.blockExplorerUrl] : undefined
       }
     ]
   })

@@ -1,5 +1,5 @@
-import Joi from 'joi'
-import type { ChainId, WalletInit, WalletModule } from '@web3-onboard/common'
+import Joi, { ObjectSchema, Schema } from 'joi'
+import type { Chain, ChainId, WalletInit, WalletModule } from '@web3-onboard/common'
 
 import type {
   InitOptions,
@@ -29,7 +29,7 @@ const providerConnectionInfo = Joi.object({
   timeout: Joi.number()
 })
 
-const chain = Joi.object({
+const chainValidationParams: Record<keyof Chain, Schema | ObjectSchema> = {
   namespace: chainNamespace,
   id: chainId.required(),
   rpcUrl: Joi.string().required(),
@@ -37,8 +37,11 @@ const chain = Joi.object({
   token: Joi.string().required(),
   icon: Joi.string(),
   color: Joi.string(),
-  providerConnectionInfo: providerConnectionInfo
-})
+  publicRpcUrl: Joi.string(),
+  blockExplorerUrl: Joi.string(),
+  providerConnectionInfo
+}
+const chain = Joi.object(chainValidationParams)
 
 const connectedChain = Joi.object({
   namespace: chainNamespace.required(),
@@ -208,6 +211,7 @@ export function validateString(str: string): ValidateReturn {
 
 export function validateSetChainOptions(data: {
   chainId: ChainId
+  chainNamespace?: string
   wallet?: WalletState['label']
 }): ValidateReturn {
   return validate(setChainOptions, data)
