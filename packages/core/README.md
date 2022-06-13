@@ -162,6 +162,12 @@ const onboard = Onboard({
       token: 'FTM',
       label: 'Fantom Mainnet',
       rpcUrl: 'https://rpc.ftm.tools/'
+    },
+    {
+      id: '0x216',
+      token: 'CNDL',
+      label: 'Candle',
+      rpcUrl: 'https://rpc.cndlchain.com'
     }
   ],
   appMetadata: {

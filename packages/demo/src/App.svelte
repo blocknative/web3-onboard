@@ -143,6 +143,12 @@
         token: 'OETH',
         label: 'Optimism',
         rpcUrl: 'https://mainnet.optimism.io'
+      },
+      {
+        id: '0x216',
+        token: 'CNDL',
+        label: 'Candle',
+        rpcUrl: 'https://rpc.cndlchain.com'
       }
     ],
     appMetadata: {

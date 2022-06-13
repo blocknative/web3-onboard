@@ -6,7 +6,7 @@ A collection of composable functions for implementing web3-onboard in to a Vue p
 
 `npm i @web3-onboard/vue`
 
-## Functions 
+## Functions
 
 ## `init`
 
@@ -85,6 +85,12 @@ const web3Onboard = init({
       token: 'MATIC',
       label: 'Matic Mainnet',
       rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+    },
+    {
+      id: '0x216',
+      token: 'CNDL',
+      label: 'Candle',
+      rpcUrl: 'https://rpc.cndlchain.com'
     }
   ],
   appMetadata: {
