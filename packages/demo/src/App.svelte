@@ -72,7 +72,7 @@
   })
 
   const web3auth = web3authModule({
-    clientId: 'BJuUOKvmNnlzy6ruVgeWYWIMKLRyYtjYa9Y10VCeJzWZcygDlrYLyXsBQjpJ2hxlBO9dnl8t9GmAC2rOP5vnIGo'
+    clientId: 'DJuUOKvmNnlzy6ruVgeWYWIMKLRyYtjYa9Y10VCeJzWZcygDlrYLyXsBQjpJ2hxlBO9dnl8t9GmAC2qOP5vnIGo'
   })
 
   const torus = torusModule()
