@@ -185,6 +185,7 @@ const customNotification = Joi.object({
   type: Joi.string().allow('pending', 'error', 'success', 'hint'),
   eventCode: Joi.string(),
   message: Joi.string(),
+  id: Joi.string(),
   autoDismiss: Joi.number()
 })
 

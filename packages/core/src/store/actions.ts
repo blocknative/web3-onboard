@@ -19,7 +19,6 @@ import type {
   UpdateNotifyAction,
   Notification,
   AddNotificationAction,
-  AddCustomNotificationAction,
   RemoveNotificationAction,
   UpdateAllWalletsAction,
   CustomNotification
@@ -49,12 +48,10 @@ import {
   SET_WALLET_MODULES,
   SET_LOCALE,
   ADD_NOTIFICATION,
-  ADD_CUSTOM_NOTIFICATION,
   REMOVE_NOTIFICATION,
   UPDATE_ALL_WALLETS
 } from './constants'
-import { chainStyles, networkToChainId } from '../utils'
-import type { Network } from 'bnc-sdk'
+
 import { setCustomNotificationProps } from '../notify'
 
 export function addChains(chains: Chain[]): void {
@@ -186,26 +183,21 @@ export function addNotification(notification: Notification): void {
   dispatch(action as AddNotificationAction)
 }
 
+// wrap below in notify component
 export function addCustomNotification(notification: CustomNotification): void {
   const customNotificationError = validateCustomNotification(notification)
   
   if (customNotificationError) {
     throw customNotificationError
   }
-  notification = setCustomNotificationProps(notification)
-
-  // const notificationError = validateNotification(notification)
-  
-  // if (notificationError) {
-  //   throw notificationError
-  // }
+  // notification = setCustomNotificationProps(notification)
 
   const action = {
-    type: ADD_CUSTOM_NOTIFICATION,
+    type: ADD_NOTIFICATION,
     payload: notification
   }
 
-  dispatch(action as AddCustomNotificationAction)
+  dispatch(action as AddNotificationAction)
 }
 
 export function removeNotification(id: Notification['id']): void {

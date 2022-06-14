@@ -32,7 +32,6 @@ import {
   SET_WALLET_MODULES,
   SET_LOCALE,
   ADD_NOTIFICATION,
-  ADD_CUSTOM_NOTIFICATION,
   REMOVE_NOTIFICATION,
   UPDATE_ALL_WALLETS
 } from './constants'
@@ -144,28 +143,6 @@ function reducer(state: AppState, action: Action): AppState {
     }
 
     case ADD_NOTIFICATION: {
-      const update = payload as AddNotificationAction['payload']
-      const notificationsUpdate = [...state.notifications]
-
-      const notificationExistsIndex = notificationsUpdate.findIndex(
-        ({ id }) => id === update.id
-      )
-
-      if (notificationExistsIndex !== -1) {
-        // if notification with same id, replace it with update
-        notificationsUpdate[notificationExistsIndex] = update
-      } else {
-        // otherwise add it to the end of array as new notification
-        notificationsUpdate.push(update)
-      }
-
-      return {
-        ...state,
-        notifications: notificationsUpdate
-      }
-    }
-
-    case ADD_CUSTOM_NOTIFICATION: {
       const update = payload as AddNotificationAction['payload']
       const notificationsUpdate = [...state.notifications]
 

@@ -7,12 +7,16 @@ import type { EthereumTransactionData } from 'bnc-sdk'
 import type {
   CustomNotification,
   Notification,
-  NotificationType
+  NotificationType,
+  UpdateNotification
 } from './types'
 
-import { validateTransactionHandlerReturn } from './validation'
+import {
+  validateTransactionHandlerReturn,
+  validateCustomNotification
+} from './validation'
 import { state } from './store'
-import { addNotification } from './store/actions'
+import { addCustomNotification, addNotification, removeNotification } from './store/actions'
 
 export function handleTransactionUpdates(
   transaction: EthereumTransactionData
@@ -165,10 +169,54 @@ export function typeToDismissTimeout(type: string): number {
 export function setCustomNotificationProps(
   customizedNotification: CustomNotification
 ): CustomNotification {
-  
-  const customIdKey = `custom-${Date.now().toString(16)}`
+  const customIdKey = `customNotification-${Date.now().toString(16)}`
   customizedNotification.id = customIdKey
   customizedNotification.key = customIdKey
 
   return customizedNotification
+}
+
+export function addCustNotification(updatedNotification: CustomNotification): {
+  dismiss: () => void
+  update: UpdateNotification
+} {
+  const customNotificationError =
+    validateCustomNotification(updatedNotification)
+
+  if (customNotificationError) {
+    throw customNotificationError
+  }
+
+  const notification = setCustomNotificationProps(updatedNotification)
+  addCustomNotification(notification)
+
+  const dismiss = () => removeNotification(notification.id)
+
+  function update(notificationUpdate: CustomNotification): {
+    dismiss: () => void
+    update: UpdateNotification
+  } {
+    const customNotificationError =
+      validateCustomNotification(updatedNotification)
+
+    if (customNotificationError) {
+      throw customNotificationError
+    }
+    notificationUpdate.id = notification.id
+    addCustomNotification(notificationUpdate)
+
+
+    return {
+      dismiss,
+      update
+    }
+  }
+
+  addCustomNotification(notification)
+
+
+  return {
+    dismiss,
+    update
+  }
 }

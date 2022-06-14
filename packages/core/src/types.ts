@@ -191,6 +191,19 @@ export type CustomNotification = Partial<
 
 export type NotificationType = 'pending' | 'success' | 'error' | 'hint'
 
+export interface NotificationActions {
+  (notificationObject: CustomNotification): {
+    dismiss: () => void
+    update: UpdateNotification
+  }
+}
+export interface UpdateNotification {
+  (notificationObject: CustomNotification): {
+    dismiss: () => void
+    update: UpdateNotification
+  }
+}
+
 // ==== ACTIONS ==== //
 export type Action =
   | AddChainsAction
@@ -254,11 +267,6 @@ export type UpdateNotifyAction = {
 export type AddNotificationAction = {
   type: 'add_notification'
   payload: Notification
-}
-
-export type AddCustomNotificationAction = {
-  type: 'add_custom_notification'
-  payload: CustomNotification
 }
 
 export type RemoveNotificationAction = {

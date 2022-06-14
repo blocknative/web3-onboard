@@ -309,7 +309,7 @@
         <div class="notify-action-container">
           <button
             on:click={() =>
-              onboard.state.actions.addCustomNotification({
+              onboard.state.actions.addCustNotification({
                 type: 'hint',
                 message:
                   'This is a custom DApp hint that allows you to tell your users anything hint-y',
@@ -317,17 +317,29 @@
               })}>Send Hint Notification</button
           >
           <button
-            on:click={() =>
-              onboard.state.actions.addCustomNotification({
-                type: 'pending',
-                message:
-                  'This is a custom DApp pending notification to use however you want',
-                autoDismiss: 6000
-              })}>Send Pending Notification</button
+            on:click={() => {
+              const { update, dismiss } =
+                onboard.state.actions.addCustNotification({
+                  type: 'pending',
+                  message:
+                    'This is a custom DApp pending notification to use however you want',
+                  autoDismiss: 0
+                })
+              setTimeout(
+                () =>
+                  update({
+                    eventCode: 'dbUpdateSuccess',
+                    message: 'Updated status for custom notification',
+                    type: 'success',
+                    autoDismiss: 8000
+                  }),
+                4000
+              )
+            }}>Send Pending Notification</button
           >
           <button
             on:click={() =>
-              onboard.state.actions.addCustomNotification({
+              onboard.state.actions.addCustNotification({
                 type: 'success',
                 message:
                   'This is a custom DApp success notification to use however you want',
@@ -336,7 +348,7 @@
           >
           <button
             on:click={() =>
-              onboard.state.actions.addCustomNotification({
+              onboard.state.actions.addCustNotification({
                 type: 'error',
                 message:
                   'This is a custom DApp Error notification to use however you want',
