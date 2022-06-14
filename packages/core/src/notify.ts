@@ -7,16 +7,12 @@ import type { EthereumTransactionData } from 'bnc-sdk'
 import type {
   CustomNotification,
   Notification,
-  NotificationType,
-  UpdateNotification
+  NotificationType
 } from './types'
 
-import {
-  validateTransactionHandlerReturn,
-  validateCustomNotification
-} from './validation'
+import { validateTransactionHandlerReturn } from './validation'
 import { state } from './store'
-import { addCustomNotification, addNotification, removeNotification } from './store/actions'
+import { addNotification } from './store/actions'
 
 export function handleTransactionUpdates(
   transaction: EthereumTransactionData

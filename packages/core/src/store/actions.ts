@@ -1,5 +1,5 @@
 import type { Chain, WalletInit, WalletModule } from '@web3-onboard/common'
-import { dispatch, state } from './index'
+import { dispatch } from './index'
 import { configuration } from '../configuration'
 
 import type {
