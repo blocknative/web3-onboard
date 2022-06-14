@@ -63,42 +63,44 @@
   }
 </style>
 
-<div class="relative">
-  {#if notification.type === 'pending'}
-    <div class="border-action absolute" />
-  {/if}
+{#if notification.type}
+  <div class="relative">
+    {#if notification.type === 'pending'}
+      <div class="border-action absolute" />
+    {/if}
 
-  <div
-    class="flex items-center justify-center border relative notification-icons-wrapper"
-    style={`background:${
-      defaultNotifyEventStyles[notification.type]['backgroundColor']
-    }; color: ${
-      defaultNotifyEventStyles[notification.type]['iconColor'] || ''
-    }; ${
-      notification.type === 'pending'
-        ? 'height: 28px; width: 28px; margin: 2px;'
-        : `border: 2px solid ${
-            defaultNotifyEventStyles[notification.type]['borderColor']
-          }`
-    }; `}
-  >
     <div
-      class={`notification-icon flex items-center justify-center ${
-        notification.type === 'pending' ? 'pending-icon' : ''
-      }`}
+      class="flex items-center justify-center border relative notification-icons-wrapper"
+      style={`background:${
+        defaultNotifyEventStyles[notification.type]['backgroundColor']
+      }; color: ${
+        defaultNotifyEventStyles[notification.type]['iconColor'] || ''
+      }; ${
+        notification.type === 'pending'
+          ? 'height: 28px; width: 28px; margin: 2px;'
+          : `border: 2px solid ${
+              defaultNotifyEventStyles[notification.type]['borderColor']
+            }`
+      }; `}
     >
-      {@html defaultNotifyEventStyles[notification.type]['eventIcon']}
+      <div
+        class={`notification-icon flex items-center justify-center ${
+          notification.type === 'pending' ? 'pending-icon' : ''
+        }`}
+      >
+        {@html defaultNotifyEventStyles[notification.type]['eventIcon']}
+      </div>
     </div>
+    {#if !notification.id.includes('custom')}
+      <div class="absolute chain-icon-container">
+        <ChainBadge
+          icon={chainStyles.icon}
+          size={16}
+          background={chainStyles.color}
+          borderColorVar={'--onboard-gray-600, var(--gray-600)'}
+          padding={3}
+        />
+      </div>
+    {/if}
   </div>
-  {#if !notification.id.includes('custom')}
-    <div class="absolute chain-icon-container">
-      <ChainBadge
-        icon={chainStyles.icon}
-        size={16}
-        background={chainStyles.color}
-        borderColorVar={'--onboard-gray-600, var(--gray-600)'}
-        padding={3}
-      />
-    </div>
-  {/if}
-</div>
+{/if}

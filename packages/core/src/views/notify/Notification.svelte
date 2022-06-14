@@ -44,6 +44,7 @@
       var(--onboard-border-radius-4, var(--border-radius-4))
     );
     display: flex;
+    position: relative;
   }
 
   .bn-notify-notification:hover > div.notify-close-btn {
@@ -59,13 +60,29 @@
     visibility: hidden;
     opacity: 0;
     transition: visibility 0.15s linear, opacity 0.15s linear;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    justify-content: center;
+    align-items: center;
   }
 
   .notify-close-btn .close-icon {
-    width: 24px;
+    width: 20px;
+    margin: auto;
+  }
+  
+  .notify-close-btn > .close-icon {
     color: var(
-      --notify-onboard-gray-200,
-      var(--onboard-gray-200, var(--gray-200))
+      --notify-onboard-gray-300,
+      var(--onboard-gray-300, var(--gray-300))
+    );
+  }
+
+  .notify-close-btn:hover > .close-icon {
+    color: var(
+      --notify-onboard-gray-100,
+      var(--onboard-gray-100, var(--gray-100))
     );
   }
 
@@ -91,7 +108,7 @@
 
   <div
     on:click|stopPropagation={() => removeNotification(notification.id)}
-    class="notify-close-btn pointer"
+    class="notify-close-btn pointer flex"
   >
     <div class="flex items-center close-icon">
       {@html closeIcon}

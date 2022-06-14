@@ -14,7 +14,7 @@
       var(--onboard-font-size-6, var(--font-size-6))
     );
     font-family: inherit;
-    margin: 0px 8px;
+    margin: 0px 20px 0px 8px;
     justify-content: space-between;
   }
 
@@ -71,8 +71,8 @@
     {notification.message}
   </span>
 
-  <span class="hash-time">
-    {#if notification.id && !notification.id.includes('custom')}
+  {#if notification.id && !notification.id.includes('custom')}
+    <span class="hash-time">
       {#if notification.link}
         <a
           class="address-hash"
@@ -87,7 +87,7 @@
           {shortenAddress(notification.id)}
         </div>
       {/if}
-    {/if}
-    <Timer startTime={notification.startTime} />
-  </span>
+      <Timer startTime={notification.startTime} />
+    </span>
+  {/if}
 </div>
