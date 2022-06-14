@@ -174,6 +174,37 @@ export type Notification = {
 export type NotificationType = 'pending' | 'success' | 'error' | 'hint'
 
 export declare type Network = 'main' | 'testnet' | 'ropsten' | 'rinkeby' | 'goerli' | 'kovan' | 'xdai' | 'bsc-main' | 'matic-main' | 'fantom-main' | 'matic-mumbai' | 'local';
+
+export interface UpdateNotification {
+  (notificationObject: CustomNotification): {
+    dismiss: () => void
+    update: UpdateNotification
+  }
+}
+```
+
+ Notify can be used to deliver custom DApp notifications by passing a `CustomNotification` object to the `customNotification` action and will be returned a `UpdateNotification` type. 
+ This `UpdateNotification` will return an `update` function that can be passed a new `CustomNotification` to update the existing notification.
+ The `customNotification` method also returns a `dismiss` method that is called without any parameters to dismiss the notification. 
+ 
+```typescript
+  const { update, dismiss } =
+    onboard.state.actions.customNotification({
+      type: 'pending',
+      message:
+        'This is a custom DApp pending notification to use however you want',
+      autoDismiss: 0
+    })
+  setTimeout(
+    () =>
+      update({
+        eventCode: 'dbUpdateSuccess',
+        message: 'Updated status for custom notification',
+        type: 'success',
+        autoDismiss: 8000
+      }),
+    4000
+  )
 ```
 
 ### Initialization Example

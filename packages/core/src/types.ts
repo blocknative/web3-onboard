@@ -191,12 +191,6 @@ export type CustomNotification = Partial<
 
 export type NotificationType = 'pending' | 'success' | 'error' | 'hint'
 
-export interface NotificationActions {
-  (notificationObject: CustomNotification): {
-    dismiss: () => void
-    update: UpdateNotification
-  }
-}
 export interface UpdateNotification {
   (notificationObject: CustomNotification): {
     dismiss: () => void
@@ -217,7 +211,6 @@ export type Action =
   | SetLocaleAction
   | UpdateNotifyAction
   | AddNotificationAction
-  | AddCustomNotificationAction
   | RemoveNotificationAction
   | UpdateAllWalletsAction
 
