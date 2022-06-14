@@ -37,7 +37,7 @@
       var(--onboard-primary-200, var(--primary-200))
     );
   }
-  
+
   a.address-hash {
     color: var(
       --notify-onboard-primary-400,
@@ -72,14 +72,21 @@
   </span>
 
   <span class="hash-time">
-    {#if notification.link}
-      <a class="address-hash" href={notification.link} target="_blank" rel="noreferrer noopener">
-        {shortenAddress(notification.id)}
-      </a>
-    {:else}
-      <div class="address-hash">
-        {shortenAddress(notification.id)}
-      </div>
+    {#if notification.id && !notification.id.includes('custom')}
+      {#if notification.link}
+        <a
+          class="address-hash"
+          href={notification.link}
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          {shortenAddress(notification.id)}
+        </a>
+      {:else}
+        <div class="address-hash">
+          {shortenAddress(notification.id)}
+        </div>
+      {/if}
     {/if}
     <Timer startTime={notification.startTime} />
   </span>

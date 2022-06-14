@@ -10,7 +10,8 @@ import type {
   AccountCenter,
   TransactionHandlerReturn,
   NotifyOptions,
-  Notification
+  Notification,
+  CustomNotification
 } from './types'
 
 const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
@@ -275,6 +276,12 @@ export function validateTransactionHandlerReturn(
 
 export function validateNotification(data: Notification): ValidateReturn {
   return validate(notification, data)
+}
+
+export function validateCustomNotification(
+  data: CustomNotification
+): ValidateReturn {
+  return validate(customNotification, data)
 }
 
 export function validateUpdateBalances(data: WalletState[]): ValidateReturn {

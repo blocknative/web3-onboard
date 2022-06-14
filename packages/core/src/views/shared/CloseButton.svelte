@@ -1,5 +1,5 @@
 <script>
-  import closeIcon from '../../icons/close-circle'
+  import closeIcon from '../../icons/close'
 
   export let width = '24px'
   export let backgroundColor = `var(
@@ -17,13 +17,11 @@
       var(--onboard-gray-600, var(--gray-600))
     );
   }
+
 </style>
 
 <div class="flex justify-center items-center pointer">
-  <div
-    class="close-button flex justify-center items-center"
-    style={`color:${backgroundColor}`}
-  >
+  <div class="close-button flex justify-center items-center" style={`background:${backgroundColor}`}>
     <div class="flex items-center" style="width:{width};">
       {@html closeIcon}
     </div>

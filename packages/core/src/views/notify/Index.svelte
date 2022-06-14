@@ -80,9 +80,11 @@
     style={`justify-content:${
       position.includes('top') ? 'flex-start' : 'flex-end'
     };`}
+    on:click|stopPropagation
   >
     {#each $notifications$ as notification (notification.key)}
       <li animate:flip={{ duration: 500 }}
+        on:click|stopPropagation
         in:fly={{ duration: 1200, delay: 300, x, y, easing: elasticOut }}
         out:fly={{ duration: 400, x, y, easing: quintIn }}
         style={`margin:${

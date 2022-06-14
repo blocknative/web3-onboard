@@ -186,7 +186,7 @@ export type Notification = {
 export type TransactionHandlerReturn = CustomNotification | boolean | void
 
 export type CustomNotification = Partial<
-  Omit<Notification, 'id' | 'startTime' | 'network'>
+  Omit<Notification, 'startTime' | 'network'>
 >
 
 export type NotificationType = 'pending' | 'success' | 'error' | 'hint'
@@ -204,6 +204,7 @@ export type Action =
   | SetLocaleAction
   | UpdateNotifyAction
   | AddNotificationAction
+  | AddCustomNotificationAction
   | RemoveNotificationAction
   | UpdateAllWalletsAction
 
@@ -253,6 +254,11 @@ export type UpdateNotifyAction = {
 export type AddNotificationAction = {
   type: 'add_notification'
   payload: Notification
+}
+
+export type AddCustomNotificationAction = {
+  type: 'add_custom_notification'
+  payload: CustomNotification
 }
 
 export type RemoveNotificationAction = {

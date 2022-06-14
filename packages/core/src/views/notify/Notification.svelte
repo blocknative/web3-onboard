@@ -62,7 +62,7 @@
   }
 
   .notify-close-btn .close-icon {
-    width:24px; 
+    width: 24px;
     color: var(
       --notify-onboard-gray-200,
       var(--onboard-gray-200, var(--gray-200))

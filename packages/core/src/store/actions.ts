@@ -1,5 +1,5 @@
 import type { Chain, WalletInit, WalletModule } from '@web3-onboard/common'
-import { dispatch } from './index'
+import { dispatch, state } from './index'
 import { configuration } from '../configuration'
 
 import type {
@@ -19,14 +19,17 @@ import type {
   UpdateNotifyAction,
   Notification,
   AddNotificationAction,
+  AddCustomNotificationAction,
   RemoveNotificationAction,
-  UpdateAllWalletsAction
+  UpdateAllWalletsAction,
+  CustomNotification
 } from '../types'
 
 import {
   validateAccountCenterUpdate,
   validateLocale,
   validateNotification,
+  validateCustomNotification,
   validateNotifyOptions,
   validateString,
   validateWallet,
@@ -46,9 +49,13 @@ import {
   SET_WALLET_MODULES,
   SET_LOCALE,
   ADD_NOTIFICATION,
+  ADD_CUSTOM_NOTIFICATION,
   REMOVE_NOTIFICATION,
   UPDATE_ALL_WALLETS
 } from './constants'
+import { chainStyles, networkToChainId } from '../utils'
+import type { Network } from 'bnc-sdk'
+import { setCustomNotificationProps } from '../notify'
 
 export function addChains(chains: Chain[]): void {
   // chains are validated on init
@@ -177,6 +184,28 @@ export function addNotification(notification: Notification): void {
   }
 
   dispatch(action as AddNotificationAction)
+}
+
+export function addCustomNotification(notification: CustomNotification): void {
+  const customNotificationError = validateCustomNotification(notification)
+  
+  if (customNotificationError) {
+    throw customNotificationError
+  }
+  notification = setCustomNotificationProps(notification)
+
+  // const notificationError = validateNotification(notification)
+  
+  // if (notificationError) {
+  //   throw notificationError
+  // }
+
+  const action = {
+    type: ADD_CUSTOM_NOTIFICATION,
+    payload: notification
+  }
+
+  dispatch(action as AddCustomNotificationAction)
 }
 
 export function removeNotification(id: Notification['id']): void {

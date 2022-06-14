@@ -16,6 +16,7 @@ import {
   setWalletModules,
   updateAccountCenter,
   updateNotify,
+  addCustomNotification,
   setLocale
 } from './store/actions'
 
@@ -32,6 +33,7 @@ const API = {
       setWalletModules,
       setLocale,
       updateNotify,
+      addCustomNotification,
       updateBalances
     }
   }

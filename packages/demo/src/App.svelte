@@ -111,19 +111,19 @@
         id: '0x1',
         token: 'ETH',
         label: 'Ethereum',
-        rpcUrl: 'https://mainnet.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
+        rpcUrl: 'https://mainnet.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
       },
       {
         id: '0x3',
         token: 'tROP',
         label: 'Ropsten',
-        rpcUrl: 'https://ropsten.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
+        rpcUrl: 'https://ropsten.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
       },
       {
         id: '0x4',
         token: 'rETH',
         label: 'Rinkeby',
-        rpcUrl: 'https://rinkeby.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
+        rpcUrl: 'https://rinkeby.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
       },
       {
         id: '0x89',
@@ -177,17 +177,27 @@
       enabled: true,
       transactionHandler: transaction => {
         console.log({ transaction })
-        // if (transaction.eventCode === 'txPool') {
-        //   return {
-        //     type: 'error',
-        //     message: 'Your in the pool, hope you brought a towel!',
-        //     id: '123',
-        //     key: '321',
+        //   if (transaction.eventCode === 'txConfirmed') {
+        //     return {
+        //       type: 'error',
+        //       message: 'Your in the pool, hope you brought a towel!',
+        //       autoDismiss: 0,
+        //       id: '123',
+        //       key: '321'
+        //     }
         //   }
-        // }
+        //   if (transaction.eventCode === 'txPool') {
+        //     return {
+        //       type: 'hint',
+        //       message: 'Your in the pool, hope you brought a towel!',
+        //       autoDismiss: 0,
+        //       id: '1232',
+        //       key: '3212'
+        //     }
+        //   }
       }
     },
-    apiKey: 'xxxx87fb-bf21-42ec-a093-9d37e4267xxx'
+    apiKey: '25b387fb-bf21-42ec-a093-9d37e4267a7a'
   })
 
   // Subscribe to wallet updates
@@ -240,6 +250,10 @@
 </script>
 
 <style>
+  button {
+    width: 14rem;
+    margin: 8px;
+  }
   .connected-wallet {
     padding: 1rem;
     border-radius: 4px;
@@ -272,25 +286,78 @@
     height: 12rem;
     margin: 0;
   }
+  .notify-chain-container {
+    display: flex;
+  }
+  .switch-chain-container,
+  .notify-action-container {
+    display: flex;
+    flex-direction: column;
+    width: 15rem;
+  }
 </style>
 
 <main>
-  <button on:click={() => onboard.connectWallet()}>Connect Wallet</button>
+  <div class="cta">
+    <button on:click={() => onboard.connectWallet()}>Connect Wallet</button>
 
-  {#if $wallets$}
-    <button on:click={() => onboard.setChain({ chainId: '0x1' })}
-      >Set Chain to Mainnet</button
-    >
-    <button on:click={() => onboard.setChain({ chainId: '0x4' })}
-      >Set Chain to Rinkeby</button
-    >
-    <button on:click={() => onboard.setChain({ chainId: '0x89' })}
-      >Set Chain to Matic</button
-    >
-    <button on:click={() => onboard.state.actions.updateBalances()}
-      >Update Wallet Balance</button
-    >
-  {/if}
+    {#if $wallets$}
+      <button on:click={() => onboard.state.actions.updateBalances()}
+        >Update Wallet Balance</button
+      >
+      <div class="notify-chain-container">
+        <div class="notify-action-container">
+          <button
+            on:click={() =>
+              onboard.state.actions.addCustomNotification({
+                type: 'hint',
+                message:
+                  'This is a custom DApp hint that allows you to tell your users anything hint-y',
+                autoDismiss: 6000
+              })}>Send Hint Notification</button
+          >
+          <button
+            on:click={() =>
+              onboard.state.actions.addCustomNotification({
+                type: 'pending',
+                message:
+                  'This is a custom DApp pending notification to use however you want',
+                autoDismiss: 6000
+              })}>Send Pending Notification</button
+          >
+          <button
+            on:click={() =>
+              onboard.state.actions.addCustomNotification({
+                type: 'success',
+                message:
+                  'This is a custom DApp success notification to use however you want',
+                autoDismiss: 6000
+              })}>Send Success Notification</button
+          >
+          <button
+            on:click={() =>
+              onboard.state.actions.addCustomNotification({
+                type: 'error',
+                message:
+                  'This is a custom DApp Error notification to use however you want',
+                autoDismiss: 6000
+              })}>Send Error Notification</button
+          >
+        </div>
+        <div class="switch-chain-container">
+          <button on:click={() => onboard.setChain({ chainId: '0x1' })}
+            >Set Chain to Mainnet</button
+          >
+          <button on:click={() => onboard.setChain({ chainId: '0x4' })}
+            >Set Chain to Rinkeby</button
+          >
+          <button on:click={() => onboard.setChain({ chainId: '0x89' })}
+            >Set Chain to Matic</button
+          >
+        </div>
+      </div>
+    {/if}
+  </div>
 
   {#if $wallets$}
     {#each $wallets$ as { icon, label, accounts, chains, provider }}

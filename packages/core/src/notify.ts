@@ -108,7 +108,7 @@ export function transactionEventToNotification(
     type,
     key,
     network,
-    startTime : startTime || Date.now(),
+    startTime: startTime || Date.now(),
     eventCode,
     message,
     autoDismiss: typeToDismissTimeout(
@@ -160,4 +160,15 @@ export function typeToDismissTimeout(type: string): number {
     default:
       return 0
   }
+}
+
+export function setCustomNotificationProps(
+  customizedNotification: CustomNotification
+): CustomNotification {
+  
+  const customIdKey = `custom-${Date.now().toString(16)}`
+  customizedNotification.id = customIdKey
+  customizedNotification.key = customIdKey
+
+  return customizedNotification
 }
