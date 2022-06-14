@@ -17,7 +17,7 @@
   }
 
   div.notification-icon {
-    padding: 2px;
+    padding: 5px;
   }
   div.pending-icon {
     animation: blink 2s ease-in infinite;

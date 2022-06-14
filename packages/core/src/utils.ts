@@ -222,9 +222,9 @@ export const defaultNotifyEventStyles: Record<string, NotifyEventStyles> = {
     eventIcon: error
   },
   hint: {
-    backgroundColor: 'var(--onboard-gray-800, var(--gray-800))',
-    borderColor: 'var(--onboard-gray-200, var(--gray-200))',
-    iconColor: 'var(--onboard-gray-200, var(--gray-200))',
+    backgroundColor: 'var(--onboard-gray-600, var(--gray-600))',
+    borderColor: 'var(--onboard-gray-100, var(--gray-100))',
+    iconColor: 'var(--onboard-gray-100, var(--gray-100))',
     eventIcon: info
   }
 }
