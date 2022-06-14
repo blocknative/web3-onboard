@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/gnosis",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Gnosis module for web3-onboard",
   "module": "dist/index.js",
   "browser": "dist/index.js",
