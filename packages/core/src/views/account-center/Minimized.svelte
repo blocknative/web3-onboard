@@ -104,7 +104,7 @@
     border-radius: 16px;
     padding: 1px;
     transition: border-color 250ms ease-in-out, backround 250ms ease-in-out;
-    max-width: 128px;
+    max-width: 116px;
     cursor: default;
   }
 
