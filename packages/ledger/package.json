@@ -27,7 +27,7 @@
     "@ledgerhq/hw-transport-u2f": "^5.36.0-deprecated",
     "@ledgerhq/hw-transport-webusb": "^6.19.0",
     "@metamask/eth-sig-util": "^4.0.0",
-    "@web3-onboard/common": "^2.1.0",
+    "@web3-onboard/common": "^2.1.1",
     "buffer": "^6.0.3",
     "ethereumjs-util": "^7.1.3"
   }

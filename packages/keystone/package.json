@@ -21,6 +21,6 @@
     "@ethereumjs/tx": "^3.4.0",
     "@ethersproject/providers": "^5.5.0",
     "@keystonehq/eth-keyring": "^0.14.0-alpha.10.3",
-    "@web3-onboard/common": "^2.1.0"
+    "@web3-onboard/common": "^2.1.1"
   }
 }

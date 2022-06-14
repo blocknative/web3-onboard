@@ -27,7 +27,7 @@
     "@ethersproject/providers": "^5.5.0",
     "@shapeshiftoss/hdwallet-core": "^1.15.2",
     "@shapeshiftoss/hdwallet-keepkey-webusb": "^1.15.2",
-    "@web3-onboard/common": "^2.1.0",
+    "@web3-onboard/common": "^2.1.1",
     "ethereumjs-util": "^7.1.3"
   }
 }

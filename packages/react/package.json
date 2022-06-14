@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@web3-onboard/core": "^2.2.12-alpha.2",
-    "@web3-onboard/common": "^2.1.1-alpha.1",
+    "@web3-onboard/common": "^2.1.1",
     "use-sync-external-store": "1.0.0"
   },
   "peerDependencies": {
