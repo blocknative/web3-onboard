@@ -125,6 +125,10 @@ export const chainStyles: Record<string, ChainStyle> = {
     icon: optimismIcon,
     color: '#FF0420'
   },
+  '0x45': {
+    icon: optimismIcon,
+    color: '#FF0420'
+  },
   '0xa86a': {
     icon: avalancheIcon,
     color: '#E84142'
