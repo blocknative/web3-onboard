@@ -309,7 +309,7 @@
         <div class="notify-action-container">
           <button
             on:click={() =>
-              onboard.state.actions.addCustNotification({
+              onboard.state.actions.customNotification({
                 type: 'hint',
                 message:
                   'This is a custom DApp hint that allows you to tell your users anything hint-y',
@@ -319,7 +319,7 @@
           <button
             on:click={() => {
               const { update, dismiss } =
-                onboard.state.actions.addCustNotification({
+                onboard.state.actions.customNotification({
                   type: 'pending',
                   message:
                     'This is a custom DApp pending notification to use however you want',
@@ -339,7 +339,7 @@
           >
           <button
             on:click={() =>
-              onboard.state.actions.addCustNotification({
+              onboard.state.actions.customNotification({
                 type: 'success',
                 message:
                   'This is a custom DApp success notification to use however you want',
@@ -348,7 +348,7 @@
           >
           <button
             on:click={() =>
-              onboard.state.actions.addCustNotification({
+              onboard.state.actions.customNotification({
                 type: 'error',
                 message:
                   'This is a custom DApp Error notification to use however you want',

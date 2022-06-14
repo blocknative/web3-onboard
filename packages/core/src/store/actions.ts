@@ -21,7 +21,8 @@ import type {
   AddNotificationAction,
   RemoveNotificationAction,
   UpdateAllWalletsAction,
-  CustomNotification
+  CustomNotification,
+  UpdateNotification
 } from '../types'
 
 import {
@@ -183,14 +184,12 @@ export function addNotification(notification: Notification): void {
   dispatch(action as AddNotificationAction)
 }
 
-// wrap below in notify component
 export function addCustomNotification(notification: CustomNotification): void {
   const customNotificationError = validateCustomNotification(notification)
   
   if (customNotificationError) {
     throw customNotificationError
   }
-  // notification = setCustomNotificationProps(notification)
 
   const action = {
     type: ADD_NOTIFICATION,
@@ -198,6 +197,37 @@ export function addCustomNotification(notification: CustomNotification): void {
   }
 
   dispatch(action as AddNotificationAction)
+}
+
+export function customNotification(updatedNotification: CustomNotification): {
+  dismiss: () => void
+  update: UpdateNotification
+} {
+
+  const notification = setCustomNotificationProps(updatedNotification)
+  addCustomNotification(notification)
+
+  const dismiss = () => removeNotification(notification.id)
+
+  const update = (notificationUpdate: CustomNotification): {
+    dismiss: () => void
+    update: UpdateNotification
+  }  => {
+    notificationUpdate.id = notification.id
+    addCustomNotification(notificationUpdate)
+
+    return {
+      dismiss,
+      update
+    }
+  }
+
+  addCustomNotification(notification)
+
+  return {
+    dismiss,
+    update
+  }
 }
 
 export function removeNotification(id: Notification['id']): void {
