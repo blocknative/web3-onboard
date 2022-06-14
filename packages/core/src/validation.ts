@@ -14,6 +14,20 @@ const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
 const chainNamespace = Joi.string().valid('evm')
 const unknownObject = Joi.object().unknown()
 
+/** Related to ConnectionInfo from 'ethers/lib/utils' */
+const providerConnectionInfo = Joi.object({
+  url: Joi.string().required(),
+  headers: Joi.object(),
+  user: Joi.string(),
+  password: Joi.string(),
+  allowInsecureAuthentication: Joi.boolean(),
+  allowGzip: Joi.boolean(),
+  throttleLimit: Joi.number(),
+  throttleSlotInterval: Joi.number(),
+  throttleCallback: Joi.function(),
+  timeout: Joi.number()
+})
+
 const chain = Joi.object({
   namespace: chainNamespace,
   id: chainId.required(),
@@ -21,7 +35,8 @@ const chain = Joi.object({
   label: Joi.string().required(),
   token: Joi.string().required(),
   icon: Joi.string(),
-  color: Joi.string()
+  color: Joi.string(),
+  providerConnectionInfo: providerConnectionInfo
 })
 
 const connectedChain = Joi.object({
