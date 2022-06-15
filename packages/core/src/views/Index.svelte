@@ -278,7 +278,10 @@
 {#if ($notify$.enabled || $accountCenter$.enabled) && $wallets$.length}
   <div
     class="container flex flex-column fixed"
-    style="{accountCenterPositions[$accountCenter$.position]} "
+    style="{accountCenterPositions[$accountCenter$.position]}; {device.type ===
+      'mobile' && $accountCenter$.position.includes('top')
+      ? 'padding-bottom: 0;'
+      : 'padding-top:0;'} "
   >
     {#if $notify$.enabled && $accountCenter$.position.includes('bottom')}
       <Notify position={$accountCenter$.position} />
