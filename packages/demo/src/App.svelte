@@ -313,7 +313,7 @@
                 type: 'hint',
                 message:
                   'This is a custom DApp hint that allows you to tell your users anything hint-y',
-                autoDismiss: 6000
+                autoDismiss: 0
               })}>Send Hint Notification</button
           >
           <button
@@ -331,20 +331,20 @@
                     eventCode: 'dbUpdateSuccess',
                     message: 'Updated status for custom notification',
                     type: 'success',
-                    autoDismiss: 8000
+                    autoDismiss: 0
                   }),
                 4000
               )
-            }}>Send Pending Notification</button
+            }}>Send Sucess Notification</button
           >
           <button
             on:click={() =>
               onboard.state.actions.customNotification({
-                type: 'success',
                 message:
                   'This is a custom DApp success notification to use however you want',
-                autoDismiss: 6000
-              })}>Send Success Notification</button
+                autoDismiss: 0,
+                type: 'pending'
+              })}>Send Pending Notification</button
           >
           <button
             on:click={() =>
@@ -352,8 +352,16 @@
                 type: 'error',
                 message:
                   'This is a custom DApp Error notification to use however you want',
-                autoDismiss: 6000
+                autoDismiss: 0
               })}>Send Error Notification</button
+          >
+          <button
+            on:click={() =>
+              onboard.state.actions.customNotification({
+                message:
+                  'This is a custom non-descript DApp notification to use however you want',
+                autoDismiss: 0
+              })}>Send DApp Notification</button
           >
         </div>
         <div class="switch-chain-container">
