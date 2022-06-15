@@ -186,7 +186,7 @@ export function addNotification(notification: Notification): void {
 
 export function addCustomNotification(notification: CustomNotification): void {
   const customNotificationError = validateCustomNotification(notification)
-  
+
   if (customNotificationError) {
     throw customNotificationError
   }
@@ -203,17 +203,19 @@ export function customNotification(updatedNotification: CustomNotification): {
   dismiss: () => void
   update: UpdateNotification
 } {
-
   const notification = setCustomNotificationProps(updatedNotification)
   addCustomNotification(notification)
 
   const dismiss = () => removeNotification(notification.id)
-
-  const update = (notificationUpdate: CustomNotification): {
+  
+  const update = (
+    notificationUpdate: CustomNotification
+  ): {
     dismiss: () => void
     update: UpdateNotification
-  }  => {
+  } => {
     notificationUpdate.id = notification.id
+    notificationUpdate.key = notification.key
     addCustomNotification(notificationUpdate)
 
     return {

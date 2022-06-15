@@ -168,6 +168,5 @@ export function setCustomNotificationProps(
   const customIdKey = `customNotification-${Date.now().toString(16)}`
   customizedNotification.id = customIdKey
   customizedNotification.key = customIdKey
-
   return customizedNotification
 }

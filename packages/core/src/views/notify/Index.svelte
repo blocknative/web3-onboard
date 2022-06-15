@@ -81,7 +81,6 @@
     style={`justify-content:${
       position.includes('top') ? 'flex-start' : 'flex-end'
     };`}
-    on:click|stopPropagation
   >
     {#each $notifications$ as notification (notification.key)}
       <li animate:flip={{ duration: 500 }}

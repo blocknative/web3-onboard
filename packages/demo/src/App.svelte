@@ -199,6 +199,9 @@
     },
     apiKey: '25b387fb-bf21-42ec-a093-9d37e4267a7a'
   })
+  onboard.state.select('notifications').subscribe(n => {
+    console.log(n)
+  })
 
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
