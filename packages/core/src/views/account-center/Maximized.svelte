@@ -21,6 +21,11 @@
   import blocknative from '../../icons/blocknative'
   import DisconnectAllConfirm from './DisconnectAllConfirm.svelte'
   import { configuration } from '../../configuration'
+  import { shareReplay, startWith } from 'rxjs/operators'
+
+  const accountCenter$ = state
+    .select('accountCenter')
+    .pipe(startWith(state.get().accountCenter), shareReplay(1))
 
   function disconnectAllWallets() {
     $wallets$.forEach(({ label }) => disconnect({ label }))
@@ -52,7 +57,6 @@
   .outer-container {
     background-color: var(--onboard-gray-600, var(--gray-600));
     border-radius: var(--onboard-border-radius-3, var(--border-radius-3));
-    width: 100%;
     filter: drop-shadow(0px 4px 16px rgba(178, 178, 178, 0.2));
     padding: 0 1px 1px 1px;
   }
@@ -212,6 +216,11 @@
   }}
   on:click|stopPropagation={hideWalletRowMenu}
   class="outer-container"
+  style={device.type !== 'mobile' && $accountCenter$.position.includes('Right')
+    ? 'margin-left: 1rem'
+    : device.type !== 'mobile' && $accountCenter$.position.includes('Left')
+    ? 'margin-right: 1rem'
+    : ''}
 >
   <!-- wallets section -->
   <div class="wallets-section">

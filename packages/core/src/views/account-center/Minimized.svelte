@@ -1,6 +1,7 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
   import { wallets$ } from '../../streams'
+  import { shareReplay, startWith } from 'rxjs/operators'
   import {
     getDefaultChainStyles,
     shortenAddress,
@@ -16,6 +17,11 @@
   import NetworkSelector from '../shared/NetworkSelector.svelte'
   import { state } from '../../store'
   import { configuration } from '../../configuration'
+
+  const { device } = configuration
+  const accountCenter$ = state
+    .select('accountCenter')
+    .pipe(startWith(state.get().accountCenter), shareReplay(1))
 
   const { appMetadata } = configuration
   const appIcon = (appMetadata && appMetadata.icon) || questionIcon
@@ -60,7 +66,6 @@
   .minimized {
     background-color: var(--onboard-white, var(--white));
     border: 1px solid var(--onboard-gray-100, var(--gray-100));
-    width: 100%;
     box-shadow: var(--onboard-shadow-3, var(--shadow-3));
   }
 
@@ -122,6 +127,13 @@
   out:fade={{ duration: 100 }}
   class="minimized pointer radius padding-5"
   on:click|stopPropagation={maximize}
+  style={device.type !== 'mobile' &&
+        $accountCenter$.position.includes('Right')
+      ? 'margin-left: 1rem'
+      : device.type !== 'mobile' &&
+        $accountCenter$.position.includes('Left')
+      ? 'margin-right: 1rem'
+      : ''}
 >
   <div class="flex items-center justify-between" style="padding: 0 4px;">
     <div class="flex items-center w-100">

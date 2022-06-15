@@ -165,7 +165,7 @@
     // // example customizing account center
     accountCenter: {
       desktop: {
-        position: 'topRight',
+        position: 'bottomLeft',
         enabled: true,
         minimal: false
       }
@@ -323,7 +323,7 @@
               onboard.state.actions.customNotification({
                 type: 'hint',
                 message:
-                  'This is a custom DApp hint that allows you to tell your users anything hint-y',
+                  'This is a custom DApp hint',
                 autoDismiss: 0
               })}>Send Hint Notification</button
           >

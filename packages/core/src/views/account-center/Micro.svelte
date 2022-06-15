@@ -5,6 +5,14 @@
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
   import { configuration } from '../../configuration'
+  import { shareReplay, startWith } from 'rxjs/operators'
+  import { state } from '../../store'
+
+  const accountCenter$ = state
+    .select('accountCenter')
+    .pipe(startWith(state.get().accountCenter), shareReplay(1))
+
+  const { device } = configuration
 
   const { appMetadata } = configuration
   const appIcon = (appMetadata && appMetadata.icon) || questionIcon
@@ -49,7 +57,12 @@
   }
 </style>
 
-<div class="minimized pointer radius" on:click|stopPropagation={maximize}>
+<div class="minimized pointer radius" on:click|stopPropagation={maximize}   style={
+  $accountCenter$.position.includes('Right')
+    ? 'margin-left: auto'
+    :       $accountCenter$.position.includes('Left')
+    ? 'margin-right: auto'
+ : ''}>
   <div class="inner-box-wrapper">
     <!-- app and wallet icon badge -->
     <div class="drop-shadow">

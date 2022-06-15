@@ -289,23 +289,7 @@
       <Notify position={$accountCenter$.position} />
     {/if}
     <div
-      style={!$accountCenter$.expanded &&
-      $accountCenter$.minimal &&
-      $accountCenter$.position.includes('Right')
-        ? 'margin-left: auto'
-        : !$accountCenter$.expanded &&
-          $accountCenter$.minimal &&
-          $accountCenter$.position.includes('Left')
-        ? 'margin-right: auto'
-        : device.type !== 'mobile' &&
-          !$accountCenter$.minimal &&
-          $accountCenter$.position.includes('Right')
-        ? 'margin-left: 1rem'
-        : device.type !== 'mobile' &&
-          !$accountCenter$.minimal &&
-          $accountCenter$.position.includes('Left')
-        ? 'margin-right: 1rem'
-        : ''}
+
     >
       {#if $accountCenter$.enabled && $wallets$.length}
         <AccountCenter settings={$accountCenter$} />
