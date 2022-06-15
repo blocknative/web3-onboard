@@ -15,7 +15,7 @@
     );
     font-family: inherit;
     margin: 0px 20px 0px 8px;
-    justify-content: space-between;
+    justify-content: center;
   }
 
   .hash-time {
@@ -66,10 +66,7 @@
   }
 </style>
 
-<div
-  class="flex flex-column notify-transaction-data"
-  style={notification.id.includes('custom') ? 'justify-content: center;' : ''}
->
+<div class="flex flex-column notify-transaction-data">
   <span class="transaction-status">
     {notification.message}
   </span>
