@@ -291,6 +291,7 @@
   }
   .notify-chain-container {
     display: flex;
+    flex-wrap: wrap;
   }
   .switch-chain-container,
   .notify-action-container {

@@ -7,7 +7,9 @@
   import ActionRequired from './connect/ActionRequired.svelte'
   import AccountCenter from './account-center/Index.svelte'
   import Notify from './notify/Index.svelte'
+  import { configuration } from '../configuration'
 
+  const { device } = configuration
   const accountCenter$ = state
     .select('accountCenter')
     .pipe(startWith(state.get().accountCenter), shareReplay(1))
@@ -256,7 +258,7 @@
 
   @media all and (min-width: 428px) {
     .container {
-      max-width: 348px;
+      max-width: calc(348px + 1rem);
     }
   }
 </style>
@@ -290,6 +292,14 @@
           $accountCenter$.minimal &&
           $accountCenter$.position.includes('Left')
         ? 'margin-right: auto'
+        : device.type !== 'mobile' &&
+          !$accountCenter$.minimal &&
+          $accountCenter$.position.includes('Right')
+        ? 'margin-left: 1rem'
+        : device.type !== 'mobile' &&
+          !$accountCenter$.minimal &&
+          $accountCenter$.position.includes('Left')
+        ? 'margin-right: 1rem'
         : ''}
     >
       {#if $accountCenter$.enabled && $wallets$.length}

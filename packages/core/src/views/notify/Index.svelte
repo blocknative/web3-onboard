@@ -8,6 +8,8 @@
   import Notification from './Notification.svelte'
   import { configuration } from '../../configuration'
 
+  const { device } = configuration
+
   export let position: string
 
   let x: number
@@ -20,7 +22,7 @@
     )
   }
 
-  $: if (configuration.device.type === 'mobile') {
+  $: if (device.type === 'mobile') {
     x = 0
 
     if (position.includes('top')) {
@@ -67,6 +69,15 @@
     margin-bottom: 8px;
   }
 
+  ul.bn-notify-bottomLeft,
+  ul.bn-notify-bottomRight {
+    transform: rotate(180deg);
+  }
+  ul > li.bn-notify-li-bottomLeft,
+  ul > li.bn-notify-li-bottomRight {
+    transform: rotate(-180deg);
+  }
+
   @media only screen and (max-width: 450px) {
     ul {
       width: 100%;
@@ -84,10 +95,18 @@
 
 {#if $notifications$.length}
   <ul
-    class="bn-notify-custom bn-notify-notify"
+    class="bn-notify-custom bn-notify-{position}"
     style={`justify-content:${
       position.includes('top') ? 'flex-start' : 'flex-end'
-    };`}
+    }; ${
+      device.type !== 'mobile' &&
+      (position.includes('topRight') || position.includes('bottomLeft'))
+        ? 'padding-left: 1rem'
+        : device.type !== 'mobile' &&
+          (position.includes('topLeft') || position.includes('bottomRight'))
+        ? 'padding-right: 1rem'
+        : ''
+    }`}
   >
     {#each $notifications$ as notification (notification.key)}
       <li
@@ -95,7 +114,7 @@
         on:click|stopPropagation
         in:fly={{ duration: 5200, delay: 300, x, y, easing: elasticOut }}
         out:fly={{ duration: 400, x, y, easing: quintIn }}
-        class={`${
+        class={`bn-notify-li-${position} ${
           position.includes('top')
             ? 'notification-list-top'
             : 'notification-list-bottom'

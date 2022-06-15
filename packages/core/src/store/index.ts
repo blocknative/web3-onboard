@@ -155,7 +155,7 @@ function reducer(state: AppState, action: Action): AppState {
         notificationsUpdate[notificationExistsIndex] = update
       } else {
         // otherwise add it to the end of array as new notification
-        notificationsUpdate.push(update)
+        notificationsUpdate.unshift(update)
       }
 
       return {
