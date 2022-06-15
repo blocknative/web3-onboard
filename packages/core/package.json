@@ -52,7 +52,6 @@
     "lodash.partition": "^4.6.0",
     "rxjs": "^7.5.2",
     "svelte": "^3.46.4",
-    "svelte-i18n": "^3.3.13",
-    "uuid": "^8.3.2"
+    "svelte-i18n": "^3.3.13"
   }
 }
