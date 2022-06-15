@@ -57,7 +57,6 @@
       var(--onboard-font-family-normal, var(--font-family-normal))
     );
     margin: 0 0;
-    overflow-x: scroll;
   }
 
   @media only screen and (max-width: 450px) {
