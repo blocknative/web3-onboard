@@ -22,17 +22,13 @@
     )
   }
 
-  $: if (device.type === 'mobile') {
-    x = 0
-
-    if (position.includes('top')) {
+  $: if (position.includes('top')) {
       y = -50
     } else {
       y = 50
     }
-  }
 
-  x = position.includes('Left') ? -321 : 321
+  x = 0
   y = 0
 
   const notifications$ = state.select('notifications').pipe(startWith([]))
@@ -98,15 +94,7 @@
     class="bn-notify-custom bn-notify-{position}"
     style={`justify-content:${
       position.includes('top') ? 'flex-start' : 'flex-end'
-    }; ${
-      device.type !== 'mobile' &&
-      (position.includes('topRight') || position.includes('bottomLeft'))
-        ? 'padding-left: 1rem'
-        : device.type !== 'mobile' &&
-          (position.includes('topLeft') || position.includes('bottomRight'))
-        ? 'padding-right: 1rem'
-        : ''
-    }`}
+    };`}
   >
     {#each $notifications$ as notification (notification.key)}
       <li
