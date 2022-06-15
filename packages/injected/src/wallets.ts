@@ -38,6 +38,16 @@ const metamask: InjectedWalletModule = {
   platforms: ['all']
 }
 
+const exodus: InjectedWalletModule = {
+  label: ProviderLabel.Exodus,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+      !!provider && !!provider[ProviderIdentityFlag.Exodus],
+  getIcon: async () => (await import('./icons/exodus.js')).default,
+  getInterface: getInjectedInterface(ProviderIdentityFlag.Exodus),
+  platforms: ['all']
+}
+
 const brave: InjectedWalletModule = {
   label: ProviderLabel.Brave,
   injectedNamespace: InjectedNameSpace.Ethereum,
@@ -464,6 +474,7 @@ const tally: InjectedWalletModule = {
 }
 
 const wallets = [
+  exodus,
   metamask,
   binance,
   coinbase,
