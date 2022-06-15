@@ -162,11 +162,3 @@ export function typeToDismissTimeout(type: string): number {
   }
 }
 
-export function setCustomNotificationProps(
-  customizedNotification: CustomNotification
-): CustomNotification {
-  const customIdKey = `customNotification-${Date.now().toString(16)}`
-  customizedNotification.id = customIdKey
-  customizedNotification.key = customIdKey
-  return customizedNotification
-}

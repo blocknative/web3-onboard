@@ -200,23 +200,26 @@ export function addCustomNotification(notification: CustomNotification): void {
   dispatch(action as AddNotificationAction)
 }
 
-export function customNotification(updatedNotification: CustomNotification): {
+export function customNotification(updatedNotification: Omit<CustomNotification, 'id' | 'key'>): {
   dismiss: () => void
   update: UpdateNotification
 } {
-  const notification = setCustomNotificationProps(updatedNotification)
-  addCustomNotification(notification)
+  // Change to nanoId
+  const customIdKey = `customNotification-${Date.now().toString(16)}`
+  updatedNotification.id = customIdKey
+  updatedNotification.key = customIdKey
+  addCustomNotification(updatedNotification)
 
-  const dismiss = () => removeNotification(notification.id)
+  const dismiss = () => removeNotification(updatedNotification.id)
   
   const update = (
-    notificationUpdate: CustomNotification
+    notificationUpdate: Omit<CustomNotification, 'id' | 'key'>
   ): {
     dismiss: () => void
     update: UpdateNotification
   } => {
-    notificationUpdate.id = notification.id
-    notificationUpdate.key = notification.key
+    notificationUpdate.id = updatedNotification.id
+    notificationUpdate.key = updatedNotification.key
     addCustomNotification(notificationUpdate)
 
     return {
@@ -225,7 +228,7 @@ export function customNotification(updatedNotification: CustomNotification): {
     }
   }
 
-  addCustomNotification(notification)
+  addCustomNotification(updatedNotification)
 
   return {
     dismiss,
