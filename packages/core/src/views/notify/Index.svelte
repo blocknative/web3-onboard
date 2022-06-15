@@ -55,8 +55,16 @@
       --notify-onboard-font-family-normal,
       var(--onboard-font-family-normal, var(--font-family-normal))
     );
-    margin: 0 0;
+    margin: 8px 0;
     overflow-y: scroll;
+  }
+
+  li.notification-list-top:not(:first-child) {
+    margin-top: 8px;
+  }
+
+  li.notification-list-bottom:not(:last-child) {
+    margin-bottom: 8px;
   }
 
   @media only screen and (max-width: 450px) {
@@ -82,13 +90,17 @@
     };`}
   >
     {#each $notifications$ as notification (notification.key)}
-      <li animate:flip={{ duration: 500 }}
+      <li
+        animate:flip={{ duration: 500 }}
         on:click|stopPropagation
-        in:fly={{ duration: 1200, delay: 300, x, y, easing: elasticOut }}
+        in:fly={{ duration: 5200, delay: 300, x, y, easing: elasticOut }}
         out:fly={{ duration: 400, x, y, easing: quintIn }}
-        style={`margin:${
-        position.includes('top') ? '8px 0 0' : '0 0 8px'
-      };`}>
+        class={`${
+          position.includes('top')
+            ? 'notification-list-top'
+            : 'notification-list-bottom'
+        }`}
+      >
         <Notification {notification} />
       </li>
     {/each}
