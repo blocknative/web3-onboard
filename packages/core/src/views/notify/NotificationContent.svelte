@@ -20,14 +20,14 @@
 
   .hash-time {
     display: inline-flex;
-    margin-top: 2px;
+    margin-top: 4px;
     font-size: var(
       --notify-onboard-font-size-7,
       var(--onboard-font-size-7, var(--font-size-7))
     );
     line-height: var(
-      --notify-onboard-line-height-4,
-      var(--onboard-line-height-4, var(--line-height-4))
+      --notify-onboard-font-line-height-4,
+      var(--onboard-font-line-height-4, var(--font-line-height-4))
     );
   }
 
