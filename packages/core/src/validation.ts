@@ -17,7 +17,6 @@ const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
 const chainNamespace = Joi.string().valid('evm')
 const unknownObject = Joi.object().unknown()
 
-// const address = Joi.string().regex(/^0x[a-fA-F0-9]{40}$/)
 /** Related to ConnectionInfo from 'ethers/lib/utils' */
 const providerConnectionInfo = Joi.object({
   url: Joi.string().required(),

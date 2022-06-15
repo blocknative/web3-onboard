@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/keepkey",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "KeepKey module for web3-onboard",
   "module": "dist/index.js",
   "browser": "dist/index.js",
@@ -27,7 +27,7 @@
     "@ethersproject/providers": "^5.5.0",
     "@shapeshiftoss/hdwallet-core": "^1.15.2",
     "@shapeshiftoss/hdwallet-keepkey-webusb": "^1.15.2",
-    "@web3-onboard/common": "^2.1.0",
+    "@web3-onboard/common": "^2.1.1",
     "ethereumjs-util": "^7.1.3"
   }
 }
