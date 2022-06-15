@@ -8,6 +8,9 @@
 
   import { chainStyles, networkToChainId } from '../../utils'
   import { onDestroy, onMount } from 'svelte'
+  import { configuration } from '../../configuration'
+
+  const { device } = configuration
 
   export let notification: Notification
 
@@ -47,7 +50,7 @@
     position: relative;
   }
 
-  .bn-notify-notification:hover > div.notify-close-btn {
+  .bn-notify-notification:hover > div.notify-close-btn-desktop {
     visibility: visible;
     opacity: 1;
   }
@@ -57,14 +60,17 @@
     margin-bottom: auto;
     height: 24px;
     width: 24px;
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0.15s linear, opacity 0.15s linear;
     position: absolute;
     top: 8px;
     right: 8px;
     justify-content: center;
     align-items: center;
+  }
+
+  div.notify-close-btn-desktop {
+    visibility: hidden;
+    transition: visibility 0.15s linear, opacity 0.15s linear;
+    opacity: 0;
   }
 
   .notify-close-btn .close-icon {
@@ -108,7 +114,7 @@
 
   <div
     on:click|stopPropagation={() => removeNotification(notification.id)}
-    class="notify-close-btn pointer flex"
+    class="notify-close-btn notify-close-btn-{device.type} pointer flex"
   >
     <div class="flex items-center close-icon">
       {@html closeIcon}
