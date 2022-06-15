@@ -108,7 +108,7 @@ export function transactionEventToNotification(
     type,
     key,
     network,
-    startTime : startTime || Date.now(),
+    startTime: startTime || Date.now(),
     eventCode,
     message,
     autoDismiss: typeToDismissTimeout(
@@ -127,9 +127,9 @@ export function eventToType(eventCode: string | undefined): NotificationType {
   switch (eventCode) {
     case 'txSent':
     case 'txPool':
+      return 'pending'
     case 'txSpeedUp':
     case 'txCancel':
-      return 'pending'
     case 'txRequest':
     case 'txRepeat':
     case 'txAwaitingApproval':
