@@ -258,7 +258,7 @@
 
   @media all and (min-width: 428px) {
     .container {
-      max-width: calc(348px + 1rem);
+      max-width: 348px;
     }
   }
 </style>
