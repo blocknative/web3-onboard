@@ -112,7 +112,7 @@
       <li
         animate:flip={{ duration: 500 }}
         on:click|stopPropagation
-        in:fly={{ duration: 5200, delay: 300, x, y, easing: elasticOut }}
+        in:fly={{ duration: 1200, delay: 300, x, y, easing: elasticOut }}
         out:fly={{ duration: 400, x, y, easing: quintIn }}
         class={`bn-notify-li-${position} ${
           position.includes('top')

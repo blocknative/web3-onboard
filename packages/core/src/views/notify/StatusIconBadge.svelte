@@ -11,21 +11,19 @@
     height: 32px;
     width: 32px;
   }
-
   .border {
     border-radius: 8px;
   }
-
   div.notification-icon {
     padding: 6px;
   }
+
   div.pending-icon {
     animation: blink 2s ease-in infinite;
     height: 100%;
     width: 100%;
     padding: 7px;
   }
-
   @keyframes blink {
     from,
     to {

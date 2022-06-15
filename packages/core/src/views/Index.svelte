@@ -281,7 +281,9 @@
     style="{accountCenterPositions[$accountCenter$.position]}; {device.type ===
       'mobile' && $accountCenter$.position.includes('top')
       ? 'padding-bottom: 0;'
-      : 'padding-top:0;'} "
+      : device.type === 'mobile' && $accountCenter$.position.includes('bottom')
+      ? 'padding-top:0;'
+      : ''} "
   >
     {#if $notify$.enabled && $accountCenter$.position.includes('bottom')}
       <Notify position={$accountCenter$.position} />

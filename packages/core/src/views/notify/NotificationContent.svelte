@@ -66,7 +66,10 @@
   }
 </style>
 
-<div class="flex flex-column notify-transaction-data">
+<div
+  class="flex flex-column notify-transaction-data"
+  style={notification.id.includes('custom') ? 'justify-content: center;' : ''}
+>
   <span class="transaction-status">
     {notification.message}
   </span>
