@@ -50,13 +50,13 @@
     overflow: visible;
     scrollbar-width: none;
     box-sizing: border-box;
-    pointer-events: none;
     z-index: 300;
     font-family: var(
       --notify-onboard-font-family-normal,
       var(--onboard-font-family-normal, var(--font-family-normal))
     );
     margin: 0 0;
+    overflow-y: scroll;
   }
 
   @media only screen and (max-width: 450px) {
