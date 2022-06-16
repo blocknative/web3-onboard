@@ -54,8 +54,6 @@ import {
   UPDATE_ALL_WALLETS
 } from './constants'
 
-import { setCustomNotificationProps } from '../notify'
-
 export function addChains(chains: Chain[]): void {
   // chains are validated on init
   const action = {
