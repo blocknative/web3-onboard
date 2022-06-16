@@ -430,6 +430,8 @@ export interface Chain {
   color?: string
   icon?: string // svg string
   providerConnectionInfo?: ConnectionInfo
+  publicRpcUrl?: string
+  blockExplorerUrl?: string
 }
 
 export type TokenSymbol = string // eg ETH
