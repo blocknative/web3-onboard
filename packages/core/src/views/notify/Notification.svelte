@@ -13,6 +13,7 @@
   const { device } = configuration
 
   export let notification: Notification
+  export let updateParentOnRemove
 
   let timeoutId: NodeJS.Timeout
 
@@ -77,7 +78,7 @@
     width: 20px;
     margin: auto;
   }
-  
+
   .notify-close-btn > .close-icon {
     color: var(
       --notify-onboard-gray-300,
@@ -113,7 +114,10 @@
   <NotificationContent {notification} />
 
   <div
-    on:click|stopPropagation={() => removeNotification(notification.id)}
+    on:click|stopPropagation={() => {
+      removeNotification(notification.id)
+      updateParentOnRemove()
+    }}
     class="notify-close-btn notify-close-btn-{device.type} pointer flex"
   >
     <div class="flex items-center close-icon">

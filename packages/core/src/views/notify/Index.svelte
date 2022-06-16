@@ -20,15 +20,32 @@
   }
 
   $: if (position.includes('top')) {
-      y = -50
-    } else {
-      y = 50
-    }
+    y = -50
+  } else {
+    y = 50
+  }
 
   x = 0
   y = 0
 
   const notifications$ = state.select('notifications').pipe(startWith([]))
+  let overflowY = 'y-scroll'
+  const updateScrollYOnRemove = (): void => {
+    if (overflowY !== 'y-visible') {
+      overflowY = 'y-visible'
+    }
+    delay(function () {
+      overflowY = 'y-scroll'
+    }, 1000)
+  }
+
+  const delay = (function () {
+    let timer: null | ReturnType<typeof setTimeout> = null
+    return (callback: () => void, ms: number) => {
+      clearTimeout(timer)
+      timer = setTimeout(callback, ms)
+    }
+  })()
 </script>
 
 <style>
@@ -51,7 +68,13 @@
       var(--onboard-font-family-normal, var(--font-family-normal))
     );
     margin: 8px 0;
+  }
+
+  .y-scroll {
     overflow-y: scroll;
+  }
+  .y-visible {
+    overflow-y: visible;
   }
 
   li.notification-list-top:not(:first-child) {
@@ -88,7 +111,7 @@
 
 {#if $notifications$.length}
   <ul
-    class="bn-notify-custom bn-notify-{position}"
+    class="bn-notify-custom bn-notify-{position} {overflowY}"
     style={`justify-content:${
       position.includes('top') ? 'flex-start' : 'flex-end'
     };`}
@@ -105,7 +128,10 @@
             : 'notification-list-bottom'
         }`}
       >
-        <Notification {notification} />
+        <Notification
+          {notification}
+          updateParentOnRemove={updateScrollYOnRemove}
+        />
       </li>
     {/each}
   </ul>
