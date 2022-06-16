@@ -473,6 +473,18 @@ const tally: InjectedWalletModule = {
   platforms: ['desktop']
 }
 
+const gamestop: InjectedWalletModule = {
+  label: ProviderLabel.GameStop,
+  injectedNamespace: InjectedNameSpace.GameStop,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.GameStop],
+  getIcon: async () => (await import('./icons/gamestop.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.gamestop)
+  }),
+  platforms: ['desktop']
+}
+
 const wallets = [
   exodus,
   metamask,
@@ -500,7 +512,8 @@ const wallets = [
   xdefi,
   oneInch,
   tokenary,
-  tally
+  tally,
+  gamestop
 ]
 
 export default wallets
