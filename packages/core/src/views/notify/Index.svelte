@@ -6,9 +6,6 @@
   import { state } from '../../store'
   import { startWith } from 'rxjs'
   import Notification from './Notification.svelte'
-  import { configuration } from '../../configuration'
-
-  const { device } = configuration
 
   export let position: string
 

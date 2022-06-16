@@ -11,7 +11,8 @@ import type {
   TransactionHandlerReturn,
   NotifyOptions,
   Notification,
-  CustomNotification
+  CustomNotification,
+  CustomNotificationUpdate
 } from './types'
 
 const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
@@ -182,6 +183,15 @@ const accountCenter = Joi.object({
   minimal: Joi.boolean()
 })
 
+const customNotificationUpdate = Joi.object({
+  key: Joi.string().required(),
+  type: Joi.string().allow('pending', 'error', 'success', 'hint'),
+  eventCode: Joi.string(),
+  message: Joi.string().required(),
+  id: Joi.string().required(),
+  autoDismiss: Joi.number()
+})
+
 const customNotification = Joi.object({
   key: Joi.string(),
   type: Joi.string().allow('pending', 'error', 'success', 'hint'),
@@ -203,7 +213,7 @@ const notification = Joi.object({
 })
 
 const transactionHandlerReturn = Joi.any().allow(
-  customNotification,
+  customNotificationUpdate,
   Joi.boolean().allow(false)
 )
 
@@ -280,6 +290,12 @@ export function validateTransactionHandlerReturn(
 
 export function validateNotification(data: Notification): ValidateReturn {
   return validate(notification, data)
+}
+
+export function validateCustomNotificationUpdate(
+  data: CustomNotificationUpdate
+): ValidateReturn {
+  return validate(customNotificationUpdate, data)
 }
 
 export function validateCustomNotification(

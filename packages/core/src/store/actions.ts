@@ -23,7 +23,8 @@ import type {
   RemoveNotificationAction,
   UpdateAllWalletsAction,
   CustomNotification,
-  UpdateNotification
+  UpdateNotification,
+  CustomNotificationUpdate
 } from '../types'
 
 import {
@@ -31,6 +32,7 @@ import {
   validateLocale,
   validateNotification,
   validateCustomNotification,
+  validateCustomNotificationUpdate,
   validateNotifyOptions,
   validateString,
   validateWallet,
@@ -61,7 +63,7 @@ export function addChains(chains: Chain[]): void {
     payload: chains.map(({ namespace = 'evm', id, ...rest }) => ({
       ...rest,
       namespace,
-      id : id.toLowerCase()
+      id: id.toLowerCase()
     }))
   }
 
@@ -184,8 +186,10 @@ export function addNotification(notification: Notification): void {
   dispatch(action as AddNotificationAction)
 }
 
-export function addCustomNotification(notification: CustomNotification): void {
-  const customNotificationError = validateCustomNotification(notification)
+export function addCustomNotification(
+  notification: CustomNotificationUpdate
+): void {
+  const customNotificationError = validateCustomNotificationUpdate(notification)
 
   if (customNotificationError) {
     throw customNotificationError
@@ -199,27 +203,46 @@ export function addCustomNotification(notification: CustomNotification): void {
   dispatch(action as AddNotificationAction)
 }
 
-export function customNotification(updatedNotification: Omit<CustomNotification, 'id' | 'key'>): {
+export function customNotification(updatedNotification: CustomNotification): {
   dismiss: () => void
   update: UpdateNotification
 } {
-  
-  const customIdKey = `customNotification-${nanoid()}`
-  updatedNotification.id = customIdKey
-  updatedNotification.key = customIdKey
-  addCustomNotification(updatedNotification)
+  const customNotificationError =
+    validateCustomNotification(updatedNotification)
 
-  const dismiss = () => removeNotification(updatedNotification.id)
-  
+  if (customNotificationError) {
+    throw customNotificationError
+  }
+
+  const customIdKey = `customNotification-${nanoid()}`
+  const notification: CustomNotificationUpdate = {
+    ...updatedNotification,
+    id: customIdKey,
+    key: customIdKey
+  }
+  addCustomNotification(notification)
+
+  const dismiss = () => removeNotification(notification.id)
+
   const update = (
-    notificationUpdate: Omit<CustomNotification, 'id' | 'key'>
+    notificationUpdate: CustomNotification
   ): {
     dismiss: () => void
     update: UpdateNotification
   } => {
-    notificationUpdate.id = updatedNotification.id
-    notificationUpdate.key = updatedNotification.key
-    addCustomNotification(notificationUpdate)
+    const customNotificationError =
+      validateCustomNotification(updatedNotification)
+
+    if (customNotificationError) {
+      throw customNotificationError
+    }
+
+    const notificationAfterUpdate: CustomNotificationUpdate = {
+      ...notificationUpdate,
+      id: notification.id,
+      key: notification.key
+    }
+    addCustomNotification(notificationAfterUpdate)
 
     return {
       dismiss,
@@ -227,7 +250,7 @@ export function customNotification(updatedNotification: Omit<CustomNotification,
     }
   }
 
-  addCustomNotification(updatedNotification)
+  addCustomNotification(notification)
 
   return {
     dismiss,
