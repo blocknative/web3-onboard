@@ -97,7 +97,8 @@ function keystone({
           ProviderRpcError,
           ProviderRpcErrorCode,
           getCommon,
-          bigNumberFieldsToStrings
+          bigNumberFieldsToStrings,
+          getHardwareWalletProvider
         } = await import('@web3-onboard/common')
 
         const keyring = AirGappedKeyring.getEmptyKeyring()
@@ -146,30 +147,9 @@ function keystone({
           return keyring.signMessage(account.address, message)
         }
 
-        const request = async ({
-          method,
-          params
-        }: {
-          method: string
-          params: any
-        }) => {
-          const response = await fetch(currentChain.rpcUrl, {
-            method: 'POST',
-            body: JSON.stringify({
-              id: '42',
-              method,
-              params
-            })
-          }).then(res => res.json())
-
-          if (response.result) {
-            return response.result
-          } else {
-            throw response.error
-          }
-        }
-
-        const keystoneProvider = { request }
+        const keystoneProvider = getHardwareWalletProvider(
+          () => currentChain.rpcUrl
+        )
 
         const provider = createEIP1193Provider(keystoneProvider, {
           eth_requestAccounts: async () => {

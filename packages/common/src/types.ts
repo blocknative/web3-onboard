@@ -464,3 +464,10 @@ export interface BootstrapNode {
   location: string
   comment: string
 }
+
+export interface RPCResponse {
+  id: number,
+  jsonrpc: string
+  error?: { code: number, message: string}
+  result?: any
+}

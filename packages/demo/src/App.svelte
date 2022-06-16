@@ -72,7 +72,8 @@
   })
 
   const web3auth = web3authModule({
-    clientId: 'DJuUOKvmNnlzy6ruVgeWYWIMKLRyYtjYa9Y10VCeJzWZcygDlrYLyXsBQjpJ2hxlBO9dnl8t9GmAC2qOP5vnIGo'
+    clientId:
+      'DJuUOKvmNnlzy6ruVgeWYWIMKLRyYtjYa9Y10VCeJzWZcygDlrYLyXsBQjpJ2hxlBO9dnl8t9GmAC2qOP5vnIGo'
   })
 
   const torus = torusModule()
@@ -197,9 +198,25 @@
 
     const signature = await signer.signTransaction({
       to: '',
-      value: 1000000000000000
+      value: 100000000000000
     })
+
     console.log(signature)
+  }
+
+  let toAddress
+  const sendTransaction = async (provider) => {
+    const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
+
+    const signer = ethersProvider.getSigner()
+
+    const txn = await signer.sendTransaction({
+      to: toAddress,
+      value: 100000000000000
+    })
+
+    const receipt = await txn.wait()
+    console.log(receipt)
   }
 
   const signMessage = async (provider, address) => {
@@ -336,6 +353,20 @@
             />
             <button on:click={signTypedMessage(provider, address)}>
               Sign Typed Message
+            </button>
+          </div>
+
+          <div>
+            <input
+              type="text"
+              class="text-input"
+              placeholder="0x..."
+              bind:value={toAddress}
+            />
+            <button
+              on:click={sendTransaction(provider)}
+            >
+              Send Transaction
             </button>
           </div>
 
