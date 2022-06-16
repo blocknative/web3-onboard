@@ -1,4 +1,5 @@
 import type { Chain, WalletInit, WalletModule } from '@web3-onboard/common'
+import { nanoid } from 'nanoid'
 import { dispatch } from './index'
 import { configuration } from '../configuration'
 
@@ -204,8 +205,8 @@ export function customNotification(updatedNotification: Omit<CustomNotification,
   dismiss: () => void
   update: UpdateNotification
 } {
-  // Change to nanoId
-  const customIdKey = `customNotification-${Date.now().toString(16)}`
+  
+  const customIdKey = `customNotification-${nanoid()}`
   updatedNotification.id = customIdKey
   updatedNotification.key = customIdKey
   addCustomNotification(updatedNotification)
