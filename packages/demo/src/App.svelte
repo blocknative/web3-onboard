@@ -346,7 +346,7 @@
                   }),
                 4000
               )
-            }}>Send Sucess Notification</button
+            }}>Send Success Notification</button
           >
           <button
             on:click={() =>
