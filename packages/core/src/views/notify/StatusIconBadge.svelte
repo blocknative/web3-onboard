@@ -38,6 +38,7 @@
     min-width: 32px;
     border-radius: 8px;
     overflow: hidden;
+    will-change: transform;
   }
   div.border-action:before {
     content: '';
