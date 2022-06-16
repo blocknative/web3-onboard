@@ -1,8 +1,8 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
   import { flip } from 'svelte/animate'
-  import { fly } from 'svelte/transition'
-  import { quintIn } from 'svelte/easing'
+  import { fade, fly } from 'svelte/transition'
+  import { cubicOut } from 'svelte/easing'
   import { state } from '../../store'
   import { startWith } from 'rxjs'
   import Notification from './Notification.svelte'
@@ -101,7 +101,7 @@
         animate:flip={{ duration: 500 }}
         on:click|stopPropagation
         in:fly={{ duration: 1200, delay: 300, x, y, easing: elasticOut }}
-        out:fly={{ duration: 400, x, y, easing: quintIn }}
+        out:fade={{ duration: 300, easing: cubicOut }}
         class={`bn-notify-li-${position} ${
           position.includes('top')
             ? 'notification-list-top'
