@@ -154,7 +154,7 @@ function reducer(state: AppState, action: Action): AppState {
         // if notification with same id, replace it with update
         notificationsUpdate[notificationExistsIndex] = update
       } else {
-        // otherwise add it to the end of array as new notification
+        // otherwise add it to the beginning of array as new notification
         notificationsUpdate.unshift(update)
       }
 
