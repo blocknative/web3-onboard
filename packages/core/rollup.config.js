@@ -53,6 +53,7 @@ export default {
     'lodash.partition',
     'eventemitter3',
     'bignumber.js',
-    'bnc-sdk'
+    'bnc-sdk',
+    'nanoid'
   ]
 }
