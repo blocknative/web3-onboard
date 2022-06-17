@@ -127,7 +127,7 @@ The `transactionHandler` can react off any property of the Ethereum TransactionD
  - `Notification.message` - to completely customize the message shown 
  - `Notification.eventCode` - handle codes in your own way - see codes here under the notify prop [default en file here](src/i18n/en.json)
  - `Notification.type` - icon type displayed (see `NotificationType` below for options)
- - `Notification.autoDismiss` - time on screen 
+ - `Notification.autoDismiss` - time (in ms) after which the notification will be dismissed. If set to `0` the notification will remain on screen until the user dismisses the notification, refreshes the page or navigates away from the site with the notifications 
  - `Notification.link` - add link to hash 
  - `Notification.onClick()` - onClick handler for when user clicks the notification element
 
