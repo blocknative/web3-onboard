@@ -243,7 +243,7 @@
   }
 
   select:disabled {
-    background-color: var(
+    background: var(
       --account-select-gray-100,
       var(--onboard-gray-100, var(--gray-100))
     );
@@ -397,7 +397,7 @@
     right: 0.2rem;
     width: 2.5rem;
     height: 2.5rem;
-    background-color: var(
+    background: var(
       --account-select-white,
       var(--onboard-white, var(--white))
     );

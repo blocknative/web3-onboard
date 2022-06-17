@@ -114,7 +114,7 @@
   :global(input[type='checkbox']) {
     -webkit-appearance: none;
     width: auto;
-    background-color: var(--onboard-white, var(--white));
+    background: var(--onboard-white, var(--white));
     outline: 1px solid var(--onboard-gray-300, var(--gray-300));
     border: none;
     padding: 0.5em;
@@ -134,7 +134,7 @@
   }
 
   :global(input[type='checkbox']:checked) {
-    background-color: var(
+    background: var(
       --onboard-checkbox-background,
       var(--onboard-primary-500, var(--primary-500))
     );
@@ -170,7 +170,7 @@
   }
 
   :global(input:disabled, textarea:disabled, select:disabled) {
-    background-color: var(--gray-100);
+    background: var(--gray-100);
   }
 
   :global(input::-moz-focus-inner) {
@@ -218,14 +218,14 @@
   :global(.button-neutral-solid) {
     width: 100%;
     border-radius: 8px;
-    background-color: var(--onboard-gray-500, var(--gray-500));
+    background: var(--onboard-gray-500, var(--gray-500));
     color: var(--onboard-white, var(--white));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
   }
 
   :global(.button-neutral-solid-b) {
     width: 100%;
-    background-color: var(--onboard-gray-100, var(--gray-100));
+    background: var(--onboard-gray-100, var(--gray-100));
     color: var(--onboard-gray-500, var(--gray-500));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
   }
@@ -235,10 +235,10 @@
   }
 
   :global(.button-neutral-solid:hover) {
-    background-color: var(--onboard-gray-700, var(--gray-700));
+    background: var(--onboard-gray-700, var(--gray-700));
   }
   :global(.button-neutral-solid-b:hover) {
-    background-color: var(--onboard-gray-200, var(--gray-200));
+    background: var(--onboard-gray-200, var(--gray-200));
   }
 
   :global(.button-neutral-solid:active) {
@@ -247,7 +247,7 @@
 
   :global(.button-neutral-solid-b:active) {
     color: var(--onboard-gray-600, var(--gray-600));
-    background-color: var(--onboard-gray-300, var(--gray-300));
+    background: var(--onboard-gray-300, var(--gray-300));
   }
 
   .container {
