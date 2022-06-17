@@ -122,7 +122,7 @@ type AccountCenterPosition =
 Notify provides by default transaction notifications for all connected wallets on the current blockchain. When switching chains the previous chain listeners remain active for 60 seconds to allow capture and report of an remaining transactions that may be in flight.
 By default transaction notifications are captured if a DAppID is provided in the Onboard config along with the Account Center being enabled.
 An object that defines whether transaction notifications will display (defaults to true if an API key is provided). This object contains an `enabled` flag prop and an optional `transactionHandler` which is a callback that can disable or allow customizations of notifications. 
-Currently notifications positions in the same location as the account center(either below - if the Account Center is positioned along the top, or above if positioned on the bottom of the view).
+Currently notifications are positioned in the same location as the account center (either below, if the Account Center is positioned along the top, or above if positioned on the bottom of the view).
 The transactionHandler can react off any property of the Ethereum TransactionData returned to the callback from the event(see console.log in example init) and in turn can return a Custom Notification object to define the verbiage, styling or add functionality:
  - `Notification.message` - to completely customize the message shown 
  - `Notification.eventCode` - Handle codes in your own way - see codes here under the notify prop [default en file here](src/i18n/en.json)
