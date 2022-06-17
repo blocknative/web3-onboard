@@ -187,7 +187,7 @@ export interface UpdateNotification {
 }
 ```
 
- Notify can be used to deliver custom DApp notifications by passing a `CustomNotification` object to the `customNotification` action and will be returned a `UpdateNotification` type. 
+Notify can be used to deliver custom DApp notifications by passing a `CustomNotification` object to the `customNotification` action. This will return an `UpdateNotification` type. 
  This `UpdateNotification` will return an `update` function that can be passed a new `CustomNotification` to update the existing notification.
  The `customNotification` method also returns a `dismiss` method that is called without any parameters to dismiss the notification. 
  
