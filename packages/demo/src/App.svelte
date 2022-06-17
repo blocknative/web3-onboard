@@ -165,7 +165,7 @@
     // // example customizing account center
     accountCenter: {
       desktop: {
-        position: 'topRight',
+        position: 'bottomRight',
         enabled: true,
         minimal: true
       }

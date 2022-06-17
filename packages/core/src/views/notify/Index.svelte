@@ -58,7 +58,7 @@
       var(--onboard-font-size-5, var(--font-size-5))
     );
     list-style-type: none;
-    max-height: calc(100vh - 76px);
+    max-height: calc(100vh - 82px);
     overflow: visible;
     scrollbar-width: none;
     box-sizing: border-box;
@@ -81,17 +81,13 @@
     margin-top: 8px;
   }
 
-  li.notification-list-bottom:not(:last-child) {
+  li.notification-list-bottom:not(:first-child) {
     margin-bottom: 8px;
   }
 
   ul.bn-notify-bottomLeft,
   ul.bn-notify-bottomRight {
-    transform: rotate(180deg);
-  }
-  ul > li.bn-notify-li-bottomLeft,
-  ul > li.bn-notify-li-bottomRight {
-    transform: rotate(-180deg);
+    flex-direction: column-reverse;
   }
 
   @media only screen and (max-width: 450px) {
@@ -112,9 +108,7 @@
 {#if $notifications$.length}
   <ul
     class="bn-notify-custom bn-notify-{position} {overflowY}"
-    style={`justify-content:${
-      position.includes('top') ? 'flex-start' : 'flex-end'
-    };`}
+    style={`${position.includes('top') ? 'justify-content:flex-start;' : ''};`}
   >
     {#each $notifications$ as notification (notification.key)}
       <li
