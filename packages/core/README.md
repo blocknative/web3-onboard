@@ -131,7 +131,7 @@ The `transactionHandler` can react off any property of the Ethereum TransactionD
  - `Notification.link` - add link to the transaction hash. For instance, a link to the transaction on etherscan
  - `Notification.onClick()` - onClick handler for when user clicks the notification element
 
- Notify can also be completely styled by using the CSS variables found below. These are setup to allow for maximum customization with base styling variables setting to global the global more themed styling (i.e. `--onboard-grey-600`) as well as a more precise component level styling available (`--notify-onboard-grey-600`) with the latter taking precedent if defined
+ Notify can also be styled by using the CSS variables found below. These are setup to allow maximum customization with base styling variables setting the global theme (i.e. `--onboard-grey-600`) along with more precise component level styling variables available (`--notify-onboard-grey-600`) with the latter taking precedent if defined
 
  If notifications are enabled the notifications can be handled through onboard app state as seen below.
  ```javascript
