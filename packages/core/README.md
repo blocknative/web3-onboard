@@ -129,7 +129,7 @@ The `transactionHandler` can react off any property of the Ethereum TransactionD
  - `Notification.type` - icon type displayed (see NotificationType below for options)
  - `Notification.autoDismiss` - time on screen 
  - `Notification.link` - add link to hash 
- - `Notification.onClick()` - notification body click event
+ - `Notification.onClick()` - onClick handler for when user clicks the notification element
 
  Notify can also be completely styled by using the CSS variables found below. These are setup to allow for maximum customization with base styling variables setting to global the global more themed styling (i.e. `--onboard-grey-600`) as well as a more precise component level styling available (`--notify-onboard-grey-600`) with the latter taking precedent if defined
 
