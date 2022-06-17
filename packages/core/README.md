@@ -125,7 +125,7 @@ An object that defines whether transaction notifications will display (defaults 
 Currently notifications are positioned in the same location as the account center (either below, if the Account Center is positioned along the top, or above if positioned on the bottom of the view).
 The `transactionHandler` can react off any property of the Ethereum TransactionData returned to the callback from the event (see console.log in example init). In turn, it can return a Custom `Notification` object to define the verbiage, styling, or add functionality:
  - `Notification.message` - to completely customize the message shown 
- - `Notification.eventCode` - Handle codes in your own way - see codes here under the notify prop [default en file here](src/i18n/en.json)
+ - `Notification.eventCode` - handle codes in your own way - see codes here under the notify prop [default en file here](src/i18n/en.json)
  - `Notification.type` - icon type displayed (see NotificationType below for options)
  - `Notification.autoDismiss` - time on screen 
  - `Notification.link` - add link to hash 
