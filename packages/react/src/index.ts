@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { useSyncExternalStore } from 'use-sync-external-store/shim'
+import { useSyncExternalStore } from 'use-sync-external-store/shim/index.js'
 
 import Web3Onboard from '@web3-onboard/core'
 import type {
