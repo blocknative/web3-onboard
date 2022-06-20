@@ -15,13 +15,38 @@ import type connect from './connect'
 import type disconnect from './disconnect'
 import type { state } from './store'
 import type en from './i18n/en.json'
+import type { EthereumTransactionData, Network } from 'bnc-sdk'
 
 export interface InitOptions {
+  /**
+   * Wallet modules to be initialized and added to wallet selection modal
+   */
   wallets: WalletInit[]
+  /**
+   * The chains that your app works with
+   */
   chains: Chain[]
+  /**
+   * Additional metadata about your app to be displayed in the Onboard UI
+   */
   appMetadata?: AppMetadata
+  /**
+   * Define custom copy for the 'en' locale or add locales to i18n your app
+   */
   i18n?: i18nOptions
+  /**
+   * Customize the account center UI
+   */
   accountCenter?: AccountCenterOptions
+  /**
+   * Opt in to Blocknative value add services (transaction updates) by providing
+   * your Blocknative API key, head to https://explorer.blocknative.com/account
+   */
+  apiKey?: string
+  /**
+   * Transaction notification options
+   */
+  notify?: Partial<NotifyOptions>
 }
 
 export interface OnboardAPI {
@@ -95,12 +120,15 @@ export interface AppState {
   wallets: WalletState[]
   accountCenter: AccountCenter
   locale: Locale
+  notify: NotifyOptions
+  notifications: Notification[]
 }
 
-export type InternalState = {
+export type Configuration = {
   svelteInstance: SvelteComponent | null
   appMetadata: AppMetadata | null
   device: Device | DeviceNotBrowser
+  apiKey: string
 }
 
 export type Locale = string
@@ -125,6 +153,55 @@ export type AccountCenterOptions = {
   mobile: Omit<AccountCenter, 'expanded'>
 }
 
+export type NotifyOptions = {
+  /**
+   * Defines whether whether to subscribe to transaction events or not
+   * default: true
+   */
+  enabled: boolean
+  /**
+   * Callback that receives all transaction events
+   * Return a custom notification based on the event
+   * Or return false to disable notification for this event
+   * Or return undefined for a default notification
+   */
+  transactionHandler: (
+    event: EthereumTransactionData
+  ) => TransactionHandlerReturn
+}
+
+export type Notification = {
+  id: string
+  key: string
+  type: NotificationType
+  network: Network
+  startTime?: number
+  eventCode: string
+  message: string
+  autoDismiss: number
+  link?: string
+  onclick?: (event: Event) => void
+}
+
+export type TransactionHandlerReturn = CustomNotification | boolean | void
+
+export type CustomNotification = Partial<
+  Omit<Notification, 'startTime' | 'network' | 'id' | 'key'>
+>
+
+export type CustomNotificationUpdate = Partial<
+  Omit<Notification, 'startTime' | 'network'>
+>
+
+export type NotificationType = 'pending' | 'success' | 'error' | 'hint'
+
+export interface UpdateNotification {
+  (notificationObject: CustomNotification): {
+    dismiss: () => void
+    update: UpdateNotification
+  }
+}
+
 // ==== ACTIONS ==== //
 export type Action =
   | AddChainsAction
@@ -136,6 +213,9 @@ export type Action =
   | UpdateAccountCenterAction
   | SetWalletModulesAction
   | SetLocaleAction
+  | UpdateNotifyAction
+  | AddNotificationAction
+  | RemoveNotificationAction
   | UpdateAllWalletsAction
 
 export type AddChainsAction = { type: 'add_chains'; payload: Chain[] }
@@ -176,6 +256,21 @@ export type SetLocaleAction = {
   payload: string
 }
 
+export type UpdateNotifyAction = {
+  type: 'update_notify'
+  payload: Partial<NotifyOptions>
+}
+
+export type AddNotificationAction = {
+  type: 'add_notification'
+  payload: Notification
+}
+
+export type RemoveNotificationAction = {
+  type: 'remove_notification'
+  payload: Notification['id']
+}
+
 export type UpdateAllWalletsAction = {
   type: 'update_balance'
   payload: WalletState[]
@@ -185,6 +280,13 @@ export type UpdateAllWalletsAction = {
 export type ChainStyle = {
   icon: string
   color: string
+}
+
+export type NotifyEventStyles = {
+  backgroundColor: string
+  borderColor: string
+  eventIcon: string
+  iconColor?: string
 }
 
 export type DeviceNotBrowser = {

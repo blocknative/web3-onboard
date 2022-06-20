@@ -16,9 +16,9 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
   import { onDestroy, onMount } from 'svelte'
-  import { internalState } from '../../internals'
+  import { configuration } from '../../configuration'
 
-  const { device } = internalState
+  const { device } = configuration
 
   const body = document.body
   const html = document.documentElement
@@ -103,6 +103,7 @@
 
     .modal {
       width: 100%;
+      margin: 0 16px;
     }
   }
 </style>

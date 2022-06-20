@@ -4,9 +4,9 @@
   import questionIcon from '../../icons/question'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
-  import { internalState } from '../../internals'
+  import { configuration } from '../../configuration'
 
-  const { appMetadata } = internalState
+  const { appMetadata } = configuration
   const appIcon = (appMetadata && appMetadata.icon) || questionIcon
   $: [primaryWallet] = $wallets$
 
@@ -20,6 +20,8 @@
     background: var(--onboard-white, var(--white));
     border: 1px solid var(--onboard-gray-100, var(--gray-100));
     box-shadow: var(--onboard-shadow-3, var(--shadow-3));
+    width: 80px;
+    pointer-events: auto;
   }
 
   .radius {

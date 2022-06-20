@@ -15,9 +15,9 @@
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
   import NetworkSelector from '../shared/NetworkSelector.svelte'
   import { state } from '../../store'
-  import { internalState } from '../../internals'
+  import { configuration } from '../../configuration'
 
-  const { appMetadata } = internalState
+  const { appMetadata } = configuration
   const appIcon = (appMetadata && appMetadata.icon) || questionIcon
   const chains = state.get().chains
 
@@ -62,6 +62,7 @@
     border: 1px solid var(--onboard-gray-100, var(--gray-100));
     width: 100%;
     box-shadow: var(--onboard-shadow-3, var(--shadow-3));
+    pointer-events: auto;
   }
 
   .radius {

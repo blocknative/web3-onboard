@@ -5,7 +5,7 @@
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
   import questionIcon from '../../icons/question'
   import en from '../../i18n/en.json'
-  import { internalState } from '../../internals'
+  import { configuration } from '../../configuration'
 
   export let connectWallet: () => Promise<void>
   export let selectedWallet: WalletState
@@ -13,7 +13,7 @@
   export let setStep: (update: keyof i18n['connect']) => void
   export let connectionRejected: boolean
 
-  const { appMetadata } = internalState
+  const { appMetadata } = configuration
 </script>
 
 <style>
