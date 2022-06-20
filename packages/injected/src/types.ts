@@ -41,7 +41,7 @@ export enum ProviderIdentityFlag {
   Tokenary = 'isTokenary',
   Tally = 'isTally',
   BraveWallet = 'isBraveWallet',
-  Rabby = 'isRabby',
+  Rabby = 'isRabby'
 }
 
 export enum ProviderLabel {
