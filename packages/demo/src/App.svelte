@@ -165,7 +165,7 @@
     // // example customizing account center
     accountCenter: {
       desktop: {
-        position: 'bottomRight',
+        position: 'topRight',
         enabled: true,
         minimal: true
       }
@@ -206,9 +206,6 @@
     },
     // Sign up for your free api key at www.Blocknative.com
     apiKey: 'xxxxxx-bf21-42ec-a093-9d37e426xxxx'
-  })
-  onboard.state.select('notifications').subscribe(n => {
-    console.log(n)
   })
 
   // Subscribe to wallet updates

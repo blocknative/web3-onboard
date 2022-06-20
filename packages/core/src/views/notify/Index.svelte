@@ -4,8 +4,12 @@
   import { fade, fly } from 'svelte/transition'
   import { cubicOut } from 'svelte/easing'
   import { state } from '../../store'
-  import { startWith } from 'rxjs'
+  import { shareReplay, startWith } from 'rxjs/operators'
   import Notification from './Notification.svelte'
+
+  const accountCenter$ = state
+    .select('accountCenter')
+    .pipe(startWith(state.get().accountCenter), shareReplay(1))
 
   export let position: string
 
@@ -29,6 +33,7 @@
   y = 0
 
   const notifications$ = state.select('notifications').pipe(startWith([]))
+
   let overflowY = 'y-scroll'
   const updateScrollYOnRemove = (): void => {
     if (overflowY !== 'y-visible') {
@@ -58,7 +63,6 @@
       var(--onboard-font-size-5, var(--font-size-5))
     );
     list-style-type: none;
-    max-height: calc(100vh - 82px);
     overflow: visible;
     scrollbar-width: none;
     box-sizing: border-box;
@@ -108,7 +112,11 @@
 {#if $notifications$.length}
   <ul
     class="bn-notify-custom bn-notify-{position} {overflowY}"
-    style={`${position.includes('top') ? 'justify-content:flex-start;' : ''};`}
+    style={`${
+      position.includes('top') ? 'justify-content:flex-start;' : ''
+    }; max-height: calc(100vh - ${
+      !$accountCenter$.expanded ? '82px' : '412px'
+    })`}
   >
     {#each $notifications$ as notification (notification.key)}
       <li
