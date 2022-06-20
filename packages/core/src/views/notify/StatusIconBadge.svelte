@@ -1,9 +1,9 @@
 <script lang="ts">
   import ChainBadge from './ChainBadge.svelte'
   import { defaultNotifyEventStyles, unrecognizedChainStyle } from '../../utils'
-  import type { NotificationObject, ChainStyle } from '../../types'
+  import type { Notification, ChainStyle } from '../../types'
   export let chainStyles: ChainStyle = unrecognizedChainStyle
-  export let notification: NotificationObject
+  export let notification: Notification
 </script>
 
 <style>

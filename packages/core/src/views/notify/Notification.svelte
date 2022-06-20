@@ -13,7 +13,7 @@
   const { device } = configuration
 
   export let notification: Notification
-  export let updateParentOnRemove
+  export let updateParentOnRemove: () => void
 
   let timeoutId: NodeJS.Timeout
 
