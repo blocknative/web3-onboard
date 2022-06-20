@@ -172,7 +172,7 @@ export type Notification = {
   message: string
   autoDismiss: number
   link?: string
-  onclick?: (event: Event) => void
+  onClick?: (event: Event) => void
 }
 
 export type NotificationType = 'pending' | 'success' | 'error' | 'hint'
