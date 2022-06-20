@@ -190,7 +190,7 @@ const customNotificationUpdate = Joi.object({
   message: Joi.string().required(),
   id: Joi.string().required(),
   autoDismiss: Joi.number(),
-  onclick: Joi.function(),
+  onClick: Joi.function(),
   link: Joi.string()
 })
 
@@ -201,7 +201,7 @@ const customNotification = Joi.object({
   message: Joi.string(),
   id: Joi.string(),
   autoDismiss: Joi.number(),
-  onclick: Joi.function(),
+  onClick: Joi.function(),
   link: Joi.string()
 })
 
@@ -214,7 +214,7 @@ const notification = Joi.object({
   autoDismiss: Joi.number().required(),
   network: Joi.string().required(),
   startTime: Joi.number(),
-  onclick: Joi.function(),
+  onClick: Joi.function(),
   link: Joi.string()
 })
 
