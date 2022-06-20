@@ -72,6 +72,7 @@
       var(--onboard-font-family-normal, var(--font-family-normal))
     );
     margin: 8px 0;
+    pointer-events: all;
   }
 
   .y-scroll {
@@ -111,7 +112,7 @@
 
 {#if $notifications$.length}
   <ul
-    class="bn-notify-custom bn-notify-{position} {overflowY}"
+    class="bn-notify-{position} {overflowY}"
     style={`${
       position.includes('top') ? 'justify-content:flex-start;' : ''
     }; max-height: calc(100vh - ${

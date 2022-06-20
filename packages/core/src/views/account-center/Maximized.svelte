@@ -55,6 +55,7 @@
     width: 100%;
     filter: drop-shadow(0px 4px 16px rgba(178, 178, 178, 0.2));
     padding: 0 1px 1px 1px;
+    pointer-events: auto;
   }
 
   .wallets-section {

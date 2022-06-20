@@ -254,6 +254,8 @@
     padding: 16px;
     font-family: var(--onboard-font-family-normal, var(--font-family-normal));
     width: 100%;
+    pointer-events: none;
+    touch-action: none;
   }
 
   @media all and (min-width: 428px) {
