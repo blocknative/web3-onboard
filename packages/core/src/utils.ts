@@ -6,7 +6,9 @@ import type {
   DeviceOS,
   DeviceType,
   ChainId,
-  Chain
+  Chain,
+  WalletInit,
+  WalletModule
 } from '@web3-onboard/common'
 
 import ethereumIcon from './icons/ethereum'
@@ -21,7 +23,17 @@ import gnosisIcon from './icons/gnosis'
 import harmonyOneIcon from './icons/harmony-one'
 import arbitrumIcon from './icons/arbitrum'
 
-import type { ChainStyle, ConnectedChain, DeviceNotBrowser } from './types'
+import hourglass from './icons/hourglass'
+import checkmark from './icons/checkmark'
+import error from './icons/error'
+import info from './icons/info'
+
+import type {
+  ChainStyle,
+  ConnectedChain,
+  DeviceNotBrowser,
+  NotifyEventStyles
+} from './types'
 
 export function getDevice(): Device | DeviceNotBrowser {
   if (typeof window !== 'undefined') {
@@ -87,6 +99,19 @@ export const chainIdToLabel: Record<string, string> = {
   '0x64': 'Gnosis',
   '0x63564C40': 'Harmony One',
   '0xa4b1': 'Arbitrum'
+}
+
+export const networkToChainId: Record<string, ChainId> = {
+  main: '0x1',
+  ropsten: '0x3',
+  rinkeby: '0x4',
+  goerli: '0x5',
+  kovan: '0x2a',
+  xdai: '0x64',
+  'bsc-main': '0x38',
+  'matic-main': '0x89',
+  'fantom-main': '0xfa',
+  'matic-mumbai': '0x80001'
 }
 
 export const chainStyles: Record<string, ChainStyle> = {
@@ -167,4 +192,44 @@ export function connectedToValidAppChain(
       id === walletConnectedChain.id &&
       namespace === walletConnectedChain.namespace
   )
+}
+
+export function initializeWalletModules(
+  modules: WalletInit[],
+  device: Device
+): WalletModule[] {
+  return modules.reduce((acc, walletInit) => {
+    const initialized = walletInit({ device })
+
+    if (initialized) {
+      // injected wallets is an array of wallets
+      acc.push(...(Array.isArray(initialized) ? initialized : [initialized]))
+    }
+
+    return acc
+  }, [] as WalletModule[])
+}
+
+export const defaultNotifyEventStyles: Record<string, NotifyEventStyles> = {
+  pending: {
+    backgroundColor: 'var(--onboard-primary-700, var(--primary-700))',
+    borderColor: '#6370E5',
+    eventIcon: hourglass
+  },
+  success: {
+    backgroundColor: '#052E17',
+    borderColor: 'var(--onboard-success-300, var(--success-300))',
+    eventIcon: checkmark
+  },
+  error: {
+    backgroundColor: '#FDB1B11A',
+    borderColor: 'var(--onboard-danger-300, var(--danger-300))',
+    eventIcon: error
+  },
+  hint: {
+    backgroundColor: 'var(--onboard-gray-500, var(--gray-500))',
+    borderColor: 'var(--onboard-gray-500, var(--gray-500))',
+    iconColor: 'var(--onboard-gray-100, var(--gray-100))',
+    eventIcon: info
+  }
 }
