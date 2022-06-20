@@ -100,6 +100,13 @@ const web3Onboard = init({
       { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
     ]
   },
+  apiKey: 'xxx387fb-bxx1-4xxc-a0x3-9d37e426xxxx'
+  notify: {
+    enabled: true,
+    transactionHandler: transaction => {
+      console.log({ transaction })
+    }
+  },
   accountCenter: {
     desktop: {
       position: 'topRight',
@@ -110,6 +117,25 @@ const web3Onboard = init({
       position: 'topRight',
       enabled: true,
       minimal: true
+    }
+  },
+  i18n: {
+    en: {
+      connect: {
+        selectingWallet: {
+          header: 'custom text header'
+        }
+      },
+      notify: {
+        transaction: {
+          txStuck: 'custom text for this notification event'
+        }
+      }
+    },
+    es: {
+      transaction: {
+        txRequest: 'Su transacción está esperando que confirme'
+      }
     }
   }
 })
