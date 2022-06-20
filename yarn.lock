@@ -2421,7 +2421,7 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.0"
 
-"@web3-onboard/common@2.1.1", "@web3-onboard/common@^2.0.7", "@web3-onboard/common@^2.1.1":
+"@web3-onboard/common@^2.1.1":
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/@web3-onboard/common/-/common-2.1.1.tgz#84cde2ad39581131a912aae064f0f41ef4f6843e"
   integrity sha512-vkuBzW+0M+3a/2sP1m4P8BzzlPj9s5+I3wcccx8kIBW8TwQ6LejHR+k/i9pYHzQcBFHersyTWis6NeKwfOggyw==
@@ -2430,14 +2430,6 @@
     ethers "5.5.4"
     joi "^17.4.2"
     rxjs "^7.5.2"
-
-"@web3-onboard/web3auth@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/web3auth/-/web3auth-2.0.0.tgz#1ca6cf65c82989d6defb0fec3c3bbb9b549a941d"
-  integrity sha512-FBudJyA3MfoR01+DWmoqNr7W7gJ4qqd1gEZmvIYL3TbtuYyGo1G2KVhDB3ADAdg3GpqynREYI5xnNZcHc8oz4w==
-  dependencies:
-    "@web3-onboard/common" "^2.0.7"
-    "@web3auth/web3auth" "^1.0.0"
 
 "@web3auth/base-plugin@^1.0.1":
   version "1.0.1"
