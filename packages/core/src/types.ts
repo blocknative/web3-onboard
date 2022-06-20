@@ -180,7 +180,7 @@ export type Notification = {
   message: string
   autoDismiss: number
   link?: string
-  onclick?: (event: Event) => void
+  onClick?: (event: Event) => void
 }
 
 export type TransactionHandlerReturn = CustomNotification | boolean | void
