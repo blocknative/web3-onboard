@@ -192,8 +192,8 @@
         //       autoDismiss: 0,
         //       id: '123',
         //       key: '321',
-            //  onClick: () =>
-            //  window.open(`https://rinkeby.etherscan.io/tx/${transaction.hash}`)
+        //       onClick: () =>
+        //         window.open(`https://rinkeby.etherscan.io/tx/${transaction.hash}`)
         //     }
         //   }
         if (transaction.eventCode === 'txPool') {
@@ -207,7 +207,7 @@
       }
     },
     // Sign up for your free api key at www.Blocknative.com
-    apiKey: '1730eff0-9d50-4382-a3fe-89f0d34a2070'
+    apiKey: 'xxxxxx-bf21-42ec-a093-9d37e426xxxx'
   })
 
   // Subscribe to wallet updates
