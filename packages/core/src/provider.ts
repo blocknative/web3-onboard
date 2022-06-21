@@ -31,7 +31,7 @@ export function getProvider(chain: Chain): providers.StaticJsonRpcProvider {
 
   if (!ethersProviders[chain.rpcUrl]) {
     ethersProviders[chain.rpcUrl] = new providers.StaticJsonRpcProvider(
-      chain.providerConnectionInfo?.url
+      chain.providerConnectionInfo && chain.providerConnectionInfo.url
         ? chain.providerConnectionInfo
         : chain.rpcUrl
     )
@@ -300,7 +300,7 @@ export async function getEns(
   // chain we don't recognize and don't have a rpcUrl for requests
   if (!chain) return null
 
-  const provider = getProvider(chain);
+  const provider = getProvider(chain)
 
   try {
     const name = await provider.lookupAddress(address)
@@ -340,7 +340,7 @@ export async function getBalance(
   // chain we don't recognize and don't have a rpcUrl for requests
   if (!chain) return null
 
-  const provider = getProvider(chain);
+  const provider = getProvider(chain)
 
   try {
     const balanceWei = await provider.getBalance(address)
@@ -380,7 +380,9 @@ export function addNewChain(
           decimals: 18
         },
         rpcUrls: [chain.publicRpcUrl || chain.rpcUrl],
-        blockExplorerUrls: chain.blockExplorerUrl ? [chain.blockExplorerUrl] : undefined
+        blockExplorerUrls: chain.blockExplorerUrl
+          ? [chain.blockExplorerUrl]
+          : undefined
       }
     ]
   })

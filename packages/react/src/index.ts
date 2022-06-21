@@ -103,11 +103,14 @@ export const useSetChain = (
 
   const { wallets, chains } = useAppState()
 
-  const connectedChain =
-    (walletLabel
+  const getChain = () => {
+    const wallet = walletLabel
       ? wallets.find(({ label }) => label === walletLabel)
       : wallets[0]
-    )?.chains[0] || null
+    return wallet && wallet.chains ? wallet.chains[0] : null
+  }
+
+  const connectedChain = getChain()
 
   const [settingChain, setInProgress] = useState<boolean>(false)
 

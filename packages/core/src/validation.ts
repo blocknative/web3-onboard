@@ -1,5 +1,10 @@
 import Joi, { ObjectSchema, Schema } from 'joi'
-import type { Chain, ChainId, WalletInit, WalletModule } from '@web3-onboard/common'
+import type {
+  Chain,
+  ChainId,
+  WalletInit,
+  WalletModule
+} from '@web3-onboard/common'
 
 import type {
   InitOptions,
