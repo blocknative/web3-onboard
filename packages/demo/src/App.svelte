@@ -196,14 +196,14 @@
         //         window.open(`https://rinkeby.etherscan.io/tx/${transaction.hash}`)
         //     }
         //   }
-        if (transaction.eventCode === 'txPool') {
-          return {
-            type: 'hint',
-            message: 'Your in the pool, hope you brought a towel!',
-            autoDismiss: 0,
-            link: `https://ropsten.etherscan.io/tx/${transaction.hash}`
-          }
-        }
+        // if (transaction.eventCode === 'txPool') {
+        //   return {
+        //     type: 'hint',
+        //     message: 'Your in the pool, hope you brought a towel!',
+        //     autoDismiss: 0,
+        //     link: `https://ropsten.etherscan.io/tx/${transaction.hash}`
+        //   }
+        // }
       }
     },
     // Sign up for your free api key at www.Blocknative.com
