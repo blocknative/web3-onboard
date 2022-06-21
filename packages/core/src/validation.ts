@@ -194,7 +194,9 @@ const customNotificationUpdate = Joi.object({
   eventCode: Joi.string(),
   message: Joi.string().required(),
   id: Joi.string().required(),
-  autoDismiss: Joi.number()
+  autoDismiss: Joi.number(),
+  onClick: Joi.function(),
+  link: Joi.string()
 })
 
 const customNotification = Joi.object({
@@ -203,7 +205,9 @@ const customNotification = Joi.object({
   eventCode: Joi.string(),
   message: Joi.string(),
   id: Joi.string(),
-  autoDismiss: Joi.number()
+  autoDismiss: Joi.number(),
+  onClick: Joi.function(),
+  link: Joi.string()
 })
 
 const notification = Joi.object({
@@ -214,7 +218,9 @@ const notification = Joi.object({
   message: Joi.string().required(),
   autoDismiss: Joi.number().required(),
   network: Joi.string().required(),
-  startTime: Joi.number()
+  startTime: Joi.number(),
+  onClick: Joi.function(),
+  link: Joi.string()
 })
 
 const transactionHandlerReturn = Joi.any().allow(

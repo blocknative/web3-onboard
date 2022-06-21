@@ -56,7 +56,10 @@
       --notify-onboard-primary-100,
       var(--onboard-primary-100, var(--primary-100))
     );
-    line-height: 14px;
+    line-height: var(
+      --notify-onboard-font-size-5,
+      var(--onboard-font-size-5, var(--font-size-5))
+    );
     font-weight: 400;
     overflow: hidden;
     text-overflow: ellipsis;

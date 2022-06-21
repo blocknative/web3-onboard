@@ -103,8 +103,8 @@
 </style>
 
 <div
-  class:bn-notify-clickable={notification.onclick}
-  on:click={e => notification.onclick && notification.onclick(e)}
+  class:bn-notify-clickable={notification.onClick}
+  on:click={e => notification.onClick && notification.onClick(e)}
   class="bn-notify-notification bn-notify-notification-{notification.type}}"
 >
   <StatusIconBadge
