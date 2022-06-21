@@ -72,7 +72,8 @@
   })
 
   const web3auth = web3authModule({
-    clientId: 'DJuUOKvmNnlzy6ruVgeWYWIMKLRyYtjYa9Y10VCeJzWZcygDlrYLyXsBQjpJ2hxlBO9dnl8t9GmAC2qOP5vnIGo'
+    clientId:
+      'DJuUOKvmNnlzy6ruVgeWYWIMKLRyYtjYa9Y10VCeJzWZcygDlrYLyXsBQjpJ2hxlBO9dnl8t9GmAC2qOP5vnIGo'
   })
 
   const torus = torusModule()
@@ -167,7 +168,7 @@
       desktop: {
         position: 'topRight',
         enabled: true,
-        minimal: true
+        minimal: false
       }
     },
     // example customizing copy
@@ -190,18 +191,19 @@
         //       message: 'Your in the pool, hope you brought a towel!',
         //       autoDismiss: 0,
         //       id: '123',
-        //       key: '321'
+        //       key: '321',
+        //       onClick: () =>
+        //         window.open(`https://rinkeby.etherscan.io/tx/${transaction.hash}`)
         //     }
         //   }
-        //   if (transaction.eventCode === 'txPool') {
-        //     return {
-        //       type: 'hint',
-        //       message: 'Your in the pool, hope you brought a towel!',
-        //       autoDismiss: 0,
-        //       id: '1232',
-        //       key: '3212'
-        //     }
+        // if (transaction.eventCode === 'txPool') {
+        //   return {
+        //     type: 'hint',
+        //     message: 'Your in the pool, hope you brought a towel!',
+        //     autoDismiss: 0,
+        //     link: `https://ropsten.etherscan.io/tx/${transaction.hash}`
         //   }
+        // }
       }
     },
     // Sign up for your free api key at www.Blocknative.com
@@ -320,8 +322,7 @@
             on:click={() =>
               onboard.state.actions.customNotification({
                 type: 'hint',
-                message:
-                  'This is a custom DApp hint',
+                message: 'This is a custom DApp hint',
                 autoDismiss: 0
               })}>Send Hint Notification</button
           >

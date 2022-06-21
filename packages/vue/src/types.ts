@@ -30,8 +30,4 @@ interface OnboardComposable {
   wallets: ReadonlyRef<WalletState[]>
 }
 
-export {
-  ReadonlyRef,
-  SetChainOptions,
-  OnboardComposable
-}
+export { ReadonlyRef, SetChainOptions, OnboardComposable }
