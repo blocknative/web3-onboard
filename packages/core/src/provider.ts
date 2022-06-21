@@ -31,7 +31,7 @@ export function getProvider(chain: Chain): providers.StaticJsonRpcProvider {
 
   if (!ethersProviders[chain.rpcUrl]) {
     ethersProviders[chain.rpcUrl] = new providers.StaticJsonRpcProvider(
-      'url' in chain.providerConnectionInfo && chain.providerConnectionInfo.url
+      chain.providerConnectionInfo && chain.providerConnectionInfo.url
         ? chain.providerConnectionInfo
         : chain.rpcUrl
     )
