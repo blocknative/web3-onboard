@@ -10,7 +10,7 @@ Install the core module:
 
 If you would like to support all wallets, then you can install all of the wallet modules:
 
-`npm i @web3-onboard/injected-wallets @web3-onboard/coinbase @web3-onboard/ledger @web3-onboard/trezor @web3-onboard/keepkey @web3-onboard/walletconnect @web3-onboard/torus @web3-onboard/portis @web3-onboard/mew @web3-onboard/gnosis @web3-onboard/magic @web3-onboard/fortmatic`
+`npm i @web3-onboard/injected-wallets @web3-onboard/coinbase @web3-onboard/ledger @web3-onboard/trezor @web3-onboard/keepkey @web3-onboard/walletconnect @web3-onboard/web3auth @web3-onboard/torus @web3-onboard/portis @web3-onboard/mew @web3-onboard/gnosis @web3-onboard/magic @web3-onboard/fortmatic @web3-onboard/dcent`
 
 Note:
 
@@ -29,6 +29,8 @@ type InitOptions {
   appMetadata?: AppMetadata
   i18n?: i18nOptions
   accountCenter?: AccountCenterOptions
+  apiKey?: string
+  notify?: Partial<NotifyOptions>
 }
 ```
 
@@ -49,6 +51,8 @@ type Chain = {
   token: TokenSymbol // the native token symbol, eg ETH, BNB, MATIC
   color?: string // the color used to represent the chain and will be used as a background for the icon
   icon?: string // the icon to represent the chain
+  publicRpcUrl?: string // an optional public RPC used when adding a new chain config to the wallet
+  blockExplorerUrl?: string // also used when adding a new config to the wallet
 }
 ```
 
@@ -114,6 +118,99 @@ type AccountCenterPosition =
   | 'topLeft'
 ```
 
+**`notify`**
+Notify provides by default transaction notifications for all connected wallets on the current blockchain. When switching chains the previous chain listeners remain active for 60 seconds to allow capture and report of an remaining transactions that may be in flight.
+By default transaction notifications are captured if a DAppID is provided in the Onboard config along with the Account Center being enabled.
+An object that defines whether transaction notifications will display (defaults to true if an API key is provided). This object contains an `enabled` flag prop and an optional `transactionHandler` which is a callback that can disable or allow customizations of notifications. 
+Currently notifications are positioned in the same location as the account center (either below, if the Account Center is positioned along the top, or above if positioned on the bottom of the view).
+The `transactionHandler` can react off any property of the Ethereum TransactionData returned to the callback from the event (see console.log in example init). In turn, it can return a Custom `Notification` object to define the verbiage, styling, or add functionality:
+ - `Notification.message` - to completely customize the message shown 
+ - `Notification.eventCode` - handle codes in your own way - see codes here under the notify prop [default en file here](src/i18n/en.json)
+ - `Notification.type` - icon type displayed (see `NotificationType` below for options)
+ - `Notification.autoDismiss` - time (in ms) after which the notification will be dismissed. If set to `0` the notification will remain on screen until the user dismisses the notification, refreshes the page or navigates away from the site with the notifications 
+ - `Notification.link` - add link to the transaction hash. For instance, a link to the transaction on etherscan
+ - `Notification.onClick()` - onClick handler for when user clicks the notification element
+
+ Notify can also be styled by using the CSS variables found below. These are setup to allow maximum customization with base styling variables setting the global theme (i.e. `--onboard-grey-600`) along with more precise component level styling variables available (`--notify-onboard-grey-600`) with the latter taking precedent if defined
+
+ If notifications are enabled the notifications can be handled through onboard app state as seen below.
+ ```javascript
+const wallets = onboard.state.select('notifications')
+const { unsubscribe } = wallets.subscribe(update =>
+  console.log('transaction notifications: ', update)
+)
+
+// unsubscribe when updates are no longer needed
+unsubscribe()
+```
+
+```typescript
+export type NotifyOptions = {
+  enabled: boolean  // default: true
+  /**
+   * Callback that receives all transaction events
+   * Return a custom notification based on the event
+   * Or return false to disable notification for this event
+   * Or return undefined for a default notification
+   */
+  transactionHandler?: (
+    event: EthereumTransactionData
+  ) => TransactionHandlerReturn
+}
+
+export type TransactionHandlerReturn = CustomNotification | boolean | void
+
+export type CustomNotification = Partial<Omit<Notification, 'id' | 'startTime'>>
+
+export type Notification = {
+  id: string
+  key: string
+  type: NotificationType
+  network: Network
+  startTime?: number
+  eventCode: string
+  message: string
+  autoDismiss: number
+  link?: string
+  onClick?: (event: Event) => void
+}
+
+export type NotificationType = 'pending' | 'success' | 'error' | 'hint'
+
+export declare type Network = 'main' | 'testnet' | 'ropsten' | 'rinkeby' | 'goerli' | 'kovan' | 'xdai' | 'bsc-main' | 'matic-main' | 'fantom-main' | 'matic-mumbai' | 'local';
+
+export interface UpdateNotification {
+  (notificationObject: CustomNotification): {
+    dismiss: () => void
+    update: UpdateNotification
+  }
+}
+```
+
+Notify can be used to deliver custom DApp notifications by passing a `CustomNotification` object to the `customNotification` action. This will return an `UpdateNotification` type. 
+ This `UpdateNotification` will return an `update` function that can be passed a new `CustomNotification` to update the existing notification.
+ The `customNotification` method also returns a `dismiss` method that is called without any parameters to dismiss the notification. 
+ 
+```typescript
+  const { update, dismiss } =
+    onboard.state.actions.customNotification({
+      type: 'pending',
+      message:
+        'This is a custom DApp pending notification to use however you want',
+      autoDismiss: 0
+    })
+  setTimeout(
+    () =>
+      update({
+        eventCode: 'dbUpdateSuccess',
+        message: 'Updated status for custom notification',
+        type: 'success',
+        autoDismiss: 8000
+      }),
+    4000
+  )
+```
+
 ### Initialization Example
 
 Putting it all together, here is an example initialization with the injected wallet modules:
@@ -174,6 +271,19 @@ const onboard = Onboard({
       { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
     ]
   },
+  apiKey: 'xxx387fb-bxx1-4xxc-a0x3-9d37e426xxxx'
+  notify: {
+    enabled: true,
+    transactionHandler: transaction => {
+      console.log({ transaction })
+      if (transaction.eventCode === 'txPool') {
+        return {
+          type: 'success',
+          message: 'Your transaction from #1 DApp is in the mempool',
+        }
+      }
+    }
+  },
   accountCenter: {
     desktop: {
       position: 'topRight',
@@ -192,6 +302,20 @@ const onboard = Onboard({
         selectingWallet: {
           header: 'custom text header'
         }
+      },
+      notify: {
+        transaction: {
+          txStuck: 'custom text for this notification event'
+        },
+        watched: {
+          // Any words in brackets can be re-ordered or removed to fit your dapps desired verbiage
+          "txPool": "Your account is {verb} {formattedValue} {asset} {preposition} {counterpartyShortened}" 
+        }
+      }
+    },
+    es: {
+      transaction: {
+        txRequest: 'Su transacción está esperando que confirme'
       }
     }
   }
@@ -283,6 +407,9 @@ type AppState = {
   chains: Chain[]
   accountCenter: AccountCenter
   walletModules: WalletModule[]
+  locale: Locale
+  notify: NotifyOptions
+  notifications: Notification[]
 }
 
 type Chain {
@@ -603,6 +730,19 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   /* SPACING */
   --account-select-modal-margin-4: 1rem;
   --account-select-modal-margin-5: 0.5rem;
+
+  /* notify STYLES */
+  --notify-onboard-font-family-normal
+  --notify-onboard-font-size-5
+  --notify-onboard-gray-300
+  --notify-onboard-gray-600
+  --notify-onboard-border-radius
+  --notify-onboard-font-size-7
+  --notify-onboard-font-size-6
+  --notify-onboard-line-height-4
+  --notify-onboard-primary-100
+  --notify-onboard-primary-400
+  --notify-onboard-main-padding
 }
 ```
 

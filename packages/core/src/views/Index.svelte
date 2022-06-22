@@ -6,15 +6,33 @@
   import SwitchChain from './chain/SwitchChain.svelte'
   import ActionRequired from './connect/ActionRequired.svelte'
   import AccountCenter from './account-center/Index.svelte'
+  import Notify from './notify/Index.svelte'
+  import { configuration } from '../configuration'
 
+  const { device } = configuration
   const accountCenter$ = state
     .select('accountCenter')
     .pipe(startWith(state.get().accountCenter), shareReplay(1))
+
+  const notify$ = state
+    .select('notify')
+    .pipe(startWith(state.get().notify), shareReplay(1))
+
+  const accountCenterPositions = {
+    topLeft: 'top: 0; left: 0;',
+    topRight: 'top: 0; right: 0;',
+    bottomRight: 'bottom: 0; right: 0;',
+    bottomLeft: 'bottom: 0; left: 0;'
+  }
 </script>
 
 <style>
   :global(.flex) {
     display: flex;
+  }
+
+  :global(.inline-flex) {
+    display: inline-flex;
   }
 
   :global(.flex-column) {
@@ -96,7 +114,7 @@
   :global(input[type='checkbox']) {
     -webkit-appearance: none;
     width: auto;
-    background-color: var(--onboard-white, var(--white));
+    background: var(--onboard-white, var(--white));
     outline: 1px solid var(--onboard-gray-300, var(--gray-300));
     border: none;
     padding: 0.5em;
@@ -116,7 +134,7 @@
   }
 
   :global(input[type='checkbox']:checked) {
-    background-color: var(
+    background: var(
       --onboard-checkbox-background,
       var(--onboard-primary-500, var(--primary-500))
     );
@@ -152,7 +170,7 @@
   }
 
   :global(input:disabled, textarea:disabled, select:disabled) {
-    background-color: var(--gray-100);
+    background: var(--gray-100);
   }
 
   :global(input::-moz-focus-inner) {
@@ -200,14 +218,14 @@
   :global(.button-neutral-solid) {
     width: 100%;
     border-radius: 8px;
-    background-color: var(--onboard-gray-500, var(--gray-500));
+    background: var(--onboard-gray-500, var(--gray-500));
     color: var(--onboard-white, var(--white));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
   }
 
   :global(.button-neutral-solid-b) {
     width: 100%;
-    background-color: var(--onboard-gray-100, var(--gray-100));
+    background: var(--onboard-gray-100, var(--gray-100));
     color: var(--onboard-gray-500, var(--gray-500));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
   }
@@ -217,10 +235,10 @@
   }
 
   :global(.button-neutral-solid:hover) {
-    background-color: var(--onboard-gray-700, var(--gray-700));
+    background: var(--onboard-gray-700, var(--gray-700));
   }
   :global(.button-neutral-solid-b:hover) {
-    background-color: var(--onboard-gray-200, var(--gray-200));
+    background: var(--onboard-gray-200, var(--gray-200));
   }
 
   :global(.button-neutral-solid:active) {
@@ -229,7 +247,21 @@
 
   :global(.button-neutral-solid-b:active) {
     color: var(--onboard-gray-600, var(--gray-600));
-    background-color: var(--onboard-gray-300, var(--gray-300));
+    background: var(--onboard-gray-300, var(--gray-300));
+  }
+
+  .container {
+    padding: 16px;
+    font-family: var(--onboard-font-family-normal, var(--font-family-normal));
+    width: 100%;
+    pointer-events: none;
+    touch-action: none;
+  }
+
+  @media all and (min-width: 428px) {
+    .container {
+      max-width: 348px;
+    }
   }
 </style>
 
@@ -245,6 +277,37 @@
   <SwitchChain />
 {/if}
 
-{#if $accountCenter$.enabled && $wallets$.length}
-  <AccountCenter settings={$accountCenter$} />
+{#if ($notify$.enabled || $accountCenter$.enabled) && $wallets$.length}
+  <div
+    class="container flex flex-column fixed"
+    style="{accountCenterPositions[$accountCenter$.position]}; {device.type ===
+      'mobile' && $accountCenter$.position.includes('top')
+      ? 'padding-bottom: 0;'
+      : device.type === 'mobile' && $accountCenter$.position.includes('bottom')
+      ? 'padding-top:0;'
+      : ''} "
+  >
+    {#if $notify$.enabled && $accountCenter$.position.includes('bottom')}
+      <Notify position={$accountCenter$.position} />
+    {/if}
+    <div
+      style={!$accountCenter$.expanded &&
+      $accountCenter$.minimal &&
+      $accountCenter$.position.includes('Right')
+        ? 'margin-left: auto'
+        : !$accountCenter$.expanded &&
+          $accountCenter$.minimal &&
+          $accountCenter$.position.includes('Left')
+        ? 'margin-right: auto'
+        : ''}
+    >
+      {#if $accountCenter$.enabled && $wallets$.length}
+        <AccountCenter settings={$accountCenter$} />
+      {/if}
+    </div>
+
+    {#if $notify$.enabled && $accountCenter$.position.includes('top')}
+      <Notify position={$accountCenter$.position} />
+    {/if}
+  </div>
 {/if}

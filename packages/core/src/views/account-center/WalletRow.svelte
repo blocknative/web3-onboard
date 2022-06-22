@@ -70,7 +70,7 @@
   }
 
   .container:hover {
-    background-color: var(--onboard-gray-500, var(--gray-500));
+    background: var(--onboard-gray-500, var(--gray-500));
   }
 
   .container:hover > div > span.balance {
@@ -78,7 +78,7 @@
   }
 
   .container.primary:hover {
-    background-color: var(--onboard-gray-700, var(--gray-700));
+    background: var(--onboard-gray-700, var(--gray-700));
   }
 
   .address-ens {
@@ -111,7 +111,7 @@
   }
 
   .elipsis-container.active {
-    background-color: var(--onboard-gray-700, var(--gray-700));
+    background: var(--onboard-gray-700, var(--gray-700));
   }
 
   .menu {
@@ -133,12 +133,12 @@
     font-size: var(--onboard-font-size-5, var(--font-size-5));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
     padding: 12px 16px;
-    background-color: var(--onboard-white, var(--white));
+    background: var(--onboard-white, var(--white));
     transition: background-color 150ms ease-in-out;
     cursor: pointer;
   }
   .menu li:hover {
-    background-color: var(--onboard-primary-200, var(--primary-200));
+    background: var(--onboard-primary-200, var(--primary-200));
   }
 </style>
 

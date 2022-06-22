@@ -55,7 +55,7 @@
   }
 
   tbody tr:hover {
-    background-color: var(
+    background: var(
       --account-select-primary-100,
       var(--onboard-primary-100, var(--primary-100))
     );
@@ -70,7 +70,7 @@
 
   .selected-row,
   .selected-row:hover {
-    background-color: var(
+    background: var(
       --account-select-primary-500,
       var(--onboard-primary-500, var(--primary-500))
     );
