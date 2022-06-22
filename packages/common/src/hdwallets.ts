@@ -1,6 +1,6 @@
 import type Common from '@ethereumjs/common'
 import type { BigNumber } from 'ethers'
-import type { CustomNetwork } from './types'
+import type { CustomNetwork, EIP1193Provider, RPCResponse } from './types'
 import type { TransactionRequest } from '@ethersproject/providers'
 
 /**
@@ -77,3 +77,30 @@ export const bigNumberFieldsToStrings = (
     }),
     transaction
   ) as StringifiedTransactionRequest
+
+/**
+ * Helper method for hardware wallets to build an object
+ * with a request method used for making rpc requests.
+ * @param getRpcUrl - callback used to get the current chain's rpc url
+ * @returns An object with a request method
+ * to be called when making rpc requests
+ */
+export const getHardwareWalletProvider = (
+  getRpcUrl: () => string
+): { request: EIP1193Provider['request'] } => ({
+  request: ({ method, params }) =>
+    fetch(getRpcUrl(), {
+      method: 'POST',
+      body: JSON.stringify({
+        id: '42',
+        method,
+        params
+      })
+    }).then(async res => {
+      const response = (await res.json()) as RPCResponse
+      if ('error' in response) {
+        throw response.error
+      }
+      return response.result
+    })
+})
