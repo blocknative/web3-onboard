@@ -2421,16 +2421,6 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.0"
 
-"@web3-onboard/common@^2.1.1":
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/common/-/common-2.1.1.tgz#84cde2ad39581131a912aae064f0f41ef4f6843e"
-  integrity sha512-vkuBzW+0M+3a/2sP1m4P8BzzlPj9s5+I3wcccx8kIBW8TwQ6LejHR+k/i9pYHzQcBFHersyTWis6NeKwfOggyw==
-  dependencies:
-    "@ethereumjs/common" "2.6.2"
-    ethers "5.5.4"
-    joi "^17.4.2"
-    rxjs "^7.5.2"
-
 "@web3auth/base-plugin@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@web3auth/base-plugin/-/base-plugin-1.0.1.tgz#1e2a87acf745299fdff6f92e6c46ee9bc38aa670"
@@ -3353,10 +3343,10 @@ bnb-javascript-sdk-nobroadcast@^2.16.14:
     uuid "^3.3.2"
     websocket-stream "^5.5.0"
 
-bnc-sdk@^4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-4.4.0.tgz#2468fbf64a51b8dc29c3ecb73eb76cd496c279c5"
-  integrity sha512-yx6Gve+UMB1HUaMwPtZpnmKEvkF/Md3npO6z5krtbdZxJdpm71II2d4GskmPOzZ/tXD7LymXpPVbbBsov+T+Yg==
+bnc-sdk@^4.4.1:
+  version "4.4.1"
+  resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-4.4.1.tgz#dc9dda2962eb28a5deafe8ac0f9305b63fa38ac4"
+  integrity sha512-S8urB7JPqTo+BGiAJJ9g7/NqMspzXXYhWlxFXOKy6YjyVEDBMqZ1j4aVLQaoPkaIPRV249wnu+tb4kuWbsKk3A==
   dependencies:
     crypto-es "^1.2.2"
     nanoid "^3.3.1"

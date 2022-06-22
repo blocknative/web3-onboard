@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/portis",
-  "version": "2.0.2-alpha.1",
+  "version": "2.0.2",
   "description": "Portis module for web3-onboard",
   "module": "dist/index.js",
   "browser": "dist/index.js",
@@ -21,6 +21,6 @@
   },
   "dependencies": {
     "@portis/web3": "^4.0.6",
-    "@web3-onboard/common": "^2.1.2-alpha.2"
+    "@web3-onboard/common": "^2.1.2"
   }
 }
