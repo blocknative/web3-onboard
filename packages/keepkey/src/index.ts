@@ -412,7 +412,7 @@ function keepkey(): WalletInit {
               value: value || '',
               nonce: utils.hexValue(nonce),
               gasLimit: gasLimit || '0x0',
-              data: data?.toString() || '',
+              data: (data || '').toString(),
               ...gasData
             }
 

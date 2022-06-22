@@ -4,7 +4,7 @@ import replace from '@rollup/plugin-replace'
 import json from '@rollup/plugin-json'
 import sveltePreprocess from 'svelte-preprocess'
 import typescript from '@rollup/plugin-typescript'
-import copy from '@rollup-extras/plugin-copy';
+import copy from '@rollup-extras/plugin-copy'
 
 const production = !process.env.ROLLUP_WATCH
 
@@ -51,6 +51,9 @@ export default {
     'svelte/store',
     'lodash.merge',
     'lodash.partition',
-    'eventemitter3'
+    'eventemitter3',
+    'bignumber.js',
+    'bnc-sdk',
+    'nanoid'
   ]
 }

@@ -83,9 +83,13 @@ function keystone({
           '@keystonehq/eth-keyring'
         )
 
-        // @ts-ignore super weird esm issue where the default export is an object with a property default on it
+        // Super weird esm issue where the default export is an object with a property default on it
         // if that is the case then we just grab the default value
-        AirGappedKeyring = AirGappedKeyring?.default || AirGappedKeyring
+        AirGappedKeyring =
+          'default' in AirGappedKeyring
+            ? // @ts-ignore
+              AirGappedKeyring.default
+            : AirGappedKeyring
 
         const { TransactionFactory: Transaction } = await import(
           '@ethereumjs/tx'

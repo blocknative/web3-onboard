@@ -12,7 +12,7 @@
 
 <style>
   button {
-    background-color: var(
+    background: var(
       --onboard-wallet-button-background,
       var(--onboard-white, var(--white))
     );
@@ -29,7 +29,7 @@
   }
 
   button:hover {
-    background-color: var(
+    background: var(
       --onboard-wallet-button-background-hover,
       var(--onboard-primary-100, var(--primary-100))
     );
@@ -40,7 +40,7 @@
   }
 
   button.connected:hover {
-    background-color: var(--onboard-success-100, var(--success-100));
+    background: var(--onboard-success-100, var(--success-100));
   }
   .name {
     margin-left: var(--onboard-spacing-4, var(--spacing-4));

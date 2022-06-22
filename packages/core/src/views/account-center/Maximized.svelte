@@ -20,14 +20,14 @@
   import { updateAccountCenter } from '../../store/actions'
   import blocknative from '../../icons/blocknative'
   import DisconnectAllConfirm from './DisconnectAllConfirm.svelte'
-  import { internalState } from '../../internals'
+  import { configuration } from '../../configuration'
 
   function disconnectAllWallets() {
     $wallets$.forEach(({ label }) => disconnect({ label }))
   }
 
   const { chains: appChains } = state.get()
-  const { appMetadata } = internalState
+  const { appMetadata } = configuration
   let disconnectConfirmModal = false
   let hideWalletRowMenu: () => void
 
@@ -45,15 +45,17 @@
   )
 
   const { position } = state.get().accountCenter
-  const { device } = internalState
+  const { device } = configuration
 </script>
 
 <style>
   .outer-container {
-    background-color: var(--onboard-gray-600, var(--gray-600));
+    background: var(--onboard-gray-600, var(--gray-600));
     border-radius: var(--onboard-border-radius-3, var(--border-radius-3));
     width: 100%;
     filter: drop-shadow(0px 4px 16px rgba(178, 178, 178, 0.2));
+    padding: 0 1px 1px 1px;
+    pointer-events: auto;
   }
 
   .wallets-section {
@@ -104,19 +106,18 @@
   }
 
   .background-blue {
-    background-color: var(--onboard-primary-100, var(--primary-100));
+    background: var(--onboard-primary-100, var(--primary-100));
   }
 
   .background-gray {
-    background-color: var(--onboard-gray-100, var(--gray-100));
+    background: var(--onboard-gray-100, var(--gray-100));
   }
 
   .background-yellow {
-    background-color: var(--onboard-warning-100, var(--warning-100));
+    background: var(--onboard-warning-100, var(--warning-100));
   }
 
   .network-container {
-    margin: 0 1px 1px 1px;
     border-radius: var(--onboard-border-radius-3, var(--border-radius-3));
     color: var(--onboard-gray-500, var(--gray-500));
   }
