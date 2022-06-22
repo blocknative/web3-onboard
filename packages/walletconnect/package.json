@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/walletconnect",
-  "version": "2.0.3-alpha.1",
+  "version": "2.0.3",
   "description": "WalletConnect module for web3-onboard",
   "module": "dist/index.js",
   "browser": "dist/index.js",
@@ -23,7 +23,7 @@
     "@ethersproject/providers": "^5.5.0",
     "@walletconnect/client": "^1.7.1",
     "@walletconnect/qrcode-modal": "^1.7.1",
-    "@web3-onboard/common": "^2.1.2-alpha.2",
+    "@web3-onboard/common": "^2.1.2",
     "rxjs": "^7.5.2"
   }
 }
