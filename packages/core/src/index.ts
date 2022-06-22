@@ -34,7 +34,8 @@ const API = {
       setLocale,
       updateNotify,
       customNotification,
-      updateBalances
+      updateBalances,
+      updateAccountCenter
     }
   }
 }

@@ -11,7 +11,13 @@ import type {
   ConnectedChain
 } from '@web3-onboard/core'
 import type { Chain } from '@web3-onboard/common'
-import type { AppState } from '@web3-onboard/core/dist/types'
+import type {
+  AppState,
+  CustomNotification,
+  Notification,
+  NotifyOptions,
+  UpdateNotification
+} from '@web3-onboard/core/dist/types'
 
 export let web3Onboard: OnboardAPI | null = null
 
@@ -52,7 +58,8 @@ const useAppState: {
 export const useConnectWallet = (): [
   { wallet: WalletState | null; connecting: boolean },
   (options?: ConnectOptions) => Promise<void>,
-  (wallet: DisconnectOptions) => Promise<void>
+  (wallet: DisconnectOptions) => Promise<void>,
+  (addresses?: string[]) => Promise<void>
 ] => {
   if (!web3Onboard) throw new Error(HOOK_ERROR_MESSAGE)
 
@@ -79,7 +86,9 @@ export const useConnectWallet = (): [
     setConnecting(false)
   }, [])
 
-  return [{ wallet, connecting }, connect, disconnect]
+  const updateBalances = web3Onboard.state.actions.updateBalances
+
+  return [{ wallet, connecting }, connect, disconnect, updateBalances]
 }
 
 type SetChainOptions = {
@@ -131,4 +140,27 @@ export const useWallets = (): WalletState[] => {
   if (!web3Onboard) throw new Error(HOOK_ERROR_MESSAGE)
 
   return useAppState('wallets')
+}
+
+export const useNotifications = (): [
+  Notification[],
+  (updatedNotification: CustomNotification) => {
+    dismiss: () => void
+    update: UpdateNotification
+  },
+  (update: Partial<NotifyOptions>) => void
+] => {
+  if (!web3Onboard) throw new Error(HOOK_ERROR_MESSAGE)
+
+  const handleCustomNotifications = web3Onboard.state.actions.customNotification
+  const updateNotify = web3Onboard.state.actions.updateNotify
+
+  return [useAppState('notifications'), handleCustomNotifications, updateNotify]
+}
+
+
+export const useSetLocale = (): (locale: string) => void => {
+  if (!web3Onboard) throw new Error(HOOK_ERROR_MESSAGE)
+
+  return web3Onboard.state.actions.setLocale
 }
