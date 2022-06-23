@@ -143,9 +143,9 @@ const web3Onboard = init({
       console.log({ transaction })
       if (transaction.eventCode === 'txPool') {
         return {
-          // autoDismiss set to zero will persist the notification until the user excuses it
+          // autoDismiss set to `0` will persist the notification until the user excuses it
           autoDismiss: 0, 
-          // message: `Your transaction is pending, click <a href="https://rinkeby.etherscan.io/tx/${transaction.hash}" rel="noopener noreferrer" target="_blank">here</a> for more info.`,
+          // message: `Your transaction is pending, click <a href="https://rinkeby.etherscan.io/tx/${transaction.hash}">here</a> for more info.`,
           // or you could use onClick for when someone clicks on the notification itself
           onClick: () =>
             window.open(`https://rinkeby.etherscan.io/tx/${transaction.hash}`)
@@ -278,9 +278,9 @@ const [
     connecting // boolean indicating if connection is in progress
   },
   connect, // function to call to initiate user to connect wallet
-  disconnect, // function to call to with wallet<DisconnectOptions> to disconnect wallet
+  disconnect, // function to call with wallet<DisconnectOptions> to disconnect wallet
   updateBalances, // function to be called with an option array of wallet addresses connected through Onboard to update balance or empty/no params to update all connected wallets
-  setWalletModules // function to be called with an array of wallet modules to conditional allow connection of wallet types i.e. setWalletModules([ledger, trezor, injected])
+  setWalletModules // function to be called with an array of wallet modules to conditionally allow connection of wallet types i.e. setWalletModules([ledger, trezor, injected])
 ] = useConnectWallet()
 ```
 
@@ -366,10 +366,10 @@ interface UpdateNotification {
 }
 type NotifyOptions = {
   /**
-   * Defines whether whether to subscribe to transaction events or not
+   * Defines whether to subscribe to transaction events or not
    * default: true
    */
-  enabled: boolean
+  enabled?: boolean
   /**
    * Callback that receives all transaction events
    * Return a custom notification based on the event
@@ -381,7 +381,7 @@ type NotifyOptions = {
   ) => TransactionHandlerReturn
 
 const [
-  notifications, // the list of all notifications that updates when notifications are added, updated or removed
+  notifications, // the list of all notifications that update when notifications are added, updated or removed
   customNotification, // a function that takes a customNotification object and allows custom notifications to be shown to the user, returns an update and dismiss callback
   updateNotify // a function that takes a NotifyOptions object to allow updating of the properties
 ] = useNotifications()
