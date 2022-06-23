@@ -58,10 +58,6 @@
     pointer-events: auto;
   }
 
-  .z-indexed {
-    z-index: var(--account-center-z-index);
-  }
-
   .wallets-section {
     width: 100%;
     border-radius: var(--onboard-border-radius-3, var(--border-radius-3));
@@ -216,7 +212,7 @@
     opacity: 0
   }}
   on:click|stopPropagation={hideWalletRowMenu}
-  class="outer-container z-indexed"
+  class="outer-container"
 >
   <!-- wallets section -->
   <div class="wallets-section">
