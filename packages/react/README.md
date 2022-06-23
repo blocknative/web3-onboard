@@ -366,7 +366,7 @@ interface UpdateNotification {
 }
 type NotifyOptions = {
   /**
-   * Defines whether whether to subscribe to transaction events or not
+   * Defines whether to subscribe to transaction events or not
    * default: true
    */
   enabled: boolean
