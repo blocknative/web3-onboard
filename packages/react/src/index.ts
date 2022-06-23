@@ -161,10 +161,10 @@ export const useNotifications = (): [
 ] => {
   if (!web3Onboard) throw new Error(HOOK_ERROR_MESSAGE)
 
-  const handleCustomNotifications = web3Onboard.state.actions.customNotification
+  const customNotification = web3Onboard.state.actions.customNotification
   const updateNotify = web3Onboard.state.actions.updateNotify
 
-  return [useAppState('notifications'), handleCustomNotifications, updateNotify]
+  return [useAppState('notifications'), customNotification, updateNotify]
 }
 
 export const useSetLocale = (): ((locale: string) => void) => {

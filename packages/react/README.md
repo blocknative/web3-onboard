@@ -178,7 +178,7 @@ function App() {
   const [{ wallet, connecting }, connect, disconnect, updateBalances, setWalletModules] =
     useConnectWallet()
   const [{ chains, connectedChain, settingChain }, setChain] = useSetChain()
-  const [notifications, handleCustomNotifications, updateNotify] = useNotifications()
+  const [notifications, customNotification, updateNotify] = useNotifications()
   const connectedWallets = useWallets()
   const updateAccountCenter = useAccountCenter()
   const updateLocale = useSetLocale()
@@ -382,7 +382,7 @@ type NotifyOptions = {
 
 const [
   notifications, // the list of all notifications that updates when notifications are added, updated or removed
-  handleCustomNotifications, // a function that takes a customNotification object and allows custom notifications to be shown to the user, returns an update and dismiss callback
+  customNotification, // a function that takes a customNotification object and allows custom notifications to be shown to the user, returns an update and dismiss callback
   updateNotify // a function that takes a NotifyOptions object to allow updating of the properties
 ] = useNotifications()
 
@@ -396,7 +396,7 @@ useEffect(() => {
   className="bn-demo-button"
   onClick={() => {
     const { update } =
-      handleCustomNotifications({
+      customNotification({
         eventCode: 'dbUpdate',
         type: 'hint',
         message: 'Custom hint notification created by the dapp',
