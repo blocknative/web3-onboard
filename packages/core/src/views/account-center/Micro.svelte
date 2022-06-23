@@ -24,6 +24,10 @@
     pointer-events: auto;
   }
 
+  .z-indexed {
+    z-index: var(--account-center-z-index);
+  }
+
   .radius {
     border-radius: var(--onboard-border-radius-3, var(--border-radius-3));
   }
@@ -50,7 +54,10 @@
   }
 </style>
 
-<div class="minimized pointer radius" on:click|stopPropagation={maximize}>
+<div
+  class="minimized pointer radius z-indexed"
+  on:click|stopPropagation={maximize}
+>
   <div class="inner-box-wrapper">
     <!-- app and wallet icon badge -->
     <div class="drop-shadow">

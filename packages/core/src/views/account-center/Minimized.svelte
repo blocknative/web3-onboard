@@ -73,6 +73,10 @@
     padding: var(--onboard-spacing-5, var(--spacing-5));
   }
 
+  .z-indexed {
+    z-index: var(--account-center-z-index);
+  }
+
   .drop-shadow {
     filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.2));
   }
@@ -121,7 +125,7 @@
 <div
   in:fade={{ duration: 250 }}
   out:fade={{ duration: 100 }}
-  class="minimized pointer radius padding-5"
+  class="minimized pointer radius padding-5 z-indexed"
   on:click|stopPropagation={maximize}
 >
   <div class="flex items-center justify-between" style="padding: 0 4px;">
