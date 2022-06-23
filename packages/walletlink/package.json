@@ -20,7 +20,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.1.1",
+    "@web3-onboard/common": "^2.1.3-alpha.1",
     "walletlink": "^2.5.0"
   }
 }
