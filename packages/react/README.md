@@ -369,7 +369,7 @@ type NotifyOptions = {
    * Defines whether to subscribe to transaction events or not
    * default: true
    */
-  enabled: boolean
+  enabled?: boolean
   /**
    * Callback that receives all transaction events
    * Return a custom notification based on the event
