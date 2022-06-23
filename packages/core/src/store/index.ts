@@ -36,16 +36,6 @@ import {
   UPDATE_ALL_WALLETS
 } from './constants'
 
-import {
-  addChains,
-  setWalletModules,
-  updateAccountCenter,
-  updateNotify,
-  customNotification,
-  setLocale
-} from '../store/actions'
-import updateBalances from '../updateBalances'
-
 function reducer(state: AppState, action: Action): AppState {
   const { type, payload } = action
 
@@ -247,12 +237,5 @@ function get(): AppState {
 
 export const state = {
   select,
-  get,
-  actions: {
-    setLocale,
-    updateNotify,
-    customNotification,
-    updateBalances,
-    updateAccountCenter
-  }
+  get
 }
