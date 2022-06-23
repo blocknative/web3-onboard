@@ -145,7 +145,7 @@ const web3Onboard = init({
         return {
           // autoDismiss set to `0` will persist the notification until the user excuses it
           autoDismiss: 0, 
-          // message: `Your transaction is pending, click <a href="https://rinkeby.etherscan.io/tx/${transaction.hash}" rel="noopener noreferrer" target="_blank">here</a> for more info.`,
+          // message: `Your transaction is pending, click <a href="https://rinkeby.etherscan.io/tx/${transaction.hash}">here</a> for more info.`,
           // or you could use onClick for when someone clicks on the notification itself
           onClick: () =>
             window.open(`https://rinkeby.etherscan.io/tx/${transaction.hash}`)
