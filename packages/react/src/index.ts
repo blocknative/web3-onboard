@@ -8,17 +8,15 @@ import type {
   ConnectOptions,
   DisconnectOptions,
   WalletState,
-  ConnectedChain
-} from '@web3-onboard/core'
-import type { Chain, WalletInit } from '@web3-onboard/common'
-import type {
+  ConnectedChain,
   AccountCenter,
   AppState,
   CustomNotification,
   Notification,
   NotifyOptions,
   UpdateNotification
-} from '@web3-onboard/core/dist/types'
+} from '@web3-onboard/core'
+import type { Chain, WalletInit } from '@web3-onboard/common'
 
 export let web3Onboard: OnboardAPI | null = null
 

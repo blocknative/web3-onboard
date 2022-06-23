@@ -46,7 +46,13 @@ export type {
   ConnectOptions,
   DisconnectOptions,
   WalletState,
-  ConnectedChain
+  ConnectedChain,
+  AccountCenter,
+  AppState,
+  CustomNotification,
+  Notification,
+  NotifyOptions,
+  UpdateNotification
 } from './types'
 
 export type { EIP1193Provider } from '@web3-onboard/common'
