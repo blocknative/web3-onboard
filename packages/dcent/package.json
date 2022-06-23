@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/dcent",
-  "version": "2.0.2",
+  "version": "2.0.3-alpha.1",
   "description": "D'CENT module for web3-onboard",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
