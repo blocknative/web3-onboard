@@ -381,7 +381,7 @@ type NotifyOptions = {
   ) => TransactionHandlerReturn
 
 const [
-  notifications, // the list of all notifications that updates when notifications are added, updated or removed
+  notifications, // the list of all notifications that update when notifications are added, updated or removed
   customNotification, // a function that takes a customNotification object and allows custom notifications to be shown to the user, returns an update and dismiss callback
   updateNotify // a function that takes a NotifyOptions object to allow updating of the properties
 ] = useNotifications()
