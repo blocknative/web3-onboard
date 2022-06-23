@@ -280,7 +280,7 @@ const [
   connect, // function to call to initiate user to connect wallet
   disconnect, // function to call with wallet<DisconnectOptions> to disconnect wallet
   updateBalances, // function to be called with an option array of wallet addresses connected through Onboard to update balance or empty/no params to update all connected wallets
-  setWalletModules // function to be called with an array of wallet modules to conditional allow connection of wallet types i.e. setWalletModules([ledger, trezor, injected])
+  setWalletModules // function to be called with an array of wallet modules to conditionally allow connection of wallet types i.e. setWalletModules([ledger, trezor, injected])
 ] = useConnectWallet()
 ```
 
