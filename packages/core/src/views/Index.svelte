@@ -258,6 +258,10 @@
     touch-action: none;
   }
 
+  .z-indexed {
+    z-index: var(--account-center-z-index);
+  }
+
   @media all and (min-width: 428px) {
     .container {
       max-width: 348px;
@@ -279,7 +283,7 @@
 
 {#if ($notify$.enabled || $accountCenter$.enabled) && $wallets$.length}
   <div
-    class="container flex flex-column fixed"
+    class="container flex flex-column fixed z-indexed"
     style="{accountCenterPositions[$accountCenter$.position]}; {device.type ===
       'mobile' && $accountCenter$.position.includes('top')
       ? 'padding-bottom: 0;'
