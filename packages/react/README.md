@@ -217,6 +217,19 @@ function App() {
           )}
           <button onClick={() => disconnect(wallet)}>Disconnect Wallet</button>
         </div>
+        <button
+          className="bn-demo-button"
+          onClick={() => {
+            // Default position of AccountCenter it top right
+            updateAccountCenter({
+                position: 'bottomLeft',
+                enabled: true,
+                minimal: true
+            })
+          }}
+        >
+          Account Center to Bottom Left
+        </button>
       )}
 
       {connectedWallets.map(({ label, accounts }) => {
