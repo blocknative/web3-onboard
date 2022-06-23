@@ -129,7 +129,7 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                   // Check if connection is already established
                   if (!this.connector.connected) {
                     // create new session
-                    this.connector.createSession().then(() => {
+                    this.connector.createSession({chainId: parseInt(chains[0].id, 16)}).then(() => {
                       QRCodeModal.open(
                         this.connector.uri,
                         () =>
