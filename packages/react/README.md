@@ -10,6 +10,7 @@ A collection of React hooks for implementing web3-onboard in to a React project
 
 ```javascript
 import React from 'react'
+import { ethers } from 'ethers'
 import {
   init,
   useConnectWallet,
@@ -26,6 +27,9 @@ import fortmaticModule from '@web3-onboard/fortmatic'
 import torusModule from '@web3-onboard/torus'
 import keepkeyModule from '@web3-onboard/keepkey'
 import dcentModule from '@web3-onboard/dcent'
+
+// Sign up to get your free API key at https://explorer.blocknative.com/?signup=true
+const dappId = '1730eff0-9d50-4382-a3fe-89f0d34a2070'
 
 const injected = injectedModule()
 const coinbase = coinbaseModule()
@@ -52,6 +56,18 @@ const trezor = trezorModule(trezorOptions)
 
 const dcent = dcentModule()
 
+const magic = magicModule({
+  // Example api key, may need to be updated when max hits reached
+  // Get one to test with for free from https://magic.link/
+  apiKey: 'pk_live_02207D744E81C2BA',
+  userEmail: localStorage.getItem('magicUserEmail')
+})
+
+const web3auth = web3authModule({
+  clientId:
+    'DJuUOKvmNnlzy6ruVgeWYWIMKLRyYtjYa9Y10VCeJzWZcygDlrYLyXsBQjpJ2hxlBO9dnl8t9GmAC2qOP5vnIGo'
+})
+
 const web3Onboard = init({
   wallets: [
     injected,
@@ -60,7 +76,8 @@ const web3Onboard = init({
     trezor,
     walletConnect,
     keepkey,
-    fortmatic,
+    web3auth,
+    magic,
     portis,
     torus,
     dcent
@@ -119,6 +136,23 @@ const web3Onboard = init({
       minimal: true
     }
   },
+  apiKey: dappId,
+  notify: {
+    enabled: true,
+    transactionHandler: transaction => {
+      console.log({ transaction })
+      if (transaction.eventCode === 'txPool') {
+        return {
+          // autoDismiss set to `0` will persist the notification until the user excuses it
+          autoDismiss: 0, 
+          // message: `Your transaction is pending, click <a href="https://rinkeby.etherscan.io/tx/${transaction.hash}">here</a> for more info.`,
+          // or you could use onClick for when someone clicks on the notification itself
+          onClick: () =>
+            window.open(`https://rinkeby.etherscan.io/tx/${transaction.hash}`)
+        }
+      }
+    }
+  }
   i18n: {
     en: {
       connect: {
@@ -141,9 +175,23 @@ const web3Onboard = init({
 })
 
 function App() {
-  const [{ wallet, connecting }, connect, disconnect] = useConnectWallet()
+  const [{ wallet, connecting }, connect, disconnect, updateBalances, setWalletModules] =
+    useConnectWallet()
   const [{ chains, connectedChain, settingChain }, setChain] = useSetChain()
+  const [notifications, customNotification, updateNotify] = useNotifications()
   const connectedWallets = useWallets()
+  const updateAccountCenter = useAccountCenter()
+  const updateLocale = useSetLocale()
+
+  let provider
+
+  useEffect(() => {
+    if (!wallet?.provider) {
+      provider = null
+    } else {
+      provider = new ethers.providers.Web3Provider(wallet.provider, 'any')
+    }
+  }, [wallet]
 
   return (
     <div>
@@ -169,6 +217,19 @@ function App() {
           )}
           <button onClick={() => disconnect(wallet)}>Disconnect Wallet</button>
         </div>
+        <button
+          className="bn-demo-button"
+          onClick={() => {
+            // Default position of AccountCenter it top right
+            updateAccountCenter({
+                position: 'bottomLeft',
+                enabled: true,
+                minimal: true
+            })
+          }}
+        >
+          Account Center to Bottom Left
+        </button>
       )}
 
       {connectedWallets.map(({ label, accounts }) => {
@@ -200,7 +261,9 @@ import { useConnectWallet } from '@web3-onboard/react'
 type UseConnectWallet = (): [
   { wallet: WalletState | null; connecting: boolean },
   (options: ConnectOptions) => Promise<void>,
-  (wallet: DisconnectOptions) => Promise<void>
+  (wallet: DisconnectOptions) => Promise<void>,
+  (addresses?: string[]) => Promise<void>,
+  (wallets: WalletInit[]) => void
 ]
 
 type ConnectOptions = {
@@ -220,13 +283,17 @@ type WalletState = {
   instance?: unknown
 }
 
+type WalletInit = (helpers: WalletHelpers) => WalletModule | WalletModule[] | null;
+
 const [
   {
     wallet, // the wallet that has been connected or null if not yet connected
     connecting // boolean indicating if connection is in progress
   },
   connect, // function to call to initiate user to connect wallet
-  disconnect // function to call to with wallet<DisconnectOptions> to disconnect wallet
+  disconnect, // function to call with wallet<DisconnectOptions> to disconnect wallet
+  updateBalances, // function to be called with an optional array of wallet addresses connected through Onboard to update balance or empty/no params to update all connected wallets
+  setWalletModules // function to be called with an array of wallet modules to conditionally allow connection of wallet types i.e. setWalletModules([ledger, trezor, injected])
 ] = useConnectWallet()
 ```
 
@@ -264,6 +331,108 @@ const [
 ] = useSetChain()
 ```
 
+## `useNotifications`
+
+This hook allows the dev to access all notifications if enabled, send custom notifications and update notify <enable/disable & update transactionHandler function>
+**note** requires an API key be added to the initialization, enabled by default if API key exists
+
+```typescript
+import { useNotifications } from '@web3-onboard/react'
+
+type UseNotifications = (): [
+  Notification[],
+  (updatedNotification: CustomNotification) => {
+    dismiss: () => void
+    update: UpdateNotification
+  },
+  (update: Partial<NotifyOptions>) => void
+]
+
+type Notification = {
+  id: string
+  key: string
+  type: NotificationType
+  network: Network
+  startTime?: number
+  eventCode: string
+  message: string
+  autoDismiss: number
+  link?: string
+  onClick?: (event: Event) => void
+}
+type TransactionHandlerReturn =
+  | CustomNotification
+  | boolean
+  | void
+type CustomNotification = Partial<
+  Omit<Notification, 'startTime' | 'network' | 'id' | 'key'>
+>
+type CustomNotificationUpdate = Partial<
+  Omit<Notification, 'startTime' | 'network'>
+>
+type NotificationType = 'pending' | 'success' | 'error' | 'hint'
+interface UpdateNotification {
+  (notificationObject: CustomNotification): {
+    dismiss: () => void
+    update: UpdateNotification
+  }
+}
+type NotifyOptions = {
+  /**
+   * Defines whether to subscribe to transaction events or not
+   * default: true
+   */
+  enabled?: boolean
+  /**
+   * Callback that receives all transaction events
+   * Return a custom notification based on the event
+   * Or return false to disable notification for this event
+   * Or return undefined for a default notification
+   */
+  transactionHandler: (
+    event: EthereumTransactionData
+  ) => TransactionHandlerReturn
+
+const [
+  notifications, // the list of all notifications that update when notifications are added, updated or removed
+  customNotification, // a function that takes a customNotification object and allows custom notifications to be shown to the user, returns an update and dismiss callback
+  updateNotify // a function that takes a NotifyOptions object to allow updating of the properties
+] = useNotifications()
+
+// View notifications as they come in if you would like to handle them independent of the notification display
+useEffect(() => {
+  console.log(notifications)
+}, [notifications])
+
+// Custom notification example
+<button
+  className="bn-demo-button"
+  onClick={() => {
+    const { update } =
+      customNotification({
+        eventCode: 'dbUpdate',
+        type: 'hint',
+        message: 'Custom hint notification created by the dapp',
+        onClick: () =>
+          window.open(`https://www.blocknative.com`)
+      })
+    // Update your notification example below
+    setTimeout(
+      () =>
+        update({
+          eventCode: 'dbUpdateSuccess',
+          message: 'Hint notification reason resolved!',
+          type: 'success',
+          autoDismiss: 5000
+        }),
+      4000
+    )
+  }}
+>
+  Custom Hint Notification
+</button>
+```
+
 ## `useWallets`
 
 This hook allows you to track the state of all the currently connected wallets.
@@ -274,4 +443,45 @@ import { useWallets } from '@web3-onboard/react'
 type UseWallets = (): WalletState[]
 
 const connectedWallets = useWallets()
+```
+
+## `useAccountCenter`
+
+This hook allows you to track and update the state of the AccountCenter
+
+```typescript
+import { useAccountCenter } from '@web3-onboard/react'
+
+type UseAccountCenter = (): ((
+  update: AccountCenter | Partial<AccountCenter>
+) => void)
+
+type AccountCenterPosition =
+  | 'topRight'
+  | 'bottomRight'
+  | 'bottomLeft'
+  | 'topLeft'
+
+type AccountCenter = {
+  enabled: boolean
+  position?: AccountCenterPosition
+  expanded?: boolean
+  minimal?: boolean
+}
+
+const updateAccountCenter = useAccountCenter()
+```
+
+## `useSetLocale`
+
+This hook allows you to set the locale of your application to allow language updates associated with the i18n config
+
+```typescript
+import { useSetLocale } from '@web3-onboard/react'
+
+type useSetLocale = (): ((locale: string) => void)
+
+const updateLocale = useSetLocale()
+
+updateLocale('es')
 ```
