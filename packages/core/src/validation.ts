@@ -17,7 +17,8 @@ import type {
   NotifyOptions,
   Notification,
   CustomNotification,
-  CustomNotificationUpdate
+  CustomNotificationUpdate,
+  Notify
 } from './types'
 
 const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
@@ -128,7 +129,7 @@ const walletInit = Joi.array().items(Joi.function()).required()
 
 const locale = Joi.string()
 
-const accountCenterPosition = Joi.string().valid(
+const commonPositions = Joi.string().valid(
   'topRight',
   'bottomRight',
   'bottomLeft',
@@ -137,7 +138,21 @@ const accountCenterPosition = Joi.string().valid(
 
 const notify = Joi.object({
   transactionHandler: Joi.function(),
-  enabled: Joi.boolean()
+  enabled: Joi.boolean(),
+  position: commonPositions
+})
+
+const notifyOptions = Joi.object({
+  desktop: Joi.object({
+    transactionHandler: Joi.function(),
+    enabled: Joi.boolean(),
+    position: commonPositions
+  }),
+  mobile: Joi.object({
+    transactionHandler: Joi.function(),
+    enabled: Joi.boolean(),
+    position: commonPositions
+  })
 })
 
 const initOptions = Joi.object({
@@ -150,15 +165,15 @@ const initOptions = Joi.object({
     desktop: Joi.object({
       enabled: Joi.boolean(),
       minimal: Joi.boolean(),
-      position: accountCenterPosition
+      position: commonPositions
     }),
     mobile: Joi.object({
       enabled: Joi.boolean(),
       minimal: Joi.boolean(),
-      position: accountCenterPosition
+      position: commonPositions
     })
   }),
-  notify
+  notify: notifyOptions
 })
 
 const connectOptions = Joi.object({
@@ -183,7 +198,7 @@ const setChainOptions = Joi.object({
 
 const accountCenter = Joi.object({
   enabled: Joi.boolean(),
-  position: accountCenterPosition,
+  position: commonPositions,
   expanded: Joi.boolean(),
   minimal: Joi.boolean()
 })
@@ -287,10 +302,14 @@ export function validateLocale(data: string): ValidateReturn {
   return validate(locale, data)
 }
 
+export function validateNotify(data: Partial<Notify>): ValidateReturn {
+  return validate(notify, data)
+}
+
 export function validateNotifyOptions(
   data: Partial<NotifyOptions>
 ): ValidateReturn {
-  return validate(notify, data)
+  return validate(notifyOptions, data)
 }
 
 export function validateTransactionHandlerReturn(

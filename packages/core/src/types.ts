@@ -63,7 +63,7 @@ export interface OnboardAPI {
 interface ExposedActions {
   setWalletModules: (wallets: WalletInit[]) => void
   setLocale: (locale: string) => void
-  updateNotify: (update: Partial<NotifyOptions>) => void
+  updateNotify: (update: Partial<Notify>) => void
   customNotification: (
     updatedNotification: CustomNotification
   ) => {
@@ -141,7 +141,7 @@ export interface AppState {
   wallets: WalletState[]
   accountCenter: AccountCenter
   locale: Locale
-  notify: NotifyOptions
+  notify: Notify
   notifications: Notification[]
 }
 
@@ -156,11 +156,15 @@ export type Locale = string
 export type i18nOptions = Record<Locale, i18n>
 export type i18n = typeof en
 
-export type AccountCenterPosition =
-  | 'topRight'
-  | 'bottomRight'
-  | 'bottomLeft'
-  | 'topLeft'
+export type CommonPositions =
+| 'topRight'
+| 'bottomRight'
+| 'bottomLeft'
+| 'topLeft'
+
+export type AccountCenterPosition = CommonPositions
+
+export type NotificationPosition = CommonPositions
 
 export type AccountCenter = {
   enabled: boolean
@@ -174,7 +178,7 @@ export type AccountCenterOptions = {
   mobile: Omit<AccountCenter, 'expanded'>
 }
 
-export type NotifyOptions = {
+export type Notify = {
   /**
    * Defines whether whether to subscribe to transaction events or not
    * default: true
@@ -189,6 +193,17 @@ export type NotifyOptions = {
   transactionHandler: (
     event: EthereumTransactionData
   ) => TransactionHandlerReturn
+  /**
+   * Position of notifications that defaults to the same position as the 
+   * Account Center (if enabled) of the top right if AC is disabled
+   * and notifications are enabled (enabled by default with API key)
+   */
+  position?: NotificationPosition
+}
+
+export type NotifyOptions = {
+  desktop: Notify
+  mobile: Notify
 }
 
 export type Notification = {
@@ -279,7 +294,7 @@ export type SetLocaleAction = {
 
 export type UpdateNotifyAction = {
   type: 'update_notify'
-  payload: Partial<NotifyOptions>
+  payload: Partial<Notify>
 }
 
 export type AddNotificationAction = {

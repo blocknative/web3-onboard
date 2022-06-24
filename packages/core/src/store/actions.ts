@@ -24,7 +24,8 @@ import type {
   UpdateAllWalletsAction,
   CustomNotification,
   UpdateNotification,
-  CustomNotificationUpdate
+  CustomNotificationUpdate,
+  Notify
 } from '../types'
 
 import {
@@ -37,7 +38,8 @@ import {
   validateString,
   validateWallet,
   validateWalletInit,
-  validateUpdateBalances
+  validateUpdateBalances,
+  validateNotify
 } from '../validation'
 
 import {
@@ -156,8 +158,8 @@ export function updateAccountCenter(
   dispatch(action as UpdateAccountCenterAction)
 }
 
-export function updateNotify(update: Partial<NotifyOptions>): void {
-  const error = validateNotifyOptions(update)
+export function updateNotify(update: Partial<Notify>): void {
+  const error = validateNotify(update)
 
   if (error) {
     throw error

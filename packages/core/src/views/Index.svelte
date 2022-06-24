@@ -291,8 +291,8 @@
       ? 'padding-top:0;'
       : ''} "
   >
-    {#if $notify$.enabled && $accountCenter$.position.includes('bottom')}
-      <Notify position={$accountCenter$.position} />
+    {#if $notify$.enabled && $notify$.position.includes('bottom') && (($accountCenter$ && $accountCenter$.position === $notify$.position || !$accountCenter$))}
+      <Notify position={$notify$.position} />
     {/if}
     <div
       style={!$accountCenter$.expanded &&
@@ -310,8 +310,8 @@
       {/if}
     </div>
 
-    {#if $notify$.enabled && $accountCenter$.position.includes('top')}
-      <Notify position={$accountCenter$.position} />
+    {#if $notify$.enabled && $notify$.position.includes('top') && (($accountCenter$ && $accountCenter$.position === $notify$.position || !$accountCenter$))}
+      <Notify position={$notify$.position} />
     {/if}
   </div>
 {/if}
