@@ -173,7 +173,7 @@ const initOptions = Joi.object({
       position: commonPositions
     })
   }),
-  notify: notifyOptions
+  notify: [notifyOptions, notify]
 })
 
 const connectOptions = Joi.object({

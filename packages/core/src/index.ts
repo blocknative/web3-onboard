@@ -139,7 +139,6 @@ function init(options: InitOptions): OnboardAPI {
           ...notify.desktop
         }
       }
-      console.log(notifyUpdate)
       updateNotify(notifyUpdate)
     } else {
       const error = validateNotify(notify as Notify)
