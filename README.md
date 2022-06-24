@@ -14,9 +14,11 @@
 
 Install the core Onboard library, the injected wallets module and optionally ethers js to support browser extension and mobile wallets:
 
-`npm i @web3-onboard/core @web3-onboard/injected-wallets ethers`
+**NPM**
+`npm i @web3-onboard/vue @web3-onboard/injected-wallets ethers`
 
-- [@web3-onboard/core Official NPM Documentation](https://www.npmjs.com/package/@web3-onboard/core)
+**Yarn**
+`yarn add @web3-onboard/vue @web3-onboard/injected-wallets ethers`
 
 Then initialize in your app:
 
@@ -53,7 +55,7 @@ const ethersProvider = new ethers.providers.Web3Provider(
 
 const signer = ethersProvider.getSigner()
 
-// send a transaction with an ethers provider
+// send a transaction with the ethers provider
 const txn = await signer.sendTransaction({
   to: '0x',
   value: 100000000000000
