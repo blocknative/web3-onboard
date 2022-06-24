@@ -18,7 +18,7 @@
     .select('notify')
     .pipe(startWith(state.get().notify), shareReplay(1))
 
-  const accountCenterPositions = {
+  const positioningDefaults = {
     topLeft: 'top: 0; left: 0;',
     topRight: 'top: 0; right: 0;',
     bottomRight: 'bottom: 0; right: 0;',
@@ -281,19 +281,46 @@
   <SwitchChain />
 {/if}
 
-{#if ($notify$.enabled || $accountCenter$.enabled) && $wallets$.length}
+{#if $notify$.enabled && $accountCenter$.enabled && $wallets$.length}
   <div
     class="container flex flex-column fixed z-indexed"
-    style="{accountCenterPositions[$accountCenter$.position]}; {device.type ===
+    style="{positioningDefaults[$accountCenter$.position]}; {device.type ===
       'mobile' && $accountCenter$.position.includes('top')
       ? 'padding-bottom: 0;'
       : device.type === 'mobile' && $accountCenter$.position.includes('bottom')
       ? 'padding-top:0;'
       : ''} "
   >
-    {#if $notify$.enabled && $notify$.position.includes('bottom') && (($accountCenter$ && $accountCenter$.position === $notify$.position || !$accountCenter$))}
+    {#if $notify$.position.includes('bottom') && $accountCenter$.position === $notify$.position}
       <Notify position={$notify$.position} />
     {/if}
+    <div
+      style={!$accountCenter$.expanded &&
+      $accountCenter$.minimal &&
+      $accountCenter$.position.includes('Right')
+        ? 'margin-left: auto'
+        : !$accountCenter$.expanded &&
+          $accountCenter$.minimal &&
+          $accountCenter$.position.includes('Left')
+        ? 'margin-right: auto'
+        : ''}
+    >
+      <AccountCenter settings={$accountCenter$} />
+    </div>
+    {#if $notify$.position.includes('top') && $accountCenter$.position === $notify$.position}
+      <Notify position={$notify$.position} />
+    {/if}
+  </div>
+{:else if $accountCenter$.enabled && (!$notify$.enabled || $accountCenter$.position !== $notify$.position) && $wallets$.length}
+  <div
+    class="container flex flex-column fixed z-indexed"
+    style="{positioningDefaults[$accountCenter$.position]}; {device.type ===
+      'mobile' && $accountCenter$.position.includes('top')
+      ? 'padding-bottom: 0;'
+      : device.type === 'mobile' && $accountCenter$.position.includes('bottom')
+      ? 'padding-top:0;'
+      : ''} "
+  >
     <div
       style={!$accountCenter$.expanded &&
       $accountCenter$.minimal &&
@@ -309,9 +336,17 @@
         <AccountCenter settings={$accountCenter$} />
       {/if}
     </div>
-
-    {#if $notify$.enabled && $notify$.position.includes('top') && (($accountCenter$ && $accountCenter$.position === $notify$.position || !$accountCenter$))}
-      <Notify position={$notify$.position} />
-    {/if}
+  </div>
+{:else if $notify$.enabled && (!$accountCenter$.enabled || $accountCenter$.position !== $notify$.position) && $wallets$.length}
+  <div
+    class="container flex flex-column fixed z-indexed"
+    style="{positioningDefaults[$notify$.position]}; {device.type ===
+      'mobile' && $notify$.position.includes('top')
+      ? 'padding-bottom: 0;'
+      : device.type === 'mobile' && $notify$.position.includes('bottom')
+      ? 'padding-top:0;'
+      : ''} "
+  >
+    <Notify position={$notify$.position} />
   </div>
 {/if}
