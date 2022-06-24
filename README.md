@@ -15,10 +15,10 @@
 Install the core Onboard library, the injected wallets module and optionally ethers js to support browser extension and mobile wallets:
 
 **NPM**
-`npm i @web3-onboard/vue @web3-onboard/injected-wallets ethers`
+`npm i @web3-onboard/core @web3-onboard/injected-wallets ethers`
 
 **Yarn**
-`yarn add @web3-onboard/vue @web3-onboard/injected-wallets ethers`
+`yarn add @web3-onboard/core @web3-onboard/injected-wallets ethers`
 
 Then initialize in your app:
 
