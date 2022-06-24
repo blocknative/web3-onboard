@@ -14,7 +14,7 @@ type WalletConnectOptions = {
   qrcodeModalOptions?: {
     mobileLinks: string[] // set the order and list of mobile linking wallets
   }
-  connectFirstChainId?: boolean
+  connectFirstChainId?: boolean // if true, connects to the first network chain provided
 }
 ```
 
