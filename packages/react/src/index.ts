@@ -13,7 +13,7 @@ import type {
   AppState,
   CustomNotification,
   Notification,
-  NotifyOptions,
+  Notify,
   UpdateNotification
 } from '@web3-onboard/core'
 import type { Chain, WalletInit } from '@web3-onboard/common'
@@ -155,7 +155,7 @@ export const useNotifications = (): [
     dismiss: () => void
     update: UpdateNotification
   },
-  (update: Partial<NotifyOptions>) => void
+  (update: Partial<Notify>) => void
 ] => {
   if (!web3Onboard) throw new Error(HOOK_ERROR_MESSAGE)
 

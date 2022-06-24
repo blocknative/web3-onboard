@@ -345,7 +345,7 @@ type UseNotifications = (): [
     dismiss: () => void
     update: UpdateNotification
   },
-  (update: Partial<NotifyOptions>) => void
+  (update: Partial<Notify>) => void
 ]
 
 type Notification = {
@@ -377,7 +377,7 @@ interface UpdateNotification {
     update: UpdateNotification
   }
 }
-type NotifyOptions = {
+type Notify = {
   /**
    * Defines whether to subscribe to transaction events or not
    * default: true
@@ -396,7 +396,7 @@ type NotifyOptions = {
 const [
   notifications, // the list of all notifications that update when notifications are added, updated or removed
   customNotification, // a function that takes a customNotification object and allows custom notifications to be shown to the user, returns an update and dismiss callback
-  updateNotify // a function that takes a NotifyOptions object to allow updating of the properties
+  updateNotify // a function that takes a Notify object to allow updating of the properties
 ] = useNotifications()
 
 // View notifications as they come in if you would like to handle them independent of the notification display

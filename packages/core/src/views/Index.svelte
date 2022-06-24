@@ -17,7 +17,6 @@
   const notify$ = state
     .select('notify')
     .pipe(startWith(state.get().notify), shareReplay(1))
-
   const positioningDefaults = {
     topLeft: 'top: 0; left: 0;',
     topRight: 'top: 0; right: 0;',
@@ -311,7 +310,8 @@
       <Notify position={$notify$.position} />
     {/if}
   </div>
-{:else if $accountCenter$.enabled && (!$notify$.enabled || $accountCenter$.position !== $notify$.position) && $wallets$.length}
+{/if}
+{#if $accountCenter$.enabled && (!$notify$.enabled || $accountCenter$.position !== $notify$.position) && $wallets$.length}
   <div
     class="container flex flex-column fixed z-indexed"
     style="{positioningDefaults[$accountCenter$.position]}; {device.type ===
@@ -337,7 +337,8 @@
       {/if}
     </div>
   </div>
-{:else if $notify$.enabled && (!$accountCenter$.enabled || $accountCenter$.position !== $notify$.position) && $wallets$.length}
+{/if}
+{#if $notify$.enabled && (!$accountCenter$.enabled || $accountCenter$.position !== $notify$.position) && $wallets$.length}
   <div
     class="container flex flex-column fixed z-indexed"
     style="{positioningDefaults[$notify$.position]}; {device.type ===

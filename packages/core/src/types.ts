@@ -46,7 +46,7 @@ export interface InitOptions {
   /**
    * Transaction notification options
    */
-  notify?: Partial<NotifyOptions>
+  notify?: Partial<NotifyOptions> | Partial<Notify>
 }
 
 export interface OnboardAPI {
