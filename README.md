@@ -47,22 +47,24 @@ const wallets = await onboard.connectWallet()
 
 console.log(wallets)
 
-// create an ethers provider with the last connected wallet provider
-const ethersProvider = new ethers.providers.Web3Provider(
-  wallets[0].provider,
-  'any'
-)
+if (wallets[0]) {
+  // create an ethers provider with the last connected wallet provider
+  const ethersProvider = new ethers.providers.Web3Provider(
+    wallets[0].provider,
+    'any'
+  )
 
-const signer = ethersProvider.getSigner()
+  const signer = ethersProvider.getSigner()
 
-// send a transaction with the ethers provider
-const txn = await signer.sendTransaction({
-  to: '0x',
-  value: 100000000000000
-})
+  // send a transaction with the ethers provider
+  const txn = await signer.sendTransaction({
+    to: '0x',
+    value: 100000000000000
+  })
 
-const receipt = await txn.wait()
-console.log(receipt)
+  const receipt = await txn.wait()
+  console.log(receipt)
+}
 ```
 
 ## Documentation
