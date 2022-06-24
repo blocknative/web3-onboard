@@ -144,6 +144,7 @@ export type AccountCenterPosition =
 export type AccountCenter = {
   enabled: boolean
   position?: AccountCenterPosition
+  containerElement?: string
   expanded?: boolean
   minimal?: boolean
 }

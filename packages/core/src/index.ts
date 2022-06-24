@@ -237,7 +237,13 @@ function mountApp() {
       </style>
     `
 
-  document.body.appendChild(onboard)
+  const containerElementQuery = state.get().accountCenter.containerElement || 'body'
+  const containerElement = document.querySelector(containerElementQuery)
+  if (!containerElement) {
+    throw new Error(`Element with query ${state.get().accountCenter} does not exist.`)
+  }
+
+  containerElement.appendChild(onboard)
 
   const app = new App({
     target
