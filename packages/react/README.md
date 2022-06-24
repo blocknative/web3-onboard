@@ -2,188 +2,63 @@
 
 A collection of React hooks for implementing web3-onboard in to a React project
 
-## Install
+## Quickstart with Injected Wallets and Ethers Provider
 
-`npm i @web3-onboard/react`
+### Install Modules
 
-## Example Usage
+**NPM**
+`npm i @web3-onboard/react @web3-onboard/injected-wallets ethers`
+
+**Yarn**
+`yarn add @web3-onboard/react @web3-onboard/injected-wallets ethers`
+
+### Add Code
 
 ```javascript
 import React from 'react'
-import {
-  init,
-  useConnectWallet,
-  useSetChain,
-  useWallets
-} from '@web3-onboard/react'
+import { init, useConnectWallet } from '@web3-onboard/react'
 import injectedModule from '@web3-onboard/injected-wallets'
-import coinbaseModule from '@web3-onboard/coinbase'
-import trezorModule from '@web3-onboard/trezor'
-import ledgerModule from '@web3-onboard/ledger'
-import walletConnectModule from '@web3-onboard/walletconnect'
-import portisModule from '@web3-onboard/portis'
-import fortmaticModule from '@web3-onboard/fortmatic'
-import torusModule from '@web3-onboard/torus'
-import keepkeyModule from '@web3-onboard/keepkey'
-import dcentModule from '@web3-onboard/dcent'
+import { ethers } from 'ethers'
 
 const injected = injectedModule()
-const coinbase = coinbaseModule()
-const walletConnect = walletConnectModule()
 
-const portis = portisModule({
-  apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
-})
+const infuraKey = '<INFURA_KEY>'
+const rpcUrl = `https://mainnet.infura.io/v3/${infuraKey}`
 
-const fortmatic = fortmaticModule({
-  apiKey: 'pk_test_886ADCAB855632AA'
-})
-
-const torus = torusModule()
-const ledger = ledgerModule()
-const keepkey = keepkeyModule()
-
-const trezorOptions = {
-  email: 'test@test.com',
-  appUrl: 'https://www.blocknative.com'
-}
-
-const trezor = trezorModule(trezorOptions)
-
-const dcent = dcentModule()
-
-const web3Onboard = init({
-  wallets: [
-    injected,
-    coinbase,
-    ledger,
-    trezor,
-    walletConnect,
-    keepkey,
-    fortmatic,
-    portis,
-    torus,
-    dcent
-  ],
+// initialize Onboard
+init({
+  wallets: [injected],
   chains: [
     {
       id: '0x1',
       token: 'ETH',
       label: 'Ethereum Mainnet',
-      rpcUrl: 'https://mainnet.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
-    },
-    {
-      id: '0x3',
-      token: 'tROP',
-      label: 'Ethereum Ropsten Testnet',
-      rpcUrl: 'https://ropsten.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
-    },
-    {
-      id: '0x4',
-      token: 'rETH',
-      label: 'Ethereum Rinkeby Testnet',
-      rpcUrl: 'https://rinkeby.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
-    },
-    {
-      id: '0x89',
-      token: 'MATIC',
-      label: 'Matic Mainnet',
-      rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+      rpcUrl
     }
-  ],
-  appMetadata: {
-    name: 'Blocknative',
-    icon: '<svg><svg/>',
-    description: 'Demo app for Onboard V2',
-    recommendedInjectedWallets: [
-      { name: 'MetaMask', url: 'https://metamask.io' },
-      { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
-    ]
-  },
-  apiKey: 'xxx387fb-bxx1-4xxc-a0x3-9d37e426xxxx'
-  notify: {
-    enabled: true,
-    transactionHandler: transaction => {
-      console.log({ transaction })
-    }
-  },
-  accountCenter: {
-    desktop: {
-      position: 'topRight',
-      enabled: true,
-      minimal: true
-    },
-    mobile: {
-      position: 'topRight',
-      enabled: true,
-      minimal: true
-    }
-  },
-  i18n: {
-    en: {
-      connect: {
-        selectingWallet: {
-          header: 'custom text header'
-        }
-      },
-      notify: {
-        transaction: {
-          txStuck: 'custom text for this notification event'
-        }
-      }
-    },
-    es: {
-      transaction: {
-        txRequest: 'Su transacción está esperando que confirme'
-      }
-    }
-  }
+  ]
 })
 
 function App() {
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet()
-  const [{ chains, connectedChain, settingChain }, setChain] = useSetChain()
-  const connectedWallets = useWallets()
+
+  // create an ethers provider
+  let ethersProvider
+
+  if (wallet) {
+    ethersProvider = new ethers.providers.Web3Provider(wallet.provider, 'any')
+  }
 
   return (
     <div>
-      <button onClick={() => connect()}>
-        {connecting ? 'connecting' : 'connect'}
+      <button
+        disabled={connecting}
+        onClick={() => (wallet ? disconnect() : connect())}
+      >
+        {connecting ? 'connecting' : wallet ? 'disconnect' : 'connect'}
       </button>
-      {wallet && (
-        <div>
-          <label>Switch Chain</label>
-          {settingChain ? (
-            <span>Switching chain...</span>
-          ) : (
-            <select
-              onChange={({ target: { value } }) =>
-                console.log('onChange called') || setChain({ chainId: value })
-              }
-              value={connectedChain.id}
-            >
-              {chains.map(({ id, label }) => {
-                return <option value={id}>{label}</option>
-              })}
-            </select>
-          )}
-          <button onClick={() => disconnect(wallet)}>Disconnect Wallet</button>
-        </div>
-      )}
-
-      {connectedWallets.map(({ label, accounts }) => {
-        return (
-          <div>
-            <div>{label}</div>
-            <div>Accounts: {JSON.stringify(accounts, null, 2)}</div>
-          </div>
-        )
-      })}
     </div>
   )
 }
-
-export default App
 ```
 
 ## `init`

@@ -12,9 +12,9 @@
 
 ## Quickstart
 
-Install the core Onboard library and the injected wallets module to support browser extension and mobile wallets:
+Install the core Onboard library, the injected wallets module and optionally ethers js to support browser extension and mobile wallets:
 
-`npm i @web3-onboard/core @web3-onboard/injected-wallets`
+`npm i @web3-onboard/core @web3-onboard/injected-wallets ethers`
 
 - [@web3-onboard/core Official NPM Documentation](https://www.npmjs.com/package/@web3-onboard/core)
 
@@ -23,6 +23,7 @@ Then initialize in your app:
 ```javascript
 import Onboard from '@web3-onboard/core'
 import injectedModule from '@web3-onboard/injected-wallets'
+import { ethers } from 'ethers'
 
 const MAINNET_RPC_URL = 'https://mainnet.infura.io/v3/<INFURA_KEY>'
 
@@ -37,17 +38,29 @@ const onboard = Onboard({
       label: 'Ethereum Mainnet',
       rpcUrl: MAINNET_RPC_URL
     }
-  ],
-  appMetadata: {
-    name: 'My App',
-    icon: '<SVG_ICON_STRING>',
-    description: 'My app using Onboard'
-  }
+  ]
 })
 
 const wallets = await onboard.connectWallet()
 
 console.log(wallets)
+
+// create an ethers provider with the last connected wallet provider
+const ethersProvider = new ethers.providers.Web3Provider(
+  wallets[0].provider,
+  'any'
+)
+
+const signer = ethersProvider.getSigner()
+
+// send a transaction with an ethers provider
+const txn = await signer.sendTransaction({
+  to: '0x',
+  value: 100000000000000
+})
+
+const receipt = await txn.wait()
+console.log(receipt)
 ```
 
 ## Documentation
@@ -71,7 +84,7 @@ For full documentation, check out the README.md for each package:
 - [Torus](packages/torus/README.md)
 - [WalletConnect](packages/walletconnect/README.md)
 - [WalletLink](packages/walletlink/README.md)
-- Magic (in active development)
+- [Magic](packages/magic/README.md)
 
 **Hardware Wallets**
 
@@ -80,6 +93,7 @@ For full documentation, check out the README.md for each package:
 - [Trezor](packages/trezor/README.md)
 - [Keystone](packages/keystone/README.md)
 - [D'CENT](packages/dcent/README.md)
+
 **Frameworks**
 
 - [React](packages/react/README.md)
