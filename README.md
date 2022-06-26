@@ -81,21 +81,21 @@ For full documentation, check out the README.md for each package:
 
 **SDK Wallets**
 
-- [Fortmatic](packages/fortmatic/README.md)
-- [Gnosis](packages/gnosis/README.md)
-- [MEW](packages/mew/README.md)
-- [Portis](packages/portis/README.md)
-- [Torus](packages/torus/README.md)
+- [Coinbase](packages/coinbase/README.md)
 - [WalletConnect](packages/walletconnect/README.md)
-- [WalletLink](packages/walletlink/README.md)
+- [Gnosis](packages/gnosis/README.md)
 - [Magic](packages/magic/README.md)
+- [Fortmatic](packages/fortmatic/README.md)
+- [Portis](packages/portis/README.md)
+- [MEW](packages/mew/README.md)
+- [Web3Auth](packages/web3auth/README.md)
 
 **Hardware Wallets**
 
-- [KeepKey](packages/keepkey/README.md)
 - [Ledger](packages/ledger/README.md)
 - [Trezor](packages/trezor/README.md)
 - [Keystone](packages/keystone/README.md)
+- [KeepKey](packages/keepkey/README.md)
 - [D'CENT](packages/dcent/README.md)
 
 **Frameworks**
