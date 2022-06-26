@@ -2,100 +2,74 @@
 
 A collection of composable functions for implementing web3-onboard in to a Vue project; compatible both with Vue 2 + composition-api and Vue 3
 
-## Install
+## Install Modules
 
-`npm i @web3-onboard/vue`
+**NPM**
+`npm i @web3-onboard/vue @web3-onboard/injected-wallets ethers`
 
-## Functions 
+**Yarn**
+`yarn add @web3-onboard/vue @web3-onboard/injected-wallets ethers`
 
-## `init`
+## Quickstart
 
-The `init` function initializes `web3-onboard` and makes it available to the `useOnboard()` composable. For references check out the [initialization docs for `@web3-onboard/core`](../core/README.md#initialization)
-
-
-### Example usage
 ```typescript
 import { init } from '@web3-onboard/vue'
 import injectedModule from '@web3-onboard/injected-wallets'
-import trezorModule from '@web3-onboard/trezor'
-import ledgerModule from '@web3-onboard/ledger'
-import walletConnectModule from '@web3-onboard/walletconnect'
-import walletLinkModule from '@web3-onboard/walletlink'
-import portisModule from '@web3-onboard/portis'
-import fortmaticModule from '@web3-onboard/fortmatic'
-import torusModule from '@web3-onboard/torus'
-import keepkeyModule from '@web3-onboard/keepkey'
 
 const injected = injectedModule()
-const walletLink = walletLinkModule()
-const walletConnect = walletConnectModule()
-
-const portis = portisModule({
-  apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
-})
-
-const fortmatic = fortmaticModule({
-  apiKey: 'pk_test_886ADCAB855632AA'
-})
-
-const torus = torusModule()
-const ledger = ledgerModule()
-const keepkey = keepkeyModule()
-
-const trezorOptions = {
-  email: 'test@test.com',
-  appUrl: 'https://www.blocknative.com'
-}
-
-const trezor = trezorModule(trezorOptions)
+const infuraKey = '<INFURA_KEY>'
+const rpcUrl = `https://mainnet.infura.io/v3/${infuraKey}`
 
 const web3Onboard = init({
-  wallets: [
-    ledger,
-    trezor,
-    walletConnect,
-    keepkey,
-    walletLink,
-    injected,
-    fortmatic,
-    portis,
-    torus
-  ],
+  wallets: [injected],
   chains: [
     {
       id: '0x1',
       token: 'ETH',
       label: 'Ethereum Mainnet',
-      rpcUrl: 'https://mainnet.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
-    },
-    {
-      id: '0x3',
-      token: 'tROP',
-      label: 'Ethereum Ropsten Testnet',
-      rpcUrl: 'https://ropsten.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
-    },
-    {
-      id: '0x4',
-      token: 'rETH',
-      label: 'Ethereum Rinkeby Testnet',
-      rpcUrl: 'https://rinkeby.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
-    },
-    {
-      id: '0x89',
-      token: 'MATIC',
-      label: 'Matic Mainnet',
-      rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+      rpcUrl
     }
-  ],
-  appMetadata: {
-    name: 'Blocknative',
-    icon: '<svg><svg/>',
-    description: 'Demo app for Onboard V2',
-    recommendedInjectedWallets: [
-      { name: 'MetaMask', url: 'https://metamask.io' },
-      { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
-    ]
-  }
+  ]
+})
+
+const { wallets, connectWallet, disconnectConnectedWallet, connectedWallet } =
+  useOnboard()
+
+if (connectedWallet) {
+  const ethersProvider = new ethers.providers.Web3Provider(
+    connectedWallet.provider,
+    'any'
+  )
+  // ..... do stuff with the provider
+}
+```
+
+## Functions
+
+## `init`
+
+The `init` function initializes `web3-onboard` and makes it available to the `useOnboard()` composable. For references check out the [initialization docs for `@web3-onboard/core`](../core/README.md#initialization)
+
+### Example usage
+
+```typescript
+import { init } from '@web3-onboard/vue'
+import injectedModule from '@web3-onboard/injected-wallets'
+
+const injected = injectedModule()
+const infuraKey = '<INFURA_KEY>'
+const rpcUrl = `https://mainnet.infura.io/v3/${infuraKey}`
+
+const web3Onboard = init({
+  wallets: [injected],
+  chains: [
+    {
+      id: '0x1',
+      token: 'ETH',
+      label: 'Ethereum Mainnet',
+      rpcUrl
+    }
+  ]
 })
 ```
 
@@ -104,19 +78,23 @@ const web3Onboard = init({
 `useOnboard` must be used after the `init` function has been called - it will return an object that can be destructured to obtain the following reactive variables and functions:
 
 ### Example usage
+
 ```typescript
 import { useOnboard } from '@web3-onboard/vue'
 // Use the composable
 const onboard = useOnboard()
 // Or destructure it
-const { wallets, connectWallet, disconnectConnectedWallet, connectedWallet } = useOnboard()
+const { wallets, connectWallet, disconnectConnectedWallet, connectedWallet } =
+  useOnboard()
 // do stuff
 ```
 
 ### `connectWallet`
+
 Function to open the onboard modal and connect to a wallet provider. For reference check out the [connecting a wallet for `@web3-onboard/core`](../core/README.md#connecting-a-wallet)
 
 ### Example usage
+
 ```vue
 <script>
 import { useOnboard } from '@web3-onboard/vue'
@@ -130,16 +108,16 @@ export default {
 </script>
 
 <template>
-  <button type="button" @click="connect">
-    Connect to a Wallet
-  </button>
+  <button type="button" @click="connect">Connect to a Wallet</button>
 </template>
 ```
 
 ### `connectedChain`
+
 Computed property that contains the current chain to which `connectedWallet` is connected
 
 ### Example usage
+
 ```vue
 <script>
 import { useOnboard } from '@web3-onboard/vue'
@@ -152,14 +130,16 @@ export default {
 </script>
 
 <template>
-  <span>Connected Chain: {{connectedChain.id}}</span>
+  <span>Connected Chain: {{ connectedChain.id }}</span>
 </template>
 ```
 
 ### `connectedWallet`
+
 Computed property that contains the latest connected wallet
 
 ### Example usage
+
 ```vue
 <script>
 import { useOnboard } from '@web3-onboard/vue'
@@ -172,14 +152,16 @@ export default {
 </script>
 
 <template>
-  <span>Connected Wallet: {{connectedWallet.label}}</span>
+  <span>Connected Wallet: {{ connectedWallet.label }}</span>
 </template>
 ```
 
 ### `connectingWallet`
+
 Readonly boolean ref that tracks the state of the wallet connection status
 
 ### Example usage
+
 ```vue
 <script>
 import { useOnboard } from '@web3-onboard/vue'
@@ -197,9 +179,11 @@ export default {
 ```
 
 ### `disconnectWallet`
+
 Function to disconnect a specific wallet
 
 ### Example usage
+
 ```vue
 <script>
 import { useOnboard } from '@web3-onboard/vue'
@@ -213,16 +197,16 @@ export default {
 </script>
 
 <template>
-  <button type="button" @click="disconnect">
-    Disconnect MetaMask
-  </button>
+  <button type="button" @click="disconnect">Disconnect MetaMask</button>
 </template>
 ```
 
 ### `disconnectConnectedWallet`
+
 Function to disconnect the `connectedWallet`
 
 ### Example usage
+
 ```vue
 <script>
 import { useOnboard } from '@web3-onboard/vue'
@@ -242,9 +226,11 @@ export default {
 ```
 
 ### `getChain`
+
 Function that returns the current chain a wallet is connected to
 
 ### Example usage
+
 ```vue
 <script>
 import { useOnboard } from '@web3-onboard/vue'
@@ -257,14 +243,16 @@ export default {
 </script>
 
 <template>
-  <span>MetaMask is connected to: {{getChain('MetaMask')}}</span>
+  <span>MetaMask is connected to: {{ getChain('MetaMask') }}</span>
 </template>
 ```
 
 ### `setChain`
+
 Function to set the chain of a wallet
 
 ### Example usage
+
 ```vue
 <script>
 import { useOnboard } from '@web3-onboard/vue'
@@ -278,16 +266,16 @@ export default {
 </script>
 
 <template>
-  <button type="button" @click="set">
-    Set MetaMask chain to mainnet
-  </button>
+  <button type="button" @click="set">Set MetaMask chain to mainnet</button>
 </template>
 ```
 
 ### `settingChain`
+
 Readonly boolean ref that tracks the status of setting the chain
 
 ### Example usage
+
 ```vue
 <script>
 import { useOnboard } from '@web3-onboard/vue'
@@ -305,9 +293,11 @@ export default {
 ```
 
 ### `wallets`
+
 Readonly ref that contains every wallet that has been connected
 
 ### Example usage
+
 ```vue
 <script>
 import { useOnboard } from '@web3-onboard/vue'
@@ -320,9 +310,11 @@ export default {
 ```
 
 ### `alreadyConnectedWallets`
+
 Readonly ref that contains every wallet that user connected to in the past; useful to reconnect wallets automatically after a reload
 
 ### Example usage
+
 ```
 vue
 <script>
@@ -343,9 +335,11 @@ export default {
 ```
 
 ### `lastConnectedTimestamp`
+
 Readonly ref that contains the last time that the user connected a wallet in milliseconds
 
 ### Example usage
+
 ```
 vue
 <script>
