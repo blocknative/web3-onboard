@@ -53,8 +53,29 @@ export interface OnboardAPI {
   connectWallet: typeof connect
   disconnectWallet: typeof disconnect
   setChain: typeof setChain
-  state: typeof state
+  state: {
+    select: typeof state.select
+    get: typeof state.get
+    actions: ExposedActions
+  }
 }
+
+interface ExposedActions {
+  setWalletModules: (wallets: WalletInit[]) => void
+  setLocale: (locale: string) => void
+  updateNotify: (update: Partial<NotifyOptions>) => void
+  customNotification: (
+    updatedNotification: CustomNotification
+  ) => {
+    dismiss: () => void
+    update: UpdateNotification
+  }
+  updateBalances: (addresses?: string[]) => Promise<void>
+  updateAccountCenter: (
+    update: AccountCenter | Partial<AccountCenter>
+  ) => void
+}
+
 export interface ConnectOptions {
   autoSelect?: { label: string; disableModals: boolean }
 }

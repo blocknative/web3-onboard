@@ -8,10 +8,15 @@ import type {
   ConnectOptions,
   DisconnectOptions,
   WalletState,
-  ConnectedChain
+  ConnectedChain,
+  AccountCenter,
+  AppState,
+  CustomNotification,
+  Notification,
+  NotifyOptions,
+  UpdateNotification
 } from '@web3-onboard/core'
-import type { Chain } from '@web3-onboard/common'
-import type { AppState } from '@web3-onboard/core/dist/types'
+import type { Chain, WalletInit } from '@web3-onboard/common'
 
 export let web3Onboard: OnboardAPI | null = null
 
@@ -52,7 +57,9 @@ const useAppState: {
 export const useConnectWallet = (): [
   { wallet: WalletState | null; connecting: boolean },
   (options?: ConnectOptions) => Promise<void>,
-  (wallet: DisconnectOptions) => Promise<void>
+  (wallet: DisconnectOptions) => Promise<void>,
+  (addresses?: string[]) => Promise<void>,
+  (wallets: WalletInit[]) => void
 ] => {
   if (!web3Onboard) throw new Error(HOOK_ERROR_MESSAGE)
 
@@ -79,7 +86,16 @@ export const useConnectWallet = (): [
     setConnecting(false)
   }, [])
 
-  return [{ wallet, connecting }, connect, disconnect]
+  const updateBalances = web3Onboard.state.actions.updateBalances
+  const setWalletModules = web3Onboard.state.actions.setWalletModules
+
+  return [
+    { wallet, connecting },
+    connect,
+    disconnect,
+    updateBalances,
+    setWalletModules
+  ]
 }
 
 type SetChainOptions = {
@@ -131,4 +147,34 @@ export const useWallets = (): WalletState[] => {
   if (!web3Onboard) throw new Error(HOOK_ERROR_MESSAGE)
 
   return useAppState('wallets')
+}
+
+export const useNotifications = (): [
+  Notification[],
+  (updatedNotification: CustomNotification) => {
+    dismiss: () => void
+    update: UpdateNotification
+  },
+  (update: Partial<NotifyOptions>) => void
+] => {
+  if (!web3Onboard) throw new Error(HOOK_ERROR_MESSAGE)
+
+  const customNotification = web3Onboard.state.actions.customNotification
+  const updateNotify = web3Onboard.state.actions.updateNotify
+
+  return [useAppState('notifications'), customNotification, updateNotify]
+}
+
+export const useSetLocale = (): ((locale: string) => void) => {
+  if (!web3Onboard) throw new Error(HOOK_ERROR_MESSAGE)
+
+  return web3Onboard.state.actions.setLocale
+}
+
+export const useAccountCenter = (): ((
+  update: AccountCenter | Partial<AccountCenter>
+) => void) => {
+  if (!web3Onboard) throw new Error(HOOK_ERROR_MESSAGE)
+
+  return web3Onboard.state.actions.updateAccountCenter
 }
