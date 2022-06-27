@@ -2,249 +2,66 @@
 
 A collection of React hooks for implementing web3-onboard in to a React project
 
-## Install
+## Quickstart with Injected Wallets and Ethers Provider
 
-`npm i @web3-onboard/react`
+### Install Modules
 
-## Example Usage
+**NPM**
+`npm i @web3-onboard/react @web3-onboard/injected-wallets ethers`
+
+**Yarn**
+`yarn add @web3-onboard/react @web3-onboard/injected-wallets ethers`
+
+### Add Code
 
 ```javascript
 import React from 'react'
-import { ethers } from 'ethers'
-import {
-  init,
-  useConnectWallet,
-  useSetChain,
-  useWallets
-} from '@web3-onboard/react'
+import { init, useConnectWallet } from '@web3-onboard/react'
 import injectedModule from '@web3-onboard/injected-wallets'
-import coinbaseModule from '@web3-onboard/coinbase'
-import trezorModule from '@web3-onboard/trezor'
-import ledgerModule from '@web3-onboard/ledger'
-import walletConnectModule from '@web3-onboard/walletconnect'
-import portisModule from '@web3-onboard/portis'
-import fortmaticModule from '@web3-onboard/fortmatic'
-import torusModule from '@web3-onboard/torus'
-import keepkeyModule from '@web3-onboard/keepkey'
-import dcentModule from '@web3-onboard/dcent'
+import { ethers } from 'ethers'
 
 // Sign up to get your free API key at https://explorer.blocknative.com/?signup=true
 const dappId = '1730eff0-9d50-4382-a3fe-89f0d34a2070'
 
 const injected = injectedModule()
-const coinbase = coinbaseModule()
-const walletConnect = walletConnectModule()
 
-const portis = portisModule({
-  apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
-})
+const infuraKey = '<INFURA_KEY>'
+const rpcUrl = `https://mainnet.infura.io/v3/${infuraKey}`
 
-const fortmatic = fortmaticModule({
-  apiKey: 'pk_test_886ADCAB855632AA'
-})
-
-const torus = torusModule()
-const ledger = ledgerModule()
-const keepkey = keepkeyModule()
-
-const trezorOptions = {
-  email: 'test@test.com',
-  appUrl: 'https://www.blocknative.com'
-}
-
-const trezor = trezorModule(trezorOptions)
-
-const dcent = dcentModule()
-
-const magic = magicModule({
-  // Example api key, may need to be updated when max hits reached
-  // Get one to test with for free from https://magic.link/
-  apiKey: 'pk_live_02207D744E81C2BA',
-  userEmail: localStorage.getItem('magicUserEmail')
-})
-
-const web3auth = web3authModule({
-  clientId:
-    'DJuUOKvmNnlzy6ruVgeWYWIMKLRyYtjYa9Y10VCeJzWZcygDlrYLyXsBQjpJ2hxlBO9dnl8t9GmAC2qOP5vnIGo'
-})
-
-const web3Onboard = init({
-  wallets: [
-    injected,
-    coinbase,
-    ledger,
-    trezor,
-    walletConnect,
-    keepkey,
-    web3auth,
-    magic,
-    portis,
-    torus,
-    dcent
-  ],
+// initialize Onboard
+init({
+  wallets: [injected],
   chains: [
     {
       id: '0x1',
       token: 'ETH',
       label: 'Ethereum Mainnet',
-      rpcUrl: 'https://mainnet.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
-    },
-    {
-      id: '0x3',
-      token: 'tROP',
-      label: 'Ethereum Ropsten Testnet',
-      rpcUrl: 'https://ropsten.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
-    },
-    {
-      id: '0x4',
-      token: 'rETH',
-      label: 'Ethereum Rinkeby Testnet',
-      rpcUrl: 'https://rinkeby.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
-    },
-    {
-      id: '0x89',
-      token: 'MATIC',
-      label: 'Matic Mainnet',
-      rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+      rpcUrl
     }
-  ],
-  appMetadata: {
-    name: 'Blocknative',
-    icon: '<svg><svg/>',
-    description: 'Demo app for Onboard V2',
-    recommendedInjectedWallets: [
-      { name: 'MetaMask', url: 'https://metamask.io' },
-      { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
-    ]
-  },
-  apiKey: 'xxx387fb-bxx1-4xxc-a0x3-9d37e426xxxx'
-  notify: {
-    enabled: true,
-    transactionHandler: transaction => {
-      console.log({ transaction })
-    }
-  },
-  accountCenter: {
-    desktop: {
-      position: 'topRight',
-      enabled: true,
-      minimal: true
-    },
-    mobile: {
-      position: 'topRight',
-      enabled: true,
-      minimal: true
-    }
-  },
-  apiKey: dappId,
-  notify: {
-    enabled: true,
-    transactionHandler: transaction => {
-      console.log({ transaction })
-      if (transaction.eventCode === 'txPool') {
-        return {
-          // autoDismiss set to `0` will persist the notification until the user excuses it
-          autoDismiss: 0, 
-          // message: `Your transaction is pending, click <a href="https://rinkeby.etherscan.io/tx/${transaction.hash}">here</a> for more info.`,
-          // or you could use onClick for when someone clicks on the notification itself
-          onClick: () =>
-            window.open(`https://rinkeby.etherscan.io/tx/${transaction.hash}`)
-        }
-      }
-    }
-  }
-  i18n: {
-    en: {
-      connect: {
-        selectingWallet: {
-          header: 'custom text header'
-        }
-      },
-      notify: {
-        transaction: {
-          txStuck: 'custom text for this notification event'
-        }
-      }
-    },
-    es: {
-      transaction: {
-        txRequest: 'Su transacción está esperando que confirme'
-      }
-    }
-  }
+  ]
 })
 
 function App() {
-  const [{ wallet, connecting }, connect, disconnect, updateBalances, setWalletModules] =
-    useConnectWallet()
-  const [{ chains, connectedChain, settingChain }, setChain] = useSetChain()
-  const [notifications, customNotification, updateNotify] = useNotifications()
-  const connectedWallets = useWallets()
-  const updateAccountCenter = useAccountCenter()
-  const updateLocale = useSetLocale()
+  const [{ wallet, connecting }, connect, disconnect] = useConnectWallet()
 
-  let provider
+  // create an ethers provider
+  let ethersProvider
 
-  useEffect(() => {
-    if (!wallet?.provider) {
-      provider = null
-    } else {
-      provider = new ethers.providers.Web3Provider(wallet.provider, 'any')
-    }
-  }, [wallet]
+  if (wallet) {
+    ethersProvider = new ethers.providers.Web3Provider(wallet.provider, 'any')
+  }
 
   return (
     <div>
-      <button onClick={() => connect()}>
-        {connecting ? 'connecting' : 'connect'}
+      <button
+        disabled={connecting}
+        onClick={() => (wallet ? disconnect() : connect())}
+      >
+        {connecting ? 'connecting' : wallet ? 'disconnect' : 'connect'}
       </button>
-      {wallet && (
-        <div>
-          <label>Switch Chain</label>
-          {settingChain ? (
-            <span>Switching chain...</span>
-          ) : (
-            <select
-              onChange={({ target: { value } }) =>
-                console.log('onChange called') || setChain({ chainId: value })
-              }
-              value={connectedChain.id}
-            >
-              {chains.map(({ id, label }) => {
-                return <option value={id}>{label}</option>
-              })}
-            </select>
-          )}
-          <button onClick={() => disconnect(wallet)}>Disconnect Wallet</button>
-        </div>
-        <button
-          className="bn-demo-button"
-          onClick={() => {
-            // Default position of AccountCenter it top right
-            updateAccountCenter({
-                position: 'bottomLeft',
-                enabled: true,
-                minimal: true
-            })
-          }}
-        >
-          Account Center to Bottom Left
-        </button>
-      )}
-
-      {connectedWallets.map(({ label, accounts }) => {
-        return (
-          <div>
-            <div>{label}</div>
-            <div>Accounts: {JSON.stringify(accounts, null, 2)}</div>
-          </div>
-        )
-      })}
     </div>
   )
 }
-
-export default App
 ```
 
 ## `init`
@@ -345,7 +162,7 @@ type UseNotifications = (): [
     dismiss: () => void
     update: UpdateNotification
   },
-  (update: Partial<NotifyOptions>) => void
+  (update: Partial<Notify>) => void
 ]
 
 type Notification = {
@@ -377,7 +194,7 @@ interface UpdateNotification {
     update: UpdateNotification
   }
 }
-type NotifyOptions = {
+type Notify = {
   /**
    * Defines whether to subscribe to transaction events or not
    * default: true
@@ -396,7 +213,7 @@ type NotifyOptions = {
 const [
   notifications, // the list of all notifications that update when notifications are added, updated or removed
   customNotification, // a function that takes a customNotification object and allows custom notifications to be shown to the user, returns an update and dismiss callback
-  updateNotify // a function that takes a NotifyOptions object to allow updating of the properties
+  updateNotify // a function that takes a Notify object to allow updating of the properties
 ] = useNotifications()
 
 // View notifications as they come in if you would like to handle them independent of the notification display

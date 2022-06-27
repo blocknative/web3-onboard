@@ -17,6 +17,7 @@ Note:
 - MEW wallet currently fails to install on M1 macs
 - All wallet modules (except for `injected-wallets`) require extra dependencies and may require polyfilling the node built in modules for the browser. See the [Build Environments](#build-environments) section for more info
 - **If using React** you may be interested in checking out the React Hooks package here - https://www.npmjs.com/package/@web3-onboard/react
+- **If using Vue** you may be interested in checking out the Vue package here - https://www.npmjs.com/package/@web3-onboard/vue
 
 ## Initialization
 
@@ -147,7 +148,12 @@ unsubscribe()
 ```
 
 ```typescript
+
 export type NotifyOptions = {
+  desktop: Notify
+  mobile: Notify
+}
+export type Notify = {
   enabled: boolean // default: true
   /**
    * Callback that receives all transaction events
@@ -158,7 +164,14 @@ export type NotifyOptions = {
   transactionHandler?: (
     event: EthereumTransactionData
   ) => TransactionHandlerReturn
+  position: CommonPositions
 }
+
+export type CommonPositions =
+| 'topRight'
+| 'bottomRight'
+| 'bottomLeft'
+| 'topLeft'
 
 export type TransactionHandlerReturn = CustomNotification | boolean | void
 
@@ -285,15 +298,31 @@ const onboard = Onboard({
   },
   apiKey: 'xxx387fb-bxx1-4xxc-a0x3-9d37e426xxxx'
   notify: {
-    enabled: true,
-    transactionHandler: transaction => {
-      console.log({ transaction })
-      if (transaction.eventCode === 'txPool') {
-        return {
-          type: 'success',
-          message: 'Your transaction from #1 DApp is in the mempool',
+    desktop: {
+      enabled: true,
+      transactionHandler: transaction => {
+        console.log({ transaction })
+        if (transaction.eventCode === 'txPool') {
+          return {
+            type: 'success',
+            message: 'Your transaction from #1 DApp is in the mempool',
+          }
         }
-      }
+      },
+      position: 'bottomLeft'
+    },
+    mobile: {
+      enabled: true,
+      transactionHandler: transaction => {
+        console.log({ transaction })
+        if (transaction.eventCode === 'txPool') {
+          return {
+            type: 'success',
+            message: 'Your transaction from #1 DApp is in the mempool',
+          }
+        }
+      },
+      position: 'topRight'
     }
   },
   accountCenter: {
@@ -420,7 +449,7 @@ type AppState = {
   accountCenter: AccountCenter
   walletModules: WalletModule[]
   locale: Locale
-  notify: NotifyOptions
+  notify: Notify
   notifications: Notification[]
 }
 
