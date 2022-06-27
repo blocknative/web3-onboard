@@ -6,12 +6,16 @@
   import { state } from '../../store'
   import { shareReplay, startWith } from 'rxjs/operators'
   import Notification from './Notification.svelte'
+  import { configuration } from '../../configuration'
+
+  const { device } = configuration
 
   const accountCenter$ = state
     .select('accountCenter')
     .pipe(startWith(state.get().accountCenter), shareReplay(1))
 
   export let position: string
+  export let sharedContainer: boolean
 
   let x: number
   let y: number
@@ -116,7 +120,13 @@
     style={`${
       position.includes('top') ? 'justify-content:flex-start;' : ''
     }; max-height: calc(100vh - ${
-      !$accountCenter$.expanded ? '82px' : '412px'
+      $accountCenter$.expanded
+        ? '412px'
+        : sharedContainer && device.type !== 'mobile'
+        ? '82px'
+        : !sharedContainer && device.type === 'mobile'
+        ? '108px'
+        : '24px'
     })`}
   >
     {#each $notifications$ as notification (notification.key)}

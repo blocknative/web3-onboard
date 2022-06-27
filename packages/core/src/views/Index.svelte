@@ -290,8 +290,8 @@
       ? 'padding-top:0;'
       : ''} "
   >
-    {#if $notify$.position.includes('bottom') && $accountCenter$.position === $notify$.position}
-      <Notify position={$notify$.position} />
+    {#if $notify$.position.includes('bottom') && $accountCenter$.position.includes('bottom') && (device.type === 'mobile' || $accountCenter$.position === $notify$.position)}
+      <Notify position={$notify$.position} sharedContainer={true} />
     {/if}
     <div
       style={!$accountCenter$.expanded &&
@@ -306,12 +306,12 @@
     >
       <AccountCenter settings={$accountCenter$} />
     </div>
-    {#if $notify$.position.includes('top') && $accountCenter$.position === $notify$.position}
-      <Notify position={$notify$.position} />
+    {#if $notify$.position.includes('top') && $accountCenter$.position.includes('top') && (device.type === 'mobile' || $accountCenter$.position === $notify$.position)}
+      <Notify position={$notify$.position} sharedContainer={true} />
     {/if}
   </div>
 {/if}
-{#if $accountCenter$.enabled && (!$notify$.enabled || $accountCenter$.position !== $notify$.position) && $wallets$.length}
+{#if $accountCenter$.enabled && (!$notify$.enabled || ($notify$.position !== $accountCenter$.position && device.type !== 'mobile')) && $wallets$.length}
   <div
     class="container flex flex-column fixed z-indexed"
     style="{positioningDefaults[$accountCenter$.position]}; {device.type ===
@@ -338,7 +338,7 @@
     </div>
   </div>
 {/if}
-{#if $notify$.enabled && (!$accountCenter$.enabled || $accountCenter$.position !== $notify$.position) && $wallets$.length}
+{#if $notify$.enabled && (!$accountCenter$.enabled || ($notify$.position !== $accountCenter$.position && device.type !== 'mobile') || ($notify$.position.includes('top') && $accountCenter$.position.includes('bottom')) || ($notify$.position.includes('bottom') && $accountCenter$.position.includes('top'))) && $wallets$.length}
   <div
     class="container flex flex-column fixed z-indexed"
     style="{positioningDefaults[$notify$.position]}; {device.type ===
@@ -348,6 +348,6 @@
       ? 'padding-top:0;'
       : ''} "
   >
-    <Notify position={$notify$.position} />
+    <Notify position={$notify$.position} sharedContainer={false} />
   </div>
 {/if}

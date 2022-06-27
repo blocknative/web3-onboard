@@ -143,16 +143,8 @@ const notify = Joi.object({
 })
 
 const notifyOptions = Joi.object({
-  desktop: Joi.object({
-    transactionHandler: Joi.function(),
-    enabled: Joi.boolean(),
-    position: commonPositions
-  }),
-  mobile: Joi.object({
-    transactionHandler: Joi.function(),
-    enabled: Joi.boolean(),
-    position: commonPositions
-  })
+  desktop: notify,
+  mobile: notify
 })
 
 const initOptions = Joi.object({
