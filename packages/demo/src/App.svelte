@@ -114,38 +114,7 @@
       gnosis,
       dcent
     ],
-    chains: [
-      {
-        id: '0x1',
-        token: 'ETH',
-        label: 'Ethereum',
-        rpcUrl: 'https://mainnet.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
-      },
-      {
-        id: '0x3',
-        token: 'tROP',
-        label: 'Ropsten',
-        rpcUrl: 'https://ropsten.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
-      },
-      {
-        id: '0x4',
-        token: 'rETH',
-        label: 'Rinkeby',
-        rpcUrl: 'https://rinkeby.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
-      },
-      {
-        id: '0x89',
-        token: 'MATIC',
-        label: 'Polygon',
-        rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
-      },
-      {
-        id: '0xa',
-        token: 'OETH',
-        label: 'Optimism',
-        rpcUrl: 'https://mainnet.optimism.io'
-      }
-    ],
+    chains: [],
     appMetadata: {
       name: 'Blocknative',
       icon: blocknativeIcon,
