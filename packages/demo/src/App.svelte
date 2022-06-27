@@ -140,6 +140,12 @@
         rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
       },
       {
+        id: '0x13881',
+        token: 'MATIC',
+        label: 'Polygon - Mumbai',
+        rpcUrl: 'https://matic-mumbai.chainstacklabs.com	'
+      },
+      {
         id: '0xa',
         token: 'OETH',
         label: 'Optimism',
