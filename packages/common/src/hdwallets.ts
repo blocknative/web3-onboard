@@ -19,18 +19,22 @@ export const getCommon = async ({
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const CommonConstructor: typeof Common = Common.default || Common
+
+  const commonOptions = {
+    // Berlin is the minimum hardfork that will allow for EIP1559
+    hardfork: Hardfork.Berlin,
+    // List of supported EIPS
+    eips: [1559]
+  }
   let common: Common
   try {
     common = new CommonConstructor({
       chain: customNetwork || chainId,
-      // Berlin is the minimum hardfork that will allow for EIP1559
-      hardfork: Hardfork.Berlin,
-      // List of supported EIPS
-      eips: [1559]
+      ...commonOptions
     })
   } catch (e: any) {
     if (e.message && /Chain.*not supported/.test(e.message)) {
-      common = CommonConstructor.custom({ chainId })
+      common = CommonConstructor.custom({ chainId }, commonOptions)
     } else {
       throw e
     }
@@ -91,7 +95,11 @@ export const getHardwareWalletProvider = (
   request: ({ method, params }) =>
     fetch(getRpcUrl(), {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
+        jsonrpc: '2.0',
         id: '42',
         method,
         params
