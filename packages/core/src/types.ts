@@ -71,9 +71,7 @@ interface ExposedActions {
     update: UpdateNotification
   }
   updateBalances: (addresses?: string[]) => Promise<void>
-  updateAccountCenter: (
-    update: AccountCenter | Partial<AccountCenter>
-  ) => void
+  updateAccountCenter: (update: AccountCenter | Partial<AccountCenter>) => void
 }
 
 export interface ConnectOptions {
