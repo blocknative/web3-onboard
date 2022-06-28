@@ -430,6 +430,8 @@ export interface Chain {
   color?: string
   icon?: string // svg string
   providerConnectionInfo?: ConnectionInfo
+  publicRpcUrl?: string
+  blockExplorerUrl?: string
 }
 
 export type TokenSymbol = string // eg ETH
@@ -463,4 +465,11 @@ export interface BootstrapNode {
   id: string
   location: string
   comment: string
+}
+
+export interface RPCResponse {
+  id: number,
+  jsonrpc: string
+  error?: { code: number, message: string}
+  result?: any
 }

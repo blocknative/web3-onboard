@@ -71,7 +71,7 @@
   }
 
   input:disabled {
-    background-color: var(
+    background: var(
       --account-select-gray-100,
       var(--onboard-gray-100, var(--gray-100))
     );
@@ -80,7 +80,7 @@
   input[type='checkbox'] {
     -webkit-appearance: none;
     width: auto;
-    background-color: var(
+    background: var(
       --account-select-white,
       var(--onboard-white, var(--white))
     );
@@ -105,7 +105,7 @@
   }
 
   input[type='checkbox']:checked {
-    background-color: var(
+    background: var(
       --account-select-primary-500,
       var(--onboard-primary-500, var(--primary-500))
     );

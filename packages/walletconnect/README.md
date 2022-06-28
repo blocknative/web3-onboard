@@ -14,6 +14,7 @@ type WalletConnectOptions = {
   qrcodeModalOptions?: {
     mobileLinks: string[] // set the order and list of mobile linking wallets
   }
+  connectFirstChainId?: boolean // if true, connects to the first network chain provided
 }
 ```
 
@@ -29,6 +30,7 @@ const walletConnect = walletConnectModule({
   qrcodeModalOptions: {
     mobileLinks: ['rainbow', 'metamask', 'argent', 'trust', 'imtoken', 'pillar']
   }
+  connectFirstChainId: true
 })
 
 // can also initialize with no options...

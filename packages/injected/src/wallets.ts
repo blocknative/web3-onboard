@@ -42,7 +42,7 @@ const exodus: InjectedWalletModule = {
   label: ProviderLabel.Exodus,
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
-      !!provider && !!provider[ProviderIdentityFlag.Exodus],
+    !!provider && !!provider[ProviderIdentityFlag.Exodus],
   getIcon: async () => (await import('./icons/exodus.js')).default,
   getInterface: getInjectedInterface(ProviderIdentityFlag.Exodus),
   platforms: ['all']

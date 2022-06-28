@@ -16,7 +16,7 @@ import type { providers } from 'ethers'
 interface CustomWindow extends Window {
   ethereum: EIP1193Provider
 }
-  
+
 declare const window: CustomWindow
 
 const DEFAULT_BASE_PATH = "m/44'/60'/0'/0/0"
