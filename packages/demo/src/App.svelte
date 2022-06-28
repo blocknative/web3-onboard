@@ -233,7 +233,7 @@
   }
 
   let toAddress
-  const sendTransaction = async (provider) => {
+  const sendTransaction = async provider => {
     const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 
     const signer = ethersProvider.getSigner()
@@ -470,9 +470,7 @@
               placeholder="0x..."
               bind:value={toAddress}
             />
-            <button
-              on:click={sendTransaction(provider)}
-            >
+            <button on:click={sendTransaction(provider)}>
               Send Transaction
             </button>
           </div>

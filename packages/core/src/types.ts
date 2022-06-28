@@ -64,16 +64,12 @@ interface ExposedActions {
   setWalletModules: (wallets: WalletInit[]) => void
   setLocale: (locale: string) => void
   updateNotify: (update: Partial<NotifyOptions>) => void
-  customNotification: (
-    updatedNotification: CustomNotification
-  ) => {
+  customNotification: (updatedNotification: CustomNotification) => {
     dismiss: () => void
     update: UpdateNotification
   }
   updateBalances: (addresses?: string[]) => Promise<void>
-  updateAccountCenter: (
-    update: AccountCenter | Partial<AccountCenter>
-  ) => void
+  updateAccountCenter: (update: AccountCenter | Partial<AccountCenter>) => void
 }
 
 export interface ConnectOptions {
