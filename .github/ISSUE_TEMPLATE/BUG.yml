@@ -115,5 +115,5 @@ body:
       label: Sanity Check
       description: Sanity check to ensure that issue has been properly filled out to reduce friction for all involved parties.
       options:
-        - label: If this is a build issue, I have included my build config. If this is a runtime issues, I have included reproduction steps and/or a [Minimal, Reproducible Example](https://stackoverflow.com/help/minimal-reproducible-example).
+        - label: If this is a build issue, I have included my build config. If this is a runtime issue, I have included reproduction steps and/or a [Minimal, Reproducible Example](https://stackoverflow.com/help/minimal-reproducible-example).
           required: true
