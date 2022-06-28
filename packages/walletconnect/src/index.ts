@@ -12,10 +12,11 @@ interface WalletConnectOptions {
   qrcodeModalOptions?: {
     mobileLinks: string[]
   }
+  connectFirstChainId?: boolean
 }
 
 function walletConnect(options?: WalletConnectOptions): WalletInit {
-  const { bridge = 'https://bridge.walletconnect.org', qrcodeModalOptions } =
+  const { bridge = 'https://bridge.walletconnect.org', qrcodeModalOptions , connectFirstChainId} =
     options || {}
 
   return () => {
@@ -129,7 +130,7 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                   // Check if connection is already established
                   if (!this.connector.connected) {
                     // create new session
-                    this.connector.createSession().then(() => {
+                    this.connector.createSession(connectFirstChainId ? {chainId: parseInt(chains[0].id, 16)} : undefined).then(() => {
                       QRCodeModal.open(
                         this.connector.uri,
                         () =>

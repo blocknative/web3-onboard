@@ -4,10 +4,10 @@ import disconnectWallet from './disconnect'
 import setChain from './chain'
 import { state } from './store'
 import { reset$ } from './streams'
-import { validateInitOptions } from './validation'
+import { validateInitOptions, validateNotify, validateNotifyOptions } from './validation'
 import initI18N from './i18n'
 import App from './views/Index.svelte'
-import type { InitOptions, OnboardAPI } from './types'
+import type { InitOptions, OnboardAPI, Notify } from './types'
 import { APP_INITIAL_STATE } from './constants'
 import { configuration, updateConfiguration } from './configuration'
 
@@ -22,7 +22,7 @@ import {
 
 import updateBalances from './updateBalances'
 
-const API = {
+const API: OnboardAPI = {
   connectWallet,
   disconnectWallet,
   setChain,
@@ -51,7 +51,7 @@ export type {
   AppState,
   CustomNotification,
   Notification,
-  NotifyOptions,
+  Notify,
   UpdateNotification
 } from './types'
 
@@ -104,7 +104,50 @@ function init(options: InitOptions): OnboardAPI {
 
   // update notify
   if (typeof notify !== undefined) {
-    updateNotify(notify)
+    if ('desktop' in notify || 'mobile' in notify) {
+      const error = validateNotifyOptions(notify)
+  
+      if (error) {
+        throw error
+      }
+  
+      if (
+        (!notify.desktop || (notify.desktop && !notify.desktop.position)) &&
+        accountCenter &&
+        accountCenter.desktop &&
+        accountCenter.desktop.position
+      ) {
+        notify.desktop.position = accountCenter.desktop.position
+      }
+      if (
+        (!notify.mobile || (notify.mobile && !notify.mobile.position)) &&
+        accountCenter &&
+        accountCenter.mobile &&
+        accountCenter.mobile.position
+      ) {
+        notify.mobile.position = accountCenter.mobile.position
+      }
+      let notifyUpdate: Partial<Notify>
+      if (device.type === 'mobile' && notify.mobile) {
+        notifyUpdate = {
+          ...APP_INITIAL_STATE.notify,
+          ...notify.mobile
+        }
+      } else if (notify.desktop) {
+        notifyUpdate = {
+          ...APP_INITIAL_STATE.notify,
+          ...notify.desktop
+        }
+      }
+      updateNotify(notifyUpdate)
+    } else {
+      const error = validateNotify(notify as Notify)
+  
+      if (error) {
+        throw error
+      }
+      updateNotify(notify as Notify)
+    }
   }
 
   if (svelteInstance) {

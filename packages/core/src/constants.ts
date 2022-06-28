@@ -13,7 +13,8 @@ export const APP_INITIAL_STATE: AppState = {
   },
   notify: {
     enabled: true,
-    transactionHandler: () => {}
+    transactionHandler: () => {},
+    position: 'topRight'
   },
   notifications: [],
   locale: ''

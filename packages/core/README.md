@@ -148,7 +148,12 @@ unsubscribe()
 ```
 
 ```typescript
+
 export type NotifyOptions = {
+  desktop: Notify
+  mobile: Notify
+}
+export type Notify = {
   enabled: boolean // default: true
   /**
    * Callback that receives all transaction events
@@ -159,7 +164,14 @@ export type NotifyOptions = {
   transactionHandler?: (
     event: EthereumTransactionData
   ) => TransactionHandlerReturn
+  position: CommonPositions
 }
+
+export type CommonPositions =
+| 'topRight'
+| 'bottomRight'
+| 'bottomLeft'
+| 'topLeft'
 
 export type TransactionHandlerReturn = CustomNotification | boolean | void
 
@@ -286,15 +298,31 @@ const onboard = Onboard({
   },
   apiKey: 'xxx387fb-bxx1-4xxc-a0x3-9d37e426xxxx'
   notify: {
-    enabled: true,
-    transactionHandler: transaction => {
-      console.log({ transaction })
-      if (transaction.eventCode === 'txPool') {
-        return {
-          type: 'success',
-          message: 'Your transaction from #1 DApp is in the mempool',
+    desktop: {
+      enabled: true,
+      transactionHandler: transaction => {
+        console.log({ transaction })
+        if (transaction.eventCode === 'txPool') {
+          return {
+            type: 'success',
+            message: 'Your transaction from #1 DApp is in the mempool',
+          }
         }
-      }
+      },
+      position: 'bottomLeft'
+    },
+    mobile: {
+      enabled: true,
+      transactionHandler: transaction => {
+        console.log({ transaction })
+        if (transaction.eventCode === 'txPool') {
+          return {
+            type: 'success',
+            message: 'Your transaction from #1 DApp is in the mempool',
+          }
+        }
+      },
+      position: 'topRight'
     }
   },
   accountCenter: {
@@ -421,7 +449,7 @@ type AppState = {
   accountCenter: AccountCenter
   walletModules: WalletModule[]
   locale: Locale
-  notify: NotifyOptions
+  notify: Notify
   notifications: Notification[]
 }
 

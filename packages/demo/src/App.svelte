@@ -172,7 +172,7 @@
     // // example customizing account center
     accountCenter: {
       desktop: {
-        position: 'topRight',
+        position: 'topLeft',
         enabled: true,
         minimal: false
       }
@@ -188,29 +188,33 @@
       }
     },
     notify: {
-      enabled: true,
-      transactionHandler: transaction => {
-        console.log({ transaction })
-        //   if (transaction.eventCode === 'txConfirmed') {
-        //     return {
-        //       type: 'error',
-        //       message: 'Your in the pool, hope you brought a towel!',
-        //       autoDismiss: 0,
-        //       id: '123',
-        //       key: '321',
-        //       onClick: () =>
-        //         window.open(`https://rinkeby.etherscan.io/tx/${transaction.hash}`)
-        //     }
-        //   }
-        // if (transaction.eventCode === 'txPool') {
-        //   return {
-        //     type: 'hint',
-        //     message: 'Your in the pool, hope you brought a towel!',
-        //     autoDismiss: 0,
-        //     link: `https://ropsten.etherscan.io/tx/${transaction.hash}`
-        //   }
-        // }
-      }
+      desktop: {
+        enabled: true,
+        transactionHandler: transaction => {
+          console.log({ transaction })
+          //   if (transaction.eventCode === 'txConfirmed') {
+          //     return {
+          //       type: 'error',
+          //       message: 'Your in the pool, hope you brought a towel!',
+          //       autoDismiss: 0,
+          //       id: '123',
+          //       key: '321',
+          //       onClick: () =>
+          //         window.open(`https://rinkeby.etherscan.io/tx/${transaction.hash}`)
+          //     }
+          //   }
+          // if (transaction.eventCode === 'txPool') {
+          //   return {
+          //     type: 'hint',
+          //     message: 'Your in the pool, hope you brought a towel!',
+          //     autoDismiss: 0,
+          //     link: `https://ropsten.etherscan.io/tx/${transaction.hash}`
+          //   }
+          // }
+        },
+        position: 'topRight'
+      },
+
     },
     // Sign up for your free api key at www.Blocknative.com
     apiKey: 'xxxxxx-bf21-42ec-a093-9d37e426xxxx'
