@@ -5,11 +5,15 @@ labels: [bug]
 assignees:
   - taylorjdawson
   - aaronbarnardsound
+  - Adamj1232
+  - mahmud-bn
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this bug report!
+        Thanks for taking the time to fill out this bug report! Note that the more detailed the report the faster we can get the issue fixed.
+        When possible, please provide a [Minimal, Reproducible Example](https://stackoverflow.com/help/minimal-reproducible-example) this will
+        reduce the time it takes us to fix the issue.
   - type: textarea
     attributes:
       label: Current Behavior
@@ -25,7 +29,7 @@ body:
   - type: textarea
     attributes:
       label: Steps To Reproduce
-      description: Steps to reproduce the behavior.
+      description: Steps to reproduce the behavior. Link or paste your [Minimal, Reproducible Example](https://stackoverflow.com/help/minimal-reproducible-example) here.
       placeholder: |
         1. In this environment...
         2. With this config...
@@ -33,9 +37,46 @@ body:
         4. See error...
     validations:
       required: false
+  - type: dropdown
+    attributes:
+      label: What package is effected by this issue?
+      options:
+        - @web3-onboard/core
+        - @web3-onboard/common
+        - @web3-onboard/coinbase
+        - @web3-onboard/decent
+        - @web3-onboard/formatic
+        - @web3-onboard/gnosis
+        - @web3-onboard/injected
+        - @web3-onboard/keepkey
+        - @web3-onboard/keystone
+        - @web3-onboard/ledger
+        - @web3-onboard/magic
+        - @web3-onboard/mew
+        - @web3-onboard/portis
+        - @web3-onboard/react
+        - @web3-onboard/torus
+        - @web3-onboard/trezor
+        - @web3-onboard/vue
+        - @web3-onboard/walletconnect
+        - @web3-onboard/walletlink
+        - @web3-onboard/web3auth
+        - bnc-onboard (v1)
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: Is this a build or a runtime issue?
+      multiple: true
+      options:
+        - Build
+        - Runtime
+        - N/A
+    validations:
+      required: true
   - type: input
     attributes:
-      label: Onboard Version
+      label: Package Version
       description: What version of Onboard are you using?
     validations:
       required: true
@@ -43,8 +84,6 @@ body:
     attributes:
       label: Node Version
       description: What version of NodeJS are you running?
-    validations:
-      required: true
   - type: dropdown
     id: browsers
     attributes:
@@ -70,3 +109,11 @@ body:
         Tip: You can attach images or log files by clicking this area to highlight it and then dragging files in.
     validations:
       required: false
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Sanity Check
+      description: Sanity check to ensure that issue has been properly filled out to reduce friction for all involved parties.
+      options:
+        - label: If this is a build issue, I have included my build config. If this is a runtime issue, I have included reproduction steps and/or a [Minimal, Reproducible Example](https://stackoverflow.com/help/minimal-reproducible-example).
+          required: true

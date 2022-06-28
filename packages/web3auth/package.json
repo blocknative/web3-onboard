@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/web3auth",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Web3Auth module for web3-onboard",
   "module": "dist/index.js",
   "browser": "dist/index.js",
@@ -20,7 +20,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.1.2",
+    "@web3-onboard/common": "^2.1.3",
     "@web3auth/web3auth": "^1.0.0"
   }
 }

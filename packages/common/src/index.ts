@@ -53,7 +53,8 @@ import type {
   Chain,
   TokenSymbol,
   CustomNetwork,
-  TransactionObject
+  TransactionObject,
+  RPCResponse
 } from './types'
 
 export { ProviderRpcErrorCode } from './types'
@@ -62,7 +63,11 @@ export { createEIP1193Provider } from './eip-1193'
 export { default as accountSelect } from './account-select'
 export { entryModal } from './entry-modal'
 export { SofiaProLight, SofiaProRegular, SofiaProSemiBold } from './fonts'
-export { getCommon, bigNumberFieldsToStrings } from './hdwallets'
+export {
+  getCommon,
+  bigNumberFieldsToStrings,
+  getHardwareWalletProvider
+} from './hdwallets'
 
 export type {
   RequestPatch,
@@ -119,5 +124,6 @@ export type {
   Chain,
   TokenSymbol,
   CustomNetwork,
-  TransactionObject
+  TransactionObject,
+  RPCResponse
 }

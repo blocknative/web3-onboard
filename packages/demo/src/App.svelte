@@ -140,6 +140,12 @@
         rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
       },
       {
+        id: '0x13881',
+        token: 'MATIC',
+        label: 'Polygon - Mumbai',
+        rpcUrl: 'https://matic-mumbai.chainstacklabs.com	'
+      },
+      {
         id: '0xa',
         token: 'OETH',
         label: 'Optimism',
@@ -166,7 +172,7 @@
     // // example customizing account center
     accountCenter: {
       desktop: {
-        position: 'topRight',
+        position: 'topLeft',
         enabled: true,
         minimal: false
       }
@@ -182,29 +188,33 @@
       }
     },
     notify: {
-      enabled: true,
-      transactionHandler: transaction => {
-        console.log({ transaction })
-        //   if (transaction.eventCode === 'txConfirmed') {
-        //     return {
-        //       type: 'error',
-        //       message: 'Your in the pool, hope you brought a towel!',
-        //       autoDismiss: 0,
-        //       id: '123',
-        //       key: '321',
-        //       onClick: () =>
-        //         window.open(`https://rinkeby.etherscan.io/tx/${transaction.hash}`)
-        //     }
-        //   }
-        // if (transaction.eventCode === 'txPool') {
-        //   return {
-        //     type: 'hint',
-        //     message: 'Your in the pool, hope you brought a towel!',
-        //     autoDismiss: 0,
-        //     link: `https://ropsten.etherscan.io/tx/${transaction.hash}`
-        //   }
-        // }
-      }
+      desktop: {
+        enabled: true,
+        transactionHandler: transaction => {
+          console.log({ transaction })
+          //   if (transaction.eventCode === 'txConfirmed') {
+          //     return {
+          //       type: 'error',
+          //       message: 'Your in the pool, hope you brought a towel!',
+          //       autoDismiss: 0,
+          //       id: '123',
+          //       key: '321',
+          //       onClick: () =>
+          //         window.open(`https://rinkeby.etherscan.io/tx/${transaction.hash}`)
+          //     }
+          //   }
+          // if (transaction.eventCode === 'txPool') {
+          //   return {
+          //     type: 'hint',
+          //     message: 'Your in the pool, hope you brought a towel!',
+          //     autoDismiss: 0,
+          //     link: `https://ropsten.etherscan.io/tx/${transaction.hash}`
+          //   }
+          // }
+        },
+        position: 'topRight'
+      },
+
     },
     // Sign up for your free api key at www.Blocknative.com
     apiKey: 'xxxxxx-bf21-42ec-a093-9d37e426xxxx'
@@ -220,9 +230,25 @@
 
     const signature = await signer.signTransaction({
       to: '',
-      value: 1000000000000000
+      value: 100000000000000
     })
+
     console.log(signature)
+  }
+
+  let toAddress
+  const sendTransaction = async provider => {
+    const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
+
+    const signer = ethersProvider.getSigner()
+
+    const txn = await signer.sendTransaction({
+      to: toAddress,
+      value: 100000000000000
+    })
+
+    const receipt = await txn.wait()
+    console.log(receipt)
   }
 
   const signMessage = async (provider, address) => {
@@ -438,6 +464,18 @@
             />
             <button on:click={signTypedMessage(provider, address)}>
               Sign Typed Message
+            </button>
+          </div>
+
+          <div>
+            <input
+              type="text"
+              class="text-input"
+              placeholder="0x..."
+              bind:value={toAddress}
+            />
+            <button on:click={sendTransaction(provider)}>
+              Send Transaction
             </button>
           </div>
 

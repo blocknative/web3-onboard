@@ -3,7 +3,6 @@ import type {
   Asset,
   Chain,
   CustomNetwork,
-  EIP1193Provider,
   ScanAccountsOptions,
   TransactionObject,
   WalletInit
@@ -123,7 +122,8 @@ function trezor(options: TrezorOptions): WalletInit {
           bigNumberFieldsToStrings,
           createEIP1193Provider,
           ProviderRpcError,
-          getCommon
+          getCommon,
+          getHardwareWalletProvider
         } = await import('@web3-onboard/common')
         const ethUtil = await import('ethereumjs-util')
         const { compress } = (await import('eth-crypto')).publicKey
@@ -443,27 +443,9 @@ function trezor(options: TrezorOptions): WalletInit {
           })
         }
 
-        const request: EIP1193Provider['request'] = async ({
-          method,
-          params
-        }) => {
-          const response = await fetch(currentChain.rpcUrl, {
-            method: 'POST',
-            body: JSON.stringify({
-              id: '42',
-              method,
-              params
-            })
-          }).then(res => res.json())
-
-          if (response.result) {
-            return response.result
-          } else {
-            throw response.error
-          }
-        }
-
-        const trezorProvider = { request }
+        const trezorProvider = getHardwareWalletProvider(
+          () => currentChain?.rpcUrl
+        )
 
         const provider = createEIP1193Provider(trezorProvider, {
           eth_requestAccounts: async () => {

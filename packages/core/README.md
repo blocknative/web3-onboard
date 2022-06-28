@@ -17,6 +17,7 @@ Note:
 - MEW wallet currently fails to install on M1 macs
 - All wallet modules (except for `injected-wallets`) require extra dependencies and may require polyfilling the node built in modules for the browser. See the [Build Environments](#build-environments) section for more info
 - **If using React** you may be interested in checking out the React Hooks package here - https://www.npmjs.com/package/@web3-onboard/react
+- **If using Vue** you may be interested in checking out the Vue package here - https://www.npmjs.com/package/@web3-onboard/vue
 
 ## Initialization
 
@@ -121,20 +122,22 @@ type AccountCenterPosition =
 **`notify`**
 Notify provides by default transaction notifications for all connected wallets on the current blockchain. When switching chains the previous chain listeners remain active for 60 seconds to allow capture and report of an remaining transactions that may be in flight.
 By default transaction notifications are captured if a DAppID is provided in the Onboard config along with the Account Center being enabled.
-An object that defines whether transaction notifications will display (defaults to true if an API key is provided). This object contains an `enabled` flag prop and an optional `transactionHandler` which is a callback that can disable or allow customizations of notifications. 
+An object that defines whether transaction notifications will display (defaults to true if an API key is provided). This object contains an `enabled` flag prop and an optional `transactionHandler` which is a callback that can disable or allow customizations of notifications.
 Currently notifications are positioned in the same location as the account center (either below, if the Account Center is positioned along the top, or above if positioned on the bottom of the view).
 The `transactionHandler` can react off any property of the Ethereum TransactionData returned to the callback from the event (see console.log in example init). In turn, it can return a Custom `Notification` object to define the verbiage, styling, or add functionality:
- - `Notification.message` - to completely customize the message shown 
- - `Notification.eventCode` - handle codes in your own way - see codes here under the notify prop [default en file here](src/i18n/en.json)
- - `Notification.type` - icon type displayed (see `NotificationType` below for options)
- - `Notification.autoDismiss` - time (in ms) after which the notification will be dismissed. If set to `0` the notification will remain on screen until the user dismisses the notification, refreshes the page or navigates away from the site with the notifications 
- - `Notification.link` - add link to the transaction hash. For instance, a link to the transaction on etherscan
- - `Notification.onClick()` - onClick handler for when user clicks the notification element
 
- Notify can also be styled by using the CSS variables found below. These are setup to allow maximum customization with base styling variables setting the global theme (i.e. `--onboard-grey-600`) along with more precise component level styling variables available (`--notify-onboard-grey-600`) with the latter taking precedent if defined
+- `Notification.message` - to completely customize the message shown
+- `Notification.eventCode` - handle codes in your own way - see codes here under the notify prop [default en file here](src/i18n/en.json)
+- `Notification.type` - icon type displayed (see `NotificationType` below for options)
+- `Notification.autoDismiss` - time (in ms) after which the notification will be dismissed. If set to `0` the notification will remain on screen until the user dismisses the notification, refreshes the page or navigates away from the site with the notifications
+- `Notification.link` - add link to the transaction hash. For instance, a link to the transaction on etherscan
+- `Notification.onClick()` - onClick handler for when user clicks the notification element
 
- If notifications are enabled the notifications can be handled through onboard app state as seen below.
- ```javascript
+Notify can also be styled by using the CSS variables found below. These are setup to allow maximum customization with base styling variables setting the global theme (i.e. `--onboard-grey-600`) along with more precise component level styling variables available (`--notify-onboard-grey-600`) with the latter taking precedent if defined
+
+If notifications are enabled the notifications can be handled through onboard app state as seen below.
+
+```javascript
 const wallets = onboard.state.select('notifications')
 const { unsubscribe } = wallets.subscribe(update =>
   console.log('transaction notifications: ', update)
@@ -145,8 +148,13 @@ unsubscribe()
 ```
 
 ```typescript
+
 export type NotifyOptions = {
-  enabled: boolean  // default: true
+  desktop: Notify
+  mobile: Notify
+}
+export type Notify = {
+  enabled: boolean // default: true
   /**
    * Callback that receives all transaction events
    * Return a custom notification based on the event
@@ -156,7 +164,14 @@ export type NotifyOptions = {
   transactionHandler?: (
     event: EthereumTransactionData
   ) => TransactionHandlerReturn
+  position: CommonPositions
 }
+
+export type CommonPositions =
+| 'topRight'
+| 'bottomRight'
+| 'bottomLeft'
+| 'topLeft'
 
 export type TransactionHandlerReturn = CustomNotification | boolean | void
 
@@ -177,7 +192,19 @@ export type Notification = {
 
 export type NotificationType = 'pending' | 'success' | 'error' | 'hint'
 
-export declare type Network = 'main' | 'testnet' | 'ropsten' | 'rinkeby' | 'goerli' | 'kovan' | 'xdai' | 'bsc-main' | 'matic-main' | 'fantom-main' | 'matic-mumbai' | 'local';
+export declare type Network =
+  | 'main'
+  | 'testnet'
+  | 'ropsten'
+  | 'rinkeby'
+  | 'goerli'
+  | 'kovan'
+  | 'xdai'
+  | 'bsc-main'
+  | 'matic-main'
+  | 'fantom-main'
+  | 'matic-mumbai'
+  | 'local'
 
 export interface UpdateNotification {
   (notificationObject: CustomNotification): {
@@ -187,28 +214,26 @@ export interface UpdateNotification {
 }
 ```
 
-Notify can be used to deliver custom DApp notifications by passing a `CustomNotification` object to the `customNotification` action. This will return an `UpdateNotification` type. 
- This `UpdateNotification` will return an `update` function that can be passed a new `CustomNotification` to update the existing notification.
- The `customNotification` method also returns a `dismiss` method that is called without any parameters to dismiss the notification. 
- 
+Notify can be used to deliver custom DApp notifications by passing a `CustomNotification` object to the `customNotification` action. This will return an `UpdateNotification` type.
+This `UpdateNotification` will return an `update` function that can be passed a new `CustomNotification` to update the existing notification.
+The `customNotification` method also returns a `dismiss` method that is called without any parameters to dismiss the notification.
+
 ```typescript
-  const { update, dismiss } =
-    onboard.state.actions.customNotification({
-      type: 'pending',
-      message:
-        'This is a custom DApp pending notification to use however you want',
-      autoDismiss: 0
-    })
-  setTimeout(
-    () =>
-      update({
-        eventCode: 'dbUpdateSuccess',
-        message: 'Updated status for custom notification',
-        type: 'success',
-        autoDismiss: 8000
-      }),
-    4000
-  )
+const { update, dismiss } = onboard.state.actions.customNotification({
+  type: 'pending',
+  message: 'This is a custom DApp pending notification to use however you want',
+  autoDismiss: 0
+})
+setTimeout(
+  () =>
+    update({
+      eventCode: 'dbUpdateSuccess',
+      message: 'Updated status for custom notification',
+      type: 'success',
+      autoDismiss: 8000
+    }),
+  4000
+)
 ```
 
 ### Initialization Example
@@ -273,15 +298,31 @@ const onboard = Onboard({
   },
   apiKey: 'xxx387fb-bxx1-4xxc-a0x3-9d37e426xxxx'
   notify: {
-    enabled: true,
-    transactionHandler: transaction => {
-      console.log({ transaction })
-      if (transaction.eventCode === 'txPool') {
-        return {
-          type: 'success',
-          message: 'Your transaction from #1 DApp is in the mempool',
+    desktop: {
+      enabled: true,
+      transactionHandler: transaction => {
+        console.log({ transaction })
+        if (transaction.eventCode === 'txPool') {
+          return {
+            type: 'success',
+            message: 'Your transaction from #1 DApp is in the mempool',
+          }
         }
-      }
+      },
+      position: 'bottomLeft'
+    },
+    mobile: {
+      enabled: true,
+      transactionHandler: transaction => {
+        console.log({ transaction })
+        if (transaction.eventCode === 'txPool') {
+          return {
+            type: 'success',
+            message: 'Your transaction from #1 DApp is in the mempool',
+          }
+        }
+      },
+      position: 'topRight'
     }
   },
   accountCenter: {
@@ -309,7 +350,7 @@ const onboard = Onboard({
         },
         watched: {
           // Any words in brackets can be re-ordered or removed to fit your dapps desired verbiage
-          "txPool": "Your account is {verb} {formattedValue} {asset} {preposition} {counterpartyShortened}" 
+          "txPool": "Your account is {verb} {formattedValue} {asset} {preposition} {counterpartyShortened}"
         }
       }
     },
@@ -408,7 +449,7 @@ type AppState = {
   accountCenter: AccountCenter
   walletModules: WalletModule[]
   locale: Locale
-  notify: NotifyOptions
+  notify: Notify
   notifications: Notification[]
 }
 
@@ -617,6 +658,9 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-warning-500: #ffaf00;
   --onboard-warning-600: #cc8c00;
   --onboard-warning-700: #664600;
+
+  /* CUSTOMIZE ACCOUNT CENTER STACK POSITIONING*/
+  --account-center-z-index
 
   /* CUSTOMIZE SECTIONS OF THE CONNECT MODAL */
   --onboard-connect-content-width
