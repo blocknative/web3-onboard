@@ -10,7 +10,7 @@
   import elipsisIcon from '../../icons/elipsis'
   import { addWallet } from '../../store/actions'
   import disconnect from '../../disconnect'
-  import { selectAccounts } from '../../provider'
+  import { getEns, selectAccounts } from '../../provider'
   import { connectWallet$ } from '../../streams'
 
   export let wallet: WalletState
@@ -54,6 +54,13 @@
           actionRequired: wallet.label
         })
       }
+    }
+  }
+  async function copyWalletAddress(address: string) {
+    try {
+      await navigator.clipboard.writeText(address)
+    } catch (err) {
+      console.error('Failed to copy: ', err)
     }
   }
 </script>
@@ -175,7 +182,10 @@
         </div>
 
         <!-- ADDRESS / ENS -->
-        <span class="address-ens"
+        <span
+          class="address-ens"
+          on:click|stopPropagation={() =>
+            copyWalletAddress(ens ? ens.name : address)}
           >{ens ? shortenEns(ens.name) : shortenAddress(address)}</span
         >
       </div>
