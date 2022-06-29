@@ -103,7 +103,7 @@ function init(options: InitOptions): OnboardAPI {
   }
 
   // update notify
-  if (typeof notify !== undefined) {
+  if (typeof notify !== 'undefined') {
     if ('desktop' in notify || 'mobile' in notify) {
       const error = validateNotifyOptions(notify)
   
