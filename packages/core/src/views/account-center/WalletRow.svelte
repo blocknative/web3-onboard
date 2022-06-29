@@ -10,7 +10,7 @@
   import elipsisIcon from '../../icons/elipsis'
   import { addWallet } from '../../store/actions'
   import disconnect from '../../disconnect'
-  import { getEns, selectAccounts } from '../../provider'
+  import { selectAccounts } from '../../provider'
   import { connectWallet$ } from '../../streams'
 
   export let wallet: WalletState
