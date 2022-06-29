@@ -290,7 +290,7 @@
   <SwitchChain />
 {/if}
 
-{#if $notify$.enabled && $accountCenter$.enabled && $wallets$.length}
+{#if $notify$.enabled && $accountCenter$.enabled && $wallets$.length && (sharedContainer || (device.type === 'mobile' && ($notify$.position.includes('bottom') && $accountCenter$.position.includes('bottom')) || ($notify$.position.includes('top') && $accountCenter$.position.includes('top')))) }
   <div
     class="container flex flex-column fixed z-indexed"
     style="{positioningDefaults[$accountCenter$.position]}; {device.type ===
@@ -304,7 +304,7 @@
       <Notify
         notifications={$notifications$}
         position={$notify$.position}
-        sharedContainer
+        sharedContainer={sharedContainer}
       />
     {/if}
     <div
@@ -324,12 +324,12 @@
       <Notify
         notifications={$notifications$}
         position={$notify$.position}
-        sharedContainer
+        sharedContainer={sharedContainer}
       />
     {/if}
   </div>
 {/if}
-{#if $accountCenter$.enabled && (!$notify$.enabled || ($notify$.position !== $accountCenter$.position && device.type !== 'mobile')) && $wallets$.length}
+{#if $accountCenter$.enabled && (!$notify$.enabled || ($notify$.position !== $accountCenter$.position && device.type !== 'mobile') || (device.type === 'mobile' && ($notify$.position.includes('top') && $accountCenter$.position.includes('bottom')) || ($notify$.position.includes('bottom') && $accountCenter$.position.includes('top')))) && $wallets$.length}
   <div
     class="container flex flex-column fixed z-indexed"
     style="{positioningDefaults[$accountCenter$.position]}; {device.type ===
@@ -369,7 +369,7 @@
     <Notify
       notifications={$notifications$}
       position={$notify$.position}
-      sharedContainer
+      sharedContainer={sharedContainer}
     />
   </div>
 {/if}
