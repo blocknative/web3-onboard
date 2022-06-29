@@ -34,7 +34,7 @@
     $notify$.enabled &&
     $notify$.position === $accountCenter$.position
 
-  $: sameMobileContainer =
+  $: samePositionMobile =
     device.type === 'mobile' || $accountCenter$.position === $notify$.position
 
   $: sharedMobileContainerCheck =
@@ -339,7 +339,7 @@
       ? 'padding-top:0;'
       : ''} "
   >
-    {#if $notify$.position.includes('bottom') && $accountCenter$.position.includes('bottom') && sameMobileContainer}
+    {#if $notify$.position.includes('bottom') && $accountCenter$.position.includes('bottom') && samePositionMobile}
       <Notify
         notifications={$notifications$}
         position={$notify$.position}
@@ -359,7 +359,7 @@
     >
       <AccountCenter settings={$accountCenter$} />
     </div>
-    {#if $notify$.position.includes('top') && $accountCenter$.position.includes('top') && sameMobileContainer}
+    {#if $notify$.position.includes('top') && $accountCenter$.position.includes('top') && samePositionMobile}
       <Notify
         notifications={$notifications$}
         position={$notify$.position}
