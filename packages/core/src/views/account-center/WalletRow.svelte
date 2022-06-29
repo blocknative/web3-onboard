@@ -56,6 +56,7 @@
       }
     }
   }
+
   async function copyWalletAddress(address: string) {
     try {
       await navigator.clipboard.writeText(address)
