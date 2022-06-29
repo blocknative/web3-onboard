@@ -473,6 +473,18 @@ const tally: InjectedWalletModule = {
   platforms: ['desktop']
 }
 
+const rabby: InjectedWalletModule = {
+  label: ProviderLabel.Rabby,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Rabby],
+  getIcon: async () => (await import('./icons/rabby.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.ethereum)
+  }),
+  platforms: ['desktop']
+}
+
 const wallets = [
   exodus,
   metamask,
@@ -500,7 +512,8 @@ const wallets = [
   xdefi,
   oneInch,
   tokenary,
-  tally
+  tally,
+  rabby
 ]
 
 export default wallets
