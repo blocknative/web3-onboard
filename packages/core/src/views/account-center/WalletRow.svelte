@@ -3,7 +3,7 @@
   import { fade } from 'svelte/transition'
   import { ProviderRpcErrorCode } from '@web3-onboard/common'
   import type { Account, WalletState } from '../../types'
-  import { shortenAddress, shortenEns } from '../../utils'
+  import { shortenAddress, shortenEns, copyWalletAddress } from '../../utils'
   import en from '../../i18n/en.json'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
@@ -54,14 +54,6 @@
           actionRequired: wallet.label
         })
       }
-    }
-  }
-
-  async function copyWalletAddress(address: string) {
-    try {
-      await navigator.clipboard.writeText(address)
-    } catch (err) {
-      console.error('Failed to copy: ', err)
     }
   }
 </script>
