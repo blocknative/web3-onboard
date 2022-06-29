@@ -52,7 +52,7 @@
   let scrollContainer: HTMLElement
 
   let walletToAutoSelect =
-    autoSelect &&
+    autoSelect.label &&
     walletModules.find(
       ({ label }) => label.toLowerCase() === autoSelect.label.toLowerCase()
     )
@@ -209,7 +209,7 @@
       // user rejected account access
       if (code === ProviderRpcErrorCode.ACCOUNT_ACCESS_REJECTED) {
         connectionRejected = true
-        if (autoSelect) {
+        if (walletToAutoSelect) {
           walletToAutoSelect = null
 
           if (autoSelect.disableModals) {
@@ -360,7 +360,7 @@
 
 <svelte:window bind:innerWidth={windowWidth} />
 
-{#if !autoSelect || (autoSelect && !autoSelect.disableModals)}
+{#if !autoSelect.disableModals}
   <Modal {close}>
     <div class="container relative flex">
       {#if windowWidth >= 809}
@@ -396,7 +396,7 @@
                   {connectingErrorMessage}
                 />
               </div>
-            {:else if !autoSelect}
+            {:else if !walletToAutoSelect}
               <InstallWallet />
             {/if}
           {/if}
