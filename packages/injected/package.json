@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/injected-wallets",
-  "version": "2.0.11-alpha.2",
+  "version": "2.0.12-alpha.1",
   "description": "Injected wallets module for web3-onboard",
   "module": "dist/index.js",
   "browser": "dist/index.js",
