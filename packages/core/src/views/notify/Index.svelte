@@ -36,7 +36,7 @@
   x = 0
   y = 0
 
-  const notifications$ = state.select('notifications').pipe(startWith([]))
+  const notifications$ = state.select('notifications').pipe(startWith(state.get().notifications))
 
   let overflowY = 'y-scroll'
   const updateScrollYOnRemove = (): void => {
