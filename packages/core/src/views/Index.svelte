@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { shareReplay, startWith } from 'rxjs/operators'
+  import { shareReplay, startWith, mergeMap, share } from 'rxjs/operators'
   import { connectWallet$, switchChainModal$, wallets$ } from '../streams'
   import { state } from '../store'
   import Connect from './connect/Index.svelte'
@@ -17,19 +17,19 @@
   const notify$ = state
     .select('notify')
     .pipe(startWith(state.get().notify), shareReplay(1))
+
   const positioningDefaults = {
     topLeft: 'top: 0; left: 0;',
     topRight: 'top: 0; right: 0;',
     bottomRight: 'bottom: 0; right: 0;',
     bottomLeft: 'bottom: 0; left: 0;'
   }
-  accountCenter$.subscribe(e => console.log(e))
-  notify$.subscribe(e => console.log(e))
+
   $: sharedContainer =
     $accountCenter$.enabled &&
     $notify$.enabled &&
     $notify$.position === $accountCenter$.position
-  $: console.log(sharedContainer)
+
 </script>
 
 <style>
@@ -287,7 +287,7 @@
   <SwitchChain />
 {/if}
 
-{#if sharedContainer && $wallets$.length}
+{#if sharedContainer}
   <div
     class="container flex flex-column fixed z-indexed"
     style="{positioningDefaults[$accountCenter$.position]}; {device.type ===
