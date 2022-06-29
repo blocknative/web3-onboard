@@ -222,7 +222,7 @@ function ledger({
               return `0x${result['r']}${result['s']}${v}`
             })
         }
-     
+
         const ledgerProvider = getHardwareWalletProvider(
           () => currentChain?.rpcUrl
         )
