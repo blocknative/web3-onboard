@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { shareReplay, startWith, mergeMap, share } from 'rxjs/operators'
+  import { shareReplay, startWith } from 'rxjs/operators'
   import { connectWallet$, switchChainModal$, wallets$ } from '../streams'
   import { state } from '../store'
   import Connect from './connect/Index.svelte'
