@@ -396,7 +396,7 @@
                   {connectingErrorMessage}
                 />
               </div>
-            {:else if !walletToAutoSelect}
+            {:else}
               <InstallWallet />
             {/if}
           {/if}
