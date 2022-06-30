@@ -51,7 +51,8 @@ const useAppState: {
     return stateKey ? snapshot[stateKey] : snapshot
   }, [stateKey])
 
-  return useSyncExternalStore(subscribe, getSnapshot)
+  const getServerSnapshot = () => get() || getSnapshot;
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 }
 
 export const useConnectWallet = (): [
