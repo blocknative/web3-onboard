@@ -4,10 +4,14 @@ import disconnectWallet from './disconnect'
 import setChain from './chain'
 import { state } from './store'
 import { reset$ } from './streams'
-import { validateInitOptions, validateNotify, validateNotifyOptions } from './validation'
+import {
+  validateInitOptions,
+  validateNotify,
+  validateNotifyOptions
+} from './validation'
 import initI18N from './i18n'
 import App from './views/Index.svelte'
-import type { InitOptions, OnboardAPI, Notify } from './types'
+import type { InitOptions, Notify } from './types'
 import { APP_INITIAL_STATE } from './constants'
 import { configuration, updateConfiguration } from './configuration'
 
@@ -17,12 +21,13 @@ import {
   updateAccountCenter,
   updateNotify,
   customNotification,
-  setLocale
+  setLocale,
+  setPrimaryWallet
 } from './store/actions'
 
 import updateBalances from './updateBalances'
 
-const API: OnboardAPI = {
+const API = {
   connectWallet,
   disconnectWallet,
   setChain,
@@ -35,14 +40,16 @@ const API: OnboardAPI = {
       updateNotify,
       customNotification,
       updateBalances,
-      updateAccountCenter
+      updateAccountCenter,
+      setPrimaryWallet
     }
   }
 }
 
+export type OnboardAPI = typeof API
+
 export type {
   InitOptions,
-  OnboardAPI,
   ConnectOptions,
   DisconnectOptions,
   WalletState,
@@ -106,11 +113,11 @@ function init(options: InitOptions): OnboardAPI {
   if (typeof notify !== 'undefined') {
     if ('desktop' in notify || 'mobile' in notify) {
       const error = validateNotifyOptions(notify)
-  
+
       if (error) {
         throw error
       }
-  
+
       if (
         (!notify.desktop || (notify.desktop && !notify.desktop.position)) &&
         accountCenter &&
@@ -142,7 +149,7 @@ function init(options: InitOptions): OnboardAPI {
       updateNotify(notifyUpdate)
     } else {
       const error = validateNotify(notify as Notify)
-  
+
       if (error) {
         throw error
       }
