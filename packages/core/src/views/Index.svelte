@@ -8,6 +8,8 @@
   import AccountCenter from './account-center/Index.svelte'
   import Notify from './notify/Index.svelte'
   import { configuration } from '../configuration'
+  import type { Observable } from 'rxjs'
+  import type { Notification } from '../types'
 
   const { device } = configuration
   const accountCenter$ = state
@@ -18,9 +20,9 @@
     .select('notify')
     .pipe(startWith(state.get().notify), shareReplay(1))
 
-  const notifications$ = $notify$.enabled
-    ? state.select('notifications').pipe(startWith(state.get().notifications))
-    : null
+  const notifications$: Observable<Notification[]> = state
+    .select('notifications')
+    .pipe(startWith(state.get().notifications))
 
   const positioningDefaults = {
     topLeft: 'top: 0; left: 0;',
@@ -34,7 +36,7 @@
     $notify$.enabled &&
     $notify$.position === $accountCenter$.position
 
-  $: samePositionMobile =
+  $: samePositionOrMobile =
     device.type === 'mobile' || $accountCenter$.position === $notify$.position
 
   $: sharedMobileContainerCheck =
@@ -339,7 +341,7 @@
       ? 'padding-top:0;'
       : ''} "
   >
-    {#if $notify$.position.includes('bottom') && $accountCenter$.position.includes('bottom') && samePositionMobile}
+    {#if $notify$.position.includes('bottom') && $accountCenter$.position.includes('bottom') && samePositionOrMobile}
       <Notify
         notifications={$notifications$}
         position={$notify$.position}
@@ -359,7 +361,7 @@
     >
       <AccountCenter settings={$accountCenter$} />
     </div>
-    {#if $notify$.position.includes('top') && $accountCenter$.position.includes('top') && samePositionMobile}
+    {#if $notify$.position.includes('top') && $accountCenter$.position.includes('top') && samePositionOrMobile}
       <Notify
         notifications={$notifications$}
         position={$notify$.position}

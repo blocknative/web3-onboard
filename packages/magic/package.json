@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/magic",
-  "version": "2.0.7-alpha.1",
+  "version": "2.0.7",
   "description": "Magic module for Onboard.js",
   "repository": "blocknative/web3-onboard",
   "scripts": {
@@ -43,7 +43,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.1.4-alpha.1",
+    "@web3-onboard/common": "^2.1.4",
     "joi": "^17.4.2",
     "magic-sdk": "^8.1.0",
     "rxjs": "^7.5.2"
