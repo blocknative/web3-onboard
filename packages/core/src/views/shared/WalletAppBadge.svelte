@@ -78,27 +78,27 @@
   }
 
   .background-gray {
-    background: var(--onboard-gray-500, var(--gray-500));
+    background: var(--onboard-wallet-app-icon-background, var(--onboard-gray-500, var(--gray-500)));
   }
 
   .background-light-gray {
-    background: var(--onboard-gray-100, var(--gray-100));
+    background: var(--onboard-wallet-app-icon-background, var(--onboard-gray-100, var(--gray-100)));
   }
 
   .background-light-blue {
-    background: var(--onboard-primary-100, var(--primary-100));
+    background: var(--onboard-wallet-app-icon-background, var(--onboard-primary-100, var(--primary-100)));
   }
 
   .background-green {
-    background: var(--onboard-success-100, var(--success-100));
+    background: var(--onboard-wallet-app-icon-background, var(--onboard-success-100, var(--success-100)));
   }
 
   .background-white {
-    background: var(--onboard-white, var(--white));
+    background: var(--onboard-wallet-app-icon-background, var(--onboard-white, var(--white)));
   }
 
   .background-transparent {
-    background: transparent;
+    background: var(--onboard-wallet-app-icon-background, transparent);
   }
 
   @keyframes pulse {
