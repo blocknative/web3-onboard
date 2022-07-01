@@ -1,7 +1,8 @@
 {
   "name": "@web3-onboard/fortmatic",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Fortmatic module for web3-onboard",
+  "repository": "blocknative/web3-onboard",
   "module": "dist/index.js",
   "browser": "dist/index.js",
   "main": "dist/index.js",
@@ -20,7 +21,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.1.3",
+    "@web3-onboard/common": "^2.1.4",
     "fortmatic": "^2.2.1"
   }
 }

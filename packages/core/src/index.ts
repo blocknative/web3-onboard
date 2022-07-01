@@ -4,7 +4,11 @@ import disconnectWallet from './disconnect'
 import setChain from './chain'
 import { state } from './store'
 import { reset$ } from './streams'
-import { validateInitOptions, validateNotify, validateNotifyOptions } from './validation'
+import {
+  validateInitOptions,
+  validateNotify,
+  validateNotifyOptions
+} from './validation'
 import initI18N from './i18n'
 import App from './views/Index.svelte'
 import type { InitOptions, OnboardAPI, Notify } from './types'
@@ -103,14 +107,14 @@ function init(options: InitOptions): OnboardAPI {
   }
 
   // update notify
-  if (typeof notify !== undefined) {
+  if (typeof notify !== 'undefined') {
     if ('desktop' in notify || 'mobile' in notify) {
       const error = validateNotifyOptions(notify)
-  
+
       if (error) {
         throw error
       }
-  
+
       if (
         (!notify.desktop || (notify.desktop && !notify.desktop.position)) &&
         accountCenter &&
@@ -128,6 +132,7 @@ function init(options: InitOptions): OnboardAPI {
         notify.mobile.position = accountCenter.mobile.position
       }
       let notifyUpdate: Partial<Notify>
+
       if (device.type === 'mobile' && notify.mobile) {
         notifyUpdate = {
           ...APP_INITIAL_STATE.notify,
@@ -139,15 +144,34 @@ function init(options: InitOptions): OnboardAPI {
           ...notify.desktop
         }
       }
+      if (!apiKey || !notifyUpdate.enabled) {
+        notifyUpdate.enabled = false
+      }
       updateNotify(notifyUpdate)
     } else {
       const error = validateNotify(notify as Notify)
-  
+
       if (error) {
         throw error
       }
-      updateNotify(notify as Notify)
+      const notifyUpdate: Partial<Notify> = {
+        ...APP_INITIAL_STATE.notify,
+        ...notify
+      }
+
+      if (!apiKey || !notifyUpdate.enabled) {
+        notifyUpdate.enabled = false
+      }
+      console.log(notifyUpdate)
+      updateNotify(notifyUpdate)
     }
+  } else {
+    const notifyUpdate: Partial<Notify> = APP_INITIAL_STATE.notify
+
+    if (!apiKey) {
+      notifyUpdate.enabled = false
+    }
+    updateNotify(notifyUpdate)
   }
 
   if (svelteInstance) {
