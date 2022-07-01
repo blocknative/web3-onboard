@@ -8,9 +8,8 @@
   import AccountCenter from './account-center/Index.svelte'
   import Notify from './notify/Index.svelte'
   import { configuration } from '../configuration'
-import type { Observable } from 'rxjs';
-import type { Notification } from '../types'
-
+  import type { Observable } from 'rxjs'
+  import type { Notification } from '../types'
 
   const { device } = configuration
   const accountCenter$ = state
@@ -21,7 +20,9 @@ import type { Notification } from '../types'
     .select('notify')
     .pipe(startWith(state.get().notify), shareReplay(1))
 
-  const notifications$: Observable<Notification[]> = state.select('notifications').pipe(startWith(state.get().notifications))
+  const notifications$: Observable<Notification[]> = state
+    .select('notifications')
+    .pipe(startWith(state.get().notifications))
 
   const positioningDefaults = {
     topLeft: 'top: 0; left: 0;',
