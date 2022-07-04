@@ -11,7 +11,7 @@ import {
 } from './validation'
 import initI18N from './i18n'
 import App from './views/Index.svelte'
-import type { InitOptions, OnboardAPI, Notify } from './types'
+import type { InitOptions, Notify } from './types'
 import { APP_INITIAL_STATE } from './constants'
 import { configuration, updateConfiguration } from './configuration'
 
@@ -21,12 +21,13 @@ import {
   updateAccountCenter,
   updateNotify,
   customNotification,
-  setLocale
+  setLocale,
+  setPrimaryWallet
 } from './store/actions'
 
 import updateBalances from './updateBalances'
 
-const API: OnboardAPI = {
+const API = {
   connectWallet,
   disconnectWallet,
   setChain,
@@ -39,14 +40,16 @@ const API: OnboardAPI = {
       updateNotify,
       customNotification,
       updateBalances,
-      updateAccountCenter
+      updateAccountCenter,
+      setPrimaryWallet
     }
   }
 }
 
+export type OnboardAPI = typeof API
+
 export type {
   InitOptions,
-  OnboardAPI,
   ConnectOptions,
   DisconnectOptions,
   WalletState,
