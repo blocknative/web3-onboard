@@ -171,13 +171,15 @@ const initOptions = Joi.object({
 })
 
 const connectOptions = Joi.object({
-  autoSelect: [
-    Joi.object({
-      label: Joi.string().required(),
-      disableModals: Joi.boolean()
-    }),
-    Joi.string()
-  ]
+  autoSelect: Joi.alternatives()
+    .try(
+      Joi.object({
+        label: Joi.string().required(),
+        disableModals: Joi.boolean()
+      }),
+      Joi.string()
+    )
+    .required()
 })
 
 const disconnectOptions = Joi.object({
