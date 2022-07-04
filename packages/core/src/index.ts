@@ -135,6 +135,7 @@ function init(options: InitOptions): OnboardAPI {
         notify.mobile.position = accountCenter.mobile.position
       }
       let notifyUpdate: Partial<Notify>
+
       if (device.type === 'mobile' && notify.mobile) {
         notifyUpdate = {
           ...APP_INITIAL_STATE.notify,
@@ -146,6 +147,9 @@ function init(options: InitOptions): OnboardAPI {
           ...notify.desktop
         }
       }
+      if (!apiKey || !notifyUpdate.enabled) {
+        notifyUpdate.enabled = false
+      }
       updateNotify(notifyUpdate)
     } else {
       const error = validateNotify(notify as Notify)
@@ -153,8 +157,24 @@ function init(options: InitOptions): OnboardAPI {
       if (error) {
         throw error
       }
-      updateNotify(notify as Notify)
+      const notifyUpdate: Partial<Notify> = {
+        ...APP_INITIAL_STATE.notify,
+        ...notify
+      }
+
+      if (!apiKey || !notifyUpdate.enabled) {
+        notifyUpdate.enabled = false
+      }
+      console.log(notifyUpdate)
+      updateNotify(notifyUpdate)
     }
+  } else {
+    const notifyUpdate: Partial<Notify> = APP_INITIAL_STATE.notify
+
+    if (!apiKey) {
+      notifyUpdate.enabled = false
+    }
+    updateNotify(notifyUpdate)
   }
 
   if (svelteInstance) {
