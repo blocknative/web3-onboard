@@ -20,7 +20,7 @@ jobs:
   deploy_prod:
     docker:
       - image: cimg/node:12.13.1-browser
-      user: root
+        user: root
     steps:
       - checkout
       - run: sudo apt update && sudo apt install awscli
