@@ -35,8 +35,6 @@ import type {
   NotifyEventStyles
 } from './types'
 
-import en from './i18n/en.json'
-
 export function getDevice(): Device | DeviceNotBrowser {
   if (typeof window !== 'undefined') {
     const parsed = bowser.getParser(window.navigator.userAgent)
