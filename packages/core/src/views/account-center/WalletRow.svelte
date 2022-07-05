@@ -12,6 +12,7 @@
   import disconnect from '../../disconnect'
   import { selectAccounts } from '../../provider'
   import { connectWallet$ } from '../../streams'
+  import { text } from 'svelte/internal'
 
   export let wallet: WalletState
   export let primary: boolean
@@ -55,6 +56,14 @@
         })
       }
     }
+  }
+
+  function changeText() {
+    en.accountCenter.copyAddress = 'Copied Successfully'
+    setTimeout(hideMenu, 500)
+    setTimeout(() => {
+      en.accountCenter.copyAddress = 'Copy Wallet address'
+    }, 700)
   }
 </script>
 
@@ -175,10 +184,7 @@
         </div>
 
         <!-- ADDRESS / ENS -->
-        <span
-          class="address-ens"
-          on:click|stopPropagation={() =>
-            copyWalletAddress(ens ? ens.name : address)}
+        <span class="address-ens"
           >{ens ? shortenEns(ens.name) : shortenAddress(address)}</span
         >
       </div>
@@ -235,6 +241,15 @@
           {$_('accountCenter.disconnectWallet', {
             default: en.accountCenter.disconnectWallet
           })}
+        </li>
+        <li
+          on:click|stopPropagation={() => {
+            copyWalletAddress(ens ? ens.name : address).then(() => {
+              changeText()
+            })
+          }}
+        >
+          {en.accountCenter.copyAddress}
         </li>
       </ul>
     {/if}

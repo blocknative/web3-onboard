@@ -62,7 +62,9 @@
 
   const coinbaseWallet = coinbaseModule()
 
-  const walletConnect = walletConnectModule()
+  const walletConnect = walletConnectModule({
+    connectFirstChainId: true
+  })
   const portis = portisModule({
     apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
   })
@@ -213,8 +215,7 @@
           // }
         },
         position: 'topRight'
-      },
-
+      }
     },
     // Sign up for your free api key at www.Blocknative.com
     apiKey: 'xxxxxx-bf21-42ec-a093-9d37e426xxxx'
