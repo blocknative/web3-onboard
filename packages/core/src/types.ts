@@ -49,31 +49,6 @@ export interface InitOptions {
   notify?: Partial<NotifyOptions> | Partial<Notify>
 }
 
-export interface OnboardAPI {
-  connectWallet: typeof connect
-  disconnectWallet: typeof disconnect
-  setChain: typeof setChain
-  state: {
-    select: typeof state.select
-    get: typeof state.get
-    actions: ExposedActions
-  }
-}
-
-interface ExposedActions {
-  setWalletModules: (wallets: WalletInit[]) => void
-  setLocale: (locale: string) => void
-  updateNotify: (update: Partial<Notify>) => void
-  customNotification: (
-    updatedNotification: CustomNotification
-  ) => {
-    dismiss: () => void
-    update: UpdateNotification
-  }
-  updateBalances: (addresses?: string[]) => Promise<void>
-  updateAccountCenter: (update: AccountCenter | Partial<AccountCenter>) => void
-}
-
 export interface ConnectOptions {
   autoSelect?: { label: string; disableModals: boolean }
 }
@@ -155,10 +130,10 @@ export type i18nOptions = Record<Locale, i18n>
 export type i18n = typeof en
 
 export type CommonPositions =
-| 'topRight'
-| 'bottomRight'
-| 'bottomLeft'
-| 'topLeft'
+  | 'topRight'
+  | 'bottomRight'
+  | 'bottomLeft'
+  | 'topLeft'
 
 export type AccountCenterPosition = CommonPositions
 
@@ -192,7 +167,7 @@ export type Notify = {
     event: EthereumTransactionData
   ) => TransactionHandlerReturn
   /**
-   * Position of notifications that defaults to the same position as the 
+   * Position of notifications that defaults to the same position as the
    * Account Center (if enabled) of the top right if AC is disabled
    * and notifications are enabled (enabled by default with API key)
    */
