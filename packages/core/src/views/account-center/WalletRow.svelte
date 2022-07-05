@@ -2,7 +2,7 @@
   import { _ } from 'svelte-i18n'
   import { fade } from 'svelte/transition'
   import { ProviderRpcErrorCode } from '@web3-onboard/common'
-  import type { Account, WalletState } from '../../types'
+  import type { WalletState } from '../../types'
   import { shortenAddress, shortenEns, copyWalletAddress } from '../../utils'
   import en from '../../i18n/en.json'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
