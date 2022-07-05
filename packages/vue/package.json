@@ -1,6 +1,10 @@
 {
   "name": "@web3-onboard/vue",
+<<<<<<< HEAD
   "version": "2.1.2-alpha.2",
+=======
+  "version": "2.1.2",
+>>>>>>> v2-web3-onboard-develop
   "description": "Vue Composable for web3-onboard",
   "repository": "blocknative/web3-onboard",
   "module": "dist/index.js",
@@ -24,8 +28,13 @@
   "dependencies": {
     "@vueuse/core": "^8.4.2",
     "@vueuse/rxjs": "^8.2.0",
+<<<<<<< HEAD
     "@web3-onboard/common": "^2.1.4-alpha.1",
     "@web3-onboard/core": "^2.3.2-alpha.3",
+=======
+    "@web3-onboard/common": "^2.1.4",
+    "@web3-onboard/core": "^2.3.2",
+>>>>>>> v2-web3-onboard-develop
     "vue-demi": "^0.12.4"
   },
   "peerDependencies": {

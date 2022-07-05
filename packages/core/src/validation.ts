@@ -92,6 +92,8 @@ const wallet = Joi.object({
   accounts,
   chains: Joi.array().items(connectedChain)
 })
+  .required()
+  .error(new Error('wallet must be defined'))
 
 const wallets = Joi.array().items(wallet)
 
@@ -268,8 +270,13 @@ export function validateDisconnectOptions(
   return validate(disconnectOptions, data)
 }
 
-export function validateString(str: string): ValidateReturn {
-  return validate(Joi.string().required(), str)
+export function validateString(str: string, label?: string): ValidateReturn {
+  return validate(
+    Joi.string()
+      .required()
+      .label(label || 'value'),
+    str
+  )
 }
 
 export function validateSetChainOptions(data: {

@@ -1,4 +1,5 @@
 # Web3-Onboard
+**easy way to connect users to dapps**
 
 ## Features
 

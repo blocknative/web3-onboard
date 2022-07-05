@@ -89,7 +89,7 @@
   .modal {
     border-radius: var(--onboard-modal-border-radius, var(--border-radius-1));
     overflow-y: auto;
-    background: white;
+    background: var(--onboard-modal-background, white);
   }
 
   @media all and (max-width: 520px) {

@@ -2,13 +2,18 @@
   import { _ } from 'svelte-i18n'
   import { fade } from 'svelte/transition'
   import { ProviderRpcErrorCode } from '@web3-onboard/common'
+<<<<<<< HEAD
   import type { Account, WalletState } from '../../types'
   import { shortenAddress, shortenEns, copyWalletAddress } from '../../utils'
+=======
+  import type { WalletState } from '../../types'
+  import { shortenAddress, shortenEns } from '../../utils'
+>>>>>>> v2-web3-onboard-develop
   import en from '../../i18n/en.json'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
   import elipsisIcon from '../../icons/elipsis'
-  import { addWallet } from '../../store/actions'
+  import { setPrimaryWallet } from '../../store/actions'
   import disconnect from '../../disconnect'
   import { selectAccounts } from '../../provider'
   import { connectWallet$ } from '../../streams'
@@ -30,14 +35,6 @@
     return `${
       balance[asset].length > 8 ? balance[asset].slice(0, 8) : balance[asset]
     } ${asset}`
-  }
-
-  function setPrimaryWallet(wallet: WalletState, account: Account): void {
-    wallet.accounts = [
-      account,
-      ...wallet.accounts.filter(({ address }) => address !== account.address)
-    ]
-    addWallet(wallet)
   }
 
   async function selectAnotherAccount(wallet: WalletState) {
@@ -154,7 +151,7 @@
 {#each wallet.accounts as { address, ens, balance }, i}
   <div class="relative">
     <div
-      on:click={() => setPrimaryWallet(wallet, { address, ens, balance })}
+      on:click={() => setPrimaryWallet(wallet, address)}
       class:primary={primary && i === 0}
       class="container flex items-center justify-between pointer"
     >
@@ -224,7 +221,7 @@
           <li
             on:click|stopPropagation={() => {
               showMenu = ''
-              setPrimaryWallet(wallet, { address, ens, balance })
+              setPrimaryWallet(wallet, address)
             }}
           >
             {$_('accountCenter.setPrimaryAccount', {
