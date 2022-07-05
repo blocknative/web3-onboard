@@ -83,6 +83,15 @@ export function shortenEns(ens: string): string {
   return ens.length > 11 ? `${ens.slice(0, 4)}...${ens.slice(-6)}` : ens
 }
 
+export async function copyWalletAddress(text: string): Promise<void> {
+  try {
+   const copy = await navigator.clipboard.writeText(text);
+   return copy
+  } catch (err) {
+    console.error('Failed to copy: ', err)
+  }
+}
+
 export const chainIdToLabel: Record<string, string> = {
   '0x1': 'Ethereum',
   '0x3': 'Ropsten',

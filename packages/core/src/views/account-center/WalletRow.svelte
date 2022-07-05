@@ -3,7 +3,7 @@
   import { fade } from 'svelte/transition'
   import { ProviderRpcErrorCode } from '@web3-onboard/common'
   import type { WalletState } from '../../types'
-  import { shortenAddress, shortenEns } from '../../utils'
+  import { shortenAddress, shortenEns, copyWalletAddress } from '../../utils'
   import en from '../../i18n/en.json'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
@@ -47,6 +47,14 @@
         })
       }
     }
+  }
+
+  function changeText() {
+    en.accountCenter.copyAddress = 'Copied Successfully'
+    setTimeout(hideMenu, 500)
+    setTimeout(() => {
+      en.accountCenter.copyAddress = 'Copy Wallet address'
+    }, 700)
   }
 </script>
 
@@ -224,6 +232,15 @@
           {$_('accountCenter.disconnectWallet', {
             default: en.accountCenter.disconnectWallet
           })}
+        </li>
+        <li
+          on:click|stopPropagation={() => {
+            copyWalletAddress(ens ? ens.name : address).then(() => {
+              changeText()
+            })
+          }}
+        >
+          {en.accountCenter.copyAddress}
         </li>
       </ul>
     {/if}

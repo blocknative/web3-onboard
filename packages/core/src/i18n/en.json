@@ -70,7 +70,8 @@
     "poweredBy": "powered by",
     "addAccount": "Add Account",
     "setPrimaryAccount": "Set Primary Account",
-    "disconnectWallet": "Disconnect Wallet"
+    "disconnectWallet": "Disconnect Wallet",
+    "copyAddress": "Copy Wallet address"
   },
   "notify": {
     "transaction": {
