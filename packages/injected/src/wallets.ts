@@ -319,13 +319,18 @@ const imtoken: InjectedWalletModule = {
 
 const liquality: InjectedWalletModule = {
   label: ProviderLabel.Liquality,
-  injectedNamespace: InjectedNameSpace.Arbitrum,
+  injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
     !!provider && !!provider[ProviderIdentityFlag.Liquality],
   getIcon: async () => (await import('./icons/liquality.js')).default,
   getInterface: async () => {
-    const provider = window[InjectedNameSpace.Arbitrum]
+    const provider = createEIP1193Provider(window.ethereum, {
+      wallet_switchEthereumChain: UNSUPPORTED_METHOD,
+      eth_selectAccounts: UNSUPPORTED_METHOD
+    })
+
     provider.removeListener = (event, func) => {}
+
     return { provider }
   },
   platforms: ['desktop']
