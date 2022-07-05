@@ -12,7 +12,6 @@
   import disconnect from '../../disconnect'
   import { selectAccounts } from '../../provider'
   import { connectWallet$ } from '../../streams'
-  import { text } from 'svelte/internal'
 
   export let wallet: WalletState
   export let primary: boolean
