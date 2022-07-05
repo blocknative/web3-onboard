@@ -178,7 +178,6 @@ async function trezorProvider(options: {
   }
 
   async function setPath(path: string, custom?: boolean) {
-
     if (path !== dPath) {
       // clear any exsting addresses if different path
       addressToPath = new Map()
