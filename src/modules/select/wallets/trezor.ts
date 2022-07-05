@@ -84,7 +84,7 @@ async function trezorProvider(options: {
   const { default: Common } = await import('@ethereumjs/common')
   const ethUtil = await import('ethereumjs-util')
   const { default: createProvider } = await import('./providerEngine')
-  const { generateAddresses, isValidPath } = await import('./hd-wallet')
+  const { generateAddresses } = await import('./hd-wallet')
 
   const { default: TrezorConnect, DEVICE_EVENT, DEVICE } = TrezorConnectLibrary
 

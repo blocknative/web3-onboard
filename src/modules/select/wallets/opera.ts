@@ -3,6 +3,7 @@ import { WalletModule, Helpers, CommonWalletOptions } from '../../../interfaces'
 
 import operaIcon from '../wallet-icons/icon-opera.png'
 import operaIcon2x from '../wallet-icons/icon-opera@2x.png'
+import { getProviderName } from '../../../utilities'
 
 function opera(options: CommonWalletOptions): WalletModule {
   const { preferred, label, iconSrc, svg } = options
@@ -13,16 +14,13 @@ function opera(options: CommonWalletOptions): WalletModule {
     iconSrcSet: iconSrc || operaIcon2x,
     svg,
     wallet: async (helpers: Helpers) => {
-      const { getProviderName, createModernProviderInterface } = helpers
-
-      const provider =
-        (window as any).ethereum ||
-        ((window as any).web3 && (window as any).web3.currentProvider)
+      const { createModernProviderInterface, browser } = helpers
+      const provider = (window as any).ethereum
 
       return {
         provider,
         interface:
-          provider && getProviderName(provider) === undefined
+          provider && getProviderName(provider) === 'Opera'
             ? createModernProviderInterface(provider)
             : null
       }
