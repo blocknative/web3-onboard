@@ -20,6 +20,7 @@ jobs:
   deploy_prod:
     docker:
       - image: cimg/node:12.13.1-browser
+        user: root
     steps:
       - checkout
       - run: yarn
