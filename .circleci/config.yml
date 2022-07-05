@@ -20,9 +20,10 @@ jobs:
   deploy_prod:
     docker:
       - image: cimg/node:12.13.1-browser
-        user: root
+      user: root
     steps:
       - checkout
+      - run: sudo apt update && sudo apt install awscli
       - run: yarn
       - run: yarn build
       - run: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
