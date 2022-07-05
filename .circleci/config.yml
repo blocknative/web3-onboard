@@ -2,7 +2,7 @@ version: 2
 jobs:
   test:
     docker:
-      - image: cimg/node:12.13.1-browser
+      - image: circleci/node:12-browsers
     steps:
       - checkout
       - restore_cache:
@@ -19,7 +19,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
   deploy_prod:
     docker:
-      - image: cimg/node:12.13.1-browser
+      - image: circleci/node:12-browsers
         user: root
     steps:
       - checkout
