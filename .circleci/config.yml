@@ -2,7 +2,7 @@ version: 2
 jobs:
   test:
     docker:
-      - image: circleci/node:12-browsers
+      - image: cimg/node:12.13.1-browser
     steps:
       - checkout
       - restore_cache:
@@ -19,11 +19,9 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
   deploy_prod:
     docker:
-      - image: circleci/node:12-browsers
-        user: root
+      - image: cimg/node:12.13.1-browser
     steps:
       - checkout
-      - run: sudo apt update && sudo apt install awscli
       - run: yarn
       - run: yarn build
       - run: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
