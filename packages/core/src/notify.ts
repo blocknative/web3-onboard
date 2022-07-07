@@ -13,7 +13,7 @@ import type {
 import { validateTransactionHandlerReturn } from './validation'
 import { state } from './store'
 import { addNotification } from './store/actions'
-import updateBalances from './updateBalances'
+import updateBalances from './update-balances'
 
 export function handleTransactionUpdates(
   transaction: EthereumTransactionData
