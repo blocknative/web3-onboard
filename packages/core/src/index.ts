@@ -25,7 +25,7 @@ import {
   setPrimaryWallet
 } from './store/actions'
 
-import updateBalances from './updateBalances'
+import updateBalances from './update-balances'
 
 const API = {
   connectWallet,
