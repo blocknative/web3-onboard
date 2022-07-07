@@ -490,6 +490,16 @@ const rabby: InjectedWalletModule = {
   platforms: ['desktop']
 }
 
+const mathwallet: InjectedWalletModule = {
+  label: ProviderLabel.MathWallet,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.MathWallet],
+  getIcon: async () => (await import('./icons/mathwallet.js')).default,
+  getInterface: getInjectedInterface(ProviderIdentityFlag.MathWallet),
+  platforms: ['all']
+}
+
 const wallets = [
   exodus,
   metamask,
@@ -518,7 +528,8 @@ const wallets = [
   oneInch,
   tokenary,
   tally,
-  rabby
+  rabby,
+  mathwallet
 ]
 
 export default wallets

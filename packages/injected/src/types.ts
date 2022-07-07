@@ -41,7 +41,8 @@ export enum ProviderIdentityFlag {
   Tokenary = 'isTokenary',
   Tally = 'isTally',
   BraveWallet = 'isBraveWallet',
-  Rabby = 'isRabby'
+  Rabby = 'isRabby',
+  MathWallet = 'isMathWallet'
 }
 
 export enum ProviderLabel {
@@ -74,7 +75,8 @@ export enum ProviderLabel {
   OneInch = '1inch Wallet',
   Tokenary = 'Tokenary Wallet',
   Tally = 'Tally Wallet',
-  Rabby = 'Rabby'
+  Rabby = 'Rabby',
+  MathWallet = 'MathWallet',
 }
 
 export interface MeetOneProvider extends ExternalProvider {
