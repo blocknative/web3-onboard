@@ -13,6 +13,7 @@ import type {
 import { validateTransactionHandlerReturn } from './validation'
 import { state } from './store'
 import { addNotification } from './store/actions'
+import updateBalances from './update-balances'
 
 export function handleTransactionUpdates(
   transaction: EthereumTransactionData
@@ -22,6 +23,10 @@ export function handleTransactionUpdates(
 
   if (invalid) {
     throw invalid
+  }
+
+  if (transaction.eventCode === 'txConfirmed') {
+    updateBalances([transaction.watchedAddress, transaction.counterparty])
   }
 
   const notification = transactionEventToNotification(transaction, customized)
@@ -161,3 +166,4 @@ export function typeToDismissTimeout(type: string): number {
       return 0
   }
 }
+

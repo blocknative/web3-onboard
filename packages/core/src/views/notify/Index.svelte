@@ -6,12 +6,18 @@
   import { state } from '../../store'
   import { shareReplay, startWith } from 'rxjs/operators'
   import Notification from './Notification.svelte'
+  import { configuration } from '../../configuration'
+  import type { Notification as NotificationType } from '../../types'
+
+  const { device } = configuration
 
   const accountCenter$ = state
     .select('accountCenter')
     .pipe(startWith(state.get().accountCenter), shareReplay(1))
 
   export let position: string
+  export let sharedContainer: boolean
+  export let notifications: NotificationType[]
 
   let x: number
   let y: number
@@ -31,8 +37,6 @@
 
   x = 0
   y = 0
-
-  const notifications$ = state.select('notifications').pipe(startWith([]))
 
   let overflowY = 'y-scroll'
   const updateScrollYOnRemove = (): void => {
@@ -110,16 +114,22 @@
   }
 </style>
 
-{#if $notifications$.length}
+{#if notifications.length}
   <ul
     class="bn-notify-{position} {overflowY}"
     style={`${
       position.includes('top') ? 'justify-content:flex-start;' : ''
     }; max-height: calc(100vh - ${
-      !$accountCenter$.expanded ? '82px' : '412px'
+      $accountCenter$.expanded
+        ? '412px'
+        : sharedContainer && device.type !== 'mobile'
+        ? '82px'
+        : !sharedContainer && device.type === 'mobile'
+        ? '108px'
+        : '24px'
     })`}
   >
-    {#each $notifications$ as notification (notification.key)}
+    {#each notifications as notification (notification.key)}
       <li
         animate:flip={{ duration: 500 }}
         on:click|stopPropagation

@@ -16,7 +16,6 @@ import type {
   UpdateAccountCenterAction,
   UpdateWalletAction,
   WalletState,
-  NotifyOptions,
   UpdateNotifyAction,
   Notification,
   AddNotificationAction,
@@ -24,7 +23,8 @@ import type {
   UpdateAllWalletsAction,
   CustomNotification,
   UpdateNotification,
-  CustomNotificationUpdate
+  CustomNotificationUpdate,
+  Notify
 } from '../types'
 
 import {
@@ -33,11 +33,11 @@ import {
   validateNotification,
   validateCustomNotification,
   validateCustomNotificationUpdate,
-  validateNotifyOptions,
   validateString,
   validateWallet,
   validateWalletInit,
-  validateUpdateBalances
+  validateUpdateBalances,
+  validateNotify
 } from '../validation'
 
 import {
@@ -106,7 +106,7 @@ export function updateWallet(id: string, update: Partial<WalletState>): void {
 }
 
 export function removeWallet(id: string): void {
-  const error = validateString(id)
+  const error = validateString(id, 'wallet id')
 
   if (error) {
     throw error
@@ -120,6 +120,31 @@ export function removeWallet(id: string): void {
   }
 
   dispatch(action as RemoveWalletAction)
+}
+
+export function setPrimaryWallet(wallet: WalletState, address?: string): void {
+  console.log({ address })
+  const error =
+    validateWallet(wallet) || (address && validateString(address, 'address'))
+
+  if (error) {
+    throw error
+  }
+
+  // if also setting the primary account
+  if (address) {
+    const account = wallet.accounts.find(ac => ac.address === address)
+
+    if (account) {
+      wallet.accounts = [
+        account,
+        ...wallet.accounts.filter(({ address }) => address !== account.address)
+      ]
+    }
+  }
+
+  // add wallet will set it to first wallet since it already exists
+  addWallet(wallet)
 }
 
 export function updateAccount(
@@ -156,8 +181,8 @@ export function updateAccountCenter(
   dispatch(action as UpdateAccountCenterAction)
 }
 
-export function updateNotify(update: Partial<NotifyOptions>): void {
-  const error = validateNotifyOptions(update)
+export function updateNotify(update: Partial<Notify>): void {
+  const error = validateNotify(update)
 
   if (error) {
     throw error

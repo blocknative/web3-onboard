@@ -8,6 +8,8 @@
   import AccountCenter from './account-center/Index.svelte'
   import Notify from './notify/Index.svelte'
   import { configuration } from '../configuration'
+  import type { Observable } from 'rxjs'
+  import type { Notification } from '../types'
 
   const { device } = configuration
   const accountCenter$ = state
@@ -18,12 +20,60 @@
     .select('notify')
     .pipe(startWith(state.get().notify), shareReplay(1))
 
-  const accountCenterPositions = {
+  const notifications$: Observable<Notification[]> = state
+    .select('notifications')
+    .pipe(startWith(state.get().notifications))
+
+  const positioningDefaults = {
     topLeft: 'top: 0; left: 0;',
     topRight: 'top: 0; right: 0;',
     bottomRight: 'bottom: 0; right: 0;',
     bottomLeft: 'bottom: 0; left: 0;'
   }
+
+  $: sharedContainer =
+    $accountCenter$.enabled &&
+    $notify$.enabled &&
+    $notify$.position === $accountCenter$.position
+
+  $: samePositionOrMobile =
+    device.type === 'mobile' || $accountCenter$.position === $notify$.position
+
+  $: sharedMobileContainerCheck =
+    device.type === 'mobile' &&
+    (($notify$.position.includes('bottom') &&
+      $accountCenter$.position.includes('bottom')) ||
+      ($notify$.position.includes('top') &&
+        $accountCenter$.position.includes('top')))
+
+  $: separateMobileContainerCheck =
+    device.type === 'mobile' &&
+    (($notify$.position.includes('top') &&
+      $accountCenter$.position.includes('bottom')) ||
+      ($notify$.position.includes('bottom') &&
+        $accountCenter$.position.includes('top')))
+
+  $: displayNotifySeparate =
+    $notify$.enabled &&
+    (!$accountCenter$.enabled ||
+      ($notify$.position !== $accountCenter$.position &&
+        device.type !== 'mobile') ||
+      separateMobileContainerCheck) &&
+    $wallets$.length
+
+  $: displayAccountCenterSeparate =
+    $accountCenter$.enabled &&
+    (!$notify$.enabled ||
+      ($notify$.position !== $accountCenter$.position &&
+        device.type !== 'mobile') ||
+      separateMobileContainerCheck) &&
+    $wallets$.length
+
+  $: displayAccountCenterNotifySameContainer =
+    $notify$.enabled &&
+    $accountCenter$.enabled &&
+    $wallets$.length &&
+    (sharedContainer || sharedMobileContainerCheck)
 </script>
 
 <style>
@@ -281,19 +331,55 @@
   <SwitchChain />
 {/if}
 
-{#if ($notify$.enabled || $accountCenter$.enabled) && $wallets$.length}
+{#if displayAccountCenterNotifySameContainer}
   <div
     class="container flex flex-column fixed z-indexed"
-    style="{accountCenterPositions[$accountCenter$.position]}; {device.type ===
+    style="{positioningDefaults[$accountCenter$.position]}; {device.type ===
       'mobile' && $accountCenter$.position.includes('top')
       ? 'padding-bottom: 0;'
       : device.type === 'mobile' && $accountCenter$.position.includes('bottom')
       ? 'padding-top:0;'
       : ''} "
   >
-    {#if $notify$.enabled && $accountCenter$.position.includes('bottom')}
-      <Notify position={$accountCenter$.position} />
+    {#if $notify$.position.includes('bottom') && $accountCenter$.position.includes('bottom') && samePositionOrMobile}
+      <Notify
+        notifications={$notifications$}
+        position={$notify$.position}
+        {sharedContainer}
+      />
     {/if}
+    <div
+      style={!$accountCenter$.expanded &&
+      $accountCenter$.minimal &&
+      $accountCenter$.position.includes('Right')
+        ? 'margin-left: auto'
+        : !$accountCenter$.expanded &&
+          $accountCenter$.minimal &&
+          $accountCenter$.position.includes('Left')
+        ? 'margin-right: auto'
+        : ''}
+    >
+      <AccountCenter settings={$accountCenter$} />
+    </div>
+    {#if $notify$.position.includes('top') && $accountCenter$.position.includes('top') && samePositionOrMobile}
+      <Notify
+        notifications={$notifications$}
+        position={$notify$.position}
+        {sharedContainer}
+      />
+    {/if}
+  </div>
+{/if}
+{#if displayAccountCenterSeparate}
+  <div
+    class="container flex flex-column fixed z-indexed"
+    style="{positioningDefaults[$accountCenter$.position]}; {device.type ===
+      'mobile' && $accountCenter$.position.includes('top')
+      ? 'padding-bottom: 0;'
+      : device.type === 'mobile' && $accountCenter$.position.includes('bottom')
+      ? 'padding-top:0;'
+      : ''} "
+  >
     <div
       style={!$accountCenter$.expanded &&
       $accountCenter$.minimal &&
@@ -309,9 +395,22 @@
         <AccountCenter settings={$accountCenter$} />
       {/if}
     </div>
-
-    {#if $notify$.enabled && $accountCenter$.position.includes('top')}
-      <Notify position={$accountCenter$.position} />
-    {/if}
+  </div>
+{/if}
+{#if displayNotifySeparate}
+  <div
+    class="container flex flex-column fixed z-indexed"
+    style="{positioningDefaults[$notify$.position]}; {device.type ===
+      'mobile' && $notify$.position.includes('top')
+      ? 'padding-bottom: 0;'
+      : device.type === 'mobile' && $notify$.position.includes('bottom')
+      ? 'padding-top:0;'
+      : ''} "
+  >
+    <Notify
+      notifications={$notifications$}
+      position={$notify$.position}
+      {sharedContainer}
+    />
   </div>
 {/if}

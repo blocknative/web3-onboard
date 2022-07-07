@@ -4,10 +4,14 @@ import disconnectWallet from './disconnect'
 import setChain from './chain'
 import { state } from './store'
 import { reset$ } from './streams'
-import { validateInitOptions } from './validation'
+import {
+  validateInitOptions,
+  validateNotify,
+  validateNotifyOptions
+} from './validation'
 import initI18N from './i18n'
 import App from './views/Index.svelte'
-import type { InitOptions, OnboardAPI } from './types'
+import type { InitOptions, Notify } from './types'
 import { APP_INITIAL_STATE } from './constants'
 import { configuration, updateConfiguration } from './configuration'
 
@@ -17,10 +21,11 @@ import {
   updateAccountCenter,
   updateNotify,
   customNotification,
-  setLocale
+  setLocale,
+  setPrimaryWallet
 } from './store/actions'
 
-import updateBalances from './updateBalances'
+import updateBalances from './update-balances'
 
 const API = {
   connectWallet,
@@ -34,18 +39,27 @@ const API = {
       setLocale,
       updateNotify,
       customNotification,
-      updateBalances
+      updateBalances,
+      updateAccountCenter,
+      setPrimaryWallet
     }
   }
 }
 
+export type OnboardAPI = typeof API
+
 export type {
   InitOptions,
-  OnboardAPI,
   ConnectOptions,
   DisconnectOptions,
   WalletState,
-  ConnectedChain
+  ConnectedChain,
+  AccountCenter,
+  AppState,
+  CustomNotification,
+  Notification,
+  Notify,
+  UpdateNotification
 } from './types'
 
 export type { EIP1193Provider } from '@web3-onboard/common'
@@ -96,8 +110,71 @@ function init(options: InitOptions): OnboardAPI {
   }
 
   // update notify
-  if (typeof notify !== undefined) {
-    updateNotify(notify)
+  if (typeof notify !== 'undefined') {
+    if ('desktop' in notify || 'mobile' in notify) {
+      const error = validateNotifyOptions(notify)
+
+      if (error) {
+        throw error
+      }
+
+      if (
+        (!notify.desktop || (notify.desktop && !notify.desktop.position)) &&
+        accountCenter &&
+        accountCenter.desktop &&
+        accountCenter.desktop.position
+      ) {
+        notify.desktop.position = accountCenter.desktop.position
+      }
+      if (
+        (!notify.mobile || (notify.mobile && !notify.mobile.position)) &&
+        accountCenter &&
+        accountCenter.mobile &&
+        accountCenter.mobile.position
+      ) {
+        notify.mobile.position = accountCenter.mobile.position
+      }
+      let notifyUpdate: Partial<Notify>
+
+      if (device.type === 'mobile' && notify.mobile) {
+        notifyUpdate = {
+          ...APP_INITIAL_STATE.notify,
+          ...notify.mobile
+        }
+      } else if (notify.desktop) {
+        notifyUpdate = {
+          ...APP_INITIAL_STATE.notify,
+          ...notify.desktop
+        }
+      }
+      if (!apiKey || !notifyUpdate.enabled) {
+        notifyUpdate.enabled = false
+      }
+      updateNotify(notifyUpdate)
+    } else {
+      const error = validateNotify(notify as Notify)
+
+      if (error) {
+        throw error
+      }
+      const notifyUpdate: Partial<Notify> = {
+        ...APP_INITIAL_STATE.notify,
+        ...notify
+      }
+
+      if (!apiKey || !notifyUpdate.enabled) {
+        notifyUpdate.enabled = false
+      }
+      console.log(notifyUpdate)
+      updateNotify(notifyUpdate)
+    }
+  } else {
+    const notifyUpdate: Partial<Notify> = APP_INITIAL_STATE.notify
+
+    if (!apiKey) {
+      notifyUpdate.enabled = false
+    }
+    updateNotify(notifyUpdate)
   }
 
   if (svelteInstance) {

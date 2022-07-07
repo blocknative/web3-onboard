@@ -1,5 +1,5 @@
 import { firstValueFrom } from 'rxjs'
-import { filter, mapTo } from 'rxjs/operators'
+import { filter, map } from 'rxjs/operators'
 import { ProviderRpcErrorCode } from '@web3-onboard/common'
 import { addNewChain, switchChain } from './provider'
 import { state } from './store'
@@ -62,7 +62,7 @@ async function setChain(options: {
     const { code } = error as { code: number }
     const switchChainModalClosed$ = switchChainModal$.pipe(
       filter(x => x === null),
-      mapTo(false)
+      map(() => false)
     )
 
     if (code === ProviderRpcErrorCode.CHAIN_NOT_ADDED) {
