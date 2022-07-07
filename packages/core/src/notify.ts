@@ -13,7 +13,7 @@ import type {
 import { validateTransactionHandlerReturn } from './validation'
 import { state } from './store'
 import { addNotification } from './store/actions'
-import updateBalances from './updateBalances'
+import updateBalances from './update-balances'
 
 export function handleTransactionUpdates(
   transaction: EthereumTransactionData
@@ -23,6 +23,10 @@ export function handleTransactionUpdates(
 
   if (invalid) {
     throw invalid
+  }
+
+  if (transaction.eventCode === 'txConfirmed') {
+    updateBalances([transaction.watchedAddress, transaction.counterparty])
   }
 
   const notification = transactionEventToNotification(transaction, customized)
@@ -47,10 +51,6 @@ export function transactionEventToNotification(
   } = transaction
 
   const type: NotificationType = eventToType(eventCode)
-
-  if (type === 'success') {
-    updateWalletBalance(transaction)
-  }
 
   const key = `${id || hash}-${
     (typeof customization === 'object' && customization.eventCode) || eventCode
@@ -167,29 +167,3 @@ export function typeToDismissTimeout(type: string): number {
   }
 }
 
-const updateWalletBalance = (
-  transaction: Pick<EthereumTransactionData, 'to' | 'from'>
-) => {
-  let walletsToUpdate: string[] = []
-  state.get().wallets.forEach(wallet => {
-    if (
-      wallet.accounts.some(
-        e => e.address.toLowerCase() === transaction.to.toLowerCase()
-      )
-    ) {
-      walletsToUpdate = [...walletsToUpdate, transaction.to]
-    }
-    if (
-      wallet.accounts.some(
-        e => e.address.toLowerCase() === transaction.from.toLowerCase()
-      )
-    ) {
-      walletsToUpdate = [...walletsToUpdate, transaction.from]
-    }
-  })
-
-  // Pause to allow provider endpoint time to update
-  setTimeout(() => {
-    updateBalances(walletsToUpdate)
-  }, 500)
-}
