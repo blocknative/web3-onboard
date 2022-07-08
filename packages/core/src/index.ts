@@ -89,10 +89,6 @@ function init(options: InitOptions): OnboardAPI {
   initI18N(i18n)
   addChains(hexedChain(chains))
 
-  // console.log(82, chains)
-  
-  // console.log(83, hexedChain(chains))
-
   const { device, svelteInstance } = configuration
 
   // update accountCenter
