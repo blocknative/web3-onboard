@@ -103,7 +103,7 @@ export function hexedChain(chains : Chain[]): Chain[] {
 }
 
 export const chainIdToLabel: Record<string, string> = {
-  '0x1' : 'Ethereum',
+  '0x1': 'Ethereum',
   '0x3': 'Ropsten',
   '0x4': 'Rinkeby',
   '0x5': 'Goerli',
