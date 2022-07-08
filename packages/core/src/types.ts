@@ -138,6 +138,7 @@ export type NotificationPosition = CommonPositions
 export type AccountCenter = {
   enabled: boolean
   position?: AccountCenterPosition
+  containerElement?: string
   expanded?: boolean
   minimal?: boolean
 }
