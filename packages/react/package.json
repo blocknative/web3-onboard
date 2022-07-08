@@ -3,29 +3,32 @@
   "version": "2.2.2",
   "description": "Collection of React Hooks for web3-onboard",
   "repository": "blocknative/web3-onboard",
-  "module": "dist/index.js",
-  "browser": "dist/index.js",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
   "type": "module",
-  "typings": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "yarn clean && node build.js && tsc --emitDeclarationOnly --outDir dist",
+    "clean": "rimraf dist",
     "dev": "tsc -w",
+    "prepublishOnly": "yarn build",
     "type-check": "tsc --noEmit"
   },
   "license": "MIT",
   "devDependencies": {
-    "@types/react": "^18.0.2",
     "@types/use-sync-external-store": "^0.0.3",
-    "react": "^18.0.0",
+    "esbuild": "^0.14.48",
+    "rimraf": "^3.0.2",
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@web3-onboard/core": "^2.3.2",
+    "@types/react": "^18.0.2",
     "@web3-onboard/common": "^2.1.4",
+    "@web3-onboard/core": "^2.3.2",
+    "react": "^18.0.0",
     "use-sync-external-store": "1.0.0"
   },
   "peerDependencies": {
