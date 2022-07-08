@@ -1,8 +1,48 @@
 {
   "name": "@web3-onboard/react",
   "version": "2.2.3-alpha.5",
+<<<<<<< HEAD
   "description": "Collection of React Hooks for web3-onboard",
   "repository": "blocknative/web3-onboard",
+=======
+  "description": "A collection of React hooks for integrating Web3-Onboard in to React and Next.js projects. Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardised spec compliant web3 providers for all supported wallets, modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
+  "keywords": [
+    "Ethereum",
+    "Web3",
+    "EVM",
+    "dapp",
+    "Multichain",
+    "Wallet",
+    "Transaction",
+    "Provider",
+    "Hardware Wallet",
+    "Notifications",
+    "React",
+    "Svelte",
+    "Vue",
+    "Next",
+    "Nuxt",
+    "MetaMask",
+    "Coinbase",
+    "WalletConnect",
+    "Ledger",
+    "Trezor",
+    "Connect Wallet",
+    "Ethereum Hooks",
+    "Blocknative",
+    "Mempool",
+    "pending",
+    "confirmed",
+    "Injected Wallet"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blocknative/web3-onboard.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://www.blocknative.com/onboard",
+  "bugs": "https://github.com/blocknative/web3-onboard/issues",
+>>>>>>> v2-web3-onboard-develop
   "module": "dist/index.js",
   "browser": "dist/index.js",
   "main": "dist/index.js",
@@ -25,7 +65,11 @@
   },
   "dependencies": {
     "@web3-onboard/core": "^2.4.0-alpha.7",
+<<<<<<< HEAD
     "@web3-onboard/common": "^2.1.5-alpha.1",
+=======
+    "@web3-onboard/common": "^2.1.4",
+>>>>>>> v2-web3-onboard-develop
     "use-sync-external-store": "1.0.0"
   },
   "peerDependencies": {
