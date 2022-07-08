@@ -5,6 +5,43 @@
   "workspaces": [
     "./packages/*"
   ],
+  "description": "Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardised spec compliant web3 providers for all supported wallets, framework agnostic modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
+  "keywords": [
+    "Ethereum",
+    "Web3",
+    "EVM",
+    "dapp",
+    "Multichain",
+    "Wallet",
+    "Transaction",
+    "Provider",
+    "Hardware Wallet",
+    "Notifications",
+    "React",
+    "Svelte",
+    "Vue",
+    "Next",
+    "Nuxt",
+    "MetaMask",
+    "Coinbase",
+    "WalletConnect",
+    "Ledger",
+    "Trezor",
+    "Connect Wallet",
+    "Ethereum Hooks",
+    "Blocknative",
+    "Mempool",
+    "pending",
+    "confirmed",
+    "Injected Wallet"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blocknative/web3-onboard.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://www.blocknative.com/onboard",
+  "bugs": "https://github.com/blocknative/web3-onboard/issues",
   "scripts": {
     "install-m1-mac": "yarn install --ignore-optional",
     "format": "prettier --write 'packages/**/*.ts'",
@@ -15,7 +52,17 @@
   "devDependencies": {
     "prettier": "^2.4.1",
     "prettier-plugin-svelte": "^2.4.0",
-    "typescript": "^4.5.5",
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
     "wsrun": "^5.2.4"
+  },
+  "resolutions": {
+    "minimist": "^1.2.6",
+    "axios": "^0.21.2",
+    "async": "^2.6.4",
+    "follow-redirects": "1.14.9",
+    "ansi-regex": "^4.1.1",
+    "got": "^11.8.5"
   }
 }

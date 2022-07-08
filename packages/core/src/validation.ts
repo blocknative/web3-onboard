@@ -159,25 +159,29 @@ const initOptions = Joi.object({
     desktop: Joi.object({
       enabled: Joi.boolean(),
       minimal: Joi.boolean(),
-      position: commonPositions
+      position: commonPositions,
+      containerElement: Joi.string()
     }),
     mobile: Joi.object({
       enabled: Joi.boolean(),
       minimal: Joi.boolean(),
-      position: commonPositions
+      position: commonPositions,
+      containerElement: Joi.string()
     })
   }),
   notify: [notifyOptions, notify]
 })
 
 const connectOptions = Joi.object({
-  autoSelect: [
-    Joi.object({
-      label: Joi.string().required(),
-      disableModals: Joi.boolean()
-    }),
-    Joi.string()
-  ]
+  autoSelect: Joi.alternatives()
+    .try(
+      Joi.object({
+        label: Joi.string().required(),
+        disableModals: Joi.boolean()
+      }),
+      Joi.string()
+    )
+    .required()
 })
 
 const disconnectOptions = Joi.object({

@@ -10,10 +10,6 @@ import type {
   TokenSymbol
 } from '@web3-onboard/common'
 
-import type setChain from './chain'
-import type connect from './connect'
-import type disconnect from './disconnect'
-import type { state } from './store'
 import type en from './i18n/en.json'
 import type { EthereumTransactionData, Network } from 'bnc-sdk'
 
@@ -142,6 +138,7 @@ export type NotificationPosition = CommonPositions
 export type AccountCenter = {
   enabled: boolean
   position?: AccountCenterPosition
+  containerElement?: string
   expanded?: boolean
   minimal?: boolean
 }
