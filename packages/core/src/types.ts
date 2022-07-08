@@ -208,13 +208,15 @@ export interface UpdateNotification {
   }
 }
 
-export interface TransactionOptions {
+export interface PreflightNotificationOptions {
   sendTransaction?: () => Promise<string>
   estimateGas?: () => Promise<string>
   gasPrice?: () => Promise<string>
-  balance?: string
+  balance?: string | number
   txDetails?: {
-    value: string
+    value: string | number
+    to?: string
+    from?: string
   }
   txApproveReminderTimeout?: number
 }

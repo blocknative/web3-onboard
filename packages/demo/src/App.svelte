@@ -251,6 +251,7 @@
   }
 
   const sendTransactionWithPreFlight = async (provider, balance) => {
+    const balanceValue = Object.values(balance)[0]
     const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 
     const signer = ethersProvider.getSigner()
@@ -263,7 +264,8 @@
       return signer.sendTransaction(txDetails).then(tx => tx.hash)
     }
 
-    const gasPrice = () => ethersProvider.getGasPrice().then(res => res.toString())
+    const gasPrice = () =>
+      ethersProvider.getGasPrice().then(res => res.toString())
 
     const estimateGas = () => {
       return ethersProvider.estimateGas(txDetails).then(res => res.toString())
@@ -273,8 +275,8 @@
       sendTransaction,
       gasPrice,
       estimateGas,
-      balance,
-      txDetails
+      balance: balanceValue,
+      txDetails: txDetails
     })
 
     console.log(receipt)

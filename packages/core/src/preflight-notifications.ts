@@ -3,12 +3,13 @@ import { nanoid } from 'nanoid'
 import defaultCopy from './i18n/en.json'
 import type { Network } from 'bnc-sdk'
 
-import type { Notification, TransactionOptions } from './types'
+import type { Notification, PreflightNotificationOptions } from './types'
 import { addNotification, removeNotification } from './store/actions'
 import { state } from './store'
 import { eventToType } from './notify'
 import { networkToChainId } from './utils'
 import { configuration } from './configuration'
+import { validatePreflightNotification } from './validation'
 
 let notificationsArr: Notification[]
 state.select('notifications').subscribe(notifications => {
@@ -16,7 +17,7 @@ state.select('notifications').subscribe(notifications => {
 })
 
 export async function preflightNotification(
-  options: TransactionOptions
+  options: PreflightNotificationOptions
 ): Promise<string> | null {
   const { apiKey } = configuration
 
@@ -25,6 +26,12 @@ export async function preflightNotification(
       'An API key is required to use this feature - head to https://explorer.blocknative.com/account for a free key'
     )
     return null
+  }
+
+  const invalid = validatePreflightNotification(options)
+
+  if (invalid) {
+    throw invalid
   }
 
   const {

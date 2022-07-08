@@ -18,7 +18,8 @@ import type {
   Notification,
   CustomNotification,
   CustomNotificationUpdate,
-  Notify
+  Notify,
+  PreflightNotificationOptions
 } from './types'
 
 const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
@@ -213,6 +214,25 @@ const customNotificationUpdate = Joi.object({
   link: Joi.string()
 })
 
+const preflightNotification = Joi.object({
+  sendTransaction: Joi.function(),
+  estimateGas: Joi.function(),
+  gasPrice: Joi.function(),
+  balance: Joi.alternatives(
+    Joi.string(),
+    Joi.number()
+  ),
+  txDetails: Joi.object({
+    value: Joi.alternatives(
+      Joi.string(),
+      Joi.number()
+    ),
+    to: Joi.string(),
+    from: Joi.string()
+  }),
+  txApproveReminderTimeout: Joi.number()
+})
+
 const customNotification = Joi.object({
   key: Joi.string(),
   type: Joi.string().allow('pending', 'error', 'success', 'hint'),
@@ -324,6 +344,11 @@ export function validateTransactionHandlerReturn(
 
 export function validateNotification(data: Notification): ValidateReturn {
   return validate(notification, data)
+}
+export function validatePreflightNotification(
+  data: PreflightNotificationOptions
+): ValidateReturn {
+  return validate(preflightNotification, data)
 }
 
 export function validateCustomNotificationUpdate(
