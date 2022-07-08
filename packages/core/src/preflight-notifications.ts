@@ -1,121 +1,110 @@
 import BigNumber from 'bignumber.js'
 import { nanoid } from 'nanoid'
 import defaultCopy from './i18n/en.json'
-import { addNotification, removeNotification } from './store/actions'
-
 import type { Network } from 'bnc-sdk'
 
 import type { Notification, TransactionOptions } from './types'
+import { addNotification, removeNotification } from './store/actions'
 import { state } from './store'
 import { eventToType } from './notify'
 import { networkToChainId } from './utils'
 
 const notifications = state.get().notifications
 
-export function preflightNotification(
+export async function preflightNotification(
   options: TransactionOptions
-): Promise<Notification | string> {
-  return new Promise((resolve, reject) => {
-    // wrap in set timeout to put to the end of the event queue
+): Promise<string> {
+  const { sendTransaction, estimateGas, gasPrice, balance, txDetails } = options
 
-    // Might not be necessary to timeout??
-    // Instead call transactionHandler
-    setTimeout(async () => {
-      const { sendTransaction, estimateGas, gasPrice, balance, txDetails } =
-        options
+  // if `balance` or `estimateGas` or `gasPrice` is not provided,
+  // then sufficient funds check is disabled
+  // if `txDetails` is not provided,
+  // then duplicate transaction check is disabled
+  // if dev doesn't want notify to initiate the transaction
+  // and `sendTransaction` is not provided, then transaction
+  // rejected notification is disabled
+  // to disable hints for `txAwaitingApproval`, `txConfirmReminder`
+  // or any other notification, then return false from listener functions
 
-      // if `balance` or `estimateGas` or `gasPrice` is not provided,
-      // then sufficient funds check is disabled
-      // if `txDetails` is not provided,
-      // then duplicate transaction check is disabled
-      // if dev doesn't want notify to initiate the transaction
-      // and `sendTransaction` is not provided, then transaction
-      // rejected notification is disabled
-      // to disable hints for `txAwaitingApproval`, `txConfirmReminder`
-      // or any other notification, then return false from listener functions
+  const [gas, price] = await gasEstimates(estimateGas, gasPrice)
+  const id = nanoid()
+  const value = new BigNumber((txDetails && txDetails.value) || 0)
 
-      const [gas, price] = await gasEstimates(estimateGas, gasPrice)
-      const id = nanoid()
-      const value = new BigNumber((txDetails && txDetails.value) || 0)
+  // check sufficient balance if required parameters are available
+  if (balance && gas && price) {
+    const transactionCost = gas.times(price).plus(value)
 
-      // check sufficient balance if required parameters are available
-      if (balance && gas && price) {
-        const transactionCost = gas.times(price).plus(value)
+    // if transaction cost is greater than the current balance
+    if (transactionCost.gt(new BigNumber(balance))) {
+      const eventCode = 'nsfFail'
 
-        // if transaction cost is greater than the current balance
-        if (transactionCost.gt(new BigNumber(balance))) {
-          const eventCode = 'nsfFail'
-
-          const newNotification = buildNotification(eventCode, id)
-          addNotification(newNotification)
-
-          return reject('User has insufficient funds')
-        }
-      }
-
-      // check previous transactions awaiting approval
-      if (notifications.find(tx => tx.eventCode === 'awaitingApproval')) {
-        const eventCode = 'txAwaitingApproval'
-
-        const newNotification = buildNotification(eventCode, id)
-        addNotification(newNotification)
-      }
-
-      // confirm reminder after 20 seconds timeout
-      setTimeout(() => {
-        const awaitingApproval = notifications.find(
-          tx => tx.id === id && tx.eventCode === 'awaitingApproval'
-        )
-
-        if (awaitingApproval) {
-          const eventCode = 'txConfirmReminder'
-
-          const newNotification = buildNotification(eventCode, id)
-          addNotification(newNotification)
-        }
-      }, 20000)
-
-      const eventCode = 'txRequest'
       const newNotification = buildNotification(eventCode, id)
       addNotification(newNotification)
+    }
+  }
 
-      // if not provided with sendTransaction function,
-      // resolve with id so dev can initiate transaction
-      // dev will need to call notify.hash(txHash, id) with this id
-      // to link up the preflight with the postflight notifications
-      if (!sendTransaction) {
-        return resolve(id)
-      }
-      // get result and handle errors
-      let hash
-      try {
-        hash = await sendTransaction()
-      } catch (error) {
-        type CatchError = {
-          message: string
-          stack: string
-        }
-        const { eventCode, errorMsg } = extractMessageFromError(
-          error as CatchError
-        )
+  // awaiting approval reminder after 15 seconds timeout
+  setTimeout(() => {
+    const txRequested = notifications.find(
+      tx => tx.id === id && tx.eventCode === 'txRequest'
+    )
 
-        const newNotification = buildNotification(eventCode, id)
-        addNotification(newNotification)
+    if (txRequested) {
+      const eventCode = 'txAwaitingApproval'
 
-        return reject(errorMsg)
-      }
+      const newNotification = buildNotification(eventCode, txRequested.id)
+      addNotification(newNotification)
+    }
+  }, 15000)
 
-      // Remove preflight notification if a resolves to hash
-      // and let the SDK take over
-      if (hash) {
-        removeNotification(id)
-      }
+  // confirm reminder after 30 seconds timeout
+  setTimeout(() => {
+    const awaitingApproval = notifications.find(
+      tx => tx.id === id && tx.eventCode === 'awaitingApproval'
+    )
 
-      reject(
-        'sendTransaction function must resolve to a transaction hash that is of type String.'
-      )
-    }, 10)
-  })
+    if (awaitingApproval) {
+      const eventCode = 'txConfirmReminder'
+
+      const newNotification = buildNotification(eventCode, awaitingApproval.id)
+      addNotification(newNotification)
+    }
+  }, 30000)
+
+  const eventCode = 'txRequest'
+  const newNotification = buildNotification(eventCode, id)
+  addNotification(newNotification)
+
+  // if not provided with sendTransaction function,
+  // resolve with id so dev can initiate transaction
+  // dev will need to call notify.hash(txHash, id) with this id
+  // to link up the preflight with the postflight notifications
+  if (!sendTransaction) {
+    return id
+  }
+  // get result and handle errors
+  let hash
+  try {
+    hash = await sendTransaction()
+  } catch (error) {
+    type CatchError = {
+      message: string
+      stack: string
+    }
+    const { eventCode, errorMsg } = extractMessageFromError(error as CatchError)
+
+    const newNotification = buildNotification(eventCode, id)
+    addNotification(newNotification)
+    console.error(errorMsg)
+    return
+  }
+
+  // Remove preflight notification if a resolves to hash
+  // and let the SDK take over
+  if (hash) {
+    removeNotification(id)
+    return hash
+  }
 }
 
 const buildNotification = (eventCode: string, id: string): Notification => {
@@ -180,10 +169,10 @@ export function extractMessageFromError(error: {
   }
 }
 
-function gasEstimates(
+const gasEstimates = async (
   gasFunc: () => Promise<string>,
   gasPriceFunc: () => Promise<string>
-) {
+) => {
   if (!gasFunc || !gasPriceFunc) {
     return Promise.resolve([])
   }

@@ -138,7 +138,6 @@ export type NotificationPosition = CommonPositions
 export type AccountCenter = {
   enabled: boolean
   position?: AccountCenterPosition
-  containerElement?: string
   expanded?: boolean
   minimal?: boolean
 }
@@ -217,7 +216,6 @@ export interface TransactionOptions {
     value: string
   }
 }
-
 
 // ==== ACTIONS ==== //
 export type Action =
