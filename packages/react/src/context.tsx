@@ -4,7 +4,7 @@ import Web3Onboard from '@web3-onboard/core'
 
 import type { InitOptions, OnboardAPI } from '@web3-onboard/core'
 
-export const initWeb3Onboard = (options: InitOptions): OnboardAPI =>
+export const init = (options: InitOptions): OnboardAPI =>
   Web3Onboard(options)
 
 export const Context = React.createContext<OnboardAPI | undefined>(undefined)

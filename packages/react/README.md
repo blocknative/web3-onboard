@@ -6,13 +6,85 @@ A collection of React hooks for implementing web3-onboard in to a React project
 
 ### Install Modules
 
-**NPM**
-`npm i @web3-onboard/react @web3-onboard/injected-wallets ethers`
+```
+# with npm
+npm i @web3-onboard/react @web3-onboard/injected-wallets ethers
 
-**Yarn**
-`yarn add @web3-onboard/react @web3-onboard/injected-wallets ethers`
+# with yarn
+yarn add @web3-onboard/react @web3-onboard/injected-wallets ethers
+```
 
-### Add Code
+### Import & Configure Wallets & Chains
+
+```
+import { init, useConnectWallet } from '@web3-onboard/react'
+import injectedModule from '@web3-onboard/injected-wallets'
+import { ethers } from 'ethers'
+
+const injected = injectedModule()
+
+const infuraKey = '<INFURA_KEY>'
+const rpcUrl = `https://ropsten.infura.io/v3/${infuraKey}`
+
+const chains = [
+  {
+    id: '0x3',
+    token: 'rETH',
+    label: 'Ethereum Ropsten',
+    rpcUrl
+  }
+]
+```
+
+### Initialize Web3-Onboard
+
+```
+const web3Onboard = init({
+  wallets: [injected],
+  chains
+})
+```
+
+### Wrap the `Web3OnboardProvider`
+
+```javascript
+function App() {
+  return (
+    <Web3OnboardProvider web3Onboard={web3Onboard}>
+      <YourApp />
+    </Web3OnboardProvider>
+  )
+}
+```
+
+### Add a connect button
+
+Now every component inside the `Web3OnboardProvider` can now access the the web3-onboard react hooks!
+
+```javascript
+export const YourApp = () => {
+  const [{ wallet, connecting }, connect, disconnect] = useConnectWallet()
+
+  // create an ethers provider
+  let ethersProvider
+
+  if (wallet) {
+    ethersProvider = new ethers.providers.Web3Provider(wallet.provider, 'any')
+  }
+  return (
+    <div>
+      <button
+        disabled={connecting}
+        onClick={() => (wallet ? disconnect({ wallet }) : connect())}
+      >
+        {connecting ? 'connecting' : wallet ? 'disconnect' : 'connect'}
+      </button>
+    </div>
+  )
+}
+```
+
+### Putting it all together
 
 ```javascript
 import React from 'react'
@@ -55,7 +127,7 @@ function App() {
     <div>
       <button
         disabled={connecting}
-        onClick={() => (wallet ? disconnect() : connect())}
+        onClick={() => (wallet ? disconnect({ wallet }) : connect())}
       >
         {connecting ? 'connecting' : wallet ? 'disconnect' : 'connect'}
       </button>
@@ -63,6 +135,8 @@ function App() {
   )
 }
 ```
+
+# API
 
 ## `init`
 

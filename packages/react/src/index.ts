@@ -8,7 +8,7 @@ export {
   useWallets
 } from './hooks'
 export {
-  initWeb3Onboard,
+  init,
   Web3OnboardProvider,
   Web3OnboardProviderProps
 } from './context'
