@@ -207,32 +207,12 @@ export interface UpdateNotification {
   }
 }
 
-export interface PreflightEvent {
-  eventCode: string
-  contractCall?: ContractCall
-  balance: string
-  txDetails?: {
-    to?: string
-    from?: string
-    value: string | number
-  }
-  status?: string
-}
-
-export interface ContractCall {
-  methodName: string
-  params: string[]
-}
-
 export interface TransactionOptions {
   sendTransaction?: () => Promise<string>
   estimateGas?: () => Promise<string>
   gasPrice?: () => Promise<string>
   balance?: string
-  contractCall?: ContractCall
   txDetails?: {
-    to?: string
-    from?: string
     value: string
   }
 }

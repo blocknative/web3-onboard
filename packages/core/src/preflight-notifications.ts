@@ -1,158 +1,34 @@
 import BigNumber from 'bignumber.js'
 import { nanoid } from 'nanoid'
-import { get } from 'svelte/store'
+import defaultCopy from './i18n/en.json'
+import { addNotification, removeNotification } from './store/actions'
 
-import { transactions, app, notifications } from './stores'
-import { transactionEventToNotification } from './notify'
-import { argsEqual, localNetwork } from './utilities'
+import type { Network } from 'bnc-sdk'
 
-import type { EthereumTransactionData } from 'bnc-sdk'
+import type { Notification, TransactionOptions } from './types'
+import { state } from './store'
+import { eventToType } from './notify'
+import { networkToChainId } from './utils'
 
-import type {
-  PreflightEvent,
-  ContractCall,
-  TransactionOptions
-} from './types'
+const notifications = state.get().notifications
 
-let transactionQueue: EthereumTransactionData[]
-transactions.subscribe(
-  (store: EthereumTransactionData[]) => (transactionQueue = store)
-)
-
-export function handlePreFlightEvent(
-  blocknative,
-  preflightEvent: PreflightEvent
-) {
-  const { eventCode, contractCall, balance, txDetails, status } = preflightEvent
-
-  let contract
-
-  if (contractCall) {
-    contract = {
-      methodName: contractCall.methodName,
-      parameters: contractCall.params
-    }
-  }
-
-  blocknative.event({
-    categoryCode: contractCall ? 'activeContract' : 'activeTransaction',
-    eventCode,
-    transaction: txDetails,
-    wallet: { balance },
-    contract: contractCall ? contract : undefined
-  })
-
-  const transaction = {
-    ...txDetails,
-    eventCode,
-    status,
-    contractCall: contract ? contractCall : undefined
-  }
-
-  handleTransactionEvent({
-    transaction: transaction
-  })
-}
-
-export function handleTransactionEvent(event) {
-  const { transaction, emitterResult } = event
-  const currentId = transaction.id
-  const transactionId = transaction.hash || transaction.txid
-
-  // returns a boolean indicating whether this transaction state is a new state
-  // for an existing transaction or is a new transaction
-  const predicate = (txInState: EthereumTransactionData) => {
-    return (
-      (txInState.id && txInState.id === currentId) ||
-      txInState.hash === transaction.hash ||
-      txInState.replaceHash === transaction.hash
-    )
-  }
-
-  // replace UUID used for pre-hash identitification with hash or txid(bitcoin)
-  if (
-    (transactionId &&
-      transactionId !== currentId &&
-      transaction.eventCode === 'txSent') ||
-    !currentId
-  ) {
-    transaction.id = transactionId
-  }
-
-  transactions.updateQueue(transaction, predicate)
-
-  if (transaction.replaceHash) {
-    // remove pending notification for replaceHash if exists,
-    // this happens is pending comes before speedup event
-    notifications.remove(transaction.replaceHash, 'txPool')
-  }
-
-  // create notification if dev hasn't opted out and not connected to a local network
-  if (emitterResult !== false && !localNetwork(get(app).networkId)) {
-    const transactionObj = transactionQueue.find(predicate)
-
-    if (transactionObj) {
-      transactionEventToNotification(transactionObj, emitterResult)
-    }
-  }
-}
-
-export function duplicateTransactionCandidate(
-  transaction: EthereumTransactionData,
-  contract: ContractCall
-) {
-  const duplicate: EthereumTransactionData | undefined | boolean =
-    transactionQueue.find((tx: EthereumTransactionData) => {
-      if (contract && typeof tx.contractCall === 'undefined') return false
-      if (tx.status === 'confirmed' || tx.status === 'failed') return
-
-      const sameMethod = contract
-        ? contract.methodName ===
-          (tx.contractCall && tx.contractCall.methodName)
-        : true
-
-      const sameParams = contract
-        ? argsEqual(contract.params, tx.contractCall && tx.contractCall.params)
-        : true
-
-      const sameVal = tx.value == transaction.value
-
-      const sameTo = contract
-        ? sameMethod
-        : tx.to &&
-          tx.to.toLowerCase() === transaction.to &&
-          transaction.to.toLowerCase()
-
-      return sameMethod && sameParams && sameVal && sameTo
-    })
-
-  return duplicate
-}
-
-export function preflightTransaction(
-  blocknative,
+export function preflightNotification(
   options: TransactionOptions
-): Promise<string> {
+): Promise<Notification | string> {
   return new Promise((resolve, reject) => {
     // wrap in set timeout to put to the end of the event queue
 
     // Might not be necessary to timeout??
     // Instead call transactionHandler
     setTimeout(async () => {
-      const {
-        sendTransaction,
-        estimateGas,
-        gasPrice,
-        balance,
-        contractCall,
-        txDetails
-      } = options
+      const { sendTransaction, estimateGas, gasPrice, balance, txDetails } =
+        options
 
       // if `balance` or `estimateGas` or `gasPrice` is not provided,
       // then sufficient funds check is disabled
       // if `txDetails` is not provided,
       // then duplicate transaction check is disabled
-      // if dev doesn't want notify to intiate the transaction
+      // if dev doesn't want notify to initiate the transaction
       // and `sendTransaction` is not provided, then transaction
       // rejected notification is disabled
       // to disable hints for `txAwaitingApproval`, `txConfirmReminder`
@@ -162,20 +38,6 @@ export function preflightTransaction(
       const id = nanoid()
       const value = new BigNumber((txDetails && txDetails.value) || 0)
 
-      const calculated = {
-        value: value.toString(10),
-        gas: gas && gas.toString(10),
-        gasPrice: price && price.toString(10)
-      }
-
-      const txObject = txDetails
-        ? {
-            ...txDetails,
-            ...calculated,
-            id
-          }
-        : { ...calculated, id }
-
       // check sufficient balance if required parameters are available
       if (balance && gas && price) {
         const transactionCost = gas.times(price).plus(value)
@@ -184,80 +46,138 @@ export function preflightTransaction(
         if (transactionCost.gt(new BigNumber(balance))) {
           const eventCode = 'nsfFail'
 
-          handlePreFlightEvent(blocknative, {
-            eventCode,
-            contractCall,
-            balance,
-            txDetails: txObject
-          })
+          const newNotification = buildNotification(eventCode, id)
+          addNotification(newNotification)
 
           return reject('User has insufficient funds')
         }
       }
 
-      // check if it is a duplicate transaction
-      if (txDetails && duplicateTransactionCandidate(txDetails, contractCall)) {
-        const eventCode = 'txRepeat'
-
-        handlePreFlightEvent(blocknative, {
-          eventCode,
-          contractCall,
-          balance,
-          txDetails: txObject
-        })
-      }
-
-      const {
-        txApproveReminderTimeout
-      } = get(app)
-
       // check previous transactions awaiting approval
-      if (transactionQueue.find(tx => tx.status === 'awaitingApproval')) {
+      if (notifications.find(tx => tx.eventCode === 'awaitingApproval')) {
         const eventCode = 'txAwaitingApproval'
 
-        handlePreFlightEvent(blocknative, {
-          eventCode,
-          contractCall,
-          balance,
-          txDetails: txObject
-        })
+        const newNotification = buildNotification(eventCode, id)
+        addNotification(newNotification)
       }
 
-      // confirm reminder after timeout
+      // confirm reminder after 20 seconds timeout
       setTimeout(() => {
-        const awaitingApproval = transactionQueue.find(
-          tx => tx.id === id && tx.status === 'awaitingApproval'
+        const awaitingApproval = notifications.find(
+          tx => tx.id === id && tx.eventCode === 'awaitingApproval'
         )
 
         if (awaitingApproval) {
           const eventCode = 'txConfirmReminder'
 
-          handlePreFlightEvent(blocknative, {
-            eventCode,
-            contractCall,
-            balance,
-            txDetails: txObject
-          })
+          const newNotification = buildNotification(eventCode, id)
+          addNotification(newNotification)
         }
-      }, txApproveReminderTimeout)
+      }, 20000)
 
-      handlePreFlightEvent(blocknative, {
-        eventCode: 'txRequest',
-        status: 'awaitingApproval',
-        contractCall,
-        balance,
-        txDetails: txObject
-      })
+      const eventCode = 'txRequest'
+      const newNotification = buildNotification(eventCode, id)
+      addNotification(newNotification)
 
-      // if not provided with sendTransaction function, 
+      // if not provided with sendTransaction function,
       // resolve with id so dev can initiate transaction
       // dev will need to call notify.hash(txHash, id) with this id
       // to link up the preflight with the postflight notifications
       if (!sendTransaction) {
         return resolve(id)
       }
+      // get result and handle errors
+      let hash
+      try {
+        hash = await sendTransaction()
+      } catch (error) {
+        type CatchError = {
+          message: string
+          stack: string
+        }
+        const { eventCode, errorMsg } = extractMessageFromError(
+          error as CatchError
+        )
+
+        const newNotification = buildNotification(eventCode, id)
+        addNotification(newNotification)
+
+        return reject(errorMsg)
+      }
+
+      // Remove preflight notification if a resolves to hash
+      // and let the SDK take over
+      if (hash) {
+        removeNotification(id)
+      }
+
+      reject(
+        'sendTransaction function must resolve to a transaction hash that is of type String.'
+      )
     }, 10)
   })
+}
+
+const buildNotification = (eventCode: string, id: string): Notification => {
+  return {
+    eventCode,
+    type: eventToType(eventCode),
+    id,
+    key: createKey(id, eventCode),
+    message: createMessageText(eventCode),
+    startTime: Date.now(),
+    network: Object.keys(networkToChainId).find(
+      key => networkToChainId[key] === state.get().chains[0].id
+    ) as Network,
+    autoDismiss: 0
+  }
+}
+
+const createKey = (id: string, eventCode: string): string => {
+  return `${id}-${eventCode}`
+}
+
+const createMessageText = (eventCode: string): string => {
+  const notificationDefaultMessages = defaultCopy.notify
+
+  const notificationMessageType = notificationDefaultMessages.transaction
+
+  return notificationDefaultMessages.transaction[
+    eventCode as keyof typeof notificationMessageType
+  ]
+}
+
+export function extractMessageFromError(error: {
+  message: string
+  stack: string
+}): { eventCode: string; errorMsg: string } {
+  if (!error.stack || !error.message) {
+    return {
+      eventCode: 'txError',
+      errorMsg: 'An unknown error occured'
+    }
+  }
+
+  const message = error.stack || error.message
+
+  if (message.includes('User denied transaction signature')) {
+    return {
+      eventCode: 'txSendFail',
+      errorMsg: 'User denied transaction signature'
+    }
+  }
+
+  if (message.includes('transaction underpriced')) {
+    return {
+      eventCode: 'txUnderpriced',
+      errorMsg: 'Transaction is under priced'
+    }
+  }
+
+  return {
+    eventCode: 'txError',
+    errorMsg: message
+  }
 }
 
 function gasEstimates(
