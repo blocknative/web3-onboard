@@ -140,6 +140,7 @@ export type AccountCenter = {
   position?: AccountCenterPosition
   expanded?: boolean
   minimal?: boolean
+  containerElement: string
 }
 
 export type AccountCenterOptions = {
@@ -215,6 +216,7 @@ export interface TransactionOptions {
   txDetails?: {
     value: string
   }
+  txApproveReminderTimeout?: number
 }
 
 // ==== ACTIONS ==== //

@@ -8,13 +8,39 @@ import { addNotification, removeNotification } from './store/actions'
 import { state } from './store'
 import { eventToType } from './notify'
 import { networkToChainId } from './utils'
+import { configuration } from './configuration'
 
-const notifications = state.get().notifications
+let notificationsArr: Notification[]
+state.select('notifications').subscribe(notifications => {
+  notificationsArr = notifications
+})
 
 export async function preflightNotification(
   options: TransactionOptions
-): Promise<string> {
-  const { sendTransaction, estimateGas, gasPrice, balance, txDetails } = options
+): Promise<string> | null {
+  const { apiKey } = configuration
+
+  if (!apiKey) {
+    console.error(
+      'An API key is required to use this feature - head to https://explorer.blocknative.com/account for a free key'
+    )
+    return null
+  }
+
+  const {
+    sendTransaction,
+    estimateGas,
+    gasPrice,
+    balance,
+    txDetails,
+    txApproveReminderTimeout
+  } = options
+
+  // Check for reminder timeout and confirm its greater than 3 seconds
+  const reminderTimeout: number =
+    txApproveReminderTimeout && txApproveReminderTimeout > 3000
+      ? txApproveReminderTimeout
+      : 15000
 
   // if `balance` or `estimateGas` or `gasPrice` is not provided,
   // then sufficient funds check is disabled
@@ -27,7 +53,7 @@ export async function preflightNotification(
   // or any other notification, then return false from listener functions
 
   const [gas, price] = await gasEstimates(estimateGas, gasPrice)
-  const id = nanoid()
+  const id = createId(nanoid())
   const value = new BigNumber((txDetails && txDetails.value) || 0)
 
   // check sufficient balance if required parameters are available
@@ -43,24 +69,20 @@ export async function preflightNotification(
     }
   }
 
-  // awaiting approval reminder after 15 seconds timeout
+  // check previous transactions awaiting approval
+  const txRequested = notificationsArr.find(tx => tx.eventCode === 'txRequest')
+
+  if (txRequested) {
+    const eventCode = 'txAwaitingApproval'
+
+    const newNotification = buildNotification(eventCode, txRequested.id)
+    addNotification(newNotification)
+  }
+
+  // confirm reminder timeout defaults to 20 seconds
   setTimeout(() => {
-    const txRequested = notifications.find(
+    const awaitingApproval = notificationsArr.find(
       tx => tx.id === id && tx.eventCode === 'txRequest'
-    )
-
-    if (txRequested) {
-      const eventCode = 'txAwaitingApproval'
-
-      const newNotification = buildNotification(eventCode, txRequested.id)
-      addNotification(newNotification)
-    }
-  }, 15000)
-
-  // confirm reminder after 30 seconds timeout
-  setTimeout(() => {
-    const awaitingApproval = notifications.find(
-      tx => tx.id === id && tx.eventCode === 'awaitingApproval'
     )
 
     if (awaitingApproval) {
@@ -69,7 +91,7 @@ export async function preflightNotification(
       const newNotification = buildNotification(eventCode, awaitingApproval.id)
       addNotification(newNotification)
     }
-  }, 30000)
+  }, reminderTimeout)
 
   const eventCode = 'txRequest'
   const newNotification = buildNotification(eventCode, id)
@@ -124,6 +146,10 @@ const buildNotification = (eventCode: string, id: string): Notification => {
 
 const createKey = (id: string, eventCode: string): string => {
   return `${id}-${eventCode}`
+}
+
+const createId = (id: string): string => {
+  return `${id}-preflight`
 }
 
 const createMessageText = (eventCode: string): string => {

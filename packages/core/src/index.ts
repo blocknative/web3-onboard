@@ -26,6 +26,7 @@ import {
 } from './store/actions'
 
 import updateBalances from './update-balances'
+import { preflightNotification } from './preflight-notifications'
 
 const API = {
   connectWallet,
@@ -39,6 +40,7 @@ const API = {
       setLocale,
       updateNotify,
       customNotification,
+      preflightNotification,
       updateBalances,
       updateAccountCenter,
       setPrimaryWallet
