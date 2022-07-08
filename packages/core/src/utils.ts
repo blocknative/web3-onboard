@@ -93,14 +93,12 @@ export async function copyWalletAddress(text: string): Promise<void> {
 }
 
 export function hexedChain(chains : Chain[]): Chain[] {
-  const hexChain = chains.map(({ id, ...chains }) => { 
+  const hexChain = chains.map(({ id, ...rest }) => { 
     if(typeof id === 'number'){
        id = '0x'+Math.abs(id).toString(16)
-       console.log(80, id)
       }
-      return { id, ...chains };
+      return { id, ...rest };
   });
-  console.log(81, hexChain)
   return hexChain
 }
 
