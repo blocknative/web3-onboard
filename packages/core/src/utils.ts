@@ -92,8 +92,20 @@ export async function copyWalletAddress(text: string): Promise<void> {
   }
 }
 
+export function hexedChain(chains : Chain[]): Chain[] {
+  const hexChain = chains.map(({ id, ...chains }) => { 
+    if(typeof id === 'number'){
+       id = '0x'+Math.abs(id).toString(16)
+       console.log(80, id)
+      }
+      return { id, ...chains };
+  });
+  console.log(81, hexChain)
+  return hexChain
+}
+
 export const chainIdToLabel: Record<string, string> = {
-  '0x1': 'Ethereum',
+  '0x1' : 'Ethereum',
   '0x3': 'Ropsten',
   '0x4': 'Rinkeby',
   '0x5': 'Goerli',

@@ -26,6 +26,7 @@ import {
 } from './store/actions'
 
 import updateBalances from './update-balances'
+import { hexedChain } from './utils'
 
 const API = {
   connectWallet,
@@ -86,7 +87,11 @@ function init(options: InitOptions): OnboardAPI {
   } = options
 
   initI18N(i18n)
-  addChains(chains)
+  addChains(hexedChain(chains))
+
+  // console.log(82, chains)
+  
+  // console.log(83, hexedChain(chains))
 
   const { device, svelteInstance } = configuration
 

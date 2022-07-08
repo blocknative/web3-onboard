@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/common",
-  "version": "2.1.4",
+  "version": "2.1.5-alpha.1",
   "repository": "blocknative/web3-onboard",
   "scripts": {
     "build": "rollup -c",

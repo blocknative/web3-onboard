@@ -21,7 +21,9 @@ import type {
   Notify
 } from './types'
 
-const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
+// const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
+const chainId = Joi.alternatives().
+                try(Joi.string().pattern(/^0x[0-9a-fA-F]+$/), Joi.number())
 const chainNamespace = Joi.string().valid('evm')
 const unknownObject = Joi.object().unknown()
 
