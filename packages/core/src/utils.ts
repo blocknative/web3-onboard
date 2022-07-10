@@ -91,7 +91,6 @@ export function weiToEth(wei: any): string {
   return formattedWei
 }
 
-
 export const chainIdToLabel: Record<string, string> = {
   '0x1': 'Ethereum',
   '0x3': 'Ropsten',
