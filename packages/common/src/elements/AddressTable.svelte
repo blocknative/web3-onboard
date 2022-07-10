@@ -119,10 +119,10 @@
               >{account.address}</td
             >
             <td>{account.derivationPath}</td>
-            <td class="asset-td"
+            <!-- <td class="asset-td"
               >{utils.formatEther(account.balance.value)}
               {account.balance.asset}</td
-            >
+            > -->
           </tr>
         {/each}
       {/if}

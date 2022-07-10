@@ -397,10 +397,7 @@
     right: 0.2rem;
     width: 2.5rem;
     height: 2.5rem;
-    background: var(
-      --account-select-white,
-      var(--onboard-white, var(--white))
-    );
+    background: var(--account-select-white, var(--onboard-white, var(--white)));
     border-radius: 1rem;
   }
 

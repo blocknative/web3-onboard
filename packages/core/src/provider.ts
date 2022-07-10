@@ -17,7 +17,7 @@ import type {
 import { disconnectWallet$ } from './streams'
 import type { Account, Address, Balances, Ens, WalletState } from './types'
 import { updateAccount, updateWallet } from './store/actions'
-import { validEnsChain } from './utils'
+import { validEnsChain, weiToEth } from './utils'
 import disconnect from './disconnect'
 import { state } from './store'
 import { getBlocknativeSdk } from './services'
@@ -344,9 +344,8 @@ export async function getBalance(
 
   try {
     const balanceWei = await provider.getBalance(address)
-
     return balanceWei
-      ? { [chain.token || 'eth']: utils.formatEther(balanceWei) }
+      ? { [chain.token || 'eth']: weiToEth(balanceWei) }
       : null
   } catch (error) {
     console.error(error)

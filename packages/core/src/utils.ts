@@ -34,6 +34,7 @@ import type {
   DeviceNotBrowser,
   NotifyEventStyles
 } from './types'
+import BigNumber from 'bignumber.js'
 
 export function getDevice(): Device | DeviceNotBrowser {
   if (typeof window !== 'undefined') {
@@ -82,6 +83,14 @@ export function shortenAddress(add: string): string {
 export function shortenEns(ens: string): string {
   return ens.length > 11 ? `${ens.slice(0, 4)}...${ens.slice(-6)}` : ens
 }
+
+export function weiToEth(wei: any): string {
+  const bigWei = new BigNumber(wei._hex)
+  const bigWeiDiv = bigWei.dividedBy(1e18)
+  const formattedWei = bigWei.dividedBy(1e18).toFixed() === '0' ? bigWeiDiv.toFixed(1) : bigWeiDiv.toFixed()
+  return formattedWei
+}
+
 
 export const chainIdToLabel: Record<string, string> = {
   '0x1': 'Ethereum',

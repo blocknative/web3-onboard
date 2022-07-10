@@ -172,7 +172,7 @@
     // // example customizing account center
     accountCenter: {
       desktop: {
-        position: 'topLeft',
+        position: 'topRight',
         enabled: true,
         minimal: false
       }
@@ -213,8 +213,7 @@
           // }
         },
         position: 'topRight'
-      },
-
+      }
     },
     // Sign up for your free api key at www.Blocknative.com
     apiKey: 'xxxxxx-bf21-42ec-a093-9d37e426xxxx'
