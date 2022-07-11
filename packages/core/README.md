@@ -760,6 +760,10 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-wallet-button-box-shadow
   --onboard-wallet-app-icon-border-color
 
+  /* CUSTOMIZE THE SHARED MODAL */
+  --onboard-modal-background
+  --onboard-modal-color
+
   /* CUSTOMIZE THE CONNECT MODAL */
   --onboard-modal-border-radius
   --onboard-modal-backdrop
