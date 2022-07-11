@@ -22,7 +22,7 @@
     "webpack-dev-server": "4.7.4"
   },
   "dependencies": {
-    "@web3-onboard/coinbase": "^2.0.7",
+    "@web3-onboard/coinbase": "^2.0.8",
     "@web3-onboard/core": "^2.4.0-alpha.8",
     "@web3-onboard/dcent": "^2.0.4",
     "@web3-onboard/fortmatic": "^2.0.6",

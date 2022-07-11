@@ -59,8 +59,8 @@
   "dependencies": {
     "@vueuse/core": "^8.4.2",
     "@vueuse/rxjs": "^8.2.0",
-    "@web3-onboard/common": "^2.1.4",
-    "@web3-onboard/core": "^2.4.0-alpha.9",
+    "@web3-onboard/common": "^2.1.5",
+    "@web3-onboard/core": "^2.4.0",
     "vue-demi": "^0.12.4"
   },
   "peerDependencies": {

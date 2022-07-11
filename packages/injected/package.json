@@ -61,7 +61,7 @@
     "window": "^4.2.7"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.1.4",
+    "@web3-onboard/common": "^2.1.5",
     "joi": "^17.4.2",
     "lodash.uniqby": "^4.7.0"
   }

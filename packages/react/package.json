@@ -60,7 +60,7 @@
   },
   "dependencies": {
     "@web3-onboard/core": "^2.4.0-alpha.9",
-    "@web3-onboard/common": "^2.1.4",
+    "@web3-onboard/common": "^2.1.5",
     "use-sync-external-store": "1.0.0"
   },
   "peerDependencies": {
