@@ -8,7 +8,6 @@ import { addNotification, removeNotification } from './store/actions'
 import { state } from './store'
 import { eventToType } from './notify'
 import { networkToChainId } from './utils'
-import { configuration } from './configuration'
 import { validatePreflightNotifications } from './validation'
 
 let notificationsArr: Notification[]
@@ -19,14 +18,7 @@ state.select('notifications').subscribe(notifications => {
 export async function preflightNotifications(
   options: PreflightNotificationsOptions
 ): Promise<string> | null {
-  const { apiKey } = configuration
 
-  if (!apiKey) {
-    console.error(
-      'An API key is required to use this feature - head to https://explorer.blocknative.com/account for a free key'
-    )
-    return null
-  }
 
   const invalid = validatePreflightNotifications(options)
 
