@@ -637,6 +637,63 @@ setTimeout(
 )
 ```
 
+**`preflightNotifications`**
+Notify can be used to deliver standard notifications along with preflight information by passing a `PreflightNotificationOptions` object to the `preflightNotification` action. This will return a a promise that resolves to the transaction hash or null `Promise<string> | null` if send.
+
+Preflight event types include 
+ - `txRequest` : Alert user there is a transaction request awaiting confirmation by their wallet
+ - `txAwaitingApproval` : A previous transaction is awaiting confirmation
+ - `txConfirmReminder` : Reminder to confirm a transaction to continue - configurable with the `txApproveReminderTimeout` property; defaults to 15 seconds
+ - `nsfFail` : The user has insufficient funds for transaction (requires `gasPrice`, `estimateGas`, `balance`, `txDetails.value`)
+ - `txError` : General transaction error (requires `sendTransaction`)
+ - `txSendFail` : The user rejected the transaction (requires `sendTransaction`)
+ - `txUnderpriced` : The gas price for the transaction is too low (requires `sendTransaction`)
+
+```typescript
+interface PreflightNotificationOptions {
+  sendTransaction?: () => Promise<string>
+  estimateGas?: () => Promise<string>
+  gasPrice?: () => Promise<string>
+  balance?: string | number
+  txDetails?: {
+    value: string | number
+    to?: string
+    from?: string
+  }
+  txApproveReminderTimeout?: number // defaults to 15 seconds if not specified
+}
+```
+
+```typescript
+const balanceValue = Object.values(balance)[0]
+const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
+
+const signer = ethersProvider.getSigner()
+const txDetails = {
+  to: toAddress,
+  value: 100000000000000
+}
+
+const sendTransaction = () => {
+  return signer.sendTransaction(txDetails).then(tx => tx.hash)
+}
+
+const gasPrice = () =>
+  ethersProvider.getGasPrice().then(res => res.toString())
+
+const estimateGas = () => {
+  return ethersProvider.estimateGas(txDetails).then(res => res.toString())
+}
+const transactionHash = await onboard.state.actions.preflightNotification({
+  sendTransaction,
+  gasPrice,
+  estimateGas,
+  balance: balanceValue,
+  txDetails: txDetails
+})
+console.log(transactionHash)
+```
+
 **`updateAccountCenter`**
 If you need to update your Account Center configuration after initialization, you can call the `updateAccountCenter` function with the new configuration
 

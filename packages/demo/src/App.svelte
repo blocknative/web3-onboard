@@ -271,7 +271,7 @@
       return ethersProvider.estimateGas(txDetails).then(res => res.toString())
     }
 
-    const receipt = await onboard.state.actions.preflightNotification({
+    const transactionHash = await onboard.state.actions.preflightNotification({
       sendTransaction,
       gasPrice,
       estimateGas,
@@ -279,7 +279,7 @@
       txDetails: txDetails
     })
 
-    console.log(receipt)
+    console.log(transactionHash)
   }
 
   const signMessage = async (provider, address) => {
