@@ -17,7 +17,7 @@ state.select('notifications').subscribe(notifications => {
 
 export async function preflightNotifications(
   options: PreflightNotificationsOptions
-): Promise<string> | null {
+): Promise<string | void> {
 
 
   const invalid = validatePreflightNotifications(options)
@@ -97,9 +97,7 @@ export async function preflightNotifications(
   addNotification(newNotification)
 
   // if not provided with sendTransaction function,
-  // resolve with id so dev can initiate transaction
-  // dev will need to call notify.hash(txHash, id) with this id
-  // to link up the preflight with the postflight notifications
+  // resolve with transaction hash(or void) so dev can initiate transaction
   if (!sendTransaction) {
     return id
   }
@@ -122,10 +120,11 @@ export async function preflightNotifications(
 
   // Remove preflight notification if a resolves to hash
   // and let the SDK take over
+  removeNotification(id)
   if (hash) {
-    removeNotification(id)
     return hash
   }
+  return
 }
 
 const buildNotification = (eventCode: string, id: string): Notification => {

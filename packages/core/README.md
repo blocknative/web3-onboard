@@ -638,7 +638,7 @@ setTimeout(
 ```
 
 **`preflightNotifications`**
-Notify can be used to deliver standard notifications along with preflight information by passing a `PreflightNotificationsOptions` object to the `preflightNotifications` action. This will return a a promise that resolves to the transaction hash or null `Promise<string> | null`.
+Notify can be used to deliver standard notifications along with preflight information by passing a `PreflightNotificationsOptions` object to the `preflightNotifications` action. This will return a a promise that resolves to the transaction hash (if `sendTransaction` resolves the transaction hash and is successful), the internal notification id (if no `sendTransaction` function is provided) or return nothing if an error occurs or `sendTransaction` is not provided or doesn't resolve to a string.
 
 Preflight event types include 
  - `txRequest` : Alert user there is a transaction request awaiting confirmation by their wallet
@@ -651,7 +651,7 @@ Preflight event types include
 
 ```typescript
 interface PreflightNotificationsOptions {
-  sendTransaction?: () => Promise<string>
+  sendTransaction?: () => Promise<string | void>
   estimateGas?: () => Promise<string>
   gasPrice?: () => Promise<string>
   balance?: string | number

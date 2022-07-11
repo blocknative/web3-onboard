@@ -209,7 +209,7 @@ export interface UpdateNotification {
 }
 
 export interface PreflightNotificationsOptions {
-  sendTransaction?: () => Promise<string>
+  sendTransaction?: () => Promise<string | void>
   estimateGas?: () => Promise<string>
   gasPrice?: () => Promise<string>
   balance?: string | number
