@@ -18,7 +18,8 @@ import type {
   Notification,
   CustomNotification,
   CustomNotificationUpdate,
-  Notify
+  Notify,
+  PreflightNotificationsOptions
 } from './types'
 
 const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
@@ -92,6 +93,8 @@ const wallet = Joi.object({
   accounts,
   chains: Joi.array().items(connectedChain)
 })
+  .required()
+  .error(new Error('wallet must be defined'))
 
 const wallets = Joi.array().items(wallet)
 
@@ -157,25 +160,29 @@ const initOptions = Joi.object({
     desktop: Joi.object({
       enabled: Joi.boolean(),
       minimal: Joi.boolean(),
-      position: commonPositions
+      position: commonPositions,
+      containerElement: Joi.string()
     }),
     mobile: Joi.object({
       enabled: Joi.boolean(),
       minimal: Joi.boolean(),
-      position: commonPositions
+      position: commonPositions,
+      containerElement: Joi.string()
     })
   }),
   notify: [notifyOptions, notify]
 })
 
 const connectOptions = Joi.object({
-  autoSelect: [
-    Joi.object({
-      label: Joi.string().required(),
-      disableModals: Joi.boolean()
-    }),
-    Joi.string()
-  ]
+  autoSelect: Joi.alternatives()
+    .try(
+      Joi.object({
+        label: Joi.string().required(),
+        disableModals: Joi.boolean()
+      }),
+      Joi.string()
+    )
+    .required()
 })
 
 const disconnectOptions = Joi.object({
@@ -192,7 +199,8 @@ const accountCenter = Joi.object({
   enabled: Joi.boolean(),
   position: commonPositions,
   expanded: Joi.boolean(),
-  minimal: Joi.boolean()
+  minimal: Joi.boolean(),
+  containerElement: Joi.string()
 })
 
 const customNotificationUpdate = Joi.object({
@@ -204,6 +212,25 @@ const customNotificationUpdate = Joi.object({
   autoDismiss: Joi.number(),
   onClick: Joi.function(),
   link: Joi.string()
+})
+
+const preflightNotifications = Joi.object({
+  sendTransaction: Joi.function(),
+  estimateGas: Joi.function(),
+  gasPrice: Joi.function(),
+  balance: Joi.alternatives(
+    Joi.string(),
+    Joi.number()
+  ),
+  txDetails: Joi.object({
+    value: Joi.alternatives(
+      Joi.string(),
+      Joi.number()
+    ),
+    to: Joi.string(),
+    from: Joi.string()
+  }),
+  txApproveReminderTimeout: Joi.number()
 })
 
 const customNotification = Joi.object({
@@ -268,8 +295,13 @@ export function validateDisconnectOptions(
   return validate(disconnectOptions, data)
 }
 
-export function validateString(str: string): ValidateReturn {
-  return validate(Joi.string().required(), str)
+export function validateString(str: string, label?: string): ValidateReturn {
+  return validate(
+    Joi.string()
+      .required()
+      .label(label || 'value'),
+    str
+  )
 }
 
 export function validateSetChainOptions(data: {
@@ -312,6 +344,11 @@ export function validateTransactionHandlerReturn(
 
 export function validateNotification(data: Notification): ValidateReturn {
   return validate(notification, data)
+}
+export function validatePreflightNotifications(
+  data: PreflightNotificationsOptions
+): ValidateReturn {
+  return validate(preflightNotifications, data)
 }
 
 export function validateCustomNotificationUpdate(

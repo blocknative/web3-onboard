@@ -70,19 +70,20 @@
     "poweredBy": "powered by",
     "addAccount": "Add Account",
     "setPrimaryAccount": "Set Primary Account",
-    "disconnectWallet": "Disconnect Wallet"
+    "disconnectWallet": "Disconnect Wallet",
+    "copyAddress": "Copy Wallet address"
   },
   "notify": {
     "transaction": {
       "txRequest": "Your transaction is waiting for you to confirm",
-      "nsfFail": "You have insufficient funds to complete this transaction",
-      "txUnderpriced": "The gas price for your transaction is too low, try again with a higher gas price",
+      "nsfFail": "You have insufficient funds for this transaction",
+      "txUnderpriced": "The gas price for your transaction is too low, try a higher gas price",
       "txRepeat": "This could be a repeat transaction",
       "txAwaitingApproval": "You have a previous transaction waiting for you to confirm",
-      "txConfirmReminder": "Please confirm your transaction to continue, the transaction window may be behind your browser",
+      "txConfirmReminder": "Please confirm your transaction to continue",
       "txSendFail": "You rejected the transaction",
       "txSent": "Your transaction has been sent to the network",
-      "txStallPending": "Your transaction has stalled and has not entered the transaction pool",
+      "txStallPending": "Your transaction has stalled before it was sent, please try again",
       "txStuck": "Your transaction is stuck due to a nonce gap",
       "txPool": "Your transaction has started",
       "txStallConfirmed": "Your transaction has stalled and hasn't been confirmed",

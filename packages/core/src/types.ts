@@ -10,10 +10,6 @@ import type {
   TokenSymbol
 } from '@web3-onboard/common'
 
-import type setChain from './chain'
-import type connect from './connect'
-import type disconnect from './disconnect'
-import type { state } from './store'
 import type en from './i18n/en.json'
 import type { EthereumTransactionData, Network } from 'bnc-sdk'
 
@@ -47,31 +43,6 @@ export interface InitOptions {
    * Transaction notification options
    */
   notify?: Partial<NotifyOptions> | Partial<Notify>
-}
-
-export interface OnboardAPI {
-  connectWallet: typeof connect
-  disconnectWallet: typeof disconnect
-  setChain: typeof setChain
-  state: {
-    select: typeof state.select
-    get: typeof state.get
-    actions: ExposedActions
-  }
-}
-
-interface ExposedActions {
-  setWalletModules: (wallets: WalletInit[]) => void
-  setLocale: (locale: string) => void
-  updateNotify: (update: Partial<Notify>) => void
-  customNotification: (
-    updatedNotification: CustomNotification
-  ) => {
-    dismiss: () => void
-    update: UpdateNotification
-  }
-  updateBalances: (addresses?: string[]) => Promise<void>
-  updateAccountCenter: (update: AccountCenter | Partial<AccountCenter>) => void
 }
 
 export interface ConnectOptions {
@@ -155,10 +126,10 @@ export type i18nOptions = Record<Locale, i18n>
 export type i18n = typeof en
 
 export type CommonPositions =
-| 'topRight'
-| 'bottomRight'
-| 'bottomLeft'
-| 'topLeft'
+  | 'topRight'
+  | 'bottomRight'
+  | 'bottomLeft'
+  | 'topLeft'
 
 export type AccountCenterPosition = CommonPositions
 
@@ -169,6 +140,7 @@ export type AccountCenter = {
   position?: AccountCenterPosition
   expanded?: boolean
   minimal?: boolean
+  containerElement: string
 }
 
 export type AccountCenterOptions = {
@@ -192,7 +164,7 @@ export type Notify = {
     event: EthereumTransactionData
   ) => TransactionHandlerReturn
   /**
-   * Position of notifications that defaults to the same position as the 
+   * Position of notifications that defaults to the same position as the
    * Account Center (if enabled) of the top right if AC is disabled
    * and notifications are enabled (enabled by default with API key)
    */
@@ -234,6 +206,19 @@ export interface UpdateNotification {
     dismiss: () => void
     update: UpdateNotification
   }
+}
+
+export interface PreflightNotificationsOptions {
+  sendTransaction?: () => Promise<string | void>
+  estimateGas?: () => Promise<string>
+  gasPrice?: () => Promise<string>
+  balance?: string | number
+  txDetails?: {
+    value: string | number
+    to?: string
+    from?: string
+  }
+  txApproveReminderTimeout?: number
 }
 
 // ==== ACTIONS ==== //

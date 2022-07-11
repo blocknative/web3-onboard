@@ -148,7 +148,6 @@ unsubscribe()
 ```
 
 ```typescript
-
 export type NotifyOptions = {
   desktop: Notify
   mobile: Notify
@@ -168,10 +167,10 @@ export type Notify = {
 }
 
 export type CommonPositions =
-| 'topRight'
-| 'bottomRight'
-| 'bottomLeft'
-| 'topLeft'
+  | 'topRight'
+  | 'bottomRight'
+  | 'bottomLeft'
+  | 'topLeft'
 
 export type TransactionHandlerReturn = CustomNotification | boolean | void
 
@@ -212,28 +211,6 @@ export interface UpdateNotification {
     update: UpdateNotification
   }
 }
-```
-
-Notify can be used to deliver custom DApp notifications by passing a `CustomNotification` object to the `customNotification` action. This will return an `UpdateNotification` type.
-This `UpdateNotification` will return an `update` function that can be passed a new `CustomNotification` to update the existing notification.
-The `customNotification` method also returns a `dismiss` method that is called without any parameters to dismiss the notification.
-
-```typescript
-const { update, dismiss } = onboard.state.actions.customNotification({
-  type: 'pending',
-  message: 'This is a custom DApp pending notification to use however you want',
-  autoDismiss: 0
-})
-setTimeout(
-  () =>
-    update({
-      eventCode: 'dbUpdateSuccess',
-      message: 'Updated status for custom notification',
-      type: 'success',
-      autoDismiss: 8000
-    }),
-  4000
-)
 ```
 
 ### Initialization Example
@@ -551,7 +528,7 @@ unsubscribe()
 
 A limited subset of internal actions are exposed to update the Onboard state.
 
-**setWalletModules**
+**`setWalletModules`**
 For updating the wallets that are displayed in the wallet selection modal. This can be used if the wallets you want to support is conditional on another user action within your app. The `setWalletModules` action is called with an updated array of wallets (the same wallets that are passed in on initialization)
 
 ```typescript
@@ -584,16 +561,170 @@ const onboard = Onboard({
 onboard.state.actions.setWalletModules([ledger, trezor])
 ```
 
-**updatedBalances**
-You may decide to get updated balances for connected wallets after a user action by calling the `updatedBalances` function, which expects a conditional array of addresses.
+**`updateBalances`**
+You may decide to get updated balances for connected wallets after a user action by calling the `updatedBalances` function, which expects a conditional array of addresses:
 
-```
+```javascript
 onboard.state.actions.updateBalances() // update all balances for all connected addresses
 onboard.state.actions.updateBalances(['0xfdadfadsadsadsadasdsa']) // update balance for one address
 onboard.state.actions.updateBalances([
   '0xfdadfadsadsadsadasdsa',
   '0xfdsafdsfdsfdsfds'
 ]) // update balance for two addresses
+```
+
+**`setLocale`**
+Onboard will automatically detect the browser locale at runtime, but if you would like to update it manually you can call the `setLocale` function:
+
+```javascript
+onboard.state.actions.setLocal('fr_FR')
+```
+
+**`updateNotify`**
+If you need to update your notify configuration after initialization, you can do that by calling the `updateNotify` function:
+
+```javascript
+onboard.state.actions.updateNotify({
+  desktop: {
+    enabled: true,
+    transactionHandler: transaction => {
+      console.log({ transaction })
+      if (transaction.eventCode === 'txPool') {
+        return {
+          type: 'success',
+          message: 'Your transaction from #1 DApp is in the mempool'
+        }
+      }
+    },
+    position: 'bottomLeft'
+  },
+  mobile: {
+    enabled: true,
+    transactionHandler: transaction => {
+      console.log({ transaction })
+      if (transaction.eventCode === 'txPool') {
+        return {
+          type: 'success',
+          message: 'Your transaction from #1 DApp is in the mempool'
+        }
+      }
+    },
+    position: 'topRight'
+  }
+})
+```
+
+**`customNotification`**
+Notify can be used to deliver custom DApp notifications by passing a `CustomNotification` object to the `customNotification` action. This will return an `UpdateNotification` type.
+This `UpdateNotification` will return an `update` function that can be passed a new `CustomNotification` to update the existing notification.
+The `customNotification` method also returns a `dismiss` method that is called without any parameters to dismiss the notification.
+
+```typescript
+const { update, dismiss } = onboard.state.actions.customNotification({
+  type: 'pending',
+  message: 'This is a custom DApp pending notification to use however you want',
+  autoDismiss: 0
+})
+setTimeout(
+  () =>
+    update({
+      eventCode: 'dbUpdateSuccess',
+      message: 'Updated status for custom notification',
+      type: 'success',
+      autoDismiss: 8000
+    }),
+  4000
+)
+```
+
+**`preflightNotifications`**
+Notify can be used to deliver standard notifications along with preflight information by passing a `PreflightNotificationsOptions` object to the `preflightNotifications` action. This will return a a promise that resolves to the transaction hash (if `sendTransaction` resolves the transaction hash and is successful), the internal notification id (if no `sendTransaction` function is provided) or return nothing if an error occurs or `sendTransaction` is not provided or doesn't resolve to a string.
+
+Preflight event types include 
+ - `txRequest` : Alert user there is a transaction request awaiting confirmation by their wallet
+ - `txAwaitingApproval` : A previous transaction is awaiting confirmation
+ - `txConfirmReminder` : Reminder to confirm a transaction to continue - configurable with the `txApproveReminderTimeout` property; defaults to 15 seconds
+ - `nsfFail` : The user has insufficient funds for transaction (requires `gasPrice`, `estimateGas`, `balance`, `txDetails.value`)
+ - `txError` : General transaction error (requires `sendTransaction`)
+ - `txSendFail` : The user rejected the transaction (requires `sendTransaction`)
+ - `txUnderpriced` : The gas price for the transaction is too low (requires `sendTransaction`)
+
+```typescript
+interface PreflightNotificationsOptions {
+  sendTransaction?: () => Promise<string | void>
+  estimateGas?: () => Promise<string>
+  gasPrice?: () => Promise<string>
+  balance?: string | number
+  txDetails?: {
+    value: string | number
+    to?: string
+    from?: string
+  }
+  txApproveReminderTimeout?: number // defaults to 15 seconds if not specified
+}
+```
+
+```typescript
+const balanceValue = Object.values(balance)[0]
+const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
+
+const signer = ethersProvider.getSigner()
+const txDetails = {
+  to: toAddress,
+  value: 100000000000000
+}
+
+const sendTransaction = () => {
+  return signer.sendTransaction(txDetails).then(tx => tx.hash)
+}
+
+const gasPrice = () =>
+  ethersProvider.getGasPrice().then(res => res.toString())
+
+const estimateGas = () => {
+  return ethersProvider.estimateGas(txDetails).then(res => res.toString())
+}
+const transactionHash = await onboard.state.actions.preflightNotifications({
+  sendTransaction,
+  gasPrice,
+  estimateGas,
+  balance: balanceValue,
+  txDetails: txDetails
+})
+console.log(transactionHash)
+```
+
+**`updateAccountCenter`**
+If you need to update your Account Center configuration after initialization, you can call the `updateAccountCenter` function with the new configuration
+
+```typescript
+onboard.state.actions.updateAccountCenter({
+  desktop: {
+    position: 'topRight',
+    enabled: true,
+    minimal: true
+  },
+  mobile: {
+    position: 'topRight',
+    enabled: true,
+    minimal: true
+  }
+})
+```
+
+**`setPrimaryWallet`**
+The primary wallet (first in the list of connected wallets) and primary account (first in the list of connected accounts for a wallet) can be set by using the `setPrimaryWallet` function. The wallet that is to be set needs to be passed in for the first parameter and if you would like to set the primary account, the address of that account also needs to be passed in:
+
+```typescript
+// set the second wallet in the wallets array as the primary
+onboard.state.actions.setPrimaryWallet(wallets[1])
+
+// set the second wallet in the wallets array as the primary wallet
+// as well as setting the third account in that wallet as the primary account
+onboard.state.actions.setPrimaryWallet(
+  wallets[1],
+  wallets[1].accounts[2].address
+)
 ```
 
 ## Setting the User's Chain/Network
@@ -659,9 +790,24 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-warning-600: #cc8c00;
   --onboard-warning-700: #664600;
 
-  /* CUSTOMIZE ACCOUNT CENTER STACK POSITIONING*/
+  /* CUSTOMIZE ACCOUNT CENTER*/
   --account-center-z-index
-
+  --account-center-minimized-background
+  --account-center-maximized-upper-background
+  --account-center-maximized-network-section
+  --account-center-maximized-app-info-section
+  --account-center-minimized-address-color
+  --account-center-maximized-address-color
+  --account-center-maximized-account-section-background-hover
+  --account-center-maximized-action-background-hover
+  --account-center-minimized-chain-select-background
+  --account-center-network-selector-color
+  --account-center-maximized-network-selector-color
+  --account-center-minimized-network-selector-color
+  --account-center-app-btn-text-color
+  --account-center-app-btn-background
+  --account-center-app-btn-font-family
+  
   /* CUSTOMIZE SECTIONS OF THE CONNECT MODAL */
   --onboard-connect-content-width
   --onboard-connect-content-height
@@ -685,6 +831,10 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-wallet-button-border-radius
   --onboard-wallet-button-box-shadow
   --onboard-wallet-app-icon-border-color
+
+  /* CUSTOMIZE THE SHARED MODAL */
+  --onboard-modal-background
+  --onboard-modal-color
 
   /* CUSTOMIZE THE CONNECT MODAL */
   --onboard-modal-border-radius

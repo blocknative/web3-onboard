@@ -11,7 +11,7 @@ import {
 } from './validation'
 import initI18N from './i18n'
 import App from './views/Index.svelte'
-import type { InitOptions, OnboardAPI, Notify } from './types'
+import type { InitOptions, Notify } from './types'
 import { APP_INITIAL_STATE } from './constants'
 import { configuration, updateConfiguration } from './configuration'
 
@@ -21,12 +21,14 @@ import {
   updateAccountCenter,
   updateNotify,
   customNotification,
-  setLocale
+  setLocale,
+  setPrimaryWallet
 } from './store/actions'
 
-import updateBalances from './updateBalances'
+import updateBalances from './update-balances'
+import { preflightNotifications } from './preflight-notifications'
 
-const API: OnboardAPI = {
+const API = {
   connectWallet,
   disconnectWallet,
   setChain,
@@ -38,15 +40,18 @@ const API: OnboardAPI = {
       setLocale,
       updateNotify,
       customNotification,
+      preflightNotifications,
       updateBalances,
-      updateAccountCenter
+      updateAccountCenter,
+      setPrimaryWallet
     }
   }
 }
 
+export type OnboardAPI = typeof API
+
 export type {
   InitOptions,
-  OnboardAPI,
   ConnectOptions,
   DisconnectOptions,
   WalletState,
@@ -311,7 +316,13 @@ function mountApp() {
       </style>
     `
 
-  document.body.appendChild(onboard)
+  const containerElementQuery = state.get().accountCenter.containerElement || 'body'
+  const containerElement = document.querySelector(containerElementQuery)
+  if (!containerElement) {
+    throw new Error(`Element with query ${state.get().accountCenter} does not exist.`)
+  }
+
+  containerElement.appendChild(onboard)
 
   const app = new App({
     target

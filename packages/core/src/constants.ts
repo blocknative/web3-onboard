@@ -9,6 +9,7 @@ export const APP_INITIAL_STATE: AppState = {
     enabled: true,
     position: 'topRight',
     expanded: false,
+    containerElement: 'body',
     minimal: configuration.device.type === 'mobile'
   },
   notify: {

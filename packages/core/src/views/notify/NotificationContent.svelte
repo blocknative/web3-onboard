@@ -74,7 +74,7 @@
     {notification.message}
   </span>
 
-  {#if notification.id && !notification.id.includes('customNotification')}
+  {#if notification.id && (!notification.id.includes('customNotification') && !notification.id.includes('preflight') )}
     <span class="hash-time">
       {#if notification.link}
         <a
