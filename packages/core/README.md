@@ -733,9 +733,24 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-warning-600: #cc8c00;
   --onboard-warning-700: #664600;
 
-  /* CUSTOMIZE ACCOUNT CENTER STACK POSITIONING*/
+  /* CUSTOMIZE ACCOUNT CENTER*/
   --account-center-z-index
-
+  --account-center-minimized-background
+  --account-center-maximized-upper-background
+  --account-center-maximized-network-section
+  --account-center-maximized-app-info-section
+  --account-center-minimized-address-color
+  --account-center-maximized-address-color
+  --account-center-maximized-account-section-background-hover
+  --account-center-maximized-action-background-hover
+  --account-center-minimized-chain-select-background
+  --account-center-network-selector-color
+  --account-center-maximized-network-selector-color
+  --account-center-minimized-network-selector-color
+  --account-center-app-btn-text-color
+  --account-center-app-btn-background
+  --account-center-app-btn-font-family
+  
   /* CUSTOMIZE SECTIONS OF THE CONNECT MODAL */
   --onboard-connect-content-width
   --onboard-connect-content-height

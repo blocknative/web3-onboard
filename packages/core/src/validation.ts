@@ -198,7 +198,8 @@ const accountCenter = Joi.object({
   enabled: Joi.boolean(),
   position: commonPositions,
   expanded: Joi.boolean(),
-  minimal: Joi.boolean()
+  minimal: Joi.boolean(),
+  containerElement: Joi.string()
 })
 
 const customNotificationUpdate = Joi.object({
