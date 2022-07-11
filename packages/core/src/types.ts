@@ -138,9 +138,9 @@ export type NotificationPosition = CommonPositions
 export type AccountCenter = {
   enabled: boolean
   position?: AccountCenterPosition
-  containerElement?: string
   expanded?: boolean
   minimal?: boolean
+  containerElement: string
 }
 
 export type AccountCenterOptions = {
@@ -206,6 +206,19 @@ export interface UpdateNotification {
     dismiss: () => void
     update: UpdateNotification
   }
+}
+
+export interface PreflightNotificationsOptions {
+  sendTransaction?: () => Promise<string | void>
+  estimateGas?: () => Promise<string>
+  gasPrice?: () => Promise<string>
+  balance?: string | number
+  txDetails?: {
+    value: string | number
+    to?: string
+    from?: string
+  }
+  txApproveReminderTimeout?: number
 }
 
 // ==== ACTIONS ==== //
