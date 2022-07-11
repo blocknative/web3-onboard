@@ -3,21 +3,21 @@ import { nanoid } from 'nanoid'
 import defaultCopy from './i18n/en.json'
 import type { Network } from 'bnc-sdk'
 
-import type { Notification, PreflightNotificationOptions } from './types'
+import type { Notification, PreflightNotificationsOptions } from './types'
 import { addNotification, removeNotification } from './store/actions'
 import { state } from './store'
 import { eventToType } from './notify'
 import { networkToChainId } from './utils'
 import { configuration } from './configuration'
-import { validatePreflightNotification } from './validation'
+import { validatePreflightNotifications } from './validation'
 
 let notificationsArr: Notification[]
 state.select('notifications').subscribe(notifications => {
   notificationsArr = notifications
 })
 
-export async function preflightNotification(
-  options: PreflightNotificationOptions
+export async function preflightNotifications(
+  options: PreflightNotificationsOptions
 ): Promise<string> | null {
   const { apiKey } = configuration
 
@@ -28,7 +28,7 @@ export async function preflightNotification(
     return null
   }
 
-  const invalid = validatePreflightNotification(options)
+  const invalid = validatePreflightNotifications(options)
 
   if (invalid) {
     throw invalid

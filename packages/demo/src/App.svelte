@@ -271,7 +271,7 @@
       return ethersProvider.estimateGas(txDetails).then(res => res.toString())
     }
 
-    const transactionHash = await onboard.state.actions.preflightNotification({
+    const transactionHash = await onboard.state.actions.preflightNotifications({
       sendTransaction,
       gasPrice,
       estimateGas,

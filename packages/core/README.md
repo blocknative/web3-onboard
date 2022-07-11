@@ -638,7 +638,7 @@ setTimeout(
 ```
 
 **`preflightNotifications`**
-Notify can be used to deliver standard notifications along with preflight information by passing a `PreflightNotificationOptions` object to the `preflightNotification` action. This will return a a promise that resolves to the transaction hash or null `Promise<string> | null`.
+Notify can be used to deliver standard notifications along with preflight information by passing a `PreflightNotificationsOptions` object to the `preflightNotifications` action. This will return a a promise that resolves to the transaction hash or null `Promise<string> | null`.
 
 Preflight event types include 
  - `txRequest` : Alert user there is a transaction request awaiting confirmation by their wallet
@@ -650,7 +650,7 @@ Preflight event types include
  - `txUnderpriced` : The gas price for the transaction is too low (requires `sendTransaction`)
 
 ```typescript
-interface PreflightNotificationOptions {
+interface PreflightNotificationsOptions {
   sendTransaction?: () => Promise<string>
   estimateGas?: () => Promise<string>
   gasPrice?: () => Promise<string>
@@ -684,7 +684,7 @@ const gasPrice = () =>
 const estimateGas = () => {
   return ethersProvider.estimateGas(txDetails).then(res => res.toString())
 }
-const transactionHash = await onboard.state.actions.preflightNotification({
+const transactionHash = await onboard.state.actions.preflightNotifications({
   sendTransaction,
   gasPrice,
   estimateGas,

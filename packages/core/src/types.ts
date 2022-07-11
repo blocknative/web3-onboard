@@ -208,7 +208,7 @@ export interface UpdateNotification {
   }
 }
 
-export interface PreflightNotificationOptions {
+export interface PreflightNotificationsOptions {
   sendTransaction?: () => Promise<string>
   estimateGas?: () => Promise<string>
   gasPrice?: () => Promise<string>
