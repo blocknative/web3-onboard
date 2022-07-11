@@ -50,7 +50,10 @@
 
 <style>
   .outer-container {
-    background: var(--account-center-maximized-upper-background, var(--onboard-gray-600, var(--gray-600)));
+    background: var(
+      --account-center-maximized-upper-background,
+      var(--onboard-gray-600, var(--gray-600))
+    );
     border-radius: var(--onboard-border-radius-3, var(--border-radius-3));
     width: 100%;
     filter: drop-shadow(0px 4px 16px rgba(178, 178, 178, 0.2));
@@ -84,7 +87,10 @@
   }
 
   .action-container:hover {
-    background-color: var(--account-center-maximized-action-background-hover, rgba(146, 155, 237, 0.2));
+    background-color: var(
+      --account-center-maximized-action-background-hover,
+      rgba(146, 155, 237, 0.2)
+    );
   }
 
   .plus-icon {
@@ -119,7 +125,10 @@
 
   .network-container {
     border-radius: var(--onboard-border-radius-3, var(--border-radius-3));
-    color: var(--account-center-maximized-network-section, var(--onboard-gray-500, var(--gray-500)));
+    color: var(
+      --account-center-maximized-network-section,
+      var(--onboard-gray-500, var(--gray-500))
+    );
   }
 
   .p5-5 {
@@ -136,7 +145,10 @@
   }
 
   .app-info-container {
-    background: var(--account-center-maximized-app-info-section, var(--onboard-white, var(--white)));
+    background: var(
+      --account-center-maximized-app-info-section,
+      var(--onboard-white, var(--white))
+    );
     border-radius: 16px;
     padding: 12px;
   }
@@ -183,8 +195,14 @@
 
   .app-button {
     margin-top: var(--onboard-spacing-5, var(--spacing-5));
-    color: var(--account-center-app-btn-text-color, var(--onboard-white, var(--white)));
-    background: var(--account-center-app-btn-background, var(--onboard-gray-500, var(--gray-500)));
+    color: var(
+      --account-center-app-btn-text-color,
+      var(--onboard-white, var(--white))
+    );
+    background: var(
+      --account-center-app-btn-background,
+      var(--onboard-gray-500, var(--gray-500))
+    );
     font-family: var(--account-center-app-btn-font-family, inherit);
   }
 

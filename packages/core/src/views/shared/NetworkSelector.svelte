@@ -96,7 +96,11 @@
 {#if wallet}
   {#if $switching$}
     <span
-      style={`color: var(${colorVar}, var(--account-center-network-selector-color, var (--gray-500))); padding: 0 8px 0 4px;`}
+      style={`
+        color: var(${colorVar}, 
+        var(--account-center-network-selector-color, var (--gray-500))); 
+        padding: 0 8px 0 4px;
+      `}
       >switching...</span
     >
   {:else}
@@ -105,7 +109,9 @@
       bind:this={selectElement}
       value={wallet.chains[0].id}
       on:change={handleSelect}
-      style={`color: var(${colorVar}, var(--account-center-network-selector-color, var (--gray-500))); background-image: url('data:image/svg+xml;utf8,${selectIcon}'); ${
+      style={`
+        color: var(${colorVar}, var(--account-center-network-selector-color, var (--gray-500)));
+        background-image: url('data:image/svg+xml;utf8,${selectIcon}'); ${
         bold ? 'font-weight: 700;' : ''
       }`}
     >

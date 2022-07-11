@@ -58,7 +58,10 @@
 
 <style>
   .minimized {
-    background: var(--account-center-minimized-background, var(--onboard-white, var(--white)));
+    background: var(
+      --account-center-minimized-background,
+      var(--onboard-white, var(--white))
+    );
     border: 1px solid var(--onboard-gray-100, var(--gray-100));
     width: 100%;
     box-shadow: var(--onboard-shadow-3, var(--shadow-3));

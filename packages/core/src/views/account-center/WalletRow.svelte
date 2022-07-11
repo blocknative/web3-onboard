@@ -70,7 +70,10 @@
   }
 
   .container:hover {
-    background: var(--account-center-maximized-account-section-background-hover, var(--onboard-gray-500, var(--gray-500)));
+    background: var(
+      --account-center-maximized-account-section-background-hover,
+      var(--onboard-gray-500, var(--gray-500))
+    );
   }
 
   .container:hover > div > span.balance {
@@ -84,7 +87,10 @@
   .address-ens {
     margin-left: 0.5rem;
     font-weight: 700;
-    color: var(--account-center-maximized-address-color, var(--onboard-primary-100, var(--primary-100)));
+    color: var(
+      --account-center-maximized-address-color,
+      var(--onboard-primary-100, var(--primary-100))
+    );
   }
 
   .balance {
