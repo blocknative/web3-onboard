@@ -139,14 +139,14 @@ export function eventToType(eventCode: string | undefined): NotificationType {
     case 'txRepeat':
     case 'txAwaitingApproval':
     case 'txConfirmReminder':
-    case 'txError':
-    case 'txSendFail':
-    case 'txUnderpriced':
-    case 'nsfFail':
     case 'txStuck':
       return 'hint'
+    case 'txError':
+    case 'txSendFail':
     case 'txFailed':
     case 'txDropped':
+    case 'nsfFail':
+    case 'txUnderpriced':
       return 'error'
     case 'txConfirmed':
       return 'success'
@@ -164,3 +164,4 @@ export function typeToDismissTimeout(type: string): number {
       return 0
   }
 }
+
