@@ -14,10 +14,10 @@ import type {
   CustomNotification,
   Notification,
   Notify,
-  UpdateNotification
+  UpdateNotification,
+  PreflightNotificationsOptions
 } from '@web3-onboard/core'
 import type { Chain, WalletInit } from '@web3-onboard/common'
-import { PreflightNotificationsOptions } from '@web3-onboard/core/dist/types'
 
 export let web3Onboard: OnboardAPI | null = null
 
