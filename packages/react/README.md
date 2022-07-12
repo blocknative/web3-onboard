@@ -154,15 +154,14 @@ This hook allows the dev to access all notifications if enabled, send custom not
 **note** requires an API key be added to the initialization, enabled by default if API key exists
 
 ```typescript
-import { useNotifications } from '@web3-onboard/react'
-
 type UseNotifications = (): [
   Notification[],
   (updatedNotification: CustomNotification) => {
     dismiss: () => void
     update: UpdateNotification
   },
-  (update: Partial<Notify>) => void
+  (update: Partial<Notify>) => void,
+  (options: PreflightNotificationsOptions) => Promise<void | string>
 ]
 
 type Notification = {
@@ -209,17 +208,74 @@ type Notify = {
   transactionHandler: (
     event: EthereumTransactionData
   ) => TransactionHandlerReturn
+  /**
+   * Position of notifications that defaults to the same position as the
+   * Account Center (if enabled) of the top right if AC is disabled
+   * and notifications are enabled (enabled by default with API key)
+   */
+  position?: NotificationPosition
+}
+
+type PreflightNotificationsOptions = {
+  sendTransaction?: () => Promise<string | void>
+  estimateGas?: () => Promise<string>
+  gasPrice?: () => Promise<string>
+  balance?: string | number
+  txDetails?: TxDetails
+  txApproveReminderTimeout?: number
+}
+type TxDetails = {
+  value: string | number
+  to?: string
+  from?: string
+}
+```
+
+```typescript
+import { useNotifications } from '@web3-onboard/react'
 
 const [
   notifications, // the list of all notifications that update when notifications are added, updated or removed
   customNotification, // a function that takes a customNotification object and allows custom notifications to be shown to the user, returns an update and dismiss callback
-  updateNotify // a function that takes a Notify object to allow updating of the properties
+  updateNotify, // a function that takes a Notify object to allow updating of the properties
+  preflightNotifications // a function that takes a PreflightNotificationsOption to create preflight notifications
 ] = useNotifications()
 
 // View notifications as they come in if you would like to handle them independent of the notification display
 useEffect(() => {
   console.log(notifications)
 }, [notifications])
+
+const sendTransactionWithPreFlightNotifications = async () => {
+  const balanceValue = Object.values(wallet.accounts[0].balance)[0]
+
+  const signer = provider.getUncheckedSigner()
+
+  const txDetails = {
+    to: toAddress,
+    value: 1000000000000000
+  }
+
+  const sendTransaction = () => {
+    return signer.sendTransaction(txDetails).then(tx => tx.hash)
+  }
+
+  const gasPrice = () => provider.getGasPrice().then(res => res.toString())
+
+  const estimateGas = () => {
+    return provider.estimateGas(txDetails).then(res => res.toString())
+  }
+
+  const transactionHash =
+    await preflightNotifications({
+      sendTransaction,
+      gasPrice,
+      estimateGas,
+      balance: balanceValue,
+      txDetails: txDetails
+    })
+  console.log(transactionHash)
+}
 
 // Custom notification example
 <button
@@ -247,6 +303,14 @@ useEffect(() => {
   }}
 >
   Custom Hint Notification
+</button>
+<button
+  className="bn-demo-button"
+  onClick={async () => {
+    sendTransactionWithPreFlightNotifications()
+  }}
+>
+  Send with In Flight and Pre Flight Notifications
 </button>
 ```
 
