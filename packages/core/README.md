@@ -930,6 +930,7 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --account-select-modal-margin-5: 0.5rem;
 
   /* NOTIFY STYLES */
+  /* Notify Positioning variables only take effect if Notify is Positioned separate of Account Center */
   --notify-onboard-container-position-top
   --notify-onboard-container-position-bottom
   --notify-onboard-container-position-right
