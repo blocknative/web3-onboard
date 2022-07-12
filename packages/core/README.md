@@ -792,6 +792,10 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
 
   /* CUSTOMIZE ACCOUNT CENTER*/
   --account-center-z-index
+  --account-center-position-top
+  --account-center-position-bottom
+  --account-center-position-right
+  --account-center-position-left
   --account-center-minimized-background
   --account-center-maximized-upper-background
   --account-center-maximized-network-section
@@ -926,6 +930,10 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --account-select-modal-margin-5: 0.5rem;
 
   /* notify STYLES */
+  --notify-onboard-container-position-top
+  --notify-onboard-container-position-bottom
+  --notify-onboard-container-position-right
+  --notify-onboard-container-position-left
   --notify-onboard-font-family-normal
   --notify-onboard-font-size-5
   --notify-onboard-gray-300

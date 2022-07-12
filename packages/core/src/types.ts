@@ -213,6 +213,7 @@ export interface PreflightNotificationsOptions {
   estimateGas?: () => Promise<string>
   gasPrice?: () => Promise<string>
   balance?: string | number
+  contractCall?: ContractCall
   txDetails?: TxDetails
   txApproveReminderTimeout?: number
 }
@@ -221,6 +222,11 @@ export interface TxDetails {
   value: string | number
   to?: string
   from?: string
+}
+
+export interface ContractCall {
+  methodName: string
+  params: string[]
 }
 
 // ==== ACTIONS ==== //
