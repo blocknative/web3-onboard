@@ -17,6 +17,7 @@ import type {
   UpdateNotification
 } from '@web3-onboard/core'
 import type { Chain, WalletInit } from '@web3-onboard/common'
+import { PreflightNotificationsOptions } from '@web3-onboard/core/dist/types'
 
 export let web3Onboard: OnboardAPI | null = null
 
@@ -51,8 +52,8 @@ const useAppState: {
     return stateKey ? snapshot[stateKey] : snapshot
   }, [stateKey])
 
-  const getServerSnapshot = () => get() || getSnapshot;
-  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const getServerSnapshot = () => get() || getSnapshot
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 }
 
 export const useConnectWallet = (): [
@@ -156,14 +157,22 @@ export const useNotifications = (): [
     dismiss: () => void
     update: UpdateNotification
   },
-  (update: Partial<Notify>) => void
+  (update: Partial<Notify>) => void,
+  (options: PreflightNotificationsOptions) => Promise<void | string>
 ] => {
   if (!web3Onboard) throw new Error(HOOK_ERROR_MESSAGE)
 
   const customNotification = web3Onboard.state.actions.customNotification
   const updateNotify = web3Onboard.state.actions.updateNotify
+  const preflightNotifications =
+    web3Onboard.state.actions.preflightNotifications
 
-  return [useAppState('notifications'), customNotification, updateNotify]
+  return [
+    useAppState('notifications'),
+    customNotification,
+    updateNotify,
+    preflightNotifications
+  ]
 }
 
 export const useSetLocale = (): ((locale: string) => void) => {

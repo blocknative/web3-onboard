@@ -63,8 +63,7 @@ export async function preflightNotifications(
     if (transactionCost.gt(new BigNumber(balance))) {
       const eventCode = 'nsfFail'
 
-      const newNotification = buildNotification(eventCode, id)
-      addNotification(newNotification)
+      addNotification(buildNotification(eventCode, id))
     }
   }
 
@@ -93,8 +92,7 @@ export async function preflightNotifications(
   }, reminderTimeout)
 
   const eventCode = 'txRequest'
-  const newNotification = buildNotification(eventCode, id)
-  addNotification(newNotification)
+  addNotification(buildNotification(eventCode, id))
 
   // if not provided with sendTransaction function,
   // resolve with transaction hash(or void) so dev can initiate transaction
@@ -112,8 +110,7 @@ export async function preflightNotifications(
     }
     const { eventCode, errorMsg } = extractMessageFromError(error as CatchError)
 
-    const newNotification = buildNotification(eventCode, id)
-    addNotification(newNotification)
+    addNotification(buildNotification(eventCode, id))
     console.error(errorMsg)
     return
   }
