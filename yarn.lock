@@ -2455,14 +2455,24 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.0"
 
-"@web3-onboard/injected-wallets@^2.0.12":
-  version "2.0.12"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.0.12.tgz#593cf6ec0fe1e2f57233e10795136cfd681c9bd5"
-  integrity sha512-viZebgwenIKRN/1q0A6Yq0euYxGmP7sPCPwjKQoTFQPcwKuR+kPkfLw1MnPkntxpC7Cyc5dS4/LsOqeEfSPFbQ==
+"@web3-onboard/core@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.4.0.tgz#37948f6826cc147a16e7ae56bae01c03a4675994"
+  integrity sha512-mdpM/PIoKPqwm2P/Nk2Kf71hwMVphehntbcNF44ITXAqARYvZ5M9MD/p4CT8OOxziSz5JI7qzqFfwacWjccHkw==
   dependencies:
-    "@web3-onboard/common" "^2.1.4"
-    joi "^17.4.2"
-    lodash.uniqby "^4.7.0"
+    "@web3-onboard/common" "^2.1.5"
+    bignumber.js "^9.0.0"
+    bnc-sdk "^4.4.1"
+    bowser "^2.11.0"
+    ethers "5.5.3"
+    eventemitter3 "^4.0.7"
+    joi "17.6.0"
+    lodash.merge "^4.6.2"
+    lodash.partition "^4.6.0"
+    nanoid "^4.0.0"
+    rxjs "^7.5.2"
+    svelte "^3.46.4"
+    svelte-i18n "^3.3.13"
 
 "@web3auth/base-plugin@^1.0.1":
   version "1.0.1"
