@@ -929,7 +929,7 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --account-select-modal-margin-4: 1rem;
   --account-select-modal-margin-5: 0.5rem;
 
-  /* notify STYLES */
+  /* NOTIFY STYLES */
   --notify-onboard-container-position-top
   --notify-onboard-container-position-bottom
   --notify-onboard-container-position-right
