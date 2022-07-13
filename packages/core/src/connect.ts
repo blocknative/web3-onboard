@@ -33,7 +33,7 @@ async function connect(
 
   // if auto selecting, wait until next event loop
   if (autoSelect) {
-    await wait(1)
+    await wait(50)
   }
 
   // first time calling connect, so initialize and set wallet modules
