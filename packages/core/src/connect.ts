@@ -32,7 +32,7 @@ async function connect(
   }
 
   // if auto selecting, wait until next event loop
-  if (autoSelect) {
+  if (autoSelect && (typeof autoSelect === 'string' || autoSelect.label)) {
     await wait(50)
   }
 
