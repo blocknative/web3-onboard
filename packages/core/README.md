@@ -713,7 +713,7 @@ onboard.state.actions.updateAccountCenter({
 ```
 
 **`setPrimaryWallet`**
-The primary wallet (first in the list of connected wallets) and primary account (first in the list of connected accounts for a wallet) can be set by using the `setPrimaryWallet` function. The wallet that is to be set needs to be passed in for the first parameter and if you would like to set the primary account, the address of that account also needs to be passed in:
+The primary wallet (first in the list of connected wallets) and primary account (first in the list of connected accounts for a wallet) can be set by using the `setPrimaryWallet` function. The wallet that is set needs to be passed in for the first parameter and if you would like to set the primary account, the address of that account also needs to be passed in:
 
 ```typescript
 // set the second wallet in the wallets array as the primary

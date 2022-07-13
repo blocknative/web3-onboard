@@ -80,7 +80,8 @@ type UseConnectWallet = (): [
   (options: ConnectOptions) => Promise<void>,
   (wallet: DisconnectOptions) => Promise<void>,
   (addresses?: string[]) => Promise<void>,
-  (wallets: WalletInit[]) => void
+  (wallets: WalletInit[]) => void,
+  (wallet: WalletState, address?: string) => void
 ]
 
 type ConnectOptions = {
@@ -110,8 +111,25 @@ const [
   connect, // function to call to initiate user to connect wallet
   disconnect, // function to call with wallet<DisconnectOptions> to disconnect wallet
   updateBalances, // function to be called with an optional array of wallet addresses connected through Onboard to update balance or empty/no params to update all connected wallets
-  setWalletModules // function to be called with an array of wallet modules to conditionally allow connection of wallet types i.e. setWalletModules([ledger, trezor, injected])
+  setWalletModules, // function to be called with an array of wallet modules to conditionally allow connection of wallet types i.e. setWalletModules([ledger, trezor, injected])
+  setPrimaryWallet // function that can set the primary wallet and/or primary account within that wallet. The wallet that is set needs to be passed in for the first parameter and if you would like to set the primary account, the address of that account also needs to be passed in
 ] = useConnectWallet()
+
+
+```
+**`setPrimaryWallet`**
+The primary wallet (first in the list of connected wallets) and primary account (first in the list of connected accounts for a wallet) can be set by using the `setPrimaryWallet` function. The wallet that is set needs to be passed in for the first parameter and if you would like to set the primary account, the address of that account also needs to be passed in:
+
+```typescript
+// set the second wallet in the wallets array as the primary
+setPrimaryWallet(wallets[1])
+
+// set the second wallet in the wallets array as the primary wallet
+// as well as setting the third account in that wallet as the primary account
+setPrimaryWallet(
+  wallets[1],
+  wallets[1].accounts[2].address
+)
 ```
 
 ## `useSetChain`
