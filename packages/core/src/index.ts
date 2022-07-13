@@ -167,7 +167,6 @@ function init(options: InitOptions): OnboardAPI {
       if (!apiKey || !notifyUpdate.enabled) {
         notifyUpdate.enabled = false
       }
-      console.log(notifyUpdate)
       updateNotify(notifyUpdate)
     }
   } else {
