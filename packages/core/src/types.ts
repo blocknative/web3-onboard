@@ -119,6 +119,7 @@ export type Configuration = {
   appMetadata: AppMetadata | null
   device: Device | DeviceNotBrowser
   apiKey: string
+  initialWalletInit: WalletInit[]
 }
 
 export type Locale = string
