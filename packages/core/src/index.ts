@@ -1,4 +1,4 @@
-import { SofiaProRegular, WalletInit } from '@web3-onboard/common'
+import { SofiaProRegular } from '@web3-onboard/common'
 import connectWallet from './connect'
 import disconnectWallet from './disconnect'
 import setChain from './chain'
