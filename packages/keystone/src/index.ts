@@ -83,9 +83,13 @@ function keystone({
           '@keystonehq/eth-keyring'
         )
 
-        // @ts-ignore super weird esm issue where the default export is an object with a property default on it
+        // Super weird esm issue where the default export is an object with a property default on it
         // if that is the case then we just grab the default value
-        AirGappedKeyring = AirGappedKeyring?.default || AirGappedKeyring
+        AirGappedKeyring =
+          'default' in AirGappedKeyring
+            ? // @ts-ignore
+              AirGappedKeyring.default
+            : AirGappedKeyring
 
         const { TransactionFactory: Transaction } = await import(
           '@ethereumjs/tx'
@@ -97,7 +101,8 @@ function keystone({
           ProviderRpcError,
           ProviderRpcErrorCode,
           getCommon,
-          bigNumberFieldsToStrings
+          bigNumberFieldsToStrings,
+          getHardwareWalletProvider
         } = await import('@web3-onboard/common')
 
         const keyring = AirGappedKeyring.getEmptyKeyring()
@@ -146,30 +151,9 @@ function keystone({
           return keyring.signMessage(account.address, message)
         }
 
-        const request = async ({
-          method,
-          params
-        }: {
-          method: string
-          params: any
-        }) => {
-          const response = await fetch(currentChain.rpcUrl, {
-            method: 'POST',
-            body: JSON.stringify({
-              id: '42',
-              method,
-              params
-            })
-          }).then(res => res.json())
-
-          if (response.result) {
-            return response.result
-          } else {
-            throw response.error
-          }
-        }
-
-        const keystoneProvider = { request }
+        const keystoneProvider = getHardwareWalletProvider(
+          () => currentChain.rpcUrl
+        )
 
         const provider = createEIP1193Provider(keystoneProvider, {
           eth_requestAccounts: async () => {

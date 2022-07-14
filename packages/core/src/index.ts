@@ -3,21 +3,30 @@ import connectWallet from './connect'
 import disconnectWallet from './disconnect'
 import setChain from './chain'
 import { state } from './store'
+import { reset$ } from './streams'
+import {
+  validateInitOptions,
+  validateNotify,
+  validateNotifyOptions
+} from './validation'
+import initI18N from './i18n'
+import App from './views/Index.svelte'
+import type { InitOptions, Notify } from './types'
+import { APP_INITIAL_STATE } from './constants'
+import { configuration, updateConfiguration } from './configuration'
+
 import {
   addChains,
-  setWalletModules,
   updateAccountCenter,
-  setLocale
+  updateNotify,
+  customNotification,
+  setLocale,
+  setPrimaryWallet,
+  setWalletModules
 } from './store/actions'
-import { reset$ } from './streams'
-import { validateInitOptions } from './validation'
-import initI18N from './i18n'
 
-import App from './views/Index.svelte'
-import type { InitOptions, OnboardAPI } from './types'
-import { APP_INITIAL_STATE } from './constants'
-import { internalState } from './internals'
-import updateBalances from './updateBalances'
+import updateBalances from './update-balances'
+import { preflightNotifications } from './preflight-notifications'
 
 const API = {
   connectWallet,
@@ -29,18 +38,31 @@ const API = {
     actions: {
       setWalletModules,
       setLocale,
-      updateBalances
+      updateNotify,
+      customNotification,
+      preflightNotifications,
+      updateBalances,
+      updateAccountCenter,
+      setPrimaryWallet
     }
   }
 }
 
+export type OnboardAPI = typeof API
+
 export type {
   InitOptions,
-  OnboardAPI,
   ConnectOptions,
   DisconnectOptions,
   WalletState,
-  ConnectedChain
+  ConnectedChain,
+  AccountCenter,
+  AppState,
+  CustomNotification,
+  Notification,
+  Notify,
+  UpdateNotification,
+  PreflightNotificationsOptions
 } from './types'
 
 export type { EIP1193Provider } from '@web3-onboard/common'
@@ -56,12 +78,20 @@ function init(options: InitOptions): OnboardAPI {
     }
   }
 
-  const { wallets, chains, appMetadata = null, i18n, accountCenter } = options
+  const {
+    wallets,
+    chains,
+    appMetadata = null,
+    i18n,
+    accountCenter,
+    apiKey,
+    notify
+  } = options
 
   initI18N(i18n)
   addChains(chains)
 
-  const { device, svelteInstance } = internalState
+  const { device, svelteInstance } = configuration
 
   // update accountCenter
   if (typeof accountCenter !== 'undefined') {
@@ -82,6 +112,73 @@ function init(options: InitOptions): OnboardAPI {
     updateAccountCenter(accountCenterUpdate)
   }
 
+  // update notify
+  if (typeof notify !== 'undefined') {
+    if ('desktop' in notify || 'mobile' in notify) {
+      const error = validateNotifyOptions(notify)
+
+      if (error) {
+        throw error
+      }
+
+      if (
+        (!notify.desktop || (notify.desktop && !notify.desktop.position)) &&
+        accountCenter &&
+        accountCenter.desktop &&
+        accountCenter.desktop.position
+      ) {
+        notify.desktop.position = accountCenter.desktop.position
+      }
+      if (
+        (!notify.mobile || (notify.mobile && !notify.mobile.position)) &&
+        accountCenter &&
+        accountCenter.mobile &&
+        accountCenter.mobile.position
+      ) {
+        notify.mobile.position = accountCenter.mobile.position
+      }
+      let notifyUpdate: Partial<Notify>
+
+      if (device.type === 'mobile' && notify.mobile) {
+        notifyUpdate = {
+          ...APP_INITIAL_STATE.notify,
+          ...notify.mobile
+        }
+      } else if (notify.desktop) {
+        notifyUpdate = {
+          ...APP_INITIAL_STATE.notify,
+          ...notify.desktop
+        }
+      }
+      if (!apiKey || !notifyUpdate.enabled) {
+        notifyUpdate.enabled = false
+      }
+      updateNotify(notifyUpdate)
+    } else {
+      const error = validateNotify(notify as Notify)
+
+      if (error) {
+        throw error
+      }
+      const notifyUpdate: Partial<Notify> = {
+        ...APP_INITIAL_STATE.notify,
+        ...notify
+      }
+
+      if (!apiKey || !notifyUpdate.enabled) {
+        notifyUpdate.enabled = false
+      }
+      updateNotify(notifyUpdate)
+    }
+  } else {
+    const notifyUpdate: Partial<Notify> = APP_INITIAL_STATE.notify
+
+    if (!apiKey) {
+      notifyUpdate.enabled = false
+    }
+    updateNotify(notifyUpdate)
+  }
+
   if (svelteInstance) {
     // if already initialized, need to cleanup old instance
     console.warn('Re-initializing Onboard and resetting back to initial state')
@@ -90,11 +187,12 @@ function init(options: InitOptions): OnboardAPI {
 
   const app = svelteInstance || mountApp()
 
-  // update metadata and app internal state
-  internalState.appMetadata = appMetadata
-  internalState.svelteInstance = app
-
-  setWalletModules(wallets)
+  updateConfiguration({
+    appMetadata,
+    svelteInstance: app,
+    apiKey,
+    initialWalletInit: wallets
+  })
 
   return API
 }
@@ -193,10 +291,10 @@ function mountApp() {
           --spacing-7: 0.125rem;
   
           /* BORDER RADIUS */
-          --border-radius-1: 24px;
-          --border-radius-2: 20px;
-          --border-radius-3: 16px;
-
+          --border-radius-1: 24px;  
+          --border-radius-2: 20px;  
+          --border-radius-3: 16px;  
+          --border-radius-4: 12px;  
 
           /* SHADOWS */
           --shadow-0: none;
@@ -217,7 +315,16 @@ function mountApp() {
       </style>
     `
 
-  document.body.appendChild(onboard)
+  const containerElementQuery =
+    state.get().accountCenter.containerElement || 'body'
+  const containerElement = document.querySelector(containerElementQuery)
+  if (!containerElement) {
+    throw new Error(
+      `Element with query ${state.get().accountCenter} does not exist.`
+    )
+  }
+
+  containerElement.appendChild(onboard)
 
   const app = new App({
     target

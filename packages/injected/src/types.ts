@@ -41,6 +41,8 @@ export enum ProviderIdentityFlag {
   Tokenary = 'isTokenary',
   Tally = 'isTally',
   BraveWallet = 'isBraveWallet',
+  Rabby = 'isRabby',
+  MathWallet = 'isMathWallet',
   GameStop = 'isGamestop'
 }
 
@@ -74,6 +76,8 @@ export enum ProviderLabel {
   OneInch = '1inch Wallet',
   Tokenary = 'Tokenary Wallet',
   Tally = 'Tally Wallet',
+  Rabby = 'Rabby',
+  MathWallet = 'MathWallet',
   GameStop = 'GameStop Wallet'
 }
 

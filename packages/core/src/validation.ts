@@ -1,5 +1,10 @@
-import Joi from 'joi'
-import type { ChainId, WalletInit, WalletModule } from '@web3-onboard/common'
+import Joi, { ObjectSchema, Schema } from 'joi'
+import type {
+  Chain,
+  ChainId,
+  WalletInit,
+  WalletModule
+} from '@web3-onboard/common'
 
 import type {
   InitOptions,
@@ -7,7 +12,14 @@ import type {
   ConnectOptions,
   DisconnectOptions,
   ConnectOptionsString,
-  AccountCenter
+  AccountCenter,
+  TransactionHandlerReturn,
+  NotifyOptions,
+  Notification,
+  CustomNotification,
+  CustomNotificationUpdate,
+  Notify,
+  PreflightNotificationsOptions
 } from './types'
 
 const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
@@ -28,7 +40,7 @@ const providerConnectionInfo = Joi.object({
   timeout: Joi.number()
 })
 
-const chain = Joi.object({
+const chainValidationParams: Record<keyof Chain, Schema | ObjectSchema> = {
   namespace: chainNamespace,
   id: chainId.required(),
   rpcUrl: Joi.string().required(),
@@ -36,8 +48,11 @@ const chain = Joi.object({
   token: Joi.string().required(),
   icon: Joi.string(),
   color: Joi.string(),
-  providerConnectionInfo: providerConnectionInfo
-})
+  publicRpcUrl: Joi.string(),
+  blockExplorerUrl: Joi.string(),
+  providerConnectionInfo
+}
+const chain = Joi.object(chainValidationParams)
 
 const connectedChain = Joi.object({
   namespace: chainNamespace.required(),
@@ -78,6 +93,8 @@ const wallet = Joi.object({
   accounts,
   chains: Joi.array().items(connectedChain)
 })
+  .required()
+  .error(new Error('wallet must be defined'))
 
 const wallets = Joi.array().items(wallet)
 
@@ -115,40 +132,57 @@ const walletInit = Joi.array().items(Joi.function()).required()
 
 const locale = Joi.string()
 
-const accountCenterPosition = Joi.string().valid(
+const commonPositions = Joi.string().valid(
   'topRight',
   'bottomRight',
   'bottomLeft',
   'topLeft'
 )
 
+const notify = Joi.object({
+  transactionHandler: Joi.function(),
+  enabled: Joi.boolean(),
+  position: commonPositions
+})
+
+const notifyOptions = Joi.object({
+  desktop: notify,
+  mobile: notify
+})
+
 const initOptions = Joi.object({
   wallets: walletInit,
   chains: chains.required(),
   appMetadata: appMetadata,
   i18n: Joi.object().unknown(),
+  apiKey: Joi.string(),
   accountCenter: Joi.object({
     desktop: Joi.object({
       enabled: Joi.boolean(),
       minimal: Joi.boolean(),
-      position: accountCenterPosition
+      position: commonPositions,
+      containerElement: Joi.string()
     }),
     mobile: Joi.object({
       enabled: Joi.boolean(),
       minimal: Joi.boolean(),
-      position: accountCenterPosition,
+      position: commonPositions,
+      containerElement: Joi.string()
     })
-  })
+  }),
+  notify: [notifyOptions, notify]
 })
 
 const connectOptions = Joi.object({
-  autoSelect: [
-    Joi.object({
-      label: Joi.string().required(),
-      disableModals: Joi.boolean()
-    }),
-    Joi.string()
-  ]
+  autoSelect: Joi.alternatives()
+    .try(
+      Joi.object({
+        label: Joi.string().required(),
+        disableModals: Joi.boolean()
+      }),
+      Joi.string()
+    )
+    .required()
 })
 
 const disconnectOptions = Joi.object({
@@ -163,10 +197,70 @@ const setChainOptions = Joi.object({
 
 const accountCenter = Joi.object({
   enabled: Joi.boolean(),
-  position: accountCenterPosition,
+  position: commonPositions,
   expanded: Joi.boolean(),
-  minimal: Joi.boolean()
+  minimal: Joi.boolean(),
+  containerElement: Joi.string()
 })
+
+const customNotificationUpdate = Joi.object({
+  key: Joi.string().required(),
+  type: Joi.string().allow('pending', 'error', 'success', 'hint'),
+  eventCode: Joi.string(),
+  message: Joi.string().required(),
+  id: Joi.string().required(),
+  autoDismiss: Joi.number(),
+  onClick: Joi.function(),
+  link: Joi.string()
+})
+
+const preflightNotifications = Joi.object({
+  sendTransaction: Joi.function(),
+  estimateGas: Joi.function(),
+  gasPrice: Joi.function(),
+  balance: Joi.alternatives(
+    Joi.string(),
+    Joi.number()
+  ),
+  txDetails: Joi.object({
+    value: Joi.alternatives(
+      Joi.string(),
+      Joi.number()
+    ),
+    to: Joi.string(),
+    from: Joi.string()
+  }),
+  txApproveReminderTimeout: Joi.number()
+})
+
+const customNotification = Joi.object({
+  key: Joi.string(),
+  type: Joi.string().allow('pending', 'error', 'success', 'hint'),
+  eventCode: Joi.string(),
+  message: Joi.string(),
+  id: Joi.string(),
+  autoDismiss: Joi.number(),
+  onClick: Joi.function(),
+  link: Joi.string()
+})
+
+const notification = Joi.object({
+  id: Joi.string().required(),
+  key: Joi.string().required(),
+  type: Joi.string().allow('pending', 'error', 'success', 'hint').required(),
+  eventCode: Joi.string().required(),
+  message: Joi.string().required(),
+  autoDismiss: Joi.number().required(),
+  network: Joi.string().required(),
+  startTime: Joi.number(),
+  onClick: Joi.function(),
+  link: Joi.string()
+})
+
+const transactionHandlerReturn = Joi.any().allow(
+  customNotificationUpdate,
+  Joi.boolean().allow(false)
+)
 
 type ValidateReturn = Joi.ValidationResult | null
 
@@ -201,12 +295,18 @@ export function validateDisconnectOptions(
   return validate(disconnectOptions, data)
 }
 
-export function validateString(str: string): ValidateReturn {
-  return validate(Joi.string().required(), str)
+export function validateString(str: string, label?: string): ValidateReturn {
+  return validate(
+    Joi.string()
+      .required()
+      .label(label || 'value'),
+    str
+  )
 }
 
 export function validateSetChainOptions(data: {
   chainId: ChainId
+  chainNamespace?: string
   wallet?: WalletState['label']
 }): ValidateReturn {
   return validate(setChainOptions, data)
@@ -226,7 +326,43 @@ export function validateLocale(data: string): ValidateReturn {
   return validate(locale, data)
 }
 
-export function validateUpdateBalances(data: 
-WalletState[]): ValidateReturn {
+export function validateNotify(data: Partial<Notify>): ValidateReturn {
+  return validate(notify, data)
+}
+
+export function validateNotifyOptions(
+  data: Partial<NotifyOptions>
+): ValidateReturn {
+  return validate(notifyOptions, data)
+}
+
+export function validateTransactionHandlerReturn(
+  data: TransactionHandlerReturn
+): ValidateReturn {
+  return validate(transactionHandlerReturn, data)
+}
+
+export function validateNotification(data: Notification): ValidateReturn {
+  return validate(notification, data)
+}
+export function validatePreflightNotifications(
+  data: PreflightNotificationsOptions
+): ValidateReturn {
+  return validate(preflightNotifications, data)
+}
+
+export function validateCustomNotificationUpdate(
+  data: CustomNotificationUpdate
+): ValidateReturn {
+  return validate(customNotificationUpdate, data)
+}
+
+export function validateCustomNotification(
+  data: CustomNotification
+): ValidateReturn {
+  return validate(customNotification, data)
+}
+
+export function validateUpdateBalances(data: WalletState[]): ValidateReturn {
   return validate(wallets, data)
 }

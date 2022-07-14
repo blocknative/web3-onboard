@@ -15,9 +15,9 @@
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
   import NetworkSelector from '../shared/NetworkSelector.svelte'
   import { state } from '../../store'
-  import { internalState } from '../../internals'
+  import { configuration } from '../../configuration'
 
-  const { appMetadata } = internalState
+  const { appMetadata } = configuration
   const appIcon = (appMetadata && appMetadata.icon) || questionIcon
   const chains = state.get().chains
 
@@ -58,10 +58,14 @@
 
 <style>
   .minimized {
-    background-color: var(--onboard-white, var(--white));
+    background: var(
+      --account-center-minimized-background,
+      var(--onboard-white, var(--white))
+    );
     border: 1px solid var(--onboard-gray-100, var(--gray-100));
     width: 100%;
     box-shadow: var(--onboard-shadow-3, var(--shadow-3));
+    pointer-events: auto;
   }
 
   .radius {
@@ -79,6 +83,7 @@
   .address {
     font-weight: 700;
     line-height: var(--onboard-font-line-height-2, var(--font-line-height-2));
+    color: var(--account-center-minimized-address-color, initial);
   }
 
   .balance {
@@ -177,7 +182,9 @@
         class="container shadow-1 flex items-center"
         style={`border-color: ${
           validAppChain ? '#D0D4F7' : '#FFAF00'
-        }; background-color: ${validAppChain ? '#EFF1FC' : '#FFEFCC'}`}
+        }; background-color: var(--account-center-minimized-chain-select-background, var(${
+          validAppChain ? '--primary-100' : '--warning-100'
+        }))`}
       >
         <div class="flex items-center">
           <div
@@ -199,7 +206,11 @@
               : warningIcon}
           </div>
 
-          <NetworkSelector {chains} color="#33394B" selectIcon={caretIcon} />
+          <NetworkSelector
+            {chains}
+            colorVar="--account-center-minimized-network-selector-color"
+            selectIcon={caretIcon}
+          />
         </div>
       </div>
     </div>

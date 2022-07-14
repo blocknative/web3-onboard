@@ -1,4 +1,4 @@
-import { internalState } from './internals'
+import { configuration } from './configuration'
 import type { AppState } from './types'
 
 export const APP_INITIAL_STATE: AppState = {
@@ -9,8 +9,15 @@ export const APP_INITIAL_STATE: AppState = {
     enabled: true,
     position: 'topRight',
     expanded: false,
-    minimal: internalState.device.type === 'mobile'
+    containerElement: 'body',
+    minimal: configuration.device.type === 'mobile'
   },
+  notify: {
+    enabled: true,
+    transactionHandler: () => {},
+    position: 'topRight'
+  },
+  notifications: [],
   locale: ''
 }
 

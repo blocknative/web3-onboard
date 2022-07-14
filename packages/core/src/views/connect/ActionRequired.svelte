@@ -27,7 +27,7 @@
   .icon-container {
     width: 3rem;
     height: 3rem;
-    background-color: var(--onboard-primary-100, var(--primary-100));
+    background: var(--onboard-primary-100, var(--primary-100));
     border-radius: 24px;
   }
 

@@ -16,9 +16,9 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
   import { onDestroy, onMount } from 'svelte'
-  import { internalState } from '../../internals'
+  import { configuration } from '../../configuration'
 
-  const { device } = internalState
+  const { device } = configuration
 
   const body = document.body
   const html = document.documentElement
@@ -89,7 +89,8 @@
   .modal {
     border-radius: var(--onboard-modal-border-radius, var(--border-radius-1));
     overflow-y: auto;
-    background: white;
+    background: var(--onboard-modal-background, white);
+    color: var(--onboard-modal-color, initial);
   }
 
   @media all and (max-width: 520px) {
@@ -103,6 +104,7 @@
 
     .modal {
       width: 100%;
+      margin: 0 16px;
     }
   }
 </style>

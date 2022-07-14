@@ -5,8 +5,7 @@ import type {
   Chain,
   CustomNetwork,
   WalletInit,
-  GetInterfaceHelpers,
-  EIP1193Provider
+  GetInterfaceHelpers
 } from '@web3-onboard/common'
 
 // these cannot be dynamically imported
@@ -130,7 +129,8 @@ function ledger({
           createEIP1193Provider,
           ProviderRpcError,
           getCommon,
-          bigNumberFieldsToStrings
+          bigNumberFieldsToStrings,
+          getHardwareWalletProvider
         } = await import('@web3-onboard/common')
 
         const { TransactionFactory: Transaction, Capability } = await import(
@@ -223,27 +223,9 @@ function ledger({
             })
         }
 
-        const request: EIP1193Provider['request'] = async ({
-          method,
-          params
-        }) => {
-          const response = await fetch(currentChain.rpcUrl, {
-            method: 'POST',
-            body: JSON.stringify({
-              id: '42',
-              method,
-              params
-            })
-          }).then(res => res.json())
-
-          if (response.result) {
-            return response.result
-          } else {
-            throw response.error
-          }
-        }
-
-        const ledgerProvider = { request }
+        const ledgerProvider = getHardwareWalletProvider(
+          () => currentChain?.rpcUrl
+        )
 
         const provider = createEIP1193Provider(ledgerProvider, {
           eth_requestAccounts: async () => {

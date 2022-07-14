@@ -1,7 +1,7 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
   import { STORAGE_KEYS } from '../../constants'
-  import { internalState } from '../../internals'
+  import { configuration } from '../../configuration'
   export let agreed: boolean
 
   const {
@@ -11,7 +11,7 @@
   } = JSON.parse(localStorage.getItem(STORAGE_KEYS.TERMS_AGREEMENT) || '{}')
 
   const blankAgreement = { termsUrl: '', privacyUrl: '', version: '' }
-  const { appMetadata } = internalState
+  const { appMetadata } = configuration
 
   const { termsUrl, privacyUrl, version } =
     (appMetadata && appMetadata.agreement) || blankAgreement

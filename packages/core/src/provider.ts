@@ -20,6 +20,7 @@ import { updateAccount, updateWallet } from './store/actions'
 import { validEnsChain } from './utils'
 import disconnect from './disconnect'
 import { state } from './store'
+import { getBlocknativeSdk } from './services'
 
 export const ethersProviders: {
   [key: string]: providers.StaticJsonRpcProvider
@@ -30,7 +31,7 @@ export function getProvider(chain: Chain): providers.StaticJsonRpcProvider {
 
   if (!ethersProviders[chain.rpcUrl]) {
     ethersProviders[chain.rpcUrl] = new providers.StaticJsonRpcProvider(
-      chain.providerConnectionInfo?.url
+      chain.providerConnectionInfo && chain.providerConnectionInfo.url
         ? chain.providerConnectionInfo
         : chain.rpcUrl
     )
@@ -108,8 +109,8 @@ export function trackWallet(
     disconnected$
   }).pipe(share())
 
-  // when account changed, set it to first account
-  accountsChanged$.subscribe(([address]) => {
+  // when account changed, set it to first account and subscribe to events
+  accountsChanged$.subscribe(async ([address]) => {
     // no address, then no account connected, so disconnect wallet
     // this could happen if user locks wallet,
     // or if disconnects app from wallet
@@ -133,9 +134,30 @@ export function trackWallet(
         ...restAccounts
       ]
     })
+
+    // if not existing account and notifications,
+    // then subscribe to transaction events
+    if (state.get().notify.enabled && !existingAccount) {
+      const sdk = await getBlocknativeSdk()
+
+      if (sdk) {
+        const wallet = state
+          .get()
+          .wallets.find(wallet => wallet.label === label)
+        try {
+          sdk.subscribe({
+            id: address,
+            chainId: wallet.chains[0].id,
+            type: 'account'
+          })
+        } catch (error) {
+          // unsupported network for transaction events
+        }
+      }
+    }
   })
 
-  // also when accounts change update Balance and ENS
+  // also when accounts change, update Balance and ENS
   accountsChanged$
     .pipe(
       switchMap(async ([address]) => {
@@ -177,12 +199,45 @@ export function trackWallet(
   )
 
   // Update chain on wallet when chainId changed
-  chainChanged$.subscribe(chainId => {
+  chainChanged$.subscribe(async chainId => {
     const { wallets } = state.get()
     const { chains, accounts } = wallets.find(wallet => wallet.label === label)
     const [connectedWalletChain] = chains
 
     if (chainId === connectedWalletChain.id) return
+
+    if (state.get().notify.enabled) {
+      const sdk = await getBlocknativeSdk()
+
+      if (sdk) {
+        const wallet = state
+          .get()
+          .wallets.find(wallet => wallet.label === label)
+
+        // Unsubscribe with timeout of 60 seconds
+        // to allow for any currently inflight transactions
+        wallet.accounts.forEach(({ address }) => {
+          sdk.unsubscribe({
+            id: address,
+            chainId: wallet.chains[0].id,
+            timeout: 60000
+          })
+        })
+
+        // resubscribe for new chainId
+        wallet.accounts.forEach(({ address }) => {
+          try {
+            sdk.subscribe({
+              id: address,
+              chainId: chainId,
+              type: 'account'
+            })
+          } catch (error) {
+            // unsupported network for transaction events
+          }
+        })
+      }
+    }
 
     const resetAccounts = accounts.map(
       ({ address }) =>
@@ -245,7 +300,7 @@ export async function getEns(
   // chain we don't recognize and don't have a rpcUrl for requests
   if (!chain) return null
 
-  const provider = getProvider(chain);
+  const provider = getProvider(chain)
 
   try {
     const name = await provider.lookupAddress(address)
@@ -285,7 +340,7 @@ export async function getBalance(
   // chain we don't recognize and don't have a rpcUrl for requests
   if (!chain) return null
 
-  const provider = getProvider(chain);
+  const provider = getProvider(chain)
 
   try {
     const balanceWei = await provider.getBalance(address)
@@ -324,7 +379,10 @@ export function addNewChain(
           symbol: chain.token,
           decimals: 18
         },
-        rpcUrls: [chain.rpcUrl]
+        rpcUrls: [chain.publicRpcUrl || chain.rpcUrl],
+        blockExplorerUrls: chain.blockExplorerUrl
+          ? [chain.blockExplorerUrl]
+          : undefined
       }
     ]
   })

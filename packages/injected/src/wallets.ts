@@ -42,7 +42,7 @@ const exodus: InjectedWalletModule = {
   label: ProviderLabel.Exodus,
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
-      !!provider && !!provider[ProviderIdentityFlag.Exodus],
+    !!provider && !!provider[ProviderIdentityFlag.Exodus],
   getIcon: async () => (await import('./icons/exodus.js')).default,
   getInterface: getInjectedInterface(ProviderIdentityFlag.Exodus),
   platforms: ['all']
@@ -319,13 +319,18 @@ const imtoken: InjectedWalletModule = {
 
 const liquality: InjectedWalletModule = {
   label: ProviderLabel.Liquality,
-  injectedNamespace: InjectedNameSpace.Arbitrum,
+  injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
     !!provider && !!provider[ProviderIdentityFlag.Liquality],
   getIcon: async () => (await import('./icons/liquality.js')).default,
   getInterface: async () => {
-    const provider = window[InjectedNameSpace.Arbitrum]
+    const provider = createEIP1193Provider(window.ethereum, {
+      wallet_switchEthereumChain: UNSUPPORTED_METHOD,
+      eth_selectAccounts: UNSUPPORTED_METHOD
+    })
+
     provider.removeListener = (event, func) => {}
+
     return { provider }
   },
   platforms: ['desktop']
@@ -473,6 +478,28 @@ const tally: InjectedWalletModule = {
   platforms: ['desktop']
 }
 
+const rabby: InjectedWalletModule = {
+  label: ProviderLabel.Rabby,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Rabby],
+  getIcon: async () => (await import('./icons/rabby.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.ethereum)
+  }),
+  platforms: ['desktop']
+}
+
+const mathwallet: InjectedWalletModule = {
+  label: ProviderLabel.MathWallet,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.MathWallet],
+  getIcon: async () => (await import('./icons/mathwallet.js')).default,
+  getInterface: getInjectedInterface(ProviderIdentityFlag.MathWallet),
+  platforms: ['all']
+}
+
 const gamestop: InjectedWalletModule = {
   label: ProviderLabel.GameStop,
   injectedNamespace: InjectedNameSpace.GameStop,
@@ -513,6 +540,8 @@ const wallets = [
   oneInch,
   tokenary,
   tally,
+  rabby,
+  mathwallet,
   gamestop
 ]
 

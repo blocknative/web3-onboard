@@ -72,7 +72,8 @@
   })
 
   const web3auth = web3authModule({
-    clientId: 'DJuUOKvmNnlzy6ruVgeWYWIMKLRyYtjYa9Y10VCeJzWZcygDlrYLyXsBQjpJ2hxlBO9dnl8t9GmAC2qOP5vnIGo'
+    clientId:
+      'DJuUOKvmNnlzy6ruVgeWYWIMKLRyYtjYa9Y10VCeJzWZcygDlrYLyXsBQjpJ2hxlBO9dnl8t9GmAC2qOP5vnIGo'
   })
 
   const torus = torusModule()
@@ -118,25 +119,31 @@
         id: '0x1',
         token: 'ETH',
         label: 'Ethereum',
-        rpcUrl: 'https://mainnet.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
+        rpcUrl: 'https://mainnet.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
       },
       {
         id: '0x3',
         token: 'tROP',
         label: 'Ropsten',
-        rpcUrl: 'https://ropsten.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
+        rpcUrl: 'https://ropsten.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
       },
       {
         id: '0x4',
         token: 'rETH',
         label: 'Rinkeby',
-        rpcUrl: 'https://rinkeby.infura.io/v3/ababf9851fd845d0a167825f97eeb12b'
+        rpcUrl: 'https://rinkeby.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
       },
       {
         id: '0x89',
         token: 'MATIC',
         label: 'Polygon',
         rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+      },
+      {
+        id: '0x13881',
+        token: 'MATIC',
+        label: 'Polygon - Mumbai',
+        rpcUrl: 'https://matic-mumbai.chainstacklabs.com	'
       },
       {
         id: '0xa',
@@ -161,30 +168,55 @@
       },
       gettingStartedGuide: 'https://blocknative.com',
       explore: 'https://blocknative.com'
-    }
+    },
     // // example customizing account center
-    // accountCenter: {
-    //   desktop: {
-    //     position: 'topRight',
-    //     enabled: true,
-    //     minimal: false
-    //   },
-    //   mobile: {
-    //     position: 'topRight',
-    //     enabled: true,
-    //     minimal: false
-    //   }
-    // }
+    accountCenter: {
+      desktop: {
+        position: 'topRight',
+        enabled: true,
+        minimal: false
+      }
+    },
     // example customizing copy
-    // i18n: {
-    //   en: {
-    //     connect: {
-    //       selectingWallet: {
-    //         header: 'custom text header'
-    //       }
-    //     }
-    //   }
-    // }
+    i18n: {
+      en: {
+        notify: {
+          watched: {
+            // "txConfirmed": "you paid a foo {formattedValue} {asset}!"
+          }
+        }
+      }
+    },
+    notify: {
+      desktop: {
+        enabled: true,
+        transactionHandler: transaction => {
+          console.log({ transaction })
+          //   if (transaction.eventCode === 'txConfirmed') {
+          //     return {
+          //       type: 'error',
+          //       message: 'Your in the pool, hope you brought a towel!',
+          //       autoDismiss: 0,
+          //       id: '123',
+          //       key: '321',
+          //       onClick: () =>
+          //         window.open(`https://rinkeby.etherscan.io/tx/${transaction.hash}`)
+          //     }
+          //   }
+          // if (transaction.eventCode === 'txPool') {
+          //   return {
+          //     type: 'hint',
+          //     message: 'Your in the pool, hope you brought a towel!',
+          //     autoDismiss: 0,
+          //     link: `https://ropsten.etherscan.io/tx/${transaction.hash}`
+          //   }
+          // }
+        },
+        position: 'topRight'
+      }
+    },
+    // Sign up for your free api key at www.Blocknative.com
+    apiKey: 'xxxxxx-bf21-42ec-a093-9d37e426xxxx'
   })
 
   // Subscribe to wallet updates
@@ -197,9 +229,57 @@
 
     const signature = await signer.signTransaction({
       to: '',
-      value: 1000000000000000
+      value: 100000000000000
     })
+
     console.log(signature)
+  }
+
+  let toAddress
+  const sendTransaction = async provider => {
+    const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
+
+    const signer = ethersProvider.getSigner()
+
+    const txn = await signer.sendTransaction({
+      to: toAddress,
+      value: 100000000000000
+    })
+
+    const receipt = await txn.wait()
+    console.log(receipt)
+  }
+
+  const sendTransactionWithPreFlight = async (provider, balance) => {
+    const balanceValue = Object.values(balance)[0]
+    const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
+
+    const signer = ethersProvider.getSigner()
+    const txDetails = {
+      to: toAddress,
+      value: 100000000000000
+    }
+
+    const sendTransaction = () => {
+      return signer.sendTransaction(txDetails).then(tx => tx.hash)
+    }
+
+    const gasPrice = () =>
+      ethersProvider.getGasPrice().then(res => res.toString())
+
+    const estimateGas = () => {
+      return ethersProvider.estimateGas(txDetails).then(res => res.toString())
+    }
+
+    const transactionHash = await onboard.state.actions.preflightNotifications({
+      sendTransaction,
+      gasPrice,
+      estimateGas,
+      balance: balanceValue,
+      txDetails: txDetails
+    })
+
+    console.log(transactionHash)
   }
 
   const signMessage = async (provider, address) => {
@@ -237,6 +317,10 @@
 </script>
 
 <style>
+  button {
+    width: 14rem;
+    margin: 8px;
+  }
   .connected-wallet {
     padding: 1rem;
     border-radius: 4px;
@@ -249,13 +333,14 @@
     align-items: center;
   }
 
-  /* CUSTOMIZE CSS VARIABLES */
-  :root {
-    /* --onboard-gray-100: pink; */
+  .account-info div {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   .text-input {
-    width: 24rem;
+    width: 18rem;
   }
 
   .sign-transaction {
@@ -268,25 +353,98 @@
     height: 12rem;
     margin: 0;
   }
+  .notify-chain-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .switch-chain-container,
+  .notify-action-container {
+    display: flex;
+    flex-direction: column;
+    width: 15rem;
+  }
 </style>
 
 <main>
-  <button on:click={() => onboard.connectWallet()}>Connect Wallet</button>
+  <div class="cta">
+    <button on:click={() => onboard.connectWallet()}>Connect Wallet</button>
 
-  {#if $wallets$}
-    <button on:click={() => onboard.setChain({ chainId: '0x1' })}
-      >Set Chain to Mainnet</button
-    >
-    <button on:click={() => onboard.setChain({ chainId: '0x4' })}
-      >Set Chain to Rinkeby</button
-    >
-    <button on:click={() => onboard.setChain({ chainId: '0x89' })}
-      >Set Chain to Matic</button
-    >
-    <button on:click={() => onboard.state.actions.updateBalances()}
-      >Update Wallet Balance</button
-    >
-  {/if}
+    {#if $wallets$}
+      <button on:click={() => onboard.state.actions.updateBalances()}
+        >Update Wallet Balance</button
+      >
+      <div class="notify-chain-container">
+        <div class="notify-action-container">
+          <button
+            on:click={() =>
+              onboard.state.actions.customNotification({
+                type: 'hint',
+                message: 'This is a custom DApp hint',
+                autoDismiss: 0
+              })}>Send Hint Notification</button
+          >
+          <button
+            on:click={() => {
+              const { update, dismiss } =
+                onboard.state.actions.customNotification({
+                  type: 'pending',
+                  message:
+                    'This is a custom DApp pending notification to use however you want',
+                  autoDismiss: 0
+                })
+              setTimeout(
+                () =>
+                  update({
+                    eventCode: 'dbUpdateSuccess',
+                    message: 'Updated status for custom notification',
+                    type: 'success',
+                    autoDismiss: 0
+                  }),
+                4000
+              )
+            }}>Send Success Notification</button
+          >
+          <button
+            on:click={() =>
+              onboard.state.actions.customNotification({
+                message:
+                  'This is a custom DApp success notification to use however you want',
+                autoDismiss: 0,
+                type: 'pending'
+              })}>Send Pending Notification</button
+          >
+          <button
+            on:click={() =>
+              onboard.state.actions.customNotification({
+                type: 'error',
+                message:
+                  'This is a custom DApp Error notification to use however you want',
+                autoDismiss: 0
+              })}>Send Error Notification</button
+          >
+          <button
+            on:click={() =>
+              onboard.state.actions.customNotification({
+                message:
+                  'This is a custom non-descript DApp notification to use however you want',
+                autoDismiss: 0
+              })}>Send DApp Notification</button
+          >
+        </div>
+        <div class="switch-chain-container">
+          <button on:click={() => onboard.setChain({ chainId: '0x1' })}
+            >Set Chain to Mainnet</button
+          >
+          <button on:click={() => onboard.setChain({ chainId: '0x4' })}
+            >Set Chain to Rinkeby</button
+          >
+          <button on:click={() => onboard.setChain({ chainId: '0x89' })}
+            >Set Chain to Matic</button
+          >
+        </div>
+      </div>
+    {/if}
+  </div>
 
   {#if $wallets$}
     {#each $wallets$ as { icon, label, accounts, chains, provider }}
@@ -300,6 +458,7 @@
 
         {#each accounts as { address, ens, balance }}
           <div
+            class="account-info"
             style="margin-top: 0.25rem; margin-bottom: 0.25rem; padding: 0.25rem; border: 1px solid gray;"
           >
             <div>Address: {address}</div>
@@ -336,6 +495,29 @@
             />
             <button on:click={signTypedMessage(provider, address)}>
               Sign Typed Message
+            </button>
+          </div>
+
+          <div>
+            <input
+              type="text"
+              class="text-input"
+              placeholder="0x..."
+              bind:value={toAddress}
+            />
+            <button on:click={sendTransaction(provider)}>
+              Send Transaction
+            </button>
+          </div>
+          <div>
+            <input
+              type="text"
+              class="text-input"
+              placeholder="0x..."
+              bind:value={toAddress}
+            />
+            <button on:click={sendTransactionWithPreFlight(provider, balance)}>
+              Send with Preflight Notifications
             </button>
           </div>
 

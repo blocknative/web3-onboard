@@ -2,13 +2,13 @@
   import { _ } from 'svelte-i18n'
   import { fade } from 'svelte/transition'
   import { ProviderRpcErrorCode } from '@web3-onboard/common'
-  import type { Account, WalletState } from '../../types'
-  import { shortenAddress, shortenEns } from '../../utils'
+  import type { WalletState } from '../../types'
+  import { shortenAddress, shortenEns, copyWalletAddress } from '../../utils'
   import en from '../../i18n/en.json'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
   import elipsisIcon from '../../icons/elipsis'
-  import { addWallet } from '../../store/actions'
+  import { setPrimaryWallet } from '../../store/actions'
   import disconnect from '../../disconnect'
   import { selectAccounts } from '../../provider'
   import { connectWallet$ } from '../../streams'
@@ -31,14 +31,6 @@
     } ${asset}`
   }
 
-  function setPrimaryWallet(wallet: WalletState, account: Account): void {
-    wallet.accounts = [
-      account,
-      ...wallet.accounts.filter(({ address }) => address !== account.address)
-    ]
-    addWallet(wallet)
-  }
-
   async function selectAnotherAccount(wallet: WalletState) {
     try {
       await selectAccounts(wallet.provider)
@@ -56,6 +48,14 @@
       }
     }
   }
+
+  function changeText() {
+    en.accountCenter.copyAddress = 'Copied Successfully'
+    setTimeout(hideMenu, 500)
+    setTimeout(() => {
+      en.accountCenter.copyAddress = 'Copy Wallet address'
+    }, 700)
+  }
 </script>
 
 <style>
@@ -70,7 +70,10 @@
   }
 
   .container:hover {
-    background-color: var(--onboard-gray-500, var(--gray-500));
+    background: var(
+      --account-center-maximized-account-section-background-hover,
+      var(--onboard-gray-500, var(--gray-500))
+    );
   }
 
   .container:hover > div > span.balance {
@@ -78,13 +81,16 @@
   }
 
   .container.primary:hover {
-    background-color: var(--onboard-gray-700, var(--gray-700));
+    background: var(--onboard-gray-700, var(--gray-700));
   }
 
   .address-ens {
     margin-left: 0.5rem;
     font-weight: 700;
-    color: var(--onboard-primary-100, var(--primary-100));
+    color: var(
+      --account-center-maximized-address-color,
+      var(--onboard-primary-100, var(--primary-100))
+    );
   }
 
   .balance {
@@ -111,7 +117,7 @@
   }
 
   .elipsis-container.active {
-    background-color: var(--onboard-gray-700, var(--gray-700));
+    background: var(--onboard-gray-700, var(--gray-700));
   }
 
   .menu {
@@ -133,19 +139,19 @@
     font-size: var(--onboard-font-size-5, var(--font-size-5));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
     padding: 12px 16px;
-    background-color: var(--onboard-white, var(--white));
+    background: var(--onboard-white, var(--white));
     transition: background-color 150ms ease-in-out;
     cursor: pointer;
   }
   .menu li:hover {
-    background-color: var(--onboard-primary-200, var(--primary-200));
+    background: var(--onboard-primary-200, var(--primary-200));
   }
 </style>
 
 {#each wallet.accounts as { address, ens, balance }, i}
   <div class="relative">
     <div
-      on:click={() => setPrimaryWallet(wallet, { address, ens, balance })}
+      on:click={() => setPrimaryWallet(wallet, address)}
       class:primary={primary && i === 0}
       class="container flex items-center justify-between pointer"
     >
@@ -215,7 +221,7 @@
           <li
             on:click|stopPropagation={() => {
               showMenu = ''
-              setPrimaryWallet(wallet, { address, ens, balance })
+              setPrimaryWallet(wallet, address)
             }}
           >
             {$_('accountCenter.setPrimaryAccount', {
@@ -232,6 +238,15 @@
           {$_('accountCenter.disconnectWallet', {
             default: en.accountCenter.disconnectWallet
           })}
+        </li>
+        <li
+          on:click|stopPropagation={() => {
+            copyWalletAddress(ens ? ens.name : address).then(() => {
+              changeText()
+            })
+          }}
+        >
+          {en.accountCenter.copyAddress}
         </li>
       </ul>
     {/if}

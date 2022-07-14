@@ -3,8 +3,7 @@ import type {
   Account,
   Asset,
   Chain,
-  WalletInit,
-  EIP1193Provider
+  WalletInit
 } from '@web3-onboard/common'
 
 import type { StaticJsonRpcProvider } from '@ethersproject/providers'
@@ -65,7 +64,8 @@ function keepkey(): WalletInit {
           createEIP1193Provider,
           ProviderRpcError,
           entryModal,
-          bigNumberFieldsToStrings
+          bigNumberFieldsToStrings,
+          getHardwareWalletProvider
         } = await import('@web3-onboard/common')
 
         const { utils } = await import('ethers')
@@ -282,27 +282,9 @@ function keepkey(): WalletInit {
           return signature
         }
 
-        const request: EIP1193Provider['request'] = async ({
-          method,
-          params
-        }) => {
-          const response = await fetch(currentChain.rpcUrl, {
-            method: 'POST',
-            body: JSON.stringify({
-              id: '42',
-              method,
-              params
-            })
-          }).then(res => res.json())
-
-          if (response.result) {
-            return response.result
-          } else {
-            throw response.error
-          }
-        }
-
-        const keepKeyProvider = { request }
+        const keepKeyProvider = getHardwareWalletProvider(
+          () => currentChain.rpcUrl
+        )
 
         const provider = createEIP1193Provider(keepKeyProvider, {
           eth_requestAccounts: async () => {
@@ -430,7 +412,7 @@ function keepkey(): WalletInit {
               value: value || '',
               nonce: utils.hexValue(nonce),
               gasLimit: gasLimit || '0x0',
-              data: data?.toString() || '',
+              data: (data || '').toString(),
               ...gasData
             }
 

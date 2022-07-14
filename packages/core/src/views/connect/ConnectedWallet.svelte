@@ -7,11 +7,11 @@
   import questionIcon from '../../icons/question'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import en from '../../i18n/en.json'
-  import { internalState } from '../../internals'
+  import { configuration } from '../../configuration'
 
   export let selectedWallet: WalletState
 
-  const { appMetadata } = internalState
+  const { appMetadata } = configuration
 </script>
 
 <style>
