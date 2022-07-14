@@ -222,14 +222,6 @@
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
 
-  const lastConnectedWallet = localStorage.getItem('last_connected_wallet')
-
-  if (lastConnectedWallet) {
-    onboard.connectWallet({
-      autoSelect: { label: lastConnectedWallet, disableModals: true }
-    })
-  }
-
   const signTransactionMessage = async provider => {
     const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 
@@ -322,14 +314,6 @@
     delete types.EIP712Domain
     console.log(verifyTypedData(domain, types, message, signature))
   }
-
-  async function connect() {
-    const [connectedWallet] = await onboard.connectWallet()
-
-    if (connectedWallet) {
-      localStorage.setItem('last_connected_wallet', connectedWallet.label)
-    }
-  }
 </script>
 
 <style>
@@ -383,7 +367,7 @@
 
 <main>
   <div class="cta">
-    <button on:click={connect}>Connect Wallet</button>
+    <button on:click={() => onboard.connectWallet()}>Connect Wallet</button>
 
     {#if $wallets$}
       <button on:click={() => onboard.state.actions.updateBalances()}
