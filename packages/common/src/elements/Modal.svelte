@@ -21,7 +21,7 @@
     width: 100vw;
     height: 100vh;
     background: rgba(0, 0, 0, 0.3);
-    z-index: 20;
+    z-index: var(--onboard-common-modal-index, 20);
   }
   @media screen and (max-width: 420px) {
     aside {

@@ -61,7 +61,8 @@ export type {
   CustomNotification,
   Notification,
   Notify,
-  UpdateNotification
+  UpdateNotification,
+  PreflightNotificationsOptions
 } from './types'
 
 export type { EIP1193Provider } from '@web3-onboard/common'

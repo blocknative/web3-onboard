@@ -713,7 +713,7 @@ onboard.state.actions.updateAccountCenter({
 ```
 
 **`setPrimaryWallet`**
-The primary wallet (first in the list of connected wallets) and primary account (first in the list of connected accounts for a wallet) can be set by using the `setPrimaryWallet` function. The wallet that is to be set needs to be passed in for the first parameter and if you would like to set the primary account, the address of that account also needs to be passed in:
+The primary wallet (first in the list of connected wallets) and primary account (first in the list of connected accounts for a wallet) can be set by using the `setPrimaryWallet` function. The wallet that is set needs to be passed in for the first parameter and if you would like to set the primary account, the address of that account also needs to be passed in:
 
 ```typescript
 // set the second wallet in the wallets array as the primary
@@ -792,6 +792,10 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
 
   /* CUSTOMIZE ACCOUNT CENTER*/
   --account-center-z-index
+  --account-center-position-top
+  --account-center-position-bottom
+  --account-center-position-right
+  --account-center-position-left
   --account-center-minimized-background
   --account-center-maximized-upper-background
   --account-center-maximized-network-section
@@ -925,7 +929,12 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --account-select-modal-margin-4: 1rem;
   --account-select-modal-margin-5: 0.5rem;
 
-  /* notify STYLES */
+  /* NOTIFY STYLES */
+  /* Notify Positioning variables only take effect if Notify is Positioned separate of Account Center */
+  --notify-onboard-container-position-top
+  --notify-onboard-container-position-bottom
+  --notify-onboard-container-position-right
+  --notify-onboard-container-position-left
   --notify-onboard-font-family-normal
   --notify-onboard-font-size-5
   --notify-onboard-gray-300
