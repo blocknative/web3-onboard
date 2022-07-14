@@ -42,7 +42,8 @@ export enum ProviderIdentityFlag {
   Tally = 'isTally',
   BraveWallet = 'isBraveWallet',
   Rabby = 'isRabby',
-  MathWallet = 'isMathWallet'
+  MathWallet = 'isMathWallet',
+  GameStop = 'isGamestop'
 }
 
 export enum ProviderLabel {
@@ -77,6 +78,7 @@ export enum ProviderLabel {
   Tally = 'Tally Wallet',
   Rabby = 'Rabby',
   MathWallet = 'MathWallet',
+  GameStop = 'GameStop Wallet'
 }
 
 export interface MeetOneProvider extends ExternalProvider {
@@ -95,7 +97,8 @@ export enum InjectedNameSpace {
   Tally = 'tally',
   Web3 = 'web3',
   Arbitrum = 'arbitrum',
-  XFI = 'xfi'
+  XFI = 'xfi',
+  GameStop = 'gamestop'
 }
 
 export interface CustomWindow extends Window {
@@ -107,6 +110,7 @@ export interface CustomWindow extends Window {
   xfi: {
     ethereum: InjectedProvider
   }
+  gamestop: InjectedProvider
 }
 
 export type InjectedProvider = ExternalProvider &
