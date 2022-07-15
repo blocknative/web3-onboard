@@ -26,11 +26,8 @@ import {
 } from './store/actions'
 
 import updateBalances from './update-balances'
-<<<<<<< HEAD
-import { hexedChain } from './utils'
-=======
+import { hexedChain, chainIdToHex } from './utils'
 import { preflightNotifications } from './preflight-notifications'
->>>>>>> v2-web3-onboard-develop
 
 const API = {
   connectWallet,
@@ -93,8 +90,9 @@ function init(options: InitOptions): OnboardAPI {
   } = options
 
   initI18N(i18n)
-  addChains(hexedChain(chains))
-
+  // addChains(hexedChain(chains))
+  addChains(chains.map(chainIdToHex))
+  console.log(99, chains)
   const { device, svelteInstance } = configuration
 
   // update accountCenter
