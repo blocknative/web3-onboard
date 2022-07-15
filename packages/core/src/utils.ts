@@ -85,8 +85,8 @@ export function shortenEns(ens: string): string {
 
 export async function copyWalletAddress(text: string): Promise<void> {
   try {
-   const copy = await navigator.clipboard.writeText(text);
-   return copy
+    const copy = await navigator.clipboard.writeText(text)
+    return copy
   } catch (err) {
     console.error('Failed to copy: ', err)
   }
@@ -242,3 +242,6 @@ export const defaultNotifyEventStyles: Record<string, NotifyEventStyles> = {
     eventIcon: info
   }
 }
+
+export const wait = (time: number) =>
+  new Promise(resolve => setTimeout(resolve, time))

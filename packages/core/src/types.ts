@@ -119,6 +119,7 @@ export type Configuration = {
   appMetadata: AppMetadata | null
   device: Device | DeviceNotBrowser
   apiKey: string
+  initialWalletInit: WalletInit[]
 }
 
 export type Locale = string
@@ -213,12 +214,14 @@ export interface PreflightNotificationsOptions {
   estimateGas?: () => Promise<string>
   gasPrice?: () => Promise<string>
   balance?: string | number
-  txDetails?: {
-    value: string | number
-    to?: string
-    from?: string
-  }
+  txDetails?: TxDetails
   txApproveReminderTimeout?: number
+}
+
+export interface TxDetails {
+  value: string | number
+  to?: string
+  from?: string
 }
 
 // ==== ACTIONS ==== //

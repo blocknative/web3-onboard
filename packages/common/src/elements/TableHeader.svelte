@@ -80,10 +80,7 @@
   input[type='checkbox'] {
     -webkit-appearance: none;
     width: auto;
-    background: var(
-      --account-select-white,
-      var(--onboard-white, var(--white))
-    );
+    background: var(--account-select-white, var(--onboard-white, var(--white)));
     border: 1px solid
       var(--account-select-gray-300, var(--onboard-gray-300, var(--gray-300)));
     padding: 0.5em;
@@ -144,6 +141,9 @@
       --account-select-font-family-light,
       var(--font-family-light)
     );
+    font-size: var(--account-select-font-size-7, var(--font-size-7));
+    max-width: 15rem;
+    line-height: 1;
   }
 
   .table-controls {
