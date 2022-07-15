@@ -59,7 +59,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@web3-onboard/core": "^2.4.1-alpha.2",
+    "@web3-onboard/core": "^2.5.0-alpha.2",
     "@web3-onboard/common": "^2.1.6-alpha.1",
     "use-sync-external-store": "1.0.0"
   },

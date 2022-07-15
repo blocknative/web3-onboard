@@ -60,7 +60,7 @@
     "@vueuse/core": "^8.4.2",
     "@vueuse/rxjs": "^8.2.0",
     "@web3-onboard/common": "^2.1.6-alpha.1",
-    "@web3-onboard/core": "^2.4.1-alpha.2",
+    "@web3-onboard/core": "^2.5.0-alpha.2",
     "vue-demi": "^0.12.4"
   },
   "peerDependencies": {
