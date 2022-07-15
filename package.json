@@ -34,7 +34,9 @@
     "pending",
     "confirmed",
     "Injected Wallet",
-    "GameStop"
+    "GameStop",
+    "Crypto",
+    "Crypto Wallet"
   ],
   "repository": {
     "type": "git",

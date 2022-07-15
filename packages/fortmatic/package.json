@@ -29,7 +29,9 @@
     "Mempool",
     "pending",
     "confirmed",
-    "Injected Wallet"
+    "Injected Wallet",
+    "Crypto",
+    "Crypto Wallet"
   ],
   "repository": {
     "type": "git",

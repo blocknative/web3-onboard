@@ -29,7 +29,10 @@
     "Mempool",
     "pending",
     "confirmed",
-    "Injected Wallet"
+    "Injected Wallet",
+    "GameStop",
+    "Crypto",
+    "Crypto Wallet"
   ],
   "repository": {
     "type": "git",
