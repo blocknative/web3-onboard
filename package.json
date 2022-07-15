@@ -1,6 +1,6 @@
 {
   "name": "web3-onboard-monorepo",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "private": true,
   "workspaces": [
     "./packages/*"
@@ -34,7 +34,9 @@
     "pending",
     "confirmed",
     "Injected Wallet",
-    "GameStop"
+    "GameStop",
+    "Crypto",
+    "Crypto Wallet"
   ],
   "repository": {
     "type": "git",
