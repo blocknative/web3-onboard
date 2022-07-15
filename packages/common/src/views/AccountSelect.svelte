@@ -67,7 +67,17 @@
       loadingAccounts = false
     } catch (err) {
       const { message } = err as { message: string }
-      errorFromScan = message || 'There was an error scanning for accounts'
+
+      if (
+        typeof message === 'string' &&
+        message.includes('could not detect network')
+      ) {
+        errorFromScan =
+          'There was an error detecting connected network from RPC endpoint'
+      } else {
+        errorFromScan = message || 'There was an error scanning for accounts'
+      }
+
       loadingAccounts = false
     }
   }

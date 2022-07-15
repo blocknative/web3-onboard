@@ -10,10 +10,6 @@ import type {
   TokenSymbol
 } from '@web3-onboard/common'
 
-import type setChain from './chain'
-import type connect from './connect'
-import type disconnect from './disconnect'
-import type { state } from './store'
 import type en from './i18n/en.json'
 import type { EthereumTransactionData, Network } from 'bnc-sdk'
 
@@ -123,6 +119,7 @@ export type Configuration = {
   appMetadata: AppMetadata | null
   device: Device | DeviceNotBrowser
   apiKey: string
+  initialWalletInit: WalletInit[]
 }
 
 export type Locale = string
@@ -144,6 +141,7 @@ export type AccountCenter = {
   position?: AccountCenterPosition
   expanded?: boolean
   minimal?: boolean
+  containerElement: string
 }
 
 export type AccountCenterOptions = {
@@ -209,6 +207,21 @@ export interface UpdateNotification {
     dismiss: () => void
     update: UpdateNotification
   }
+}
+
+export interface PreflightNotificationsOptions {
+  sendTransaction?: () => Promise<string | void>
+  estimateGas?: () => Promise<string>
+  gasPrice?: () => Promise<string>
+  balance?: string | number
+  txDetails?: TxDetails
+  txApproveReminderTimeout?: number
+}
+
+export interface TxDetails {
+  value: string | number
+  to?: string
+  from?: string
 }
 
 // ==== ACTIONS ==== //

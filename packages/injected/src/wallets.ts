@@ -490,6 +490,28 @@ const rabby: InjectedWalletModule = {
   platforms: ['desktop']
 }
 
+const mathwallet: InjectedWalletModule = {
+  label: ProviderLabel.MathWallet,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.MathWallet],
+  getIcon: async () => (await import('./icons/mathwallet.js')).default,
+  getInterface: getInjectedInterface(ProviderIdentityFlag.MathWallet),
+  platforms: ['all']
+}
+
+const gamestop: InjectedWalletModule = {
+  label: ProviderLabel.GameStop,
+  injectedNamespace: InjectedNameSpace.GameStop,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.GameStop],
+  getIcon: async () => (await import('./icons/gamestop.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.gamestop)
+  }),
+  platforms: ['desktop']
+}
+
 const wallets = [
   exodus,
   metamask,
@@ -518,7 +540,9 @@ const wallets = [
   oneInch,
   tokenary,
   tally,
-  rabby
+  rabby,
+  mathwallet,
+  gamestop
 ]
 
 export default wallets

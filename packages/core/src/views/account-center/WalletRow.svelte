@@ -3,7 +3,7 @@
   import { fade } from 'svelte/transition'
   import { ProviderRpcErrorCode } from '@web3-onboard/common'
   import type { WalletState } from '../../types'
-  import { shortenAddress, shortenEns } from '../../utils'
+  import { shortenAddress, shortenEns, copyWalletAddress } from '../../utils'
   import en from '../../i18n/en.json'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
@@ -48,6 +48,14 @@
       }
     }
   }
+
+  function changeText() {
+    en.accountCenter.copyAddress = 'Copied Successfully'
+    setTimeout(hideMenu, 500)
+    setTimeout(() => {
+      en.accountCenter.copyAddress = 'Copy Wallet address'
+    }, 700)
+  }
 </script>
 
 <style>
@@ -62,7 +70,10 @@
   }
 
   .container:hover {
-    background: var(--onboard-gray-500, var(--gray-500));
+    background: var(
+      --account-center-maximized-account-section-background-hover,
+      var(--onboard-gray-500, var(--gray-500))
+    );
   }
 
   .container:hover > div > span.balance {
@@ -76,7 +87,10 @@
   .address-ens {
     margin-left: 0.5rem;
     font-weight: 700;
-    color: var(--onboard-primary-100, var(--primary-100));
+    color: var(
+      --account-center-maximized-address-color,
+      var(--onboard-primary-100, var(--primary-100))
+    );
   }
 
   .balance {
@@ -224,6 +238,15 @@
           {$_('accountCenter.disconnectWallet', {
             default: en.accountCenter.disconnectWallet
           })}
+        </li>
+        <li
+          on:click|stopPropagation={() => {
+            copyWalletAddress(ens ? ens.name : address).then(() => {
+              changeText()
+            })
+          }}
+        >
+          {en.accountCenter.copyAddress}
         </li>
       </ul>
     {/if}

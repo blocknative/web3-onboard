@@ -167,37 +167,43 @@ function keepkey(): WalletInit {
           asset: Asset
           provider: StaticJsonRpcProvider
         }) => {
-          let index = getAccountIdx(derivationPath)
-          let zeroBalanceAccounts = 0
-          const accounts = []
+          try {
+            let index = getAccountIdx(derivationPath)
+            let zeroBalanceAccounts = 0
+            const accounts = []
 
-          // Iterates until a 0 balance account is found
-          // Then adds 4 more 0 balance accounts to the array
-          while (zeroBalanceAccounts < 5) {
-            const acc = await getAccount({
-              accountIdx: index,
-              provider,
-              asset
-            })
+            // Iterates until a 0 balance account is found
+            // Then adds 4 more 0 balance accounts to the array
+            while (zeroBalanceAccounts < 5) {
+              const acc = await getAccount({
+                accountIdx: index,
+                provider,
+                asset
+              })
 
-            if (
-              acc &&
-              acc.balance &&
-              acc.balance.value &&
-              acc.balance.value.isZero()
-            ) {
-              zeroBalanceAccounts++
-              accounts.push(acc)
-            } else {
-              accounts.push(acc)
-              // Reset the number of 0 balance accounts
-              zeroBalanceAccounts = 0
+              if (
+                acc &&
+                acc.balance &&
+                acc.balance.value &&
+                acc.balance.value.isZero()
+              ) {
+                zeroBalanceAccounts++
+                accounts.push(acc)
+              } else {
+                accounts.push(acc)
+                // Reset the number of 0 balance accounts
+                zeroBalanceAccounts = 0
+              }
+
+              index++
             }
 
-            index++
+            return accounts
+          } catch (error) {
+            throw new Error(
+              (error as { message: { message: string } }).message.message
+            )
           }
-
-          return accounts
         }
         let ethersProvider: StaticJsonRpcProvider
         const scanAccounts = async ({
