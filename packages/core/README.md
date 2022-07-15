@@ -637,6 +637,63 @@ setTimeout(
 )
 ```
 
+**`preflightNotifications`**
+Notify can be used to deliver standard notifications along with preflight information by passing a `PreflightNotificationsOptions` object to the `preflightNotifications` action. This will return a a promise that resolves to the transaction hash (if `sendTransaction` resolves the transaction hash and is successful), the internal notification id (if no `sendTransaction` function is provided) or return nothing if an error occurs or `sendTransaction` is not provided or doesn't resolve to a string.
+
+Preflight event types include 
+ - `txRequest` : Alert user there is a transaction request awaiting confirmation by their wallet
+ - `txAwaitingApproval` : A previous transaction is awaiting confirmation
+ - `txConfirmReminder` : Reminder to confirm a transaction to continue - configurable with the `txApproveReminderTimeout` property; defaults to 15 seconds
+ - `nsfFail` : The user has insufficient funds for transaction (requires `gasPrice`, `estimateGas`, `balance`, `txDetails.value`)
+ - `txError` : General transaction error (requires `sendTransaction`)
+ - `txSendFail` : The user rejected the transaction (requires `sendTransaction`)
+ - `txUnderpriced` : The gas price for the transaction is too low (requires `sendTransaction`)
+
+```typescript
+interface PreflightNotificationsOptions {
+  sendTransaction?: () => Promise<string | void>
+  estimateGas?: () => Promise<string>
+  gasPrice?: () => Promise<string>
+  balance?: string | number
+  txDetails?: {
+    value: string | number
+    to?: string
+    from?: string
+  }
+  txApproveReminderTimeout?: number // defaults to 15 seconds if not specified
+}
+```
+
+```typescript
+const balanceValue = Object.values(balance)[0]
+const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
+
+const signer = ethersProvider.getSigner()
+const txDetails = {
+  to: toAddress,
+  value: 100000000000000
+}
+
+const sendTransaction = () => {
+  return signer.sendTransaction(txDetails).then(tx => tx.hash)
+}
+
+const gasPrice = () =>
+  ethersProvider.getGasPrice().then(res => res.toString())
+
+const estimateGas = () => {
+  return ethersProvider.estimateGas(txDetails).then(res => res.toString())
+}
+const transactionHash = await onboard.state.actions.preflightNotifications({
+  sendTransaction,
+  gasPrice,
+  estimateGas,
+  balance: balanceValue,
+  txDetails: txDetails
+})
+console.log(transactionHash)
+```
+
 **`updateAccountCenter`**
 If you need to update your Account Center configuration after initialization, you can call the `updateAccountCenter` function with the new configuration
 
@@ -656,7 +713,7 @@ onboard.state.actions.updateAccountCenter({
 ```
 
 **`setPrimaryWallet`**
-The primary wallet (first in the list of connected wallets) and primary account (first in the list of connected accounts for a wallet) can be set by using the `setPrimaryWallet` function. The wallet that is to be set needs to be passed in for the first parameter and if you would like to set the primary account, the address of that account also needs to be passed in:
+The primary wallet (first in the list of connected wallets) and primary account (first in the list of connected accounts for a wallet) can be set by using the `setPrimaryWallet` function. The wallet that is set needs to be passed in for the first parameter and if you would like to set the primary account, the address of that account also needs to be passed in:
 
 ```typescript
 // set the second wallet in the wallets array as the primary
@@ -733,9 +790,28 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-warning-600: #cc8c00;
   --onboard-warning-700: #664600;
 
-  /* CUSTOMIZE ACCOUNT CENTER STACK POSITIONING*/
+  /* CUSTOMIZE ACCOUNT CENTER*/
   --account-center-z-index
-
+  --account-center-position-top
+  --account-center-position-bottom
+  --account-center-position-right
+  --account-center-position-left
+  --account-center-minimized-background
+  --account-center-maximized-upper-background
+  --account-center-maximized-network-section
+  --account-center-maximized-app-info-section
+  --account-center-minimized-address-color
+  --account-center-maximized-address-color
+  --account-center-maximized-account-section-background-hover
+  --account-center-maximized-action-background-hover
+  --account-center-minimized-chain-select-background
+  --account-center-network-selector-color
+  --account-center-maximized-network-selector-color
+  --account-center-minimized-network-selector-color
+  --account-center-app-btn-text-color
+  --account-center-app-btn-background
+  --account-center-app-btn-font-family
+  
   /* CUSTOMIZE SECTIONS OF THE CONNECT MODAL */
   --onboard-connect-content-width
   --onboard-connect-content-height
@@ -759,6 +835,10 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-wallet-button-border-radius
   --onboard-wallet-button-box-shadow
   --onboard-wallet-app-icon-border-color
+
+  /* CUSTOMIZE THE SHARED MODAL */
+  --onboard-modal-background
+  --onboard-modal-color
 
   /* CUSTOMIZE THE CONNECT MODAL */
   --onboard-modal-border-radius
@@ -849,7 +929,12 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --account-select-modal-margin-4: 1rem;
   --account-select-modal-margin-5: 0.5rem;
 
-  /* notify STYLES */
+  /* NOTIFY STYLES */
+  /* Notify Positioning variables only take effect if Notify is Positioned separate of Account Center */
+  --notify-onboard-container-position-top
+  --notify-onboard-container-position-bottom
+  --notify-onboard-container-position-right
+  --notify-onboard-container-position-left
   --notify-onboard-font-family-normal
   --notify-onboard-font-size-5
   --notify-onboard-gray-300

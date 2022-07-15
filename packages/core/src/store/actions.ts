@@ -123,7 +123,6 @@ export function removeWallet(id: string): void {
 }
 
 export function setPrimaryWallet(wallet: WalletState, address?: string): void {
-  console.log({ address })
   const error =
     validateWallet(wallet) || (address && validateString(address, 'address'))
 

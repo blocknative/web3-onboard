@@ -14,7 +14,8 @@ import type {
   CustomNotification,
   Notification,
   Notify,
-  UpdateNotification
+  UpdateNotification,
+  PreflightNotificationsOptions
 } from '@web3-onboard/core'
 import type { Chain, WalletInit } from '@web3-onboard/common'
 
@@ -51,8 +52,8 @@ const useAppState: {
     return stateKey ? snapshot[stateKey] : snapshot
   }, [stateKey])
 
-  const getServerSnapshot = () => get() || getSnapshot;
-  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const getServerSnapshot = () => get() || getSnapshot
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 }
 
 export const useConnectWallet = (): [
@@ -60,7 +61,8 @@ export const useConnectWallet = (): [
   (options?: ConnectOptions) => Promise<void>,
   (wallet: DisconnectOptions) => Promise<void>,
   (addresses?: string[]) => Promise<void>,
-  (wallets: WalletInit[]) => void
+  (wallets: WalletInit[]) => void,
+  (wallet: WalletState, address?: string) => void
 ] => {
   if (!web3Onboard) throw new Error(HOOK_ERROR_MESSAGE)
 
@@ -89,13 +91,15 @@ export const useConnectWallet = (): [
 
   const updateBalances = web3Onboard.state.actions.updateBalances
   const setWalletModules = web3Onboard.state.actions.setWalletModules
+  const setPrimaryWallet = web3Onboard.state.actions.setPrimaryWallet
 
   return [
     { wallet, connecting },
     connect,
     disconnect,
     updateBalances,
-    setWalletModules
+    setWalletModules,
+    setPrimaryWallet
   ]
 }
 
@@ -156,14 +160,22 @@ export const useNotifications = (): [
     dismiss: () => void
     update: UpdateNotification
   },
-  (update: Partial<Notify>) => void
+  (update: Partial<Notify>) => void,
+  (options: PreflightNotificationsOptions) => Promise<void | string>
 ] => {
   if (!web3Onboard) throw new Error(HOOK_ERROR_MESSAGE)
 
   const customNotification = web3Onboard.state.actions.customNotification
   const updateNotify = web3Onboard.state.actions.updateNotify
+  const preflightNotifications =
+    web3Onboard.state.actions.preflightNotifications
 
-  return [useAppState('notifications'), customNotification, updateNotify]
+  return [
+    useAppState('notifications'),
+    customNotification,
+    updateNotify,
+    preflightNotifications
+  ]
 }
 
 export const useSetLocale = (): ((locale: string) => void) => {

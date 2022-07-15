@@ -17,16 +17,20 @@ import { configuration, updateConfiguration } from './configuration'
 
 import {
   addChains,
-  setWalletModules,
   updateAccountCenter,
   updateNotify,
   customNotification,
   setLocale,
-  setPrimaryWallet
+  setPrimaryWallet,
+  setWalletModules
 } from './store/actions'
 
 import updateBalances from './update-balances'
+<<<<<<< HEAD
 import { hexedChain } from './utils'
+=======
+import { preflightNotifications } from './preflight-notifications'
+>>>>>>> v2-web3-onboard-develop
 
 const API = {
   connectWallet,
@@ -40,6 +44,7 @@ const API = {
       setLocale,
       updateNotify,
       customNotification,
+      preflightNotifications,
       updateBalances,
       updateAccountCenter,
       setPrimaryWallet
@@ -60,7 +65,8 @@ export type {
   CustomNotification,
   Notification,
   Notify,
-  UpdateNotification
+  UpdateNotification,
+  PreflightNotificationsOptions
 } from './types'
 
 export type { EIP1193Provider } from '@web3-onboard/common'
@@ -166,7 +172,6 @@ function init(options: InitOptions): OnboardAPI {
       if (!apiKey || !notifyUpdate.enabled) {
         notifyUpdate.enabled = false
       }
-      console.log(notifyUpdate)
       updateNotify(notifyUpdate)
     }
   } else {
@@ -189,10 +194,9 @@ function init(options: InitOptions): OnboardAPI {
   updateConfiguration({
     appMetadata,
     svelteInstance: app,
-    apiKey
+    apiKey,
+    initialWalletInit: wallets
   })
-
-  setWalletModules(wallets)
 
   return API
 }
@@ -315,10 +319,13 @@ function mountApp() {
       </style>
     `
 
-  const containerElementQuery = state.get().accountCenter.containerElement || 'body'
+  const containerElementQuery =
+    state.get().accountCenter.containerElement || 'body'
   const containerElement = document.querySelector(containerElementQuery)
   if (!containerElement) {
-    throw new Error(`Element with query ${state.get().accountCenter} does not exist.`)
+    throw new Error(
+      `Element with query ${state.get().accountCenter} does not exist.`
+    )
   }
 
   containerElement.appendChild(onboard)
