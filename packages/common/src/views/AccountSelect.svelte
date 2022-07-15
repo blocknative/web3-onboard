@@ -67,7 +67,17 @@
       loadingAccounts = false
     } catch (err) {
       const { message } = err as { message: string }
-      errorFromScan = message || 'There was an error scanning for accounts'
+
+      if (
+        typeof message === 'string' &&
+        message.includes('could not detect network')
+      ) {
+        errorFromScan =
+          'There was an error detecting connected network from RPC endpoint'
+      } else {
+        errorFromScan = message || 'There was an error scanning for accounts'
+      }
+
       loadingAccounts = false
     }
   }
@@ -397,10 +407,7 @@
     right: 0.2rem;
     width: 2.5rem;
     height: 2.5rem;
-    background: var(
-      --account-select-white,
-      var(--onboard-white, var(--white))
-    );
+    background: var(--account-select-white, var(--onboard-white, var(--white)));
     border-radius: 1rem;
   }
 
