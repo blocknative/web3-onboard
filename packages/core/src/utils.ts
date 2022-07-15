@@ -34,7 +34,6 @@ import type {
   DeviceNotBrowser,
   NotifyEventStyles
 } from './types'
-import BigNumber from 'bignumber.js'
 
 export function getDevice(): Device | DeviceNotBrowser {
   if (typeof window !== 'undefined') {
@@ -84,13 +83,6 @@ export function shortenEns(ens: string): string {
   return ens.length > 11 ? `${ens.slice(0, 4)}...${ens.slice(-6)}` : ens
 }
 
-<<<<<<< HEAD
-export function weiToEth(wei: any): string {
-  const bigWei = new BigNumber(wei._hex)
-  const bigWeiDiv = bigWei.dividedBy(1e18)
-  const formattedWei = bigWei.dividedBy(1e18).toFixed() === '0' ? bigWeiDiv.toFixed(1) : bigWeiDiv.toFixed()
-  return formattedWei
-=======
 export async function copyWalletAddress(text: string): Promise<void> {
   try {
     const copy = await navigator.clipboard.writeText(text)
@@ -98,7 +90,6 @@ export async function copyWalletAddress(text: string): Promise<void> {
   } catch (err) {
     console.error('Failed to copy: ', err)
   }
->>>>>>> v2-web3-onboard-develop
 }
 
 export const chainIdToLabel: Record<string, string> = {

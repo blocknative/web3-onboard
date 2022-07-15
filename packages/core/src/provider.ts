@@ -1,7 +1,7 @@
 import { fromEventPattern, Observable } from 'rxjs'
 import { filter, takeUntil, take, share, switchMap } from 'rxjs/operators'
 import partition from 'lodash.partition'
-import { utils, providers } from 'ethers'
+import { providers } from 'ethers'
 
 import type {
   ChainId,
@@ -14,10 +14,12 @@ import type {
   SelectAccountsRequest
 } from '@web3-onboard/common'
 
+import {  weiToEth } from '@web3-onboard/common'
+
 import { disconnectWallet$ } from './streams'
 import type { Account, Address, Balances, Ens, WalletState } from './types'
 import { updateAccount, updateWallet } from './store/actions'
-import { validEnsChain, weiToEth } from './utils'
+import { validEnsChain } from './utils'
 import disconnect from './disconnect'
 import { state } from './store'
 import { getBlocknativeSdk } from './services'

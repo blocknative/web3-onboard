@@ -69,6 +69,8 @@ export {
   getHardwareWalletProvider
 } from './hdwallets'
 
+export { weiToEth } from './utils'
+
 export type {
   RequestPatch,
   AccountSelectAPI,

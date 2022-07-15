@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Account, AccountsList } from '../types'
-  import { utils } from 'ethers'
+  import { weiToEth } from '../utils'
 
   export let accountsListObject: AccountsList | undefined
   export let accountSelected: Account | undefined = undefined
