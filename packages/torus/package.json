@@ -57,6 +57,6 @@
   },
   "dependencies": {
     "@toruslabs/torus-embed": "^1.18.3",
-    "@web3-onboard/common": "^2.1.7-alpha.2"
+    "@web3-onboard/common": "^2.1.7-alpha.1"
   }
 }

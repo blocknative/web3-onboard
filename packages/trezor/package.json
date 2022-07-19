@@ -60,7 +60,7 @@
   "dependencies": {
     "@ethereumjs/tx": "^3.4.0",
     "@ethersproject/providers": "^5.5.0",
-    "@web3-onboard/common": "^2.1.7-alpha.2",
+    "@web3-onboard/common": "^2.1.7-alpha.1",
     "buffer": "^6.0.3",
     "eth-crypto": "^2.1.0",
     "ethereumjs-util": "^7.1.3",
