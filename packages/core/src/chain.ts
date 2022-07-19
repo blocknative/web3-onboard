@@ -8,7 +8,7 @@ import { validateSetChainOptions } from './validation'
 import type { WalletState } from './types'
 
 async function setChain(options: {
-  chainId: string
+  chainId: string | number
   chainNamespace?: string
   wallet?: WalletState['label']
 }): Promise<boolean> {

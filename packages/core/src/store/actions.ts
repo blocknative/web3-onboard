@@ -63,7 +63,7 @@ export function addChains(chains: Chain[]): void {
     payload: chains.map(({ namespace = 'evm', id, ...rest }) => ({
       ...rest,
       namespace,
-      id: id.toLowerCase()
+      id: id
     }))
   }
 

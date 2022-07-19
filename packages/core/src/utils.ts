@@ -92,6 +92,8 @@ export async function copyWalletAddress(text: string): Promise<void> {
   }
 }
 
+export const chainIdToHex = (chain: Chain): Chain => typeof chain.id === 'number' ? { ...chain, id: `0x${chain.id.toString(16)}` } : chain
+
 export const chainIdToLabel: Record<string, string> = {
   '0x1': 'Ethereum',
   '0x3': 'Ropsten',

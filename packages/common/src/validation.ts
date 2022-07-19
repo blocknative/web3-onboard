@@ -9,7 +9,9 @@ const basePaths = Joi.array().items(basePath)
 
 const chain = Joi.object({
   namespace: Joi.string(),
-  id: Joi.string().required(),
+  id: Joi.alternatives()
+        .try(Joi.string().pattern(/^0x[0-9a-fA-F]+$/), 
+        Joi.number().positive()).required,
   rpcUrl: Joi.string().required(),
   label: Joi.string().required(),
   token: Joi.string().required(),
