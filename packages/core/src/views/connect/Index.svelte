@@ -19,8 +19,7 @@
   import Sidebar from './Sidebar.svelte'
   import { configuration } from '../../configuration'
   import { getBlocknativeSdk } from '../../services'
-  // import * as BigNumber from 'bignumber.js';
-  // type BigNumber = BigNumber.BigNumber;
+  import BigNumber from 'bignumber.js'
   import {
     getChainId,
     requestAccounts,
@@ -35,7 +34,6 @@
     WalletState,
     WalletWithLoadingIcon
   } from '../../types'
-  import BigNumber from 'bignumber.js'
 
   export let autoSelect: ConnectOptions['autoSelect']
 
