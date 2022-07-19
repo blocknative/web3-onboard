@@ -59,6 +59,6 @@
   "dependencies": {
     "@gnosis.pm/safe-apps-provider": "^0.9.2",
     "@gnosis.pm/safe-apps-sdk": "^6.1.1",
-    "@web3-onboard/common": "^2.1.7-alpha.2"
+    "@web3-onboard/common": "^2.1.7-alpha.1"
   }
 }
