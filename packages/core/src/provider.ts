@@ -23,6 +23,7 @@ import { validEnsChain } from './utils'
 import disconnect from './disconnect'
 import { state } from './store'
 import { getBlocknativeSdk } from './services'
+import BigNumber from 'bignumber.js'
 
 export const ethersProviders: {
   [key: string]: providers.StaticJsonRpcProvider
@@ -346,8 +347,9 @@ export async function getBalance(
 
   try {
     const balanceWei = await provider.getBalance(address)
+    const bigNumberWei = new BigNumber(parseInt(balanceWei.toHexString(), 16))
     return balanceWei
-      ? { [chain.token || 'eth']: weiToEth(balanceWei) }
+      ? { [chain.token || 'eth']: weiToEth(bigNumberWei).slice(0,6) }
       : null
   } catch (error) {
     console.error(error)

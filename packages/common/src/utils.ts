@@ -1,6 +1,5 @@
-import BigNumber from 'bignumber.js'
+import type BigNumber from 'bignumber.js'
 
-export function weiToEth(wei: any): string {
-    return new BigNumber(wei._hex).div(1e18).toString()
+export function weiToEth(wei: BigNumber): string {
+    return wei.div(1e18).toString()
 }
-  
