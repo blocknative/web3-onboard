@@ -1,0 +1,34 @@
+{
+  "name": "@web3-onboard/gas",
+  "version": "2.0.0",
+  "description": "Gas",
+  "keywords": [
+    "gas"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blocknative/web3-onboard.git",
+    "directory": "packages/gas"
+  },
+  "homepage": "https://www.blocknative.com/onboard",
+  "bugs": "https://github.com/blocknative/web3-onboard/issues",
+  "module": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w",
+    "type-check": "tsc --noEmit"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "rxjs": "^7.5.6",
+    "joi": "^17.6.0"
+  }
+}
