@@ -26,6 +26,7 @@ import {
 } from './store/actions'
 
 import updateBalances from './update-balances'
+import { chainIdToHex } from './utils'
 import { preflightNotifications } from './preflight-notifications'
 
 const API = {
@@ -89,8 +90,7 @@ function init(options: InitOptions): OnboardAPI {
   } = options
 
   initI18N(i18n)
-  addChains(chains)
-
+  addChains(chains.map(chainIdToHex))
   const { device, svelteInstance } = configuration
 
   // update accountCenter
