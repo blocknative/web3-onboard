@@ -2,6 +2,7 @@ import Joi, { ObjectSchema, Schema } from 'joi'
 import type {
   Chain,
   ChainId,
+  DecimalChainId,
   WalletInit,
   WalletModule
 } from '@web3-onboard/common'
@@ -24,8 +25,8 @@ import type {
 
 // const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
 const chainId = Joi.alternatives().
-                try(Joi.string().pattern(/^0x[0-9a-fA-F]+$/), 
-                Joi.number().positive())
+    try(Joi.string().pattern(/^0x[0-9a-fA-F]+$/),
+    Joi.number().positive())
 const chainNamespace = Joi.string().valid('evm')
 const unknownObject = Joi.object().unknown()
 
@@ -308,7 +309,7 @@ export function validateString(str: string, label?: string): ValidateReturn {
 }
 
 export function validateSetChainOptions(data: {
-  chainId: ChainId
+  chainId: ChainId | DecimalChainId
   chainNamespace?: string
   wallet?: WalletState['label']
 }): ValidateReturn {
