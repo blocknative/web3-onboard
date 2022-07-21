@@ -14,16 +14,13 @@ import type {
   SelectAccountsRequest
 } from '@web3-onboard/common'
 
-import {  weiToEth } from '@web3-onboard/common'
-
 import { disconnectWallet$ } from './streams'
 import type { Account, Address, Balances, Ens, WalletState } from './types'
 import { updateAccount, updateWallet } from './store/actions'
-import { validEnsChain } from './utils'
+import { shortenHexToString, validEnsChain } from './utils'
 import disconnect from './disconnect'
 import { state } from './store'
 import { getBlocknativeSdk } from './services'
-import BigNumber from 'bignumber.js'
 
 export const ethersProviders: {
   [key: string]: providers.StaticJsonRpcProvider
@@ -342,14 +339,15 @@ export async function getBalance(
 ): Promise<Balances | null> {
   // chain we don't recognize and don't have a rpcUrl for requests
   if (!chain) return null
-
-  const provider = getProvider(chain)
+  
+  const { wallets } = state.get()
 
   try {
-    const balanceWei = await provider.getBalance(address)
-    const bigNumberWei = new BigNumber(parseInt(balanceWei.toHexString(), 16))
-    return balanceWei
-      ? { [chain.token || 'eth']: weiToEth(bigNumberWei).slice(0,6) }
+    const wallet = wallets.find(wallet => wallet.label)
+    const provider = wallet.provider
+    const balanceHex = await provider.request({ method: 'eth_getBalance', params:[address,'latest'] });
+    return balanceHex
+      ? { [chain.token || 'eth']: shortenHexToString(balanceHex) }
       : null
   } catch (error) {
     console.error(error)
