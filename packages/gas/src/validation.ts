@@ -1,11 +1,11 @@
 import Joi from 'joi'
-import { BlockPricesOptions, GasInit } from 'types'
+import { EstimateOptions, GasInit } from 'types'
 
 const init = Joi.object({
   apiKey: Joi.string().required()
 }).required()
 
-const blockPrices = Joi.object({
+const estimateOptions = Joi.object({
   chainId: Joi.string().valid('0x1', '0x89').required(),
   poll: Joi.number()
 }).required()
@@ -20,6 +20,6 @@ const validate = (validator: Joi.Schema, data: unknown): ValidateReturn => {
 export const validateInit = (data: GasInit): ValidateReturn =>
   validate(init, data)
 
-export const validateBlockPricesOptions = (
-  data: BlockPricesOptions
-): ValidateReturn => validate(blockPrices, data)
+export const validateEstimateOptions = (
+  data: EstimateOptions
+): ValidateReturn => validate(estimateOptions, data)

@@ -17,7 +17,8 @@ import type {
   UpdateNotifyAction,
   AddNotificationAction,
   RemoveNotificationAction,
-  UpdateAllWalletsAction
+  UpdateAllWalletsAction,
+  Gas
 } from '../types'
 
 import {
@@ -33,7 +34,8 @@ import {
   SET_LOCALE,
   ADD_NOTIFICATION,
   REMOVE_NOTIFICATION,
-  UPDATE_ALL_WALLETS
+  UPDATE_ALL_WALLETS,
+  UPDATE_GAS
 } from './constants'
 
 function reducer(state: AppState, action: Action): AppState {
@@ -188,6 +190,13 @@ function reducer(state: AppState, action: Action): AppState {
       return {
         ...state,
         locale: payload as Locale
+      }
+    }
+
+    case UPDATE_GAS: {
+      return {
+        ...state,
+        gas: { ...state.gas, ...(payload as Gas) }
       }
     }
 

@@ -28,7 +28,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "rxjs": "^7.5.6",
+    "rxjs": "^7.5.2",
     "joi": "^17.6.0"
   }
 }

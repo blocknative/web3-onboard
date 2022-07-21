@@ -7,8 +7,11 @@ import type {
   EIP1193Provider,
   WalletModule,
   Chain,
-  TokenSymbol
+  TokenSymbol,
+  ChainWithDecimalId
 } from '@web3-onboard/common'
+
+import type { GasEstimateData, GasAPI } from '@web3-onboard/gas'
 
 import type en from './i18n/en.json'
 import type { EthereumTransactionData, Network } from 'bnc-sdk'
@@ -21,7 +24,7 @@ export interface InitOptions {
   /**
    * The chains that your app works with
    */
-  chains: Chain[]
+  chains: Chain[] | ChainWithDecimalId[]
   /**
    * Additional metadata about your app to be displayed in the Onboard UI
    */
@@ -43,6 +46,8 @@ export interface InitOptions {
    * Transaction notification options
    */
   notify?: Partial<NotifyOptions> | Partial<Notify>
+  /**Gas module initialized with API key */
+  gas?: GasAPI
 }
 
 export interface ConnectOptions {
@@ -112,6 +117,7 @@ export interface AppState {
   locale: Locale
   notify: Notify
   notifications: Notification[]
+  gas: Gas
 }
 
 export type Configuration = {
@@ -224,6 +230,9 @@ export interface TxDetails {
   from?: string
 }
 
+/**A mapping of chainId -> GasEstimateData */
+export type Gas = Record<string, GasEstimateData>
+
 // ==== ACTIONS ==== //
 export type Action =
   | AddChainsAction
@@ -239,6 +248,7 @@ export type Action =
   | AddNotificationAction
   | RemoveNotificationAction
   | UpdateAllWalletsAction
+  | UpdateGasAction
 
 export type AddChainsAction = { type: 'add_chains'; payload: Chain[] }
 export type AddWalletAction = { type: 'add_wallet'; payload: WalletState }
@@ -296,6 +306,11 @@ export type RemoveNotificationAction = {
 export type UpdateAllWalletsAction = {
   type: 'update_balance'
   payload: WalletState[]
+}
+
+export type UpdateGasAction = {
+  type: 'update_gas'
+  payload: Gas
 }
 
 // ==== MISC ==== //

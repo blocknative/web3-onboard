@@ -1,19 +1,24 @@
 import { SofiaProRegular } from '@web3-onboard/common'
+import { takeUntil } from 'rxjs/operators'
 import connectWallet from './connect'
 import disconnectWallet from './disconnect'
 import setChain from './chain'
 import { state } from './store'
 import { reset$ } from './streams'
-import {
-  validateInitOptions,
-  validateNotify,
-  validateNotifyOptions
-} from './validation'
 import initI18N from './i18n'
 import App from './views/Index.svelte'
 import type { InitOptions, Notify } from './types'
 import { APP_INITIAL_STATE } from './constants'
 import { configuration, updateConfiguration } from './configuration'
+import updateBalances from './update-balances'
+import { chainIdToHex } from './utils'
+import { preflightNotifications } from './preflight-notifications'
+
+import {
+  validateInitOptions,
+  validateNotify,
+  validateNotifyOptions
+} from './validation'
 
 import {
   addChains,
@@ -22,12 +27,9 @@ import {
   customNotification,
   setLocale,
   setPrimaryWallet,
-  setWalletModules
+  setWalletModules,
+  updateGas
 } from './store/actions'
-
-import updateBalances from './update-balances'
-import { chainIdToHex } from './utils'
-import { preflightNotifications } from './preflight-notifications'
 
 const API = {
   connectWallet,
@@ -86,12 +88,15 @@ function init(options: InitOptions): OnboardAPI {
     i18n,
     accountCenter,
     apiKey,
-    notify
+    notify,
+    gas
   } = options
 
-  initI18N(i18n)
-  addChains(chains.map(chainIdToHex))
   const { device, svelteInstance } = configuration
+  const normalizedChains = chains.map(chainIdToHex)
+
+  initI18N(i18n)
+  addChains(normalizedChains)
 
   // update accountCenter
   if (typeof accountCenter !== 'undefined') {
@@ -177,6 +182,20 @@ function init(options: InitOptions): OnboardAPI {
       notifyUpdate.enabled = false
     }
     updateNotify(notifyUpdate)
+  }
+
+  // handle gas module
+  if (gas) {
+    const validGasEstimateChains = normalizedChains.filter(
+      ({ id }) => id === '0x1' || id === '0x89'
+    )
+
+    validGasEstimateChains.forEach(({ id }) => {
+      const estimates$ = gas.estimates({ chainId: id, poll: 1000 })
+      estimates$.pipe(takeUntil(reset$)).subscribe(estimate => {
+        updateGas({ [id]: estimate })
+      })
+    })
   }
 
   if (svelteInstance) {

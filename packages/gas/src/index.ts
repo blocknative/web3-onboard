@@ -1,48 +1,53 @@
 import { timer, Observable } from 'rxjs'
 import { switchMap, shareReplay } from 'rxjs/operators'
 import { ajax } from 'rxjs/ajax'
-import type { BlockPricesOptions, GasInit, BlockPriceData } from 'types'
-import { validateBlockPricesOptions, validateInit } from 'validation'
+import type { EstimateOptions, GasInit, GasEstimateData } from './types'
+import { validateEstimateOptions, validateInit } from './validation'
 
 export * from './types'
 
-function gas(init: GasInit) {
+export type GasAPI = {
+  /**Returns a stream of price estimates with likelyhood of getting in to the next block */
+  estimates: typeof estimates
+}
+
+let apiKey
+
+function gas(init: GasInit): GasAPI {
   const invalid = validateInit(init)
 
   if (invalid) {
     throw invalid
   }
 
-  const { apiKey } = init
+  apiKey = init.apiKey
 
   return {
-    blockPrices: blockPrices(apiKey)
+    estimates
   }
 }
 
-function blockPrices(apiKey: string) {
-  return (options: BlockPricesOptions): Observable<BlockPriceData> => {
-    const invalid = validateBlockPricesOptions(options)
+function estimates(options: EstimateOptions): Observable<GasEstimateData> {
+  const invalid = validateEstimateOptions(options)
 
-    if (invalid) {
-      throw invalid
-    }
-
-    const { chainId, poll = 5000 } = options
-    const decimalChainId = parseInt(chainId, 16)
-
-    return timer(0, poll).pipe(
-      switchMap(() =>
-        ajax.getJSON<BlockPriceData>(
-          `https://api.blocknative.com/gasprices/blockprices?chainid=${decimalChainId}`,
-          {
-            authorization: apiKey
-          }
-        )
-      ),
-      shareReplay(1)
-    )
+  if (invalid) {
+    throw invalid
   }
+
+  const { chainId, poll = 5000 } = options
+  const decimalChainId = parseInt(chainId, 16)
+
+  return timer(0, poll).pipe(
+    switchMap(() =>
+      ajax.getJSON<GasEstimateData>(
+        `https://api.blocknative.com/gasprices/blockprices?chainid=${decimalChainId}`,
+        {
+          authorization: apiKey
+        }
+      )
+    ),
+    shareReplay(1)
+  )
 }
 
 export default gas

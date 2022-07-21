@@ -2,7 +2,7 @@ export type GasInit = {
   apiKey: string
 }
 
-export type BlockPricesOptions = {
+export type EstimateOptions = {
   chainId: string
   poll?: number
 }
@@ -34,7 +34,7 @@ export type EstimatedBaseFees = [
   { ['pending+5']: [EstimatedBaseFee] }
 ]
 
-export type BlockPriceData = {
+export type GasEstimateData = {
   system: string
   network: string
   unit: string
