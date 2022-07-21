@@ -1,17 +1,23 @@
-import { timer, Observable } from 'rxjs'
-import { switchMap, shareReplay } from 'rxjs/operators'
+import { timer, Observable, zip } from 'rxjs'
+import { switchMap, shareReplay, map } from 'rxjs/operators'
 import { ajax } from 'rxjs/ajax'
-import type { EstimateOptions, GasInit, GasEstimateData } from './types'
+import type {
+  EstimateOptions,
+  GasInit,
+  GasEstimateData,
+  ChainId
+} from './types'
 import { validateEstimateOptions, validateInit } from './validation'
 
 export * from './types'
 
 export type GasAPI = {
-  /**Returns a stream of price estimates with likelyhood of getting in to the next block */
+  /**@returns a stream of price estimates with likelyhood of getting in to the next block */
   estimates: typeof estimates
 }
 
 let apiKey
+let defaultPoll = 5000
 
 function gas(init: GasInit): GasAPI {
   const invalid = validateInit(init)
@@ -20,31 +26,51 @@ function gas(init: GasInit): GasAPI {
     throw invalid
   }
 
-  apiKey = init.apiKey
+  const { apiKey: key, defaultPoll: poll } = init
+
+  apiKey = key
+  defaultPoll = poll || defaultPoll
 
   return {
     estimates
   }
 }
 
-function estimates(options: EstimateOptions): Observable<GasEstimateData> {
+function estimates(
+  options: EstimateOptions
+): Observable<Record<ChainId, GasEstimateData>> {
   const invalid = validateEstimateOptions(options)
 
   if (invalid) {
     throw invalid
   }
 
-  const { chainId, poll = 5000 } = options
-  const decimalChainId = parseInt(chainId, 16)
+  const { chains, poll = defaultPoll } = options
 
+  // start polling
   return timer(0, poll).pipe(
     switchMap(() =>
-      ajax.getJSON<GasEstimateData>(
-        `https://api.blocknative.com/gasprices/blockprices?chainid=${decimalChainId}`,
-        {
-          authorization: apiKey
-        }
+      // combine results of all chains request in to one stream emission
+      zip(
+        chains.map(id =>
+          ajax.getJSON<GasEstimateData>(
+            `https://api.blocknative.com/gasprices/blockprices?chainid=${parseInt(
+              id,
+              16
+            )}`,
+            {
+              authorization: apiKey
+            }
+          )
+        )
       )
+    ),
+    // reduce array of gas data in to mapping of chainId -> GasEstimateData
+    map(chainsGasData =>
+      chains.reduce((acc, id, index) => {
+        acc[id] = chainsGasData[index]
+        return acc
+      }, {})
     ),
     shareReplay(1)
   )

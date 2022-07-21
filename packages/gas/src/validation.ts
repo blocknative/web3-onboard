@@ -2,11 +2,12 @@ import Joi from 'joi'
 import { EstimateOptions, GasInit } from 'types'
 
 const init = Joi.object({
-  apiKey: Joi.string().required()
+  apiKey: Joi.string().required(),
+  defaultPoll: Joi.number().min(1000).max(5000)
 }).required()
 
 const estimateOptions = Joi.object({
-  chainId: Joi.string().valid('0x1', '0x89').required(),
+  chains: Joi.array().items(Joi.string().valid('0x1', '0x89')).required(),
   poll: Joi.number()
 }).required()
 

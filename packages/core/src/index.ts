@@ -186,15 +186,13 @@ function init(options: InitOptions): OnboardAPI {
 
   // handle gas module
   if (gas) {
-    const validGasEstimateChains = normalizedChains.filter(
-      ({ id }) => id === '0x1' || id === '0x89'
-    )
+    const validGasEstimateChains = normalizedChains
+      .filter(({ id }) => id === '0x1' || id === '0x89')
+      .map(({ id }) => id)
 
-    validGasEstimateChains.forEach(({ id }) => {
-      const estimates$ = gas.estimates({ chainId: id, poll: 1000 })
-      estimates$.pipe(takeUntil(reset$)).subscribe(estimate => {
-        updateGas({ [id]: estimate })
-      })
+    const estimates$ = gas.estimates({ chains: validGasEstimateChains })
+    estimates$.pipe(takeUntil(reset$)).subscribe(estimates => {
+      updateGas(estimates)
     })
   }
 

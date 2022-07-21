@@ -1,11 +1,14 @@
 export type GasInit = {
   apiKey: string
+  defaultPoll?: number
 }
 
 export type EstimateOptions = {
-  chainId: string
+  chains: ChainId[]
   poll?: number
 }
+
+export type ChainId = string
 
 export type GasPrice = {
   confidence: number
