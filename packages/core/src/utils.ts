@@ -99,6 +99,8 @@ export function chainIdToHex(chains : Chain[] | ChainWithDecimalId[] ):
 Chain[] {
   return chains.map(({ id, ...rest }) => { 
     id = typeof id === 'number' ?  decimalToHex(id) : id
+    return { id, ...rest };
+  });  
 } 
 
 export const chainIdToLabel: Record<string, string> = {
