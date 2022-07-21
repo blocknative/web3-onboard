@@ -96,9 +96,7 @@ export async function copyWalletAddress(text: string): Promise<void> {
 export function chainIdToHex(chains : Chain[] | ChainWithDecimalId[] ): 
 Chain[] {
   return chains.map(({ id, ...rest }) => { 
-    id = typeof id === 'number' ?  `0x${id.toString(16)}` : id
-    return { id, ...rest };
-  });  
+    id = typeof id === 'number' ?  decimalToHex(id) : id
 } 
 
 export const chainIdToLabel: Record<string, string> = {

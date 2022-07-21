@@ -6,6 +6,7 @@ import { state } from './store'
 import { switchChainModal$ } from './streams'
 import { validateSetChainOptions } from './validation'
 import type { WalletState } from './types'
+import { decimalToHex } from './utils'
 
 async function setChain(options: {
   chainId: string | number
