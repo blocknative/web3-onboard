@@ -93,6 +93,8 @@ export async function copyWalletAddress(text: string): Promise<void> {
   }
 }
 
+export const decimalToHex = (decimal: number): string => `0x${decimal.toString(16)}`
+
 export function chainIdToHex(chains : Chain[] | ChainWithDecimalId[] ): 
 Chain[] {
   return chains.map(({ id, ...rest }) => { 
