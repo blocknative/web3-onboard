@@ -35,7 +35,11 @@ const { unsubscribe: ethGasUnsub } = ethMainnetGasEstimates.subscribe(
 setTimeout(ethGasUnsub, 10000)
 
 // OR you can subscribe to multiple chains at once:
-const gasEstimates = gas.estimates({ chains: ['0x1', '0x89'] })
+const gasEstimates = gas.estimates({
+  chains: ['0x1', '0x89'],
+  // can override default poll rate as well
+  poll: 1000
+})
 
 const { unsubscribe } = gasEstimates.subscribe(estimates =>
   console.log(estimates)
