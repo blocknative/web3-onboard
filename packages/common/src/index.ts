@@ -54,7 +54,9 @@ import type {
   TokenSymbol,
   CustomNetwork,
   TransactionObject,
-  RPCResponse
+  RPCResponse,
+  DecimalChainId,
+  ChainWithDecimalId
 } from './types'
 
 export { ProviderRpcErrorCode } from './types'
@@ -125,5 +127,7 @@ export type {
   TokenSymbol,
   CustomNetwork,
   TransactionObject,
-  RPCResponse
+  RPCResponse,
+  DecimalChainId,
+  ChainWithDecimalId
 }
