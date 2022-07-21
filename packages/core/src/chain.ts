@@ -21,7 +21,7 @@ async function setChain(options: {
 
   const { wallets, chains } = state.get()
   const { chainId, chainNamespace = 'evm', wallet: walletToSet } = options
-  const chainIdHex = typeof chainId === 'number' ? `0x${chainId.toString(16)}` : chainId
+  const chainIdHex = typeof chainId === 'number' ? decimalToHex(chainId) : chainId
 
   // validate that chainId has been added to chains
   const chain = chains.find(
