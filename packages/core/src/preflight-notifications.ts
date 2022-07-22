@@ -18,8 +18,6 @@ state.select('notifications').subscribe(notifications => {
 export async function preflightNotifications(
   options: PreflightNotificationsOptions
 ): Promise<string | void> {
-
-
   const invalid = validatePreflightNotifications(options)
 
   if (invalid) {

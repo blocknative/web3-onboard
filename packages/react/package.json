@@ -57,14 +57,15 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@types/react": "^18.0.15",
     "@types/use-sync-external-store": "^0.0.3",
     "esbuild": "^0.14.48",
     "rimraf": "^3.0.2",
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@web3-onboard/core": "^2.6.0-alpha.2",
     "@web3-onboard/common": "^2.1.7-alpha.1",
+    "@web3-onboard/core": "^2.6.0-alpha.2",
     "use-sync-external-store": "1.0.0"
   },
   "peerDependencies": {

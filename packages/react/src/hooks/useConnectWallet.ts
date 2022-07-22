@@ -14,7 +14,8 @@ export const useConnectWallet = (): [
   (options?: ConnectOptions) => Promise<void>,
   (wallet: DisconnectOptions) => Promise<void>,
   (addresses?: string[]) => Promise<void>,
-  (wallets: WalletInit[]) => void
+  (wallets: WalletInit[]) => void,
+  (wallet: WalletState, address?: string) => void
 ] => {
   const web3Onboard = useWeb3Onboard()
 
@@ -43,12 +44,14 @@ export const useConnectWallet = (): [
 
   const updateBalances = web3Onboard.state.actions.updateBalances
   const setWalletModules = web3Onboard.state.actions.setWalletModules
+  const setPrimaryWallet = web3Onboard.state.actions.setPrimaryWallet
 
   return [
     { wallet, connecting },
     connect,
     disconnect,
     updateBalances,
-    setWalletModules
+    setWalletModules,
+    setPrimaryWallet
   ]
 }

@@ -164,4 +164,3 @@ export function typeToDismissTimeout(type: string): number {
       return 0
   }
 }
-
