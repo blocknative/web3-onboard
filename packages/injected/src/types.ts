@@ -43,7 +43,8 @@ export enum ProviderIdentityFlag {
   BraveWallet = 'isBraveWallet',
   Rabby = 'isRabby',
   MathWallet = 'isMathWallet',
-  GameStop = 'isGamestop'
+  GameStop = 'isGamestop',
+  Core = 'isAvalanche'
 }
 
 export enum ProviderLabel {
@@ -78,7 +79,8 @@ export enum ProviderLabel {
   Tally = 'Tally Wallet',
   Rabby = 'Rabby',
   MathWallet = 'MathWallet',
-  GameStop = 'GameStop Wallet'
+  GameStop = 'GameStop Wallet',
+  Core = 'Core'
 }
 
 export interface MeetOneProvider extends ExternalProvider {

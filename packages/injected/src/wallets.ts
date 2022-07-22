@@ -512,6 +512,19 @@ const gamestop: InjectedWalletModule = {
   platforms: ['desktop']
 }
 
+const core: InjectedWalletModule = {
+  label: ProviderLabel.Core,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Core],
+  getIcon: async () => (await import('./icons/core.js')).default,
+  getInterface: async () => ({
+    provider: getInjectedInterface(ProviderIdentityFlag.Core)
+  }),
+  // Core wallet is only tested in chrome or chromium browser
+  platforms: ['desktop', 'Chrome', 'Chromium','Microsoft Edge']
+}
+
 const wallets = [
   exodus,
   metamask,
@@ -542,7 +555,8 @@ const wallets = [
   tally,
   rabby,
   mathwallet,
-  gamestop
+  gamestop,
+  core
 ]
 
 export default wallets
