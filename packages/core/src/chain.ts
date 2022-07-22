@@ -6,7 +6,7 @@ import { state } from './store'
 import { switchChainModal$ } from './streams'
 import { validateSetChainOptions } from './validation'
 import type { WalletState } from './types'
-import { decimalToHex } from './utils'
+import { toHexString } from './utils'
 
 async function setChain(options: {
   chainId: string | number
@@ -21,7 +21,7 @@ async function setChain(options: {
 
   const { wallets, chains } = state.get()
   const { chainId, chainNamespace = 'evm', wallet: walletToSet } = options
-  const chainIdHex = typeof chainId === 'number' ? decimalToHex(chainId) : chainId
+  const chainIdHex = toHexString(chainId)
 
   // validate that chainId has been added to chains
   const chain = chains.find(
@@ -30,7 +30,7 @@ async function setChain(options: {
 
   if (!chain) {
     throw new Error(
-      `Chain with chainId: ${chainIdHex} and chainNamespace: ${chainNamespace} has not been set and must be added when Onboard is initialized.`
+      `Chain with chainId: ${chainId} and chainNamespace: ${chainNamespace} has not been set and must be added when Onboard is initialized.`
     )
   }
 
