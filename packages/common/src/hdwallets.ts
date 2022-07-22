@@ -71,7 +71,7 @@ export const bigNumberFieldsToStrings = (
     (transaction, txnProperty) => ({
       ...transaction,
       ...((transaction[txnProperty as keyof TransactionRequest] as BigNumber)
-        .toString(16)
+        instanceof BigNumber
         ? {
             [txnProperty]: (
               transaction[txnProperty as keyof TransactionRequest] as BigNumber

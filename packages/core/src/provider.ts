@@ -3,7 +3,7 @@ import { filter, takeUntil, take, share, switchMap } from 'rxjs/operators'
 import partition from 'lodash.partition'
 import { providers } from 'ethers'
 
-import type {
+import {
   ChainId,
   EIP1102Request,
   EIP1193Provider,
@@ -11,16 +11,18 @@ import type {
   Chain,
   AccountsListener,
   ChainListener,
-  SelectAccountsRequest
+  SelectAccountsRequest,
+  weiToEth
 } from '@web3-onboard/common'
 
 import { disconnectWallet$ } from './streams'
 import type { Account, Address, Balances, Ens, WalletState } from './types'
 import { updateAccount, updateWallet } from './store/actions'
-import { shortenHexToString, validEnsChain } from './utils'
+import { validEnsChain } from './utils'
 import disconnect from './disconnect'
 import { state } from './store'
 import { getBlocknativeSdk } from './services'
+import BigNumber from 'bignumber.js'
 
 export const ethersProviders: {
   [key: string]: providers.StaticJsonRpcProvider
@@ -345,9 +347,10 @@ export async function getBalance(
   try {
     const wallet = wallets.find(wallet => wallet.label)
     const provider = wallet.provider
-    const balanceHex = await provider.request({ method: 'eth_getBalance', params:[address,'latest'] });
-    return balanceHex
-      ? { [chain.token || 'eth']: shortenHexToString(balanceHex) }
+    const balanceHex = await provider.request({ method: 'eth_getBalance', params:[address,'latest'] })
+    const balanceWei = new BigNumber(parseInt(balanceHex, 16))
+    return balanceWei
+      ? { [chain.token || 'eth']: weiToEth(balanceWei).slice(0,6) }
       : null
   } catch (error) {
     console.error(error)

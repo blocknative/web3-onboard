@@ -83,11 +83,6 @@ export function shortenEns(ens: string): string {
   return ens.length > 11 ? `${ens.slice(0, 4)}...${ens.slice(-6)}` : ens
 }
 
-export function shortenHexToString(hex: string) : string {
-  const hexToString = (parseInt(hex, 16) / 1e18).toString()
-  return hexToString.length > 5 ?  hexToString.slice(0,6) : hexToString
-}
-
 export async function copyWalletAddress(text: string): Promise<void> {
   try {
     const copy = await navigator.clipboard.writeText(text)
