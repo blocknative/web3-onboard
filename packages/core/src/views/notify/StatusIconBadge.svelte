@@ -90,7 +90,7 @@
         {@html defaultNotifyEventStyles[notification.type]['eventIcon']}
       </div>
     </div>
-    {#if !notification.id.includes('customNotification')}
+    {#if !notification.id.includes('customNotification') && !notification.id.includes('preflight')}
       <div class="absolute chain-icon-container">
         <ChainBadge
           icon={chainStyles.icon}

@@ -5,7 +5,8 @@ export let configuration: Configuration = {
   svelteInstance: null,
   appMetadata: null,
   apiKey: null,
-  device: getDevice()
+  device: getDevice(),
+  initialWalletInit: []
 }
 
 export function updateConfiguration(update: Partial<Configuration>): void {

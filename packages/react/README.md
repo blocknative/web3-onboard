@@ -154,7 +154,8 @@ type UseConnectWallet = (): [
   (options: ConnectOptions) => Promise<void>,
   (wallet: DisconnectOptions) => Promise<void>,
   (addresses?: string[]) => Promise<void>,
-  (wallets: WalletInit[]) => void
+  (wallets: WalletInit[]) => void,
+  (wallet: WalletState, address?: string) => void
 ]
 
 type ConnectOptions = {
@@ -184,8 +185,25 @@ const [
   connect, // function to call to initiate user to connect wallet
   disconnect, // function to call with wallet<DisconnectOptions> to disconnect wallet
   updateBalances, // function to be called with an optional array of wallet addresses connected through Onboard to update balance or empty/no params to update all connected wallets
-  setWalletModules // function to be called with an array of wallet modules to conditionally allow connection of wallet types i.e. setWalletModules([ledger, trezor, injected])
+  setWalletModules, // function to be called with an array of wallet modules to conditionally allow connection of wallet types i.e. setWalletModules([ledger, trezor, injected])
+  setPrimaryWallet // function that can set the primary wallet and/or primary account within that wallet. The wallet that is set needs to be passed in for the first parameter and if you would like to set the primary account, the address of that account also needs to be passed in
 ] = useConnectWallet()
+
+
+```
+**`setPrimaryWallet`**
+The primary wallet (first in the list of connected wallets) and primary account (first in the list of connected accounts for a wallet) can be set by using the `setPrimaryWallet` function. The wallet that is set needs to be passed in for the first parameter and if you would like to set the primary account, the address of that account also needs to be passed in:
+
+```typescript
+// set the second wallet in the wallets array as the primary
+setPrimaryWallet(wallets[1])
+
+// set the second wallet in the wallets array as the primary wallet
+// as well as setting the third account in that wallet as the primary account
+setPrimaryWallet(
+  wallets[1],
+  wallets[1].accounts[2].address
+)
 ```
 
 ## `useSetChain`
@@ -226,17 +244,17 @@ const [
 
 This hook allows the dev to access all notifications if enabled, send custom notifications and update notify <enable/disable & update transactionHandler function>
 **note** requires an API key be added to the initialization, enabled by default if API key exists
+For full Notification documentation please see [Notify section within the `@web3-onboard/core` docs](../core/README.md#options)
 
 ```typescript
-import { useNotifications } from '@web3-onboard/react'
-
 type UseNotifications = (): [
   Notification[],
   (updatedNotification: CustomNotification) => {
     dismiss: () => void
     update: UpdateNotification
   },
-  (update: Partial<Notify>) => void
+  (update: Partial<Notify>) => void,
+  (options: PreflightNotificationsOptions) => Promise<void | string>
 ]
 
 type Notification = {
@@ -283,17 +301,74 @@ type Notify = {
   transactionHandler: (
     event: EthereumTransactionData
   ) => TransactionHandlerReturn
+  /**
+   * Position of notifications that defaults to the same position as the
+   * Account Center (if enabled) of the top right if AC is disabled
+   * and notifications are enabled (enabled by default with API key)
+   */
+  position?: NotificationPosition
+}
+
+type PreflightNotificationsOptions = {
+  sendTransaction?: () => Promise<string | void>
+  estimateGas?: () => Promise<string>
+  gasPrice?: () => Promise<string>
+  balance?: string | number
+  txDetails?: TxDetails
+  txApproveReminderTimeout?: number
+}
+type TxDetails = {
+  value: string | number
+  to?: string
+  from?: string
+}
+```
+
+```typescript
+import { useNotifications } from '@web3-onboard/react'
 
 const [
   notifications, // the list of all notifications that update when notifications are added, updated or removed
   customNotification, // a function that takes a customNotification object and allows custom notifications to be shown to the user, returns an update and dismiss callback
-  updateNotify // a function that takes a Notify object to allow updating of the properties
+  updateNotify, // a function that takes a Notify object to allow updating of the properties
+  preflightNotifications // a function that takes a PreflightNotificationsOption to create preflight notifications
 ] = useNotifications()
 
 // View notifications as they come in if you would like to handle them independent of the notification display
 useEffect(() => {
   console.log(notifications)
 }, [notifications])
+
+const sendTransactionWithPreFlightNotifications = async () => {
+  const balanceValue = Object.values(wallet.accounts[0].balance)[0]
+
+  const signer = provider.getUncheckedSigner()
+
+  const txDetails = {
+    to: toAddress,
+    value: 1000000000000000
+  }
+
+  const sendTransaction = () => {
+    return signer.sendTransaction(txDetails).then(tx => tx.hash)
+  }
+
+  const gasPrice = () => provider.getGasPrice().then(res => res.toString())
+
+  const estimateGas = () => {
+    return provider.estimateGas(txDetails).then(res => res.toString())
+  }
+
+  const transactionHash =
+    await preflightNotifications({
+      sendTransaction,
+      gasPrice,
+      estimateGas,
+      balance: balanceValue,
+      txDetails: txDetails
+    })
+  console.log(transactionHash)
+}
 
 // Custom notification example
 <button
@@ -321,6 +396,14 @@ useEffect(() => {
   }}
 >
   Custom Hint Notification
+</button>
+<button
+  className="bn-demo-button"
+  onClick={async () => {
+    sendTransactionWithPreFlightNotifications()
+  }}
+>
+  Send with In Flight and Pre Flight Notifications
 </button>
 ```
 

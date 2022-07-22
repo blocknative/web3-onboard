@@ -7,8 +7,4 @@ export {
   useSetLocale,
   useWallets
 } from './hooks'
-export {
-  init,
-  Web3OnboardProvider,
-  Web3OnboardProviderProps
-} from './context'
+export { init, Web3OnboardProvider, Web3OnboardProviderProps } from './context'

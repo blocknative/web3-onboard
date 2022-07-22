@@ -63,7 +63,7 @@ export function addChains(chains: Chain[]): void {
     payload: chains.map(({ namespace = 'evm', id, ...rest }) => ({
       ...rest,
       namespace,
-      id: id.toLowerCase()
+      id: id
     }))
   }
 
@@ -123,7 +123,6 @@ export function removeWallet(id: string): void {
 }
 
 export function setPrimaryWallet(wallet: WalletState, address?: string): void {
-  console.log({ address })
   const error =
     validateWallet(wallet) || (address && validateString(address, 'address'))
 

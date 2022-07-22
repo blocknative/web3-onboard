@@ -119,6 +119,7 @@ export type Configuration = {
   appMetadata: AppMetadata | null
   device: Device | DeviceNotBrowser
   apiKey: string
+  initialWalletInit: WalletInit[]
 }
 
 export type Locale = string
@@ -138,9 +139,9 @@ export type NotificationPosition = CommonPositions
 export type AccountCenter = {
   enabled: boolean
   position?: AccountCenterPosition
-  containerElement?: string
   expanded?: boolean
   minimal?: boolean
+  containerElement: string
 }
 
 export type AccountCenterOptions = {
@@ -206,6 +207,21 @@ export interface UpdateNotification {
     dismiss: () => void
     update: UpdateNotification
   }
+}
+
+export interface PreflightNotificationsOptions {
+  sendTransaction?: () => Promise<string | void>
+  estimateGas?: () => Promise<string>
+  gasPrice?: () => Promise<string>
+  balance?: string | number
+  txDetails?: TxDetails
+  txApproveReminderTimeout?: number
+}
+
+export interface TxDetails {
+  value: string | number
+  to?: string
+  from?: string
 }
 
 // ==== ACTIONS ==== //

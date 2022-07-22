@@ -62,7 +62,9 @@
 
   const coinbaseWallet = coinbaseModule()
 
-  const walletConnect = walletConnectModule()
+  const walletConnect = walletConnectModule({
+    connectFirstChainId: true
+  })
   const portis = portisModule({
     apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
   })
@@ -122,19 +124,19 @@
         rpcUrl: 'https://mainnet.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
       },
       {
-        id: '0x3',
+        id: 3,
         token: 'tROP',
         label: 'Ropsten',
         rpcUrl: 'https://ropsten.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
       },
       {
-        id: '0x4',
+        id: 4,
         token: 'rETH',
         label: 'Rinkeby',
         rpcUrl: 'https://rinkeby.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
       },
       {
-        id: '0x89',
+        id: 137,
         token: 'MATIC',
         label: 'Polygon',
         rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
@@ -146,7 +148,7 @@
         rpcUrl: 'https://matic-mumbai.chainstacklabs.com	'
       },
       {
-        id: '0xa',
+        id: 10,
         token: 'OETH',
         label: 'Optimism',
         rpcUrl: 'https://mainnet.optimism.io'
@@ -172,7 +174,7 @@
     // // example customizing account center
     accountCenter: {
       desktop: {
-        position: 'topLeft',
+        position: 'topRight',
         enabled: true,
         minimal: false
       }
@@ -248,6 +250,38 @@
 
     const receipt = await txn.wait()
     console.log(receipt)
+  }
+
+  const sendTransactionWithPreFlight = async (provider, balance) => {
+    const balanceValue = Object.values(balance)[0]
+    const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
+
+    const signer = ethersProvider.getSigner()
+    const txDetails = {
+      to: toAddress,
+      value: 100000000000000
+    }
+
+    const sendTransaction = () => {
+      return signer.sendTransaction(txDetails).then(tx => tx.hash)
+    }
+
+    const gasPrice = () =>
+      ethersProvider.getGasPrice().then(res => res.toString())
+
+    const estimateGas = () => {
+      return ethersProvider.estimateGas(txDetails).then(res => res.toString())
+    }
+
+    const transactionHash = await onboard.state.actions.preflightNotifications({
+      sendTransaction,
+      gasPrice,
+      estimateGas,
+      balance: balanceValue,
+      txDetails: txDetails
+    })
+
+    console.log(transactionHash)
   }
 
   const signMessage = async (provider, address) => {
@@ -475,6 +509,17 @@
             />
             <button on:click={sendTransaction(provider)}>
               Send Transaction
+            </button>
+          </div>
+          <div>
+            <input
+              type="text"
+              class="text-input"
+              placeholder="0x..."
+              bind:value={toAddress}
+            />
+            <button on:click={sendTransactionWithPreFlight(provider, balance)}>
+              Send with Preflight Notifications
             </button>
           </div>
 

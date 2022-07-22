@@ -1,6 +1,6 @@
 {
   "name": "web3-onboard-monorepo",
-  "version": "2.3.0",
+  "version": "2.5.0",
   "private": true,
   "workspaces": [
     "./packages/*"
@@ -33,7 +33,10 @@
     "Mempool",
     "pending",
     "confirmed",
-    "Injected Wallet"
+    "Injected Wallet",
+    "GameStop",
+    "Crypto",
+    "Crypto Wallet"
   ],
   "repository": {
     "type": "git",

@@ -24,11 +24,23 @@
     .select('notifications')
     .pipe(startWith(state.get().notifications))
 
-  const positioningDefaults = {
-    topLeft: 'top: 0; left: 0;',
-    topRight: 'top: 0; right: 0;',
-    bottomRight: 'bottom: 0; right: 0;',
-    bottomLeft: 'bottom: 0; left: 0;'
+  const accountCenterPositioning = 'account-center'
+  const notifyPositioning = 'notify-onboard-container'
+  const setPositioningDefaults = (targetComponentVariable: string) => {
+    return {
+      topLeft: `
+        top: var(--${targetComponentVariable}-position-top, 0); 
+        left: var(--${targetComponentVariable}-position-left, 0);`,
+      topRight: `
+        top: var(--${targetComponentVariable}-position-top, 0); 
+        right: var(--${targetComponentVariable}-position-right, 0);`,
+      bottomRight: `
+        bottom: var(--${targetComponentVariable}-position-bottom, 0); 
+        right: var(--${targetComponentVariable}-position-right, 0);`,
+      bottomLeft: `
+        bottom: var(--${targetComponentVariable}-position-bottom, 0); 
+        left: var(--${targetComponentVariable}-position-left, 0);`
+    }
   }
 
   $: sharedContainer =
@@ -334,8 +346,9 @@
 {#if displayAccountCenterNotifySameContainer}
   <div
     class="container flex flex-column fixed z-indexed"
-    style="{positioningDefaults[$accountCenter$.position]}; {device.type ===
-      'mobile' && $accountCenter$.position.includes('top')
+    style="{setPositioningDefaults(accountCenterPositioning)[
+      $accountCenter$.position
+    ]}; {device.type === 'mobile' && $accountCenter$.position.includes('top')
       ? 'padding-bottom: 0;'
       : device.type === 'mobile' && $accountCenter$.position.includes('bottom')
       ? 'padding-top:0;'
@@ -373,8 +386,9 @@
 {#if displayAccountCenterSeparate}
   <div
     class="container flex flex-column fixed z-indexed"
-    style="{positioningDefaults[$accountCenter$.position]}; {device.type ===
-      'mobile' && $accountCenter$.position.includes('top')
+    style="{setPositioningDefaults(accountCenterPositioning)[
+      $accountCenter$.position
+    ]}; {device.type === 'mobile' && $accountCenter$.position.includes('top')
       ? 'padding-bottom: 0;'
       : device.type === 'mobile' && $accountCenter$.position.includes('bottom')
       ? 'padding-top:0;'
@@ -400,8 +414,9 @@
 {#if displayNotifySeparate}
   <div
     class="container flex flex-column fixed z-indexed"
-    style="{positioningDefaults[$notify$.position]}; {device.type ===
-      'mobile' && $notify$.position.includes('top')
+    style="{setPositioningDefaults(notifyPositioning)[
+      $notify$.position
+    ]}; {device.type === 'mobile' && $notify$.position.includes('top')
       ? 'padding-bottom: 0;'
       : device.type === 'mobile' && $notify$.position.includes('bottom')
       ? 'padding-top:0;'

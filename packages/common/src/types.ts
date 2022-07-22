@@ -236,7 +236,7 @@ export type GetInterfaceHelpers = {
   EventEmitter: typeof EventEmitter
 }
 
-export type ChainId = string
+export type ChainId = string | number
 
 export type RpcUrl = string
 

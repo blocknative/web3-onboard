@@ -85,12 +85,14 @@ export function shortenEns(ens: string): string {
 
 export async function copyWalletAddress(text: string): Promise<void> {
   try {
-   const copy = await navigator.clipboard.writeText(text);
-   return copy
+    const copy = await navigator.clipboard.writeText(text)
+    return copy
   } catch (err) {
     console.error('Failed to copy: ', err)
   }
 }
+
+export const chainIdToHex = (chain: Chain): Chain => typeof chain.id === 'number' ? { ...chain, id: `0x${chain.id.toString(16)}` } : chain
 
 export const chainIdToLabel: Record<string, string> = {
   '0x1': 'Ethereum',
@@ -242,3 +244,6 @@ export const defaultNotifyEventStyles: Record<string, NotifyEventStyles> = {
     eventIcon: info
   }
 }
+
+export const wait = (time: number) =>
+  new Promise(resolve => setTimeout(resolve, time))
