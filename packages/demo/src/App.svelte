@@ -121,19 +121,19 @@
         id: '0x1',
         token: 'ETH',
         label: 'Ethereum',
-        rpcUrl: 'https://mainnet.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
+        rpcUrl: 'https://eth-mainnet.g.alchemy.com/v2/yk36Seh643o-WU1jVcV7nhtqKXdYcW8_'
       },
       {
         id: 3,
         token: 'tROP',
         label: 'Ropsten',
-        rpcUrl: 'https://ropsten.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
+        rpcUrl: 'https://eth-ropsten.g.alchemy.com/v2/Ujl_rZi5-qud14Hx8FbPKCBrcteFr4mB'
       },
       {
         id: 4,
         token: 'rETH',
         label: 'Rinkeby',
-        rpcUrl: 'https://rinkeby.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
+        rpcUrl: 'https://eth-rinkeby.g.alchemy.com/v2/_SGaED6MKYWlaZEBazHxPPmnFgrgx9yU'
       },
       {
         id: 137,

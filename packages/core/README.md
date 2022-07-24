@@ -230,19 +230,19 @@ const onboard = Onboard({
       id: '0x1',
       token: 'ETH',
       label: 'Ethereum Mainnet',
-      rpcUrl: `https://mainnet.infura.io/v3/${INFURA_ID}`
+      rpcUrl: `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_ID}`
     },
     {
       id: '0x3',
       token: 'tROP',
       label: 'Ethereum Ropsten Testnet',
-      rpcUrl: `https://ropsten.infura.io/v3/${INFURA_ID}`
+      rpcUrl: `https://eth-ropsten.g.alchemy.com/v2/${ALCHEMY_ID}`
     },
     {
       id: '0x4',
       token: 'rETH',
       label: 'Ethereum Rinkeby Testnet',
-      rpcUrl: `https://rinkeby.infura.io/v3/${INFURA_ID}`
+      rpcUrl: `https://eth-rinkeby.g.alchemy.com/v2/${ALCHEMY_ID}`
     },
     {
       id: '0x38',
@@ -552,7 +552,7 @@ const onboard = Onboard({
       id: '0x1',
       token: 'ETH',
       label: 'Ethereum Mainnet',
-      rpcUrl: `https://mainnet.infura.io/v3/${INFURA_ID}`
+      rpcUrl: `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_ID}`
     }
   ]
 })

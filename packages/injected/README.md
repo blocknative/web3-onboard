@@ -8,7 +8,7 @@ To allow all injected wallets that are supported, don't pass in any options:
 import Onboard from '@web3-onboard/core'
 import injectedModule from '@web3-onboard/injected-wallets'
 
-const MAINNET_RPC_URL = 'https://mainnet.infura.io/v3/<INFURA_KEY>'
+const MAINNET_RPC_URL = 'https://eth-mainnet.g.alchemy.com/v2/<ALCHEMY_KEY>'
 
 const injected = injectedModule()
 
@@ -42,7 +42,7 @@ Injected wallets that you do not want to support can be filtered based on the `P
 import Onboard from '@web3-onboard/core'
 import injectedModule, { ProviderLabel } from '@web3-onboard/injected-wallets'
 
-const MAINNET_RPC_URL = 'https://mainnet.infura.io/v3/<INFURA_KEY>'
+const MAINNET_RPC_URL = 'https://eth-mainnet.g.alchemy.com/v2/<ALCHEMY_KEY>'
 
 const injected = injectedModule({
   filter: {
@@ -62,7 +62,7 @@ Or you may want to only filter the 'Detected Wallet' on a select few platforms:
 import Onboard from '@web3-onboard/core'
 import injectedModule, { ProviderLabel } from '@web3-onboard/injected-wallets'
 
-const MAINNET_RPC_URL = 'https://mainnet.infura.io/v3/<INFURA_KEY>'
+const MAINNET_RPC_URL = 'https://eth-mainnet.g.alchemy.com/v2/<ALCHEMY_KEY>'
 
 const injected = injectedModule({
   filter: {

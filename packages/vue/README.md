@@ -17,8 +17,8 @@ import { init } from '@web3-onboard/vue'
 import injectedModule from '@web3-onboard/injected-wallets'
 
 const injected = injectedModule()
-const infuraKey = '<INFURA_KEY>'
-const rpcUrl = `https://mainnet.infura.io/v3/${infuraKey}`
+const alchemyKey = '<ALCHEMY_KEY>'
+const rpcUrl = `https://eth-mainnet.g.alchemy.com/v2/${alchemyKey}`
 
 const web3Onboard = init({
   wallets: [injected],
@@ -57,8 +57,8 @@ import { init } from '@web3-onboard/vue'
 import injectedModule from '@web3-onboard/injected-wallets'
 
 const injected = injectedModule()
-const infuraKey = '<INFURA_KEY>'
-const rpcUrl = `https://mainnet.infura.io/v3/${infuraKey}`
+const alchemyKey = '<ALCHEMY_KEY>'
+const rpcUrl = `https://eth-mainnet.g.alchemy.com/v2/${alchemyKey}`
 
 const web3Onboard = init({
   wallets: [injected],
