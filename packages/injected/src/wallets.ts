@@ -519,10 +519,10 @@ const core: InjectedWalletModule = {
     !!provider && !!provider[ProviderIdentityFlag.Core],
   getIcon: async () => (await import('./icons/core.js')).default,
   getInterface: async () => ({
-    provider: getInjectedInterface(ProviderIdentityFlag.Core)
+    provider: createEIP1193Provider(window.avalanche)
   }),
   // Core wallet is only tested in chrome or chromium browser
-  platforms: ['desktop', 'Chrome', 'Chromium','Microsoft Edge']
+  platforms: ['desktop', 'Chrome', 'Chromium', 'Microsoft Edge']
 }
 
 const wallets = [

@@ -113,6 +113,7 @@ export interface CustomWindow extends Window {
     ethereum: InjectedProvider
   }
   gamestop: InjectedProvider
+  avalanche: InjectedProvider
 }
 
 export type InjectedProvider = ExternalProvider &
