@@ -353,6 +353,15 @@ function trezor(options: TrezorOptions): WalletInit {
           ) {
             populatedTransaction.nonce = populatedTransaction.nonce.toString(16)
           }
+          if (
+            populatedTransaction.hasOwnProperty('nonce') &&
+            typeof populatedTransaction.nonce === 'string'
+          ) {
+            // Adds "0x" to a given `String` if it does not already start with "0x".
+            populatedTransaction.nonce = ethUtil.addHexPrefix(
+              populatedTransaction.nonce
+            )
+          }
 
           const updateBigNumberFields =
             bigNumberFieldsToStrings(populatedTransaction)
