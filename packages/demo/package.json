@@ -26,7 +26,6 @@
     "@web3-onboard/core": "^2.6.0-alpha.1",
     "@web3-onboard/dcent": "^2.0.5",
     "@web3-onboard/fortmatic": "^2.0.6",
-    "@web3-onboard/gas": "^2.0.0",
     "@web3-onboard/gnosis": "^2.0.5",
     "@web3-onboard/injected-wallets": "^2.0.12",
     "@web3-onboard/keepkey": "^2.1.4",

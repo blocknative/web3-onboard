@@ -13,8 +13,6 @@
   import coinbaseModule from '@web3-onboard/coinbase'
   import magicModule from '@web3-onboard/magic'
   import web3authModule from '@web3-onboard/web3auth'
-  import GasModule from '@web3-onboard/gas'
-
   import dcentModule from '@web3-onboard/dcent'
   import {
     recoverAddress,
@@ -28,13 +26,9 @@
   import blocknativeIcon from './blocknative-icon'
   import blocknativeLogo from './blocknative-logo'
 
-  const BLOCKNATIVE_API_KEY = 'd65d5b97-f3fc-4d85-beed-29ba6709c14d'
-
   if (window.innerWidth < 700) {
     new VConsole()
   }
-
-  const gas = GasModule({ apiKey: BLOCKNATIVE_API_KEY })
 
   let defaultTransactionObject = JSON.stringify(
     {
@@ -224,13 +218,11 @@
       }
     },
     // Sign up for your free api key at www.Blocknative.com
-    apiKey: BLOCKNATIVE_API_KEY
+    apiKey: 'xxxxxx-bf21-42ec-a093-9d37e426xxxx'
   })
 
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
-
-  onboard.state.select('gas').subscribe(console.log)
 
   const signTransactionMessage = async provider => {
     const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
