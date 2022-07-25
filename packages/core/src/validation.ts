@@ -176,6 +176,14 @@ const initOptions = Joi.object({
   notify: [notifyOptions, notify]
 })
 
+const accountCenter = Joi.object({
+  enabled: Joi.boolean(),
+  position: commonPositions,
+  expanded: Joi.boolean(),
+  minimal: Joi.boolean(),
+  containerElement: Joi.string()
+})
+
 const connectOptions = Joi.object({
   autoSelect: Joi.alternatives()
     .try(
@@ -196,14 +204,6 @@ const setChainOptions = Joi.object({
   chainId: chainId.required(),
   chainNamespace: chainNamespace,
   wallet: Joi.string()
-})
-
-const accountCenter = Joi.object({
-  enabled: Joi.boolean(),
-  position: commonPositions,
-  expanded: Joi.boolean(),
-  minimal: Joi.boolean(),
-  containerElement: Joi.string()
 })
 
 const customNotificationUpdate = Joi.object({
