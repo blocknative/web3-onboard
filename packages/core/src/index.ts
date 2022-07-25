@@ -91,10 +91,9 @@ function init(options: InitOptions): OnboardAPI {
   } = options
 
   const { device, svelteInstance } = configuration
-  const normalizedChains = chains.map(chainIdToHex)
 
   initI18N(i18n)
-  addChains(normalizedChains)
+  addChains(chains)
 
   // update accountCenter
   if (typeof accountCenter !== 'undefined') {

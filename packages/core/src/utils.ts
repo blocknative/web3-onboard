@@ -8,8 +8,7 @@ import type {
   ChainId,
   Chain,
   WalletInit,
-  WalletModule,
-  ChainWithDecimalId
+  WalletModule
 } from '@web3-onboard/common'
 
 import ethereumIcon from './icons/ethereum'
@@ -93,16 +92,10 @@ export async function copyWalletAddress(text: string): Promise<void> {
   }
 }
 
-export const chainIdToHex = (chain: Chain | ChainWithDecimalId): Chain => {
-  if (typeof chain.id === 'number') {
-    return {
-      ...chain,
-      id: `0x${(chain as ChainWithDecimalId).id.toString(16)}`
-    }
-  } else {
-    return chain as Chain
-  }
-}
+export const chainIdToHex = (chain: Chain): Chain =>
+  typeof chain.id === 'number'
+    ? { ...chain, id: `0x${chain.id.toString(16)}` }
+    : chain
 
 export const chainIdToLabel: Record<string, string> = {
   '0x1': 'Ethereum',

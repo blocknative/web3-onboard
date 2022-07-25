@@ -7,8 +7,7 @@ import type {
   EIP1193Provider,
   WalletModule,
   Chain,
-  TokenSymbol,
-  ChainWithDecimalId
+  TokenSymbol
 } from '@web3-onboard/common'
 
 import type gas from '@web3-onboard/gas'
@@ -24,7 +23,7 @@ export interface InitOptions {
   /**
    * The chains that your app works with
    */
-  chains: Chain[] | ChainWithDecimalId[]
+  chains: Chain[]
   /**
    * Additional metadata about your app to be displayed in the Onboard UI
    */
@@ -46,7 +45,7 @@ export interface InitOptions {
    * Transaction notification options
    */
   notify?: Partial<NotifyOptions> | Partial<Notify>
-  /**Gas module initialized with API key */
+  /**Gas module */
   gas?: typeof gas
 }
 
