@@ -90,10 +90,10 @@ function init(options: InitOptions): OnboardAPI {
     gas
   } = options
 
-  const { device, svelteInstance } = configuration
-
   initI18N(i18n)
-  addChains(chains)
+  addChains(chains.map(chainIdToHex))
+
+  const { device, svelteInstance } = configuration
 
   // update accountCenter
   if (typeof accountCenter !== 'undefined') {
