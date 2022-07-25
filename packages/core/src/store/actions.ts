@@ -24,9 +24,7 @@ import type {
   CustomNotification,
   UpdateNotification,
   CustomNotificationUpdate,
-  Notify,
-  UpdateGasAction,
-  Gas
+  Notify
 } from '../types'
 
 import {
@@ -55,8 +53,7 @@ import {
   SET_LOCALE,
   ADD_NOTIFICATION,
   REMOVE_NOTIFICATION,
-  UPDATE_ALL_WALLETS,
-  UPDATE_GAS
+  UPDATE_ALL_WALLETS
 } from './constants'
 
 export function addChains(chains: Chain[]): void {
@@ -352,15 +349,6 @@ export function updateAllWallets(wallets: WalletState[]): void {
   }
 
   dispatch(action as UpdateAllWalletsAction)
-}
-
-export function updateGas(update: Gas): void {
-  const action = {
-    type: UPDATE_GAS,
-    payload: update
-  }
-
-  dispatch(action as UpdateGasAction)
 }
 
 // ==== HELPERS ==== //

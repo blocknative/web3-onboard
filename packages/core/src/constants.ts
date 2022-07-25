@@ -18,8 +18,7 @@ export const APP_INITIAL_STATE: AppState = {
     position: 'topRight'
   },
   notifications: [],
-  locale: '',
-  gas: null
+  locale: ''
 }
 
 export const STORAGE_KEYS = {

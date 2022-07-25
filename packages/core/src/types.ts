@@ -11,7 +11,7 @@ import type {
   ChainWithDecimalId
 } from '@web3-onboard/common'
 
-import type { GasEstimateData, GasAPI } from '@web3-onboard/gas'
+import type gas from '@web3-onboard/gas'
 
 import type en from './i18n/en.json'
 import type { EthereumTransactionData, Network } from 'bnc-sdk'
@@ -47,7 +47,7 @@ export interface InitOptions {
    */
   notify?: Partial<NotifyOptions> | Partial<Notify>
   /**Gas module initialized with API key */
-  gas?: GasAPI
+  gas?: typeof gas
 }
 
 export interface ConnectOptions {
@@ -117,7 +117,6 @@ export interface AppState {
   locale: Locale
   notify: Notify
   notifications: Notification[]
-  gas: Gas
 }
 
 export type Configuration = {
@@ -126,6 +125,7 @@ export type Configuration = {
   device: Device | DeviceNotBrowser
   apiKey: string
   initialWalletInit: WalletInit[]
+  gas: typeof gas
 }
 
 export type Locale = string
@@ -230,9 +230,6 @@ export interface TxDetails {
   from?: string
 }
 
-/**A mapping of chainId -> GasEstimateData */
-export type Gas = Record<string, GasEstimateData>
-
 // ==== ACTIONS ==== //
 export type Action =
   | AddChainsAction
@@ -248,7 +245,6 @@ export type Action =
   | AddNotificationAction
   | RemoveNotificationAction
   | UpdateAllWalletsAction
-  | UpdateGasAction
 
 export type AddChainsAction = { type: 'add_chains'; payload: Chain[] }
 export type AddWalletAction = { type: 'add_wallet'; payload: WalletState }
@@ -306,11 +302,6 @@ export type RemoveNotificationAction = {
 export type UpdateAllWalletsAction = {
   type: 'update_balance'
   payload: WalletState[]
-}
-
-export type UpdateGasAction = {
-  type: 'update_gas'
-  payload: Gas
 }
 
 // ==== MISC ==== //

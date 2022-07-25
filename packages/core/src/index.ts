@@ -1,5 +1,4 @@
 import { SofiaProRegular } from '@web3-onboard/common'
-import { takeUntil } from 'rxjs/operators'
 import connectWallet from './connect'
 import disconnectWallet from './disconnect'
 import setChain from './chain'
@@ -27,8 +26,7 @@ import {
   customNotification,
   setLocale,
   setPrimaryWallet,
-  setWalletModules,
-  updateGas
+  setWalletModules
 } from './store/actions'
 
 const API = {
@@ -134,6 +132,7 @@ function init(options: InitOptions): OnboardAPI {
       ) {
         notify.desktop.position = accountCenter.desktop.position
       }
+
       if (
         (!notify.mobile || (notify.mobile && !notify.mobile.position)) &&
         accountCenter &&
@@ -142,6 +141,7 @@ function init(options: InitOptions): OnboardAPI {
       ) {
         notify.mobile.position = accountCenter.mobile.position
       }
+
       let notifyUpdate: Partial<Notify>
 
       if (device.type === 'mobile' && notify.mobile) {
@@ -155,9 +155,11 @@ function init(options: InitOptions): OnboardAPI {
           ...notify.desktop
         }
       }
+
       if (!apiKey || !notifyUpdate.enabled) {
         notifyUpdate.enabled = false
       }
+
       updateNotify(notifyUpdate)
     } else {
       const error = validateNotify(notify as Notify)
@@ -165,6 +167,7 @@ function init(options: InitOptions): OnboardAPI {
       if (error) {
         throw error
       }
+
       const notifyUpdate: Partial<Notify> = {
         ...APP_INITIAL_STATE.notify,
         ...notify
@@ -173,6 +176,7 @@ function init(options: InitOptions): OnboardAPI {
       if (!apiKey || !notifyUpdate.enabled) {
         notifyUpdate.enabled = false
       }
+
       updateNotify(notifyUpdate)
     }
   } else {
@@ -181,19 +185,8 @@ function init(options: InitOptions): OnboardAPI {
     if (!apiKey) {
       notifyUpdate.enabled = false
     }
+
     updateNotify(notifyUpdate)
-  }
-
-  // handle gas module
-  if (gas) {
-    const validGasEstimateChains = normalizedChains
-      .filter(({ id }) => id === '0x1' || id === '0x89')
-      .map(({ id }) => id)
-
-    const estimates$ = gas.estimates({ chains: validGasEstimateChains })
-    estimates$.pipe(takeUntil(reset$)).subscribe(estimates => {
-      updateGas(estimates)
-    })
   }
 
   if (svelteInstance) {
@@ -208,7 +201,8 @@ function init(options: InitOptions): OnboardAPI {
     appMetadata,
     svelteInstance: app,
     apiKey,
-    initialWalletInit: wallets
+    initialWalletInit: wallets,
+    gas
   })
 
   return API
@@ -231,6 +225,7 @@ function mountApp() {
   styleEl.innerHTML = `
     ${SofiaProRegular}
   `
+
   document.body.appendChild(styleEl)
 
   // add to DOM
@@ -334,7 +329,9 @@ function mountApp() {
 
   const containerElementQuery =
     state.get().accountCenter.containerElement || 'body'
+
   const containerElement = document.querySelector(containerElementQuery)
+
   if (!containerElement) {
     throw new Error(
       `Element with query ${state.get().accountCenter} does not exist.`

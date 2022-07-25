@@ -176,7 +176,8 @@ const initOptions = Joi.object({
   }),
   notify: [notifyOptions, notify],
   gas: Joi.object({
-    estimates: Joi.function().required()
+    get: Joi.function().required(),
+    stream: Joi.function().required()
   })
 })
 

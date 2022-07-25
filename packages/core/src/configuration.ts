@@ -6,7 +6,8 @@ export let configuration: Configuration = {
   appMetadata: null,
   apiKey: null,
   device: getDevice(),
-  initialWalletInit: []
+  initialWalletInit: [],
+  gas: null
 }
 
 export function updateConfiguration(update: Partial<Configuration>): void {
