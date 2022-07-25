@@ -1,12 +1,12 @@
-export type GasInit = {
-  apiKey: string
-  defaultPoll?: number
+export type RequestEndpoint = 'blockPrices'
+
+export type RequestOptions = {
+  chains: ChainId[]
+  endpoint: RequestEndpoint
+  apiKey?: string
 }
 
-export type EstimateOptions = {
-  chains: ChainId[]
-  poll?: number
-}
+export type StreamOptions = RequestOptions & { poll?: number }
 
 export type ChainId = string
 
@@ -37,7 +37,7 @@ export type EstimatedBaseFees = [
   { ['pending+5']: [EstimatedBaseFee] }
 ]
 
-export type GasEstimateData = {
+export type BlockPricesResponse = {
   system: string
   network: string
   unit: string
@@ -45,5 +45,7 @@ export type GasEstimateData = {
   currentBlockNumber: number
   msSinceLastBlock: number
   blockPrices: BlockPrices[]
-  estimatedBaseFees?: [EstimatedBaseFees]
+  estimatedBaseFees?: EstimatedBaseFees
 }
+
+export type GasPlatformResponse = BlockPricesResponse
