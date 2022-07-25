@@ -284,7 +284,7 @@ function trezor(options: TrezorOptions): WalletInit {
               maxFeePerGas: transactionData.maxFeePerGas!,
               maxPriorityFeePerGas: transactionData.maxPriorityFeePerGas!,
               nonce: transactionData.nonce!,
-              chainId: parseInt(currentChain.id),
+              chainId: Number(currentChain.id),
               data: transactionData.hasOwnProperty('data')
                 ? transactionData.data
                 : ''
@@ -296,7 +296,7 @@ function trezor(options: TrezorOptions): WalletInit {
             gasPrice: transactionData.gasPrice!,
             gasLimit: gasLimit!,
             nonce: transactionData.nonce!,
-            chainId: parseInt(currentChain.id),
+            chainId: Number(currentChain.id),
             data: transactionData.hasOwnProperty('data')
               ? transactionData.data
               : ''
@@ -372,7 +372,7 @@ function trezor(options: TrezorOptions): WalletInit {
           )
 
           const chainId = currentChain.hasOwnProperty('id')
-            ? Number.parseInt(currentChain.id)
+            ? Number(currentChain.id)
             : 1
           const common = await getCommon({ customNetwork, chainId })
 
@@ -395,7 +395,7 @@ function trezor(options: TrezorOptions): WalletInit {
 
           // EIP155 support. check/recalc signature v value.
           const rv = parseInt(v, 16)
-          let cv = parseInt(currentChain.id) * 2 + 35
+          let cv = Number(currentChain.id) * 2 + 35
           if (rv !== cv && (rv & cv) !== rv) {
             cv += 1 // add signature v bit.
           }
@@ -486,7 +486,7 @@ function trezor(options: TrezorOptions): WalletInit {
               ? [accounts[0].address]
               : [],
           eth_chainId: async () =>
-            currentChain.hasOwnProperty('id') ? currentChain.id : '',
+            currentChain.hasOwnProperty('id') ? String(currentChain.id) : '',
           eth_signTransaction: async ({ params: [transactionObject] }) =>
             signTransaction(transactionObject),
           eth_sendTransaction: async ({ baseRequest, params }) => {
