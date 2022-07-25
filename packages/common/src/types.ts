@@ -236,8 +236,7 @@ export type GetInterfaceHelpers = {
   EventEmitter: typeof EventEmitter
 }
 
-export type ChainId = string
-export type DecimalChainId = number
+export type ChainId = string | number
 
 export type RpcUrl = string
 
@@ -434,8 +433,6 @@ export interface Chain {
   publicRpcUrl?: string
   blockExplorerUrl?: string
 }
-
-export type ChainWithDecimalId = Omit<Chain, 'id'> & { id: DecimalChainId }
 
 export type TokenSymbol = string // eg ETH
 
