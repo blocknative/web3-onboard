@@ -142,7 +142,7 @@ export type AccountCenter = {
   position?: AccountCenterPosition
   expanded?: boolean
   minimal?: boolean
-  containerElement: string
+  containerElement?: string
 }
 
 export type AccountCenterOptions = {
