@@ -50,8 +50,6 @@ setTimeout(unsubscribe, 10000)
 const gasBlockPrices = await gas.get({
   chains: ['0x1', '0x89'],
   apiKey: '<OPTIONAL_API_KEY>',
-  endpoint: 'blockPrices',
-  // can override default poll rate as well
-  poll: 1000
+  endpoint: 'blockPrices'
 })
 ```
