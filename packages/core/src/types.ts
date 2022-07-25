@@ -120,11 +120,11 @@ export interface AppState {
 
 export type Configuration = {
   svelteInstance: SvelteComponent | null
-  appMetadata: AppMetadata | null
   device: Device | DeviceNotBrowser
-  apiKey: string
   initialWalletInit: WalletInit[]
-  gas: typeof gas
+  appMetadata?: AppMetadata | null
+  apiKey?: string
+  gas?: typeof gas
 }
 
 export type Locale = string
