@@ -10,6 +10,8 @@ import type {
   TokenSymbol
 } from '@web3-onboard/common'
 
+import type gas from '@web3-onboard/gas'
+
 import type en from './i18n/en.json'
 import type { EthereumTransactionData, Network } from 'bnc-sdk'
 
@@ -43,6 +45,8 @@ export interface InitOptions {
    * Transaction notification options
    */
   notify?: Partial<NotifyOptions> | Partial<Notify>
+  /**Gas module */
+  gas?: typeof gas
 }
 
 export interface ConnectOptions {
@@ -116,10 +120,11 @@ export interface AppState {
 
 export type Configuration = {
   svelteInstance: SvelteComponent | null
-  appMetadata: AppMetadata | null
   device: Device | DeviceNotBrowser
-  apiKey: string
   initialWalletInit: WalletInit[]
+  appMetadata?: AppMetadata | null
+  apiKey?: string
+  gas?: typeof gas
 }
 
 export type Locale = string

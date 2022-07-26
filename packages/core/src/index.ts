@@ -4,16 +4,20 @@ import disconnectWallet from './disconnect'
 import setChain from './chain'
 import { state } from './store'
 import { reset$ } from './streams'
-import {
-  validateInitOptions,
-  validateNotify,
-  validateNotifyOptions
-} from './validation'
 import initI18N from './i18n'
 import App from './views/Index.svelte'
 import type { InitOptions, Notify } from './types'
 import { APP_INITIAL_STATE } from './constants'
 import { configuration, updateConfiguration } from './configuration'
+import updateBalances from './update-balances'
+import { chainIdToHex } from './utils'
+import { preflightNotifications } from './preflight-notifications'
+
+import {
+  validateInitOptions,
+  validateNotify,
+  validateNotifyOptions
+} from './validation'
 
 import {
   addChains,
@@ -24,10 +28,6 @@ import {
   setPrimaryWallet,
   setWalletModules
 } from './store/actions'
-
-import updateBalances from './update-balances'
-import { chainIdToHex } from './utils'
-import { preflightNotifications } from './preflight-notifications'
 
 const API = {
   connectWallet,
@@ -86,11 +86,13 @@ function init(options: InitOptions): OnboardAPI {
     i18n,
     accountCenter,
     apiKey,
-    notify
+    notify,
+    gas
   } = options
 
   initI18N(i18n)
   addChains(chains.map(chainIdToHex))
+
   const { device, svelteInstance } = configuration
 
   // update accountCenter
@@ -129,6 +131,7 @@ function init(options: InitOptions): OnboardAPI {
       ) {
         notify.desktop.position = accountCenter.desktop.position
       }
+
       if (
         (!notify.mobile || (notify.mobile && !notify.mobile.position)) &&
         accountCenter &&
@@ -137,6 +140,7 @@ function init(options: InitOptions): OnboardAPI {
       ) {
         notify.mobile.position = accountCenter.mobile.position
       }
+
       let notifyUpdate: Partial<Notify>
 
       if (device.type === 'mobile' && notify.mobile) {
@@ -150,9 +154,11 @@ function init(options: InitOptions): OnboardAPI {
           ...notify.desktop
         }
       }
+
       if (!apiKey || !notifyUpdate.enabled) {
         notifyUpdate.enabled = false
       }
+
       updateNotify(notifyUpdate)
     } else {
       const error = validateNotify(notify as Notify)
@@ -160,6 +166,7 @@ function init(options: InitOptions): OnboardAPI {
       if (error) {
         throw error
       }
+
       const notifyUpdate: Partial<Notify> = {
         ...APP_INITIAL_STATE.notify,
         ...notify
@@ -168,6 +175,7 @@ function init(options: InitOptions): OnboardAPI {
       if (!apiKey || !notifyUpdate.enabled) {
         notifyUpdate.enabled = false
       }
+
       updateNotify(notifyUpdate)
     }
   } else {
@@ -176,6 +184,7 @@ function init(options: InitOptions): OnboardAPI {
     if (!apiKey) {
       notifyUpdate.enabled = false
     }
+
     updateNotify(notifyUpdate)
   }
 
@@ -191,7 +200,8 @@ function init(options: InitOptions): OnboardAPI {
     appMetadata,
     svelteInstance: app,
     apiKey,
-    initialWalletInit: wallets
+    initialWalletInit: wallets,
+    gas
   })
 
   return API
@@ -214,6 +224,7 @@ function mountApp() {
   styleEl.innerHTML = `
     ${SofiaProRegular}
   `
+
   document.body.appendChild(styleEl)
 
   // add to DOM
@@ -317,7 +328,9 @@ function mountApp() {
 
   const containerElementQuery =
     state.get().accountCenter.containerElement || 'body'
+
   const containerElement = document.querySelector(containerElementQuery)
+
   if (!containerElement) {
     throw new Error(
       `Element with query ${state.get().accountCenter} does not exist.`
