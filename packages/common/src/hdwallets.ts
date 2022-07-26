@@ -1,7 +1,7 @@
 import type Common from '@ethereumjs/common'
 import type { CustomNetwork, EIP1193Provider, RPCResponse } from './types'
 import type { TransactionRequest } from '@ethersproject/providers'
-import type BigNumber from 'bignumber.js'
+import type { BigNumber } from 'ethers'
 
 /**
  * Creates the common instance used for signing
@@ -71,11 +71,11 @@ export const bigNumberFieldsToStrings = (
     (transaction, txnProperty) => ({
       ...transaction,
       ...((transaction[txnProperty as keyof TransactionRequest] as BigNumber)
-        instanceof BigNumber
+        .toHexString
         ? {
             [txnProperty]: (
               transaction[txnProperty as keyof TransactionRequest] as BigNumber
-            ).toString(16)
+            ).toHexString()
           }
         : {})
     }),

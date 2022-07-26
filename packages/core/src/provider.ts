@@ -350,7 +350,7 @@ export async function getBalance(
     const balanceHex = await provider.request({ method: 'eth_getBalance', params:[address,'latest'] })
     const balanceWei = new BigNumber(parseInt(balanceHex, 16))
     return balanceWei
-      ? { [chain.token || 'eth']: weiToEth(balanceWei).slice(0,6) }
+      ? { [chain.token || 'eth']: weiToEth(balanceWei) }
       : null
   } catch (error) {
     console.error(error)
