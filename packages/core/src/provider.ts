@@ -3,7 +3,7 @@ import { filter, takeUntil, take, share, switchMap } from 'rxjs/operators'
 import partition from 'lodash.partition'
 import { providers } from 'ethers'
 
-import {
+import type {
   ChainId,
   EIP1102Request,
   EIP1193Provider,
@@ -11,10 +11,10 @@ import {
   Chain,
   AccountsListener,
   ChainListener,
-  SelectAccountsRequest,
-  weiToEth
+  SelectAccountsRequest
 } from '@web3-onboard/common'
 
+import { weiToEth } from '@web3-onboard/common'
 import { disconnectWallet$ } from './streams'
 import type { Account, Address, Balances, Ens, WalletState } from './types'
 import { updateAccount, updateWallet } from './store/actions'
@@ -345,7 +345,7 @@ export async function getBalance(
   const { wallets } = state.get()
 
   try {
-    const wallet = wallets.find(wallet => wallet.label)
+    const wallet = wallets.find(wallet => !!wallet.provider)
     const provider = wallet.provider
     const balanceHex = await provider.request({ method: 'eth_getBalance', params:[address,'latest'] })
     const balanceWei = new BigNumber(parseInt(balanceHex, 16))
