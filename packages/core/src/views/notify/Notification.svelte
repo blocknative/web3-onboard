@@ -10,12 +10,13 @@
   import { onDestroy, onMount } from 'svelte'
   import { configuration } from '../../configuration'
 
-  const { device } = configuration
+  const { device, gas } = configuration
 
   export let notification: Notification
   export let updateParentOnRemove: () => void
 
   let timeoutId: NodeJS.Timeout
+  let hovered = false
 
   onMount(() => {
     if (notification.autoDismiss) {
@@ -28,6 +29,17 @@
   onDestroy(() => {
     clearTimeout(timeoutId)
   })
+
+  function actionableEventCode(eventCode: Notification['eventCode']): boolean {
+    switch (eventCode) {
+      case 'txPool':
+      case 'txConfirmed':
+      case 'txFailed':
+        return true
+      default:
+        return false
+    }
+  }
 </script>
 
 <style>
@@ -100,9 +112,51 @@
     );
     line-height: 14px;
   }
+
+  .dropdown {
+    height: 0px;
+    overflow: hidden;
+    transition: height 150ms ease-in-out;
+  }
+
+  .dropdown-visible {
+    height: 48px;
+  }
+
+  .dropdown-buttons {
+    background-color: var(
+      --notify-onboard-gray-600,
+      var(--onboard-gray-600, var(--gray-600))
+    );
+    width: 100%;
+    padding: 8px;
+  }
+
+  .drop-button {
+    padding: 4px 12px;
+    background-color: transparent;
+    font-size: var(
+      --notify-onboard-font-size-6,
+      var(--onboard-font-size-6, var(--font-size-6))
+    );
+    color: var(
+      --notify-onboard-primary-400,
+      var(--onboard-primary-400, var(--primary-400))
+    );
+    transition: background-color 150ms ease-in-out;
+  }
+
+  .drop-button:hover {
+    background-color: var(
+      --notify-onboard-primary-100,
+      var(--onboard-primary-100, var(--primary-100))
+    );
+  }
 </style>
 
 <div
+  on:mouseenter={() => (hovered = true)}
+  on:mouseleave={() => (hovered = false)}
   class:bn-notify-clickable={notification.onClick}
   on:click={e => notification.onClick && notification.onClick(e)}
   class="bn-notify-notification bn-notify-notification-{notification.type}}"
@@ -123,5 +177,24 @@
     <div class="flex items-center close-icon">
       {@html closeIcon}
     </div>
+  </div>
+
+  <!-- HOVER ACTION DROPDOWN -->
+  <div
+    class="dropdown"
+    class:dropdown-visible={hovered &&
+      gas &&
+      actionableEventCode(notification.eventCode)}
+  >
+    {#if notification.eventCode === 'txPool'}
+      <div class="dropdown-buttons flex items-end">
+        <button class="dropdown-button">Cancel</button>
+        <button class="dropdown-button">Speed-up</button>
+      </div>
+    {:else if notification.eventCode === 'txConfirmed' || notification.eventCode === 'txFailed'}
+      <div class="dropdown-buttons flex items-end">
+        <button class="dropdown-button">View Details</button>
+      </div>
+    {/if}
   </div>
 </div>
