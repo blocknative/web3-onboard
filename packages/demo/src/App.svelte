@@ -115,7 +115,6 @@
       gnosis,
       dcent
     ],
-    gas,
     chains: [
       {
         id: '0x1',
