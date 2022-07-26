@@ -24,9 +24,10 @@ import type {
 } from './types'
 
 // const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
-const chainId = Joi.alternatives().
-    try(Joi.string().pattern(/^0x[0-9a-fA-F]+$/),
-    Joi.number().positive())
+const chainId = Joi.alternatives().try(
+  Joi.string().pattern(/^0x[0-9a-fA-F]+$/),
+  Joi.number().positive()
+)
 const chainNamespace = Joi.string().valid('evm')
 const unknownObject = Joi.object().unknown()
 
@@ -179,7 +180,11 @@ const initOptions = Joi.object({
     desktop: accountCenterInitOptions,
     mobile: accountCenterInitOptions
   }),
-  notify: [notifyOptions, notify]
+  notify: [notifyOptions, notify],
+  gas: Joi.object({
+    get: Joi.function().required(),
+    stream: Joi.function().required()
+  })
 })
 
 const connectOptions = Joi.object({
@@ -219,15 +224,9 @@ const preflightNotifications = Joi.object({
   sendTransaction: Joi.function(),
   estimateGas: Joi.function(),
   gasPrice: Joi.function(),
-  balance: Joi.alternatives(
-    Joi.string(),
-    Joi.number()
-  ),
+  balance: Joi.alternatives(Joi.string(), Joi.number()),
   txDetails: Joi.object({
-    value: Joi.alternatives(
-      Joi.string(),
-      Joi.number()
-    ),
+    value: Joi.alternatives(Joi.string(), Joi.number()),
     to: Joi.string(),
     from: Joi.string()
   }),
