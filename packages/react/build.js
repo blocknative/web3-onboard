@@ -11,7 +11,7 @@ const shared = {
   // Treat all dependencies in package.json as externals to keep bundle size to a minimum
   external: Object.keys(dependencies),
   logLevel: 'info',
-  minify: true,
+  minify: false,
   sourcemap: true,
   platform: 'browser'
 }

@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@web3-onboard/injected-wallets": "^2.0.12",
-    "@web3-onboard/react": "file:.yalc/@web3-onboard/react",
     "next": "12.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"

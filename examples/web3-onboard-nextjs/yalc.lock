@@ -1,9 +1,0 @@
-{
-  "version": "v1",
-  "packages": {
-    "@web3-onboard/react": {
-      "signature": "5017b3fb498de6cb40768f65418b5b77",
-      "file": true
-    }
-  }
-}

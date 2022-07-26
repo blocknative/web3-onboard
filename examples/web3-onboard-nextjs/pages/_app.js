@@ -1,5 +1,5 @@
 import '../styles/globals.css'
-import { Web3OnboardProvider, initWeb3Onboard } from '@web3-onboard/react'
+import { Web3OnboardProvider, init } from '@web3-onboard/react'
 import injectedModule from '@web3-onboard/injected-wallets'
 
 const injected = injectedModule()
@@ -20,7 +20,7 @@ const polygonMumbai = {
   rpcUrl: 'https://matic-mumbai.chainstacklabs.com	'
 }
 
-const web3Onboard = initWeb3Onboard({
+const web3Onboard = init({
   wallets: [injected],
   chains: [ethereumRopsten, polygonMumbai],
   appMetadata: {
