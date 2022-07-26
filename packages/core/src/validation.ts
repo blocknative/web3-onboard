@@ -2,6 +2,7 @@ import Joi, { ObjectSchema, Schema } from 'joi'
 import type {
   Chain,
   ChainId,
+  DecimalChainId,
   WalletInit,
   WalletModule
 } from '@web3-onboard/common'
@@ -304,7 +305,7 @@ export function validateString(str: string, label?: string): ValidateReturn {
 }
 
 export function validateSetChainOptions(data: {
-  chainId: ChainId
+  chainId: ChainId | DecimalChainId
   chainNamespace?: string
   wallet?: WalletState['label']
 }): ValidateReturn {

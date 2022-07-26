@@ -7,7 +7,8 @@ import type {
   EIP1193Provider,
   WalletModule,
   Chain,
-  TokenSymbol
+  TokenSymbol,
+  ChainWithDecimalId
 } from '@web3-onboard/common'
 
 import type gas from '@web3-onboard/gas'
@@ -23,7 +24,7 @@ export interface InitOptions {
   /**
    * The chains that your app works with
    */
-  chains: Chain[]
+  chains: Chain[] | ChainWithDecimalId[]
   /**
    * Additional metadata about your app to be displayed in the Onboard UI
    */
