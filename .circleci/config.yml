@@ -285,6 +285,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/vue
     steps:
       - node-build-steps
+  build-gas:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/gas
+    steps:
+      - node-build-steps
 
   # Build staging/Alpha releases
   build-staging-core:
@@ -405,6 +411,12 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/vue
+    steps:
+      - node-staging-build-steps
+  build-staging-gas:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/gas
     steps:
       - node-staging-build-steps
 
@@ -530,4 +542,10 @@ workflows:
       - build-vue:
           <<: *deploy_production_filters
       - build-staging-vue:
+          <<: *deploy_staging_filters
+  gas:
+    jobs:
+      - build-gas:
+          <<: *deploy_production_filters
+      - build-staging-gas:
           <<: *deploy_staging_filters

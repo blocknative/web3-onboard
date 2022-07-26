@@ -13,7 +13,6 @@
   import coinbaseModule from '@web3-onboard/coinbase'
   import magicModule from '@web3-onboard/magic'
   import web3authModule from '@web3-onboard/web3auth'
-
   import dcentModule from '@web3-onboard/dcent'
   import {
     recoverAddress,
@@ -62,7 +61,9 @@
 
   const coinbaseWallet = coinbaseModule()
 
-  const walletConnect = walletConnectModule()
+  const walletConnect = walletConnectModule({
+    connectFirstChainId: true
+  })
   const portis = portisModule({
     apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
   })
@@ -122,19 +123,19 @@
         rpcUrl: 'https://mainnet.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
       },
       {
-        id: '0x3',
+        id: 3,
         token: 'tROP',
         label: 'Ropsten',
         rpcUrl: 'https://ropsten.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
       },
       {
-        id: '0x4',
+        id: 4,
         token: 'rETH',
         label: 'Rinkeby',
         rpcUrl: 'https://rinkeby.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
       },
       {
-        id: '0x89',
+        id: 137,
         token: 'MATIC',
         label: 'Polygon',
         rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
@@ -146,7 +147,7 @@
         rpcUrl: 'https://matic-mumbai.chainstacklabs.com	'
       },
       {
-        id: '0xa',
+        id: 10,
         token: 'OETH',
         label: 'Optimism',
         rpcUrl: 'https://mainnet.optimism.io'

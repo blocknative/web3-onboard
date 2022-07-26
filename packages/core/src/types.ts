@@ -7,8 +7,11 @@ import type {
   EIP1193Provider,
   WalletModule,
   Chain,
-  TokenSymbol
+  TokenSymbol,
+  ChainWithDecimalId
 } from '@web3-onboard/common'
+
+import type gas from '@web3-onboard/gas'
 
 import type en from './i18n/en.json'
 import type { EthereumTransactionData, Network } from 'bnc-sdk'
@@ -21,7 +24,7 @@ export interface InitOptions {
   /**
    * The chains that your app works with
    */
-  chains: Chain[]
+  chains: Chain[] | ChainWithDecimalId[]
   /**
    * Additional metadata about your app to be displayed in the Onboard UI
    */
@@ -43,6 +46,8 @@ export interface InitOptions {
    * Transaction notification options
    */
   notify?: Partial<NotifyOptions> | Partial<Notify>
+  /**Gas module */
+  gas?: typeof gas
 }
 
 export interface ConnectOptions {
@@ -116,10 +121,11 @@ export interface AppState {
 
 export type Configuration = {
   svelteInstance: SvelteComponent | null
-  appMetadata: AppMetadata | null
   device: Device | DeviceNotBrowser
-  apiKey: string
   initialWalletInit: WalletInit[]
+  appMetadata?: AppMetadata | null
+  apiKey?: string
+  gas?: typeof gas
 }
 
 export type Locale = string
@@ -141,7 +147,7 @@ export type AccountCenter = {
   position?: AccountCenterPosition
   expanded?: boolean
   minimal?: boolean
-  containerElement: string
+  containerElement?: string
 }
 
 export type AccountCenterOptions = {

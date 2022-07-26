@@ -238,6 +238,8 @@ export type GetInterfaceHelpers = {
 
 export type ChainId = string
 
+export type DecimalChainId = number
+
 export type RpcUrl = string
 
 export type WalletInterface = {
@@ -433,6 +435,8 @@ export interface Chain {
   publicRpcUrl?: string
   blockExplorerUrl?: string
 }
+
+export type ChainWithDecimalId = Omit<Chain, 'id'> & { id: DecimalChainId }
 
 export type TokenSymbol = string // eg ETH
 
