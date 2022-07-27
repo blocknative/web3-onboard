@@ -148,6 +148,9 @@ export interface AppMetadata {
   recommendedInjectedWallets?: RecommendedInjectedWallets[]
 
   agreement?: TermsOfServiceAgreementOptions | null
+
+  /* hide the left sidebar branding on all window sizes */
+  hideSidebar?: boolean
 }
 
 export type TermsOfServiceAgreementOptions = {

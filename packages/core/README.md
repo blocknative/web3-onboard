@@ -76,7 +76,9 @@ type AppMetadata = {
   // url that points to more information about app
   explore?: string
   // if your app only supports injected wallets and when no injected wallets detected, recommend the user to install some
-  recommendedInjectedWallets?: RecommendedInjectedWallets[]
+  recommendedInjectedWallets?: RecommendedInjectedWallets[],
+  // hide the left sidebar branding on all window sizes
+  hideSidebar?: boolean
 }
 
 type RecommendedInjectedWallets = {

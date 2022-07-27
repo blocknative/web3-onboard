@@ -40,6 +40,7 @@
 
   const { appMetadata } = configuration
   const { walletModules } = state.get()
+  const sidebarBreakpoint = 809;
 
   let connectionRejected = false
   let wallets: WalletWithLoadingIcon[] = []
@@ -366,7 +367,7 @@
 {#if !autoSelect.disableModals}
   <Modal {close}>
     <div class="container relative flex">
-      {#if windowWidth >= 809}
+      {#if !appMetadata.hideSidebar && windowWidth >= sidebarBreakpoint}
         <Sidebar step={$modalStep$} />
       {/if}
 
