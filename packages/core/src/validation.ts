@@ -124,7 +124,8 @@ const appMetadata = Joi.object({
   appUrl: Joi.string(),
   explore: Joi.string(),
   recommendedInjectedWallets: Joi.array().items(recommendedWallet),
-  agreement
+  agreement,
+  hideSidebar: Joi.boolean()
 })
 
 const walletModule = Joi.object({
