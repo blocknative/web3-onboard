@@ -54,16 +54,23 @@
       --notify-onboard-gray-600,
       var(--onboard-gray-600, var(--gray-600))
     );
-    padding: 0.75rem;
     border-radius: var(
       --notify-onboard-border-radius,
       var(--onboard-border-radius-4, var(--border-radius-4))
     );
     display: flex;
+    flex-direction: column;
     position: relative;
+    overflow: hidden;
   }
 
-  .bn-notify-notification:hover > div.notify-close-btn-desktop {
+  .bn-notify-notification-inner {
+    padding: 0.75rem;
+  }
+
+  .bn-notify-notification:hover
+    > div.bn-notify-notification-inner
+    > div.notify-close-btn-desktop {
     visibility: visible;
     opacity: 1;
   }
@@ -125,15 +132,19 @@
 
   .dropdown-buttons {
     background-color: var(
-      --notify-onboard-gray-600,
-      var(--onboard-gray-600, var(--gray-600))
+      --notify-onboard-gray-700,
+      var(--onboard-gray-700, var(--gray-700))
     );
     width: 100%;
     padding: 8px;
   }
 
-  .drop-button {
+  .dropdown-button {
     padding: 4px 12px;
+    border-radius: var(
+      --notify-onboard-border-radius-5,
+      var(--onboard-border-radius-5, var(--border-radius-5))
+    );
     background-color: transparent;
     font-size: var(
       --notify-onboard-font-size-6,
@@ -143,14 +154,12 @@
       --notify-onboard-primary-400,
       var(--onboard-primary-400, var(--primary-400))
     );
-    transition: background-color 150ms ease-in-out;
+    transition: all 150ms ease-in-out;
+    cursor: pointer;
   }
 
-  .drop-button:hover {
-    background-color: var(
-      --notify-onboard-primary-100,
-      var(--onboard-primary-100, var(--primary-100))
-    );
+  .dropdown-button:hover {
+    background-color: rgba(146, 155, 237, 0.2);
   }
 </style>
 
@@ -161,21 +170,23 @@
   on:click={e => notification.onClick && notification.onClick(e)}
   class="bn-notify-notification bn-notify-notification-{notification.type}}"
 >
-  <StatusIconBadge
-    {notification}
-    chainStyles={chainStyles[networkToChainId[notification.network]]}
-  />
-  <NotificationContent {notification} />
+  <div class="flex bn-notify-notification-inner">
+    <StatusIconBadge
+      {notification}
+      chainStyles={chainStyles[networkToChainId[notification.network]]}
+    />
+    <NotificationContent {notification} />
 
-  <div
-    on:click|stopPropagation={() => {
-      removeNotification(notification.id)
-      updateParentOnRemove()
-    }}
-    class="notify-close-btn notify-close-btn-{device.type} pointer flex"
-  >
-    <div class="flex items-center close-icon">
-      {@html closeIcon}
+    <div
+      on:click|stopPropagation={() => {
+        removeNotification(notification.id)
+        updateParentOnRemove()
+      }}
+      class="notify-close-btn notify-close-btn-{device.type} pointer flex"
+    >
+      <div class="flex items-center close-icon">
+        {@html closeIcon}
+      </div>
     </div>
   </div>
 
@@ -187,12 +198,12 @@
       actionableEventCode(notification.eventCode)}
   >
     {#if notification.eventCode === 'txPool'}
-      <div class="dropdown-buttons flex items-end">
+      <div class="dropdown-buttons flex items-center justify-end">
         <button class="dropdown-button">Cancel</button>
         <button class="dropdown-button">Speed-up</button>
       </div>
     {:else if notification.eventCode === 'txConfirmed' || notification.eventCode === 'txFailed'}
-      <div class="dropdown-buttons flex items-end">
+      <div class="dropdown-buttons flex items-center justify-end">
         <button class="dropdown-button">View Details</button>
       </div>
     {/if}

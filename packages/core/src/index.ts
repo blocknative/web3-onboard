@@ -305,6 +305,7 @@ function mountApp() {
           --border-radius-2: 20px;  
           --border-radius-3: 16px;  
           --border-radius-4: 12px;  
+          --border-radius-5: 8px;  
 
           /* SHADOWS */
           --shadow-0: none;
