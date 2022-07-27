@@ -6,6 +6,7 @@ import { state } from './store'
 import { switchChainModal$ } from './streams'
 import { validateSetChainOptions } from './validation'
 import type { WalletState } from './types'
+import { toHexString } from './utils'
 
 async function setChain(options: {
   chainId: string | number
@@ -20,10 +21,11 @@ async function setChain(options: {
 
   const { wallets, chains } = state.get()
   const { chainId, chainNamespace = 'evm', wallet: walletToSet } = options
+  const chainIdHex = toHexString(chainId)
 
   // validate that chainId has been added to chains
   const chain = chains.find(
-    ({ namespace, id }) => namespace === chainNamespace && id === chainId
+    ({ namespace, id }) => namespace === chainNamespace && id === chainIdHex
   )
 
   if (!chain) {
@@ -50,13 +52,13 @@ async function setChain(options: {
   // check if wallet is already connected to chainId
   if (
     walletConnectedChain.namespace === chainNamespace &&
-    walletConnectedChain.id === chainId
+    walletConnectedChain.id === chainIdHex
   ) {
     return true
   }
 
   try {
-    await switchChain(wallet.provider, chainId)
+    await switchChain(wallet.provider, chainIdHex)
     return true
   } catch (error) {
     const { code } = error as { code: number }
@@ -69,7 +71,7 @@ async function setChain(options: {
       // chain has not been added to wallet
       try {
         await addNewChain(wallet.provider, chain)
-        await switchChain(wallet.provider, chainId)
+        await switchChain(wallet.provider, chainIdHex)
         return true
       } catch (error) {
         // display notification to user to switch chain
