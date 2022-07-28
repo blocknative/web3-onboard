@@ -3,8 +3,6 @@
   import CloseButton from '../elements/CloseButton.svelte'
   import AddressTable from '../elements/AddressTable.svelte'
   import TableHeader from '../elements/TableHeader.svelte'
-  import { utils } from 'ethers'
-
   import type { Subject } from 'rxjs'
   import type {
     ScanAccountsOptions,
@@ -12,6 +10,7 @@
     Account,
     AccountsList
   } from '../types'
+  import { weiToEth } from '../utils'
 
   export let selectAccountOptions: SelectAccountOptions
   export let accounts$: Subject<Account[]>
@@ -61,7 +60,7 @@
       accountsListObject = {
         all: allAccounts,
         filtered: allAccounts.filter(account => {
-          return parseFloat(utils.formatEther(account.balance.value)) > 0
+          return parseFloat(weiToEth(account.balance.value)) > 0
         })
       }
       loadingAccounts = false
