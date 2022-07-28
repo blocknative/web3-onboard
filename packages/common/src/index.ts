@@ -9,5 +9,6 @@ export {
   bigNumberFieldsToStrings,
   getHardwareWalletProvider
 } from './hdwallets'
+export { weiToEth } from './utils'
 
 export * from './types'

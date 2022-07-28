@@ -1,7 +1,7 @@
 import type Common from '@ethereumjs/common'
-import type { BigNumber } from 'ethers'
 import type { CustomNetwork, EIP1193Provider, RPCResponse } from './types'
 import type { TransactionRequest } from '@ethersproject/providers'
+import type { BigNumber } from 'ethers'
 
 /**
  * Creates the common instance used for signing

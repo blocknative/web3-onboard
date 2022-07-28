@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Account, AccountsList } from '../types'
-  import { utils } from 'ethers'
+  import { weiToEth } from '../utils'
 
   export let accountsListObject: AccountsList | undefined
   export let accountSelected: Account | undefined = undefined
@@ -120,7 +120,7 @@
             >
             <td>{account.derivationPath}</td>
             <td class="asset-td"
-              >{utils.formatEther(account.balance.value)}
+              >{weiToEth(account.balance.value)}
               {account.balance.asset}</td
             >
           </tr>
