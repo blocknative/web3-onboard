@@ -1,6 +1,5 @@
 <script lang="ts">
   import { ProviderRpcErrorCode, WalletModule } from '@web3-onboard/common'
-  import { BigNumber } from 'ethers'
   import { BehaviorSubject, takeUntil } from 'rxjs'
   import EventEmitter from 'eventemitter3'
   import { _ } from 'svelte-i18n'
@@ -20,7 +19,7 @@
   import Sidebar from './Sidebar.svelte'
   import { configuration } from '../../configuration'
   import { getBlocknativeSdk } from '../../services'
-
+  import BigNumber from 'bignumber.js'
   import {
     getChainId,
     requestAccounts,
