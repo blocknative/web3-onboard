@@ -100,7 +100,6 @@ const getAddresses = async (
     }
     index++
   }
-
   return accounts
 }
 

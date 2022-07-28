@@ -349,8 +349,9 @@ export async function getBalance(
     const provider = wallet.provider
     const balanceHex = await provider.request({ method: 'eth_getBalance', params:[address,'latest'] })
     const balanceWei = new BigNumber(parseInt(balanceHex, 16))
+    console.log(22, balanceWei)
     return balanceWei
-      ? { [chain.token || 'eth']: weiToEth(balanceWei) }
+      ? { [chain.token || 'eth']: weiToEth(balanceWei, false) }
       : null
   } catch (error) {
     console.error(error)

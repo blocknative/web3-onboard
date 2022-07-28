@@ -119,8 +119,8 @@
               >{account.address}</td
             >
             <td>{account.derivationPath}</td>
-            <td class="asset-td"
-              >{weiToEth(account.balance.value)}
+            <td class="asset-td">
+              {weiToEth(account.balance.value, true)}
               {account.balance.asset}</td
             >
           </tr>

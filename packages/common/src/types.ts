@@ -1,7 +1,7 @@
 import type { ConnectionInfo } from 'ethers/lib/utils'
 import type EventEmitter from 'eventemitter3'
 import type { TypedData as EIP712TypedData } from 'eip-712'
-import type BigNumber from 'bignumber.js'
+import type { ethers, BigNumber } from 'ethers'
 export type { TypedData as EIP712TypedData } from 'eip-712'
 
 /**
@@ -232,7 +232,7 @@ export interface WalletModule {
 export type GetInterfaceHelpers = {
   chains: Chain[]
   appMetadata: AppMetadata | null
-  BigNumber: typeof BigNumber
+  BigNumber: typeof ethers.BigNumber
   EventEmitter: typeof EventEmitter
 }
 
