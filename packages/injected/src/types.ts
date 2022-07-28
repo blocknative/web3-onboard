@@ -114,7 +114,9 @@ export interface CustomWindow extends Window {
     ethereum: InjectedProvider
   }
   gamestop: InjectedProvider,
-  bitkeep: InjectedProvider
+  bitkeep: {
+    ethereum: InjectedProvider
+  }
 }
 
 export type InjectedProvider = ExternalProvider &
