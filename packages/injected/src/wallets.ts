@@ -508,6 +508,18 @@ const gamestop: InjectedWalletModule = {
   platforms: ['desktop']
 }
 
+const bitkeep: InjectedWalletModule = {
+  label: ProviderLabel.BitKeep,
+  injectedNamespace: InjectedNameSpace.BitKeep,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider["ethereum"][ProviderIdentityFlag.BitKeep],
+  getIcon: async () => (await import('./icons/bitkeep.js')).default,
+  getInterface: async () => ({
+    provider: window.bitkeep && window.bitkeep.ethereum,
+  }),
+  platforms: ['all']
+}
+
 const wallets = [
   exodus,
   metamask,
@@ -538,7 +550,8 @@ const wallets = [
   tally,
   rabby,
   mathwallet,
-  gamestop
+  gamestop,
+  bitkeep
 ]
 
 export default wallets
