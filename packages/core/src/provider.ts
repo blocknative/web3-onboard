@@ -22,7 +22,6 @@ import { validEnsChain } from './utils'
 import disconnect from './disconnect'
 import { state } from './store'
 import { getBlocknativeSdk } from './services'
-import BigNumber from 'bignumber.js'
 
 export const ethersProviders: {
   [key: string]: providers.StaticJsonRpcProvider
