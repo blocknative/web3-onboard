@@ -4,6 +4,7 @@ import replace from '@rollup/plugin-replace'
 import json from '@rollup/plugin-json'
 import sveltePreprocess from 'svelte-preprocess'
 import typescript from '@rollup/plugin-typescript'
+import { terser } from 'rollup-plugin-terser'
 
 const production = !process.env.ROLLUP_WATCH
 
@@ -11,7 +12,8 @@ export default {
   input: 'src/index.ts',
   output: {
     format: 'esm',
-    dir: 'dist/'
+    dir: 'dist/',
+    sourcemap: true,
   },
   plugins: [
     json(),
@@ -33,7 +35,19 @@ export default {
     typescript({
       sourceMap: !production,
       inlineSources: !production
+    }),
+    production && terser({
+      ecma: 2020,
+      mangle: { toplevel: true },
+      compress: {
+        module: true,
+        toplevel: true,
+        unsafe_arrows: true,
+        drop_console: production,
+        drop_debugger: production
+      },
+      output: { quote_style: 1 }
     })
   ],
-  external: ['joi', 'rxjs', 'ethers', '@ethereumjs/common']
+  external: ['joi', 'rxjs', 'ethers', '@ethereumjs/common', 'bignumber.js']
 }

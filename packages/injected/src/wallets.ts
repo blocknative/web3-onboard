@@ -1,11 +1,16 @@
 import type {
   EIP1193Provider,
   ChainListener,
-  SimpleEventEmitter
+  SimpleEventEmitter,
+  ChainId
 } from '@web3-onboard/common'
 
 import { createEIP1193Provider } from '@web3-onboard/common'
-import type { InjectedWalletModule, CustomWindow } from './types.js'
+import type {
+  InjectedWalletModule,
+  CustomWindow,
+  BinanceProvider
+} from './types.js'
 
 import {
   InjectedNameSpace,
@@ -65,11 +70,11 @@ const binance: InjectedWalletModule = {
     !!provider && !!provider[ProviderIdentityFlag.Binance],
   getIcon: async () => (await import('./icons/binance.js')).default,
   getInterface: async () => {
-    // We add this to the BinanceChain provider as there is currently
-    // no way to determine if the wallet is unlocked
-    if (window.BinanceChain) {
-      window.BinanceChain.isUnlocked = false
+    // Replace the provider as the BNB provider is readonly
+    let tempBNBProvider: BinanceProvider = {
+      ...window.BinanceChain
     }
+    window.BinanceChain = tempBNBProvider
 
     const addListener: SimpleEventEmitter['on'] = window.BinanceChain.on.bind(
       window.BinanceChain
@@ -78,9 +83,9 @@ const binance: InjectedWalletModule = {
     window.BinanceChain.on = (event, func) => {
       // intercept chainChanged event and format string
       if (event === 'chainChanged') {
-        addListener(event, (chainId: string) => {
+        addListener(event, (chainId: ChainId) => {
           const cb = func as ChainListener
-          cb(`0x${parseInt(chainId).toString(16)}`)
+          cb(`0x${parseInt(chainId as string).toString(16)}`)
         })
       } else {
         addListener(event, func)
@@ -88,21 +93,12 @@ const binance: InjectedWalletModule = {
     }
 
     const provider = createEIP1193Provider(window.BinanceChain, {
-      // If the wallet is unlocked then we don't need to patch this request
-      ...(!window.BinanceChain.isUnlocked && {
-        eth_accounts: () => Promise.resolve([])
-      }),
-      eth_requestAccounts: ({ baseRequest }) =>
-        baseRequest({ method: 'eth_requestAccounts' }).then(accts => {
-          window.BinanceChain.isUnlocked = true
-          return accts
-        }),
-      eth_selectAccounts: UNSUPPORTED_METHOD,
       eth_chainId: ({ baseRequest }) =>
-        baseRequest({ method: 'eth_chainId' }).then(
-          id => `0x${parseInt(id).toString(16)}`
-        ),
+        baseRequest({ method: 'eth_chainId' }).then(id => {
+          return `0x${parseInt(id as string).toString(16)}`
+        }),
       // Unsupported method -- will throw error
+      eth_selectAccounts: UNSUPPORTED_METHOD,
       wallet_switchEthereumChain: UNSUPPORTED_METHOD
     })
 
@@ -523,6 +519,17 @@ const core: InjectedWalletModule = {
   }),
   // Core wallet is only tested in chrome or chromium browser
   platforms: ['desktop', 'Chrome', 'Chromium', 'Microsoft Edge']
+
+const bitkeep: InjectedWalletModule = {
+  label: ProviderLabel.BitKeep,
+  injectedNamespace: InjectedNameSpace.BitKeep,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider["ethereum"][ProviderIdentityFlag.BitKeep],
+  getIcon: async () => (await import('./icons/bitkeep.js')).default,
+  getInterface: async () => ({
+    provider: window.bitkeep && window.bitkeep.ethereum,
+  }),
+  platforms: ['all']
 }
 
 const wallets = [
@@ -557,6 +564,7 @@ const wallets = [
   mathwallet,
   gamestop,
   core
+  bitkeep
 ]
 
 export default wallets

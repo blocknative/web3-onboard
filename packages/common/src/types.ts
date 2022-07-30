@@ -1,7 +1,7 @@
-import type { ethers, BigNumber } from 'ethers'
 import type { ConnectionInfo } from 'ethers/lib/utils'
 import type EventEmitter from 'eventemitter3'
 import type { TypedData as EIP712TypedData } from 'eip-712'
+import type BigNumber from 'bignumber.js'
 export type { TypedData as EIP712TypedData } from 'eip-712'
 
 /**
@@ -232,11 +232,13 @@ export interface WalletModule {
 export type GetInterfaceHelpers = {
   chains: Chain[]
   appMetadata: AppMetadata | null
-  BigNumber: typeof ethers.BigNumber
+  BigNumber: typeof BigNumber
   EventEmitter: typeof EventEmitter
 }
 
-export type ChainId = string | number
+export type ChainId = string
+
+export type DecimalChainId = number
 
 export type RpcUrl = string
 
@@ -433,6 +435,8 @@ export interface Chain {
   publicRpcUrl?: string
   blockExplorerUrl?: string
 }
+
+export type ChainWithDecimalId = Omit<Chain, 'id'> & { id: DecimalChainId }
 
 export type TokenSymbol = string // eg ETH
 
