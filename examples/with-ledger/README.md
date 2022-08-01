@@ -5,13 +5,13 @@ This is a sample [Web3Onboard](https://github.com/blocknative/web3-onboard) proj
 Clone this repo
 
 ```
-
+https://github.com/blocknative/web3-onboard.git
 ```
 
 Navigate to the project directory:
 
 ```
-cd
+cd examples
 ```
 
 Install the dependencies:
