@@ -42,10 +42,7 @@ export default defineConfig<DefaultThemeConfig>({
         remoteGitRepo: {
           dir: 'docs',
         },
-      },
-      remoteGitRepo: {
-        url: 'blocknative/docs',
-      },
+      }
     },
   },
 })
