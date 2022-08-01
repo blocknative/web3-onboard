@@ -96,7 +96,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to this demo of
+          Welcome to a demo of
           <a href="https://github.com/blocknative/web3-onboard">
             {' '}
             Web3-Onboard + Ledger
