@@ -459,7 +459,7 @@ const tokenary: InjectedWalletModule = {
   getInterface: async () => ({
     provider: createEIP1193Provider(window.ethereum)
   }),
-  platforms: ['mobile']
+  platforms: ['all']
 }
 
 const tally: InjectedWalletModule = {
