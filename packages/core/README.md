@@ -700,16 +700,9 @@ If you need to update your Account Center configuration after initialization, yo
 
 ```typescript
 onboard.state.actions.updateAccountCenter({
-  desktop: {
-    position: 'topRight',
-    enabled: true,
-    minimal: true
-  },
-  mobile: {
-    position: 'topRight',
-    enabled: true,
-    minimal: true
-  }
+  position: 'topRight',
+  enabled: true,
+  minimal: true
 })
 ```
 
