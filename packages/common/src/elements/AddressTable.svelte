@@ -120,7 +120,7 @@
             >
             <td>{account.derivationPath}</td>
             <td class="asset-td"
-              >{weiToEth(account.balance.value)}
+              >{weiToEth(account.balance.value.toString())}
               {account.balance.asset}</td
             >
           </tr>

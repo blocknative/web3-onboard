@@ -19,7 +19,7 @@
   import Sidebar from './Sidebar.svelte'
   import { configuration } from '../../configuration'
   import { getBlocknativeSdk } from '../../services'
-  import BigNumber from 'bignumber.js'
+  import { BigNumber } from 'ethers'
   import {
     getChainId,
     requestAccounts,
