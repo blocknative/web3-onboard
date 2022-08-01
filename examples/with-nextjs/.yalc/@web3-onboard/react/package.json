@@ -1,0 +1,71 @@
+{
+  "name": "@web3-onboard/react",
+  "version": "2.2.5-alpha.6+e10201e6",
+  "description": "A collection of React hooks for integrating Web3-Onboard in to React and Next.js projects. Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardised spec compliant web3 providers for all supported wallets, modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
+  "keywords": [
+    "Ethereum",
+    "Web3",
+    "EVM",
+    "dapp",
+    "Multichain",
+    "Wallet",
+    "Transaction",
+    "Provider",
+    "Hardware Wallet",
+    "Notifications",
+    "React",
+    "Svelte",
+    "Vue",
+    "Next",
+    "Nuxt",
+    "MetaMask",
+    "Coinbase",
+    "WalletConnect",
+    "Ledger",
+    "Trezor",
+    "Connect Wallet",
+    "Ethereum Hooks",
+    "Blocknative",
+    "Mempool",
+    "pending",
+    "confirmed",
+    "Injected Wallet",
+    "GameStop",
+    "Crypto",
+    "Crypto Wallet"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blocknative/web3-onboard.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://www.blocknative.com/onboard",
+  "bugs": "https://github.com/blocknative/web3-onboard/issues",
+  "module": "dist/index.esm.js",
+  "browser": "dist/index.js",
+  "main": "dist/index.cjs.js",
+  "type": "module",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf dist",
+    "prepublishOnly": "yarn build",
+    "dev": "tsc -w",
+    "type-check": "tsc --noEmit"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@types/react": "^18.0.15",
+    "@web3-onboard/common": "^2.1.7-alpha.4",
+    "@web3-onboard/core": "^2.6.0-alpha.7",
+    "react": "^18.2.0",
+    "use-sync-external-store": "1.0.0"
+  },
+  "peerDependencies": {
+    "react": ">=16.8"
+  },
+  "yalcSig": "e10201e6d0ee7340334ff4284ae7bdec"
+}
