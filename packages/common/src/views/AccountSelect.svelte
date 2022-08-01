@@ -60,7 +60,7 @@
       accountsListObject = {
         all: allAccounts,
         filtered: allAccounts.filter(account => {
-          return parseFloat(weiToEth(account.balance.value)) > 0
+          return parseFloat(weiToEth(account.balance.value.toString())) > 0
         })
       }
       loadingAccounts = false
