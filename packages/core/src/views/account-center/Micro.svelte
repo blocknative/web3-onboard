@@ -18,14 +18,21 @@
 <style>
   .minimized {
     background: var(--onboard-white, var(--white));
-    border: 1px solid var(--onboard-gray-100, var(--gray-100));
-    box-shadow: var(--onboard-shadow-3, var(--shadow-3));
+    border: 1px solid
+      var(--acount-center-border, var(--onboard-gray-100, var(--gray-100)));
+    box-shadow: var(
+      --account-center-box-shadow,
+      var(--onboard-shadow-3, var(--shadow-3))
+    );
     width: 80px;
     pointer-events: auto;
   }
 
   .radius {
-    border-radius: var(--onboard-border-radius-3, var(--border-radius-3));
+    border-radius: var(
+      --account-center-boarder-radius,
+      var(--onboard-border-radius-3, var(--border-radius-3))
+    );
   }
 
   .drop-shadow {
