@@ -176,7 +176,6 @@ function ledger({
 
             return getAddresses(derivationPath, asset, ethersProvider, eth)
           } catch (error) {
-            console.log('err', error)
             const { statusText } = error as { statusText: string }
             throw new Error(
               statusText === 'UNKNOWN_ERROR'
