@@ -1,6 +1,5 @@
 <script lang="ts">
   import { ProviderRpcErrorCode, WalletModule } from '@web3-onboard/common'
-  import { BigNumber } from 'ethers'
   import { BehaviorSubject, takeUntil } from 'rxjs'
   import EventEmitter from 'eventemitter3'
   import { _ } from 'svelte-i18n'
@@ -20,7 +19,7 @@
   import Sidebar from './Sidebar.svelte'
   import { configuration } from '../../configuration'
   import { getBlocknativeSdk } from '../../services'
-
+  import { BigNumber } from 'ethers'
   import {
     getChainId,
     requestAccounts,
@@ -50,12 +49,6 @@
 
   let windowWidth: number
   let scrollContainer: HTMLElement
-
-  let walletToAutoSelect =
-    autoSelect.label &&
-    walletModules.find(
-      ({ label }) => label.toLowerCase() === autoSelect.label.toLowerCase()
-    )
 
   const modalStep$ = new BehaviorSubject<keyof i18n['connect']>(
     'selectingWallet'
@@ -209,13 +202,13 @@
       // user rejected account access
       if (code === ProviderRpcErrorCode.ACCOUNT_ACCESS_REJECTED) {
         connectionRejected = true
-        if (walletToAutoSelect) {
-          walletToAutoSelect = null
 
-          if (autoSelect.disableModals) {
-            connectWallet$.next({ inProgress: false })
-          }
+        if (autoSelect.disableModals) {
+          connectWallet$.next({ inProgress: false })
+        } else if (autoSelect.label) {
+          autoSelect.label = ''
         }
+
         return
       }
 
@@ -263,8 +256,17 @@
   modalStep$.pipe(takeUntil(onDestroy$)).subscribe(step => {
     switch (step) {
       case 'selectingWallet': {
-        if (walletToAutoSelect) {
-          autoSelectWallet(walletToAutoSelect)
+        if (autoSelect.label) {
+          const walletToAutoSelect = walletModules.find(
+            ({ label }) =>
+              label.toLowerCase() === autoSelect.label.toLowerCase()
+          )
+
+          if (walletToAutoSelect) {
+            autoSelectWallet(walletToAutoSelect)
+          } else if (autoSelect.disableModals) {
+            connectWallet$.next({ inProgress: false })
+          }
         } else {
           loadWalletsForSelection()
         }

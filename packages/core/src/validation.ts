@@ -2,6 +2,7 @@ import Joi, { ObjectSchema, Schema } from 'joi'
 import type {
   Chain,
   ChainId,
+  DecimalChainId,
   WalletInit,
   WalletModule
 } from '@web3-onboard/common'
@@ -22,7 +23,11 @@ import type {
   PreflightNotificationsOptions
 } from './types'
 
-const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
+// const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
+const chainId = Joi.alternatives().try(
+  Joi.string().pattern(/^0x[0-9a-fA-F]+$/),
+  Joi.number().positive()
+)
 const chainNamespace = Joi.string().valid('evm')
 const unknownObject = Joi.object().unknown()
 
@@ -150,6 +155,21 @@ const notifyOptions = Joi.object({
   mobile: notify
 })
 
+const accountCenterInitOptions = Joi.object({
+  enabled: Joi.boolean(),
+  position: commonPositions,
+  minimal: Joi.boolean(),
+  containerElement: Joi.string()
+})
+
+const accountCenter = Joi.object({
+  enabled: Joi.boolean(),
+  position: commonPositions,
+  expanded: Joi.boolean(),
+  minimal: Joi.boolean(),
+  containerElement: Joi.string()
+})
+
 const initOptions = Joi.object({
   wallets: walletInit,
   chains: chains.required(),
@@ -157,20 +177,14 @@ const initOptions = Joi.object({
   i18n: Joi.object().unknown(),
   apiKey: Joi.string(),
   accountCenter: Joi.object({
-    desktop: Joi.object({
-      enabled: Joi.boolean(),
-      minimal: Joi.boolean(),
-      position: commonPositions,
-      containerElement: Joi.string()
-    }),
-    mobile: Joi.object({
-      enabled: Joi.boolean(),
-      minimal: Joi.boolean(),
-      position: commonPositions,
-      containerElement: Joi.string()
-    })
+    desktop: accountCenterInitOptions,
+    mobile: accountCenterInitOptions
   }),
-  notify: [notifyOptions, notify]
+  notify: [notifyOptions, notify],
+  gas: Joi.object({
+    get: Joi.function().required(),
+    stream: Joi.function().required()
+  })
 })
 
 const connectOptions = Joi.object({
@@ -195,14 +209,6 @@ const setChainOptions = Joi.object({
   wallet: Joi.string()
 })
 
-const accountCenter = Joi.object({
-  enabled: Joi.boolean(),
-  position: commonPositions,
-  expanded: Joi.boolean(),
-  minimal: Joi.boolean(),
-  containerElement: Joi.string()
-})
-
 const customNotificationUpdate = Joi.object({
   key: Joi.string().required(),
   type: Joi.string().allow('pending', 'error', 'success', 'hint'),
@@ -218,15 +224,9 @@ const preflightNotifications = Joi.object({
   sendTransaction: Joi.function(),
   estimateGas: Joi.function(),
   gasPrice: Joi.function(),
-  balance: Joi.alternatives(
-    Joi.string(),
-    Joi.number()
-  ),
+  balance: Joi.alternatives(Joi.string(), Joi.number()),
   txDetails: Joi.object({
-    value: Joi.alternatives(
-      Joi.string(),
-      Joi.number()
-    ),
+    value: Joi.alternatives(Joi.string(), Joi.number()),
     to: Joi.string(),
     from: Joi.string()
   }),
@@ -305,7 +305,7 @@ export function validateString(str: string, label?: string): ValidateReturn {
 }
 
 export function validateSetChainOptions(data: {
-  chainId: ChainId
+  chainId: ChainId | DecimalChainId
   chainNamespace?: string
   wallet?: WalletState['label']
 }): ValidateReturn {
