@@ -89,7 +89,7 @@ export default function Home() {
         <title>Web3-Onboard + Ledger Demo</title>
         <meta
           name="description"
-          content="Example of how to integrate Web3-Onboard with Next.js"
+          content="Web3-Onboard Example with Ledger Hardware Wallet"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
