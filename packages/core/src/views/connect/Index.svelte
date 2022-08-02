@@ -1,6 +1,6 @@
 <script lang="ts">
   import { ProviderRpcErrorCode, WalletModule } from '@web3-onboard/common'
-  import { BehaviorSubject, takeUntil, shareReplay } from 'rxjs'
+  import { BehaviorSubject, takeUntil } from 'rxjs'
   import EventEmitter from 'eventemitter3'
   import { _ } from 'svelte-i18n'
   import en from '../../i18n/en.json'
