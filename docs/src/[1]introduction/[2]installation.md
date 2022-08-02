@@ -40,7 +40,10 @@ import injectedModule from '@web3-onboard/injected-wallets'
 
 #### Wallets
 
-```js
+```ts {4-6}
+import Onboard, { chains } from '@web3-onboard/core'
+import injectedModule from '@web3-onboard/injected-wallets'
+
 const injected = injectedModule()
 
 const wallets = [injected]
@@ -50,39 +53,21 @@ const wallets = [injected]
 
 Select the chains that you'd like your dapp to support:
 
-```js
+```ts
 const INFURA_ID = '...'
 
 const chains = [
   {
-    id: '0x1',
+    id: 1,
     token: 'ETH',
     label: 'Ethereum Mainnet',
     rpcUrl: 'https://mainnet.infura.io/v3/${INFURA_ID}',
   },
   {
-    id: '0x4',
-    token: 'rETH',
-    label: 'Ethereum Rinkeby Testnet',
-    rpcUrl: 'https://rinkeby.infura.io/v3/${INFURA_ID}',
-  },
-  {
-    id: '0x38',
-    token: 'BNB',
-    label: 'Binance Smart Chain',
-    rpcUrl: 'https://bsc-dataseed.binance.org/',
-  },
-  {
-    id: '0x89',
+    id: 137,
     token: 'MATIC',
     label: 'Matic Mainnet',
     rpcUrl: 'https://matic-mainnet.chainstacklabs.com',
-  },
-  {
-    id: '0xfa',
-    token: 'FTM',
-    label: 'Fantom Mainnet',
-    rpcUrl: 'https://rpc.ftm.tools/',
   },
 ]
 ```
@@ -91,7 +76,7 @@ const chains = [
 
 You can add metadata about your dapp.
 
-```js
+```ts
 const appMetadata = {
   name: 'My App',
   icon: '<SVG_ICON_STRING>',
@@ -106,7 +91,7 @@ const appMetadata = {
 
 #### Initialize Onboard
 
-```js
+```ts
 const onboard = Onboard({
   wallets,
   chains,

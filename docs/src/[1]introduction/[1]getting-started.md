@@ -12,16 +12,6 @@ Web3-Onboard is the quickest and easiest way to add multi-wallet and multi-chain
 
 ### Features
 
-```ts {4-6}
-import { defineConfig } from '@vitebook/client/node'
-
-export default defineConfig({
-  resolveRoute({ filePath, relativeFilePath }) {
-    // ...
-  },
-})
-```
-
 ### Minimal Dependencies
 
 All wallet dependencies are included in separate packages,

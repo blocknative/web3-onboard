@@ -42,7 +42,7 @@ export default defineConfig<DefaultThemeConfig>({
         remoteGitRepo: {
           dir: 'docs',
         },
-      }
+      },
     },
   },
 })

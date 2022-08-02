@@ -1,3 +1,3 @@
-import Theme from '@vitebook/theme-default';
+import Theme from '@vitebook/theme-default'
 
-export default Theme;
+export default Theme
