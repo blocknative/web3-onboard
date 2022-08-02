@@ -37,7 +37,7 @@ export default {
       inlineSources: !production
     }),
     production && terser({
-      ecma: 2020,
+      ecma: 2017,
       mangle: { toplevel: true },
       compress: {
         module: true,
