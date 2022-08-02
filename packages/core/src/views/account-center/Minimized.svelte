@@ -96,7 +96,10 @@
   .balance {
     font-weight: 400;
     line-height: var(--onboard-font-line-height-2, var(--font-line-height-2));
-    color: var(--onboard-gray-400, var(--gray-400));
+    color: var(
+      --account-center-minimized-balance-color,
+      var(--onboard-gray-400, var(--gray-400))
+    );
   }
 
   .network {
@@ -194,8 +197,10 @@
           validAppChain
             ? '--onboard-primary-200, var(--primary-200)'
             : '--onboard-warning-500, var(--warning-500)'
-        }); background-color: var(--account-center-minimized-chain-select-background, var(${
-          validAppChain ? '--primary-100' : '--warning-100'
+        }); background-color: var(${
+          validAppChain
+            ? '--account-center-minimized-chain-select-background, var(--primary-100)'
+            : '--account-center-minimized-chain-select-background-warning, var(--warning-100)'
         }))`}
       >
         <div class="flex items-center">

@@ -54,7 +54,10 @@
       --account-center-maximized-upper-background,
       var(--onboard-gray-600, var(--gray-600))
     );
-    border-radius: var(--onboard-border-radius-3, var(--border-radius-3));
+    border-radius: var(
+      --account-center-boarder-radius,
+      var(--onboard-border-radius-3, var(--border-radius-3))
+    );
     width: 100%;
     filter: drop-shadow(0px 4px 16px rgba(178, 178, 178, 0.2));
     padding: 0 1px 1px 1px;
@@ -115,7 +118,10 @@
   }
 
   .background-blue {
-    background: var(--onboard-primary-100, var(--primary-100));
+    background: var(
+      --account-center-maximized-network-section-background,
+      var(--onboard-primary-100, var(--primary-100))
+    );
   }
 
   .background-gray {
@@ -127,10 +133,16 @@
   }
 
   .network-container {
-    border-radius: var(--onboard-border-radius-3, var(--border-radius-3));
+    border-radius: var(
+      --account-center-boarder-radius,
+      var(--onboard-border-radius-3, var(--border-radius-3))
+    );
     color: var(
-      --account-center-maximized-network-section,
-      var(--onboard-gray-500, var(--gray-500))
+      --account-center-maximized-network-text-color,
+      var(
+        --account-center-maximized-network-section,
+        var(--onboard-gray-500, var(--gray-500))
+      )
     );
   }
 
@@ -149,10 +161,16 @@
 
   .app-info-container {
     background: var(
-      --account-center-maximized-app-info-section,
-      var(--onboard-white, var(--white))
+      --account-center-maximized-app-info-section-background-color,
+      var(
+        --account-center-maximized-app-info-section,
+        var(--onboard-white, var(--white))
+      )
     );
-    border-radius: 16px;
+    border-radius: var(
+      --account-center-boarder-radius,
+      var(--onboard-border-radius-3, var(--border-radius-3))
+    );
     padding: 12px;
   }
 
