@@ -20,7 +20,8 @@ import type {
   CustomNotification,
   CustomNotificationUpdate,
   Notify,
-  PreflightNotificationsOptions
+  PreflightNotificationsOptions,
+  ConnectModalOptions
 } from './types'
 
 // const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
@@ -184,6 +185,9 @@ const initOptions = Joi.object({
   gas: Joi.object({
     get: Joi.function().required(),
     stream: Joi.function().required()
+  }),
+  connect: Joi.object({
+    showSidebar: Joi.boolean()
   })
 })
 
@@ -197,6 +201,10 @@ const connectOptions = Joi.object({
       Joi.string()
     )
     .required()
+})
+
+const connectModalOptions = Joi.object({
+  showSidebar: Joi.boolean()
 })
 
 const disconnectOptions = Joi.object({
@@ -316,6 +324,12 @@ export function validateAccountCenterUpdate(
   data: AccountCenter | Partial<AccountCenter>
 ): ValidateReturn {
   return validate(accountCenter, data)
+}
+
+export function validateConnectModalUpdate(
+  data: ConnectModalOptions | Partial<ConnectModalOptions>
+): ValidateReturn {
+  return validate(connectModalOptions, data)
 }
 
 export function validateWalletInit(data: WalletInit[]): ValidateReturn {

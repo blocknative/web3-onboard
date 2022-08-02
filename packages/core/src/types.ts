@@ -34,6 +34,10 @@ export interface InitOptions {
    */
   i18n?: i18nOptions
   /**
+   * Customize the connect modal
+   */
+  connect?: ConnectModalOptions
+  /**
    * Customize the account center UI
    */
   accountCenter?: AccountCenterOptions
@@ -117,6 +121,7 @@ export interface AppState {
   locale: Locale
   notify: Notify
   notifications: Notification[]
+  connect: ConnectModalOptions
 }
 
 export type Configuration = {
@@ -131,6 +136,10 @@ export type Configuration = {
 export type Locale = string
 export type i18nOptions = Record<Locale, i18n>
 export type i18n = typeof en
+
+export type ConnectModalOptions = {
+  showSidebar?: boolean
+}
 
 export type CommonPositions =
   | 'topRight'
@@ -245,6 +254,7 @@ export type Action =
   | AddNotificationAction
   | RemoveNotificationAction
   | UpdateAllWalletsAction
+  | UpdateConnectModalAction
 
 export type AddChainsAction = { type: 'add_chains'; payload: Chain[] }
 export type AddWalletAction = { type: 'add_wallet'; payload: WalletState }
@@ -272,6 +282,11 @@ export type UpdateAccountAction = {
 export type UpdateAccountCenterAction = {
   type: 'update_account_center'
   payload: AccountCenter | Partial<AccountCenter>
+}
+
+export type UpdateConnectModalAction = {
+  type: 'update_connect_modal'
+  payload: ConnectModalOptions | Partial<ConnectModalOptions>
 }
 
 export type SetWalletModulesAction = {
