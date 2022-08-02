@@ -171,9 +171,6 @@
       gettingStartedGuide: 'https://blocknative.com',
       explore: 'https://blocknative.com'
     },
-    connect: {
-      showSidebar: false
-    },
     // // example customizing account center
     accountCenter: {
       desktop: {
