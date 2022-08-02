@@ -365,7 +365,7 @@
 {#if !autoSelect.disableModals}
   <Modal {close}>
     <div class="container relative flex">
-      {#if windowWidth >= 809 && connect && connect.showSidebar}
+      {#if windowWidth >= 809 && connect.showSidebar}
         <Sidebar step={$modalStep$} />
       {/if}
 
