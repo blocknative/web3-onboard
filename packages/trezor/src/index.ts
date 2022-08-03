@@ -486,7 +486,7 @@ function trezor(options: TrezorOptions): WalletInit {
               ? [accounts[0].address]
               : [],
           eth_chainId: async () =>
-            currentChain.hasOwnProperty('id') ? String(currentChain.id) : '',
+            currentChain.hasOwnProperty('id') ? currentChain.id : '',
           eth_signTransaction: async ({ params: [transactionObject] }) =>
             signTransaction(transactionObject),
           eth_sendTransaction: async ({ baseRequest, params }) => {

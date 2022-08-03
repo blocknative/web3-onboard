@@ -1,13 +1,11 @@
 import { Observable, timer, zip } from 'rxjs'
-import { switchMap, map } from 'rxjs/operators'
+import { switchMap } from 'rxjs/operators'
 import { ajax } from 'rxjs/ajax'
 import { getRequestUrl } from './utils'
-import { StreamOptions, ChainId, GasPlatformResponse } from './types'
+import { StreamOptions, GasPlatformResponse } from './types'
 import { validateRequest } from './validation'
 
-function stream(
-  options: StreamOptions
-): Observable<Record<ChainId, GasPlatformResponse>> {
+function stream(options: StreamOptions): Observable<GasPlatformResponse[]> {
   const invalid = validateRequest(options)
 
   if (invalid) {
@@ -29,13 +27,6 @@ function stream(
           ajax.getJSON<GasPlatformResponse>(url, headers)
         )
       )
-    ),
-    // reduce to mapping of chainId -> gas data
-    map(data =>
-      chains.reduce((acc, chainId, index) => {
-        acc[chainId] = data[index]
-        return acc
-      }, {})
     )
   )
 }

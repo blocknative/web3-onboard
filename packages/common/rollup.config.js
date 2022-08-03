@@ -37,7 +37,7 @@ export default {
       inlineSources: !production
     }),
     production && terser({
-      ecma: 2020,
+      ecma: 2017,
       mangle: { toplevel: true },
       compress: {
         module: true,
@@ -49,5 +49,5 @@ export default {
       output: { quote_style: 1 }
     })
   ],
-  external: ['joi', 'rxjs', 'ethers', '@ethereumjs/common']
+  external: ['joi', 'rxjs', 'ethers', '@ethereumjs/common', 'bignumber.js']
 }
