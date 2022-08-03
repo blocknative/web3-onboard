@@ -28,6 +28,7 @@ type InitOptions {
   wallets: WalletInit[]
   chains: Chain[]
   appMetadata?: AppMetadata
+  connect?: ConnectModalOptions
   i18n?: i18nOptions
   accountCenter?: AccountCenterOptions
   apiKey?: string
@@ -82,6 +83,15 @@ type AppMetadata = {
 type RecommendedInjectedWallets = {
   name: string // display name
   url: string // link to download wallet
+}
+```
+
+**`connect`**
+An object that allows for customization of the Connect Modal and accepts the type ConnectModalOptions.
+
+```typescript
+type ConnectModalOptions = {
+  showSidebar?: boolean
 }
 ```
 
