@@ -33,6 +33,7 @@ type InitOptions {
   accountCenter?: AccountCenterOptions
   apiKey?: string
   notify?: Partial<NotifyOptions>
+  connect?: Partial<ConnectModalOptions>
 }
 ```
 
