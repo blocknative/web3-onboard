@@ -80,9 +80,6 @@ init({
 export default function Home() {
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet()
 
-  if(wallet){
-    console.log(wallet)
-  }
   return (
     <div className={styles.container}>
       <Head>
