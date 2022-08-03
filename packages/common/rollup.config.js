@@ -49,5 +49,5 @@ export default {
       output: { quote_style: 1 }
     })
   ],
-  external: ['joi', 'rxjs', 'ethers', '@ethereumjs/common', 'bignumber.js']
+  external: ['joi', 'rxjs', 'ethers', 'bignumber.js']
 }

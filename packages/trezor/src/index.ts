@@ -119,12 +119,15 @@ function trezor(options: TrezorOptions): WalletInit {
         const { Transaction } = await import('@ethereumjs/tx')
         const {
           accountSelect,
-          bigNumberFieldsToStrings,
           createEIP1193Provider,
-          ProviderRpcError,
-          getCommon,
-          getHardwareWalletProvider
+          ProviderRpcError
         } = await import('@web3-onboard/common')
+
+        const {
+          getCommon,
+          bigNumberFieldsToStrings,
+          getHardwareWalletProvider
+        } = await import('@web3-onboard/hw-common')
         const ethUtil = await import('ethereumjs-util')
         const { compress } = (await import('eth-crypto')).publicKey
         const { StaticJsonRpcProvider } = await import(

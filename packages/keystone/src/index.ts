@@ -99,11 +99,14 @@ function keystone({
           accountSelect,
           createEIP1193Provider,
           ProviderRpcError,
-          ProviderRpcErrorCode,
+          ProviderRpcErrorCode
+        } = await import('@web3-onboard/common')
+
+        const {
           getCommon,
           bigNumberFieldsToStrings,
           getHardwareWalletProvider
-        } = await import('@web3-onboard/common')
+        } = await import('@web3-onboard/hw-common')
 
         const keyring = AirGappedKeyring.getEmptyKeyring()
         await keyring.readKeyring()

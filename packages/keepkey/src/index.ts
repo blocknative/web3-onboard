@@ -63,10 +63,13 @@ function keepkey(): WalletInit {
           accountSelect,
           createEIP1193Provider,
           ProviderRpcError,
-          entryModal,
+          entryModal
+        } = await import('@web3-onboard/common')
+
+        const {
           bigNumberFieldsToStrings,
           getHardwareWalletProvider
-        } = await import('@web3-onboard/common')
+        } = await import('@web3-onboard/hw-common')
 
         const { utils } = await import('ethers')
 

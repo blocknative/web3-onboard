@@ -3,10 +3,11 @@ import type {
   Account,
   Asset,
   Chain,
-  CustomNetwork,
   WalletInit,
   GetInterfaceHelpers
 } from '@web3-onboard/common'
+
+import type { CustomNetwork } from '@web3-onboard/hw-common'
 
 // these cannot be dynamically imported
 import { TypedDataUtils } from '@metamask/eth-sig-util'
@@ -127,11 +128,14 @@ function ledger({
         const {
           accountSelect,
           createEIP1193Provider,
-          ProviderRpcError,
+          ProviderRpcError
+        } = await import('@web3-onboard/common')
+
+        const {
           getCommon,
           bigNumberFieldsToStrings,
           getHardwareWalletProvider
-        } = await import('@web3-onboard/common')
+        } = await import('@web3-onboard/hw-common')
 
         const { TransactionFactory: Transaction, Capability } = await import(
           '@ethereumjs/tx'
