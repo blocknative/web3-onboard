@@ -286,7 +286,7 @@ export type UpdateAccountCenterAction = {
 
 export type UpdateConnectModalAction = {
   type: 'update_connect_modal'
-  payload: ConnectModalOptions | Partial<ConnectModalOptions>
+  payload: Partial<ConnectModalOptions>
 }
 
 export type SetWalletModulesAction = {
