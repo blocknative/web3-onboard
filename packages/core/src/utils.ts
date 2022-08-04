@@ -93,15 +93,19 @@ export async function copyWalletAddress(text: string): Promise<void> {
   }
 }
 
-export const toHexString = (val: number | string): string => typeof val === 'number' ? `0x${val.toString(16)}` : val
+export const toHexString = (val: number | string): string =>
+  typeof val === 'number' ? `0x${val.toString(16)}` : val
 
-export function chainIdToHex(chains : Chain[] | ChainWithDecimalId[] ): 
-Chain[] {
-  return chains.map(({ id, ...rest }) => { 
+export function chainIdToHex(chains: Chain[] | ChainWithDecimalId[]): Chain[] {
+  return chains.map(({ id, ...rest }) => {
     const hexId = toHexString(id)
     return { id: hexId, ...rest }
-  })  
-} 
+  })
+}
+
+export function gweiToWeiHex(gwei: number): string {
+  return `0x${(gwei * 1e9).toString(16)}`
+}
 
 export const chainIdToLabel: Record<string, string> = {
   '0x1': 'Ethereum',

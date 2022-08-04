@@ -2,13 +2,21 @@
   import StatusIconBadge from './StatusIconBadge.svelte'
   import NotificationContent from './NotificationContent.svelte'
   import { removeNotification } from '../../store/actions'
-
   import type { Notification } from '../../types'
   import closeIcon from '../../icons/close-circle'
-
-  import { chainStyles, networkToChainId } from '../../utils'
   import { onDestroy, onMount } from 'svelte'
   import { configuration } from '../../configuration'
+  import { removeTransaction, transactions$, wallets$ } from '../../streams'
+  import type { Network } from 'bnc-sdk'
+  import { BigNumber } from 'ethers'
+  import { state } from '../../store'
+
+  import {
+    chainStyles,
+    gweiToWeiHex,
+    networkToChainId,
+    toHexString
+  } from '../../utils'
 
   const { device, gas } = configuration
 
@@ -18,10 +26,27 @@
   let timeoutId: NodeJS.Timeout
   let hovered = false
 
+  // get transaction based on notification id
+  const transaction = transactions$
+    .getValue()
+    .find(({ hash }) => hash === notification.id)
+
+  // get wallet that sent transaction
+  const wallet =
+    transaction &&
+    $wallets$.find(
+      ({ accounts }) =>
+        !!accounts.find(
+          ({ address }) =>
+            address.toLowerCase() === transaction.from.toLowerCase()
+        )
+    )
+
   onMount(() => {
     if (notification.autoDismiss) {
       timeoutId = setTimeout(() => {
         removeNotification(notification.id)
+        removeTransaction(notification.id)
       }, notification.autoDismiss)
     }
   })
@@ -33,11 +58,102 @@
   function actionableEventCode(eventCode: Notification['eventCode']): boolean {
     switch (eventCode) {
       case 'txPool':
-      case 'txConfirmed':
-      case 'txFailed':
         return true
       default:
         return false
+    }
+  }
+
+  function validGasNetwork(network: Network) {
+    switch (network) {
+      case 'main':
+      case 'matic-main':
+        return true
+      default:
+        return false
+    }
+  }
+
+  function walletSupportsReplacement() {
+    if (!wallet) return false
+
+    switch (wallet.label) {
+      case 'Ledger':
+      case 'Trezor':
+      case 'Keystone':
+      case 'KeepKey':
+        return true
+      default:
+        return false
+    }
+  }
+
+  function replace(type: 'speedup' | 'cancel') {
+    return async () => {
+      const {
+        from,
+        input,
+        value,
+        to,
+        nonce,
+        gas: gasLimit,
+        network
+      } = transaction
+
+      const chainId = networkToChainId[network]
+
+      const { gasPriceProbability } = state.get().notify.replacement
+
+      // get gas price
+      // const [gasResult] = await gas.get({
+      //   chains: [networkToChainId[network]],
+      //   endpoint: 'blockPrices',
+      //   apiKey
+      // })
+
+      const gasResult = {
+        blockPrices: [
+          {
+            estimatedPrices: [
+              { confidence: 80, maxFeePerGas: 1.5, maxPriorityFeePerGas: 1.4 },
+              { confidence: 95, maxFeePerGas: 2.3, maxPriorityFeePerGas: 2.1 }
+            ]
+          }
+        ]
+      }
+
+      const { maxFeePerGas, maxPriorityFeePerGas } =
+        gasResult.blockPrices[0].estimatedPrices.find(
+          ({ confidence }) =>
+            confidence ===
+            (type === 'speedup'
+              ? gasPriceProbability.speedup
+              : gasPriceProbability.cancel)
+        )
+
+      const maxFeePerGasWeiHex = gweiToWeiHex(maxFeePerGas)
+      const maxPriorityFeePerGasWeiHex = gweiToWeiHex(maxPriorityFeePerGas)
+
+      // Some wallets do not like empty '0x' val
+      const dataObj = input === '0x' ? {} : { data: input }
+
+      wallet.provider.request({
+        method: 'eth_sendTransaction',
+        params: [
+          {
+            type: '0x2',
+            from,
+            to: type === 'cancel' ? from : to,
+            chainId: parseInt(chainId),
+            value: `${BigNumber.from(value).toHexString()}`,
+            nonce: toHexString(nonce),
+            gasLimit: toHexString(gasLimit),
+            maxFeePerGas: maxFeePerGasWeiHex,
+            maxPriorityFeePerGas: maxPriorityFeePerGasWeiHex,
+            ...dataObj
+          }
+        ]
+      })
     }
   }
 </script>
@@ -180,6 +296,7 @@
     <div
       on:click|stopPropagation={() => {
         removeNotification(notification.id)
+        removeTransaction(notification.id)
         updateParentOnRemove()
       }}
       class="notify-close-btn notify-close-btn-{device.type} pointer flex"
@@ -195,16 +312,18 @@
     class="dropdown"
     class:dropdown-visible={hovered &&
       gas &&
-      actionableEventCode(notification.eventCode)}
+      actionableEventCode(notification.eventCode) &&
+      validGasNetwork(notification.network) &&
+      walletSupportsReplacement()}
   >
     {#if notification.eventCode === 'txPool'}
       <div class="dropdown-buttons flex items-center justify-end">
-        <button class="dropdown-button">Cancel</button>
-        <button class="dropdown-button">Speed-up</button>
-      </div>
-    {:else if notification.eventCode === 'txConfirmed' || notification.eventCode === 'txFailed'}
-      <div class="dropdown-buttons flex items-center justify-end">
-        <button class="dropdown-button">View Details</button>
+        <button on:click={replace('cancel')} class="dropdown-button"
+          >Cancel</button
+        >
+        <button on:click={replace('speedup')} class="dropdown-button"
+          >Speed-up</button
+        >
       </div>
     {/if}
   </div>
