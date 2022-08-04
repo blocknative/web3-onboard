@@ -82,7 +82,10 @@
   }
 
   .actions {
-    color: var(--onboard-primary-400, var(--primary-400));
+    color: var(
+      --account-center-maximized-upper-action-color,
+      var(--onboard-primary-400, var(--primary-400))
+    );
     padding-left: 2px;
   }
 
@@ -94,7 +97,7 @@
 
   .action-container:hover {
     background-color: var(
-      --account-center-maximized-action-background-hover,
+      --account-center-maximized-upper-action-background-hover,
       rgba(146, 155, 237, 0.2)
     );
   }
@@ -161,9 +164,9 @@
 
   .app-info-container {
     background: var(
-      --account-center-maximized-app-info-section-background-color,
+      --account-center-maximized-info-section-background-color,
       var(
-        --account-center-maximized-app-info-section,
+        --account-center-maximized-info-section,
         var(--onboard-white, var(--white))
       )
     );
@@ -178,7 +181,10 @@
     font-weight: 700;
     font-size: var(--onboard-font-size-5, var(--font-size-5));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
-    color: var(--onboard-gray-600, var(--gray-600));
+    color: var(
+      --account-center-maximized-app-name-color,
+      var(--onboard-gray-600, var(--gray-600))
+    );
     margin-bottom: var(--onboard-spacing-5, var(--spacing-5));
     margin-top: 0;
   }
@@ -186,17 +192,26 @@
   .app-description {
     font-size: var(--onboard-font-size-7, var(--font-size-7));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
-    color: var(--onboard-gray-500, var(--gray-500));
+    color: var(
+      --account-center-maximized-app-info-color,
+      var(--onboard-gray-500, var(--gray-500))
+    );
     margin: 0;
   }
 
   .app-info {
     font-size: var(--onboard-font-size-7, var(--font-size-7));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
-    color: var(--onboard-gray-500, var(--gray-500));
+    color: var(
+      --account-center-maximized-app-info-color,
+      var(--onboard-gray-500, var(--gray-500))
+    );
   }
   .app-info-heading {
-    color: var(--onboard-gray-600, var(--gray-600));
+    color: var(
+      --account-center-maximized-app-info-color,
+      var(--onboard-gray-600, var(--gray-600))
+    );
     font-weight: 700;
     margin-top: var(--onboard-spacing-5, var(--spacing-5));
     margin-bottom: var(--onboard-spacing-7, var(--spacing-7));
