@@ -1,7 +1,7 @@
 import { fromEventPattern, Observable } from 'rxjs'
 import { filter, takeUntil, take, share, switchMap } from 'rxjs/operators'
 import partition from 'lodash.partition'
-import { utils, providers } from 'ethers'
+import { providers } from 'ethers'
 
 import type {
   ChainId,
@@ -14,6 +14,7 @@ import type {
   SelectAccountsRequest
 } from '@web3-onboard/common'
 
+import { weiToEth } from '@web3-onboard/common'
 import { disconnectWallet$ } from './streams'
 import type { Account, Address, Balances, Ens, WalletState } from './types'
 import { updateAccount, updateWallet } from './store/actions'
@@ -339,14 +340,15 @@ export async function getBalance(
 ): Promise<Balances | null> {
   // chain we don't recognize and don't have a rpcUrl for requests
   if (!chain) return null
-
-  const provider = getProvider(chain)
+  
+  const { wallets } = state.get()
 
   try {
-    const balanceWei = await provider.getBalance(address)
-
-    return balanceWei
-      ? { [chain.token || 'eth']: utils.formatEther(balanceWei) }
+    const wallet = wallets.find(wallet => !!wallet.provider)
+    const provider = wallet.provider
+    const balanceHex = await provider.request({ method: 'eth_getBalance', params:[address,'latest'] })
+    return balanceHex
+      ? { [chain.token || 'eth']: weiToEth(balanceHex) }
       : null
   } catch (error) {
     console.error(error)

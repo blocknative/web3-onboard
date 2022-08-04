@@ -17,7 +17,8 @@ import type {
   UpdateNotifyAction,
   AddNotificationAction,
   RemoveNotificationAction,
-  UpdateAllWalletsAction
+  UpdateAllWalletsAction,
+  UpdateConnectModalAction
 } from '../types'
 
 import {
@@ -27,6 +28,7 @@ import {
   REMOVE_WALLET,
   RESET_STORE,
   UPDATE_ACCOUNT,
+  UPDATE_CONNECT_MODAL,
   UPDATE_ACCOUNT_CENTER,
   UPDATE_NOTIFY,
   SET_WALLET_MODULES,
@@ -115,6 +117,18 @@ function reducer(state: AppState, action: Action): AppState {
       return {
         ...state,
         wallets: updatedWallets
+      }
+    }
+
+    case UPDATE_CONNECT_MODAL: {
+      const update = payload as UpdateConnectModalAction['payload']
+
+      return {
+        ...state,
+        connect: {
+          ...state.connect,
+          ...update
+        }
       }
     }
 

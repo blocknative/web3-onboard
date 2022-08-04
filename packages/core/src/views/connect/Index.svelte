@@ -1,6 +1,5 @@
 <script lang="ts">
   import { ProviderRpcErrorCode, WalletModule } from '@web3-onboard/common'
-  import { BigNumber } from 'ethers'
   import { BehaviorSubject, takeUntil } from 'rxjs'
   import EventEmitter from 'eventemitter3'
   import { _ } from 'svelte-i18n'
@@ -20,7 +19,7 @@
   import Sidebar from './Sidebar.svelte'
   import { configuration } from '../../configuration'
   import { getBlocknativeSdk } from '../../services'
-
+  import { BigNumber } from 'ethers'
   import {
     getChainId,
     requestAccounts,
@@ -39,7 +38,7 @@
   export let autoSelect: ConnectOptions['autoSelect']
 
   const { appMetadata } = configuration
-  const { walletModules } = state.get()
+  const { walletModules, connect } = state.get()
 
   let connectionRejected = false
   let wallets: WalletWithLoadingIcon[] = []
@@ -366,7 +365,7 @@
 {#if !autoSelect.disableModals}
   <Modal {close}>
     <div class="container relative flex">
-      {#if windowWidth >= 809}
+      {#if windowWidth >= 809 && connect.showSidebar}
         <Sidebar step={$modalStep$} />
       {/if}
 

@@ -19,7 +19,6 @@ async function updateBalances(addresses?: string[]): Promise<void> {
             )
           ) {
             const updatedBalance = await getBalance(account.address, chain)
-
             return { ...account, balance: updatedBalance }
           }
           return account

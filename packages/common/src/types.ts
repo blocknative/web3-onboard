@@ -1,7 +1,7 @@
-import type { ethers, BigNumber } from 'ethers'
 import type { ConnectionInfo } from 'ethers/lib/utils'
 import type EventEmitter from 'eventemitter3'
 import type { TypedData as EIP712TypedData } from 'eip-712'
+import type { ethers } from 'ethers'
 export type { TypedData as EIP712TypedData } from 'eip-712'
 
 /**
@@ -116,7 +116,7 @@ export type Account = {
   derivationPath: DerivationPath
   balance: {
     asset: Asset['label']
-    value: BigNumber
+    value: ethers.BigNumber
   }
 }
 

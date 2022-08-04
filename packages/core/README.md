@@ -28,10 +28,12 @@ type InitOptions {
   wallets: WalletInit[]
   chains: Chain[]
   appMetadata?: AppMetadata
+  connect?: ConnectModalOptions
   i18n?: i18nOptions
   accountCenter?: AccountCenterOptions
   apiKey?: string
   notify?: Partial<NotifyOptions>
+  connect?: Partial<ConnectModalOptions>
 }
 ```
 
@@ -82,6 +84,15 @@ type AppMetadata = {
 type RecommendedInjectedWallets = {
   name: string // display name
   url: string // link to download wallet
+}
+```
+
+**`connect`**
+An object that allows for customization of the Connect Modal and accepts the type ConnectModalOptions.
+
+```typescript
+type ConnectModalOptions = {
+  showSidebar?: boolean
 }
 ```
 
@@ -641,14 +652,15 @@ setTimeout(
 **`preflightNotifications`**
 Notify can be used to deliver standard notifications along with preflight information by passing a `PreflightNotificationsOptions` object to the `preflightNotifications` action. This will return a a promise that resolves to the transaction hash (if `sendTransaction` resolves the transaction hash and is successful), the internal notification id (if no `sendTransaction` function is provided) or return nothing if an error occurs or `sendTransaction` is not provided or doesn't resolve to a string.
 
-Preflight event types include 
- - `txRequest` : Alert user there is a transaction request awaiting confirmation by their wallet
- - `txAwaitingApproval` : A previous transaction is awaiting confirmation
- - `txConfirmReminder` : Reminder to confirm a transaction to continue - configurable with the `txApproveReminderTimeout` property; defaults to 15 seconds
- - `nsfFail` : The user has insufficient funds for transaction (requires `gasPrice`, `estimateGas`, `balance`, `txDetails.value`)
- - `txError` : General transaction error (requires `sendTransaction`)
- - `txSendFail` : The user rejected the transaction (requires `sendTransaction`)
- - `txUnderpriced` : The gas price for the transaction is too low (requires `sendTransaction`)
+Preflight event types include
+
+- `txRequest` : Alert user there is a transaction request awaiting confirmation by their wallet
+- `txAwaitingApproval` : A previous transaction is awaiting confirmation
+- `txConfirmReminder` : Reminder to confirm a transaction to continue - configurable with the `txApproveReminderTimeout` property; defaults to 15 seconds
+- `nsfFail` : The user has insufficient funds for transaction (requires `gasPrice`, `estimateGas`, `balance`, `txDetails.value`)
+- `txError` : General transaction error (requires `sendTransaction`)
+- `txSendFail` : The user rejected the transaction (requires `sendTransaction`)
+- `txUnderpriced` : The gas price for the transaction is too low (requires `sendTransaction`)
 
 ```typescript
 interface PreflightNotificationsOptions {
@@ -679,8 +691,7 @@ const sendTransaction = () => {
   return signer.sendTransaction(txDetails).then(tx => tx.hash)
 }
 
-const gasPrice = () =>
-  ethersProvider.getGasPrice().then(res => res.toString())
+const gasPrice = () => ethersProvider.getGasPrice().then(res => res.toString())
 
 const estimateGas = () => {
   return ethersProvider.estimateGas(txDetails).then(res => res.toString())
@@ -700,16 +711,9 @@ If you need to update your Account Center configuration after initialization, yo
 
 ```typescript
 onboard.state.actions.updateAccountCenter({
-  desktop: {
-    position: 'topRight',
-    enabled: true,
-    minimal: true
-  },
-  mobile: {
-    position: 'topRight',
-    enabled: true,
-    minimal: true
-  }
+  position: 'topRight',
+  enabled: true,
+  minimal: true
 })
 ```
 
@@ -812,7 +816,7 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --account-center-app-btn-text-color
   --account-center-app-btn-background
   --account-center-app-btn-font-family
-  
+
   /* CUSTOMIZE SECTIONS OF THE CONNECT MODAL */
   --onboard-connect-content-width
   --onboard-connect-content-height
