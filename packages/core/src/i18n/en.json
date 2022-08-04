@@ -98,7 +98,8 @@
       "txSpeedUp": "Transaction for {formattedValue} {asset} {preposition} {counterpartyShortened} has been sped up",
       "txCancel": "Transaction for {formattedValue} {asset} {preposition} {counterpartyShortened} has been canceled",
       "txConfirmed": "Your account successfully {verb} {formattedValue} {asset} {preposition} {counterpartyShortened}",
-      "txFailed": "Your account failed to {verb} {formattedValue} {asset} {preposition} {counterpartyShortened}"
+      "txFailed": "Your account failed to {verb} {formattedValue} {asset} {preposition} {counterpartyShortened}",
+      "txStuck": "Your transaction is stuck due to a nonce gap"
     },
     "time": {
       "minutes": "min",
