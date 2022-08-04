@@ -18,7 +18,7 @@
     toHexString
   } from '../../utils'
 
-  const { device, gas } = configuration
+  const { device, gas, apiKey } = configuration
 
   export let notification: Notification
   export let updateParentOnRemove: () => void
@@ -105,22 +105,11 @@
       const { gasPriceProbability } = state.get().notify.replacement
 
       // get gas price
-      // const [gasResult] = await gas.get({
-      //   chains: [networkToChainId[network]],
-      //   endpoint: 'blockPrices',
-      //   apiKey
-      // })
-
-      const gasResult = {
-        blockPrices: [
-          {
-            estimatedPrices: [
-              { confidence: 80, maxFeePerGas: 1.5, maxPriorityFeePerGas: 1.4 },
-              { confidence: 95, maxFeePerGas: 2.3, maxPriorityFeePerGas: 2.1 }
-            ]
-          }
-        ]
-      }
+      const [gasResult] = await gas.get({
+        chains: [networkToChainId[network]],
+        endpoint: 'blockPrices',
+        apiKey
+      })
 
       const { maxFeePerGas, maxPriorityFeePerGas } =
         gasResult.blockPrices[0].estimatedPrices.find(
