@@ -70,7 +70,7 @@
     overflow: visible;
     scrollbar-width: none;
     box-sizing: border-box;
-    z-index: var(--nofity-onboard-z-index, 300);
+    z-index: var(--notify-onboard-z-index, 300);
     font-family: var(
       --notify-onboard-font-family-normal,
       var(--onboard-font-family-normal, var(--font-family-normal))

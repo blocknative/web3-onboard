@@ -817,6 +817,23 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --account-center-app-btn-background
   --account-center-app-btn-font-family
 
+  --account-center-border
+  --account-center-box-shadow
+  --account-center-boarder-radius
+  --account-center-chain-warning
+  --account-center-minimized-balance-color
+  --account-center-minimized-chain-select-background
+
+  --account-center-maximized-network-section-background
+  --account-center-maximized-network-text-color
+  --account-center-maximized-info-section-background-color
+  --account-center-maximized-upper-action-color
+  --account-center-maximized-upper-action-background-hover
+  --account-center-maximized-app-name-color
+  --account-center-maximized-app-info-color
+
+  --account-center-micro-background
+
   /* CUSTOMIZE SECTIONS OF THE CONNECT MODAL */
   --onboard-connect-content-width
   --onboard-connect-content-height
@@ -951,6 +968,17 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --notify-onboard-primary-100
   --notify-onboard-primary-400
   --notify-onboard-main-padding
+
+  --notify-onboard-z-index
+  --notify-onboard-background
+  --notify-onboard-close-icon-color
+  --notify-onboard-close-icon-hover
+  --notify-onboard-transaction-status-color
+  --notify-onboard-transaction-font-size
+  --notify-onboard-hash-time-font-size
+  --notify-onboard-hash-time-font-line-height
+  --notify-onboard-address-hash-color
+  --notify-onboard-anchor-color
 }
 ```
 
