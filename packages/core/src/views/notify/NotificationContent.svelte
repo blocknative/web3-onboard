@@ -10,7 +10,7 @@
 <style>
   div.notify-transaction-data {
     font-size: var(
-      --notify-onboard-font-size-6,
+      --notify-onboard-transaction-font-size,
       var(--onboard-font-size-6, var(--font-size-6))
     );
     font-family: inherit;
@@ -22,25 +22,25 @@
     display: inline-flex;
     margin-top: 4px;
     font-size: var(
-      --notify-onboard-font-size-7,
+      --notify-onboard-hash-time-font-size,
       var(--onboard-font-size-7, var(--font-size-7))
     );
     line-height: var(
-      --notify-onboard-font-line-height-4,
+      --notify-onboard-hash-time-font-line-height,
       var(--onboard-font-line-height-4, var(--font-line-height-4))
     );
   }
 
   .address-hash {
     color: var(
-      --notify-onboard-primary-200,
+      --notify-onboard-address-hash-color,
       var(--onboard-primary-200, var(--primary-200))
     );
   }
 
   a.address-hash {
     color: var(
-      --notify-onboard-primary-400,
+      --notify-onboard-anchor-color,
       var(--onboard-primary-400, var(--primary-400))
     );
   }
