@@ -34,12 +34,6 @@ type InitOptions {
   apiKey?: string
   notify?: Partial<NotifyOptions>
   connect?: Partial<ConnectModalOptions>
-  replacement?: {
-    gasPriceProbability: {
-      speedup: number,
-      cancel: number
-    }
-  }
 }
 ```
 
@@ -182,6 +176,12 @@ export type Notify = {
     event: EthereumTransactionData
   ) => TransactionHandlerReturn
   position: CommonPositions
+  replacement?: {
+    gasPriceProbability: {
+      speedup: number // default 80
+      cancel: number // default 95
+    }
+  }
 }
 
 export type CommonPositions =
@@ -229,22 +229,6 @@ export interface UpdateNotification {
     update: UpdateNotification
   }
 }
-```
-
-**`replacement`**
-Allows for customization of the [probabilities of getting in to the next block](https://docs.blocknative.com/gas-platform#estimatedprices-greater-than-confidence) for replacement transactions that are initiated by Web3 Onboard.
-Defaults are shown below:
-
-```javascript
-const onboard = Web3Onboard({
-  // ... other init options
-  replacement?: {
-    gasPriceProbability: {
-      speedup: 80,
-      cancel: 95
-    }
-  }
-})
 ```
 
 ### Initialization Example
