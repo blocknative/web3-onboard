@@ -201,7 +201,7 @@
           validAppChain
             ? '--account-center-minimized-chain-select-background, var(--primary-100)'
             : '--account-center-minimized-chain-select-background-warning, var(--warning-100)'
-        }))`}
+        })`}
       >
         <div class="flex items-center">
           <div

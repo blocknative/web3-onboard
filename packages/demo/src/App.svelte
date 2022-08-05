@@ -122,36 +122,6 @@
         token: 'ETH',
         label: 'Ethereum',
         rpcUrl: 'https://mainnet.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
-      },
-      {
-        id: 3,
-        token: 'tROP',
-        label: 'Ropsten',
-        rpcUrl: 'https://ropsten.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
-      },
-      {
-        id: 4,
-        token: 'rETH',
-        label: 'Rinkeby',
-        rpcUrl: 'https://rinkeby.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
-      },
-      {
-        id: 137,
-        token: 'MATIC',
-        label: 'Polygon',
-        rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
-      },
-      {
-        id: '0x13881',
-        token: 'MATIC',
-        label: 'Polygon - Mumbai',
-        rpcUrl: 'https://matic-mumbai.chainstacklabs.com	'
-      },
-      {
-        id: 10,
-        token: 'OETH',
-        label: 'Optimism',
-        rpcUrl: 'https://mainnet.optimism.io'
       }
     ],
     appMetadata: {
@@ -319,6 +289,69 @@
 </script>
 
 <style>
+
+:root {
+    --background-color: #FFFFFF; /* --white */
+    --text-color: #1A1D26;  /* --gray-700 */
+    --border-color: #ebebed;  /* --gray-100 taken from future mock */
+
+    --accent-background: #ebebed;  /* --primary-100 (currently gray-100 in connect modal) */
+    --accent-color: #929BED;  /* --primary-400 */
+    --accent-color-hover: #eff1fc;  /* --primary-200 */
+
+		/* Account Center & Notify */
+    --secondary-text-color: #707481;  /* --gray-400 (balance and token name) */
+    --secondary-accent-background: #242835;  /* --gray-600 (Upper background in maximized) */
+
+
+
+    /* --onboard-font-family-normal: System,monospace; */
+    --onboard-connect-sidebar-background: var(--accent-background);
+    --onboard-connect-sidebar-color: var(--text-color);
+    --onboard-connect-sidebar-progress-background: var(--text-color);
+    --onboard-connect-sidebar-progress-color: var(--accent-color);
+    --onboard-connect-header-background: var(--background-color);
+    --onboard-connect-header-color: var(--text-color);
+    --onboard-main-scroll-container-background: var(--background-color);
+    --onboard-link-color: var(--accent-color);
+    --onboard-wallet-button-background: var(--background-color);
+    --onboard-wallet-button-background-hover: var(--accent-color-hover);
+    --onboard-wallet-button-border-color: var(--border-color);
+    --onboard-wallet-app-icon-border-color:  var(--border-color);
+
+		--account-center-minimized-background: var(--background-color);
+		--account-center-minimized-address-color: var(--text-color);
+		--account-center-minimized-balance-color: var(--secondary-text-color);
+		--account-center-minimized-chain-select-background: var(--accent-color-hover);
+		--account-center-maximized-info-section-background-color: var(--background-color);
+		--account-center-maximized-network-section-background: var(--accent-background);
+		--account-center-maximized-upper-background: var(--secondary-accent-background);
+		--account-center-maximized-address-color: var(--background-color);
+		--account-center-maximized-account-section-background-hover: var(--text-color);
+		--account-center-maximized-balance-color: var(--border-color);
+		--account-center-maximized-upper-action-color: var(--accent-color);
+		--account-center-maximized-network-text-color: var(--secondary-accent-background);
+		--account-center-maximized-info-section-background-color: var(--background-color);
+		--account-center-maximized-app-name-color: var(--secondary-accent-background);
+		--account-center-maximized-app-info-color: var(--secondary-accent-background);
+		--account-center-app-btn-background: var(--secondary-accent-background);
+		--account-center-app-btn-text-color: var(--background-color);
+
+		--notify-onboard-background: var(----secondary-accent-color);
+		--notify-onboard-transaction-status: var(--accent-background);
+		--notify-onboard-address-hash-color: var(--accent-color-hover);
+		--notify-onboard-anchor-color: var(--accent-color);
+		--notify-onboard-timer-color: var(--secondary-text-color);
+
+
+	/* 
+		NEEDS TARGET AS IT USES OPACITY: 
+		--account-center-maximized-upper-action-background-hover
+		NEEDS UPDATES FOR DIFFERNT STYLING, DOESNT FIT BASIC VARIABLES ABOVE:
+		Notify status icons, icon backgrounds and icon borders
+	*/
+
+  }
   button {
     width: 14rem;
     margin: 8px;
