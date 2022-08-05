@@ -122,6 +122,36 @@
         token: 'ETH',
         label: 'Ethereum',
         rpcUrl: 'https://mainnet.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
+      },
+      {
+        id: 3,
+        token: 'tROP',
+        label: 'Ropsten',
+        rpcUrl: 'https://ropsten.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
+      },
+      {
+        id: 4,
+        token: 'rETH',
+        label: 'Rinkeby',
+        rpcUrl: 'https://rinkeby.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
+      },
+      {
+        id: 137,
+        token: 'MATIC',
+        label: 'Polygon',
+        rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+      },
+      {
+        id: '0x13881',
+        token: 'MATIC',
+        label: 'Polygon - Mumbai',
+        rpcUrl: 'https://matic-mumbai.chainstacklabs.com	'
+      },
+      {
+        id: 10,
+        token: 'OETH',
+        label: 'Optimism',
+        rpcUrl: 'https://mainnet.optimism.io'
       }
     ],
     appMetadata: {
@@ -295,7 +325,7 @@
     --text-color: #1A1D26;  /* --gray-700 */
     --border-color: #ebebed;  /* --gray-100 taken from future mock */
 
-    --accent-background: #ebebed;  /* --primary-100 (currently gray-100 in connect modal) */
+    --accent-background: #ebebed;  /* --gray-100 (currently gray-100 in connect modal) */
     --accent-color: #929BED;  /* --primary-400 */
     --accent-color-hover: #eff1fc;  /* --primary-200 */
 
