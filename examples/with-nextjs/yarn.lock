@@ -948,10 +948,10 @@
     "@typescript-eslint/types" "5.31.0"
     eslint-visitor-keys "^3.3.0"
 
-"@web3-onboard/common@^2.1.7-alpha.3", "@web3-onboard/common@^2.1.7-alpha.4":
-  version "2.1.7-alpha.4"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/common/-/common-2.1.7-alpha.4.tgz#05ffc9a41b01fdd6b49903317a4868fdbec22c3d"
-  integrity sha512-8fdPvjQGr6orwc7e0AKS197h8quaEivxr8vvnn9eLDwL3zH2Ev3VlaZYXJG42aCd3XDXGufRum+92wMqz92aOA==
+"@web3-onboard/common@^2.1.7":
+  version "2.1.7"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/common/-/common-2.1.7.tgz#62c74726ed9dd6e8baadab1e6aec6462d62e7d2d"
+  integrity sha512-4nJvfNl0t5D17B1jD8H9BNBtUOVDDHxyxmRyQxnv1u1D5dgdd2I/mUVGhee0xWIHgMy9ORjuJCApraYCwZfgJA==
   dependencies:
     "@ethereumjs/common" "2.6.2"
     bignumber.js "^9.0.0"
@@ -959,12 +959,12 @@
     joi "^17.4.2"
     rxjs "^7.5.2"
 
-"@web3-onboard/core@^2.6.0-alpha.7":
-  version "2.6.0-alpha.7"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.6.0-alpha.7.tgz#f205487e57520756fa245dcc7a5003924a2bd765"
-  integrity sha512-fZUh5HJ4au9ibyLEzWFJSidod9cvcYeUhh032B2yDHIpn2nX1JgWF1e7FcR0QrvM/9DK2CPLprNvfLTRJbx2IQ==
+"@web3-onboard/core@^2.7.0-alpha.1":
+  version "2.7.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.7.0-alpha.1.tgz#8b935922434facbaddd04e6db7f00378d2462bc5"
+  integrity sha512-tM+80XUWXR8cRwqJpJyrWfv7OJKsz0665I43DhxIA5jYVm0MgpWnP/HoZJZ2UJI/RZZtGNWCcazqHrRWI3Z32Q==
   dependencies:
-    "@web3-onboard/common" "^2.1.7-alpha.3"
+    "@web3-onboard/common" "^2.1.7"
     bignumber.js "^9.0.0"
     bnc-sdk "^4.4.1"
     bowser "^2.11.0"
@@ -979,11 +979,11 @@
     svelte-i18n "^3.3.13"
 
 "@web3-onboard/react@file:.yalc/@web3-onboard/react":
-  version "2.2.5-alpha.6"
+  version "2.2.6-alpha.2"
   dependencies:
     "@types/react" "^18.0.15"
-    "@web3-onboard/common" "^2.1.7-alpha.4"
-    "@web3-onboard/core" "^2.6.0-alpha.7"
+    "@web3-onboard/common" "^2.1.7"
+    "@web3-onboard/core" "^2.7.0-alpha.1"
     react "^18.2.0"
     use-sync-external-store "1.0.0"
 
