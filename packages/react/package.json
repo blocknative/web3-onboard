@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/react",
-  "version": "2.2.5-alpha.7",
+  "version": "2.2.6-alpha.1",
   "description": "A collection of React hooks for integrating Web3-Onboard in to React and Next.js projects. Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardised spec compliant web3 providers for all supported wallets, modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
   "keywords": [
     "Ethereum",
@@ -50,23 +50,20 @@
     "dist"
   ],
   "scripts": {
-    "build": "yarn clean && tsc",
-    "clean": "rimraf dist",
-    "prepublishOnly": "yarn build",
+    "build": "tsc",
     "dev": "tsc -w",
     "type-check": "tsc --noEmit"
   },
   "license": "MIT",
   "devDependencies": {
+    "@types/react": "^18.0.2",
     "@types/use-sync-external-store": "^0.0.3",
-    "rimraf": "^3.0.2",
+    "react": "^18.0.0",
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@types/react": "^18.0.15",
-    "@web3-onboard/common": "^2.1.7-alpha.4",
-    "@web3-onboard/core": "^2.6.0-alpha.7",
-    "react": "^18.2.0",
+    "@web3-onboard/core": "^2.7.0-alpha.1",
+    "@web3-onboard/common": "^2.1.7",
     "use-sync-external-store": "1.0.0"
   },
   "peerDependencies": {
