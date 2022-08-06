@@ -24,7 +24,9 @@ import type {
   CustomNotification,
   UpdateNotification,
   CustomNotificationUpdate,
-  Notify
+  Notify,
+  ConnectModalOptions,
+  UpdateConnectModalAction
 } from '../types'
 
 import {
@@ -37,7 +39,8 @@ import {
   validateWallet,
   validateWalletInit,
   validateUpdateBalances,
-  validateNotify
+  validateNotify,
+  validateConnectModalUpdate
 } from '../validation'
 
 import {
@@ -53,7 +56,8 @@ import {
   SET_LOCALE,
   ADD_NOTIFICATION,
   REMOVE_NOTIFICATION,
-  UPDATE_ALL_WALLETS
+  UPDATE_ALL_WALLETS,
+  UPDATE_CONNECT_MODAL
 } from './constants'
 
 export function addChains(chains: Chain[]): void {
@@ -178,6 +182,23 @@ export function updateAccountCenter(
   }
 
   dispatch(action as UpdateAccountCenterAction)
+}
+
+export function updateConnectModal(
+  update: ConnectModalOptions | Partial<ConnectModalOptions>
+): void {
+  const error = validateConnectModalUpdate(update)
+
+  if (error) {
+    throw error
+  }
+
+  const action = {
+    type: UPDATE_CONNECT_MODAL,
+    payload: update
+  }
+
+  dispatch(action as UpdateConnectModalAction)
 }
 
 export function updateNotify(update: Partial<Notify>): void {
