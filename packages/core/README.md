@@ -28,10 +28,12 @@ type InitOptions {
   wallets: WalletInit[]
   chains: Chain[]
   appMetadata?: AppMetadata
+  connect?: ConnectModalOptions
   i18n?: i18nOptions
   accountCenter?: AccountCenterOptions
   apiKey?: string
   notify?: Partial<NotifyOptions>
+  connect?: Partial<ConnectModalOptions>
 }
 ```
 
@@ -82,6 +84,15 @@ type AppMetadata = {
 type RecommendedInjectedWallets = {
   name: string // display name
   url: string // link to download wallet
+}
+```
+
+**`connect`**
+An object that allows for customization of the Connect Modal and accepts the type ConnectModalOptions.
+
+```typescript
+type ConnectModalOptions = {
+  showSidebar?: boolean
 }
 ```
 
@@ -700,16 +711,9 @@ If you need to update your Account Center configuration after initialization, yo
 
 ```typescript
 onboard.state.actions.updateAccountCenter({
-  desktop: {
-    position: 'topRight',
-    enabled: true,
-    minimal: true
-  },
-  mobile: {
-    position: 'topRight',
-    enabled: true,
-    minimal: true
-  }
+  position: 'topRight',
+  enabled: true,
+  minimal: true
 })
 ```
 
