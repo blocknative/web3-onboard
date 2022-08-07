@@ -6,8 +6,7 @@ const frameworks = ['npm', 'yarn'];
 
 # @web3-onboard/coinbase
 
-## Wallet module for connecting Coinbase Wallet SDK to web3-onboard
-See [Coinbase Wallet Developer Docs](https://docs.cloud.coinbase.com/wallet-sdk/docs)
+Wallet module for connecting Coinbase Wallet SDK to web3-onboard. Check out the [Coinbase Wallet Developer Docs](https://docs.cloud.coinbase.com/wallet-sdk/docs) for more information.
 
 ### Install
 

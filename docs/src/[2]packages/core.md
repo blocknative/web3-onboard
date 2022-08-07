@@ -260,7 +260,7 @@ export interface UpdateNotification {
 
 Putting it all together, here is an example initialization with the injected wallet modules:
 
-```javascript
+```ts
 import Onboard from '@web3-onboard/core'
 import injectedModule from '@web3-onboard/injected-wallets'
 
@@ -273,19 +273,19 @@ const onboard = Onboard({
       id: '0x1',
       token: 'ETH',
       label: 'Ethereum Mainnet',
-      rpcUrl: `https://mainnet.infura.io/v3/${INFURA_ID}`
+      rpcUrl: 'https://mainnet.infura.io/v3/${INFURA_ID}'
     },
     {
       id: '0x3',
       token: 'tROP',
       label: 'Ethereum Ropsten Testnet',
-      rpcUrl: `https://ropsten.infura.io/v3/${INFURA_ID}`
+      rpcUrl: 'https://ropsten.infura.io/v3/${INFURA_ID}'
     },
     {
       id: '0x4',
       token: 'rETH',
       label: 'Ethereum Rinkeby Testnet',
-      rpcUrl: `https://rinkeby.infura.io/v3/${INFURA_ID}`
+      rpcUrl: 'https://rinkeby.infura.io/v3/${INFURA_ID}'
     },
     {
       id: '0x38',
@@ -316,7 +316,7 @@ const onboard = Onboard({
       { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
     ]
   },
-  apiKey: 'xxx387fb-bxx1-4xxc-a0x3-9d37e426xxxx'
+  apiKey: 'xxx387fb-bxx1-4xxc-a0x3-9d37e426xxxx',
   notify: {
     desktop: {
       enabled: true,
@@ -381,6 +381,7 @@ const onboard = Onboard({
     }
   }
 })
+
 ```
 
 ## Connecting a Wallet
@@ -595,7 +596,7 @@ const onboard = Onboard({
       id: '0x1',
       token: 'ETH',
       label: 'Ethereum Mainnet',
-      rpcUrl: `https://mainnet.infura.io/v3/${INFURA_ID}`
+      rpcUrl: 'https://mainnet.infura.io/v3/${INFURA_ID}'
     }
   ]
 })
@@ -619,14 +620,16 @@ onboard.state.actions.updateBalances([
 **`setLocale`**
 Onboard will automatically detect the browser locale at runtime, but if you would like to update it manually you can call the `setLocale` function:
 
-```javascript
+```js
+
 onboard.state.actions.setLocal('fr_FR')
+
 ```
 
 **`updateNotify`**
 If you need to update your notify configuration after initialization, you can do that by calling the `updateNotify` function:
 
-```javascript
+```ts
 onboard.state.actions.updateNotify({
   desktop: {
     enabled: true,
@@ -751,7 +754,8 @@ onboard.state.actions.updateAccountCenter({
 **`setPrimaryWallet`**
 The primary wallet (first in the list of connected wallets) and primary account (first in the list of connected accounts for a wallet) can be set by using the `setPrimaryWallet` function. The wallet that is set needs to be passed in for the first parameter and if you would like to set the primary account, the address of that account also needs to be passed in:
 
-```typescript
+```js
+
 // set the second wallet in the wallets array as the primary
 onboard.state.actions.setPrimaryWallet(wallets[1])
 
@@ -761,13 +765,15 @@ onboard.state.actions.setPrimaryWallet(
   wallets[1],
   wallets[1].accounts[2].address
 )
+
 ```
 
 ## Setting the User's Chain/Network
 
 When initializing Onboard you define a list of chains/networks that your app supports. If you would like to prompt the user to switch to one of those chains, you can use the `setChain` method on an initialized instance of Onboard:
 
-```typescript
+```ts
+
 type SetChain = (options: SetChainOptions) => Promise<boolean>
 type SetChainOptions = {
   chainId: string // hex encoded string
