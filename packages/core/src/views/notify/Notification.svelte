@@ -1,24 +1,27 @@
 <script lang="ts">
+  import { onDestroy, onMount } from 'svelte'
+  import { _ } from 'svelte-i18n'
   import StatusIconBadge from './StatusIconBadge.svelte'
   import NotificationContent from './NotificationContent.svelte'
-  import { removeNotification } from '../../store/actions'
   import type { Notification } from '../../types'
   import closeIcon from '../../icons/close-circle'
-  import { onDestroy, onMount } from 'svelte'
   import { configuration } from '../../configuration'
   import { removeTransaction, transactions$, wallets$ } from '../../streams'
-  import type { Network } from 'bnc-sdk'
-  import { BigNumber } from 'ethers'
-  import { state } from '../../store'
+  import { chainStyles, networkToChainId } from '../../utils'
 
   import {
-    chainStyles,
-    gweiToWeiHex,
-    networkToChainId,
-    toHexString
-  } from '../../utils'
+    addCustomNotification,
+    removeNotification
+  } from '../../store/actions'
 
-  const { device, gas, apiKey } = configuration
+  import {
+    actionableEventCode,
+    replaceTransaction,
+    validGasNetwork,
+    walletSupportsReplacement
+  } from '../../replacement'
+
+  const { device, gas } = configuration
 
   export let notification: Notification
   export let updateParentOnRemove: () => void
@@ -54,97 +57,6 @@
   onDestroy(() => {
     clearTimeout(timeoutId)
   })
-
-  function actionableEventCode(eventCode: Notification['eventCode']): boolean {
-    switch (eventCode) {
-      case 'txPool':
-        return true
-      default:
-        return false
-    }
-  }
-
-  function validGasNetwork(network: Network) {
-    switch (network) {
-      case 'main':
-      case 'matic-main':
-        return true
-      default:
-        return false
-    }
-  }
-
-  function walletSupportsReplacement() {
-    if (!wallet) return false
-
-    switch (wallet.label) {
-      case 'Ledger':
-      case 'Trezor':
-      case 'Keystone':
-      case 'KeepKey':
-        return true
-      default:
-        return false
-    }
-  }
-
-  function replace(type: 'speedup' | 'cancel') {
-    return async () => {
-      const {
-        from,
-        input,
-        value,
-        to,
-        nonce,
-        gas: gasLimit,
-        network
-      } = transaction
-
-      const chainId = networkToChainId[network]
-
-      const { gasPriceProbability } = state.get().notify.replacement
-
-      // get gas price
-      const [gasResult] = await gas.get({
-        chains: [networkToChainId[network]],
-        endpoint: 'blockPrices',
-        apiKey
-      })
-
-      const { maxFeePerGas, maxPriorityFeePerGas } =
-        gasResult.blockPrices[0].estimatedPrices.find(
-          ({ confidence }) =>
-            confidence ===
-            (type === 'speedup'
-              ? gasPriceProbability.speedup
-              : gasPriceProbability.cancel)
-        )
-
-      const maxFeePerGasWeiHex = gweiToWeiHex(maxFeePerGas)
-      const maxPriorityFeePerGasWeiHex = gweiToWeiHex(maxPriorityFeePerGas)
-
-      // Some wallets do not like empty '0x' val
-      const dataObj = input === '0x' ? {} : { data: input }
-
-      wallet.provider.request({
-        method: 'eth_sendTransaction',
-        params: [
-          {
-            type: '0x2',
-            from,
-            to: type === 'cancel' ? from : to,
-            chainId: parseInt(chainId),
-            value: `${BigNumber.from(value).toHexString()}`,
-            nonce: toHexString(nonce),
-            gasLimit: toHexString(gasLimit),
-            maxFeePerGas: maxFeePerGasWeiHex,
-            maxPriorityFeePerGas: maxPriorityFeePerGasWeiHex,
-            ...dataObj
-          }
-        ]
-      })
-    }
-  }
 </script>
 
 <style>
@@ -303,15 +215,43 @@
       gas &&
       actionableEventCode(notification.eventCode) &&
       validGasNetwork(notification.network) &&
-      walletSupportsReplacement()}
+      walletSupportsReplacement(wallet)}
   >
     {#if notification.eventCode === 'txPool'}
       <div class="dropdown-buttons flex items-center justify-end">
-        <button on:click={replace('cancel')} class="dropdown-button"
-          >Cancel</button
+        <button
+          on:click={async () => {
+            try {
+              await replaceTransaction({ type: 'cancel', wallet, transaction })
+            } catch (error) {
+              addCustomNotification({
+                id: transaction.hash,
+                type: 'error',
+                eventCode: 'txError',
+                message: $_('notify.watched.txError')
+              })
+            }
+          }}
+          class="dropdown-button">Cancel</button
         >
-        <button on:click={replace('speedup')} class="dropdown-button"
-          >Speed-up</button
+        <button
+          on:click={async () => {
+            try {
+              await replaceTransaction({
+                type: 'speedup',
+                wallet,
+                transaction
+              })
+            } catch (error) {
+              addCustomNotification({
+                id: transaction.hash,
+                type: 'error',
+                eventCode: 'txError',
+                message: $_('notify.watched.txError')
+              })
+            }
+          }}
+          class="dropdown-button">Speed-up</button
         >
       </div>
     {/if}
