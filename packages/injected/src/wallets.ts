@@ -94,9 +94,9 @@ const binance: InjectedWalletModule = {
 
     const provider = createEIP1193Provider(window.BinanceChain, {
       eth_chainId: ({ baseRequest }) =>
-        baseRequest({ method: 'eth_chainId' }).then(id => {
-          return `0x${parseInt(id as string).toString(16)}`
-        }),
+        baseRequest({ method: 'eth_chainId' }).then(id =>
+          `0x${parseInt(id as string).toString(16)}`
+        ),
       // Unsupported method -- will throw error
       eth_selectAccounts: UNSUPPORTED_METHOD,
       wallet_switchEthereumChain: UNSUPPORTED_METHOD
@@ -459,7 +459,7 @@ const tokenary: InjectedWalletModule = {
   getInterface: async () => ({
     provider: createEIP1193Provider(window.ethereum)
   }),
-  platforms: ['mobile']
+  platforms: ['all']
 }
 
 const tally: InjectedWalletModule = {

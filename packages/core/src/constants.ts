@@ -18,7 +18,10 @@ export const APP_INITIAL_STATE: AppState = {
     position: 'topRight'
   },
   notifications: [],
-  locale: ''
+  locale: '',
+  connect : {
+    showSidebar: true
+  }
 }
 
 export const STORAGE_KEYS = {
