@@ -9,7 +9,6 @@
 
 .theme.__vbk__ {
   --vbk--color-primary: #262a3d;
-  --vbk--color-primary-rgb: 97, 15, 230;
 }
 
 html.dark .theme.__vbk__ {
