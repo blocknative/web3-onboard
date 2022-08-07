@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.navbar__logo > svg {
+  @apply rounded-xl;
+  @apply shadow-lg;
+}
+
+.theme.__vbk__ {
+  --vbk--color-primary: #262a3d;
+  --vbk--color-primary-rgb: 97, 15, 230;
+}
+
+html.dark .theme.__vbk__ {
+  --vbk--color-primary: #55ccfe;
+  --vbk--color-bg-400: #0f0f0f;
+  --vbk--sidebar-item-active-bg-color: #ffffff1a;
+}

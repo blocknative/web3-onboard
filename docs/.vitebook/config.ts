@@ -27,6 +27,9 @@ export default defineConfig<DefaultThemeConfig>({
     description: 'Documentation for Web3-Onboard',
     /** @type {(import('@vitebook/theme-default/node').DefaultThemeConfig} */
     theme: {
+      remoteGitRepo: {
+        url: 'blocknative/web3-onboard',
+      },
       navbar: {},
       sidebar: {
         style: 'docs',
