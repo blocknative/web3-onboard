@@ -224,11 +224,20 @@
             try {
               await replaceTransaction({ type: 'cancel', wallet, transaction })
             } catch (error) {
+              // we want a unique id so that the hint notification does not replace the pending notification, so it can't just be the hash
+              // but the id is displayed as a hash, so we need to insert the error in the middle
+              const id = `${transaction.hash.slice(
+                0,
+                9
+              )}:txReplaceError${transaction.hash.slice(-5)}`
+
               addCustomNotification({
-                id: transaction.hash,
-                type: 'error',
+                id,
+                type: 'hint',
                 eventCode: 'txError',
-                message: $_('notify.watched.txError')
+                message: $_('notify.transaction.txReplaceError'),
+                key: id,
+                autoDismiss: 4000
               })
             }
           }}
@@ -243,11 +252,20 @@
                 transaction
               })
             } catch (error) {
+              // we want a unique id so that the hint notification does not replace the pending notification, so it can't just be the hash
+              // but the id is displayed as a hash, so we need to insert the error in the middle
+              const id = `${transaction.hash.slice(
+                0,
+                9
+              )}:txReplaceError${transaction.hash.slice(-5)}`
+
               addCustomNotification({
-                id: transaction.hash,
-                type: 'error',
+                id,
+                type: 'hint',
                 eventCode: 'txError',
-                message: $_('notify.watched.txError')
+                message: $_('notify.transaction.txReplaceError'),
+                key: id,
+                autoDismiss: 4000
               })
             }
           }}
