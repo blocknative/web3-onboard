@@ -178,8 +178,10 @@ export type Notify = {
   position: CommonPositions
   replacement?: {
     gasPriceProbability: {
-      speedup: number // default 80
-      cancel: number // default 95
+      // define the gas price used for speedup based on the probability of getting in to the next block. Default 80
+      speedup: number
+      // // define the gas price used for cancel based on the probability of getting in to the next block. Default 95
+      cancel: number
     }
   }
 }
