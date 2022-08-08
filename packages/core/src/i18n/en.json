@@ -91,7 +91,8 @@
       "txCancel": "Your transaction is being canceled",
       "txFailed": "Your transaction has failed",
       "txConfirmed": "Your transaction has succeeded",
-      "txError": "Oops something went wrong, please try again"
+      "txError": "Oops something went wrong, please try again",
+      "txReplaceError": "There was an error replacing your transaction, please try again"
     },
     "watched": {
       "txPool": "Your account is {verb} {formattedValue} {asset} {preposition} {counterpartyShortened}",
