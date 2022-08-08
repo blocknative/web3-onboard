@@ -26,7 +26,8 @@ import {
   customNotification,
   setLocale,
   setPrimaryWallet,
-  setWalletModules
+  setWalletModules,
+  updateConnectModal
 } from './store/actions'
 
 const API = {
@@ -87,12 +88,17 @@ function init(options: InitOptions): OnboardAPI {
     accountCenter,
     apiKey,
     notify,
-    gas
+    gas,
+    connect
   } = options
 
   initI18N(i18n)
   addChains(chainIdToHex(chains))
   const { device, svelteInstance } = configuration
+
+  if (typeof connect !== undefined) {
+    updateConnectModal(connect)
+  }
 
   // update accountCenter
   if (typeof accountCenter !== 'undefined') {
@@ -305,6 +311,7 @@ function mountApp() {
           --border-radius-2: 20px;  
           --border-radius-3: 16px;  
           --border-radius-4: 12px;  
+          --border-radius-5: 8px;  
 
           /* SHADOWS */
           --shadow-0: none;

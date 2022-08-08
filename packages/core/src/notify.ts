@@ -14,6 +14,7 @@ import { validateTransactionHandlerReturn } from './validation'
 import { state } from './store'
 import { addNotification } from './store/actions'
 import updateBalances from './update-balances'
+import { updateTransaction } from './streams'
 
 export function handleTransactionUpdates(
   transaction: EthereumTransactionData
@@ -32,6 +33,7 @@ export function handleTransactionUpdates(
   const notification = transactionEventToNotification(transaction, customized)
 
   addNotification(notification)
+  updateTransaction(transaction)
 }
 
 export function transactionEventToNotification(
@@ -164,4 +166,3 @@ export function typeToDismissTimeout(type: string): number {
       return 0
   }
 }
-

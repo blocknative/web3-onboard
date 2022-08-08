@@ -20,7 +20,8 @@ import type {
   CustomNotification,
   CustomNotificationUpdate,
   Notify,
-  PreflightNotificationsOptions
+  PreflightNotificationsOptions,
+  ConnectModalOptions
 } from './types'
 
 // const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
@@ -144,10 +145,18 @@ const commonPositions = Joi.string().valid(
   'topLeft'
 )
 
+const gasPriceProbabilities = [70, 80, 90, 95, 99]
+
 const notify = Joi.object({
   transactionHandler: Joi.function(),
   enabled: Joi.boolean(),
-  position: commonPositions
+  position: commonPositions,
+  replacement: Joi.object({
+    gasPriceProbability: Joi.object({
+      speedup: Joi.number().valid(...gasPriceProbabilities),
+      cancel: Joi.number().valid(...gasPriceProbabilities)
+    })
+  })
 })
 
 const notifyOptions = Joi.object({
@@ -170,6 +179,10 @@ const accountCenter = Joi.object({
   containerElement: Joi.string()
 })
 
+const connectModalOptions = Joi.object({
+  showSidebar: Joi.boolean()
+})
+
 const initOptions = Joi.object({
   wallets: walletInit,
   chains: chains.required(),
@@ -184,7 +197,8 @@ const initOptions = Joi.object({
   gas: Joi.object({
     get: Joi.function().required(),
     stream: Joi.function().required()
-  })
+  }),
+  connect: connectModalOptions
 })
 
 const connectOptions = Joi.object({
@@ -316,6 +330,12 @@ export function validateAccountCenterUpdate(
   data: AccountCenter | Partial<AccountCenter>
 ): ValidateReturn {
   return validate(accountCenter, data)
+}
+
+export function validateConnectModalUpdate(
+  data: ConnectModalOptions | Partial<ConnectModalOptions>
+): ValidateReturn {
+  return validate(connectModalOptions, data)
 }
 
 export function validateWalletInit(data: WalletInit[]): ValidateReturn {

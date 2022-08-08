@@ -23,9 +23,10 @@
   },
   "dependencies": {
     "@web3-onboard/coinbase": "^2.0.10",
-    "@web3-onboard/core": "^2.7.0-alpha.1",
+    "@web3-onboard/core": "^2.7.0-alpha.3",
     "@web3-onboard/dcent": "^2.0.7",
     "@web3-onboard/fortmatic": "^2.0.9",
+    "@web3-onboard/gas": "^2.0.0",
     "@web3-onboard/gnosis": "^2.0.8",
     "@web3-onboard/injected-wallets": "^2.0.16-alpha.1",
     "@web3-onboard/keepkey": "^2.1.7",
