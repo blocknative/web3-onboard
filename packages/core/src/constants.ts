@@ -15,7 +15,13 @@ export const APP_INITIAL_STATE: AppState = {
   notify: {
     enabled: true,
     transactionHandler: () => {},
-    position: 'topRight'
+    position: 'topRight',
+    replacement: {
+      gasPriceProbability: {
+        speedup: 80,
+        cancel: 95
+      }
+    }
   },
   notifications: [],
   locale: '',

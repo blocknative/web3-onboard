@@ -125,6 +125,10 @@
     justify-content: space-between;
   }
 
+  :global(.justify-end) {
+    justify-content: flex-end;
+  }
+
   :global(.justify-around) {
     justify-content: space-around;
   }
