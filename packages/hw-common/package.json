@@ -41,8 +41,8 @@
   "homepage": "https://www.blocknative.com/onboard",
   "bugs": "https://github.com/blocknative/web3-onboard/issues",
   "scripts": {
-    "build": "tsc",
-    "dev": "tsc -w",
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
     "type-check": "tsc --noEmit"
   },
   "module": "dist/index.js",
@@ -55,7 +55,8 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "typescript": "^4.5.5"
+    "rollup": "^2.77.2",
+    "typescript": "^4.7.4"
   },
   "dependencies": {
     "@ethereumjs/common": "^2.6.5",

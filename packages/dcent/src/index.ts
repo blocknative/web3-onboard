@@ -3,13 +3,14 @@ import {
   accountSelect,
   Chain,
   createEIP1193Provider,
-  CustomNetwork,
   ProviderRpcErrorCode,
   ProviderRpcError,
   ScanAccountsOptions,
   WalletInit,
   EIP1193Provider
 } from '@web3-onboard/common'
+
+import type { CustomNetwork } from '@web3-onboard/hw-common'
 
 import type { providers } from 'ethers'
 
