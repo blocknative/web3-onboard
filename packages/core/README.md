@@ -147,7 +147,16 @@ The `transactionHandler` can react off any property of the Ethereum TransactionD
 - `Notification.link` - add link to the transaction hash. For instance, a link to the transaction on etherscan
 - `Notification.onClick()` - onClick handler for when user clicks the notification element
 
-Notify can also be styled by using the CSS variables found below. These are setup to allow maximum customization with base styling variables setting the global theme (i.e. `--onboard-grey-600`) along with more precise component level styling variables available (`--notify-onboard-grey-600`) with the latter taking precedent if defined
+Notify can also be styled by using the CSS variables found below. These are setup to allow maximum customization with base styling variables setting the global theme (i.e. `--onboard-grey-600`) along with more precise component level styling variables available (`--notify-onboard-grey-600`) with the latter taking precedent if defined.
+
+Under the following conditions, when a transaction notification is hovered, a dropdown will appear, allowing the user to replace (speedup or cancel) their transaction:
+
+- The [gas](../gas/) module has been passed in to the Web3 Onboard initialization
+- The transaction was initiated on the networks that the gas module can get estimations for (currently Ethereum and Polygon mainnet)
+- The transaction has a pending status (eventCode: 'txPool')
+- The transaction was initiated by a hardware wallet (possibly other wallet types in future as they recognize the `nonce` field)
+
+The replacement gas values can be customized from the defaults by using the `replacement` parameter in the Notify options.
 
 If notifications are enabled the notifications can be handled through onboard app state as seen below.
 
@@ -178,6 +187,14 @@ export type Notify = {
     event: EthereumTransactionData
   ) => TransactionHandlerReturn
   position: CommonPositions
+  replacement?: {
+    gasPriceProbability?: {
+      // define the gas price used for speedup based on the probability of getting in to the next block. Default 80
+      speedup?: number
+      // define the gas price used for cancel based on the probability of getting in to the next block. Default 95
+      cancel?: number
+    }
+  }
 }
 
 export type CommonPositions =

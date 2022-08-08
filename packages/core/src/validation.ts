@@ -145,10 +145,18 @@ const commonPositions = Joi.string().valid(
   'topLeft'
 )
 
+const gasPriceProbabilities = [70, 80, 90, 95, 99]
+
 const notify = Joi.object({
   transactionHandler: Joi.function(),
   enabled: Joi.boolean(),
-  position: commonPositions
+  position: commonPositions,
+  replacement: Joi.object({
+    gasPriceProbability: Joi.object({
+      speedup: Joi.number().valid(...gasPriceProbabilities),
+      cancel: Joi.number().valid(...gasPriceProbabilities)
+    })
+  })
 })
 
 const notifyOptions = Joi.object({

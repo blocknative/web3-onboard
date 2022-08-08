@@ -90,6 +90,7 @@ const getAddresses = async (
   // Then adds 4 more 0 balance accounts to the array
   while (zeroBalanceAccounts < 5) {
     const acc = await getAccount(derivationPath, asset, index, provider, eth)
+
     if (acc.balance.value.isZero()) {
       zeroBalanceAccounts++
       accounts.push(acc)
@@ -174,9 +175,17 @@ function ledger({
               ]
             }
 
-            return getAddresses(derivationPath, asset, ethersProvider, eth)
+            const accounts = await getAddresses(
+              derivationPath,
+              asset,
+              ethersProvider,
+              eth
+            )
+
+            return accounts
           } catch (error) {
             const { statusText } = error as { statusText: string }
+
             throw new Error(
               statusText === 'UNKNOWN_ERROR'
                 ? 'Ledger device is locked, please unlock to continue'
@@ -231,6 +240,7 @@ function ledger({
           eth_requestAccounts: async () => {
             // Triggers the account select modal if no accounts have been selected
             const accounts = await getAccounts()
+
             if (!Array.isArray(accounts))
               throw new Error(
                 'No account selected. Must call eth_requestAccounts first.'
@@ -283,6 +293,7 @@ function ledger({
             const chainId = currentChain.hasOwnProperty('id')
               ? Number.parseInt(currentChain.id)
               : 1
+
             const common = await getCommon({ customNetwork, chainId })
 
             transactionObject.gasLimit =
@@ -292,6 +303,7 @@ function ledger({
             delete transactionObject.gas
 
             const signer = ethersProvider.getSigner(from)
+
             let populatedTransaction = await signer.populateTransaction(
               transactionObject
             )
