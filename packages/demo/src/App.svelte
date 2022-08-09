@@ -156,6 +156,9 @@
         rpcUrl: 'https://mainnet.optimism.io'
       }
     ],
+    // connect: {
+    //   showSidebar: false
+    // },
     appMetadata: {
       name: 'Blocknative',
       icon: blocknativeIcon,
@@ -336,6 +339,7 @@
 
     /* --onboard-font-family-normal: System,monospace; */
     --onboard-connect-sidebar-background: var(--accent-background);
+    --onboard-close-button-background: var(--accent-background);
     --onboard-connect-sidebar-color: var(--text-color);
     --onboard-connect-sidebar-progress-background: var(--text-color);
     --onboard-connect-sidebar-progress-color: var(--accent-color);
