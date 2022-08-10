@@ -93,7 +93,7 @@
     "lodash.partition": "^4.6.0",
     "nanoid": "^4.0.0",
     "rxjs": "^7.5.2",
-    "svelte": "^3.46.4",
+    "svelte": "^3.49.0",
     "svelte-i18n": "^3.3.13"
   }
 }
