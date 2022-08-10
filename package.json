@@ -36,7 +36,8 @@
     "Injected Wallet",
     "GameStop",
     "Crypto",
-    "Crypto Wallet"
+    "Crypto Wallet",
+    "Sequence"
   ],
   "repository": {
     "type": "git",
