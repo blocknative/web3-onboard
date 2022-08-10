@@ -527,7 +527,7 @@ const sequence: InjectedWalletModule = {
     !!provider && !!provider[ProviderIdentityFlag.Sequence],
   getIcon: async () => (await import('./icons/sequence.js')).default,
   getInterface: async () => ({
-    provider: createEIP1193Provider(window.ethereum)
+    provider: window.ethereum
   }),
   platforms: ['all']
 }
