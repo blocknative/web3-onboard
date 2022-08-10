@@ -5,8 +5,8 @@ interface SequenceOptions {
   network?: number | string
 }
 
-function sequence(options: SequenceOptions): WalletInit {
-  const { appName = 'app', network = 137 } = options
+function sequence(options?: SequenceOptions): WalletInit {
+  const { appName = 'app', network = 137 } = options || {}
 
   return () => {
     // @ts-ignore

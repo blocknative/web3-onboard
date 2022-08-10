@@ -100,9 +100,7 @@
 
   const dcent = dcentModule()
 
-  const sequence = sequenceModule({ 
-    apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
-   })
+  const sequence = sequenceModule()
 
   const onboard = Onboard({
     wallets: [

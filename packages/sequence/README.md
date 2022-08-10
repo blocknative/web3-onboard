@@ -11,6 +11,7 @@
 ```typescript
 type SequenceOptions {
   appName?: string
+  network?: number | string
 }
 ```
 

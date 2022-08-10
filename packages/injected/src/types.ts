@@ -103,7 +103,7 @@ export enum InjectedNameSpace {
   Arbitrum = 'arbitrum',
   XFI = 'xfi',
   GameStop = 'gamestop',
-  BitKeep = 'bitkeep',
+  BitKeep = 'bitkeep'
 }
 
 export interface CustomWindow extends Window {
