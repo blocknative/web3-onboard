@@ -44,8 +44,6 @@ function sequence(options?: SequenceOptions): WalletInit {
             eth_chainId: async () => {
               const chainId = await instance.getChainId()
               
-              console.log(chainId.toString(16))
-              
               return `0x${chainId.toString(16)}`
             }
           })
