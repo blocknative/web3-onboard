@@ -104,7 +104,6 @@ export enum InjectedNameSpace {
   XFI = 'xfi',
   GameStop = 'gamestop',
   BitKeep = 'bitkeep',
-  Sequence = 'sequence'
 }
 
 export interface CustomWindow extends Window {

@@ -522,7 +522,7 @@ const bitkeep: InjectedWalletModule = {
 
 const sequence: InjectedWalletModule = {
   label: ProviderLabel.Sequence,
-  injectedNamespace: InjectedNameSpace.Sequence,
+  injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
     !!provider && !!provider[ProviderIdentityFlag.Sequence],
   getIcon: async () => (await import('./icons/sequence.js')).default,
