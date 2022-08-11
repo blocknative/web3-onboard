@@ -1,4 +1,5 @@
 # Web3-Onboard
+
 **easy way to connect users to dapps**
 
 ## Features
@@ -67,6 +68,10 @@ if (wallets[0]) {
   console.log(receipt)
 }
 ```
+
+**Onboard v1 migration guide**
+
+If you're coming from v1, we've created a [migration guide for you](https://docs.blocknative.com/onboard/migration-guide).
 
 ## Documentation
 
