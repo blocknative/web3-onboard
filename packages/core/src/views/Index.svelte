@@ -5,7 +5,6 @@
   import Connect from './connect/Index.svelte'
   import SwitchChain from './chain/SwitchChain.svelte'
   import ActionRequired from './connect/ActionRequired.svelte'
-  import AccountCenter from './account-center/Index.svelte'
   import Notify from './notify/Index.svelte'
   import { configuration } from '../configuration'
   import type { Observable } from 'rxjs'
@@ -42,6 +41,10 @@
         left: var(--${targetComponentVariable}-position-left, 0);`
     }
   }
+
+  const accountCenterComponent = $accountCenter$.enabled
+    ? import('./account-center/Index.svelte').then(mod => mod.default)
+    : Promise.resolve(null)
 
   $: sharedContainer =
     $accountCenter$.enabled &&
@@ -376,7 +379,11 @@
         ? 'margin-right: auto'
         : ''}
     >
-      <AccountCenter settings={$accountCenter$} />
+      {#await accountCenterComponent then AccountCenter}
+        {#if AccountCenter}
+          <svelte:component this={AccountCenter} settings={$accountCenter$} />
+        {/if}
+      {/await}
     </div>
     {#if $notify$.position.includes('top') && $accountCenter$.position.includes('top') && samePositionOrMobile}
       <Notify
@@ -410,7 +417,11 @@
         : ''}
     >
       {#if $accountCenter$.enabled && $wallets$.length}
-        <AccountCenter settings={$accountCenter$} />
+        {#await accountCenterComponent then AccountCenter}
+          {#if AccountCenter}
+            <svelte:component this={AccountCenter} settings={$accountCenter$} />
+          {/if}
+        {/await}
       {/if}
     </div>
   </div>
