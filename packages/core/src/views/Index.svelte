@@ -46,6 +46,10 @@
     ? import('./account-center/Index.svelte').then(mod => mod.default)
     : Promise.resolve(null)
 
+  const notifyComponent = $notify$.enabled
+    ? import('./notify/Index.svelte').then(mod => mod.default)
+    : Promise.resolve(null)
+
   $: sharedContainer =
     $accountCenter$.enabled &&
     $notify$.enabled &&
@@ -362,11 +366,16 @@
       : ''} "
   >
     {#if $notify$.position.includes('bottom') && $accountCenter$.position.includes('bottom') && samePositionOrMobile}
-      <Notify
-        notifications={$notifications$}
-        position={$notify$.position}
-        {sharedContainer}
-      />
+      {#await notifyComponent then Notify}
+        {#if Notify}
+          <svelte:component
+            this={Notify}
+            notifications={$notifications$}
+            position={$notify$.position}
+            {sharedContainer}
+          />
+        {/if}
+      {/await}
     {/if}
     <div
       style={!$accountCenter$.expanded &&
@@ -386,11 +395,16 @@
       {/await}
     </div>
     {#if $notify$.position.includes('top') && $accountCenter$.position.includes('top') && samePositionOrMobile}
-      <Notify
-        notifications={$notifications$}
-        position={$notify$.position}
-        {sharedContainer}
-      />
+      {#await notifyComponent then Notify}
+        {#if Notify}
+          <svelte:component
+            this={Notify}
+            notifications={$notifications$}
+            position={$notify$.position}
+            {sharedContainer}
+          />
+        {/if}
+      {/await}
     {/if}
   </div>
 {/if}
@@ -437,10 +451,15 @@
       ? 'padding-top:0;'
       : ''} "
   >
-    <Notify
-      notifications={$notifications$}
-      position={$notify$.position}
-      {sharedContainer}
-    />
+    {#await notifyComponent then Notify}
+      {#if Notify}
+        <svelte:component
+          this={Notify}
+          notifications={$notifications$}
+          position={$notify$.position}
+          {sharedContainer}
+        />
+      {/if}
+    {/await}
   </div>
 {/if}
