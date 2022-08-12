@@ -5,8 +5,6 @@
   import Connect from './connect/Index.svelte'
   import SwitchChain from './chain/SwitchChain.svelte'
   import ActionRequired from './connect/ActionRequired.svelte'
-  import AccountCenter from './account-center/Index.svelte'
-  import Notify from './notify/Index.svelte'
   import { configuration } from '../configuration'
   import type { Observable } from 'rxjs'
   import type { Notification } from '../types'
@@ -42,6 +40,14 @@
         left: var(--${targetComponentVariable}-position-left, 0);`
     }
   }
+
+  const accountCenterComponent = $accountCenter$.enabled
+    ? import('./account-center/Index.svelte').then(mod => mod.default)
+    : Promise.resolve(null)
+
+  const notifyComponent = $notify$.enabled
+    ? import('./notify/Index.svelte').then(mod => mod.default)
+    : Promise.resolve(null)
 
   $: sharedContainer =
     $accountCenter$.enabled &&
@@ -359,11 +365,16 @@
       : ''} "
   >
     {#if $notify$.position.includes('bottom') && $accountCenter$.position.includes('bottom') && samePositionOrMobile}
-      <Notify
-        notifications={$notifications$}
-        position={$notify$.position}
-        {sharedContainer}
-      />
+      {#await notifyComponent then Notify}
+        {#if Notify}
+          <svelte:component
+            this={Notify}
+            notifications={$notifications$}
+            position={$notify$.position}
+            {sharedContainer}
+          />
+        {/if}
+      {/await}
     {/if}
     <div
       style={!$accountCenter$.expanded &&
@@ -376,14 +387,23 @@
         ? 'margin-right: auto'
         : ''}
     >
-      <AccountCenter settings={$accountCenter$} />
+      {#await accountCenterComponent then AccountCenter}
+        {#if AccountCenter}
+          <svelte:component this={AccountCenter} settings={$accountCenter$} />
+        {/if}
+      {/await}
     </div>
     {#if $notify$.position.includes('top') && $accountCenter$.position.includes('top') && samePositionOrMobile}
-      <Notify
-        notifications={$notifications$}
-        position={$notify$.position}
-        {sharedContainer}
-      />
+      {#await notifyComponent then Notify}
+        {#if Notify}
+          <svelte:component
+            this={Notify}
+            notifications={$notifications$}
+            position={$notify$.position}
+            {sharedContainer}
+          />
+        {/if}
+      {/await}
     {/if}
   </div>
 {/if}
@@ -410,7 +430,11 @@
         : ''}
     >
       {#if $accountCenter$.enabled && $wallets$.length}
-        <AccountCenter settings={$accountCenter$} />
+        {#await accountCenterComponent then AccountCenter}
+          {#if AccountCenter}
+            <svelte:component this={AccountCenter} settings={$accountCenter$} />
+          {/if}
+        {/await}
       {/if}
     </div>
   </div>
@@ -426,10 +450,15 @@
       ? 'padding-top:0;'
       : ''} "
   >
-    <Notify
-      notifications={$notifications$}
-      position={$notify$.position}
-      {sharedContainer}
-    />
+    {#await notifyComponent then Notify}
+      {#if Notify}
+        <svelte:component
+          this={Notify}
+          notifications={$notifications$}
+          position={$notify$.position}
+          {sharedContainer}
+        />
+      {/if}
+    {/await}
   </div>
 {/if}
