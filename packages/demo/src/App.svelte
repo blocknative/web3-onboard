@@ -356,8 +356,8 @@
     --onboard-connect-sidebar-background: var(--accent-background);
     --onboard-close-button-background: var(--accent-background);
     --onboard-connect-sidebar-color: var(--text-color);
-    --onboard-connect-sidebar-progress-background: var(--text-color);
-    --onboard-connect-sidebar-progress-color: var(--accent-color);
+    --onboard-connect-sidebar-progress-background: var(--accent-background); /* defaults to gray-200 */
+    --onboard-connect-sidebar-progress-color: var(--accent-color); /* defaults to  primary-600 */
     --onboard-connect-header-background: var(--background-color);
     --onboard-connect-header-color: var(--text-color);
     --onboard-main-scroll-container-background: var(--background-color);
@@ -373,7 +373,7 @@
     --account-center-minimized-chain-select-background: var(
       --accent-color-hover
     );
-    --account-center-maximized-info-section-background-color: var(
+    --account-center-maximized-info-section-background: var(
       --background-color
     );
     --account-center-maximized-network-section-background: var(
