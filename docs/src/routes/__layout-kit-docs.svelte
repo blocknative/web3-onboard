@@ -59,7 +59,7 @@
   {/key}
 </svelte:head>
 
-<KitDocs {meta}>
+<!-- <KitDocs {meta}>
   <KitDocsLayout {navbar} {sidebar}>
     <div class="logo" slot="navbar-left">
       <Button href="/">
@@ -69,7 +69,8 @@
 
     <slot />
   </KitDocsLayout>
-</KitDocs>
+</KitDocs> -->
+<slot />
 
 <style>
   :global(:root) {

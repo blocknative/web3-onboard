@@ -1,0 +1,45 @@
+<script>
+  export let label = '';
+</script>
+
+<button type="button" style={$$props.style}>
+  <slot>
+    {label}
+  </slot>
+</button>
+
+<style>
+  button {
+    --text-color: #EFF1FC;
+    --bg-color: #6370E5;
+
+    /* brand/blue */
+    background: var(--bg-color);
+    color: var(--text-color);
+
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex: var(--flex, auto);
+
+    border: none;
+    border-radius: 4px;
+    padding: 1rem 2rem;
+
+    font-family: 'Sofia Pro';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 16px;
+  }
+
+  button:hover {
+    --text-color: black;
+    --bg-color: #454EA0;
+  }
+
+  button:focus {
+
+  }
+</style>

@@ -1,3 +1,5 @@
-<div>
-  HOME page
-</div>
+<script>
+  import HomeLayout from '$lib/components/HomeLayout.svelte'
+</script>
+
+<HomeLayout></HomeLayout>
