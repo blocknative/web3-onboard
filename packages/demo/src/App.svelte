@@ -321,6 +321,22 @@
     delete types.EIP712Domain
     console.log(verifyTypedData(domain, types, message, signature))
   }
+
+  const defaultStyling = {
+    '--background-color': '#ffffff',
+    '--text-color': '#1a1d26',
+    '--border-color': '#ebebed',
+    '--accent-background': '#ebebed',
+    '--accent-color': '#929bed',
+    '--accent-color-hover': '#eff1fc',
+    '--secondary-text-color': '#707481',
+    '--secondary-accent-background': '#242835'
+  }
+
+  const updateTheme = (e, targetStyle) => {
+    console.log(e.target.value, targetStyle)
+    document.documentElement.style.setProperty(targetStyle, e.target.value)
+  }
 </script>
 
 <style>
@@ -447,6 +463,46 @@
     flex-direction: column;
     width: 15rem;
   }
+
+  .themes {
+    padding: 1rem;
+    border-radius: 4px;
+    margin: 0.5rem;
+    border: 1px solid gray;
+    width: fit-content;
+  }
+
+  .theming-container {
+    height: 16rem;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    width: 54rem;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .theming-inputs-wrapper {
+    display: flex;
+    align-items: center;
+    width: 25rem;
+  }
+  .theming-inputs {
+    display: inline-flex;
+    overflow: hidden;
+    width: 2em;
+    height: 2em;
+    /* optional formatting below here */
+    border-radius: 50%;
+    box-shadow: 1px 1px 3px 0px grey;
+    margin: 1em;
+  }
+  input[type='color'] {
+    padding: 0;
+    width: 150%;
+    height: 150%;
+    margin: -25%;
+  }
 </style>
 
 <main>
@@ -454,8 +510,11 @@
     <button on:click={() => onboard.connectWallet()}>Connect Wallet</button>
 
     {#if $wallets$}
-      <button on:click={() => onboard.state.actions.updateBalances()}
-        >Update Wallet Balance</button
+      <button
+        on:click={() => {
+          // Only necessary if a Blocknative API key is not provided and notify is disabled
+          onboard.state.actions.updateBalances()
+        }}>Update Wallet Balance</button
       >
       <div class="notify-chain-container">
         <div class="notify-action-container">
@@ -525,6 +584,26 @@
           <button on:click={() => onboard.setChain({ chainId: '0x89' })}
             >Set Chain to Matic</button
           >
+        </div>
+      </div>
+      <div class="themes">
+        <label for="Theme">Choose color theme: </label>
+        <div class="theming-container">
+          {#each Object.keys(defaultStyling) as target}
+            <div class="theming-inputs-wrapper">
+              <div class="theming-inputs">
+                <input
+                  type="color"
+                  name="Theme"
+                  bind:value={defaultStyling[target]}
+                  on:input={e => updateTheme(e, target)}
+                />
+              </div>
+              <span class="text" id="current-theme"
+                >{target} : {defaultStyling[target]}</span
+              >
+            </div>
+          {/each}
         </div>
       </div>
     {/if}
