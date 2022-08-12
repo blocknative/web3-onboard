@@ -1,6 +1,6 @@
 <script>
-  import Container from './Container.svelte';
-  import CodeBlock from './CodeBlock.svelte';
+  import Container from './Container.svelte'
+  import CodeBlock from './CodeBlock.svelte'
 
   let examplecode = `import Onboard from '@web3-onboard/core'
 import injectedModule from '@web3-onboard/injected-wallets'
@@ -48,17 +48,19 @@ console.log(receipt)
 
 <section>
   <!-- <Container> -->
-    <div class="container">
-      <h1>{"Getting Started"}</h1>
-      <h2>{"Installation"}</h2>
-      <p>{"Install the core Onboard library and the injected wallets module to support browser extension and mobile wallets:"}</p>
-      <CodeBlock>
-      {"npm i @web3-onboard/core @web3-onboard/injected-wallets"}
-      </CodeBlock>
-      <h2>{"Quick Start"}</h2>
-      <p>{"Then initialize in your app:"}</p>
-      <CodeBlock>{examplecode}</CodeBlock>
-    </div>
+  <div class="container">
+    <h1>{'Getting Started'}</h1>
+    <h2>{'Installation'}</h2>
+    <p>
+      {'Install the core Onboard library and the injected wallets module to support browser extension and mobile wallets:'}
+    </p>
+    <CodeBlock>
+      {'npm i @web3-onboard/core @web3-onboard/injected-wallets'}
+    </CodeBlock>
+    <h2>{'Quick Start'}</h2>
+    <p>{'Then initialize in your app:'}</p>
+    <CodeBlock>{examplecode}</CodeBlock>
+  </div>
   <!-- </Container> -->
 </section>
 
@@ -66,8 +68,8 @@ console.log(receipt)
   section {
     /* min-height: 1648px; */
     /* grey/100 */
-    background: #EBEBED;
-    color:black;
+    background: #ebebed;
+    color: black;
   }
 
   h1 {
@@ -105,5 +107,4 @@ console.log(receipt)
     margin: 0 auto;
     padding: 3rem 2rem;
   }
-
 </style>

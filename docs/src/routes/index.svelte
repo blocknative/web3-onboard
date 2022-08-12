@@ -2,4 +2,4 @@
   import HomeLayout from '$lib/components/HomeLayout.svelte'
 </script>
 
-<HomeLayout></HomeLayout>
+<HomeLayout />

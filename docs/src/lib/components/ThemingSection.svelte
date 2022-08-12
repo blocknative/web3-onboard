@@ -1,10 +1,10 @@
 <script>
-  import Container from './Container.svelte';
-  import TextBlock from './TextBlock.svelte';
-  import CodeBlock from './CodeBlock.svelte';
+  import Container from './Container.svelte'
+  import TextBlock from './TextBlock.svelte'
+  import CodeBlock from './CodeBlock.svelte'
 
-  import ThemeCode from './svg/ThemeCode.svelte';
-  import ThemeCarousel from './svg/ThemeCarousel.svelte';
+  import ThemeCode from './svg/ThemeCode.svelte'
+  import ThemeCarousel from './svg/ThemeCarousel.svelte'
 
   let examplecode = `:root {
   /* COLORS */
@@ -22,7 +22,6 @@
   --account-select-modal-gray-700: #1a1d26;
   --account-select-modal-danger-500: #ff4f4f;
 }`
-
 </script>
 
 <section>
@@ -46,7 +45,13 @@
 <style>
   section {
     /* min-height: 991px; */
-    background: radial-gradient(137.29% 137.29% at 50% -37.29%, rgba(99, 112, 229, 0.5) 0%, rgba(53, 60, 123, 0.269089) 49.81%, rgba(0, 0, 0, 0) 100%), #060D20;
+    background: radial-gradient(
+        137.29% 137.29% at 50% -37.29%,
+        rgba(99, 112, 229, 0.5) 0%,
+        rgba(53, 60, 123, 0.269089) 49.81%,
+        rgba(0, 0, 0, 0) 100%
+      ),
+      #060d20;
 
     display: flex;
     flex-flow: column;
@@ -88,5 +93,4 @@
     width: 100%;
     padding: 0 2rem;
   }
-
 </style>

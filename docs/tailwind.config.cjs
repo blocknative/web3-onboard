@@ -10,11 +10,11 @@ module.exports = {
     // Add this instead if you're using the default theme.
     "'./node_modules/@svelteness/kit-docs/client/**/*.svelte'"
   ],
-  
+
   plugins: [...config.plugins, overrides]
 }
 
-function overrides(theme) {
+function overrides() {
   return {
     css: {
       h5: {

@@ -1,11 +1,11 @@
 <script>
-  import NavBar from './NavBar.svelte';
-  import Footer from './Footer.svelte';
-  import HeroSection from './HeroSection.svelte';
-  import FeaturesSection from './FeaturesSection.svelte';
-  import ThemingSection from './ThemingSection.svelte';
-  import TestimonialSection from './TestimonialSection.svelte';
-  import GettingStarted from './GettingStarted.svelte';
+  import NavBar from './NavBar.svelte'
+  import Footer from './Footer.svelte'
+  import HeroSection from './HeroSection.svelte'
+  import FeaturesSection from './FeaturesSection.svelte'
+  import ThemingSection from './ThemingSection.svelte'
+  import TestimonialSection from './TestimonialSection.svelte'
+  import GettingStarted from './GettingStarted.svelte'
 </script>
 
 <div class="layout-container">
@@ -22,7 +22,7 @@
 
 <style>
   .layout-container {
-    --text-color: #FFF;
+    --text-color: #fff;
     --background-color: #000;
 
     display: flex;
@@ -51,7 +51,6 @@
 
   :global(a) {
     /* blue/400 */
-    color: #929BED;
+    color: #929bed;
   }
-
 </style>

@@ -1,7 +1,8 @@
 <script>
-  import IconBN from './icons/blocknative.svelte';
-  import IconGithub from './icons/github.svelte';
+  import IconBN from './icons/blocknative.svelte'
+  import IconGithub from './icons/github.svelte'
 </script>
+
 <nav>
   <IconBN />
   <div class="link-list">
@@ -24,7 +25,7 @@
 
     color: white;
     background: rgba(6, 13, 32, 0.8);
-    border: 1px solid #0F182E;
+    border: 1px solid #0f182e;
 
     display: flex;
     justify-content: space-between;
@@ -36,9 +37,9 @@
     gap: 2rem;
   }
   /* .link-list a { */
-    /* blue/400 */
-    /* color: #929BED; */
-    /* margin: 1rem; */
+  /* blue/400 */
+  /* color: #929BED; */
+  /* margin: 1rem; */
   /* } */
 
   svg {

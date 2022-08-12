@@ -1,14 +1,13 @@
 <script>
   // import Container from './Container.svelte';
-  import PoweredByBadge from './svg/PoweredByBadge.svelte';
+  import PoweredByBadge from './svg/PoweredByBadge.svelte'
   import SocialIcons from './svg/social-icons.svelte'
   import IconGithub from './icons/github.svelte'
 
   let text = {
-    license: "Released under the MIT License.",
-    copyright: "Copyright © 2022"
+    license: 'Released under the MIT License.',
+    copyright: 'Copyright © 2022'
   }
-
 </script>
 
 <footer>
@@ -22,7 +21,7 @@
       <a href="#!">Twitter</a>
     </div>
     <SocialIcons />
-    <a href="#!"><PoweredByBadge/></a>
+    <a href="#!"><PoweredByBadge /></a>
   </div>
   <div class="flexbox copyright-box">
     <div class="text">{text.license}</div>
@@ -32,7 +31,7 @@
 
 <style>
   footer {
-    background: #1A1D26;
+    background: #1a1d26;
     min-height: 400px;
 
     display: flex;
@@ -47,7 +46,7 @@
   .copyright-box {
     /* grey/600 */
     background: #242835;
-/*
+    /*
     display: flex;
     flex-flow: column;
     justify-content: center;
@@ -72,7 +71,6 @@
     line-height: 16px;
 
     /* grey/300 */
-    color: #999CA5;
+    color: #999ca5;
   }
-
 </style>

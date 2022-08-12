@@ -21,7 +21,7 @@
     /* height: 208px; */
     width: 100%;
 
-    background: #060D20;
+    background: #060d20;
     border: 1px solid rgba(255, 255, 255, 0.05);
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
@@ -39,7 +39,7 @@
     align-items: center; */
 
     /* blue/100 */
-    color: #EFF1FC;
+    color: #eff1fc;
   }
 
   .text {
@@ -54,7 +54,6 @@
     align-items: center; */
 
     /* grey/200 */
-    color: #C2C4C9;
+    color: #c2c4c9;
   }
-
 </style>
