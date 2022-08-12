@@ -23,6 +23,7 @@
     "@typescript-eslint/eslint-plugin": "^5.27.0",
     "@typescript-eslint/parser": "^5.27.0",
     "@vitebook/client": "^0.100.5",
+    "@vitebook/core": "^0.100.5",
     "@vitebook/markdown-shiki": "^0.100.5",
     "@vitebook/markdown-svelte": "^0.100.5",
     "autoprefixer": "^10.4.7",

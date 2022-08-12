@@ -2,7 +2,7 @@
   export let label = ''
 </script>
 
-<button type="button" style={$$props.style}>
+<button type="button" style={$$props.style} on:click>
   <slot>
     {label}
   </slot>

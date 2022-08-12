@@ -74,6 +74,7 @@
 <style>
   :global(:root) {
     --kd-color-brand-rgb: 233, 127, 6;
+    --kd-font-family-sans: 'Sofia Pro' ;
   }
 
   :global(:root.dark) {
