@@ -28,7 +28,6 @@ type InitOptions {
   wallets: WalletInit[]
   chains: Chain[]
   appMetadata?: AppMetadata
-  connect?: ConnectModalOptions
   i18n?: i18nOptions
   accountCenter?: AccountCenterOptions
   apiKey?: string
@@ -49,7 +48,7 @@ An array of Chains that your app supports:
 type Chain = {
   id: ChainId // hex encoded string, eg '0x1' for Ethereum Mainnet
   namespace?: 'evm' // string indicating chain namespace. Defaults to 'evm' but will allow other chain namespaces in the future
-  rpcUrl: string // used for network requests
+  rpcUrl: string // used for network requests (eg Alchemy or Infura end point)
   label: string // used for display, eg Ethereum Mainnet
   token: TokenSymbol // the native token symbol, eg ETH, BNB, MATIC
   color?: string // the color used to represent the chain and will be used as a background for the icon
@@ -254,6 +253,11 @@ import injectedModule from '@web3-onboard/injected-wallets'
 
 const injected = injectedModule()
 
+// Only one RPC endpoint required per chain
+const ETH_MAINNET_RPC = `https://mainnet.infura.io/v3/${INFURA_KEY}` || `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
+const ETH_ROPSTEN_RPC = `https://ropsten.infura.io/v3/${INFURA_ID}` || `https://eth-ropsten.g.alchemy.com/v2/${ALCHEMY_KEY}`
+const ETH_RINKEBY_RPC = `https://rinkeby.infura.io/v3/${INFURA_KEY}` || `https://eth-rinkeby.g.alchemy.com/v2/${ALCHEMY_KEY}`
+
 const onboard = Onboard({
   wallets: [injected],
   chains: [
@@ -261,19 +265,19 @@ const onboard = Onboard({
       id: '0x1',
       token: 'ETH',
       label: 'Ethereum Mainnet',
-      rpcUrl: `https://mainnet.infura.io/v3/${INFURA_ID}`
+      rpcUrl: ETH_MAINNET_RPC
     },
     {
       id: '0x3',
       token: 'tROP',
       label: 'Ethereum Ropsten Testnet',
-      rpcUrl: `https://ropsten.infura.io/v3/${INFURA_ID}`
+      rpcUrl: ETH_ROPSTEN_RPC
     },
     {
       id: '0x4',
       token: 'rETH',
       label: 'Ethereum Rinkeby Testnet',
-      rpcUrl: `https://rinkeby.infura.io/v3/${INFURA_ID}`
+      rpcUrl: ETH_RINKEBY_RPC
     },
     {
       id: '0x38',
@@ -583,7 +587,8 @@ const onboard = Onboard({
       id: '0x1',
       token: 'ETH',
       label: 'Ethereum Mainnet',
-      rpcUrl: `https://mainnet.infura.io/v3/${INFURA_ID}`
+      // Only one RPC required
+      rpcUrl: `https://mainnet.infura.io/v3/${INFURA_KEY}` || `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
     }
   ]
 })
