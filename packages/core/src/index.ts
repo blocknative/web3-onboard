@@ -92,9 +92,16 @@ function init(options: InitOptions): OnboardAPI {
     connect
   } = options
 
+  const { device, svelteInstance } = configuration
+
+  if (svelteInstance) {
+    // if already initialized, need to cleanup old instance
+    console.warn('Re-initializing Onboard and resetting back to initial state')
+    reset$.next()
+  }
+
   initI18N(i18n)
   addChains(chainIdToHex(chains))
-  const { device, svelteInstance } = configuration
 
   if (typeof connect !== undefined) {
     updateConnectModal(connect)
@@ -191,12 +198,6 @@ function init(options: InitOptions): OnboardAPI {
     }
 
     updateNotify(notifyUpdate)
-  }
-
-  if (svelteInstance) {
-    // if already initialized, need to cleanup old instance
-    console.warn('Re-initializing Onboard and resetting back to initial state')
-    reset$.next()
   }
 
   const app = svelteInstance || mountApp()
