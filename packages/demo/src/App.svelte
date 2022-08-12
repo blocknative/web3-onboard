@@ -333,8 +333,91 @@
     '--secondary-accent-background': '#242835'
   }
 
+  const baseStyling = `--onboard-connect-sidebar-background: var(--accent-background);
+  --onboard-close-button-background: var(--accent-background);
+  --onboard-connect-sidebar-color: var(--text-color);
+  --onboard-connect-sidebar-progress-background: var(--secondary-text-color);
+  --onboard-connect-sidebar-progress-color: var(--accent-color);
+  --onboard-connect-header-background: var(--background-color);
+  --onboard-connect-header-color: var(--text-color);
+  --onboard-main-scroll-container-background: var(--background-color);
+  --onboard-link-color: var(--accent-color);
+  --onboard-wallet-button-background: var(--background-color);
+  --onboard-wallet-button-background-hover: var(--accent-color-hover);
+  --onboard-wallet-button-border-color: var(--border-color);
+  --onboard-wallet-app-icon-border-color: var(--border-color);
+
+  --account-center-minimized-background: var(--background-color);
+  --account-center-minimized-address-color: var(--text-color);
+  --account-center-minimized-balance-color: var(--secondary-text-color);
+  --account-center-minimized-chain-select-background: var(
+    --accent-color-hover
+  );
+  --account-center-maximized-info-section-background: var(
+    --background-color
+  );
+  --account-center-maximized-network-section-background: var(
+    --accent-background
+  );
+  --account-center-maximized-upper-background: var(
+    --secondary-accent-background
+  );
+  --account-center-maximized-address-color: var(--background-color);
+  --account-center-maximized-account-section-background-hover: var(
+    --text-color
+  );
+  --account-center-maximized-balance-color: var(--border-color);
+  --account-center-maximized-upper-action-color: var(--accent-color);
+  --account-center-maximized-network-text-color: var(
+    --secondary-accent-background
+  );
+  --account-center-maximized-info-section-background-color: var(
+    --background-color
+  );
+  --account-center-maximized-app-name-color: var(
+    --secondary-accent-background
+  );
+  --account-center-maximized-app-info-color: var(
+    --secondary-accent-background
+  );
+  --account-center-app-btn-background: var(--secondary-accent-background);
+  --account-center-app-btn-text-color: var(--background-color);
+
+  --notify-onboard-background: var(----secondary-accent-color);
+  --notify-onboard-transaction-status: var(--accent-background);
+  --notify-onboard-address-hash-color: var(--accent-color-hover);
+  --notify-onboard-anchor-color: var(--accent-color);
+  --notify-onboard-timer-color: var(--secondary-text-color);`
+
+  const styleToString = style => {
+    return Object.keys(style).reduce(
+      (acc, key) => acc + key + ': ' + style[key] + '; \n  ',
+      ''
+    )
+  }
+
+  export async function copyWalletAddress(text) {
+    try {
+      const copy = await navigator.clipboard.writeText(text)
+      return copy
+    } catch (err) {
+      console.error('Failed to copy: ', err)
+    }
+  }
+  let copyableStyles = `:root {\n  ${styleToString(
+    defaultStyling
+  )}${baseStyling}\n}`
   const updateTheme = (e, targetStyle) => {
     document.documentElement.style.setProperty(targetStyle, e.target.value)
+
+    copyableStyles = `:root {\n  ${styleToString(
+      defaultStyling
+    )}${baseStyling}\n}`
+  }
+
+  const copyConfigToClipboard = () => {
+    // Provide UI feedback on clipboard copy
+    copyWalletAddress(copyableStyles)
   }
 </script>
 
@@ -356,8 +439,12 @@
     --onboard-connect-sidebar-background: var(--accent-background);
     --onboard-close-button-background: var(--accent-background);
     --onboard-connect-sidebar-color: var(--text-color);
-    --onboard-connect-sidebar-progress-background: var(--accent-background); /* defaults to gray-200 */
-    --onboard-connect-sidebar-progress-color: var(--accent-color); /* defaults to  primary-600 */
+    --onboard-connect-sidebar-progress-background: var(
+      --secondary-text-color
+    ); /* defaults to gray-200 */
+    --onboard-connect-sidebar-progress-color: var(
+      --accent-color
+    ); /* defaults to  primary-600 */
     --onboard-connect-header-background: var(--background-color);
     --onboard-connect-header-color: var(--text-color);
     --onboard-main-scroll-container-background: var(--background-color);
@@ -373,9 +460,7 @@
     --account-center-minimized-chain-select-background: var(
       --accent-color-hover
     );
-    --account-center-maximized-info-section-background: var(
-      --background-color
-    );
+    --account-center-maximized-info-section-background: var(--background-color);
     --account-center-maximized-network-section-background: var(
       --accent-background
     );
@@ -445,6 +530,18 @@
   .sign-transaction {
     display: flex;
     align-items: end;
+  }
+
+  .copy-styles-container {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+  }
+
+  .copy-styles-textarea {
+    width: 30rem;
+    height: 16rem;
+    margin: 0 0 8px;
   }
 
   .sign-transaction-textarea {
@@ -603,6 +700,16 @@
               >
             </div>
           {/each}
+        </div>
+        <div class="copy-styles-container">
+          <textarea
+            readonly
+            bind:value={copyableStyles}
+            class="copy-styles-textarea"
+          />
+          <button on:click={copyConfigToClipboard()}>
+            Copy Styling Config
+          </button>
         </div>
       </div>
     {/if}
