@@ -334,7 +334,6 @@
   }
 
   const updateTheme = (e, targetStyle) => {
-    console.log(e.target.value, targetStyle)
     document.documentElement.style.setProperty(targetStyle, e.target.value)
   }
 </script>
