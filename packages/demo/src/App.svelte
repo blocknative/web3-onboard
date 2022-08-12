@@ -13,6 +13,7 @@
   import coinbaseModule from '@web3-onboard/coinbase'
   import magicModule from '@web3-onboard/magic'
   import web3authModule from '@web3-onboard/web3auth'
+  import gas from '@web3-onboard/gas'
 
   import dcentModule from '@web3-onboard/dcent'
   import {
@@ -116,6 +117,7 @@
       gnosis,
       dcent
     ],
+    gas,
     chains: [
       {
         id: '0x1',
