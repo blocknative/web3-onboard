@@ -10,3 +10,5 @@ declare namespace App {
   // interface Session {}
   // interface Stuff {}
 }
+
+declare module '@svelteness/kit-docs/tailwind.config.cjs';

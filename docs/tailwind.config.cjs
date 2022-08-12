@@ -14,7 +14,7 @@ module.exports = {
   plugins: [...config.plugins, overrides]
 }
 
-function overrides(theme) {
+function overrides() {
   return {
     css: {
       h5: {
