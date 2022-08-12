@@ -1,3 +1,8 @@
+<div>
+  <!-- your container -->
+  <slot />
+</div>
+
 <style>
   div {
     /* background: salmon; */
@@ -7,8 +12,3 @@
     margin: 0 auto;
   }
 </style>
-
-<div>
-  <!-- your container -->
-  <slot></slot>
-</div>

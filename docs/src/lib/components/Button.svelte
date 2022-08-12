@@ -1,5 +1,5 @@
 <script>
-  export let label = '';
+  export let label = ''
 </script>
 
 <button type="button" style={$$props.style}>
@@ -10,8 +10,8 @@
 
 <style>
   button {
-    --text-color: #EFF1FC;
-    --bg-color: #6370E5;
+    --text-color: #eff1fc;
+    --bg-color: #6370e5;
 
     /* brand/blue */
     background: var(--bg-color);
@@ -36,10 +36,9 @@
 
   button:hover {
     --text-color: black;
-    --bg-color: #454EA0;
+    --bg-color: #454ea0;
   }
 
   button:focus {
-
   }
 </style>

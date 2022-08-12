@@ -1,7 +1,7 @@
 <script>
-  export let title = 'Title';
-  export let subtitle = 'Subtitle';
-  export let text = 'Body Text';
+  export let title = 'Title'
+  export let subtitle = 'Subtitle'
+  export let text = 'Body Text'
 </script>
 
 <div class="textblock">
@@ -12,7 +12,6 @@
 </div>
 
 <style>
-
   .textblock {
     display: flex;
     flex-flow: column;
@@ -29,7 +28,8 @@
     line-height: 32px;
   }
 
-  .subtitle, .text {
+  .subtitle,
+  .text {
     /* F4 */
     font-family: 'Sofia Pro';
     font-style: normal;
@@ -37,5 +37,4 @@
     font-size: 20px;
     line-height: 32px;
   }
-
 </style>
