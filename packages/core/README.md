@@ -28,7 +28,6 @@ type InitOptions {
   wallets: WalletInit[]
   chains: Chain[]
   appMetadata?: AppMetadata
-  connect?: ConnectModalOptions
   i18n?: i18nOptions
   accountCenter?: AccountCenterOptions
   apiKey?: string
