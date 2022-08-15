@@ -28,7 +28,6 @@
   import blocknativeIcon from './blocknative-icon'
   import blocknativeLogo from './blocknative-logo'
   import { onMount } from 'svelte'
-  import Picker from 'vanilla-picker';
 
   if (window.innerWidth < 700) {
     new VConsole()
@@ -416,6 +415,24 @@
       ${styleToString(defaultStyling)}${baseStyling}\n}`
   }
 
+  let checked = false
+
+  const handleBackdrop = () => {
+    const iframe = document.getElementById('inlineFrameExample')
+
+    if (!checked) {
+      iframe.contentWindow.document.documentElement.style.setProperty(
+        '--onboard-modal-backdrop',
+        'rgba(0, 0, 0, 0)'
+      )
+    } else {
+      iframe.contentWindow.document.documentElement.style.setProperty(
+        '--onboard-modal-backdrop',
+        'rgba(0, 0, 0, 0.6)'
+      )
+    }
+  }
+
   // Converts the image into a data URI
   const readImage = file => {
     const reader = new FileReader()
@@ -434,6 +451,8 @@
     if (window.location !== window.parent.location) {
       if (image_drop_area) {
         // Event listener for dragging the image over the div
+        const connectButton = window.document.getElementById('connectBtn')
+        connectButton.style.visibility = 'hidden'
         image_drop_area.addEventListener('dragover', event => {
           event.stopPropagation()
           event.preventDefault()
@@ -448,7 +467,6 @@
           )
           document.body.style.padding = 0
           image_drop_area_direction.style.display = 'none'
-          const connectButton = window.document.getElementById('connectBtn')
           connectButton.click()
           connectButton.style.display = 'none'
           event.stopPropagation()
@@ -666,6 +684,69 @@
     background-size: cover;
     box-sizing: border-box;
   }
+
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    border-radius: 34px;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: '';
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+
+  input:checked + .slider {
+    background-color: #929bed;
+  }
+
+  input:checked + .slider {
+    box-shadow: 0 0 1px #929bed;
+  }
+
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+
+  .backdrop-toggle {
+    display: flex;
+    align-items: center;
+    margin: 8px 8px 16px 4px;
+  }
+
+  .backdrop-toggle > label {
+    margin-right:8px;
+  }
 </style>
 
 <main>
@@ -674,6 +755,9 @@
       <p id="image_drop_area_direction">
         Drag and drop a screen shot of your site to customize styling
       </p>
+      {#if uploaded_image}
+        <button on:click={() => onboard.connectWallet()}>Connect Wallet</button>
+      {/if}
     </div>
   {/if}
   <div class="cta">
@@ -780,6 +864,17 @@
             >
           </div>
         {/each}
+      </div>
+      <div class="backdrop-toggle">
+        <label class="switch">
+          <input
+          type="checkbox"
+          on:change={() => handleBackdrop()}
+          bind:checked
+          />
+          <span class="slider" />
+        </label>
+        Disabled Backdrop for Styling
       </div>
       <div class="copy-styles-container">
         <textarea
