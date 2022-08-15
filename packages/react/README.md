@@ -65,6 +65,47 @@ function App() {
 }
 ```
 
+### Using the `Web3OnboardProvider`
+You can use the context provider `Web3OnboardProvider` to better manage global state. Simply wrap the provider around your `App` and
+the initialized web3Onboard instance will be available in all children components. See example below.
+
+```ts
+import { Web3OnboardProvider, init } from '@web3-onboard/react'
+import injectedModule from '@web3-onboard/injected-wallets'
+
+const INFURA_KEY = ''
+
+const ethereumRopsten = {
+  id: '0x3',
+  token: 'rETH',
+  label: 'Ethereum Ropsten',
+  rpcUrl: `https://ropsten.infura.io/v3/${INFURA_KEY}`
+}
+
+const chains = [ethereumRopsten]
+const wallets = [injectedModule()]
+
+const web3Onboard = init({
+  wallets,
+  chains,
+  appMetadata: {
+    name: "Web3-Onboard Demo",
+    icon: '<svg>App Icon</svg>',
+    description: "A demo of Web3-Onboard."
+  }
+})
+
+function MyApp({ Component, pageProps }) {
+  return (
+    <Web3OnboardProvider web3Onboard={web3Onboard}>
+      <Component {...pageProps} />
+    </Web3OnboardProvider>
+  )
+}
+
+export default MyApp
+```
+
 ## `init`
 
 The `init` function must be called before any hooks can be used. The `init` function just initializes `web3-onboard` and makes it available for all hooks to use. For reference check out the [initialization docs for `@web3-onboard/core`](../core/README.md#initialization)
