@@ -1,9 +1,8 @@
 <script>
   import Container from './Container.svelte'
   import TextBlock from './TextBlock.svelte'
-  import CodeBlock from './CodeBlock.svelte'
+  import CodeBlock from './base/CodeBlock.svelte'
 
-  import ThemeCode from './svg/ThemeCode.svelte'
   import ThemeCarousel from './svg/ThemeCarousel.svelte'
 
   let examplecode = `:root {

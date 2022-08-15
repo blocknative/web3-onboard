@@ -4,10 +4,10 @@
   import heroBg from './svg/hero-bg.svg'
   import heroImg from './svg/hero-img.svg'
 
-  import CodeBlock from './CodeBlock.svelte'
+  import CodeBlock from './base/CodeBlock.svelte'
 
-  import Flexbox from './Flexbox.svelte'
-  import Button from './Button.svelte'
+  import Flexbox from './base/Flexbox.svelte'
+  import Button from './base/Button.svelte'
 </script>
 
 <section style="background-image: url({heroBg});">

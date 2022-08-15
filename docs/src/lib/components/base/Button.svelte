@@ -35,7 +35,7 @@
   }
 
   button:hover {
-    --text-color: black;
+    /* --text-color: black; */
     --bg-color: #454ea0;
   }
 

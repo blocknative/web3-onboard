@@ -1,6 +1,6 @@
 <script>
   import Container from './Container.svelte'
-  import CodeBlock from './CodeBlock.svelte'
+  import CodeBlock from './base/CodeBlock.svelte'
 
   let examplecode = `import Onboard from '@web3-onboard/core'
 import injectedModule from '@web3-onboard/injected-wallets'
@@ -59,6 +59,7 @@ console.log(receipt)
     </CodeBlock>
     <h2>{'Quick Start'}</h2>
     <p>{'Then initialize in your app:'}</p>
+
     <CodeBlock>{examplecode}</CodeBlock>
   </div>
   <!-- </Container> -->
@@ -102,7 +103,7 @@ console.log(receipt)
   .container {
     /* display: flex;
     flex-flow: column; */
-    width: 100%;
+    width: auto;
     max-width: 800px;
     margin: 0 auto;
     padding: 3rem 2rem;

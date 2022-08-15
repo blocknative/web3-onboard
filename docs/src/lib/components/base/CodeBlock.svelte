@@ -1,5 +1,5 @@
 <script>
-  import CodeTabs from './svg/CodeTabs.svelte'
+  import CodeTabs from '../svg/CodeTabs.svelte'
 </script>
 
 <div>

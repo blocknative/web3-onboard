@@ -1,10 +1,10 @@
 <script>
-  import Flexbox from './Flexbox.svelte'
+  import Flexbox from './base/Flexbox.svelte'
   import Container from './Container.svelte'
   import TextBlock from './TextBlock.svelte'
   import FeatureCard from './FeatureCard.svelte'
 
-  import CodeBlock from './CodeBlock.svelte'
+  import CodeBlock from './base/CodeBlock.svelte'
 
   import FigFrameworksGroup from './svg/frameworks-group.svelte'
   import FigWalletsGroup from './svg/wallets-group.svelte'
