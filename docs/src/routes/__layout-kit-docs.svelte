@@ -20,7 +20,6 @@
   import '@svelteness/kit-docs/client/styles/theme.css'
 
   import { page } from '$app/stores'
-  import SvelteLogo from '$img/svelte-horizontal.svg?raw'
 
   import {
     Button,
@@ -31,7 +30,6 @@
   } from '@svelteness/kit-docs'
 
   import IconBN from '$lib/components/icons/blocknative.svelte'
-  import { append } from 'svelte/internal'
 
   /** @type {import('@svelteness/kit-docs').MarkdownMeta | null} */
   export let meta = null
@@ -43,8 +41,8 @@
   const navbar = {
     links: [
       { title: 'Documentation', slug: '/docs', match: /\/docs/ },
-      { title: 'Examples', slug: '/docs/examples', match: /\/docs\/examples/ },
-      { title: 'FAQS', slug: '/docs/faqs', match: /\/docs\/faqs/ }
+      { title: 'Examples', slug: '/docs', match: /\/docs\/examples/ },
+      { title: 'FAQS', slug: '/docs', match: /\/docs\/faqs/ }
     ]
   }
 
@@ -53,6 +51,8 @@
   $: category = $activeCategory ? `${$activeCategory}: ` : ''
   $: title = meta ? `${category}${meta.title} | KitDocs` : null
   $: description = meta?.description
+
+  $: console.log()
 </script>
 
 <svelte:head>
@@ -66,19 +66,22 @@
   {/key}
 </svelte:head>
 
-<KitDocs {meta}>
-  <KitDocsLayout {navbar} {sidebar}>
-    <div class="logo" slot="navbar-left">
-      <Button class=" text-base" href="/">
-        <div class="flex items-center">
-          <IconBN />
-          <span class="ml-2">Blocknative</span>
-        </div>
-      </Button>
-    </div>
-    <slot />
-  </KitDocsLayout>
-</KitDocs>
+<div style={$page.routeId === '@kit-docs' ? '--kd-content-max-width: 100%;' : ''}>
+  <KitDocs {meta}>
+    <KitDocsLayout {navbar} {sidebar}>
+      <div class="logo" slot="navbar-left">
+        <Button class=" text-base" href="/">
+          <div class="flex items-center">
+            <IconBN />
+            <span class="ml-2">Blocknative</span>
+          </div>
+        </Button>
+      </div>
+
+      <slot />
+    </KitDocsLayout>
+  </KitDocs>
+</div>
 
 <style>
   :global(:root) {
