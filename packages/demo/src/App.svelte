@@ -199,17 +199,11 @@
         enabled: true,
         transactionHandler: transaction => {
           console.log({ transaction })
-          //   if (transaction.eventCode === 'txConfirmed') {
-          //     return {
-          //       type: 'error',
-          //       message: 'Your in the pool, hope you brought a towel!',
-          //       autoDismiss: 0,
-          //       id: '123',
-          //       key: '321',
-          //       onClick: () =>
-          //         window.open(`https://rinkeby.etherscan.io/tx/${transaction.hash}`)
-          //     }
-          //   }
+            if (transaction.eventCode === 'txConfirmed') {
+              return {
+                autoDismiss: 0,
+              }
+            }
           // if (transaction.eventCode === 'txPool') {
           //   return {
           //     type: 'hint',
@@ -682,37 +676,37 @@
           >
         </div>
       </div>
-      <div class="themes">
-        <label for="Theme">Choose color theme: </label>
-        <div class="theming-container">
-          {#each Object.keys(defaultStyling) as target}
-            <div class="theming-inputs-wrapper">
-              <div class="theming-inputs">
-                <input
-                  type="color"
-                  name="Theme"
-                  bind:value={defaultStyling[target]}
-                  on:input={e => updateTheme(e, target)}
-                />
-              </div>
-              <span class="text" id="current-theme"
-                >{target} : {defaultStyling[target]}</span
-              >
-            </div>
-          {/each}
-        </div>
-        <div class="copy-styles-container">
-          <textarea
-            readonly
-            bind:value={copyableStyles}
-            class="copy-styles-textarea"
-          />
-          <button on:click={copyConfigToClipboard()}>
-            Copy Styling Config
-          </button>
-        </div>
-      </div>
     {/if}
+  </div>
+  <div class="themes">
+    <label for="Theme">Choose color theme: </label>
+    <div class="theming-container">
+      {#each Object.keys(defaultStyling) as target}
+        <div class="theming-inputs-wrapper">
+          <div class="theming-inputs">
+            <input
+              type="color"
+              name="Theme"
+              bind:value={defaultStyling[target]}
+              on:input={e => updateTheme(e, target)}
+            />
+          </div>
+          <span class="text" id="current-theme"
+            >{target} : {defaultStyling[target]}</span
+          >
+        </div>
+      {/each}
+    </div>
+    <div class="copy-styles-container">
+      <textarea
+        readonly
+        bind:value={copyableStyles}
+        class="copy-styles-textarea"
+      />
+      <button on:click={copyConfigToClipboard()}>
+        Copy Styling Config
+      </button>
+    </div>
   </div>
 
   {#if $wallets$}
