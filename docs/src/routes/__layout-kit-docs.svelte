@@ -66,22 +66,20 @@
   {/key}
 </svelte:head>
 
-<div style={$page.routeId === '@kit-docs' ? '--kd-content-max-width: 100%;' : ''}>
-  <KitDocs {meta}>
-    <KitDocsLayout {navbar} {sidebar}>
-      <div class="logo" slot="navbar-left">
-        <Button class=" text-base" href="/">
-          <div class="flex items-center">
-            <IconBN />
-            <span class="ml-2">Blocknative</span>
-          </div>
-        </Button>
-      </div>
+<KitDocs {meta}>
+  <KitDocsLayout {navbar} {sidebar}>
+    <div class="logo" slot="navbar-left">
+      <Button class=" text-base" href="/">
+        <div class="flex items-center">
+          <IconBN />
+          <span class="ml-2">Blocknative</span>
+        </div>
+      </Button>
+    </div>
 
-      <slot />
-    </KitDocsLayout>
-  </KitDocs>
-</div>
+    <slot />
+  </KitDocsLayout>
+</KitDocs>
 
 <style>
   :global(:root) {
