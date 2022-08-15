@@ -84,7 +84,6 @@
   :global(:root) {
     --kd-color-brand: #54b4f6;
     --kd-font-family-sans: 'Sofia Pro';
-    --kd-content-max-width: 100%;
   }
 
   :global(:root.dark) {
