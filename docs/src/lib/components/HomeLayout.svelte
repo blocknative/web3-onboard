@@ -9,7 +9,7 @@
 </script>
 
 <div class="layout-container">
-  <NavBar />
+  <!-- <NavBar /> -->
   <div class="body">
     <HeroSection />
     <FeaturesSection />
