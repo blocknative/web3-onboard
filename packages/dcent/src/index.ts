@@ -90,7 +90,6 @@ function dcent({
         const { StaticJsonRpcProvider } = await import(
           '@ethersproject/providers'
         )
-        const { default: Common, Hardfork } = await import('@ethereumjs/common')
 
         const { default: EthDcentKeyring } = await import('eth-dcent-keyring')
         const dcentKeyring = new EthDcentKeyring({})
@@ -98,6 +97,8 @@ function dcent({
         const { TransactionFactory: Transaction } = await import(
           '@ethereumjs/tx'
         )
+
+        const { getCommon } = await import('@web3-onboard/hw-common')
 
         let currentChain: Chain = chains[0]
         const scanAccounts = async ({
@@ -194,16 +195,11 @@ function dcent({
             // Set the `from` field to the currently selected account
             transactionObject = { ...transactionObject, from }
 
-            // @ts-ignore -- Due to weird commonjs exports
-            const CommonConstructor = Common.default || Common
+            const chainId = currentChain.hasOwnProperty('id')
+              ? Number.parseInt(currentChain.id)
+              : 1
 
-            const common = new CommonConstructor({
-              chain: customNetwork || Number.parseInt(currentChain.id) || 1,
-              // Berlin is the minimum hardfork that will allow for EIP1559
-              hardfork: Hardfork.Berlin,
-              // List of supported EIPS
-              eips: [1559]
-            })
+            const common = await getCommon({ customNetwork, chainId })
 
             transactionObject.gasLimit =
               transactionObject.gas || transactionObject.gasLimit

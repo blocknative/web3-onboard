@@ -1,8 +1,7 @@
 import type Common from '@ethereumjs/common'
 import type { EIP1193Provider, RPCResponse } from '@web3-onboard/common'
-import type { TransactionRequest } from '@ethersproject/providers'
 import type { CustomNetwork } from './type'
-import type { BigNumber } from 'ethers'
+import type { BigNumber, providers } from 'ethers'
 
 /**
  * Creates the common instance used for signing
@@ -44,7 +43,7 @@ export const getCommon = async ({
 }
 
 type StringifiedTransactionRequest = Omit<
-  TransactionRequest,
+  providers.TransactionRequest,
   | 'nonce'
   | 'gasLimit'
   | 'gasPrice'
@@ -66,16 +65,21 @@ type StringifiedTransactionRequest = Omit<
  * @returns a transaction where all BigNumber properties are now strings
  */
 export const bigNumberFieldsToStrings = (
-  transaction: TransactionRequest
+  transaction: providers.TransactionRequest
 ): StringifiedTransactionRequest =>
   Object.keys(transaction).reduce(
     (transaction, txnProperty) => ({
       ...transaction,
-      ...((transaction[txnProperty as keyof TransactionRequest] as BigNumber)
-        .toHexString
+      ...((
+        transaction[
+          txnProperty as keyof providers.TransactionRequest
+        ] as BigNumber
+      ).toHexString
         ? {
             [txnProperty]: (
-              transaction[txnProperty as keyof TransactionRequest] as BigNumber
+              transaction[
+                txnProperty as keyof providers.TransactionRequest
+              ] as BigNumber
             ).toHexString()
           }
         : {})

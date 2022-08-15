@@ -939,7 +939,7 @@
   dependencies:
     vue-demi "*"
 
-"@web3-onboard/common@^2.1.7", "@web3-onboard/common@^2.1.7-alpha.4":
+"@web3-onboard/common@^2.1.7":
   version "2.1.7"
   resolved "https://registry.yarnpkg.com/@web3-onboard/common/-/common-2.1.7.tgz#62c74726ed9dd6e8baadab1e6aec6462d62e7d2d"
   integrity sha512-4nJvfNl0t5D17B1jD8H9BNBtUOVDDHxyxmRyQxnv1u1D5dgdd2I/mUVGhee0xWIHgMy9ORjuJCApraYCwZfgJA==
@@ -950,12 +950,23 @@
     joi "^17.4.2"
     rxjs "^7.5.2"
 
-"@web3-onboard/core@^2.6.0-alpha.7":
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.6.0.tgz#978b41211780189d9f5fb2f8f3259659bf6022e2"
-  integrity sha512-mxX4kMKetSqp/kDWYEZYqpIeDx7s3Q2i+XgS9FAaNDv+Rbv95CC/AC5zxpxiUy2zsixe8avTZtKoPXRV7y0Wag==
+"@web3-onboard/common@^2.1.8":
+  version "2.1.8"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/common/-/common-2.1.8.tgz#e20e027eaa597846b4ff178423de13d5ca597a5b"
+  integrity sha512-3kmJi0FKUw0rPXrbVe/BL+K13JSEzZ2QndnzpmHtKt4xFyRN+JgboAaAvJqfuk9t4hAZe45PqEWraSnYUCgDaA==
   dependencies:
-    "@web3-onboard/common" "^2.1.7"
+    "@ethereumjs/common" "2.6.2"
+    bignumber.js "^9.0.0"
+    ethers "5.5.4"
+    joi "^17.4.2"
+    rxjs "^7.5.2"
+
+"@web3-onboard/core@^2.7.0":
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.7.0.tgz#20acb5ae430cc5d0b2a7513e4e83f3182cff19eb"
+  integrity sha512-wxlUheuqgW8C5W2W4bpQdfjV9fXwmWxQx82IKem5kEnDhU8NPjVYEO/Xg4+kUwPlzYg0Uj/SPuGGjk+tNIrn9g==
+  dependencies:
+    "@web3-onboard/common" "^2.1.8"
     bignumber.js "^9.0.0"
     bnc-sdk "^4.4.1"
     bowser "^2.11.0"
@@ -966,7 +977,7 @@
     lodash.partition "^4.6.0"
     nanoid "^4.0.0"
     rxjs "^7.5.2"
-    svelte "^3.46.4"
+    svelte "^3.49.0"
     svelte-i18n "^3.3.13"
 
 "@web3-onboard/injected-wallets@^2.0.15":
@@ -978,13 +989,15 @@
     joi "^17.4.2"
     lodash.uniqby "^4.7.0"
 
-"@web3-onboard/vue@file:.yalc/@web3-onboard/vue":
-  version "2.1.5-alpha.6"
+"@web3-onboard/vue@^2.1.6":
+  version "2.1.6"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/vue/-/vue-2.1.6.tgz#c634aff42932cc51e97bc40dc8669af1396d4485"
+  integrity sha512-RWWpZdTYLiwjUoem2+Lppdxtj0qPycrw44Dls83PjOp+9mO9/dvLO+FXSwmMJcPJiOH9WYPuejqAGOF89LQAUQ==
   dependencies:
     "@vueuse/core" "^8.4.2"
     "@vueuse/rxjs" "^8.2.0"
-    "@web3-onboard/common" "^2.1.7-alpha.4"
-    "@web3-onboard/core" "^2.6.0-alpha.7"
+    "@web3-onboard/common" "^2.1.8"
+    "@web3-onboard/core" "^2.7.0"
     vue-demi "^0.12.4"
 
 acorn-jsx@^5.3.2:
@@ -2453,7 +2466,7 @@ svelte-i18n@^3.3.13:
     sade "^1.7.4"
     tiny-glob "^0.2.6"
 
-svelte@^3.46.4:
+svelte@^3.49.0:
   version "3.49.0"
   resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.49.0.tgz#5baee3c672306de1070c3b7888fc2204e36a4029"
   integrity sha512-+lmjic1pApJWDfPCpUUTc1m8azDqYCG1JN9YEngrx/hUyIcFJo6VZhj0A1Ai0wqoHcEIuQy+e9tk+4uDgdtsFA==

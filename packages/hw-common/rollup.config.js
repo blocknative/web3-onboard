@@ -10,7 +10,7 @@ export default {
   output: {
     format: 'esm',
     dir: 'dist/',
-    sourcemap: true,
+    sourcemap: true
   },
   plugins: [
     json(),
@@ -26,5 +26,5 @@ export default {
       inlineSources: !production
     })
   ],
-  external: ['joi', 'rxjs', 'bignumber.js']
+  external: ['joi', 'rxjs', '@ethereumjs/common', 'ethers']
 }

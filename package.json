@@ -58,7 +58,6 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "cipher-base": "^1.0.4",
     "wsrun": "^5.2.4"
   },
   "resolutions": {

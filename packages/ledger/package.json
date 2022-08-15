@@ -66,6 +66,7 @@
     "@ledgerhq/hw-transport-webusb": "^6.19.0",
     "@metamask/eth-sig-util": "^4.0.0",
     "@web3-onboard/common": "^2.2.0-alpha.1",
+    "@web3-onboard/hw-common": "^2.0.0-alpha.1",
     "buffer": "^6.0.3",
     "ethereumjs-util": "^7.1.3"
   }

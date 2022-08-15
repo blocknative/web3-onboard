@@ -56,7 +56,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.1.8-alpha.1",
+    "@web3-onboard/common": "^2.2.0-alpha.1",
     "@web3auth/web3auth": "^1.0.0"
   }
 }
