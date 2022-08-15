@@ -27,6 +27,8 @@
   import VConsole from 'vconsole'
   import blocknativeIcon from './blocknative-icon'
   import blocknativeLogo from './blocknative-logo'
+  import { onMount } from 'svelte'
+  import Picker from 'vanilla-picker';
 
   if (window.innerWidth < 700) {
     new VConsole()
@@ -199,11 +201,11 @@
         enabled: true,
         transactionHandler: transaction => {
           console.log({ transaction })
-            if (transaction.eventCode === 'txConfirmed') {
-              return {
-                autoDismiss: 0,
-              }
+          if (transaction.eventCode === 'txConfirmed') {
+            return {
+              autoDismiss: 0
             }
+          }
           // if (transaction.eventCode === 'txPool') {
           //   return {
           //     type: 'hint',
@@ -390,29 +392,84 @@
     )
   }
 
-  export async function copyWalletAddress(text) {
+  async function copyStylingConfig() {
     try {
-      const copy = await navigator.clipboard.writeText(text)
+      const copy = await navigator.clipboard.writeText(copyableStyles)
       return copy
     } catch (err) {
       console.error('Failed to copy: ', err)
     }
   }
+
   let copyableStyles = `:root {\n  ${styleToString(
     defaultStyling
   )}${baseStyling}\n}`
+
   const updateTheme = (e, targetStyle) => {
-    document.documentElement.style.setProperty(targetStyle, e.target.value)
+    const iframe = document.getElementById('inlineFrameExample')
+    iframe.contentWindow.document.documentElement.style.setProperty(
+      targetStyle,
+      e.target.value
+    )
 
-    copyableStyles = `:root {\n  ${styleToString(
-      defaultStyling
-    )}${baseStyling}\n}`
+    copyableStyles = `:root {\n  
+      ${styleToString(defaultStyling)}${baseStyling}\n}`
   }
 
-  const copyConfigToClipboard = () => {
-    // Provide UI feedback on clipboard copy
-    copyWalletAddress(copyableStyles)
+  // Converts the image into a data URI
+  const readImage = file => {
+    const reader = new FileReader()
+    reader.addEventListener('load', event => {
+      uploaded_image = event.target.result
+      document.querySelector(
+        '#image_drop_area'
+      ).style.backgroundImage = `url(${uploaded_image})`
+    })
+    reader.readAsDataURL(file)
   }
+
+  let hideForIframe = false
+  let uploaded_image
+  const handleImageDrop = () => {
+    if (window.location !== window.parent.location) {
+      if (image_drop_area) {
+        // Event listener for dragging the image over the div
+        image_drop_area.addEventListener('dragover', event => {
+          event.stopPropagation()
+          event.preventDefault()
+          // Style the drag-and-drop as a "copy file" operation.
+          event.dataTransfer.dropEffect = 'copy'
+        })
+
+        // Event listener for dropping the image inside the div
+        image_drop_area.addEventListener('drop', event => {
+          const image_drop_area_direction = document.querySelector(
+            '#image_drop_area_direction'
+          )
+          document.body.style.padding = 0
+          image_drop_area_direction.style.display = 'none'
+          const connectButton = window.document.getElementById('connectBtn')
+          connectButton.click()
+          connectButton.style.display = 'none'
+          event.stopPropagation()
+          event.preventDefault()
+          let fileList = event.dataTransfer.files
+
+          readImage(fileList[0])
+        })
+      }
+    }
+  }
+  const initIFrame = async () => {
+    if (window.location !== window.parent.location) {
+      return (hideForIframe = true)
+    }
+  }
+
+  onMount(async () => {
+    await initIFrame()
+    handleImageDrop()
+  })
 </script>
 
 <style>
@@ -494,6 +551,9 @@
 		NEEDS UPDATES FOR DIFFERNT STYLING, DOESNT FIT BASIC VARIABLES ABOVE:
 		Notify status icons, icon backgrounds and icon borders
 	*/
+  }
+  main {
+    height: 100%;
   }
   button {
     width: 14rem;
@@ -593,14 +653,37 @@
     height: 150%;
     margin: -25%;
   }
+  iframe {
+    height: 600px;
+    width: 900px;
+    resize: both;
+    overflow: auto;
+  }
+  #image_drop_area {
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    box-sizing: border-box;
+  }
 </style>
 
 <main>
+  {#if hideForIframe}
+    <div id="image_drop_area">
+      <p id="image_drop_area_direction">
+        Drag and drop a screen shot of your site to customize styling
+      </p>
+    </div>
+  {/if}
   <div class="cta">
-    <button on:click={() => onboard.connectWallet()}>Connect Wallet</button>
+    <button on:click={() => onboard.connectWallet()} id="connectBtn"
+      >Connect Wallet</button
+    >
 
-    {#if $wallets$}
+    {#if $wallets$ && !hideForIframe}
       <button
+        class="updateBalanceBtn"
         on:click={() => {
           // Only necessary if a Blocknative API key is not provided and notify is disabled
           onboard.state.actions.updateBalances()
@@ -678,38 +761,45 @@
       </div>
     {/if}
   </div>
-  <div class="themes">
-    <label for="Theme">Choose color theme: </label>
-    <div class="theming-container">
-      {#each Object.keys(defaultStyling) as target}
-        <div class="theming-inputs-wrapper">
-          <div class="theming-inputs">
-            <input
-              type="color"
-              name="Theme"
-              bind:value={defaultStyling[target]}
-              on:input={e => updateTheme(e, target)}
-            />
+  {#if !hideForIframe}
+    <div class="themes">
+      <label for="Theme">Choose color theme: </label>
+      <div class="theming-container">
+        {#each Object.keys(defaultStyling) as target}
+          <div class="theming-inputs-wrapper">
+            <div class="theming-inputs">
+              <input
+                type="color"
+                name="Theme"
+                bind:value={defaultStyling[target]}
+                on:input={e => updateTheme(e, target)}
+              />
+            </div>
+            <span class="text" id="current-theme"
+              >{target} : {defaultStyling[target]}</span
+            >
           </div>
-          <span class="text" id="current-theme"
-            >{target} : {defaultStyling[target]}</span
-          >
-        </div>
-      {/each}
+        {/each}
+      </div>
+      <div class="copy-styles-container">
+        <textarea
+          readonly
+          bind:value={copyableStyles}
+          class="copy-styles-textarea"
+        />
+        <button on:click={async () => await copyStylingConfig()}>
+          Copy Styling Config
+        </button>
+      </div>
     </div>
-    <div class="copy-styles-container">
-      <textarea
-        readonly
-        bind:value={copyableStyles}
-        class="copy-styles-textarea"
-      />
-      <button on:click={copyConfigToClipboard()}>
-        Copy Styling Config
-      </button>
-    </div>
-  </div>
-
-  {#if $wallets$}
+    <iframe
+      id="inlineFrameExample"
+      name="inlineFrameExample"
+      title="Inline Frame Example"
+      src="http://localhost:8080/"
+    />
+  {/if}
+  {#if $wallets$ && !hideForIframe}
     {#each $wallets$ as { icon, label, accounts, chains, provider }}
       <div class="connected-wallet">
         <div class="flex-centered" style="width: 10rem;">
