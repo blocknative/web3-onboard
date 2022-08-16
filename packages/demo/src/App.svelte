@@ -411,8 +411,9 @@
       e.target.value
     )
 
-    copyableStyles = `:root {\n  
-      ${styleToString(defaultStyling)}${baseStyling}\n}`
+    copyableStyles = `:root {\n  ${styleToString(
+      defaultStyling
+    )}${baseStyling}\n}`
   }
 
   let checked = false
@@ -557,7 +558,7 @@
     --account-center-app-btn-background: var(--secondary-accent-background);
     --account-center-app-btn-text-color: var(--background-color);
 
-    --notify-onboard-background: var(----secondary-accent-color);
+    --notify-onboard-background: var(--secondary-accent-background);
     --notify-onboard-transaction-status: var(--accent-background);
     --notify-onboard-address-hash-color: var(--accent-color-hover);
     --notify-onboard-anchor-color: var(--accent-color);
@@ -672,10 +673,11 @@
     margin: -25%;
   }
   iframe {
-    height: 600px;
-    width: 900px;
+    height: 850px;
+    width: 1000px;
     resize: both;
     overflow: auto;
+    margin: 8px 8px 16px;
   }
   #image_drop_area {
     width: 100%;
@@ -745,7 +747,7 @@
   }
 
   .backdrop-toggle > label {
-    margin-right:8px;
+    margin-right: 8px;
   }
 </style>
 
@@ -753,10 +755,73 @@
   {#if hideForIframe}
     <div id="image_drop_area">
       <p id="image_drop_area_direction">
-        Drag and drop a screen shot of your site to customize styling
+        Drag and drop a screen shot of your site to customize styling.
+        <br />
+        Click color circles above to change the theme.
       </p>
       {#if uploaded_image}
         <button on:click={() => onboard.connectWallet()}>Connect Wallet</button>
+        {#if $wallets$}
+          <div class="notify-chain-container">
+            <div class="notify-action-container">
+              <button
+                on:click={() =>
+                  onboard.state.actions.customNotification({
+                    type: 'hint',
+                    message: 'This is a custom DApp hint',
+                    autoDismiss: 0
+                  })}>Send Hint Notification</button
+              >
+              <button
+                on:click={() => {
+                  const { update, dismiss } =
+                    onboard.state.actions.customNotification({
+                      type: 'pending',
+                      message:
+                        'This is a custom DApp pending notification to use however you want',
+                      autoDismiss: 0
+                    })
+                  setTimeout(
+                    () =>
+                      update({
+                        eventCode: 'dbUpdateSuccess',
+                        message: 'Updated status for custom notification',
+                        type: 'success',
+                        autoDismiss: 0
+                      }),
+                    4000
+                  )
+                }}>Send Success Notification</button
+              >
+              <button
+                on:click={() =>
+                  onboard.state.actions.customNotification({
+                    message:
+                      'This is a custom DApp success notification to use however you want',
+                    autoDismiss: 0,
+                    type: 'pending'
+                  })}>Send Pending Notification</button
+              >
+              <button
+                on:click={() =>
+                  onboard.state.actions.customNotification({
+                    type: 'error',
+                    message:
+                      'This is a custom DApp Error notification to use however you want',
+                    autoDismiss: 0
+                  })}>Send Error Notification</button
+              >
+              <button
+                on:click={() =>
+                  onboard.state.actions.customNotification({
+                    message:
+                      'This is a custom non-descript DApp notification to use however you want',
+                    autoDismiss: 0
+                  })}>Send DApp Notification</button
+              >
+            </div>
+          </div>
+        {/if}
       {/if}
     </div>
   {/if}
@@ -845,55 +910,6 @@
       </div>
     {/if}
   </div>
-  {#if !hideForIframe}
-    <div class="themes">
-      <label for="Theme">Choose color theme: </label>
-      <div class="theming-container">
-        {#each Object.keys(defaultStyling) as target}
-          <div class="theming-inputs-wrapper">
-            <div class="theming-inputs">
-              <input
-                type="color"
-                name="Theme"
-                bind:value={defaultStyling[target]}
-                on:input={e => updateTheme(e, target)}
-              />
-            </div>
-            <span class="text" id="current-theme"
-              >{target} : {defaultStyling[target]}</span
-            >
-          </div>
-        {/each}
-      </div>
-      <div class="backdrop-toggle">
-        <label class="switch">
-          <input
-          type="checkbox"
-          on:change={() => handleBackdrop()}
-          bind:checked
-          />
-          <span class="slider" />
-        </label>
-        Disabled Backdrop for Styling
-      </div>
-      <div class="copy-styles-container">
-        <textarea
-          readonly
-          bind:value={copyableStyles}
-          class="copy-styles-textarea"
-        />
-        <button on:click={async () => await copyStylingConfig()}>
-          Copy Styling Config
-        </button>
-      </div>
-    </div>
-    <iframe
-      id="inlineFrameExample"
-      name="inlineFrameExample"
-      title="Inline Frame Example"
-      src="http://localhost:8080/"
-    />
-  {/if}
   {#if $wallets$ && !hideForIframe}
     {#each $wallets$ as { icon, label, accounts, chains, provider }}
       <div class="connected-wallet">
@@ -992,5 +1008,54 @@
         </button>
       </div>
     {/each}
+  {/if}
+  {#if !hideForIframe}
+    <div class="themes">
+      <label for="Theme">Click Color Circles to Set Theme: </label>
+      <div class="theming-container">
+        {#each Object.keys(defaultStyling) as target}
+          <div class="theming-inputs-wrapper">
+            <div class="theming-inputs">
+              <input
+                type="color"
+                name="Theme"
+                bind:value={defaultStyling[target]}
+                on:input={e => updateTheme(e, target)}
+              />
+            </div>
+            <span class="text" id="current-theme"
+              >{target} : {defaultStyling[target]}</span
+            >
+          </div>
+        {/each}
+      </div>
+      <div class="backdrop-toggle">
+        <label class="switch">
+          <input
+            type="checkbox"
+            on:change={() => handleBackdrop()}
+            bind:checked
+          />
+          <span class="slider" />
+        </label>
+        Disabled Backdrop for Styling
+      </div>
+      <div class="copy-styles-container">
+        <textarea
+          readonly
+          bind:value={copyableStyles}
+          class="copy-styles-textarea"
+        />
+        <button on:click={async () => await copyStylingConfig()}>
+          Copy Styling Config
+        </button>
+      </div>
+    </div>
+    <iframe
+      id="inlineFrameExample"
+      name="inlineFrameExample"
+      title="Inline Frame Example"
+      src="http://localhost:8080/"
+    />
   {/if}
 </main>
