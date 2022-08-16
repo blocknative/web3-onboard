@@ -1,18 +1,11 @@
-import {
-  Account,
-  accountSelect,
-  Chain,
-  createEIP1193Provider,
-  ProviderRpcErrorCode,
-  ProviderRpcError,
-  ScanAccountsOptions,
-  WalletInit,
-  EIP1193Provider
-} from '@web3-onboard/common'
-
-import type { CustomNetwork } from '@web3-onboard/hw-common'
-
+import type { Chain, WalletInit, EIP1193Provider } from '@web3-onboard/common'
 import type { providers } from 'ethers'
+
+import type {
+  CustomNetwork,
+  Account,
+  ScanAccountsOptions
+} from '@web3-onboard/hw-common'
 
 interface CustomWindow extends Window {
   ethereum: EIP1193Provider
@@ -98,7 +91,15 @@ function dcent({
           '@ethereumjs/tx'
         )
 
-        const { getCommon } = await import('@web3-onboard/hw-common')
+        const { getCommon, accountSelect } = await import(
+          '@web3-onboard/hw-common'
+        )
+
+        const {
+          createEIP1193Provider,
+          ProviderRpcErrorCode,
+          ProviderRpcError
+        } = await import('@web3-onboard/common')
 
         let currentChain: Chain = chains[0]
         const scanAccounts = async ({
