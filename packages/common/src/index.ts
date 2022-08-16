@@ -1,4 +1,3 @@
-export { ProviderRpcErrorCode } from './types'
 export { ProviderRpcError } from './errors'
 export { createEIP1193Provider } from './eip-1193'
 export { SofiaProLight, SofiaProRegular, SofiaProSemiBold } from './fonts'

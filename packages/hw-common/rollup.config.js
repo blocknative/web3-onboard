@@ -36,10 +36,10 @@ export default {
     })
   ],
   external: [
-    '@ethereumjs/common',
-    '@web3-onboard/common',
-    'ethers',
     'joi',
-    'rxjs'
+    'rxjs',
+    'ethers',
+    '@ethereumjs/common',
+    '@web3-onboard/common'
   ]
 }
