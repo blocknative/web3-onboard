@@ -1,10 +1,10 @@
+import type { Chain, WalletInit } from '@web3-onboard/common'
+
 import type {
   ScanAccountsOptions,
   Account,
-  Asset,
-  Chain,
-  WalletInit
-} from '@web3-onboard/common'
+  Asset
+} from '@web3-onboard/hw-common'
 
 import type { StaticJsonRpcProvider } from '@ethersproject/providers'
 import type { ETHAccountPath } from '@shapeshiftoss/hdwallet-core'
@@ -66,10 +66,8 @@ function keepkey(): WalletInit {
           entryModal
         } = await import('@web3-onboard/common')
 
-        const {
-          bigNumberFieldsToStrings,
-          getHardwareWalletProvider
-        } = await import('@web3-onboard/hw-common')
+        const { bigNumberFieldsToStrings, getHardwareWalletProvider } =
+          await import('@web3-onboard/hw-common')
 
         const { utils } = await import('ethers')
 

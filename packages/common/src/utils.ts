@@ -1,5 +1,5 @@
-import BigNumber from 'bignumber.js'
+import { BigNumber } from 'ethers'
 
 export function weiToEth(wei: string): string {
-   return new BigNumber(wei).div(1e18).toString(10)
+  return BigNumber.from(wei).div(1e18).toString()
 }

@@ -1,7 +1,10 @@
 export {
-    getCommon,
-    bigNumberFieldsToStrings,
-    getHardwareWalletProvider
+  getCommon,
+  bigNumberFieldsToStrings,
+  getHardwareWalletProvider
 } from './hdwallets'
 
-export * from './type';
+export { default as accountSelect } from './account-select'
+export { entryModal } from './entry-modal'
+
+export * from './types'

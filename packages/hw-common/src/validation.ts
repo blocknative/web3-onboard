@@ -25,6 +25,7 @@ const asset = Joi.object({
   label: Joi.string().required(),
   address: Joi.string()
 })
+
 const assets = Joi.array().items(asset)
 
 const selectAccountOptions = Joi.object({

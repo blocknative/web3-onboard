@@ -1,16 +1,17 @@
 <script lang="ts">
+  import type { Subject } from 'rxjs'
+  import { weiToEth } from '@web3-onboard/common'
   import { fade } from 'svelte/transition'
   import CloseButton from '../elements/CloseButton.svelte'
   import AddressTable from '../elements/AddressTable.svelte'
   import TableHeader from '../elements/TableHeader.svelte'
-  import type { Subject } from 'rxjs'
+
   import type {
     ScanAccountsOptions,
     SelectAccountOptions,
     Account,
     AccountsList
   } from '../types'
-  import { weiToEth } from '../utils'
 
   export let selectAccountOptions: SelectAccountOptions
   export let accounts$: Subject<Account[]>
@@ -100,6 +101,125 @@
       (basePaths[0] && basePaths[0].value) || ''
   }
 </script>
+
+<div class="container">
+  <div
+    class="hardware-connect-modal account-select-modal-position"
+    transition:fade
+  >
+    <header class="connect-wallet-header">
+      <div />
+      <div class="close" on:click={dismiss}>
+        <CloseButton />
+      </div>
+    </header>
+    <section class="modal-controls">
+      <div class="w-100 base-path-container">
+        <h4 class="control-label">Select Base Path</h4>
+        {#if customDerivationPath}
+          <input
+            type="text"
+            class="base-path-select"
+            placeholder="type/your/custom/path..."
+            on:change={handleCustomPath}
+          />
+          <span
+            class="input-select"
+            on:click={toggleDerivationPathToDropdown}
+          />
+        {:else if !customDerivationPath}
+          <select
+            class="base-path-select"
+            on:change={handleDerivationPathSelect}
+          >
+            {#each basePaths as path}
+              <option value={path.value}>
+                {path.label} - {path.value}
+              </option>
+            {/each}
+            {#if supportsCustomPath}
+              <option value="customPath"> Custom Derivation Path </option>
+            {/if}
+          </select>
+        {/if}
+      </div>
+
+      <div class="asset-container">
+        <h4 class="control-label">Asset</h4>
+        <select class="asset-select" bind:value={scanAccountOptions['asset']}>
+          {#each assets as asset}
+            <option value={asset}>
+              {asset.label}
+            </option>
+          {/each}
+        </select>
+      </div>
+
+      <div class="network-container">
+        <h4 class="control-label">Network</h4>
+        <select
+          bind:value={scanAccountOptions['chainId']}
+          class="network-select"
+        >
+          {#each chains as chain}
+            <option value={chain.id}>
+              {chain.label}
+            </option>
+          {/each}
+        </select>
+      </div>
+    </section>
+    <section class="table-section">
+      <div class="w-100 table-container">
+        <TableHeader
+          scanAccounts={scanAccountsWrap}
+          {loadingAccounts}
+          {errorFromScan}
+          bind:showEmptyAddresses
+        />
+        <AddressTable
+          {accountsListObject}
+          {showEmptyAddresses}
+          bind:accountSelected
+        />
+      </div>
+    </section>
+
+    <section>
+      <div class="address-found-count">
+        {#if showEmptyAddresses}
+          {(accountsListObject && accountsListObject.all.length) || 0} total address{accountsListObject &&
+          accountsListObject.all.length !== 1
+            ? 'es'
+            : ''} found
+        {/if}
+        {#if !showEmptyAddresses}
+          {(accountsListObject && accountsListObject.filtered.length) || 0} total
+          address{accountsListObject && accountsListObject.filtered.length !== 1
+            ? 'es'
+            : ''} found
+        {/if}
+      </div>
+      <div class="modal-controls">
+        <div
+          class="dismiss-action"
+          id="dismiss-account-select"
+          on:click={dismiss}
+        >
+          Dismiss
+        </div>
+        <button
+          class="connect-btn"
+          id="connect-accounts"
+          disabled={!accountSelected}
+          on:click={connectAccounts}
+        >
+          Connect
+        </button>
+      </div>
+    </section>
+  </div>
+</div>
 
 <style>
   select {
@@ -438,122 +558,3 @@
     );
   }
 </style>
-
-<div class="container">
-  <div
-    class="hardware-connect-modal account-select-modal-position"
-    transition:fade
-  >
-    <header class="connect-wallet-header">
-      <div />
-      <div class="close" on:click={dismiss}>
-        <CloseButton />
-      </div>
-    </header>
-    <section class="modal-controls">
-      <div class="w-100 base-path-container">
-        <h4 class="control-label">Select Base Path</h4>
-        {#if customDerivationPath}
-          <input
-            type="text"
-            class="base-path-select"
-            placeholder="type/your/custom/path..."
-            on:change={handleCustomPath}
-          />
-          <span
-            class="input-select"
-            on:click={toggleDerivationPathToDropdown}
-          />
-        {:else if !customDerivationPath}
-          <select
-            class="base-path-select"
-            on:change={handleDerivationPathSelect}
-          >
-            {#each basePaths as path}
-              <option value={path.value}>
-                {path.label} - {path.value}
-              </option>
-            {/each}
-            {#if supportsCustomPath}
-              <option value="customPath"> Custom Derivation Path </option>
-            {/if}
-          </select>
-        {/if}
-      </div>
-
-      <div class="asset-container">
-        <h4 class="control-label">Asset</h4>
-        <select class="asset-select" bind:value={scanAccountOptions['asset']}>
-          {#each assets as asset}
-            <option value={asset}>
-              {asset.label}
-            </option>
-          {/each}
-        </select>
-      </div>
-
-      <div class="network-container">
-        <h4 class="control-label">Network</h4>
-        <select
-          bind:value={scanAccountOptions['chainId']}
-          class="network-select"
-        >
-          {#each chains as chain}
-            <option value={chain.id}>
-              {chain.label}
-            </option>
-          {/each}
-        </select>
-      </div>
-    </section>
-    <section class="table-section">
-      <div class="w-100 table-container">
-        <TableHeader
-          scanAccounts={scanAccountsWrap}
-          {loadingAccounts}
-          {errorFromScan}
-          bind:showEmptyAddresses
-        />
-        <AddressTable
-          {accountsListObject}
-          {showEmptyAddresses}
-          bind:accountSelected
-        />
-      </div>
-    </section>
-
-    <section>
-      <div class="address-found-count">
-        {#if showEmptyAddresses}
-          {(accountsListObject && accountsListObject.all.length) || 0} total address{accountsListObject &&
-          accountsListObject.all.length !== 1
-            ? 'es'
-            : ''} found
-        {/if}
-        {#if !showEmptyAddresses}
-          {(accountsListObject && accountsListObject.filtered.length) || 0} total
-          address{accountsListObject && accountsListObject.filtered.length !== 1
-            ? 'es'
-            : ''} found
-        {/if}
-      </div>
-      <div class="modal-controls">
-        <div
-          class="dismiss-action"
-          id="dismiss-account-select"
-          on:click={dismiss}
-        >
-          Dismiss
-        </div>
-        <button
-          class="connect-btn"
-          id="connect-accounts"
-          disabled={!accountSelected}
-          on:click={connectAccounts}
-        >
-          Connect
-        </button>
-      </div>
-    </section>
-  </div>
-</div>
