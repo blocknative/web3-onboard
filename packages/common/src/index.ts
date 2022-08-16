@@ -4,3 +4,4 @@ export { SofiaProLight, SofiaProRegular, SofiaProSemiBold } from './fonts'
 export { weiToEth } from './utils'
 
 export * from './types'
+export * from './validation'

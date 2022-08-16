@@ -73,6 +73,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "ethers": "5.5.4"
+    "ethers": "5.5.4",
+    "joi": "^17.4.2"
   }
 }
