@@ -2455,25 +2455,13 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.0"
 
-"@web3-onboard/common@^2.1.8":
-  version "2.1.8"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/common/-/common-2.1.8.tgz#e20e027eaa597846b4ff178423de13d5ca597a5b"
-  integrity sha512-3kmJi0FKUw0rPXrbVe/BL+K13JSEzZ2QndnzpmHtKt4xFyRN+JgboAaAvJqfuk9t4hAZe45PqEWraSnYUCgDaA==
+"@web3-onboard/gas@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/gas/-/gas-2.0.0.tgz#0c38e522915878bc010ce45fb329c2ef9b8d67db"
+  integrity sha512-sjO4rRqxh9CoVuyuhu3N/mdqjswMxi64kkXvid2XnuDOBeASqy5MSl8O1OoSuribDvzSg37stpe+ZNlIXRiEyA==
   dependencies:
-    "@ethereumjs/common" "2.6.2"
-    bignumber.js "^9.0.0"
-    ethers "5.5.4"
     joi "^17.4.2"
     rxjs "^7.5.2"
-
-"@web3-onboard/injected-wallets@^2.0.16-alpha.1":
-  version "2.0.16"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.0.16.tgz#b76f6a4906ea43aa7fdc4c1ba60ec47d5afb0146"
-  integrity sha512-llV+RGTRZtFq9n0uQ5FDyOfwSV+ITThubNhmaOUcFHpwwLD9U9Gyw15bdnGzUikaZTsKTyyuCEqtS8B3gH5paw==
-  dependencies:
-    "@web3-onboard/common" "^2.1.8"
-    joi "^17.4.2"
-    lodash.uniqby "^4.7.0"
 
 "@web3auth/base-plugin@^1.0.1":
   version "1.0.1"
