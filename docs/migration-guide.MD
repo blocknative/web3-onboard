@@ -11,7 +11,7 @@ If you have `bnc-onboard` installed, you will need to install `web3-onboard` ins
 - Initialize Onboard with the wallets you’ve installed along with the network chains you would like to support.
 - Make use of our API actions like `await onboard.connectWallet()` to allow a user to connect their wallets.
 
-For a full code overview of the process using the React Hooks package please see [this PR](https://github.com/blocknative/react-demo/pull/160/files).
+For a full code overview of the process using the React Hooks package please see [this PR](https://github.com/blocknative/react-demo/pull/160/files) with special attention to the App.js and services.js files.
 
 To help you get started quickly, regardless of the framework you're using, we’ve put together a [quickstart](https://docs.blocknative.com/onboard#quickstart) that includes the above-mentioned steps.
 
