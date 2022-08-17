@@ -2455,6 +2455,14 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.0"
 
+"@web3-onboard/gas@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/gas/-/gas-2.0.0.tgz#0c38e522915878bc010ce45fb329c2ef9b8d67db"
+  integrity sha512-sjO4rRqxh9CoVuyuhu3N/mdqjswMxi64kkXvid2XnuDOBeASqy5MSl8O1OoSuribDvzSg37stpe+ZNlIXRiEyA==
+  dependencies:
+    joi "^17.4.2"
+    rxjs "^7.5.2"
+
 "@web3auth/base-plugin@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@web3auth/base-plugin/-/base-plugin-1.0.1.tgz#1e2a87acf745299fdff6f92e6c46ee9bc38aa670"
@@ -3215,6 +3223,11 @@ bignumber.js@^9.0.0, bignumber.js@^9.0.1, bignumber.js@^9.0.2:
   version "9.0.2"
   resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-9.0.2.tgz#71c6c6bed38de64e24a65ebe16cfcf23ae693673"
   integrity sha512-GAcQvbpsM0pUb0zw1EI0KhQEZ+lRwR5fYaAp3vPOYuP7aDvGy6cVN6XHLauvF8SOga2y0dcLcjt3iQDTSEliyw==
+
+bignumber.js@^9.1.0:
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-9.1.0.tgz#8d340146107fe3a6cb8d40699643c302e8773b62"
+  integrity sha512-4LwHK4nfDOraBCtst+wOWIHbu1vhvAPJK8g8nROd4iuc3PSEjWif/qwbkh8jwCJz6yDBvtU4KPynETgrfh7y3A==
 
 binary-extensions@^2.0.0:
   version "2.2.0"
@@ -9517,7 +9530,7 @@ svelte-preprocess@^4.0.0, svelte-preprocess@^4.9.4:
     sorcery "^0.10.0"
     strip-indent "^3.0.0"
 
-svelte@^3.49.0:
+svelte@^3.42.5, svelte@^3.49.0:
   version "3.49.0"
   resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.49.0.tgz#5baee3c672306de1070c3b7888fc2204e36a4029"
   integrity sha512-+lmjic1pApJWDfPCpUUTc1m8azDqYCG1JN9YEngrx/hUyIcFJo6VZhj0A1Ai0wqoHcEIuQy+e9tk+4uDgdtsFA==

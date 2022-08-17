@@ -1,18 +1,16 @@
-import type {
-  Account,
-  Asset,
-  Chain,
-  CustomNetwork,
-  ScanAccountsOptions,
-  TransactionObject,
-  WalletInit
-} from '@web3-onboard/common'
+import { Account, Asset, ScanAccountsOptions } from '@web3-onboard/hw-common'
+import type { StaticJsonRpcProvider } from '@ethersproject/providers'
+import type { TransactionRequest } from '@ethersproject/providers'
 
 // cannot be dynamically imported
 import { Buffer } from 'buffer'
 
-import type { StaticJsonRpcProvider } from '@ethersproject/providers'
-import type { TransactionRequest } from '@ethersproject/providers'
+import type {
+  Chain,
+  CustomNetwork,
+  TransactionObject,
+  WalletInit
+} from '@web3-onboard/common'
 
 interface TrezorOptions {
   email: string
@@ -117,16 +115,22 @@ function trezor(options: TrezorOptions): WalletInit {
       getInterface: async ({ EventEmitter, chains }) => {
         const { default: Trezor } = await import('trezor-connect')
         const { Transaction } = await import('@ethereumjs/tx')
+
+        const { createEIP1193Provider, ProviderRpcError } = await import(
+          '@web3-onboard/common'
+        )
+
+        const { accountSelect } = await import('@web3-onboard/hw-common')
+
         const {
-          accountSelect,
-          bigNumberFieldsToStrings,
-          createEIP1193Provider,
-          ProviderRpcError,
           getCommon,
+          bigNumberFieldsToStrings,
           getHardwareWalletProvider
-        } = await import('@web3-onboard/common')
+        } = await import('@web3-onboard/hw-common')
+
         const ethUtil = await import('ethereumjs-util')
         const { compress } = (await import('eth-crypto')).publicKey
+
         const { StaticJsonRpcProvider } = await import(
           '@ethersproject/providers'
         )

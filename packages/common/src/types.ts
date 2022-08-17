@@ -75,56 +75,6 @@ export type RequestPatch = {
       }) => Promise<null>)
     | null
 }
-
-// eslint-disable-next-line max-len
-export type AccountSelectAPI = (
-  options: SelectAccountOptions
-) => Promise<Account>
-
-export type SelectAccountOptions = {
-  basePaths: BasePath[] // the paths to display in the base path selector
-  assets: Asset[] // the selectable assets to scan for a balance
-  chains: Chain[] // the selectable chains/networks to scan for balance
-  scanAccounts: ScanAccounts
-  supportsCustomPath?: boolean
-}
-
-export type BasePath = {
-  label: string // eg - Ethereum Ledger Live
-  value: DerivationPath
-}
-
-export type DerivationPath = string // eg - m/44'/60'
-
-export type Asset = {
-  label: string // eg - ETH
-  address?: string // if is a token, address to query contract
-}
-
-export type ScanAccounts = (options: ScanAccountsOptions) => Promise<Account[]>
-
-export type ScanAccountsOptions = {
-  derivationPath: DerivationPath
-  chainId: Chain['id']
-  asset: Asset
-}
-
-export type AccountAddress = string
-
-export type Account = {
-  address: AccountAddress
-  derivationPath: DerivationPath
-  balance: {
-    asset: Asset['label']
-    value: ethers.BigNumber
-  }
-}
-
-export type AccountsList = {
-  all: Account[]
-  filtered: Account[]
-}
-
 export interface AppMetadata {
   /* App name */
   name: string
@@ -261,6 +211,8 @@ export interface ProviderMessage {
 export interface ProviderInfo {
   chainId: ChainId
 }
+
+export type AccountAddress = string
 
 /**
  * An array of addresses

@@ -1,9 +1,8 @@
 import { firstValueFrom, Subject, take } from 'rxjs'
-
+import { SofiaProRegular, SofiaProLight } from '@web3-onboard/common'
 import AccountSelect from './views/AccountSelect.svelte'
 import { accounts$ } from './streams'
 import { validateSelectAccountOptions } from './validation'
-import { SofiaProRegular, SofiaProSemiBold, SofiaProLight } from './fonts'
 
 import type { SelectAccountOptions, Account } from './types'
 
@@ -48,7 +47,6 @@ const mountAccountSelect = (
 
   styleEl.innerHTML = `
     ${SofiaProRegular}
-    ${SofiaProSemiBold}
     ${SofiaProLight}
   `
   document.body.appendChild(styleEl)

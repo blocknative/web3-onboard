@@ -49,7 +49,7 @@
     "install-m1-mac": "yarn install --ignore-optional",
     "format": "prettier --write 'packages/**/*.ts'",
     "dev": "yarn wsrun dev",
-    "build": "yarn wsrun --stages build",
+    "build": "yarn wsrun --serial build",
     "type-check": "yarn wsrun type-check"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/common",
-  "version": "2.1.8",
+  "version": "2.2.0-alpha.1",
   "description": "Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardised spec compliant web3 providers for all supported wallets, framework agnostic modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
   "keywords": [
     "Ethereum",
@@ -36,15 +36,14 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/blocknative/web3-onboard.git",
-    "directory": "packages/core"
+    "directory": "packages/common"
   },
   "homepage": "https://www.blocknative.com/onboard",
   "bugs": "https://github.com/blocknative/web3-onboard/issues",
   "scripts": {
-    "build": "rollup -c",
-    "dev": "rollup -c -w",
-    "start": "sirv public --no-clear",
-    "type-check": "svelte-check --tsconfig ./tsconfig.json",
+    "build": "tsc",
+    "dev": "tsc -w",
+    "type-check": "tsc --noEmit",
     "lint": "eslint -c './.eslintrc.cjs' './src' && prettier --check './src/**/*'"
   },
   "module": "dist/index.js",
@@ -57,33 +56,25 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^11.0.0",
-    "@rollup/plugin-replace": "^3.0.0",
-    "@rollup/plugin-typescript": "^8.0.0",
-    "@tsconfig/svelte": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
     "eip-712": "^0.4.3",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-svelte3": "^3.2.1",
     "eventemitter3": "^4.0.7",
     "prettier": "^2.4.0",
     "prettier-plugin-svelte": "^2.4.0",
     "rollup": "^2.3.4",
     "rollup-plugin-svelte": "^7.0.0",
-    "svelte": "^3.49.0",
+    "svelte": "^3.42.5",
     "svelte-check": "^2.2.6",
     "svelte-preprocess": "^4.9.4",
     "tslib": "^2.0.0",
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@ethereumjs/common": "2.6.2",
-    "bignumber.js": "^9.0.0",
+    "bignumber.js": "^9.1.0",
     "ethers": "5.5.4",
-    "joi": "^17.4.2",
-    "rxjs": "^7.5.2"
+    "joi": "^17.4.2"
   }
 }

@@ -12,7 +12,7 @@ export default {
   input: 'src/index.ts',
   output: {
     format: 'es',
-    dir: 'dist/',
+    dir: 'dist/'
   },
   plugins: [
     json(),
@@ -38,7 +38,7 @@ export default {
     copy({
       src: 'src/i18n/en.json',
       dest: 'i18n'
-    }),
+    })
   ],
   external: [
     '@web3-onboard/common',

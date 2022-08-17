@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/walletconnect",
-  "version": "2.0.9",
+  "version": "2.1.0-alpha.1",
   "description": "WalletConnect SDK module for connecting to Web3-Onboard. Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardised spec compliant web3 providers for all supported wallets, framework agnostic modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
   "keywords": [
     "Ethereum",
@@ -36,7 +36,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/blocknative/web3-onboard.git",
-    "directory": "packages/core"
+    "directory": "packages/walletconnect"
   },
   "homepage": "https://www.blocknative.com/onboard",
   "bugs": "https://github.com/blocknative/web3-onboard/issues",
@@ -61,7 +61,7 @@
     "@ethersproject/providers": "^5.5.0",
     "@walletconnect/client": "^1.7.1",
     "@walletconnect/qrcode-modal": "^1.7.1",
-    "@web3-onboard/common": "^2.1.8",
+    "@web3-onboard/common": "^2.2.0-alpha.1",
     "rxjs": "^7.5.2"
   }
 }
