@@ -11,8 +11,8 @@ import { useAppState } from './useAppState'
 
 export const useConnectWallet = (): [
   { wallet: WalletState | null; connecting: boolean },
-  (options?: ConnectOptions) => Promise<void>,
-  (wallet: DisconnectOptions) => Promise<void>,
+  (options?: ConnectOptions) => Promise<WalletState[]>,
+  (wallet: DisconnectOptions) => Promise<WalletState[]>,
   (addresses?: string[]) => Promise<void>,
   (wallets: WalletInit[]) => void,
   (wallet: WalletState, address?: string) => void
@@ -29,17 +29,21 @@ export const useConnectWallet = (): [
   const connect = useCallback(async (options?: ConnectOptions) => {
     setConnecting(true)
 
-    await connectWallet(options)
+    const walletState = await connectWallet(options)
 
     setConnecting(false)
+
+    return walletState
   }, [])
 
   const disconnect = useCallback(async ({ label }: DisconnectOptions) => {
     setConnecting(true)
 
-    await disconnectWallet({ label })
+    const walletState = await disconnectWallet({ label })
 
     setConnecting(false)
+
+    return walletState
   }, [])
 
   const updateBalances = web3Onboard.state.actions.updateBalances
