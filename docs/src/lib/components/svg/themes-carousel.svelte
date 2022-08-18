@@ -1,3 +1,20 @@
+<style>
+  svg {
+    height: 9rem;
+    width: auto;
+  }
+  @media screen and (min-width: 640px) {
+    svg {
+      height: 20rem;
+    }
+  }
+  @media screen and (min-width: 1024px) {
+    svg {
+      height: auto;
+    }
+  }
+</style>
+
 <svg
   width="5568"
   height="440"

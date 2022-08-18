@@ -3,7 +3,7 @@
   import TextBlock from './TextBlock.svelte'
   import CodeBlock from './base/CodeBlock.svelte'
 
-  import ThemeCarousel from './svg/ThemeCarousel.svelte'
+  import ThemeCarousel from './svg/themes-carousel.svelte'
 
   let examplecode = `:root {
   /* COLORS */
