@@ -2,6 +2,7 @@
   import Container from './Container.svelte'
   import TextBlock from './TextBlock.svelte'
   import CodeBlock from './base/CodeBlock.svelte'
+  import ScrollContainer from './base/ScrollContainer.svelte'
 
   import ThemeCarousel from './svg/themes-carousel.svelte'
 
@@ -36,9 +37,9 @@
       </div>
     </div>
   </Container>
-  <div class="scroll-container">
+  <ScrollContainer style={'padding: 0 2rem'}>
     <ThemeCarousel />
-  </div>
+  </ScrollContainer>
 </section>
 
 <style>
@@ -87,9 +88,4 @@
     }
   }
 
-  .scroll-container {
-    overflow-x: scroll;
-    width: 100%;
-    padding: 0 2rem;
-  }
 </style>

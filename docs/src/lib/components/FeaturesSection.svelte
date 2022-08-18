@@ -1,6 +1,7 @@
 <script>
   import Flexbox from './base/Flexbox.svelte'
   import CodeBlock from './base/CodeBlock.svelte'
+  import ScrollContainer from './base/ScrollContainer.svelte'
   import Container from './Container.svelte'
   import TextBlock from './TextBlock.svelte'
   import FeatureCard from './FeatureCard.svelte'
@@ -67,9 +68,9 @@
       <NetworksGraphic />
     </div>
   </Container>
-  <div class="scroll-container">
+  <ScrollContainer>
     <WalletsGraphic />
-  </div>
+  </ScrollContainer>
   <Container>
     <div class="flexbox" style:padding={'4rem 1rem'}>
       <TextBlock
@@ -173,22 +174,6 @@
       /* gap: 4rem; */
       /* padding: 2rem; */
     }
-  }
-
-  .scroll-container {
-    overflow-x: scroll;
-    width: 100%;
-
-  }
-    /* Hide scrollbar for Chrome, Safari and Opera */
-  .scroll-container::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* Hide scrollbar for IE, Edge and Firefox */
-  .scroll-container {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
   }
 
 

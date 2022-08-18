@@ -1,5 +1,5 @@
 <script>
-  // import Container from './Container.svelte';
+  import ScrollContainer from './base/ScrollContainer.svelte';
   import TextBlock from './TextBlock.svelte'
 
   import TestimonialsGroup from './svg/testimonials-group.svelte'
@@ -9,9 +9,9 @@
   <div class="flexbox">
     <TextBlock title={"Who's using web3-onboard?"} subtitle={''} text={''} />
   </div>
-  <div class="scroll-container">
+  <ScrollContainer>
     <TestimonialsGroup />
-  </div>
+  </ScrollContainer>
 </section>
 
 <style>
@@ -23,10 +23,6 @@
     /* border: 1px solid #C2C4C9; */
     color: black;
     text-align: center;
-  }
-
-  .scroll-container {
-    overflow-x: scroll;
   }
 
   .flexbox {
