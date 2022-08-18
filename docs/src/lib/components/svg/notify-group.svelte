@@ -1,4 +1,4 @@
-<svg width="673" height="296" viewBox="0 0 673 296" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 673 296" fill="none" xmlns="http://www.w3.org/2000/svg">
   <g filter="url(#filter0_d_53_95504)">
     <g filter="url(#filter1_d_53_95504)">
       <g clip-path="url(#clip0_53_95504)">
