@@ -1,16 +1,15 @@
 <script>
   import Flexbox from './base/Flexbox.svelte'
+  import CodeBlock from './base/CodeBlock.svelte'
   import Container from './Container.svelte'
   import TextBlock from './TextBlock.svelte'
   import FeatureCard from './FeatureCard.svelte'
 
-  import CodeBlock from './base/CodeBlock.svelte'
-
   import FigFrameworksGroup from './svg/frameworks-group.svelte'
-  import FigWalletsGroup from './svg/wallets-group.svelte'
-  import FigNetworksGroup from './svg/networks-group.svelte'
-  import FigNotifyGroup from './svg/notify-group.svelte'
-  import FigACGroup from './svg/account-center-group.svelte'
+  import NetworksGraphic from './svg/networks-group.svelte'
+  import WalletsGraphic from './svg/wallets-group.svelte'
+  import NotifyGraphic from './svg/notify-group.svelte'
+  import AccountCenterGraphic from './svg/account-center-group.svelte'
 </script>
 
 <section class="features-a">
@@ -35,7 +34,7 @@
 
 <section class="features-b">
   <Container>
-    <Flexbox>
+    <div class="flexbox">
       <FeatureCard
         title={'Minimal Dependencies'}
         text={'All wallet dependencies are included in separate packages, so you only include the ones you want to use in your app.'}
@@ -52,7 +51,7 @@
         title={'Multiple Chain Support'}
         text={'Allow users to switch between chains/networks with ease.'}
       />
-    </Flexbox>
+    </div>
   </Container>
 </section>
 
@@ -65,13 +64,11 @@
         subtitle={''}
         text={'Web3-Onboard is the quickest and easiest way to add multi-wallet and multi-chain support to your project. With built-in modules for more than 35 unique hardware and software wallets, Web3-Onboard saves you time and headaches.'}
       />
-      <div>
-        <FigWalletsGroup />
-      </div>
+      <NetworksGraphic />
     </div>
   </Container>
   <div class="scroll-container">
-    <FigNetworksGroup />
+    <WalletsGraphic />
   </div>
   <Container>
     <div class="flexbox" style:padding={'4rem 1rem'}>
@@ -80,12 +77,12 @@
         subtitle={''}
         text={'Real-time transaction notifications for all connected wallet addresses and all transaction states.'}
       />
-      <FigNotifyGroup />
+      <NotifyGraphic />
     </div>
   </Container>
   <Container>
     <div class="flexbox" style:gap={'4rem'} style:padding={'2rem'}>
-      <FigACGroup />
+      <AccountCenterGraphic />
       <div>
         <div>
           <TextBlock
@@ -117,17 +114,29 @@
     /* gap: 2rem; */
     padding: 0;
   }
-  .features-b {
-    padding: 40px;
-    /* gap: 16px; */
 
+  .features-b {
+    padding: 2rem;
+    /* gap: 16px; */
     height: auto;
     /* min-height: 288px; */
-
     background: linear-gradient(87.71deg, rgba(0, 0, 0, 0) 0%, rgba(0, 209, 255, 0.02) 100%),
       #060d20;
     border: 1px solid rgba(255, 255, 255, 0.05);
     box-shadow: 0px -8px 16px rgba(0, 0, 0, 0.2);
+  }
+  .features-b .flexbox {
+    display: flex;
+    flex-flow: column wrap;
+    gap: 1rem;
+    padding: 0;
+    align-items: stretch;
+  }
+
+  @media screen and (min-width: 1024px) {
+    .features-b .flexbox {
+      flex-flow: row nowrap;
+    }
   }
 
   .features-c {
@@ -169,5 +178,18 @@
   .scroll-container {
     overflow-x: scroll;
     width: 100%;
+
   }
+    /* Hide scrollbar for Chrome, Safari and Opera */
+  .scroll-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .scroll-container {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+
 </style>
