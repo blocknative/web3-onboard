@@ -1,5 +1,7 @@
 <!-- layout-homepage -->
 <script>
+  import '@svelteness/kit-docs/client/styles/normalize.css'
+  
   let title = 'My Title'
   let description = 'My Description'
 </script>
