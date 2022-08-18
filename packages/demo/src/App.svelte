@@ -1055,7 +1055,7 @@
       id="inlineFrameExample"
       name="inlineFrameExample"
       title="Inline Frame Example"
-      src="http://localhost:8080/"
+      src={window.location.href}
     />
   {/if}
 </main>
