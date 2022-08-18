@@ -4,6 +4,13 @@ import injectedModule from '@web3-onboard/injected-wallets'
 
 const INFURA_KEY = ''
 
+const candle = {
+  id: '0x216',
+  token: 'CNDl',
+  label: 'Candle',
+  rpcUrl: 'https://rpc.cndlchain.com
+}
+
 const ethereumRopsten = {
   id: '0x3',
   token: 'rETH',
@@ -18,7 +25,7 @@ const polygonMainnet = {
   rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
 }
 
-const chains = [ethereumRopsten, polygonMainnet]
+const chains = [candle, ethereumRopsten, polygonMainnet]
 const wallets = [injectedModule()]
 
 const web3Onboard = init({
