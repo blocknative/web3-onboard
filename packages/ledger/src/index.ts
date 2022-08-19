@@ -1,19 +1,21 @@
+// these cannot be dynamically imported
+import { TypedDataUtils } from '@metamask/eth-sig-util'
+import type Transport from '@ledgerhq/hw-transport'
+import type { StaticJsonRpcProvider } from '@ethersproject/providers'
+import type Eth from '@ledgerhq/hw-app-eth'
+
 import type {
-  ScanAccountsOptions,
-  Account,
-  Asset,
   Chain,
-  CustomNetwork,
   WalletInit,
   GetInterfaceHelpers
 } from '@web3-onboard/common'
 
-// these cannot be dynamically imported
-import { TypedDataUtils } from '@metamask/eth-sig-util'
-
-import type Transport from '@ledgerhq/hw-transport'
-import type { StaticJsonRpcProvider } from '@ethersproject/providers'
-import type Eth from '@ledgerhq/hw-app-eth'
+import type {
+  CustomNetwork,
+  ScanAccountsOptions,
+  Account,
+  Asset
+} from '@web3-onboard/hw-common'
 
 const LEDGER_LIVE_PATH = `m/44'/60'`
 const LEDGER_DEFAULT_PATH = `m/44'/60'/0'`
@@ -125,14 +127,17 @@ function ledger({
           '@ethersproject/providers'
         )
 
+        const { createEIP1193Provider, ProviderRpcError } = await import(
+          '@web3-onboard/common'
+        )
+
+        const { accountSelect } = await import('@web3-onboard/hw-common')
+
         const {
-          accountSelect,
-          createEIP1193Provider,
-          ProviderRpcError,
           getCommon,
           bigNumberFieldsToStrings,
           getHardwareWalletProvider
-        } = await import('@web3-onboard/common')
+        } = await import('@web3-onboard/hw-common')
 
         const { TransactionFactory: Transaction, Capability } = await import(
           '@ethereumjs/tx'

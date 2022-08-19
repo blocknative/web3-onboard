@@ -1,11 +1,7 @@
 import { firstValueFrom, Subject, take } from 'rxjs'
 import LoginModal from './view/LoginModal.svelte'
 import { loggedIn$ } from './streams'
-import {
-  SofiaProRegular,
-  SofiaProSemiBold,
-  SofiaProLight
-} from '@web3-onboard/common'
+import { SofiaProRegular, SofiaProLight } from '@web3-onboard/common'
 import type { LoginOptions } from './types'
 
 // eslint-disable-next-line max-len
@@ -49,7 +45,6 @@ const mountLoginModal = (
 
   styleEl.innerHTML = `
     ${SofiaProRegular}
-    ${SofiaProSemiBold}
     ${SofiaProLight}
   `
   document.body.appendChild(styleEl)

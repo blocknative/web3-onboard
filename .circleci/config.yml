@@ -291,6 +291,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/gas
     steps:
       - node-build-steps
+  build-hw-common:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/hw-common
+    steps:
+      - node-build-steps
 
   # Build staging/Alpha releases
   build-staging-core:
@@ -417,6 +423,12 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/gas
+    steps:
+      - node-staging-build-steps
+  build-staging-hw-common:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/hw-common
     steps:
       - node-staging-build-steps
 
@@ -548,4 +560,10 @@ workflows:
       - build-gas:
           <<: *deploy_production_filters
       - build-staging-gas:
+          <<: *deploy_staging_filters
+  hw-common:
+    jobs:
+      - build-common:
+          <<: *deploy_production_filters
+      - build-staging-common:
           <<: *deploy_staging_filters

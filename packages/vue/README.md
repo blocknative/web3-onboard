@@ -17,8 +17,10 @@ import { init } from '@web3-onboard/vue'
 import injectedModule from '@web3-onboard/injected-wallets'
 
 const injected = injectedModule()
-const infuraKey = '<INFURA_KEY>'
-const rpcUrl = `https://mainnet.infura.io/v3/${infuraKey}`
+
+// Only one RPC endpoint required per chain
+const rpcAPIKey = '<INFURA_KEY>' || '<ALCHEMY_KEY>'
+const rpcUrl = `https://eth-mainnet.g.alchemy.com/v2/${rpcAPIKey}` || `https://mainnet.infura.io/v3/${rpcAPIKey}`
 
 const web3Onboard = init({
   wallets: [injected],

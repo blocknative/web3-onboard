@@ -1,10 +1,15 @@
-import Joi, { ObjectSchema, Schema } from 'joi'
-import type {
-  Chain,
-  ChainId,
-  DecimalChainId,
-  WalletInit,
-  WalletModule
+import Joi from 'joi'
+
+import {
+  type ChainId,
+  type DecimalChainId,
+  type WalletInit,
+  type WalletModule,
+  type ValidateReturn,
+  chainNamespaceValidation,
+  chainIdValidation,
+  chainValidation,
+  validate
 } from '@web3-onboard/common'
 
 import type {
@@ -24,45 +29,11 @@ import type {
   ConnectModalOptions
 } from './types'
 
-// const chainId = Joi.string().pattern(/^0x[0-9a-fA-F]+$/)
-const chainId = Joi.alternatives().try(
-  Joi.string().pattern(/^0x[0-9a-fA-F]+$/),
-  Joi.number().positive()
-)
-const chainNamespace = Joi.string().valid('evm')
 const unknownObject = Joi.object().unknown()
 
-/** Related to ConnectionInfo from 'ethers/lib/utils' */
-const providerConnectionInfo = Joi.object({
-  url: Joi.string().required(),
-  headers: Joi.object(),
-  user: Joi.string(),
-  password: Joi.string(),
-  allowInsecureAuthentication: Joi.boolean(),
-  allowGzip: Joi.boolean(),
-  throttleLimit: Joi.number(),
-  throttleSlotInterval: Joi.number(),
-  throttleCallback: Joi.function(),
-  timeout: Joi.number()
-})
-
-const chainValidationParams: Record<keyof Chain, Schema | ObjectSchema> = {
-  namespace: chainNamespace,
-  id: chainId.required(),
-  rpcUrl: Joi.string().required(),
-  label: Joi.string().required(),
-  token: Joi.string().required(),
-  icon: Joi.string(),
-  color: Joi.string(),
-  publicRpcUrl: Joi.string(),
-  blockExplorerUrl: Joi.string(),
-  providerConnectionInfo
-}
-const chain = Joi.object(chainValidationParams)
-
 const connectedChain = Joi.object({
-  namespace: chainNamespace.required(),
-  id: chainId.required()
+  namespace: chainNamespaceValidation.required(),
+  id: chainIdValidation.required()
 })
 
 const ens = Joi.any().allow(
@@ -88,7 +59,7 @@ const account = Joi.object({
   balance
 })
 
-const chains = Joi.array().items(chain)
+const chains = Joi.array().items(chainValidation)
 const accounts = Joi.array().items(account)
 
 const wallet = Joi.object({
@@ -218,8 +189,8 @@ const disconnectOptions = Joi.object({
 }).required()
 
 const setChainOptions = Joi.object({
-  chainId: chainId.required(),
-  chainNamespace: chainNamespace,
+  chainId: chainIdValidation.required(),
+  chainNamespace: chainNamespaceValidation,
   wallet: Joi.string()
 })
 
@@ -275,13 +246,6 @@ const transactionHandlerReturn = Joi.any().allow(
   customNotificationUpdate,
   Joi.boolean().allow(false)
 )
-
-type ValidateReturn = Joi.ValidationResult | null
-
-function validate(validator: Joi.Schema, data: unknown): ValidateReturn {
-  const result = validator.validate(data)
-  return result.error ? result : null
-}
 
 export function validateWallet(
   data: WalletState | Partial<WalletState>
