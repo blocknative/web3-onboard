@@ -1,6 +1,6 @@
 # @web3-onboard/sequence
 
-## Wallet module for connecting Portis wallet to web3-onboard
+## Wallet module for connecting Sequence wallet to web3-onboard
 
 ### Install
 
