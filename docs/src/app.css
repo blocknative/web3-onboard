@@ -4,12 +4,12 @@
 
 @font-face {
   font-family: 'Sofia Pro';
-  src: url('src/lib/fonts/SofiaPro-Light.eot');
-  src: url('src/lib/fonts/SofiaPro-Light.eot?#iefix') format('embedded-opentype'),
-    url('src/lib/fonts/SofiaPro-Light.woff2') format('woff2'),
-    url('src/lib/fonts/SofiaPro-Light.woff') format('woff'),
-    url('src/lib/fonts/SofiaPro-Light.ttf') format('truetype'),
-    url('src/lib/fonts/SofiaPro-Light.svg#SofiaPro-Light') format('svg');
+  src: url('$fonts/SofiaPro-Light.eot');
+  src: url('$fonts/SofiaPro-Light.eot?#iefix') format('embedded-opentype'),
+    url('$fonts/SofiaPro-Light.woff2') format('woff2'),
+    url('$fonts/SofiaPro-Light.woff') format('woff'),
+    url('$fonts/SofiaPro-Light.ttf') format('truetype'),
+    url('$fonts/SofiaPro-Light.svg#SofiaPro-Light') format('svg');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -17,12 +17,12 @@
 
 @font-face {
   font-family: 'Sofia Pro';
-  src: url('src/lib/fonts/SofiaPro-Regular.eot');
-  src: url('src/lib/fonts/SofiaPro-Regular.eot?#iefix') format('embedded-opentype'),
-    url('src/lib/fonts/SofiaPro-Regular.woff2') format('woff2'),
-    url('src/lib/fonts/SofiaPro-Regular.woff') format('woff'),
-    url('src/lib/fonts/SofiaPro-Regular.ttf') format('truetype'),
-    url('src/lib/fonts/SofiaPro-Regular.svg#SofiaPro-Regular') format('svg');
+  src: url('$fonts/SofiaPro-Regular.eot');
+  src: url('$fonts/SofiaPro-Regular.eot?#iefix') format('embedded-opentype'),
+    url('$fonts/SofiaPro-Regular.woff2') format('woff2'),
+    url('$fonts/SofiaPro-Regular.woff') format('woff'),
+    url('$fonts/SofiaPro-Regular.ttf') format('truetype'),
+    url('$fonts/SofiaPro-Regular.svg#SofiaPro-Regular') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -30,12 +30,12 @@
 
 @font-face {
   font-family: 'Sofia Pro';
-  src: url('src/lib/fonts/SofiaPro-SemiBold.eot');
-  src: url('src/lib/fonts/SofiaPro-SemiBold.eot?#iefix') format('embedded-opentype'),
-    url('src/lib/fonts/SofiaPro-SemiBold.woff2') format('woff2'),
-    url('src/lib/fonts/SofiaPro-SemiBold.woff') format('woff'),
-    url('src/lib/fonts/SofiaPro-SemiBold.ttf') format('truetype'),
-    url('src/lib/fonts/SofiaPro-SemiBold.svg#SofiaPro-SemiBold') format('svg');
+  src: url('$fonts/SofiaPro-SemiBold.eot');
+  src: url('$fonts/SofiaPro-SemiBold.eot?#iefix') format('embedded-opentype'),
+    url('$fonts/SofiaPro-SemiBold.woff2') format('woff2'),
+    url('$fonts/SofiaPro-SemiBold.woff') format('woff'),
+    url('$fonts/SofiaPro-SemiBold.ttf') format('truetype'),
+    url('$fonts/SofiaPro-SemiBold.svg#SofiaPro-SemiBold') format('svg');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
