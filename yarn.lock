@@ -2455,14 +2455,6 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.0"
 
-"@web3-onboard/gas@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/gas/-/gas-2.0.0.tgz#0c38e522915878bc010ce45fb329c2ef9b8d67db"
-  integrity sha512-sjO4rRqxh9CoVuyuhu3N/mdqjswMxi64kkXvid2XnuDOBeASqy5MSl8O1OoSuribDvzSg37stpe+ZNlIXRiEyA==
-  dependencies:
-    joi "^17.4.2"
-    rxjs "^7.5.2"
-
 "@web3auth/base-plugin@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@web3auth/base-plugin/-/base-plugin-1.0.1.tgz#1e2a87acf745299fdff6f92e6c46ee9bc38aa670"

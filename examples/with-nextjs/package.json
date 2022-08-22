@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@web3-onboard/react": "2.2.6-alpha.1",
+    "@web3-onboard/react": "2.2.6",
     "next": "12.2.5",
     "react": "18.2.0",
     "react-dom": "18.2.0"

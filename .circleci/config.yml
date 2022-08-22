@@ -563,7 +563,7 @@ workflows:
           <<: *deploy_staging_filters
   hw-common:
     jobs:
-      - build-common:
+      - build-hw-common:
           <<: *deploy_production_filters
-      - build-staging-common:
+      - build-staging-hw-common:
           <<: *deploy_staging_filters
