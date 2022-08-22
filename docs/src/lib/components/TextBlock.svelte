@@ -8,7 +8,7 @@
   <div class="title">{title}</div>
   <div class="subtitle">{subtitle}</div>
   <div class="text">{text}</div>
-  <a href="#!">Learn More</a>
+  <slot />
 </div>
 
 <style>
