@@ -1,5 +1,5 @@
 <script>
-  import NavBar from './NavBar.svelte'
+  // import NavBar from './NavBar.svelte'
   import Footer from './Footer.svelte'
   import HeroSection from './HeroSection.svelte'
   import FeaturesSection from './FeaturesSection.svelte'
@@ -9,7 +9,7 @@
 </script>
 
 <div class="layout-container">
-  <NavBar />
+  <!-- <NavBar /> -->
   <div class="body">
     <HeroSection />
     <FeaturesSection />

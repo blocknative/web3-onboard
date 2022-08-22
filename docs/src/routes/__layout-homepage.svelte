@@ -1,7 +1,30 @@
 <!-- layout-homepage -->
 <script>
-  import '@svelteness/kit-docs/client/styles/normalize.css'
-  
+  import '../app.css'
+
+  import '@svelteness/kit-docs/client/polyfills/index.js';
+  import '@svelteness/kit-docs/client/styles/normalize.css';
+  import '@svelteness/kit-docs/client/styles/fonts.css';
+  import '@svelteness/kit-docs/client/styles/theme.css';
+  import '@svelteness/kit-docs/client/styles/vars.css';
+
+  import {
+    Button,
+    KitDocs,
+    KitDocsLayout,
+  } from '@svelteness/kit-docs'
+
+  import IconBN from '$lib/components/icons/blocknative.svelte'
+
+  /** @type {import('@svelteness/kit-docs').NavbarConfig} */
+  const navbar = {
+    links: [
+      { title: 'Documentation', slug: '/docs', match: /\/docs/ },
+      { title: 'Examples', slug: '/docs', match: /\/docs\/examples/ },
+      { title: 'FAQS', slug: '/docs', match: /\/docs\/faqs/ }
+    ]
+  }
+
   let title = 'My Title'
   let description = 'My Description'
 </script>
@@ -15,10 +38,29 @@
   {/if}
 </svelte:head>
 
-<slot />
+
+<KitDocs>
+  <KitDocsLayout {navbar} --kd-content-max-width={'100%'}>
+    <div class="logo" slot="navbar-left">
+      <Button class="text-base" href="/">
+        <div class="flex items-center">
+          <IconBN />
+          <span class="ml-2">Blocknative</span>
+        </div>
+      </Button>
+    </div>
+    <slot />
+  </KitDocsLayout>
+</KitDocs>
 
 <style>
   :global(:root) {
-    /* root styles */
+    --kd-color-brand-rgb: 99, 112, 229;
+    --kd-font-family-sans: 'Sofia Pro';
+    --kd-font-family-mono: monospace;
+  }
+
+  :global(:root.dark) {
+    --kd-color-brand-rgb: 99, 112, 229;
   }
 </style>
