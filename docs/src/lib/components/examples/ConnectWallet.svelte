@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { Chip } from '@svelteness/kit-docs';
+
   import Onboard from '@web3-onboard/core'
   import injectedModule from '@web3-onboard/injected-wallets'
 
@@ -76,7 +78,7 @@
         <div class="">
           {account?.ens ? `${account?.ens?.name} (${account?.address})` : `${account?.address}`}
         </div>
-        <div class=" text-sm">Connected to {$wallets$?.[0]?.label}</div>
+        <div class=" text-sm">Connected to <Chip>{$wallets$?.[0]?.label}</Chip></div>
       </div>
 
       <button
