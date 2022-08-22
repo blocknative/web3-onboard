@@ -2,8 +2,8 @@ import { useState, useCallback } from 'react'
 
 import type { ConnectedChain } from '@web3-onboard/core'
 import type { Chain } from '@web3-onboard/common'
-import { useAppState } from './useAppState'
-import { useWeb3Onboard } from '../context'
+import { useAppState } from './useAppState.js'
+import { useWeb3Onboard } from '../context.js'
 
 type SetChainOptions = {
   chainId: string

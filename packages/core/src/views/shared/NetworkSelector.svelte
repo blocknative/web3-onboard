@@ -1,11 +1,11 @@
 <script lang="ts">
   import { BehaviorSubject, merge } from 'rxjs'
   import type { Chain } from '@web3-onboard/common'
-  import { chainIdToLabel, connectedToValidAppChain } from '../../utils'
-  import setChain from '../../chain'
-  import { wallets$ } from '../../streams'
+  import { chainIdToLabel, connectedToValidAppChain } from '../../utils.js'
+  import setChain from '../../chain.js'
+  import { wallets$ } from '../../streams.js'
   import { distinctUntilChanged, debounceTime, skip } from 'rxjs/operators'
-  import caretIcon from '../../icons/caret'
+  import caretIcon from '../../icons/caret.js'
 
   export let selectIcon: string = caretIcon
   export let colorVar: string

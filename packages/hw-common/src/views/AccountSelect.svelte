@@ -11,7 +11,7 @@
     SelectAccountOptions,
     Account,
     AccountsList
-  } from '../types'
+  } from '../types.js'
 
   export let selectAccountOptions: SelectAccountOptions
   export let accounts$: Subject<Account[]>

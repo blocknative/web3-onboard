@@ -1,10 +1,10 @@
 import { firstValueFrom, Subject, take } from 'rxjs'
 import { SofiaProRegular, SofiaProLight } from '@web3-onboard/common'
 import AccountSelect from './views/AccountSelect.svelte'
-import { accounts$ } from './streams'
-import { validateSelectAccountOptions } from './validation'
+import { accounts$ } from './streams.js'
+import { validateSelectAccountOptions } from './validation.js'
 
-import type { SelectAccountOptions, Account } from './types'
+import type { SelectAccountOptions, Account } from './types.js'
 
 // eslint-disable-next-line max-len
 const accountSelect = async (

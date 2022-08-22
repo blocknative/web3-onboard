@@ -6,8 +6,8 @@ import type {
   WalletState
 } from '@web3-onboard/core'
 import type { WalletInit } from '@web3-onboard/common'
-import { useWeb3Onboard } from '../context'
-import { useAppState } from './useAppState'
+import { useWeb3Onboard } from '../context.js'
+import { useAppState } from './useAppState.js'
 
 export const useConnectWallet = (): [
   { wallet: WalletState | null; connecting: boolean },

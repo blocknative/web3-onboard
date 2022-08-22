@@ -1,23 +1,23 @@
 import { SofiaProRegular } from '@web3-onboard/common'
-import connectWallet from './connect'
-import disconnectWallet from './disconnect'
-import setChain from './chain'
-import { state } from './store'
-import { reset$ } from './streams'
-import initI18N from './i18n'
+import connectWallet from './connect.js'
+import disconnectWallet from './disconnect.js'
+import setChain from './chain.js'
+import { state } from './store/index.js'
+import { reset$ } from './streams.js'
+import initI18N from './i18n/index.js'
 import App from './views/Index.svelte'
-import type { InitOptions, Notify } from './types'
-import { APP_INITIAL_STATE } from './constants'
-import { configuration, updateConfiguration } from './configuration'
-import updateBalances from './update-balances'
-import { chainIdToHex } from './utils'
-import { preflightNotifications } from './preflight-notifications'
+import type { InitOptions, Notify } from './types.js'
+import { APP_INITIAL_STATE } from './constants.js'
+import { configuration, updateConfiguration } from './configuration.js'
+import updateBalances from './update-balances.js'
+import { chainIdToHex } from './utils.js'
+import { preflightNotifications } from './preflight-notifications.js'
 
 import {
   validateInitOptions,
   validateNotify,
   validateNotifyOptions
-} from './validation'
+} from './validation.js'
 
 import {
   addChains,
@@ -28,7 +28,7 @@ import {
   setPrimaryWallet,
   setWalletModules,
   updateConnectModal
-} from './store/actions'
+} from './store/actions.js'
 
 const API = {
   connectWallet,
@@ -65,7 +65,7 @@ export type {
   Notify,
   UpdateNotification,
   PreflightNotificationsOptions
-} from './types'
+} from './types.js'
 
 export type { EIP1193Provider } from '@web3-onboard/common'
 

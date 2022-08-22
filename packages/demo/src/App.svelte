@@ -25,8 +25,8 @@
   import { ethers } from 'ethers'
   import { share } from 'rxjs/operators'
   import VConsole from 'vconsole'
-  import blocknativeIcon from './blocknative-icon'
-  import blocknativeLogo from './blocknative-logo'
+  import blocknativeIcon from './blocknative-icon.js'
+  import blocknativeLogo from './blocknative-logo.js'
 
   if (window.innerWidth < 700) {
     new VConsole()

@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import type { SelectAccountOptions } from './types'
+import type { SelectAccountOptions } from './types.js'
 
 import {
   validate,

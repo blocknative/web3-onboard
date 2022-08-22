@@ -1,7 +1,7 @@
 import { addMessages, init, getLocaleFromNavigator } from 'svelte-i18n'
 import merge from 'lodash.merge'
 import en from './en.json'
-import type { i18nOptions } from '../types'
+import type { i18nOptions } from '../types.js'
 
 function initialize(options?: i18nOptions): void {
   if (options) {
