@@ -4,27 +4,20 @@
 
 <style>
   div {
-    /* flexbox props */
-    /* --flex: 1 1 100%; */
-    /* --display: flex; */
-    /* --direction: row; */
-    /* --gap: var(--flex-gap, 1rem); */
     /* spacing props*/
-    --padding: 0;
-    --margin: 0;
+    margin: var(--margin, 0);
+    padding: var(--padding, 0);
 
-    /* Auto layout */
+    /* flexbox parent props */
     display: var(--display, flex);
     flex-direction: var(--direction, row);
     flex-wrap: var(--wrap, nowrap);
     gap: var(--gap, 1rem);
 
+    justify-content: var(--justify-content, flex-start);
+    align-items: var(--align-items, flex-start);
+
+    /* flexbox child props */
     flex: var(--flex, auto);
-
-    /* align-items: center; */
-    /* justify-content: space-between; */
-
-    margin: var(--margin, 0);
-    padding: var(--padding, 0);
   }
 </style>
