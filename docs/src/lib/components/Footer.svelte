@@ -1,8 +1,12 @@
 <script>
-  // import Container from './Container.svelte';
+  import Flexbox from './base/Flexbox.svelte'
   import PoweredByBadge from './svg/PoweredByBadge.svelte'
-  import SocialIcons from './svg/social-icons.svelte'
-  import IconGithub from './icons/github.svelte'
+
+  import DiscordIcon from '~icons/ri/discord-fill';
+  import GitHubIcon from '~icons/ri/github-fill';
+  import TwitterIcon from '~icons/ri/twitter-fill';
+
+  export let iconSize = 40;
 
   let text = {
     license: 'Released under the MIT License.',
@@ -11,19 +15,34 @@
 </script>
 
 <footer>
-  <div class="flexbox link-box">
-    <div>
-      <a href="#!">
-        Github
-        <IconGithub />
+  <Flexbox
+    --direction="column"
+    --justify-content="center"
+    --align-items="center"
+    --gap="2rem"
+    --flex="1"
+    --padding="2rem"
+  >
+    <Flexbox --direction="row" --gap="1rem" --padding="0">
+      <a href="//github.com/blocknative/web3-onboard" target="_blank">
+        <GitHubIcon width={iconSize} height={iconSize} />
+        <span class="sr-only">Github</span>
       </a>
-      <a href="#!">Discord</a>
-      <a href="#!">Twitter</a>
-    </div>
-    <SocialIcons />
-    <a href="#!"><PoweredByBadge /></a>
-  </div>
-  <div class="flexbox copyright-box">
+      <a href="//discord.com/invite/KZaBVME" target="_blank">
+        <DiscordIcon width={iconSize} height={iconSize} />
+        <span class="sr-only">Discord</span>
+      </a>
+      <a href="//twitter.com/blocknative" target="_blank">
+        <TwitterIcon width={iconSize} height={iconSize} />
+        <span class="sr-only">Twitter</span>
+      </a>
+    </Flexbox>
+    <a href="//www.blocknative.com/" target="_blank">
+      <PoweredByBadge />
+      <span class="sr-only">Powered by Blocknative</span>
+    </a>
+  </Flexbox>
+  <div class="copyright-box">
     <div class="text">{text.license}</div>
     <div class="text">{text.copyright}</div>
   </div>
@@ -38,23 +57,10 @@
     flex-flow: column;
   }
 
-  .link-box {
-    flex: 1;
-    gap: 4rem;
-  }
-
   .copyright-box {
     /* grey/600 */
     background: #242835;
-    /*
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    align-items: center;
-    padding: 1.5rem 2rem; */
-  }
 
-  .flexbox {
     display: flex;
     flex-flow: column;
     justify-content: center;
@@ -72,5 +78,23 @@
 
     /* grey/300 */
     color: #999ca5;
+  }
+
+  a {
+    color: white;
+  }
+
+  /* screen reader class */
+  /* can be moved elsewhere */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
   }
 </style>
