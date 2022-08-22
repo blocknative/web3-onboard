@@ -27,7 +27,7 @@ import type {
   Notify,
   PreflightNotificationsOptions,
   ConnectModalOptions
-} from './types'
+} from './types.js'
 
 const unknownObject = Joi.object().unknown()
 

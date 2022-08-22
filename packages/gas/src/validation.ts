@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import { RequestOptions, StreamOptions } from './types'
+import { RequestOptions, StreamOptions } from './types.js'
 import { validate, type ValidateReturn } from '@web3-onboard/common'
 
 const requestOptions = Joi.object({

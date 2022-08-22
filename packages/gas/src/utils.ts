@@ -1,4 +1,4 @@
-import { ChainId, RequestEndpoint } from './types'
+import { ChainId, RequestEndpoint } from './types.js'
 
 export function getRequestUrl({
   chainId,

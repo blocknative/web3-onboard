@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import type { MagicInitOptions } from './types'
+import type { MagicInitOptions } from './types.js'
 
 const userEmail = Joi.string()
   .email({ tlds: { allow: false } })

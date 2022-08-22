@@ -8,13 +8,13 @@ import type {
   CustomNotification,
   Notification,
   NotificationType
-} from './types'
+} from './types.js'
 
-import { validateTransactionHandlerReturn } from './validation'
-import { state } from './store'
-import { addNotification } from './store/actions'
-import updateBalances from './update-balances'
-import { updateTransaction } from './streams'
+import { validateTransactionHandlerReturn } from './validation.js'
+import { state } from './store/index.js'
+import { addNotification } from './store/actions.js'
+import updateBalances from './update-balances.js'
+import { updateTransaction } from './streams.js'
 
 export function handleTransactionUpdates(
   transaction: EthereumTransactionData

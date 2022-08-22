@@ -1,7 +1,7 @@
-import get from './get'
-import stream from './stream'
+import get from './get.js'
+import stream from './stream.js'
 
-export * from './types'
+export * from './types.js'
 
 export default {
   get,

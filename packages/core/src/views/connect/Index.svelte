@@ -4,11 +4,11 @@
   import EventEmitter from 'eventemitter3'
   import { _ } from 'svelte-i18n'
   import en from '../../i18n/en.json'
-  import { selectAccounts } from '../../provider'
-  import { state } from '../../store'
-  import { connectWallet$, onDestroy$ } from '../../streams'
-  import { addWallet, updateAccount } from '../../store/actions'
-  import { validEnsChain } from '../../utils'
+  import { selectAccounts } from '../../provider.js'
+  import { state } from '../../store/index.js'
+  import { connectWallet$, onDestroy$ } from '../../streams.js'
+  import { addWallet, updateAccount } from '../../store/actions.js'
+  import { validEnsChain } from '../../utils.js'
   import CloseButton from '../shared/CloseButton.svelte'
   import Modal from '../shared/Modal.svelte'
   import Agreement from './Agreement.svelte'
@@ -17,8 +17,8 @@
   import InstallWallet from './InstallWallet.svelte'
   import SelectingWallet from './SelectingWallet.svelte'
   import Sidebar from './Sidebar.svelte'
-  import { configuration } from '../../configuration'
-  import { getBlocknativeSdk } from '../../services'
+  import { configuration } from '../../configuration.js'
+  import { getBlocknativeSdk } from '../../services.js'
   import { BigNumber } from 'ethers'
   import {
     getChainId,
@@ -26,14 +26,14 @@
     trackWallet,
     getBalance,
     getEns
-  } from '../../provider'
+  } from '../../provider.js'
 
   import type {
     ConnectOptions,
     i18n,
     WalletState,
     WalletWithLoadingIcon
-  } from '../../types'
+  } from '../../types.js'
 
   export let autoSelect: ConnectOptions['autoSelect']
 

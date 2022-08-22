@@ -9,10 +9,10 @@ import {
   shareReplay
 } from 'rxjs/operators'
 
-import { resetStore } from './store/actions'
-import { state } from './store'
+import { resetStore } from './store/actions.js'
+import { state } from './store/index.js'
 
-import type { WalletState, ConnectOptions } from './types'
+import type { WalletState, ConnectOptions } from './types.js'
 import type { EthereumTransactionData } from 'bnc-sdk'
 
 export const reset$ = new Subject<void>()

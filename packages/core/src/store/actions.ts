@@ -1,7 +1,7 @@
 import type { Chain, WalletInit, WalletModule } from '@web3-onboard/common'
 import { nanoid } from 'nanoid'
-import { dispatch } from './index'
-import { configuration } from '../configuration'
+import { dispatch } from './index.js'
+import { configuration } from '../configuration.js'
 
 import type {
   Account,
@@ -27,7 +27,7 @@ import type {
   Notify,
   ConnectModalOptions,
   UpdateConnectModalAction
-} from '../types'
+} from '../types.js'
 
 import {
   validateAccountCenterUpdate,
@@ -41,7 +41,7 @@ import {
   validateUpdateBalances,
   validateNotify,
   validateConnectModalUpdate
-} from '../validation'
+} from '../validation.js'
 
 import {
   ADD_CHAINS,
@@ -58,7 +58,7 @@ import {
   REMOVE_NOTIFICATION,
   UPDATE_ALL_WALLETS,
   UPDATE_CONNECT_MODAL
-} from './constants'
+} from './constants.js'
 
 export function addChains(chains: Chain[]): void {
   // chains are validated on init
