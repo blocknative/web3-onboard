@@ -1,7 +1,3 @@
-<script>
-    import { Tabs, TabPanel } from '$lib/components'
-</script>
-
 # @web3-onboard/magic
 
 Wallet module for connecting Magic wallets to Onboard V2

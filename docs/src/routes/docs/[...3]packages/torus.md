@@ -1,7 +1,3 @@
-<script>
-    import { Tabs, TabPanel } from '$lib/components'
-</script>
-
 # @web3-onboard/torus
 
 ## Wallet module for connecting Torus wallet to web3-onboard

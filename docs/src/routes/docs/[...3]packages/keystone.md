@@ -1,7 +1,3 @@
-<script>
-    import { Tabs, TabPanel } from '$lib/components'
-</script>
-
 # @web3-onboard/keystone
 
 Wallet module for connecting Keystone hardware wallets to web3-onboard

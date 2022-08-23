@@ -1,7 +1,3 @@
-<script>
-    import { Tabs, TabPanel } from '$lib/components'
-</script>
-
 # @web3-onboard/portis
 
 Wallet module for connecting Portis wallet to web3-onboard

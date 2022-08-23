@@ -1,7 +1,3 @@
-<script>
-    import { Tabs, TabPanel } from '$lib/components'
-</script>
-
 # @web3-onboard/gnosis
 
 Wallet module for connecting Gnosis Safe to web3-onboard

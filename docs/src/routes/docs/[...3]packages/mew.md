@@ -1,7 +1,3 @@
-<script>
-    import { Tabs, TabPanel } from '$lib/components'
-</script>
-
 # @web3-onboard/mew
 
 Wallet module for connecting Mew wallet to web3-onboard

@@ -1,6 +1,3 @@
-<script>
-    import { Tabs, TabPanel } from '$lib/components'
-</script>
 # @web3-onboard/walletconnect
 
 Wallet module for connecting Ledger hardware wallets to web3-onboard

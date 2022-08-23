@@ -1,8 +1,3 @@
-<script>
-    import { Tabs, TabPanel } from '$lib/components'
-</script>
-
-
 # @web3-onboard/dcent
 
 ## Wallet module for connecting D'CENT hardware wallets to web3-onboard

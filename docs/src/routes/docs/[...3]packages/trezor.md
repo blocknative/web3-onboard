@@ -1,7 +1,3 @@
-<script>
-    import { Tabs, TabPanel } from '$lib/components'
-</script>
-
 # @web3-onboard/trezor
 
 Wallet module for connecting Trezor hardware wallets to web3-onboard

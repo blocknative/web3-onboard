@@ -1,7 +1,3 @@
-<script>
-    import { Tabs, TabPanel } from '$lib/components'
-</script>
-
 # @web3-onboard/keepkey
 
 Wallet module for connecting KeepKey hardware wallets to web3-onboard
