@@ -1,11 +1,4 @@
-<script>
-  import CodeTabs from '../svg/CodeTabs.svelte'
-</script>
-
-<div>
-  <CodeTabs />
-  <pre><code><slot /></code></pre>
-</div>
+<pre><code><slot /></code></pre>
 
 <style>
   pre {
