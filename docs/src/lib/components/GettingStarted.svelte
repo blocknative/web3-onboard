@@ -3,7 +3,7 @@
 </script>
 
 <section id="get-started">
-  <article class="prose w-full max-w-prose">
+  <article class="prose">
     <GettingStartedGuide />
   </article>
 </section>
@@ -17,5 +17,9 @@
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
+  }
+
+  article {
+    max-width: 100%;
   }
 </style>
