@@ -12,6 +12,7 @@
   import {
     KitDocs,
     KitDocsLayout,
+    SocialLink
   } from '@svelteness/kit-docs'
 
   import IconBN from '$lib/components/icons/blocknative.svelte'
@@ -45,6 +46,9 @@
       <a href="/">
         <IconBN />
       </a>
+    </div>
+    <div slot="navbar-right-alt">
+      <SocialLink type="gitHub" href="//github.com/blocknative/web3-onboard" />
     </div>
     <slot />
   </KitDocsLayout>

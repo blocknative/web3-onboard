@@ -24,6 +24,7 @@
   import {
     KitDocs,
     KitDocsLayout,
+    SocialLink,
     createKitDocsLoader,
     createSidebarContext
   } from '@svelteness/kit-docs'
@@ -71,6 +72,9 @@
         <IconBN />
         <span class="ml-4">{'Web3-Onboard'}</span>
       </a>
+    </div>
+    <div slot="navbar-right-alt">
+      <SocialLink type="gitHub" href="//github.com/blocknative/web3-onboard" />
     </div>
     <slot />
   </KitDocsLayout>
