@@ -16,7 +16,7 @@ function sequence(options?: SequenceOptions): WalletInit {
      {
       label: 'Sequence',
       getIcon: async () => (await import('./icon.js')).default,
-      getInterface: async ({ chains }) => {
+      getInterface: async () => {
         const { sequence } = await import('0xsequence')
         const { createEIP1193Provider } = await import('@web3-onboard/common')
 
