@@ -110,7 +110,6 @@ function dcent({
 
           const provider = new StaticJsonRpcProvider(currentChain.rpcUrl)
 
-          // @ts-ignore
           return generateAccounts(dcentKeyring, provider)
         }
 
