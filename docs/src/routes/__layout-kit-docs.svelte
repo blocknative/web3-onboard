@@ -10,6 +10,7 @@
 </script>
 
 <script>
+  import '../app.css'
   import '@svelteness/kit-docs/client/polyfills/index.js';
   import '@svelteness/kit-docs/client/styles/normalize.css';
   import '@svelteness/kit-docs/client/styles/theme.css';
@@ -17,7 +18,6 @@
   // import '@svelteness/kit-docs/client/styles/vars.css';
   import '$lib/styles/fonts.css';
   import '$lib/styles/kit-docs.css';
-  import '../app.css'
 
   import { page } from '$app/stores'
 
