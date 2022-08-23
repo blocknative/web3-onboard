@@ -112,6 +112,7 @@
               <Button href="/docs/examples/connect-wallet" buttonStyle={"link"}>{"View Demo"}</Button>
             </Flexbox>
           </TextBlock>
+          <div style={'margin-top: 2rem'}></div>
           <CodeBlock>
             {'npm i @web3-onboard/core @web3-onboard/injected-wallets'}
           </CodeBlock>
