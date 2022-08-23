@@ -20,7 +20,7 @@
   const navbar = {
     links: [
       { title: 'Documentation', slug: '/docs', match: /\/docs/ },
-      { title: 'Examples', slug: '/docs', match: /\/docs\/examples/ },
+      { title: 'Examples', slug: '/docs/examples/connect-wallet', match: /\/docs\/examples/ },
       { title: 'FAQS', slug: '/docs', match: /\/docs\/faqs/ }
     ]
   }
@@ -41,13 +41,10 @@
 
 <KitDocs>
   <KitDocsLayout {navbar} --kd-content-max-width={'100%'}>
-    <div class="logo" slot="navbar-left">
-      <Button class="text-base" href="/">
-        <div class="flex items-center">
-          <IconBN />
-          <span class="ml-2">Blocknative</span>
-        </div>
-      </Button>
+    <div slot="navbar-left">
+      <a href="/">
+        <IconBN />
+      </a>
     </div>
     <slot />
   </KitDocsLayout>
