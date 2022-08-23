@@ -1,6 +1,9 @@
 <script>
   import Container from './Container.svelte'
   import TextBlock from './TextBlock.svelte'
+
+  import Button from './base/Button.svelte'
+  import Flexbox from './base/Flexbox.svelte'
   import CodeBlock from './base/CodeBlock.svelte'
   import ScrollContainer from './base/ScrollContainer.svelte'
 
@@ -31,7 +34,12 @@
         title={'Themeable'}
         subtitle={'Powerfull customization options for all your needs'}
         text={'Style web3-onboard to fit into your existing designs, or pick from our pre-made themes.'}
-      />
+      >
+        <Flexbox --wrap="wrap">
+          <Button href="/docs" buttonStyle={"link"}>{"Learn More"}</Button>
+          <Button href="/docs/examples/connect-wallet" buttonStyle={"link"}>{"View Demo"}</Button>
+        </Flexbox>
+      </TextBlock>
       <div class="code-box">
         <CodeBlock>{examplecode}</CodeBlock>
       </div>
@@ -62,10 +70,6 @@
     overflow: hidden;
   }
 
-  /* section pre {
-    max-height: 20rem;
-  } */
-
   .flexbox {
     /* Auto layout */
     display: flex;
@@ -82,9 +86,7 @@
 
   @media screen and (min-width: 1024px) {
     .flexbox {
-      /* display: flex; */
       flex-direction: row;
-      /* align-items: flex-start; */
     }
   }
 

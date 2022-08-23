@@ -22,17 +22,19 @@
         subtitle={'Support all your favorite frameworks.'}
         text={'Use web3-onboard with any of your favorite Javascript libraries.'}
       >
-        <Flexbox>
-          <Button href="#!" buttonStyle={"link"}>{"Learn More"}</Button>
-          <Button href="#!" buttonStyle={"link"}>{"View Demo"}</Button>
+        <Flexbox --wrap="wrap">
+          <Button href="/docs" buttonStyle={"link"}>{"Learn More"}</Button>
+          <Button href="/docs/examples/connect-wallet" buttonStyle={"link"}>{"View Demo"}</Button>
         </Flexbox>
       </TextBlock>
-      <Flexbox --direction="column" --gap="3rem" >
+      <div>
         <CodeBlock>
           {'npm i @web3-onboard/core @web3-onboard/injected-wallets'}
         </CodeBlock>
-        <FigFrameworksGroup />
-      </Flexbox>
+        <div style={'padding: 3rem 1rem 1rem 1rem'}>
+          <FigFrameworksGroup />
+        </div>
+      </div>
     </div>
   </Container>
 </section>
@@ -68,7 +70,12 @@
         title={'Enable Multi-Wallet and Multi-Chain functionality with one library '}
         subtitle={''}
         text={'Web3-Onboard is the quickest and easiest way to add multi-wallet and multi-chain support to your project. With built-in modules for more than 35 unique hardware and software wallets, Web3-Onboard saves you time and headaches.'}
-      />
+      >
+        <Flexbox --wrap="wrap">
+          <Button href="/docs" buttonStyle={"link"}>{"Learn More"}</Button>
+          <Button href="/docs/examples/connect-wallet" buttonStyle={"link"}>{"View Demo"}</Button>
+        </Flexbox>
+      </TextBlock>
       <NetworksGraphic />
     </div>
   </Container>
@@ -81,7 +88,12 @@
         title={'Real-time transaction notifications'}
         subtitle={''}
         text={'Real-time transaction notifications for all connected wallet addresses and all transaction states.'}
-      />
+      >
+        <Flexbox --wrap="wrap">
+          <Button href="/docs" buttonStyle={"link"}>{"Learn More"}</Button>
+          <Button href="/docs/examples/connect-wallet" buttonStyle={"link"}>{"View Demo"}</Button>
+        </Flexbox>
+      </TextBlock>
       <NotifyGraphic />
     </div>
   </Container>
@@ -94,7 +106,12 @@
             title={'Account Center'}
             subtitle={'Multiple Wallets and Accounts Connection:'}
             text={'Allow your users to connect multiple wallets and multiple accounts within each wallet at the same time to your dapp.'}
-          />
+          >
+            <Flexbox --wrap="wrap">
+              <Button href="/docs" buttonStyle={"link"}>{"Learn More"}</Button>
+              <Button href="/docs/examples/connect-wallet" buttonStyle={"link"}>{"View Demo"}</Button>
+            </Flexbox>
+          </TextBlock>
           <CodeBlock>
             {'npm i @web3-onboard/core @web3-onboard/injected-wallets'}
           </CodeBlock>
