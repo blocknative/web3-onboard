@@ -1,22 +1,33 @@
 <script>
     import { Tabs, TabPanel } from '$lib/components'
-    import { InstallYarnLedger, InstallNpmLedger } from '$lib/components/code-snippets/packages'
 </script>
 
 # @web3-onboard/ledger
 
-## Wallet module for connecting Ledger hardware wallets to web3-onboard
+Wallet module for connecting Ledger hardware wallets to web3-onboard
 
-### Install
+## Install
 
 
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn"><InstallYarnLedger /></TabPanel>
-  <TabPanel value="npm"><InstallNpmLedger /></TabPanel>
-</Tabs> 
+  <TabPanel value="yarn">
+
+  ```sh copy
+  yarn add @web3-onboard/ledger
+  ```
+
+  </TabPanel>
+  <TabPanel value="npm">
+
+  ```sh copy
+  npm install @web3-onboard/ledger
+  ```
+
+  </TabPanel>
+</Tabs>
 
 
-### Options
+## Options
 
 ```typescript
 type LedgerOptions = {
@@ -56,7 +67,7 @@ interface BootstrapNode {
 }
 ```
 
-### Usage
+## Usage
 
 ```typescript
 import Onboard from '@web3-onboard/core'

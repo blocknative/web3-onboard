@@ -1,6 +1,5 @@
 <script>
     import { Tabs, TabPanel } from '$lib/components'
-    import { InstallYarnWalletConnect, InstallNpmWalletConnect } from '$lib/components/code-snippets/packages'
 </script>
 # @web3-onboard/walletconnect
 
@@ -8,12 +7,23 @@ Wallet module for connecting Ledger hardware wallets to web3-onboard
 
 ## Install
 
-
-
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn"><InstallYarnWalletConnect /></TabPanel>
-  <TabPanel value="npm"><InstallNpmWalletConnect /></TabPanel>
-</Tabs> 
+  <TabPanel value="yarn">
+
+  ```sh copy
+  yarn add @web3-onboard/walletconnect
+  ```
+
+  </TabPanel>
+  <TabPanel value="npm">
+
+  ```sh copy
+  npm install @web3-onboard/walletconnect
+  ```
+
+  </TabPanel>
+</Tabs>
+
 
 
 ## Options

@@ -1,19 +1,29 @@
 <script>
     import { Tabs, TabPanel } from '$lib/components'
-    import { InstallYarnPortis, InstallNpmPortis } from '$lib/components/code-snippets/packages'
 </script>
 
 # @web3-onboard/portis
 
 Wallet module for connecting Portis wallet to web3-onboard
 
-### Install
+## Install
 
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn"><InstallYarnPortis /></TabPanel>
-  <TabPanel value="npm"><InstallNpmPortis /></TabPanel>
-</Tabs> 
+  <TabPanel value="yarn">
 
+  ```sh copy
+  yarn add @web3-onboard/portis
+  ```
+
+  </TabPanel>
+  <TabPanel value="npm">
+
+  ```sh copy
+  npm install @web3-onboard/portis
+  ```
+
+  </TabPanel>
+</Tabs>
 
 ## Options
 

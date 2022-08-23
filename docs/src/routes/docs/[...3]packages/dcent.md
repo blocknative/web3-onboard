@@ -1,7 +1,5 @@
 <script>
     import { Tabs, TabPanel } from '$lib/components'
-    import { InstallYarnDcent, InstallNpmDcent } from '$lib/components/code-snippets/packages'
-
 </script>
 
 
@@ -12,9 +10,21 @@
 ### Install
 
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn"><InstallYarnDcent /></TabPanel>
-  <TabPanel value="npm"><InstallNpmDcent /></TabPanel>
-</Tabs> 
+  <TabPanel value="yarn">
+
+  ```sh copy
+  yarn add @web3-onboard/dcent
+  ```
+
+  </TabPanel>
+  <TabPanel value="npm">
+
+  ```sh copy
+  npm install @web3-onboard/dcent
+  ```
+
+  </TabPanel>
+</Tabs>
 
 ### Usage
 

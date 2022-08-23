@@ -1,19 +1,31 @@
 <script>
     import { Tabs, TabPanel } from '$lib/components'
-    import { InstallYarnGnosis, InstallNpmGnosis } from '$lib/components/code-snippets/packages'
 </script>
+
 # @web3-onboard/gnosis
 
 Wallet module for connecting Gnosis Safe to web3-onboard
 
-### Install
+## Install
 
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn"><InstallYarnGnosis /></TabPanel>
-  <TabPanel value="npm"><InstallNpmGnosis /></TabPanel>
-</Tabs> 
+  <TabPanel value="yarn">
 
-### Options
+  ```sh copy
+  yarn add @web3-onboard/gnosis
+  ```
+
+  </TabPanel>
+  <TabPanel value="npm">
+
+  ```sh copy
+  npm install @web3-onboard/gnosis
+  ```
+
+  </TabPanel>
+</Tabs>
+
+## Options
 
 ```typescript
 type GnosisOptions = {
@@ -21,7 +33,7 @@ type GnosisOptions = {
 }
 ```
 
-### Usage
+## Usage
 
 ```typescript
 import Onboard from '@web3-onboard/core'

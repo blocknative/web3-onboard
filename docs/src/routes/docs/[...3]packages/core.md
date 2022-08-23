@@ -1,7 +1,5 @@
 <script>
     import { Tabs, TabPanel } from '$lib/components'
-    import { InstallYarnCore, InstallNpmCore, InstallYarnWallets, InstallNpmWallets } from '$lib/components/code-snippets/packages'
-
 </script>
 
 # @web3-onboard/core
@@ -13,18 +11,42 @@ This is the core package that contains all of the UI and logic to be able to sea
 Install the core module:
 
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn"><InstallYarnCore /></TabPanel>
-  <TabPanel value="npm"><InstallNpmCore /></TabPanel>
-</Tabs> 
+  <TabPanel value="yarn">
+
+  ```sh copy
+  yarn add @web3-onboard/core
+  ```
+
+  </TabPanel>
+  <TabPanel value="npm">
+
+  ```sh copy
+  npm install @web3-onboard/core
+  ```
+
+  </TabPanel>
+</Tabs>
 
 
 If you would like to support all wallets, then you can install all of the wallet modules:
 
-
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn"><InstallYarnWallets /></TabPanel>
-  <TabPanel value="npm"><InstallNpmWallets /></TabPanel>
-</Tabs> 
+  <TabPanel value="yarn">
+
+  ```sh copy
+  yarn add @web3-onboard/injected-wallets @web3-onboard/coinbase @web3-onboard/ledger @web3-onboard/trezor @web3-onboard/keepkey @web3-onboard/walletconnect @web3-onboard/web3auth @web3-onboard/torus @web3-onboard/portis @web3-onboard/mew @web3-onboard/gnosis @web3-onboard/magic @web3-onboard/fortmatic @web3-onboard/dcent
+  ```
+
+  </TabPanel>
+  <TabPanel value="npm">
+
+  ```sh copy
+  npm install @web3-onboard/injected-wallets @web3-onboard/coinbase @web3-onboard/ledger @web3-onboard/trezor @web3-onboard/keepkey @web3-onboard/walletconnect @web3-onboard/web3auth @web3-onboard/torus @web3-onboard/portis @web3-onboard/mew @web3-onboard/gnosis @web3-onboard/magic @web3-onboard/fortmatic @web3-onboard/dcent
+  ```
+
+  </TabPanel>
+</Tabs>
+
 
 
 :::admonition type=note

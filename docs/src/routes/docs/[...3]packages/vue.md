@@ -1,6 +1,5 @@
 <script>
     import { Tabs, TabPanel } from '$lib/components'
-    import { InstallYarnVue, InstallNpmVue } from '$lib/components/code-snippets/packages'
 </script>
 
 # @web3-onboard/vue
@@ -10,9 +9,22 @@ A collection of composable functions for implementing web3-onboard in to a Vue p
 ## Install
 
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn"><InstallYarnVue /></TabPanel>
-  <TabPanel value="npm"><InstallNpmVue /></TabPanel>
-</Tabs> 
+  <TabPanel value="yarn">
+
+  ```sh copy
+  yarn add @web3-onboard/vue
+  ```
+
+  </TabPanel>
+  <TabPanel value="npm">
+
+  ```sh copy
+  npm install @web3-onboard/vue
+  ```
+
+  </TabPanel>
+</Tabs>
+
 
 
 ## Quickstart

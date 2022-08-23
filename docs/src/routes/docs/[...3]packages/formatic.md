@@ -1,6 +1,5 @@
 <script>
     import { Tabs, TabPanel } from '$lib/components'
-    import { InstallYarnFortmatic, InstallNpmFortmatic } from '$lib/components/code-snippets/packages'
 </script>
 
 # @web3-onboard/fortmatic
@@ -10,8 +9,20 @@ Wallet module for connecting Ledger hardware wallets to web3-onboard
 ### Install
 
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn"><InstallYarnFortmatic /></TabPanel>
-  <TabPanel value="npm"><InstallNpmFortmatic /></TabPanel>
+  <TabPanel value="yarn">
+
+  ```sh copy
+  yarn add @web3-onboard/fortmatic
+  ```
+
+  </TabPanel>
+  <TabPanel value="npm">
+
+  ```sh copy
+  npm install @web3-onboard/fortmatic
+  ```
+
+  </TabPanel>
 </Tabs>
 
 ## Options

@@ -1,21 +1,32 @@
 <script>
     import { Tabs, TabPanel } from '$lib/components'
-    import { InstallYarnKeepkey, InstallNpmKeepkey } from '$lib/components/code-snippets/packages'
 </script>
 
 # @web3-onboard/keepkey
 
 Wallet module for connecting KeepKey hardware wallets to web3-onboard
 
-### Install
+## Install
 
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn"><InstallYarnKeepkey /></TabPanel>
-  <TabPanel value="npm"><InstallNpmKeepkey /></TabPanel>
-</Tabs> 
+  <TabPanel value="yarn">
+
+  ```sh copy
+  yarn add @web3-onboard/keepkey
+  ```
+
+  </TabPanel>
+  <TabPanel value="npm">
+
+  ```sh copy
+  npm install @web3-onboard/keepkey
+  ```
+
+  </TabPanel>
+</Tabs>
 
 
-### Usage
+## Usage
 
 ```typescript
 import Onboard from '@web3-onboard/core'

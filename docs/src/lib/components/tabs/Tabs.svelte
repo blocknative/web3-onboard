@@ -21,9 +21,9 @@
   setContext(TABS_REGISTRY_CTX_KEY, registry)
 </script>
 
-<div class="tabs w-full border border-[var(--kd-color-gray-divider)] rounded-md">
+<div class="tabs w-full border border-gray-divider rounded-md">
   <ul
-    class="flex items-center w-full list-none m-0 overflow-x-auto border-b border-gray-200"
+    class="flex items-center w-full list-none m-0 overflow-x-auto border-b border-gray-divider"
     role="tablist"
     aria-orientation="horizontal"
   >
