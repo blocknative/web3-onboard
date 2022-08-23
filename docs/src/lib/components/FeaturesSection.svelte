@@ -1,4 +1,5 @@
 <script>
+  import Button from './base/Button.svelte'
   import Flexbox from './base/Flexbox.svelte'
   import CodeBlock from './base/CodeBlock.svelte'
   import ScrollContainer from './base/ScrollContainer.svelte'
@@ -20,15 +21,18 @@
         title={'Framework Agnostic'}
         subtitle={'Support all your favorite frameworks.'}
         text={'Use web3-onboard with any of your favorite Javascript libraries.'}
-      />
-      <div>
-        <div>
-          <CodeBlock>
-            {'npm i @web3-onboard/core @web3-onboard/injected-wallets'}
-          </CodeBlock>
-          <FigFrameworksGroup />
-        </div>
-      </div>
+      >
+        <Flexbox>
+          <Button href="#!" buttonStyle={"link"}>{"Learn More"}</Button>
+          <Button href="#!" buttonStyle={"link"}>{"View Demo"}</Button>
+        </Flexbox>
+      </TextBlock>
+      <Flexbox --direction="column" --gap="3rem" >
+        <CodeBlock>
+          {'npm i @web3-onboard/core @web3-onboard/injected-wallets'}
+        </CodeBlock>
+        <FigFrameworksGroup />
+      </Flexbox>
     </div>
   </Container>
 </section>

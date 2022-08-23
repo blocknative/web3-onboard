@@ -1,6 +1,4 @@
 <script>
-  import { goto } from '$app/navigation'
-
   import heroBg from './svg/hero-bg.svg'
   import heroImg from './svg/hero-img.svg'
 
@@ -24,8 +22,8 @@
       </CodeBlock>
     </div>
     <Flexbox --gap="1.5rem" --direction="row" --wrap="wrap">
-      <Button>Get Started</Button>
-      <Button label={'View Docs'} on:click={() => goto('/docs')} />
+      <Button href="#get-started" label={'Get Started'} />
+      <Button href="/docs" label={'View Docs'} />
     </Flexbox>
   </div>
 

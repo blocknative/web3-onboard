@@ -46,7 +46,7 @@ console.log(receipt)
 }`
 </script>
 
-<section>
+<section id="get-started">
   <!-- <Container> -->
   <div class="container">
     <h1>{'Getting Started'}</h1>
