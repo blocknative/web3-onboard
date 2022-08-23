@@ -4,12 +4,12 @@
 
   import '@svelteness/kit-docs/client/polyfills/index.js';
   import '@svelteness/kit-docs/client/styles/normalize.css';
-  import '@svelteness/kit-docs/client/styles/fonts.css';
   import '@svelteness/kit-docs/client/styles/theme.css';
-  import '@svelteness/kit-docs/client/styles/vars.css';
+  // import '@svelteness/kit-docs/client/styles/fonts.css';
+  // import '@svelteness/kit-docs/client/styles/vars.css';
+  import '$lib/styles/kit-docs.css';
 
   import {
-    Button,
     KitDocs,
     KitDocsLayout,
   } from '@svelteness/kit-docs'
@@ -53,11 +53,6 @@
 <style>
   :global(:root) {
     --kd-color-brand-rgb: 99, 112, 229;
-    --kd-font-family-sans: 'Sofia Pro';
-    --kd-font-family-mono: monospace;
-  }
-
-  :global(:root.dark) {
-    --kd-color-brand-rgb: 99, 112, 229;
+    /* --kd-font-family-sans: 'Sofia Pro'; */
   }
 </style>

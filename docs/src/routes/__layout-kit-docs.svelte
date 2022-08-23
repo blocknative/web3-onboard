@@ -12,17 +12,16 @@
 <script>
   import '../app.css'
 
-  import '@svelteness/kit-docs/client/polyfills/index.js'
-  import '@svelteness/kit-docs/client/styles/fonts.css'
-  import '@svelteness/kit-docs/client/styles/vars.css'
-
-  import '@svelteness/kit-docs/client/styles/normalize.css'
-  import '@svelteness/kit-docs/client/styles/theme.css'
+  import '@svelteness/kit-docs/client/polyfills/index.js';
+  import '@svelteness/kit-docs/client/styles/normalize.css';
+  import '@svelteness/kit-docs/client/styles/theme.css';
+  // import '@svelteness/kit-docs/client/styles/fonts.css';
+  // import '@svelteness/kit-docs/client/styles/vars.css';
+  import '$lib/styles/kit-docs.css';
 
   import { page } from '$app/stores'
 
   import {
-    Button,
     KitDocs,
     KitDocsLayout,
     createKitDocsLoader,
@@ -79,11 +78,7 @@
 
 <style>
   :global(:root) {
-    --kd-color-brand: #54b4f6;
-    --kd-font-family-sans: 'Sofia Pro';
-  }
-
-  :global(:root.dark) {
-    --kd-color-brand-rgb: 213, 149, 76;
+    --kd-color-brand-rgb: 99, 112, 229;
+    /* --kd-font-family-sans: 'Sofia Pro'; */
   }
 </style>
