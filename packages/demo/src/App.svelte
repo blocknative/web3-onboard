@@ -14,8 +14,8 @@
   import magicModule from '@web3-onboard/magic'
   import web3authModule from '@web3-onboard/web3auth'
   import gas from '@web3-onboard/gas'
-
   import dcentModule from '@web3-onboard/dcent'
+  import sequenceModule from '@web3-onboard/sequence'
   import {
     recoverAddress,
     arrayify,
@@ -100,6 +100,8 @@
 
   const dcent = dcentModule()
 
+  const sequence = sequenceModule()
+
   const onboard = Onboard({
     wallets: [
       web3auth,
@@ -115,7 +117,8 @@
       portis,
       torus,
       gnosis,
-      dcent
+      dcent,
+      sequence
     ],
     gas,
     chains: [

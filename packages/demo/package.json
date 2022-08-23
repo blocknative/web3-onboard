@@ -1,6 +1,6 @@
 {
   "name": "demo",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "devDependencies": {
     "assert": "^2.0.0",
     "buffer": "^6.0.3",
@@ -34,6 +34,7 @@
     "@web3-onboard/ledger": "^2.2.0",
     "@web3-onboard/magic": "^2.1.0",
     "@web3-onboard/portis": "^2.1.0",
+    "@web3-onboard/sequence": "^1.0.0",
     "@web3-onboard/torus": "^2.1.0",
     "@web3-onboard/trezor": "^2.2.0",
     "@web3-onboard/walletconnect": "^2.1.0",

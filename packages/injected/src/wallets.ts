@@ -520,6 +520,18 @@ const bitkeep: InjectedWalletModule = {
   platforms: ['all']
 }
 
+const sequence: InjectedWalletModule = {
+  label: ProviderLabel.Sequence,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Sequence],
+  getIcon: async () => (await import('./icons/sequence.js')).default,
+  getInterface: async () => ({
+    provider: window.ethereum
+  }),
+  platforms: ['all']
+}
+
 const wallets = [
   exodus,
   metamask,
@@ -551,7 +563,8 @@ const wallets = [
   rabby,
   mathwallet,
   gamestop,
-  bitkeep
+  bitkeep,
+  sequence
 ]
 
 export default wallets
