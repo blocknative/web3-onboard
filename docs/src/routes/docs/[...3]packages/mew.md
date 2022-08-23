@@ -1,19 +1,30 @@
 <script>
     import { Tabs, TabPanel } from '$lib/components'
-    import { InstallYarnMew, InstallNpmMew } from '$lib/components/code-snippets/packages'
 </script>
 
 # @web3-onboard/mew
 
-## Wallet module for connecting Mew wallet to web3-onboard
+Wallet module for connecting Mew wallet to web3-onboard
 
-### Install
+## Install
 
 
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn"><InstallYarnMew /></TabPanel>
-  <TabPanel value="npm"><InstallNpmMew /></TabPanel>
-</Tabs> 
+  <TabPanel value="yarn">
+
+  ```sh copy
+  yarn add @web3-onboard/mew
+  ```
+
+  </TabPanel>
+  <TabPanel value="npm">
+
+  ```sh copy
+  npm install @web3-onboard/mew
+  ```
+
+  </TabPanel>
+</Tabs>
 
 
 ## Usage

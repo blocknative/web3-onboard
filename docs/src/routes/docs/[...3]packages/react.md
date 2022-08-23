@@ -1,6 +1,5 @@
 <script>
     import { Tabs, TabPanel } from '$lib/components'
-    import { InstallYarnReact, InstallNpmReact } from '$lib/components/code-snippets/packages'
 </script>
 
 # @web3-onboard/react
@@ -14,9 +13,21 @@ A collection of React hooks for implementing web3-onboard in to a React project
 
 
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn"><InstallYarnReact /></TabPanel>
-  <TabPanel value="npm"><InstallNpmReact /></TabPanel>
-</Tabs> 
+  <TabPanel value="yarn">
+
+  ```sh copy
+  yarn add @web3-onboard/react
+  ```
+
+  </TabPanel>
+  <TabPanel value="npm">
+
+  ```sh copy
+  npm install @web3-onboard/react
+  ```
+
+  </TabPanel>
+</Tabs>
 
 
 ### Add Code

@@ -1,20 +1,31 @@
 <script>
     import { Tabs, TabPanel } from '$lib/components'
-    import { InstallYarnKeystone, InstallNpmKeystone } from '$lib/components/code-snippets/packages'
 </script>
 
 # @web3-onboard/keystone
 
 Wallet module for connecting Keystone hardware wallets to web3-onboard
 
-### Install
+## Install
 
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn"><InstallYarnKeystone /></TabPanel>
-  <TabPanel value="npm"><InstallNpmKeystone /></TabPanel>
-</Tabs> 
+  <TabPanel value="yarn">
 
-### Options
+  ```sh copy
+  yarn add @web3-onboard/keystone
+  ```
+
+  </TabPanel>
+  <TabPanel value="npm">
+
+  ```sh copy
+  npm install @web3-onboard/keystone
+  ```
+
+  </TabPanel>
+</Tabs>
+
+## Options
 
 ```typescript
 type KeystoneOptions = {
@@ -54,7 +65,7 @@ interface BootstrapNode {
 }
 ```
 
-### Usage
+## Usage
 
 ```typescript
 import Onboard from '@web3-onboard/core'

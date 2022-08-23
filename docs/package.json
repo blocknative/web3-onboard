@@ -16,7 +16,6 @@
   "devDependencies": {
     "@iconify-json/ri": "^1.1.1",
     "@playwright/test": "^1.22.2",
-    "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
     "@svelteness/kit-docs": "^0.22.12",
     "@tailwindcss/typography": "^0.5.2",
@@ -45,6 +44,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@sveltejs/adapter-static": "^1.0.0-next.39",
     "@web3-onboard/core": "^2.7.0",
     "@web3-onboard/injected-wallets": "^2.0.16"
   }

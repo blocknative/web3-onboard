@@ -1,6 +1,5 @@
 <script>
     import { Tabs, TabPanel } from '$lib/components'
-    import { InstallYarnTrezor, InstallNpmTrezor } from '$lib/components/code-snippets/packages'
 </script>
 
 # @web3-onboard/trezor
@@ -11,9 +10,22 @@ Wallet module for connecting Trezor hardware wallets to web3-onboard
 
 
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn"><InstallYarnTrezor /></TabPanel>
-  <TabPanel value="npm"><InstallNpmTrezor /></TabPanel>
-</Tabs> 
+  <TabPanel value="yarn">
+
+  ```sh copy
+  yarn add @web3-onboard/trezor
+  ```
+
+  </TabPanel>
+  <TabPanel value="npm">
+
+  ```sh copy
+  npm install @web3-onboard/trezor
+  ```
+
+  </TabPanel>
+</Tabs>
+
 
 
 

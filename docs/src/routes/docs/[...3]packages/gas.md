@@ -1,6 +1,5 @@
 <script>
     import { Tabs, TabPanel } from '$lib/components'
-    import { InstallYarnGas, InstallNpmGas } from '$lib/components/code-snippets/packages'
 </script>
 
 # @web3-onboard/gas
@@ -10,9 +9,21 @@ A module for requesting streams or single requests of gas price estimates from t
 ### Install
 
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn"><InstallYarnGas /></TabPanel>
-  <TabPanel value="npm"><InstallNpmGas /></TabPanel>
-</Tabs> 
+  <TabPanel value="yarn">
+
+  ```sh copy
+  yarn add @web3-onboard/gas
+  ```
+
+  </TabPanel>
+  <TabPanel value="npm">
+
+  ```sh copy
+  npm install @web3-onboard/gas
+  ```
+
+  </TabPanel>
+</Tabs>
 
 ### Standalone Usage
 

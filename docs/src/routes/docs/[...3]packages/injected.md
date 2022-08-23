@@ -1,6 +1,5 @@
 <script>
     import { Tabs, TabPanel } from '$lib/components'
-    import { InstallYarnInjected, InstallNpmInjected } from '$lib/components/code-snippets/packages'
 </script>
 
 # @web3-onboard/injected-wallets
@@ -9,9 +8,21 @@
 
 
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn"><InstallYarnInjected /></TabPanel>
-  <TabPanel value="npm"><InstallNpmInjected /></TabPanel>
-</Tabs> 
+  <TabPanel value="yarn">
+
+  ```sh copy
+  yarn add @web3-onboard/injected
+  ```
+
+  </TabPanel>
+  <TabPanel value="npm">
+
+  ```sh copy
+  npm install @web3-onboard/injected
+  ```
+
+  </TabPanel>
+</Tabs>
 
 ## Quickstart
 

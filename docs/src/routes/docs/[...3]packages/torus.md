@@ -1,6 +1,5 @@
 <script>
     import { Tabs, TabPanel } from '$lib/components'
-    import { InstallYarnTorus, InstallNpmTorus } from '$lib/components/code-snippets/packages'
 </script>
 
 # @web3-onboard/torus
@@ -9,13 +8,22 @@
 
 ### Install
 
-
-
-
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn"><InstallYarnTorus /></TabPanel>
-  <TabPanel value="npm"><InstallNpmTorus /></TabPanel>
-</Tabs> 
+  <TabPanel value="yarn">
+
+  ```sh copy
+  yarn add @web3-onboard/torus
+  ```
+
+  </TabPanel>
+  <TabPanel value="npm">
+
+  ```sh copy
+  npm install @web3-onboard/torus
+  ```
+
+  </TabPanel>
+</Tabs>
 
 ## Options
 

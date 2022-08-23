@@ -1,7 +1,5 @@
 <script>
     import { Tabs, TabPanel } from '$lib/components'
-    import { InstallYarnCoinbase, InstallNpmCoinbase } from '$lib/components/code-snippets/packages'
-
 </script>
 
 # @web3-onboard/coinbase
@@ -11,9 +9,21 @@ Wallet module for connecting Coinbase Wallet SDK to web3-onboard. Check out the 
 ## Install
 
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn"><InstallYarnCoinbase /></TabPanel>
-  <TabPanel value="npm"><InstallNpmCoinbase /></TabPanel>
-</Tabs> 
+  <TabPanel value="yarn">
+
+  ```sh copy
+  yarn add @web3-onboard/coinbase
+  ```
+
+  </TabPanel>
+  <TabPanel value="npm">
+
+  ```sh copy
+  npm install @web3-onboard/coinbase
+  ```
+
+  </TabPanel>
+</Tabs>
 
 
 ## Options

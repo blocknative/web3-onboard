@@ -1,6 +1,5 @@
 <script>
     import { Tabs, TabPanel } from '$lib/components'
-    import { InstallYarnMagic, InstallNpmMagic } from '$lib/components/code-snippets/packages'
 </script>
 
 # @web3-onboard/magic
@@ -18,15 +17,24 @@ The Magic Module currently only supports email login but we are open to expand t
 
 :::
 
-### Install
-
+## Install
 
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn"><InstallYarnMagic /></TabPanel>
-  <TabPanel value="npm"><InstallNpmMagic /></TabPanel>
-</Tabs> 
+  <TabPanel value="yarn">
 
+  ```sh copy
+  yarn add @web3-onboard/magic
+  ```
 
+  </TabPanel>
+  <TabPanel value="npm">
+
+  ```sh copy
+  npm install @web3-onboard/magic
+  ```
+
+  </TabPanel>
+</Tabs>
 
 ## Options
 
