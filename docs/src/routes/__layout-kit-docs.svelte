@@ -67,15 +67,12 @@
 
 <KitDocs {meta}>
   <KitDocsLayout {navbar} {sidebar}>
-    <div class="logo" slot="navbar-left">
-      <Button class=" text-base" href="/">
-        <div class="flex items-center">
-          <IconBN />
-          <span class="ml-2">Blocknative</span>
-        </div>
-      </Button>
+    <div slot="navbar-left">
+      <a class="text-base flex items-center" href="/">
+        <IconBN />
+        <span class="ml-4">{'Web3-Onboard'}</span>
+      </a>
     </div>
-
     <slot />
   </KitDocsLayout>
 </KitDocs>
