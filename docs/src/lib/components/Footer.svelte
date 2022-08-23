@@ -24,15 +24,15 @@
     --padding="2rem"
   >
     <Flexbox --direction="row" --gap="1rem" --padding="0">
-      <a href="//github.com/blocknative/web3-onboard" target="_blank">
+      <a class="icon-link" href="//github.com/blocknative/web3-onboard" target="_blank">
         <GitHubIcon width={iconSize} height={iconSize} />
         <span class="sr-only">Github</span>
       </a>
-      <a href="//discord.com/invite/KZaBVME" target="_blank">
+      <a class="icon-link" href="//discord.com/invite/KZaBVME" target="_blank">
         <DiscordIcon width={iconSize} height={iconSize} />
         <span class="sr-only">Discord</span>
       </a>
-      <a href="//twitter.com/blocknative" target="_blank">
+      <a class="icon-link" href="//twitter.com/blocknative" target="_blank">
         <TwitterIcon width={iconSize} height={iconSize} />
         <span class="sr-only">Twitter</span>
       </a>
@@ -80,8 +80,16 @@
     color: #999ca5;
   }
 
-  a {
-    color: white;
+  a.icon-link {
+    color: rgba(255, 255, 255, 0.8);
+    transition: transform 200ms ease-in-out;
+  }
+  a.icon-link:hover {
+    color: rgba(255, 255, 255, 1);
+    transform: scale(1.2);
+  }
+  a.icon-link:focus {
+    transform: none;
   }
 
   /* screen reader class */
