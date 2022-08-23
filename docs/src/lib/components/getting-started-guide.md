@@ -12,7 +12,7 @@ npm i @web3-onboard/core @web3-onboard/injected-wallets
 
 Then initialize in your app:
 
-```js copy
+```js copy lineNumbers
 import Onboard from '@web3-onboard/core'
 import injectedModule from '@web3-onboard/injected-wallets'
 import { ethers } from 'ethers'
