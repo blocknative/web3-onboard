@@ -1,37 +1,48 @@
 <script>
-  import ScrollContainer from './base/ScrollContainer.svelte';
-  import TextBlock from './TextBlock.svelte'
-
-  import TestimonialsGroup from './svg/testimonials-group.svelte'
+  import TestimonialsGraphic from './svg/logos-group.svelte'
 </script>
 
 <section>
-  <div class="flexbox">
-    <TextBlock title={"Who's using web3-onboard?"} subtitle={''} text={''} />
+  <h1 class="text">
+    {"Who's using web3-onboard?"}
+  </h1>
+  <div>
+    <TestimonialsGraphic />
   </div>
-  <ScrollContainer>
-    <TestimonialsGroup />
-  </ScrollContainer>
 </section>
 
 <style>
   section {
-    /* min-height: 500px; */
-    background: radial-gradient(88.3% 88.3% at 50% 0%, rgba(255, 255, 255, 0.6) 0%, #d1d5f8 100%),
-      #d0d4f7;
-    /* grey/200 */
-    /* border: 1px solid #C2C4C9; */
-    color: black;
+    background: #1A1D26;
     text-align: center;
+
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem;
   }
 
-  .flexbox {
+  section > div {
     display: flex;
-    flex-flow: column;
-    gap: 2rem;
-    padding: 5rem 2rem;
+    max-width: 100%;
+  }
 
-    align-items: center;
-    /* justify-content: center; */
+  .text {
+    /* font-family: Sofia Pro; */
+    font-size: 1rem;
+    font-weight: 900;
+  }
+
+  @media screen and (min-width: 480px) {
+    section {
+      gap: 4rem;
+      padding: 5rem;
+    }
+    .text {
+      font-size: 2.5rem;
+      /* font-size: 40px; */
+    }
   }
 </style>
