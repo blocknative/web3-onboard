@@ -20,7 +20,7 @@
 </script>
 
 <li
-  class="tab __vbk__"
+  class="tab hover:text-gray-inverse"
   role="tab"
   aria-selected={selected ? 'true' : 'false'}
   tabindex="0"
@@ -38,16 +38,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.75rem 1.15rem;
     margin: 0;
+    padding: 0.75rem 1.25rem;
     cursor: pointer;
     border-radius: 0 !important;
-    font-weight: 500;
-    transition: var(--vbk--color-transition);
+    border-bottom: 0.25rem solid transparent;
+    font-weight: bold;
   }
 
   .tab.selected {
     color: var(--kd-color-brand);
-    border-bottom: 0.15rem solid var(--kd-color-brand);
+    border-color: currentColor;
   }
 </style>

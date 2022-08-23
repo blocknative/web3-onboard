@@ -21,9 +21,9 @@
   setContext(TABS_REGISTRY_CTX_KEY, registry)
 </script>
 
-<div class="tabs w-full border border-gray-divider rounded-md">
+<div class="tabs w-full">
   <ul
-    class="flex items-center w-full list-none m-0 overflow-x-auto border-b border-gray-divider"
+    class="flex items-center w-full list-none m-0 p-0 overflow-x-auto border-b border-gray-divider"
     role="tablist"
     aria-orientation="horizontal"
   >
@@ -34,7 +34,7 @@
     <slot name="tablist" />
   </ul>
 
-  <div class="p-5">
+  <div>
     <slot />
   </div>
 </div>
