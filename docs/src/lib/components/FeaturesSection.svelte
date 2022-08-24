@@ -1,17 +1,18 @@
 <script>
   import Button from './base/Button.svelte'
   import Flexbox from './base/Flexbox.svelte'
-  import CodeBlock from './base/CodeBlock.svelte'
   import ScrollContainer from './base/ScrollContainer.svelte'
   import Container from './Container.svelte'
   import TextBlock from './TextBlock.svelte'
   import FeatureCard from './FeatureCard.svelte'
 
-  import FigFrameworksGroup from './svg/frameworks-group.svelte'
+  import FrameworksGraphic from './svg/frameworks-group.svelte'
   import NetworksGraphic from './svg/networks-group.svelte'
   import WalletsGraphic from './svg/wallets-group.svelte'
   import NotifyGraphic from './svg/notify-group.svelte'
   import AccountCenterGraphic from './svg/account-center-group.svelte'
+
+  import InstallCode from './install-code.md'
 </script>
 
 <section class="features-a">
@@ -28,11 +29,11 @@
         </Flexbox>
       </TextBlock>
       <div>
-        <CodeBlock>
-          {'npm i @web3-onboard/core @web3-onboard/injected-wallets'}
-        </CodeBlock>
-        <div style={'padding: 3rem 1rem 1rem 1rem'}>
-          <FigFrameworksGroup />
+        <div class="prose">
+          <InstallCode />
+        </div>
+        <div style={'padding: 1rem'}>
+          <FrameworksGraphic />
         </div>
       </div>
     </div>
@@ -101,22 +102,16 @@
     <div class="flexbox" style:gap={'4rem'} style:padding={'2rem'}>
       <AccountCenterGraphic />
       <div>
-        <div>
-          <TextBlock
-            title={'Account Center'}
-            subtitle={'Multiple Wallets and Accounts Connection:'}
-            text={'Allow your users to connect multiple wallets and multiple accounts within each wallet at the same time to your dapp.'}
-          >
-            <Flexbox --wrap="wrap">
-              <Button href="/docs" buttonStyle={"link"}>{"Learn More"}</Button>
-              <Button href="/docs/examples/connect-wallet" buttonStyle={"link"}>{"View Demo"}</Button>
-            </Flexbox>
-          </TextBlock>
-          <div style={'margin-top: 2rem'}></div>
-          <CodeBlock>
-            {'npm i @web3-onboard/core @web3-onboard/injected-wallets'}
-          </CodeBlock>
-        </div>
+        <TextBlock
+          title={'Account Center'}
+          subtitle={'Multiple Wallets and Accounts Connection:'}
+          text={'Allow your users to connect multiple wallets and multiple accounts within each wallet at the same time to your dapp.'}
+        >
+          <Flexbox --wrap="wrap">
+            <Button href="/docs" buttonStyle={"link"}>{"Learn More"}</Button>
+            <Button href="/docs/examples/connect-wallet" buttonStyle={"link"}>{"View Demo"}</Button>
+          </Flexbox>
+        </TextBlock>
       </div>
     </div>
   </Container>
@@ -125,7 +120,6 @@
 <style>
   .features-a {
     padding: 3rem;
-    /* height: 328px; */
     background: conic-gradient(
         from 195.62deg at 100% 0%,
         rgba(85, 204, 254, 0.1) 0deg,
@@ -134,7 +128,6 @@
       #060d20;
   }
   .features-a .flexbox {
-    /* gap: 2rem; */
     padding: 0;
   }
 
