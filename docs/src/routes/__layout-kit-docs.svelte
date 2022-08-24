@@ -3,7 +3,7 @@
 
   export const load = createKitDocsLoader({
     sidebar: {
-      '/': '',
+      '/': null,
       '/docs': '/docs'
     }
   })
@@ -42,6 +42,7 @@
     links: [
       { title: 'Documentation', slug: '/docs', match: /\/docs/ },
       { title: 'Examples', slug: '/docs/examples/connect-wallet', match: /\/docs\/examples/ },
+      { title: 'FAQ', slug: '/faq', match: /\/faq/ },
       { title: 'Blog', slug: 'https://www.blocknative.com/blog' }
     ]
   }
@@ -75,7 +76,10 @@
       </a>
     </div>
     <div slot="navbar-right-alt">
-      <SocialLink type="gitHub" href="//github.com/blocknative/web3-onboard" />
+      <div class="flex">
+        <SocialLink type="gitHub" href="//github.com/blocknative/web3-onboard" />
+        <SocialLink type="discord" href="//discord.com/invite/KZaBVME" />
+      </div>
     </div>
     <slot />
   </KitDocsLayout>
