@@ -6,7 +6,10 @@ export {
   useSetChain,
   useSetLocale,
   useWallets
-} from './hooks'
-export { init, Web3OnboardProvider, Web3OnboardProviderProps } from './context'
+} from './hooks/index.js'
 
-
+export {
+  init,
+  Web3OnboardProvider,
+  Web3OnboardProviderProps
+} from './context.js'

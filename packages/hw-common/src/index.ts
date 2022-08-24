@@ -1,10 +1,10 @@
-export { default as accountSelect } from './account-select'
-export { entryModal } from './entry-modal'
+export { default as accountSelect } from './account-select.js'
+export { entryModal } from './entry-modal.js'
 
 export {
   getCommon,
   bigNumberFieldsToStrings,
   getHardwareWalletProvider
-} from './hdwallets'
+} from './hdwallets.js'
 
-export * from './types'
+export * from './types.js'

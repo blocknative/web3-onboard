@@ -1,13 +1,13 @@
 <script lang="ts">
   import { shareReplay, startWith } from 'rxjs/operators'
-  import { connectWallet$, switchChainModal$, wallets$ } from '../streams'
-  import { state } from '../store'
+  import { connectWallet$, switchChainModal$, wallets$ } from '../streams.js'
+  import { state } from '../store/index.js'
   import Connect from './connect/Index.svelte'
   import SwitchChain from './chain/SwitchChain.svelte'
   import ActionRequired from './connect/ActionRequired.svelte'
-  import { configuration } from '../configuration'
+  import { configuration } from '../configuration.js'
   import type { Observable } from 'rxjs'
-  import type { Notification } from '../types'
+  import type { Notification } from '../types.js'
 
   const { device } = configuration
   const accountCenter$ = state
@@ -76,8 +76,8 @@
     (!$accountCenter$.enabled ||
       ($notify$.position !== $accountCenter$.position &&
         device.type !== 'mobile') ||
-      separateMobileContainerCheck) &&
-    $wallets$.length
+      separateMobileContainerCheck ||
+      !$wallets$.length)
 
   $: displayAccountCenterSeparate =
     $accountCenter$.enabled &&

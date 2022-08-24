@@ -1,6 +1,6 @@
 import type Common from '@ethereumjs/common'
 import type { EIP1193Provider, RPCResponse } from '@web3-onboard/common'
-import type { CustomNetwork } from './types'
+import type { CustomNetwork } from './types.js'
 import type { BigNumber, providers } from 'ethers'
 
 /**

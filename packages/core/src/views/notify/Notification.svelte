@@ -3,23 +3,23 @@
   import { _ } from 'svelte-i18n'
   import StatusIconBadge from './StatusIconBadge.svelte'
   import NotificationContent from './NotificationContent.svelte'
-  import type { Notification } from '../../types'
-  import closeIcon from '../../icons/close-circle'
-  import { configuration } from '../../configuration'
-  import { removeTransaction, transactions$, wallets$ } from '../../streams'
-  import { chainStyles, networkToChainId } from '../../utils'
+  import type { Notification } from '../../types.js'
+  import closeIcon from '../../icons/close-circle.js'
+  import { configuration } from '../../configuration.js'
+  import { removeTransaction, transactions$, wallets$ } from '../../streams.js'
+  import { chainStyles, networkToChainId } from '../../utils.js'
 
   import {
     addCustomNotification,
     removeNotification
-  } from '../../store/actions'
+  } from '../../store/actions.js'
 
   import {
     actionableEventCode,
     replaceTransaction,
     validGasNetwork,
     walletSupportsReplacement
-  } from '../../replacement'
+  } from '../../replacement.js'
 
   const { device, gas } = configuration
 
