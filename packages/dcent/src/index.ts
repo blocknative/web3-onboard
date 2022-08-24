@@ -108,7 +108,9 @@ function dcent({
           currentChain =
             chains.find(({ id }: Chain) => id === chainId) || currentChain
 
-          const provider = new StaticJsonRpcProvider(currentChain.rpcUrl)
+          const provider = new StaticJsonRpcProvider(
+            currentChain.rpcUrl
+          ) as providers.StaticJsonRpcProvider
 
           return generateAccounts(dcentKeyring, provider)
         }
