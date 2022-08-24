@@ -1,30 +1,12 @@
 <script>
-  import Container from './Container.svelte'
-  import TextBlock from './TextBlock.svelte'
-
   import Button from './base/Button.svelte'
   import Flexbox from './base/Flexbox.svelte'
-  import CodeBlock from './base/CodeBlock.svelte'
   import ScrollContainer from './base/ScrollContainer.svelte'
+  import TextBlock from './TextBlock.svelte'
+  import Container from './Container.svelte'
 
+  import ThemingCode from './theming-code.md'
   import ThemeCarousel from './svg/themes-carousel.svelte'
-
-  let examplecode = `:root {
-  /* COLORS */
-  --account-select-modal-white: white;
-  --account-select-modal-black: black;
-  --account-select-modal-primary-100: #eff1fc;
-  --account-select-modal-primary-200: #d0d4f7;
-  --account-select-modal-primary-300: #b1b8f2;
-  --account-select-modal-primary-500: #6370e5;
-  --account-select-modal-primary-600: #454ea0;
-  --account-select-modal-gray-100: #ebebed;
-  --account-select-modal-gray-200: #c2c4c9;
-  --account-select-modal-gray-300: #999ca5;
-  --account-select-modal-gray-500: #33394b;
-  --account-select-modal-gray-700: #1a1d26;
-  --account-select-modal-danger-500: #ff4f4f;
-}`
 </script>
 
 <section>
@@ -40,8 +22,8 @@
           <Button href="/docs/examples/connect-wallet" buttonStyle={"link"}>{"View Demo"}</Button>
         </Flexbox>
       </TextBlock>
-      <div class="code-box">
-        <CodeBlock>{examplecode}</CodeBlock>
+      <div class="prose">
+        <ThemingCode />
       </div>
     </div>
   </Container>
