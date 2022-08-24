@@ -167,7 +167,7 @@ function init(options: InitOptions): OnboardAPI {
         }
       }
 
-      if (!apiKey || !notifyUpdate.enabled) {
+      if (!notifyUpdate.enabled) {
         notifyUpdate.enabled = false
       }
 
@@ -184,7 +184,7 @@ function init(options: InitOptions): OnboardAPI {
         ...notify
       }
 
-      if (!apiKey || !notifyUpdate.enabled) {
+      if (!notifyUpdate.enabled) {
         notifyUpdate.enabled = false
       }
 
@@ -192,10 +192,6 @@ function init(options: InitOptions): OnboardAPI {
     }
   } else {
     const notifyUpdate: Partial<Notify> = APP_INITIAL_STATE.notify
-
-    if (!apiKey) {
-      notifyUpdate.enabled = false
-    }
 
     updateNotify(notifyUpdate)
   }
