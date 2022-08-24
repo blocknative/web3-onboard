@@ -95,6 +95,7 @@ For full documentation, check out the README.md for each package:
 - [Portis](packages/portis/README.md)
 - [MEW](packages/mew/README.md)
 - [Web3Auth](packages/web3auth/README.md)
+- [Sequence](packages/sequence/README.md)
 
 **Hardware Wallets**
 

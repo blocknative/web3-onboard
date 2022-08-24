@@ -16,7 +16,7 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
   import { onDestroy, onMount } from 'svelte'
-  import { configuration } from '../../configuration'
+  import { configuration } from '../../configuration.js'
 
   const { device } = configuration
 

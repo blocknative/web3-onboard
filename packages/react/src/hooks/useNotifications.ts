@@ -5,8 +5,8 @@ import type {
   Notification,
   PreflightNotificationsOptions
 } from '@web3-onboard/core'
-import { useWeb3Onboard } from '../context'
-import { useAppState } from './useAppState'
+import { useWeb3Onboard } from '../context.js'
+import { useAppState } from './useAppState.js'
 
 export const useNotifications = (): [
   Notification[],

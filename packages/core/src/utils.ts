@@ -12,29 +12,29 @@ import type {
   ChainWithDecimalId
 } from '@web3-onboard/common'
 
-import ethereumIcon from './icons/ethereum'
-import polygonIcon from './icons/polygon'
-import questionIcon from './icons/question'
-import binanceIcon from './icons/binance'
-import fantomIcon from './icons/fantom'
-import optimismIcon from './icons/optimism'
-import avalancheIcon from './icons/avalanche'
-import celoIcon from './icons/celo'
-import gnosisIcon from './icons/gnosis'
-import harmonyOneIcon from './icons/harmony-one'
-import arbitrumIcon from './icons/arbitrum'
+import ethereumIcon from './icons/ethereum.js'
+import polygonIcon from './icons/polygon.js'
+import questionIcon from './icons/question.js'
+import binanceIcon from './icons/binance.js'
+import fantomIcon from './icons/fantom.js'
+import optimismIcon from './icons/optimism.js'
+import avalancheIcon from './icons/avalanche.js'
+import celoIcon from './icons/celo.js'
+import gnosisIcon from './icons/gnosis.js'
+import harmonyOneIcon from './icons/harmony-one.js'
+import arbitrumIcon from './icons/arbitrum.js'
 
-import hourglass from './icons/hourglass'
-import checkmark from './icons/checkmark'
-import error from './icons/error'
-import info from './icons/info'
+import hourglass from './icons/hourglass.js'
+import checkmark from './icons/checkmark.js'
+import error from './icons/error.js'
+import info from './icons/info.js'
 
 import type {
   ChainStyle,
   ConnectedChain,
   DeviceNotBrowser,
   NotifyEventStyles
-} from './types'
+} from './types.js'
 
 export function getDevice(): Device | DeviceNotBrowser {
   if (typeof window !== 'undefined') {

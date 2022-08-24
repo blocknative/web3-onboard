@@ -1,6 +1,6 @@
 <script lang="ts">
-  import type { Notification } from '../../types'
-  import { shortenAddress } from '../../utils'
+  import type { Notification } from '../../types.js'
+  import { shortenAddress } from '../../utils.js'
   import { _ } from 'svelte-i18n'
   import Timer from './Timer.svelte'
 
