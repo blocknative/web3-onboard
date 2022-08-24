@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/trezor",
-  "version": "2.2.1-alpha.1",
+  "version": "2.2.1",
   "description": "Trezor hardware wallet module for connecting to Web3-Onboard. Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardised spec compliant web3 providers for all supported wallets, framework agnostic modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
   "keywords": [
     "Ethereum",
@@ -60,8 +60,8 @@
   "dependencies": {
     "@ethereumjs/tx": "^3.4.0",
     "@ethersproject/providers": "^5.5.0",
-    "@web3-onboard/common": "^2.2.1-alpha.1",
-    "@web3-onboard/hw-common": "^2.0.1-alpha.1",
+    "@web3-onboard/common": "^2.2.1",
+    "@web3-onboard/hw-common": "^2.0.1",
     "buffer": "^6.0.3",
     "eth-crypto": "^2.1.0",
     "ethereumjs-util": "^7.1.3",
