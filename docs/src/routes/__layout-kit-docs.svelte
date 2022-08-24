@@ -41,7 +41,8 @@
   const navbar = {
     links: [
       { title: 'Documentation', slug: '/docs', match: /\/docs/ },
-      { title: 'FAQS', slug: '/docs', match: /\/docs\/faqs/ }
+      { title: 'Examples', slug: '/docs/examples/connect-wallet', match: /\/docs\/examples/ },
+      { title: 'Blog', slug: 'https://www.blocknative.com/blog' }
     ]
   }
 

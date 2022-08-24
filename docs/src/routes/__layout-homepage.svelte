@@ -22,7 +22,7 @@
     links: [
       { title: 'Documentation', slug: '/docs', match: /\/docs/ },
       { title: 'Examples', slug: '/docs/examples/connect-wallet', match: /\/docs\/examples/ },
-      { title: 'FAQS', slug: '/docs', match: /\/docs\/faqs/ }
+      { title: 'Blog', slug: 'https://www.blocknative.com/blog' }
     ]
   }
 
