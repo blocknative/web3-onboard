@@ -52,8 +52,6 @@
   $: category = $activeCategory ? `${$activeCategory}: ` : ''
   $: title = meta ? `${category}${meta.title} | KitDocs` : null
   $: description = meta?.description
-
-  $: console.log()
 </script>
 
 <svelte:head>
