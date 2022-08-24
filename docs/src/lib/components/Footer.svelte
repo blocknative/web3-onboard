@@ -5,6 +5,7 @@
   import DiscordIcon from '~icons/ri/discord-fill';
   import GitHubIcon from '~icons/ri/github-fill';
   import TwitterIcon from '~icons/ri/twitter-fill';
+  import YoutubeIcon from '~icons/ri/youtube-fill';
 
   export let iconSize = 40;
 
@@ -23,7 +24,7 @@
     --flex="1"
     --padding="2rem"
   >
-    <Flexbox --direction="row" --gap="1rem" --padding="0">
+    <Flexbox --direction="row" --gap="2rem" --padding="0">
       <a class="icon-link" href="//github.com/blocknative/web3-onboard" target="_blank">
         <GitHubIcon width={iconSize} height={iconSize} />
         <span class="sr-only">Github</span>
@@ -35,6 +36,10 @@
       <a class="icon-link" href="//twitter.com/blocknative" target="_blank">
         <TwitterIcon width={iconSize} height={iconSize} />
         <span class="sr-only">Twitter</span>
+      </a>
+      <a class="icon-link" href="//www.youtube.com/c/Blocknative" target="_blank">
+        <YoutubeIcon width={iconSize} height={iconSize} />
+        <span class="sr-only">Youtube</span>
       </a>
     </Flexbox>
     <a href="//www.blocknative.com/" target="_blank">
