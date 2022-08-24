@@ -12,6 +12,7 @@ import type {
   ChainWithDecimalId
 } from '@web3-onboard/common'
 
+import candleIcon from './icons/candle.js'
 import ethereumIcon from './icons/ethereum.js'
 import polygonIcon from './icons/polygon.js'
 import questionIcon from './icons/question.js'
@@ -114,6 +115,7 @@ export const chainIdToLabel: Record<string, string> = {
   '0x5': 'Goerli',
   '0x2a': 'Kovan',
   '0x38': 'Binance',
+  '0x216': 'Candle',
   '0x89': 'Polygon',
   '0xfa': 'Fantom',
   '0xa': 'Optimism',
@@ -132,6 +134,7 @@ export const networkToChainId: Record<string, ChainId> = {
   goerli: '0x5',
   kovan: '0x2a',
   xdai: '0x64',
+  candle: '0x216',
   'bsc-main': '0x38',
   'matic-main': '0x89',
   'fantom-main': '0xfa',
@@ -162,6 +165,10 @@ export const chainStyles: Record<string, ChainStyle> = {
   '0x38': {
     icon: binanceIcon,
     color: '#F3BA2F'
+  },
+  '0x216': {
+    icon: candleIcon,
+    color: '#8247E5'
   },
   '0x89': {
     icon: polygonIcon,
