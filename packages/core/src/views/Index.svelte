@@ -72,11 +72,12 @@
         $accountCenter$.position.includes('top')))
 
   $: displayNotifySeparate =
-    $notify$.enabled &&
-    (!$accountCenter$.enabled ||
-      ($notify$.position !== $accountCenter$.position &&
-        device.type !== 'mobile') ||
-      separateMobileContainerCheck)  || (!$wallets$.length && $notify$.enabled)
+    ($notify$.enabled &&
+      (!$accountCenter$.enabled ||
+        ($notify$.position !== $accountCenter$.position &&
+          device.type !== 'mobile') ||
+        separateMobileContainerCheck)) ||
+    (!$wallets$.length && $notify$.enabled)
 
   $: displayAccountCenterSeparate =
     $accountCenter$.enabled &&

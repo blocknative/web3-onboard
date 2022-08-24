@@ -167,10 +167,6 @@ function init(options: InitOptions): OnboardAPI {
         }
       }
 
-      if (!notifyUpdate.enabled) {
-        notifyUpdate.enabled = false
-      }
-
       updateNotify(notifyUpdate)
     } else {
       const error = validateNotify(notify as Notify)
@@ -182,10 +178,6 @@ function init(options: InitOptions): OnboardAPI {
       const notifyUpdate: Partial<Notify> = {
         ...APP_INITIAL_STATE.notify,
         ...notify
-      }
-
-      if (!notifyUpdate.enabled) {
-        notifyUpdate.enabled = false
       }
 
       updateNotify(notifyUpdate)
