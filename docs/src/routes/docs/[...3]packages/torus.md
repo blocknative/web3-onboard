@@ -5,18 +5,18 @@
 ### Install
 
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn">
+<TabPanel value="yarn">
 
-  ```sh copy
-  yarn add @web3-onboard/torus
-  ```
+```sh copy
+yarn add @web3-onboard/torus
+```
 
   </TabPanel>
   <TabPanel value="npm">
 
-  ```sh copy
-  npm install @web3-onboard/torus
-  ```
+```sh copy
+npm install @web3-onboard/torus
+```
 
   </TabPanel>
 </Tabs>

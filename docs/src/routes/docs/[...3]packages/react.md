@@ -1,30 +1,27 @@
 # @web3-onboard/react
 
-
 A collection of React hooks for implementing web3-onboard in to a React project
 
 ## Quickstart with Injected Wallets and Ethers Provider
 
 ### Install
 
-
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn">
+<TabPanel value="yarn">
 
-  ```sh copy
-  yarn add @web3-onboard/react
-  ```
+```sh copy
+yarn add @web3-onboard/react
+```
 
   </TabPanel>
   <TabPanel value="npm">
 
-  ```sh copy
-  npm install @web3-onboard/react
-  ```
+```sh copy
+npm install @web3-onboard/react
+```
 
   </TabPanel>
 </Tabs>
-
 
 ### Add Code
 
@@ -67,10 +64,7 @@ function App() {
 
   return (
     <div>
-      <button
-        disabled={connecting}
-        onClick={() => (wallet ? disconnect() : connect())}
-      >
+      <button disabled={connecting} onClick={() => (wallet ? disconnect() : connect())}>
         {connecting ? 'connecting' : wallet ? 'disconnect' : 'connect'}
       </button>
     </div>
@@ -131,6 +125,7 @@ const [
 
 
 ```
+
 **`setPrimaryWallet`**
 The primary wallet (first in the list of connected wallets) and primary account (first in the list of connected accounts for a wallet) can be set by using the `setPrimaryWallet` function. The wallet that is set needs to be passed in for the first parameter and if you would like to set the primary account, the address of that account also needs to be passed in:
 
@@ -140,10 +135,7 @@ setPrimaryWallet(wallets[1])
 
 // set the second wallet in the wallets array as the primary wallet
 // as well as setting the third account in that wallet as the primary account
-setPrimaryWallet(
-  wallets[1],
-  wallets[1].accounts[2].address
-)
+setPrimaryWallet(wallets[1], wallets[1].accounts[2].address)
 ```
 
 ## `useSetChain`

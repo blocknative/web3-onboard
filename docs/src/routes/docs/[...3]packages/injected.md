@@ -2,20 +2,19 @@
 
 ## Install
 
-
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn">
+<TabPanel value="yarn">
 
-  ```sh copy
-  yarn add @web3-onboard/injected
-  ```
+```sh copy
+yarn add @web3-onboard/injected
+```
 
   </TabPanel>
   <TabPanel value="npm">
 
-  ```sh copy
-  npm install @web3-onboard/injected
-  ```
+```sh copy
+npm install @web3-onboard/injected
+```
 
   </TabPanel>
 </Tabs>
@@ -131,14 +130,13 @@ const equal = {
   // The property on the window where the injected provider is defined
   // Example: window.ethereum
   injectedNamespace: 'ethereum',
- // A function that returns a bool indicating whether or not the provider is
+  // A function that returns a bool indicating whether or not the provider is
   // of a certain identity. In this case, a unique property on the provider
   // is used to identify the provider.
   // In most cases this is in the format: is<provider-name>.
   // You may also include custom logic here if checking for the property
   // isn't sufficient.
-  checkProviderIdentity: ({ provider }) =>
-    !!provider && !!provider[ProviderIdentityFlag.MetaMask],
+  checkProviderIdentity: ({ provider }) => !!provider && !!provider[ProviderIdentityFlag.MetaMask],
 
   // A method that returns a string of the wallet icon which will be displayed
   getIcon: async () => (await import('<PATH_TO_ICON>')).default,

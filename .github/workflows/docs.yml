@@ -3,20 +3,34 @@ on:
   push:
     branches:
     - main
+    - develop
   workflow_dispatch:
 jobs:
-  build:
+  deploy:
+    name: "Deploy Docs"
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./docs
     steps:
-    - uses: actions/setup-python@v2
-    - uses: actions/checkout@master
+    - name: Checkout
+      uses: actions/checkout@v2
+    
+    - name: Setup Nodejs and yarn
+      uses: actions/setup-node@v2
       with:
-        fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
-    - name: Build and Commit
-      uses: sphinx-notes/pages@v2
-    - name: Push changes
-      uses: ad-m/github-push-action@master
+        node-version: "16"
+        cache: yarn
+
+    - name: Install dependencies
+      run: yarn install --immutable
+      
+    - name: Build Documentation
+      run: yarn build
+
+
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: gh-pages
-  
+        publish_dir: ./docs/build

@@ -5,22 +5,21 @@ Wallet module for connecting Coinbase Wallet SDK to web3-onboard. Check out the 
 ## Install
 
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn">
+<TabPanel value="yarn">
 
-  ```sh copy
-  yarn add @web3-onboard/coinbase
-  ```
+```sh copy
+yarn add @web3-onboard/coinbase
+```
 
   </TabPanel>
   <TabPanel value="npm">
 
-  ```sh copy
-  npm install @web3-onboard/coinbase
-  ```
+```sh copy
+npm install @web3-onboard/coinbase
+```
 
   </TabPanel>
 </Tabs>
-
 
 ## Options
 

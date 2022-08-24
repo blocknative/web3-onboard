@@ -7,50 +7,48 @@ This is the core package that contains all of the UI and logic to be able to sea
 Install the core module:
 
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn">
+<TabPanel value="yarn">
 
-  ```sh copy
-  yarn add @web3-onboard/core
-  ```
+```sh copy
+yarn add @web3-onboard/core
+```
 
   </TabPanel>
   <TabPanel value="npm">
 
-  ```sh copy
-  npm install @web3-onboard/core
-  ```
+```sh copy
+npm install @web3-onboard/core
+```
 
   </TabPanel>
 </Tabs>
-
 
 If you would like to support all wallets, then you can install all of the wallet modules:
 
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn">
+<TabPanel value="yarn">
 
-  ```sh copy
-  yarn add @web3-onboard/injected-wallets @web3-onboard/coinbase @web3-onboard/ledger @web3-onboard/trezor @web3-onboard/keepkey @web3-onboard/walletconnect @web3-onboard/web3auth @web3-onboard/torus @web3-onboard/portis @web3-onboard/mew @web3-onboard/gnosis @web3-onboard/magic @web3-onboard/fortmatic @web3-onboard/dcent
-  ```
+```sh copy
+yarn add @web3-onboard/injected-wallets @web3-onboard/coinbase @web3-onboard/ledger @web3-onboard/trezor @web3-onboard/keepkey @web3-onboard/walletconnect @web3-onboard/web3auth @web3-onboard/torus @web3-onboard/portis @web3-onboard/mew @web3-onboard/gnosis @web3-onboard/magic @web3-onboard/fortmatic @web3-onboard/dcent
+```
 
   </TabPanel>
   <TabPanel value="npm">
 
-  ```sh copy
-  npm install @web3-onboard/injected-wallets @web3-onboard/coinbase @web3-onboard/ledger @web3-onboard/trezor @web3-onboard/keepkey @web3-onboard/walletconnect @web3-onboard/web3auth @web3-onboard/torus @web3-onboard/portis @web3-onboard/mew @web3-onboard/gnosis @web3-onboard/magic @web3-onboard/fortmatic @web3-onboard/dcent
-  ```
+```sh copy
+npm install @web3-onboard/injected-wallets @web3-onboard/coinbase @web3-onboard/ledger @web3-onboard/trezor @web3-onboard/keepkey @web3-onboard/walletconnect @web3-onboard/web3auth @web3-onboard/torus @web3-onboard/portis @web3-onboard/mew @web3-onboard/gnosis @web3-onboard/magic @web3-onboard/fortmatic @web3-onboard/dcent
+```
 
   </TabPanel>
 </Tabs>
 
-
-
 :::admonition type=note
+
 - MEW wallet currently fails to install on M1 macs
 - All wallet modules (except for `injected-wallets`) require extra dependencies and may require polyfilling the node built in modules for the browser. See the [Build Environments](#build-environments) section for more info
 - **If using React** you may be interested in checking out the React Hooks package here - https://www.npmjs.com/package/@web3-onboard/react
 - **If using Vue** you may be interested in checking out the Vue package here - https://www.npmjs.com/package/@web3-onboard/vue
-:::
+  :::
 
 ## Initialization
 
@@ -132,7 +130,6 @@ Onboard is using the [ICU syntax](https://formatjs.io/docs/core-concepts/icu-syn
 **`accountCenter`**
 An object that defines whether the account center UI (default and minimal) is enabled and it's position on the screen. Currently the account center is enabled for both desktop and mobile devices.
 
-
 ```ts
 export type AccountCenter = {
   enabled: boolean
@@ -147,11 +144,7 @@ export type AccountCenterOptions = {
   mobile: Omit<AccountCenter, 'expanded'>
 }
 
-type AccountCenterPosition =
-  | 'topRight'
-  | 'bottomRight'
-  | 'bottomLeft'
-  | 'topLeft'
+type AccountCenterPosition = 'topRight' | 'bottomRight' | 'bottomLeft' | 'topLeft'
 ```
 
 **`notify`**
@@ -174,7 +167,7 @@ If notifications are enabled the notifications can be handled through onboard ap
 
 ```js
 const wallets = onboard.state.select('notifications')
-const { unsubscribe } = wallets.subscribe(update =>
+const { unsubscribe } = wallets.subscribe((update) =>
   console.log('transaction notifications: ', update)
 )
 
@@ -195,17 +188,11 @@ export type Notify = {
    * Or return false to disable notification for this event
    * Or return undefined for a default notification
    */
-  transactionHandler?: (
-    event: EthereumTransactionData
-  ) => TransactionHandlerReturn
+  transactionHandler?: (event: EthereumTransactionData) => TransactionHandlerReturn
   position: CommonPositions
 }
 
-export type CommonPositions =
-  | 'topRight'
-  | 'bottomRight'
-  | 'bottomLeft'
-  | 'topLeft'
+export type CommonPositions = 'topRight' | 'bottomRight' | 'bottomLeft' | 'topLeft'
 
 export type TransactionHandlerReturn = CustomNotification | boolean | void
 

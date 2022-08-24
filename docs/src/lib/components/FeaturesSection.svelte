@@ -24,8 +24,8 @@
         text={'Use web3-onboard with any of your favorite Javascript libraries.'}
       >
         <Flexbox --wrap="wrap">
-          <Button href="/docs" buttonStyle={"link"}>{"Learn More"}</Button>
-          <Button href="/docs/examples/connect-wallet" buttonStyle={"link"}>{"View Demo"}</Button>
+          <Button href="/docs" buttonStyle={'link'}>{'Learn More'}</Button>
+          <Button href="/docs/examples/connect-wallet" buttonStyle={'link'}>{'View Demo'}</Button>
         </Flexbox>
       </TextBlock>
       <div>
@@ -73,8 +73,8 @@
         text={'Web3-Onboard is the quickest and easiest way to add multi-wallet and multi-chain support to your project. With built-in modules for more than 35 unique hardware and software wallets, Web3-Onboard saves you time and headaches.'}
       >
         <Flexbox --wrap="wrap">
-          <Button href="/docs" buttonStyle={"link"}>{"Learn More"}</Button>
-          <Button href="/docs/examples/connect-wallet" buttonStyle={"link"}>{"View Demo"}</Button>
+          <Button href="/docs" buttonStyle={'link'}>{'Learn More'}</Button>
+          <Button href="/docs/examples/connect-wallet" buttonStyle={'link'}>{'View Demo'}</Button>
         </Flexbox>
       </TextBlock>
       <NetworksGraphic />
@@ -91,8 +91,8 @@
         text={'Real-time transaction notifications for all connected wallet addresses and all transaction states.'}
       >
         <Flexbox --wrap="wrap">
-          <Button href="/docs" buttonStyle={"link"}>{"Learn More"}</Button>
-          <Button href="/docs/examples/connect-wallet" buttonStyle={"link"}>{"View Demo"}</Button>
+          <Button href="/docs" buttonStyle={'link'}>{'Learn More'}</Button>
+          <Button href="/docs/examples/connect-wallet" buttonStyle={'link'}>{'View Demo'}</Button>
         </Flexbox>
       </TextBlock>
       <NotifyGraphic />
@@ -108,8 +108,8 @@
           text={'Allow your users to connect multiple wallets and multiple accounts within each wallet at the same time to your dapp.'}
         >
           <Flexbox --wrap="wrap">
-            <Button href="/docs" buttonStyle={"link"}>{"Learn More"}</Button>
-            <Button href="/docs/examples/connect-wallet" buttonStyle={"link"}>{"View Demo"}</Button>
+            <Button href="/docs" buttonStyle={'link'}>{'Learn More'}</Button>
+            <Button href="/docs/examples/connect-wallet" buttonStyle={'link'}>{'View Demo'}</Button>
           </Flexbox>
         </TextBlock>
       </div>
@@ -190,6 +190,4 @@
       /* padding: 2rem; */
     }
   }
-
-
 </style>

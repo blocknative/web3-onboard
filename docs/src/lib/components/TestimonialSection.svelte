@@ -13,7 +13,7 @@
 
 <style>
   section {
-    background: #1A1D26;
+    background: #1a1d26;
     text-align: center;
 
     display: flex;

@@ -35,7 +35,7 @@ const config = {
           }
         })
       ],
-      
+
       optimizeDeps: {
         include: ['@web3-onboard/core']
       }

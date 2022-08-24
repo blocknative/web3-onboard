@@ -5,18 +5,18 @@ A module for requesting streams or single requests of gas price estimates from t
 ### Install
 
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn">
+<TabPanel value="yarn">
 
-  ```sh copy
-  yarn add @web3-onboard/gas
-  ```
+```sh copy
+yarn add @web3-onboard/gas
+```
 
   </TabPanel>
   <TabPanel value="npm">
 
-  ```sh copy
-  npm install @web3-onboard/gas
-  ```
+```sh copy
+npm install @web3-onboard/gas
+```
 
   </TabPanel>
 </Tabs>
@@ -34,8 +34,8 @@ const ethMainnetGasBlockPrices = gas.stream({
   endpoint: 'blockPrices'
 })
 
-const { unsubscribe: ethGasUnsub } = ethMainnetGasBlockPrices.subscribe(
-  estimates => console.log(estimates)
+const { unsubscribe: ethGasUnsub } = ethMainnetGasBlockPrices.subscribe((estimates) =>
+  console.log(estimates)
 )
 
 // .... sometime later, unsubscribe to stop polling
@@ -50,9 +50,7 @@ const gasBlockPrices = gas.stream({
   poll: 1000
 })
 
-const { unsubscribe } = gasBlockPrices.subscribe(estimates =>
-  console.log(estimates)
-)
+const { unsubscribe } = gasBlockPrices.subscribe((estimates) => console.log(estimates))
 
 // .... sometime later, unsubscribe to stop polling
 setTimeout(unsubscribe, 10000)

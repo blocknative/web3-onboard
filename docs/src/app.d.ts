@@ -11,4 +11,4 @@ declare namespace App {
   // interface Stuff {}
 }
 
-declare module '@svelteness/kit-docs/tailwind.config.cjs';
+declare module '@svelteness/kit-docs/tailwind.config.cjs'

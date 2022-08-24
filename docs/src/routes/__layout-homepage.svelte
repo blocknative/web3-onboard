@@ -4,19 +4,15 @@
 
 <script>
   import '../app.css'
-  import '@svelteness/kit-docs/client/polyfills/index.js';
-  import '@svelteness/kit-docs/client/styles/normalize.css';
-  import '@svelteness/kit-docs/client/styles/theme.css';
+  import '@svelteness/kit-docs/client/polyfills/index.js'
+  import '@svelteness/kit-docs/client/styles/normalize.css'
+  import '@svelteness/kit-docs/client/styles/theme.css'
   // import '@svelteness/kit-docs/client/styles/fonts.css';
   // import '@svelteness/kit-docs/client/styles/vars.css';
-  import '$lib/styles/fonts.css';
-  import '$lib/styles/kit-docs.css';
+  import '$lib/styles/fonts.css'
+  import '$lib/styles/kit-docs.css'
 
-  import {
-    KitDocs,
-    KitDocsLayout,
-    SocialLink
-  } from '@svelteness/kit-docs'
+  import { KitDocs, KitDocsLayout, SocialLink } from '@svelteness/kit-docs'
 
   import IconBN from '$lib/components/icons/blocknative.svelte'
 
@@ -42,7 +38,6 @@
     <meta name="description" content={description} />
   {/if}
 </svelte:head>
-
 
 <KitDocs>
   <KitDocsLayout {navbar} --kd-content-max-width={'100%'}>

@@ -16,18 +16,18 @@ The Magic Module currently only supports email login but we are open to expand t
 ## Install
 
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn">
+<TabPanel value="yarn">
 
-  ```sh copy
-  yarn add @web3-onboard/magic
-  ```
+```sh copy
+yarn add @web3-onboard/magic
+```
 
   </TabPanel>
   <TabPanel value="npm">
 
-  ```sh copy
-  npm install @web3-onboard/magic
-  ```
+```sh copy
+npm install @web3-onboard/magic
+```
 
   </TabPanel>
 </Tabs>

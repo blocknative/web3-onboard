@@ -5,23 +5,21 @@ Wallet module for connecting Ledger hardware wallets to web3-onboard
 ## Install
 
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn">
+<TabPanel value="yarn">
 
-  ```sh copy
-  yarn add @web3-onboard/walletconnect
-  ```
+```sh copy
+yarn add @web3-onboard/walletconnect
+```
 
   </TabPanel>
   <TabPanel value="npm">
 
-  ```sh copy
-  npm install @web3-onboard/walletconnect
-  ```
+```sh copy
+npm install @web3-onboard/walletconnect
+```
 
   </TabPanel>
 </Tabs>
-
-
 
 ## Options
 

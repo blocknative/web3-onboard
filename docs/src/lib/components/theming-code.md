@@ -1,4 +1,4 @@
-```css 
+```css
 :root {
   /* COLORS */
   --account-select-modal-white: white;

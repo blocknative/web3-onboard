@@ -4,26 +4,22 @@ Wallet module for connecting Trezor hardware wallets to web3-onboard
 
 ### Install
 
-
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn">
+<TabPanel value="yarn">
 
-  ```sh copy
-  yarn add @web3-onboard/trezor
-  ```
+```sh copy
+yarn add @web3-onboard/trezor
+```
 
   </TabPanel>
   <TabPanel value="npm">
 
-  ```sh copy
-  npm install @web3-onboard/trezor
-  ```
+```sh copy
+npm install @web3-onboard/trezor
+```
 
   </TabPanel>
 </Tabs>
-
-
-
 
 ### Options
 

@@ -6,14 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     %sveltekit.head%
 
+    <!-- Start of HubSpot Embed Code -->
+    <script
+      type="text/javascript"
+      id="hs-script-loader"
+      async
+      defer
+      src="//js.hs-scripts.com/5118396.js"
+    ></script>
+    <!-- End of HubSpot Embed Code -->
+
+    <!-- Google Tag Manager -->
     <script>
-      const key = 'svelteness::color-scheme';
-      const scheme = localStorage[key];
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      ;(function (w, d, s, l, i) {
+        w[l] = w[l] || []
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' })
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != 'dataLayer' ? '&l=' + l : ''
+        j.async = true
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl
+        f.parentNode.insertBefore(j, f)
+      })(window, document, 'script', 'dataLayer', 'GTM-MVTXN4H')
+    </script>
+    <!-- End Google Tag Manager -->
+
+    <script>
+      const key = 'svelteness::color-scheme'
+      const scheme = localStorage[key]
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
       if (scheme === 'dark' || (scheme !== 'light' && prefersDark)) {
-        document.documentElement.classList.add('dark');
+        document.documentElement.classList.add('dark')
       } else {
-        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.remove('dark')
       }
     </script>
   </head>

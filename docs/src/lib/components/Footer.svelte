@@ -2,12 +2,12 @@
   import Flexbox from './base/Flexbox.svelte'
   import PoweredByBadge from './svg/PoweredByBadge.svelte'
 
-  import DiscordIcon from '~icons/ri/discord-fill';
-  import GitHubIcon from '~icons/ri/github-fill';
-  import TwitterIcon from '~icons/ri/twitter-fill';
-  import YoutubeIcon from '~icons/ri/youtube-fill';
+  import DiscordIcon from '~icons/ri/discord-fill'
+  import GitHubIcon from '~icons/ri/github-fill'
+  import TwitterIcon from '~icons/ri/twitter-fill'
+  import YoutubeIcon from '~icons/ri/youtube-fill'
 
-  export let iconSize = 40;
+  export let iconSize = 40
 
   let text = {
     license: 'Released under the MIT License.',

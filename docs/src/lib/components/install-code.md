@@ -1,16 +1,16 @@
 <Tabs values={['npm', 'yarn']}>
-  <TabPanel value="npm">
+<TabPanel value="npm">
 
-  ```sh copy
-  npm install @web3-onboard/core @web3-onboard/injected
-  ```
+```sh copy
+npm install @web3-onboard/core @web3-onboard/injected
+```
 
   </TabPanel>
   <TabPanel value="yarn">
 
-  ```sh copy
-  yarn add @web3-onboard/core @web3-onboard/injected
-  ```
+```sh copy
+yarn add @web3-onboard/core @web3-onboard/injected
+```
 
   </TabPanel>
 </Tabs>

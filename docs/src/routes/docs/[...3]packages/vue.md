@@ -5,23 +5,21 @@ A collection of composable functions for implementing web3-onboard in to a Vue p
 ## Install
 
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn">
+<TabPanel value="yarn">
 
-  ```sh copy
-  yarn add @web3-onboard/vue
-  ```
+```sh copy
+yarn add @web3-onboard/vue
+```
 
   </TabPanel>
   <TabPanel value="npm">
 
-  ```sh copy
-  npm install @web3-onboard/vue
-  ```
+```sh copy
+npm install @web3-onboard/vue
+```
 
   </TabPanel>
 </Tabs>
-
-
 
 ## Quickstart
 
@@ -45,14 +43,10 @@ const web3Onboard = init({
   ]
 })
 
-const { wallets, connectWallet, disconnectConnectedWallet, connectedWallet } =
-  useOnboard()
+const { wallets, connectWallet, disconnectConnectedWallet, connectedWallet } = useOnboard()
 
 if (connectedWallet) {
-  const ethersProvider = new ethers.providers.Web3Provider(
-    connectedWallet.provider,
-    'any'
-  )
+  const ethersProvider = new ethers.providers.Web3Provider(connectedWallet.provider, 'any')
   // ..... do stuff with the provider
 }
 ```
@@ -97,8 +91,7 @@ import { useOnboard } from '@web3-onboard/vue'
 // Use the composable
 const onboard = useOnboard()
 // Or destructure it
-const { wallets, connectWallet, disconnectConnectedWallet, connectedWallet } =
-  useOnboard()
+const { wallets, connectWallet, disconnectConnectedWallet, connectedWallet } = useOnboard()
 // do stuff
 ```
 
@@ -232,9 +225,7 @@ export default {
 </script>
 
 <template>
-  <button type="button" @click="disconnectConnectedWallet">
-    Disconnect connectedWallet
-  </button>
+  <button type="button" @click="disconnectConnectedWallet">Disconnect connectedWallet</button>
 </template>
 ```
 

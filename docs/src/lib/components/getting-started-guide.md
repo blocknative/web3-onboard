@@ -38,11 +38,8 @@ const wallets = await onboard.connectWallet()
 console.log(wallets)
 
 if (wallets[0]) {
-// create an ethers provider with the last connected wallet provider
-  const ethersProvider = new ethers.providers.Web3Provider(
-    wallets[0].provider,
-  'any'
-  )
+  // create an ethers provider with the last connected wallet provider
+  const ethersProvider = new ethers.providers.Web3Provider(wallets[0].provider, 'any')
 
   const signer = ethersProvider.getSigner()
 

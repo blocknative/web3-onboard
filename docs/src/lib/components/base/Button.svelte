@@ -1,20 +1,20 @@
 <script>
-  import ArrowRightLine from '~icons/ri/arrow-right-line';
+  import ArrowRightLine from '~icons/ri/arrow-right-line'
 
   export let label = ''
   export let href = '#!'
   export let buttonStyle = 'button'
 
-  let iconSize = '24px';
+  let iconSize = '24px'
 </script>
 
 {#if buttonStyle === 'link'}
-  <a href={href} class="link-style" style={$$props.style}>
+  <a {href} class="link-style" style={$$props.style}>
     <slot>{label}</slot>
-    <ArrowRightLine width={iconSize} height={iconSize}/>
+    <ArrowRightLine width={iconSize} height={iconSize} />
   </a>
 {:else}
-  <a href={href} class="button-style" style={$$props.style}>
+  <a {href} class="button-style" style={$$props.style}>
     <slot>{label}</slot>
   </a>
 {/if}
@@ -25,7 +25,7 @@
     --accent-color-rgb: 99, 112, 229;
     /* vars */
     --text-color: white;
-    --bg-color: rgba( var(--accent-color-rgb) , 1 );
+    --bg-color: rgba(var(--accent-color-rgb), 1);
 
     /* color styles */
     color: var(--text-color);
@@ -62,8 +62,8 @@
     /* blue/400 */
     --accent-color-rgb: 146, 155, 237;
     /* vars */
-    --text-color: rgba( var(--accent-color-rgb) , 1 );
-    --bg-color: rgba( var(--accent-color-rgb) , 0 );
+    --text-color: rgba(var(--accent-color-rgb), 1);
+    --bg-color: rgba(var(--accent-color-rgb), 0);
 
     /* color styles */
     color: var(--text-color);
@@ -90,7 +90,6 @@
     transition: 300ms ease-out;
   }
   .link-style:hover {
-    --bg-color: rgba( var(--accent-color-rgb) , 0.2 );
+    --bg-color: rgba(var(--accent-color-rgb), 0.2);
   }
-
 </style>

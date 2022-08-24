@@ -4,27 +4,24 @@
 _Wallet module for connecting WalletLink to web3-onboard is now deprecated. Please use [@web3-onboard/coinbase](./coinbase.md)_
 :::
 
-
 ### Install
 
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn">
+<TabPanel value="yarn">
 
-  ```sh copy
-  yarn add @web3-onboard/walletlink
-  ```
+```sh copy
+yarn add @web3-onboard/walletlink
+```
 
   </TabPanel>
   <TabPanel value="npm">
 
-  ```sh copy
-  npm install @web3-onboard/walletlink
-  ```
+```sh copy
+npm install @web3-onboard/walletlink
+```
 
   </TabPanel>
 </Tabs>
-
-
 
 ## Options
 

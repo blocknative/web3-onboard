@@ -1,5 +1,5 @@
 <script>
-  import GettingStartedGuide from './getting-started-guide.md';
+  import GettingStartedGuide from './getting-started-guide.md'
 </script>
 
 <section id="get-started">

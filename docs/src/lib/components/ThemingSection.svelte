@@ -18,8 +18,8 @@
         text={'Style web3-onboard to fit into your existing designs, or pick from our pre-made themes.'}
       >
         <Flexbox --wrap="wrap">
-          <Button href="/docs" buttonStyle={"link"}>{"Learn More"}</Button>
-          <Button href="/docs/examples/connect-wallet" buttonStyle={"link"}>{"View Demo"}</Button>
+          <Button href="/docs" buttonStyle={'link'}>{'Learn More'}</Button>
+          <Button href="/docs/examples/connect-wallet" buttonStyle={'link'}>{'View Demo'}</Button>
         </Flexbox>
       </TextBlock>
       <div class="prose">
@@ -71,5 +71,4 @@
       flex-direction: row;
     }
   }
-
 </style>

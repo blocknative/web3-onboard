@@ -4,24 +4,22 @@ Wallet module for connecting Web3auth to web3-onboard
 
 ## Install
 
-
 <Tabs values={['yarn', 'npm']}>
-  <TabPanel value="yarn">
+<TabPanel value="yarn">
 
-  ```sh copy
-  yarn add @web3-onboard/web3auth
-  ```
+```sh copy
+yarn add @web3-onboard/web3auth
+```
 
   </TabPanel>
   <TabPanel value="npm">
 
-  ```sh copy
-  npm install @web3-onboard/web3auth
-  ```
+```sh copy
+npm install @web3-onboard/web3auth
+```
 
   </TabPanel>
 </Tabs>
-
 
 ## Options
 
