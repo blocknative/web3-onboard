@@ -28,4 +28,4 @@ Join our discord if you want to chat with us in real time
     
 7. Does web3-onboard support my favorite network?
 
-    web3-onboard is compatible with all evm networks, which can be specified on initialization. You can add your chain to this list in the docs to call out its support.
+    web3-onboard is compatible with all evm networks, which can be specified on initialization. You can add your chain to [this list in the docs](https://github.com/blocknative/web3-onboard/blob/feature/documentation/docs/src/routes/docs/%5B...1%5Dintroduction/%5B...1%5Dgetting-started.md#supported-networks) to call out its support.
