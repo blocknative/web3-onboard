@@ -5,7 +5,7 @@
   export function load() {
     return {
       status: 307,
-      redirect: '/docs/overview/introduction'
+      redirect: '/examples/connect-wallet'
     }
   }
 </script>

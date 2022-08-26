@@ -7,8 +7,6 @@
   import '@svelteness/kit-docs/client/polyfills/index.js'
   import '@svelteness/kit-docs/client/styles/normalize.css'
   import '@svelteness/kit-docs/client/styles/theme.css'
-  // import '@svelteness/kit-docs/client/styles/fonts.css';
-  // import '@svelteness/kit-docs/client/styles/vars.css';
   import '$lib/styles/fonts.css'
   import '$lib/styles/kit-docs.css'
 
@@ -20,14 +18,14 @@
   const navbar = {
     links: [
       { title: 'Documentation', slug: '/docs', match: /\/docs/ },
-      { title: 'Examples', slug: '/docs/examples/connect-wallet', match: /\/docs\/examples/ },
+      { title: 'Examples', slug: '/examples', match: /\/examples/ },
       { title: 'FAQ', slug: '/faq', match: /\/faq/ },
       { title: 'Blog', slug: 'https://www.blocknative.com/blog' }
     ]
   }
 
-  let title = 'My Title'
-  let description = 'My Description'
+  let title = 'Web3-Onboard Docs'
+  let description = 'Web3-Onboard Documentation'
 </script>
 
 <svelte:head>

@@ -14,19 +14,17 @@ const config = {
   ],
   kit: {
     adapter: adapter(),
-
     prerender: {
       default: true,
       entries: ['*']
     },
-
+    trailingSlash: 'always',
     vite: {
       resolve: {
         alias: {
           $fonts: resolve(process.cwd(), 'src/lib/fonts')
         }
       },
-
       plugins: [
         Icons({ compiler: 'svelte' }),
         kitDocsPlugin({
@@ -35,7 +33,6 @@ const config = {
           }
         })
       ],
-
       optimizeDeps: {
         include: ['@web3-onboard/core']
       }
