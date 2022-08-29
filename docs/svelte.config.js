@@ -1,4 +1,5 @@
-import adapter from '@sveltejs/adapter-static'
+import adapterStatic from '@sveltejs/adapter-static'
+import adapterVercel from '@sveltejs/adapter-vercel'
 import { kitDocsPlugin } from '@svelteness/kit-docs/node'
 import Icons from 'unplugin-icons/vite'
 import preprocess from 'svelte-preprocess'
@@ -13,12 +14,12 @@ const config = {
     })
   ],
   kit: {
-    adapter: adapter(),
+    adapter: adapterVercel(),
     prerender: {
       default: true,
       entries: ['*']
     },
-    trailingSlash: 'always',
+    // trailingSlash: 'always',
     vite: {
       resolve: {
         alias: {
