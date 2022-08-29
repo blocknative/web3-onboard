@@ -1,23 +1,23 @@
 import { SofiaProRegular } from '@web3-onboard/common'
-import connectWallet from './connect'
-import disconnectWallet from './disconnect'
-import setChain from './chain'
-import { state } from './store'
-import { reset$ } from './streams'
-import initI18N from './i18n'
+import connectWallet from './connect.js'
+import disconnectWallet from './disconnect.js'
+import setChain from './chain.js'
+import { state } from './store/index.js'
+import { reset$ } from './streams.js'
+import initI18N from './i18n/index.js'
 import App from './views/Index.svelte'
-import type { InitOptions, Notify } from './types'
-import { APP_INITIAL_STATE } from './constants'
-import { configuration, updateConfiguration } from './configuration'
-import updateBalances from './update-balances'
-import { chainIdToHex } from './utils'
-import { preflightNotifications } from './preflight-notifications'
+import type { InitOptions, Notify } from './types.js'
+import { APP_INITIAL_STATE } from './constants.js'
+import { configuration, updateConfiguration } from './configuration.js'
+import updateBalances from './update-balances.js'
+import { chainIdToHex } from './utils.js'
+import { preflightNotifications } from './preflight-notifications.js'
 
 import {
   validateInitOptions,
   validateNotify,
   validateNotifyOptions
-} from './validation'
+} from './validation.js'
 
 import {
   addChains,
@@ -28,7 +28,7 @@ import {
   setPrimaryWallet,
   setWalletModules,
   updateConnectModal
-} from './store/actions'
+} from './store/actions.js'
 
 const API = {
   connectWallet,
@@ -65,7 +65,7 @@ export type {
   Notify,
   UpdateNotification,
   PreflightNotificationsOptions
-} from './types'
+} from './types.js'
 
 export type { EIP1193Provider } from '@web3-onboard/common'
 
@@ -92,9 +92,16 @@ function init(options: InitOptions): OnboardAPI {
     connect
   } = options
 
+  const { device, svelteInstance } = configuration
+
+  if (svelteInstance) {
+    // if already initialized, need to cleanup old instance
+    console.warn('Re-initializing Onboard and resetting back to initial state')
+    reset$.next()
+  }
+
   initI18N(i18n)
   addChains(chainIdToHex(chains))
-  const { device, svelteInstance } = configuration
 
   if (typeof connect !== undefined) {
     updateConnectModal(connect)
@@ -160,10 +167,6 @@ function init(options: InitOptions): OnboardAPI {
         }
       }
 
-      if (!apiKey || !notifyUpdate.enabled) {
-        notifyUpdate.enabled = false
-      }
-
       updateNotify(notifyUpdate)
     } else {
       const error = validateNotify(notify as Notify)
@@ -177,26 +180,12 @@ function init(options: InitOptions): OnboardAPI {
         ...notify
       }
 
-      if (!apiKey || !notifyUpdate.enabled) {
-        notifyUpdate.enabled = false
-      }
-
       updateNotify(notifyUpdate)
     }
   } else {
     const notifyUpdate: Partial<Notify> = APP_INITIAL_STATE.notify
 
-    if (!apiKey) {
-      notifyUpdate.enabled = false
-    }
-
     updateNotify(notifyUpdate)
-  }
-
-  if (svelteInstance) {
-    // if already initialized, need to cleanup old instance
-    console.warn('Re-initializing Onboard and resetting back to initial state')
-    reset$.next()
   }
 
   const app = svelteInstance || mountApp()
@@ -311,6 +300,7 @@ function mountApp() {
           --border-radius-2: 20px;  
           --border-radius-3: 16px;  
           --border-radius-4: 12px;  
+          --border-radius-5: 8px;  
 
           /* SHADOWS */
           --shadow-0: none;

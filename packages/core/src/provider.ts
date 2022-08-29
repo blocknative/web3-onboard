@@ -15,13 +15,13 @@ import type {
 } from '@web3-onboard/common'
 
 import { weiToEth } from '@web3-onboard/common'
-import { disconnectWallet$ } from './streams'
-import type { Account, Address, Balances, Ens, WalletState } from './types'
-import { updateAccount, updateWallet } from './store/actions'
-import { validEnsChain } from './utils'
-import disconnect from './disconnect'
-import { state } from './store'
-import { getBlocknativeSdk } from './services'
+import { disconnectWallet$ } from './streams.js'
+import type { Account, Address, Balances, Ens, WalletState } from './types.js'
+import { updateAccount, updateWallet } from './store/actions.js'
+import { validEnsChain } from './utils.js'
+import disconnect from './disconnect.js'
+import { state } from './store/index.js'
+import { getBlocknativeSdk } from './services.js'
 
 export const ethersProviders: {
   [key: string]: providers.StaticJsonRpcProvider
@@ -340,16 +340,17 @@ export async function getBalance(
 ): Promise<Balances | null> {
   // chain we don't recognize and don't have a rpcUrl for requests
   if (!chain) return null
-  
+
   const { wallets } = state.get()
 
   try {
     const wallet = wallets.find(wallet => !!wallet.provider)
     const provider = wallet.provider
-    const balanceHex = await provider.request({ method: 'eth_getBalance', params:[address,'latest'] })
-    return balanceHex
-      ? { [chain.token || 'eth']: weiToEth(balanceHex) }
-      : null
+    const balanceHex = await provider.request({
+      method: 'eth_getBalance',
+      params: [address, 'latest']
+    })
+    return balanceHex ? { [chain.token || 'eth']: weiToEth(balanceHex) } : null
   } catch (error) {
     console.error(error)
     return null

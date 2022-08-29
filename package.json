@@ -1,6 +1,6 @@
 {
   "name": "web3-onboard-monorepo",
-  "version": "2.6.0",
+  "version": "2.9.0",
   "private": true,
   "workspaces": [
     "./packages/*"
@@ -36,7 +36,8 @@
     "Injected Wallet",
     "GameStop",
     "Crypto",
-    "Crypto Wallet"
+    "Crypto Wallet",
+    "Sequence"
   ],
   "repository": {
     "type": "git",
@@ -49,7 +50,7 @@
     "install-m1-mac": "yarn install --ignore-optional",
     "format": "prettier --write 'packages/**/*.ts'",
     "dev": "yarn wsrun dev",
-    "build": "yarn wsrun --stages build",
+    "build": "yarn wsrun --serial build",
     "type-check": "yarn wsrun type-check"
   },
   "devDependencies": {

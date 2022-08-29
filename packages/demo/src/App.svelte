@@ -13,8 +13,9 @@
   import coinbaseModule from '@web3-onboard/coinbase'
   import magicModule from '@web3-onboard/magic'
   import web3authModule from '@web3-onboard/web3auth'
-
+  import gas from '@web3-onboard/gas'
   import dcentModule from '@web3-onboard/dcent'
+  import sequenceModule from '@web3-onboard/sequence'
   import {
     recoverAddress,
     arrayify,
@@ -24,8 +25,8 @@
   import { ethers } from 'ethers'
   import { share } from 'rxjs/operators'
   import VConsole from 'vconsole'
-  import blocknativeIcon from './blocknative-icon'
-  import blocknativeLogo from './blocknative-logo'
+  import blocknativeIcon from './blocknative-icon.js'
+  import blocknativeLogo from './blocknative-logo.js'
 
   if (window.innerWidth < 700) {
     new VConsole()
@@ -99,6 +100,8 @@
 
   const dcent = dcentModule()
 
+  const sequence = sequenceModule()
+
   const onboard = Onboard({
     wallets: [
       web3auth,
@@ -114,8 +117,10 @@
       portis,
       torus,
       gnosis,
-      dcent
+      dcent,
+      sequence
     ],
+    gas,
     chains: [
       {
         id: '0x1',

@@ -1,15 +1,13 @@
 <script lang="ts">
   import { shareReplay, startWith } from 'rxjs/operators'
-  import { connectWallet$, switchChainModal$, wallets$ } from '../streams'
-  import { state } from '../store'
+  import { connectWallet$, switchChainModal$, wallets$ } from '../streams.js'
+  import { state } from '../store/index.js'
   import Connect from './connect/Index.svelte'
   import SwitchChain from './chain/SwitchChain.svelte'
   import ActionRequired from './connect/ActionRequired.svelte'
-  import AccountCenter from './account-center/Index.svelte'
-  import Notify from './notify/Index.svelte'
-  import { configuration } from '../configuration'
+  import { configuration } from '../configuration.js'
   import type { Observable } from 'rxjs'
-  import type { Notification } from '../types'
+  import type { Notification } from '../types.js'
 
   const { device } = configuration
   const accountCenter$ = state
@@ -43,6 +41,14 @@
     }
   }
 
+  const accountCenterComponent = $accountCenter$.enabled
+    ? import('./account-center/Index.svelte').then(mod => mod.default)
+    : Promise.resolve(null)
+
+  const notifyComponent = $notify$.enabled
+    ? import('./notify/Index.svelte').then(mod => mod.default)
+    : Promise.resolve(null)
+
   $: sharedContainer =
     $accountCenter$.enabled &&
     $notify$.enabled &&
@@ -70,8 +76,8 @@
     (!$accountCenter$.enabled ||
       ($notify$.position !== $accountCenter$.position &&
         device.type !== 'mobile') ||
-      separateMobileContainerCheck) &&
-    $wallets$.length
+      separateMobileContainerCheck ||
+      !$wallets$.length)
 
   $: displayAccountCenterSeparate =
     $accountCenter$.enabled &&
@@ -123,6 +129,10 @@
 
   :global(.justify-between) {
     justify-content: space-between;
+  }
+
+  :global(.justify-end) {
+    justify-content: flex-end;
   }
 
   :global(.justify-around) {
@@ -355,11 +365,16 @@
       : ''} "
   >
     {#if $notify$.position.includes('bottom') && $accountCenter$.position.includes('bottom') && samePositionOrMobile}
-      <Notify
-        notifications={$notifications$}
-        position={$notify$.position}
-        {sharedContainer}
-      />
+      {#await notifyComponent then Notify}
+        {#if Notify}
+          <svelte:component
+            this={Notify}
+            notifications={$notifications$}
+            position={$notify$.position}
+            {sharedContainer}
+          />
+        {/if}
+      {/await}
     {/if}
     <div
       style={!$accountCenter$.expanded &&
@@ -372,14 +387,23 @@
         ? 'margin-right: auto'
         : ''}
     >
-      <AccountCenter settings={$accountCenter$} />
+      {#await accountCenterComponent then AccountCenter}
+        {#if AccountCenter}
+          <svelte:component this={AccountCenter} settings={$accountCenter$} />
+        {/if}
+      {/await}
     </div>
     {#if $notify$.position.includes('top') && $accountCenter$.position.includes('top') && samePositionOrMobile}
-      <Notify
-        notifications={$notifications$}
-        position={$notify$.position}
-        {sharedContainer}
-      />
+      {#await notifyComponent then Notify}
+        {#if Notify}
+          <svelte:component
+            this={Notify}
+            notifications={$notifications$}
+            position={$notify$.position}
+            {sharedContainer}
+          />
+        {/if}
+      {/await}
     {/if}
   </div>
 {/if}
@@ -406,7 +430,11 @@
         : ''}
     >
       {#if $accountCenter$.enabled && $wallets$.length}
-        <AccountCenter settings={$accountCenter$} />
+        {#await accountCenterComponent then AccountCenter}
+          {#if AccountCenter}
+            <svelte:component this={AccountCenter} settings={$accountCenter$} />
+          {/if}
+        {/await}
       {/if}
     </div>
   </div>
@@ -422,10 +450,15 @@
       ? 'padding-top:0;'
       : ''} "
   >
-    <Notify
-      notifications={$notifications$}
-      position={$notify$.position}
-      {sharedContainer}
-    />
+    {#await notifyComponent then Notify}
+      {#if Notify}
+        <svelte:component
+          this={Notify}
+          notifications={$notifications$}
+          position={$notify$.position}
+          {sharedContainer}
+        />
+      {/if}
+    {/await}
   </div>
 {/if}

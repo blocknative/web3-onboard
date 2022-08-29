@@ -1,4 +1,5 @@
 # Web3-Onboard
+
 **easy way to connect users to dapps**
 
 ## Features
@@ -68,6 +69,10 @@ if (wallets[0]) {
 }
 ```
 
+**Onboard v1 migration guide**
+
+If you're coming from v1, we've created a [migration guide for you](https://docs.blocknative.com/onboard/migration-guide).
+
 ## Documentation
 
 For full documentation, check out the README.md for each package:
@@ -90,6 +95,7 @@ For full documentation, check out the README.md for each package:
 - [Portis](packages/portis/README.md)
 - [MEW](packages/mew/README.md)
 - [Web3Auth](packages/web3auth/README.md)
+- [Sequence](packages/sequence/README.md)
 
 **Hardware Wallets**
 

@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/mew",
-  "version": "2.0.7",
+  "version": "2.1.1",
   "description": "MEW (My Ether Wallet) SDK wallet module for connecting to Web3-Onboard. Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardised spec compliant web3 providers for all supported wallets, framework agnostic modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
   "keywords": [
     "Ethereum",
@@ -34,7 +34,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/blocknative/web3-onboard.git",
-    "directory": "packages/core"
+    "directory": "packages/mew"
   },
   "homepage": "https://www.blocknative.com/onboard",
   "bugs": "https://github.com/blocknative/web3-onboard/issues",
@@ -59,7 +59,7 @@
     "@myetherwallet/mewconnect-web-client": "^2.2.0-beta.14"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.1.7",
+    "@web3-onboard/common": "^2.2.1",
     "rxjs": "^7.5.2"
   }
 }

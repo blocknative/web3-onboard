@@ -1,10 +1,10 @@
 <script>
   import { _ } from 'svelte-i18n'
-  import { switchChainModal$ } from '../../streams'
+  import { switchChainModal$ } from '../../streams.js'
   import en from '../../i18n/en.json'
   import CloseButton from '../shared/CloseButton.svelte'
   import Modal from '../shared/Modal.svelte'
-  import { configuration } from '../../configuration'
+  import { configuration } from '../../configuration.js'
 
   const { appMetadata } = configuration
   const nextNetworkName = $switchChainModal$.chain.label

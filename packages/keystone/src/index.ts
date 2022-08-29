@@ -1,11 +1,5 @@
-import type {
-  Account,
-  Chain,
-  CustomNetwork,
-  ScanAccountsOptions,
-  WalletInit
-} from '@web3-onboard/common'
-
+import type { Chain, CustomNetwork, WalletInit } from '@web3-onboard/common'
+import type { Account, ScanAccountsOptions } from '@web3-onboard/hw-common'
 import type { StaticJsonRpcProvider } from '@ethersproject/providers'
 
 const DEFAULT_BASE_PATH = "m/44'/60'/0'/0"
@@ -96,14 +90,17 @@ function keystone({
         )
 
         const {
-          accountSelect,
           createEIP1193Provider,
           ProviderRpcError,
-          ProviderRpcErrorCode,
+          ProviderRpcErrorCode
+        } = await import('@web3-onboard/common')
+
+        const {
+          accountSelect,
           getCommon,
           bigNumberFieldsToStrings,
           getHardwareWalletProvider
-        } = await import('@web3-onboard/common')
+        } = await import('@web3-onboard/hw-common')
 
         const keyring = AirGappedKeyring.getEmptyKeyring()
         await keyring.readKeyring()

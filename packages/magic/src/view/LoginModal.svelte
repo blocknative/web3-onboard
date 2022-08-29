@@ -2,10 +2,10 @@
   import { fade } from 'svelte/transition'
   import type { Subject } from 'rxjs'
 
-  import { validateUserEmail } from '../validation'
+  import { validateUserEmail } from '../validation.js'
   import CloseButton from '../elements/CloseButton.svelte'
   import Spinner from '../elements/Spinner.svelte'
-  import type { LoginOptions } from '../types'
+  import type { LoginOptions } from '../types.js'
 
   let credentials: string = ''
   export let loginOptions: LoginOptions

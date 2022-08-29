@@ -1,13 +1,13 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
-  import success from '../../icons/success'
+  import success from '../../icons/success.js'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
 
-  import type { WalletState } from '../../types'
-  import questionIcon from '../../icons/question'
+  import type { WalletState } from '../../types.js'
+  import questionIcon from '../../icons/question.js'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import en from '../../i18n/en.json'
-  import { configuration } from '../../configuration'
+  import { configuration } from '../../configuration.js'
 
   export let selectedWallet: WalletState
 
