@@ -50,7 +50,7 @@
   const { activeCategory } = createSidebarContext(sidebar)
 
   $: category = $activeCategory ? `${$activeCategory}: ` : ''
-  $: title = meta ? `${category}${meta.title} | KitDocs` : null
+  $: title = meta ? `${category}${meta.title} | Web3-Onboard` : null
   $: description = meta?.description
 </script>
 

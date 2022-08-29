@@ -44,6 +44,9 @@
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets')
 
+  // The first wallet in the array of connected wallets
+  $: connectedAccount = $wallets$?.[0]?.accounts?.[0]
+
   async function connectWallet() {
     if ($wallets$?.[0]?.provider) {
       onboard.disconnectWallet({ label: $wallets$?.[0]?.label })
@@ -56,12 +59,12 @@
 
   $: buttonText = $wallets$?.[0]?.provider ? 'Disconnect' : connecting ? 'Connecting' : 'Connect'
 
-  $: account = $wallets$?.[0]?.accounts?.[0]?.ens?.name
+  $: account = connectedAccount?.ens?.name
     ? {
-        ens: $wallets$?.[0]?.accounts?.[0]?.ens,
-        address: trunc($wallets$?.[0]?.accounts?.[0]?.address)
+        ens: connectedAccount?.ens,
+        address: trunc(connectedAccount?.address)
       }
-    : { address: trunc($wallets$?.[0]?.accounts?.[0]?.address) }
+    : { address: trunc(connectedAccount?.address) }
 </script>
 
 <div class="flex items-center justify-center border-gray-divider border rounded-md h-40 p-4">

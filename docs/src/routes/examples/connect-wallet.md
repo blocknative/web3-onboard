@@ -1,24 +1,20 @@
 <script>
-    import { ConnectWallet, ReactConnectWallet } from '$lib/components'
+    import { ConnectWallet, ReactConnectWallet, SvelteConnectWallet } from '$lib/components'
+
+    const frameworks = ['react', 'svelte']
 </script>
 
-## Connect Wallet
+# Connect Wallet Example
 
 <ConnectWallet />
 
+<div class="w-full  h-5"/>
 
-<div class="w-full  h-10"/>
-
-<Tabs values={['vanilla', 'react']}>
-<div class="w-full  h-10"/> 
-<TabPanel value="vanilla">
-
-  
-
-  </TabPanel>
+<Tabs values={frameworks}>
   <TabPanel value="react">
-    <ReactConnectWallet /> 
+   <ReactConnectWallet /> 
+  </TabPanel>
+  <TabPanel value="svelte">
+    <SvelteConnectWallet /> 
   </TabPanel>
 </Tabs>
-
-

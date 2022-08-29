@@ -1,2 +1,2 @@
-export { ConnectWallet, ReactConnectWallet } from './examples'
+export * from './examples'
 export { default as NavBar } from './NavBar.svelte'
