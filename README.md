@@ -96,6 +96,7 @@ For full documentation, check out the README.md for each package:
 - [MEW](packages/mew/README.md)
 - [Web3Auth](packages/web3auth/README.md)
 - [Sequence](packages/sequence/README.md)
+- [TallyHo](packages/tallyho/README.md)
 
 **Hardware Wallets**
 
