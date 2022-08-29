@@ -11,7 +11,7 @@
     "Wallet",
     "Transaction",
     "Provider",
-    "Hardware Wallet", 
+    "Hardware Wallet",
     "Notifications",
     "React",
     "Svelte",
@@ -64,6 +64,8 @@
     "window": "^4.2.7"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.1.8"
+    "@web3-onboard/common": "^2.1.8",
+    "tallyho-detect-provider": "^1.0.0",
+    "tallyho-onboarding": "^1.0.2"
   }
 }
