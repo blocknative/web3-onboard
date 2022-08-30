@@ -1,5 +1,5 @@
-import { configuration } from './configuration'
-import type { AppState } from './types'
+import { configuration } from './configuration.js'
+import type { AppState } from './types.js'
 
 export const APP_INITIAL_STATE: AppState = {
   wallets: [],
@@ -25,7 +25,7 @@ export const APP_INITIAL_STATE: AppState = {
   },
   notifications: [],
   locale: '',
-  connect : {
+  connect: {
     showSidebar: true
   }
 }

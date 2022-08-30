@@ -1,9 +1,9 @@
 import type { EthereumTransactionData, Network } from 'bnc-sdk'
 import { BigNumber } from 'ethers'
-import { configuration } from './configuration'
-import { state } from './store'
-import type { WalletState } from './types'
-import { gweiToWeiHex, networkToChainId, toHexString } from './utils'
+import { configuration } from './configuration.js'
+import { state } from './store/index.js'
+import type { WalletState } from './types.js'
+import { gweiToWeiHex, networkToChainId, toHexString } from './utils.js'
 
 const ACTIONABLE_EVENT_CODES: string[] = ['txPool']
 const VALID_GAS_NETWORKS: Network[] = ['main', 'matic-main']

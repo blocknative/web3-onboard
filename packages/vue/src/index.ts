@@ -13,7 +13,7 @@ import type { AppState } from '@web3-onboard/core/dist/types'
 
 // We use vue-demi to automatically use the correct reactivity API for both Vue 2 and Vue 3
 import { ref, computed, readonly, shallowRef } from 'vue-demi'
-import type { SetChainOptions, OnboardComposable } from './types'
+import type { SetChainOptions, OnboardComposable } from './types.js'
 
 // Vueuse helper to use the localstorage as a reactive variable
 import { useStorage } from '@vueuse/core'

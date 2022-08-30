@@ -2,16 +2,16 @@
   import { _ } from 'svelte-i18n'
   import { fade } from 'svelte/transition'
   import { ProviderRpcErrorCode } from '@web3-onboard/common'
-  import type { WalletState } from '../../types'
-  import { shortenAddress, shortenEns, copyWalletAddress } from '../../utils'
+  import type { WalletState } from '../../types.js'
+  import { shortenAddress, shortenEns, copyWalletAddress } from '../../utils.js'
   import en from '../../i18n/en.json'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
-  import elipsisIcon from '../../icons/elipsis'
-  import { setPrimaryWallet } from '../../store/actions'
-  import disconnect from '../../disconnect'
-  import { selectAccounts } from '../../provider'
-  import { connectWallet$ } from '../../streams'
+  import elipsisIcon from '../../icons/elipsis.js'
+  import { setPrimaryWallet } from '../../store/actions.js'
+  import disconnect from '../../disconnect.js'
+  import { selectAccounts } from '../../provider.js'
+  import { connectWallet$ } from '../../streams.js'
 
   export let wallet: WalletState
   export let primary: boolean

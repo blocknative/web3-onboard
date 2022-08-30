@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { state } from '../../store'
-  import type { WalletWithLoadingIcon } from '../../types'
+  import { state } from '../../store/index.js'
+  import type { WalletWithLoadingIcon } from '../../types.js'
   import Warning from '../shared/Warning.svelte'
   import WalletButton from './WalletButton.svelte'
 

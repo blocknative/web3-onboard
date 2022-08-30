@@ -3,11 +3,11 @@
   import { flip } from 'svelte/animate'
   import { fade, fly } from 'svelte/transition'
   import { cubicOut } from 'svelte/easing'
-  import { state } from '../../store'
+  import { state } from '../../store/index.js'
   import { shareReplay, startWith } from 'rxjs/operators'
   import Notification from './Notification.svelte'
-  import { configuration } from '../../configuration'
-  import type { Notification as NotificationType } from '../../types'
+  import { configuration } from '../../configuration.js'
+  import type { Notification as NotificationType } from '../../types.js'
 
   const { device } = configuration
 

@@ -1,21 +1,21 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
-  import { wallets$ } from '../../streams'
+  import { wallets$ } from '../../streams.js'
   import {
     getDefaultChainStyles,
     shortenAddress,
     shortenEns,
     unrecognizedChainStyle
-  } from '../../utils'
-  import { updateAccountCenter } from '../../store/actions'
-  import questionIcon from '../../icons/question'
-  import caretIcon from '../../icons/caret'
+  } from '../../utils.js'
+  import { updateAccountCenter } from '../../store/actions.js'
+  import questionIcon from '../../icons/question.js'
+  import caretIcon from '../../icons/caret.js'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
-  import warningIcon from '../../icons/warning'
+  import warningIcon from '../../icons/warning.js'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
   import NetworkSelector from '../shared/NetworkSelector.svelte'
-  import { state } from '../../store'
-  import { configuration } from '../../configuration'
+  import { state } from '../../store/index.js'
+  import { configuration } from '../../configuration.js'
 
   const { appMetadata } = configuration
   const appIcon = (appMetadata && appMetadata.icon) || questionIcon

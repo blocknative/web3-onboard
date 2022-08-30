@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { wallets$ } from '../../streams'
-  import { updateAccountCenter } from '../../store/actions'
-  import questionIcon from '../../icons/question'
+  import { wallets$ } from '../../streams.js'
+  import { updateAccountCenter } from '../../store/actions.js'
+  import questionIcon from '../../icons/question.js'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
-  import { configuration } from '../../configuration'
+  import { configuration } from '../../configuration.js'
 
   const { appMetadata } = configuration
   const appIcon = (appMetadata && appMetadata.icon) || questionIcon
