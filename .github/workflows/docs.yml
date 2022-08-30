@@ -48,12 +48,15 @@ jobs:
 
       - name: Build Documentation
         run: yarn build
+
+      - name: Peak at folder contents
+        run: ls -al
         
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload entire repository
-          path: './build'
+          path: '.'
           
       - name: Deploy to GitHub Pages
         id: deployment
