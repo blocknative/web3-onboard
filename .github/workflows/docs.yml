@@ -1,11 +1,12 @@
 name: Documentation GH Pages
 on:
+  workflow_dispatch:
   push:
     branches:
     - main
     - develop
     - feature/documentation
-  workflow_dispatch:
+
 jobs:
   deploy:
     name: "Deploy Docs"
