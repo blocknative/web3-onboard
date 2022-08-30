@@ -157,3 +157,36 @@ const onboard = Onboard({
   //... other options
 })
 ```
+
+### Injected Wallets Supported Natively
+
+- Metamask - *Desktop & Mobile* (Mobile relies on Wallet Connect and is detected inside MetaMask app browser)
+- Binance - *Desktop*
+- Coinbase - *Desktop & Mobile*
+- Tally - *Desktop*
+- Exodus - *Desktop & Mobile*
+- Trust - *Mobile*
+- Opera - *Desktop & Mobile*
+- Status - *Mobile*
+- Alphawallet - *Mobile*
+- Atoken - *Mobile*
+- Bitpie - *Mobile*
+- Blockwallet - *Desktop*
+- Brave - *Desktop & Mobile*
+- D'Cent - *Mobile*
+- Frame - *Desktop*
+- Huobiwallet - *Mobile*
+- Hyperpay - *Mobile*
+- IMtoken - *Mobile*
+- Liquality - *Desktop*
+- Meetone - *Mobile*
+- Mykey - *Mobile*
+- Ownbit - *Mobile*
+- Tokenpocket - *Desktop & Mobile*
+- TP - *Mobile*
+- xDefi - *Desktop & Mobile*
+- OneInch - *Mobile*
+- Tokenary - *Mobile*
+- GameStop - *Desktop*
+- Rabby - *Desktop*
+- MathWallet - *Desktop & Mobile*
