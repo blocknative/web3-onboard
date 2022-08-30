@@ -19,7 +19,7 @@
       >
         <Flexbox --wrap="wrap">
           <Button href="/docs" buttonStyle={'link'}>{'Learn More'}</Button>
-          <Button href="/docs/examples/connect-wallet" buttonStyle={'link'}>{'View Demo'}</Button>
+          <Button href="/examples/connect-wallet" buttonStyle={'link'}>{'View Demo'}</Button>
         </Flexbox>
       </TextBlock>
       <div class="prose">

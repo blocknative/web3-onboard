@@ -90,7 +90,7 @@ export default function ConnectWallet() {
 
 Now that we have our wallet connected, let's display some basic information, such as the connected wallet's address, ENS name, and avatar.
 
-```js title="ConnectWallet.tsx"|copy{8,10-19,28-36}
+```js title="ConnectWallet.tsx"|copy{8,10-19,28-37}
 import { useEffect } from 'react'
 import { useConnectWallet } from '@web3-onboard/react'
 import { ethers } from 'ethers'
