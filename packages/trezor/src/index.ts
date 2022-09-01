@@ -291,7 +291,7 @@ function trezor(options: TrezorOptions): WalletInit {
           ) {
             return {
               to: transactionData.to!,
-              value: transactionData.value!,
+              value: transactionData.value || '',
               gasLimit: gasLimit!,
               maxFeePerGas: transactionData.maxFeePerGas!,
               maxPriorityFeePerGas: transactionData.maxPriorityFeePerGas!,
@@ -304,7 +304,7 @@ function trezor(options: TrezorOptions): WalletInit {
           }
           return {
             to: transactionData.to!,
-            value: transactionData.value!,
+            value: transactionData.value || '',
             gasPrice: transactionData.gasPrice!,
             gasLimit: gasLimit!,
             nonce: transactionData.nonce!,
