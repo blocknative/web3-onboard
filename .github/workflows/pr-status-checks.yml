@@ -23,8 +23,8 @@ jobs:
           cache: yarn
 
       - name: Install dependencies
-        run: yarn install --immutable
-
+        run: yarn
+        
       - name: Check that it builds
         run: yarn build
 
