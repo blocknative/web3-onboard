@@ -1,6 +1,12 @@
 import { Account, Asset, ScanAccountsOptions } from '@web3-onboard/hw-common'
 import type { StaticJsonRpcProvider } from '@ethersproject/providers'
 import type { TransactionRequest } from '@ethersproject/providers'
+import type {
+  FeeMarketEIP1559TxData,
+  TxData,
+  FeeMarketEIP1559Transaction,
+  Transaction
+} from '@ethereumjs/tx'
 
 // cannot be dynamically imported
 import { Buffer } from 'buffer'
@@ -114,7 +120,9 @@ function trezor(options: TrezorOptions): WalletInit {
       getIcon,
       getInterface: async ({ EventEmitter, chains }) => {
         const { default: Trezor } = await import('trezor-connect')
-        const { Transaction } = await import('@ethereumjs/tx')
+        const { Transaction, FeeMarketEIP1559Transaction } = await import(
+          '@ethereumjs/tx'
+        )
 
         const { createEIP1193Provider, ProviderRpcError } = await import(
           '@web3-onboard/common'
@@ -370,11 +378,11 @@ function trezor(options: TrezorOptions): WalletInit {
           const updateBigNumberFields =
             bigNumberFieldsToStrings(populatedTransaction)
 
-          // Set the `from` field to the currently selected account
           const transactionData = createTrezorTransactionObject(
             updateBigNumberFields as TransactionObject
           )
 
+          transactionData.from = address
           const chainId = currentChain.hasOwnProperty('id')
             ? Number(currentChain.id)
             : 1
@@ -394,26 +402,27 @@ function trezor(options: TrezorOptions): WalletInit {
             throw new Error(message)
           }
 
-          const { r, s } = trezorResult.payload
-          let v = trezorResult.payload.v
-
-          // EIP155 support. check/recalc signature v value.
-          const rv = parseInt(v, 16)
-          let cv = Number(currentChain.id) * 2 + 35
-          if (rv !== cv && (rv & cv) !== rv) {
-            cv += 1 // add signature v bit.
+          let signedTx: FeeMarketEIP1559Transaction | Transaction
+          if (
+            transactionData!.maxFeePerGas ||
+            transactionData!.maxPriorityFeePerGas
+          ) {
+            signedTx = FeeMarketEIP1559Transaction.fromTxData(
+              {
+                ...(transactionData as FeeMarketEIP1559TxData),
+                ...trezorResult.payload
+              },
+              { common }
+            )
+          } else {
+            signedTx = Transaction.fromTxData(
+              {
+                ...(transactionData as TxData),
+                ...trezorResult.payload
+              },
+              { common }
+            )
           }
-          v = cv.toString(16)
-
-          const signedTx = Transaction.fromTxData(
-            {
-              ...populatedTransaction,
-              v: `0x${v}`,
-              r: r,
-              s: s
-            },
-            { common }
-          )
           return signedTx ? `0x${signedTx.serialize().toString('hex')}` : ''
         }
 
