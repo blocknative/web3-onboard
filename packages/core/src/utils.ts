@@ -12,7 +12,6 @@ import type {
   ChainWithDecimalId
 } from '@web3-onboard/common'
 
-import candleIcon from './icons/candle.js'
 import ethereumIcon from './icons/ethereum.js'
 import polygonIcon from './icons/polygon.js'
 import questionIcon from './icons/question.js'
