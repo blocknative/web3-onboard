@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/common",
-  "version": "2.2.1-alpha.1",
+  "version": "2.2.1",
   "description": "Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardised spec compliant web3 providers for all supported wallets, framework agnostic modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
   "keywords": [
     "Ethereum",

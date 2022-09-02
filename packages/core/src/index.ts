@@ -167,10 +167,6 @@ function init(options: InitOptions): OnboardAPI {
         }
       }
 
-      if (!apiKey || !notifyUpdate.enabled) {
-        notifyUpdate.enabled = false
-      }
-
       updateNotify(notifyUpdate)
     } else {
       const error = validateNotify(notify as Notify)
@@ -184,18 +180,10 @@ function init(options: InitOptions): OnboardAPI {
         ...notify
       }
 
-      if (!apiKey || !notifyUpdate.enabled) {
-        notifyUpdate.enabled = false
-      }
-
       updateNotify(notifyUpdate)
     }
   } else {
     const notifyUpdate: Partial<Notify> = APP_INITIAL_STATE.notify
-
-    if (!apiKey) {
-      notifyUpdate.enabled = false
-    }
 
     updateNotify(notifyUpdate)
   }

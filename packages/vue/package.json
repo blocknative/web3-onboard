@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/vue",
-  "version": "2.2.1-alpha.1",
+  "version": "2.2.1",
   "description": "A collection of Vue Composables for integrating Web3-Onboard in to a Vue or Nuxt project. Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardised spec compliant web3 providers for all supported wallets, modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
   "keywords": [
     "Ethereum",
@@ -62,8 +62,8 @@
   "dependencies": {
     "@vueuse/core": "^8.4.2",
     "@vueuse/rxjs": "^8.2.0",
-    "@web3-onboard/common": "^2.2.1-alpha.1",
-    "@web3-onboard/core": "^2.8.0",
+    "@web3-onboard/common": "^2.2.1",
+    "@web3-onboard/core": "^2.8.1",
     "vue-demi": "^0.12.4"
   },
   "peerDependencies": {

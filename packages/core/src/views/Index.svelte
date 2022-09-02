@@ -76,8 +76,8 @@
     (!$accountCenter$.enabled ||
       ($notify$.position !== $accountCenter$.position &&
         device.type !== 'mobile') ||
-      separateMobileContainerCheck) &&
-    $wallets$.length
+      separateMobileContainerCheck ||
+      !$wallets$.length)
 
   $: displayAccountCenterSeparate =
     $accountCenter$.enabled &&

@@ -1,4 +1,10 @@
-import type { Chain, WalletInit, EIP1193Provider } from '@web3-onboard/common'
+import type {
+  Chain,
+  WalletInit,
+  EIP1193Provider,
+  Platform
+} from '@web3-onboard/common'
+
 import type { providers } from 'ethers'
 
 import type {
@@ -51,15 +57,24 @@ const generateAccounts = async (
 }
 
 function dcent({
-  customNetwork
+  customNetwork,
+  filter
 }: {
   customNetwork?: CustomNetwork
+  filter?: Platform[]
 } = {}): WalletInit {
   const getIcon = async () => (await import('./icon.js')).default
-  return helpers => {
-    const { device } = helpers
+
+  return ({ device }) => {
+    const filtered =
+      Array.isArray(filter) &&
+      (filter.includes(device.type) || filter.includes(device.os.name))
+
+    if (filtered) return null
+
     const isMobile = device.type === 'mobile'
     let accounts: Account[] | undefined
+
     return {
       label: "D'CENT",
       getIcon,
@@ -108,7 +123,9 @@ function dcent({
           currentChain =
             chains.find(({ id }: Chain) => id === chainId) || currentChain
 
-          const provider = new StaticJsonRpcProvider(currentChain.rpcUrl)
+          const provider = new StaticJsonRpcProvider(
+            currentChain.rpcUrl
+          ) as providers.StaticJsonRpcProvider
 
           return generateAccounts(dcentKeyring, provider)
         }
