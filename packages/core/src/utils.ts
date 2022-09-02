@@ -166,10 +166,6 @@ export const chainStyles: Record<string, ChainStyle> = {
     icon: binanceIcon,
     color: '#F3BA2F'
   },
-  '0x216': {
-    icon: candleIcon,
-    color: '#8247E5'
-  },
   '0x89': {
     icon: polygonIcon,
     color: '#8247E5'
