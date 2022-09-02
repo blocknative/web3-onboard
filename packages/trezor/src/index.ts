@@ -14,6 +14,7 @@ import { Buffer } from 'buffer'
 import type {
   Chain,
   CustomNetwork,
+  Platform,
   TransactionObject,
   WalletInit
 } from '@web3-onboard/common'
@@ -22,6 +23,7 @@ interface TrezorOptions {
   email: string
   appUrl: string
   customNetwork?: CustomNetwork
+  filter?: Platform[]
 }
 
 const TREZOR_DEFAULT_PATH = "m/44'/60'/0'/0"
@@ -113,8 +115,24 @@ const getAddresses = async (
 
 function trezor(options: TrezorOptions): WalletInit {
   const getIcon = async () => (await import('./icon.js')).default
-  return () => {
+
+  return ({ device }) => {
+    const { email, appUrl, customNetwork, filter } = options || {}
+
+    if (!email || !appUrl) {
+      throw new Error(
+        'Email and AppUrl required in Trezor options for Trezor Wallet Connection'
+      )
+    }
+
+    const filtered =
+      Array.isArray(filter) &&
+      (filter.includes(device.type) || filter.includes(device.os.name))
+
+    if (filtered) return null
+
     let accounts: Account[] | undefined
+
     return {
       label: 'Trezor',
       getIcon,
@@ -142,14 +160,6 @@ function trezor(options: TrezorOptions): WalletInit {
         const { StaticJsonRpcProvider } = await import(
           '@ethersproject/providers'
         )
-
-        if (!options || !options.email || !options.appUrl) {
-          throw new Error(
-            'Email and AppUrl required in Trezor options for Trezor Wallet Connection'
-          )
-        }
-
-        const { email, appUrl, customNetwork } = options
 
         // @ts-ignore
         const TrezorConnect = Trezor.default || Trezor

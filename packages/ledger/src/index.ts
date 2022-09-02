@@ -7,7 +7,8 @@ import type Eth from '@ledgerhq/hw-app-eth'
 import type {
   Chain,
   WalletInit,
-  GetInterfaceHelpers
+  GetInterfaceHelpers,
+  Platform
 } from '@web3-onboard/common'
 
 import type {
@@ -108,13 +109,23 @@ const getAddresses = async (
 }
 
 function ledger({
-  customNetwork
+  customNetwork,
+  filter
 }: {
   customNetwork?: CustomNetwork
+  filter?: Platform[]
 } = {}): WalletInit {
   const getIcon = async () => (await import('./icon.js')).default
-  return () => {
+
+  return ({ device }) => {
     let accounts: Account[] | undefined
+
+    const filtered =
+      Array.isArray(filter) &&
+      (filter.includes(device.type) || filter.includes(device.os.name))
+
+    if (filtered) return null
+
     return {
       label: 'Ledger',
       getIcon,

@@ -1,4 +1,4 @@
-import type { Chain, WalletInit } from '@web3-onboard/common'
+import type { Chain, Platform, WalletInit } from '@web3-onboard/common'
 import type { StaticJsonRpcProvider } from '@ethersproject/providers'
 import type { ETHAccountPath } from '@shapeshiftoss/hdwallet-core'
 import type { KeepKeyHDWallet } from '@shapeshiftoss/hdwallet-keepkey'
@@ -36,11 +36,17 @@ const errorMessages = {
 
 type ErrorCode = 'busy' | 'pairing'
 
-function keepkey(): WalletInit {
+function keepkey({ filter }: { filter?: Platform[] } = {}): WalletInit {
   const getIcon = async () => (await import('./icon.js')).default
 
-  return () => {
+  return ({ device }) => {
     let accounts: Account[] | undefined
+
+    const filtered =
+      Array.isArray(filter) &&
+      (filter.includes(device.type) || filter.includes(device.os.name))
+
+    if (filtered) return null
 
     return {
       label: 'KeepKey',
