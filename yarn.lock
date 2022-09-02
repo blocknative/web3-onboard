@@ -3003,21 +3003,6 @@
     joi "^17.4.2"
     rxjs "^7.5.2"
 
-"@web3-onboard/trezor@^2.3.0-alpha.2":
-  version "2.3.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/trezor/-/trezor-2.3.0-alpha.2.tgz#70deea9a9dbe4ed5f9ba386298349260222d209e"
-  integrity sha512-O+ijJ49QKDrjWhGbTY1gVjk/pORvy3E4KTMd/KyCsoN3Ea+GXbLVhxDQtB2HI97DxZ/UVfAlagXdofKOkjU9yw==
-  dependencies:
-    "@ethereumjs/tx" "^3.4.0"
-    "@ethersproject/providers" "^5.5.0"
-    "@web3-onboard/common" "^2.2.1"
-    "@web3-onboard/hw-common" "^2.0.1"
-    buffer "^6.0.3"
-    eth-crypto "^2.1.0"
-    ethereumjs-util "^7.1.3"
-    hdkey "^2.0.1"
-    trezor-connect "^8.2.11"
-
 "@web3auth/base-plugin@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@web3auth/base-plugin/-/base-plugin-1.0.1.tgz#1e2a87acf745299fdff6f92e6c46ee9bc38aa670"
@@ -4640,7 +4625,7 @@ cross-fetch@^2.1.0:
     node-fetch "^2.6.7"
     whatwg-fetch "^2.0.4"
 
-cross-fetch@^3.1.4, cross-fetch@^3.1.5:
+cross-fetch@^3.1.5:
   version "3.1.5"
   resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.1.5.tgz#e1389f44d9e7ba767907f7af8454787952ab534f"
   integrity sha512-lvb1SBsI0Z7GDwmuid+mU3kWVBwTVUbe7S0H52yaaAdQOXq2YktTCZdlAcNKFzE6QtRz0snpw9bNiPeOIkkQvw==
@@ -10326,15 +10311,6 @@ trezor-connect@^8.2.11:
   dependencies:
     "@babel/runtime" "^7.15.4"
     cross-fetch "^3.1.5"
-    events "^3.3.0"
-
-trezor-connect@^8.2.6:
-  version "8.2.6"
-  resolved "https://registry.yarnpkg.com/trezor-connect/-/trezor-connect-8.2.6.tgz#2731f9af2837116307672aeba747cf29c02b6229"
-  integrity sha512-ioa/NkwtFHY94VI95q4JPdoDU3HaQFFIqdS47751zHa5q8qVBzwf5vgUrNS+q3vJ2ZNE7mTk/r4FjURtDB1xjA==
-  dependencies:
-    "@babel/runtime" "^7.15.4"
-    cross-fetch "^3.1.4"
     events "^3.3.0"
 
 ts-custom-error@^3.2.0:
