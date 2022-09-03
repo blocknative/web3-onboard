@@ -84,7 +84,8 @@ For full documentation, check out the README.md for each package:
 **Injected Wallets**
 
 - [Injected](packages/injected/README.md)
-- [Candle] (packages/injected/README.md)
+- [Candle](packages/injected/README.md)
+
 **SDK Wallets**
 
 - [Coinbase](packages/coinbase/README.md)
