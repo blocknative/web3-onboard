@@ -2974,35 +2974,6 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.0"
 
-"@web3-onboard/common@^2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/common/-/common-2.2.1.tgz#1143e2237d44c80df2d4e34d5959197ed29c0153"
-  integrity sha512-714kgZoTiZ7I1vWE8Ah6jzpd3nVqOitioHvYy/gLoOECSFNzOqcHQMystOn1sLpl05j/uOkPRgUwWHYmPI60Og==
-  dependencies:
-    bignumber.js "^9.1.0"
-    ethers "5.5.4"
-    joi "^17.4.2"
-
-"@web3-onboard/gas@^2.0.0":
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/gas/-/gas-2.1.1.tgz#a94c9cdb2a3d8650fcb64d15633c85353ac2ec7d"
-  integrity sha512-DdxRpV6+DGKyaIpBSW+Btt+N+bYpPWo5RkJGXxzMgXfCnXDL+YytOhsNxQCrucfzjIZWvWzCsklgOfSEhFtyKw==
-  dependencies:
-    "@web3-onboard/common" "^2.2.1"
-    joi "^17.4.2"
-    rxjs "^7.5.2"
-
-"@web3-onboard/hw-common@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/hw-common/-/hw-common-2.0.1.tgz#23bb18c73b34ae64b7c591314ff1ace95c297b09"
-  integrity sha512-+ZR5m5pJLt+gnSvpe2m8DoNzJWw0ccxoDThdX1o363GwIHkttiCID2gCrejUxjJjabneluChx/cdR7iuGh756A==
-  dependencies:
-    "@ethereumjs/common" "2.6.2"
-    "@web3-onboard/common" "^2.2.1"
-    ethers "5.5.4"
-    joi "^17.4.2"
-    rxjs "^7.5.2"
-
 "@web3auth/base-plugin@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@web3auth/base-plugin/-/base-plugin-1.0.1.tgz#1e2a87acf745299fdff6f92e6c46ee9bc38aa670"
