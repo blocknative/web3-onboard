@@ -17,6 +17,7 @@ export enum ProviderIdentityFlag {
   Binance = 'bbcSignTx',
   Bitpie = 'isBitpie',
   BlockWallet = 'isBlockWallet',
+  Candle = 'isCandleWallet',
   Coinbase = 'isToshi',
   CoinbaseExtension = 'isCoinbaseWallet',
   Detected = 'request',
@@ -55,6 +56,7 @@ export enum ProviderLabel {
   Bitpie = 'Bitpie',
   BlockWallet = 'BlockWallet',
   Brave = 'Brave Wallet',
+  Candle = 'Candle Wallet',
   Coinbase = 'Coinbase Wallet',
   Dcent = `D'CENT`,
   Detected = 'Detected Wallet',
@@ -96,6 +98,7 @@ export interface BinanceProvider extends EIP1193Provider {
 }
 
 export enum InjectedNameSpace {
+  Candle = 'Candle',
   Ethereum = 'ethereum',
   Binance = 'BinanceChain',
   Tally = 'tally',
@@ -107,6 +110,7 @@ export enum InjectedNameSpace {
 }
 
 export interface CustomWindow extends Window {
+  Candle: InjectedProvider
   BinanceChain: BinanceProvider
   ethereum: InjectedProvider
   tally: InjectedProvider

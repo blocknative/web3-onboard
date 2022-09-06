@@ -43,6 +43,16 @@ const metamask: InjectedWalletModule = {
   platforms: ['all']
 }
 
+const candlewallet: InjectedWalletModule = {
+  label: ProviderLabel.candlewallet,
+  injectedNamespace: InjectedNameSpace.Candle,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.candlewallet],
+  getIcon: async () => (await import('./icons/candleIcon.js')).default,
+  getInterface: getInjectedInterface(ProviderIdentityFlag.candlewallet),
+  platforms: ['all']
+}
+
 const exodus: InjectedWalletModule = {
   label: ProviderLabel.Exodus,
   injectedNamespace: InjectedNameSpace.Ethereum,
@@ -535,6 +545,7 @@ const sequence: InjectedWalletModule = {
 const wallets = [
   exodus,
   metamask,
+  candlewallet,
   binance,
   coinbase,
   detected,
