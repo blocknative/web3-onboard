@@ -115,7 +115,7 @@ export interface CustomWindow extends Window {
   xfi: {
     ethereum: InjectedProvider
   }
-  gamestop: InjectedProvider,
+  gamestop: InjectedProvider
   bitkeep: {
     ethereum: InjectedProvider
   }

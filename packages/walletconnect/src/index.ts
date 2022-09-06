@@ -16,8 +16,11 @@ interface WalletConnectOptions {
 }
 
 function walletConnect(options?: WalletConnectOptions): WalletInit {
-  const { bridge = 'https://bridge.walletconnect.org', qrcodeModalOptions , connectFirstChainId} =
-    options || {}
+  const {
+    bridge = 'https://bridge.walletconnect.org',
+    qrcodeModalOptions,
+    connectFirstChainId
+  } = options || {}
 
   return () => {
     return {
@@ -130,19 +133,25 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                   // Check if connection is already established
                   if (!this.connector.connected) {
                     // create new session
-                    this.connector.createSession(connectFirstChainId ? {chainId: parseInt(chains[0].id, 16)} : undefined).then(() => {
-                      QRCodeModal.open(
-                        this.connector.uri,
-                        () =>
-                          reject(
-                            new ProviderRpcError({
-                              code: 4001,
-                              message: 'User rejected the request.'
-                            })
-                          ),
-                        qrcodeModalOptions
+                    this.connector
+                      .createSession(
+                        connectFirstChainId
+                          ? { chainId: parseInt(chains[0].id, 16) }
+                          : undefined
                       )
-                    })
+                      .then(() => {
+                        QRCodeModal.open(
+                          this.connector.uri,
+                          () =>
+                            reject(
+                              new ProviderRpcError({
+                                code: 4001,
+                                message: 'User rejected the request.'
+                              })
+                            ),
+                          qrcodeModalOptions
+                        )
+                      })
                   } else {
                     const { accounts, chainId } = this.connector.session
                     this.emit('chainChanged', `0x${chainId.toString(16)}`)

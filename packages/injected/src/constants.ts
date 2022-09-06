@@ -13,5 +13,5 @@ export const WALLET_NAMES: { [key: string]: string } = {
   meetone: 'MeetOne',
   frame: 'Frame',
   bitkeep: 'BitKeep',
-  sequence: 'Sequence',
+  sequence: 'Sequence'
 }
