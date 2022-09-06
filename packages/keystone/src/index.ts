@@ -1,4 +1,10 @@
-import type { Chain, CustomNetwork, WalletInit } from '@web3-onboard/common'
+import type {
+  Chain,
+  CustomNetwork,
+  Platform,
+  WalletInit
+} from '@web3-onboard/common'
+
 import type { Account, ScanAccountsOptions } from '@web3-onboard/hw-common'
 import type { StaticJsonRpcProvider } from '@ethersproject/providers'
 
@@ -58,13 +64,23 @@ const generateAccounts = async (
 }
 
 function keystone({
-  customNetwork
+  customNetwork,
+  filter
 }: {
   customNetwork?: CustomNetwork
+  filter?: Platform[]
 } = {}): WalletInit {
   const getIcon = async () => (await import('./icon.js')).default
-  return () => {
+
+  return ({ device }) => {
     let accounts: Account[] | undefined
+
+    const filtered =
+      Array.isArray(filter) &&
+      (filter.includes(device.type) || filter.includes(device.os.name))
+
+    if (filtered) return null
+
     return {
       label: 'Keystone',
       getIcon,
