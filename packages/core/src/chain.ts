@@ -67,7 +67,10 @@ async function setChain(options: {
       map(() => false)
     )
 
-    if (code === ProviderRpcErrorCode.CHAIN_NOT_ADDED) {
+    if (
+      code === ProviderRpcErrorCode.CHAIN_NOT_ADDED ||
+      code === ProviderRpcErrorCode.UNRECOGNIZED_CHAIN_ID
+    ) {
       // chain has not been added to wallet
       try {
         await addNewChain(wallet.provider, chain)
