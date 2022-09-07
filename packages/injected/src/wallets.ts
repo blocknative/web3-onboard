@@ -30,16 +30,16 @@ function getInjectedInterface(
     provider: (window.ethereum.providers &&
     Array.isArray(window.ethereum.providers)
       ? getInterfaceFromProvidersArray(
-          checkOtherProviderFlags || false,
-          identity
+        identity,
+        checkOtherProviderFlags
         )
       : window.ethereum) as EIP1193Provider
   })
 }
 
 function getInterfaceFromProvidersArray(
-  checkOtherProviderFlags: boolean,
-  identity: string
+  identity: string,
+  checkOtherProviderFlags?: boolean,
 ) {
   return window.ethereum.providers.find(provider => {
     if (!checkOtherProviderFlags) {
