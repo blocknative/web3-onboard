@@ -303,6 +303,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/sequence
     steps:
       - node-build-steps
+  build-tallyho:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/tallyho
+    steps:
+      - node-build-steps
 
   # Build staging/Alpha releases
   build-staging-core:
@@ -441,6 +447,12 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/sequence
+    steps:
+      - node-staging-build-steps
+  build-staging-tallyho:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/tallyho
     steps:
       - node-staging-build-steps
 
@@ -584,4 +596,10 @@ workflows:
       - build-sequence:
           <<: *deploy_production_filters
       - build-staging-sequence:
+          <<: *deploy_staging_filters
+  tallyho:
+    jobs:
+      - build-tallyho:
+          <<: *deploy_production_filters
+      - build-staging-tallyho:
           <<: *deploy_staging_filters

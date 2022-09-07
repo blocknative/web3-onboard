@@ -94,8 +94,8 @@ const binance: InjectedWalletModule = {
 
     const provider = createEIP1193Provider(window.BinanceChain, {
       eth_chainId: ({ baseRequest }) =>
-        baseRequest({ method: 'eth_chainId' }).then(id =>
-          `0x${parseInt(id as string).toString(16)}`
+        baseRequest({ method: 'eth_chainId' }).then(
+          id => `0x${parseInt(id as string).toString(16)}`
         ),
       // Unsupported method -- will throw error
       eth_selectAccounts: UNSUPPORTED_METHOD,
@@ -512,10 +512,10 @@ const bitkeep: InjectedWalletModule = {
   label: ProviderLabel.BitKeep,
   injectedNamespace: InjectedNameSpace.BitKeep,
   checkProviderIdentity: ({ provider }) =>
-    !!provider && !!provider["ethereum"][ProviderIdentityFlag.BitKeep],
+    !!provider && !!provider['ethereum'][ProviderIdentityFlag.BitKeep],
   getIcon: async () => (await import('./icons/bitkeep.js')).default,
   getInterface: async () => ({
-    provider: window.bitkeep && window.bitkeep.ethereum,
+    provider: window.bitkeep && window.bitkeep.ethereum
   }),
   platforms: ['all']
 }

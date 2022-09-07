@@ -77,7 +77,7 @@ export enum ProviderLabel {
   XDEFI = 'XDEFI Wallet',
   OneInch = '1inch Wallet',
   Tokenary = 'Tokenary Wallet',
-  Tally = 'Tally Wallet',
+  Tally = 'Tally Ho Wallet',
   Rabby = 'Rabby',
   MathWallet = 'MathWallet',
   GameStop = 'GameStop Wallet',
@@ -115,7 +115,7 @@ export interface CustomWindow extends Window {
   xfi: {
     ethereum: InjectedProvider
   }
-  gamestop: InjectedProvider,
+  gamestop: InjectedProvider
   bitkeep: {
     ethereum: InjectedProvider
   }
