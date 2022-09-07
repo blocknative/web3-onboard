@@ -29,16 +29,25 @@ function getInjectedInterface(
   return async () => ({
     provider: (window.ethereum.providers &&
     Array.isArray(window.ethereum.providers)
-      ? window.ethereum.providers.find(provider => {
-          if (!checkOtherProviderFlags) {
-            return !!provider[identity]
-          }
-          return (
-            !!provider[identity] &&
-            !checkOtherProviderIdentities(identity, provider)
-          )
-        })
+      ? getInterfaceFromProvidersArray(
+          checkOtherProviderFlags || false,
+          identity
+        )
       : window.ethereum) as EIP1193Provider
+  })
+}
+
+function getInterfaceFromProvidersArray(
+  checkOtherProviderFlags: boolean,
+  identity: string
+) {
+  return window.ethereum.providers.find(provider => {
+    if (!checkOtherProviderFlags) {
+      return !!provider[identity]
+    }
+    return (
+      !!provider[identity] && !checkOtherProviderIdentities(identity, provider)
+    )
   })
 }
 
