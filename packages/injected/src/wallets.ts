@@ -23,14 +23,30 @@ declare const window: CustomWindow
 const UNSUPPORTED_METHOD = null
 
 function getInjectedInterface(
-  identity: string
+  identity: string,
+  checkOtherProviderFlags?: boolean
 ): () => Promise<{ provider: EIP1193Provider }> {
   return async () => ({
     provider: (window.ethereum.providers &&
     Array.isArray(window.ethereum.providers)
-      ? window.ethereum.providers.find(provider => !!provider[identity])
+      ? window.ethereum.providers.find(provider => {
+          if (!checkOtherProviderFlags) {
+            return !!provider[identity]
+          }
+          return (
+            !!provider[identity] &&
+            !checkOtherProviderIdentities(identity, provider)
+          )
+        })
       : window.ethereum) as EIP1193Provider
   })
+}
+
+function checkOtherProviderIdentities(identity: string, provider: any) {
+  const otherProviderFlags = Object.values(ProviderIdentityFlag).filter(
+    id => id !== identity && id !== ProviderIdentityFlag.Detected
+  )
+  return otherProviderFlags.some(id => !!provider[id])
 }
 
 const metamask: InjectedWalletModule = {
@@ -39,7 +55,7 @@ const metamask: InjectedWalletModule = {
   checkProviderIdentity: ({ provider }) =>
     !!provider && !!provider[ProviderIdentityFlag.MetaMask],
   getIcon: async () => (await import('./icons/metamask.js')).default,
-  getInterface: getInjectedInterface(ProviderIdentityFlag.MetaMask),
+  getInterface: getInjectedInterface(ProviderIdentityFlag.MetaMask, true),
   platforms: ['all']
 }
 
