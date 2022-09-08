@@ -41,12 +41,12 @@ function getInterfaceFromProvidersArray(
   return window.ethereum.providers.find(provider => {
     return checkOtherProviderFlags
       ? !!provider[identity] &&
-          !checkOtherProviderIdentities(identity, provider)
+          !otherProviderFlagsExist(identity, provider)
       : !!provider[identity]
   })
 }
 
-function checkOtherProviderIdentities(identity: string, provider: any) {
+function otherProviderFlagsExist(identity: string, provider: any): boolean {
   const otherProviderFlags = Object.values(ProviderIdentityFlag).filter(
     id => id !== identity && id !== ProviderIdentityFlag.Detected
   )
@@ -59,7 +59,7 @@ const metamask: InjectedWalletModule = {
   checkProviderIdentity: ({ provider }) =>
     !!provider &&
     !!provider[ProviderIdentityFlag.MetaMask] &&
-    !checkOtherProviderIdentities(ProviderIdentityFlag.MetaMask, provider),
+    !otherProviderFlagsExist(ProviderIdentityFlag.MetaMask, provider),
   getIcon: async () => (await import('./icons/metamask.js')).default,
   getInterface: getInjectedInterface(ProviderIdentityFlag.MetaMask, true),
   platforms: ['all']
