@@ -57,7 +57,9 @@ const metamask: InjectedWalletModule = {
   label: ProviderLabel.MetaMask,
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
-    !!provider && !!provider[ProviderIdentityFlag.MetaMask],
+    !!provider &&
+    !!provider[ProviderIdentityFlag.MetaMask] &&
+    !checkOtherProviderIdentities(ProviderIdentityFlag.MetaMask, provider),
   getIcon: async () => (await import('./icons/metamask.js')).default,
   getInterface: getInjectedInterface(ProviderIdentityFlag.MetaMask, true),
   platforms: ['all']
