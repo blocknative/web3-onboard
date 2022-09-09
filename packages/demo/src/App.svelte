@@ -106,6 +106,7 @@
 
   const onboard = Onboard({
     wallets: [
+      injected,
       web3auth,
       ledger,
       trezor,
@@ -113,7 +114,6 @@
       keepkey,
       keystone,
       coinbaseWallet,
-      injected,
       magic,
       fortmatic,
       portis,
