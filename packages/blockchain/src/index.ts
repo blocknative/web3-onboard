@@ -18,7 +18,7 @@ function blockchainWalletConnect(options?: WalletConnectOptions): WalletInit {
 
   return () => {
     return {
-      label: 'Blockchain.com Wallet',
+      label: 'Blockchain.com',
       getIcon: async () => (await import('./icon.js')).default,
       getInterface: async ({ chains, EventEmitter }) => {
         const { StaticJsonRpcProvider } = await import(
