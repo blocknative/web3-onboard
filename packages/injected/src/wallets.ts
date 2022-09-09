@@ -532,6 +532,17 @@ const sequence: InjectedWalletModule = {
   platforms: ['all']
 }
 
+const core: InjectedWalletModule = {
+  label: ProviderLabel.Core,
+  injectedNamespace: InjectedNameSpace.Avalanche,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Core],
+  getIcon: async () => (await import('./icons/core.js')).default,
+  getInterface: getInjectedInterface(ProviderIdentityFlag.Core),
+  // Core wallet is only tested in chrome or chromium browser
+  platforms: ['desktop', 'Chrome', 'Chromium', 'Microsoft Edge']
+}
+
 const wallets = [
   exodus,
   metamask,
@@ -564,7 +575,8 @@ const wallets = [
   mathwallet,
   gamestop,
   bitkeep,
-  sequence
+  sequence,
+  core
 ]
 
 export default wallets
