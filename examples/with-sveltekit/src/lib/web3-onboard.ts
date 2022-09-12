@@ -8,7 +8,7 @@ const walletConnect = walletConnectModule()
 
 const wallets = [injected, walletConnect]
 
-const INFURA_ID = 'b4ec5124517247f3900246e6b9f922fc'
+const INFURA_ID = ''
 
 const chains = [
   {
