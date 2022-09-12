@@ -33,6 +33,10 @@
       --onboard-wallet-button-background-hover,
       var(--onboard-primary-100, var(--primary-100))
     );
+    color: var(
+      --onboard-wallet-button-color-hover,
+      var(--onboard-gray-700, var(--gray-700))
+    );
   }
 
   button.connected {
@@ -52,6 +56,10 @@
       var(--border-radius-1)
     );
     box-shadow: var(--onboard-wallet-button-box-shadow, var(--box-shadow-0));
+  }
+  
+  button.wallet-button-styling:hover {
+    box-shadow: var(--onboard-wallet-button-box-shadow-hover, var(--box-shadow-0));
   }
 </style>
 
