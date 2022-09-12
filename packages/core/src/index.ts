@@ -328,7 +328,7 @@ function mountApp() {
 
   if (!containerElement) {
     throw new Error(
-      `Element with query ${state.get().accountCenter} does not exist.`
+      `Element with query ${containerElementQuery} does not exist.`
     )
   }
 

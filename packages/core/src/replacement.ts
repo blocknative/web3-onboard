@@ -12,7 +12,8 @@ const WALLETS_SUPPORT_REPLACEMENT: WalletState['label'][] = [
   'Ledger',
   'Trezor',
   'Keystone',
-  'Keepkey'
+  'KeepKey',
+  `D'CENT`
 ]
 
 export const actionableEventCode = (eventCode: string): boolean =>

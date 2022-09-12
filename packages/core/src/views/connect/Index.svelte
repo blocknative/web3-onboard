@@ -115,7 +115,7 @@
       }
 
       connectingErrorMessage = ''
-
+      scrollToTop()
       // change step on next event loop
       setTimeout(() => setStep('connectingWallet'), 1)
     } catch (error) {
@@ -196,8 +196,10 @@
       trackWallet(provider, label)
       updateSelectedWallet(update)
       setStep('connectedWallet')
+      scrollToTop()
     } catch (error) {
       const { code } = error as { code: number; message: string }
+      scrollToTop()
 
       // user rejected account access
       if (code === ProviderRpcErrorCode.ACCOUNT_ACCESS_REJECTED) {
