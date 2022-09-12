@@ -16,6 +16,7 @@
   import gas from '@web3-onboard/gas'
   import dcentModule from '@web3-onboard/dcent'
   import sequenceModule from '@web3-onboard/sequence'
+  import tallyHoModule from '@web3-onboard/tallyho'
   import {
     recoverAddress,
     arrayify,
@@ -84,6 +85,7 @@
   const keepkey = keepkeyModule()
   const keystone = keystoneModule()
   const gnosis = gnosisModule()
+  const tallyho = tallyHoModule()
 
   const trezorOptions = {
     email: 'test@test.com',
@@ -104,6 +106,7 @@
 
   const onboard = Onboard({
     wallets: [
+      injected,
       web3auth,
       ledger,
       trezor,
@@ -111,14 +114,14 @@
       keepkey,
       keystone,
       coinbaseWallet,
-      injected,
       magic,
       fortmatic,
       portis,
       torus,
       gnosis,
       dcent,
-      sequence
+      sequence,
+      tallyho
     ],
     gas,
     chains: [

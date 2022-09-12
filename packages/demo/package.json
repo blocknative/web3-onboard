@@ -28,7 +28,7 @@
     "@web3-onboard/fortmatic": "^2.0.13",
     "@web3-onboard/gas": "^2.1.2",
     "@web3-onboard/gnosis": "^2.1.2",
-    "@web3-onboard/injected-wallets": "^2.2.1",
+    "@web3-onboard/injected-wallets": "^2.2.2",
     "@web3-onboard/keepkey": "^2.3.0",
     "@web3-onboard/keystone": "^2.3.0",
     "@web3-onboard/ledger": "^2.3.0",
@@ -37,6 +37,7 @@
     "@web3-onboard/sequence": "^2.0.1",
     "@web3-onboard/torus": "^2.1.2",
     "@web3-onboard/trezor": "^2.3.0",
+    "@web3-onboard/tallyho": "^2.0.0",
     "@web3-onboard/walletconnect": "^2.1.2",
     "@web3-onboard/web3auth": "^2.1.2",
     "vconsole": "^3.9.5"
