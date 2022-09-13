@@ -90,8 +90,10 @@
     font-weight: 400;
     line-height: var(--onboard-font-line-height-2, var(--font-line-height-2));
     color: var(--onboard-gray-400, var(--gray-400));
+    overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    width: 7.25rem;
   }
 
   .network {
@@ -212,6 +214,7 @@
             {chains}
             colorVar="--account-center-minimized-network-selector-color"
             selectIcon={caretIcon}
+            parentCSSId="minimized_ac"
           />
         </div>
       </div>

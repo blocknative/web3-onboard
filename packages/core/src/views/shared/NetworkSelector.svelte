@@ -11,6 +11,7 @@
   export let colorVar: string
   export let chains: Chain[]
   export let bold = false
+  export let parentCSSId = ''
 
   const switching$ = new BehaviorSubject<boolean>(false)
   let selectElement: HTMLSelectElement
@@ -73,8 +74,6 @@
     appearance: none;
     font-size: var(--onboard-font-size-7, var(--font-size-7));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
-    min-width: 80px;
-    max-width: 80px;
     transition: width 250ms ease-in-out;
     background-repeat: no-repeat, repeat;
     background-position: right 0px top 0px, 0 0;
@@ -83,6 +82,15 @@
     padding: 0 14px 0 0;
     white-space: nowrap;
     text-overflow: ellipsis;
+  }
+
+  select.minimized_ac {
+    min-width: 80px;
+    max-width: 80px;
+  }
+
+  select.maximized_ac {
+    width: auto !important;
   }
 
   select:focus {
@@ -101,7 +109,7 @@
 {#if wallet}
   {#if $switching$}
     <span
-      class="switching-placeholder"
+      class={`switching-placeholder ${parentCSSId}`}
       style={`
         color: var(${colorVar}, 
         var(--account-center-network-selector-color, var (--gray-500))); 
@@ -109,7 +117,7 @@
     >
   {:else}
     <select
-      class="flex justify-center items-center pointer"
+      class={`flex justify-center items-center pointer ${parentCSSId}`}
       bind:this={selectElement}
       value={wallet.chains[0].id}
       on:change={handleSelect}

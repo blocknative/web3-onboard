@@ -97,11 +97,15 @@
     margin-left: 0.5rem;
     color: var(--onboard-gray-300, var(--gray-300));
     transition: color 150ms ease-in-out, background-color 150ms ease-in-out;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 7.25rem;
   }
 
   .elipsis-container {
     padding: 0.25rem;
-    margin-left: 0.5rem;
+    margin-left: 0.25rem;
     border-radius: 24px;
     transition: color 150ms ease-in-out, background-color 150ms ease-in-out;
     background-color: transparent;
