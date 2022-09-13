@@ -332,7 +332,6 @@
       --onboard-connect-header-color,
       var(--onboard-black, var(--black))
     );
-    border-radius: 0 24px 0 0;
   }
 
   .header-heading {
