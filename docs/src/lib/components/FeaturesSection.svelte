@@ -8,9 +8,9 @@
 
   import FrameworksGraphic from './svg/frameworks-group.svelte'
   import NetworksGraphic from './svg/networks-group.svelte'
-  import WalletsGraphic from './svg/wallets-group.svelte'
   import NotifyGraphic from './svg/notify-group.svelte'
   import AccountCenterGraphic from './svg/account-center-group.svelte'
+  import WalletsGraphic from './svg/wallet-row.svg'
 
   import InstallCode from './install-code.md'
 </script>
@@ -81,7 +81,7 @@
     </div>
   </Container>
   <ScrollContainer>
-    <WalletsGraphic />
+    <img src={WalletsGraphic} alt="onboard connect wallets" style="margin: 0 auto; max-width: none;">
   </ScrollContainer>
   <Container>
     <div class="flexbox" style:padding={'4rem 1rem'}>
