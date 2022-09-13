@@ -46,7 +46,8 @@ export enum ProviderIdentityFlag {
   GameStop = 'isGamestop',
   BitKeep = 'isBitKeep',
   Sequence = 'isSequence',
-  Core = 'isAvalanche'
+  Core = 'isAvalanche',
+  Opera = 'isOpera'
 }
 
 export enum ProviderLabel {
