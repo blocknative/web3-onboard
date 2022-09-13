@@ -1,11 +1,10 @@
 <script>
-  import heroBg from './svg/hero-bg.svg'
-  import heroImg from './svg/hero-img.svg'
-
+  import Button from './base/Button.svelte'
+  import Flexbox from './base/Flexbox.svelte'
   import CodeBlock from './base/CodeBlock.svelte'
 
-  import Flexbox from './base/Flexbox.svelte'
-  import Button from './base/Button.svelte'
+  import heroBg from './svg/hero-bg.svg'
+  import heroImg from './svg/hero-img.svg'
 </script>
 
 <section style="background-image: url({heroBg});">
@@ -26,20 +25,17 @@
       <Button href="/docs" label={'View Docs'} />
     </Flexbox>
   </div>
-
-  <img src={heroImg} alt="" />
+  <img src={heroImg} alt="onboard connect wallet" />
 </section>
 
 <style>
   section {
     position: relative;
     max-width: 100%;
-    /* height: auto; */
-    /* width: 1440px; */
-    min-height: 1140px;
-    padding: 2rem;
-    padding-top: 80px;
-
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    /* justify-content: center; */
     background: radial-gradient(
         50% 50% at 50% 50%,
         rgba(0, 216, 255, 0.02) 0%,
@@ -48,20 +44,15 @@
       #060d20;
     background-size: cover;
     background-repeat: no-repeat;
-
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    /* justify-content: center; */
   }
 
   img {
-    position: absolute;
-    bottom: 0;
+    position: relative;
     display: block;
     margin: 0 auto;
+    padding: 0 1rem;
     width: 100%;
-    max-width: 1243px;
+    max-width: 1240px;
   }
 
   .textblock {
@@ -72,7 +63,7 @@
 
     width: 100%;
     max-width: 760px;
-    margin: 32px;
+    padding: 5rem 2rem 4rem;
   }
 
   .textblock > div {
