@@ -877,9 +877,11 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-wallet-button-background
   --onboard-wallet-button-background-hover
   --onboard-wallet-button-color
+  --onboard-wallet-button-color-hover
   --onboard-wallet-button-border-color
   --onboard-wallet-button-border-radius
   --onboard-wallet-button-box-shadow
+  --onboard-wallet-button-box-shadow-hover
   --onboard-wallet-app-icon-border-color
 
   /* CUSTOMIZE THE SHARED MODAL */

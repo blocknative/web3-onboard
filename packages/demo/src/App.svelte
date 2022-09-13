@@ -527,6 +527,8 @@
     --onboard-link-color: var(--accent-color);
     --onboard-wallet-button-background: var(--background-color);
     --onboard-wallet-button-background-hover: var(--accent-color-hover);
+    --onboard-wallet-button-color-hover: var(--text-color);
+    --onboard-wallet-button-color: var(--text-color);
     --onboard-wallet-button-border-color: var(--border-color);
     --onboard-wallet-app-icon-border-color: var(--border-color);
 
