@@ -1,3 +1,20 @@
+<style>
+  svg {
+    height: 9rem;
+    width: auto;
+  }
+  @media screen and (min-width: 640px) {
+    svg {
+      height: 20rem;
+    }
+  }
+  @media screen and (min-width: 1024px) {
+    svg {
+      height: auto;
+    }
+  }
+</style>
+
 <svg width="4768" height="440" viewBox="0 0 4768 440" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g filter="url(#filter0_d_53_101842)">
 <g clip-path="url(#clip0_53_101842)">
