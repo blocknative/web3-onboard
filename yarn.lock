@@ -2953,10 +2953,10 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.0"
 
-"@web3-onboard/core@^2.8.2":
-  version "2.8.2"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.8.2.tgz#70d1730384a3e028bbe07769086361db5c631d78"
-  integrity sha512-AE2xQVKsmjtvW7lI7xFFdfAtoLxmZRa9qfCv5MtHRDY9Ojqkj06dLgteJmB4FBFZnh79iXoKbIj7N+vRpvjHIw==
+"@web3-onboard/core@^2.8.3":
+  version "2.8.3"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.8.3.tgz#e41c3e11b5a38d7b5e2ee15d4dc2cf49307d38c5"
+  integrity sha512-3CKc33dKqC9jurbf0+7mfvddBJgvCU4n9ADu68XlmCws3xP8Gq1nji4Y/AEUqcfhfdPWno6vIgc/j1cYseCIhw==
   dependencies:
     "@web3-onboard/common" "^2.2.2"
     bignumber.js "^9.0.0"

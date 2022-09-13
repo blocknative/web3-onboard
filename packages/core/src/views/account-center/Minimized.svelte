@@ -90,10 +90,12 @@
     font-weight: 400;
     line-height: var(--onboard-font-line-height-2, var(--font-line-height-2));
     color: var(--onboard-gray-400, var(--gray-400));
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   .network {
-    margin-left: 0.5rem;
+    margin-left: 0.2rem;
   }
 
   .chain-icon {
