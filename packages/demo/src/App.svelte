@@ -347,6 +347,9 @@
   --onboard-wallet-button-background-hover: var(--accent-color-hover);
   --onboard-wallet-button-border-color: var(--border-color);
   --onboard-wallet-app-icon-border-color: var(--border-color);
+  --onboard-close-button-background: var(--accent-background);
+  --onboard-wallet-button-color-hover: var(--text-color);
+  --onboard-wallet-button-color: var(--text-color);
 
   --account-center-minimized-background: var(--background-color);
   --account-center-minimized-address-color: var(--text-color);
