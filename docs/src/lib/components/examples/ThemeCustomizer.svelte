@@ -5,216 +5,210 @@
   import { share } from 'rxjs/operators'
   import { onMount } from 'svelte'
 
-  // const INFURA_ID = 'e0b15c21b7d54cd4814586334af72618'
-  // const injected = injectedModule()
+  const INFURA_ID = 'e0b15c21b7d54cd4814586334af72618'
+  const injected = injectedModule()
 
-  // const onboard = Onboard({
-  //   wallets: [injected],
-  //   chains: [
-  //     {
-  //       id: '0x1',
-  //       token: 'ETH',
-  //       label: 'Ethereum Mainnet',
-  //       rpcUrl: `https://mainnet.infura.io/v3/${INFURA_ID}`
-  //     },
-  //     {
-  //       id: '0x3',
-  //       token: 'tROP',
-  //       label: 'Ethereum Ropsten Testnet',
-  //       rpcUrl: `https://ropsten.infura.io/v3/${INFURA_ID}`
-  //     }
-  //   ],
-  //   appMetadata: {
-  //     name: 'Documentation',
-  //     icon: '<svg></svg>',
-  //     description: 'Example showcasing how to connect a wallet.',
-  //     recommendedInjectedWallets: [
-  //       { name: 'MetaMask', url: 'https://metamask.io' },
-  //       { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
-  //     ]
-  //   },
-  //   accountCenter: {
-  //     desktop: { enabled: false },
-  //     mobile: { enabled: false }
-  //   }
-  // })
+  const onboard = Onboard({
+    wallets: [injected],
+    chains: [
+      {
+        id: '0x1',
+        token: 'ETH',
+        label: 'Ethereum Mainnet',
+        rpcUrl: `https://mainnet.infura.io/v3/${INFURA_ID}`
+      },
+      {
+        id: '0x3',
+        token: 'tROP',
+        label: 'Ethereum Ropsten Testnet',
+        rpcUrl: `https://ropsten.infura.io/v3/${INFURA_ID}`
+      }
+    ],
+    appMetadata: {
+      name: 'Documentation',
+      icon: '<svg></svg>',
+      description: 'Example showcasing how to connect a wallet.',
+      recommendedInjectedWallets: [
+        { name: 'MetaMask', url: 'https://metamask.io' },
+        { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
+      ]
+    },
+    accountCenter: {
+      desktop: { enabled: false },
+      mobile: { enabled: false }
+    }
+  })
 
-  // // Subscribe to wallet updates
-  // const wallets$ = onboard.state.select('wallets').pipe(share())
+  // Subscribe to wallet updates
+  const wallets$ = onboard.state.select('wallets').pipe(share())
 
-  // const defaultStyling = {
-  //   '--background-color': '#ffffff',
-  //   '--text-color': '#1a1d26',
-  //   '--border-color': '#ebebed',
-  //   '--accent-background': '#ebebed',
-  //   '--accent-color': '#929bed',
-  //   '--accent-color-hover': '#eff1fc',
-  //   '--secondary-text-color': '#707481',
-  //   '--secondary-accent-background': '#242835'
-  // }
+  const defaultStyling = {
+    '--background-color': '#ffffff',
+    '--text-color': '#1a1d26',
+    '--border-color': '#ebebed',
+    '--accent-background': '#ebebed',
+    '--accent-color': '#929bed',
+    '--accent-color-hover': '#eff1fc',
+    '--secondary-text-color': '#707481',
+    '--secondary-accent-background': '#242835'
+  }
 
-  // const baseStyling = `--onboard-connect-sidebar-background: var(--accent-background);
-  // --onboard-close-button-background: var(--accent-background);
-  // --onboard-connect-sidebar-color: var(--text-color);
-  // --onboard-connect-sidebar-progress-background: var(--secondary-text-color);
-  // --onboard-connect-sidebar-progress-color: var(--accent-color);
-  // --onboard-connect-header-background: var(--background-color);
-  // --onboard-connect-header-color: var(--text-color);
-  // --onboard-main-scroll-container-background: var(--background-color);
-  // --onboard-link-color: var(--accent-color);
-  // --onboard-wallet-button-background: var(--background-color);
-  // --onboard-wallet-button-background-hover: var(--accent-color-hover);
-  // --onboard-wallet-button-border-color: var(--border-color);
-  // --onboard-wallet-app-icon-border-color: var(--border-color);
+  const baseStyling = `--onboard-connect-sidebar-background: var(--accent-background);
+  --onboard-close-button-background: var(--accent-background);
+  --onboard-connect-sidebar-color: var(--text-color);
+  --onboard-connect-sidebar-progress-background: var(--secondary-text-color);
+  --onboard-connect-sidebar-progress-color: var(--accent-color);
+  --onboard-connect-header-background: var(--background-color);
+  --onboard-connect-header-color: var(--text-color);
+  --onboard-main-scroll-container-background: var(--background-color);
+  --onboard-link-color: var(--accent-color);
+  --onboard-wallet-button-background: var(--background-color);
+  --onboard-wallet-button-background-hover: var(--accent-color-hover);
+  --onboard-wallet-button-border-color: var(--border-color);
+  --onboard-wallet-app-icon-border-color: var(--border-color);
 
-  // --account-center-minimized-background: var(--background-color);
-  // --account-center-minimized-address-color: var(--text-color);
-  // --account-center-minimized-balance-color: var(--secondary-text-color);
-  // --account-center-minimized-chain-select-background: var(
-  //   --accent-color-hover
-  // );
-  // --account-center-maximized-info-section-background: var(
-  //   --background-color
-  // );
-  // --account-center-maximized-network-section-background: var(
-  //   --accent-background
-  // );
-  // --account-center-maximized-upper-background: var(
-  //   --secondary-accent-background
-  // );
-  // --account-center-maximized-address-color: var(--background-color);
-  // --account-center-maximized-account-section-background-hover: var(
-  //   --text-color
-  // );
-  // --account-center-maximized-balance-color: var(--border-color);
-  // --account-center-maximized-upper-action-color: var(--accent-color);
-  // --account-center-maximized-network-text-color: var(
-  //   --secondary-accent-background
-  // );
-  // --account-center-maximized-info-section-background-color: var(
-  //   --background-color
-  // );
-  // --account-center-maximized-app-name-color: var(
-  //   --secondary-accent-background
-  // );
-  // --account-center-maximized-app-info-color: var(
-  //   --secondary-accent-background
-  // );
-  // --account-center-app-btn-background: var(--secondary-accent-background);
-  // --account-center-app-btn-text-color: var(--background-color);
+  --account-center-minimized-background: var(--background-color);
+  --account-center-minimized-address-color: var(--text-color);
+  --account-center-minimized-balance-color: var(--secondary-text-color);
+  --account-center-minimized-chain-select-background: var(
+    --accent-color-hover
+  );
+  --account-center-maximized-info-section-background: var(
+    --background-color
+  );
+  --account-center-maximized-network-section-background: var(
+    --accent-background
+  );
+  --account-center-maximized-upper-background: var(
+    --secondary-accent-background
+  );
+  --account-center-maximized-address-color: var(--background-color);
+  --account-center-maximized-account-section-background-hover: var(
+    --text-color
+  );
+  --account-center-maximized-balance-color: var(--border-color);
+  --account-center-maximized-upper-action-color: var(--accent-color);
+  --account-center-maximized-network-text-color: var(
+    --secondary-accent-background
+  );
+  --account-center-maximized-info-section-background-color: var(
+    --background-color
+  );
+  --account-center-maximized-app-name-color: var(
+    --secondary-accent-background
+  );
+  --account-center-maximized-app-info-color: var(
+    --secondary-accent-background
+  );
+  --account-center-app-btn-background: var(--secondary-accent-background);
+  --account-center-app-btn-text-color: var(--background-color);
 
-  // --notify-onboard-background: var(----secondary-accent-color);
-  // --notify-onboard-transaction-status: var(--accent-background);
-  // --notify-onboard-address-hash-color: var(--accent-color-hover);
-  // --notify-onboard-anchor-color: var(--accent-color);
-  // --notify-onboard-timer-color: var(--secondary-text-color);`
+  --notify-onboard-background: var(----secondary-accent-color);
+  --notify-onboard-transaction-status: var(--accent-background);
+  --notify-onboard-address-hash-color: var(--accent-color-hover);
+  --notify-onboard-anchor-color: var(--accent-color);
+  --notify-onboard-timer-color: var(--secondary-text-color);`
 
-  // const styleToString = (style) => {
-  //   return Object.keys(style).reduce((acc, key) => acc + key + ': ' + style[key] + '; \n  ', '')
-  // }
+  const styleToString = (style) => {
+    return Object.keys(style).reduce((acc, key) => acc + key + ': ' + style[key] + '; \n  ', '')
+  }
 
-  // async function copyStylingConfig() {
-  //   try {
-  //     const copy = await navigator.clipboard.writeText(copyableStyles)
-  //     return copy
-  //   } catch (err) {
-  //     console.error('Failed to copy: ', err)
-  //   }
-  // }
+  async function copyStylingConfig() {
+    try {
+      const copy = await navigator.clipboard.writeText(copyableStyles)
+      return copy
+    } catch (err) {
+      console.error('Failed to copy: ', err)
+    }
+  }
 
-  // let copyableStyles = `:root {\n  ${styleToString(defaultStyling)}${baseStyling}\n}`
+  let copyableStyles = `:root {\n  ${styleToString(defaultStyling)}${baseStyling}\n}`
 
-  // const updateTheme = (e, targetStyle) => {
-  //   const iframe = driver.findElements(webdriver.By.tagName("iframe"))[0];
-  //   // const iframe = document.getElementById('inlineFrameExample')
-  //   console.log(iframe)
-  //   iframe.contentWindow.document.documentElement.style.setProperty(targetStyle, e.target.value)
+  const updateThemes = (e, targetStyle) => {
+    const iframe = driver.findElements(webdriver.By.tagName("iframe"))[0];
+    // const iframe = document.getElementById('inlineFrameExample')
+    console.log(iframe)
+    document.documentElement.style.setProperty(targetStyle, e.target.value)
 
-  //   copyableStyles = `:root {\n  ${styleToString(defaultStyling)}${baseStyling}\n}`
-  // }
+    copyableStyles = `:root {\n  ${styleToString(defaultStyling)}${baseStyling}\n}`
+  }
 
-  // let checked = false
+  let checked = false
 
-  // const handleBackdrop = () => {
-  //   const iframe = document.getElementById('inlineFrameExample')
+  const handleBackdrop = () => {
+    const iframe = document.getElementById('inlineFrameExample')
 
-  //   if (!checked) {
-  //     iframe.contentWindow.document.documentElement.style.setProperty(
-  //       '--onboard-modal-backdrop',
-  //       'rgba(0, 0, 0, 0)'
-  //     )
-  //   } else {
-  //     iframe.contentWindow.document.documentElement.style.setProperty(
-  //       '--onboard-modal-backdrop',
-  //       'rgba(0, 0, 0, 0.6)'
-  //     )
-  //   }
-  // }
+    if (!checked) {
+      document.documentElement.style.setProperty(
+        '--onboard-modal-backdrop',
+        'rgba(0, 0, 0, 0)'
+      )
+    } else {
+      document.documentElement.style.setProperty(
+        '--onboard-modal-backdrop',
+        'rgba(0, 0, 0, 0.6)'
+      )
+    }
+  }
 
-  // // Converts the image into a data URI
-  // const readImage = (file) => {
-  //   const reader = new FileReader()
-  //   reader.addEventListener('load', (event) => {
-  //     uploaded_image = event.target.result
-  //     document.querySelector('#image_drop_area').style.backgroundImage = `url(${uploaded_image})`
-  //   })
-  //   reader.readAsDataURL(file)
-  // }
+  // Converts the image into a data URI
+  const readImage = (file) => {
+    const reader = new FileReader()
+    reader.addEventListener('load', (event) => {
+      uploaded_image = event.target.result
+      document.querySelector('#image_drop_area').style.backgroundImage = `url(${uploaded_image})`
+    })
+    reader.readAsDataURL(file)
+  }
 
-  // let uploaded_image
-  // const handleImageDrop = () => {
-  //   // if (window.location !== window.parent.location) {
-  //     if (image_drop_area) {
-  //       // Event listener for dragging the image over the div
-  //       const connectButton = window.document.getElementById('connectBtn')
-  //       connectButton.style.visibility = 'hidden'
-  //       image_drop_area.addEventListener('dragover', (event) => {
-  //         event.stopPropagation()
-  //         event.preventDefault()
-  //         // Style the drag-and-drop as a "copy file" operation.
-  //         event.dataTransfer.dropEffect = 'copy'
-  //       })
+  let uploaded_image
+  const handleImageDrop = () => {
+    // if (window.location !== window.parent.location) {
+      if (image_drop_area) {
+        // Event listener for dragging the image over the div
+        const connectButton = window.document.getElementById('connectBtn')
+        connectButton.style.visibility = 'hidden'
+        image_drop_area.addEventListener('dragover', (event) => {
+          event.stopPropagation()
+          event.preventDefault()
+          // Style the drag-and-drop as a "copy file" operation.
+          event.dataTransfer.dropEffect = 'copy'
+        })
 
-  //       // Event listener for dropping the image inside the div
-  //       image_drop_area.addEventListener('drop', (event) => {
-  //         const image_drop_area_direction = document.querySelector('#image_drop_area_direction')
-  //         document.body.style.padding = 0
-  //         image_drop_area_direction.style.display = 'none'
-  //         connectButton.click()
-  //         connectButton.style.display = 'none'
-  //         event.stopPropagation()
-  //         event.preventDefault()
-  //         let fileList = event.dataTransfer.files
+        // Event listener for dropping the image inside the div
+        image_drop_area.addEventListener('drop', (event) => {
+          const image_drop_area_direction = document.querySelector('#image_drop_area_direction')
+          document.body.style.padding = 0
+          image_drop_area_direction.style.display = 'none'
+          connectButton.click()
+          connectButton.style.display = 'none'
+          event.stopPropagation()
+          event.preventDefault()
+          let fileList = event.dataTransfer.files
 
-  //         readImage(fileList[0])
-  //       })
-  //     }
-  //   // }
-  // }
+          readImage(fileList[0])
+        })
+      }
+    // }
+  }
 
-  // onMount(async () => {
-  //   handleImageDrop()
-  //   const sheet = document.createElement('style')
-  //   document.getElementById('#image_drop_area')?.append(sheet)
-  // })
+  onMount(async () => {
+    handleImageDrop()
+    const sheet = document.createElement('style')
+    document.getElementById('#image_drop_area')?.append(sheet)
+  })
 
 </script>
 
 
-<style>
-  :root {
-    --kd-main-max-width: 100%;
-    --kd-article-max-width: 100%;
-  }
-  iframe { width: 100%; height: 62.5rem;}
-</style>
-<iframe
+
+<!-- <iframe
 src="https://melodic-sfogliatella-f45328.netlify.app/"
-title="The Themenator - Theming for Web3Onboard"
-/>
-<!-- 
+title="The Themesnator - Theming for Web3Onboard"
+/> -->
+
 <main>
-    <div class="themes">
+    <div class="control-panel">
       <label for="Theme">Click Color Circles to Set Theme: </label>
       <div class="theming-container">
         {#each Object.keys(defaultStyling) as target}
@@ -329,4 +323,230 @@ title="The Themenator - Theming for Web3Onboard"
         {/if}
       {/if}
     </div>
-</main> -->
+</main>
+<style>
+  :root {
+    --kd-main-max-width: 100%;
+    --kd-article-max-width: 100%;
+  }
+  /* iframe { width: 100%; height: 62.5rem;} */
+:root {
+    --background-color: #ffffff; /* --white */
+    --text-color: #1a1d26; /* --gray-700 */
+    --border-color: #ebebed; /* --gray-100 taken from future mock */
+
+    --accent-background: #ebebed; /* --gray-100 (currently gray-100 in connect modal) */
+    --accent-color: #929bed; /* --primary-400 */
+    --accent-color-hover: #eff1fc; /* --primary-200 */
+
+    /* Account Center & Notify */
+    --secondary-text-color: #707481; /* --gray-400 (balance and token name) */
+    /* --secondary-accent-background: #242835; --gray-600 (Upper background in maximized) */
+
+    /* --onboard-font-family-normal: System,monospace; */
+    --onboard-connect-sidebar-background: var(--accent-background);
+    --onboard-close-button-background: var(--accent-background);
+    --onboard-connect-sidebar-color: var(--text-color);
+    --onboard-connect-sidebar-progress-background: var(
+      --secondary-text-color
+    ); /* defaults to gray-200 */
+    --onboard-connect-sidebar-progress-color: var(
+      --accent-color
+    ); /* defaults to  primary-600 */
+    --onboard-connect-header-background: var(--background-color);
+    --onboard-connect-header-color: var(--text-color);
+    --onboard-main-scroll-container-background: var(--background-color);
+    --onboard-link-color: var(--accent-color);
+    --onboard-wallet-button-background: var(--background-color);
+    --onboard-wallet-button-background-hover: var(--accent-color-hover);
+    --onboard-wallet-button-color-hover: var(--text-color);
+    --onboard-wallet-button-color: var(--text-color);
+    --onboard-wallet-button-border-color: var(--border-color);
+    --onboard-wallet-app-icon-border-color: var(--border-color);
+/* 
+    --account-center-minimized-background: var(--background-color);
+    --account-center-minimized-address-color: var(--text-color);
+    --account-center-minimized-balance-color: var(--secondary-text-color);
+    --account-center-minimized-chain-select-background: var(
+      --accent-color-hover
+    );
+    --account-center-maximized-info-section-background: var(--background-color);
+    --account-center-maximized-network-section-background: var(
+      --accent-background
+    );
+    --account-center-maximized-upper-background: var(
+      --secondary-accent-background
+    );
+    --account-center-maximized-address-color: var(--background-color);
+    --account-center-maximized-account-section-background-hover: var(
+      --text-color
+    );
+    --account-center-maximized-balance-color: var(--border-color);
+    --account-center-maximized-upper-action-color: var(--accent-color);
+    --account-center-maximized-network-text-color: var(
+      --secondary-accent-background
+    );
+    --account-center-maximized-info-section-background-color: var(
+      --background-color
+    );
+    --account-center-maximized-app-name-color: var(
+      --secondary-accent-background
+    );
+    --account-center-maximized-app-info-color: var(
+      --secondary-accent-background
+    );
+    --account-center-app-btn-background: var(--secondary-accent-background);
+    --account-center-app-btn-text-color: var(--background-color);
+
+    --notify-onboard-background: var(--secondary-accent-background);
+    --notify-onboard-transaction-status: var(--accent-background);
+    --notify-onboard-address-hash-color: var(--accent-color-hover);
+    --notify-onboard-anchor-color: var(--accent-color);
+    --notify-onboard-timer-color: var(--secondary-text-color); */
+
+    /* 
+		NEEDS TARGET AS IT USES OPACITY: 
+		--account-center-maximized-upper-action-background-hover
+		NEEDS UPDATES FOR DIFFERNT STYLING, DOESNT FIT BASIC VARIABLES ABOVE:
+		Notify status icons, icon backgrounds and icon borders
+	*/
+  }
+  main {
+    height: 100%;
+  }
+  button {
+    width: 14rem;
+    margin: 8px;
+  }
+
+  .copy-styles-container {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+  }
+
+  .copy-styles-textarea {
+    width: 30rem;
+    height: 16rem;
+    margin: 0 0 8px;
+  }
+
+  .control-panel {
+    z-index: 9999;
+    left: 0;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    position: fixed;
+    overflow: hidden;
+    background-color: black;
+    width: 480px;
+    margin: auto;
+  }
+
+  .theming-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+  }
+
+  .theming-inputs-wrapper {
+    display: flex;
+    align-items: center;
+    width: 24rem;
+  }
+  .theming-inputs {
+    display: inline-flex;
+    overflow: hidden;
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    box-shadow: 1px 1px 3px 0px grey;
+    margin: 0.4em;
+  }
+  input[type='color'] {
+    padding: 0;
+    width: 150%;
+    height: 150%;
+    margin: -25%;
+  }
+  iframe {
+    height: 450px;
+    width: 100%;
+    resize: both;
+    overflow: auto;
+    margin: 8px 0px;
+  }
+  #image_drop_area {
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    box-sizing: border-box;
+  }
+
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    border-radius: 34px;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: '';
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+
+  input:checked + .slider {
+    background-color: #929bed;
+  }
+
+  input:checked + .slider {
+    box-shadow: 0 0 1px #929bed;
+  }
+
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+
+  .backdrop-toggle {
+    display: flex;
+    align-items: center;
+    margin: 8px 8px 16px 4px;
+  }
+
+  .backdrop-toggle > label {
+    margin-right: 8px;
+  }
+</style>
