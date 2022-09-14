@@ -49,7 +49,7 @@
     '--accent-background': '#ebebed',
     '--accent-color': '#929bed',
     '--accent-color-hover': '#eff1fc',
-    '--secondary-text-color': '#707481',
+    '--secondary-text-color': '#707481'
   }
 
   const baseStyling = `--onboard-connect-sidebar-background: var(--accent-background);
@@ -82,9 +82,6 @@
   let copyableStyles = `:root {\n  ${styleToString(defaultStyling)}${baseStyling}\n}`
 
   const updateThemes = (e, targetStyle) => {
-    const iframe = driver.findElements(webdriver.By.tagName("iframe"))[0];
-    // const iframe = document.getElementById('inlineFrameExample')
-    console.log(iframe)
     document.documentElement.style.setProperty(targetStyle, e.target.value)
 
     copyableStyles = `:root {\n  ${styleToString(defaultStyling)}${baseStyling}\n}`
@@ -96,15 +93,9 @@
     const iframe = document.getElementById('inlineFrameExample')
 
     if (!checked) {
-      document.documentElement.style.setProperty(
-        '--onboard-modal-backdrop',
-        'rgba(0, 0, 0, 0)'
-      )
+      document.documentElement.style.setProperty('--onboard-modal-backdrop', 'rgba(0, 0, 0, 0)')
     } else {
-      document.documentElement.style.setProperty(
-        '--onboard-modal-backdrop',
-        'rgba(0, 0, 0, 0.6)'
-      )
+      document.documentElement.style.setProperty('--onboard-modal-backdrop', 'rgba(0, 0, 0, 0.6)')
     }
   }
 
@@ -120,174 +111,85 @@
 
   let uploaded_image
   const handleImageDrop = () => {
-    // if (window.location !== window.parent.location) {
-      if (image_drop_area) {
-        // Event listener for dragging the image over the div
-        const connectButton = window.document.getElementById('connectBtn')
-        connectButton.style.visibility = 'hidden'
-        image_drop_area.addEventListener('dragover', (event) => {
-          event.stopPropagation()
-          event.preventDefault()
-          // Style the drag-and-drop as a "copy file" operation.
-          event.dataTransfer.dropEffect = 'copy'
-        })
+    if (image_drop_area) {
+      // Event listener for dragging the image over the div
+      const connectButton = window.document.getElementById('connectBtn')
+      connectButton.style.visibility = 'hidden'
+      image_drop_area.addEventListener('dragover', (event) => {
+        event.stopPropagation()
+        event.preventDefault()
+        // Style the drag-and-drop as a "copy file" operation.
+        event.dataTransfer.dropEffect = 'copy'
+      })
 
-        // Event listener for dropping the image inside the div
-        image_drop_area.addEventListener('drop', (event) => {
-          const image_drop_area_direction = document.querySelector('#image_drop_area_direction')
-          document.body.style.padding = 0
-          image_drop_area_direction.style.display = 'none'
-          connectButton.click()
-          connectButton.style.display = 'none'
-          event.stopPropagation()
-          event.preventDefault()
-          let fileList = event.dataTransfer.files
+      // Event listener for dropping the image inside the div
+      image_drop_area.addEventListener('drop', (event) => {
+        const image_drop_area_direction = document.querySelector('#image_drop_area_direction')
+        document.body.style.padding = 0
+        image_drop_area_direction.style.display = 'none'
+        connectButton.click()
+        connectButton.style.display = 'none'
+        event.stopPropagation()
+        event.preventDefault()
+        let fileList = event.dataTransfer.files
 
-          readImage(fileList[0])
-        })
-      }
-    // }
+        readImage(fileList[0])
+      })
+    }
   }
 
   onMount(async () => {
     handleImageDrop()
-    const sheet = document.createElement('style')
-    document.getElementById('#image_drop_area')?.append(sheet)
   })
-
 </script>
 
-
-
-<!-- <iframe
-src="https://melodic-sfogliatella-f45328.netlify.app/"
-title="The Themesnator - Theming for Web3Onboard"
-/> -->
-
 <main>
-    <div class="control-panel">
-      <label for="Theme">Click Color Circles to Set Theme: </label>
-      <div class="theming-container">
-        {#each Object.keys(defaultStyling) as target}
-          <div class="theming-inputs-wrapper">
-            <div class="theming-inputs">
-              <input
-                type="color"
-                name="Theme"
-                bind:value={defaultStyling[target]}
-                on:input={e => updateTheme(e, target)}
-              />
-            </div>
-            <span class="text" id="current-theme"
-              >{target} : {defaultStyling[target]}</span
-            >
+  <div class="control-panel">
+    <label for="Theme">Click Color Circles to Set Theme: </label>
+    <div class="theming-container">
+      {#each Object.keys(defaultStyling) as target}
+        <div class="theming-inputs-wrapper">
+          <div class="theming-inputs">
+            <input
+              type="color"
+              name="Theme"
+              bind:value={defaultStyling[target]}
+              on:input={(e) => updateThemes(e, target)}
+            />
           </div>
-        {/each}
-      </div>
-      <div class="backdrop-toggle">
-        <label class="switch">
-          <input
-            type="checkbox"
-            on:change={() => handleBackdrop()}
-            bind:checked
-          />
-          <span class="slider" />
-        </label>
-        Disabled Backdrop for Styling
-      </div>
-      <div class="copy-styles-container">
-        <textarea
-          readonly
-          bind:value={copyableStyles}
-          class="copy-styles-textarea"
-        />
-        <button on:click={async () => await copyStylingConfig()}>
-          Copy Styling Config
-        </button>
-      </div>
+          <span class="text" id="current-theme">{target} : {defaultStyling[target]}</span>
+        </div>
+      {/each}
     </div>
-    <div id="image_drop_area">
-      <p id="image_drop_area_direction">
-        Drag and drop a screen shot of your site to customize styling.
-        <br />
-        Click color circles above to change the theme.
-      </p>
-      <button on:click={() => onboard.connectWallet()} id="connectBtn"
-        >Connect Wallet</button
-      >
-      {#if uploaded_image}
-        <button on:click={() => onboard.connectWallet()}>Connect Wallet</button>
-        {#if $wallets$}
-          <div class="notify-chain-container">
-            <div class="notify-action-container">
-              <button
-                on:click={() =>
-                  onboard.state.actions.customNotification({
-                    type: 'hint',
-                    message: 'This is a custom DApp hint',
-                    autoDismiss: 0
-                  })}>Send Hint Notification</button
-              >
-              <button
-                on:click={() => {
-                  const { update, dismiss } =
-                    onboard.state.actions.customNotification({
-                      type: 'pending',
-                      message:
-                        'This is a custom DApp pending notification to use however you want',
-                      autoDismiss: 0
-                    })
-                  setTimeout(
-                    () =>
-                      update({
-                        eventCode: 'dbUpdateSuccess',
-                        message: 'Updated status for custom notification',
-                        type: 'success',
-                        autoDismiss: 0
-                      }),
-                    4000
-                  )
-                }}>Send Success Notification</button
-              >
-              <button
-                on:click={() =>
-                  onboard.state.actions.customNotification({
-                    message:
-                      'This is a custom DApp success notification to use however you want',
-                    autoDismiss: 0,
-                    type: 'pending'
-                  })}>Send Pending Notification</button
-              >
-              <button
-                on:click={() =>
-                  onboard.state.actions.customNotification({
-                    type: 'error',
-                    message:
-                      'This is a custom DApp Error notification to use however you want',
-                    autoDismiss: 0
-                  })}>Send Error Notification</button
-              >
-              <button
-                on:click={() =>
-                  onboard.state.actions.customNotification({
-                    message:
-                      'This is a custom non-descript DApp notification to use however you want',
-                    autoDismiss: 0
-                  })}>Send DApp Notification</button
-              >
-            </div>
-          </div>
-        {/if}
-      {/if}
+    <div class="backdrop-toggle">
+      <label class="switch">
+        <input type="checkbox" on:change={() => handleBackdrop()} bind:checked />
+        <span class="slider" />
+      </label>
+      Disabled Backdrop for Styling
     </div>
+    <div class="copy-styles-container">
+      <textarea readonly bind:value={copyableStyles} class="copy-styles-textarea" />
+      <button on:click={async () => await copyStylingConfig()}> Copy Styling Config </button>
+    </div>
+  </div>
+  <div id="image_drop_area">
+    <p id="image_drop_area_direction">
+      Drag and drop a screen shot of your site to customize styling.
+      <br />
+      Click color circles above to change the theme.
+    </p>
+    <button on:click={() => onboard.connectWallet()} id="connectBtn">Connect Wallet</button>
+  </div>
 </main>
+
 <style>
   :root {
     --kd-main-max-width: 100%;
     --kd-article-max-width: 100%;
   }
   /* iframe { width: 100%; height: 62.5rem;} */
-:root {
+  :root {
     --background-color: #ffffff; /* --white */
     --text-color: #1a1d26; /* --gray-700 */
     --border-color: #ebebed; /* --gray-100 taken from future mock */
@@ -307,9 +209,7 @@ title="The Themesnator - Theming for Web3Onboard"
     --onboard-connect-sidebar-progress-background: var(
       --secondary-text-color
     ); /* defaults to gray-200 */
-    --onboard-connect-sidebar-progress-color: var(
-      --accent-color
-    ); /* defaults to  primary-600 */
+    --onboard-connect-sidebar-progress-color: var(--accent-color); /* defaults to  primary-600 */
     --onboard-connect-header-background: var(--background-color);
     --onboard-connect-header-color: var(--text-color);
     --onboard-main-scroll-container-background: var(--background-color);
@@ -320,7 +220,7 @@ title="The Themesnator - Theming for Web3Onboard"
     --onboard-wallet-button-color: var(--text-color);
     --onboard-wallet-button-border-color: var(--border-color);
     --onboard-wallet-app-icon-border-color: var(--border-color);
-/* 
+    /* 
     --account-center-minimized-background: var(--background-color);
     --account-center-minimized-address-color: var(--text-color);
     --account-center-minimized-balance-color: var(--secondary-text-color);
@@ -437,8 +337,9 @@ title="The Themesnator - Theming for Web3Onboard"
     margin: 8px 0px;
   }
   #image_drop_area {
-    width: 100%;
-    height: 100%;
+    width: 62%;
+    height: 80%;
+    margin: auto;
     background-position: center;
     background-size: cover;
     box-sizing: border-box;
