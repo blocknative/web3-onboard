@@ -5,3 +5,4 @@ package-lock.json
 .rpt2_cache
 .vscode
 yarn-error.log
+.env
