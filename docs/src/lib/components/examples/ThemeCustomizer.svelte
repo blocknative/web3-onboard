@@ -173,13 +173,18 @@
       <button on:click={async () => await copyStylingConfig()}> Copy Styling Config </button>
     </div>
   </div>
-  <div id="image_drop_area">
-    <p id="image_drop_area_direction">
-      Drag and drop a screen shot of your site to customize styling.
-      <br />
-      Click color circles above to change the theme.
-    </p>
-    <button on:click={() => onboard.connectWallet()} id="connectBtn">Connect Wallet</button>
+  <div class="image-drop-container">
+    <div id="image_drop_area">
+      <p id="image_drop_area_direction">
+        Drag and drop a screen shot of your site to customize styling.
+        <br />
+        Click color circles above to change the theme.
+      </p>
+      {#if uploaded_image}
+        <button on:click={() => onboard.connectWallet()}>Connect Wallet</button>
+      {/if}
+      <button on:click={() => onboard.connectWallet()} id="connectBtn">Connect Wallet</button>
+    </div>
   </div>
 </main>
 
@@ -220,53 +225,6 @@
     --onboard-wallet-button-color: var(--text-color);
     --onboard-wallet-button-border-color: var(--border-color);
     --onboard-wallet-app-icon-border-color: var(--border-color);
-    /* 
-    --account-center-minimized-background: var(--background-color);
-    --account-center-minimized-address-color: var(--text-color);
-    --account-center-minimized-balance-color: var(--secondary-text-color);
-    --account-center-minimized-chain-select-background: var(
-      --accent-color-hover
-    );
-    --account-center-maximized-info-section-background: var(--background-color);
-    --account-center-maximized-network-section-background: var(
-      --accent-background
-    );
-    --account-center-maximized-upper-background: var(
-      --secondary-accent-background
-    );
-    --account-center-maximized-address-color: var(--background-color);
-    --account-center-maximized-account-section-background-hover: var(
-      --text-color
-    );
-    --account-center-maximized-balance-color: var(--border-color);
-    --account-center-maximized-upper-action-color: var(--accent-color);
-    --account-center-maximized-network-text-color: var(
-      --secondary-accent-background
-    );
-    --account-center-maximized-info-section-background-color: var(
-      --background-color
-    );
-    --account-center-maximized-app-name-color: var(
-      --secondary-accent-background
-    );
-    --account-center-maximized-app-info-color: var(
-      --secondary-accent-background
-    );
-    --account-center-app-btn-background: var(--secondary-accent-background);
-    --account-center-app-btn-text-color: var(--background-color);
-
-    --notify-onboard-background: var(--secondary-accent-background);
-    --notify-onboard-transaction-status: var(--accent-background);
-    --notify-onboard-address-hash-color: var(--accent-color-hover);
-    --notify-onboard-anchor-color: var(--accent-color);
-    --notify-onboard-timer-color: var(--secondary-text-color); */
-
-    /* 
-		NEEDS TARGET AS IT USES OPACITY: 
-		--account-center-maximized-upper-action-background-hover
-		NEEDS UPDATES FOR DIFFERNT STYLING, DOESNT FIT BASIC VARIABLES ABOVE:
-		Notify status icons, icon backgrounds and icon borders
-	*/
   }
   main {
     height: 100%;
@@ -329,12 +287,12 @@
     height: 150%;
     margin: -25%;
   }
-  iframe {
-    height: 450px;
+  .image-drop-container {
+    height: 100%;
     width: 100%;
-    resize: both;
-    overflow: auto;
-    margin: 8px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   #image_drop_area {
     width: 62%;
@@ -343,6 +301,8 @@
     background-position: center;
     background-size: cover;
     box-sizing: border-box;
+    border: 1px solid grey;
+    border-radius: 12px;
   }
 
   .switch {
