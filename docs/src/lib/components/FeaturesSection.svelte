@@ -84,7 +84,7 @@
     <img src={WalletsGraphic} alt="onboard connect wallets" style="margin: 0 auto; max-width: none;">
   </ScrollContainer>
   <Container>
-    <div class="flexbox" style:padding={'4rem 1rem'}>
+    <div class="flexbox">
       <TextBlock
         title={'Real-time transaction notifications'}
         subtitle={''}
@@ -95,12 +95,12 @@
           <Button href="/examples/connect-wallet" buttonStyle={'link'}>{'View Demo'}</Button>
         </Flexbox>
       </TextBlock>
-      <NotifyGraphic />
+      <div><NotifyGraphic /></div>
     </div>
   </Container>
   <Container>
-    <div class="flexbox" style:gap={'4rem'} style:padding={'2rem'}>
-      <AccountCenterGraphic />
+    <div class="flexbox">
+      <div><AccountCenterGraphic /></div>
       <div>
         <TextBlock
           title={'Account Center'}
@@ -132,10 +132,9 @@
   }
 
   .features-b {
-    padding: 2rem;
-    /* gap: 16px; */
     height: auto;
     /* min-height: 288px; */
+    padding: 2rem;
     background: linear-gradient(87.71deg, rgba(0, 0, 0, 0) 0%, rgba(0, 209, 255, 0.02) 100%),
       #060d20;
     border: 1px solid rgba(255, 255, 255, 0.05);
@@ -156,9 +155,6 @@
   }
 
   .features-c {
-    /* width: 1440px; */
-    /* height: 1698px; */
-    /* min-height: 1698px; */
     background: radial-gradient(
         93.49% 93.49% at 50% 93.49%,
         rgba(20, 29, 107, 0.25) 0%,
@@ -170,24 +166,20 @@
 
   .flexbox {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4rem;
+    flex-flow: column nowrap;
+    gap: 3rem;
     padding: 2rem;
   }
   .flexbox > div {
-    min-width: 50%;
-    max-width: 100%;
-    /* display: flex; */
+    width: 100%;
+    flex: 50%;
   }
 
   @media screen and (min-width: 640px) {
     .flexbox {
-      /* display: flex; */
-      flex-direction: row;
-      /* align-items: center; */
-      /* gap: 4rem; */
-      /* padding: 2rem; */
+      flex-flow: row nowrap;
+      gap: 4rem;
+      padding: 3rem;
     }
   }
 </style>
