@@ -50,7 +50,6 @@
     '--accent-color': '#929bed',
     '--accent-color-hover': '#eff1fc',
     '--secondary-text-color': '#707481',
-    '--secondary-accent-background': '#242835'
   }
 
   const baseStyling = `--onboard-connect-sidebar-background: var(--accent-background);
@@ -65,49 +64,7 @@
   --onboard-wallet-button-background: var(--background-color);
   --onboard-wallet-button-background-hover: var(--accent-color-hover);
   --onboard-wallet-button-border-color: var(--border-color);
-  --onboard-wallet-app-icon-border-color: var(--border-color);
-
-  --account-center-minimized-background: var(--background-color);
-  --account-center-minimized-address-color: var(--text-color);
-  --account-center-minimized-balance-color: var(--secondary-text-color);
-  --account-center-minimized-chain-select-background: var(
-    --accent-color-hover
-  );
-  --account-center-maximized-info-section-background: var(
-    --background-color
-  );
-  --account-center-maximized-network-section-background: var(
-    --accent-background
-  );
-  --account-center-maximized-upper-background: var(
-    --secondary-accent-background
-  );
-  --account-center-maximized-address-color: var(--background-color);
-  --account-center-maximized-account-section-background-hover: var(
-    --text-color
-  );
-  --account-center-maximized-balance-color: var(--border-color);
-  --account-center-maximized-upper-action-color: var(--accent-color);
-  --account-center-maximized-network-text-color: var(
-    --secondary-accent-background
-  );
-  --account-center-maximized-info-section-background-color: var(
-    --background-color
-  );
-  --account-center-maximized-app-name-color: var(
-    --secondary-accent-background
-  );
-  --account-center-maximized-app-info-color: var(
-    --secondary-accent-background
-  );
-  --account-center-app-btn-background: var(--secondary-accent-background);
-  --account-center-app-btn-text-color: var(--background-color);
-
-  --notify-onboard-background: var(----secondary-accent-color);
-  --notify-onboard-transaction-status: var(--accent-background);
-  --notify-onboard-address-hash-color: var(--accent-color-hover);
-  --notify-onboard-anchor-color: var(--accent-color);
-  --notify-onboard-timer-color: var(--secondary-text-color);`
+  --onboard-wallet-app-icon-border-color: var(--border-color);`
 
   const styleToString = (style) => {
     return Object.keys(style).reduce((acc, key) => acc + key + ': ' + style[key] + '; \n  ', '')
