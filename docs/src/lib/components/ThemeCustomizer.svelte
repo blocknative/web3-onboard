@@ -42,6 +42,38 @@
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
 
+  let webURL = ''
+  let iframeUsed = false
+  let hideDirections = false
+
+  const isValidUrl = (urlString) => {
+    try {
+      return Boolean(new URL(urlString))
+    } catch (e) {
+      return false
+    }
+  }
+
+  const addURLToIFrame = () => {
+    if (!webURL || !isValidUrl(webURL)) {
+      alert('Invaled URL entered')
+      return
+    }
+    iframeUsed = true
+    document.querySelector('#iframe_underlay').setAttribute('src', webURL)
+    hideDirections = true
+    onboard.connectWallet()
+  }
+
+  const resetPage = () => {
+    iframeUsed = false
+    document.querySelector('#iframe_underlay').setAttribute('src', '')
+    hideDirections = false
+    document.querySelector('#image_drop_area').style.backgroundImage = ''
+    uploaded_image = undefined
+    webURL = ''
+  }
+
   const defaultStyling = {
     '--background-color': '#ffffff',
     '--text-color': '#1a1d26',
@@ -111,19 +143,14 @@
   const handleImageDrop = () => {
     const image_drop_area = document.querySelector('#image_drop_area')
     if (image_drop_area) {
-      // Event listener for dragging the image over the div
       image_drop_area.addEventListener('dragover', (event) => {
         event.stopPropagation()
         event.preventDefault()
-        // Style the drag-and-drop as a "copy file" operation.
         event.dataTransfer.dropEffect = 'copy'
       })
 
-      // Event listener for dropping the image inside the div
       image_drop_area.addEventListener('drop', (event) => {
-        const image_drop_area_direction = document.querySelector('#image_drop_area_direction')
-        // document.body.style.padding = 0
-        image_drop_area_direction.style.display = 'none'
+        hideDirections = true
         onboard.connectWallet()
         event.stopPropagation()
         event.preventDefault()
@@ -142,7 +169,7 @@
 <section>
   <div class="control-panel">
     <label for="Theme">Click Color Circles to Set Theme: </label>
-    <hr>
+    <hr />
     <div class="theming-container">
       {#each Object.keys(defaultStyling) as target}
         <div class="theming-inputs-wrapper">
@@ -162,7 +189,7 @@
       <textarea readonly bind:value={copyableStyles} rows="10" class="copy-styles-textarea" />
       <button on:click={async () => await copyStylingConfig()}> Copy Styling Config </button>
     </div>
-    <hr>
+    <hr />
     <div class="backdrop-toggle">
       <label class="switch">
         <input type="checkbox" on:change={() => handleBackdrop()} bind:checked />
@@ -172,15 +199,35 @@
     </div>
   </div>
   <div class="image-drop-container">
-    <div id="image_drop_area">
-      <p id="image_drop_area_direction">
-        Drag and drop a screen shot of your site to customize styling.
-        <br />
-        Click color circles above to change the theme.
-      </p>
-      {#if uploaded_image}
-        <button on:click={() => onboard.connectWallet()}>Connect Wallet</button>
-      {/if}
+    <div class="id" style={'height: 100%; width: 70%;'}>
+
+      <button on:click={resetPage} class="reset-btn" style={(iframeUsed || uploaded_image) ? 'visibility : visible' : 'visibility: hidden'}> Reset </button>
+      <div id="image_drop_area">
+        <section
+          style={hideDirections ? 'display: none; border: none;' : 'display: block'}
+          class="drop-area-controls"
+        >
+          <p>
+            Drag and drop a screen shot of your site to customize styling or enter your website
+            below...
+          </p>
+          <div>
+            <input
+              type="text"
+              class="iframe-input"
+              placeholder="Enter your Website URL"
+              bind:value={webURL}
+            />
+            <button on:click={addURLToIFrame} class="iframe-btn"> View With Your Website </button>
+          </div>
+          <p>Then click color circles above to change the theme.</p>
+        </section>
+        <iframe
+          id="iframe_underlay"
+          title="iframe area for testing W3O with your app"
+          class={iframeUsed ? 'iframe-visible' : 'iframe-hidden'}
+        />
+      </div>
     </div>
   </div>
 </section>
@@ -284,6 +331,21 @@
     height: 2em;
     margin: 0.5em;
   }
+  .iframe-input {
+    width: 28rem;
+    padding: 0.5rem;
+    margin: 16px 0px;
+  }
+
+  .iframe-btn {
+    padding: 0.5rem;
+  }
+
+  .reset-btn {
+    width: 8rem;
+    padding: 0.75rem;
+    margin: 8px 0;
+  }
   input[type='color'] {
     width: inherit;
     height: inherit;
@@ -305,14 +367,29 @@
     align-items: center;
   }
   #image_drop_area {
-    width: 70%;
+    width: 100%;
     height: 90%;
-    margin: auto;
     background-position: center;
     background-size: cover;
     box-sizing: border-box;
     border: 1px solid grey;
     border-radius: 12px;
+  }
+
+  .drop-area-controls {
+    padding: 12px;
+  }
+  .drop-area-controls p {
+    font-size: 1.2rem;
+  }
+
+  .iframe-visible {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .iframe-hidden {
+    display: none;
   }
 
   .switch {
