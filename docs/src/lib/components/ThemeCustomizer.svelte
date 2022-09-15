@@ -199,34 +199,30 @@
     </div>
   </div>
   <div class="image-drop-container">
-    <div class="id" style={'height: 100%; width: 70%;'}>
-
-      <button on:click={resetPage} class="reset-btn" style={(iframeUsed || uploaded_image) ? 'visibility : visible' : 'visibility: hidden'}> Reset </button>
-      <div id="image_drop_area">
-        <section
-          style={hideDirections ? 'display: none; border: none;' : 'display: block'}
-          class="drop-area-controls"
-        >
-          <p>
-            Drag and drop a screen shot of your site to customize styling or enter your website
-            below...
-          </p>
-          <div>
-            <input
-              type="text"
-              class="iframe-input"
-              placeholder="Enter your Website URL"
-              bind:value={webURL}
-            />
-            <button on:click={addURLToIFrame} class="iframe-btn"> View With Your Website </button>
-          </div>
-          <p>Then click color circles above to change the theme.</p>
-        </section>
-        <iframe
-          id="iframe_underlay"
-          title="iframe area for testing W3O with your app"
-          class={iframeUsed ? 'iframe-visible' : 'iframe-hidden'}
-        />
+    <div id="image_drop_area">
+      <div class="drop-area-controls">
+        <div>Enter your website url or drag and drop a screenshot to preview web3-onboard on your site</div>
+        <!-- <div>Then click color circles above to change the theme.</div> -->
+        <div class="website-input-row">
+          <input
+            type="text"
+            class="iframe-input"
+            placeholder="Enter your Website URL"
+            bind:value={webURL}
+          />
+          <button on:click={addURLToIFrame}>Preview on your website</button>
+          <button on:click={resetPage} type="button" disabled={(iframeUsed || uploaded_image) ? false : true }>Reset</button>
+        </div>
+      </div>
+      <iframe
+        id="iframe_underlay"
+        title="iframe area for testing W3O with your app"
+        class={iframeUsed ? 'iframe-visible' : 'iframe-hidden'}
+      />
+      <div style:display={hideDirections ? 'none' : ''}>
+        <button on:click={() => onboard.connectWallet()} id="connectBtn">Connect Wallet</button>
+        <div>or</div>
+        <div>Drag and drop an image here to preview</div>
       </div>
     </div>
   </div>
@@ -268,13 +264,24 @@
   }
 
   section {
+    position: relative;
     height: 100%;
-    width: 100%;
+    padding: 1rem;
   }
+
   button {
     color: var(--kd-color-gray-body);
     background: var(--kd-color-gray-inverse);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     padding: 1rem;
+  }
+  button:hover {
+    background: var(--kd-color-gray-hover-inverse);
+  }
+  button:disabled {
+    background: var(--kd-color-gray-inverse);
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 
   hr {
@@ -288,9 +295,12 @@
     bottom: 0;
     position: fixed;
     overflow: hidden;
+    overflow-y: scroll;
+    max-height: 100vh;
     width: 360px;
     margin: 1rem;
     padding: 1rem;
+    font-size: 14px;
     color: var(--kd-color-gray-inverse);
     background-color: var(--kd-color-gray-divider);
     border: 1px solid rgba(0, 0, 0, 0.05);
@@ -310,7 +320,8 @@
   .copy-styles-textarea {
     padding: 1rem;
     color: var(--kd-color-gray-inverse);
-    background: rgba(0, 0, 0, 0.2);
+    background: var(--kd-color-gray-hover);
+    border: 1px solid var(--kd-color-gray-soft);
   }
 
   .theming-container {
@@ -332,20 +343,13 @@
     margin: 0.5em;
   }
   .iframe-input {
-    width: 28rem;
-    padding: 0.5rem;
-    margin: 16px 0px;
+    flex: 1;
+    padding: 1rem;
+    color: var(--kd-color-gray-inverse);
+    background: var(--kd-color-gray-hover);
+    border: 1px solid var(--kd-color-gray-soft);
   }
 
-  .iframe-btn {
-    padding: 0.5rem;
-  }
-
-  .reset-btn {
-    width: 8rem;
-    padding: 0.75rem;
-    margin: 8px 0;
-  }
   input[type='color'] {
     width: inherit;
     height: inherit;
@@ -359,28 +363,55 @@
     border: 1px solid rgba(0, 0, 0, 0.5);
     border-radius: 50%;
   }
+
   .image-drop-container {
-    height: 100%;
-    width: 100%;
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    height: 100%;
+    max-width: 100%;
+    padding: 0.5rem;
+
+    border: 1px solid var(--kd-color-gray-soft);
+    border-style: dotted;
   }
+
   #image_drop_area {
     width: 100%;
-    height: 90%;
-    background-position: center;
-    background-size: cover;
+    height: 100%;
+    background: center no-repeat;
+    background-size: contain;
+    background-color: rgba(0,0,0, 0.25);
     box-sizing: border-box;
-    border: 1px solid grey;
-    border-radius: 12px;
+
+    display: flex;
+    flex-flow: column;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
   }
 
   .drop-area-controls {
-    padding: 12px;
+    position: absolute;
+    top: 0;
+    padding: 1rem;
+    font-size: 14px;
+    color: var(--kd-color-gray-inverse);
+    background-color: var(--kd-color-gray-divider);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    display: flex;
+    flex-flow: column;
+    gap: 1rem;
   }
-  .drop-area-controls p {
-    font-size: 1.2rem;
+
+  .website-input-row {
+    display: flex;
+    flex-flow: row;
+    gap: 0.5rem;
   }
 
   .iframe-visible {
