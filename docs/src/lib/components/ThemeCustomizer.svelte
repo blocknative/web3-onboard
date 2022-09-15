@@ -90,8 +90,6 @@
   let checked = false
 
   const handleBackdrop = () => {
-    const iframe = document.getElementById('inlineFrameExample')
-
     if (!checked) {
       document.documentElement.style.setProperty('--onboard-modal-backdrop', 'rgba(0, 0, 0, 0)')
     } else {
@@ -99,22 +97,21 @@
     }
   }
 
+  let uploaded_image
   // Converts the image into a data URI
   const readImage = (file) => {
     const reader = new FileReader()
     reader.addEventListener('load', (event) => {
-      uploaded_image = event.target.result
+      uploaded_image = event?.target?.result
       document.querySelector('#image_drop_area').style.backgroundImage = `url(${uploaded_image})`
     })
     reader.readAsDataURL(file)
   }
 
-  let uploaded_image
   const handleImageDrop = () => {
+    const image_drop_area = document.querySelector('#image_drop_area')
     if (image_drop_area) {
       // Event listener for dragging the image over the div
-      const connectButton = window.document.getElementById('connectBtn')
-      connectButton.style.visibility = 'hidden'
       image_drop_area.addEventListener('dragover', (event) => {
         event.stopPropagation()
         event.preventDefault()
@@ -125,10 +122,9 @@
       // Event listener for dropping the image inside the div
       image_drop_area.addEventListener('drop', (event) => {
         const image_drop_area_direction = document.querySelector('#image_drop_area_direction')
-        document.body.style.padding = 0
+        // document.body.style.padding = 0
         image_drop_area_direction.style.display = 'none'
-        connectButton.click()
-        connectButton.style.display = 'none'
+        onboard.connectWallet()
         event.stopPropagation()
         event.preventDefault()
         let fileList = event.dataTransfer.files
@@ -185,7 +181,6 @@
       {#if uploaded_image}
         <button on:click={() => onboard.connectWallet()}>Connect Wallet</button>
       {/if}
-      <button on:click={() => onboard.connectWallet()} id="connectBtn">Connect Wallet</button>
     </div>
   </div>
 </section>
@@ -225,6 +220,10 @@
     --onboard-wallet-app-icon-border-color: var(--border-color);
   }
 
+  section {
+    height: 100%;
+    width: 100%;
+  }
   button {
     color: var(--kd-color-gray-body);
     background: var(--kd-color-gray-inverse);
@@ -239,18 +238,16 @@
     z-index: 9999;
     left: auto;
     right: 0;
-    /* top: 10rem; */
     bottom: 0;
     position: fixed;
     overflow: hidden;
-    width: 420px;
+    width: 360px;
     margin: 1rem;
     padding: 1rem;
     color: var(--kd-color-gray-inverse);
     background-color: var(--kd-color-gray-divider);
     border: 1px solid rgba(0, 0, 0, 0.05);
     box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-
     display: flex;
     flex-flow: column;
     gap: 1rem;
@@ -282,7 +279,6 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
     overflow: hidden;
     width: 2em;
     height: 2em;
@@ -309,8 +305,8 @@
     align-items: center;
   }
   #image_drop_area {
-    width: 62%;
-    height: 80%;
+    width: 70%;
+    height: 90%;
     margin: auto;
     background-position: center;
     background-size: cover;
