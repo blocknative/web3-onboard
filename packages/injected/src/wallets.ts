@@ -40,8 +40,7 @@ function getInterfaceFromProvidersArray(
 ) {
   return window.ethereum.providers.find(provider => {
     return checkOtherProviderFlags
-      ? !!provider[identity] &&
-          !otherProviderFlagsExist(identity, provider)
+      ? !!provider[identity] && !otherProviderFlagsExist(identity, provider)
       : !!provider[identity]
   })
 }
@@ -197,7 +196,8 @@ const trust: InjectedWalletModule = {
 const opera: InjectedWalletModule = {
   label: ProviderLabel.Opera,
   injectedNamespace: InjectedNameSpace.Ethereum,
-  checkProviderIdentity: ({ device }) => device.browser.name === 'Opera',
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Opera],
   getIcon: async () => (await import('./icons/opera.js')).default,
   getInterface: async () => ({
     provider: createEIP1193Provider(window.ethereum, {
