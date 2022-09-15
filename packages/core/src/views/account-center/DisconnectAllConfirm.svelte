@@ -2,7 +2,7 @@
   import { _ } from 'svelte-i18n'
   import Modal from '../shared/Modal.svelte'
   import en from '../../i18n/en.json'
-  import warningIcon from '../../icons/warning'
+  import warningIcon from '../../icons/warning.js'
 
   export let onConfirm: () => void
   export let onClose: () => void
@@ -20,7 +20,7 @@
   .icon-container {
     width: 3rem;
     height: 3rem;
-    background-color: var(--onboard-warning-100, var(--warning-100));
+    background: var(--onboard-warning-100, var(--warning-100));
     border-radius: 24px;
     padding: 12px;
     color: var(--onboard-warning-500, var(--warning-500));

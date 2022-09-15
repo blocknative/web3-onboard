@@ -1,15 +1,16 @@
 {
-  "extends": "@tsconfig/svelte/tsconfig.json",
-
+  "extends": "../../tsconfig.json",
   "include": ["src/**/*"],
-  "exclude": ["node_modules/*", "dist"],
+
   "compilerOptions": {
-    "strict": true,
+    "outDir": "dist",
+    "rootDir": "src",
     "declaration": true,
     "declarationDir": "dist",
-    "target": "ES2018",
-    "module": "ES2020",
-    "resolveJsonModule": true
-  },
-  "outDir": "dist"
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "*": ["./src/*", "./node_modules/*"]
+    },
+    "typeRoots": ["node_modules/@types"]
+  }
 }

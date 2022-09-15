@@ -46,7 +46,9 @@ function mew(): WalletInit {
               firstValueFrom(closed$)
             ])
           },
-          eth_selectAccounts: null
+          eth_selectAccounts: null,
+          wallet_addEthereumChain: null,
+          wallet_switchEthereumChain: null
         })
 
         const events = new EventEmitter()

@@ -14,6 +14,7 @@ type WalletConnectOptions = {
   qrcodeModalOptions?: {
     mobileLinks: string[] // set the order and list of mobile linking wallets
   }
+  connectFirstChainId?: boolean // if true, connects to the first network chain provided
 }
 ```
 
@@ -28,7 +29,8 @@ const walletConnect = walletConnectModule({
   bridge: 'YOUR_CUSTOM_BRIDGE_SERVER',
   qrcodeModalOptions: {
     mobileLinks: ['rainbow', 'metamask', 'argent', 'trust', 'imtoken', 'pillar']
-  }
+  },
+  connectFirstChainId: true
 })
 
 // can also initialize with no options...

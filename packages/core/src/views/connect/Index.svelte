@@ -1,23 +1,14 @@
 <script lang="ts">
   import { ProviderRpcErrorCode, WalletModule } from '@web3-onboard/common'
-  import { BigNumber } from 'ethers'
   import { BehaviorSubject, takeUntil } from 'rxjs'
   import EventEmitter from 'eventemitter3'
   import { _ } from 'svelte-i18n'
   import en from '../../i18n/en.json'
-  import { selectAccounts } from '../../provider'
-  import { state } from '../../store'
-  import { connectWallet$, internalState$, onDestroy$ } from '../../streams'
-  import {
-    getChainId,
-    requestAccounts,
-    trackWallet,
-    getBalance,
-    getEns
-  } from '../../provider'
-  import { addWallet, updateAccount } from '../../store/actions'
-  import { validEnsChain } from '../../utils'
-
+  import { selectAccounts } from '../../provider.js'
+  import { state } from '../../store/index.js'
+  import { connectWallet$, onDestroy$ } from '../../streams.js'
+  import { addWallet, updateAccount } from '../../store/actions.js'
+  import { validEnsChain } from '../../utils.js'
   import CloseButton from '../shared/CloseButton.svelte'
   import Modal from '../shared/Modal.svelte'
   import Agreement from './Agreement.svelte'
@@ -26,17 +17,28 @@
   import InstallWallet from './InstallWallet.svelte'
   import SelectingWallet from './SelectingWallet.svelte'
   import Sidebar from './Sidebar.svelte'
+  import { configuration } from '../../configuration.js'
+  import { getBlocknativeSdk } from '../../services.js'
+  import { BigNumber } from 'ethers'
+  import {
+    getChainId,
+    requestAccounts,
+    trackWallet,
+    getBalance,
+    getEns
+  } from '../../provider.js'
+
   import type {
     ConnectOptions,
     i18n,
     WalletState,
     WalletWithLoadingIcon
-  } from '../../types'
+  } from '../../types.js'
 
   export let autoSelect: ConnectOptions['autoSelect']
 
-  const { appMetadata } = internalState$.getValue()
-  const { walletModules } = state.get()
+  const { appMetadata } = configuration
+  const { walletModules, connect } = state.get()
 
   let connectionRejected = false
   let wallets: WalletWithLoadingIcon[] = []
@@ -47,12 +49,6 @@
 
   let windowWidth: number
   let scrollContainer: HTMLElement
-
-  let walletToAutoSelect =
-    autoSelect &&
-    walletModules.find(
-      ({ label }) => label.toLowerCase() === autoSelect.label.toLowerCase()
-    )
 
   const modalStep$ = new BehaviorSubject<keyof i18n['connect']>(
     'selectingWallet'
@@ -119,7 +115,7 @@
       }
 
       connectingErrorMessage = ''
-
+      scrollToTop()
       // change step on next event loop
       setTimeout(() => setStep('connectingWallet'), 1)
     } catch (error) {
@@ -175,6 +171,22 @@
 
       const chain = await getChainId(provider)
 
+      if (state.get().notify.enabled) {
+        const sdk = await getBlocknativeSdk()
+
+        if (sdk) {
+          try {
+            sdk.subscribe({
+              id: address,
+              chainId: chain,
+              type: 'account'
+            })
+          } catch (error) {
+            // unsupported network for transaction events
+          }
+        }
+      }
+
       const update: Pick<WalletState, 'accounts' | 'chains'> = {
         accounts: [{ address, ens: null, balance: null }],
         chains: [{ namespace: 'evm', id: chain }]
@@ -184,15 +196,21 @@
       trackWallet(provider, label)
       updateSelectedWallet(update)
       setStep('connectedWallet')
+      scrollToTop()
     } catch (error) {
       const { code } = error as { code: number; message: string }
+      scrollToTop()
 
       // user rejected account access
       if (code === ProviderRpcErrorCode.ACCOUNT_ACCESS_REJECTED) {
         connectionRejected = true
-        if (autoSelect) {
-          walletToAutoSelect = null
+
+        if (autoSelect.disableModals) {
+          connectWallet$.next({ inProgress: false })
+        } else if (autoSelect.label) {
+          autoSelect.label = ''
         }
+
         return
       }
 
@@ -240,8 +258,17 @@
   modalStep$.pipe(takeUntil(onDestroy$)).subscribe(step => {
     switch (step) {
       case 'selectingWallet': {
-        if (walletToAutoSelect) {
-          autoSelectWallet(walletToAutoSelect)
+        if (autoSelect.label) {
+          const walletToAutoSelect = walletModules.find(
+            ({ label }) =>
+              label.toLowerCase() === autoSelect.label.toLowerCase()
+          )
+
+          if (walletToAutoSelect) {
+            autoSelectWallet(walletToAutoSelect)
+          } else if (autoSelect.disableModals) {
+            connectWallet$.next({ inProgress: false })
+          }
         } else {
           loadWalletsForSelection()
         }
@@ -305,7 +332,6 @@
       --onboard-connect-header-color,
       var(--onboard-black, var(--black))
     );
-    border-radius: 0 24px 0 0;
   }
 
   .header-heading {
@@ -337,10 +363,10 @@
 
 <svelte:window bind:innerWidth={windowWidth} />
 
-{#if !autoSelect || (autoSelect && !autoSelect.disableModals)}
+{#if !autoSelect.disableModals}
   <Modal {close}>
     <div class="container relative flex">
-      {#if windowWidth >= 809}
+      {#if windowWidth >= 809 && connect.showSidebar}
         <Sidebar step={$modalStep$} />
       {/if}
 
@@ -373,7 +399,7 @@
                   {connectingErrorMessage}
                 />
               </div>
-            {:else if !autoSelect}
+            {:else}
               <InstallWallet />
             {/if}
           {/if}

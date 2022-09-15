@@ -11,5 +11,8 @@ export const WALLET_NAMES: { [key: string]: string } = {
   metamask: 'MetaMask',
   detected: 'Detected Wallet',
   meetone: 'MeetOne',
-  frame: 'Frame'
+  frame: 'Frame',
+  bitkeep: 'BitKeep',
+  sequence: 'Sequence',
+  core: 'Core'
 }

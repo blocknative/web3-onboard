@@ -1,11 +1,11 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
-  import { internalState$ } from '../../streams'
-  import type { WalletState, i18n } from '../../types'
+  import type { WalletState, i18n } from '../../types.js'
 
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
-  import questionIcon from '../../icons/question'
+  import questionIcon from '../../icons/question.js'
   import en from '../../i18n/en.json'
+  import { configuration } from '../../configuration.js'
 
   export let connectWallet: () => Promise<void>
   export let selectedWallet: WalletState
@@ -13,7 +13,7 @@
   export let setStep: (update: keyof i18n['connect']) => void
   export let connectionRejected: boolean
 
-  const { appMetadata } = internalState$.getValue()
+  const { appMetadata } = configuration
 </script>
 
 <style>
@@ -27,14 +27,14 @@
     transition: background-color 100ms ease-in-out,
       border-color 100ms ease-in-out;
     border-radius: 24px;
-    background-color: var(--onboard-primary-100, var(--primary-100));
+    background: var(--onboard-primary-100, var(--primary-100));
     border: 1px solid;
     border-color: var(--onboard-primary-300, var(--primary-300));
     color: var(--onboard-gray-600, var(--gray-600));
   }
 
   .connecting-container.warning {
-    background-color: var(--onboard-warning-100, var(--warning-100));
+    background: var(--onboard-warning-100, var(--warning-100));
     border-color: var(--onboard-warning-400, var(--warning-400));
   }
 

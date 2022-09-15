@@ -2,31 +2,32 @@
   import { _ } from 'svelte-i18n'
   import { fly } from 'svelte/transition'
   import { quartOut } from 'svelte/easing'
-  import { internalState$, wallets$ } from '../../streams'
+  import { wallets$ } from '../../streams.js'
   import en from '../../i18n/en.json'
   import WalletRow from './WalletRow.svelte'
-  import plusCircleIcon from '../../icons/plus-circle'
-  import arrowForwardIcon from '../../icons/arrow-forward'
-  import connect from '../../connect'
-  import disconnect from '../../disconnect'
-  import { state } from '../../store'
+  import plusCircleIcon from '../../icons/plus-circle.js'
+  import arrowForwardIcon from '../../icons/arrow-forward.js'
+  import connect from '../../connect.js'
+  import disconnect from '../../disconnect.js'
+  import { state } from '../../store/index.js'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
-  import { getDefaultChainStyles, unrecognizedChainStyle } from '../../utils'
+  import { getDefaultChainStyles, unrecognizedChainStyle } from '../../utils.js'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import NetworkBadgeSelector from '../shared/NetworkSelector.svelte'
-  import caretLightIcon from '../../icons/caret-light'
-  import warningIcon from '../../icons/warning'
-  import questionIcon from '../../icons/question'
-  import { updateAccountCenter } from '../../store/actions'
-  import blocknative from '../../icons/blocknative'
+  import caretLightIcon from '../../icons/caret-light.js'
+  import warningIcon from '../../icons/warning.js'
+  import questionIcon from '../../icons/question.js'
+  import { updateAccountCenter } from '../../store/actions.js'
+  import blocknative from '../../icons/blocknative.js'
   import DisconnectAllConfirm from './DisconnectAllConfirm.svelte'
+  import { configuration } from '../../configuration.js'
 
   function disconnectAllWallets() {
     $wallets$.forEach(({ label }) => disconnect({ label }))
   }
 
   const { chains: appChains } = state.get()
-  const { appMetadata } = internalState$.getValue()
+  const { appMetadata } = configuration
   let disconnectConfirmModal = false
   let hideWalletRowMenu: () => void
 
@@ -44,19 +45,25 @@
   )
 
   const { position } = state.get().accountCenter
+  const { device } = configuration
 </script>
 
 <style>
   .outer-container {
-    background-color: var(--onboard-gray-600, var(--gray-600));
-    border-radius: 16px;
+    background: var(
+      --account-center-maximized-upper-background,
+      var(--onboard-gray-600, var(--gray-600))
+    );
+    border-radius: var(--onboard-border-radius-3, var(--border-radius-3));
     width: 100%;
     filter: drop-shadow(0px 4px 16px rgba(178, 178, 178, 0.2));
+    padding: 0 1px 1px 1px;
+    pointer-events: auto;
   }
 
   .wallets-section {
     width: 100%;
-    border-radius: 16px;
+    border-radius: var(--onboard-border-radius-3, var(--border-radius-3));
   }
 
   .p5 {
@@ -80,7 +87,10 @@
   }
 
   .action-container:hover {
-    background-color: rgba(146, 155, 237, 0.2);
+    background-color: var(
+      --account-center-maximized-action-background-hover,
+      rgba(146, 155, 237, 0.2)
+    );
   }
 
   .plus-icon {
@@ -102,21 +112,23 @@
   }
 
   .background-blue {
-    background-color: var(--onboard-primary-100, var(--primary-100));
+    background: var(--onboard-primary-100, var(--primary-100));
   }
 
   .background-gray {
-    background-color: var(--onboard-gray-100, var(--gray-100));
+    background: var(--onboard-gray-100, var(--gray-100));
   }
 
   .background-yellow {
-    background-color: var(--onboard-warning-100, var(--warning-100));
+    background: var(--onboard-warning-100, var(--warning-100));
   }
 
   .network-container {
-    margin: 0 1px 1px 1px;
-    border-radius: 15px;
-    color: var(--onboard-gray-500, var(--gray-500));
+    border-radius: var(--onboard-border-radius-3, var(--border-radius-3));
+    color: var(
+      --account-center-maximized-network-section,
+      var(--onboard-gray-500, var(--gray-500))
+    );
   }
 
   .p5-5 {
@@ -132,12 +144,11 @@
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
   }
 
-  .caret {
-    width: 16px;
-  }
-
   .app-info-container {
-    background: var(--onboard-white, var(--white));
+    background: var(
+      --account-center-maximized-app-info-section,
+      var(--onboard-white, var(--white))
+    );
     border-radius: 16px;
     padding: 12px;
   }
@@ -184,6 +195,15 @@
 
   .app-button {
     margin-top: var(--onboard-spacing-5, var(--spacing-5));
+    color: var(
+      --account-center-app-btn-text-color,
+      var(--onboard-white, var(--white))
+    );
+    background: var(
+      --account-center-app-btn-background,
+      var(--onboard-gray-500, var(--gray-500))
+    );
+    font-family: var(--account-center-app-btn-font-family, inherit);
   }
 
   .powered-by-container {
@@ -228,38 +248,40 @@
           />
         {/each}
       </div>
-
       <!-- actions -->
       <div class="actions flex flex-column items-start">
-        <!-- connect another wallet -->
-        <div
-          on:click={() => connect()}
-          class="action-container flex items-center pointer"
-        >
-          <div class="plus-icon flex items-center justify-center">
-            {@html plusCircleIcon}
-          </div>
-          <span class="action-text"
-            >{$_('accountCenter.connectAnotherWallet', {
-              default: en.accountCenter.connectAnotherWallet
-            })}</span
+        <!-- Hide for Mobile  -->
+        {#if device.type === 'desktop'}
+          <!-- connect another wallet -->
+          <div
+            on:click={() => connect()}
+            class="action-container flex items-center pointer"
           >
-        </div>
+            <div class="plus-icon flex items-center justify-center">
+              {@html plusCircleIcon}
+            </div>
+            <span class="action-text"
+              >{$_('accountCenter.connectAnotherWallet', {
+                default: en.accountCenter.connectAnotherWallet
+              })}</span
+            >
+          </div>
 
-        <!-- disconnect all wallets -->
-        <div
-          on:click={() => (disconnectConfirmModal = true)}
-          class="action-container flex items-center mt pointer"
-        >
-          <div class="arrow-forward flex items-center justify-center">
-            {@html arrowForwardIcon}
-          </div>
-          <span class="action-text"
-            >{$_('accountCenter.disconnectAllWallets', {
-              default: en.accountCenter.disconnectAllWallets
-            })}</span
+          <!-- disconnect all wallets -->
+          <div
+            on:click={() => (disconnectConfirmModal = true)}
+            class="action-container flex items-center mt pointer"
           >
-        </div>
+            <div class="arrow-forward flex items-center justify-center">
+              {@html arrowForwardIcon}
+            </div>
+            <span class="action-text"
+              >{$_('accountCenter.disconnectAllWallets', {
+                default: en.accountCenter.disconnectAllWallets
+              })}</span
+            >
+          </div>
+        {/if}
       </div>
     </div>
 
@@ -317,7 +339,7 @@
           <div on:click class="flex items-center">
             <NetworkBadgeSelector
               chains={appChains}
-              color="#33394B"
+              colorVar="--account-center-maximized-network-selector-color"
               bold={true}
               selectIcon={caretLightIcon}
             />
@@ -414,7 +436,6 @@
             default: en.accountCenter.backToApp
           })}</button
         >
-
         <a
           href="https://blocknative.com"
           target="_blank"

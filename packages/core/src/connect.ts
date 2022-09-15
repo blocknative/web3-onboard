@@ -1,9 +1,16 @@
 import { firstValueFrom } from 'rxjs'
 import { filter, withLatestFrom, pluck } from 'rxjs/operators'
-import { state } from './store'
-import { connectWallet$, wallets$ } from './streams'
-import type { ConnectOptions, ConnectOptionsString, WalletState } from './types'
-import { validateConnectOptions } from './validation'
+import { configuration } from './configuration.js'
+import { state } from './store/index.js'
+import { setWalletModules } from './store/actions.js'
+import { connectWallet$, wallets$ } from './streams.js'
+import type {
+  ConnectOptions,
+  ConnectOptionsString,
+  WalletState
+} from './types.js'
+import { wait } from './utils.js'
+import { validateConnectOptions } from './validation.js'
 
 async function connect(
   options?: ConnectOptions | ConnectOptionsString
@@ -26,6 +33,16 @@ async function connect(
 
   const { autoSelect } = options || {
     autoSelect: { label: '', disableModals: false }
+  }
+
+  // if auto selecting, wait until next event loop
+  if (autoSelect && (typeof autoSelect === 'string' || autoSelect.label)) {
+    await wait(50)
+  }
+
+  // first time calling connect, so initialize and set wallet modules
+  if (!state.get().walletModules.length) {
+    setWalletModules(configuration.initialWalletInit)
   }
 
   connectWallet$.next({

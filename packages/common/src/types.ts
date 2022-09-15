@@ -1,6 +1,7 @@
-import type { ethers, BigNumber } from 'ethers'
+import type { ConnectionInfo } from 'ethers/lib/utils'
 import type EventEmitter from 'eventemitter3'
 import type { TypedData as EIP712TypedData } from 'eip-712'
+import type { ethers } from 'ethers'
 export type { TypedData as EIP712TypedData } from 'eip-712'
 
 /**
@@ -74,56 +75,6 @@ export type RequestPatch = {
       }) => Promise<null>)
     | null
 }
-
-// eslint-disable-next-line max-len
-export type AccountSelectAPI = (
-  options: SelectAccountOptions
-) => Promise<Account>
-
-export type SelectAccountOptions = {
-  basePaths: BasePath[] // the paths to display in the base path selector
-  assets: Asset[] // the selectable assets to scan for a balance
-  chains: Chain[] // the selectable chains/networks to scan for balance
-  scanAccounts: ScanAccounts
-  supportsCustomPath?: boolean
-}
-
-export type BasePath = {
-  label: string // eg - Ethereum Ledger Live
-  value: DerivationPath
-}
-
-export type DerivationPath = string // eg - m/44'/60'
-
-export type Asset = {
-  label: string // eg - ETH
-  address?: string // if is a token, address to query contract
-}
-
-export type ScanAccounts = (options: ScanAccountsOptions) => Promise<Account[]>
-
-export type ScanAccountsOptions = {
-  derivationPath: DerivationPath
-  chainId: Chain['id']
-  asset: Asset
-}
-
-export type AccountAddress = string
-
-export type Account = {
-  address: AccountAddress
-  derivationPath: DerivationPath
-  balance: {
-    asset: Asset['label']
-    value: BigNumber
-  }
-}
-
-export type AccountsList = {
-  all: Account[]
-  filtered: Account[]
-}
-
 export interface AppMetadata {
   /* App name */
   name: string
@@ -237,6 +188,8 @@ export type GetInterfaceHelpers = {
 
 export type ChainId = string
 
+export type DecimalChainId = number
+
 export type RpcUrl = string
 
 export type WalletInterface = {
@@ -258,6 +211,8 @@ export interface ProviderMessage {
 export interface ProviderInfo {
   chainId: ChainId
 }
+
+export type AccountAddress = string
 
 /**
  * An array of addresses
@@ -417,7 +372,8 @@ export enum ProviderRpcErrorCode {
   DISCONNECTED = 4900,
   CHAIN_DISCONNECTED = 4901,
   CHAIN_NOT_ADDED = 4902,
-  DOES_NOT_EXIST = -32601
+  DOES_NOT_EXIST = -32601,
+  UNRECOGNIZED_CHAIN_ID = -32603
 }
 
 export interface Chain {
@@ -428,7 +384,12 @@ export interface Chain {
   token: TokenSymbol // eg ETH, BNB, MATIC
   color?: string
   icon?: string // svg string
+  providerConnectionInfo?: ConnectionInfo
+  publicRpcUrl?: string
+  blockExplorerUrl?: string
 }
+
+export type ChainWithDecimalId = Omit<Chain, 'id'> & { id: DecimalChainId }
 
 export type TokenSymbol = string // eg ETH
 
@@ -461,4 +422,11 @@ export interface BootstrapNode {
   id: string
   location: string
   comment: string
+}
+
+export interface RPCResponse {
+  id: number
+  jsonrpc: string
+  error?: { code: number; message: string }
+  result?: any
 }

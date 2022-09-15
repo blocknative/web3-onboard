@@ -1,6 +1,6 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
-  import { connectWallet$ } from '../../streams'
+  import { connectWallet$ } from '../../streams.js'
   import Modal from '../shared/Modal.svelte'
   import InfoIcon from '../shared/InfoIcon.svelte'
 
@@ -18,12 +18,16 @@
     font-family: var(--onboard-font-family-normal, var(--font-family-normal));
     font-size: var(--onboard-font-size-5, var(--font-size-5));
     line-height: 24px;
+    background: var(
+      --onboard-action-required-modal-background,
+      var(--onboard-white, var(--white))
+    );
   }
 
   .icon-container {
     width: 3rem;
     height: 3rem;
-    background-color: var(--onboard-primary-100, var(--primary-100));
+    background: var(--onboard-primary-100, var(--primary-100));
     border-radius: 24px;
   }
 

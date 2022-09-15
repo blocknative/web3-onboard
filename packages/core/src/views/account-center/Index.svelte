@@ -1,46 +1,31 @@
 <script lang="ts">
   import { onDestroy } from 'svelte'
-  import { updateAccountCenter } from '../../store/actions'
-  import type { AccountCenter } from '../../types'
+  import { updateAccountCenter } from '../../store/actions.js'
+  import type { AccountCenter } from '../../types.js'
   import Maximized from './Maximized.svelte'
   import Minimized from './Minimized.svelte'
+  import Micro from './Micro.svelte'
 
   export let settings: AccountCenter
-
-  const accountCenterPositions = {
-    topLeft: 'top: 0; left: 0;',
-    topRight: 'top: 0; right: 0;',
-    bottomRight: 'bottom: 0; right: 0;',
-    bottomLeft: 'bottom: 0; left: 0;'
-  }
 
   onDestroy(minimize)
 
   function minimize() {
-    updateAccountCenter({ expanded: false })
+    if (settings.expanded) {
+      updateAccountCenter({ expanded: false })
+    }
   }
 </script>
 
-<style>
-  .container {
-    padding: 16px;
-    max-width: 364px;
-    min-width: 348px;
-    font-family: var(--onboard-font-family-normal, var(--font-family-normal));
-  }
-</style>
-
 <svelte:window on:click={minimize} />
 
-<div
-  class="container flex flex-column absolute"
-  style={accountCenterPositions[settings.position]}
->
-  {#if !settings.expanded}
-    <!-- minimized -->
-    <Minimized />
-  {:else}
-    <!-- maximized -->
-    <Maximized />
-  {/if}
-</div>
+{#if !settings.expanded && !settings.minimal}
+  <!-- minimized -->
+  <Minimized />
+{:else if !settings.expanded && settings.minimal}
+  <!-- micro -->
+  <Micro />
+{:else}
+  <!-- maximized -->
+  <Maximized />
+{/if}

@@ -1,47 +1,42 @@
 import Joi from 'joi'
-import type { SelectAccountOptions } from './types'
 
-const basePath = Joi.object({
-  label: Joi.string().required(),
-  value: Joi.string().required()
-})
-const basePaths = Joi.array().items(basePath)
+export type ValidateReturn = Joi.ValidationResult | null
 
-const chain = Joi.object({
-  namespace: Joi.string(),
-  id: Joi.string().required(),
-  rpcUrl: Joi.string().required(),
-  label: Joi.string().required(),
-  token: Joi.string().required(),
-  icon: Joi.string(),
-  color: Joi.string()
-})
-
-const chains = Joi.array().items(chain)
-
-const asset = Joi.object({
-  label: Joi.string().required(),
-  address: Joi.string()
-})
-const assets = Joi.array().items(asset)
-
-const selectAccountOptions = Joi.object({
-  basePaths: basePaths,
-  assets: assets,
-  chains: chains,
-  scanAccounts: Joi.function().arity(1).required(),
-  supportsCustomPath: Joi.bool()
-})
-
-type ValidateReturn = Joi.ValidationResult | null
-
-const validate = (validator: Joi.Schema, data: unknown): ValidateReturn => {
+export function validate(validator: Joi.Schema, data: unknown): ValidateReturn {
   const result = validator.validate(data)
   return result.error ? result : null
 }
 
-export const validateSelectAccountOptions = (
-  data: SelectAccountOptions
-): ValidateReturn => {
-  return validate(selectAccountOptions, data)
-}
+export const chainIdValidation = Joi.alternatives().try(
+  Joi.string().pattern(/^0x[0-9a-fA-F]+$/),
+  Joi.number().positive()
+)
+
+export const chainNamespaceValidation = Joi.string().valid('evm')
+
+/** Related to ConnectionInfo from 'ethers/lib/utils' */
+export const providerConnectionInfoValidation = Joi.object({
+  url: Joi.string().required(),
+  headers: Joi.object(),
+  user: Joi.string(),
+  password: Joi.string(),
+  allowInsecureAuthentication: Joi.boolean(),
+  allowGzip: Joi.boolean(),
+  throttleLimit: Joi.number(),
+  throttleSlotInterval: Joi.number(),
+  throttleCallback: Joi.function(),
+  timeout: Joi.number()
+})
+
+export const chainValidation = Joi.object({
+  namespace: chainNamespaceValidation,
+  id: chainIdValidation.required(),
+  rpcUrl: Joi.string().required(),
+  label: Joi.string().required(),
+  token: Joi.string().required(),
+  icon: Joi.string(),
+  color: Joi.string(),
+  publicRpcUrl: Joi.string(),
+  blockExplorerUrl: Joi.string(),
+  providerConnectionInfoValidation
+})

@@ -1,11 +1,13 @@
 import { WalletInit } from '@web3-onboard/common'
 
-function coinbaseWallet(options?: { darkMode?: boolean }): WalletInit {
-  const { darkMode = false } = options || {}
-
+function coinbaseWallet({
+  darkMode = false
+}: {
+  darkMode?: boolean
+} = {}): WalletInit {
   return () => {
     return {
-      label: 'Coinbase',
+      label: 'Coinbase Wallet',
       getIcon: async () => (await import('./icon.js')).default,
       getInterface: async ({ chains, appMetadata }) => {
         const [chain] = chains

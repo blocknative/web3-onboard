@@ -12,7 +12,7 @@
 
 <style>
   button {
-    background-color: var(
+    background: var(
       --onboard-wallet-button-background,
       var(--onboard-white, var(--white))
     );
@@ -29,9 +29,13 @@
   }
 
   button:hover {
-    background-color: var(
+    background: var(
       --onboard-wallet-button-background-hover,
       var(--onboard-primary-100, var(--primary-100))
+    );
+    color: var(
+      --onboard-wallet-button-color-hover,
+      var(--onboard-gray-700, var(--gray-700))
     );
   }
 
@@ -40,15 +44,22 @@
   }
 
   button.connected:hover {
-    background-color: var(--onboard-success-100, var(--success-100));
+    background: var(--onboard-success-100, var(--success-100));
   }
   .name {
     margin-left: var(--onboard-spacing-4, var(--spacing-4));
   }
 
   button.wallet-button-styling {
-    border-radius: var(--onboard-wallet-button-border-radius, var(--border-radius-1));
+    border-radius: var(
+      --onboard-wallet-button-border-radius,
+      var(--border-radius-1)
+    );
     box-shadow: var(--onboard-wallet-button-box-shadow, var(--box-shadow-0));
+  }
+  
+  button.wallet-button-styling:hover {
+    box-shadow: var(--onboard-wallet-button-box-shadow-hover, var(--box-shadow-0));
   }
 </style>
 

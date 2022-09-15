@@ -1,14 +1,14 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
-  import blocknative from '../../icons/blocknative'
-  import { internalState$ } from '../../streams'
+  import blocknative from '../../icons/blocknative.js'
   import en from '../../i18n/en.json'
-  import type { i18n } from '../../types'
-  import { isSVG } from '../../utils'
+  import type { i18n } from '../../types.js'
+  import { isSVG } from '../../utils.js'
+  import { configuration } from '../../configuration.js'
 
   export let step: keyof i18n['connect']
 
-  const { appMetadata } = internalState$.getValue()
+  const { appMetadata } = configuration
   const { icon, logo, name = 'This app' } = appMetadata || {}
 
   const defaultContent = en.connect[step].sidebar

@@ -1,7 +1,8 @@
 import { BehaviorSubject, Subject, Observable } from 'rxjs'
 import { distinctUntilKeyChanged, pluck, filter } from 'rxjs/operators'
-import { APP_INITIAL_STATE } from '../constants'
-import { notNullish } from '../utils'
+import { locale } from 'svelte-i18n'
+import { APP_INITIAL_STATE } from '../constants.js'
+import { notNullish } from '../utils.js'
 import type { Chain, WalletModule } from '@web3-onboard/common'
 
 import type {
@@ -11,8 +12,14 @@ import type {
   UpdateWalletAction,
   AddWalletAction,
   UpdateAccountAction,
-  UpdateAccountCenterAction
-} from '../types'
+  UpdateAccountCenterAction,
+  Locale,
+  UpdateNotifyAction,
+  AddNotificationAction,
+  RemoveNotificationAction,
+  UpdateAllWalletsAction,
+  UpdateConnectModalAction
+} from '../types.js'
 
 import {
   ADD_CHAINS,
@@ -21,9 +28,15 @@ import {
   REMOVE_WALLET,
   RESET_STORE,
   UPDATE_ACCOUNT,
+  UPDATE_CONNECT_MODAL,
   UPDATE_ACCOUNT_CENTER,
-  SET_WALLET_MODULES
-} from './constants'
+  UPDATE_NOTIFY,
+  SET_WALLET_MODULES,
+  SET_LOCALE,
+  ADD_NOTIFICATION,
+  REMOVE_NOTIFICATION,
+  UPDATE_ALL_WALLETS
+} from './constants.js'
 
 function reducer(state: AppState, action: Action): AppState {
   const { type, payload } = action
@@ -68,6 +81,7 @@ function reducer(state: AppState, action: Action): AppState {
 
     case REMOVE_WALLET: {
       const update = payload as { id: string }
+
       return {
         ...state,
         wallets: state.wallets.filter(({ label }) => label !== update.id)
@@ -98,8 +112,29 @@ function reducer(state: AppState, action: Action): AppState {
       }
     }
 
+    case UPDATE_ALL_WALLETS: {
+      const updatedWallets = payload as UpdateAllWalletsAction['payload']
+      return {
+        ...state,
+        wallets: updatedWallets
+      }
+    }
+
+    case UPDATE_CONNECT_MODAL: {
+      const update = payload as UpdateConnectModalAction['payload']
+
+      return {
+        ...state,
+        connect: {
+          ...state.connect,
+          ...update
+        }
+      }
+    }
+
     case UPDATE_ACCOUNT_CENTER: {
       const update = payload as UpdateAccountCenterAction['payload']
+
       return {
         ...state,
         accountCenter: {
@@ -108,10 +143,65 @@ function reducer(state: AppState, action: Action): AppState {
         }
       }
     }
+
+    case UPDATE_NOTIFY: {
+      const update = payload as UpdateNotifyAction['payload']
+
+      return {
+        ...state,
+        notify: {
+          ...state.notify,
+          ...update
+        }
+      }
+    }
+
+    case ADD_NOTIFICATION: {
+      const update = payload as AddNotificationAction['payload']
+      const notificationsUpdate = [...state.notifications]
+
+      const notificationExistsIndex = notificationsUpdate.findIndex(
+        ({ id }) => id === update.id
+      )
+
+      if (notificationExistsIndex !== -1) {
+        // if notification with same id, replace it with update
+        notificationsUpdate[notificationExistsIndex] = update
+      } else {
+        // otherwise add it to the beginning of array as new notification
+        notificationsUpdate.unshift(update)
+      }
+
+      return {
+        ...state,
+        notifications: notificationsUpdate
+      }
+    }
+
+    case REMOVE_NOTIFICATION: {
+      const id = payload as RemoveNotificationAction['payload']
+
+      return {
+        ...state,
+        notifications: state.notifications.filter(
+          notification => notification.id !== id
+        )
+      }
+    }
+
     case SET_WALLET_MODULES: {
       return {
         ...state,
         walletModules: payload as WalletModule[]
+      }
+    }
+
+    case SET_LOCALE: {
+      // Set the locale in the svelte-i18n internal state
+      locale.set(payload as Locale)
+      return {
+        ...state,
+        locale: payload as Locale
       }
     }
 

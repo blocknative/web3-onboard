@@ -1,20 +1,34 @@
 import { SofiaProRegular } from '@web3-onboard/common'
-import connectWallet from './connect'
-import disconnectWallet from './disconnect'
-import setChain from './chain'
-import { state } from './store'
+import connectWallet from './connect.js'
+import disconnectWallet from './disconnect.js'
+import setChain from './chain.js'
+import { state } from './store/index.js'
+import { reset$ } from './streams.js'
+import initI18N from './i18n/index.js'
+import App from './views/Index.svelte'
+import type { InitOptions, Notify } from './types.js'
+import { APP_INITIAL_STATE } from './constants.js'
+import { configuration, updateConfiguration } from './configuration.js'
+import updateBalances from './update-balances.js'
+import { chainIdToHex } from './utils.js'
+import { preflightNotifications } from './preflight-notifications.js'
+
+import {
+  validateInitOptions,
+  validateNotify,
+  validateNotifyOptions
+} from './validation.js'
+
 import {
   addChains,
+  updateAccountCenter,
+  updateNotify,
+  customNotification,
+  setLocale,
+  setPrimaryWallet,
   setWalletModules,
-  updateAccountCenter
-} from './store/actions'
-import { reset$, internalState$ } from './streams'
-import { validateInitOptions } from './validation'
-import initI18N from './i18n'
-
-import App from './views/Index.svelte'
-import type { InitOptions, OnboardAPI } from './types'
-import { getDevice } from './utils'
+  updateConnectModal
+} from './store/actions.js'
 
 const API = {
   connectWallet,
@@ -24,19 +38,34 @@ const API = {
     get: state.get,
     select: state.select,
     actions: {
-      setWalletModules
+      setWalletModules,
+      setLocale,
+      updateNotify,
+      customNotification,
+      preflightNotifications,
+      updateBalances,
+      updateAccountCenter,
+      setPrimaryWallet
     }
   }
 }
 
+export type OnboardAPI = typeof API
+
 export type {
   InitOptions,
-  OnboardAPI,
   ConnectOptions,
   DisconnectOptions,
   WalletState,
-  ConnectedChain
-} from './types'
+  ConnectedChain,
+  AccountCenter,
+  AppState,
+  CustomNotification,
+  Notification,
+  Notify,
+  UpdateNotification,
+  PreflightNotificationsOptions
+} from './types.js'
 
 export type { EIP1193Provider } from '@web3-onboard/common'
 
@@ -51,26 +80,19 @@ function init(options: InitOptions): OnboardAPI {
     }
   }
 
-  const { wallets, chains, appMetadata = null, i18n, accountCenter } = options
+  const {
+    wallets,
+    chains,
+    appMetadata = null,
+    i18n,
+    accountCenter,
+    apiKey,
+    notify,
+    gas,
+    connect
+  } = options
 
-  initI18N(i18n)
-  addChains(chains)
-
-  let accountCenterUpdate
-
-  const device = getDevice()
-
-  if (device.type === 'mobile') {
-    accountCenterUpdate = {
-      enabled: false
-    }
-  } else if (typeof accountCenter !== 'undefined' && accountCenter.desktop) {
-    accountCenterUpdate = accountCenter.desktop
-  }
-
-  accountCenterUpdate && updateAccountCenter(accountCenterUpdate)
-
-  const { svelteInstance } = internalState$.getValue()
+  const { device, svelteInstance } = configuration
 
   if (svelteInstance) {
     // if already initialized, need to cleanup old instance
@@ -78,15 +100,103 @@ function init(options: InitOptions): OnboardAPI {
     reset$.next()
   }
 
+  initI18N(i18n)
+  addChains(chainIdToHex(chains))
+
+  if (typeof connect !== undefined) {
+    updateConnectModal(connect)
+  }
+
+  // update accountCenter
+  if (typeof accountCenter !== 'undefined') {
+    let accountCenterUpdate
+
+    if (device.type === 'mobile' && accountCenter.mobile) {
+      accountCenterUpdate = {
+        ...APP_INITIAL_STATE.accountCenter,
+        ...accountCenter.mobile
+      }
+    } else if (accountCenter.desktop) {
+      accountCenterUpdate = {
+        ...APP_INITIAL_STATE.accountCenter,
+        ...accountCenter.desktop
+      }
+    }
+
+    updateAccountCenter(accountCenterUpdate)
+  }
+
+  // update notify
+  if (typeof notify !== 'undefined') {
+    if ('desktop' in notify || 'mobile' in notify) {
+      const error = validateNotifyOptions(notify)
+
+      if (error) {
+        throw error
+      }
+
+      if (
+        (!notify.desktop || (notify.desktop && !notify.desktop.position)) &&
+        accountCenter &&
+        accountCenter.desktop &&
+        accountCenter.desktop.position
+      ) {
+        notify.desktop.position = accountCenter.desktop.position
+      }
+
+      if (
+        (!notify.mobile || (notify.mobile && !notify.mobile.position)) &&
+        accountCenter &&
+        accountCenter.mobile &&
+        accountCenter.mobile.position
+      ) {
+        notify.mobile.position = accountCenter.mobile.position
+      }
+
+      let notifyUpdate: Partial<Notify>
+
+      if (device.type === 'mobile' && notify.mobile) {
+        notifyUpdate = {
+          ...APP_INITIAL_STATE.notify,
+          ...notify.mobile
+        }
+      } else if (notify.desktop) {
+        notifyUpdate = {
+          ...APP_INITIAL_STATE.notify,
+          ...notify.desktop
+        }
+      }
+
+      updateNotify(notifyUpdate)
+    } else {
+      const error = validateNotify(notify as Notify)
+
+      if (error) {
+        throw error
+      }
+
+      const notifyUpdate: Partial<Notify> = {
+        ...APP_INITIAL_STATE.notify,
+        ...notify
+      }
+
+      updateNotify(notifyUpdate)
+    }
+  } else {
+    const notifyUpdate: Partial<Notify> = APP_INITIAL_STATE.notify
+
+    updateNotify(notifyUpdate)
+  }
+
   const app = svelteInstance || mountApp()
 
-  internalState$.next({
+  updateConfiguration({
     appMetadata,
     svelteInstance: app,
-    device
+    apiKey,
+    initialWalletInit: wallets,
+    gas
   })
-
-  setWalletModules(wallets)
 
   return API
 }
@@ -108,6 +218,7 @@ function mountApp() {
   styleEl.innerHTML = `
     ${SofiaProRegular}
   `
+
   document.body.appendChild(styleEl)
 
   // add to DOM
@@ -186,6 +297,10 @@ function mountApp() {
   
           /* BORDER RADIUS */
           --border-radius-1: 24px;  
+          --border-radius-2: 20px;  
+          --border-radius-3: 16px;  
+          --border-radius-4: 12px;  
+          --border-radius-5: 8px;  
 
           /* SHADOWS */
           --shadow-0: none;
@@ -206,7 +321,18 @@ function mountApp() {
       </style>
     `
 
-  document.body.appendChild(onboard)
+  const containerElementQuery =
+    state.get().accountCenter.containerElement || 'body'
+
+  const containerElement = document.querySelector(containerElementQuery)
+
+  if (!containerElement) {
+    throw new Error(
+      `Element with query ${containerElementQuery} does not exist.`
+    )
+  }
+
+  containerElement.appendChild(onboard)
 
   const app = new App({
     target

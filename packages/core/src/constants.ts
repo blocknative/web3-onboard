@@ -1,4 +1,5 @@
-import type { AppState } from './types'
+import { configuration } from './configuration.js'
+import type { AppState } from './types.js'
 
 export const APP_INITIAL_STATE: AppState = {
   wallets: [],
@@ -7,7 +8,25 @@ export const APP_INITIAL_STATE: AppState = {
   accountCenter: {
     enabled: true,
     position: 'topRight',
-    expanded: false
+    expanded: false,
+    containerElement: 'body',
+    minimal: configuration.device.type === 'mobile'
+  },
+  notify: {
+    enabled: true,
+    transactionHandler: () => {},
+    position: 'topRight',
+    replacement: {
+      gasPriceProbability: {
+        speedup: 80,
+        cancel: 95
+      }
+    }
+  },
+  notifications: [],
+  locale: '',
+  connect: {
+    showSidebar: true
   }
 }
 

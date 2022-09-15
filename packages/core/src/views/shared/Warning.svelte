@@ -1,6 +1,6 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
-  import infoIcon from '../../icons/info'
+  import infoIcon from '../../icons/info.js'
 </script>
 
 <style>
@@ -10,7 +10,7 @@
     font-size: var(--onboard-font-size-7, var(--font-size-7));
     line-height: 16px;
     border: 1px solid var(--onboard-warning-400, var(--warning-400));
-    background-color: var(--onboard-warning-100, var(--warning-100));
+    background: var(--onboard-warning-100, var(--warning-100));
     margin: 0;
     border-radius: 12px;
   }

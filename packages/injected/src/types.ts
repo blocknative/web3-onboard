@@ -21,6 +21,7 @@ export enum ProviderIdentityFlag {
   CoinbaseExtension = 'isCoinbaseWallet',
   Detected = 'request',
   Dcent = 'isDcentWallet',
+  Exodus = 'isExodus',
   Frame = 'isFrame',
   HuobiWallet = 'isHbWallet',
   HyperPay = 'isHyperPay',
@@ -39,7 +40,14 @@ export enum ProviderIdentityFlag {
   OneInch = 'isOneInchIOSWallet',
   Tokenary = 'isTokenary',
   Tally = 'isTally',
-  BraveWallet = 'isBraveWallet'
+  BraveWallet = 'isBraveWallet',
+  Rabby = 'isRabby',
+  MathWallet = 'isMathWallet',
+  GameStop = 'isGamestop',
+  BitKeep = 'isBitKeep',
+  Sequence = 'isSequence',
+  Core = 'isAvalanche',
+  Opera = 'isOpera'
 }
 
 export enum ProviderLabel {
@@ -52,6 +60,7 @@ export enum ProviderLabel {
   Coinbase = 'Coinbase Wallet',
   Dcent = `D'CENT`,
   Detected = 'Detected Wallet',
+  Exodus = 'Exodus',
   Frame = 'Frame',
   HuobiWallet = 'Huobi Wallet',
   HyperPay = 'HyperPay',
@@ -70,7 +79,13 @@ export enum ProviderLabel {
   XDEFI = 'XDEFI Wallet',
   OneInch = '1inch Wallet',
   Tokenary = 'Tokenary Wallet',
-  Tally = 'Tally Wallet'
+  Tally = 'Tally Ho Wallet',
+  Rabby = 'Rabby',
+  MathWallet = 'MathWallet',
+  GameStop = 'GameStop Wallet',
+  BitKeep = 'BitKeep',
+  Sequence = 'Sequence',
+  Core = 'Core'
 }
 
 export interface MeetOneProvider extends ExternalProvider {
@@ -89,10 +104,12 @@ export enum InjectedNameSpace {
   Tally = 'tally',
   Web3 = 'web3',
   Arbitrum = 'arbitrum',
-  XFI = 'xfi'
+  XFI = 'xfi',
+  GameStop = 'gamestop',
+  BitKeep = 'bitkeep',
+  Avalanche = 'avalanche'
 }
 
-//   Arbitrum = 'arbitrum'
 export interface CustomWindow extends Window {
   BinanceChain: BinanceProvider
   ethereum: InjectedProvider
@@ -102,6 +119,11 @@ export interface CustomWindow extends Window {
   xfi: {
     ethereum: InjectedProvider
   }
+  gamestop: InjectedProvider
+  bitkeep: {
+    ethereum: InjectedProvider
+  }
+  avalanche: InjectedProvider
 }
 
 export type InjectedProvider = ExternalProvider &

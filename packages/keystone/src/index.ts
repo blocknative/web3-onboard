@@ -1,12 +1,12 @@
 import type {
-  Account,
   Chain,
   CustomNetwork,
-  ScanAccountsOptions,
+  Platform,
   WalletInit
 } from '@web3-onboard/common'
 
-import type { providers } from 'ethers'
+import type { Account, ScanAccountsOptions } from '@web3-onboard/hw-common'
+import type { StaticJsonRpcProvider } from '@ethersproject/providers'
 
 const DEFAULT_BASE_PATH = "m/44'/60'/0'/0"
 
@@ -25,7 +25,7 @@ const assets = [
 
 const getAccount = async (
   keyring: any,
-  provider: providers.StaticJsonRpcProvider,
+  provider: StaticJsonRpcProvider,
   index: number
 ): Promise<Account> => {
   const address = (await keyring.addAccounts())[index]
@@ -42,7 +42,7 @@ const getAccount = async (
 
 const generateAccounts = async (
   keyring: any,
-  provider: providers.StaticJsonRpcProvider
+  provider: StaticJsonRpcProvider
 ): Promise<Account[]> => {
   const accounts = []
   let zeroBalanceAccounts = 0,
@@ -64,13 +64,23 @@ const generateAccounts = async (
 }
 
 function keystone({
-  customNetwork
+  customNetwork,
+  filter
 }: {
   customNetwork?: CustomNetwork
+  filter?: Platform[]
 } = {}): WalletInit {
   const getIcon = async () => (await import('./icon.js')).default
-  return () => {
+
+  return ({ device }) => {
     let accounts: Account[] | undefined
+
+    const filtered =
+      Array.isArray(filter) &&
+      (filter.includes(device.type) || filter.includes(device.os.name))
+
+    if (filtered) return null
+
     return {
       label: 'Keystone',
       getIcon,
@@ -79,38 +89,51 @@ function keystone({
           '@ethersproject/providers'
         )
 
-        const { default: AirGappedKeyring } = await import(
+        let { default: AirGappedKeyring } = await import(
           '@keystonehq/eth-keyring'
         )
+
+        // Super weird esm issue where the default export is an object with a property default on it
+        // if that is the case then we just grab the default value
+        AirGappedKeyring =
+          'default' in AirGappedKeyring
+            ? // @ts-ignore
+              AirGappedKeyring.default
+            : AirGappedKeyring
 
         const { TransactionFactory: Transaction } = await import(
           '@ethereumjs/tx'
         )
 
         const {
-          accountSelect,
           createEIP1193Provider,
           ProviderRpcError,
-          ProviderRpcErrorCode,
-          getCommon
+          ProviderRpcErrorCode
         } = await import('@web3-onboard/common')
+
+        const {
+          accountSelect,
+          getCommon,
+          bigNumberFieldsToStrings,
+          getHardwareWalletProvider
+        } = await import('@web3-onboard/hw-common')
 
         const keyring = AirGappedKeyring.getEmptyKeyring()
         await keyring.readKeyring()
 
         const eventEmitter = new EventEmitter()
 
+        let ethersProvider: StaticJsonRpcProvider
+
         let currentChain: Chain = chains[0]
         const scanAccounts = async ({
-          derivationPath,
-          chainId,
-          asset
+          chainId
         }: ScanAccountsOptions): Promise<Account[]> => {
           currentChain =
             chains.find(({ id }: Chain) => id === chainId) || currentChain
 
-          const provider = new StaticJsonRpcProvider(currentChain.rpcUrl)
-          return generateAccounts(keyring, provider)
+          ethersProvider = new StaticJsonRpcProvider(currentChain.rpcUrl)
+          return generateAccounts(keyring, ethersProvider)
         }
 
         const getAccounts = async () => {
@@ -141,30 +164,9 @@ function keystone({
           return keyring.signMessage(account.address, message)
         }
 
-        const request = async ({
-          method,
-          params
-        }: {
-          method: string
-          params: any
-        }) => {
-          const response = await fetch(currentChain.rpcUrl, {
-            method: 'POST',
-            body: JSON.stringify({
-              id: '42',
-              method,
-              params
-            })
-          }).then(res => res.json())
-
-          if (response.result) {
-            return response.result
-          } else {
-            throw response.error
-          }
-        }
-
-        const keystoneProvider = { request }
+        const keystoneProvider = getHardwareWalletProvider(
+          () => currentChain.rpcUrl
+        )
 
         const provider = createEIP1193Provider(keystoneProvider, {
           eth_requestAccounts: async () => {
@@ -216,15 +218,31 @@ function keystone({
             transactionObject.gasLimit =
               transactionObject.gas || transactionObject.gasLimit
 
-            const transaction = Transaction.fromTxData(
-              {
-                ...transactionObject
-              },
-              { common, freeze: false }
+            // 'gas' is an invalid property for the TransactionRequest type
+            delete transactionObject.gas
+
+            const signer = ethersProvider.getSigner(from)
+
+            let populatedTransaction = bigNumberFieldsToStrings(
+              await signer.populateTransaction(transactionObject)
             )
 
-            // @ts-ignore
-            const signedTx = await keyring.signTransaction(from, transaction)
+            const transaction = Transaction.fromTxData(populatedTransaction, {
+              common,
+              freeze: false
+            })
+
+            let signedTx
+            try {
+              // @ts-ignore
+              signedTx = await keyring.signTransaction(from, transaction)
+            } catch (error: any) {
+              if (error.message && error.message.message) {
+                throw new Error(error.message.message)
+              } else {
+                throw new Error(error)
+              }
+            }
 
             return `0x${signedTx.serialize().toString('hex')}`
           },

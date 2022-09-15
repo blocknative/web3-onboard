@@ -1,14 +1,14 @@
 <script lang="ts">
   import { BehaviorSubject, merge } from 'rxjs'
   import type { Chain } from '@web3-onboard/common'
-  import { chainIdToLabel, connectedToValidAppChain } from '../../utils'
-  import setChain from '../../chain'
-  import { wallets$ } from '../../streams'
+  import { chainIdToLabel, connectedToValidAppChain } from '../../utils.js'
+  import setChain from '../../chain.js'
+  import { wallets$ } from '../../streams.js'
   import { distinctUntilChanged, debounceTime, skip } from 'rxjs/operators'
-  import caretIcon from '../../icons/caret'
+  import caretIcon from '../../icons/caret.js'
 
   export let selectIcon: string = caretIcon
-  export let color = '#33394B'
+  export let colorVar: string
   export let chains: Chain[]
   export let bold = false
 
@@ -95,14 +95,24 @@
 
 {#if wallet}
   {#if $switching$}
-    <span style={`color: ${color}; padding: 0 12px 0 8px;`}>switching...</span>
+    <span
+      style={`
+        color: var(${colorVar}, 
+        var(--account-center-network-selector-color, var (--gray-500))); 
+        padding: 0 8px 0 4px;
+      `}
+      >switching...</span
+    >
   {:else}
     <select
       class="flex justify-center items-center pointer"
       bind:this={selectElement}
       value={wallet.chains[0].id}
       on:change={handleSelect}
-      style={`color: ${color}; background-image: url('data:image/svg+xml;utf8,${selectIcon}'); ${
+      style={`
+        color: var(${colorVar}, 
+        var(--account-center-network-selector-color, var (--gray-500)));
+        background-image: url('data:image/svg+xml;utf8,${selectIcon}'); ${
         bold ? 'font-weight: 700;' : ''
       }`}
     >

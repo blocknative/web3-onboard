@@ -1,22 +1,23 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
-  import { internalState$, wallets$ } from '../../streams'
+  import { wallets$ } from '../../streams.js'
   import {
     getDefaultChainStyles,
     shortenAddress,
     shortenEns,
     unrecognizedChainStyle
-  } from '../../utils'
-  import { updateAccountCenter } from '../../store/actions'
-  import questionIcon from '../../icons/question'
-  import caretIcon from '../../icons/caret'
+  } from '../../utils.js'
+  import { updateAccountCenter } from '../../store/actions.js'
+  import questionIcon from '../../icons/question.js'
+  import caretIcon from '../../icons/caret.js'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
-  import warningIcon from '../../icons/warning'
+  import warningIcon from '../../icons/warning.js'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
   import NetworkSelector from '../shared/NetworkSelector.svelte'
-  import { state } from '../../store'
+  import { state } from '../../store/index.js'
+  import { configuration } from '../../configuration.js'
 
-  const { appMetadata } = internalState$.getValue()
+  const { appMetadata } = configuration
   const appIcon = (appMetadata && appMetadata.icon) || questionIcon
   const chains = state.get().chains
 
@@ -57,14 +58,18 @@
 
 <style>
   .minimized {
-    background-color: var(--onboard-white, var(--white));
+    background: var(
+      --account-center-minimized-background,
+      var(--onboard-white, var(--white))
+    );
     border: 1px solid var(--onboard-gray-100, var(--gray-100));
     width: 100%;
     box-shadow: var(--onboard-shadow-3, var(--shadow-3));
+    pointer-events: auto;
   }
 
   .radius {
-    border-radius: 16px;
+    border-radius: var(--onboard-border-radius-3, var(--border-radius-3));
   }
 
   .padding-5 {
@@ -78,6 +83,7 @@
   .address {
     font-weight: 700;
     line-height: var(--onboard-font-line-height-2, var(--font-line-height-2));
+    color: var(--account-center-minimized-address-color, initial);
   }
 
   .balance {
@@ -96,10 +102,6 @@
     padding: 4px;
     border-radius: 25px;
     margin-right: 4px;
-  }
-
-  .caret {
-    width: 24px;
   }
 
   .container {
@@ -180,7 +182,9 @@
         class="container shadow-1 flex items-center"
         style={`border-color: ${
           validAppChain ? '#D0D4F7' : '#FFAF00'
-        }; background-color: ${validAppChain ? '#EFF1FC' : '#FFEFCC'}`}
+        }; background-color: var(--account-center-minimized-chain-select-background, var(${
+          validAppChain ? '--primary-100' : '--warning-100'
+        }))`}
       >
         <div class="flex items-center">
           <div
@@ -202,7 +206,11 @@
               : warningIcon}
           </div>
 
-          <NetworkSelector {chains} color="#33394B" selectIcon={caretIcon} />
+          <NetworkSelector
+            {chains}
+            colorVar="--account-center-minimized-network-selector-color"
+            selectIcon={caretIcon}
+          />
         </div>
       </div>
     </div>

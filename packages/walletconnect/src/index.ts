@@ -1,12 +1,10 @@
-import { StaticJsonRpcProvider } from '@ethersproject/providers'
+import type { StaticJsonRpcProvider as StaticJsonRpcProviderType } from '@ethersproject/providers'
 
-import {
+import type {
   Chain,
   ProviderAccounts,
   WalletInit,
-  EIP1193Provider,
-  ProviderRpcError,
-  ProviderRpcErrorCode
+  EIP1193Provider
 } from '@web3-onboard/common'
 
 interface WalletConnectOptions {
@@ -14,10 +12,11 @@ interface WalletConnectOptions {
   qrcodeModalOptions?: {
     mobileLinks: string[]
   }
+  connectFirstChainId?: boolean
 }
 
 function walletConnect(options?: WalletConnectOptions): WalletInit {
-  const { bridge = 'https://bridge.walletconnect.org', qrcodeModalOptions } =
+  const { bridge = 'https://bridge.walletconnect.org', qrcodeModalOptions , connectFirstChainId} =
     options || {}
 
   return () => {
@@ -25,11 +24,25 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
       label: 'Blockchain.com',
       getIcon: async () => (await import('./blockchain-com-icon.js')).default,
       getInterface: async ({ chains, EventEmitter }) => {
+        const { StaticJsonRpcProvider } = await import(
+          '@ethersproject/providers'
+        )
+
+        const { ProviderRpcError, ProviderRpcErrorCode } = await import(
+          '@web3-onboard/common'
+        )
+
         const { default: WalletConnect } = await import('@walletconnect/client')
 
-        const { default: QRCodeModal } = await import(
-          '@walletconnect/qrcode-modal'
-        )
+        // This is a cjs module and therefor depending on build tooling
+        // sometimes it will be nested in the { default } object and
+        // other times it will be the actual import
+        // @ts-ignore - It thinks it is missing properties since it expect it to be nested under default
+        let QRCodeModal: typeof import('@walletconnect/qrcode-modal').default =
+          await import('@walletconnect/qrcode-modal')
+
+        // @ts-ignore - TS thinks that there is no default property on the `QRCodeModal` but sometimes there is
+        QRCodeModal = QRCodeModal.default || QRCodeModal
 
         const { Subject, fromEvent } = await import('rxjs')
         const { takeUntil, take } = await import('rxjs/operators')
@@ -50,7 +63,7 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
           public removeListener: typeof EventEmitter['removeListener']
 
           private disconnected$: InstanceType<typeof Subject>
-          private providers: Record<string, StaticJsonRpcProvider>
+          private providers: Record<string, StaticJsonRpcProviderType>
 
           constructor({
             connector,
@@ -117,7 +130,7 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                   // Check if connection is already established
                   if (!this.connector.connected) {
                     // create new session
-                    this.connector.createSession().then(() => {
+                    this.connector.createSession(connectFirstChainId ? {chainId: parseInt(chains[0].id, 16)} : undefined).then(() => {
                       QRCodeModal.open(
                         this.connector.uri,
                         () =>

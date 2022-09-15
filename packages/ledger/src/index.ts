@@ -1,21 +1,22 @@
-import type {
-  ScanAccountsOptions,
-  Account,
-  Asset,
-  Chain,
-  CustomNetwork,
-  WalletInit,
-  GetInterfaceHelpers,
-  EIP1193Provider
-} from '@web3-onboard/common'
-
 // these cannot be dynamically imported
 import { TypedDataUtils } from '@metamask/eth-sig-util'
-import { Buffer } from 'buffer'
-
 import type Transport from '@ledgerhq/hw-transport'
-import type { providers } from 'ethers'
+import type { StaticJsonRpcProvider } from '@ethersproject/providers'
 import type Eth from '@ledgerhq/hw-app-eth'
+
+import type {
+  Chain,
+  WalletInit,
+  GetInterfaceHelpers,
+  Platform
+} from '@web3-onboard/common'
+
+import type {
+  CustomNetwork,
+  ScanAccountsOptions,
+  Account,
+  Asset
+} from '@web3-onboard/hw-common'
 
 const LEDGER_LIVE_PATH = `m/44'/60'`
 const LEDGER_DEFAULT_PATH = `m/44'/60'/0'`
@@ -60,7 +61,7 @@ const getAccount = async (
   derivationPath: string,
   asset: Asset,
   index: number,
-  provider: providers.StaticJsonRpcProvider,
+  provider: StaticJsonRpcProvider,
   eth: Eth
 ): Promise<Account> => {
   const dPath =
@@ -81,7 +82,7 @@ const getAccount = async (
 const getAddresses = async (
   derivationPath: string,
   asset: Asset,
-  provider: providers.StaticJsonRpcProvider,
+  provider: StaticJsonRpcProvider,
   eth: Eth
 ): Promise<Account[]> => {
   const accounts = []
@@ -92,6 +93,7 @@ const getAddresses = async (
   // Then adds 4 more 0 balance accounts to the array
   while (zeroBalanceAccounts < 5) {
     const acc = await getAccount(derivationPath, asset, index, provider, eth)
+
     if (acc.balance.value.isZero()) {
       zeroBalanceAccounts++
       accounts.push(acc)
@@ -107,13 +109,23 @@ const getAddresses = async (
 }
 
 function ledger({
-  customNetwork
+  customNetwork,
+  filter
 }: {
   customNetwork?: CustomNetwork
+  filter?: Platform[]
 } = {}): WalletInit {
   const getIcon = async () => (await import('./icon.js')).default
-  return () => {
+
+  return ({ device }) => {
     let accounts: Account[] | undefined
+
+    const filtered =
+      Array.isArray(filter) &&
+      (filter.includes(device.type) || filter.includes(device.os.name))
+
+    if (filtered) return null
+
     return {
       label: 'Ledger',
       getIcon,
@@ -126,8 +138,17 @@ function ledger({
           '@ethersproject/providers'
         )
 
-        const { accountSelect, createEIP1193Provider, ProviderRpcError, getCommon } =
-          await import('@web3-onboard/common')
+        const { createEIP1193Provider, ProviderRpcError } = await import(
+          '@web3-onboard/common'
+        )
+
+        const { accountSelect } = await import('@web3-onboard/hw-common')
+
+        const {
+          getCommon,
+          bigNumberFieldsToStrings,
+          getHardwareWalletProvider
+        } = await import('@web3-onboard/hw-common')
 
         const { TransactionFactory: Transaction, Capability } = await import(
           '@ethereumjs/tx'
@@ -136,6 +157,8 @@ function ledger({
         const transport: Transport = await getTransport()
         const eth = new Eth(transport)
         const eventEmitter = new EventEmitter()
+
+        let ethersProvider: StaticJsonRpcProvider
 
         let currentChain: Chain = chains[0]
 
@@ -147,7 +170,7 @@ function ledger({
           try {
             currentChain =
               chains.find(({ id }: Chain) => id === chainId) || currentChain
-            const provider = new StaticJsonRpcProvider(currentChain.rpcUrl)
+            ethersProvider = new StaticJsonRpcProvider(currentChain.rpcUrl)
 
             // Checks to see if this is a custom derivation path
             // If it is then just return the single account
@@ -162,15 +185,23 @@ function ledger({
                   address,
                   balance: {
                     asset: asset.label,
-                    value: await provider.getBalance(address)
+                    value: await ethersProvider.getBalance(address)
                   }
                 }
               ]
             }
 
-            return getAddresses(derivationPath, asset, provider, eth)
+            const accounts = await getAddresses(
+              derivationPath,
+              asset,
+              ethersProvider,
+              eth
+            )
+
+            return accounts
           } catch (error) {
             const { statusText } = error as { statusText: string }
+
             throw new Error(
               statusText === 'UNKNOWN_ERROR'
                 ? 'Ledger device is locked, please unlock to continue'
@@ -206,44 +237,26 @@ function ledger({
           return eth
             .signPersonalMessage(
               account.derivationPath,
-              Buffer.from(message).toString('hex')
+              ethUtil.stripHexPrefix(message)
             )
             .then(result => {
               let v = (result['v'] - 27).toString(16)
               if (v.length < 2) {
                 v = '0' + v
               }
-
               return `0x${result['r']}${result['s']}${v}`
             })
         }
 
-        const request: EIP1193Provider['request'] = async ({
-          method,
-          params
-        }) => {
-          const response = await fetch(currentChain.rpcUrl, {
-            method: 'POST',
-            body: JSON.stringify({
-              id: '42',
-              method,
-              params
-            })
-          }).then(res => res.json())
-
-          if (response.result) {
-            return response.result
-          } else {
-            throw response.error
-          }
-        }
-
-        const ledgerProvider = { request }
+        const ledgerProvider = getHardwareWalletProvider(
+          () => currentChain?.rpcUrl
+        )
 
         const provider = createEIP1193Provider(ledgerProvider, {
           eth_requestAccounts: async () => {
             // Triggers the account select modal if no accounts have been selected
             const accounts = await getAccounts()
+
             if (!Array.isArray(accounts))
               throw new Error(
                 'No account selected. Must call eth_requestAccounts first.'
@@ -296,17 +309,27 @@ function ledger({
             const chainId = currentChain.hasOwnProperty('id')
               ? Number.parseInt(currentChain.id)
               : 1
+
             const common = await getCommon({ customNetwork, chainId })
 
             transactionObject.gasLimit =
               transactionObject.gas || transactionObject.gasLimit
 
-            const transaction = Transaction.fromTxData(
-              {
-                ...transactionObject
-              },
-              { common }
+            // 'gas' is an invalid property for the TransactionRequest type
+            delete transactionObject.gas
+
+            const signer = ethersProvider.getSigner(from)
+
+            let populatedTransaction = await signer.populateTransaction(
+              transactionObject
             )
+
+            populatedTransaction =
+              bigNumberFieldsToStrings(populatedTransaction)
+
+            const transaction = Transaction.fromTxData(populatedTransaction, {
+              common
+            })
 
             let unsignedTx = transaction.getMessageToSign(false)
 
@@ -324,7 +347,7 @@ function ledger({
             // Reconstruct the signed transaction
             const signedTx = Transaction.fromTxData(
               {
-                ...transactionObject,
+                ...populatedTransaction,
                 v: `0x${v}`,
                 r: `0x${r}`,
                 s: `0x${s}`
