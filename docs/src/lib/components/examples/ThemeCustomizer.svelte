@@ -143,9 +143,10 @@
   })
 </script>
 
-<main>
+<section>
   <div class="control-panel">
     <label for="Theme">Click Color Circles to Set Theme: </label>
+    <hr>
     <div class="theming-container">
       {#each Object.keys(defaultStyling) as target}
         <div class="theming-inputs-wrapper">
@@ -161,16 +162,17 @@
         </div>
       {/each}
     </div>
+    <div class="copy-styles-container">
+      <textarea readonly bind:value={copyableStyles} rows="10" class="copy-styles-textarea" />
+      <button on:click={async () => await copyStylingConfig()}> Copy Styling Config </button>
+    </div>
+    <hr>
     <div class="backdrop-toggle">
       <label class="switch">
         <input type="checkbox" on:change={() => handleBackdrop()} bind:checked />
         <span class="slider" />
       </label>
       Disabled Backdrop for Styling
-    </div>
-    <div class="copy-styles-container">
-      <textarea readonly bind:value={copyableStyles} class="copy-styles-textarea" />
-      <button on:click={async () => await copyStylingConfig()}> Copy Styling Config </button>
     </div>
   </div>
   <div class="image-drop-container">
@@ -186,13 +188,9 @@
       <button on:click={() => onboard.connectWallet()} id="connectBtn">Connect Wallet</button>
     </div>
   </div>
-</main>
+</section>
 
 <style>
-  :root {
-    --kd-main-max-width: 100%;
-    --kd-article-max-width: 100%;
-  }
   /* iframe { width: 100%; height: 62.5rem;} */
   :root {
     --background-color: #ffffff; /* --white */
@@ -226,66 +224,82 @@
     --onboard-wallet-button-border-color: var(--border-color);
     --onboard-wallet-app-icon-border-color: var(--border-color);
   }
-  main {
-    height: 100%;
-  }
+
   button {
-    width: 14rem;
-    margin: 8px;
+    color: var(--kd-color-gray-body);
+    background: var(--kd-color-gray-inverse);
+    padding: 1rem;
   }
 
-  .copy-styles-container {
-    display: flex;
-    flex-direction: row;
-    align-items: end;
-  }
-
-  .copy-styles-textarea {
-    width: 30rem;
-    height: 16rem;
-    margin: 0 0 8px;
+  hr {
+    border-color: var(--kd-color-gray-soft);
   }
 
   .control-panel {
     z-index: 9999;
-    left: 0;
-    right: auto;
-    top: auto;
-    bottom: auto;
+    left: auto;
+    right: 0;
+    /* top: 10rem; */
+    bottom: 0;
     position: fixed;
     overflow: hidden;
-    background-color: black;
-    width: 480px;
-    margin: auto;
+    width: 420px;
+    margin: 1rem;
+    padding: 1rem;
+    color: var(--kd-color-gray-inverse);
+    background-color: var(--kd-color-gray-divider);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+    display: flex;
+    flex-flow: column;
+    gap: 1rem;
+  }
+
+  .copy-styles-container {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+    gap: inherit;
+  }
+
+  .copy-styles-textarea {
+    padding: 1rem;
+    color: var(--kd-color-gray-inverse);
+    background: rgba(0, 0, 0, 0.2);
   }
 
   .theming-container {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    width: 100%;
+    flex-direction: column;
   }
 
   .theming-inputs-wrapper {
     display: flex;
     align-items: center;
-    width: 24rem;
   }
   .theming-inputs {
     display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
     overflow: hidden;
     width: 2em;
     height: 2em;
-    border-radius: 50%;
-    box-shadow: 1px 1px 3px 0px grey;
-    margin: 0.4em;
+    margin: 0.5em;
   }
   input[type='color'] {
+    width: inherit;
+    height: inherit;
+    background: none;
+  }
+  input[type='color']::-webkit-color-swatch-wrapper {
     padding: 0;
-    width: 150%;
-    height: 150%;
-    margin: -25%;
+    background: none;
+  }
+  input[type='color']::-webkit-color-swatch {
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
   }
   .image-drop-container {
     height: 100%;
@@ -361,10 +375,6 @@
   .backdrop-toggle {
     display: flex;
     align-items: center;
-    margin: 8px 8px 16px 4px;
-  }
-
-  .backdrop-toggle > label {
-    margin-right: 8px;
+    gap: 1rem;
   }
 </style>
