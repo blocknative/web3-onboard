@@ -12,7 +12,7 @@ Yes it’s free to use forever.
 
 3. Do I need an API key?
 
-No you don’t need an API key to use web3-onboard. The optional addition of an API key allows access to transaction notifications and gas estimates from Blocknative. You can get one here
+No you don’t need an API key to use web3-onboard. The optional addition of an API key allows access to transaction notifications and more frequent gas estimates from Blocknative. You can [get one here](https://explorer.blocknative.com/account)
 
 4. Which frameworks does web3-onboard support?
 
