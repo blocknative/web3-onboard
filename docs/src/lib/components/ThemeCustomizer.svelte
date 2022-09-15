@@ -74,6 +74,12 @@
     webURL = ''
   }
 
+  const handleConnectWalletBtn = () => {
+    !!$wallets$ && $wallets$.length
+      ? onboard.disconnectWallet({label: $wallets$[0].label})
+      : onboard.connectWallet()
+  }
+
   const defaultStyling = {
     '--background-color': '#ffffff',
     '--text-color': '#1a1d26',
@@ -201,7 +207,9 @@
   <div class="image-drop-container">
     <div id="image_drop_area">
       <div class="drop-area-controls">
-        <div>Enter your website url or drag and drop a screenshot to preview web3-onboard on your site</div>
+        <div>
+          Enter your website url or drag and drop a screenshot to preview web3-onboard on your site
+        </div>
         <!-- <div>Then click color circles above to change the theme.</div> -->
         <div class="website-input-row">
           <input
@@ -210,8 +218,15 @@
             placeholder="Enter your Website URL"
             bind:value={webURL}
           />
-          <button on:click={addURLToIFrame}>Preview on your website</button>
-          <button on:click={resetPage} type="button" disabled={(iframeUsed || uploaded_image) ? false : true }>Reset</button>
+          <button on:click={addURLToIFrame}>Preview On Your Website</button>
+          <button
+            on:click={resetPage}
+            type="button"
+            disabled={iframeUsed || !!uploaded_image ? false : true}>Reset</button
+          >
+          <button on:click={handleConnectWalletBtn} type="button"
+            >{!!$wallets$ && $wallets$.length ? 'Disconnect Wallet' : 'Connect Wallet'}</button
+          >
         </div>
       </div>
       <iframe
@@ -220,8 +235,6 @@
         class={iframeUsed ? 'iframe-visible' : 'iframe-hidden'}
       />
       <div style:display={hideDirections ? 'none' : ''}>
-        <button on:click={() => onboard.connectWallet()} id="connectBtn">Connect Wallet</button>
-        <div>or</div>
         <div>Drag and drop an image here to preview</div>
       </div>
     </div>
@@ -383,7 +396,7 @@
     height: 100%;
     background: center no-repeat;
     background-size: contain;
-    background-color: rgba(0,0,0, 0.25);
+    background-color: rgba(0, 0, 0, 0.25);
     box-sizing: border-box;
 
     display: flex;

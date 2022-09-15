@@ -41,6 +41,14 @@
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
 
+  let webURL = ''
+  let iframeUsed = false
+
+  const addURLToIFrame = () => {
+    document.getElementById('iframe_underlay').setAttribute('src', webURL)
+    iframeUsed = true
+  }
+
   const defaultStyling = {
     '--background-color': '#ffffff',
     '--text-color': '#1a1d26',
@@ -48,7 +56,7 @@
     '--accent-background': '#ebebed',
     '--accent-color': '#929bed',
     '--accent-color-hover': '#eff1fc',
-    '--secondary-text-color': '#707481',
+    '--secondary-text-color': '#707481'
     // '--secondary-accent-background': '#242835'
   }
 
@@ -131,9 +139,8 @@
     reader.readAsDataURL(file)
   }
 
-  let hideForIframe = false
   let uploaded_image
-  const handleImageDrop = (dataFromDocument) => {
+  const handleImageDrop = dataFromDocument => {
     if (dataFromDocument) {
       if (image_drop_area) {
         // Event listener for dragging the image over the div
@@ -161,14 +168,14 @@
       }
     }
   }
-  const initIFrame = async (dataFromDocument) => {
+  const initIFrame = async dataFromDocument => {
     if (dataFromDocument) {
       return (hideForIframe = true)
     }
   }
 
   onMount(async () => {
-    var dataFromDocument = location.hash.replace(/#/, "");
+    var dataFromDocument = location.hash.replace(/#/, '')
     console.log(dataFromDocument)
     await initIFrame(dataFromDocument)
     handleImageDrop(dataFromDocument)
@@ -209,7 +216,7 @@
     --onboard-wallet-button-color: var(--text-color);
     --onboard-wallet-button-border-color: var(--border-color);
     --onboard-wallet-app-icon-border-color: var(--border-color);
-/* 
+    /* 
     --account-center-minimized-background: var(--background-color);
     --account-center-minimized-address-color: var(--text-color);
     --account-center-minimized-balance-color: var(--secondary-text-color);
@@ -315,14 +322,8 @@
     height: 150%;
     margin: -25%;
   }
-  iframe {
-    height: 450px;
-    width: 100%;
-    resize: both;
-    overflow: auto;
-    margin: 8px 0px;
-  }
-  #image_drop_area {
+  #image_drop_area,
+  #iframe_underlay {
     width: 100%;
     height: 100%;
     background-position: center;
@@ -395,13 +396,22 @@
 </style>
 
 <main>
-  {#if hideForIframe}
+  {#if !iframeUsed}
     <div id="image_drop_area">
       <p id="image_drop_area_direction">
-        Drag and drop a screen shot of your site to customize styling.
+        Drag and drop a screen shot of your site to customize styling origin....
         <br />
-        Click color circles above to change the theme.
       </p>
+      <div>
+        <input
+          type="text"
+          class="text-input"
+          placeholder="Enter your Website URL"
+          bind:value={webURL}
+        />
+        <button on:click={addURLToIFrame}> View With Your Website </button>
+      </div>
+      Click color circles above to change the theme.
       <!-- {#if uploaded_image}
         {#if $wallets$}
           <div class="notify-chain-container">
@@ -455,54 +465,57 @@
         {/if}
       {/if} -->
     </div>
-  {/if}
-  {#if !hideForIframe}
-    <div class="themes">
-      <label for="Theme">Click Color Circles to Set Theme: </label>
-      <div class="theming-container">
-        {#each Object.keys(defaultStyling) as target}
-          <div class="theming-inputs-wrapper">
-            <div class="theming-inputs">
-              <input
-                type="color"
-                name="Theme"
-                bind:value={defaultStyling[target]}
-                on:input={e => updateTheme(e, target)}
-              />
-            </div>
-            <span class="text" id="current-theme"
-              >{target} : {defaultStyling[target]}</span
-            >
-          </div>
-        {/each}
-      </div>
-      <div class="backdrop-toggle">
-        <label class="switch">
-          <input
-            type="checkbox"
-            on:change={() => handleBackdrop()}
-            bind:checked
-          />
-          <span class="slider" />
-        </label>
-        Disabled Backdrop for Styling
-      </div>
-      <div class="copy-styles-container">
-        <textarea
-          readonly
-          bind:value={copyableStyles}
-          class="copy-styles-textarea"
-        />
-        <button on:click={async () => await copyStylingConfig()}>
-          Copy Styling Config
-        </button>
-      </div>
-    </div>
+  {:else}
     <iframe
-      id="inlineFrameExample"
-      name="inlineFrameExample"
-      title="Inline Frame Example"
-      src={window.location.href + '#stylize'}
+      id="iframe_underlay"
+      title="iframe area for testing W3O with your app"
     />
   {/if}
+  <div class="themes">
+    <label for="Theme">Click Color Circles to Set Theme: </label>
+    <div class="theming-container">
+      {#each Object.keys(defaultStyling) as target}
+        <div class="theming-inputs-wrapper">
+          <div class="theming-inputs">
+            <input
+              type="color"
+              name="Theme"
+              bind:value={defaultStyling[target]}
+              on:input={e => updateTheme(e, target)}
+            />
+          </div>
+          <span class="text" id="current-theme"
+            >{target} : {defaultStyling[target]}</span
+          >
+        </div>
+      {/each}
+    </div>
+    <div class="backdrop-toggle">
+      <label class="switch">
+        <input
+          type="checkbox"
+          on:change={() => handleBackdrop()}
+          bind:checked
+        />
+        <span class="slider" />
+      </label>
+      Disabled Backdrop for Styling
+    </div>
+    <div class="copy-styles-container">
+      <textarea
+        readonly
+        bind:value={copyableStyles}
+        class="copy-styles-textarea"
+      />
+      <button on:click={async () => await copyStylingConfig()}>
+        Copy Styling Config
+      </button>
+    </div>
+  </div>
+  <iframe
+    id="inlineFrameExample"
+    name="inlineFrameExample"
+    title="Inline Frame Example"
+    src={window.location.href + '#stylize'}
+  />
 </main>
