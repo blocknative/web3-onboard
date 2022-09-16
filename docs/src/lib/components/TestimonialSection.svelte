@@ -1,5 +1,5 @@
 <script>
-  import TestimonialsGraphic from './svg/logos-group.svelte'
+  import TestimonialsGraphic from './svg/logos-group.svg'
 </script>
 
 <section>
@@ -7,7 +7,7 @@
     {"Who's using web3-onboard?"}
   </h1>
   <div>
-    <TestimonialsGraphic />
+    <img src={TestimonialsGraphic} alt="Web3-Onboard-users">
   </div>
 </section>
 
