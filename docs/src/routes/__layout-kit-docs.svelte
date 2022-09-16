@@ -20,6 +20,8 @@
   import '$lib/styles/fonts.css'
   import '$lib/styles/kit-docs.css'
 
+  import LinkOutIcon from '$lib/icons/LinkOutIcon.svelte';
+
   import { page } from '$app/stores'
 
   import {
@@ -37,6 +39,17 @@
 
   /** @type {import('@svelteness/kit-docs').ResolvedSidebarConfig | null} */
   export let sidebar = null
+  const themingLink = {
+    slug: '/theming',
+    title: 'Theming',
+    icon: { after: LinkOutIcon }
+  }
+
+  const addThemingLinkToSideBar = () => {
+    sidebar?.links['Getting Started'].splice(1, 0, themingLink)
+  }
+
+  addThemingLinkToSideBar()
 
   /** @type {import('@svelteness/kit-docs').NavbarConfig} */
   const navbar = {
