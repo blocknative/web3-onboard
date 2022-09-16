@@ -419,6 +419,7 @@
     display: flex;
     flex-flow: column;
     gap: 1rem;
+    z-index: 9999;
   }
 
   .website-input-row {
