@@ -64,10 +64,11 @@ export function addChains(chains: Chain[]): void {
   // chains are validated on init
   const action = {
     type: ADD_CHAINS,
-    payload: chains.map(({ namespace = 'evm', id, ...rest }) => ({
+    payload: chains.map(({ namespace = 'evm', id, rpcUrl, ...rest }) => ({
       ...rest,
       namespace,
-      id: id.toLowerCase()
+      id: id.toLowerCase(),
+      rpcUrl: rpcUrl.trim()
     }))
   }
 

@@ -13,7 +13,7 @@
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
   import { getDefaultChainStyles, unrecognizedChainStyle } from '../../utils.js'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
-  import NetworkBadgeSelector from '../shared/NetworkSelector.svelte'
+  import NetworkSelector from '../shared/NetworkSelector.svelte'
   import caretLightIcon from '../../icons/caret-light.js'
   import warningIcon from '../../icons/warning.js'
   import questionIcon from '../../icons/question.js'
@@ -155,6 +155,7 @@
 
   .network-selector-container {
     margin-left: 1rem;
+    width: 100%;
   }
 
   .network-selector-label {
@@ -372,12 +373,13 @@
               default: en.accountCenter.currentNetwork
             })}
           </div>
-          <div on:click class="flex items-center">
-            <NetworkBadgeSelector
+          <div on:click class="flex items-center" style=" width: 100%;">
+            <NetworkSelector
               chains={appChains}
               colorVar="--account-center-maximized-network-selector-color"
               bold={true}
               selectIcon={caretLightIcon}
+              parentCSSId="maximized_ac"
             />
           </div>
         </div>

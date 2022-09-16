@@ -100,10 +100,14 @@
       --account-center-minimized-balance-color,
       var(--onboard-gray-400, var(--gray-400))
     );
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 7.25rem;
   }
 
   .network {
-    margin-left: 0.5rem;
+    margin-left: 0.2rem;
   }
 
   .chain-icon {
@@ -227,6 +231,7 @@
             {chains}
             colorVar="--account-center-minimized-network-selector-color"
             selectIcon={caretIcon}
+            parentCSSId="minimized_ac"
           />
         </div>
       </div>
