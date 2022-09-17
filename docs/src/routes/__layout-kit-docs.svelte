@@ -6,7 +6,8 @@
       '/': '/',
       '/docs': '/docs',
       '/faq': '/faq',
-      '/examples': '/examples'
+      '/examples': '/examples',
+      '/theming': '/theming'
     }
   })
 </script>
