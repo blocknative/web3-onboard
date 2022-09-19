@@ -67,7 +67,7 @@
   .wallets-section {
     width: 100%;
     border-radius: var(
-      --account-center-boarder-radius,
+      --account-center-border-radius,
       var(--onboard-border-radius-3, var(--border-radius-3))
     );
   }
