@@ -2953,6 +2953,15 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.0"
 
+"@web3-onboard/injected-wallets@^2.2.2":
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.2.2.tgz#035e798b35506d51a9e0be29408fe7c1739f4b85"
+  integrity sha512-msJNdbmWkhPzYcfE3K4hDOvF0T9T4sQB19N2W4RL/kdufi3qCwvZaVW3+tkvcPnOsOKPS9+D4N2GFfY0khqMqg==
+  dependencies:
+    "@web3-onboard/common" "^2.2.2"
+    joi "^17.4.2"
+    lodash.uniqby "^4.7.0"
+
 "@web3auth/base-plugin@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@web3auth/base-plugin/-/base-plugin-1.0.1.tgz#1e2a87acf745299fdff6f92e6c46ee9bc38aa670"
