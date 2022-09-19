@@ -1,10 +1,16 @@
 {
   "name": "web3-onboard-monorepo",
-  "version": "2.11.0",
+  "version": "2.11.1",
   "private": true,
   "workspaces": {
-    "packages": ["./packages/*"],
-    "nohoist": ["**/react", "**/react-dom", "**/csstype"]
+    "packages": [
+      "./packages/*"
+    ],
+    "nohoist": [
+      "**/react",
+      "**/react-dom",
+      "**/csstype"
+    ]
   },
   "description": "Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardised spec compliant web3 providers for all supported wallets, framework agnostic modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
   "keywords": [
