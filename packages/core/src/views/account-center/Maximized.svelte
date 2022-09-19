@@ -55,7 +55,7 @@
       var(--onboard-gray-600, var(--gray-600))
     );
     border-radius: var(
-      --account-center-boarder-radius,
+      --account-center-border-radius,
       var(--onboard-border-radius-3, var(--border-radius-3))
     );
     width: 100%;
