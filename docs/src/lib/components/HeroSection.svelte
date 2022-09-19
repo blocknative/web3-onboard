@@ -35,7 +35,6 @@
     display: flex;
     flex-flow: column;
     align-items: center;
-    /* justify-content: center; */
     background: radial-gradient(
         50% 50% at 50% 50%,
         rgba(0, 216, 255, 0.02) 0%,
