@@ -843,7 +843,7 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
 
   --account-center-border
   --account-center-box-shadow
-  --account-center-boarder-radius
+  --account-center-border-radius
   --account-center-chain-warning
   --account-center-minimized-balance-color
   --account-center-minimized-chain-select-background
