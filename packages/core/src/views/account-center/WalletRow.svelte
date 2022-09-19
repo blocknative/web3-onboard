@@ -70,18 +70,21 @@
   }
 
   .container:hover {
-    background: var(
-      --account-center-maximized-account-section-background-hover,
-      var(--onboard-gray-500, var(--gray-500))
-    );
+    background: var(--onboard-gray-500, var(--gray-500));
   }
 
   .container:hover > div > span.balance {
-    color: var(--onboard-gray-100, var(--gray-100));
+    color: var(
+      --account-center-maximized-balance-color,
+      var(--onboard-gray-100, var(--gray-100))
+    );
   }
 
   .container.primary:hover {
-    background: var(--onboard-gray-700, var(--gray-700));
+    background: var(
+      --account-center-maximized-account-section-background-hover,
+      var(--onboard-gray-700, var(--gray-700))
+    );
   }
 
   .address-ens {
@@ -97,11 +100,15 @@
     margin-left: 0.5rem;
     color: var(--onboard-gray-300, var(--gray-300));
     transition: color 150ms ease-in-out, background-color 150ms ease-in-out;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 7.25rem;
   }
 
   .elipsis-container {
     padding: 0.25rem;
-    margin-left: 0.5rem;
+    margin-left: 0.25rem;
     border-radius: 24px;
     transition: color 150ms ease-in-out, background-color 150ms ease-in-out;
     background-color: transparent;

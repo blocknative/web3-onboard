@@ -2953,25 +2953,6 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.0"
 
-"@web3-onboard/core@^2.8.2":
-  version "2.8.2"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.8.2.tgz#70d1730384a3e028bbe07769086361db5c631d78"
-  integrity sha512-AE2xQVKsmjtvW7lI7xFFdfAtoLxmZRa9qfCv5MtHRDY9Ojqkj06dLgteJmB4FBFZnh79iXoKbIj7N+vRpvjHIw==
-  dependencies:
-    "@web3-onboard/common" "^2.2.2"
-    bignumber.js "^9.0.0"
-    bnc-sdk "^4.4.1"
-    bowser "^2.11.0"
-    ethers "5.5.3"
-    eventemitter3 "^4.0.7"
-    joi "17.6.0"
-    lodash.merge "^4.6.2"
-    lodash.partition "^4.6.0"
-    nanoid "^4.0.0"
-    rxjs "^7.5.2"
-    svelte "^3.49.0"
-    svelte-i18n "^3.3.13"
-
 "@web3auth/base-plugin@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@web3auth/base-plugin/-/base-plugin-1.0.1.tgz#1e2a87acf745299fdff6f92e6c46ee9bc38aa670"

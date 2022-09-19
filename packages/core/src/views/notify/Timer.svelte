@@ -45,7 +45,7 @@
 
   .time {
     color: var(
-      --notify-onboard-gray-300,
+      --notify-onboard-timer-color,
       var(--onboard-gray-300, var(--gray-300))
     );
     margin-left: 4px;

@@ -68,7 +68,7 @@
     width: 100%;
     min-height: 56px;
     background: var(
-      --notify-onboard-gray-600,
+      --notify-onboard-background,
       var(--onboard-gray-600, var(--gray-600))
     );
     border-radius: var(
@@ -117,21 +117,21 @@
 
   .notify-close-btn > .close-icon {
     color: var(
-      --notify-onboard-gray-300,
+      --notify-onboard-close-icon-color,
       var(--onboard-gray-300, var(--gray-300))
     );
   }
 
   .notify-close-btn:hover > .close-icon {
     color: var(
-      --notify-onboard-gray-100,
+      --notify-onboard-close-icon-hover,
       var(--onboard-gray-100, var(--gray-100))
     );
   }
 
   .transaction-status {
     color: var(
-      --notify-onboard-primary-100,
+      --notify-onboard-transaction-status-color,
       var(--onboard-primary-100, var(--primary-100))
     );
     line-height: 14px;
