@@ -1,6 +1,6 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
-  import { connectWallet$ } from '../../streams'
+  import { connectWallet$ } from '../../streams.js'
   import Modal from '../shared/Modal.svelte'
   import InfoIcon from '../shared/InfoIcon.svelte'
 

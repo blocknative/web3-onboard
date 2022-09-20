@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onDestroy } from 'svelte'
-  import { updateAccountCenter } from '../../store/actions'
-  import type { AccountCenter } from '../../types'
+  import { updateAccountCenter } from '../../store/actions.js'
+  import type { AccountCenter } from '../../types.js'
   import Maximized from './Maximized.svelte'
   import Minimized from './Minimized.svelte'
   import Micro from './Micro.svelte'

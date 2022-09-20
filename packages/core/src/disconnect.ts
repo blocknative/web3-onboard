@@ -1,9 +1,9 @@
-import { getBlocknativeSdk } from './services'
-import { state } from './store'
-import { removeWallet } from './store/actions'
-import { disconnectWallet$ } from './streams'
-import type { DisconnectOptions, WalletState } from './types'
-import { validateDisconnectOptions } from './validation'
+import { getBlocknativeSdk } from './services.js'
+import { state } from './store/index.js'
+import { removeWallet } from './store/actions.js'
+import { disconnectWallet$ } from './streams.js'
+import type { DisconnectOptions, WalletState } from './types.js'
+import { validateDisconnectOptions } from './validation.js'
 
 async function disconnect(options: DisconnectOptions): Promise<WalletState[]> {
   const error = validateDisconnectOptions(options)

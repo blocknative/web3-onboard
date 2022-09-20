@@ -1,5 +1,5 @@
 <script lang="ts">
-  import pendingIcon from '../../icons/pending'
+  import pendingIcon from '../../icons/pending.js'
 
   export let size: number // px
   export let color = 'yellow'

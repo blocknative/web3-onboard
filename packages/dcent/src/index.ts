@@ -1,17 +1,17 @@
-import {
-  Account,
-  accountSelect,
+import type {
   Chain,
-  createEIP1193Provider,
-  CustomNetwork,
-  ProviderRpcErrorCode,
-  ProviderRpcError,
-  ScanAccountsOptions,
   WalletInit,
-  EIP1193Provider
+  EIP1193Provider,
+  Platform
 } from '@web3-onboard/common'
 
 import type { providers } from 'ethers'
+
+import type {
+  CustomNetwork,
+  Account,
+  ScanAccountsOptions
+} from '@web3-onboard/hw-common'
 
 interface CustomWindow extends Window {
   ethereum: EIP1193Provider
@@ -57,15 +57,24 @@ const generateAccounts = async (
 }
 
 function dcent({
-  customNetwork
+  customNetwork,
+  filter
 }: {
   customNetwork?: CustomNetwork
+  filter?: Platform[]
 } = {}): WalletInit {
   const getIcon = async () => (await import('./icon.js')).default
-  return helpers => {
-    const { device } = helpers
+
+  return ({ device }) => {
+    const filtered =
+      Array.isArray(filter) &&
+      (filter.includes(device.type) || filter.includes(device.os.name))
+
+    if (filtered) return null
+
     const isMobile = device.type === 'mobile'
     let accounts: Account[] | undefined
+
     return {
       label: "D'CENT",
       getIcon,
@@ -89,7 +98,6 @@ function dcent({
         const { StaticJsonRpcProvider } = await import(
           '@ethersproject/providers'
         )
-        const { default: Common, Hardfork } = await import('@ethereumjs/common')
 
         const { default: EthDcentKeyring } = await import('eth-dcent-keyring')
         const dcentKeyring = new EthDcentKeyring({})
@@ -98,6 +106,16 @@ function dcent({
           '@ethereumjs/tx'
         )
 
+        const { getCommon, accountSelect } = await import(
+          '@web3-onboard/hw-common'
+        )
+
+        const {
+          createEIP1193Provider,
+          ProviderRpcErrorCode,
+          ProviderRpcError
+        } = await import('@web3-onboard/common')
+
         let currentChain: Chain = chains[0]
         const scanAccounts = async ({
           chainId
@@ -105,7 +123,9 @@ function dcent({
           currentChain =
             chains.find(({ id }: Chain) => id === chainId) || currentChain
 
-          const provider = new StaticJsonRpcProvider(currentChain.rpcUrl)
+          const provider = new StaticJsonRpcProvider(
+            currentChain.rpcUrl
+          ) as providers.StaticJsonRpcProvider
 
           return generateAccounts(dcentKeyring, provider)
         }
@@ -193,16 +213,11 @@ function dcent({
             // Set the `from` field to the currently selected account
             transactionObject = { ...transactionObject, from }
 
-            // @ts-ignore -- Due to weird commonjs exports
-            const CommonConstructor = Common.default || Common
+            const chainId = currentChain.hasOwnProperty('id')
+              ? Number.parseInt(currentChain.id)
+              : 1
 
-            const common = new CommonConstructor({
-              chain: customNetwork || Number.parseInt(currentChain.id) || 1,
-              // Berlin is the minimum hardfork that will allow for EIP1559
-              hardfork: Hardfork.Berlin,
-              // List of supported EIPS
-              eips: [1559]
-            })
+            const common = await getCommon({ customNetwork, chainId })
 
             transactionObject.gasLimit =
               transactionObject.gas || transactionObject.gasLimit

@@ -964,6 +964,11 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --notify-onboard-main-padding
 }
 ```
+### Theming
+
+Interested in seeing what your site would look like with web3-onboard styled o fit your application?
+
+[Try out our theming tool](https://onboard.blocknative.com/theming) that not only allows you to drop a screenshot or enter your sites web address to see how web3-onboard looks on your site but also style web3-onboard and match your sites look and feel. You can then copy the theme configuration, add it to your site's main css file and you will have onboard themed specifically for your application.
 
 ## Build Environments
 

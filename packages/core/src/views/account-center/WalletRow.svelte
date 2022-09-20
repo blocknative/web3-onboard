@@ -2,16 +2,16 @@
   import { _ } from 'svelte-i18n'
   import { fade } from 'svelte/transition'
   import { ProviderRpcErrorCode } from '@web3-onboard/common'
-  import type { WalletState } from '../../types'
-  import { shortenAddress, shortenEns, copyWalletAddress } from '../../utils'
+  import type { WalletState } from '../../types.js'
+  import { shortenAddress, shortenEns, copyWalletAddress } from '../../utils.js'
   import en from '../../i18n/en.json'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
-  import elipsisIcon from '../../icons/elipsis'
-  import { setPrimaryWallet } from '../../store/actions'
-  import disconnect from '../../disconnect'
-  import { selectAccounts } from '../../provider'
-  import { connectWallet$ } from '../../streams'
+  import elipsisIcon from '../../icons/elipsis.js'
+  import { setPrimaryWallet } from '../../store/actions.js'
+  import disconnect from '../../disconnect.js'
+  import { selectAccounts } from '../../provider.js'
+  import { connectWallet$ } from '../../streams.js'
 
   export let wallet: WalletState
   export let primary: boolean
@@ -70,18 +70,21 @@
   }
 
   .container:hover {
-    background: var(
-      --account-center-maximized-account-section-background-hover,
-      var(--onboard-gray-500, var(--gray-500))
-    );
+    background: var(--onboard-gray-500, var(--gray-500));
   }
 
   .container:hover > div > span.balance {
-    color: var(--onboard-gray-100, var(--gray-100));
+    color: var(
+      --account-center-maximized-balance-color,
+      var(--onboard-gray-100, var(--gray-100))
+    );
   }
 
   .container.primary:hover {
-    background: var(--onboard-gray-700, var(--gray-700));
+    background: var(
+      --account-center-maximized-account-section-background-hover,
+      var(--onboard-gray-700, var(--gray-700))
+    );
   }
 
   .address-ens {
@@ -97,11 +100,15 @@
     margin-left: 0.5rem;
     color: var(--onboard-gray-300, var(--gray-300));
     transition: color 150ms ease-in-out, background-color 150ms ease-in-out;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 7.25rem;
   }
 
   .elipsis-container {
     padding: 0.25rem;
-    margin-left: 0.5rem;
+    margin-left: 0.25rem;
     border-radius: 24px;
     transition: color 150ms ease-in-out, background-color 150ms ease-in-out;
     background-color: transparent;

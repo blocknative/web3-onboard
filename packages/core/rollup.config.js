@@ -5,7 +5,6 @@ import json from '@rollup/plugin-json'
 import sveltePreprocess from 'svelte-preprocess'
 import typescript from '@rollup/plugin-typescript'
 import copy from '@rollup-extras/plugin-copy'
-import { terser } from 'rollup-plugin-terser'
 
 const production = !process.env.ROLLUP_WATCH
 
@@ -13,8 +12,7 @@ export default {
   input: 'src/index.ts',
   output: {
     format: 'es',
-    dir: 'dist/',
-    sourcemap: true,
+    dir: 'dist/'
   },
   plugins: [
     json(),
@@ -40,18 +38,6 @@ export default {
     copy({
       src: 'src/i18n/en.json',
       dest: 'i18n'
-    }),
-    production && terser({
-      ecma: 2017,
-      mangle: { toplevel: true },
-      compress: {
-        module: true,
-        toplevel: true,
-        unsafe_arrows: true,
-        drop_console: production,
-        drop_debugger: production
-      },
-      output: { quote_style: 1 }
     })
   ],
   external: [

@@ -2,25 +2,25 @@
   import { _ } from 'svelte-i18n'
   import { fly } from 'svelte/transition'
   import { quartOut } from 'svelte/easing'
-  import { wallets$ } from '../../streams'
+  import { wallets$ } from '../../streams.js'
   import en from '../../i18n/en.json'
   import WalletRow from './WalletRow.svelte'
-  import plusCircleIcon from '../../icons/plus-circle'
-  import arrowForwardIcon from '../../icons/arrow-forward'
-  import connect from '../../connect'
-  import disconnect from '../../disconnect'
-  import { state } from '../../store'
+  import plusCircleIcon from '../../icons/plus-circle.js'
+  import arrowForwardIcon from '../../icons/arrow-forward.js'
+  import connect from '../../connect.js'
+  import disconnect from '../../disconnect.js'
+  import { state } from '../../store/index.js'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
-  import { getDefaultChainStyles, unrecognizedChainStyle } from '../../utils'
+  import { getDefaultChainStyles, unrecognizedChainStyle } from '../../utils.js'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
-  import NetworkBadgeSelector from '../shared/NetworkSelector.svelte'
-  import caretLightIcon from '../../icons/caret-light'
-  import warningIcon from '../../icons/warning'
-  import questionIcon from '../../icons/question'
-  import { updateAccountCenter } from '../../store/actions'
-  import blocknative from '../../icons/blocknative'
+  import NetworkSelector from '../shared/NetworkSelector.svelte'
+  import caretLightIcon from '../../icons/caret-light.js'
+  import warningIcon from '../../icons/warning.js'
+  import questionIcon from '../../icons/question.js'
+  import { updateAccountCenter } from '../../store/actions.js'
+  import blocknative from '../../icons/blocknative.js'
   import DisconnectAllConfirm from './DisconnectAllConfirm.svelte'
-  import { configuration } from '../../configuration'
+  import { configuration } from '../../configuration.js'
 
   function disconnectAllWallets() {
     $wallets$.forEach(({ label }) => disconnect({ label }))
@@ -54,7 +54,10 @@
       --account-center-maximized-upper-background,
       var(--onboard-gray-600, var(--gray-600))
     );
-    border-radius: var(--onboard-border-radius-3, var(--border-radius-3));
+    border-radius: var(
+      --account-center-border-radius,
+      var(--onboard-border-radius-3, var(--border-radius-3))
+    );
     width: 100%;
     filter: drop-shadow(0px 4px 16px rgba(178, 178, 178, 0.2));
     padding: 0 1px 1px 1px;
@@ -63,7 +66,10 @@
 
   .wallets-section {
     width: 100%;
-    border-radius: var(--onboard-border-radius-3, var(--border-radius-3));
+    border-radius: var(
+      --account-center-border-radius,
+      var(--onboard-border-radius-3, var(--border-radius-3))
+    );
   }
 
   .p5 {
@@ -76,7 +82,10 @@
   }
 
   .actions {
-    color: var(--onboard-primary-400, var(--primary-400));
+    color: var(
+      --account-center-maximized-upper-action-color,
+      var(--onboard-primary-400, var(--primary-400))
+    );
     padding-left: 2px;
   }
 
@@ -88,7 +97,7 @@
 
   .action-container:hover {
     background-color: var(
-      --account-center-maximized-action-background-hover,
+      --account-center-maximized-upper-action-background-hover,
       rgba(146, 155, 237, 0.2)
     );
   }
@@ -112,7 +121,10 @@
   }
 
   .background-blue {
-    background: var(--onboard-primary-100, var(--primary-100));
+    background: var(
+      --account-center-maximized-network-section-background,
+      var(--onboard-primary-100, var(--primary-100))
+    );
   }
 
   .background-gray {
@@ -124,10 +136,16 @@
   }
 
   .network-container {
-    border-radius: var(--onboard-border-radius-3, var(--border-radius-3));
+    border-radius: var(
+      --account-center-border-radius,
+      var(--onboard-border-radius-3, var(--border-radius-3))
+    );
     color: var(
-      --account-center-maximized-network-section,
-      var(--onboard-gray-500, var(--gray-500))
+      --account-center-maximized-network-text-color,
+      var(
+        --account-center-maximized-network-section,
+        var(--onboard-gray-500, var(--gray-500))
+      )
     );
   }
 
@@ -137,6 +155,7 @@
 
   .network-selector-container {
     margin-left: 1rem;
+    width: 100%;
   }
 
   .network-selector-label {
@@ -146,10 +165,16 @@
 
   .app-info-container {
     background: var(
-      --account-center-maximized-app-info-section,
-      var(--onboard-white, var(--white))
+      --account-center-maximized-info-section-background-color,
+      var(
+        --account-center-maximized-info-section,
+        var(--onboard-white, var(--white))
+      )
     );
-    border-radius: 16px;
+    border-radius: var(
+      --account-center-border-radius,
+      var(--onboard-border-radius-3, var(--border-radius-3))
+    );
     padding: 12px;
   }
 
@@ -157,7 +182,10 @@
     font-weight: 700;
     font-size: var(--onboard-font-size-5, var(--font-size-5));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
-    color: var(--onboard-gray-600, var(--gray-600));
+    color: var(
+      --account-center-maximized-app-name-color,
+      var(--onboard-gray-600, var(--gray-600))
+    );
     margin-bottom: var(--onboard-spacing-5, var(--spacing-5));
     margin-top: 0;
   }
@@ -165,17 +193,26 @@
   .app-description {
     font-size: var(--onboard-font-size-7, var(--font-size-7));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
-    color: var(--onboard-gray-500, var(--gray-500));
+    color: var(
+      --account-center-maximized-app-info-color,
+      var(--onboard-gray-500, var(--gray-500))
+    );
     margin: 0;
   }
 
   .app-info {
     font-size: var(--onboard-font-size-7, var(--font-size-7));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
-    color: var(--onboard-gray-500, var(--gray-500));
+    color: var(
+      --account-center-maximized-app-info-color,
+      var(--onboard-gray-500, var(--gray-500))
+    );
   }
   .app-info-heading {
-    color: var(--onboard-gray-600, var(--gray-600));
+    color: var(
+      --account-center-maximized-app-info-color,
+      var(--onboard-gray-600, var(--gray-600))
+    );
     font-weight: 700;
     margin-top: var(--onboard-spacing-5, var(--spacing-5));
     margin-bottom: var(--onboard-spacing-7, var(--spacing-7));
@@ -336,12 +373,13 @@
               default: en.accountCenter.currentNetwork
             })}
           </div>
-          <div on:click class="flex items-center">
-            <NetworkBadgeSelector
+          <div on:click class="flex items-center" style=" width: 100%;">
+            <NetworkSelector
               chains={appChains}
               colorVar="--account-center-maximized-network-selector-color"
               bold={true}
               selectIcon={caretLightIcon}
+              parentCSSId="maximized_ac"
             />
           </div>
         </div>
