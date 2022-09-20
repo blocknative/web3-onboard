@@ -1,5 +1,5 @@
 <script lang="ts">
-  import successIcon from '../../icons/success'
+  import successIcon from '../../icons/success.js'
 
   export let size: number // px
   export let color: 'green' | 'blue' = 'green'

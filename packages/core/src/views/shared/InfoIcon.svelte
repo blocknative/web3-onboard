@@ -1,5 +1,5 @@
 <script lang="ts">
-  import infoIcon from '../../icons/info'
+  import infoIcon from '../../icons/info.js'
 
   export let size = 20 // px
 </script>

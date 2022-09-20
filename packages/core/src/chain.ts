@@ -1,12 +1,12 @@
 import { firstValueFrom } from 'rxjs'
 import { filter, map } from 'rxjs/operators'
 import { ProviderRpcErrorCode } from '@web3-onboard/common'
-import { addNewChain, switchChain } from './provider'
-import { state } from './store'
-import { switchChainModal$ } from './streams'
-import { validateSetChainOptions } from './validation'
-import type { WalletState } from './types'
-import { toHexString } from './utils'
+import { addNewChain, switchChain } from './provider.js'
+import { state } from './store/index.js'
+import { switchChainModal$ } from './streams.js'
+import { validateSetChainOptions } from './validation.js'
+import type { WalletState } from './types.js'
+import { toHexString } from './utils.js'
 
 async function setChain(options: {
   chainId: string | number
@@ -67,7 +67,10 @@ async function setChain(options: {
       map(() => false)
     )
 
-    if (code === ProviderRpcErrorCode.CHAIN_NOT_ADDED) {
+    if (
+      code === ProviderRpcErrorCode.CHAIN_NOT_ADDED ||
+      code === ProviderRpcErrorCode.UNRECOGNIZED_CHAIN_ID
+    ) {
       // chain has not been added to wallet
       try {
         await addNewChain(wallet.provider, chain)

@@ -23,23 +23,44 @@ declare const window: CustomWindow
 const UNSUPPORTED_METHOD = null
 
 function getInjectedInterface(
-  identity: string
+  identity: string,
+  checkOtherProviderFlags?: boolean
 ): () => Promise<{ provider: EIP1193Provider }> {
   return async () => ({
     provider: (window.ethereum.providers &&
     Array.isArray(window.ethereum.providers)
-      ? window.ethereum.providers.find(provider => !!provider[identity])
+      ? getInterfaceFromProvidersArray(identity, checkOtherProviderFlags)
       : window.ethereum) as EIP1193Provider
   })
+}
+
+function getInterfaceFromProvidersArray(
+  identity: string,
+  checkOtherProviderFlags?: boolean
+) {
+  return window.ethereum.providers.find(provider => {
+    return checkOtherProviderFlags
+      ? !!provider[identity] && !otherProviderFlagsExist(identity, provider)
+      : !!provider[identity]
+  })
+}
+
+function otherProviderFlagsExist(identity: string, provider: any): boolean {
+  const otherProviderFlags = Object.values(ProviderIdentityFlag).filter(
+    id => id !== identity && id !== ProviderIdentityFlag.Detected
+  )
+  return otherProviderFlags.some(id => !!provider[id])
 }
 
 const metamask: InjectedWalletModule = {
   label: ProviderLabel.MetaMask,
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
-    !!provider && !!provider[ProviderIdentityFlag.MetaMask],
+    !!provider &&
+    !!provider[ProviderIdentityFlag.MetaMask] &&
+    !otherProviderFlagsExist(ProviderIdentityFlag.MetaMask, provider),
   getIcon: async () => (await import('./icons/metamask.js')).default,
-  getInterface: getInjectedInterface(ProviderIdentityFlag.MetaMask),
+  getInterface: getInjectedInterface(ProviderIdentityFlag.MetaMask, true),
   platforms: ['all']
 }
 
@@ -94,8 +115,8 @@ const binance: InjectedWalletModule = {
 
     const provider = createEIP1193Provider(window.BinanceChain, {
       eth_chainId: ({ baseRequest }) =>
-        baseRequest({ method: 'eth_chainId' }).then(id =>
-          `0x${parseInt(id as string).toString(16)}`
+        baseRequest({ method: 'eth_chainId' }).then(
+          id => `0x${parseInt(id as string).toString(16)}`
         ),
       // Unsupported method -- will throw error
       eth_selectAccounts: UNSUPPORTED_METHOD,
@@ -175,7 +196,8 @@ const trust: InjectedWalletModule = {
 const opera: InjectedWalletModule = {
   label: ProviderLabel.Opera,
   injectedNamespace: InjectedNameSpace.Ethereum,
-  checkProviderIdentity: ({ device }) => device.browser.name === 'Opera',
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Opera],
   getIcon: async () => (await import('./icons/opera.js')).default,
   getInterface: async () => ({
     provider: createEIP1193Provider(window.ethereum, {
@@ -512,12 +534,35 @@ const bitkeep: InjectedWalletModule = {
   label: ProviderLabel.BitKeep,
   injectedNamespace: InjectedNameSpace.BitKeep,
   checkProviderIdentity: ({ provider }) =>
-    !!provider && !!provider["ethereum"][ProviderIdentityFlag.BitKeep],
+    !!provider && !!provider['ethereum'][ProviderIdentityFlag.BitKeep],
   getIcon: async () => (await import('./icons/bitkeep.js')).default,
   getInterface: async () => ({
-    provider: window.bitkeep && window.bitkeep.ethereum,
+    provider: window.bitkeep && window.bitkeep.ethereum
   }),
   platforms: ['all']
+}
+
+const sequence: InjectedWalletModule = {
+  label: ProviderLabel.Sequence,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Sequence],
+  getIcon: async () => (await import('./icons/sequence.js')).default,
+  getInterface: async () => ({
+    provider: window.ethereum
+  }),
+  platforms: ['all']
+}
+
+const core: InjectedWalletModule = {
+  label: ProviderLabel.Core,
+  injectedNamespace: InjectedNameSpace.Avalanche,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Core],
+  getIcon: async () => (await import('./icons/core.js')).default,
+  getInterface: getInjectedInterface(ProviderIdentityFlag.Core),
+  // Core wallet is only tested in chrome or chromium browser
+  platforms: ['desktop', 'Chrome', 'Chromium', 'Microsoft Edge']
 }
 
 const wallets = [
@@ -551,7 +596,9 @@ const wallets = [
   rabby,
   mathwallet,
   gamestop,
-  bitkeep
+  bitkeep,
+  sequence,
+  core
 ]
 
 export default wallets

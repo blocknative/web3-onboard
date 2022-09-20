@@ -1,6 +1,6 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
-  import { isSVG } from '../../utils'
+  import { isSVG } from '../../utils.js'
   import Spinner from './Spinner.svelte'
   export let size: number // px
   export let icon: Promise<string> | string // svg string or url string
