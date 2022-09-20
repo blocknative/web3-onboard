@@ -1,5 +1,4 @@
 <script>
-     import {  UniswapWidget } from '$lib/components'
 </script>
 
 # Uniswap Widget Example
