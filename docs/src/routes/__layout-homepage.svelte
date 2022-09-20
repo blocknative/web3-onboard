@@ -1,0 +1,62 @@
+<script context="module">
+  export const prerender = true
+</script>
+
+<script>
+  import '../app.css'
+  import '@svelteness/kit-docs/client/polyfills/index.js'
+  import '@svelteness/kit-docs/client/styles/normalize.css'
+  import '@svelteness/kit-docs/client/styles/theme.css'
+  import '$lib/styles/fonts.css'
+  import '$lib/styles/kit-docs.css'
+
+  import { KitDocs, KitDocsLayout, SocialLink } from '@svelteness/kit-docs'
+
+  import IconBN from '$lib/components/icons/blocknative.svelte'
+
+  /** @type {import('@svelteness/kit-docs').NavbarConfig} */
+  const navbar = {
+    links: [
+      { title: 'Documentation', slug: '/docs', match: /\/docs/ },
+      { title: 'Examples', slug: '/examples', match: /\/examples/ },
+      { title: 'FAQ', slug: '/faq', match: /\/faq/ },
+      { title: 'Blog', slug: 'https://www.blocknative.com/blog' }
+    ]
+  }
+
+  let title = 'Web3-Onboard Docs'
+  let description = 'Web3-Onboard Documentation'
+</script>
+
+<svelte:head>
+  {#if title}
+    <title>{title}</title>
+  {/if}
+  {#if description}
+    <meta name="description" content={description} />
+  {/if}
+</svelte:head>
+
+<KitDocs>
+  <KitDocsLayout {navbar} --kd-content-max-width={'100%'}>
+    <div slot="navbar-left">
+      <a href="/">
+        <IconBN />
+      </a>
+    </div>
+    <div slot="navbar-right-alt">
+      <div class="flex">
+        <SocialLink type="gitHub" href="//github.com/blocknative/web3-onboard" />
+        <SocialLink type="discord" href="//discord.com/invite/KZaBVME" />
+      </div>
+    </div>
+    <slot />
+  </KitDocsLayout>
+</KitDocs>
+
+<style>
+  :global(:root) {
+    --kd-color-brand-rgb: 99, 112, 229;
+    /* --kd-font-family-sans: 'Sofia Pro'; */
+  }
+</style>
