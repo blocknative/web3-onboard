@@ -34,7 +34,8 @@ const config = {
         })
       ],
       optimizeDeps: {
-        include: ['@web3-onboard/core']
+        exclude: ['@web3-react/*', '@web3-react/core'],
+        include: ['@web3-onboard/core', '@uniswap/widgets']
       }
     }
   }

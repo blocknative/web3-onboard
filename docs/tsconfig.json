@@ -8,8 +8,10 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
-    "strict": true
+    "strict": true,
+    "jsx": "react-jsx",
+    "outDir": "build"
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "./.svelte-kit"]
+  "exclude": ["./.svelte-kit"]
 }
