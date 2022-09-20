@@ -1,6 +1,6 @@
 import type { WalletInit, EIP1193Provider } from '@web3-onboard/common'
-import type { MagicInitOptions } from './types'
-import { validateMagicInitOptions } from './validation'
+import type { MagicInitOptions } from './types.js'
+import { validateMagicInitOptions } from './validation.js'
 
 function magic(options: MagicInitOptions): WalletInit {
   if (options) {

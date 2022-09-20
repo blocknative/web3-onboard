@@ -185,6 +185,12 @@ export type Notify = {
    * and notifications are enabled (enabled by default with API key)
    */
   position?: NotificationPosition
+  replacement?: {
+    gasPriceProbability?: {
+      speedup?: number
+      cancel?: number
+    }
+  }
 }
 
 export type NotifyOptions = {

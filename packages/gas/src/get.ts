@@ -1,8 +1,8 @@
 import { firstValueFrom, zip } from 'rxjs'
 import { ajax } from 'rxjs/ajax'
-import { getRequestUrl } from './utils'
-import { RequestOptions, ChainId, GasPlatformResponse } from './types'
-import { validateRequest } from './validation'
+import { getRequestUrl } from './utils.js'
+import { RequestOptions, ChainId, GasPlatformResponse } from './types.js'
+import { validateRequest } from './validation.js'
 
 function get(options: RequestOptions): Promise<GasPlatformResponse[]> {
   const invalid = validateRequest(options)

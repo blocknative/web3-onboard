@@ -1,6 +1,6 @@
 import type { MultiChain } from 'bnc-sdk'
-import { configuration } from './configuration'
-import { handleTransactionUpdates } from './notify'
+import { configuration } from './configuration.js'
+import { handleTransactionUpdates } from './notify.js'
 
 let blocknativeSdk: MultiChain
 

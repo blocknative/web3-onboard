@@ -1,6 +1,6 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
-  import infoIcon from '../../icons/info'
+  import infoIcon from '../../icons/info.js'
 </script>
 
 <style>

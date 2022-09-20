@@ -1,12 +1,16 @@
 import { firstValueFrom } from 'rxjs'
 import { filter, withLatestFrom, pluck } from 'rxjs/operators'
-import { configuration } from './configuration'
-import { state } from './store'
-import { setWalletModules } from './store/actions'
-import { connectWallet$, wallets$ } from './streams'
-import type { ConnectOptions, ConnectOptionsString, WalletState } from './types'
-import { wait } from './utils'
-import { validateConnectOptions } from './validation'
+import { configuration } from './configuration.js'
+import { state } from './store/index.js'
+import { setWalletModules } from './store/actions.js'
+import { connectWallet$, wallets$ } from './streams.js'
+import type {
+  ConnectOptions,
+  ConnectOptionsString,
+  WalletState
+} from './types.js'
+import { wait } from './utils.js'
+import { validateConnectOptions } from './validation.js'
 
 async function connect(
   options?: ConnectOptions | ConnectOptionsString
@@ -25,8 +29,8 @@ async function connect(
   if (!chains.length)
     throw new Error(
       'At least one chain must be set before attempting to connect a wallet'
-  )
-  
+    )
+
   const { autoSelect } = options || {
     autoSelect: { label: '', disableModals: false }
   }
