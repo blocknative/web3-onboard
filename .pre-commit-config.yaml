@@ -1,0 +1,13 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.3.0
+    hooks:
+    -   id: check-yaml
+    -   id: end-of-file-fixer
+    -   id: trailing-whitespace
+    -   id: detect-private-key
+
+-   repo: https://github.com/Yelp/detect-secrets
+    rev: v1.3.0
+    hooks:
+    -   id: detect-secrets
