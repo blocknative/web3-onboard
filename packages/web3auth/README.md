@@ -18,7 +18,7 @@ import web3authModule from '@web3-onboard/web3auth'
 
 const web3auth = web3authModule({
   clientId:
-    'DJuUOKvmNnlzy6ruVgeWYWIMKLRyYtjYa9Y10VCeJzWZcygDlrYLyXsBQjpJ2hxlBO9dnl8t9GmAC2qOP5vnIGo'
+    'DJuUOKvmNnlzy6ruVgeWYWIMKLRyYtjYa9Y10VCeJzWZcygDlrYLyXsBQjpJ2hxlBO9dnl8t9GmAC2qOP5vnIGo'  // pragma: allowlist secret
 })
 
 const onboard = Onboard({

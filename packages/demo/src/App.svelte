@@ -73,12 +73,12 @@
   })
 
   const fortmatic = fortmaticModule({
-    apiKey: 'pk_test_886ADCAB855632AA'
+    apiKey: 'pk_test_886ADCAB855632AA'  <!-- pragma: allowlist secret -->
   })
 
   const web3auth = web3authModule({
     clientId:
-      'DJuUOKvmNnlzy6ruVgeWYWIMKLRyYtjYa9Y10VCeJzWZcygDlrYLyXsBQjpJ2hxlBO9dnl8t9GmAC2qOP5vnIGo'
+      'DJuUOKvmNnlzy6ruVgeWYWIMKLRyYtjYa9Y10VCeJzWZcygDlrYLyXsBQjpJ2hxlBO9dnl8t9GmAC2qOP5vnIGo'  <!-- pragma: allowlist secret -->
   })
 
   const torus = torusModule()
@@ -95,7 +95,7 @@
   const trezor = trezorModule(trezorOptions)
 
   const magic = magicModule({
-    apiKey: 'pk_live_02207D744E81C2BA'
+    apiKey: 'pk_live_02207D744E81C2BA'  <!-- pragma: allowlist secret -->
     // userEmail: 'test@test.com'
     // userEmail is optional - if user has already logged in and/or session is still active a login modal will not appear
     // for more info see the @web3-onboard/magic docs
@@ -224,7 +224,7 @@
       }
     },
     // Sign up for your free api key at www.Blocknative.com
-    apiKey: 'xxxxxx-bf21-42ec-a093-9d37e426xxxx'
+    apiKey: 'xxxxxx-bf21-42ec-a093-9d37e426xxxx'  <!-- pragma: allowlist secret -->
   })
 
   // Subscribe to wallet updates
@@ -575,8 +575,8 @@
     --notify-onboard-anchor-color: var(--accent-color);
     --notify-onboard-timer-color: var(--secondary-text-color);
 
-    /* 
-		NEEDS TARGET AS IT USES OPACITY: 
+    /*
+		NEEDS TARGET AS IT USES OPACITY:
 		--account-center-maximized-upper-action-background-hover
 		NEEDS UPDATES FOR DIFFERNT STYLING, DOESNT FIT BASIC VARIABLES ABOVE:
 		Notify status icons, icon backgrounds and icon borders

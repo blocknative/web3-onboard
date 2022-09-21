@@ -33,7 +33,7 @@ aliases:
         | grep version \
         | head -1 \
         | awk -F: '{ print $2 }' \
-        | sed 's/[",]//g'); 
+        | sed 's/[",]//g');
         if [[ $PACKAGE_VERSION =~ "-alpha" ]];
         then
           echo true
@@ -50,7 +50,7 @@ aliases:
         | grep version \
         | head -1 \
         | awk -F: '{ print $2 }' \
-        | sed 's/[",]//g'); 
+        | sed 's/[",]//g');
         if [[ $PACKAGE_VERSION =~ "-alpha" ]];
         then
           echo true

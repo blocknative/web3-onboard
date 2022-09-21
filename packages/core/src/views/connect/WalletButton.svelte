@@ -57,7 +57,7 @@
     );
     box-shadow: var(--onboard-wallet-button-box-shadow, var(--box-shadow-0));
   }
-  
+
   button.wallet-button-styling:hover {
     box-shadow: var(--onboard-wallet-button-box-shadow-hover, var(--box-shadow-0));
   }

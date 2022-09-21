@@ -31,7 +31,7 @@ import Onboard from '@web3-onboard/core'
 import magicModule from '@web3-onboard/magic'
 
 const magic = magicModule({
-  apiKey: 'API_KEY',
+  apiKey: 'API_KEY',  // pragma: allowlist secret
   userEmail: localStorage.getItem('magicUserEmail')
 })
 

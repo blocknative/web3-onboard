@@ -115,7 +115,7 @@ export type AccountCenter = {
   position?: AccountCenterPosition // default: 'topRight'
   expanded?: boolean // default: true
   minimal?: boolean // enabled by default for mobile
-  containerElement?: string // defines the DOM container element for svelte to attach 
+  containerElement?: string // defines the DOM container element for svelte to attach
   // **NOTE: containerElement must be a DOM element with a styleSheet property attached.
   // This property can normally be omitted from the config and allowed to default to document.body
 }
@@ -308,7 +308,7 @@ const onboard = Onboard({
       { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
     ]
   },
-  apiKey: 'xxx387fb-bxx1-4xxc-a0x3-9d37e426xxxx'
+  apiKey: 'xxx387fb-bxx1-4xxc-a0x3-9d37e426xxxx'  // pragma: allowlist secret
   notify: {
     desktop: {
       enabled: true,

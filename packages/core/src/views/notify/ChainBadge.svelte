@@ -21,10 +21,10 @@
 <div
   class="border"
   style={`
-    width: ${size - padding * 2}px; 
-    height: ${size - padding * 2}px; 
-    border-color: var(${borderColorVar}); 
-    padding: ${padding}px; 
+    width: ${size - padding * 2}px;
+    height: ${size - padding * 2}px;
+    border-color: var(${borderColorVar});
+    padding: ${padding}px;
     background-color: ${background};
     border-radius: 50%;
     display: flex;

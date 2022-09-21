@@ -59,7 +59,7 @@ const mountLoginModal = (
 
   target.innerHTML = `
     <style>
-      :host {  
+      :host {
         /* COLORS */
         --white: white;
         --black: black;

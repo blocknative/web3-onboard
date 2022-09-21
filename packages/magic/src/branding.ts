@@ -1,4 +1,4 @@
-export default `    
+export default `
 <a
 role="link"
 tabindex="0"

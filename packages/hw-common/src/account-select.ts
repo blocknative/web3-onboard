@@ -59,7 +59,7 @@ const mountAccountSelect = (
 
   target.innerHTML = `
     <style>
-      :host {  
+      :host {
         /* COLORS */
         --white: white;
         --black: black;

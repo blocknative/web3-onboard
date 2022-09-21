@@ -27,16 +27,16 @@
   const setPositioningDefaults = (targetComponentVariable: string) => {
     return {
       topLeft: `
-        top: var(--${targetComponentVariable}-position-top, 0); 
+        top: var(--${targetComponentVariable}-position-top, 0);
         left: var(--${targetComponentVariable}-position-left, 0);`,
       topRight: `
-        top: var(--${targetComponentVariable}-position-top, 0); 
+        top: var(--${targetComponentVariable}-position-top, 0);
         right: var(--${targetComponentVariable}-position-right, 0);`,
       bottomRight: `
-        bottom: var(--${targetComponentVariable}-position-bottom, 0); 
+        bottom: var(--${targetComponentVariable}-position-bottom, 0);
         right: var(--${targetComponentVariable}-position-right, 0);`,
       bottomLeft: `
-        bottom: var(--${targetComponentVariable}-position-bottom, 0); 
+        bottom: var(--${targetComponentVariable}-position-bottom, 0);
         left: var(--${targetComponentVariable}-position-left, 0);`
     }
   }

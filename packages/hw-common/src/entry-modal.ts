@@ -107,7 +107,7 @@ const baseStyles = `
     width: 100%;
     justify-content: center;
   }
-  
+
   /* Overrides the branding on the modal*/
   .keepkey-modal + .bn-branding { visibility: hidden !important; }
   .keepkey-modal .bn-onboard-prepare-button {

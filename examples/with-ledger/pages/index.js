@@ -17,7 +17,7 @@ const buttonStyles = {
 }
 
 
-const INFURA__KEY = 'cf540cb0b3b643d399e59aef4f5ac179'
+const INFURA__KEY = 'cf540cb0b3b643d399e59aef4f5ac179'  // pragma: allowlist secret
 const ledger = ledgerModule()
 
 // initialize Onboard

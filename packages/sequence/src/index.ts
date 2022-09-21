@@ -43,7 +43,7 @@ function sequence(options?: SequenceOptions): WalletInit {
             },
             eth_chainId: async () => {
               const chainId = await instance.getChainId()
-              
+
               return `0x${chainId.toString(16)}`
             }
           })
