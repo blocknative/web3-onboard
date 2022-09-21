@@ -71,7 +71,7 @@ async function setChain(options: {
       code === ProviderRpcErrorCode.UNRECOGNIZED_CHAIN_ID
     ) {
       // chain has not been added to wallet
-      chainNotInWallet(wallet, chain, switchChainModal$, chainIdHex)
+      return chainNotInWallet(wallet, chain, switchChainModal$, chainIdHex)
     }
 
     if (code === ProviderRpcErrorCode.UNSUPPORTED_METHOD) {
