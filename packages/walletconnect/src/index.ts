@@ -206,7 +206,7 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
               }
 
               // @ts-ignore
-              if (method === 'eth_signTypedData' || method === 'eth_signTypedData_v4') {
+              if (method.includes('eth_signTypedData') {
                 // @ts-ignore
                 return this.connector.signTypedData(params)
               }
