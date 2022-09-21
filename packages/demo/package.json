@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@web3-onboard/coinbase": "^2.1.2",
-    "@web3-onboard/core": "^2.8.4",
+    "@web3-onboard/core": "^2.8.5-alpha.1",
     "@web3-onboard/dcent": "^2.2.0",
     "@web3-onboard/fortmatic": "^2.0.13",
     "@web3-onboard/gas": "^2.1.2",
