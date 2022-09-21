@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs'
-=======
-import { BehaviorSubject, firstValueFrom } from 'rxjs'
->>>>>>> v2-web3-onboard-develop
+import { firstValueFrom, Observable } from 'rxjs'
 import { filter, map } from 'rxjs/operators'
 import { Chain, ProviderRpcErrorCode } from '@web3-onboard/common'
 import { addNewChain, switchChain } from './provider.js'
