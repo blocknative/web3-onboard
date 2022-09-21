@@ -45,7 +45,8 @@ export function isValidPath(path: string) {
     return false
   }
 
-  if (!["60'", "1'", "73799'", "246'"].includes(parts[2])) {
+  const regex = new RegExp("([0-9])+('){1}$");
+  if (!regex.test(parts[2])) {
     return false
   }
 
