@@ -45,7 +45,7 @@ export function isValidPath(path: string) {
     return false
   }
 
-  const regex = new RegExp("([0-9])+(')");
+  const regex = new RegExp("([0-9])+('){1}$");
   if (!regex.test(parts[2])) {
     return false
   }
