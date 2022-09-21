@@ -46,7 +46,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@web3-onboard/core": "^2.7.0",
-    "@web3-onboard/injected-wallets": "^2.0.16"
+    "@web3-onboard/core": "^2.8.4",
+    "@web3-onboard/injected-wallets": "^2.2.3"
   }
 }
