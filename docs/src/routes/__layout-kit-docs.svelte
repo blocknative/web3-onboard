@@ -7,7 +7,7 @@
       '/docs': '/docs',
       '/faq': '/faq',
       '/examples': '/examples',
-      '/theming': '/theming'
+      '/theming-tool': '/theming-tool'
     }
   })
 </script>
