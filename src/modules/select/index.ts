@@ -11,6 +11,7 @@ import { getProviderName } from '../../utilities'
 const desktopDefaultWalletNames = [
   'tokenary',
   'tally',
+  'exodus',
   'metamask',
   'binance',
   'mathwallet',
@@ -156,6 +157,8 @@ function getModule(name: string): Promise<{
       }
     case 'meetone':
       return import('./wallets/meetone')
+    case 'exodus':
+      return import('./wallets/exodus')
     case 'tally':
       return import('./wallets/tally')
     case 'tokenary':
