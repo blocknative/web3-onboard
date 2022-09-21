@@ -1,4 +1,4 @@
-import { BehaviorSubject, firstValueFrom } from 'rxjs'
+import { firstValueFrom, Observable } from 'rxjs'
 import { filter, map } from 'rxjs/operators'
 import { Chain, ProviderRpcErrorCode } from '@web3-onboard/common'
 import { addNewChain, switchChain } from './provider.js'
@@ -71,7 +71,12 @@ async function setChain(options: {
       code === ProviderRpcErrorCode.UNRECOGNIZED_CHAIN_ID
     ) {
       // chain has not been added to wallet
-      return chainNotInWallet(wallet, chain, switchChainModal$, chainIdHex)
+      return chainNotInWallet(
+        wallet,
+        chain,
+        switchChainModalClosed$,
+        chainIdHex
+      )
     }
 
     if (code === ProviderRpcErrorCode.UNSUPPORTED_METHOD) {
@@ -87,11 +92,9 @@ async function setChain(options: {
 const chainNotInWallet = async (
   wallet: WalletState,
   chain: Chain,
-  switchChainModalClosed$: BehaviorSubject<{
-    chain: Chain
-  }>,
+  switchChainModalClosed$: Observable<boolean>,
   chainIdHex: string
-) => {
+): Promise<boolean> => {
   try {
     await addNewChain(wallet.provider, chain)
     await switchChain(wallet.provider, chainIdHex)
