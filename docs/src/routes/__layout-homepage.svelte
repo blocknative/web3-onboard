@@ -25,7 +25,7 @@
   }
 
   let title = 'Web3-Onboard Docs'
-  let description = 'Web3-Onboard Documentation'
+  let description = 'Open-source, framework-agnostic JavaScript library to onboard users to web3 apps. Help your users transact with ease by enabling wallet connection, real-time transaction states, and more.'
 </script>
 
 <svelte:head>
