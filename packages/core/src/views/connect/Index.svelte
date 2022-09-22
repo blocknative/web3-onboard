@@ -259,6 +259,7 @@
 
         if (autoSelect.disableModals) {
           connectWallet$.next({ inProgress: false })
+          return
         }
 
         listenAccountsChanged({
