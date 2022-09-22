@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import * as ethUtil from 'ethereumjs-util'
 import {
   CommonWalletOptions,

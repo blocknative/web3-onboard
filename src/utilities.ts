@@ -72,8 +72,6 @@ export async function getEns(provider: any, address: string): Promise<Ens> {
   try {
     // There is an issue with ens and ts unable to find the
     // declaration file for it even though it is present.
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore - TS7016
     const { default: ENS, getEnsAddress } = await import('@ensdomains/ensjs')
     const ens = new ENS({ provider, ensAddress: getEnsAddress(networkId) })
     const { name } = await ens.getName(address)
