@@ -24,8 +24,8 @@ jobs:
           FLAG: Github
           STATUS: Backlog
           # Product Work Board
-          DATABASE_ID: 29876f9a9b864ca39a984f42e17fd345
-          PROJECT_NAME: Onboard.js
+          DATABASE_ID: 69f0e513a59d445b87a1baed729c75c5
+          PROJECT_NAME: web3-onboard
           # User ids of who to assign the card to in notion: Taylor, Adam, Aaron
           NOTION_USER_IDS: f6cbb362-4908-4138-9ef0-434003d9a9f8,8a3a2287-5d2c-4665-906d-02ae9a113340,3b407adf-6552-40de-b22f-5efa852c34a2
         shell: bash
