@@ -11,8 +11,8 @@
   import '$lib/styles/kit-docs.css'
 
   import { KitDocs, KitDocsLayout, SocialLink } from '@svelteness/kit-docs'
-
   import IconBN from '$lib/components/icons/blocknative.svelte'
+  import SEO from '$lib/components/SEO/index.svelte';
 
   /** @type {import('@svelteness/kit-docs').NavbarConfig} */
   const navbar = {
@@ -24,18 +24,25 @@
     ]
   }
 
-  let title = 'Web3-Onboard Docs'
-  let description = 'Open-source, framework-agnostic JavaScript library to onboard users to web3 apps. Help your users transact with ease by enabling wallet connection, real-time transaction states, and more.'
+  const title = 'Web3-Onboard | The easy way to connect web3 users to dapps'
+  const metadescription = 'Open-source, framework-agnostic JavaScript library to onboard users to web3 apps. Help your users transact with ease by enabling wallet connection, real-time transaction states, and more.'
+  const url = 'https://onboard.blocknative.com/'
 </script>
 
 <svelte:head>
   {#if title}
     <title>{title}</title>
   {/if}
-  {#if description}
-    <meta name="description" content={description} />
+  {#if metadescription}
+    <meta name="description" content={metadescription} />
   {/if}
 </svelte:head>
+
+<SEO
+ {title}
+ {metadescription}
+ {url}
+/>
 
 <KitDocs>
   <KitDocsLayout {navbar} --kd-content-max-width={'100%'}>
