@@ -1,10 +1,9 @@
 <script lang="ts">
   import { ProviderRpcErrorCode, WalletModule } from '@web3-onboard/common'
-  import { BehaviorSubject, takeUntil } from 'rxjs'
   import EventEmitter from 'eventemitter3'
   import { _ } from 'svelte-i18n'
   import en from '../../i18n/en.json'
-  import { selectAccounts } from '../../provider.js'
+  import { listenAccountsChanged, selectAccounts } from '../../provider.js'
   import { state } from '../../store/index.js'
   import { connectWallet$, onDestroy$ } from '../../streams.js'
   import { addWallet, updateAccount } from '../../store/actions.js'
@@ -20,6 +19,18 @@
   import { configuration } from '../../configuration.js'
   import { getBlocknativeSdk } from '../../services.js'
   import { BigNumber } from 'ethers'
+
+  import {
+    BehaviorSubject,
+    distinctUntilChanged,
+    filter,
+    firstValueFrom,
+    mapTo,
+    Subject,
+    take,
+    takeUntil
+  } from 'rxjs'
+
   import {
     getChainId,
     requestAccounts,
@@ -39,8 +50,10 @@
 
   const { appMetadata } = configuration
   const { walletModules, connect } = state.get()
+  const cancelPreviousConnect$ = new Subject<void>()
 
   let connectionRejected = false
+  let previousConnectionRequest = false
   let wallets: WalletWithLoadingIcon[] = []
   let selectedWallet: WalletState | null
   let agreed: boolean
@@ -53,6 +66,25 @@
   const modalStep$ = new BehaviorSubject<keyof i18n['connect']>(
     'selectingWallet'
   )
+
+  // handle the edge case where disableModals was set to true on first call
+  // and then set to false on second call and there is still a pending call
+  connectWallet$
+    .pipe(
+      distinctUntilChanged(
+        (prev, curr) =>
+          prev.autoSelect &&
+          curr.autoSelect &&
+          prev.autoSelect.disableModals === curr.autoSelect.disableModals
+      ),
+      filter(
+        ({ autoSelect }) => autoSelect && autoSelect.disableModals === false
+      ),
+      takeUntil(onDestroy$)
+    )
+    .subscribe(() => {
+      selectedWallet && connectWallet()
+    })
 
   // ==== SELECT WALLET ==== //
   async function selectWallet({
@@ -161,8 +193,15 @@
 
     const { provider, label } = selectedWallet
 
+    cancelPreviousConnect$.next()
+
     try {
-      const [address] = await requestAccounts(provider)
+      const [address] = await Promise.race([
+        // resolved account
+        requestAccounts(provider),
+        // or connect wallet is called again whilst waiting for response
+        firstValueFrom(cancelPreviousConnect$.pipe(mapTo([])))
+      ])
 
       // canceled previous request
       if (!address) {
@@ -216,6 +255,24 @@
 
       // account access has already been requested and is awaiting approval
       if (code === ProviderRpcErrorCode.ACCOUNT_ACCESS_ALREADY_REQUESTED) {
+        previousConnectionRequest = true
+
+        if (autoSelect.disableModals) {
+          connectWallet$.next({ inProgress: false })
+        }
+
+        listenAccountsChanged({
+          provider: selectedWallet.provider,
+          disconnected$: connectWallet$.pipe(
+            filter(({ inProgress }) => !inProgress),
+            mapTo('')
+          )
+        })
+          .pipe(take(1))
+          .subscribe(([account]) => {
+            account && connectWallet()
+          })
+
         return
       }
     }
@@ -286,6 +343,7 @@
   })
 
   function setStep(update: keyof i18n['connect']) {
+    cancelPreviousConnect$.next()
     modalStep$.next(update)
   }
 
@@ -408,6 +466,7 @@
             <ConnectingWallet
               {connectWallet}
               {connectionRejected}
+              {previousConnectionRequest}
               {setStep}
               {deselectWallet}
               {selectedWallet}

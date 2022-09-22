@@ -25,6 +25,7 @@
       },
       "mainText": "Connecting...",
       "paragraph": "Make sure to select all accounts that you want to grant access to.",
+      "previousConnection": "{wallet} already has a pending connection request, please open the menu to login and connect",
       "rejectedText": "Connection Rejected!",
       "rejectedCTA": "Click here to try again",
       "primaryButton": "Back to wallets"
