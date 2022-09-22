@@ -1,9 +1,9 @@
 import { Observable, timer, zip } from 'rxjs'
 import { switchMap } from 'rxjs/operators'
 import { ajax } from 'rxjs/ajax'
-import { getRequestUrl } from './utils'
-import { StreamOptions, GasPlatformResponse } from './types'
-import { validateRequest } from './validation'
+import { getRequestUrl } from './utils.js'
+import { StreamOptions, GasPlatformResponse } from './types.js'
+import { validateRequest } from './validation.js'
 
 function stream(options: StreamOptions): Observable<GasPlatformResponse[]> {
   const invalid = validateRequest(options)

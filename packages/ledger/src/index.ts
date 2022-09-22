@@ -1,19 +1,22 @@
-import type {
-  ScanAccountsOptions,
-  Account,
-  Asset,
-  Chain,
-  CustomNetwork,
-  WalletInit,
-  GetInterfaceHelpers
-} from '@web3-onboard/common'
-
 // these cannot be dynamically imported
 import { TypedDataUtils } from '@metamask/eth-sig-util'
-
 import type Transport from '@ledgerhq/hw-transport'
 import type { StaticJsonRpcProvider } from '@ethersproject/providers'
 import type Eth from '@ledgerhq/hw-app-eth'
+
+import type {
+  Chain,
+  WalletInit,
+  GetInterfaceHelpers,
+  Platform
+} from '@web3-onboard/common'
+
+import type {
+  CustomNetwork,
+  ScanAccountsOptions,
+  Account,
+  Asset
+} from '@web3-onboard/hw-common'
 
 const LEDGER_LIVE_PATH = `m/44'/60'`
 const LEDGER_DEFAULT_PATH = `m/44'/60'/0'`
@@ -90,6 +93,7 @@ const getAddresses = async (
   // Then adds 4 more 0 balance accounts to the array
   while (zeroBalanceAccounts < 5) {
     const acc = await getAccount(derivationPath, asset, index, provider, eth)
+
     if (acc.balance.value.isZero()) {
       zeroBalanceAccounts++
       accounts.push(acc)
@@ -105,13 +109,23 @@ const getAddresses = async (
 }
 
 function ledger({
-  customNetwork
+  customNetwork,
+  filter
 }: {
   customNetwork?: CustomNetwork
+  filter?: Platform[]
 } = {}): WalletInit {
   const getIcon = async () => (await import('./icon.js')).default
-  return () => {
+
+  return ({ device }) => {
     let accounts: Account[] | undefined
+
+    const filtered =
+      Array.isArray(filter) &&
+      (filter.includes(device.type) || filter.includes(device.os.name))
+
+    if (filtered) return null
+
     return {
       label: 'Ledger',
       getIcon,
@@ -124,14 +138,17 @@ function ledger({
           '@ethersproject/providers'
         )
 
+        const { createEIP1193Provider, ProviderRpcError } = await import(
+          '@web3-onboard/common'
+        )
+
+        const { accountSelect } = await import('@web3-onboard/hw-common')
+
         const {
-          accountSelect,
-          createEIP1193Provider,
-          ProviderRpcError,
           getCommon,
           bigNumberFieldsToStrings,
           getHardwareWalletProvider
-        } = await import('@web3-onboard/common')
+        } = await import('@web3-onboard/hw-common')
 
         const { TransactionFactory: Transaction, Capability } = await import(
           '@ethereumjs/tx'
@@ -174,9 +191,17 @@ function ledger({
               ]
             }
 
-            return getAddresses(derivationPath, asset, ethersProvider, eth)
+            const accounts = await getAddresses(
+              derivationPath,
+              asset,
+              ethersProvider,
+              eth
+            )
+
+            return accounts
           } catch (error) {
             const { statusText } = error as { statusText: string }
+
             throw new Error(
               statusText === 'UNKNOWN_ERROR'
                 ? 'Ledger device is locked, please unlock to continue'
@@ -231,6 +256,7 @@ function ledger({
           eth_requestAccounts: async () => {
             // Triggers the account select modal if no accounts have been selected
             const accounts = await getAccounts()
+
             if (!Array.isArray(accounts))
               throw new Error(
                 'No account selected. Must call eth_requestAccounts first.'
@@ -283,6 +309,7 @@ function ledger({
             const chainId = currentChain.hasOwnProperty('id')
               ? Number.parseInt(currentChain.id)
               : 1
+
             const common = await getCommon({ customNetwork, chainId })
 
             transactionObject.gasLimit =
@@ -292,6 +319,7 @@ function ledger({
             delete transactionObject.gas
 
             const signer = ethersProvider.getSigner(from)
+
             let populatedTransaction = await signer.populateTransaction(
               transactionObject
             )

@@ -36,14 +36,4 @@
     display: flex;
     gap: 2rem;
   }
-  /* .link-list a { */
-  /* blue/400 */
-  /* color: #929BED; */
-  /* margin: 1rem; */
-  /* } */
-
-  svg {
-    /* color: inherit; */
-    display: block;
-  }
 </style>

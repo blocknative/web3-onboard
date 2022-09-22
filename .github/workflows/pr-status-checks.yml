@@ -1,0 +1,32 @@
+name: PR Status Checks
+
+on:
+  # Allows it to be manually triggered, used primarily for debugging 
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - v2-web3-onboard-develop
+
+jobs:
+  checks:
+    name: "Checks"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Nodejs and yarn
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn
+        
+      - name: Check that it builds
+        run: yarn build
+
+      - name: Check formatting and types
+        run: yarn check

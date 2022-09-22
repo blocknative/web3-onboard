@@ -1,6 +1,6 @@
 <script>
   import Flexbox from './base/Flexbox.svelte'
-  import PoweredByBadge from './svg/PoweredByBadge.svelte'
+  import PoweredByBn from './svg/powered-by-blocknative.svg'
 
   import DiscordIcon from '~icons/ri/discord-fill'
   import GitHubIcon from '~icons/ri/github-fill'
@@ -43,7 +43,7 @@
       </a>
     </Flexbox>
     <a href="//www.blocknative.com/" target="_blank">
-      <PoweredByBadge />
+      <img src={PoweredByBn} alt="Powered by Blocknative">
       <span class="sr-only">Powered by Blocknative</span>
     </a>
   </Flexbox>

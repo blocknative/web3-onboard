@@ -4,7 +4,11 @@ name: Deploy documentation to Pages
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ["v2-web3-onboard-develop", "feature/documentation"]
+
+    branches: ["docs-main"]
+
+
+
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:

@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { wallets$ } from '../../streams'
-  import { updateAccountCenter } from '../../store/actions'
-  import questionIcon from '../../icons/question'
+  import { wallets$ } from '../../streams.js'
+  import { updateAccountCenter } from '../../store/actions.js'
+  import questionIcon from '../../icons/question.js'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
-  import { configuration } from '../../configuration'
+  import { configuration } from '../../configuration.js'
 
   const { appMetadata } = configuration
   const appIcon = (appMetadata && appMetadata.icon) || questionIcon
@@ -17,15 +17,25 @@
 
 <style>
   .minimized {
-    background: var(--onboard-white, var(--white));
-    border: 1px solid var(--onboard-gray-100, var(--gray-100));
-    box-shadow: var(--onboard-shadow-3, var(--shadow-3));
+    background: var(
+      --account-center-micro-background,
+      var(--onboard-white, var(--white))
+    );
+    border: 1px solid
+      var(--acount-center-border, var(--onboard-gray-100, var(--gray-100)));
+    box-shadow: var(
+      --account-center-box-shadow,
+      var(--onboard-shadow-3, var(--shadow-3))
+    );
     width: 80px;
     pointer-events: auto;
   }
 
   .radius {
-    border-radius: var(--onboard-border-radius-3, var(--border-radius-3));
+    border-radius: var(
+      --account-center-border-radius,
+      var(--onboard-border-radius-3, var(--border-radius-3))
+    );
   }
 
   .drop-shadow {

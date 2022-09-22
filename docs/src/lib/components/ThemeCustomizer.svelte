@@ -4,6 +4,7 @@
 
   import { share } from 'rxjs/operators'
   import { onMount } from 'svelte'
+import { object_without_properties } from 'svelte/internal';
 
   const INFURA_ID = 'e0b15c21b7d54cd4814586334af72618'
   const injected = injectedModule()
@@ -72,15 +73,19 @@
     document.querySelector('#image_drop_area').style.backgroundImage = ''
     uploaded_image = undefined
     webURL = ''
+    resetTheme()
+    const onboardCloseBtnVisible =
+      document?.querySelector('body > onboard-v2')?.shadowRoot?.querySelector('.close-button')
+    if (onboardCloseBtnVisible) onboardCloseBtnVisible?.click()
   }
 
   const handleConnectWalletBtn = () => {
     !!$wallets$ && $wallets$.length
-      ? onboard.disconnectWallet({label: $wallets$[0].label})
+      ? onboard.disconnectWallet({ label: $wallets$[0].label })
       : onboard.connectWallet()
   }
 
-  const defaultStyling = {
+  const baseStyles = {
     '--background-color': '#ffffff',
     '--text-color': '#1a1d26',
     '--border-color': '#ebebed',
@@ -89,6 +94,8 @@
     '--accent-color-hover': '#eff1fc',
     '--secondary-text-color': '#707481'
   }
+
+  let defaultStyling = {...baseStyles}
 
   const baseStyling = `--onboard-connect-sidebar-background: var(--accent-background);
   --onboard-close-button-background: var(--accent-background);
@@ -119,10 +126,17 @@
 
   let copyableStyles = `:root {\n  ${styleToString(defaultStyling)}${baseStyling}\n}`
 
-  const updateThemes = (e, targetStyle) => {
+  const updateTheme = (e, targetStyle) => {
     document.documentElement.style.setProperty(targetStyle, e.target.value)
 
     copyableStyles = `:root {\n  ${styleToString(defaultStyling)}${baseStyling}\n}`
+  }
+
+  const resetTheme = () => {
+    defaultStyling = {...baseStyles}
+    Object.keys(defaultStyling).forEach(style => {
+      document.documentElement.style.setProperty(style, defaultStyling[style])
+    })
   }
 
   let checked = false
@@ -184,7 +198,7 @@
               type="color"
               name="Theme"
               bind:value={defaultStyling[target]}
-              on:input={(e) => updateThemes(e, target)}
+              on:input={(e) => updateTheme(e, target)}
             />
           </div>
           <span class="text" id="current-theme">{target} : {defaultStyling[target]}</span>
@@ -206,7 +220,7 @@
   </div>
   <div class="image-drop-container">
     <div id="image_drop_area">
-      <div class="drop-area-controls">
+      <form class="drop-area-controls" on:submit|preventDefault={addURLToIFrame}>
         <div>
           Enter your website url or drag and drop a screenshot to preview web3-onboard on your site
         </div>
@@ -228,7 +242,7 @@
             >{!!$wallets$ && $wallets$.length ? 'Disconnect Wallet' : 'Connect Wallet'}</button
           >
         </div>
-      </div>
+      </form>
       <iframe
         id="iframe_underlay"
         title="iframe area for testing W3O with your app"

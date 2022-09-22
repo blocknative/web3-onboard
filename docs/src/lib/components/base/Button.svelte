@@ -40,7 +40,7 @@
 
     border: none;
     border-radius: 4px;
-    padding: 1rem 2rem;
+    padding: 1rem 2.5rem;
 
     /* text */
     font-family: 'Sofia Pro';
