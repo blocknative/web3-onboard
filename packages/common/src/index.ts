@@ -1,14 +1,7 @@
-export { ProviderRpcErrorCode } from './types'
-export { ProviderRpcError } from './errors'
-export { createEIP1193Provider } from './eip-1193'
-export { default as accountSelect } from './account-select'
-export { entryModal } from './entry-modal'
-export { SofiaProLight, SofiaProRegular, SofiaProSemiBold } from './fonts'
-export {
-  getCommon,
-  bigNumberFieldsToStrings,
-  getHardwareWalletProvider
-} from './hdwallets'
-export { weiToEth } from './utils'
+export { ProviderRpcError } from './errors.js'
+export { createEIP1193Provider } from './eip-1193.js'
+export { SofiaProLight, SofiaProRegular, SofiaProSemiBold } from './fonts.js'
+export { weiToEth } from './utils.js'
 
-export * from './types'
+export * from './types.js'
+export * from './validation.js'

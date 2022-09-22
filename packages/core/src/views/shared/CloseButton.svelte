@@ -1,5 +1,5 @@
 <script>
-  import closeIcon from '../../icons/close'
+  import closeIcon from '../../icons/close.js'
 
   export let width = '24px'
   export let backgroundColor = `var(

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
-  import { STORAGE_KEYS } from '../../constants'
-  import { configuration } from '../../configuration'
+  import { STORAGE_KEYS } from '../../constants.js'
+  import { configuration } from '../../configuration.js'
   export let agreed: boolean
 
   const {

@@ -20,7 +20,7 @@
       { title: 'Documentation', slug: '/docs', match: /\/docs/ },
       { title: 'Examples', slug: '/examples', match: /\/examples/ },
       { title: 'FAQ', slug: '/faq', match: /\/faq/ },
-      { title: 'Blog', slug: 'https://www.blocknative.com/blog' }
+      { title: 'Blog', slug: 'https://www.blocknative.com/blog/tag/web3-onboard' }
     ]
   }
 

@@ -8,12 +8,13 @@ import type {
   CustomNotification,
   Notification,
   NotificationType
-} from './types'
+} from './types.js'
 
-import { validateTransactionHandlerReturn } from './validation'
-import { state } from './store'
-import { addNotification } from './store/actions'
-import updateBalances from './update-balances'
+import { validateTransactionHandlerReturn } from './validation.js'
+import { state } from './store/index.js'
+import { addNotification } from './store/actions.js'
+import updateBalances from './update-balances.js'
+import { updateTransaction } from './streams.js'
 
 export function handleTransactionUpdates(
   transaction: EthereumTransactionData
@@ -32,6 +33,7 @@ export function handleTransactionUpdates(
   const notification = transactionEventToNotification(transaction, customized)
 
   addNotification(notification)
+  updateTransaction(transaction)
 }
 
 export function transactionEventToNotification(
@@ -164,4 +166,3 @@ export function typeToDismissTimeout(type: string): number {
       return 0
   }
 }
-

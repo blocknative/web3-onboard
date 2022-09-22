@@ -1,21 +1,21 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
-  import { wallets$ } from '../../streams'
+  import { wallets$ } from '../../streams.js'
   import {
     getDefaultChainStyles,
     shortenAddress,
     shortenEns,
     unrecognizedChainStyle
-  } from '../../utils'
-  import { updateAccountCenter } from '../../store/actions'
-  import questionIcon from '../../icons/question'
-  import caretIcon from '../../icons/caret'
+  } from '../../utils.js'
+  import { updateAccountCenter } from '../../store/actions.js'
+  import questionIcon from '../../icons/question.js'
+  import caretIcon from '../../icons/caret.js'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
-  import warningIcon from '../../icons/warning'
+  import warningIcon from '../../icons/warning.js'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
   import NetworkSelector from '../shared/NetworkSelector.svelte'
-  import { state } from '../../store'
-  import { configuration } from '../../configuration'
+  import { state } from '../../store/index.js'
+  import { configuration } from '../../configuration.js'
 
   const { appMetadata } = configuration
   const appIcon = (appMetadata && appMetadata.icon) || questionIcon
@@ -62,14 +62,21 @@
       --account-center-minimized-background,
       var(--onboard-white, var(--white))
     );
-    border: 1px solid var(--onboard-gray-100, var(--gray-100));
+    border: 1px solid
+      var(--account-center-border, var(--onboard-gray-100, var(--gray-100)));
     width: 100%;
-    box-shadow: var(--onboard-shadow-3, var(--shadow-3));
+    box-shadow: var(
+      --account-center-box-shadow,
+      var(--onboard-shadow-3, var(--shadow-3))
+    );
     pointer-events: auto;
   }
 
   .radius {
-    border-radius: var(--onboard-border-radius-3, var(--border-radius-3));
+    border-radius: var(
+      --account-center-border-radius,
+      var(--onboard-border-radius-3, var(--border-radius-3))
+    );
   }
 
   .padding-5 {
@@ -89,11 +96,18 @@
   .balance {
     font-weight: 400;
     line-height: var(--onboard-font-line-height-2, var(--font-line-height-2));
-    color: var(--onboard-gray-400, var(--gray-400));
+    color: var(
+      --account-center-minimized-balance-color,
+      var(--onboard-gray-400, var(--gray-400))
+    );
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 7.25rem;
   }
 
   .network {
-    margin-left: 0.5rem;
+    margin-left: 0.2rem;
   }
 
   .chain-icon {
@@ -114,7 +128,10 @@
   }
 
   .color-yellow {
-    color: var(--onboard-warning-500, var(--warning-500));
+    color: var(
+      --account-center-chain-warning,
+      var(--onboard-warning-500, var(--warning-500))
+    );
   }
 
   .color-white {
@@ -180,11 +197,15 @@
       <div
         on:click|stopPropagation
         class="container shadow-1 flex items-center"
-        style={`border-color: ${
-          validAppChain ? '#D0D4F7' : '#FFAF00'
-        }; background-color: var(--account-center-minimized-chain-select-background, var(${
-          validAppChain ? '--primary-100' : '--warning-100'
-        }))`}
+        style={`border-color: var(${
+          validAppChain
+            ? '--onboard-primary-200, var(--primary-200)'
+            : '--onboard-warning-500, var(--warning-500)'
+        }); background-color: var(${
+          validAppChain
+            ? '--account-center-minimized-chain-select-background, var(--primary-100)'
+            : '--account-center-minimized-chain-select-background-warning, var(--warning-100)'
+        })`}
       >
         <div class="flex items-center">
           <div
@@ -196,7 +217,7 @@
                 ? validAppChain.color ||
                   (defaultChainStyles && defaultChainStyles.color) ||
                   unrecognizedChainStyle.color
-                : '#FFE7B3'
+                : 'var(--onboard-warning-200, var(--warning-200))'
             };`}
           >
             {@html validAppChain
@@ -210,6 +231,7 @@
             {chains}
             colorVar="--account-center-minimized-network-selector-color"
             selectIcon={caretIcon}
+            parentCSSId="minimized_ac"
           />
         </div>
       </div>

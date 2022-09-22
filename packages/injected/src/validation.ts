@@ -1,6 +1,6 @@
-import { InjectedWalletOptions } from './types.js'
-
 import Joi from 'joi'
+import { InjectedWalletOptions } from './types.js'
+import { validate, type ValidateReturn } from '@web3-onboard/common'
 
 const walletModule = Joi.object({
   label: Joi.string().required(),
@@ -20,13 +20,6 @@ const walletOptions = Joi.object({
   custom: wallets,
   filter
 })
-
-type ValidateReturn = Joi.ValidationResult | null
-
-const validate = (validator: Joi.Schema, data: unknown): ValidateReturn => {
-  const result = validator.validate(data)
-  return result.error ? result : null
-}
 
 export const validateWalletOptions = (
   data: InjectedWalletOptions | Partial<InjectedWalletOptions>

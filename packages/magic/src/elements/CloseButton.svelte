@@ -1,5 +1,5 @@
 <script>
-  import closeIcon from './close'
+  import closeIcon from './close.js'
 </script>
 
 <style>

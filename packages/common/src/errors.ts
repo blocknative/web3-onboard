@@ -1,4 +1,4 @@
-import type { ProviderRpcErrorCode } from './types'
+import type { ProviderRpcErrorCode } from './types.js'
 
 export class ProviderRpcError extends Error {
   message: string
