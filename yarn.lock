@@ -2953,6 +2953,24 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.0"
 
+"@web3-onboard/common@^2.2.2":
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/common/-/common-2.2.2.tgz#abef8ca861835ab00e5b4641462de2c3db73fc89"
+  integrity sha512-04Y2Fryiu48nW27dgAtYmPugdhYbeIZq4HM1wsqRftQjgyEWnsam3YyeKRWBABa5iTsE2a/Fo4LofuBG5RMVYw==
+  dependencies:
+    bignumber.js "^9.1.0"
+    ethers "5.5.4"
+    joi "^17.4.2"
+
+"@web3-onboard/gas@^2.0.0":
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/gas/-/gas-2.1.2.tgz#291c572bfb3a705335ee096355bf67c06739c9a5"
+  integrity sha512-MUPGdZOcP84RVX0msZdVdVLDbOFJMWBcJqNIvGaSQvBdUBIg8zUBRh2vSO3Ynqpm/RJffl+cJfnKVP6pEfbUXg==
+  dependencies:
+    "@web3-onboard/common" "^2.2.2"
+    joi "^17.4.2"
+    rxjs "^7.5.2"
+
 "@web3auth/base-plugin@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@web3auth/base-plugin/-/base-plugin-1.0.1.tgz#1e2a87acf745299fdff6f92e6c46ee9bc38aa670"
@@ -7189,10 +7207,21 @@ jest-worker@^27.4.5:
     merge-stream "^2.0.0"
     supports-color "^8.0.0"
 
-joi@17.6.0, joi@^17.4.2:
+joi@^17.4.2:
   version "17.6.0"
   resolved "https://registry.yarnpkg.com/joi/-/joi-17.6.0.tgz#0bb54f2f006c09a96e75ce687957bd04290054b2"
   integrity sha512-OX5dG6DTbcr/kbMFj0KGYxuew69HPcAE3K/sZpEV2nP6e/j/C0HV+HNiBPCASxdx5T7DMoa0s8UeHWMnb6n2zw==
+  dependencies:
+    "@hapi/hoek" "^9.0.0"
+    "@hapi/topo" "^5.0.0"
+    "@sideway/address" "^4.1.3"
+    "@sideway/formula" "^3.0.0"
+    "@sideway/pinpoint" "^2.0.0"
+
+joi@^17.6.1:
+  version "17.6.1"
+  resolved "https://registry.yarnpkg.com/joi/-/joi-17.6.1.tgz#e77422f277091711599634ac39a409e599d7bdaa"
+  integrity sha512-Hl7/iBklIX345OCM1TiFSCZRVaAOLDGlWCp0Df2vWYgBgjkezaR7Kvm3joBciBHQjZj5sxXs859r6eqsRSlG8w==
   dependencies:
     "@hapi/hoek" "^9.0.0"
     "@hapi/topo" "^5.0.0"
