@@ -14,7 +14,7 @@ function opera(options: CommonWalletOptions): WalletModule {
     iconSrcSet: iconSrc || operaIcon2x,
     svg,
     wallet: async (helpers: Helpers) => {
-      const { createModernProviderInterface, browser } = helpers
+      const { createModernProviderInterface } = helpers
       const provider = (window as any).ethereum
 
       return {
