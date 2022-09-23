@@ -235,4 +235,3 @@ Check out the live example on StackBlitz!
 
 <iframe title="Uniswap + Web3-Onboard" src="https://stackblitz.com/edit/node-avakex?ctl=1&embed=1&hideExplorer=1&hideNavigation=1&view=preview" 
 width="100%" height="500px" style="border-radius: 0.375rem" />
-
