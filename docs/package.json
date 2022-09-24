@@ -14,8 +14,6 @@
     "format": "prettier --write --plugin-search-dir=. ."
   },
   "devDependencies": {
-    "@fontsource/ibm-plex-mono": "^4.5.11",
-    "@iconify-json/ri": "^1.1.1",
     "@playwright/test": "^1.22.2",
     "@sveltejs/adapter-static": "^1.0.0-next.39",
     "@sveltejs/adapter-vercel": "next",
@@ -48,9 +46,8 @@
   },
   "type": "module",
   "dependencies": {
-    "@uniswap/widgets": "^2.7.0",
-    "@web3-onboard/core": "^2.7.0",
-    "@web3-onboard/injected-wallets": "^2.0.16",
+    "@web3-onboard/core": "^2.8.4",
+    "@web3-onboard/injected-wallets": "^2.2.3",
     "react-dom": "^18.2.0"
   }
 }
