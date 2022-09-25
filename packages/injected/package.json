@@ -37,7 +37,7 @@
     "url": "https://github.com/blocknative/web3-onboard.git",
     "directory": "packages/injected"
   },
-  "homepage": "https://www.blocknative.com/onboard",
+  "homepage": "https://onboard.blocknative.com",
   "bugs": "https://github.com/blocknative/web3-onboard/issues",
   "module": "dist/index.js",
   "browser": "dist/index.js",

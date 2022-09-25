@@ -38,7 +38,7 @@
     "url": "https://github.com/blocknative/web3-onboard.git",
     "directory": "packages/magic"
   },
-  "homepage": "https://www.blocknative.com/onboard",
+  "homepage": "https://onboard.blocknative.com",
   "bugs": "https://github.com/blocknative/web3-onboard/issues",
   "scripts": {
     "build": "rollup -c",

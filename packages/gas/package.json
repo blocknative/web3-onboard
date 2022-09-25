@@ -12,7 +12,7 @@
     "url": "https://github.com/blocknative/web3-onboard.git",
     "directory": "packages/gas"
   },
-  "homepage": "https://www.blocknative.com/onboard",
+  "homepage": "https://onboard.blocknative.com",
   "bugs": "https://github.com/blocknative/web3-onboard/issues",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
