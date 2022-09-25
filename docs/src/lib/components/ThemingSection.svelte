@@ -6,7 +6,7 @@
   import Container from './Container.svelte'
 
   import ThemingCode from './theming-code.md'
-  import ThemeCarousel from './svg/themes-carousel.svelte'
+  import ThemingGraphic from './svg/themes-example-carousel.svg'
 </script>
 
 <section>
@@ -28,13 +28,12 @@
     </div>
   </Container>
   <ScrollContainer style={'padding: 0 2rem'}>
-    <ThemeCarousel />
+    <img class="carousel-img" src={ThemingGraphic} alt="onboard connect wallet themes" >
   </ScrollContainer>
 </section>
 
 <style>
   section {
-    /* min-height: 991px; */
     background: radial-gradient(
         137.29% 137.29% at 50% -37.29%,
         rgba(99, 112, 229, 0.5) 0%,
@@ -66,9 +65,24 @@
     flex: 50%;
   }
 
+  .carousel-img {
+    height: 9rem;
+    width: auto;
+    max-width: none;
+  }
+
+  @media screen and (min-width: 640px) {
+    .carousel-img {
+      height: 20rem;
+    }
+  }
+
   @media screen and (min-width: 1024px) {
     .flexbox {
       flex-direction: row;
+    }
+    .carousel-img {
+      height: auto;
     }
   }
 </style>

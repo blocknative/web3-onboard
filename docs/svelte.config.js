@@ -19,6 +19,7 @@ const config = {
       postcss: true
     })
   ],
+
   kit: {
     adapter: adapter(),
     prerender: {
@@ -26,6 +27,19 @@ const config = {
       entries: ['*']
     },
     vite: {
+      build: {
+        rollupOptions: {
+          external: [
+            '@web3-react/core',
+            '@web3-react/eip1193',
+            '@web3-react/metamask',
+            '@web3-react/network',
+            '@web3-react/walletconnect',
+            '@web3-react/types',
+            '@web3-react/url'
+          ]
+        }
+      },
       resolve: {
         alias: {
           $fonts: resolve(process.cwd(), 'src/lib/fonts')
