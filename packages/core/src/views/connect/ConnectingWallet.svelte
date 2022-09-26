@@ -12,6 +12,7 @@
   export let deselectWallet: (label: string) => void
   export let setStep: (update: keyof i18n['connect']) => void
   export let connectionRejected: boolean
+  export let previousConnectionRequest: boolean
 
   const { appMetadata } = configuration
 </script>
@@ -69,7 +70,7 @@
 <div class="container flex flex-column items-center">
   <div
     class="connecting-container flex justify-between items-center"
-    class:warning={connectionRejected}
+    class:warning={connectionRejected || previousConnectionRequest}
   >
     <div class="flex">
       <div class="flex justify-center relative">
@@ -77,7 +78,9 @@
           size={40}
           padding={8}
           icon={(appMetadata && appMetadata.icon) || questionIcon}
-          border={connectionRejected ? 'yellow' : 'blue'}
+          border={connectionRejected || previousConnectionRequest
+            ? 'yellow'
+            : 'blue'}
           background="lightGray"
         />
 
@@ -85,7 +88,9 @@
           <WalletAppBadge
             size={40}
             padding={8}
-            border={connectionRejected ? 'yellow' : 'blue'}
+            border={connectionRejected || previousConnectionRequest
+              ? 'yellow'
+              : 'blue'}
             background="white"
             icon={selectedWallet.icon}
           />
@@ -95,9 +100,9 @@
       <div class="flex flex-column justify-center ml">
         <div class="text" class:text-rejected={connectionRejected}>
           {$_(
-            connectionRejected
-              ? 'connect.connectingWallet.rejectedText'
-              : 'connect.connectingWallet.mainText',
+            `connect.connectingWallet.${
+              connectionRejected ? 'rejectedText' : 'mainText'
+            }`,
             {
               default: connectionRejected
                 ? en.connect.connectingWallet.rejectedText
@@ -113,9 +118,15 @@
           </div>
         {:else}
           <div class="subtext">
-            {$_('connect.connectingWallet.paragraph', {
-              default: en.connect.connectingWallet.paragraph
-            })}
+            {$_(
+              `connect.connectingWallet.${
+                previousConnectionRequest ? 'previousConnection' : 'paragraph'
+              }`,
+              {
+                default: en.connect.connectingWallet.paragraph,
+                values: { wallet: selectedWallet.label }
+              }
+            )}
           </div>
         {/if}
       </div>

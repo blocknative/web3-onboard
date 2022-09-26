@@ -1,6 +1,6 @@
 {
   "name": "web3-onboard-monorepo",
-  "version": "2.11.1",
+  "version": "2.12.0",
   "private": true,
   "workspaces": {
     "packages": [
@@ -51,7 +51,7 @@
     "url": "https://github.com/blocknative/web3-onboard.git",
     "directory": "packages/core"
   },
-  "homepage": "https://www.blocknative.com/onboard",
+  "homepage": "https://onboard.blocknative.com",
   "bugs": "https://github.com/blocknative/web3-onboard/issues",
   "scripts": {
     "install-m1-mac": "yarn install --ignore-optional",

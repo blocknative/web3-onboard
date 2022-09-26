@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/gas",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "Estimate the gas prices needed to get a transaction in to the next block for Ethereum Mainnet and Polygon Matic Mainnet.",
   "keywords": [
     "gas",
@@ -12,7 +12,7 @@
     "url": "https://github.com/blocknative/web3-onboard.git",
     "directory": "packages/gas"
   },
-  "homepage": "https://www.blocknative.com/onboard",
+  "homepage": "https://onboard.blocknative.com",
   "bugs": "https://github.com/blocknative/web3-onboard/issues",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -30,8 +30,8 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.2.2",
+    "@web3-onboard/common": "^2.2.3",
     "rxjs": "^7.5.2",
-    "joi": "^17.4.2"
+    "joi": "^17.6.1"
   }
 }
