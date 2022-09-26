@@ -18,7 +18,7 @@
     "@playwright/test": "^1.22.2",
     "@sveltejs/adapter-static": "^1.0.0-next.39",
     "@sveltejs/adapter-vercel": "next",
-    "@sveltejs/kit": "next",
+    "@sveltejs/kit": "1.0.0-next.357",
     "@svelteness/kit-docs": "^0.22.12",
     "@tailwindcss/typography": "^0.5.2",
     "@types/react-dom": "^18.0.6",

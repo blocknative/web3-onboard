@@ -851,9 +851,9 @@
     "@vercel/nft" "^0.21.0"
     esbuild "^0.14.48"
 
-"@sveltejs/kit@next":
+"@sveltejs/kit@1.0.0-next.357":
   version "1.0.0-next.357"
-  resolved "https://registry.yarnpkg.com/@sveltejs/kit/-/kit-1.0.0-next.357.tgz#da92d327a8ea3881ccb61318f5c5e89205ac02eb"
+  resolved "https://registry.npmjs.org/@sveltejs/kit/-/kit-1.0.0-next.357.tgz#da92d327a8ea3881ccb61318f5c5e89205ac02eb"
   integrity sha512-nCAehVybIEpQNnPu61V/EFVdfDb1nBSiQUfW9EcSSDEUbyAMCVBOKZZuzQ0qQDp3xniqRkyDzpBA4wN+ADxHBw==
   dependencies:
     "@sveltejs/vite-plugin-svelte" "^1.0.0-next.48"
