@@ -15,13 +15,14 @@ jobs:
           -H 'Authorization: Bearer '"$NOTION_TOKEN"'' \
           -H "Content-Type: application/json" \
           -H "Notion-Version: 2022-02-22" \
-          --data '{"parent":{"type":"database_id","database_id":"'"$DATABASE_ID"'"},"icon":{"type":"emoji","emoji":"🐛"},"properties":{"Name":{"type":"title","title":[{"type":"text","text":{"content":"'"$(echo $TITLE | tr '"' "'")"'"}}]},"Assigned":{"people":['${people:0:-1}']},"Status":{"select":{"name":"'"$STATUS"'"}},"Flag":{"multi_select":[{"name":"'"$FLAG"'"}]},"Type":{"multi_select":[{"name":"bug"}]},"Project":{"multi_select":[{"name":"'"$PROJECT_NAME"'"}]}},"children":[{"object":"block","type":"bookmark","bookmark":{"url":"'"$ISSUE_URL"'"}}]}'
+          --data '{"parent":{"type":"database_id","database_id":"'"$DATABASE_ID"'"},"icon":{"type":"emoji","emoji":"🐛"},"properties":{"Name":{"type":"title","title":[{"type":"text","text":{"content":"'"$(echo $TITLE | tr '"' "'")"'"}}]},"Assigned":{"people":['${people:0:-1}']},"Status":{"select":{"name":"'"$STATUS"'"}},"Flag":{"multi_select":[{"name":"'"$FLAG"'"}]},"Database":{"multi_select":[{"name":"'"$DATABASE_NAME"'"}]},"Type":{"multi_select":[{"name":"bug"}]},"Project":{"multi_select":[{"name":"'"$PROJECT_NAME"'"}]}},"children":[{"object":"block","type":"bookmark","bookmark":{"url":"'"$ISSUE_URL"'"}}]}'
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           STATE: ${{ github.event.issue.state }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
           TITLE: ${{ github.event.issue.title }}
           FLAG: Github
+          DATABASE_NAME: Product
           STATUS: Backlog
           # Product Work Board
           DATABASE_ID: 69f0e513a59d445b87a1baed729c75c5
