@@ -1,5 +1,5 @@
 import adapterStatic from '@sveltejs/adapter-static'
-import adapterVercel from '@sveltejs/adapter-vercel'
+import adapterVercel from '@sveltejs/adapter-auto'
 import { kitDocsPlugin } from '@svelteness/kit-docs/node'
 import Icons from 'unplugin-icons/vite'
 import preprocess from 'svelte-preprocess'
