@@ -1,0 +1,1 @@
+// Use for Typescript declarations
