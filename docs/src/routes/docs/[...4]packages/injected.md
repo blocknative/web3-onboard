@@ -1,5 +1,9 @@
 # @web3-onboard/injected-wallets
 
+This module lets web3-onboard automatically detect Browser Injected Wallets such as Metamask or Coinbase Wallet. We recommend you install this module to get the most out of your w3o implementation. This module supports [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) and [recognizes many injected wallets natively](https://onboard.blocknative.com/docs/packages/injected#injected-wallets-supported-natively).
+
+Note: Make sure to install the core module before installing other modules to w3o.
+
 ## Install
 
 <Tabs values={['yarn', 'npm']}>
@@ -185,7 +189,7 @@ const onboard = Onboard({
 - Tokenpocket - *Desktop & Mobile*
 - TP - *Mobile*
 - xDefi - *Desktop & Mobile*
-- OneInch - *Mobile*
+- 1inch - *Mobile*
 - Tokenary - *Mobile*
 - GameStop - *Desktop*
 - Rabby - *Desktop*
