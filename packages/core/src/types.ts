@@ -343,3 +343,15 @@ export type DeviceNotBrowser = {
   os: null
   browser: null
 }
+
+export type WalletPermission = {
+  id: string
+  parentCapability: string
+  invoker: string
+  caveats: {
+    type: string
+    value: string[]
+  }[]
+
+  date: number
+}
