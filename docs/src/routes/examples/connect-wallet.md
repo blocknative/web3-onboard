@@ -4,7 +4,7 @@
     const frameworks = ['react', 'svelte']
 </script>
 
-# Connect Wallet Example
+# Connect Wallet Button Example
 
 <ConnectWallet />
 
@@ -12,9 +12,9 @@
 
 <Tabs values={frameworks}>
   <TabPanel value="react">
-    <ReactConnectWallet /> 
+    <ReactConnectWallet />
   </TabPanel>
   <TabPanel value="svelte">
-    <SvelteConnectWallet /> 
+    <SvelteConnectWallet />
   </TabPanel>
 </Tabs>
