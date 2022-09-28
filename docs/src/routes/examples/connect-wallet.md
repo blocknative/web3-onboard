@@ -1,10 +1,15 @@
-<script>
-    import { ConnectWallet, ReactConnectWallet, SvelteConnectWallet } from '$lib/components'
+---
+title: Connect Wallet Button Example
+description: Learn how to create a connect wallet button for your dapp with Web3-Onboard. For this example, we are going to use the injected wallets module.
+---
 
-    const frameworks = ['react', 'svelte']
+<script>
+  import { ConnectWallet, ReactConnectWallet, SvelteConnectWallet } from '$lib/components'
+  
+  const frameworks = ['react', 'svelte']
 </script>
 
-# Connect Wallet Button Example
+# {$frontmatter.title}
 
 <ConnectWallet />
 
