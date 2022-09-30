@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/keepkey",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "KeepKey hardware wallet module for connecting to Web3-Onboard. Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardised spec compliant web3 providers for all supported wallets, framework agnostic modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
   "keywords": [
     "Ethereum",
@@ -36,7 +36,7 @@
     "url": "https://github.com/blocknative/web3-onboard.git",
     "directory": "packages/keepkey"
   },
-  "homepage": "https://www.blocknative.com/onboard",
+  "homepage": "https://onboard.blocknative.com",
   "bugs": "https://github.com/blocknative/web3-onboard/issues",
   "module": "dist/index.js",
   "browser": "dist/index.js",
@@ -63,8 +63,8 @@
     "@ethersproject/providers": "^5.5.0",
     "@shapeshiftoss/hdwallet-core": "^1.15.2",
     "@shapeshiftoss/hdwallet-keepkey-webusb": "^1.15.2",
-    "@web3-onboard/common": "^2.2.2",
-    "@web3-onboard/hw-common": "^2.0.1",
+    "@web3-onboard/common": "^2.2.3",
+    "@web3-onboard/hw-common": "^2.0.3",
     "ethereumjs-util": "^7.1.3"
   }
 }
