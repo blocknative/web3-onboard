@@ -12,7 +12,6 @@
     alt: 'Web3-Onboard Connect Wallet Button'
   }
 
-  console.log(MetaImage)
 
   const twitterProps = {
     image,
