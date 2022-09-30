@@ -1,15 +1,18 @@
 <script>
   import OpenGraph from './OpenGraph.svelte';
   import Twitter from './Twitter.svelte';
+  import MetaImage from '$lib/assets/blocknative-onboard-og-image.png'
 
   export let metadescription;
   export let title;
   export let url;
 
   export let image = {
-    url: 'https://onboard.blocknative.com/blocknative-onboard-og-image.png',
+    url: MetaImage,
     alt: 'Web3-Onboard Connect Wallet Button'
   }
+
+  console.log(MetaImage)
 
   const twitterProps = {
     image,
