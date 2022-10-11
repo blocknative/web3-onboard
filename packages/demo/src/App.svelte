@@ -448,9 +448,9 @@
     const reader = new FileReader()
     reader.addEventListener('load', event => {
       uploaded_image = event.target.result
-      document.querySelector(
-        '#image_drop_area'
-      ).style.backgroundImage = `url(${uploaded_image})`
+      // document.querySelector(
+      //   '#image_drop_area'
+      // ).style.backgroundImage = `url(${uploaded_image})`
     })
     reader.readAsDataURL(file)
   }
@@ -616,7 +616,7 @@
     align-items: end;
   }
 
-  .copy-styles-container {
+  /* .copy-styles-container {
     display: flex;
     flex-direction: row;
     align-items: end;
@@ -626,7 +626,7 @@
     width: 30rem;
     height: 16rem;
     margin: 0 0 8px;
-  }
+  } */
 
   .sign-transaction-textarea {
     width: 24rem;
@@ -643,7 +643,7 @@
     flex-direction: column;
     width: 15rem;
   }
-
+/* 
   .themes {
     padding: 1rem;
     border-radius: 4px;
@@ -672,7 +672,6 @@
     overflow: hidden;
     width: 2em;
     height: 2em;
-    /* optional formatting below here */
     border-radius: 50%;
     box-shadow: 1px 1px 3px 0px grey;
     margin: 1em;
@@ -759,11 +758,12 @@
 
   .backdrop-toggle > label {
     margin-right: 8px;
-  }
+  } */
+  .cta {height: 200vh;}
 </style>
 
 <main>
-  {#if hideForIframe}
+  <!-- {#if hideForIframe}
     <div id="image_drop_area">
       <p id="image_drop_area_direction">
         Drag and drop a screen shot of your site to customize styling.
@@ -835,9 +835,11 @@
         {/if}
       {/if}
     </div>
-  {/if}
+  {/if} -->
   <div class="cta">
     <button on:click={() => onboard.connectWallet()} id="connectBtn"
+      >something else</button
+    >    <button on:click={() => onboard.connectWallet()} id="connectBtn"
       >Connect Wallet</button
     >
 
@@ -1020,7 +1022,7 @@
       </div>
     {/each}
   {/if}
-  {#if !hideForIframe}
+  <!-- {#if !hideForIframe}
     <div class="themes">
       <label for="Theme">Click Color Circles to Set Theme: </label>
       <div class="theming-container">
@@ -1068,5 +1070,5 @@
       title="Inline Frame Example"
       src={window.location.href}
     />
-  {/if}
+  {/if} -->
 </main>
