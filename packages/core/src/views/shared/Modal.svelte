@@ -16,37 +16,16 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
   import { onDestroy, onMount } from 'svelte'
-  import { configuration } from '../../configuration.js'
 
-  const { device } = configuration
-
-  const body = document.body
   const html = document.documentElement
-  const trackYScrollPosition = () => {
-    document.documentElement.style.setProperty(
-      '--scroll-y',
-      `${window.scrollY}px`
-    )
-  }
-
   onMount(() => {
-    window.addEventListener('scroll', trackYScrollPosition, { passive: true })
-    const scrollY = html.style.getPropertyValue('--scroll-y')
-    device.type === 'mobile'
-      ? (html.style.position = 'fixed')
-      : (html.style.overflow = 'hidden')
-
-    body.style.top = `-${scrollY}`
+    html.style.position = 'sticky'
+    html.style.overflow = 'hidden'
   })
 
   onDestroy(() => {
-    device.type === 'mobile'
-      ? (html.style.position = '')
-      : html.style.removeProperty('overflow')
-    const scrollY = body.style.top
-    body.style.top = ''
-    window.scrollTo(0, parseInt(scrollY || '0') * -1)
-    window.removeEventListener('scroll', trackYScrollPosition)
+    html.style.position = ''
+    html.style.removeProperty('overflow')
   })
   export let close: () => void
 </script>

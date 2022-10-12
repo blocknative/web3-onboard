@@ -30,6 +30,8 @@
   import blocknativeLogo from './blocknative-logo'
   import { onMount } from 'svelte'
 
+  let windowWidth
+
   if (window.innerWidth < 700) {
     new VConsole()
   }
@@ -672,7 +674,6 @@
     overflow: hidden;
     width: 2em;
     height: 2em;
-    /* optional formatting below here */
     border-radius: 50%;
     box-shadow: 1px 1px 3px 0px grey;
     margin: 1em;
@@ -761,6 +762,8 @@
     margin-right: 8px;
   }
 </style>
+
+<svelte:window bind:innerWidth={windowWidth} />
 
 <main>
   {#if hideForIframe}
@@ -1020,9 +1023,9 @@
       </div>
     {/each}
   {/if}
-  {#if !hideForIframe}
+  {#if !hideForIframe && windowWidth > 1040}
     <div class="themes">
-      <label for="Theme">Click Color Circles to Set Theme: </label>
+      <label for="Theme">Click Colored Circles to Set Theme: </label>
       <div class="theming-container">
         {#each Object.keys(defaultStyling) as target}
           <div class="theming-inputs-wrapper">
