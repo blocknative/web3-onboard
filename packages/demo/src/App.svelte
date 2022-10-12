@@ -674,7 +674,6 @@
     overflow: hidden;
     width: 2em;
     height: 2em;
-    /* optional formatting below here */
     border-radius: 50%;
     box-shadow: 1px 1px 3px 0px grey;
     margin: 1em;

@@ -17,20 +17,15 @@
   import { fade } from 'svelte/transition'
   import { onDestroy, onMount } from 'svelte'
 
-  const body = document.body
   const html = document.documentElement
-  let scrollY: number
   onMount(() => {
-    scrollY = window.scrollY
     html.style.position = 'sticky'
     html.style.overflow = 'hidden'
-    body.style.top = `-${scrollY}`
   })
 
   onDestroy(() => {
     html.style.position = ''
     html.style.removeProperty('overflow')
-    body.style.top = `${scrollY}`
   })
   export let close: () => void
 </script>
