@@ -42,7 +42,7 @@
   onDestroy(() => {
     device.type === 'mobile'
       ? (html.style.position = '')
-      : (html.style.overflow = 'auto')
+      : html.style.removeProperty('overflow')
     const scrollY = body.style.top
     body.style.top = ''
     window.scrollTo(0, parseInt(scrollY || '0') * -1)
