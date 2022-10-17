@@ -6,7 +6,7 @@ Install [yarn](https://classic.yarnpkg.com/en/docs/install)
 
 ## Running docs server locally
 
-Run
+Run the following command within the `docs/` folder
 
 ```sh
 yarn && yarn dev
