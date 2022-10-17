@@ -89,8 +89,11 @@ function init(options: InitOptions): OnboardAPI {
     apiKey,
     notify,
     gas,
-    connect
+    connect,
+    containerElements
   } = options
+
+  updateConfiguration({ containerElements })
 
   const { device, svelteInstance } = configuration
 
@@ -228,6 +231,8 @@ function mountApp() {
   onboard.style.all = 'initial'
 
   target.innerHTML = `
+  <link type="css" rel="stylesheet" href="./views/Index.css" />
+
       <style>
         :host {  
           /* COLORS */

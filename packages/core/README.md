@@ -115,6 +115,8 @@ export type AccountCenter = {
   position?: AccountCenterPosition // default: 'topRight'
   expanded?: boolean // default: true
   minimal?: boolean // enabled by default for mobile
+
+  // containerElement has been DEPRECATED in favor of a top level property called containerElements
   containerElement?: string // defines the DOM container element for svelte to attach 
   // **NOTE: containerElement must be a DOM element with a styleSheet property attached.
   // This property can normally be omitted from the config and allowed to default to document.body

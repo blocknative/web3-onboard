@@ -9,7 +9,8 @@ function gnosis(options?: GnosisOptions): WalletInit {
 
   return () => {
     const loadedInIframe = window.self !== window.top
-
+console.log(loadedInIframe)
+console.log('this shit loaded in an iframe?!?!?!')
     return loadedInIframe
       ? {
           label: 'Gnosis Safe',
@@ -55,7 +56,17 @@ function gnosis(options?: GnosisOptions): WalletInit {
             )
 
             const patchedProvider = createEIP1193Provider(provider, {
-              eth_requestAccounts: () => Promise.resolve([safe.safeAddress])
+              eth_requestAccounts: () => Promise.resolve([safe.safeAddress]),
+              eth_sendTransaction: async ({ baseRequest, params }) => {
+                console.log(params)
+                console.log(baseRequest)
+                const transactionHash = await baseRequest({
+                  method: 'eth_sendTransaction',
+                  params
+                })
+    
+                return transactionHash as string
+              }
             })
 
             return {

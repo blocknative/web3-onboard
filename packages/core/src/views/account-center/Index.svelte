@@ -2,11 +2,15 @@
   import { onDestroy } from 'svelte'
   import { updateAccountCenter } from '../../store/actions.js'
   import type { AccountCenter } from '../../types.js'
+  import { wallets$ } from '../../streams.js'
   import Maximized from './Maximized.svelte'
   import Minimized from './Minimized.svelte'
   import Micro from './Micro.svelte'
+  
 
   export let settings: AccountCenter
+  export let mountInDefinedContainer: boolean = false
+  console.log('ac settings', settings, mountInDefinedContainer)
 
   onDestroy(minimize)
 
@@ -17,9 +21,262 @@
   }
 </script>
 
+<style>
+  :global(.flex) {
+    display: flex;
+  }
+
+  :global(.inline-flex) {
+    display: inline-flex;
+  }
+
+  :global(.flex-column) {
+    flex-direction: column;
+  }
+
+  :global(.items-center) {
+    align-items: center;
+  }
+
+  :global(.items-end) {
+    align-items: flex-end;
+  }
+
+  :global(.items-start) {
+    align-items: flex-start;
+  }
+
+  :global(.justify-center) {
+    justify-content: center;
+  }
+
+  :global(.justify-start) {
+    justify-content: flex-start;
+  }
+
+  :global(.justify-between) {
+    justify-content: space-between;
+  }
+
+  :global(.justify-end) {
+    justify-content: flex-end;
+  }
+
+  :global(.justify-around) {
+    justify-content: space-around;
+  }
+
+  :global(.relative) {
+    position: relative;
+  }
+
+  :global(.absolute) {
+    position: absolute;
+  }
+
+  :global(.fixed) {
+    position: fixed;
+  }
+
+  :global(.pointer) {
+    cursor: pointer;
+  }
+
+  :global(.shadow-1) {
+    box-shadow: var(--onboard-shadow-1, var(--shadow-1));
+  }
+
+  :global(.w-100) {
+    width: 100%;
+  }
+
+  :global(*) {
+    box-sizing: border-box;
+  }
+
+  :global(input) {
+    background: var(--onboard-white, var(--white));
+  }
+
+  :global(input) {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    outline: 2px solid var(--onboard-gray-200, var(--gray-200));
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--onboard-gray-600, var(--gray-600));
+    transition: all 200ms ease-in-out;
+  }
+
+  :global(input[type='checkbox']) {
+    -webkit-appearance: none;
+    width: auto;
+    background: var(--onboard-white, var(--white));
+    outline: 1px solid var(--onboard-gray-300, var(--gray-300));
+    border: none;
+    padding: 0.5em;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+  }
+
+  :global(input[type='checkbox']:hover) {
+    border-color: var(
+      --onboard-checkbox-background,
+      var(--onboard-primary-500, var(--primary-500))
+    );
+  }
+
+  :global(input[type='checkbox']:checked) {
+    background: var(
+      --onboard-checkbox-background,
+      var(--onboard-primary-500, var(--primary-500))
+    );
+    border-color: var(
+      --onboard-checkbox-background,
+      var(--onboard-primary-500, var(--primary-500))
+    );
+    color: var(--onboard-checkbox-color, var(--onboard-white, var(--white)));
+  }
+
+  :global(input[type='checkbox']:checked:after) {
+    content: url("data:image/svg+xml,%3Csvg width='0.885em' height='0.6em' viewBox='0 0 14 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0 6L5 11L14 2L12.59 0.58L5 8.17L1.41 4.59L0 6Z' fill='white'/%3E%3C/svg%3E");
+    font-size: 12px;
+    position: absolute;
+    color: var(--onboard-checkbox-color, var(--onboard-white, var(--white)));
+  }
+
+  :global(input:hover) {
+    border-color: var(
+      --onboard-checkbox-color,
+      var(--onboard-white, var(--white))
+    );
+  }
+
+  :global(input:focus) {
+    border-color: var(--onboard-primary-500, var(--primary-500));
+    box-shadow: 0 0 1px 1px
+      var(
+        --onboard-checkbox-background,
+        var(--onboard-primary-500, var(--primary-500))
+      );
+    box-shadow: 0 0 0 1px -moz-mac-focusring;
+  }
+
+  :global(input:disabled, textarea:disabled, select:disabled) {
+    background: var(--gray-100);
+  }
+
+  :global(input::-moz-focus-inner) {
+    outline: 0;
+    padding: 0;
+    margin-top: -2px;
+    margin-bottom: -2px;
+  }
+
+  :global(a) {
+    color: var(
+      --onboard-link-color,
+      var(--onboard-primary-500, var(--primary-500))
+    );
+    text-decoration: none;
+  }
+
+  :global(a:hover) {
+    text-decoration: underline;
+  }
+
+  :global(button) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: calc(var(--onboard-spacing-4, var(--spacing-4)) - 1px);
+    border-radius: 24px;
+    cursor: pointer;
+    font: inherit;
+    border: none;
+    transition: background-color 150ms ease-in-out, color 150ms ease-in-out;
+  }
+
+  :global(.onboard-button-primary) {
+    background: var(--onboard-white, var(--white));
+    padding: calc(var(--onboard-spacing-5, var(--spacing-5)) - 1px)
+      calc(var(--onboard-spacing-4, var(--spacing-4)) - 1px);
+    color: var(--onboard-gray-500, var(--gray-500));
+    font-size: var(--onboard-font-size-6, var(--font-size-6));
+    line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
+    border: 1px solid var(--onboard-gray-500, var(--gray-500));
+    font-weight: 700;
+  }
+
+  :global(.button-neutral-solid) {
+    width: 100%;
+    border-radius: 8px;
+    background: var(--onboard-gray-500, var(--gray-500));
+    color: var(--onboard-white, var(--white));
+    line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
+  }
+
+  :global(.button-neutral-solid-b) {
+    width: 100%;
+    background: var(--onboard-gray-100, var(--gray-100));
+    color: var(--onboard-gray-500, var(--gray-500));
+    line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
+  }
+
+  :global(button.rounded) {
+    border-radius: 24px;
+  }
+
+  :global(.button-neutral-solid:hover) {
+    background: var(--onboard-gray-700, var(--gray-700));
+  }
+  :global(.button-neutral-solid-b:hover) {
+    background: var(--onboard-gray-200, var(--gray-200));
+  }
+
+  :global(.button-neutral-solid:active) {
+    color: var(--onboard-gray-300, var(--gray-300));
+  }
+
+  :global(.button-neutral-solid-b:active) {
+    color: var(--onboard-gray-600, var(--gray-600));
+    background: var(--onboard-gray-300, var(--gray-300));
+  }
+
+  .z-indexed {
+    z-index: var(--account-center-z-index);
+  }
+  .container {
+    padding: 16px;
+    font-family: var(--onboard-font-family-normal, var(--font-family-normal));
+    width: 100%;
+    pointer-events: none;
+    touch-action: none;
+  }
+  @media all and (min-width: 428px) {
+    .container {
+      max-width: 348px;
+    }
+  }
+</style>
+
 <svelte:window on:click={minimize} />
 
-{#if !settings.expanded && !settings.minimal}
+{#if mountInDefinedContainer}
+  {#if $wallets$.length}
+    <div class="container flex flex-column fixed z-indexed">
+      <div>
+        <svelte:self settings={settings} mountInDefinedContainer={false}/>
+      </div>
+    </div>
+  {/if}
+{:else if !settings.expanded && !settings.minimal}
   <!-- minimized -->
   <Minimized />
 {:else if !settings.expanded && settings.minimal}
