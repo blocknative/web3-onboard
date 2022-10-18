@@ -81,8 +81,8 @@ type AppMetadata = {
   /** Gas module */
   gas?: typeof gas
   /**
-   * Object mapping for W3O components with the key being the DOM element to mount
-   * the component to, this defines the DOM container element for svelte to attach the component
+   * Object mapping for W3O components with the key being the component and the value the DOM element to mount
+   * the component to. This element must be available at time of package script execution.
    */
   containerElements?: Partial<ContainerElements>
 }
