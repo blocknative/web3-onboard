@@ -28,7 +28,7 @@
 {#if mountInContainer}
   {#if $wallets$.length}
     <div class="container flex flex-column fixed z-indexed">
-      <svelte:self mountInContainer={false} />
+      <svelte:self />
     </div>
   {/if}
 {:else if !$accountCenter$.expanded && !$accountCenter$.minimal}
