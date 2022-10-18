@@ -125,7 +125,6 @@ function init(options: InitOptions): OnboardAPI {
         ...accountCenter.desktop
       }
     }
-
     updateAccountCenter(accountCenterUpdate)
   }
 

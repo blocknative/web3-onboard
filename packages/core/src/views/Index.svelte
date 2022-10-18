@@ -40,7 +40,7 @@
         left: var(--${targetComponentVariable}-position-left, 0);`
     }
   }
-
+console.log($accountCenter$)
   const accountCenterComponent = $accountCenter$.enabled
     ? import('./account-center/Index.svelte').then(mod => mod.default)
     : Promise.resolve(null)
@@ -50,7 +50,7 @@
     : Promise.resolve(null)
 
   $: sharedContainer =
-    !accountCenterMountToDifferentElement &&
+    !accountCenterMountToElement &&
     $accountCenter$.enabled &&
     $notify$.enabled &&
     $notify$.position === $accountCenter$.position
@@ -74,8 +74,8 @@
 
   $: displayNotifySeparate =
     $notify$.enabled &&
-    accountCenterMountToDifferentElement &&
     (!$accountCenter$.enabled ||
+    accountCenterMountToElement ||
       ($notify$.position !== $accountCenter$.position &&
         device.type !== 'mobile') ||
       separateMobileContainerCheck ||
@@ -96,12 +96,13 @@
     (sharedContainer || sharedMobileContainerCheck)
 
   const accountCenterContainerElement =
-    (containerElements && containerElements.accountCenter) || null
+    (containerElements && containerElements.accountCenter)
+    console.log(accountCenterContainerElement)
 
-  const accountCenterMountToDifferentElement =
+  const accountCenterMountToElement =
     $accountCenter$.enabled && accountCenterContainerElement
 
-  if (accountCenterMountToDifferentElement) {
+  if (accountCenterMountToElement) {
     const accountCenter = document.createElement('onboard-account-center')
     const target = accountCenter.attachShadow({ mode: 'open' })
 
