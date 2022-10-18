@@ -54,7 +54,7 @@
     <Algolia
       apiKey="c5806678a94b96af0f6b1145b4ed370f"
       appId="RZ0X99H4C8"
-      indexName="web-3-onboard-docs"
+      indexName="dev_blocknative"
       placeholder="Search documentation"
       slot="search"
     />
