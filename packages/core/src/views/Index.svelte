@@ -40,7 +40,7 @@
         left: var(--${targetComponentVariable}-position-left, 0);`
     }
   }
-console.log($accountCenter$)
+  console.log($accountCenter$)
   const accountCenterComponent = $accountCenter$.enabled
     ? import('./account-center/Index.svelte').then(mod => mod.default)
     : Promise.resolve(null)
@@ -59,26 +59,18 @@ console.log($accountCenter$)
     device.type === 'mobile' || $accountCenter$.position === $notify$.position
 
   $: sharedMobileContainerCheck =
-    device.type === 'mobile' &&
-    (($notify$.position.includes('bottom') &&
+    ($notify$.position.includes('bottom') &&
       $accountCenter$.position.includes('bottom')) ||
-      ($notify$.position.includes('top') &&
-        $accountCenter$.position.includes('top')))
-
-  $: separateMobileContainerCheck =
-    device.type === 'mobile' &&
-    (($notify$.position.includes('top') &&
-      $accountCenter$.position.includes('bottom')) ||
-      ($notify$.position.includes('bottom') &&
-        $accountCenter$.position.includes('top')))
+    ($notify$.position.includes('top') &&
+      $accountCenter$.position.includes('top'))
 
   $: displayNotifySeparate =
     $notify$.enabled &&
     (!$accountCenter$.enabled ||
-    accountCenterMountToElement ||
+      accountCenterMountToElement ||
       ($notify$.position !== $accountCenter$.position &&
         device.type !== 'mobile') ||
-      separateMobileContainerCheck ||
+      (device.type === 'mobile' && !sharedMobileContainerCheck) ||
       !$wallets$.length)
 
   $: displayAccountCenterSeparate =
@@ -86,30 +78,31 @@ console.log($accountCenter$)
     (!$notify$.enabled ||
       ($notify$.position !== $accountCenter$.position &&
         device.type !== 'mobile') ||
-      separateMobileContainerCheck) &&
+      (device.type === 'mobile' && !sharedMobileContainerCheck)) &&
     $wallets$.length
 
   $: displayAccountCenterNotifySameContainer =
     $notify$.enabled &&
     $accountCenter$.enabled &&
-    $wallets$.length &&
-    (sharedContainer || sharedMobileContainerCheck)
-
-  const accountCenterContainerElement =
-    (containerElements && containerElements.accountCenter)
-    console.log(accountCenterContainerElement)
+    (sharedContainer ||
+      (device.type === 'mobile' && sharedMobileContainerCheck)) &&
+    $wallets$.length
 
   const accountCenterMountToElement =
-    $accountCenter$.enabled && accountCenterContainerElement
+    $accountCenter$.enabled &&
+    containerElements &&
+    containerElements.accountCenter
 
   if (accountCenterMountToElement) {
     const accountCenter = document.createElement('onboard-account-center')
     const target = accountCenter.attachShadow({ mode: 'open' })
 
-    let customElem = document.querySelector('onboard-v2')
-    let shadowStyleSheets = customElem.shadowRoot.styleSheets
+    let getW3OEl = document.querySelector('onboard-v2')
+    let w3OStyleSheets = getW3OEl.shadowRoot.styleSheets
     const accountCenterStyleSheet = new CSSStyleSheet()
-    Object.values(shadowStyleSheets).forEach(sheet => {
+
+    // Copy Onboard stylesheets over to AccountCenter shadow DOM
+    Object.values(w3OStyleSheets).forEach(sheet => {
       const styleRules = Object.values(sheet.cssRules)
       styleRules.forEach(rule =>
         accountCenterStyleSheet.insertRule(rule.cssText)
@@ -117,20 +110,15 @@ console.log($accountCenter$)
     })
     target.adoptedStyleSheets = [accountCenterStyleSheet]
 
-    const accountCenterContainerElementQuery = accountCenterContainerElement
-
-    const containerElement = document.querySelector(
-      accountCenterContainerElementQuery
-    )
+    const containerElement = document.querySelector(accountCenterMountToElement)
 
     containerElement.appendChild(accountCenter)
     if (!containerElement) {
       throw new Error(
-        `Element with query ${accountCenterContainerElementQuery} does not exist.`
+        `Element with query ${accountCenterMountToElement} does not exist.`
       )
     }
 
-    // containerElement.appendChild(accountCenter)
     const getACComp = async () => {
       let acComponent = await accountCenterComponent
       if (acComponent) {
