@@ -50,7 +50,7 @@
     : Promise.resolve(null)
 
   $: sharedContainer =
-    // !accountCenterMountToDifferentElement &&
+    !accountCenterMountToDifferentElement &&
     $accountCenter$.enabled &&
     $notify$.enabled &&
     $notify$.position === $accountCenter$.position
@@ -74,7 +74,7 @@
 
   $: displayNotifySeparate =
     $notify$.enabled &&
-    // accountCenterMountToDifferentElement &&
+    accountCenterMountToDifferentElement &&
     (!$accountCenter$.enabled ||
       ($notify$.position !== $accountCenter$.position &&
         device.type !== 'mobile') ||
@@ -441,7 +441,7 @@
     >
       {#await accountCenterComponent then AccountCenter}
         {#if AccountCenter}
-          <svelte:component this={AccountCenter} settings={$accountCenter$} />
+          <svelte:component this={AccountCenter} />
         {/if}
       {/await}
     </div>
@@ -484,7 +484,7 @@
       {#if $accountCenter$.enabled && $wallets$.length}
         {#await accountCenterComponent then AccountCenter}
           {#if AccountCenter}
-            <svelte:component this={AccountCenter} settings={$accountCenter$} />
+            <svelte:component this={AccountCenter} />
           {/if}
         {/await}
       {/if}

@@ -225,9 +225,9 @@
         position: 'topRight'
       }
     },
-    containerElements: {
-      accountCenter: '#themer'
-    },
+    // containerElements: {
+    //   accountCenter: '#themer'
+    // },
     // Sign up for your free api key at www.Blocknative.com
     apiKey: 'xxxxxx-bf21-42ec-a093-9d37e426xxxx'
   })
@@ -769,7 +769,6 @@
 <svelte:window bind:innerWidth={windowWidth} />
 
 <main>
-  <div  id="themer"></div>
   {#if hideForIframe}
     <div id="image_drop_area">
       <p id="image_drop_area_direction">
