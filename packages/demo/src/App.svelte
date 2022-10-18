@@ -226,7 +226,7 @@
       }
     },
     // containerElements: {
-    //   accountCenter: '#themer'
+    //   accountCenter: '#elementIDToMountAccountCenterTo'
     // },
     // Sign up for your free api key at www.Blocknative.com
     apiKey: 'xxxxxx-bf21-42ec-a093-9d37e426xxxx'

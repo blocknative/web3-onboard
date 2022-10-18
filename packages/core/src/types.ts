@@ -50,7 +50,7 @@ export interface InitOptions {
    * Transaction notification options
    */
   notify?: Partial<NotifyOptions> | Partial<Notify>
-  /**Gas module */
+  /** Gas module */
   gas?: typeof gas
   /**
    * Object mapping for W3O components with the key being the DOM element to mount

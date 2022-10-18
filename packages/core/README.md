@@ -78,6 +78,13 @@ type AppMetadata = {
   explore?: string
   // if your app only supports injected wallets and when no injected wallets detected, recommend the user to install some
   recommendedInjectedWallets?: RecommendedInjectedWallets[]
+  /** Gas module */
+  gas?: typeof gas
+  /**
+   * Object mapping for W3O components with the key being the DOM element to mount
+   * the component to, this defines the DOM container element for svelte to attach the component
+   */
+  containerElements?: Partial<ContainerElements>
 }
 
 type RecommendedInjectedWallets = {
@@ -106,23 +113,38 @@ type i18nOptions = Record<Locale, i18n>
 To see a list of all of the text values that can be internationalized or replaced, check out the [default en file](src/i18n/en.json).
 Onboard is using the [ICU syntax](https://formatjs.io/docs/core-concepts/icu-syntax/) for formatting under the hood.
 
+**`containerElements`**
+An object mapping for W3O components with the key being the DOM element to mount the specified component to.
+This defines the DOM container element for svelte to attach the component.
+
+**NOTE**: containerElement must be a DOM element with a styleSheet property attached and the element must be available on the DOM at the time of component mounting. 
+For an example please see containerElement usage [here](https://github.com/blocknative/web3-onboard/blob/8531a73d69365f7d584320f1c4b97a5d90f1c34e/packages/demo/src/App.svelte#L227)
+
+```typescript
+type ContainerElements = {
+  // when using the accountCenter with a container el the accountCenter position properties are ignored
+  accountCenter?: string
+}
+```
+
 **`accountCenter`**
 An object that defines whether the account center UI (default and minimal) is enabled and it's position on the screen. Currently the account center is enabled for both desktop and mobile devices.
 
 ```typescript
-export type AccountCenter = {
+type AccountCenter = {
   enabled: boolean
   position?: AccountCenterPosition // default: 'topRight'
   expanded?: boolean // default: true
   minimal?: boolean // enabled by default for mobile
 
-  // containerElement has been DEPRECATED in favor of a top level property called containerElements
-  containerElement?: string // defines the DOM container element for svelte to attach 
-  // **NOTE: containerElement must be a DOM element with a styleSheet property attached.
-  // This property can normally be omitted from the config and allowed to default to document.body
+  /**
+   * @deprecated Use top level containerElements property
+   * with the accountCenter prop set to the desired container El
+   */
+  containerElement?: string // defines the DOM container element for svelte to attach
 }
 
-export type AccountCenterOptions = {
+type AccountCenterOptions = {
   desktop: Omit<AccountCenter, 'expanded'>
   mobile: Omit<AccountCenter, 'expanded'>
 }
@@ -172,11 +194,11 @@ unsubscribe()
 ```
 
 ```typescript
-export type NotifyOptions = {
+type NotifyOptions = {
   desktop: Notify
   mobile: Notify
 }
-export type Notify = {
+type Notify = {
   enabled: boolean // default: true
   /**
    * Callback that receives all transaction events
@@ -198,17 +220,13 @@ export type Notify = {
   }
 }
 
-export type CommonPositions =
-  | 'topRight'
-  | 'bottomRight'
-  | 'bottomLeft'
-  | 'topLeft'
+type CommonPositions = 'topRight' | 'bottomRight' | 'bottomLeft' | 'topLeft'
 
-export type TransactionHandlerReturn = CustomNotification | boolean | void
+type TransactionHandlerReturn = CustomNotification | boolean | void
 
-export type CustomNotification = Partial<Omit<Notification, 'id' | 'startTime'>>
+type CustomNotification = Partial<Omit<Notification, 'id' | 'startTime'>>
 
-export type Notification = {
+type Notification = {
   id: string
   key: string
   type: NotificationType
@@ -221,7 +239,7 @@ export type Notification = {
   onClick?: (event: Event) => void
 }
 
-export type NotificationType = 'pending' | 'success' | 'error' | 'hint'
+type NotificationType = 'pending' | 'success' | 'error' | 'hint'
 
 export declare type Network =
   | 'main'
@@ -590,7 +608,9 @@ const onboard = Onboard({
       token: 'ETH',
       label: 'Ethereum Mainnet',
       // Only one RPC required
-      rpcUrl: `https://mainnet.infura.io/v3/${INFURA_KEY}` || `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
+      rpcUrl:
+        `https://mainnet.infura.io/v3/${INFURA_KEY}` ||
+        `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
     }
   ]
 })
