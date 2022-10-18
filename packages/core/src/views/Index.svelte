@@ -40,7 +40,7 @@
         left: var(--${targetComponentVariable}-position-left, 0);`
     }
   }
-  console.log($accountCenter$)
+
   const accountCenterComponent = $accountCenter$.enabled
     ? import('./account-center/Index.svelte').then(mod => mod.default)
     : Promise.resolve(null)
