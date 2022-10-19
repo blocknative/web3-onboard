@@ -104,6 +104,7 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     width: 7.25rem;
+    text-align: end;
   }
 
   .elipsis-container {
