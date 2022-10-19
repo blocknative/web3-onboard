@@ -29,8 +29,6 @@ export enum ProviderIdentityFlag {
   Liquality = 'isLiquality',
   MeetOne = 'wallet',
   MetaMask = 'isMetaMask',
-  Enkrypt = 'isEnkrypt',
-  MewWallet = 'isMEWwallet',
   MyKey = 'isMYKEY',
   OwnBit = 'isOwnbit',
   Status = 'isStatus',
