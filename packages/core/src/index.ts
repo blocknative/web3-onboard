@@ -230,8 +230,6 @@ function mountApp() {
   onboard.style.all = 'initial'
 
   target.innerHTML = `
-  <link type="css" rel="stylesheet" href="./views/Index.css" />
-
       <style>
         :host {  
           /* COLORS */
