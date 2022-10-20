@@ -165,6 +165,10 @@ const connectModalOptions = Joi.object({
   showSidebar: Joi.boolean()
 })
 
+const containerElements = Joi.object({
+  accountCenter: Joi.string()
+})
+
 const initOptions = Joi.object({
   wallets: walletInit,
   chains: chains.required(),
@@ -180,7 +184,8 @@ const initOptions = Joi.object({
     get: Joi.function().required(),
     stream: Joi.function().required()
   }),
-  connect: connectModalOptions
+  connect: connectModalOptions,
+  containerElements: containerElements
 })
 
 const connectOptions = Joi.object({
