@@ -4,7 +4,6 @@
 
   import { share } from 'rxjs/operators'
   import { onMount } from 'svelte'
-import { object_without_properties } from 'svelte/internal';
 
   const INFURA_ID = 'e0b15c21b7d54cd4814586334af72618'
   const injected = injectedModule()
