@@ -141,16 +141,10 @@
         rpcUrl: 'https://ropsten.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
       },
       {
-        id: 4,
-        token: 'rETH',
-        label: 'Rinkeby',
-        rpcUrl: 'https://rinkeby.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
-      },
-      {
-        id: 137,
-        token: 'MATIC',
-        label: 'Polygon',
-        rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+        id: '0x5',
+        token: 'ETH',
+        label: 'Goerli',
+        rpcUrl: `https://goerli.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e`
       },
       {
         id: '0x13881',
@@ -159,10 +153,28 @@
         rpcUrl: 'https://matic-mumbai.chainstacklabs.com	'
       },
       {
+        id: '0x38',
+        token: 'BNB',
+        label: 'Binance',
+        rpcUrl: 'https://bsc-dataseed.binance.org/'
+      },
+      {
+        id: 137,
+        token: 'MATIC',
+        label: 'Polygon',
+        rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+      },
+      {
         id: 10,
         token: 'OETH',
         label: 'Optimism',
         rpcUrl: 'https://mainnet.optimism.io'
+      },
+      {
+        id: 42161,
+        token: 'ARB-ETH',
+        label: 'Arbitrum',
+        rpcUrl: 'https://rpc.ankr.com/arbitrum'
       }
     ],
     // connect: {
