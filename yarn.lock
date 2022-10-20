@@ -1295,19 +1295,12 @@
     "@gnosis.pm/safe-react-gateway-sdk" "^2.8.5"
     ethers "^5.4.7"
 
-"@gnosis.pm/safe-react-gateway-sdk@^2.5.6":
+"@gnosis.pm/safe-react-gateway-sdk@^2.5.6", "@gnosis.pm/safe-react-gateway-sdk@^2.8.5":
   version "2.8.5"
   resolved "https://registry.yarnpkg.com/@gnosis.pm/safe-react-gateway-sdk/-/safe-react-gateway-sdk-2.8.5.tgz#3b82b993ae64a5fde1a96a4b0c47a97514839055"
   integrity sha512-lrZ3gXzbNzIjIzYDs21d7I3fwwHi01YFnD+2+5Kuy0+fJAiONYXih2Z9Q4h3RS/AgzTHfL+G7WB6XB0V8GMVCQ==
   dependencies:
     isomorphic-unfetch "^3.1.0"
-
-"@gnosis.pm/safe-react-gateway-sdk@^2.8.5":
-  version "2.10.3"
-  resolved "https://registry.yarnpkg.com/@gnosis.pm/safe-react-gateway-sdk/-/safe-react-gateway-sdk-2.10.3.tgz#4537442a78eb0508c483aabcac19296335a77ac3"
-  integrity sha512-ukaLACozdJQb2YGSAZgBUkF4CT9iKVjpnKFCKUnGGghXqp+Yyn9jpdcfFK0VYQJ6ZSwAm40tHtQaN3K9817Bcg==
-  dependencies:
-    cross-fetch "^3.1.5"
 
 "@hapi/hoek@^9.0.0":
   version "9.2.1"
