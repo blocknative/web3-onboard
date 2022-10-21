@@ -1,6 +1,6 @@
-# @web3-onboard/walletconnect
+# @web3-onboard/uauth
 
-## Wallet module for connecting Ledger hardware wallets to web3-onboard
+## Wallet module for connecting Unstoppable Domains to web3-onboard
 
 ### Install
 
