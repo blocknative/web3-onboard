@@ -7,7 +7,7 @@ import nodePolyfills from 'vite-plugin-node-stdlib-browser'
 export default defineConfig({
   plugins: [react(), nodePolyfills()],
   optimizeDeps: {
-    exclude: ['@ethersproject/hash',],
+    exclude: ['@ethersproject/hash', 'wrtc'],
     include: ['js-sha3', '@ethersproject/bignumber']
   }
 })
