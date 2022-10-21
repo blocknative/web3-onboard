@@ -30,6 +30,8 @@
   import blocknativeLogo from './blocknative-logo'
   import { onMount } from 'svelte'
 
+  let windowWidth
+
   if (window.innerWidth < 700) {
     new VConsole()
   }
@@ -139,16 +141,10 @@
         rpcUrl: 'https://ropsten.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
       },
       {
-        id: 4,
-        token: 'rETH',
-        label: 'Rinkeby',
-        rpcUrl: 'https://rinkeby.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
-      },
-      {
-        id: 137,
-        token: 'MATIC',
-        label: 'Polygon',
-        rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+        id: '0x5',
+        token: 'ETH',
+        label: 'Goerli',
+        rpcUrl: `https://goerli.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e`
       },
       {
         id: '0x13881',
@@ -157,10 +153,28 @@
         rpcUrl: 'https://matic-mumbai.chainstacklabs.com	'
       },
       {
+        id: '0x38',
+        token: 'BNB',
+        label: 'Binance',
+        rpcUrl: 'https://bsc-dataseed.binance.org/'
+      },
+      {
+        id: 137,
+        token: 'MATIC',
+        label: 'Polygon',
+        rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+      },
+      {
         id: 10,
         token: 'OETH',
         label: 'Optimism',
         rpcUrl: 'https://mainnet.optimism.io'
+      },
+      {
+        id: 42161,
+        token: 'ARB-ETH',
+        label: 'Arbitrum',
+        rpcUrl: 'https://rpc.ankr.com/arbitrum'
       }
     ],
     // connect: {
@@ -223,6 +237,11 @@
         position: 'topRight'
       }
     },
+    // containerElements: {
+      // El must be present at time of JS script execution
+      // See ../public/index.html for element example
+    //   accountCenter: '#sample-container-el'
+    // },
     // Sign up for your free api key at www.Blocknative.com
     apiKey: 'xxxxxx-bf21-42ec-a093-9d37e426xxxx'
   })
@@ -672,7 +691,6 @@
     overflow: hidden;
     width: 2em;
     height: 2em;
-    /* optional formatting below here */
     border-radius: 50%;
     box-shadow: 1px 1px 3px 0px grey;
     margin: 1em;
@@ -761,6 +779,8 @@
     margin-right: 8px;
   }
 </style>
+
+<svelte:window bind:innerWidth={windowWidth} />
 
 <main>
   {#if hideForIframe}
@@ -1020,9 +1040,9 @@
       </div>
     {/each}
   {/if}
-  {#if !hideForIframe}
+  {#if !hideForIframe && windowWidth > 1040}
     <div class="themes">
-      <label for="Theme">Click Color Circles to Set Theme: </label>
+      <label for="Theme">Click Colored Circles to Set Theme: </label>
       <div class="theming-container">
         {#each Object.keys(defaultStyling) as target}
           <div class="theming-inputs-wrapper">

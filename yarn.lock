@@ -2953,6 +2953,82 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.0"
 
+"@web3-onboard/dcent@^2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/dcent/-/dcent-2.2.1.tgz#88a0aa781e7bd2279cf32751a69f19c97532ccf3"
+  integrity sha512-RO7HJnkRMcod4R5Nb2YU63GiNuvpiucKI+F6AmsHwVksj2qcS3fwlJl09uZVK1a2ERkNUSNhp4BCTUsc9esuxw==
+  dependencies:
+    "@ethereumjs/tx" "^3.4.0"
+    "@ethersproject/providers" "^5.5.0"
+    "@web3-onboard/common" "^2.2.3"
+    "@web3-onboard/hw-common" "^2.0.3"
+    eth-dcent-keyring "^0.2.2"
+
+"@web3-onboard/hw-common@^2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/hw-common/-/hw-common-2.0.3.tgz#8e73ef3c94d2f513e8439804f8a541ccac1cf845"
+  integrity sha512-hfCVVgNjKIJXjinqMTmYfxqiOTausYj77IrWhSaIk9W9PfAEX+BnPLMhmbuNb39FBVWg/ucvMIiG3pwY6hXoOw==
+  dependencies:
+    "@ethereumjs/common" "2.6.2"
+    "@web3-onboard/common" "^2.2.3"
+    ethers "5.5.4"
+    joi "^17.6.1"
+    rxjs "^7.5.2"
+
+"@web3-onboard/keepkey@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/keepkey/-/keepkey-2.3.1.tgz#00712e1799f2016da2f1fd22f461989e5c436713"
+  integrity sha512-OA36iTNLkLjFQrt2xsNou+kEdjBVQDxHDJeeTcII4OjEqcTP300GifNd2RIW5sTWP+CK6hx2EWZLDUZGXVJe0A==
+  dependencies:
+    "@ethersproject/providers" "^5.5.0"
+    "@shapeshiftoss/hdwallet-core" "^1.15.2"
+    "@shapeshiftoss/hdwallet-keepkey-webusb" "^1.15.2"
+    "@web3-onboard/common" "^2.2.3"
+    "@web3-onboard/hw-common" "^2.0.3"
+    ethereumjs-util "^7.1.3"
+
+"@web3-onboard/keystone@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/keystone/-/keystone-2.3.1.tgz#b9a47fa4a4df3462ccd1326466ce883697208cde"
+  integrity sha512-Evz3/DLcpCIH9pvAmr1Ukd7yNodGgkoLiLmYP9MjEk5FVC1N7/e7sQYQVJ9CmbH9x2a+s37XBsx+g55G2a3cow==
+  dependencies:
+    "@ethereumjs/tx" "^3.4.0"
+    "@ethersproject/providers" "^5.5.0"
+    "@keystonehq/eth-keyring" "^0.14.00.3"
+    "@web3-onboard/common" "^2.2.3"
+    "@web3-onboard/hw-common" "^2.0.3"
+
+"@web3-onboard/ledger@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/ledger/-/ledger-2.3.1.tgz#21afedd376da9dc54e32493f9cafaadd043511f0"
+  integrity sha512-KNBwJFbL0vivqmArSqTI+05AKhikP/HYLEbuVI9brY5YM/5LXap/QslM8FYECmomOyCofpouPV4AreSWkyRvuA==
+  dependencies:
+    "@ethereumjs/tx" "^3.4.0"
+    "@ethersproject/providers" "^5.5.0"
+    "@ledgerhq/hw-app-eth" "^6.19.0"
+    "@ledgerhq/hw-transport-u2f" "^5.36.0-deprecated"
+    "@ledgerhq/hw-transport-webusb" "^6.19.0"
+    "@metamask/eth-sig-util" "^4.0.0"
+    "@web3-onboard/common" "^2.2.3"
+    "@web3-onboard/hw-common" "^2.0.3"
+    buffer "^6.0.3"
+    ethereumjs-util "^7.1.3"
+
+"@web3-onboard/trezor@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/trezor/-/trezor-2.3.1.tgz#48e4f25cd647dd668aca13293a30e68757e00122"
+  integrity sha512-fINzu1TzMUSh9BlXZC4geQDP1lV4nOtl+8mTHw116L1GYtqAFwtVWmxGx7jzrpyxDj02CQha8UIqiHiOK43f8w==
+  dependencies:
+    "@ethereumjs/tx" "^3.4.0"
+    "@ethersproject/providers" "^5.5.0"
+    "@web3-onboard/common" "^2.2.3"
+    "@web3-onboard/hw-common" "^2.0.3"
+    buffer "^6.0.3"
+    eth-crypto "^2.1.0"
+    ethereumjs-util "^7.1.3"
+    hdkey "^2.0.1"
+    trezor-connect "^8.2.11"
+
 "@web3auth/base-plugin@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@web3auth/base-plugin/-/base-plugin-1.0.1.tgz#1e2a87acf745299fdff6f92e6c46ee9bc38aa670"
@@ -9260,6 +9336,13 @@ rxjs@^7.5.2:
   version "7.5.4"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.5.4.tgz#3d6bd407e6b7ce9a123e76b1e770dc5761aa368d"
   integrity sha512-h5M3Hk78r6wAheJF0a5YahB1yRQKCsZ4MsGdZ5O9ETbVtjPcScGfrMmoOq7EBsCRzd4BDkvDJ7ogP8Sz5tTFiQ==
+  dependencies:
+    tslib "^2.1.0"
+
+rxjs@^7.5.5:
+  version "7.5.7"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.5.7.tgz#2ec0d57fdc89ece220d2e702730ae8f1e49def39"
+  integrity sha512-z9MzKh/UcOqB3i20H6rtrlaE/CgjLOvheWK/9ILrbhROGTweAi1BaFsTT9FbwZi5Trr1qNRs+MXkhmR06awzQA==
   dependencies:
     tslib "^2.1.0"
 
