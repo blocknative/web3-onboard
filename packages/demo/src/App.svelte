@@ -17,6 +17,7 @@
   import dcentModule from '@web3-onboard/dcent'
   import sequenceModule from '@web3-onboard/sequence'
   import tallyHoModule from '@web3-onboard/tallyho'
+  import uauthModule from '@web3-onboard/uauth'
   import {
     recoverAddress,
     arrayify,
@@ -96,6 +97,12 @@
   }
   const trezor = trezorModule(trezorOptions)
 
+  const uauthOptions = {
+  clientID: "a25c3a65-a1f2-46cc-a515-a46fe7acb78c",
+  redirectUri: "http://localhost:8080/",
+}
+  const uauth = uauthModule(uauthOptions)
+
   const magic = magicModule({
     apiKey: 'pk_live_02207D744E81C2BA'
     // userEmail: 'test@test.com'
@@ -124,7 +131,8 @@
       gnosis,
       dcent,
       sequence,
-      tallyho
+      tallyho,
+      uauth
     ],
     gas,
     chains: [
