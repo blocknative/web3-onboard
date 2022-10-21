@@ -1,3 +1,7 @@
+<script>
+    import {Gas} from '$lib/components'
+</script>
+<Gas />
 # @web3-onboard/gas
 
 A module for requesting streams or single requests of gas price estimates from the [Blocknative Gas Platform API](https://docs.blocknative.com/gas-platform).
