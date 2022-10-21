@@ -5,9 +5,10 @@
   import gasModule from '@web3-onboard/gas'
   import { onMount } from 'svelte'
   import { ethers } from 'ethers'
+  import type { GasPrice, RPCGasPrice } from './types'
 
-  let cardBg
-  let animation
+  let cardBg: any
+  let animation: any
   $: if (cardBg) {
     animation = anime({
       targets: '.Gas--card-bg',
@@ -19,61 +20,57 @@
     })
   }
   let ethMainnetGasBlockPrices
-  let rpcGasData
+  let rpcGasData: RPCGasPrice
   onMount(() => {
     ethMainnetGasBlockPrices = gasModule.stream({
       chains: ['0x1'],
       apiKey: '7eeb406c-82cb-4348-8ab5-b8cd3b684fff',
       endpoint: 'blockPrices'
     })
-    ethMainnetGasBlockPrices.subscribe((stats) => {
-      animation?.restart()
-      console.log(stats)
+    ethMainnetGasBlockPrices.subscribe(() => {
       async function getEtherGasFromRPC() {
         const INFURA_ID = '03af2f609bfd4782900a84da1ac65000'
-
         const infuraRPC = `https://mainnet.infura.io/v3/${INFURA_ID}`
         const customHttpProvider = new ethers.providers.JsonRpcProvider(infuraRPC)
         const fee = await customHttpProvider.getFeeData()
-        const cleanFees = {
-          price: ethers.utils.formatUnits(fee.gasPrice, 'gwei'),
-          maxPriorityFeePerGas: ethers.utils.formatUnits(fee.maxPriorityFeePerGas, 'gwei'),
-          maxFeePerGas: ethers.utils.formatUnits(fee.maxFeePerGas, 'gwei')
+        if (fee.gasPrice && fee.maxFeePerGas && fee.maxPriorityFeePerGas) {
+          rpcGasData = {
+            price: ethers.utils.formatUnits(fee.gasPrice, 'gwei'),
+            maxPriorityFeePerGas: ethers.utils.formatUnits(fee.maxPriorityFeePerGas, 'gwei'),
+            maxFeePerGas: ethers.utils.formatUnits(fee.maxFeePerGas, 'gwei')
+          }
         }
-        console.log('rpc fees', cleanFees)
-        rpcGasData = cleanFees
       }
       getEtherGasFromRPC()
+      animation?.restart()
     })
   })
 
-  const gasDiff = (bnGas) => {
-    if (!rpcGasData) return
-    const priFeeDiff = rpcGasData.maxPriorityFeePerGas - bnGas.maxPriorityFeePerGas
-    const maxFeeDiff = rpcGasData.maxFeePerGas - bnGas.maxFeePerGas
+  const gasDiff = (bnGas: GasPrice) => {
+    if (!rpcGasData || !bnGas) return
+    const priFeeDiff = Number.parseInt(rpcGasData.maxPriorityFeePerGas) - bnGas.maxPriorityFeePerGas
+    const maxFeeDiff = Number.parseInt(rpcGasData.maxFeePerGas) - bnGas.maxFeePerGas
     return priFeeDiff + maxFeeDiff
   }
 </script>
 
 <div class="Gas px-6  p-4">
   <div class="flex whitespace-nowrap mb-3 text-sm select-none">
-    <span>MORE LIKELY</span>
+    <span class="flex items-center">MORE LIKELY</span>
     <span
       class="bg-gradient-to-r from-conf-99 via-conf-95 via-conf-90 via-conf-80 to-conf-70 h-[1px] mx-2 my-3 w-full rounded-full"
     />
-    <span>LESS LIKELY</span>
+    <span class="flex items-center">LESS LIKELY</span>
   </div>
   <div class="w-0 h-0 text-transparent selection:bg-none">.</div>
-  <div class="flex flex-nowrap justify-evenly ">
-    {#if $ethMainnetGasBlockPrices && rpcGasData}
+  {#if $ethMainnetGasBlockPrices && rpcGasData}
+    <div class="flex flex-nowrap justify-evenly ">
       {#each $ethMainnetGasBlockPrices[0]?.blockPrices[0]?.estimatedPrices as gasData}
         <GasCard bind:cardBg {gasData} gasDiff={gasDiff(gasData)?.toFixed(2)} />
       {/each}
-    {/if}
-  </div>
-  {#if $ethMainnetGasBlockPrices && rpcGasData}
+    </div>
     <div class="flex mt-4">
-      <GasCard bind:cardBg gasData={rpcGasData} />
+      <GasCard bind:cardBg gasData={rpcGasData} gasDiff={undefined} />
     </div>
   {/if}
 </div>

@@ -1,19 +1,17 @@
 <script lang="ts">
   import { blur } from 'svelte/transition'
-  // import type { GasPrice } from '../types'
+  import type { GasPrice, RPCGasPrice } from './types'
 
-  export let gasData
-  export let gasDiff
+  export let gasData: GasPrice | RPCGasPrice
+  export let gasDiff: string | undefined
   let className = ''
   export { className as class }
   export let backgroundStyle = ''
 
-  export let minimal = false
-
   // Holds refference to the background element node
   export let cardBg = null
 
-  const cardColors = {
+  const cardColors: Record<number, string> = {
     99: '#5aea98',
     95: '#5dea5a',
     90: '#bcea5a',
@@ -21,39 +19,36 @@
     70: '#eab05a'
   }
 
-  let cardColor = cardColors[gasData?.confidence]
+  let cardColor: string | undefined = cardColors[gasData?.confidence]
 </script>
 
 <div
   class={`${className} p-1 mr-2 last:mr-0 flex flex-col border rounded-2xl justify-evenly text-center overflow-hidden w-full relative cursor-pointer before:absolute before:scale-0 before:transition-transform before:h-3 before:w-3 before:rounded-full before:top-2 before:left-2 before:bg-blue-500`}
   style={`border-color: ${cardColor}; `}
 >
-  {#if gasData?.confidence}
+  {#if gasData.hasOwnProperty('confidence')}
     <div>BN Gas</div>
   {:else}
     <div>Ethers.js Gas</div>
   {/if}
-  <div class={`${minimal ? 'text-xs' : 'text-base'}`}>priority fee</div>
+  <div class="text-base">priority fee</div>
 
   {#key gasData}
-    <div
-      in:blur={{ duration: 350, amount: 12 }}
-      class={`font-extrabold ${minimal ? 'text-base' : 'text-3xl'}`}
-    >
+    <div in:blur={{ duration: 350, amount: 12 }} class="font-extrabold text-base">
       {gasData?.maxPriorityFeePerGas || '...'}
     </div>
   {/key}
 
-  <div class={`${minimal ? 'text-xs' : 'text-base'}`}>max fee</div>
+  <div class="text-xs">max fee</div>
   {#key gasData}
-    <div in:blur={{ duration: 350, amount: 12 }} class={`font-extrabold text-base`}>
-      {Math.round(gasData?.maxFeePerGas) || '...'}
+    <div in:blur={{ duration: 350, amount: 12 }} class="font-extrabold text-base">
+      {gasData?.maxFeePerGas ? Math.round(Number(gasData.maxFeePerGas)) : '...'}
     </div>
   {/key}
 
-  {#if gasData?.confidence}
+  {#if gasData.hasOwnProperty('confidence')}
     <div class="text-sm m-1 whitespace-nowrap" style={`color: ${cardColor}`}>
-      {gasData?.confidence}% probability
+      {gasData.confidence}% probability
     </div>
   {/if}
   {#if gasDiff}
