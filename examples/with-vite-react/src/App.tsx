@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
-import blocknativeLogo from './assets/blocknative.svg'
 import './App.css'
 
 import web3Onboard from './web3-onboard'
@@ -16,9 +15,9 @@ function App() {
       <div>
         <a href="https://onboard.blocknative.com" target="_blank">
           <img
-            src={blocknativeLogo}
+            src="/blocknative.svg"
             className="logo blocknative"
-            alt="React logo"
+            alt="Blocknative logo"
           />
         </a>
         <a href="https://vitejs.dev" target="_blank">

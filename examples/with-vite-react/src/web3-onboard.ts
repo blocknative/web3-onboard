@@ -18,7 +18,7 @@ import web3authModule from '@web3-onboard/web3auth'
 
 import { init } from '@web3-onboard/react'
 
-const INFURA_KEY = '1886ff3d0a1143689424a8341cb75c66'
+const INFURA_KEY = '2896ff3d0a1143689424a8341cb75c67'
 
 const injected = injectedModule({
   custom: [
@@ -86,7 +86,10 @@ export default init({
     keepkey,
     keystone,
     dcent,
-    mew
+    mew,
+    talltHoWalletSdk,
+    web3auth,
+    sequence
   ],
   // An array of Chains that your app supports
   chains: [
