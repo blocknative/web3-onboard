@@ -47,7 +47,8 @@ export enum ProviderIdentityFlag {
   BitKeep = 'isBitKeep',
   Sequence = 'isSequence',
   Core = 'isAvalanche',
-  Opera = 'isOpera'
+  Opera = 'isOpera',
+  Bitski = 'isBitski'
 }
 
 export enum ProviderLabel {
