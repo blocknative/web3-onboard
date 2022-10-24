@@ -309,6 +309,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/tallyho
     steps:
       - node-build-steps
+  build-uauth:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/uauth
+    steps:
+      - node-build-steps
 
   # Build staging/Alpha releases
   build-staging-core:
@@ -453,6 +459,12 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/tallyho
+    steps:
+      - node-staging-build-steps
+  build-staging-uauth:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/uauth
     steps:
       - node-staging-build-steps
 
@@ -602,4 +614,10 @@ workflows:
       - build-tallyho:
           <<: *deploy_production_filters
       - build-staging-tallyho:
+          <<: *deploy_staging_filters
+  uauth:
+    jobs:
+      - build-uauth:
+          <<: *deploy_production_filters
+      - build-staging-uauth:
           <<: *deploy_staging_filters
