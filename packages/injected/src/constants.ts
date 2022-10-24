@@ -6,6 +6,7 @@ export const WALLET_NAMES: { [key: string]: string } = {
   atoken: 'AToken',
   binance: 'Binance Chain Wallet',
   bitpie: 'Bitpie',
+  bitski: 'Bitski',
   coinbasewallet: 'Coinbase Wallet',
   dcentwallet: "D'CENT",
   metamask: 'MetaMask',

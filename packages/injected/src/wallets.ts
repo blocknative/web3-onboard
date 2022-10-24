@@ -565,6 +565,19 @@ const core: InjectedWalletModule = {
   platforms: ['desktop', 'Chrome', 'Chromium', 'Microsoft Edge']
 }
 
+const bitski: InjectedWalletModule = {
+  label: ProviderLabel.Bitski,
+  injectedNamespace: InjectedNameSpace.Bitski,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider.getProvider && !!provider.getProvider().isBitski,
+  getIcon: async () => (await import('./icons/bitski.js')).default,
+  getInterface: async () => ({
+    provider:
+      window.Bitski && window.Bitski.getProvider && window.Bitski.getProvider()
+  }),
+  platforms: ['all']
+}
+
 const wallets = [
   exodus,
   metamask,
@@ -598,7 +611,8 @@ const wallets = [
   gamestop,
   bitkeep,
   sequence,
-  core
+  core,
+  bitski
 ]
 
 export default wallets
