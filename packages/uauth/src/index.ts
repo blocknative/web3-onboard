@@ -23,11 +23,7 @@ interface uauthOptions {
 }
 
 export async function getUauthUser(options: uauthOptions) {
-  const {
-    clientID,
-    redirectUri,
-    scope = 'openid wallet'
-  } = options || {}
+  const { clientID, redirectUri, scope = 'openid wallet' } = options || {}
 
   const uauthInstance = new UAuth({
     clientID: clientID,
@@ -35,12 +31,10 @@ export async function getUauthUser(options: uauthOptions) {
     scope: scope
   })
 
-  return await uauthInstance.user()
-    .then((user) => {
-      console.log(user)
-      return user
-    })
-
+  return await uauthInstance.user().then(user => {
+    console.log(user)
+    return user
+  })
 }
 
 function uauth(options: uauthOptions): WalletInit {
@@ -81,7 +75,7 @@ function uauth(options: uauthOptions): WalletInit {
             // NOTE: We don't want to throw because the page will take some time to
             // load the redirect page.
             // eslint-disable-next-line @typescript-eslint/no-empty-function
-            await new Promise<void>(() => { })
+            await new Promise<void>(() => {})
             // We need to throw here otherwise typescript won't know that user isn't null.
             throw new Error('Should never get here.')
           } else {
