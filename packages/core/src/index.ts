@@ -89,8 +89,11 @@ function init(options: InitOptions): OnboardAPI {
     apiKey,
     notify,
     gas,
-    connect
+    connect,
+    containerElements
   } = options
+
+  updateConfiguration({ containerElements })
 
   const { device, svelteInstance } = configuration
 
@@ -122,7 +125,6 @@ function init(options: InitOptions): OnboardAPI {
         ...accountCenter.desktop
       }
     }
-
     updateAccountCenter(accountCenterUpdate)
   }
 

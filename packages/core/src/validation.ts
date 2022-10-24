@@ -59,7 +59,18 @@ const account = Joi.object({
   balance
 })
 
-const chains = Joi.array().items(chainValidation)
+const chains = Joi.array()
+  .items(chainValidation)
+  .unique((a, b) => a.id === b.id)
+  .error(e => {
+    if (e[0].code === 'array.unique') {
+      return new Error(
+        `There is a duplicate Chain ID in your Onboard Chains array: ${e}`
+      )
+    }
+    return new Error(`${e}`)
+  })
+
 const accounts = Joi.array().items(account)
 
 const wallet = Joi.object({
@@ -154,6 +165,10 @@ const connectModalOptions = Joi.object({
   showSidebar: Joi.boolean()
 })
 
+const containerElements = Joi.object({
+  accountCenter: Joi.string()
+})
+
 const initOptions = Joi.object({
   wallets: walletInit,
   chains: chains.required(),
@@ -169,7 +184,8 @@ const initOptions = Joi.object({
     get: Joi.function().required(),
     stream: Joi.function().required()
   }),
-  connect: connectModalOptions
+  connect: connectModalOptions,
+  containerElements: containerElements
 })
 
 const connectOptions = Joi.object({
