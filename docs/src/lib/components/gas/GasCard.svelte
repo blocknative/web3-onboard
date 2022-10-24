@@ -2,8 +2,9 @@
   import { blur } from 'svelte/transition'
   import type { GasPrice, RPCGasPrice } from './types'
 
-  export let gasData: GasPrice | RPCGasPrice
+  export let gasData: GasPrice | RPCGasPrice | undefined
   export let gasDiff: string | undefined
+  export let gasPriceFrom: string
   let className = ''
   export { className as class }
   export let backgroundStyle = ''
@@ -26,7 +27,7 @@
   class={`${className} p-1 mr-2 last:mr-0 flex flex-col border rounded-2xl justify-evenly text-center overflow-hidden w-full relative cursor-pointer before:absolute before:scale-0 before:transition-transform before:h-3 before:w-3 before:rounded-full before:top-2 before:left-2 before:bg-blue-500`}
   style={`border-color: ${cardColor}; `}
 >
-  {#if gasData.hasOwnProperty('confidence')}
+  {#if gasPriceFrom === 'bn'}
     <div>BN Gas</div>
   {:else}
     <div>Ethers.js Gas</div>
@@ -46,9 +47,9 @@
     </div>
   {/key}
 
-  {#if gasData.hasOwnProperty('confidence')}
+  {#if gasPriceFrom === 'bn'}
     <div class="text-sm m-1 whitespace-nowrap" style={`color: ${cardColor}`}>
-      {gasData.confidence}% probability
+      {(gasData && gasData?.confidence) ? `${gasData.confidence}% probability` : '...'}
     </div>
   {/if}
   {#if gasDiff}

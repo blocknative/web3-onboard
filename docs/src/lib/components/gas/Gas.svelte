@@ -5,7 +5,7 @@
   import gasModule from '@web3-onboard/gas'
   import { onMount } from 'svelte'
   import { ethers } from 'ethers'
-  import type { GasPrice, RPCGasPrice } from './types'
+  import type { GasPrice, RPCGasPrice, GasData } from './types'
 
   let cardBg: any
   let animation: any
@@ -47,10 +47,28 @@
   })
 
   const gasDiff = (bnGas: GasPrice) => {
-    if (!rpcGasData || !bnGas) return
+    if (!rpcGasData || !bnGas || !bnGas.maxPriorityFeePerGas || !bnGas.maxFeePerGas) return
     const priFeeDiff = Number.parseInt(rpcGasData.maxPriorityFeePerGas) - bnGas.maxPriorityFeePerGas
     const maxFeeDiff = Number.parseInt(rpcGasData.maxFeePerGas) - bnGas.maxFeePerGas
     return priFeeDiff + maxFeeDiff
+  }
+
+  export const CONF_PERCENTAGES: number[] = [99, 95, 90, 80, 70]
+
+  const gasPricesDefaults: GasPrice[] = CONF_PERCENTAGES.map((confidence) => ({
+    confidence,
+    price: null,
+    maxFeePerGas: null,
+    maxPriorityFeePerGas: null
+  }))
+
+  export const GAS_DATA_DEFAULT: GasData = {
+    estimatedPrices: gasPricesDefaults,
+    baseFeePerGas: null,
+    blockNumber: null,
+    maxPrice: null,
+    estimatedTransactionCount: null,
+    seconds: null
   }
 </script>
 
@@ -63,14 +81,12 @@
     <span class="flex items-center">LESS LIKELY</span>
   </div>
   <div class="w-0 h-0 text-transparent selection:bg-none">.</div>
-  {#if $ethMainnetGasBlockPrices && rpcGasData}
-    <div class="flex flex-nowrap justify-evenly ">
-      {#each $ethMainnetGasBlockPrices[0]?.blockPrices[0]?.estimatedPrices as gasData}
-        <GasCard bind:cardBg {gasData} gasDiff={gasDiff(gasData)?.toFixed(2)} />
-      {/each}
-    </div>
-    <div class="flex mt-4">
-      <GasCard bind:cardBg gasData={rpcGasData} gasDiff={undefined} />
-    </div>
-  {/if}
+  <div class="flex flex-nowrap justify-evenly ">
+    {#each ($ethMainnetGasBlockPrices && $ethMainnetGasBlockPrices[0]?.blockPrices[0]?.estimatedPrices) || GAS_DATA_DEFAULT.estimatedPrices as gasData}
+      <GasCard bind:cardBg {gasData} gasDiff={gasDiff(gasData)?.toFixed(2)} gasPriceFrom={'bn'} />
+    {/each}
+  </div>
+  <div class="flex mt-4">
+    <GasCard bind:cardBg gasData={rpcGasData} gasDiff={undefined} gasPriceFrom={'rpc'} />
+  </div>
 </div>
