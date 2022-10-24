@@ -46,13 +46,6 @@
     })
   })
 
-  const gasDiff = (bnGas: GasPrice) => {
-    if (!rpcGasData || !bnGas || !bnGas.maxPriorityFeePerGas || !bnGas.maxFeePerGas) return
-    const priFeeDiff = Number.parseInt(rpcGasData.maxPriorityFeePerGas) - bnGas.maxPriorityFeePerGas
-    const maxFeeDiff = Number.parseInt(rpcGasData.maxFeePerGas) - bnGas.maxFeePerGas
-    return priFeeDiff + maxFeeDiff
-  }
-
   export const CONF_PERCENTAGES: number[] = [99, 95, 90, 80, 70]
 
   const gasPricesDefaults: GasPrice[] = CONF_PERCENTAGES.map((confidence) => ({
@@ -83,10 +76,10 @@
   <div class="w-0 h-0 text-transparent selection:bg-none">.</div>
   <div class="flex flex-nowrap justify-evenly ">
     {#each ($ethMainnetGasBlockPrices && $ethMainnetGasBlockPrices[0]?.blockPrices[0]?.estimatedPrices) || GAS_DATA_DEFAULT.estimatedPrices as gasData}
-      <GasCard bind:cardBg {gasData} gasDiff={gasDiff(gasData)?.toFixed(2)} gasPriceFrom={'bn'} />
+      <GasCard bind:cardBg {gasData} rpcGasForDiff={rpcGasData} gasPriceFrom={'bn'} />
     {/each}
   </div>
   <div class="flex mt-4">
-    <GasCard bind:cardBg gasData={rpcGasData} gasDiff={undefined} gasPriceFrom={'rpc'} />
+    <GasCard bind:cardBg gasData={rpcGasData} rpcGasForDiff={undefined} gasPriceFrom={'rpc'} />
   </div>
 </div>

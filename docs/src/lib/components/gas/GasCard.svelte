@@ -3,13 +3,13 @@
   import type { GasPrice, RPCGasPrice } from './types'
 
   export let gasData: GasPrice | RPCGasPrice | undefined
-  export let gasDiff: string | undefined
+  export let rpcGasForDiff: RPCGasPrice | undefined
   export let gasPriceFrom: string
   let className = ''
   export { className as class }
   export let backgroundStyle = ''
 
-  // Holds refference to the background element node
+  // Holds refference to the background element node for animation
   export let cardBg = null
 
   const cardColors: Record<number, string> = {
@@ -18,6 +18,13 @@
     90: '#bcea5a',
     80: '#ffe600',
     70: '#eab05a'
+  }
+
+  const gasDiff = (bnGas: GasPrice) => {
+    if (!rpcGasForDiff || !bnGas || !bnGas.maxPriorityFeePerGas || !bnGas.maxFeePerGas) return
+    const priFeeDiff = Number.parseInt(rpcGasForDiff.maxPriorityFeePerGas) - bnGas.maxPriorityFeePerGas
+    const maxFeeDiff = Number.parseInt(rpcGasForDiff.maxFeePerGas) - bnGas.maxFeePerGas
+    return priFeeDiff + maxFeeDiff
   }
 
   let cardColor: string | undefined = cardColors[gasData?.confidence]
@@ -51,10 +58,8 @@
     <div class="text-sm m-1 whitespace-nowrap" style={`color: ${cardColor}`}>
       {(gasData && gasData?.confidence) ? `${gasData.confidence}% probability` : '...'}
     </div>
-  {/if}
-  {#if gasDiff}
     <div class="text-sm m-1 whitespace-nowrap" style={`color: ${cardColor}`}>
-      {gasDiff} gwei saved
+      {rpcGasForDiff ? `${gasDiff(gasData)?.toFixed(2)} gwei saved` : '...'}
     </div>
   {/if}
   <div

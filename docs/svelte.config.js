@@ -4,11 +4,6 @@ import { kitDocsPlugin } from '@svelteness/kit-docs/node'
 import Icons from 'unplugin-icons/vite'
 import preprocess from 'svelte-preprocess'
 import { resolve } from 'path'
-import nodePolyfills from 'rollup-plugin-polyfill-node'
-const MODE = process.env.NODE_ENV
-
-const development = MODE === 'development'
-
 
 const { adapter, adapterName } = process.env.VERCEL
   ? { adapter: adapterVercel, adapterName: 'vercel' }
@@ -33,11 +28,7 @@ const config = {
     },
     vite: {
       build: {
-        commonjsOptions: {
-          transformMixedEsModules: true
-        },
         rollupOptions: {
-          plugins: [nodePolyfills({ crypto: true, http: true })],
           external: [
             '@web3-react/core',
             '@web3-react/eip1193',
@@ -58,27 +49,15 @@ const config = {
         Icons({ compiler: 'svelte' }),
         kitDocsPlugin({
           shiki: {
-            theme: 'material-ocean',
-            crypto: 'crypto-browserify',
-            stream: 'stream-browserify',
-            assert: 'assert'
+            theme: 'material-ocean'
           }
-        }),
-        development &&
-          nodePolyfills({
-            include: [
-              'node_modules/**/*.js',
-              new RegExp('node_modules/.vite/.*js')
-            ],
-            http: true,
-            crypto: true
-          })
+        })
       ],
       define: {
         'import.meta.env.VERCEL': JSON.stringify(process.env.VERCEL)
       },
       optimizeDeps: {
-        include: ['@web3-onboard/core', '@web3-onboard/gas']
+        include: ['@web3-onboard/core']
       }
     }
   }
