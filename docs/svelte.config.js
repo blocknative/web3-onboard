@@ -28,6 +28,9 @@ const config = {
     },
     vite: {
       build: {
+        commonjsOptions: {
+          transformMixedEsModules: true
+        },
         rollupOptions: {
           external: [
             '@web3-react/core',
@@ -36,7 +39,9 @@ const config = {
             '@web3-react/network',
             '@web3-react/walletconnect',
             '@web3-react/types',
-            '@web3-react/url'
+            '@web3-react/url',
+            '@web3-onboard/gas',
+            'ethers'
           ]
         }
       },
