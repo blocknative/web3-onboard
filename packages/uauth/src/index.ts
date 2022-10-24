@@ -32,7 +32,6 @@ export async function getUauthUser(options: uauthOptions) {
   })
 
   return await uauthInstance.user().then(user => {
-    console.log(user)
     return user
   })
 }
