@@ -17,7 +17,7 @@
   import dcentModule from '@web3-onboard/dcent'
   import sequenceModule from '@web3-onboard/sequence'
   import tallyHoModule from '@web3-onboard/tallyho'
-  import uauthModule from '@web3-onboard/uauth'
+  import uauthModule, { getUauthUser } from '@web3-onboard/uauth'
   import {
     recoverAddress,
     arrayify,
@@ -98,9 +98,10 @@
   const trezor = trezorModule(trezorOptions)
 
   const uauthOptions = {
-  clientID: "a25c3a65-a1f2-46cc-a515-a46fe7acb78c",
-  redirectUri: "http://localhost:8080/",
-}
+    clientID: 'a25c3a65-a1f2-46cc-a515-a46fe7acb78c',
+    redirectUri: 'http://localhost:8080/',
+    scope: 'openid wallet email:optional humanity_check:optional profile:optional social:optional'
+  }
   const uauth = uauthModule(uauthOptions)
 
   const magic = magicModule({
@@ -131,7 +132,7 @@
       gnosis,
       dcent,
       sequence,
-      tallyho,
+      tallyho, 
       uauth
     ],
     gas,
@@ -958,6 +959,19 @@
         </div>
 
         <div>Chains: {JSON.stringify(chains, null, 2)}</div>
+
+        {#if label === 'Unstoppable'}
+          {#await getUauthUser(uauthOptions)}
+            <div>Getting Unstoppable User...</div>
+          {:then user}
+          scope: 'openid wallet email:optional humanity_check:optional profile:optional social:optional'
+            <div>Unstoppable User: {user.sub}</div>
+            <div>Unstoppable Wallet: {user.wallet_address}</div>
+            <div>Unstoppable Email: {user.email || ''}</div>
+            <div>Unstoppable Humanity: {user.humanity_check_id || ''}</div>
+            <div>Unstoppable Profile: {user.profile || ''}</div>
+          {/await}
+        {/if}
 
         {#each accounts as { address, ens, balance }}
           <div
