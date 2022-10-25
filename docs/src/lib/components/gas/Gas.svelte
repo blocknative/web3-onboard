@@ -2,7 +2,7 @@
   import anime from 'animejs'
 
   import GasCard from './GasCard.svelte'
-  import gasModule from '@web3-onboard/gas'
+  import gasModule from '@web3-onboard/gas/dist/index.js'
   import { onMount } from 'svelte'
   import { ethers } from 'ethers'
   import type { GasPrice, RPCGasPrice, GasData } from './types'
@@ -46,7 +46,7 @@
     })
   })
 
-  export const CONF_PERCENTAGES: number[] = [99, 95, 90, 80, 70]
+  const CONF_PERCENTAGES: number[] = [99, 95, 90, 80, 70]
 
   const gasPricesDefaults: GasPrice[] = CONF_PERCENTAGES.map((confidence) => ({
     confidence,
@@ -55,7 +55,7 @@
     maxPriorityFeePerGas: null
   }))
 
-  export const GAS_DATA_DEFAULT: GasData = {
+  const GAS_DATA_DEFAULT: GasData = {
     estimatedPrices: gasPricesDefaults,
     baseFeePerGas: null,
     blockNumber: null,
