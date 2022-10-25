@@ -78,12 +78,12 @@
       </a>
     </div>
     <Algolia
-    apiKey="599cec31baffa4868cae4e79f180729b"
-    appId="R2IYF7ETH7"
-    indexName="docsearch"
-    placeholder="Search documentation"
-    slot="search"
-  />
+      apiKey="1bce9c4755cea3698e16830544503ee2"
+      appId="02BH13PRRI"
+      indexName="docsearch"
+      placeholder="Search documentation"
+      slot="search"
+    />
     <div slot="navbar-right-alt">
       <div class="flex">
         <SocialLink type="gitHub" href="//github.com/blocknative/web3-onboard" />

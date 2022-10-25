@@ -52,8 +52,8 @@
       </a>
     </div>
     <Algolia
-      apiKey="c5806678a94b96af0f6b1145b4ed370f"
-      appId="RZ0X99H4C8"
+      apiKey="1bce9c4755cea3698e16830544503ee2"
+      appId="02BH13PRRI"
       indexName="dev_blocknative"
       placeholder="Search documentation"
       slot="search"
