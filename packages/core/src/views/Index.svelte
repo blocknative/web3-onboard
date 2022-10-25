@@ -9,7 +9,7 @@
   import type { Observable } from 'rxjs'
   import type { Notification } from '../types.js'
 
-  const { device } = configuration
+  const { device, containerElements } = configuration
   const accountCenter$ = state
     .select('accountCenter')
     .pipe(startWith(state.get().accountCenter), shareReplay(1))
@@ -50,6 +50,7 @@
     : Promise.resolve(null)
 
   $: sharedContainer =
+    !accountCenterMountToElement &&
     $accountCenter$.enabled &&
     $notify$.enabled &&
     $notify$.position === $accountCenter$.position
@@ -58,25 +59,18 @@
     device.type === 'mobile' || $accountCenter$.position === $notify$.position
 
   $: sharedMobileContainerCheck =
-    device.type === 'mobile' &&
-    (($notify$.position.includes('bottom') &&
+    ($notify$.position.includes('bottom') &&
       $accountCenter$.position.includes('bottom')) ||
-      ($notify$.position.includes('top') &&
-        $accountCenter$.position.includes('top')))
-
-  $: separateMobileContainerCheck =
-    device.type === 'mobile' &&
-    (($notify$.position.includes('top') &&
-      $accountCenter$.position.includes('bottom')) ||
-      ($notify$.position.includes('bottom') &&
-        $accountCenter$.position.includes('top')))
+    ($notify$.position.includes('top') &&
+      $accountCenter$.position.includes('top'))
 
   $: displayNotifySeparate =
     $notify$.enabled &&
     (!$accountCenter$.enabled ||
+      accountCenterMountToElement ||
       ($notify$.position !== $accountCenter$.position &&
         device.type !== 'mobile') ||
-      separateMobileContainerCheck ||
+      (device.type === 'mobile' && !sharedMobileContainerCheck) ||
       !$wallets$.length)
 
   $: displayAccountCenterSeparate =
@@ -84,14 +78,61 @@
     (!$notify$.enabled ||
       ($notify$.position !== $accountCenter$.position &&
         device.type !== 'mobile') ||
-      separateMobileContainerCheck) &&
+      (device.type === 'mobile' && !sharedMobileContainerCheck)) &&
     $wallets$.length
 
   $: displayAccountCenterNotifySameContainer =
     $notify$.enabled &&
     $accountCenter$.enabled &&
-    $wallets$.length &&
-    (sharedContainer || sharedMobileContainerCheck)
+    (sharedContainer ||
+      (device.type === 'mobile' && sharedMobileContainerCheck)) &&
+    $wallets$.length
+
+  const accountCenterMountToElement =
+    $accountCenter$.enabled &&
+    containerElements &&
+    containerElements.accountCenter
+
+  if (accountCenterMountToElement) {
+    const accountCenter = document.createElement('onboard-account-center')
+    const target = accountCenter.attachShadow({ mode: 'open' })
+
+    let getW3OEl = document.querySelector('onboard-v2')
+    let w3OStyleSheets = getW3OEl.shadowRoot.styleSheets
+    const accountCenterStyleSheet = new CSSStyleSheet()
+
+    // Copy Onboard stylesheets over to AccountCenter shadow DOM
+    Object.values(w3OStyleSheets).forEach(sheet => {
+      const styleRules = Object.values(sheet.cssRules)
+      styleRules.forEach(rule =>
+        accountCenterStyleSheet.insertRule(rule.cssText)
+      )
+    })
+    target.adoptedStyleSheets = [accountCenterStyleSheet]
+
+    const containerElement = document.querySelector(accountCenterMountToElement)
+
+    containerElement.appendChild(accountCenter)
+    if (!containerElement) {
+      throw new Error(
+        `Element with query ${accountCenterMountToElement} does not exist.`
+      )
+    }
+
+    const getACComp = async () => {
+      let acComponent = await accountCenterComponent
+      if (acComponent) {
+        new acComponent({
+          target,
+          props: {
+            settings: $accountCenter$,
+            mountInContainer: true
+          }
+        })
+      }
+    }
+    getACComp()
+  }
 </script>
 
 <style>
@@ -389,7 +430,7 @@
     >
       {#await accountCenterComponent then AccountCenter}
         {#if AccountCenter}
-          <svelte:component this={AccountCenter} settings={$accountCenter$} />
+          <svelte:component this={AccountCenter} />
         {/if}
       {/await}
     </div>
@@ -432,7 +473,7 @@
       {#if $accountCenter$.enabled && $wallets$.length}
         {#await accountCenterComponent then AccountCenter}
           {#if AccountCenter}
-            <svelte:component this={AccountCenter} settings={$accountCenter$} />
+            <svelte:component this={AccountCenter} />
           {/if}
         {/await}
       {/if}

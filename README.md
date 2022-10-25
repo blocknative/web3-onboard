@@ -71,7 +71,7 @@ if (wallets[0]) {
 
 **Onboard v1 migration guide**
 
-If you're coming from v1, we've created a [migration guide for you](https://docs.blocknative.com/onboard/migration-guide).
+If you're coming from v1, we've created a [migration guide for you](https://onboard.blocknative.com/docs/overview/onboard.js-migration-guide#background).
 
 ## Documentation
 
