@@ -75,7 +75,7 @@ If you're coming from v1, we've created a [migration guide for you](https://docs
 
 ## Documentation
 
-For full documentation, check out the README.md for each package:
+For full documentation, check out the README.md for each package or the [docs page here](https://onboard.blocknative.com/docs/overview/introduction#features):
 
 **Core Repo**
 
