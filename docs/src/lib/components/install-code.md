@@ -2,14 +2,14 @@
 <TabPanel value="npm">
 
 ```sh copy
-npm install @web3-onboard/core @web3-onboard/injected
+npm install @web3-onboard/core @web3-onboard/injected-wallets
 ```
 
   </TabPanel>
   <TabPanel value="yarn">
 
 ```sh copy
-yarn add @web3-onboard/core @web3-onboard/injected
+yarn add @web3-onboard/core @web3-onboard/injected-wallets
 ```
 
   </TabPanel>
