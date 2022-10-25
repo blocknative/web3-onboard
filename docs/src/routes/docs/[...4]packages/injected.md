@@ -10,14 +10,14 @@ Note: Make sure to install the core module before installing other modules to w3
 <TabPanel value="yarn">
 
 ```sh copy
-yarn add @web3-onboard/injected
+yarn add @web3-onboard/injected-wallets
 ```
 
   </TabPanel>
   <TabPanel value="npm">
 
 ```sh copy
-npm install @web3-onboard/injected
+npm install @web3-onboard/injected-wallets
 ```
 
   </TabPanel>
@@ -164,33 +164,33 @@ const onboard = Onboard({
 
 ### Injected Wallets Supported Natively
 
-- Metamask - *Desktop & Mobile* (Mobile relies on Wallet Connect and is detected inside MetaMask app browser)
-- Binance - *Desktop*
-- Coinbase - *Desktop & Mobile*
-- Tally - *Desktop*
-- Exodus - *Desktop & Mobile*
-- Trust - *Mobile*
-- Opera - *Desktop & Mobile*
-- Status - *Mobile*
-- Alphawallet - *Mobile*
-- Atoken - *Mobile*
-- Bitpie - *Mobile*
-- Blockwallet - *Desktop*
-- Brave - *Desktop & Mobile*
-- D'Cent - *Mobile*
-- Frame - *Desktop*
-- Huobiwallet - *Mobile*
-- Hyperpay - *Mobile*
-- IMtoken - *Mobile*
-- Liquality - *Desktop*
-- Meetone - *Mobile*
-- Mykey - *Mobile*
-- Ownbit - *Mobile*
-- Tokenpocket - *Desktop & Mobile*
-- TP - *Mobile*
-- xDefi - *Desktop & Mobile*
-- 1inch - *Mobile*
-- Tokenary - *Mobile*
-- GameStop - *Desktop*
-- Rabby - *Desktop*
-- MathWallet - *Desktop & Mobile*
+- Metamask - _Desktop & Mobile_ (Mobile relies on Wallet Connect and is detected inside MetaMask app browser)
+- Binance - _Desktop_
+- Coinbase - _Desktop & Mobile_
+- Tally - _Desktop_
+- Exodus - _Desktop & Mobile_
+- Trust - _Mobile_
+- Opera - _Desktop & Mobile_
+- Status - _Mobile_
+- Alphawallet - _Mobile_
+- Atoken - _Mobile_
+- Bitpie - _Mobile_
+- Blockwallet - _Desktop_
+- Brave - _Desktop & Mobile_
+- D'Cent - _Mobile_
+- Frame - _Desktop_
+- Huobiwallet - _Mobile_
+- Hyperpay - _Mobile_
+- IMtoken - _Mobile_
+- Liquality - _Desktop_
+- Meetone - _Mobile_
+- Mykey - _Mobile_
+- Ownbit - _Mobile_
+- Tokenpocket - _Desktop & Mobile_
+- TP - _Mobile_
+- xDefi - _Desktop & Mobile_
+- 1inch - _Mobile_
+- Tokenary - _Mobile_
+- GameStop - _Desktop_
+- Rabby - _Desktop_
+- MathWallet - _Desktop & Mobile_
