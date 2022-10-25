@@ -50,8 +50,13 @@ export interface InitOptions {
    * Transaction notification options
    */
   notify?: Partial<NotifyOptions> | Partial<Notify>
-  /**Gas module */
+  /** Gas module */
   gas?: typeof gas
+  /**
+   * Object mapping for W3O components with the key being the DOM element to mount
+   * the component to, this defines the DOM container element for svelte to attach the component
+   */
+  containerElements?: Partial<ContainerElements>
 }
 
 export interface ConnectOptions {
@@ -131,6 +136,7 @@ export type Configuration = {
   appMetadata?: AppMetadata | null
   apiKey?: string
   gas?: typeof gas
+  containerElements?: ContainerElements
 }
 
 export type Locale = string
@@ -156,12 +162,20 @@ export type AccountCenter = {
   position?: AccountCenterPosition
   expanded?: boolean
   minimal?: boolean
+  /**
+   * @deprecated Use top level containerElements property
+   * with the accountCenter prop set to the desired container El
+   */
   containerElement?: string
 }
 
 export type AccountCenterOptions = {
   desktop: Omit<AccountCenter, 'expanded'>
   mobile: Omit<AccountCenter, 'expanded'>
+}
+
+export type ContainerElements = {
+  accountCenter?: string
 }
 
 export type Notify = {
@@ -342,4 +356,16 @@ export type DeviceNotBrowser = {
   type: null
   os: null
   browser: null
+}
+
+export type WalletPermission = {
+  id: string
+  parentCapability: string
+  invoker: string
+  caveats: {
+    type: string
+    value: string[]
+  }[]
+
+  date: number
 }
