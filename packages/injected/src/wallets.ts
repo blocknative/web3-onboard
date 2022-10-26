@@ -578,6 +578,18 @@ const bitski: InjectedWalletModule = {
   platforms: ['all']
 }
 
+const enkrypt: InjectedWalletModule = {
+  label: ProviderLabel.Enkrypt,
+  injectedNamespace: InjectedNameSpace.Enkrypt,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider.providers && !!provider.providers.ethereum,
+  getIcon: async () => (await import('./icons/enkrypt.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.enkrypt.providers.ethereum)
+  }),
+  platforms: ['all']
+}
+
 const wallets = [
   exodus,
   metamask,
@@ -612,7 +624,8 @@ const wallets = [
   bitkeep,
   sequence,
   core,
-  bitski
+  bitski,
+  enkrypt
 ]
 
 export default wallets
