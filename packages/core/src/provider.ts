@@ -219,12 +219,14 @@ export function trackWallet(
   )
 
   // Update chain on wallet when chainId changed
-  chainChanged$.subscribe(async chainId => {
+  chainChanged$.subscribe(async (chainId: string | number) => {
+    const hexChainId: string =
+      typeof chainId === 'number' ? `0x${chainId.toString(16)}` : chainId
     const { wallets } = state.get()
     const { chains, accounts } = wallets.find(wallet => wallet.label === label)
     const [connectedWalletChain] = chains
 
-    if (chainId === connectedWalletChain.id) return
+    if (hexChainId === connectedWalletChain.id) return
 
     if (state.get().notify.enabled) {
       const sdk = await getBlocknativeSdk()
@@ -249,7 +251,7 @@ export function trackWallet(
           try {
             sdk.subscribe({
               id: address,
-              chainId: chainId,
+              chainId: hexChainId,
               type: 'account'
             })
           } catch (error) {
@@ -269,7 +271,7 @@ export function trackWallet(
     )
 
     updateWallet(label, {
-      chains: [{ namespace: 'evm', id: chainId }],
+      chains: [{ namespace: 'evm', id: hexChainId }],
       accounts: resetAccounts
     })
   })
