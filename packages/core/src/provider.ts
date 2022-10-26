@@ -5,7 +5,7 @@ import { providers } from 'ethers'
 import { weiToEth } from '@web3-onboard/common'
 import { disconnectWallet$ } from './streams.js'
 import { updateAccount, updateWallet } from './store/actions.js'
-import { validEnsChain } from './utils.js'
+import { toHexString, validEnsChain } from './utils.js'
 import disconnect from './disconnect.js'
 import { state } from './store/index.js'
 import { getBlocknativeSdk } from './services.js'
@@ -221,7 +221,7 @@ export function trackWallet(
   // Update chain on wallet when chainId changed
   chainChanged$.subscribe(async (chainId: string | number) => {
     const hexChainId: string =
-      typeof chainId === 'number' ? `0x${chainId.toString(16)}` : chainId
+      typeof chainId === 'number' ? toHexString(chainId) : chainId
     const { wallets } = state.get()
     const { chains, accounts } = wallets.find(wallet => wallet.label === label)
     const [connectedWalletChain] = chains
