@@ -8,10 +8,6 @@ function enkrypt(): WalletInit {
   return () => {
     return {
       label: 'Enkrypt',
-      injectedNamespace: 'enkrypt',
-      checkProviderIdentity: ({ provider }: { provider: any }) => {
-        !!provider && !!provider['isEnkrypt']
-      },
       getIcon: async () => (await import('./icon.js')).default,
       getInterface: async () => {
         const provider = window.hasOwnProperty('enkrypt')
@@ -21,8 +17,7 @@ function enkrypt(): WalletInit {
           window.open('https://enkrypt.com', '_blank')
           throw new Error('Please Install Enkrypt to use this wallet')
         }
-      },
-      platforms: ['desktop']
+      }
     }
   }
 }
