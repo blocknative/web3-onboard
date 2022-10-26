@@ -93,7 +93,7 @@ For full documentation, check out the README.md for each package:
 - [Magic](packages/magic/README.md)
 - [Fortmatic](packages/fortmatic/README.md)
 - [Portis](packages/portis/README.md)
-- [MEW](packages/mew/README.md)
+- [MEW-Wallet](packages/mew-wallet/README.md)
 - [Web3Auth](packages/web3auth/README.md)
 - [Sequence](packages/sequence/README.md)
 - [TallyHo](packages/tallyho/README.md)

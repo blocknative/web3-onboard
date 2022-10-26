@@ -219,6 +219,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/mew
     steps:
       - node-build-steps
+  build-mew-wallet:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/mew-wallet
+    steps:
+      - node-build-steps
   build-portis:
     docker:
       - image: cimg/node:16.13.1
@@ -369,6 +375,12 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/mew
+    steps:
+      - node-staging-build-steps
+  build-staging-mew-wallet:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/mew-wallet
     steps:
       - node-staging-build-steps
   build-staging-portis:
@@ -524,6 +536,12 @@ workflows:
       - build-mew:
           <<: *deploy_production_filters
       - build-staging-mew:
+          <<: *deploy_staging_filters
+  mew-wallet:
+    jobs:
+      - build-mew-wallet:
+          <<: *deploy_production_filters
+      - build-staging-mew-wallet:
           <<: *deploy_staging_filters
   portis:
     jobs:
