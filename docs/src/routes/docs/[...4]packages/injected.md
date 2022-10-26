@@ -10,14 +10,14 @@ Note: Make sure to install the core module before installing other modules to w3
 <TabPanel value="yarn">
 
 ```sh copy
-yarn add @web3-onboard/injected
+yarn add @web3-onboard/injected-wallets
 ```
 
   </TabPanel>
   <TabPanel value="npm">
 
 ```sh copy
-npm install @web3-onboard/injected
+npm install @web3-onboard/injected-wallets
 ```
 
   </TabPanel>
