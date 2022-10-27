@@ -80,7 +80,7 @@
     <Algolia
       apiKey="1bce9c4755cea3698e16830544503ee2"
       appId="02BH13PRRI"
-      indexName="docsearch"
+      indexName="blocknative"
       placeholder="Search documentation"
       slot="search"
     />
