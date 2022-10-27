@@ -9,8 +9,6 @@
   import '@svelteness/kit-docs/client/styles/theme.css'
   import '$lib/styles/fonts.css'
   import '$lib/styles/kit-docs.css'
-  import '@docsearch/css'
-  import '@svelteness/kit-docs/client/styles/docsearch.css'
 
   import { KitDocs, KitDocsLayout, SocialLink } from '@svelteness/kit-docs'
   import IconBN from '$lib/components/icons/blocknative.svelte'
@@ -44,7 +42,7 @@
 <SEO {title} {metadescription} {url} />
 
 <KitDocs>
-  <KitDocsLayout {navbar} --kd-content-max-width={'100%'} search>
+  <KitDocsLayout {navbar} --kd-content-max-width={'100%'}>
     <div slot="navbar-left">
       <a href="/">
         <IconBN />
