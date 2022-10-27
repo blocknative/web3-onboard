@@ -22,7 +22,8 @@ function mewWallet(): WalletInit {
                   const androidChains = ['0x1', '0x89', '0x38'];
                   const chains = platform.manufacturer.toLowerCase() === 'apple' ? iosChains : androidChains;
                   const supported = chains.find(id => id === params[0].chainId)
-                  if (!supported) throw new Error("MEW Wallet doesn't selected chain");
+                  if (!supported) throw new Error("MEW Wallet doesn't support selected chain");
+                  window.ethereum.setChainId(parseInt(supported));
                   return null;
                 }
               })
