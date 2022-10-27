@@ -2,7 +2,8 @@ import type {
   EIP1193Provider,
   ChainListener,
   SimpleEventEmitter,
-  ChainId
+  ChainId,
+  TransactionListener
 } from '@web3-onboard/common'
 
 import { createEIP1193Provider } from '@web3-onboard/common'
@@ -60,7 +61,29 @@ const metamask: InjectedWalletModule = {
     !!provider[ProviderIdentityFlag.MetaMask] &&
     !otherProviderFlagsExist(ProviderIdentityFlag.MetaMask, provider),
   getIcon: async () => (await import('./icons/metamask.js')).default,
-  getInterface: getInjectedInterface(ProviderIdentityFlag.MetaMask, true),
+  getInterface: async () => {
+    const { provider } = await getInjectedInterface(
+      ProviderIdentityFlag.MetaMask
+    )()
+
+    const addListener: SimpleEventEmitter['on'] = provider.on.bind(provider)
+    provider.on = (event, func) => {
+      // intercept chainChanged event and format string
+      console.log('testing MM')
+      console.log(event)
+      if (event === 'eth_sendTransaction') {
+        addListener(event, (trans) => {
+          console.log(trans)
+          // const cb = func as TransactionListener
+          // cb(`0x${parseInt(chainId).toString(16)}`)
+        })
+      } else {
+        addListener(event, func)
+      }
+    }
+
+    return { provider }
+  },
   platforms: ['all']
 }
 
