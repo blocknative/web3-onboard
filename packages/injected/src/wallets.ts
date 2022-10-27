@@ -67,15 +67,16 @@ const metamask: InjectedWalletModule = {
     )()
 
     const addListener: SimpleEventEmitter['on'] = provider.on.bind(provider)
+    console.log
     provider.on = (event, func) => {
       // intercept chainChanged event and format string
       console.log('testing MM')
       console.log(event)
-      if (event === 'eth_sendTransaction') {
+      if (event === 'eth_sendRawTransaction') {
         addListener(event, (trans) => {
           console.log(trans)
-          // const cb = func as TransactionListener
-          // cb(`0x${parseInt(chainId).toString(16)}`)
+          const cb = func as TransactionListener
+          cb(trans)
         })
       } else {
         addListener(event, func)

@@ -37,7 +37,7 @@ export const createEIP1193Provider = (
 
   const request: EIP1193Provider['request'] = async ({ method, params }) => {
     const key = method as keyof RequestPatch
-
+console.log(key)
     // If the request method is set to null
     // this indicates this method is not supported
     if (requestPatch && requestPatch[key] === null) {
