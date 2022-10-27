@@ -15,7 +15,6 @@
   import { KitDocs, KitDocsLayout, SocialLink } from '@svelteness/kit-docs'
   import IconBN from '$lib/components/icons/blocknative.svelte'
   import SEO from '$lib/components/SEO/index.svelte'
-  import { Algolia } from '@svelteness/kit-docs/client/algolia'
 
   /** @type {import('@svelteness/kit-docs').NavbarConfig} */
   const navbar = {
@@ -51,13 +50,6 @@
         <IconBN />
       </a>
     </div>
-    <Algolia
-      apiKey="1bce9c4755cea3698e16830544503ee2"
-      appId="02BH13PRRI"
-      indexName="dev_blocknative"
-      placeholder="Search documentation"
-      slot="search"
-    />
     <div slot="navbar-right-alt">
       <div class="flex">
         <SocialLink type="gitHub" href="//github.com/blocknative/web3-onboard" />
