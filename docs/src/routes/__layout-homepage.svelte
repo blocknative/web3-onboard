@@ -42,7 +42,7 @@
 <SEO {title} {metadescription} {url} />
 
 <KitDocs>
-  <KitDocsLayout {navbar} --kd-content-max-width={'100%'} search>
+  <KitDocsLayout {navbar} --kd-content-max-width={'100%'}>
     <div slot="navbar-left">
       <a href="/">
         <IconBN />
