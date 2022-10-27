@@ -12,7 +12,7 @@
 
   import { KitDocs, KitDocsLayout, SocialLink } from '@svelteness/kit-docs'
   import IconBN from '$lib/components/icons/blocknative.svelte'
-  import SEO from '$lib/components/SEO/index.svelte';
+  import SEO from '$lib/components/SEO/index.svelte'
 
   /** @type {import('@svelteness/kit-docs').NavbarConfig} */
   const navbar = {
@@ -25,7 +25,8 @@
   }
 
   const title = 'Web3-Onboard | The easy way to connect web3 users to dapps'
-  const metadescription = 'Open-source, framework-agnostic JavaScript library to onboard users to web3 apps. Help your users transact with ease by enabling wallet connection, real-time transaction states, and more.'
+  const metadescription =
+    'Open-source, framework-agnostic JavaScript library to onboard users to web3 apps. Help your users transact with ease by enabling wallet connection, real-time transaction states, and more.'
   const url = 'https://onboard.blocknative.com/'
 </script>
 
@@ -38,11 +39,7 @@
   {/if}
 </svelte:head>
 
-<SEO
- {title}
- {metadescription}
- {url}
-/>
+<SEO {title} {metadescription} {url} />
 
 <KitDocs>
   <KitDocsLayout {navbar} --kd-content-max-width={'100%'}>
