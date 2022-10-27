@@ -68,7 +68,7 @@
   <div class="flex whitespace-nowrap mb-3 text-sm select-none">
     <span class="flex items-center">MORE LIKELY</span>
     <span
-      class="bg-gradient-to-r from-conf-99 via-conf-95 via-conf-90 via-conf-80 to-conf-70 h-[1px] mx-2 my-3 w-full rounded-full"
+      class="bg-gradient-to-r from-[#5aea98] via-[#5dea5a] via-[#bcea5a] via-[#ffe600] to-[#eab05a] h-[1px] mx-2 my-3 w-full rounded-full"
     />
     <span class="flex items-center">LESS LIKELY</span>
   </div>

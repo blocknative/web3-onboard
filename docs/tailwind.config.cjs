@@ -11,20 +11,7 @@ module.exports = {
     "'./node_modules/@svelteness/kit-docs/client/**/*.svelte'"
   ],
 
-  plugins: [...config.plugins, overrides],
-  theme: {
-    extend: {
-      colors: {
-        conf: {
-          99: '#5aea98',
-          95: '#5dea5a',
-          90: '#bcea5a',
-          80: '#ffe600',
-          70: '#eab05a'
-        }
-      }
-    }
-  }
+  plugins: [...config.plugins, overrides]
 }
 
 function overrides() {

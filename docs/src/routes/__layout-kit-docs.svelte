@@ -19,6 +19,8 @@
   import '@svelteness/kit-docs/client/styles/theme.css'
   import '$lib/styles/fonts.css'
   import '$lib/styles/kit-docs.css'
+  import '@docsearch/css'
+  import '@svelteness/kit-docs/client/styles/docsearch.css'
 
   import { page } from '$app/stores'
 
@@ -29,6 +31,7 @@
     createKitDocsLoader,
     createSidebarContext
   } from '@svelteness/kit-docs'
+  import { Algolia } from '@svelteness/kit-docs/client/algolia'
 
   import IconBN from '$lib/components/icons/blocknative.svelte'
 
@@ -67,13 +70,20 @@
 </svelte:head>
 
 <KitDocs {meta}>
-  <KitDocsLayout {navbar} {sidebar}>
+  <KitDocsLayout {navbar} {sidebar} search>
     <div slot="navbar-left">
       <a class="text-base flex items-center" href="/">
         <IconBN />
         <span class="ml-4">{'Web3-Onboard'}</span>
       </a>
     </div>
+    <Algolia
+      apiKey="1bce9c4755cea3698e16830544503ee2"
+      appId="02BH13PRRI"
+      indexName="docsearch"
+      placeholder="Search documentation"
+      slot="search"
+    />
     <div slot="navbar-right-alt">
       <div class="flex">
         <SocialLink type="gitHub" href="//github.com/blocknative/web3-onboard" />
