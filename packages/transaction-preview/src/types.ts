@@ -2,9 +2,10 @@ import { EIP1193Provider } from "@web3-onboard/common"
 
 export type RequestEndpoint = 'blockPrices'
 
-export type InitOptions = {
+export type TransactionPreviewInitOptions = {
   apiKey: string
   walletProvider: EIP1193Provider
+  containerElement: string
   network?: string //defaults to mainnet for now
 }
 
