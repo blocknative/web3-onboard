@@ -19,7 +19,8 @@ function mewWallet(): WalletInit {
               provider: createEIP1193Provider(window.ethereum, {
                 wallet_switchEthereumChain: async ({ params }) => {
                   if (device.os.name.toLowerCase() === 'ios') {
-                    throw new Error("MEW Wallet iOS only supports ETH network");
+                    // @ts-ignore
+                    throw new Error(4200, { cause: "MEW Wallet iOS only supports ETH network" });
                   }
                   window.ethereum.setChainId(parseInt(params[0].chainId));
                   return null;
