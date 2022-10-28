@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/gas",
-  "version": "2.1.4-alpha.1",
+  "version": "2.1.4",
   "description": "Estimate the gas prices needed to get a transaction in to the next block for Ethereum Mainnet and Polygon Matic Mainnet.",
   "keywords": [
     "gas",
