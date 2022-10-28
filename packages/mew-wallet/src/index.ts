@@ -1,4 +1,4 @@
-import type { WalletInit } from '@web3-onboard/common'
+import { ProviderRpcError, WalletInit } from '@web3-onboard/common'
 import { createEIP1193Provider } from '@web3-onboard/common'
 import { CustomWindow } from './types.js'
 declare const window: CustomWindow
@@ -19,8 +19,10 @@ function mewWallet(): WalletInit {
               provider: createEIP1193Provider(window.ethereum, {
                 wallet_switchEthereumChain: async ({ params }) => {
                   if (device.os.name.toLowerCase() === 'ios') {
-                    // @ts-ignore
-                    throw new Error(4200, { cause: "MEW Wallet iOS only supports ETH network" });
+                    throw new ProviderRpcError({
+                      message: "MEW Wallet iOS only supports ETH network",
+                      code: 4200,
+                    });
                   }
                   window.ethereum.setChainId(parseInt(params[0].chainId));
                   return null;
