@@ -1,0 +1,38 @@
+{
+  "name": "@web3-onboard/transaction-preview",
+  "version": "2.0.0-alpha.1",
+  "description": "Preview transaction before they are sent",
+  "keywords": [
+    "transaction preview",
+    "Ethereum"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blocknative/web3-onboard.git",
+    "directory": "packages/transaction-preview"
+  },
+  "homepage": "https://onboard.blocknative.com",
+  "bugs": "https://github.com/blocknative/web3-onboard/issues",
+  "module": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "browser": "dist/index.js",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w",
+    "type-check": "tsc --noEmit"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "@web3-onboard/common": "^2.2.3",
+    "rxjs": "^7.5.2",
+    "joi": "^17.6.1"
+  }
+}

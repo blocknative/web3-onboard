@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/x-icon" href="../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="content-security-policy" content=""><title>Connect Wallet Button Example | Web3-Onboard</title>
+    <meta name="description" content="Learn how to create a connect wallet button for your dapp with Web3-Onboard. For this example, we are going to use the injected wallets module." data-svelte="svelte-3cm5o9">
+	<link rel="stylesheet" href="/_app/immutable/assets/blocknative-ce591f8d.css">
+	<link rel="stylesheet" href="/_app/immutable/assets/scroll-8521731d.css">
+	<link rel="stylesheet" href="/_app/immutable/assets/pages/__layout-homepage.svelte-4d6bc01c.css">
+	<link rel="stylesheet" href="/_app/immutable/assets/TabItem.svelte_svelte_type_style_lang-5a0ebecb.css">
+	<link rel="stylesheet" href="/_app/immutable/assets/ThemeCustomizer.svelte_svelte_type_style_lang-6a87737d.css">
+	<link rel="modulepreload" href="/_app/immutable/start-3d191ebf.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/index-c32358ff.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/singletons-37dfeae3.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/preload-helper-60cab3ee.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/__layout-kit-docs.svelte-fd0fa950.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/blocknative-847bc20d.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/contexts-2aef7541.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/twitter-fill-a9ee53f3.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/scroll-5387a6f1.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/__layout-kit-docs-1dffb550.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/examples/__layout@kit-docs.svelte-c4c5b46f.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/examples/connect-wallet.md-358efaf0.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/ThemeCustomizer.svelte_svelte_type_style_lang-eee81db4.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/index-92058c84.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/CodeFence-ac7b69e1.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/CodeInline-8df56a89.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/Link-d3089e65.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/Tabs-f2c9522f.js">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121780722-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-121780722-2');
+      gtag('config', 'G-WQ8M55VX1Z');
+    </script>
+
+    <script>
+      const key = 'svelteness::color-scheme'
+      const scheme = localStorage[key]
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+      if (scheme === 'dark' || (scheme !== 'light' && prefersDark)) {
+        document.documentElement.classList.add('dark')
+      } else {
+        document.documentElement.classList.remove('dark')
+      }
+    </script>
+  </head>
+  <body>
+    <div>
+
+
+
+
+<div class="kit-docs bg-gray-body min-h-full min-w-full h-full transition-transform duration-150 ease-out" style="font-family: var(--kd-font-family-sans, inherit); --kd--navbar-height: calc(var(--kd-navbar-height) + var(--kd-breadcrumbs-height));"><div class="fixed top-0 z-30 w-full flex-none transform-gpu transition-transform duration-150 ease-out supports-backdrop-blur:bg-white/60 bg-gray-200/95 backdrop-blur dark:bg-gray-800/60 translate-y-0" style="border-bottom: var(--kd-navbar-border-bottom);"><div class="flex w-full flex-col items-center justify-center mx-auto max-w-[var(--kd-navbar-max-width)] p-[var(--kd-navbar-padding)] h-[var(--kd--navbar-height)]"><div class="flex w-full items-center"><div slot="navbar-left"><a class="text-base flex items-center" href="/"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="12" fill="#262A3D"></rect><g clip-path="url(#clip0_12312_91622)"><path d="M14.7268 25.6998L11.4386 19.9961H18.0155L21.3042 25.6998H14.7268Z" fill="#262A3D"></path><path d="M14.7268 25.6998L11.4386 19.9961H18.0155L21.3042 25.6998H14.7268Z" fill="white"></path><path d="M18.0155 19.9962H11.4386L14.7268 14.2925H21.3042L18.0155 19.9962Z" fill="url(#paint0_linear_12312_91622)"></path><path d="M24.5929 19.9963L21.3042 14.2926H14.7268L11.4386 8.58887H24.5929L31.1699 19.9963H24.5929Z" fill="#262A3D"></path><path d="M24.5929 19.9963L21.3042 14.2926H14.7268L11.4386 8.58887H24.5929L31.1699 19.9963H24.5929Z" fill="white"></path><path d="M24.5929 31.4035H11.4386L14.7268 25.6998H21.3042L24.5929 19.9961H31.1699L24.5929 31.4035Z" fill="url(#paint1_linear_12312_91622)"></path></g><defs><linearGradient id="paint0_linear_12312_91622" x1="11.4386" y1="17.1443" x2="21.3042" y2="17.1443" gradientUnits="userSpaceOnUse"><stop stop-color="#55CCFE"></stop><stop offset="1" stop-color="#5E93EF"></stop></linearGradient><linearGradient id="paint1_linear_12312_91622" x1="54.65" y1="3724.32" x2="7422.7" y2="3724.32" gradientUnits="userSpaceOnUse"><stop stop-color="#55CCFE"></stop><stop offset="1" stop-color="#5E93EF"></stop></linearGradient><clipPath id="clip0_12312_91622"><rect width="19.7619" height="22.8571" fill="white" transform="translate(11.4286 8.57129)"></rect></clipPath></defs></svg>
+        <span class="ml-4">Web3-Onboard</span></a></div>
+        
+
+    <div class="flex-1"></div>
+
+    <div class="992:hidden -mr-2 flex items-center">
+<div class="hidden w-full items-center rounded-sm border border-gray-divider bg-gray-elevate py-2.5 px-3 text-[15px] shadow-sm 992:flex"><div class="flex-1 flex items-center"><svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 20 20"><path d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z" stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path><span>Search</span></svg></div>
+
+  <span class="flex space-x-0.5 font-semibold"><span>⌘</span>
+    <span>K</span></span></div>
+
+<div class="flex h-12 w-12 items-center justify-center rounded-sm border-0 992:hidden text-gray-soft"><svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 20 20"><path d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z" stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+
+
+
+      <div class="relative inline-block text-left not-prose"><button id="popover-button-4" type="button" class="inline-flex w-full justify-center rounded-md p-2 text-lg font-medium text-gray-soft hover:text-gray-inverse" aria-controls="popover-4" aria-expanded="false" aria-haspopup="true"><svg width="30" height="30" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><!-- HTML_TAG_START --><path fill="currentColor" d="M18 18v2H6v-2h12zm3-7v2H3v-2h18zm-3-7v2H6V4h12z"/><!-- HTML_TAG_END --></svg>
+          <span class="sr-only">Main navigation menu</span>
+        </button>
+
+  <div class="fixed top-0 left-0 bg-black/40 backdrop-blur-sm dark:bg-gray-700/80 transition-opacity duration-75 pointer-events-auto z-40 w-screen h-screen opacity-0 invisible"></div>
+
+  <div hidden></div>
+
+</div></div>
+
+    <div class="992:flex 992:items-center hidden"><nav><ul class="flex items-center space-x-8 text-lg font-medium"><li class="mt-4 first:mt-0 992:mt-0"><a class="p-1 text-gray-soft hover:text-gray-inverse" href="/docs">Documentation</a></li><li class="mt-4 first:mt-0 992:mt-0"><a class="p-1 border-b hover:border-b-2 border-brand text-gray-inverse" href="/examples">Examples</a></li><li class="mt-4 first:mt-0 992:mt-0"><a class="p-1 text-gray-soft hover:text-gray-inverse" href="/faq">FAQ</a></li><li class="mt-4 first:mt-0 992:mt-0"><a class="p-1 text-gray-soft hover:text-gray-inverse" href="https://www.blocknative.com/blog/tag/web3-onboard" target="_blank">Blog</a></li></ul></nav>
+
+      
+        
+
+      <div class="border-gray-divider ml-6 mr-2.5 h-7 w-2 border-l-[1.5px]"></div>
+
+      <div class="hidden 992:flex items-center"><div slot="navbar-right-alt"><div class="flex"><a class="relative flex items-center text-gray-soft hover:text-gray-inverse border-0 rounded-md p-2" href="//github.com/blocknative/web3-onboard" target="_blank"><svg width="28" height="28" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class=""><!-- HTML_TAG_START --><path fill="currentColor" d="M12 2C6.475 2 2 6.475 2 12a9.994 9.994 0 0 0 6.838 9.488c.5.087.687-.213.687-.476c0-.237-.013-1.024-.013-1.862c-2.512.463-3.162-.612-3.362-1.175c-.113-.288-.6-1.175-1.025-1.413c-.35-.187-.85-.65-.013-.662c.788-.013 1.35.725 1.538 1.025c.9 1.512 2.338 1.087 2.912.825c.088-.65.35-1.087.638-1.337c-2.225-.25-4.55-1.113-4.55-4.938c0-1.088.387-1.987 1.025-2.688c-.1-.25-.45-1.275.1-2.65c0 0 .837-.262 2.75 1.026a9.28 9.28 0 0 1 2.5-.338c.85 0 1.7.112 2.5.337c1.912-1.3 2.75-1.024 2.75-1.024c.55 1.375.2 2.4.1 2.65c.637.7 1.025 1.587 1.025 2.687c0 3.838-2.337 4.688-4.562 4.938c.362.312.675.912.675 1.85c0 1.337-.013 2.412-.013 2.75c0 .262.188.574.688.474A10.016 10.016 0 0 0 22 12c0-5.525-4.475-10-10-10z"/><!-- HTML_TAG_END --></svg>
+  <span class="sr-only">GitHub</span>
+  </a>
+        <a class="relative flex items-center text-gray-soft hover:text-gray-inverse border-0 rounded-md p-2" href="//discord.com/invite/KZaBVME" target="_blank"><svg width="28" height="28" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class=""><!-- HTML_TAG_START --><path fill="currentColor" d="M10.076 11c.6 0 1.086.45 1.075 1c0 .55-.474 1-1.075 1C9.486 13 9 12.55 9 12s.475-1 1.076-1zm3.848 0c.601 0 1.076.45 1.076 1s-.475 1-1.076 1c-.59 0-1.075-.45-1.075-1s.474-1 1.075-1zm4.967-9C20.054 2 21 2.966 21 4.163V23l-2.211-1.995l-1.245-1.176l-1.317-1.25l.546 1.943H5.109C3.946 20.522 3 19.556 3 18.359V4.163C3 2.966 3.946 2 5.109 2H18.89zm-3.97 13.713c2.273-.073 3.148-1.596 3.148-1.596c0-3.381-1.482-6.122-1.482-6.122c-1.48-1.133-2.89-1.102-2.89-1.102l-.144.168c1.749.546 2.561 1.334 2.561 1.334a8.263 8.263 0 0 0-3.096-1.008a8.527 8.527 0 0 0-2.077.02c-.062 0-.114.011-.175.021c-.36.032-1.235.168-2.335.662c-.38.178-.607.305-.607.305s.854-.83 2.705-1.376l-.103-.126s-1.409-.031-2.89 1.103c0 0-1.481 2.74-1.481 6.121c0 0 .864 1.522 3.137 1.596c0 0 .38-.472.69-.871c-1.307-.4-1.8-1.24-1.8-1.24s.102.074.287.179c.01.01.02.021.041.031c.031.022.062.032.093.053c.257.147.514.262.75.357c.422.168.926.336 1.513.452a7.06 7.06 0 0 0 2.664.01a6.666 6.666 0 0 0 1.491-.451c.36-.137.761-.337 1.183-.62c0 0-.514.861-1.862 1.25c.309.399.68.85.68.85z"/><!-- HTML_TAG_END --></svg>
+  <span class="sr-only">Discord</span>
+  </a></div></div>
+        
+        <div class="relative inline-block text-left not-prose"><button id="menu-button-4" type="button" class="inline-flex w-full justify-center rounded-md p-2 text-lg font-medium text-gray-soft hover:text-gray-inverse" aria-controls="menu-4" aria-expanded="false" aria-haspopup="true"><svg width="1.2em" height="1.2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="h-6 w-6"><!-- HTML_TAG_START --><path fill="currentColor" d="M12 18a6 6 0 1 1 0-12a6 6 0 0 1 0 12zM11 1h2v3h-2V1zm0 19h2v3h-2v-3zM3.515 4.929l1.414-1.414L7.05 5.636L5.636 7.05L3.515 4.93zM16.95 18.364l1.414-1.414l2.121 2.121l-1.414 1.414l-2.121-2.121zm2.121-14.85l1.414 1.415l-2.121 2.121l-1.414-1.414l2.121-2.121zM5.636 16.95l1.414 1.414l-2.121 2.121l-1.414-1.414l2.121-2.121zM23 11v2h-3v-2h3zM4 11v2H1v-2h3z"/><!-- HTML_TAG_END --></svg>
+    <span class="sr-only">Color Scheme</span>
+  </button>
+
+  <div hidden></div>
+
+</div></div></div></div>
+
+  <div class="border-gray-divider 992:hidden flex w-full items-center mt-4 pt-4 border-t"><button id="main-sidebar-button" type="button" class="text-gray-soft hover:text-gray-inverse inline-flex justify-center rounded-md p-2 text-sm font-medium" aria-controls="main-sidebar" aria-expanded="false" aria-haspopup="true"><span class="sr-only">Open main sidebar</span>
+                  <svg width="28" height="28" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><!-- HTML_TAG_START --><path fill="currentColor" d="M21 18v2H3v-2h18zM17.05 3.55L22 8.5l-4.95 4.95v-9.9zM12 11v2H3v-2h9zm0-7v2H3V4h9z"/><!-- HTML_TAG_END --></svg></button>
+
+              <ol class="text-md text-gray-soft flex items-center whitespace-nowrap leading-6 mt-px ml-2.5">
+                  <li class="truncate font-semibold text-slate-900 dark:text-slate-200">Connect Wallet Button Example</li></ol></div>
+
+          
+        </div></div>
+
+  <div class="mx-auto w-full flex flex-row min-h-full max-w-[var(--kd-content-max-width)] pt-[var(--kd--navbar-height)] z-20"><aside id="main-sidebar" class="sidebar self-start fixed top-0 left-0 transform bg-gray-body z-50 border-gray-divider border-r -translate-x-full transform transition-transform duration-200 ease-out will-change-transform max-h-screen min-h-screen min-w-[var(--kd-sidebar-min-width)] max-w-[var(--kd-sidebar-max-width)] 992:translate-x-0 922:block 992:sticky 992:z-0 overflow-y-auto p-[var(--kd-sidebar-padding)] 992:top-[var(--kd--navbar-height)] 992:min-h-[calc(100vh-var(--kd--navbar-height))] 992:max-h-[calc(100vh-var(--kd--navbar-height))]" role="dialog" aria-modal="true" style=""><div class="992:hidden sticky top-0 left-0 flex items-center"><div class="flex-1"></div>
+    <button class="text-gray-soft hover:text-gray-inverse p-4 -mx-6 pointer-events-none"><svg width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><!-- HTML_TAG_START --><path fill="currentColor" d="m12 10.586l4.95-4.95l1.414 1.414l-4.95 4.95l4.95 4.95l-1.414 1.414l-4.95-4.95l-4.95 4.95l-1.414-1.414l4.95-4.95l-4.95-4.95L7.05 5.636z"/><!-- HTML_TAG_END --></svg>
+      <span class="sr-only">Close sidebar</span></button></div>
+
+  <nav class="992:px-1"><div class="992:block pointer-events-none sticky top-0 -ml-0.5 hidden min-h-[80px]"><div class="h-6 bg-white dark:bg-gray-800"></div>
+        <div class="pointer-events-auto relative bg-white dark:bg-gray-800">
+<div class="hidden w-full items-center rounded-sm border border-gray-divider bg-gray-elevate py-2.5 px-3 text-[15px] shadow-sm 992:flex"><div class="flex-1 flex items-center"><svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 20 20"><path d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z" stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path><span>Search</span></svg></div>
+
+  <span class="flex space-x-0.5 font-semibold"><span>⌘</span>
+    <span>K</span></span></div>
+
+<div class="flex h-12 w-12 items-center justify-center rounded-sm border-0 992:hidden text-gray-soft"><svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 20 20"><path d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z" stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+
+
+        </div>
+        <div class="h-8 bg-gradient-to-b from-white dark:from-gray-800"></div></div>
+
+    
+
+    <ul class="pb-28 992:pb-0">
+        <li class="992:mt-10 mt-12 first:mt-0"><div class="mt-10"></div>
+          <ul class="border-gray-divider space-y-3 border-l"><li class="first:mt-6"><a class="992:py-1.5 -ml-px flex items-center border-l-2 py-2 pl-4 text-brand font-semibold" href="/examples/connect-wallet" style="border-color: var(--kd-sidebar-border-active);">
+                  Connect Wallet Button Example
+                  </a>
+              </li><li class="first:mt-6"><a class="992:py-1.5 -ml-px flex items-center border-l-2 py-2 pl-4 hover:border-gray-inverse text-gray-soft hover:text-gray-inverse border-transparent font-normal" href="/examples/uniswap-widget" style="">
+                  Uniswap Widget Example
+                  </a>
+              </li></ul>
+        </li></ul>
+
+    
+        </nav></aside>
+
+<div class="992:hidden z-40"><div class="fixed top-0 left-0 bg-black/40 backdrop-blur-sm dark:bg-gray-700/80 transition-opacity duration-75 pointer-events-auto z-40 w-screen h-screen opacity-0 invisible"></div></div>
+
+    <main class="w-full overflow-x-hidden 992:min-h-[calc(100vh-var(--kd--navbar-height))] min-h-[calc(100vh-var(--kd--navbar-height))] px-8 992:px-16 pt-8" style="max-width: var(--kd-main-max-width, var(--kd-article-max-width));">
+
+      <article class="markdown prose dark:prose-invert z-10 max-w-[var(--kd-article-max-width)]">
+
+          
+
+<h1>Connect Wallet Button Example</h1>
+<div class="flex items-center justify-center border-gray-divider border rounded-md h-40 p-4"><button class="rounded-lg bg-gray-inverse hover:bg-gray-hover hover:text-gray-inverse transition-all px-4 h-10 text-base text-gray-current">Connect</button></div>
+<div class="w-full h-5"></div>
+<div class="tabs w-full"><ul class="flex items-center w-full list-none m-0 p-0 overflow-x-auto border-b border-gray-divider" role="tablist" aria-orientation="horizontal"><li class="tab hover:text-gray-inverse svelte-n8rdaz" role="tab" aria-selected="false" tabindex="0">
+    React
+  
+</li><li class="tab hover:text-gray-inverse svelte-n8rdaz" role="tab" aria-selected="false" tabindex="0">
+    Svelte
+  
+</li>
+
+    </ul>
+
+  <div><div role="tabpanel" hidden><h2 id="step-1-import-configure" tabindex="-1">
+<a class="header-anchor" href="#step-1-import-configure" aria-hidden="true">#</a> Step 1: Import + Configure</h2>
+<p>Import the libraries and any wallets you would like to use. For this example, we are going to use the injected wallets module. You can easily add more wallet support to your dapp via our other wallet modules. Additionally, we&#39;ll setup web3-onboard to support 2 chains: Ethereum mainnet and Polygon mainnet.</p>
+<div class="code-fence overflow-y-auto relative max-h-[60vh] 576:max-h-[32rem] my-8 rounded-md shadow-lg mx-auto border border-gray-divider lang-javascript ext-js" style="background-color: var(--kd-code-fence-bg);"><div class="sticky top-0 left-0 z-10 flex items-center rounded-md pt-2 backdrop-blur supports-backdrop-blur:bg-white/60" style="background-color: var(--kd-code-fence-top-bar-bg);"><span class="ml-3.5 font-mono text-sm text-gray-300">App.tsx</span>
+
+      <div class="flex-1"></div>
+
+      <button type="button" class="mr-2 px-2 py-1 hover:text-white"><div class="text-white absolute top-2.5 right-4 transition-opacity z-10 duration-300 px-2 py-1 rounded-md ease-out text-sm font-mono hidden opacity-0" aria-hidden="true" style="background-color: var(--kd-code-copied-bg-color);">Copied!</div>
+
+          <svg width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="opacity-100 transition-opacity duration-600 ease-in"><!-- HTML_TAG_START --><path fill="currentColor" d="M7 6V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1.001 1.001 0 0 1 3 21l.003-14c0-.552.45-1 1.007-1H7zM5.003 8L5 20h10V8H5.003zM9 6h8v10h2V4H9v2z"/><!-- HTML_TAG_END --></svg>
+          <span class="sr-only">Copy code</span></button></div>
+
+  <div class="code relative z-0 overflow-hidden"><div class=""><!-- HTML_TAG_START --><pre><code><span class="line"><span style="color: #89DDFF; font-style: italic">import</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">{</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">Web3OnboardProvider</span><span style="color: #89DDFF">,</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">init</span><span style="color: #F07178"> </span><span style="color: #89DDFF">}</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF; font-style: italic">from</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">@web3-onboard/react</span><span style="color: #89DDFF">&#39;</span></span>
+<span class="line"><span style="color: #89DDFF; font-style: italic">import</span><span style="color: #A6ACCD"> injectedModule </span><span style="color: #89DDFF; font-style: italic">from</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">@web3-onboard/injected-wallets</span><span style="color: #89DDFF">&#39;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">const</span><span style="color: #A6ACCD"> INFURA_KEY </span><span style="color: #89DDFF">=</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;&#39;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">const</span><span style="color: #A6ACCD"> ethereumRopsten </span><span style="color: #89DDFF">=</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">{</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #F07178">id</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">0x3</span><span style="color: #89DDFF">&#39;</span><span style="color: #89DDFF">,</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #F07178">token</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">rETH</span><span style="color: #89DDFF">&#39;</span><span style="color: #89DDFF">,</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #F07178">label</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">Ethereum Ropsten</span><span style="color: #89DDFF">&#39;</span><span style="color: #89DDFF">,</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #F07178">rpcUrl</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">`</span><span style="color: #C3E88D">https://ropsten.infura.io/v3/</span><span style="color: #89DDFF">${</span><span style="color: #A6ACCD">INFURA_KEY</span><span style="color: #89DDFF">}`</span></span>
+<span class="line"><span style="color: #89DDFF">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">const</span><span style="color: #A6ACCD"> polygonMainnet </span><span style="color: #89DDFF">=</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">{</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #F07178">id</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">0x89</span><span style="color: #89DDFF">&#39;</span><span style="color: #89DDFF">,</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #F07178">token</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">MATIC</span><span style="color: #89DDFF">&#39;</span><span style="color: #89DDFF">,</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #F07178">label</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">Polygon</span><span style="color: #89DDFF">&#39;</span><span style="color: #89DDFF">,</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #F07178">rpcUrl</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">https://matic-mainnet.chainstacklabs.com</span><span style="color: #89DDFF">&#39;</span></span>
+<span class="line"><span style="color: #89DDFF">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">const</span><span style="color: #A6ACCD"> chains </span><span style="color: #89DDFF">=</span><span style="color: #A6ACCD"> [ethereumRopsten</span><span style="color: #89DDFF">,</span><span style="color: #A6ACCD"> polygonMainnet]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">const</span><span style="color: #A6ACCD"> wallets </span><span style="color: #89DDFF">=</span><span style="color: #A6ACCD"> [</span><span style="color: #82AAFF">injectedModule</span><span style="color: #A6ACCD">()]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">const</span><span style="color: #A6ACCD"> appMetadata </span><span style="color: #89DDFF">=</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">{</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #F07178">name</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">Connect Wallet Example</span><span style="color: #89DDFF">&#39;</span><span style="color: #89DDFF">,</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #F07178">icon</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">&lt;svg&gt;My App Icon&lt;/svg&gt;</span><span style="color: #89DDFF">&#39;</span><span style="color: #89DDFF">,</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #F07178">description</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">Example showcasing how to connect a wallet.</span><span style="color: #89DDFF">&#39;</span><span style="color: #89DDFF">,</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #F07178">recommendedInjectedWallets</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> [</span></span>
+<span class="line"><span style="color: #A6ACCD">    </span><span style="color: #89DDFF">{</span><span style="color: #A6ACCD"> </span><span style="color: #F07178">name</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">MetaMask</span><span style="color: #89DDFF">&#39;</span><span style="color: #89DDFF">,</span><span style="color: #A6ACCD"> </span><span style="color: #F07178">url</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">https://metamask.io</span><span style="color: #89DDFF">&#39;</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">},</span></span>
+<span class="line"><span style="color: #A6ACCD">    </span><span style="color: #89DDFF">{</span><span style="color: #A6ACCD"> </span><span style="color: #F07178">name</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">Coinbase</span><span style="color: #89DDFF">&#39;</span><span style="color: #89DDFF">,</span><span style="color: #A6ACCD"> </span><span style="color: #F07178">url</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">https://wallet.coinbase.com/</span><span style="color: #89DDFF">&#39;</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">}</span></span>
+<span class="line"><span style="color: #A6ACCD">  ]</span></span>
+<span class="line"><span style="color: #89DDFF">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">const</span><span style="color: #A6ACCD"> web3Onboard </span><span style="color: #89DDFF">=</span><span style="color: #A6ACCD"> </span><span style="color: #82AAFF">init</span><span style="color: #A6ACCD">(</span><span style="color: #89DDFF">{</span></span>
+<span class="line"><span style="color: #A6ACCD">  wallets</span><span style="color: #89DDFF">,</span></span>
+<span class="line"><span style="color: #A6ACCD">  chains</span></span>
+<span class="line"><span style="color: #A6ACCD">  appMetadata</span></span>
+<span class="line"><span style="color: #89DDFF">}</span><span style="color: #A6ACCD">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">function</span><span style="color: #A6ACCD"> </span><span style="color: #82AAFF">App</span><span style="color: #89DDFF">()</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">{</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #89DDFF; font-style: italic">return</span><span style="color: #F07178"> (</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #89DDFF">&lt;</span><span style="color: #FFCB6B">Web3OnboardProvider</span><span style="color: #89DDFF"> </span><span style="color: #C792EA">web3Onboard</span><span style="color: #89DDFF">={</span><span style="color: #A6ACCD">web3Onboard</span><span style="color: #89DDFF">}&gt;</span></span>
+<span class="line"><span style="color: #A6ACCD">      </span><span style="color: #89DDFF">&lt;</span><span style="color: #FFCB6B">ConnectWallet</span><span style="color: #89DDFF"> /&gt;</span></span>
+<span class="line"><span style="color: #A6ACCD">    </span><span style="color: #89DDFF">&lt;/</span><span style="color: #FFCB6B">Web3OnboardProvider</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"><span style="color: #F07178">  )</span></span>
+<span class="line"><span style="color: #89DDFF">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #89DDFF; font-style: italic">export</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF; font-style: italic">default</span><span style="color: #A6ACCD"> MyApp</span></span>
+<span class="line"></span></code></pre><!-- HTML_TAG_END --></div>
+
+    
+
+    </div></div><h2 id="step-2-display-the-connect-wallet-button" tabindex="-1">
+<a class="header-anchor" href="#step-2-display-the-connect-wallet-button" aria-hidden="true">#</a> Step 2: Display the connect wallet button</h2>
+<p>In another file we&#39;ll create the component that will display our connect wallet button. We&#39;ll be using the <code>useConnectWallet</code> hook in order to achieve this.</p>
+<div class="code-fence overflow-y-auto relative max-h-[60vh] 576:max-h-[32rem] my-8 rounded-md shadow-lg mx-auto border border-gray-divider lang-javascript ext-js" style="background-color: var(--kd-code-fence-bg);"><div class="sticky top-0 left-0 z-10 flex items-center rounded-md pt-2 backdrop-blur supports-backdrop-blur:bg-white/60" style="background-color: var(--kd-code-fence-top-bar-bg);"><span class="ml-3.5 font-mono text-sm text-gray-300">ConnectWallet.tsx</span>
+
+      <div class="flex-1"></div>
+
+      <button type="button" class="mr-2 px-2 py-1 hover:text-white"><div class="text-white absolute top-2.5 right-4 transition-opacity z-10 duration-300 px-2 py-1 rounded-md ease-out text-sm font-mono hidden opacity-0" aria-hidden="true" style="background-color: var(--kd-code-copied-bg-color);">Copied!</div>
+
+          <svg width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="opacity-100 transition-opacity duration-600 ease-in"><!-- HTML_TAG_START --><path fill="currentColor" d="M7 6V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1.001 1.001 0 0 1 3 21l.003-14c0-.552.45-1 1.007-1H7zM5.003 8L5 20h10V8H5.003zM9 6h8v10h2V4H9v2z"/><!-- HTML_TAG_END --></svg>
+          <span class="sr-only">Copy code</span></button></div>
+
+  <div class="code relative z-0 overflow-hidden"><div class=""><!-- HTML_TAG_START --><pre><code><span class="line"><span style="color: #89DDFF; font-style: italic">import</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">{</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">useEffect</span><span style="color: #F07178"> </span><span style="color: #89DDFF">}</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF; font-style: italic">from</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">react</span><span style="color: #89DDFF">&#39;</span></span>
+<span class="line"><span style="color: #89DDFF; font-style: italic">import</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">{</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">useConnectWallet</span><span style="color: #F07178"> </span><span style="color: #89DDFF">}</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF; font-style: italic">from</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">@web3-onboard/react</span><span style="color: #89DDFF">&#39;</span></span>
+<span class="line"><span style="color: #89DDFF; font-style: italic">import</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">{</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">ethers</span><span style="color: #F07178"> </span><span style="color: #89DDFF">}</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF; font-style: italic">from</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">ethers</span><span style="color: #89DDFF">&#39;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #89DDFF; font-style: italic">export</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF; font-style: italic">default</span><span style="color: #A6ACCD"> </span><span style="color: #C792EA">function</span><span style="color: #A6ACCD"> </span><span style="color: #82AAFF">ConnectWallet</span><span style="color: #89DDFF">()</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">{</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #C792EA">const</span><span style="color: #F07178"> </span><span style="color: #89DDFF">[{</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">wallet</span><span style="color: #89DDFF">,</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">connecting</span><span style="color: #F07178"> </span><span style="color: #89DDFF">},</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">connect</span><span style="color: #89DDFF">,</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">disconnect</span><span style="color: #89DDFF">]</span><span style="color: #F07178"> </span><span style="color: #89DDFF">=</span><span style="color: #F07178"> </span><span style="color: #82AAFF">useConnectWallet</span><span style="color: #F07178">()</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #C792EA">const</span><span style="color: #F07178"> </span><span style="color: #89DDFF">[</span><span style="color: #A6ACCD">ethersProvider</span><span style="color: #89DDFF">,</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">setProvider</span><span style="color: #89DDFF">]</span><span style="color: #F07178"> </span><span style="color: #89DDFF">=</span><span style="color: #F07178"> </span><span style="color: #82AAFF">useState</span><span style="color: #89DDFF">&lt;</span><span style="color: #FFCB6B">ethers</span><span style="color: #89DDFF">.</span><span style="color: #FFCB6B">providers</span><span style="color: #89DDFF">.</span><span style="color: #FFCB6B">Web3Provider</span><span style="color: #F07178"> </span><span style="color: #89DDFF">|</span><span style="color: #F07178"> </span><span style="color: #FFCB6B">null</span><span style="color: #89DDFF">&gt;</span><span style="color: #F07178">()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #82AAFF">useEffect</span><span style="color: #F07178">(</span><span style="color: #89DDFF">()</span><span style="color: #F07178"> </span><span style="color: #C792EA">=&gt;</span><span style="color: #F07178"> </span><span style="color: #89DDFF">{</span></span>
+<span class="line"><span style="color: #89DDFF">    </span><span style="color: #464B5D; font-style: italic">// If the wallet has a provider than the wallet is connected</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #89DDFF; font-style: italic">if</span><span style="color: #F07178"> (</span><span style="color: #A6ACCD">wallet</span><span style="color: #89DDFF">?.</span><span style="color: #A6ACCD">provider</span><span style="color: #F07178">) </span><span style="color: #89DDFF">{</span></span>
+<span class="line"><span style="color: #F07178">      </span><span style="color: #82AAFF">setProvider</span><span style="color: #F07178">(</span><span style="color: #89DDFF">new</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">ethers</span><span style="color: #89DDFF">.</span><span style="color: #A6ACCD">providers</span><span style="color: #89DDFF">.</span><span style="color: #82AAFF">Web3Provider</span><span style="color: #F07178">(</span><span style="color: #A6ACCD">wallet</span><span style="color: #89DDFF">.</span><span style="color: #A6ACCD">provider</span><span style="color: #89DDFF">,</span><span style="color: #F07178"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">any</span><span style="color: #89DDFF">&#39;</span><span style="color: #F07178">))</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #89DDFF">}</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #89DDFF">},</span><span style="color: #F07178"> [</span><span style="color: #A6ACCD">wallet</span><span style="color: #F07178">])</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #89DDFF; font-style: italic">return</span><span style="color: #F07178"> (</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #89DDFF">&lt;</span><span style="color: #F07178">div</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"><span style="color: #A6ACCD">      </span><span style="color: #89DDFF">&lt;</span><span style="color: #F07178">button</span></span>
+<span class="line"><span style="color: #89DDFF">        </span><span style="color: #C792EA">disabled</span><span style="color: #89DDFF">={</span><span style="color: #A6ACCD">connecting</span><span style="color: #89DDFF">}</span></span>
+<span class="line"><span style="color: #89DDFF">        </span><span style="color: #C792EA">onClick</span><span style="color: #89DDFF">={</span><span style="color: #A6ACCD">connect</span><span style="color: #89DDFF">}&gt;</span></span>
+<span class="line"><span style="color: #A6ACCD">        Connect</span></span>
+<span class="line"><span style="color: #A6ACCD">      </span><span style="color: #89DDFF">&lt;/</span><span style="color: #F07178">button</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"><span style="color: #A6ACCD">    </span><span style="color: #89DDFF">&lt;/</span><span style="color: #F07178">div</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"><span style="color: #F07178">  )</span></span>
+<span class="line"><span style="color: #89DDFF">}</span></span>
+<span class="line"></span></code></pre><!-- HTML_TAG_END --></div>
+
+    
+
+    </div></div><h2 id="step-3-display-account-information" tabindex="-1">
+<a class="header-anchor" href="#step-3-display-account-information" aria-hidden="true">#</a> Step 3: Display account information</h2>
+<p>Now that we have our wallet connected, let&#39;s display some basic information, such as the connected wallet&#39;s address, ENS name, and avatar.</p>
+<div class="code-fence overflow-y-auto relative max-h-[60vh] 576:max-h-[32rem] my-8 rounded-md shadow-lg mx-auto border border-gray-divider lang-javascript ext-js" style="background-color: var(--kd-code-fence-bg);"><div class="sticky top-0 left-0 z-10 flex items-center rounded-md pt-2 backdrop-blur supports-backdrop-blur:bg-white/60" style="background-color: var(--kd-code-fence-top-bar-bg);"><span class="ml-3.5 font-mono text-sm text-gray-300">ConnectWallet.tsx</span>
+
+      <div class="flex-1"></div>
+
+      <button type="button" class="mr-2 px-2 py-1 hover:text-white"><div class="text-white absolute top-2.5 right-4 transition-opacity z-10 duration-300 px-2 py-1 rounded-md ease-out text-sm font-mono hidden opacity-0" aria-hidden="true" style="background-color: var(--kd-code-copied-bg-color);">Copied!</div>
+
+          <svg width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="opacity-100 transition-opacity duration-600 ease-in"><!-- HTML_TAG_START --><path fill="currentColor" d="M7 6V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1.001 1.001 0 0 1 3 21l.003-14c0-.552.45-1 1.007-1H7zM5.003 8L5 20h10V8H5.003zM9 6h8v10h2V4H9v2z"/><!-- HTML_TAG_END --></svg>
+          <span class="sr-only">Copy code</span></button></div>
+
+  <div class="code relative z-0 overflow-hidden"><div class=""><!-- HTML_TAG_START --><pre><code><span class="line"><span style="color: #89DDFF; font-style: italic">import</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">{</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">useEffect</span><span style="color: #F07178"> </span><span style="color: #89DDFF">}</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF; font-style: italic">from</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">react</span><span style="color: #89DDFF">&#39;</span></span>
+<span class="line"><span style="color: #89DDFF; font-style: italic">import</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">{</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">useConnectWallet</span><span style="color: #F07178"> </span><span style="color: #89DDFF">}</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF; font-style: italic">from</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">@web3-onboard/react</span><span style="color: #89DDFF">&#39;</span></span>
+<span class="line"><span style="color: #89DDFF; font-style: italic">import</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">{</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">ethers</span><span style="color: #F07178"> </span><span style="color: #89DDFF">}</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF; font-style: italic">from</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">ethers</span><span style="color: #89DDFF">&#39;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #89DDFF; font-style: italic">export</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF; font-style: italic">default</span><span style="color: #A6ACCD"> </span><span style="color: #C792EA">function</span><span style="color: #A6ACCD"> </span><span style="color: #82AAFF">ConnectWallet</span><span style="color: #89DDFF">()</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">{</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #C792EA">const</span><span style="color: #F07178"> </span><span style="color: #89DDFF">[{</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">wallet</span><span style="color: #89DDFF">,</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">connecting</span><span style="color: #F07178"> </span><span style="color: #89DDFF">},</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">connect</span><span style="color: #89DDFF">,</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">disconnect</span><span style="color: #89DDFF">]</span><span style="color: #F07178"> </span><span style="color: #89DDFF">=</span><span style="color: #F07178"> </span><span style="color: #82AAFF">useConnectWallet</span><span style="color: #F07178">()</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #C792EA">const</span><span style="color: #F07178"> </span><span style="color: #89DDFF">[</span><span style="color: #A6ACCD">ethersProvider</span><span style="color: #89DDFF">,</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">setProvider</span><span style="color: #89DDFF">]</span><span style="color: #F07178"> </span><span style="color: #89DDFF">=</span><span style="color: #F07178"> </span><span style="color: #82AAFF">useState</span><span style="color: #89DDFF">&lt;</span><span style="color: #FFCB6B">ethers</span><span style="color: #89DDFF">.</span><span style="color: #FFCB6B">providers</span><span style="color: #89DDFF">.</span><span style="color: #FFCB6B">Web3Provider</span><span style="color: #F07178"> </span><span style="color: #89DDFF">|</span><span style="color: #F07178"> </span><span style="color: #FFCB6B">null</span><span style="color: #89DDFF">&gt;</span><span style="color: #F07178">()</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #C792EA">const</span><span style="color: #F07178"> </span><span style="color: #89DDFF">[</span><span style="color: #A6ACCD">account</span><span style="color: #89DDFF">,</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">setAccount</span><span style="color: #89DDFF">]</span><span style="color: #F07178"> </span><span style="color: #89DDFF">=</span><span style="color: #F07178"> </span><span style="color: #82AAFF">useState</span><span style="color: #89DDFF">&lt;</span><span style="color: #FFCB6B">Account</span><span style="color: #F07178"> </span><span style="color: #89DDFF">|</span><span style="color: #F07178"> </span><span style="color: #FFCB6B">null</span><span style="color: #89DDFF">&gt;</span><span style="color: #F07178">(</span><span style="color: #89DDFF">null</span><span style="color: #F07178">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #82AAFF">useEffect</span><span style="color: #F07178">(</span><span style="color: #89DDFF">()</span><span style="color: #F07178"> </span><span style="color: #C792EA">=&gt;</span><span style="color: #F07178"> </span><span style="color: #89DDFF">{</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #89DDFF; font-style: italic">if</span><span style="color: #F07178"> (</span><span style="color: #A6ACCD">wallet</span><span style="color: #89DDFF">?.</span><span style="color: #A6ACCD">provider</span><span style="color: #F07178">) </span><span style="color: #89DDFF">{</span></span>
+<span class="line"><span style="color: #F07178">      </span><span style="color: #C792EA">const</span><span style="color: #F07178"> </span><span style="color: #89DDFF">{</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">name</span><span style="color: #89DDFF">,</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">avatar</span><span style="color: #F07178"> </span><span style="color: #89DDFF">}</span><span style="color: #F07178"> </span><span style="color: #89DDFF">=</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">wallet</span><span style="color: #89DDFF">?.</span><span style="color: #A6ACCD">accounts</span><span style="color: #F07178">[</span><span style="color: #F78C6C">0</span><span style="color: #F07178">]</span><span style="color: #89DDFF">.</span><span style="color: #A6ACCD">ens</span><span style="color: #F07178"> </span><span style="color: #89DDFF">??</span><span style="color: #F07178"> </span><span style="color: #89DDFF">{}</span></span>
+<span class="line"><span style="color: #F07178">      </span><span style="color: #82AAFF">setAccount</span><span style="color: #F07178">(</span><span style="color: #89DDFF">{</span></span>
+<span class="line"><span style="color: #F07178">        address</span><span style="color: #89DDFF">:</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">wallet</span><span style="color: #89DDFF">.</span><span style="color: #A6ACCD">accounts</span><span style="color: #F07178">[</span><span style="color: #F78C6C">0</span><span style="color: #F07178">]</span><span style="color: #89DDFF">.</span><span style="color: #A6ACCD">address</span><span style="color: #89DDFF">,</span></span>
+<span class="line"><span style="color: #F07178">        balance</span><span style="color: #89DDFF">:</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">wallet</span><span style="color: #89DDFF">.</span><span style="color: #A6ACCD">accounts</span><span style="color: #F07178">[</span><span style="color: #F78C6C">0</span><span style="color: #F07178">]</span><span style="color: #89DDFF">.</span><span style="color: #A6ACCD">balance</span><span style="color: #89DDFF">,</span></span>
+<span class="line"><span style="color: #F07178">        ens</span><span style="color: #89DDFF">:</span><span style="color: #F07178"> </span><span style="color: #89DDFF">{</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">name</span><span style="color: #89DDFF">,</span><span style="color: #F07178"> avatar</span><span style="color: #89DDFF">:</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">avatar</span><span style="color: #89DDFF">?.</span><span style="color: #A6ACCD">url</span><span style="color: #F07178"> </span><span style="color: #89DDFF">}</span></span>
+<span class="line"><span style="color: #F07178">      </span><span style="color: #89DDFF">}</span><span style="color: #F07178">)</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #89DDFF">}</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #89DDFF">},</span><span style="color: #F07178"> [</span><span style="color: #A6ACCD">wallet</span><span style="color: #F07178">])</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #82AAFF">useEffect</span><span style="color: #F07178">(</span><span style="color: #89DDFF">()</span><span style="color: #F07178"> </span><span style="color: #C792EA">=&gt;</span><span style="color: #F07178"> </span><span style="color: #89DDFF">{</span></span>
+<span class="line"><span style="color: #89DDFF">    </span><span style="color: #464B5D; font-style: italic">// If the wallet has a provider than the wallet is connected</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #89DDFF; font-style: italic">if</span><span style="color: #F07178"> (</span><span style="color: #A6ACCD">wallet</span><span style="color: #89DDFF">?.</span><span style="color: #A6ACCD">provider</span><span style="color: #F07178">) </span><span style="color: #89DDFF">{</span></span>
+<span class="line"><span style="color: #F07178">      </span><span style="color: #82AAFF">setProvider</span><span style="color: #F07178">(</span><span style="color: #89DDFF">new</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">ethers</span><span style="color: #89DDFF">.</span><span style="color: #A6ACCD">providers</span><span style="color: #89DDFF">.</span><span style="color: #82AAFF">Web3Provider</span><span style="color: #F07178">(</span><span style="color: #A6ACCD">wallet</span><span style="color: #89DDFF">.</span><span style="color: #A6ACCD">provider</span><span style="color: #89DDFF">,</span><span style="color: #F07178"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">any</span><span style="color: #89DDFF">&#39;</span><span style="color: #F07178">))</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #89DDFF">}</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #89DDFF">},</span><span style="color: #F07178"> [</span><span style="color: #A6ACCD">wallet</span><span style="color: #F07178">])</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #89DDFF; font-style: italic">if</span><span style="color: #F07178">(</span><span style="color: #A6ACCD">wallet</span><span style="color: #89DDFF">?.</span><span style="color: #A6ACCD">provider</span><span style="color: #F07178">) </span><span style="color: #89DDFF">{</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #89DDFF; font-style: italic">return</span><span style="color: #F07178"> (</span></span>
+<span class="line"><span style="color: #F07178">        </span><span style="color: #89DDFF">&lt;</span><span style="color: #F07178">div</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"><span style="color: #A6ACCD">          </span><span style="color: #89DDFF">&lt;</span><span style="color: #F07178">img</span><span style="color: #89DDFF"> </span><span style="color: #C792EA">src</span><span style="color: #89DDFF">={</span><span style="color: #A6ACCD">ens</span><span style="color: #89DDFF">?.</span><span style="color: #A6ACCD">avatar</span><span style="color: #89DDFF">} </span><span style="color: #C792EA">alt</span><span style="color: #89DDFF">=</span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">ENS Avatar</span><span style="color: #89DDFF">&quot;</span><span style="color: #89DDFF"> /&gt;</span></span>
+<span class="line"><span style="color: #A6ACCD">          </span><span style="color: #89DDFF">&lt;</span><span style="color: #F07178">div</span><span style="color: #89DDFF">&gt;{</span><span style="color: #A6ACCD"> ens</span><span style="color: #89DDFF">?.</span><span style="color: #A6ACCD">name </span><span style="color: #89DDFF">?</span><span style="color: #A6ACCD"> ens</span><span style="color: #89DDFF">.</span><span style="color: #A6ACCD">name </span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> address </span><span style="color: #89DDFF">}&lt;/</span><span style="color: #F07178">div</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"><span style="color: #A6ACCD">          </span><span style="color: #89DDFF">&lt;</span><span style="color: #F07178">div</span><span style="color: #89DDFF">&gt;</span><span style="color: #A6ACCD">Connected to </span><span style="color: #89DDFF">{</span><span style="color: #A6ACCD">wallet</span><span style="color: #89DDFF">.</span><span style="color: #A6ACCD">label</span><span style="color: #89DDFF">}&lt;/</span><span style="color: #F07178">div</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"><span style="color: #A6ACCD">          </span><span style="color: #89DDFF">&lt;</span><span style="color: #F07178">button</span><span style="color: #89DDFF"> </span><span style="color: #C792EA">onClick</span><span style="color: #89DDFF">={()</span><span style="color: #A6ACCD"> </span><span style="color: #C792EA">=&gt;</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">{</span><span style="color: #F07178"> </span><span style="color: #82AAFF">disconnect</span><span style="color: #F07178">(</span><span style="color: #89DDFF">{</span><span style="color: #F07178"> label</span><span style="color: #89DDFF">:</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">wallet</span><span style="color: #89DDFF">.</span><span style="color: #A6ACCD">label</span><span style="color: #F07178"> </span><span style="color: #89DDFF">}</span><span style="color: #F07178">) </span><span style="color: #89DDFF">}&gt;</span><span style="color: #A6ACCD">Disconnect</span><span style="color: #89DDFF">&lt;/</span><span style="color: #A6ACCD">button</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"><span style="color: #A6ACCD">        </span><span style="color: #89DDFF">&lt;/</span><span style="color: #A6ACCD">div</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"><span style="color: #A6ACCD">    )</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #89DDFF">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #89DDFF">  </span><span style="color: #C792EA">return</span><span style="color: #89DDFF"> (</span></span>
+<span class="line"><span style="color: #89DDFF">    &lt;div&gt;</span></span>
+<span class="line"><span style="color: #89DDFF">      &lt;button</span></span>
+<span class="line"><span style="color: #89DDFF">        </span><span style="color: #C792EA">disabled</span><span style="color: #89DDFF">={</span><span style="color: #A6ACCD">connecting</span><span style="color: #89DDFF">}</span></span>
+<span class="line"><span style="color: #89DDFF">        </span><span style="color: #C792EA">onClick</span><span style="color: #89DDFF">={</span><span style="color: #A6ACCD">connect</span><span style="color: #89DDFF">}&gt;</span></span>
+<span class="line"><span style="color: #A6ACCD">        Connect</span></span>
+<span class="line"><span style="color: #A6ACCD">      </span><span style="color: #89DDFF">&lt;/</span><span style="color: #F07178">button</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"><span style="color: #A6ACCD">    </span><span style="color: #89DDFF">&lt;/</span><span style="color: #F07178">div</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"><span style="color: #F07178">  )</span></span>
+<span class="line"><span style="color: #89DDFF">}</span></span>
+<span class="line"></span></code></pre><!-- HTML_TAG_END --></div>
+
+    
+
+    <div class="pointer-events-none absolute inset-0 mt-[0.7em] h-full w-full leading-[27px]" aria-hidden="true"><br><br><br><br><br><br><br><div class="w-full border-l-[5px] font-mono text-transparent" style="border-color: var(--kd-code-highlight-border); background-color: var(--kd-code-highlight-color);"> 
+            </div><br><div class="w-full border-l-[5px] font-mono text-transparent" style="border-color: var(--kd-code-highlight-border); background-color: var(--kd-code-highlight-color);"> 
+            </div><div class="w-full border-l-[5px] font-mono text-transparent" style="border-color: var(--kd-code-highlight-border); background-color: var(--kd-code-highlight-color);"> 
+            </div><div class="w-full border-l-[5px] font-mono text-transparent" style="border-color: var(--kd-code-highlight-border); background-color: var(--kd-code-highlight-color);"> 
+            </div><div class="w-full border-l-[5px] font-mono text-transparent" style="border-color: var(--kd-code-highlight-border); background-color: var(--kd-code-highlight-color);"> 
+            </div><div class="w-full border-l-[5px] font-mono text-transparent" style="border-color: var(--kd-code-highlight-border); background-color: var(--kd-code-highlight-color);"> 
+            </div><div class="w-full border-l-[5px] font-mono text-transparent" style="border-color: var(--kd-code-highlight-border); background-color: var(--kd-code-highlight-color);"> 
+            </div><div class="w-full border-l-[5px] font-mono text-transparent" style="border-color: var(--kd-code-highlight-border); background-color: var(--kd-code-highlight-color);"> 
+            </div><div class="w-full border-l-[5px] font-mono text-transparent" style="border-color: var(--kd-code-highlight-border); background-color: var(--kd-code-highlight-color);"> 
+            </div><div class="w-full border-l-[5px] font-mono text-transparent" style="border-color: var(--kd-code-highlight-border); background-color: var(--kd-code-highlight-color);"> 
+            </div><div class="w-full border-l-[5px] font-mono text-transparent" style="border-color: var(--kd-code-highlight-border); background-color: var(--kd-code-highlight-color);"> 
+            </div><br><br><br><br><br><br><br><br><div class="w-full border-l-[5px] font-mono text-transparent" style="border-color: var(--kd-code-highlight-border); background-color: var(--kd-code-highlight-color);"> 
+            </div><div class="w-full border-l-[5px] font-mono text-transparent" style="border-color: var(--kd-code-highlight-border); background-color: var(--kd-code-highlight-color);"> 
+            </div><div class="w-full border-l-[5px] font-mono text-transparent" style="border-color: var(--kd-code-highlight-border); background-color: var(--kd-code-highlight-color);"> 
+            </div><div class="w-full border-l-[5px] font-mono text-transparent" style="border-color: var(--kd-code-highlight-border); background-color: var(--kd-code-highlight-color);"> 
+            </div><div class="w-full border-l-[5px] font-mono text-transparent" style="border-color: var(--kd-code-highlight-border); background-color: var(--kd-code-highlight-color);"> 
+            </div><div class="w-full border-l-[5px] font-mono text-transparent" style="border-color: var(--kd-code-highlight-border); background-color: var(--kd-code-highlight-color);"> 
+            </div><div class="w-full border-l-[5px] font-mono text-transparent" style="border-color: var(--kd-code-highlight-border); background-color: var(--kd-code-highlight-color);"> 
+            </div><div class="w-full border-l-[5px] font-mono text-transparent" style="border-color: var(--kd-code-highlight-border); background-color: var(--kd-code-highlight-color);"> 
+            </div><div class="w-full border-l-[5px] font-mono text-transparent" style="border-color: var(--kd-code-highlight-border); background-color: var(--kd-code-highlight-color);"> 
+            </div><div class="w-full border-l-[5px] font-mono text-transparent" style="border-color: var(--kd-code-highlight-border); background-color: var(--kd-code-highlight-color);"> 
+            </div><br><br><br><br><br><br><br><br><br><br><br></div></div></div></div>
+  <div role="tabpanel" hidden><h2 id="step-1-import-configure" tabindex="-1">
+<a class="header-anchor" href="#step-1-import-configure" aria-hidden="true">#</a> Step 1: Import + Configure</h2>
+<p>Import the libraries and any wallets you would like to use. For this example, we are going to use the injected wallets module. You can easily add more wallet support to your dapp via our other wallet modules. Additionally, we&#39;ll setup web3-onboard to support 2 chains: Ethereum mainnet and Polygon mainnet.</p>
+<div class="code-fence overflow-y-auto relative max-h-[60vh] 576:max-h-[32rem] my-8 rounded-md shadow-lg mx-auto border border-gray-divider lang-javascript ext-js" style="background-color: var(--kd-code-fence-bg);"><div class="sticky top-0 left-0 z-10 flex items-center rounded-md pt-2 backdrop-blur supports-backdrop-blur:bg-white/60" style="background-color: var(--kd-code-fence-top-bar-bg);"><span class="ml-3.5 font-mono text-sm text-gray-300">onboard.js</span>
+
+      <div class="flex-1"></div>
+
+      <button type="button" class="mr-2 px-2 py-1 hover:text-white"><div class="text-white absolute top-2.5 right-4 transition-opacity z-10 duration-300 px-2 py-1 rounded-md ease-out text-sm font-mono hidden opacity-0" aria-hidden="true" style="background-color: var(--kd-code-copied-bg-color);">Copied!</div>
+
+          <svg width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="opacity-100 transition-opacity duration-600 ease-in"><!-- HTML_TAG_START --><path fill="currentColor" d="M7 6V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1.001 1.001 0 0 1 3 21l.003-14c0-.552.45-1 1.007-1H7zM5.003 8L5 20h10V8H5.003zM9 6h8v10h2V4H9v2z"/><!-- HTML_TAG_END --></svg>
+          <span class="sr-only">Copy code</span></button></div>
+
+  <div class="code relative z-0 overflow-hidden"><div class=""><!-- HTML_TAG_START --><pre><code><span class="line"><span style="color: #89DDFF; font-style: italic">import</span><span style="color: #A6ACCD"> Onboard </span><span style="color: #89DDFF; font-style: italic">from</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">@web3-onboard/core</span><span style="color: #89DDFF">&#39;</span></span>
+<span class="line"><span style="color: #89DDFF; font-style: italic">import</span><span style="color: #A6ACCD"> injectedModule </span><span style="color: #89DDFF; font-style: italic">from</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">@web3-onboard/injected-wallets</span><span style="color: #89DDFF">&#39;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">const</span><span style="color: #A6ACCD"> INFURA_KEY </span><span style="color: #89DDFF">=</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;&#39;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">const</span><span style="color: #A6ACCD"> wallets </span><span style="color: #89DDFF">=</span><span style="color: #A6ACCD"> [</span><span style="color: #82AAFF">injectedModule</span><span style="color: #A6ACCD">()]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">const</span><span style="color: #A6ACCD"> chains </span><span style="color: #89DDFF">=</span><span style="color: #A6ACCD"> [</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #89DDFF">{</span></span>
+<span class="line"><span style="color: #A6ACCD">    </span><span style="color: #F07178">id</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">0x1</span><span style="color: #89DDFF">&#39;</span><span style="color: #89DDFF">,</span></span>
+<span class="line"><span style="color: #A6ACCD">    </span><span style="color: #F07178">token</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">ETH</span><span style="color: #89DDFF">&#39;</span><span style="color: #89DDFF">,</span></span>
+<span class="line"><span style="color: #A6ACCD">    </span><span style="color: #F07178">label</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">Ethereum Mainnet</span><span style="color: #89DDFF">&#39;</span><span style="color: #89DDFF">,</span></span>
+<span class="line"><span style="color: #A6ACCD">    </span><span style="color: #F07178">rpcUrl</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">`</span><span style="color: #C3E88D">https://mainnet.infura.io/v3/</span><span style="color: #89DDFF">${</span><span style="color: #A6ACCD">INFURA_ID</span><span style="color: #89DDFF">}`</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #89DDFF">},</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #89DDFF">{</span></span>
+<span class="line"><span style="color: #A6ACCD">    </span><span style="color: #F07178">id</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">0x89</span><span style="color: #89DDFF">&#39;</span><span style="color: #89DDFF">,</span></span>
+<span class="line"><span style="color: #A6ACCD">    </span><span style="color: #F07178">token</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">MATIC</span><span style="color: #89DDFF">&#39;</span><span style="color: #89DDFF">,</span></span>
+<span class="line"><span style="color: #A6ACCD">    </span><span style="color: #F07178">label</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">Polygon</span><span style="color: #89DDFF">&#39;</span><span style="color: #89DDFF">,</span></span>
+<span class="line"><span style="color: #A6ACCD">    </span><span style="color: #F07178">rpcUrl</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">https://matic-mainnet.chainstacklabs.com</span><span style="color: #89DDFF">&#39;</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #89DDFF">}</span></span>
+<span class="line"><span style="color: #A6ACCD">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">const</span><span style="color: #A6ACCD"> appMetadata </span><span style="color: #89DDFF">=</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">{</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #F07178">name</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">Connect Wallet Example</span><span style="color: #89DDFF">&#39;</span><span style="color: #89DDFF">,</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #F07178">icon</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">&lt;svg&gt;My App Icon&lt;/svg&gt;</span><span style="color: #89DDFF">&#39;</span><span style="color: #89DDFF">,</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #F07178">description</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">Example showcasing how to connect a wallet.</span><span style="color: #89DDFF">&#39;</span><span style="color: #89DDFF">,</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #F07178">recommendedInjectedWallets</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> [</span></span>
+<span class="line"><span style="color: #A6ACCD">    </span><span style="color: #89DDFF">{</span><span style="color: #A6ACCD"> </span><span style="color: #F07178">name</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">MetaMask</span><span style="color: #89DDFF">&#39;</span><span style="color: #89DDFF">,</span><span style="color: #A6ACCD"> </span><span style="color: #F07178">url</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">https://metamask.io</span><span style="color: #89DDFF">&#39;</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">},</span></span>
+<span class="line"><span style="color: #A6ACCD">    </span><span style="color: #89DDFF">{</span><span style="color: #A6ACCD"> </span><span style="color: #F07178">name</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">Coinbase</span><span style="color: #89DDFF">&#39;</span><span style="color: #89DDFF">,</span><span style="color: #A6ACCD"> </span><span style="color: #F07178">url</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">https://wallet.coinbase.com/</span><span style="color: #89DDFF">&#39;</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">}</span></span>
+<span class="line"><span style="color: #A6ACCD">  ]</span></span>
+<span class="line"><span style="color: #89DDFF">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C792EA">const</span><span style="color: #A6ACCD"> onboard </span><span style="color: #89DDFF">=</span><span style="color: #A6ACCD"> </span><span style="color: #82AAFF">Onboard</span><span style="color: #A6ACCD">(</span><span style="color: #89DDFF">{</span></span>
+<span class="line"><span style="color: #A6ACCD">  wallets</span><span style="color: #89DDFF">,</span></span>
+<span class="line"><span style="color: #A6ACCD">  chains</span><span style="color: #89DDFF">,</span></span>
+<span class="line"><span style="color: #A6ACCD">  appMetadata</span><span style="color: #89DDFF">,</span></span>
+<span class="line"><span style="color: #89DDFF">}</span><span style="color: #A6ACCD">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #89DDFF; font-style: italic">export</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF; font-style: italic">default</span><span style="color: #A6ACCD"> onboard</span></span>
+<span class="line"></span></code></pre><!-- HTML_TAG_END --></div>
+
+    
+
+    </div></div><h2 id="step-2-display-the-connect-wallet-button" tabindex="-1">
+<a class="header-anchor" href="#step-2-display-the-connect-wallet-button" aria-hidden="true">#</a> Step 2: Display the connect wallet button</h2>
+<p>In main <code>App.svelte</code> file we&#39;ll import our previously initialized web3-onboard instance and then display our connect wallet button.</p>
+<div class="code-fence overflow-y-auto relative max-h-[60vh] 576:max-h-[32rem] my-8 rounded-md shadow-lg mx-auto border border-gray-divider lang-svelte ext-svelte" style="background-color: var(--kd-code-fence-bg);"><div class="sticky top-0 left-0 z-10 flex items-center rounded-md pt-2 backdrop-blur supports-backdrop-blur:bg-white/60" style="background-color: var(--kd-code-fence-top-bar-bg);"><span class="ml-3.5 font-mono text-sm text-gray-300">App.svelte</span>
+
+      <div class="flex-1"></div>
+
+      <button type="button" class="mr-2 px-2 py-1 hover:text-white"><div class="text-white absolute top-2.5 right-4 transition-opacity z-10 duration-300 px-2 py-1 rounded-md ease-out text-sm font-mono hidden opacity-0" aria-hidden="true" style="background-color: var(--kd-code-copied-bg-color);">Copied!</div>
+
+          <svg width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="opacity-100 transition-opacity duration-600 ease-in"><!-- HTML_TAG_START --><path fill="currentColor" d="M7 6V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1.001 1.001 0 0 1 3 21l.003-14c0-.552.45-1 1.007-1H7zM5.003 8L5 20h10V8H5.003zM9 6h8v10h2V4H9v2z"/><!-- HTML_TAG_END --></svg>
+          <span class="sr-only">Copy code</span></button></div>
+
+  <div class="code relative z-0 overflow-hidden"><div class=""><!-- HTML_TAG_START --><pre><code><span class="line"><span style="color: #89DDFF">&lt;</span><span style="color: #F07178">script</span><span style="color: #89DDFF"> </span><span style="color: #C792EA">lang</span><span style="color: #89DDFF">=</span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">js</span><span style="color: #89DDFF">&quot;</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"><span style="color: #89DDFF; font-style: italic">import</span><span style="color: #A6ACCD"> onboard </span><span style="color: #89DDFF; font-style: italic">from</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">./onboard.js</span><span style="color: #89DDFF">&#39;</span></span>
+<span class="line"><span style="color: #89DDFF">&lt;/</span><span style="color: #F07178">script</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #89DDFF">&lt;</span><span style="color: #F07178">div</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #89DDFF">&lt;</span><span style="color: #F07178">button</span></span>
+<span class="line"><span style="color: #89DDFF">    </span><span style="color: #C792EA">disabled</span><span style="color: #89DDFF">={</span><span style="color: #A6ACCD">connecting</span><span style="color: #89DDFF">}</span></span>
+<span class="line"><span style="color: #89DDFF">    </span><span style="color: #C792EA">onClick</span><span style="color: #89DDFF">={</span><span style="color: #A6ACCD">connect</span><span style="color: #89DDFF">}&gt;</span></span>
+<span class="line"><span style="color: #A6ACCD">    Connect</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #89DDFF">&lt;/</span><span style="color: #F07178">button</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"><span style="color: #89DDFF">&lt;/</span><span style="color: #F07178">div</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"></span></code></pre><!-- HTML_TAG_END --></div>
+
+    
+
+    </div></div><h2 id="step-3-display-account-information" tabindex="-1">
+<a class="header-anchor" href="#step-3-display-account-information" aria-hidden="true">#</a> Step 3: Display account information</h2>
+<p>Now that we have our wallet connected, let&#39;s display some basic information, such as the connected wallet&#39;s address, ENS name, and avatar.</p>
+<div class="code-fence overflow-y-auto relative max-h-[60vh] 576:max-h-[32rem] my-8 rounded-md shadow-lg mx-auto border border-gray-divider lang-svelte ext-svelte" style="background-color: var(--kd-code-fence-bg);"><div class="sticky top-0 left-0 z-10 flex items-center rounded-md pt-2 backdrop-blur supports-backdrop-blur:bg-white/60" style="background-color: var(--kd-code-fence-top-bar-bg);"><span class="ml-3.5 font-mono text-sm text-gray-300">App.svelte</span>
+
+      <div class="flex-1"></div>
+
+      <button type="button" class="mr-2 px-2 py-1 hover:text-white"><div class="text-white absolute top-2.5 right-4 transition-opacity z-10 duration-300 px-2 py-1 rounded-md ease-out text-sm font-mono hidden opacity-0" aria-hidden="true" style="background-color: var(--kd-code-copied-bg-color);">Copied!</div>
+
+          <svg width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="opacity-100 transition-opacity duration-600 ease-in"><!-- HTML_TAG_START --><path fill="currentColor" d="M7 6V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1.001 1.001 0 0 1 3 21l.003-14c0-.552.45-1 1.007-1H7zM5.003 8L5 20h10V8H5.003zM9 6h8v10h2V4H9v2z"/><!-- HTML_TAG_END --></svg>
+          <span class="sr-only">Copy code</span></button></div>
+
+  <div class="code relative z-0 overflow-hidden"><div class=""><!-- HTML_TAG_START --><pre><code><span class="line"><span style="color: #89DDFF">&lt;</span><span style="color: #F07178">script</span><span style="color: #89DDFF"> </span><span style="color: #C792EA">lang</span><span style="color: #89DDFF">=</span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">js</span><span style="color: #89DDFF">&quot;</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #89DDFF; font-style: italic">import</span><span style="color: #A6ACCD"> onboard </span><span style="color: #89DDFF; font-style: italic">from</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">./onboard.js</span><span style="color: #89DDFF">&#39;</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span></span>
+<span class="line"><span style="color: #89DDFF">  </span><span style="color: #464B5D; font-style: italic">// Subscribe to wallet updates</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #C792EA">const</span><span style="color: #A6ACCD"> wallets$ </span><span style="color: #89DDFF">=</span><span style="color: #A6ACCD"> onboard</span><span style="color: #89DDFF">.</span><span style="color: #A6ACCD">state</span><span style="color: #89DDFF">.</span><span style="color: #82AAFF">select</span><span style="color: #A6ACCD">(</span><span style="color: #89DDFF">&#39;</span><span style="color: #C3E88D">wallets</span><span style="color: #89DDFF">&#39;</span><span style="color: #A6ACCD">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #89DDFF">  </span><span style="color: #464B5D; font-style: italic">// The first wallet in the array of connected wallets</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #FFCB6B">$</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> connectedAccount </span><span style="color: #89DDFF">=</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">$</span><span style="color: #A6ACCD">wallets$</span><span style="color: #89DDFF">?.</span><span style="color: #A6ACCD">[</span><span style="color: #F78C6C">0</span><span style="color: #A6ACCD">]</span><span style="color: #89DDFF">?.</span><span style="color: #A6ACCD">accounts</span><span style="color: #89DDFF">?.</span><span style="color: #A6ACCD">[</span><span style="color: #F78C6C">0</span><span style="color: #A6ACCD">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #FFCB6B">$</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> account </span><span style="color: #89DDFF">=</span><span style="color: #A6ACCD"> connectedAccount</span><span style="color: #89DDFF">?.</span><span style="color: #A6ACCD">ens</span><span style="color: #89DDFF">?.</span><span style="color: #A6ACCD">name</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #89DDFF">?</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">{</span></span>
+<span class="line"><span style="color: #A6ACCD">      </span><span style="color: #F07178">ens</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> connectedAccount</span><span style="color: #89DDFF">?.</span><span style="color: #A6ACCD">ens</span><span style="color: #89DDFF">,</span></span>
+<span class="line"><span style="color: #A6ACCD">      </span><span style="color: #F07178">address</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> connectedAccount</span><span style="color: #89DDFF">?.</span><span style="color: #A6ACCD">address</span></span>
+<span class="line"><span style="color: #A6ACCD">    </span><span style="color: #89DDFF">}</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">{</span><span style="color: #A6ACCD"> </span><span style="color: #F07178">address</span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> connectedAccount</span><span style="color: #89DDFF">?.</span><span style="color: #A6ACCD">address </span><span style="color: #89DDFF">}</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #C792EA">const</span><span style="color: #A6ACCD"> connect </span><span style="color: #89DDFF">=</span><span style="color: #A6ACCD"> </span><span style="color: #C792EA">async</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">()</span><span style="color: #A6ACCD"> </span><span style="color: #C792EA">=&gt;</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">{</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #89DDFF; font-style: italic">await</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">onboard</span><span style="color: #89DDFF">.</span><span style="color: #82AAFF">connectWallet</span><span style="color: #F07178">()</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #89DDFF">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #C792EA">const</span><span style="color: #A6ACCD"> disconnect </span><span style="color: #89DDFF">=</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">({</span><span style="color: #A6ACCD"> label </span><span style="color: #89DDFF">})</span><span style="color: #A6ACCD"> </span><span style="color: #C792EA">=&gt;</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">{</span></span>
+<span class="line"><span style="color: #F07178">    </span><span style="color: #A6ACCD">onboard</span><span style="color: #89DDFF">.</span><span style="color: #82AAFF">disconnectWallet</span><span style="color: #F07178">(</span><span style="color: #89DDFF">{</span><span style="color: #F07178"> </span><span style="color: #A6ACCD">label</span><span style="color: #F07178"> </span><span style="color: #89DDFF">}</span><span style="color: #F07178">)</span></span>
+<span class="line"><span style="color: #F07178">  </span><span style="color: #89DDFF">}</span></span>
+<span class="line"><span style="color: #89DDFF">&lt;/</span><span style="color: #F07178">script</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #89DDFF">{#</span><span style="color: #89DDFF; font-style: italic">if</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">$</span><span style="color: #A6ACCD">wallets$</span><span style="color: #89DDFF">?.</span><span style="color: #A6ACCD">[</span><span style="color: #F78C6C">0</span><span style="color: #A6ACCD">]</span><span style="color: #89DDFF">?.</span><span style="color: #A6ACCD">provider</span><span style="color: #89DDFF">}</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #89DDFF">&lt;</span><span style="color: #F07178">div</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"><span style="color: #A6ACCD">    </span><span style="color: #89DDFF">&lt;</span><span style="color: #F07178">img</span><span style="color: #89DDFF"> </span><span style="color: #C792EA">src</span><span style="color: #89DDFF">={</span><span style="color: #A6ACCD">ens</span><span style="color: #89DDFF">?.</span><span style="color: #A6ACCD">avatar</span><span style="color: #89DDFF">} </span><span style="color: #C792EA">alt</span><span style="color: #89DDFF">=</span><span style="color: #89DDFF">&quot;</span><span style="color: #C3E88D">ENS Avatar</span><span style="color: #89DDFF">&quot;</span><span style="color: #89DDFF"> /&gt;</span></span>
+<span class="line"><span style="color: #A6ACCD">    </span><span style="color: #89DDFF">&lt;</span><span style="color: #F07178">div</span><span style="color: #89DDFF">&gt;{</span><span style="color: #A6ACCD"> ens</span><span style="color: #89DDFF">?.</span><span style="color: #A6ACCD">name </span><span style="color: #89DDFF">?</span><span style="color: #A6ACCD"> ens</span><span style="color: #89DDFF">.</span><span style="color: #A6ACCD">name </span><span style="color: #89DDFF">:</span><span style="color: #A6ACCD"> address </span><span style="color: #89DDFF">}&lt;/</span><span style="color: #F07178">div</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"><span style="color: #A6ACCD">    </span><span style="color: #89DDFF">&lt;</span><span style="color: #F07178">div</span><span style="color: #89DDFF">&gt;</span><span style="color: #A6ACCD">Connected to </span><span style="color: #89DDFF">{</span><span style="color: #A6ACCD">wallet</span><span style="color: #89DDFF">.</span><span style="color: #A6ACCD">label</span><span style="color: #89DDFF">}&lt;/</span><span style="color: #F07178">div</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"><span style="color: #A6ACCD">    </span><span style="color: #89DDFF">&lt;</span><span style="color: #F07178">button</span><span style="color: #89DDFF"> </span><span style="color: #C792EA">onClick</span><span style="color: #89DDFF">={()</span><span style="color: #A6ACCD"> </span><span style="color: #C792EA">=&gt;</span><span style="color: #A6ACCD"> </span><span style="color: #89DDFF">{</span><span style="color: #F07178"> </span><span style="color: #82AAFF">disconnect</span><span style="color: #F07178">(</span><span style="color: #89DDFF">$</span><span style="color: #A6ACCD">wallets$</span><span style="color: #89DDFF">?.</span><span style="color: #F07178">[</span><span style="color: #F78C6C">0</span><span style="color: #F07178">]) </span><span style="color: #89DDFF">}&gt;</span><span style="color: #A6ACCD">Disconnect</span><span style="color: #89DDFF">&lt;/</span><span style="color: #A6ACCD">button</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #89DDFF">&lt;/</span><span style="color: #A6ACCD">div</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"><span style="color: #89DDFF">{</span><span style="color: #F07178">:</span><span style="color: #89DDFF; font-style: italic">else</span><span style="color: #89DDFF">}</span></span>
+<span class="line"><span style="color: #A6ACCD">  &lt;</span><span style="color: #FFCB6B">div</span><span style="color: #A6ACCD">&gt;</span></span>
+<span class="line"><span style="color: #A6ACCD">    </span><span style="color: #89DDFF">&lt;</span><span style="color: #A6ACCD">button</span></span>
+<span class="line"><span style="color: #A6ACCD">      onClick</span><span style="color: #89DDFF">={</span><span style="color: #A6ACCD">connect</span><span style="color: #89DDFF">}&gt;</span></span>
+<span class="line"><span style="color: #A6ACCD">      Connect</span></span>
+<span class="line"><span style="color: #A6ACCD">    </span><span style="color: #89DDFF">&lt;/</span><span style="color: #A6ACCD">button</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"><span style="color: #A6ACCD">  </span><span style="color: #89DDFF">&lt;/</span><span style="color: #A6ACCD">div</span><span style="color: #89DDFF">&gt;</span></span>
+<span class="line"><span style="color: #89DDFF">{/</span><span style="color: #89DDFF; font-style: italic">if</span><span style="color: #89DDFF">}</span></span>
+<span class="line"></span></code></pre><!-- HTML_TAG_END --></div>
+
+    
+
+    </div></div></div></div></div></article>
+
+      <hr class="border-gray-divider mt-20">
+
+        <div class="992:text-xl flex items-center pt-12 pb-20 text-lg font-semibold text-gray-300">
+
+          <div class="ml-auto mb-4 flex flex-col items-end"><span class="text-gray-inverse mr-3 mb-4 inline-block">Next</span>
+              
+  <a class="group transform-gpu text-lg font-medium transition-transform hover:scale-105 hover:text-gray-inverse" href="/examples/uniswap-widget" sveltekit:prefetch>
+    <span class="inline-block transform transition-transform duration-100 group-hover:translate-x-0 translate-x-2">Uniswap Widget Example</span>
+    <span class="opacity-0 transition-opacity duration-100 group-hover:visible group-hover:opacity-100 inline-block">-&gt;</span></a></div></div>
+
+      </main>
+
+    <div class="992:flex-1"></div>
+
+    </div></div>
+
+
+		<script type="module" data-sveltekit-hydrate="1qhgklh">
+		import { start } from "/_app/immutable/start-3d191ebf.js";
+		start({
+			target: document.querySelector('[data-sveltekit-hydrate="1qhgklh"]').parentNode,
+			paths: {"base":"","assets":""},
+			session: {},
+			route: true,
+			spa: false,
+			trailing_slash: "never",
+			hydrate: {
+				status: 200,
+				error: null,
+				nodes: [3, 5, 36],
+				params: {},
+				routeId: "examples/connect-wallet"
+			}
+		});
+	</script><script type="application/json" sveltekit:data-type="data" sveltekit:data-url="/kit-docs/examples_connect-wallet.meta.json">{"status":200,"statusText":"","headers":{"content-type":"application/json; charset=utf-8"},"body":"{\"excerpt\":\"\",\"headers\":[],\"title\":\"Connect Wallet Button Example\",\"description\":\"Learn how to create a connect wallet button for your dapp with Web3-Onboard. For this example, we are going to use the injected wallets module.\",\"frontmatter\":{\"title\":\"Connect Wallet Button Example\",\"description\":\"Learn how to create a connect wallet button for your dapp with Web3-Onboard. For this example, we are going to use the injected wallets module.\"},\"lastUpdated\":1666892474432}"}</script>
+	<script type="application/json" sveltekit:data-type="data" sveltekit:data-url="/kit-docs/examples.sidebar.json">{"status":200,"statusText":"","headers":{"content-type":"application/json; charset=utf-8"},"body":"{\"links\":{\".\":[{\"title\":\"Connect Wallet Button Example\",\"slug\":\"/examples/connect-wallet\"},{\"title\":\"Uniswap Widget Example\",\"slug\":\"/examples/uniswap-widget\"}]}}"}</script></div>
+  </body>
+</html>

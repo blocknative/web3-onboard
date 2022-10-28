@@ -1,0 +1,1 @@
+import{S as t,i as s,s as n}from"../../chunks/index-c32358ff.js";const l=!0;function o(){return{status:307,redirect:"/examples/connect-wallet"}}class u extends t{constructor(e){super(),s(this,e,null,null,n,{})}}export{u as default,o as load,l as prerender};

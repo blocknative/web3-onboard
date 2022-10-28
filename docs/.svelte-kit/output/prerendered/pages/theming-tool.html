@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/x-icon" href="./favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="content-security-policy" content=""><title>Web3-Onboard | The easy way to connect web3 users to dapps</title><meta name="description" content="Open-source, framework-agnostic JavaScript library to onboard users to web3 apps. Help your users transact with ease by enabling wallet connection, real-time transaction states, and more." data-svelte="svelte-1nm3ek9"><meta property="twitter:card" content="summary_large_image" data-svelte="svelte-19j40fq"><meta property="twitter:title" content="Web3-Onboard | The easy way to connect web3 users to dapps" data-svelte="svelte-19j40fq"><meta property="twitter:description" content="Open-source, framework-agnostic JavaScript library to onboard users to web3 apps. Help your users transact with ease by enabling wallet connection, real-time transaction states, and more." data-svelte="svelte-19j40fq"><meta property="twitter:url" content="https://onboard.blocknative.com/" data-svelte="svelte-19j40fq"><meta name="twitter:image" content="/_app/immutable/assets/blocknative-onboard-og-image-f5a685a3.png" data-svelte="svelte-19j40fq">
+    <meta name="twitter:image:alt" content="Web3-Onboard Connect Wallet Button" data-svelte="svelte-19j40fq"><meta property="og:site_name" content="Web3-Onboard | The easy way to connect web3 users to dapps" data-svelte="svelte-dx4xbh"><meta property="og:locale" content="en_us" data-svelte="svelte-dx4xbh"><meta property="og:url" content="https://onboard.blocknative.com/" data-svelte="svelte-dx4xbh"><meta property="og:type" content="website" data-svelte="svelte-dx4xbh"><meta property="og:title" content="Web3-Onboard | The easy way to connect web3 users to dapps" data-svelte="svelte-dx4xbh"><meta property="og:description" content="Open-source, framework-agnostic JavaScript library to onboard users to web3 apps. Help your users transact with ease by enabling wallet connection, real-time transaction states, and more." data-svelte="svelte-dx4xbh"><meta property="og:image" content="/_app/immutable/assets/blocknative-onboard-og-image-f5a685a3.png" data-svelte="svelte-dx4xbh">
+    <meta property="og:image:alt" content="Web3-Onboard Connect Wallet Button" data-svelte="svelte-dx4xbh">
+	<link rel="stylesheet" href="/_app/immutable/assets/pages/__layout-homepage.svelte-4d6bc01c.css">
+	<link rel="stylesheet" href="/_app/immutable/assets/blocknative-ce591f8d.css">
+	<link rel="stylesheet" href="/_app/immutable/assets/scroll-8521731d.css">
+	<link rel="stylesheet" href="/_app/immutable/assets/TabItem.svelte_svelte_type_style_lang-5a0ebecb.css">
+	<link rel="stylesheet" href="/_app/immutable/assets/ThemeCustomizer.svelte_svelte_type_style_lang-6a87737d.css">
+	<link rel="modulepreload" href="/_app/immutable/start-3d191ebf.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/index-c32358ff.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/singletons-37dfeae3.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/preload-helper-60cab3ee.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/__layout-homepage.svelte-5c2a893c.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/blocknative-847bc20d.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/contexts-2aef7541.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/twitter-fill-a9ee53f3.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/scroll-5387a6f1.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/theming-tool/__layout@homepage.svelte-f25217f5.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/theming-tool/index.md-2ceef449.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/ThemeCustomizer.svelte_svelte_type_style_lang-eee81db4.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/index-92058c84.js">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121780722-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-121780722-2');
+      gtag('config', 'G-WQ8M55VX1Z');
+    </script>
+
+    <script>
+      const key = 'svelteness::color-scheme'
+      const scheme = localStorage[key]
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+      if (scheme === 'dark' || (scheme !== 'light' && prefersDark)) {
+        document.documentElement.classList.add('dark')
+      } else {
+        document.documentElement.classList.remove('dark')
+      }
+    </script>
+  </head>
+  <body>
+    <div>
+
+
+
+
+
+
+
+<div style="display: contents; --kd-content-max-width:100%;"><div class="kit-docs bg-gray-body min-h-full min-w-full h-full transition-transform duration-150 ease-out" style="font-family: var(--kd-font-family-sans, inherit); --kd-breadcrumbs-height: 0px; --kd--navbar-height: calc(var(--kd-navbar-height) + var(--kd-breadcrumbs-height));"><div class="fixed top-0 z-30 w-full flex-none transform-gpu transition-transform duration-150 ease-out supports-backdrop-blur:bg-white/60 bg-gray-200/95 backdrop-blur dark:bg-gray-800/60 translate-y-0" style="border-bottom: var(--kd-navbar-border-bottom);"><div class="flex w-full flex-col items-center justify-center mx-auto max-w-[var(--kd-navbar-max-width)] p-[var(--kd-navbar-padding)] h-[var(--kd--navbar-height)]"><div class="flex w-full items-center"><div slot="navbar-left"><a href="/"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="12" fill="#262A3D"></rect><g clip-path="url(#clip0_12312_91622)"><path d="M14.7268 25.6998L11.4386 19.9961H18.0155L21.3042 25.6998H14.7268Z" fill="#262A3D"></path><path d="M14.7268 25.6998L11.4386 19.9961H18.0155L21.3042 25.6998H14.7268Z" fill="white"></path><path d="M18.0155 19.9962H11.4386L14.7268 14.2925H21.3042L18.0155 19.9962Z" fill="url(#paint0_linear_12312_91622)"></path><path d="M24.5929 19.9963L21.3042 14.2926H14.7268L11.4386 8.58887H24.5929L31.1699 19.9963H24.5929Z" fill="#262A3D"></path><path d="M24.5929 19.9963L21.3042 14.2926H14.7268L11.4386 8.58887H24.5929L31.1699 19.9963H24.5929Z" fill="white"></path><path d="M24.5929 31.4035H11.4386L14.7268 25.6998H21.3042L24.5929 19.9961H31.1699L24.5929 31.4035Z" fill="url(#paint1_linear_12312_91622)"></path></g><defs><linearGradient id="paint0_linear_12312_91622" x1="11.4386" y1="17.1443" x2="21.3042" y2="17.1443" gradientUnits="userSpaceOnUse"><stop stop-color="#55CCFE"></stop><stop offset="1" stop-color="#5E93EF"></stop></linearGradient><linearGradient id="paint1_linear_12312_91622" x1="54.65" y1="3724.32" x2="7422.7" y2="3724.32" gradientUnits="userSpaceOnUse"><stop stop-color="#55CCFE"></stop><stop offset="1" stop-color="#5E93EF"></stop></linearGradient><clipPath id="clip0_12312_91622"><rect width="19.7619" height="22.8571" fill="white" transform="translate(11.4286 8.57129)"></rect></clipPath></defs></svg></a></div>
+        
+
+    <div class="flex-1"></div>
+
+    <div class="992:hidden -mr-2 flex items-center">
+
+      <div class="relative inline-block text-left not-prose"><button id="popover-button-3" type="button" class="inline-flex w-full justify-center rounded-md p-2 text-lg font-medium text-gray-soft hover:text-gray-inverse" aria-controls="popover-3" aria-expanded="false" aria-haspopup="true"><svg width="30" height="30" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><!-- HTML_TAG_START --><path fill="currentColor" d="M18 18v2H6v-2h12zm3-7v2H3v-2h18zm-3-7v2H6V4h12z"/><!-- HTML_TAG_END --></svg>
+          <span class="sr-only">Main navigation menu</span>
+        </button>
+
+  <div class="fixed top-0 left-0 bg-black/40 backdrop-blur-sm dark:bg-gray-700/80 transition-opacity duration-75 pointer-events-auto z-40 w-screen h-screen opacity-0 invisible"></div>
+
+  <div hidden></div>
+
+</div></div>
+
+    <div class="992:flex 992:items-center hidden"><nav><ul class="flex items-center space-x-8 text-lg font-medium"><li class="mt-4 first:mt-0 992:mt-0"><a class="p-1 text-gray-soft hover:text-gray-inverse" href="/docs">Documentation</a></li><li class="mt-4 first:mt-0 992:mt-0"><a class="p-1 text-gray-soft hover:text-gray-inverse" href="/examples">Examples</a></li><li class="mt-4 first:mt-0 992:mt-0"><a class="p-1 text-gray-soft hover:text-gray-inverse" href="/faq">FAQ</a></li><li class="mt-4 first:mt-0 992:mt-0"><a class="p-1 text-gray-soft hover:text-gray-inverse" href="https://www.blocknative.com/blog/tag/web3-onboard" target="_blank">Blog</a></li></ul></nav>
+
+      
+        
+
+      <div class="border-gray-divider ml-6 mr-2.5 h-7 w-2 border-l-[1.5px]"></div>
+
+      <div class="hidden 992:flex items-center"><div slot="navbar-right-alt"><div class="flex"><a class="relative flex items-center text-gray-soft hover:text-gray-inverse border-0 rounded-md p-2" href="//github.com/blocknative/web3-onboard" target="_blank"><svg width="28" height="28" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class=""><!-- HTML_TAG_START --><path fill="currentColor" d="M12 2C6.475 2 2 6.475 2 12a9.994 9.994 0 0 0 6.838 9.488c.5.087.687-.213.687-.476c0-.237-.013-1.024-.013-1.862c-2.512.463-3.162-.612-3.362-1.175c-.113-.288-.6-1.175-1.025-1.413c-.35-.187-.85-.65-.013-.662c.788-.013 1.35.725 1.538 1.025c.9 1.512 2.338 1.087 2.912.825c.088-.65.35-1.087.638-1.337c-2.225-.25-4.55-1.113-4.55-4.938c0-1.088.387-1.987 1.025-2.688c-.1-.25-.45-1.275.1-2.65c0 0 .837-.262 2.75 1.026a9.28 9.28 0 0 1 2.5-.338c.85 0 1.7.112 2.5.337c1.912-1.3 2.75-1.024 2.75-1.024c.55 1.375.2 2.4.1 2.65c.637.7 1.025 1.587 1.025 2.687c0 3.838-2.337 4.688-4.562 4.938c.362.312.675.912.675 1.85c0 1.337-.013 2.412-.013 2.75c0 .262.188.574.688.474A10.016 10.016 0 0 0 22 12c0-5.525-4.475-10-10-10z"/><!-- HTML_TAG_END --></svg>
+  <span class="sr-only">GitHub</span>
+  </a>
+        <a class="relative flex items-center text-gray-soft hover:text-gray-inverse border-0 rounded-md p-2" href="//discord.com/invite/KZaBVME" target="_blank"><svg width="28" height="28" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class=""><!-- HTML_TAG_START --><path fill="currentColor" d="M10.076 11c.6 0 1.086.45 1.075 1c0 .55-.474 1-1.075 1C9.486 13 9 12.55 9 12s.475-1 1.076-1zm3.848 0c.601 0 1.076.45 1.076 1s-.475 1-1.076 1c-.59 0-1.075-.45-1.075-1s.474-1 1.075-1zm4.967-9C20.054 2 21 2.966 21 4.163V23l-2.211-1.995l-1.245-1.176l-1.317-1.25l.546 1.943H5.109C3.946 20.522 3 19.556 3 18.359V4.163C3 2.966 3.946 2 5.109 2H18.89zm-3.97 13.713c2.273-.073 3.148-1.596 3.148-1.596c0-3.381-1.482-6.122-1.482-6.122c-1.48-1.133-2.89-1.102-2.89-1.102l-.144.168c1.749.546 2.561 1.334 2.561 1.334a8.263 8.263 0 0 0-3.096-1.008a8.527 8.527 0 0 0-2.077.02c-.062 0-.114.011-.175.021c-.36.032-1.235.168-2.335.662c-.38.178-.607.305-.607.305s.854-.83 2.705-1.376l-.103-.126s-1.409-.031-2.89 1.103c0 0-1.481 2.74-1.481 6.121c0 0 .864 1.522 3.137 1.596c0 0 .38-.472.69-.871c-1.307-.4-1.8-1.24-1.8-1.24s.102.074.287.179c.01.01.02.021.041.031c.031.022.062.032.093.053c.257.147.514.262.75.357c.422.168.926.336 1.513.452a7.06 7.06 0 0 0 2.664.01a6.666 6.666 0 0 0 1.491-.451c.36-.137.761-.337 1.183-.62c0 0-.514.861-1.862 1.25c.309.399.68.85.68.85z"/><!-- HTML_TAG_END --></svg>
+  <span class="sr-only">Discord</span>
+  </a></div></div>
+        
+        <div class="relative inline-block text-left not-prose"><button id="menu-button-3" type="button" class="inline-flex w-full justify-center rounded-md p-2 text-lg font-medium text-gray-soft hover:text-gray-inverse" aria-controls="menu-3" aria-expanded="false" aria-haspopup="true"><svg width="1.2em" height="1.2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="h-6 w-6"><!-- HTML_TAG_START --><path fill="currentColor" d="M12 18a6 6 0 1 1 0-12a6 6 0 0 1 0 12zM11 1h2v3h-2V1zm0 19h2v3h-2v-3zM3.515 4.929l1.414-1.414L7.05 5.636L5.636 7.05L3.515 4.93zM16.95 18.364l1.414-1.414l2.121 2.121l-1.414 1.414l-2.121-2.121zm2.121-14.85l1.414 1.415l-2.121 2.121l-1.414-1.414l2.121-2.121zM5.636 16.95l1.414 1.414l-2.121 2.121l-1.414-1.414l2.121-2.121zM23 11v2h-3v-2h3zM4 11v2H1v-2h3z"/><!-- HTML_TAG_END --></svg>
+    <span class="sr-only">Color Scheme</span>
+  </button>
+
+  <div hidden></div>
+
+</div></div></div></div>
+
+  
+
+          
+        </div></div>
+
+  <div class="mx-auto w-full flex flex-row min-h-full max-w-[var(--kd-content-max-width)] pt-[var(--kd--navbar-height)] z-20">
+
+    <main class="w-full overflow-x-hidden 992:min-h-[calc(100vh-var(--kd--navbar-height))] min-h-[calc(100vh-var(--kd--navbar-height))]" style="max-width: var(--kd-main-max-width);">
+
+      
+
+<section class="svelte-15p6d5d"><div class="control-panel svelte-15p6d5d"><label for="Theme">Click Color Circles to Set Theme: </label>
+    <hr class="svelte-15p6d5d">
+    <div class="theming-container svelte-15p6d5d"><div class="theming-inputs-wrapper svelte-15p6d5d"><div class="theming-inputs svelte-15p6d5d"><input type="color" name="Theme" class="svelte-15p6d5d" value="#ffffff"></div>
+          <span class="text" id="current-theme">--background-color : #ffffff</span>
+        </div><div class="theming-inputs-wrapper svelte-15p6d5d"><div class="theming-inputs svelte-15p6d5d"><input type="color" name="Theme" class="svelte-15p6d5d" value="#1a1d26"></div>
+          <span class="text" id="current-theme">--text-color : #1a1d26</span>
+        </div><div class="theming-inputs-wrapper svelte-15p6d5d"><div class="theming-inputs svelte-15p6d5d"><input type="color" name="Theme" class="svelte-15p6d5d" value="#ebebed"></div>
+          <span class="text" id="current-theme">--border-color : #ebebed</span>
+        </div><div class="theming-inputs-wrapper svelte-15p6d5d"><div class="theming-inputs svelte-15p6d5d"><input type="color" name="Theme" class="svelte-15p6d5d" value="#ebebed"></div>
+          <span class="text" id="current-theme">--accent-background : #ebebed</span>
+        </div><div class="theming-inputs-wrapper svelte-15p6d5d"><div class="theming-inputs svelte-15p6d5d"><input type="color" name="Theme" class="svelte-15p6d5d" value="#929bed"></div>
+          <span class="text" id="current-theme">--accent-color : #929bed</span>
+        </div><div class="theming-inputs-wrapper svelte-15p6d5d"><div class="theming-inputs svelte-15p6d5d"><input type="color" name="Theme" class="svelte-15p6d5d" value="#eff1fc"></div>
+          <span class="text" id="current-theme">--accent-color-hover : #eff1fc</span>
+        </div><div class="theming-inputs-wrapper svelte-15p6d5d"><div class="theming-inputs svelte-15p6d5d"><input type="color" name="Theme" class="svelte-15p6d5d" value="#707481"></div>
+          <span class="text" id="current-theme">--secondary-text-color : #707481</span>
+        </div></div>
+    <div class="copy-styles-container svelte-15p6d5d"><textarea readonly rows="10" class="copy-styles-textarea svelte-15p6d5d">:root {
+  --background-color: #ffffff; 
+  --text-color: #1a1d26; 
+  --border-color: #ebebed; 
+  --accent-background: #ebebed; 
+  --accent-color: #929bed; 
+  --accent-color-hover: #eff1fc; 
+  --secondary-text-color: #707481; 
+  --onboard-connect-sidebar-background: var(--accent-background);
+  --onboard-close-button-background: var(--accent-background);
+  --onboard-connect-sidebar-color: var(--text-color);
+  --onboard-connect-sidebar-progress-background: var(--secondary-text-color);
+  --onboard-connect-sidebar-progress-color: var(--accent-color);
+  --onboard-connect-header-background: var(--background-color);
+  --onboard-connect-header-color: var(--text-color);
+  --onboard-main-scroll-container-background: var(--background-color);
+  --onboard-link-color: var(--accent-color);
+  --onboard-wallet-button-background: var(--background-color);
+  --onboard-wallet-button-background-hover: var(--accent-color-hover);
+  --onboard-wallet-button-border-color: var(--border-color);
+  --onboard-wallet-app-icon-border-color: var(--border-color);
+}</textarea>
+      <button class="svelte-15p6d5d">Copy Styling Config </button></div>
+    <hr class="svelte-15p6d5d">
+    <div class="backdrop-toggle svelte-15p6d5d"><label class="switch svelte-15p6d5d"><input type="checkbox" class="svelte-15p6d5d">
+        <span class="slider svelte-15p6d5d"></span></label>
+      Disabled Backdrop for Styling
+    </div></div>
+  <div class="image-drop-container svelte-15p6d5d"><div id="image_drop_area" class="svelte-15p6d5d"><form class="drop-area-controls svelte-15p6d5d"><div>Enter your website url or drag and drop a screenshot to preview web3-onboard on your site
+        </div>
+        
+        <div class="website-input-row svelte-15p6d5d"><input type="text" class="iframe-input svelte-15p6d5d" placeholder="Enter your Website URL" value="">
+          <button class="svelte-15p6d5d">Preview On Your Website</button>
+          <button type="button" disabled class="svelte-15p6d5d">Reset</button>
+          <button type="button" class="svelte-15p6d5d">Connect Wallet</button></div></form>
+      <iframe id="iframe_underlay" title="iframe area for testing W3O with your app" class="iframe-hidden svelte-15p6d5d"></iframe>
+      <div><div>Drag and drop an image here to preview</div></div></div></div>
+</section>
+
+      
+
+      </main>
+
+    <div class="992:flex-1"></div>
+
+    </div></div></div>
+
+
+		<script type="module" data-sveltekit-hydrate="149hzco">
+		import { start } from "/_app/immutable/start-3d191ebf.js";
+		start({
+			target: document.querySelector('[data-sveltekit-hydrate="149hzco"]').parentNode,
+			paths: {"base":"","assets":""},
+			session: {},
+			route: true,
+			spa: false,
+			trailing_slash: "never",
+			hydrate: {
+				status: 200,
+				error: null,
+				nodes: [2, 7, 41],
+				params: {},
+				routeId: "theming-tool"
+			}
+		});
+	</script></div>
+  </body>
+</html>
