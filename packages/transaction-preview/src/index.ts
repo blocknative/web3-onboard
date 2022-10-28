@@ -1,14 +1,10 @@
 import { SofiaProLight, SofiaProRegular } from '@web3-onboard/common'
-import { firstValueFrom, Subject, take } from 'rxjs'
 import get from './get.js'
 import { SimPlatformResponse, TransactionPreviewInitOptions } from './types.js'
 import { validateTPInit } from './validation'
+import TransactionPreview from './views/Index.svelte'
 
 export * from './types.js'
-
-// export default {
-//   get
-// }
 
 // eslint-disable-next-line max-len
 const transactionPreview = async (
@@ -22,19 +18,14 @@ const transactionPreview = async (
     }
   }
 
-  const app = mountTransactionPreview(options, accounts$)
+  const app = mountTransactionPreview(options)
 
-  accounts$.pipe(take(1)).subscribe(() => {
-    app.$destroy()
-  })
-
-  return firstValueFrom(accounts$)
+  return get(options)
 }
 
 // eslint-disable-next-line max-len
 const mountTransactionPreview = (
   transactionPreviewOptions: TransactionPreviewInitOptions,
-  accounts$: Subject<Account[]>
 ) => {
   class TransactionPreviewEl extends HTMLElement {
     constructor() {
@@ -120,7 +111,6 @@ const mountTransactionPreview = (
     target: target,
     props: {
       transactionPreviewOptions,
-      accounts$
     }
   })
 

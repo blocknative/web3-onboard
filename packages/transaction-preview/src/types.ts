@@ -1,6 +1,6 @@
 import { EIP1193Provider } from "@web3-onboard/common"
 
-export type RequestEndpoint = 'blockPrices'
+export type RequestOptions = Pick<TransactionPreviewInitOptions, 'apiKey'>
 
 export type TransactionPreviewInitOptions = {
   apiKey: string
@@ -31,6 +31,8 @@ export type SimPlatformResponse = {
   error: unknown[]
   system: string
   network: string
+  
+  // Noted in the docs but not seen in the mock response
   // gasUsed: number
 }
 

@@ -1,17 +1,19 @@
+import { firstValueFrom, zip } from 'rxjs'
 import { ajax } from 'rxjs/ajax'
 import { RequestOptions, SimPlatformResponse } from './types.js'
-import { validateRequest } from './validation.js'
 
 function get(options: RequestOptions): Promise<SimPlatformResponse[]> {
-  const invalid = validateRequest(options)
+  const { apiKey } = options
 
-  if (invalid) {
-    throw invalid
-  }
-
-  const { enableUI, transactions, apiKey } = options
-
-  return ajax.getJSON<SimPlatformResponse>(url, headers)
+  const headers = { authorization: apiKey }
+  return firstValueFrom(
+    zip(
+      ajax.getJSON<SimPlatformResponse>(
+        'https://api.blocknative.com/simulate',
+        headers
+      )
+    )
+  )
 }
 
 export default get
