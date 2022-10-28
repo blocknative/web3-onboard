@@ -90,7 +90,8 @@ function init(options: InitOptions): OnboardAPI {
     notify,
     gas,
     connect,
-    containerElements
+    containerElements,
+    transactionPreview
   } = options
 
   updateConfiguration({ containerElements })

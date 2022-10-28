@@ -5,7 +5,7 @@ export type RequestOptions = Pick<TransactionPreviewInitOptions, 'apiKey'>
 export type TransactionPreviewInitOptions = {
   apiKey: string
   walletProvider: EIP1193Provider
-  containerElement: string
+  containerElement?: string
   network?: string //defaults to mainnet for now
 }
 
@@ -31,7 +31,7 @@ export type SimPlatformResponse = {
   error: unknown[]
   system: string
   network: string
-  
+
   // Noted in the docs but not seen in the mock response
   // gasUsed: number
 }

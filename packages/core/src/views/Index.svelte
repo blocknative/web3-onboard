@@ -427,6 +427,7 @@
           $accountCenter$.position.includes('Left')
         ? 'margin-right: auto'
         : ''}
+        id="account-center-with-notify"
     >
       {#await accountCenterComponent then AccountCenter}
         {#if AccountCenter}

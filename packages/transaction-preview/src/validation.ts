@@ -5,7 +5,7 @@ import { validate, type ValidateReturn } from '@web3-onboard/common'
 const initOptions = Joi.object({
   apiKey: Joi.string().required(),
   provider: Joi.object().unknown().required(),
-  containerElement: Joi.string().required(),
+  containerElement: Joi.string(),
   network: Joi.string()
 })
 
