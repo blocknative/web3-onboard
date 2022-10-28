@@ -6,7 +6,6 @@ declare const window: CustomWindow
 function mewWallet(): WalletInit {
   if (typeof window === 'undefined') return () => null
   return ({ device }) => {
-    console.log(device, 'AAAAAAA')
     return device.type === 'mobile'
       ? {
         label: 'MEW wallet',
