@@ -78,6 +78,16 @@ export function addChains(chains: Chain[]): void {
 export function addWallet(wallet: WalletState): void {
   const error = validateWallet(wallet)
 
+  const fullProviderRequest = wallet.provider.request
+
+  wallet.provider.request = req => {
+    console.log(req.method)
+    if (req.method === 'eth_sendTransaction') {
+      console.log('sending transaction')
+    }
+    return fullProviderRequest(req)
+  }
+
   if (error) {
     console.error(error)
     throw error
