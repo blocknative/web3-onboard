@@ -1708,10 +1708,10 @@
     svelte "^3.49.0"
     svelte-i18n "^3.3.13"
 
-"@web3-onboard/gas@^2.1.4-alpha.1":
-  version "2.1.4-alpha.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/gas/-/gas-2.1.4-alpha.1.tgz#f0b4d84043987d51d656c0507f1fc98e83890b04"
-  integrity sha512-gEuhTu9aOxEbXJoQgqHl+BbXdLRRX9enW/dbgFya2JR2y1wEDLuvph7m4hVtZBTcN6xQ/tOd0ksJAlcYNet3wQ==
+"@web3-onboard/gas@^2.1.4":
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/gas/-/gas-2.1.4.tgz#6022cd10419c5b28b93d7c914e2165e33098a027"
+  integrity sha512-7yGYQ5/KTdZqt2TtHQi7kTTL9Fp1nQRAARct0JgJLbwG6XbVd+5GG47Nc4KXeCFAYjBWzJ2rBO59zejt3/R9uA==
   dependencies:
     "@web3-onboard/common" "^2.2.3"
     joi "^17.6.1"
