@@ -2,11 +2,7 @@ import { fromEventPattern, Observable } from 'rxjs'
 import { filter, takeUntil, take, share, switchMap } from 'rxjs/operators'
 import partition from 'lodash.partition'
 import { providers } from 'ethers'
-import {
-  TransactionListener,
-  TransactionObject,
-  weiToEth
-} from '@web3-onboard/common'
+import { weiToEth } from '@web3-onboard/common'
 import { disconnectWallet$ } from './streams.js'
 import { updateAccount, updateWallet } from './store/actions.js'
 import { validEnsChain } from './utils.js'
@@ -103,23 +99,6 @@ export function listenChainChanged(args: {
   }
 
   return fromEventPattern<ChainId>(addHandler, removeHandler).pipe(
-    takeUntil(disconnected$)
-  )
-}
-export function listenTransactionSent(args: {
-  provider: EIP1193Provider
-  disconnected$: Observable<string>
-}): Observable<TransactionObject> {
-  const { provider, disconnected$ } = args
-  const addHandler = (handler: TransactionListener) => {
-    provider.on('eth_sendTransaction', handler)
-  }
-
-  const removeHandler = (handler: TransactionListener) => {
-    provider.removeListener('eth_sendTransaction', handler)
-  }
-
-  return fromEventPattern<TransactionObject>(addHandler, removeHandler).pipe(
     takeUntil(disconnected$)
   )
 }
@@ -234,15 +213,6 @@ export function trackWallet(
       const [address, balance, ens] = res
       updateAccount(label, address, { balance, ens })
     })
-
-  const transactionListener$ = listenTransactionSent({
-    provider,
-    disconnected$
-  }).pipe(share())
-
-  transactionListener$.subscribe(trans => {
-    console.log(trans)
-  })
 
   const chainChanged$ = listenChainChanged({ provider, disconnected$ }).pipe(
     share()

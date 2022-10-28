@@ -225,7 +225,6 @@ export type ProviderEvent =
   | 'message'
   | 'chainChanged'
   | 'accountsChanged'
-  | 'eth_sendTransaction'
 
 export interface SimpleEventEmitter {
   on(
@@ -236,7 +235,6 @@ export interface SimpleEventEmitter {
       | MessageListener
       | ChainListener
       | AccountsListener
-      | TransactionListener
   ): void
   removeListener(
     event: ProviderEvent,
@@ -246,7 +244,6 @@ export interface SimpleEventEmitter {
       | MessageListener
       | ChainListener
       | AccountsListener
-      | TransactionListener
   ): void
 }
 
@@ -255,7 +252,6 @@ export type DisconnectListener = (error: ProviderRpcError) => void
 export type MessageListener = (message: ProviderMessage) => void
 export type ChainListener = (chainId: ChainId) => void
 export type AccountsListener = (accounts: ProviderAccounts) => void
-export type TransactionListener = (transaction: TransactionObject) => void
 
 /**
  * The hexadecimal representation of the users
@@ -352,7 +348,6 @@ export interface EIP1193Provider extends SimpleEventEmitter {
   on(event: 'message', listener: MessageListener): void
   on(event: 'chainChanged', listener: ChainListener): void
   on(event: 'accountsChanged', listener: AccountsListener): void
-  on(event: 'eth_sendTransaction', listener: TransactionListener): void
   request(args: EthAccountsRequest): Promise<ProviderAccounts>
   request(args: EthBalanceRequest): Promise<Balance>
   request(args: EIP1102Request): Promise<ProviderAccounts>
