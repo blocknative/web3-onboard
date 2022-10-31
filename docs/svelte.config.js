@@ -4,6 +4,10 @@ import { kitDocsPlugin } from '@svelteness/kit-docs/node'
 import Icons from 'unplugin-icons/vite'
 import preprocess from 'svelte-preprocess'
 import { resolve } from 'path'
+import nodePolyfills from 'rollup-plugin-polyfill-node'
+const MODE = process.env.NODE_ENV
+
+const development = MODE === 'development'
 
 const { adapter, adapterName } = process.env.VERCEL
   ? { adapter: adapterVercel, adapterName: 'vercel' }
@@ -36,7 +40,8 @@ const config = {
             '@web3-react/network',
             '@web3-react/walletconnect',
             '@web3-react/types',
-            '@web3-react/url'
+            '@web3-react/url',
+            '@web3-onboard/*',
           ]
         }
       },
