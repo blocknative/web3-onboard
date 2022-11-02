@@ -24,7 +24,7 @@
     ]
   }
 
-  const title = 'Web3-Onboard | The easy way to connect web3 users to dapps'
+  const title = 'Web3-Onboard | Framework-agnostic Web3 Connect Wallet Button'
   const metadescription =
     'Open-source, framework-agnostic JavaScript library to onboard users to web3 apps. Help your users transact with ease by enabling wallet connection, real-time transaction states, and more.'
   const url = 'https://onboard.blocknative.com/'
