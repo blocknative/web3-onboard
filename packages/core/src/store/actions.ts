@@ -77,16 +77,20 @@ export function addChains(chains: Chain[]): void {
 
 export function addWallet(wallet: WalletState): void {
   const error = validateWallet(wallet)
+  // const { apiKey, apiSecretKey, transactionPreview } = configuration
+  // if (transactionPreview && apiKey && apiSecretKey) {
+  //   console.log('TPin')
+  //   try {
 
-  const fullProviderRequest = wallet.provider.request
-
-  wallet.provider.request = req => {
-    console.log(req.method)
-    if (req.method === 'eth_sendTransaction') {
-      console.log('sending transaction')
-    }
-    return fullProviderRequest(req)
-  }
+  //     configuration.transactionPreview({
+  //       apiKey: configuration.apiKey,
+  //       apiSecretKey: configuration.apiSecretKey,
+  //       walletProvider: wallet.provider
+  //     })
+  //   } catch (r) {
+  //     console.log(r)
+  //   }
+  // }
 
   if (error) {
     console.error(error)

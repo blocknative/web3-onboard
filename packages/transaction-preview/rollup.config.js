@@ -4,6 +4,7 @@ import replace from '@rollup/plugin-replace'
 import json from '@rollup/plugin-json'
 import sveltePreprocess from 'svelte-preprocess'
 import typescript from '@rollup/plugin-typescript'
+import commonjs from '@rollup/plugin-commonjs';
 
 const production = !process.env.ROLLUP_WATCH
 
@@ -33,7 +34,8 @@ export default {
     typescript({
       sourceMap: !production,
       inlineSources: !production
-    })
+    }),
+    commonjs()
   ],
   external: ['joi', 'rxjs', '@web3-onboard/common']
 }

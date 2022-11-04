@@ -1,3 +1,7 @@
 {
-  "poweredBy": "powered by"
+  "poweredBy": "powered by",
+  "time": {
+    "minutes": "min",
+    "seconds": "sec"
+  }
 }

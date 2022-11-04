@@ -87,6 +87,7 @@ function init(options: InitOptions): OnboardAPI {
     i18n,
     accountCenter,
     apiKey,
+    apiSecretKey,
     notify,
     gas,
     connect,
@@ -197,8 +198,10 @@ function init(options: InitOptions): OnboardAPI {
     appMetadata,
     svelteInstance: app,
     apiKey,
+    apiSecretKey,
     initialWalletInit: wallets,
-    gas
+    gas,
+    transactionPreview
   })
 
   return API

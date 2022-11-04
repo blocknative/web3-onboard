@@ -1,9 +1,12 @@
 import { EIP1193Provider } from "@web3-onboard/common"
+import type en from './i18n/en.json'
+
 
 export type RequestOptions = Pick<TransactionPreviewInitOptions, 'apiKey'>
 
 export type TransactionPreviewInitOptions = {
   apiKey: string
+  apiSecretKey: string
   walletProvider: EIP1193Provider
   containerElement?: string
   network?: string //defaults to mainnet for now
@@ -90,3 +93,7 @@ interface ContractCallValue {
   contractDecimals: string
   contractName: string
 }
+
+export type Locale = string
+export type i18nOptions = Record<Locale, i18n>
+export type i18n = typeof en

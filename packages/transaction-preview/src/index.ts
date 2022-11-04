@@ -1,31 +1,57 @@
 import { SofiaProLight, SofiaProRegular } from '@web3-onboard/common'
-import get from './get.js'
+import simTransaction from './get.js'
 import { SimPlatformResponse, TransactionPreviewInitOptions } from './types.js'
 import { validateTPInit } from './validation'
 import TransactionPreview from './views/Index.svelte'
+import initI18N from './i18n/index.js'
 
 export * from './types.js'
 
-// eslint-disable-next-line max-len
-const transactionPreview = async (
-  options: TransactionPreviewInitOptions
-): Promise<SimPlatformResponse[]> => {
-  if (options) {
-    const error = validateTPInit(options)
+const transactionPreview = (
+  initOptions: TransactionPreviewInitOptions
+): void => {
+  initOptions
+  if (initOptions) {
+    const error = validateTPInit(initOptions)
 
     if (error) {
       throw error
     }
   }
+  // Add i18n to init options
+  initI18N({})
 
-  const app = mountTransactionPreview(options)
+  mountTransactionPreview(initOptions)
+  watchWallet(initOptions)
+}
 
-  return get(options)
+// patchProvider
+const watchWallet = async (initOptions: TransactionPreviewInitOptions) => {
+  const { walletProvider } = initOptions
+  const fullProviderRequest = walletProvider.request
+  let transactionParams
+  walletProvider.request = async req => {
+    if (req.method === 'eth_sendTransaction' && req.params.length) {
+      transactionParams = req.params[0]
+      if (transactionParams) {
+        try {
+          const preview = simTransaction(initOptions, transactionParams)
+          // mountTransactionPreview(initOptions)
+          console.log(preview)
+        } catch (e) {
+          console.log('error: ', e)
+        }
+        transactionParams = undefined
+      }
+    }
+    // await result and clear if wanted : check w/ Murat
+    return fullProviderRequest(req)
+  }
 }
 
 // eslint-disable-next-line max-len
 const mountTransactionPreview = (
-  transactionPreviewOptions: TransactionPreviewInitOptions,
+  transactionPreviewOptions: TransactionPreviewInitOptions
 ) => {
   class TransactionPreviewEl extends HTMLElement {
     constructor() {
@@ -57,10 +83,16 @@ const mountTransactionPreview = (
   target.innerHTML = `
     <style>
       :host {  
-        /* COLORS */
-        
-        /* FONTS */
 
+        --transaction-notification-border-radius
+        
+        /* COLORS */
+        --transaction-notification-background
+
+        /* FONTS */
+  
+        /* FONTS */
+        --font-family-normal: Sofia Pro;
 
         /* SPACING */
 
@@ -77,9 +109,12 @@ const mountTransactionPreview = (
 
     </style>
   `
-
   let getW3OEl = document.querySelector('onboard-v2')
 
+  const containerElementQuery =
+    transactionPreviewOptions.containerElement || 'body'
+
+  let containerEl
   // If Onboard is present copy Onboard stylesheets over to TransactionPreview shadow DOM
   if (getW3OEl && getW3OEl.shadowRoot) {
     let w3OStyleSheets = getW3OEl.shadowRoot.styleSheets
@@ -92,25 +127,23 @@ const mountTransactionPreview = (
       )
     })
     target.adoptedStyleSheets = [transactionPreviewStyleSheet]
+    containerEl = getW3OEl.shadowRoot.querySelector(containerElementQuery)
+  } else {
+    containerEl = document.querySelector(containerElementQuery)
   }
 
-  const containerElementQuery =
-    transactionPreviewOptions.containerElement || 'body'
-
-  const containerElement = document.querySelector(containerElementQuery)
-
-  if (!containerElement) {
+  if (!containerEl) {
     throw new Error(
       `Element with query ${containerElementQuery} does not exist.`
     )
   }
 
-  containerElement.appendChild(transactionPreviewDomElement)
+  containerEl.appendChild(transactionPreviewDomElement)
 
   const app = new TransactionPreview({
     target: target,
     props: {
-      transactionPreviewOptions,
+      transactionPreviewOptions
     }
   })
 

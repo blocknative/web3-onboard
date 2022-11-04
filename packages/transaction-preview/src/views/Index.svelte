@@ -3,19 +3,15 @@
   import Maximized from './Maximized.svelte'
   import Minimized from './Minimized.svelte'
 
-  onDestroy(minimize)
-
   $: expanded = false
 
-  function minimize() {
-    expanded = !expanded
+  function toggleExpanded(maximize: boolean) {
+    expanded = maximize
   }
 </script>
 
-<svelte:window on:click={minimize} />
-
 {#if !expanded}
-  <Minimized />
+  <Minimized {toggleExpanded}/>
 {:else}
-  <Maximized />
+  <Maximized {toggleExpanded}/>
 {/if}

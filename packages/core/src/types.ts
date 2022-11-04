@@ -48,6 +48,11 @@ export interface InitOptions {
    */
   apiKey?: string
   /**
+   * Once you have an Blocknative API key setup click the api key menu
+   * and create an api secret key to pass in here
+   */
+  apiSecretKey?: string
+  /**
    * Transaction notification options
    */
   notify?: Partial<NotifyOptions> | Partial<Notify>
@@ -62,7 +67,7 @@ export interface InitOptions {
   /** 
    * Transaction Preview module 
    */
-  transactionPreview?: typeof transactionPreview
+  transactionPreview?: unknown
 }
 
 export interface ConnectOptions {
@@ -141,8 +146,10 @@ export type Configuration = {
   initialWalletInit: WalletInit[]
   appMetadata?: AppMetadata | null
   apiKey?: string
+  apiSecretKey?: string
   gas?: typeof gas
   containerElements?: ContainerElements
+  transactionPreview?: any
 }
 
 export type Locale = string

@@ -8,6 +8,7 @@
   import { configuration } from '../configuration.js'
   import type { Observable } from 'rxjs'
   import type { Notification } from '../types.js'
+  import { afterUpdate } from 'svelte'
 
   const { device, containerElements } = configuration
   const accountCenter$ = state
@@ -133,6 +134,23 @@
     }
     getACComp()
   }
+let transactionPreviewRendered = false
+  afterUpdate(() => {
+    const { apiKey, apiSecretKey, transactionPreview } = configuration
+    if (transactionPreview && apiKey && apiSecretKey && $wallets$.length && !transactionPreviewRendered) {
+      try {
+        configuration.transactionPreview({
+          apiKey: configuration.apiKey,
+          apiSecretKey: configuration.apiSecretKey,
+          walletProvider: $wallets$[0].provider,
+          containerElement: '#bn-inner-aux-container'
+        })
+        transactionPreviewRendered = true
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  })
 </script>
 
 <style>
@@ -404,6 +422,7 @@
       : device.type === 'mobile' && $accountCenter$.position.includes('bottom')
       ? 'padding-top:0;'
       : ''} "
+    id="bn-inner-aux-container"
   >
     {#if $notify$.position.includes('bottom') && $accountCenter$.position.includes('bottom') && samePositionOrMobile}
       {#await notifyComponent then Notify}
@@ -427,7 +446,7 @@
           $accountCenter$.position.includes('Left')
         ? 'margin-right: auto'
         : ''}
-        id="account-center-with-notify"
+      id="account-center-with-notify"
     >
       {#await accountCenterComponent then AccountCenter}
         {#if AccountCenter}
@@ -459,6 +478,7 @@
       : device.type === 'mobile' && $accountCenter$.position.includes('bottom')
       ? 'padding-top:0;'
       : ''} "
+    id="bn-inner-aux-container"
   >
     <div
       style={!$accountCenter$.expanded &&
@@ -491,6 +511,7 @@
       : device.type === 'mobile' && $notify$.position.includes('bottom')
       ? 'padding-top:0;'
       : ''} "
+    id="bn-inner-aux-container"
   >
     {#await notifyComponent then Notify}
       {#if Notify}
