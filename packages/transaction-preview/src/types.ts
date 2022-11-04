@@ -1,11 +1,10 @@
 import { EIP1193Provider } from "@web3-onboard/common"
 import type en from './i18n/en.json'
 
-
 export type TransactionPreviewModule = (options: TransactionPreviewInitOptions) => TransactionPreviewAPI
 
 export type TransactionPreviewAPI = {
-  patchProvider: (provider: EIP1193Provider) => PatchedEIP1193Provider
+  patchProvider: (provider: EIP1193Provider | PatchedEIP1193Provider) => PatchedEIP1193Provider
   simTransactions: (tx: TransactionObject[]) => Promise<SimPlatformResponse>
   containerElement?: string
   setContainerElement: (element: string) => void

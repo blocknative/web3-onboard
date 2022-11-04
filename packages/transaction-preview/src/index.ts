@@ -29,22 +29,24 @@ const simTransactions = (
   return simulateTransactions(options, txs)
 }
 
-export const patchProvider = async (walletProvider: EIP1193Provider | PatchedEIP1193Provider) => {
-  if (walletProvider.hasOwnProperty('simPatched')) return walletProvider
+export const patchProvider = (
+  walletProvider: EIP1193Provider | PatchedEIP1193Provider
+): PatchedEIP1193Provider => {
+  if (walletProvider.hasOwnProperty('simPatched'))
+    return walletProvider as PatchedEIP1193Provider
+
   const fullProviderRequest = walletProvider.request
   const patchedProvider = walletProvider as PatchedEIP1193Provider
-  patchedProvider.request = async(req) => {
+  patchedProvider.request = req => {
     if (req.method === 'eth_sendTransaction' && req.params.length) {
       let transactionParams = req.params[0]
       if (transactionParams) {
         try {
           const preview = simulateTransactions(options, transactionParams)
           const app = mountTransactionPreview(preview)
-          const transactionId = await fullProviderRequest(req)
-          console.log(transactionId)
-          if (transactionId) {
-            app.$destroy()
-          }
+          fullProviderRequest(req).then(hash => {
+            hash && app.$destroy()
+          })
         } catch (e) {
           console.log('error patching provider for transaction simulation: ', e)
         }
