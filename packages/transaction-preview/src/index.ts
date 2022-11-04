@@ -1,15 +1,66 @@
 import { SofiaProLight, SofiaProRegular } from '@web3-onboard/common'
-import simTransaction from './get.js'
-import { SimPlatformResponse, TransactionPreviewInitOptions } from './types.js'
+import {
+  PatchedEIP1193Provider,
+  SimPlatformResponse,
+  TransactionPreviewInitOptions,
+  TransactionPreviewModule,
+  TransactionPreviewAPI,
+  TransactionObject,
+  ProviderReq
+} from './types.js'
+import { EIP1193Provider } from '@web3-onboard/common'
+
 import { validateTPInit } from './validation'
 import TransactionPreview from './views/Index.svelte'
 import initI18N from './i18n/index.js'
+import simulateTransactions from './simulateTransactions.js'
 
 export * from './types.js'
 
-const transactionPreview = (
+let options: TransactionPreviewInitOptions
+
+export const setContainerElement = (containerElement: string): void => {
+  options.containerElement = containerElement
+}
+
+const simTransactions = (
+  txs: TransactionObject[]
+): Promise<SimPlatformResponse> => {
+  return simulateTransactions(options, txs)
+}
+
+export const patchProvider = async (walletProvider: EIP1193Provider | PatchedEIP1193Provider) => {
+  if (walletProvider.hasOwnProperty('simPatched')) return walletProvider
+  const fullProviderRequest = walletProvider.request
+  const patchedProvider = walletProvider as PatchedEIP1193Provider
+  patchedProvider.request = async(req) => {
+    if (req.method === 'eth_sendTransaction' && req.params.length) {
+      let transactionParams = req.params[0]
+      if (transactionParams) {
+        try {
+          const preview = simulateTransactions(options, transactionParams)
+          const app = mountTransactionPreview(preview)
+          const transactionId = await fullProviderRequest(req)
+          console.log(transactionId)
+          if (transactionId) {
+            app.$destroy()
+          }
+        } catch (e) {
+          console.log('error patching provider for transaction simulation: ', e)
+        }
+        transactionParams = undefined
+      }
+    }
+    // TODO: await result and clear if wanted : check w/ Murat
+    return fullProviderRequest(req)
+  }
+  patchedProvider.simPatched = true
+  return patchedProvider
+}
+
+const transactionPreview: TransactionPreviewModule = (
   initOptions: TransactionPreviewInitOptions
-): void => {
+): TransactionPreviewAPI => {
   initOptions
   if (initOptions) {
     const error = validateTPInit(initOptions)
@@ -18,40 +69,22 @@ const transactionPreview = (
       throw error
     }
   }
-  // Add i18n to init options
+  options = initOptions
+  console.log(options)
+
+  // TODO: Add i18n to init options
   initI18N({})
 
-  mountTransactionPreview(initOptions)
-  watchWallet(initOptions)
-}
-
-// patchProvider
-const watchWallet = async (initOptions: TransactionPreviewInitOptions) => {
-  const { walletProvider } = initOptions
-  const fullProviderRequest = walletProvider.request
-  let transactionParams
-  walletProvider.request = async req => {
-    if (req.method === 'eth_sendTransaction' && req.params.length) {
-      transactionParams = req.params[0]
-      if (transactionParams) {
-        try {
-          const preview = simTransaction(initOptions, transactionParams)
-          // mountTransactionPreview(initOptions)
-          console.log(preview)
-        } catch (e) {
-          console.log('error: ', e)
-        }
-        transactionParams = undefined
-      }
-    }
-    // await result and clear if wanted : check w/ Murat
-    return fullProviderRequest(req)
+  return {
+    patchProvider,
+    simTransactions,
+    containerElement: options.containerElement,
+    setContainerElement
   }
 }
 
-// eslint-disable-next-line max-len
 const mountTransactionPreview = (
-  transactionPreviewOptions: TransactionPreviewInitOptions
+  previewedTransactions: Promise<SimPlatformResponse>
 ) => {
   class TransactionPreviewEl extends HTMLElement {
     constructor() {
@@ -111,8 +144,7 @@ const mountTransactionPreview = (
   `
   let getW3OEl = document.querySelector('onboard-v2')
 
-  const containerElementQuery =
-    transactionPreviewOptions.containerElement || 'body'
+  const containerElementQuery = options.containerElement || 'body'
 
   let containerEl
   // If Onboard is present copy Onboard stylesheets over to TransactionPreview shadow DOM
@@ -143,7 +175,8 @@ const mountTransactionPreview = (
   const app = new TransactionPreview({
     target: target,
     props: {
-      transactionPreviewOptions
+      options,
+      previewedTransactions
     }
   })
 

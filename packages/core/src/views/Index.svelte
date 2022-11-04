@@ -8,7 +8,6 @@
   import { configuration } from '../configuration.js'
   import type { Observable } from 'rxjs'
   import type { Notification } from '../types.js'
-  import { afterUpdate } from 'svelte'
 
   const { device, containerElements } = configuration
   const accountCenter$ = state
@@ -134,23 +133,6 @@
     }
     getACComp()
   }
-let transactionPreviewRendered = false
-  afterUpdate(() => {
-    const { apiKey, apiSecretKey, transactionPreview } = configuration
-    if (transactionPreview && apiKey && apiSecretKey && $wallets$.length && !transactionPreviewRendered) {
-      try {
-        configuration.transactionPreview({
-          apiKey: configuration.apiKey,
-          apiSecretKey: configuration.apiSecretKey,
-          walletProvider: $wallets$[0].provider,
-          containerElement: '#bn-inner-aux-container'
-        })
-        transactionPreviewRendered = true
-      } catch (error) {
-        console.log(error)
-      }
-    }
-  })
 </script>
 
 <style>
@@ -412,6 +394,13 @@ let transactionPreviewRendered = false
   <SwitchChain />
 {/if}
 
+{#if !$accountCenter$.enabled}
+  <div
+    class="container flex flex-column fixed z-indexed"
+    id="transaction-simulation-container"
+  />
+{/if}
+
 {#if displayAccountCenterNotifySameContainer}
   <div
     class="container flex flex-column fixed z-indexed"
@@ -422,7 +411,6 @@ let transactionPreviewRendered = false
       : device.type === 'mobile' && $accountCenter$.position.includes('bottom')
       ? 'padding-top:0;'
       : ''} "
-    id="bn-inner-aux-container"
   >
     {#if $notify$.position.includes('bottom') && $accountCenter$.position.includes('bottom') && samePositionOrMobile}
       {#await notifyComponent then Notify}
@@ -435,6 +423,9 @@ let transactionPreviewRendered = false
           />
         {/if}
       {/await}
+    {/if}
+    {#if $accountCenter$.position.includes('bottom')}
+      <div id="transaction-simulation-container" />
     {/if}
     <div
       style={!$accountCenter$.expanded &&
@@ -454,6 +445,9 @@ let transactionPreviewRendered = false
         {/if}
       {/await}
     </div>
+    {#if $accountCenter$.position.includes('top')}
+      <div id="transaction-simulation-container" />
+    {/if}
     {#if $notify$.position.includes('top') && $accountCenter$.position.includes('top') && samePositionOrMobile}
       {#await notifyComponent then Notify}
         {#if Notify}
@@ -478,8 +472,10 @@ let transactionPreviewRendered = false
       : device.type === 'mobile' && $accountCenter$.position.includes('bottom')
       ? 'padding-top:0;'
       : ''} "
-    id="bn-inner-aux-container"
   >
+    {#if $accountCenter$.position.includes('bottom')}
+      <div id="transaction-simulation-container" />
+    {/if}
     <div
       style={!$accountCenter$.expanded &&
       $accountCenter$.minimal &&
@@ -499,6 +495,9 @@ let transactionPreviewRendered = false
         {/await}
       {/if}
     </div>
+    {#if $accountCenter$.position.includes('top')}
+      <div id="transaction-simulation-container" />
+    {/if}
   </div>
 {/if}
 {#if displayNotifySeparate}
@@ -511,7 +510,6 @@ let transactionPreviewRendered = false
       : device.type === 'mobile' && $notify$.position.includes('bottom')
       ? 'padding-top:0;'
       : ''} "
-    id="bn-inner-aux-container"
   >
     {#await notifyComponent then Notify}
       {#if Notify}

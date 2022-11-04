@@ -7,7 +7,6 @@
   function timeString(time: number): string {
     const seconds = Math.floor(time / 1000)
     const formattedSeconds = seconds < 0 ? 0 : seconds
-    console.log(formattedSeconds)
     return formattedSeconds >= 60
       ? `${Math.floor(formattedSeconds / 60).toLocaleString(
           $locale

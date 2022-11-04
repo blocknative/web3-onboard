@@ -17,7 +17,7 @@
   import dcentModule from '@web3-onboard/dcent'
   import sequenceModule from '@web3-onboard/sequence'
   import tallyHoModule from '@web3-onboard/tallyho'
-  import transactionPreview from '@web3-onboard/transaction-preview'
+  import transactionPreviewModule from '@web3-onboard/transaction-preview'
   import {
     recoverAddress,
     arrayify,
@@ -25,7 +25,6 @@
     verifyTypedData
   } from 'ethers/lib/utils'
   import { ethers } from 'ethers'
-  import web3 from 'web3'
   import { share } from 'rxjs/operators'
   import VConsole from 'vconsole'
   import blocknativeIcon from './blocknative-icon'
@@ -108,7 +107,10 @@
   const dcent = dcentModule()
 
   const sequence = sequenceModule()
-  // console.log(tpModule({apiKey: '7eeb406c-82cb-4348-8ab5-b8cd3b684fff'}))
+  const transactionPreview = transactionPreviewModule({
+    apiKey: '0e5f8cec-4729-457a-8d76-d6d15692657b',
+    secretKey: '196bf536-f0e8-40ec-b49a-2571715642cb'
+  })
 
   const onboard = Onboard({
     wallets: [
@@ -247,8 +249,7 @@
     //   accountCenter: '#sample-container-el'
     // },
     // Sign up for your free api key at www.Blocknative.com
-    apiKey: 'e2e849ee-a917-460c-b5d4-036858c1a7ed',
-    apiSecretKey: '0678dd39-b819-481b-a082-75b4808786f0'
+    apiKey: '0e5f8cec-4729-457a-8d76-d6d15692657b'
   })
 
   // Subscribe to wallet updates
@@ -326,12 +327,20 @@
         deadline
       )
 
-      console.log(swapTxData)
-      // const rec = await swapContract.swapExactTokensForETH(swapTxData)
-      const txGas = {...swapTxData, "maxFeePerGas": 405000000000, "maxPriorityFeePerGas": 150000000000, "gas": 900000, "gasLimit": 90000, "from": "0xd450B032f5f3A50Fbf3a91E0Fb410269e766c4d6", "to": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",}
-      console.log(txGas)
-      // console.log(swapTxData, rec)
-await signer.sendTransaction(popTransaction)
+    console.log(swapTxData)
+    // const rec = await swapContract.swapExactTokensForETH(swapTxData)
+    const txGas = {
+      ...swapTxData,
+      maxFeePerGas: 405000000000,
+      maxPriorityFeePerGas: 150000000000,
+      gas: 900000,
+      gasLimit: 90000,
+      from: '0xd450B032f5f3A50Fbf3a91E0Fb410269e766c4d6',
+      to: '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D'
+    }
+    console.log(txGas)
+    // console.log(swapTxData, rec)
+    await signer.sendTransaction(popTransaction)
 
     const receipt = await txn.wait()
     console.log(receipt)

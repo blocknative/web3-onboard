@@ -5,7 +5,6 @@ export let configuration: Configuration = {
   svelteInstance: null,
   appMetadata: null,
   apiKey: null,
-  apiSecretKey: null,
   device: getDevice(),
   initialWalletInit: [],
   gas: null,

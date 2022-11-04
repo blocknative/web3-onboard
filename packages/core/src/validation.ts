@@ -175,7 +175,6 @@ const initOptions = Joi.object({
   appMetadata: appMetadata,
   i18n: Joi.object().unknown(),
   apiKey: Joi.string(),
-  apiSecretKey: Joi.string(),
   accountCenter: Joi.object({
     desktop: accountCenterInitOptions,
     mobile: accountCenterInitOptions
@@ -187,7 +186,12 @@ const initOptions = Joi.object({
   }),
   connect: connectModalOptions,
   containerElements: containerElements,
-  transactionPreview: Joi.function()
+  transactionPreview: Joi.object({
+    patchProvider: Joi.function().required(),
+    simTransactions: Joi.function().required(),
+    containerElement: Joi.string(),
+    setContainerElement: Joi.function().required()
+  }),
 })
 
 const connectOptions = Joi.object({

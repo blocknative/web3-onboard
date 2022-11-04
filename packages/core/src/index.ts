@@ -3,7 +3,7 @@ import connectWallet from './connect.js'
 import disconnectWallet from './disconnect.js'
 import setChain from './chain.js'
 import { state } from './store/index.js'
-import { reset$ } from './streams.js'
+import { reset$, wallets$ } from './streams.js'
 import initI18N from './i18n/index.js'
 import App from './views/Index.svelte'
 import type { InitOptions, Notify } from './types.js'
@@ -87,7 +87,6 @@ function init(options: InitOptions): OnboardAPI {
     i18n,
     accountCenter,
     apiKey,
-    apiSecretKey,
     notify,
     gas,
     connect,
@@ -192,13 +191,25 @@ function init(options: InitOptions): OnboardAPI {
     updateNotify(notifyUpdate)
   }
 
+  if (transactionPreview) {
+    if (!transactionPreview.containerElement) {
+      transactionPreview.setContainerElement(
+        '#transaction-simulation-container'
+      )
+    }
+    wallets$.subscribe(wallets => {
+      wallets.forEach(({ provider }) => {
+        transactionPreview.patchProvider(provider)
+      })
+    })
+  }
+
   const app = svelteInstance || mountApp()
 
   updateConfiguration({
     appMetadata,
     svelteInstance: app,
     apiKey,
-    apiSecretKey,
     initialWalletInit: wallets,
     gas,
     transactionPreview

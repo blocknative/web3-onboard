@@ -4,10 +4,8 @@ import { validate, type ValidateReturn } from '@web3-onboard/common'
 
 const initOptions = Joi.object({
   apiKey: Joi.string().required(),
-  apiSecretKey: Joi.string().required(),
-  walletProvider: Joi.object().unknown(),
-  containerElement: Joi.string(),
-  network: Joi.string()
+  secretKey: Joi.string().required(),
+  containerElement: Joi.string()
 })
 
 export const validateTPInit = (

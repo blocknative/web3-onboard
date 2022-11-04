@@ -2,14 +2,31 @@ import { EIP1193Provider } from "@web3-onboard/common"
 import type en from './i18n/en.json'
 
 
+export type TransactionPreviewModule = (options: TransactionPreviewInitOptions) => TransactionPreviewAPI
+
+export type TransactionPreviewAPI = {
+  patchProvider: (provider: EIP1193Provider) => PatchedEIP1193Provider
+  simTransactions: (tx: TransactionObject[]) => Promise<SimPlatformResponse>
+  containerElement?: string
+  setContainerElement: (element: string) => void
+}
+
+export type PatchedEIP1193Provider = EIP1193Provider & {simPatched: boolean}
+
+export interface ProviderReq {
+  method: string;
+  params?: Array<unknown>;
+}
+
 export type RequestOptions = Pick<TransactionPreviewInitOptions, 'apiKey'>
 
 export type TransactionPreviewInitOptions = {
+  /**Your Blocknative key */
   apiKey: string
-  apiSecretKey: string
-  walletProvider: EIP1193Provider
+  /**Your Blocknative secret key*/
+  secretKey: string
+  /**Optional dom query string to mount UI to*/
   containerElement?: string
-  network?: string //defaults to mainnet for now
 }
 
 export interface TransactionObject {

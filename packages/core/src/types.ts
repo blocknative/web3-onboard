@@ -12,7 +12,7 @@ import type {
 } from '@web3-onboard/common'
 
 import type gas from '@web3-onboard/gas'
-import type transactionPreview from '@web3-onboard/transaction-preview'
+import type TransactionPreviewAPI from '@web3-onboard/transaction-preview'
 
 import type en from './i18n/en.json'
 import type { EthereumTransactionData, Network } from 'bnc-sdk'
@@ -48,11 +48,6 @@ export interface InitOptions {
    */
   apiKey?: string
   /**
-   * Once you have an Blocknative API key setup click the api key menu
-   * and create an api secret key to pass in here
-   */
-  apiSecretKey?: string
-  /**
    * Transaction notification options
    */
   notify?: Partial<NotifyOptions> | Partial<Notify>
@@ -67,7 +62,7 @@ export interface InitOptions {
   /** 
    * Transaction Preview module 
    */
-  transactionPreview?: unknown
+  transactionPreview?: TransactionPreviewAPI
 }
 
 export interface ConnectOptions {
@@ -146,10 +141,9 @@ export type Configuration = {
   initialWalletInit: WalletInit[]
   appMetadata?: AppMetadata | null
   apiKey?: string
-  apiSecretKey?: string
   gas?: typeof gas
   containerElements?: ContainerElements
-  transactionPreview?: any
+  transactionPreview?: TransactionPreviewAPI
 }
 
 export type Locale = string
