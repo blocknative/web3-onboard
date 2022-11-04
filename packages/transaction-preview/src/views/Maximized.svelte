@@ -3,11 +3,13 @@
   import { fly, fade } from 'svelte/transition'
   import { quartOut } from 'svelte/easing'
   import en from '../i18n/en.json'
+  import type { NetBalanceChange } from '../types'
   import NotificationContent from './components/NotificationContent.svelte'
   import StatusIconBadge from './components/StatusIconBadge.svelte'
 
   export let toggleExpanded: (maximize: boolean) => void
-  export let transactionData
+  export let balanceChanges: NetBalanceChange[][]
+  console.log(balanceChanges)
 </script>
 
 <style>
@@ -118,7 +120,8 @@
     font-size: 14px;
     line-height: 16px;
   }
-  tbody > tr:last-child {
+
+  tbody > tr:not(:first-child) {
     box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.2);
   }
 
@@ -130,6 +133,19 @@
     color: var(
       --transaction-sim-thead-color,
       var(--onboard-gray-100, var(--gray-100))
+    );
+  }
+
+  .negative {
+    color: var(
+      --transaction-sim-thead-color,
+      var(--onboard-danger-400, var(--danger-400))
+    );
+  }
+  .positive {
+    color: var(
+      --transaction-sim-thead-color,
+      var(--onboard-success-500, var(--success-500))
     );
   }
 
@@ -184,14 +200,25 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>ETH</td>
-          <td>-1000</td>
-        </tr>
-        <tr>
+        {#each balanceChanges as balanceChangesList}
+          {#if balanceChangesList.length}
+            {#each balanceChangesList as assetChanges}
+              {#each assetChanges.balanceChanges as asset}
+                <tr>
+                  <td>{asset.asset.symbol}</td>
+                  <td
+                    class={asset.delta.includes('-') ? 'negative' : 'positive'}
+                    >{!asset.delta.includes('-') ? '+' : ''}{asset.delta}</td
+                  >
+                </tr>
+                <!-- <tr>
           <td>DAI</td>
           <td>+10,000.2480</td>
-        </tr>
+        </tr> -->
+              {/each}
+            {/each}
+          {/if}
+        {/each}
       </tbody>
     </table>
   </section>

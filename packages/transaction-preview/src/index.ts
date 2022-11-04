@@ -5,8 +5,7 @@ import {
   TransactionPreviewInitOptions,
   TransactionPreviewModule,
   TransactionPreviewAPI,
-  TransactionObject,
-  ProviderReq
+  TransactionObject
 } from './types.js'
 import { EIP1193Provider } from '@web3-onboard/common'
 
@@ -42,13 +41,16 @@ export const patchProvider = (
       let transactionParams = req.params[0]
       if (transactionParams) {
         try {
-          const preview = simulateTransactions(options, transactionParams)
-          const app = mountTransactionPreview(preview)
-          fullProviderRequest(req).then(hash => {
-            hash && app.$destroy()
-          })
+          simulateTransactions(options, transactionParams).then(
+            preview => {
+              const app = mountTransactionPreview(preview)
+              fullProviderRequest(req).then(hash => {
+                hash && app.$destroy()
+              })
+            }
+          )
         } catch (e) {
-          console.log('error patching provider for transaction simulation: ', e)
+          console.error('Error simulating transaction: ', e)
         }
         transactionParams = undefined
       }
@@ -85,9 +87,8 @@ const transactionPreview: TransactionPreviewModule = (
   }
 }
 
-const mountTransactionPreview = (
-  previewedTransactions: Promise<SimPlatformResponse>
-) => {
+const mountTransactionPreview = (simResponse: SimPlatformResponse) => {
+  console.log(simResponse)
   class TransactionPreviewEl extends HTMLElement {
     constructor() {
       super()
@@ -160,6 +161,8 @@ const mountTransactionPreview = (
         transactionPreviewStyleSheet.insertRule(rule.cssText)
       )
     })
+
+    //@ts-ignore
     target.adoptedStyleSheets = [transactionPreviewStyleSheet]
     containerEl = getW3OEl.shadowRoot.querySelector(containerElementQuery)
   } else {
@@ -177,8 +180,7 @@ const mountTransactionPreview = (
   const app = new TransactionPreview({
     target: target,
     props: {
-      options,
-      previewedTransactions
+      balanceChanges: simResponse.netBalanceChanges
     }
   })
 

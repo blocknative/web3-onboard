@@ -1,7 +1,9 @@
 <script lang="ts">
-  import { onDestroy } from 'svelte'
+  import type { NetBalanceChange } from '../types'
   import Maximized from './Maximized.svelte'
   import Minimized from './Minimized.svelte'
+
+  export let balanceChanges: NetBalanceChange[][]
 
   $: expanded = false
 
@@ -13,5 +15,5 @@
 {#if !expanded}
   <Minimized {toggleExpanded}/>
 {:else}
-  <Maximized {toggleExpanded}/>
+  <Maximized {toggleExpanded} {balanceChanges}/>
 {/if}

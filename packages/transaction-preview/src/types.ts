@@ -1,20 +1,24 @@
-import { EIP1193Provider } from "@web3-onboard/common"
+import { EIP1193Provider } from '@web3-onboard/common'
 import type en from './i18n/en.json'
 
-export type TransactionPreviewModule = (options: TransactionPreviewInitOptions) => TransactionPreviewAPI
+export type TransactionPreviewModule = (
+  options: TransactionPreviewInitOptions
+) => TransactionPreviewAPI
 
 export type TransactionPreviewAPI = {
-  patchProvider: (provider: EIP1193Provider | PatchedEIP1193Provider) => PatchedEIP1193Provider
+  patchProvider: (
+    provider: EIP1193Provider | PatchedEIP1193Provider
+  ) => PatchedEIP1193Provider
   simTransactions: (tx: TransactionObject[]) => Promise<SimPlatformResponse>
   containerElement?: string
   setContainerElement: (element: string) => void
 }
 
-export type PatchedEIP1193Provider = EIP1193Provider & {simPatched: boolean}
+export type PatchedEIP1193Provider = EIP1193Provider & { simPatched: boolean }
 
 export interface ProviderReq {
-  method: string;
-  params?: Array<unknown>;
+  method: string
+  params?: Array<unknown>
 }
 
 export type RequestOptions = Pick<TransactionPreviewInitOptions, 'apiKey'>
@@ -35,27 +39,31 @@ export interface TransactionObject {
   input: string
   gas: string
 
-  // Either include gasPrice or maxFeePerGas and maxPriorityFeePerGas
-  // to differentiate between a type 0 and type 2 (EIP1559) transaction
+  /**
+   *  Either include gasPrice or maxFeePerGas and maxPriorityFeePerGas
+   * to differentiate between a type 0 and type 2 (EIP1559) transaction
+  */
   gasPrice?: string
   maxFeePerGas?: string
   maxPriorityFeePerGas?: string
+  contractCall?: ContractCallValue
 }
 
 export type SimPlatformResponse = {
-  internalTransactions: TransactionObject[][]
-  netBalanceChanges: NetBalanceChange[][]
-  simDetails: SimDetails
   contractCall: ContractCall[]
   error: unknown[]
-  system: string
+  gasUsed: number[]
+  internalTransactions: TransactionObject[][]
+  netBalanceChanges: NetBalanceChange[][]
   network: string
-
-  // Noted in the docs but not seen in the mock response
-  // gasUsed: number
+  simDetails: SimDetails
+  system: string
+  status: string
+  simulatedBlockNumber: number
+  transactions: TransactionObject[]
 }
 
-interface NetBalanceChange {
+export interface NetBalanceChange {
   address: string
   balanceChanges: BalanceChange[]
 }
@@ -100,14 +108,19 @@ interface ContractCall {
 interface ContractCallValue {
   methodName: string
   params: {
-    amount: string
-    spender: string
+    _amount?: string
+    _spender?: string
+    amountIn?: string
+    amountOutMin?: string
+    deadline?: string
+    path?: string[]
+    to?: string
   }
   contractAddress: string
-  contractType: string
-  contractAlias: string
-  contractDecimals: string
-  contractName: string
+  contractType?: string
+  contractAlias?: string
+  contractDecimals?: string
+  contractName?: string
 }
 
 export type Locale = string
