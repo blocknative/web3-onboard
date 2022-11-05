@@ -180,13 +180,30 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                 })
               }
 
-              if (
-                method === 'wallet_switchEthereumChain' ||
-                method === 'eth_selectAccounts'
-              ) {
+              if (method === 'eth_selectAccounts') {
                 throw new ProviderRpcError({
                   code: ProviderRpcErrorCode.UNSUPPORTED_METHOD,
                   message: `The Provider does not support the requested method: ${method}`
+                })
+              }
+
+              if (method == 'wallet_switchEthereumChain') {
+                if (!params) {
+                  throw new ProviderRpcError({
+                    code: ProviderRpcErrorCode.INVALID_PARAMS,
+                    message: `The Provider requires a chainId to be passed in as an argument`
+                  })
+                }
+                const chainId = params[0] as { chainId?: number }
+                if (!chainId?.chainId) {
+                  throw new ProviderRpcError({
+                    code: ProviderRpcErrorCode.INVALID_PARAMS,
+                    message: `The Provider requires a chainId to be passed in as an argument`
+                  })
+                }
+                return this.connector.updateSession({
+                  chainId: chainId.chainId,
+                  accounts: this.connector.accounts
                 })
               }
 
