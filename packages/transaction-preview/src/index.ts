@@ -5,7 +5,7 @@ import {
   SofiaProLight,
   SofiaProRegular
 } from '@web3-onboard/common'
-import {
+import type {
   PatchedEIP1193Provider,
   SimPlatformResponse,
   TransactionPreviewInitOptions,
@@ -13,7 +13,7 @@ import {
   TransactionPreviewAPI,
   TransactionObject
 } from './types.js'
-import { EIP1193Provider } from '@web3-onboard/common'
+import type { EIP1193Provider } from '@web3-onboard/common'
 
 import { validateTPInit } from './validation'
 import TransactionPreview from './views/Index.svelte'

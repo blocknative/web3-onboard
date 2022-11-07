@@ -1,4 +1,4 @@
-import { EIP1193Provider } from '@web3-onboard/common'
+import type { EIP1193Provider } from '@web3-onboard/common'
 import type en from './i18n/en.json'
 
 export type TransactionPreviewModule = (
@@ -41,13 +41,6 @@ export interface TransactionObject {
   chainId: number
   value?: string
   nonce?: string
-
-  // to: string
-  // from: string
-  // value: string
-  // input: string
-  // gas: string
-  // data: string
 
   /**
    *  Either include gasPrice or maxFeePerGas and maxPriorityFeePerGas

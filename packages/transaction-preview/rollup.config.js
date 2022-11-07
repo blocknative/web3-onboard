@@ -33,7 +33,8 @@ export default {
     }),
     typescript({
       sourceMap: !production,
-      inlineSources: !production
+      inlineSources: !production,
+      resolveJsonModule: true
     }),
     commonjs()
   ],

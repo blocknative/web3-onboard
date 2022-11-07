@@ -1,4 +1,4 @@
-import type { providers } from 'ethers'
+import type { TransactionObject } from './types'
 
 /**
  * Takes in TransactionRequest and converts all Hex values to numbers
@@ -6,15 +6,17 @@ import type { providers } from 'ethers'
  * @returns a transaction where all Hex properties are now numbers
  */
 export const hexFieldsToNumber = (
-  transaction: providers.TransactionRequest
+  transaction: TransactionObject
 ): TransactionRequestWithNumberFields =>
   Object.keys(transaction).reduce(
     (transaction, txnProperty) => ({
       ...transaction,
       ...(typeof transaction[
-        txnProperty as keyof providers.TransactionRequest
+        txnProperty as keyof TransactionObject
       ] === 'string' &&
-      transaction[txnProperty].includes('0x') &&
+      (transaction[
+        txnProperty as keyof TransactionObject
+      ] as string).includes('0x') &&
       txnProperty !== 'to' &&
       txnProperty !== 'input' &&
       txnProperty !== 'data' &&
@@ -22,7 +24,7 @@ export const hexFieldsToNumber = (
         ? {
             [txnProperty]: parseInt(
               transaction[
-                txnProperty as keyof providers.TransactionRequest
+                txnProperty as keyof TransactionObject
               ] as string,
               16
             )
@@ -32,7 +34,7 @@ export const hexFieldsToNumber = (
     transaction
   ) as TransactionRequestWithNumberFields
 
-type TransactionRequestWithNumberFields = {
+type TransactionRequestWithNumberFields = TransactionObject & {
   gas: number
   value: number
   gasPrice?: number

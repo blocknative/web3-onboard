@@ -2,7 +2,7 @@ import { catchError, firstValueFrom, map, of } from 'rxjs'
 import { ajax } from 'rxjs/ajax'
 import { ethers } from 'ethers'
 import { hexFieldsToNumber } from './utils'
-import { SimPlatformResponse, TransactionObject, TransactionPreviewInitOptions } from './types.js'
+import type { SimPlatformResponse, TransactionObject, TransactionPreviewInitOptions } from './types.js'
 
 const simulateTransactions = async (
   options: Omit<TransactionPreviewInitOptions, 'provider'>,
@@ -10,7 +10,7 @@ const simulateTransactions = async (
 ): Promise<SimPlatformResponse> => {
   const { secretKey, apiKey } = options
   const cleanedTransactions = transactions.map(transaction => {
-    const convertedTransaction = hexFieldsToNumber(transaction)
+    const convertedTransaction = hexFieldsToNumber(transaction as TransactionObject)
   
     const cleanedTrans = {
       ...transaction,

@@ -11,7 +11,8 @@
     "module": "esnext",
     "resolveJsonModule": true,
     "strictNullChecks": false,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
   },
   "outDir": "dist",
 }
