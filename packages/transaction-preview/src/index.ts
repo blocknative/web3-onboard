@@ -48,15 +48,14 @@ export const patchProvider = (
   }): Promise<any> => {
     if (
       req.method === 'eth_sendTransaction' &&
-      req.hasOwnProperty('params') &&
-      req.params.length
+      req.hasOwnProperty('params')
     ) {
       let transactionParams = req.params as EthSignTransactionRequest['params']
-      console.log(transactionParams)
       if (transactionParams) {
         try {
           simulateTransactions(options, transactionParams).then(preview => {
             if (preview.status !== 'simulated') {
+              // If transaction simulation was unsuccessful do not create DOM el
               return
             }
             const app = mountTransactionPreview(preview)
@@ -74,7 +73,6 @@ export const patchProvider = (
         transactionParams = undefined
       }
     }
-    // TODO: await result and clear if wanted : check w/ Murat
     return fullProviderRequest(req)
   }
   patchedProvider.request = request
