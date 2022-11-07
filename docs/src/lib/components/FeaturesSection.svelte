@@ -57,7 +57,7 @@
       />
       <FeatureCard
         title={'Multiple Chain Support'}
-        text={'Allow users to switch between chains/networks with ease.'}
+        text={'The best connect wallet button for allowing users to switch between chains/networks with ease.'}
       />
     </div>
   </Container>
