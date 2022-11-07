@@ -1,11 +1,11 @@
 import type { providers } from 'ethers'
 
 /**
- * Takes in TransactionRequest and converts all BigNumber values to strings
+ * Takes in TransactionRequest and converts all Hex values to numbers
  * @param transaction
- * @returns a transaction where all BigNumber properties are now strings
+ * @returns a transaction where all Hex properties are now numbers
  */
-export const bigNumberFieldsToNumber = (
+export const hexFieldsToNumber = (
   transaction: providers.TransactionRequest
 ): TransactionRequestWithNumberFields =>
   Object.keys(transaction).reduce(

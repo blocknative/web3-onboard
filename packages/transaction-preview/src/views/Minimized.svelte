@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { fade } from 'svelte/transition'
   import NotificationContent from './components/NotificationContent.svelte'
   import StatusIconBadge from './components/StatusIconBadge.svelte'
 
   export let toggleExpanded: (maximize: boolean) => void
+  export let startTime: number
 </script>
 
 <style>
@@ -60,14 +60,10 @@
   }
 </style>
 
-<div
-  in:fade={{ duration: 250 }}
-  out:fade={{ duration: 100 }}
-  class="minimized pointer radius padding-5"
->
+<div class="minimized pointer radius padding-5">
   <div class="flex bn-notify-notification-inner">
     <StatusIconBadge />
-    <NotificationContent />
+    <NotificationContent {startTime} />
   </div>
   <section class="details">
     <div

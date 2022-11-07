@@ -1,21 +1,24 @@
-import { catchError, firstValueFrom, map, of, zip } from 'rxjs'
+import { catchError, firstValueFrom, map, of } from 'rxjs'
 import { ajax } from 'rxjs/ajax'
 import { ethers } from 'ethers'
-import { bigNumberFieldsToNumber } from 'utils'
-import { SimPlatformResponse, TransactionPreviewInitOptions } from './types.js'
+import { hexFieldsToNumber } from './utils'
+import { SimPlatformResponse, TransactionObject, TransactionPreviewInitOptions } from './types.js'
 
 const simulateTransactions = async (
   options: Omit<TransactionPreviewInitOptions, 'provider'>,
-  transaction
+  transactions: [TransactionObject]
 ): Promise<SimPlatformResponse> => {
   const { secretKey, apiKey } = options
-  const convertedTransaction = bigNumberFieldsToNumber(transaction)
-
-  const cleanedTrans = {
-    ...transaction,
-    ...convertedTransaction,
-    input: transaction.input || transaction.data || '0x'
-  }
+  const cleanedTransactions = transactions.map(transaction => {
+    const convertedTransaction = hexFieldsToNumber(transaction)
+  
+    const cleanedTrans = {
+      ...transaction,
+      ...convertedTransaction,
+      input: transaction.data || '0x'
+    }
+    return transaction
+  })
 
   const addressFrom = '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045'
 
@@ -40,13 +43,11 @@ const simulateTransactions = async (
       uniswapV2router_interface
     )
     const erc20_contract = new ethers.Contract(weth, erc20_interface)
-
-    const amount = ethers.utils.hexlify(1000000)
+    const oneEther = ethers.BigNumber.from("1591000000000000000000");
     approveTxData = await erc20_contract.populateTransaction.approve(
       CONTRACT_ADDRESS,
-      amount
+      oneEther
     )
-    console.log(approveTxData)
 
     const amountOutMin = 0
     const amountOutMinHex = ethers.BigNumber.from(amountOutMin.toString())._hex
@@ -54,9 +55,7 @@ const simulateTransactions = async (
     const path = [dai, weth]
     const deadline = Math.floor(Date.now() / 1000) + 60 * 1 // 1 minutes from the current Unix time
 
-    const inputAmountHex = ethers.BigNumber.from(
-      amount.toString()
-    ).toHexString()
+    const inputAmountHex = oneEther.toHexString()
 
     swapTxData = await swapContract.populateTransaction.swapExactTokensForETH(
       inputAmountHex,
@@ -98,21 +97,21 @@ const simulateTransactions = async (
     transactions: stubTrans
   }
   console.log(body)
-  const headers = { credentials: apiKey }
+  const headers = {
+    'Content-Type': 'application/json',
+    credentials: `${apiKey}:${secretKey}`
+  }
 
   const sim = ajax({
     url: 'https://api.blocknative.com/simulate',
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      credentials: `${apiKey}:${secretKey}`
-    },
+    headers: headers,
     body: JSON.stringify(body)
   }).pipe(
     map(response => response.response),
 
     catchError(error => {
-      console.log('error: ', error)
+      console.error('Error previewing transaction: ', error)
       return of(error)
     })
   )

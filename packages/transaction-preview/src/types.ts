@@ -33,20 +33,29 @@ export type TransactionPreviewInitOptions = {
 }
 
 export interface TransactionObject {
-  to: string
+  data?: string
   from: string
-  value: string
-  input: string
-  gas: string
+  gas?: string
+  gasLimit?: string
+  to: string
+  chainId: number
+  value?: string
+  nonce?: string
+
+  // to: string
+  // from: string
+  // value: string
+  // input: string
+  // gas: string
+  // data: string
 
   /**
    *  Either include gasPrice or maxFeePerGas and maxPriorityFeePerGas
    * to differentiate between a type 0 and type 2 (EIP1559) transaction
-  */
+   */
   gasPrice?: string
   maxFeePerGas?: string
   maxPriorityFeePerGas?: string
-  contractCall?: ContractCallValue
 }
 
 export type SimPlatformResponse = {

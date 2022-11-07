@@ -1,11 +1,13 @@
 <script lang="ts">
-  import type { NetBalanceChange } from '../types'
+  import type { SimPlatformResponse } from '../types'
   import Maximized from './Maximized.svelte'
   import Minimized from './Minimized.svelte'
 
-  export let balanceChanges: NetBalanceChange[][]
+  export let simResponse: SimPlatformResponse
 
   $: expanded = false
+
+  const startTime = Date.now()
 
   function toggleExpanded(maximize: boolean) {
     expanded = maximize
@@ -13,7 +15,7 @@
 </script>
 
 {#if !expanded}
-  <Minimized {toggleExpanded}/>
+  <Minimized {toggleExpanded} {startTime} />
 {:else}
-  <Maximized {toggleExpanded} {balanceChanges}/>
+  <Maximized {toggleExpanded} {simResponse} {startTime} />
 {/if}

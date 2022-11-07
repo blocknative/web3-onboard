@@ -1,21 +1,38 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
-  import { fly, fade } from 'svelte/transition'
-  import { quartOut } from 'svelte/easing'
-  import en from '../i18n/en.json'
-  import type { NetBalanceChange } from '../types'
+  import type { SimPlatformResponse } from '../types'
   import NotificationContent from './components/NotificationContent.svelte'
   import StatusIconBadge from './components/StatusIconBadge.svelte'
+  import { ethers } from 'ethers'
 
   export let toggleExpanded: (maximize: boolean) => void
-  export let balanceChanges: NetBalanceChange[][]
-  console.log(balanceChanges)
+  export let simResponse: SimPlatformResponse
+  export let startTime: number
+
+  $: transactionOriginator = simResponse.transactions[0].from
+  $: balanceChanges = simResponse.netBalanceChanges
+
+  function addCommasToNumber(x: number): string {
+    const parts = x.toString().split('.')
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    return parts.join('.')
+  }
+
+  const cleanBalance = (dirtyBalance: string): string => {
+    const gweiToEther = ethers.utils.formatEther(dirtyBalance)
+    const roundTo4Decimal = parseFloat(gweiToEther).toFixed(4)
+    const removeEmptyDecimalPlaces = Number(roundTo4Decimal)
+    return addCommasToNumber(removeEmptyDecimalPlaces)
+  }
+
+  const shortenAddress = (address: string) => {
+    return `${address.slice(0, 6)}...${address.slice(-4)}`
+  }
 </script>
 
 <style>
   .maximized {
     font-family: var(--onboard-font-family-normal, var(--font-family-normal));
-    transition: background 300ms ease-in-out, color 300ms ease-in-out;
     pointer-events: all;
     backdrop-filter: blur(5px);
     width: 100%;
@@ -112,13 +129,16 @@
   table.balance-change-table th {
     padding: 0.25rem 1rem;
     text-align: start;
-  }
-  table.balance-change-table td {
     font-family: 'Sofia Pro';
     font-style: normal;
     font-weight: 400;
+    line-height: 1rem;
+  }
+  table.balance-change-table th {
+    font-size: 0.75rem;
+  }
+  table.balance-change-table td {
     font-size: 14px;
-    line-height: 16px;
   }
 
   tbody > tr:not(:first-child) {
@@ -148,50 +168,21 @@
       var(--onboard-success-500, var(--success-500))
     );
   }
-
-  /* .outer-container {
-    background: var(
-      --transaction-sim-maximized-upper-background,
-      var(--onboard-gray-600, var(--gray-600))
-    );
-    border-radius: var(
-      --transaction-sim-border-radius,
-      var(--onboard-border-radius-3, var(--border-radius-3))
-    );
-    width: 100%;
-    filter: drop-shadow(0px 4px 16px rgba(178, 178, 178, 0.2));
-    padding: 0 1px 1px 1px;
-    pointer-events: auto;
-  } */
 </style>
 
-<!-- <div
-  in:fly={{
-    // delay: position.includes('top') ? 100 : 0,
-    duration: 600,
-    // y: position.includes('top') ? 56 : -76,
-    easing: quartOut,
-    opacity: 0
-  }}
-  class="outer-container"
-> -->
-<div
-  in:fade={{ duration: 250 }}
-  out:fade={{ duration: 100 }}
-  class="maximized pointer radius padding-5"
->
+<div class="maximized pointer radius padding-5">
   <div class="flex bn-notify-notification-inner">
     <StatusIconBadge />
-    <NotificationContent />
+    <NotificationContent {startTime} />
   </div>
   <section class="details">
     <section class="address-info">
-      Simulated balance changes for {`0x1230...0987`}
+      Simulated balance changes for {shortenAddress(transactionOriginator)}
     </section>
     <table class="balance-change-table table-radius">
       <colgroup>
-        <col span="1" style="width: 25%;" />
-        <col span="1" style="width: 70%;" />
+        <col span="1" style="width: 28%;" />
+        <col span="1" style="width: 72%;" />
       </colgroup>
       <thead>
         <tr>
@@ -202,21 +193,18 @@
       <tbody>
         {#each balanceChanges as balanceChangesList}
           {#if balanceChangesList.length}
-            {#each balanceChangesList as assetChanges}
-              {#each assetChanges.balanceChanges as asset}
-                <tr>
-                  <td>{asset.asset.symbol}</td>
-                  <td
-                    class={asset.delta.includes('-') ? 'negative' : 'positive'}
-                    >{!asset.delta.includes('-') ? '+' : ''}{asset.delta}</td
-                  >
-                </tr>
-                <!-- <tr>
-          <td>DAI</td>
-          <td>+10,000.2480</td>
-        </tr> -->
-              {/each}
+            <!-- {#each balanceChangesList as assetChanges} -->
+            {#each balanceChangesList[0].balanceChanges as asset}
+              <tr>
+                <td>{asset.asset.symbol}</td>
+                <td class={asset.delta.includes('-') ? 'negative' : 'positive'}
+                  >{!asset.delta.includes('-') ? '+' : ''}{cleanBalance(
+                    asset.delta
+                  )}</td
+                >
+              </tr>
             {/each}
+            <!-- {/each} -->
           {/if}
         {/each}
       </tbody>

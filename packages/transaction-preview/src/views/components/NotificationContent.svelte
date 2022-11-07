@@ -2,6 +2,8 @@
   import { _ } from 'svelte-i18n'
   import Timer from './Timer.svelte'
 
+  export let startTime: number
+
 </script>
 
 <style>
@@ -52,6 +54,6 @@
   </span>
 
     <span class="timer">
-      <Timer startTime={Date.now()} />
+      <Timer {startTime} />
     </span>
 </div>

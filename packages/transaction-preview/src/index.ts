@@ -1,4 +1,10 @@
-import { SofiaProLight, SofiaProRegular } from '@web3-onboard/common'
+import {
+  Balance,
+  EthSignTransactionRequest,
+  ProviderAccounts,
+  SofiaProLight,
+  SofiaProRegular
+} from '@web3-onboard/common'
 import {
   PatchedEIP1193Provider,
   SimPlatformResponse,
@@ -23,7 +29,7 @@ export const setContainerElement = (containerElement: string): void => {
 }
 
 const simTransactions = (
-  txs: TransactionObject[]
+  txs: [TransactionObject]
 ): Promise<SimPlatformResponse> => {
   return simulateTransactions(options, txs)
 }
@@ -36,19 +42,32 @@ export const patchProvider = (
 
   const fullProviderRequest = walletProvider.request
   const patchedProvider = walletProvider as PatchedEIP1193Provider
-  patchedProvider.request = req => {
-    if (req.method === 'eth_sendTransaction' && req.params.length) {
-      let transactionParams = req.params[0]
+  const request: EIP1193Provider['request'] = async (req: {
+    method: string
+    params?: Array<unknown>
+  }): Promise<any> => {
+    if (
+      req.method === 'eth_sendTransaction' &&
+      req.hasOwnProperty('params') &&
+      req.params.length
+    ) {
+      let transactionParams = req.params as EthSignTransactionRequest['params']
+      console.log(transactionParams)
       if (transactionParams) {
         try {
-          simulateTransactions(options, transactionParams).then(
-            preview => {
-              const app = mountTransactionPreview(preview)
-              fullProviderRequest(req).then(hash => {
+          simulateTransactions(options, transactionParams).then(preview => {
+            if (preview.status !== 'simulated') {
+              return
+            }
+            const app = mountTransactionPreview(preview)
+            fullProviderRequest(req)
+              .then(hash => {
                 hash && app.$destroy()
               })
-            }
-          )
+              .catch(() => {
+                app.$destroy()
+              })
+          })
         } catch (e) {
           console.error('Error simulating transaction: ', e)
         }
@@ -58,6 +77,7 @@ export const patchProvider = (
     // TODO: await result and clear if wanted : check w/ Murat
     return fullProviderRequest(req)
   }
+  patchedProvider.request = request
   patchedProvider.simPatched = true
   return patchedProvider
 }
@@ -149,7 +169,7 @@ const mountTransactionPreview = (simResponse: SimPlatformResponse) => {
 
   const containerElementQuery = options.containerElement || 'body'
 
-  let containerEl
+  let containerEl: Element
   // If Onboard is present copy Onboard stylesheets over to TransactionPreview shadow DOM
   if (getW3OEl && getW3OEl.shadowRoot) {
     let w3OStyleSheets = getW3OEl.shadowRoot.styleSheets
@@ -180,7 +200,7 @@ const mountTransactionPreview = (simResponse: SimPlatformResponse) => {
   const app = new TransactionPreview({
     target: target,
     props: {
-      balanceChanges: simResponse.netBalanceChanges
+      simResponse
     }
   })
 
