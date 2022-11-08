@@ -190,7 +190,7 @@ const trust: InjectedWalletModule = {
       eth_selectAccounts: UNSUPPORTED_METHOD
     })
   }),
-  platforms: ['mobile']
+  platforms: ['all']
 }
 
 const opera: InjectedWalletModule = {

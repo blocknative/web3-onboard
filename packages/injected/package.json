@@ -63,6 +63,9 @@
   },
   "dependencies": {
     "@web3-onboard/common": "^2.2.3",
+    "@web3-onboard/core": "^2.10.0",
+    "@web3-onboard/injected-wallets": "^2.3.0",
+    "ethers": "^5.7.2",
     "joi": "^17.6.1",
     "lodash.uniqby": "^4.7.0"
   }
