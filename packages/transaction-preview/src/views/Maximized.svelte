@@ -11,8 +11,20 @@
   export let startTime: number
   let nodeRef: HTMLElement
 
-  $: transactionOriginator = simResponse.transactions[0].from
-  $: balanceChanges = simResponse.netBalanceChanges
+  let transactionOriginator = simResponse.transactions[0].from
+  let balanceChanges = simResponse.netBalanceChanges.reduce((arr, changes) => {
+    if (changes.length) {
+      changes.forEach(change => {
+        if (
+          change.address.toLowerCase() ===
+          transactionOriginator.toLowerCase()
+        ) {
+          arr.push(change)
+        }
+      })
+    }
+    return arr
+  }, [])
 
   function addCommasToNumber(x: number): string {
     const parts = x.toString().split('.')
@@ -82,7 +94,7 @@
     visibility: visible;
     opacity: 1;
   }
-  
+
   div.tp-close-btn {
     visibility: hidden;
     transition: visibility 0.15s linear, opacity 0.15s linear;
@@ -251,10 +263,9 @@
         </tr>
       </thead>
       <tbody>
-        {#each balanceChanges as balanceChangesList}
-          {#if balanceChangesList.length}
-            <!-- {#each balanceChangesList as assetChanges} -->
-            {#each balanceChangesList[0].balanceChanges as asset}
+        {#if balanceChanges.length}
+          {#each balanceChanges as assetChanges}
+            {#each assetChanges.balanceChanges as asset}
               <tr>
                 <td>{asset.asset.symbol}</td>
                 <td class={asset.delta.includes('-') ? 'negative' : 'positive'}
@@ -264,9 +275,8 @@
                 >
               </tr>
             {/each}
-            <!-- {/each} -->
-          {/if}
-        {/each}
+          {/each}
+        {/if}
       </tbody>
     </table>
   </section>
