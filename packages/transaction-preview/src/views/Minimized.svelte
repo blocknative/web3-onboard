@@ -1,9 +1,12 @@
 <script lang="ts">
   import NotificationContent from './components/NotificationContent.svelte'
   import StatusIconBadge from './components/StatusIconBadge.svelte'
+  import closeIcon from '../icons/close-circle.js'
 
   export let toggleExpanded: (maximize: boolean) => void
   export let startTime: number
+
+  let nodeRef: HTMLElement
 </script>
 
 <style>
@@ -39,6 +42,54 @@
   .bn-notify-notification-inner {
     padding: 0.75rem;
   }
+
+  div.tp-close-btn {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  div.tp-close-btn {
+    margin-left: auto;
+    margin-bottom: auto;
+    height: 24px;
+    width: 24px;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  div.minimized:hover > div.tp-close-btn {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  div.tp-close-btn {
+    visibility: hidden;
+    transition: visibility 0.15s linear, opacity 0.15s linear;
+    opacity: 0;
+  }
+
+  .tp-close-btn .close-icon {
+    width: 20px;
+    margin: auto;
+  }
+
+  .tp-close-btn > .close-icon {
+    color: var(
+      --notify-onboard-close-icon-color,
+      var(--onboard-gray-300, var(--gray-300))
+    );
+  }
+
+  .tp-close-btn:hover > .close-icon {
+    color: var(
+      --notify-onboard-close-icon-hover,
+      var(--onboard-gray-100, var(--gray-100))
+    );
+  }
+
   .details {
     background: var(
       --transaction-sim-details-background,
@@ -60,7 +111,17 @@
   }
 </style>
 
-<div class="minimized pointer radius padding-5">
+<div class="minimized pointer radius padding-5" bind:this={nodeRef}>
+  <div
+    on:click|stopPropagation={() => {
+      nodeRef.parentNode.removeChild(nodeRef)
+    }}
+    class="tp-close-btn pointer flex"
+  >
+    <div class="flex items-center close-icon">
+      {@html closeIcon}
+    </div>
+  </div>
   <div class="flex bn-notify-notification-inner">
     <StatusIconBadge />
     <NotificationContent {startTime} />

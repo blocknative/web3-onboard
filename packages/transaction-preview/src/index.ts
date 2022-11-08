@@ -46,7 +46,8 @@ export const patchProvider = (
   }): Promise<any> => {
     if (
       req.method === 'eth_sendTransaction' &&
-      req.hasOwnProperty('params')
+      req.params &&
+      req.params.length
     ) {
       let transactionParams = req.params as EthSignTransactionRequest['params']
       if (transactionParams) {
@@ -58,7 +59,7 @@ export const patchProvider = (
             }
             const app = mountTransactionPreview(preview)
             fullProviderRequest(req)
-              .then(hash => {
+              .then((hash: string) => {
                 hash && app.$destroy()
               })
               .catch(() => {
@@ -68,7 +69,6 @@ export const patchProvider = (
         } catch (e) {
           console.error('Error simulating transaction: ', e)
         }
-        transactionParams = undefined
       }
     }
     return fullProviderRequest(req)
@@ -165,7 +165,7 @@ const mountTransactionPreview = (simResponse: SimPlatformResponse) => {
 
   const containerElementQuery = options.containerElement || 'body'
 
-  let containerEl: Element
+  let containerEl: Element | null
   // If Onboard is present copy Onboard stylesheets over to TransactionPreview shadow DOM
   if (getW3OEl && getW3OEl.shadowRoot) {
     let w3OStyleSheets = getW3OEl.shadowRoot.styleSheets
@@ -194,9 +194,9 @@ const mountTransactionPreview = (simResponse: SimPlatformResponse) => {
   containerEl.appendChild(transactionPreviewDomElement)
 
   const app = new TransactionPreview({
-    target: target,
+    target,
     props: {
-      simResponse
+      simResponse,
     }
   })
 
