@@ -23,12 +23,12 @@
   onMount(() => {
     ethMainnetGasBlockPrices = gasModule.stream({
       chains: ['0x1'],
-      apiKey: '7eeb406c-82cb-4348-8ab5-b8cd3b684fff',
+      apiKey: 'da1b962d-314d-4903-bfe1-426821d14a35',
       endpoint: 'blockPrices'
     })
     ethMainnetGasBlockPrices.subscribe(() => {
       async function getEtherGasFromRPC() {
-        const INFURA_ID = '03af2f609bfd4782900a84da1ac65000'
+        const INFURA_ID = '8b60d52405694345a99bcb82e722e0af'
         const infuraRPC = `https://mainnet.infura.io/v3/${INFURA_ID}`
         const customHttpProvider = new ethers.providers.JsonRpcProvider(infuraRPC)
         const fee = await customHttpProvider.getFeeData()
