@@ -13,7 +13,11 @@ import type {
 } from './types.js'
 import type { EIP1193Provider } from '@web3-onboard/common'
 
-import { validateSetContainerEl, validateSimTransactions, validateTPInit } from './validation'
+import {
+  validateSetContainerEl,
+  validateSimTransactions,
+  validateTPInit
+} from './validation'
 import TransactionPreview from './views/Index.svelte'
 import initI18N from './i18n/index.js'
 import simulateTransactions from './simulateTransactions.js'
@@ -49,6 +53,12 @@ const simTransactions = (
 export const patchProvider = (
   walletProvider: PatchedEIP1193Provider
 ): PatchedEIP1193Provider => {
+  if (!walletProvider) {
+    throw new Error(
+      `An EIP 1193 wallet provider is required to preform patching and 
+      watch for transactions e.g. an injected wallet using window.ethereum`
+    )
+  }
   if (walletProvider.simPatched) return walletProvider as PatchedEIP1193Provider
 
   const fullProviderRequest = walletProvider.request
