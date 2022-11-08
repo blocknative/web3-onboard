@@ -18,7 +18,7 @@ export interface GasData {
   maxPrice: number | null
   estimatedTransactionCount: number | null
   seconds: number | null
-  estimatedBaseFees?: [EstimatedBaseFees]
+  estimatedBaseFees?: [EstimatedBaseFee]
   isTrendingUp?: boolean
 }
 

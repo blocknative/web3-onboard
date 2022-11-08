@@ -4,7 +4,7 @@
   import Onboard from '@web3-onboard/core'
   import injectedModule from '@web3-onboard/injected-wallets'
 
-  const INFURA_ID = 'e0b15c21b7d54cd4814586334af72618'
+  const INFURA_ID = '8b60d52405694345a99bcb82e722e0af'
 
   const injected = injectedModule()
 
