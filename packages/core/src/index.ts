@@ -29,6 +29,7 @@ import {
   setWalletModules,
   updateConnectModal
 } from './store/actions.js'
+import type { PatchedEIP1193Provider } from '@web3-onboard/transaction-preview'
 
 const API = {
   connectWallet,
@@ -194,12 +195,12 @@ function init(options: InitOptions): OnboardAPI {
   if (transactionPreview) {
     if (!transactionPreview.containerElement) {
       transactionPreview.setContainerElement(
-        '#transaction-simulation-container'
+        '#transaction-preview-container'
       )
     }
     wallets$.subscribe(wallets => {
       wallets.forEach(({ provider }) => {
-        transactionPreview.patchProvider(provider)
+        transactionPreview.patchProvider(provider as PatchedEIP1193Provider)
       })
     })
   }

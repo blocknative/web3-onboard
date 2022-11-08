@@ -7,9 +7,9 @@ export type TransactionPreviewModule = (
 
 export type TransactionPreviewAPI = {
   patchProvider: (
-    provider: EIP1193Provider | PatchedEIP1193Provider
+    provider: PatchedEIP1193Provider
   ) => PatchedEIP1193Provider
-  simTransactions: (tx: TransactionObject[]) => Promise<SimPlatformResponse>
+  simTransactions: (txs: [TransactionObject]) => Promise<SimPlatformResponse>
   containerElement?: string
   setContainerElement: (element: string) => void
 }

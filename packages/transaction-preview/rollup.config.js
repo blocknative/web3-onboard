@@ -4,7 +4,7 @@ import replace from '@rollup/plugin-replace'
 import json from '@rollup/plugin-json'
 import sveltePreprocess from 'svelte-preprocess'
 import typescript from '@rollup/plugin-typescript'
-import commonjs from '@rollup/plugin-commonjs';
+import copy from '@rollup-extras/plugin-copy'
 
 const production = !process.env.ROLLUP_WATCH
 
@@ -36,7 +36,18 @@ export default {
       inlineSources: !production,
       resolveJsonModule: true
     }),
-    commonjs()
+    copy({
+      src: 'src/i18n/en.json',
+      dest: 'i18n'
+    })
   ],
-  external: ['joi', 'rxjs', '@web3-onboard/common']
+  external: [
+    '@web3-onboard/common',
+    'ethers',
+    'joi',
+    'rxjs',
+    'rxjs/operators',
+    'svelte-i18n',
+    'lodash.merge'
+  ]
 }

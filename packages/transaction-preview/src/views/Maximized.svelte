@@ -1,8 +1,8 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
   import type { SimPlatformResponse } from '../types'
-  import NotificationContent from './components/NotificationContent.svelte'
-  import StatusIconBadge from './components/StatusIconBadge.svelte'
+  import SimulationHeader from './components/SimulationHeader.svelte'
+  import IconBadge from './components/IconBadge.svelte'
   import { ethers } from 'ethers'
   import closeIcon from '../icons/close-circle.js'
 
@@ -244,8 +244,8 @@
     </div>
   </div>
   <div class="flex bn-notify-notification-inner">
-    <StatusIconBadge />
-    <NotificationContent {startTime} />
+    <IconBadge />
+    <SimulationHeader {startTime} />
   </div>
   <section class="details">
     <section class="address-info">
@@ -287,4 +287,3 @@
     Hide details
   </div>
 </div>
-<!-- </div> -->

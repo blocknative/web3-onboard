@@ -397,7 +397,7 @@
 {#if !$accountCenter$.enabled}
   <div
     class="container flex flex-column fixed z-indexed"
-    id="transaction-simulation-container"
+    id="transaction-preview-container"
   />
 {/if}
 
@@ -425,7 +425,7 @@
       {/await}
     {/if}
     {#if $accountCenter$.position.includes('bottom')}
-      <div id="transaction-simulation-container" />
+      <div id="transaction-preview-container" />
     {/if}
     <div
       style={!$accountCenter$.expanded &&
@@ -446,7 +446,7 @@
       {/await}
     </div>
     {#if $accountCenter$.position.includes('top')}
-      <div id="transaction-simulation-container" />
+      <div id="transaction-preview-container" />
     {/if}
     {#if $notify$.position.includes('top') && $accountCenter$.position.includes('top') && samePositionOrMobile}
       {#await notifyComponent then Notify}
@@ -474,7 +474,7 @@
       : ''} "
   >
     {#if $accountCenter$.position.includes('bottom')}
-      <div id="transaction-simulation-container" />
+      <div id="transaction-preview-container" />
     {/if}
     <div
       style={!$accountCenter$.expanded &&
@@ -496,7 +496,7 @@
       {/if}
     </div>
     {#if $accountCenter$.position.includes('top')}
-      <div id="transaction-simulation-container" />
+      <div id="transaction-preview-container" />
     {/if}
   </div>
 {/if}

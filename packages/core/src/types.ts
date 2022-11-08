@@ -12,7 +12,7 @@ import type {
 } from '@web3-onboard/common'
 
 import type gas from '@web3-onboard/gas'
-import type TransactionPreviewAPI from '@web3-onboard/transaction-preview'
+import type { TransactionPreviewAPI } from '@web3-onboard/transaction-preview'
 
 import type en from './i18n/en.json'
 import type { EthereumTransactionData, Network } from 'bnc-sdk'
@@ -54,13 +54,13 @@ export interface InitOptions {
   /** Gas module */
   gas?: typeof gas
   /**
-   * Object mapping for W3O components with the key being the DOM 
+   * Object mapping for W3O components with the key being the DOM
    * element to mount the component to, this defines the DOM container
    *  element for svelte to attach the component
    */
   containerElements?: Partial<ContainerElements>
-  /** 
-   * Transaction Preview module 
+  /**
+   * Transaction Preview module
    */
   transactionPreview?: TransactionPreviewAPI
 }

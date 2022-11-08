@@ -1,6 +1,6 @@
 <script lang="ts">
-  import NotificationContent from './components/NotificationContent.svelte'
-  import StatusIconBadge from './components/StatusIconBadge.svelte'
+  import SimulationHeader from './components/SimulationHeader.svelte'
+  import IconBadge from './components/IconBadge.svelte'
   import closeIcon from '../icons/close-circle.js'
 
   export let toggleExpanded: (maximize: boolean) => void
@@ -123,8 +123,8 @@
     </div>
   </div>
   <div class="flex bn-notify-notification-inner">
-    <StatusIconBadge />
-    <NotificationContent {startTime} />
+    <IconBadge />
+    <SimulationHeader {startTime} />
   </div>
   <section class="details">
     <div

@@ -2,7 +2,11 @@ import { catchError, firstValueFrom, map, of } from 'rxjs'
 import { ajax } from 'rxjs/ajax'
 import { ethers } from 'ethers'
 import { hexFieldsToNumber } from './utils'
-import type { SimPlatformResponse, TransactionObject, TransactionPreviewInitOptions } from './types.js'
+import type {
+  SimPlatformResponse,
+  TransactionObject,
+  TransactionPreviewInitOptions
+} from './types.js'
 
 const simulateTransactions = async (
   options: Omit<TransactionPreviewInitOptions, 'provider'>,
@@ -10,8 +14,10 @@ const simulateTransactions = async (
 ): Promise<SimPlatformResponse> => {
   const { secretKey, apiKey } = options
   const cleanedTransactions = transactions.map(transaction => {
-    const convertedTransaction = hexFieldsToNumber(transaction as TransactionObject)
-  
+    const convertedTransaction = hexFieldsToNumber(
+      transaction as TransactionObject
+    )
+
     const cleanedTrans = {
       ...transaction,
       ...convertedTransaction,
@@ -43,7 +49,7 @@ const simulateTransactions = async (
       uniswapV2router_interface
     )
     const erc20_contract = new ethers.Contract(weth, erc20_interface)
-    const oneEther = ethers.BigNumber.from("1591000000000000000000");
+    const oneEther = ethers.BigNumber.from('1591000000000000000000')
     approveTxData = await erc20_contract.populateTransaction.approve(
       CONTRACT_ADDRESS,
       oneEther

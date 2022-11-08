@@ -33,10 +33,9 @@ const simTransactions = (
 }
 
 export const patchProvider = (
-  walletProvider: EIP1193Provider | PatchedEIP1193Provider
+  walletProvider: PatchedEIP1193Provider
 ): PatchedEIP1193Provider => {
-  if (walletProvider.hasOwnProperty('simPatched'))
-    return walletProvider as PatchedEIP1193Provider
+  if (walletProvider.simPatched) return walletProvider as PatchedEIP1193Provider
 
   const fullProviderRequest = walletProvider.request
   const patchedProvider = walletProvider as PatchedEIP1193Provider
@@ -49,7 +48,8 @@ export const patchProvider = (
       req.params &&
       req.params.length
     ) {
-      let transactionParams = req.params as EthSignTransactionRequest['params']
+      const transactionParams =
+        req.params as EthSignTransactionRequest['params']
       if (transactionParams) {
         try {
           simulateTransactions(options, transactionParams).then(preview => {
@@ -59,7 +59,7 @@ export const patchProvider = (
             }
             const app = mountTransactionPreview(preview)
             fullProviderRequest(req)
-              .then((hash: string) => {
+              .then((hash: unknown) => {
                 hash && app.$destroy()
               })
               .catch(() => {
@@ -161,14 +161,14 @@ const mountTransactionPreview = (simResponse: SimPlatformResponse) => {
 
     </style>
   `
-  let getW3OEl = document.querySelector('onboard-v2')
+  const getW3OEl = document.querySelector('onboard-v2')
 
   const containerElementQuery = options.containerElement || 'body'
 
   let containerEl: Element | null
-  // If Onboard is present copy Onboard stylesheets over to TransactionPreview shadow DOM
+  // If Onboard present copy stylesheets over to TransactionPreview shadow DOM
   if (getW3OEl && getW3OEl.shadowRoot) {
-    let w3OStyleSheets = getW3OEl.shadowRoot.styleSheets
+    const w3OStyleSheets = getW3OEl.shadowRoot.styleSheets
     const transactionPreviewStyleSheet = new CSSStyleSheet()
 
     Object.values(w3OStyleSheets).forEach(sheet => {
@@ -196,7 +196,7 @@ const mountTransactionPreview = (simResponse: SimPlatformResponse) => {
   const app = new TransactionPreview({
     target,
     props: {
-      simResponse,
+      simResponse
     }
   })
 

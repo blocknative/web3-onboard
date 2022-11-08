@@ -53,7 +53,6 @@
 </style>
 
 <div class="time">
-  <!-- status Simulating || Simulated -->
   Simulated
   {#if startTime}
     -
