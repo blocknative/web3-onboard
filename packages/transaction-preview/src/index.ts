@@ -1,7 +1,5 @@
 import {
-  Balance,
   EthSignTransactionRequest,
-  ProviderAccounts,
   SofiaProLight,
   SofiaProRegular
 } from '@web3-onboard/common'

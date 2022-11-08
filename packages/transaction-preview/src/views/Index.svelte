@@ -5,7 +5,7 @@
 
   export let simResponse: SimPlatformResponse
 
-  $: expanded = false
+  $: expanded = true
 
   const startTime = Date.now()
 

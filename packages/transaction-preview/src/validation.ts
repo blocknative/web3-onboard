@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import { TransactionPreviewInitOptions } from './types.js'
+import type { TransactionPreviewInitOptions } from './types.js'
 import { validate, type ValidateReturn } from '@web3-onboard/common'
 
 const initOptions = Joi.object({
