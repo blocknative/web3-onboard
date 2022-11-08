@@ -13,7 +13,7 @@ import type {
 } from './types.js'
 import type { EIP1193Provider } from '@web3-onboard/common'
 
-import { validateTPInit } from './validation'
+import { validateSetContainerEl, validateSimTransactions, validateTPInit } from './validation'
 import TransactionPreview from './views/Index.svelte'
 import initI18N from './i18n/index.js'
 import simulateTransactions from './simulateTransactions.js'
@@ -23,12 +23,26 @@ export * from './types.js'
 let options: TransactionPreviewInitOptions
 
 export const setContainerElement = (containerElement: string): void => {
+  if (containerElement) {
+    const error = validateSetContainerEl(containerElement)
+
+    if (error) {
+      throw error
+    }
+  }
   options.containerElement = containerElement
 }
 
 const simTransactions = (
   txs: [TransactionObject]
 ): Promise<SimPlatformResponse> => {
+  if (txs) {
+    const error = validateSimTransactions(txs)
+
+    if (error) {
+      throw error
+    }
+  }
   return simulateTransactions(options, txs)
 }
 

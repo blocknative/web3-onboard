@@ -9,7 +9,7 @@ export type TransactionPreviewAPI = {
   patchProvider: (provider: PatchedEIP1193Provider) => PatchedEIP1193Provider
   simTransactions: (txs: [TransactionObject]) => Promise<SimPlatformResponse>
   containerElement?: string
-  setContainerElement: (element: string) => void
+  setContainerElement: (elementId: string) => void
 }
 
 export type PatchedEIP1193Provider = EIP1193Provider & { simPatched: boolean }
