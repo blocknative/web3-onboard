@@ -1,5 +1,6 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
+  import en from '../i18n/en.json'
   import type { SimPlatformResponse } from '../types'
   import SimulationHeader from './components/SimulationHeader.svelte'
   import IconBadge from './components/IconBadge.svelte'
@@ -16,8 +17,7 @@
     if (changes.length) {
       changes.forEach(change => {
         if (
-          change.address.toLowerCase() ===
-          transactionOriginator.toLowerCase()
+          change.address.toLowerCase() === transactionOriginator.toLowerCase()
         ) {
           arr.push(change)
         }
@@ -249,7 +249,10 @@
   </div>
   <section class="details">
     <section class="address-info">
-      Simulated balance changes for {shortenAddress(transactionOriginator)}
+      {$_('maximized.sectionHeading', {
+        default: en.maximized.sectionHeading
+      })}
+      {shortenAddress(transactionOriginator)}
     </section>
     <table class="balance-change-table table-radius">
       <colgroup>
@@ -258,8 +261,16 @@
       </colgroup>
       <thead>
         <tr>
-          <th>Token</th>
-          <th>Balance</th>
+          <th>
+            {$_('maximized.tokenColumnHeader', {
+              default: en.maximized.tokenColumnHeader
+            })}</th
+          >
+          <th>
+            {$_('maximized.balanceColumnHeader', {
+              default: en.maximized.balanceColumnHeader
+            })}</th
+          >
         </tr>
       </thead>
       <tbody>
@@ -284,6 +295,8 @@
     class="details-cta"
     on:click|stopPropagation={() => toggleExpanded(false)}
   >
-    Hide details
+    {$_('maximized.hide', {
+      default: en.maximized.hide
+    })}
   </div>
 </div>

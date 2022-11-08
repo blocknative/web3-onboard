@@ -81,7 +81,7 @@ export const patchProvider = (
 const transactionPreview: TransactionPreviewModule = (
   initOptions: TransactionPreviewInitOptions
 ): TransactionPreviewAPI => {
-  initOptions
+  const { i18n, containerElement } = initOptions
   if (initOptions) {
     const error = validateTPInit(initOptions)
 
@@ -90,15 +90,13 @@ const transactionPreview: TransactionPreviewModule = (
     }
   }
   options = initOptions
-  console.log(options)
 
-  // TODO: Add i18n to init options
-  initI18N({})
+  initI18N(i18n)
 
   return {
     patchProvider,
     simTransactions,
-    containerElement: options.containerElement,
+    containerElement: containerElement,
     setContainerElement
   }
 }

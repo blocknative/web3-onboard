@@ -1,4 +1,7 @@
 <script lang="ts">
+  import { _ } from 'svelte-i18n'
+  import en from '../i18n/en.json'
+
   import SimulationHeader from './components/SimulationHeader.svelte'
   import IconBadge from './components/IconBadge.svelte'
   import closeIcon from '../icons/close-circle.js'
@@ -131,7 +134,9 @@
       class="details-cta"
       on:click|stopPropagation={() => toggleExpanded(true)}
     >
-      Show details
+      {$_('minimized.show', {
+        default: en.minimized.show
+      })}
     </div>
   </section>
 </div>

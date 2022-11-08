@@ -1,7 +1,20 @@
 {
-  "poweredBy": "powered by",
   "time": {
     "minutes": "min",
     "seconds": "sec"
+  },
+  "header":"New Transaction Detected",
+  "timeSection": {
+    "action": "simulated",
+    "past": "ago"
+  },
+  "minimized": {
+    "show": "Show details"
+  },
+  "maximized": {
+    "sectionHeading": "Simulated balance changes for",
+    "tokenColumnHeader": "Token",
+    "balanceColumnHeader": "Balance",
+    "hide": "Hide details"
   }
 }

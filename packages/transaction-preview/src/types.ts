@@ -6,9 +6,7 @@ export type TransactionPreviewModule = (
 ) => TransactionPreviewAPI
 
 export type TransactionPreviewAPI = {
-  patchProvider: (
-    provider: PatchedEIP1193Provider
-  ) => PatchedEIP1193Provider
+  patchProvider: (provider: PatchedEIP1193Provider) => PatchedEIP1193Provider
   simTransactions: (txs: [TransactionObject]) => Promise<SimPlatformResponse>
   containerElement?: string
   setContainerElement: (element: string) => void
@@ -30,6 +28,10 @@ export type TransactionPreviewInitOptions = {
   secretKey: string
   /**Optional dom query string to mount UI to*/
   containerElement?: string
+  /**
+   * Define custom copy for the 'en' locale or add locales to i18n your app
+   */
+  i18n?: i18nOptions
 }
 
 export interface TransactionObject {

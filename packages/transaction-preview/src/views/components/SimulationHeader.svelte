@@ -1,9 +1,8 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
   import Timer from './Timer.svelte'
-
+  import en from '../../i18n/en.json'
   export let startTime: number
-
 </script>
 
 <style>
@@ -50,10 +49,12 @@
 
 <div class="flex flex-column notify-transaction-data">
   <span class="transaction-status">
-    New Transaction Detected
+    {$_('header', {
+      default: en.header
+    })}
   </span>
 
-    <span class="timer">
-      <Timer {startTime} />
-    </span>
+  <span class="timer">
+    <Timer {startTime} />
+  </span>
 </div>

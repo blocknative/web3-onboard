@@ -1,5 +1,6 @@
 <script lang="ts">
   import { _ as formatter, locale } from 'svelte-i18n'
+  import en from '../../i18n/en.json'
   import { onDestroy } from 'svelte'
 
   export let startTime: number
@@ -53,12 +54,16 @@
 </style>
 
 <div class="time">
-  Simulated
+  {$formatter('timeSection.action', {
+    default: en.timeSection.action
+  })}
   {#if startTime}
     -
     <span>
       {timeString(currentTime - startTime)}
     </span>
-    ago
+    {$formatter('timeSection.past', {
+      default: en.timeSection.past
+    })}
   {/if}
 </div>

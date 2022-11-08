@@ -11,21 +11,18 @@ export const hexFieldsToNumber = (
   Object.keys(transaction).reduce(
     (transaction, txnProperty) => ({
       ...transaction,
-      ...(typeof transaction[
-        txnProperty as keyof TransactionObject
-      ] === 'string' &&
-      (transaction[
-        txnProperty as keyof TransactionObject
-      ] as string).includes('0x') &&
+      ...(typeof transaction[txnProperty as keyof TransactionObject] ===
+        'string' &&
+      (transaction[txnProperty as keyof TransactionObject] as string).includes(
+        '0x'
+      ) &&
       txnProperty !== 'to' &&
       txnProperty !== 'input' &&
       txnProperty !== 'data' &&
       txnProperty !== 'from'
         ? {
             [txnProperty]: parseInt(
-              transaction[
-                txnProperty as keyof TransactionObject
-              ] as string,
+              transaction[txnProperty as keyof TransactionObject] as string,
               16
             )
           }
