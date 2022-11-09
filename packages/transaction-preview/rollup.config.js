@@ -44,6 +44,7 @@ export default {
   external: [
     '@web3-onboard/common',
     'ethers',
+    'bowser',
     'joi',
     'rxjs',
     'rxjs/operators',

@@ -159,3 +159,9 @@ interface ContractCallValue {
 export type Locale = string
 export type i18nOptions = Record<Locale, i18n>
 export type i18n = typeof en
+
+export type DeviceNotBrowser = {
+  type: null
+  os: null
+  browser: null
+}

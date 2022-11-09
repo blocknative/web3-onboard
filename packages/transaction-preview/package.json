@@ -81,6 +81,7 @@
   },
   "dependencies": {
     "@web3-onboard/common": "^2.2.3",
+    "bowser": "^2.11.0",
     "joi": "^17.6.1",
     "rxjs": "^7.5.2",
     "svelte-i18n": "^3.3.13"

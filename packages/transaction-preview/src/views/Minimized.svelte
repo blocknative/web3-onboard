@@ -1,6 +1,7 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
   import en from '../i18n/en.json'
+  import { getDevice } from '../utils'
 
   import SimulationHeader from './components/SimulationHeader.svelte'
   import IconBadge from './components/IconBadge.svelte'
@@ -9,6 +10,7 @@
   export let toggleExpanded: (maximize: boolean) => void
   export let startTime: number
 
+  const device = getDevice()
   let nodeRef: HTMLElement
 </script>
 
@@ -62,12 +64,12 @@
     align-items: center;
   }
 
-  div.minimized:hover > div.tp-close-btn {
+  div.minimized:hover > div.tp-close-btn-desktop {
     visibility: visible;
     opacity: 1;
   }
 
-  div.tp-close-btn {
+  div.tp-close-btn-desktop {
     visibility: hidden;
     transition: visibility 0.15s linear, opacity 0.15s linear;
     opacity: 0;
@@ -118,7 +120,7 @@
     on:click|stopPropagation={() => {
       nodeRef.parentNode.removeChild(nodeRef)
     }}
-    class="tp-close-btn pointer flex"
+    class="tp-close-btn tp-close-btn-{device.type} pointer flex"
   >
     <div class="flex items-center close-icon">
       {@html closeIcon}

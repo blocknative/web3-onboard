@@ -6,10 +6,13 @@
   import IconBadge from './components/IconBadge.svelte'
   import { ethers } from 'ethers'
   import closeIcon from '../icons/close-circle.js'
+  import { getDevice } from '../utils'
 
+  
   export let toggleExpanded: (maximize: boolean) => void
   export let simResponse: SimPlatformResponse
   export let startTime: number
+  const device = getDevice()
   let nodeRef: HTMLElement
 
   let transactionOriginator = simResponse.transactions[0].from
@@ -89,12 +92,12 @@
     align-items: center;
   }
 
-  div.maximized:hover > div.tp-close-btn {
+  div.maximized:hover > div.tp-close-btn-desktop {
     visibility: visible;
     opacity: 1;
   }
 
-  div.tp-close-btn {
+  div.tp-close-btn-desktop {
     visibility: hidden;
     transition: visibility 0.15s linear, opacity 0.15s linear;
     opacity: 0;
@@ -236,7 +239,7 @@
     on:click|stopPropagation={() => {
       nodeRef.parentNode.removeChild(nodeRef)
     }}
-    class="tp-close-btn pointer flex"
+    class="tp-close-btn tp-close-btn-{device.type} pointer flex"
   >
     <div class="flex items-center close-icon">
       {@html closeIcon}

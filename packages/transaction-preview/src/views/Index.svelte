@@ -2,11 +2,13 @@
   import type { SimPlatformResponse } from '../types'
   import Maximized from './Maximized.svelte'
   import Minimized from './Minimized.svelte'
+  import { getDevice } from '../utils'
 
   export let simResponse: SimPlatformResponse
 
-  $: expanded = true
+  $: expanded = device.type === 'mobile' ? false : true
 
+  const device = getDevice()
   const startTime = Date.now()
 
   function toggleExpanded(maximize: boolean) {
@@ -14,8 +16,8 @@
   }
 </script>
 
-{#if !expanded}
-  <Minimized {toggleExpanded} {startTime} />
-{:else}
+{#if expanded}
   <Maximized {toggleExpanded} {simResponse} {startTime} />
+{:else}
+  <Minimized {toggleExpanded} {startTime} />
 {/if}
