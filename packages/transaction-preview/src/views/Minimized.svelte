@@ -32,7 +32,6 @@
     flex-direction: column;
     position: relative;
     overflow: hidden;
-    margin: 8px 0;
   }
 
   .radius {

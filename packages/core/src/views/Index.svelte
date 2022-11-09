@@ -394,9 +394,12 @@
   <SwitchChain />
 {/if}
 
-{#if !$accountCenter$.enabled}
+{#if !$accountCenter$.enabled && !$notify$.enabled}
   <div
     class="container flex flex-column fixed z-indexed"
+    style="top: 0; right: 0; {device.type === 'mobile'
+      ? 'padding-bottom: 0;'
+      : ''} "
     id="transaction-preview-container"
   />
 {/if}
@@ -425,7 +428,7 @@
       {/await}
     {/if}
     {#if $accountCenter$.position.includes('bottom')}
-      <div id="transaction-preview-container" />
+      <div id="transaction-preview-container" style="margin-bottom: 8px;"/>
     {/if}
     <div
       style={!$accountCenter$.expanded &&
@@ -446,7 +449,7 @@
       {/await}
     </div>
     {#if $accountCenter$.position.includes('top')}
-      <div id="transaction-preview-container" />
+      <div id="transaction-preview-container" style="margin-top: 8px;"/>
     {/if}
     {#if $notify$.position.includes('top') && $accountCenter$.position.includes('top') && samePositionOrMobile}
       {#await notifyComponent then Notify}
@@ -474,7 +477,7 @@
       : ''} "
   >
     {#if $accountCenter$.position.includes('bottom')}
-      <div id="transaction-preview-container" />
+      <div id="transaction-preview-container" style="margin-bottom: 8px;"/>
     {/if}
     <div
       style={!$accountCenter$.expanded &&
@@ -496,7 +499,7 @@
       {/if}
     </div>
     {#if $accountCenter$.position.includes('top')}
-      <div id="transaction-preview-container" />
+      <div id="transaction-preview-container" style="margin-top: 8px;"/>
     {/if}
   </div>
 {/if}
@@ -511,6 +514,9 @@
       ? 'padding-top:0;'
       : ''} "
   >
+    {#if $notify$.position.includes('top')}
+      <div id="transaction-preview-container" />
+    {/if}
     {#await notifyComponent then Notify}
       {#if Notify}
         <svelte:component
@@ -521,5 +527,8 @@
         />
       {/if}
     {/await}
+    {#if $notify$.position.includes('bottom')}
+      <div id="transaction-preview-container" />
+    {/if}
   </div>
 {/if}
