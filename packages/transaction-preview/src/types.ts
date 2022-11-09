@@ -6,9 +6,28 @@ export type TransactionPreviewModule = (
 ) => TransactionPreviewAPI
 
 export type TransactionPreviewAPI = {
+  /**
+   * Pass this method a standard EIP1193 provider
+   * (such as an injected wallet from window.ethereum)
+   * and it will be patched to allow for transaction previewing
+   */
   patchProvider: (provider: PatchedEIP1193Provider) => PatchedEIP1193Provider
+  /**
+   * Pass this method any full, presigned ethereum transaction
+   * for previewing and simulation
+   */
   simTransactions: (txs: [TransactionObject]) => Promise<SimPlatformResponse>
+  /**
+   * This property will return the container element HTML ID
+   *  set for the Transaction Preview UI to mount to
+   */
   containerElement?: string
+  /**
+   * Pass this method an HTML element ID to allow for
+   * the Transaction Preview UI to mount to it.
+   * Note: The element must exist within the DOM tree
+   *  at time of preview/rendering
+   */
   setContainerElement: (elementId: string) => void
 }
 
