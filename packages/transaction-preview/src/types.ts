@@ -41,14 +41,24 @@ export interface ProviderReq {
 export type RequestOptions = Pick<TransactionPreviewInitOptions, 'apiKey'>
 
 export type TransactionPreviewInitOptions = {
-  /**Your Blocknative key */
+  /**
+   * Blocknative API key (https://explorer.blocknative.com/account)
+   */
   apiKey: string
-  /**Your Blocknative secret key*/
+  /**
+   * Your Blocknative API secret key: Add a Secret Key to your API key
+   * by using the three dot menu next to the name of your API key.
+   * (https://docs.blocknative.com/account#secret-key)
+   * */
   secretKey: string
-  /**Optional dom query string to mount UI to*/
+  /**
+   * Optional dom query string to mount UI to
+   * */
   containerElement?: string
   /**
-   * Define custom copy for the 'en' locale or add locales to i18n your app
+   * An optional internationalization object that defines the display
+   * text for different locales. Can also be used to override the default text.
+   *  To override the default text, pass in a object for the en locale
    */
   i18n?: i18nOptions
 }
