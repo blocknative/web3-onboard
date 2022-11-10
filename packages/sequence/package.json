@@ -58,7 +58,6 @@
     "0xsequence": "^0.40.5"
   },
   "peerDependencies": {
-    "@web3-onboard/common": ">=2.2.3",
     "0xsequence": ">=0.40.5"
   }
 }
