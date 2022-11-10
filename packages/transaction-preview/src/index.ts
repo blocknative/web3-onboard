@@ -30,6 +30,7 @@ export * from './types.js'
 export const approved$ = new Subject<boolean>()
 
 let options: TransactionPreviewInitOptions
+let app: TransactionPreview
 
 export const setContainerElement = (containerElement: string): void => {
   if (containerElement) {
@@ -105,7 +106,8 @@ export const patchProvider = (
             // If transaction simulation was unsuccessful do not create DOM el
             return
           }
-          const app = mountTransactionPreview(preview)
+          if (app) app.$destroy()
+          app = mountTransactionPreview(preview)
           options.requireTransactionApproval
             ? handleRequireApproval(app, fullProviderRequest, req)
             : fullProviderRequest(req).then((hash: unknown) => {
