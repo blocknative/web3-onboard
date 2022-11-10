@@ -8,13 +8,13 @@
   import closeIcon from '../icons/close-circle.js'
   import { getDevice } from '../utils'
 
-  export let toggleExpanded: (maximize: boolean) => void
   export let requireTransactionApproval: boolean
   export let transactionApproved: (approved: boolean) => void
+  export let toggleExpanded: (maximize: boolean) => void
+  export let destroyApp: () => void
   export let simResponse: SimPlatformResponse
   export let startTime: number
   const device = getDevice()
-  let nodeRef: HTMLElement
 
   let transactionOriginator = simResponse.transactions[0].from
   let balanceChanges = simResponse.netBalanceChanges.reduce((arr, changes) => {
@@ -171,10 +171,11 @@
     gap: 8px;
     width: 314px;
     height: 48px;
-    border:  1px solid var(
-      --transaction-sim-details-background,
-      var(--onboard-gray-600, var(--gray-600))
-    );
+    border: 1px solid
+      var(
+        --transaction-sim-details-background,
+        var(--onboard-gray-600, var(--gray-600))
+      );
     flex: none;
     order: 2;
     align-self: stretch;
@@ -277,11 +278,11 @@
   }
 </style>
 
-<div class="maximized radius padding-5" bind:this={nodeRef}>
+<div class="maximized radius padding-5">
   {#if !requireTransactionApproval}
     <div
       on:click|stopPropagation={() => {
-        nodeRef.parentNode.removeChild(nodeRef)
+        destroyApp()
       }}
       class="tp-close-btn tp-close-btn-{device.type} pointer flex"
     >

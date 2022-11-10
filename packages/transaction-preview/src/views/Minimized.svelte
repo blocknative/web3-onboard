@@ -8,10 +8,10 @@
   import closeIcon from '../icons/close-circle.js'
 
   export let toggleExpanded: (maximize: boolean) => void
+  export let destroyApp: () => void
   export let startTime: number
 
   const device = getDevice()
-  let nodeRef: HTMLElement
 </script>
 
 <style>
@@ -132,10 +132,10 @@
   }
 </style>
 
-<div class="minimized radius padding-5" bind:this={nodeRef}>
+<div class="minimized radius padding-5" >
   <div
     on:click|stopPropagation={() => {
-      nodeRef.parentNode.removeChild(nodeRef)
+      destroyApp()
     }}
     class="tp-close-btn tp-close-btn-{device.type} pointer flex"
   >

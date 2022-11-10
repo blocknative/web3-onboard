@@ -18,17 +18,17 @@ export type TransactionPreviewAPI = {
    */
   simTransactions: (txs: [TransactionObject]) => Promise<SimPlatformResponse>
   /**
-   * This property will return the container element HTML ID
-   *  set for the Transaction Preview UI to mount to
-   */
-  containerElement?: string
-  /**
    * Pass this method an HTML element ID to allow for
    * the Transaction Preview UI to mount to it.
    * Note: The element must exist within the DOM tree
    *  at time of preview/rendering
    */
   setContainerElement: (elementId: string) => void
+  /**
+   * This property will return the container element HTML ID
+   *  set for the Transaction Preview UI to mount to
+   */
+  containerElement?: string
 }
 
 export type PatchedEIP1193Provider = EIP1193Provider & { simPatched: boolean }
@@ -56,10 +56,10 @@ export type TransactionPreviewInitOptions = {
    * */
   containerElement?: string
   /**
-   * Optional requirement for user to accept transaction balance changes 
+   * Optional requirement for user to accept transaction balance changes
    * prior to sending the transaction to the wallet
    * */
-   requireTransactionApproval?: boolean
+  requireTransactionApproval?: boolean
   /**
    * An optional internationalization object that defines the display
    * text for different locales. Can also be used to override the default text.

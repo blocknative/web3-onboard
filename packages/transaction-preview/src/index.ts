@@ -27,8 +27,7 @@ import simulateTransactions from './simulateTransactions.js'
 
 export * from './types.js'
 
-export const approved$ = new Subject<boolean>()
-
+const approved$ = new Subject<boolean>()
 let options: TransactionPreviewInitOptions
 let app: TransactionPreview
 
@@ -41,6 +40,10 @@ export const setContainerElement = (containerElement: string): void => {
     }
   }
   options.containerElement = containerElement
+}
+
+const destroyApp = () => {
+  app.$destroy()
 }
 
 const simTransactions = (
@@ -99,26 +102,24 @@ export const patchProvider = (
     ) {
       const transactionParams =
         req.params as EthSignTransactionRequest['params']
-      if (transactionParams) {
-        try {
-          const preview = await simulateTransactions(options, transactionParams)
-          if (preview.status !== 'simulated') {
-            // If transaction simulation was unsuccessful do not create DOM el
-            return
-          }
-          if (app) app.$destroy()
-          app = mountTransactionPreview(preview)
-          options.requireTransactionApproval
-            ? handleRequireApproval(app, fullProviderRequest, req)
-            : fullProviderRequest(req).then((hash: unknown) => {
-                hash && app.$destroy()
-              })
-        } catch (e) {
-          throw new ProviderRpcError({
-            code: ProviderRpcErrorCode.ACCOUNT_ACCESS_REJECTED,
-            message: 'User rejected the transaction'
-          })
+      try {
+        const preview = await simulateTransactions(options, transactionParams)
+        if (preview.status !== 'simulated') {
+          // If transaction simulation was unsuccessful do not create DOM el
+          return
         }
+        if (app) app.$destroy()
+        app = mountTransactionPreview(preview)
+        options.requireTransactionApproval
+          ? handleRequireApproval(app, fullProviderRequest, req)
+          : fullProviderRequest(req).then((hash: unknown) => {
+              hash && app.$destroy()
+            })
+      } catch (e) {
+        throw new ProviderRpcError({
+          code: ProviderRpcErrorCode.ACCOUNT_ACCESS_REJECTED,
+          message: `User rejected the transaction: ${e}`
+        })
       }
     } else {
       return fullProviderRequest(req)
@@ -140,7 +141,6 @@ const transactionPreview: TransactionPreviewModule = (
       throw error
     }
   }
-  console.log(initOptions)
   options = initOptions
 
   initI18N(i18n)
@@ -148,8 +148,8 @@ const transactionPreview: TransactionPreviewModule = (
   return {
     patchProvider,
     simTransactions,
-    containerElement: containerElement,
-    setContainerElement
+    setContainerElement,
+    containerElement
   }
 }
 
@@ -248,7 +248,8 @@ const mountTransactionPreview = (simResponse: SimPlatformResponse) => {
     props: {
       simResponse,
       requireTransactionApproval,
-      approved$
+      approved$,
+      destroyApp
     }
   })
 

@@ -126,17 +126,17 @@ type TransactionPreviewAPI = {
    */
   simTransactions: (txs: [TransactionObject]) => Promise<SimPlatformResponse>
   /**
-   * This property will return the container element HTML ID
-   *  set for the Transaction Preview UI to mount to
-   */
-  containerElement?: string
-  /**
    * Pass this method an HTML element ID to allow for
    * the Transaction Preview UI to mount to it.
    * Note: The element must exist within the DOM tree
    *  at time of preview/rendering
    */
   setContainerElement: (elementId: string) => void
+  /**
+   * This property will return the container element HTML ID
+   *  set for the Transaction Preview UI to mount to
+   */
+  containerElement?: string
 }
 
 type PatchedEIP1193Provider = EIP1193Provider & { simPatched: boolean }

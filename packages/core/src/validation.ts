@@ -189,8 +189,8 @@ const initOptions = Joi.object({
   transactionPreview: Joi.object({
     patchProvider: Joi.function().required(),
     simTransactions: Joi.function().required(),
-    containerElement: Joi.string(),
-    setContainerElement: Joi.function().required()
+    setContainerElement: Joi.function().required(),
+    containerElement: Joi.string()
   }),
 })
 
