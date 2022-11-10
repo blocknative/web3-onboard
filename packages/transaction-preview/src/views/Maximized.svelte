@@ -59,10 +59,6 @@
       --transaction-sim-background,
       var(--onboard-gray-600, var(--gray-600))
     );
-    border-radius: var(
-      --transaction-sim-border-radius,
-      var(--onboard-border-radius-4, var(--border-radius-4))
-    );
     display: flex;
     flex-direction: column;
     position: relative;
@@ -72,7 +68,7 @@
   .radius {
     border-radius: var(
       --transaction-sim-border-radius,
-      var(--onboard-border-radius-3, var(--border-radius-3))
+      var(--onboard-border-radius-4, var(--border-radius-4))
     );
   }
 
@@ -126,7 +122,7 @@
   .table-radius {
     border-radius: var(
       --transaction-sim-border-radius,
-      var(--onboard-border-radius-4, var(--border-radius-4))
+      var(--onboard-border-radius-5, var(--border-radius-5))
     );
   }
 
@@ -154,7 +150,6 @@
     );
   }
   .details-cta {
-    padding: 0.75rem 1rem;
     color: var(
       --transaction-sim-details-cta-color,
       var(--onboard-primary-400, var(--primary-400))
@@ -162,14 +157,61 @@
     font-style: normal;
     font-weight: 700;
     font-size: 14px;
-    line-height: 24px;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     background: var(
       --transaction-sim-details-background,
       var(--onboard-gray-700, var(--gray-700))
     );
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 8px;
+    gap: 8px;
+    width: 314px;
+    height: 48px;
+    border:  1px solid var(
+      --transaction-sim-details-background,
+      var(--onboard-gray-600, var(--gray-600))
+    );
+    flex: none;
+    order: 2;
+    align-self: stretch;
+    flex-grow: 0;
   }
+
+  .cancel {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 4px 8px 4px 12px;
+    gap: 4px;
+
+    width: 73px;
+    height: 32px;
+  }
+
+  .confirm {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 4px 12px;
+    gap: 4px;
+
+    width: 69px;
+    height: 32px;
+  }
+
+  .cta {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 4px 12px;
+    gap: 4px;
+    cursor: pointer;
+  }
+
   table.balance-change-table {
     width: 100%;
     background: var(
@@ -298,14 +340,23 @@
   </section>
   <div class="details-cta">
     {#if requireTransactionApproval}
-      <section on:click|stopPropagation={() => transactionApproved(false)}>
+      <section
+        class="cancel"
+        on:click|stopPropagation={() => transactionApproved(false)}
+      >
         Cancel
       </section>
-      <section on:click|stopPropagation={() => transactionApproved(true)}>
-        Send to Wallet
+      <section
+        class="confirm"
+        on:click|stopPropagation={() => transactionApproved(true)}
+      >
+        Confirm
       </section>
     {:else}
-      <section on:click|stopPropagation={() => toggleExpanded(false)}>
+      <section
+        class="cta"
+        on:click|stopPropagation={() => toggleExpanded(false)}
+      >
         {$_('maximized.hide', {
           default: en.maximized.hide
         })}

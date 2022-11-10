@@ -26,10 +26,6 @@
       --transaction-sim-background,
       var(--onboard-gray-600, var(--gray-600))
     );
-    border-radius: var(
-      --transaction-sim-border-radius,
-      var(--onboard-border-radius-4, var(--border-radius-4))
-    );
     display: flex;
     flex-direction: column;
     position: relative;
@@ -39,7 +35,7 @@
   .radius {
     border-radius: var(
       --transaction-sim-border-radius,
-      var(--onboard-border-radius-3, var(--border-radius-3))
+      var(--onboard-border-radius-4, var(--border-radius-4))
     );
   }
 
@@ -94,16 +90,7 @@
     );
   }
 
-  .details {
-    background: var(
-      --transaction-sim-details-background,
-      var(--onboard-gray-700, var(--gray-700))
-    );
-    display: flex;
-    justify-content: flex-end;
-  }
   .details-cta {
-    margin: 0.75rem 1rem;
     color: var(
       --transaction-sim-details-cta-color,
       var(--onboard-primary-400, var(--primary-400))
@@ -111,7 +98,37 @@
     font-style: normal;
     font-weight: 700;
     font-size: 14px;
-    line-height: 24px;
+    display: flex;
+    justify-content: flex-end;
+    background: var(
+      --transaction-sim-details-background,
+      var(--onboard-gray-700, var(--gray-700))
+    );
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 8px;
+    gap: 8px;
+    width: 314px;
+    height: 48px;
+    border:  1px solid var(
+      --transaction-sim-details-background,
+      var(--onboard-gray-600, var(--gray-600))
+    );
+    flex: none;
+    order: 2;
+    align-self: stretch;
+    flex-grow: 0;
+  }
+
+  .cta {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 4px 12px;
+    gap: 4px;
+    cursor: pointer;
   }
 </style>
 
@@ -130,14 +147,11 @@
     <IconBadge />
     <SimulationHeader {startTime} />
   </div>
-  <section class="details">
-    <div
-      class="details-cta"
-      on:click|stopPropagation={() => toggleExpanded(true)}
-    >
+  <div class="details-cta">
+    <section class="cta" on:click|stopPropagation={() => toggleExpanded(true)}>
       {$_('minimized.show', {
         default: en.minimized.show
       })}
-    </div>
-  </section>
+    </section>
+  </div>
 </div>

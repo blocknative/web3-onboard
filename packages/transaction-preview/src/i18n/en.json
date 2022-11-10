@@ -5,7 +5,7 @@
   },
   "header":"New Transaction Detected",
   "timeSection": {
-    "action": "simulated",
+    "action": "Simulated",
     "past": "ago"
   },
   "minimized": {
