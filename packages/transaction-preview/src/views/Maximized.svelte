@@ -188,7 +188,7 @@
     align-items: center;
     padding: 4px 8px 4px 12px;
     gap: 4px;
-
+    cursor: pointer;
     width: 73px;
     height: 32px;
   }
@@ -199,7 +199,7 @@
     align-items: center;
     padding: 4px 12px;
     gap: 4px;
-
+    cursor: pointer;
     width: 69px;
     height: 32px;
   }
