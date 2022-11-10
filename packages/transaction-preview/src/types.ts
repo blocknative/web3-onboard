@@ -56,6 +56,11 @@ export type TransactionPreviewInitOptions = {
    * */
   containerElement?: string
   /**
+   * Optional requirement for user to accept transaction balance changes 
+   * prior to sending the transaction to the wallet
+   * */
+   requireTransactionApproval?: boolean
+  /**
    * An optional internationalization object that defines the display
    * text for different locales. Can also be used to override the default text.
    *  To override the default text, pass in a object for the en locale

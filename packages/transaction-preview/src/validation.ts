@@ -9,6 +9,7 @@ const initOptions = Joi.object({
   apiKey: Joi.string().required(),
   secretKey: Joi.string().required(),
   containerElement: Joi.string(),
+  requireTransactionApproval: Joi.boolean(),
   i18n: Joi.object().unknown()
 })
 

@@ -115,7 +115,7 @@
   }
 </style>
 
-<div class="minimized pointer radius padding-5" bind:this={nodeRef}>
+<div class="minimized radius padding-5" bind:this={nodeRef}>
   <div
     on:click|stopPropagation={() => {
       nodeRef.parentNode.removeChild(nodeRef)

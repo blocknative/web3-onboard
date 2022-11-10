@@ -1,5 +1,8 @@
+import { firstValueFrom, Subject } from 'rxjs'
 import {
   EthSignTransactionRequest,
+  ProviderRpcError,
+  ProviderRpcErrorCode,
   SofiaProLight,
   SofiaProRegular
 } from '@web3-onboard/common'
@@ -23,6 +26,8 @@ import initI18N from './i18n/index.js'
 import simulateTransactions from './simulateTransactions.js'
 
 export * from './types.js'
+
+export const approved$ = new Subject<boolean>()
 
 let options: TransactionPreviewInitOptions
 
@@ -48,6 +53,25 @@ const simTransactions = (
     }
   }
   return simulateTransactions(options, txs)
+}
+
+const handleRequireApproval = async (
+  app: TransactionPreview,
+  fullProviderRequest: EIP1193Provider['request'],
+  req: {
+    method: string
+    params?: Array<unknown>
+  }
+) => {
+  const approved = await firstValueFrom(approved$)
+  app.$destroy()
+  if (!approved) {
+    throw new ProviderRpcError({
+      code: ProviderRpcErrorCode.ACCOUNT_ACCESS_REJECTED,
+      message: 'User rejected the transaction'
+    })
+  }
+  fullProviderRequest(req)
 }
 
 export const patchProvider = (
@@ -76,26 +100,27 @@ export const patchProvider = (
         req.params as EthSignTransactionRequest['params']
       if (transactionParams) {
         try {
-          simulateTransactions(options, transactionParams).then(preview => {
-            if (preview.status !== 'simulated') {
-              // If transaction simulation was unsuccessful do not create DOM el
-              return
-            }
-            const app = mountTransactionPreview(preview)
-            fullProviderRequest(req)
-              .then((hash: unknown) => {
+          const preview = await simulateTransactions(options, transactionParams)
+          if (preview.status !== 'simulated') {
+            // If transaction simulation was unsuccessful do not create DOM el
+            return
+          }
+          const app = mountTransactionPreview(preview)
+          options.requireTransactionApproval
+            ? handleRequireApproval(app, fullProviderRequest, req)
+            : fullProviderRequest(req).then((hash: unknown) => {
                 hash && app.$destroy()
               })
-              .catch(() => {
-                app.$destroy()
-              })
-          })
         } catch (e) {
-          console.error('Error simulating transaction: ', e)
+          throw new ProviderRpcError({
+            code: ProviderRpcErrorCode.ACCOUNT_ACCESS_REJECTED,
+            message: 'User rejected the transaction'
+          })
         }
       }
+    } else {
+      return fullProviderRequest(req)
     }
-    return fullProviderRequest(req)
   }
   patchedProvider.request = request
   patchedProvider.simPatched = true
@@ -113,6 +138,7 @@ const transactionPreview: TransactionPreviewModule = (
       throw error
     }
   }
+  console.log(initOptions)
   options = initOptions
 
   initI18N(i18n)
@@ -126,7 +152,6 @@ const transactionPreview: TransactionPreviewModule = (
 }
 
 const mountTransactionPreview = (simResponse: SimPlatformResponse) => {
-  console.log(simResponse)
   class TransactionPreviewEl extends HTMLElement {
     constructor() {
       super()
@@ -214,11 +239,14 @@ const mountTransactionPreview = (simResponse: SimPlatformResponse) => {
   }
 
   containerEl.appendChild(transactionPreviewDomElement)
+  const { requireTransactionApproval } = options
 
   const app = new TransactionPreview({
     target,
     props: {
-      simResponse
+      simResponse,
+      requireTransactionApproval,
+      approved$
     }
   })
 

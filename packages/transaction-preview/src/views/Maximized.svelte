@@ -8,8 +8,9 @@
   import closeIcon from '../icons/close-circle.js'
   import { getDevice } from '../utils'
 
-  
   export let toggleExpanded: (maximize: boolean) => void
+  export let requireTransactionApproval: boolean
+  export let transactionApproved: (approved: boolean) => void
   export let simResponse: SimPlatformResponse
   export let startTime: number
   const device = getDevice()
@@ -163,7 +164,7 @@
     font-size: 14px;
     line-height: 24px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     background: var(
       --transaction-sim-details-background,
       var(--onboard-gray-700, var(--gray-700))
@@ -234,17 +235,19 @@
   }
 </style>
 
-<div class="maximized pointer radius padding-5" bind:this={nodeRef}>
-  <div
-    on:click|stopPropagation={() => {
-      nodeRef.parentNode.removeChild(nodeRef)
-    }}
-    class="tp-close-btn tp-close-btn-{device.type} pointer flex"
-  >
-    <div class="flex items-center close-icon">
-      {@html closeIcon}
+<div class="maximized radius padding-5" bind:this={nodeRef}>
+  {#if !requireTransactionApproval}
+    <div
+      on:click|stopPropagation={() => {
+        nodeRef.parentNode.removeChild(nodeRef)
+      }}
+      class="tp-close-btn tp-close-btn-{device.type} pointer flex"
+    >
+      <div class="flex items-center close-icon">
+        {@html closeIcon}
+      </div>
     </div>
-  </div>
+  {/if}
   <div class="flex bn-notify-notification-inner">
     <IconBadge />
     <SimulationHeader {startTime} />
@@ -293,12 +296,20 @@
       </tbody>
     </table>
   </section>
-  <div
-    class="details-cta"
-    on:click|stopPropagation={() => toggleExpanded(false)}
-  >
-    {$_('maximized.hide', {
-      default: en.maximized.hide
-    })}
+  <div class="details-cta">
+    {#if requireTransactionApproval}
+      <section on:click|stopPropagation={() => transactionApproved(false)}>
+        Cancel
+      </section>
+      <section on:click|stopPropagation={() => transactionApproved(true)}>
+        Send to Wallet
+      </section>
+    {:else}
+      <section on:click|stopPropagation={() => toggleExpanded(false)}>
+        {$_('maximized.hide', {
+          default: en.maximized.hide
+        })}
+      </section>
+    {/if}
   </div>
 </div>
