@@ -53,7 +53,9 @@ If you would like to use outside of web3-onboard wallet connect more steps are r
 import transactionPreviewModule from '@web3-onboard/transaction-preview'
 const transactionPreview = transactionPreviewModule({
   apiKey: 'xxxxx-4729-457a-8d76-d6d15692657b',
-  secretKey: 'xxxxx-f0e8-40ec-b49a-2571715642cb'
+  secretKey: 'xxxxx-f0e8-40ec-b49a-2571715642cb',
+  // Require balance change confirmation prior to sending to wallet
+  requireTransactionApproval: true
 })
 
 transactionPreview.setContainerElement(
@@ -105,6 +107,11 @@ type TransactionPreviewInitOptions = {
    * Optional dom query string to mount UI to
    * */
   containerElement?: string
+  /**
+   * Optional requirement for user to accept transaction balance changes
+   * prior to sending the transaction to the wallet
+   * */
+  requireTransactionApproval?: boolean
   /**
    * An optional internationalization object that defines the display
    * text for different locales. Can also be used to override the default text.
