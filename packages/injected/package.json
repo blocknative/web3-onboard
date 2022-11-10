@@ -62,8 +62,6 @@
     "window": "^4.2.7"
   },
   "dependencies": {
-    "@web3-onboard/injected-wallets": "^2.3.0",
-    "ethers": "^5.7.2",
     "joi": "^17.6.1",
     "lodash.uniqby": "^4.7.0"
   }
