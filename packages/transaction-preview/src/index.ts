@@ -114,7 +114,7 @@ export const patchProvider = (
           ? handleRequireApproval(app, fullProviderRequest, req)
           : fullProviderRequest(req).then((hash: unknown) => {
               hash && app.$destroy()
-            })
+            }).catch(() => app.$destroy())
       } catch (e) {
         throw new ProviderRpcError({
           code: ProviderRpcErrorCode.ACCOUNT_ACCESS_REJECTED,
