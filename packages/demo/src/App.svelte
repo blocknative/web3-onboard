@@ -110,7 +110,7 @@
   const transactionPreview = transactionPreviewModule({
     apiKey: '0e5f8cec-4729-457a-8d76-d6d15692657b',
     secretKey: '196bf536-f0e8-40ec-b49a-2571715642cb',
-    // requireTransactionApproval: true
+    requireTransactionApproval: true
   })
 
   const onboard = Onboard({

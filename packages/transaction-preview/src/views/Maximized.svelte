@@ -345,13 +345,17 @@
         class="cancel"
         on:click|stopPropagation={() => transactionApproved(false)}
       >
-        Cancel
+        {$_('maximized.cancel', {
+          default: en.maximized.cancel
+        })}
       </section>
       <section
         class="confirm"
         on:click|stopPropagation={() => transactionApproved(true)}
       >
-        Confirm
+        {$_('maximized.confirm', {
+          default: en.maximized.confirm
+        })}
       </section>
     {:else}
       <section
