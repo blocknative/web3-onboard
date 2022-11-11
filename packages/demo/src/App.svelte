@@ -279,67 +279,6 @@
       value: 100000000000000
     })
 
-    const addressFrom = '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045'
-
-    const CONTRACT_ADDRESS = '0x7a250d5630b4cf539739df2c5dacb4c659f2488d'
-    const erc20_interface = [
-      'function approve(address _spender, uint256 _value) public returns (bool success)',
-      'function transferFrom(address sender, address recipient, uint256 amount) external returns (bool)',
-      'function balanceOf(address owner) view returns (uint256)'
-    ]
-
-    const uniswapV2router_interface = [
-      'function swapExactTokensForETH(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline) external returns (uint[] memory amounts)'
-    ]
-
-    const weth = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
-    const dai = '0x6B175474E89094C44Da98b954EedeAC495271d0F'
-
-    const swapContract = new ethers.Contract(
-      CONTRACT_ADDRESS,
-      uniswapV2router_interface
-    )
-    const erc20_contract = new ethers.Contract(weth, erc20_interface)
-
-    const amount = ethers.utils.hexlify(1000)
-    const approveTxData = await erc20_contract.populateTransaction.approve(
-      CONTRACT_ADDRESS,
-      amount
-    )
-    console.log(approveTxData)
-
-    const amountOutMin = 0
-    const amountOutMinHex = ethers.BigNumber.from(amountOutMin.toString())._hex
-
-    const path = [dai, weth]
-    const deadline = Math.floor(Date.now() / 1000) + 60 * 1 // 1 minutes from the current Unix time
-
-    const inputAmountHex = ethers.BigNumber.from(
-      amount.toString()
-    ).toHexString()
-
-    const swapTxData =
-      await swapContract.populateTransaction.swapExactTokensForETH(
-        inputAmountHex,
-        amountOutMinHex,
-        path,
-        addressFrom,
-        deadline
-      )
-
-    console.log(swapTxData)
-    // const rec = await swapContract.swapExactTokensForETH(swapTxData)
-    const txGas = {
-      ...swapTxData,
-      maxFeePerGas: 405000000000,
-      maxPriorityFeePerGas: 150000000000,
-      gas: 900000,
-      gasLimit: 90000,
-      from: '0xd450B032f5f3A50Fbf3a91E0Fb410269e766c4d6',
-      to: '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D'
-    }
-    console.log(txGas)
-    // console.log(swapTxData, rec)
     await signer.sendTransaction(popTransaction)
 
     const receipt = await txn.wait()
