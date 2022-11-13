@@ -64,7 +64,7 @@
     seconds: null
   }
   onDestroy(() => {
-    gasSub.unsubscribe()
+    gasSub && gasSub.unsubscribe()
   })
 </script>
 
