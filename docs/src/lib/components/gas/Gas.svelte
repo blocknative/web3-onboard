@@ -63,6 +63,7 @@
     estimatedTransactionCount: null,
     seconds: null
   }
+
   onDestroy(() => {
     gasSub && gasSub.unsubscribe()
   })
