@@ -19,7 +19,7 @@
     })
   }
   let ethMainnetGasBlockPrices
-  let gasUnsub
+  let gasSub
   let rpcGasData: RPCGasPrice
   onMount(() => {
     ethMainnetGasBlockPrices = gasModule.stream({
@@ -27,7 +27,7 @@
       apiKey: 'da1b962d-314d-4903-bfe1-426821d14a35',
       endpoint: 'blockPrices'
     })
-    gasUnsub = ethMainnetGasBlockPrices.subscribe(() => {
+    gasSub = ethMainnetGasBlockPrices.subscribe(() => {
       async function getEtherGasFromRPC() {
         const INFURA_ID = '8b60d52405694345a99bcb82e722e0af'
         const infuraRPC = `https://mainnet.infura.io/v3/${INFURA_ID}`
@@ -64,7 +64,7 @@
     seconds: null
   }
   onDestroy(() => {
-    gasUnsub.unsubscribe()
+    gasSub.unsubscribe()
   })
 </script>
 
