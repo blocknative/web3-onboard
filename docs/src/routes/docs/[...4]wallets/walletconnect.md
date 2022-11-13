@@ -1,4 +1,4 @@
-# @web3-onboard/walletconnect
+# Walletconnect
 
 Wallet module for connecting Ledger hardware wallets to web3-onboard
 

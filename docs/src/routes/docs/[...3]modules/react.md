@@ -1,4 +1,4 @@
-# @web3-onboard/react
+# React
 
 A collection of React hooks for implementing web3-onboard in to a React project
 

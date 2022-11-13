@@ -1,4 +1,4 @@
-# @web3-onboard/mew
+# Mew
 
 Wallet module for connecting Mew wallet to web3-onboard
 

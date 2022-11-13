@@ -1,4 +1,4 @@
-# @web3-onboard/injected-wallets
+# Injected Wallets
 
 This module lets web3-onboard automatically detect Browser Injected Wallets such as Metamask or Coinbase Wallet. We recommend you install this module to get the most out of your w3o implementation. This module supports [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) and [recognizes many injected wallets natively](https://onboard.blocknative.com/docs/packages/injected#injected-wallets-supported-natively).
 

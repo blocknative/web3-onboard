@@ -1,20 +1,23 @@
-# @web3-onboard/coinbase
+# Walletlink
 
-Wallet module for connecting Coinbase Wallet SDK to web3-onboard. Check out the [Coinbase Wallet Developer Docs](https://docs.cloud.coinbase.com/wallet-sdk/docs) for more information.
-## Install
+:::admonition type=warning
+_Wallet module for connecting WalletLink to web3-onboard is now deprecated. Please use [@web3-onboard/coinbase](./coinbase.md)_
+:::
+
+### Install
 
 <Tabs values={['yarn', 'npm']}>
 <TabPanel value="yarn">
 
 ```sh copy
-yarn add @web3-onboard/coinbase
+yarn add @web3-onboard/walletlink
 ```
 
   </TabPanel>
   <TabPanel value="npm">
 
 ```sh copy
-npm install @web3-onboard/coinbase
+npm install @web3-onboard/walletlink
 ```
 
   </TabPanel>
@@ -23,7 +26,7 @@ npm install @web3-onboard/coinbase
 ## Options
 
 ```typescript
-type CoinbaseWalletOptions = {
+type WalletLinkOptions = {
   darkMode: boolean // default = false
 }
 ```
@@ -32,18 +35,18 @@ type CoinbaseWalletOptions = {
 
 ```typescript
 import Onboard from '@web3-onboard/core'
-import coinbaseWalletModule from '@web3-onboard/coinbase'
+import walletLinkModule from '@web3-onboard/walletlink'
 
 // initialize the module with options
-const coinbaseWalletSdk = coinbaseWalletModule({ darkMode: true })
+const walletLink = walletLinkModule({ darkMode: true })
 
 // can also initialize with no options...
-// const coinbaseWalletSdk = coinbaseWalletSdk()
+// const walletLink = walletLinkModule()
 
 const onboard = Onboard({
   // ... other Onboard options
   wallets: [
-    coinbaseWalletSdk
+    walletLink
     //... other wallets
   ]
 })

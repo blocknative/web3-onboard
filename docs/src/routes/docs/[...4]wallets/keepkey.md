@@ -1,4 +1,4 @@
-# @web3-onboard/keepkey
+# Keepkey
 
 Wallet module for connecting KeepKey hardware wallets to web3-onboard
 
