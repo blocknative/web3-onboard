@@ -112,9 +112,11 @@ export const patchProvider = (
         app = mountTransactionPreview(preview)
         options.requireTransactionApproval
           ? handleRequireApproval(app, fullProviderRequest, req)
-          : fullProviderRequest(req).then(() => {
-              app.$destroy()
-            }).catch(() => app.$destroy())
+          : fullProviderRequest(req)
+              .then(() => {
+                app.$destroy()
+              })
+              .catch(() => app.$destroy())
       } catch (e) {
         if (app) app.$destroy()
         throw new ProviderRpcError({
@@ -136,7 +138,7 @@ const transactionPreview: TransactionPreviewModule = (
 ): TransactionPreviewAPI => {
   if (initOptions) {
     const error = validateTPInit(initOptions)
-    
+
     if (error) {
       throw error
     }
