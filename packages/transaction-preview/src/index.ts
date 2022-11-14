@@ -245,6 +245,7 @@ const mountTransactionPreview = (simResponse: SimPlatformResponse) => {
 
   const app = new TransactionPreview({
     target,
+    intro: true,
     props: {
       simResponse,
       requireTransactionApproval,

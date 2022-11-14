@@ -16,8 +16,8 @@
   export let startTime: number
   const device = getDevice()
 
-  let transactionOriginator = simResponse.transactions[0].from
-  let balanceChanges = simResponse.netBalanceChanges.reduce((arr, changes) => {
+  const transactionOriginator = simResponse.transactions[0].from
+  const balanceChanges = simResponse.netBalanceChanges.reduce((arr, changes) => {
     if (changes.length) {
       changes.forEach(change => {
         if (

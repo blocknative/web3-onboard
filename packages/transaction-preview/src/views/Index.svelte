@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { onMount } from 'svelte'
   import { fade } from 'svelte/transition'
   import { cubicOut } from 'svelte/easing'
   import type { SimPlatformResponse } from '../types'
@@ -25,23 +24,19 @@
   const transactionApproved = (approved: boolean) => {
     approved$.next(approved)
   }
-  let mounted = false
-  onMount(() => (mounted = true))
 </script>
 
-{#if mounted}
-  <div in:fade={{ duration: 250, easing: cubicOut }}>
-    {#if expanded || requireTransactionApproval}
-      <Maximized
-        {toggleExpanded}
-        {transactionApproved}
-        {destroyApp}
-        {simResponse}
-        {startTime}
-        {requireTransactionApproval}
-      />
-    {:else}
-      <Minimized {toggleExpanded} {destroyApp} {startTime} />
-    {/if}
-  </div>
-{/if}
+<div in:fade={{ duration: 250, easing: cubicOut }}>
+  {#if expanded || requireTransactionApproval}
+    <Maximized
+      {toggleExpanded}
+      {transactionApproved}
+      {destroyApp}
+      {simResponse}
+      {startTime}
+      {requireTransactionApproval}
+    />
+  {:else}
+    <Minimized {toggleExpanded} {destroyApp} {startTime} />
+  {/if}
+</div>

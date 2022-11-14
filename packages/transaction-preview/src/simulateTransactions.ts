@@ -31,7 +31,7 @@ const simulateTransactions = async (
     network: 'main',
     transactions: cleanedTransactions
   }
-  console.log(body)
+  
   const headers = {
     'Content-Type': 'application/json',
     credentials: `${apiKey}:${secretKey}`
