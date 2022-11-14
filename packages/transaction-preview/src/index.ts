@@ -112,10 +112,11 @@ export const patchProvider = (
         app = mountTransactionPreview(preview)
         options.requireTransactionApproval
           ? handleRequireApproval(app, fullProviderRequest, req)
-          : fullProviderRequest(req).then((hash: unknown) => {
-              hash && app.$destroy()
+          : fullProviderRequest(req).then(() => {
+              app.$destroy()
             }).catch(() => app.$destroy())
       } catch (e) {
+        if (app) app.$destroy()
         throw new ProviderRpcError({
           code: ProviderRpcErrorCode.ACCOUNT_ACCESS_REJECTED,
           message: `User rejected the transaction: ${e}`
