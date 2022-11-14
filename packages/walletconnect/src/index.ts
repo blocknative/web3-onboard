@@ -56,6 +56,14 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
 
         const emitter = new EventEmitter()
 
+        function isHexString(value: string | number) {
+          if (typeof value !== 'string' || !value.match(/^0x[0-9A-Fa-f]*$/)) {
+            return false
+          }
+
+          return true
+        }
+
         class EthProvider {
           public request: EIP1193Provider['request']
           public connector: InstanceType<typeof WalletConnect>
@@ -97,7 +105,11 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                 next: ({ params }) => {
                   const [{ accounts, chainId }] = params
                   this.emit('accountsChanged', accounts)
-                  this.emit('chainChanged', `0x${chainId.toString(16)}`)
+                  if (isHexString(chainId)) {
+                    this.emit('chainChanged', chainId)
+                  } else {
+                    this.emit('chainChanged', `0x${chainId.toString(16)}`)
+                  }
                 },
                 error: console.warn
               })
@@ -125,7 +137,11 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
 
             this.request = async ({ method, params }) => {
               if (method === 'eth_chainId') {
-                return `0x${this.connector.chainId.toString(16)}`
+                if (isHexString(this.connector.chainId)) {
+                  return this.connector.chainId
+                } else {
+                  return `0x${this.connector.chainId.toString(16)}`
+                }
               }
 
               if (method === 'eth_requestAccounts') {
@@ -154,7 +170,11 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                       })
                   } else {
                     const { accounts, chainId } = this.connector.session
-                    this.emit('chainChanged', `0x${chainId.toString(16)}`)
+                    if (isHexString(chainId)) {
+                      this.emit('chainChanged', chainId)
+                    } else {
+                      this.emit('chainChanged', `0x${chainId.toString(16)}`)
+                    }
                     return resolve(accounts)
                   }
 
@@ -171,7 +191,11 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                       next: ({ params }) => {
                         const [{ accounts, chainId }] = params
                         this.emit('accountsChanged', accounts)
-                        this.emit('chainChanged', `0x${chainId.toString(16)}`)
+                        if (isHexString(chainId)) {
+                          this.emit('chainChanged', chainId)
+                        } else {
+                          this.emit('chainChanged', `0x${chainId.toString(16)}`)
+                        }
                         QRCodeModal.close()
                         resolve(accounts)
                       },
@@ -180,13 +204,30 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                 })
               }
 
-              if (
-                method === 'wallet_switchEthereumChain' ||
-                method === 'eth_selectAccounts'
-              ) {
+              if (method === 'eth_selectAccounts') {
                 throw new ProviderRpcError({
                   code: ProviderRpcErrorCode.UNSUPPORTED_METHOD,
                   message: `The Provider does not support the requested method: ${method}`
+                })
+              }
+
+              if (method == 'wallet_switchEthereumChain') {
+                if (!params) {
+                  throw new ProviderRpcError({
+                    code: ProviderRpcErrorCode.INVALID_PARAMS,
+                    message: `The Provider requires a chainId to be passed in as an argument`
+                  })
+                }
+                const chainId = params[0] as { chainId?: number }
+                if (!chainId?.chainId) {
+                  throw new ProviderRpcError({
+                    code: ProviderRpcErrorCode.INVALID_PARAMS,
+                    message: `The Provider requires a chainId to be passed in as an argument`
+                  })
+                }
+                return this.connector.updateSession({
+                  chainId: chainId.chainId,
+                  accounts: this.connector.accounts
                 })
               }
 
