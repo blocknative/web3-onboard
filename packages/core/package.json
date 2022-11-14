@@ -82,7 +82,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.2.4-alpha.1",
+    "@web3-onboard/common": "^2.2.3",
     "bignumber.js": "^9.0.0",
     "bnc-sdk": "^4.4.1",
     "bowser": "^2.11.0",
