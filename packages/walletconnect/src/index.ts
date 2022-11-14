@@ -213,15 +213,18 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                     message: `The Provider requires a chainId to be passed in as an argument`
                   })
                 }
-                const chainId = params[0] as { chainId?: number }
-                if (!chainId?.chainId) {
+                const chainIdObj = params[0] as { chainId?: number }
+                if (
+                  !chainIdObj.hasOwnProperty('chainId') ||
+                  typeof chainIdObj['chainId'] === 'undefined'
+                ) {
                   throw new ProviderRpcError({
                     code: ProviderRpcErrorCode.INVALID_PARAMS,
                     message: `The Provider requires a chainId to be passed in as an argument`
                   })
                 }
                 return this.connector.updateSession({
-                  chainId: chainId.chainId,
+                  chainId: chainIdObj.chainId,
                   accounts: this.connector.accounts
                 })
               }
