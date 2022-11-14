@@ -133,14 +133,14 @@ export const patchProvider = (
 const transactionPreview: TransactionPreviewModule = (
   initOptions: TransactionPreviewInitOptions
 ): TransactionPreviewAPI => {
-  const { i18n, containerElement } = initOptions
   if (initOptions) {
     const error = validateTPInit(initOptions)
-
+    
     if (error) {
       throw error
     }
   }
+  const { i18n, containerElement } = initOptions
   options = initOptions
 
   initI18N(i18n)
