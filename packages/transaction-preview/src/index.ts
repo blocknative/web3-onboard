@@ -106,7 +106,7 @@ export const patchProvider = (
         const preview = await simulateTransactions(options, transactionParams)
         if (preview.status !== 'simulated') {
           // If transaction simulation was unsuccessful do not create DOM el
-          return
+          return fullProviderRequest(req)
         }
         if (app) app.$destroy()
         app = mountTransactionPreview(preview)
@@ -128,8 +128,15 @@ export const patchProvider = (
       return fullProviderRequest(req)
     }
   }
-  patchedProvider.request = request
-  patchedProvider.simPatched = true
+  try {
+    patchedProvider.request = request
+    patchedProvider.simPatched = true
+  } catch (err) {
+    console.error(
+      `There was an error patching the passed in wallet provider. 
+      The provider may be read only and may be incompatible with Transaction Preview`
+    )
+  }
   return patchedProvider
 }
 
