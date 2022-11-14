@@ -15,6 +15,14 @@ interface WalletConnectOptions {
   connectFirstChainId?: boolean
 }
 
+const isHexString = (value: string | number) => {
+  if (typeof value !== 'string' || !value.match(/^0x[0-9A-Fa-f]*$/)) {
+    return false
+  }
+
+  return true
+}
+
 function walletConnect(options?: WalletConnectOptions): WalletInit {
   const {
     bridge = 'https://bridge.walletconnect.org',
@@ -55,14 +63,6 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
         })
 
         const emitter = new EventEmitter()
-
-        function isHexString(value: string | number) {
-          if (typeof value !== 'string' || !value.match(/^0x[0-9A-Fa-f]*$/)) {
-            return false
-          }
-
-          return true
-        }
 
         class EthProvider {
           public request: EIP1193Provider['request']
@@ -105,11 +105,10 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                 next: ({ params }) => {
                   const [{ accounts, chainId }] = params
                   this.emit('accountsChanged', accounts)
-                  if (isHexString(chainId)) {
-                    this.emit('chainChanged', chainId)
-                  } else {
-                    this.emit('chainChanged', `0x${chainId.toString(16)}`)
-                  }
+                  const hexChainId = isHexString(chainId)
+                    ? chainId
+                    : `0x${chainId.toString(16)}`
+                  this.emit('chainChanged', hexChainId)
                 },
                 error: console.warn
               })
@@ -137,11 +136,9 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
 
             this.request = async ({ method, params }) => {
               if (method === 'eth_chainId') {
-                if (isHexString(this.connector.chainId)) {
-                  return this.connector.chainId
-                } else {
-                  return `0x${this.connector.chainId.toString(16)}`
-                }
+                return isHexString(this.connector.chainId)
+                  ? this.connector.chainId
+                  : `0x${this.connector.chainId.toString(16)}`
               }
 
               if (method === 'eth_requestAccounts') {
@@ -170,11 +167,10 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                       })
                   } else {
                     const { accounts, chainId } = this.connector.session
-                    if (isHexString(chainId)) {
-                      this.emit('chainChanged', chainId)
-                    } else {
-                      this.emit('chainChanged', `0x${chainId.toString(16)}`)
-                    }
+                    const hexChainId = isHexString(chainId)
+                      ? chainId
+                      : `0x${chainId.toString(16)}`
+                    this.emit('chainChanged', hexChainId)
                     return resolve(accounts)
                   }
 
@@ -191,11 +187,10 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                       next: ({ params }) => {
                         const [{ accounts, chainId }] = params
                         this.emit('accountsChanged', accounts)
-                        if (isHexString(chainId)) {
-                          this.emit('chainChanged', chainId)
-                        } else {
-                          this.emit('chainChanged', `0x${chainId.toString(16)}`)
-                        }
+                        const hexChainId = isHexString(chainId)
+                          ? chainId
+                          : `0x${chainId.toString(16)}`
+                        this.emit('chainChanged', hexChainId)
                         QRCodeModal.close()
                         resolve(accounts)
                       },
