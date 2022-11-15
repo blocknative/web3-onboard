@@ -46,33 +46,32 @@
       <img src={PoweredByBn} alt="Powered by Blocknative" />
       <span class="sr-only">Powered by Blocknative</span>
     </a>
-
-    <div class="tos-section w-full flex flex-col text-center justify-between border-t border-t-gray-divider py-6">
-      <div class="flex flex-col copyright">
-        <div class="text-gray-300 text-sm mr-1">{text.copyright}</div>
-        <div class="text-gray-300 text-sm ">{text.license}</div>
-      </div>
-      <div class="privacy flex justify-center items-center mt-4 ">
-        <a
-          target="_blank"
-          href="https://www.blocknative.com/privacy-policy"
-          class="text-gray-300 text-sm cursor-pointer hover:text-white">Privacy Policy</a
-        >
-        <div class="w-px bg-gray-divider mx-2 h-4" />
-        <a
-          target="_blank"
-          href="https://www.blocknative.com/terms-conditions"
-          class="text-gray-300 text-sm cursor-pointer hover:text-white">Terms of Service</a
-        >
-      </div>
-    </div>
   </Flexbox>
+  <div class="copyright-box">
+    <div class="flex flex-row flex-wrap justify-center">
+      <div class="text">{text.license}</div>
+      <div class="text">{text.copyright}</div>
+    </div>
+    <div class="flex">
+      <a
+        target="_blank"
+        href="https://www.blocknative.com/privacy-policy"
+        class="text-sm hover:text-white">Privacy Policy</a
+      >
+      <div class="w-px bg-gray-divider mx-2 h-4" />
+      <a
+        target="_blank"
+        href="https://www.blocknative.com/terms-conditions"
+        class="text-sm hover:text-white">Terms of Service</a
+      >
+    </div>
+  </div>
 </footer>
 
 <style>
   footer {
     background: #1a1d26;
-    min-height: 350px;
+    min-height: 400px;
     display: flex;
     flex-flow: column;
   }
@@ -89,6 +88,35 @@
     transform: none;
   }
 
+  .copyright-box {
+    /* grey/600 */
+    background: #242835;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    gap: 1rem;
+  }
+  @media screen and (min-width: 1024px) {
+    .copyright-box {
+      flex-flow: row;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+  }
+
+  .text {
+    /* F6 */
+    font-family: 'Sofia Pro';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    /* grey/300 */
+    color: #999ca5;
+  }
+
   /* screen reader class */
   /* can be moved elsewhere */
   .sr-only {
@@ -103,15 +131,4 @@
     border-width: 0;
   }
 
-  @media screen and (min-width: 1024px) {
-    .copyright {
-      flex-flow: row nowrap;
-    }
-    .tos-section {
-      flex-flow: row nowrap;
-    }
-    .privacy {
-      margin: 0;
-    }
-  }
 </style>
