@@ -2953,15 +2953,6 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.0"
 
-"@web3-onboard/gnosis@^2.2.0":
-  version "2.1.5-alpha.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/gnosis/-/gnosis-2.1.5-alpha.1.tgz#cc2c0efe21beac540f4b87c4690cf26fd60e5293"
-  integrity sha512-Z4b620aROhGhbkThaJT8L4VVLA5jOTJ7OIMfxAZSOoT7K+CFik+D1uUg51KJspwtQRmbkmEC2fR6BVppP4vjuw==
-  dependencies:
-    "@gnosis.pm/safe-apps-provider" "^0.9.2"
-    "@gnosis.pm/safe-apps-sdk" "^6.1.1"
-    "@web3-onboard/common" "^2.2.3"
-
 "@web3auth/base-plugin@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@web3auth/base-plugin/-/base-plugin-1.0.1.tgz#1e2a87acf745299fdff6f92e6c46ee9bc38aa670"
