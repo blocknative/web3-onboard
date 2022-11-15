@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import type { StaticJsonRpcProvider as StaticJsonRpcProviderType } from '@ethersproject/providers'
-import UAuth from '@uauth/js'
 import type { UserInfo } from '@uauth/js'
 import {
   WalletInit,
@@ -31,9 +30,10 @@ const isHexString = (value: string | number) => {
 }
 
 export async function getUauthUser(options: uauthOptions): Promise<UserInfo> {
+  const UAuth = await import('@uauth/js')
   const { clientID, redirectUri, scope = 'openid wallet' } = options || {}
 
-  const uauthInstance = new UAuth({
+  const uauthInstance = new UAuth.default({
     clientID: clientID,
     redirectUri: redirectUri,
     scope: scope
@@ -60,7 +60,8 @@ function uauth(options: uauthOptions): WalletInit {
       label: 'Unstoppable',
       getIcon: async () => (await import('./icon.js')).default,
       getInterface: async ({ chains, EventEmitter }) => {
-        const uauthInstance = new UAuth({
+        const UAuth = await import('@uauth/js')
+        const uauthInstance = new UAuth.default({
           clientID: clientID,
           redirectUri: redirectUri,
           scope: scope
