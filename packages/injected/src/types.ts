@@ -49,7 +49,8 @@ export enum ProviderIdentityFlag {
   Core = 'isAvalanche',
   Opera = 'isOpera',
   Bitski = 'isBitski',
-  Enkrypt = 'isEnkrypt'
+  Enkrypt = 'isEnkrypt',
+  Phantom = 'isPhantom'
 }
 
 export enum ProviderLabel {
@@ -89,7 +90,8 @@ export enum ProviderLabel {
   BitKeep = 'BitKeep',
   Sequence = 'Sequence',
   Core = 'Core',
-  Enkrypt = 'Enkrypt'
+  Enkrypt = 'Enkrypt',
+  Phantom = 'Phantom'
 }
 
 export interface MeetOneProvider extends ExternalProvider {
