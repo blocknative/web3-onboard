@@ -15,6 +15,7 @@ Full Simulation Platform API documentation can be found [here](https://docs.bloc
 `yarn add @web3-onboard/core @web3-onboard/injected @web3-onboard/transaction-preview`
 
 ### Usage with Web3-Onboard Core package (recommended)
+To use the Transaction Preview package with web3-onboard all a user needs to do is initialize with their Blocknative API key and the associated [Secret Key](https://docs.blocknative.com/account#secret-key) and the package handles the rest!
 
 ```typescript
 import Onboard from '@web3-onboard/core'
@@ -24,7 +25,9 @@ import transactionPreviewModule from '@web3-onboard/transaction-preview'
 const injected = injectedModule({})
 const transactionPreview = transactionPreviewModule({
   apiKey: 'xxxxx-4729-457a-8d76-d6d15692657b',
-  secretKey: 'xxxxx-f0e8-40ec-b49a-2571715642cb'
+  secretKey: 'xxxxx-f0e8-40ec-b49a-2571715642cb',
+    // Optional: Require balance change approval prior to sending transaction to wallet
+  requireTransactionApproval: true
 })
 
 const onboard = Onboard({
@@ -54,7 +57,7 @@ import transactionPreviewModule from '@web3-onboard/transaction-preview'
 const transactionPreview = transactionPreviewModule({
   apiKey: 'xxxxx-4729-457a-8d76-d6d15692657b',
   secretKey: 'xxxxx-f0e8-40ec-b49a-2571715642cb',
-  // Require balance change confirmation prior to sending to wallet
+  // Optional: Require balance change approval prior to sending transaction to wallet
   requireTransactionApproval: true
 })
 
@@ -70,7 +73,7 @@ transactionPreview.patchProvider(window.ethereum)
 // UI will display within DOM element specified as containerElement
 ```
 
-Alternatively Transaction Preview can be ran headless without a UI
+Alternatively Transaction Preview can be run headless without a UI and the preview results will be returned by the `simTransactions` method.
 
 ```typescript
 import transactionPreviewModule from '@web3-onboard/transaction-preview'
@@ -80,9 +83,10 @@ const transactionPreview = transactionPreviewModule({
 })
 
 // Transaction code here using Ether.js or Web3.js or custom
-// Pass unsigned transactions into the below method to receive a transaction preview for each transaction passed
+// Pass unsigned transactions into the below method to receive a transaction preview for all transaction passed
 
-transactionPreview.simTransactions(unsignedTransaction)
+const previewResults = await transactionPreview.simTransactions(arrayOfUnsignedTransactions)
+console.log(previewResults)
 ```
 
 ### Options & Types
