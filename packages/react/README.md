@@ -56,7 +56,7 @@ function App() {
     <div>
       <button
         disabled={connecting}
-        onClick={() => (wallet ? disconnect() : connect())}
+        onClick={() => (wallet ? disconnect(wallet) : connect())}
       >
         {connecting ? 'connecting' : wallet ? 'disconnect' : 'connect'}
       </button>
