@@ -15,6 +15,14 @@ interface WalletConnectOptions {
   connectFirstChainId?: boolean
 }
 
+const isHexString = (value: string | number) => {
+  if (typeof value !== 'string' || !value.match(/^0x[0-9A-Fa-f]*$/)) {
+    return false
+  }
+
+  return true
+}
+
 function walletConnect(options?: WalletConnectOptions): WalletInit {
   const {
     bridge = 'https://bridge.walletconnect.org',
@@ -97,7 +105,10 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                 next: ({ params }) => {
                   const [{ accounts, chainId }] = params
                   this.emit('accountsChanged', accounts)
-                  this.emit('chainChanged', `0x${chainId.toString(16)}`)
+                  const hexChainId = isHexString(chainId)
+                    ? chainId
+                    : `0x${chainId.toString(16)}`
+                  this.emit('chainChanged', hexChainId)
                 },
                 error: console.warn
               })
@@ -125,7 +136,9 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
 
             this.request = async ({ method, params }) => {
               if (method === 'eth_chainId') {
-                return `0x${this.connector.chainId.toString(16)}`
+                return isHexString(this.connector.chainId)
+                  ? this.connector.chainId
+                  : `0x${this.connector.chainId.toString(16)}`
               }
 
               if (method === 'eth_requestAccounts') {
@@ -154,7 +167,10 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                       })
                   } else {
                     const { accounts, chainId } = this.connector.session
-                    this.emit('chainChanged', `0x${chainId.toString(16)}`)
+                    const hexChainId = isHexString(chainId)
+                      ? chainId
+                      : `0x${chainId.toString(16)}`
+                    this.emit('chainChanged', hexChainId)
                     return resolve(accounts)
                   }
 
@@ -171,7 +187,10 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                       next: ({ params }) => {
                         const [{ accounts, chainId }] = params
                         this.emit('accountsChanged', accounts)
-                        this.emit('chainChanged', `0x${chainId.toString(16)}`)
+                        const hexChainId = isHexString(chainId)
+                          ? chainId
+                          : `0x${chainId.toString(16)}`
+                        this.emit('chainChanged', hexChainId)
                         QRCodeModal.close()
                         resolve(accounts)
                       },
@@ -180,13 +199,33 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                 })
               }
 
-              if (
-                method === 'wallet_switchEthereumChain' ||
-                method === 'eth_selectAccounts'
-              ) {
+              if (method === 'eth_selectAccounts') {
                 throw new ProviderRpcError({
                   code: ProviderRpcErrorCode.UNSUPPORTED_METHOD,
                   message: `The Provider does not support the requested method: ${method}`
+                })
+              }
+
+              if (method == 'wallet_switchEthereumChain') {
+                if (!params) {
+                  throw new ProviderRpcError({
+                    code: ProviderRpcErrorCode.INVALID_PARAMS,
+                    message: `The Provider requires a chainId to be passed in as an argument`
+                  })
+                }
+                const chainIdObj = params[0] as { chainId?: number }
+                if (
+                  !chainIdObj.hasOwnProperty('chainId') ||
+                  typeof chainIdObj['chainId'] === 'undefined'
+                ) {
+                  throw new ProviderRpcError({
+                    code: ProviderRpcErrorCode.INVALID_PARAMS,
+                    message: `The Provider requires a chainId to be passed in as an argument`
+                  })
+                }
+                return this.connector.updateSession({
+                  chainId: chainIdObj.chainId,
+                  accounts: this.connector.accounts
                 })
               }
 
