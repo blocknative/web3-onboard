@@ -22,6 +22,14 @@ interface uauthOptions {
   connectFirstChainId?: boolean
 }
 
+const isHexString = (value: string | number) => {
+  if (typeof value !== 'string' || !value.match(/^0x[0-9A-Fa-f]*$/)) {
+    return false
+  }
+
+  return true
+}
+
 export async function getUauthUser(options: uauthOptions) {
   const { clientID, redirectUri, scope = 'openid wallet' } = options || {}
 
@@ -31,7 +39,7 @@ export async function getUauthUser(options: uauthOptions) {
     scope: scope
   })
 
-  return await uauthInstance.user().then(user => {
+  return uauthInstance.user().then(user => {
     return user
   })
 }
@@ -163,15 +171,18 @@ function uauth(options: uauthOptions): WalletInit {
 
                 return payload
               })
-                .pipe(takeUntil(this.disconnected$))
-                .subscribe({
-                  next: ({ params }) => {
-                    const [{ accounts, chainId }] = params
-                    this.emit('accountsChanged', accounts)
-                    this.emit('chainChanged', `0x${chainId.toString(16)}`)
-                  },
-                  error: console.warn
-                })
+              .pipe(takeUntil(this.disconnected$))
+              .subscribe({
+                next: ({ params }) => {
+                  const [{ accounts, chainId }] = params
+                  this.emit('accountsChanged', accounts)
+                  const hexChainId = isHexString(chainId)
+                    ? chainId
+                    : `0x${chainId.toString(16)}`
+                  this.emit('chainChanged', hexChainId)
+                },
+                error: console.warn
+              })
 
               // @ts-ignore listen for disconnect event
               fromEvent(this.connector, 'disconnect', (error, payload) => {
@@ -196,7 +207,9 @@ function uauth(options: uauthOptions): WalletInit {
 
               this.request = async ({ method, params }) => {
                 if (method === 'eth_chainId') {
-                  return `0x${this.connector.chainId.toString(16)}`
+                  return isHexString(this.connector.chainId)
+                    ? this.connector.chainId
+                    : `0x${this.connector.chainId.toString(16)}`
                 }
 
                 if (method === 'eth_requestAccounts') {
@@ -225,7 +238,10 @@ function uauth(options: uauthOptions): WalletInit {
                         })
                     } else {
                       const { accounts, chainId } = this.connector.session
-                      this.emit('chainChanged', `0x${chainId.toString(16)}`)
+                      const hexChainId = isHexString(chainId)
+                        ? chainId
+                        : `0x${chainId.toString(16)}`
+                      this.emit('chainChanged', hexChainId)
                       return resolve(accounts)
                     }
 
@@ -237,27 +253,50 @@ function uauth(options: uauthOptions): WalletInit {
 
                       return payload
                     })
-                      .pipe(take(1))
-                      .subscribe({
-                        next: ({ params }) => {
-                          const [{ accounts, chainId }] = params
-                          this.emit('accountsChanged', accounts)
-                          this.emit('chainChanged', `0x${chainId.toString(16)}`)
-                          QRCodeModal.close()
-                          resolve(accounts)
-                        },
-                        error: reject
-                      })
+                    .pipe(take(1))
+                    .subscribe({
+                      next: ({ params }) => {
+                        const [{ accounts, chainId }] = params
+                        this.emit('accountsChanged', accounts)
+                        const hexChainId = isHexString(chainId)
+                          ? chainId
+                          : `0x${chainId.toString(16)}`
+                        this.emit('chainChanged', hexChainId)
+                        QRCodeModal.close()
+                        resolve(accounts)
+                      },
+                      error: reject
+                    })
                   })
                 }
 
-                if (
-                  method === 'wallet_switchEthereumChain' ||
-                  method === 'eth_selectAccounts'
-                ) {
+                if (method === 'eth_selectAccounts') {
                   throw new ProviderRpcError({
                     code: ProviderRpcErrorCode.UNSUPPORTED_METHOD,
                     message: `The Provider does not support the requested method: ${method}`
+                  })
+                }
+  
+                if (method == 'wallet_switchEthereumChain') {
+                  if (!params) {
+                    throw new ProviderRpcError({
+                      code: ProviderRpcErrorCode.INVALID_PARAMS,
+                      message: `The Provider requires a chainId to be passed in as an argument`
+                    })
+                  }
+                  const chainIdObj = params[0] as { chainId?: number }
+                  if (
+                    !chainIdObj.hasOwnProperty('chainId') ||
+                    typeof chainIdObj['chainId'] === 'undefined'
+                  ) {
+                    throw new ProviderRpcError({
+                      code: ProviderRpcErrorCode.INVALID_PARAMS,
+                      message: `The Provider requires a chainId to be passed in as an argument`
+                    })
+                  }
+                  return this.connector.updateSession({
+                    chainId: chainIdObj.chainId,
+                    accounts: this.connector.accounts
                   })
                 }
 
