@@ -25,25 +25,12 @@ function enkrypt(): WalletInit {
             enkryptProvider.on.bind(enkryptProvider)
 
           enkryptProvider.on = (event, func) => {
-            // intercept chainChanged event and format string
-            if (event === 'chainChanged') {
-              addListener(event, (chainId: ChainId) => {
-                const cb = func as ChainListener
-                cb(`0x${parseInt(chainId as string).toString(16)}`)
-              })
-            } else {
-              addListener(event, func)
-            }
+            addListener(event, func)
           }
 
-          const provider = createEIP1193Provider(enkryptProvider, {
-            eth_chainId: ({ baseRequest }) =>
-              baseRequest({ method: 'eth_chainId' }).then(
-                id => `0x${parseInt(id as string).toString(16)}`
-              )
-          })
+          const provider = createEIP1193Provider(enkryptProvider)
 
-          provider.removeListener = (event, func) => {}
+          provider.removeListener = (event, func) => { }
 
           return {
             provider
