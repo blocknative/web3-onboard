@@ -594,7 +594,6 @@ const enkrypt: InjectedWalletModule = {
       // intercept chainChanged event and format string
       if (event === 'chainChanged') {
         addListener(event, (chainId: ChainId) => {
-          console.log(chainId)
           const cb = func as ChainListener
           cb(`0x${parseInt(chainId as string).toString(16)}`)
         })

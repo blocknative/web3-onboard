@@ -114,7 +114,7 @@
 
   const onboard = Onboard({
     wallets: [
-      injected,
+      // injected,
       web3auth,
       ledger,
       trezor,
