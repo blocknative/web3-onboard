@@ -17,6 +17,8 @@
   import dcentModule from '@web3-onboard/dcent'
   import sequenceModule from '@web3-onboard/sequence'
   import tallyHoModule from '@web3-onboard/tallyho'
+  import enkryptModule from '@web3-onboard/enkrypt'
+  import mewWalletModule from '@web3-onboard/mew-wallet'
   import uauthModule from '@web3-onboard/uauth'
   import {
     recoverAddress,
@@ -117,6 +119,9 @@
 
   const sequence = sequenceModule()
 
+  const enrkypt = enkryptModule()
+  const mewWallet = mewWalletModule()
+
   const onboard = Onboard({
     wallets: [
       injected,
@@ -124,6 +129,8 @@
       ledger,
       trezor,
       walletConnect,
+      enrkypt,
+      mewWallet,
       keepkey,
       keystone,
       coinbaseWallet,
