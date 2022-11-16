@@ -19,28 +19,6 @@ const isHexString = (value: string | number) => {
   return true
 }
 
-export async function getUauthUser(options: UauthInitOptions): Promise<UserInfo> {
-  const UAuth = await import('@uauth/js')
-  if (options) {
-    const error = validateUauthInitOptions(options)
-
-    if (error) {
-      throw error
-    }
-  }
-  const { clientID, redirectUri, scope = 'openid wallet' } = options || {}
-
-  const uauthInstance = new UAuth.default({
-    clientID: clientID,
-    redirectUri: redirectUri,
-    scope: scope
-  })
-
-  return uauthInstance.user().then(user => {
-    return user
-  })
-}
-
 function uauth(options: UauthInitOptions): WalletInit {
   return () => {
     if (options) {
@@ -375,7 +353,12 @@ function uauth(options: UauthInitOptions): WalletInit {
           }
           provider = new EthProvider({ chains, connector })
         }
-        return { provider: provider }
+        return { 
+          provider,
+          instance: {
+            user
+          }
+        }
       }
     }
   }

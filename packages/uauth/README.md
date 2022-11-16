@@ -11,7 +11,7 @@
 Follow the [Login Client Congifuration Docs](https://docs.unstoppabledomains.com/login-with-unstoppable/login-integration-guides/login-client-configuration/) on the Unstoppable Domains website to get setup with your clientID and redirectUri.
 
 ```typescript
-interface uauthOptions {
+type UauthInitOptions = {
   clientID: string // required and will throw an error if not included: links dapp to Unstoppable Domains for customization
   redirectUri: string // required and will throw an error if not included: used for pop-up and callback redirection
   scope?: string // default = 'openid wallet'
@@ -28,7 +28,7 @@ interface uauthOptions {
 
 ```typescript
 import Onboard from '@web3-onboard/core'
-import uauthModule, { getUauthUser } from '@web3-onboard/uauth'
+import uauthModule from '@web3-onboard/uauth'
 
 // initialize the module with options
 const uauth = uauthModule({
@@ -59,12 +59,20 @@ const onboard = Onboard({
 
 const connectedWallets = await onboard.connectWallet()
 console.log(connectedWallets)
+```
 
-// after connection, get requested user scopes in an object
-const user = await getUauthUser({
-  clientID: 'YOUR_CLIENT_ID',
-  redirectUri: 'YOUR_REDIRECT_URI',
-  scope?: 'YOUR_SCOPES'
-})
-console.log(user)
+### Accessing the UAuth configuration
+
+When Unstoppable Domains is connected the UAuth user instance is exposed.
+This can be used to get information related to the user scopes requested through the `UauthInitOptions`. 
+
+```typescript
+const [unstoppable] = await onboard.connectWallet()
+
+try {
+  const user = unstoppable.instance.user
+  console.log(user)
+} catch {
+  // Handle errors if required!
+}
 ```

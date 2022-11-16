@@ -17,7 +17,7 @@
   import dcentModule from '@web3-onboard/dcent'
   import sequenceModule from '@web3-onboard/sequence'
   import tallyHoModule from '@web3-onboard/tallyho'
-  import uauthModule, { getUauthUser } from '@web3-onboard/uauth'
+  import uauthModule from '@web3-onboard/uauth'
   import {
     recoverAddress,
     arrayify,
@@ -951,7 +951,7 @@
     {/if}
   </div>
   {#if $wallets$ && !hideForIframe}
-    {#each $wallets$ as { icon, label, accounts, chains, provider }}
+    {#each $wallets$ as { icon, label, accounts, chains, provider, instance }}
       <div class="connected-wallet">
         <div class="flex-centered" style="width: 10rem;">
           <div style="width: 2rem; height: 2rem">{@html icon}</div>
@@ -961,16 +961,11 @@
         <div>Chains: {JSON.stringify(chains, null, 2)}</div>
 
         {#if label === 'Unstoppable'}
-          {#await getUauthUser(uauthOptions)}
-            <div>Getting Unstoppable User...</div>
-          {:then user}
-          scope: 'openid wallet email:optional humanity_check:optional profile:optional social:optional'
-            <div>Unstoppable User: {user.sub}</div>
-            <div>Unstoppable Wallet: {user.wallet_address}</div>
-            <div>Unstoppable Email: {user.email || ''}</div>
-            <div>Unstoppable Humanity: {user.humanity_check_id || ''}</div>
-            <div>Unstoppable Profile: {user.profile || ''}</div>
-          {/await}
+          <div>Unstoppable User: {instance.user.sub}</div>
+          <div>Unstoppable Wallet: {instance.user.wallet_address}</div>
+          <div>Unstoppable Email: {instance.user.email || ''}</div>
+          <div>Unstoppable Humanity: {instance.user.humanity_check_id || ''}</div>
+          <div>Unstoppable Profile: {instance.user.profile || ''}</div>
         {/if}
 
         {#each accounts as { address, ens, balance }}
