@@ -23,7 +23,7 @@ function uauth(options: UauthInitOptions): WalletInit {
   return () => {
     if (options) {
       const error = validateUauthInitOptions(options)
-  
+
       if (error) {
         throw error
       }
@@ -108,7 +108,8 @@ function uauth(options: UauthInitOptions): WalletInit {
           // This is a cjs module and therefor depending on build tooling
           // sometimes it will be nested in the { default } object and
           // other times it will be the actual import
-          let QRCodeModal = (await import('@walletconnect/qrcode-modal')).default
+          let QRCodeModal = (await import('@walletconnect/qrcode-modal'))
+            .default
 
           // @ts-ignore - TS thinks that there is no default property on the `QRCodeModal` but sometimes there is
           QRCodeModal = QRCodeModal.default || QRCodeModal
@@ -158,18 +159,18 @@ function uauth(options: UauthInitOptions): WalletInit {
 
                 return payload
               })
-              .pipe(takeUntil(this.disconnected$))
-              .subscribe({
-                next: ({ params }) => {
-                  const [{ accounts, chainId }] = params
-                  this.emit('accountsChanged', accounts)
-                  const hexChainId = isHexString(chainId)
-                    ? chainId
-                    : `0x${chainId.toString(16)}`
-                  this.emit('chainChanged', hexChainId)
-                },
-                error: console.warn
-              })
+                .pipe(takeUntil(this.disconnected$))
+                .subscribe({
+                  next: ({ params }) => {
+                    const [{ accounts, chainId }] = params
+                    this.emit('accountsChanged', accounts)
+                    const hexChainId = isHexString(chainId)
+                      ? chainId
+                      : `0x${chainId.toString(16)}`
+                    this.emit('chainChanged', hexChainId)
+                  },
+                  error: console.warn
+                })
 
               // @ts-ignore listen for disconnect event
               fromEvent(this.connector, 'disconnect', (error, payload) => {
@@ -240,20 +241,20 @@ function uauth(options: UauthInitOptions): WalletInit {
 
                       return payload
                     })
-                    .pipe(take(1))
-                    .subscribe({
-                      next: ({ params }) => {
-                        const [{ accounts, chainId }] = params
-                        this.emit('accountsChanged', accounts)
-                        const hexChainId = isHexString(chainId)
-                          ? chainId
-                          : `0x${chainId.toString(16)}`
-                        this.emit('chainChanged', hexChainId)
-                        QRCodeModal.close()
-                        resolve(accounts)
-                      },
-                      error: reject
-                    })
+                      .pipe(take(1))
+                      .subscribe({
+                        next: ({ params }) => {
+                          const [{ accounts, chainId }] = params
+                          this.emit('accountsChanged', accounts)
+                          const hexChainId = isHexString(chainId)
+                            ? chainId
+                            : `0x${chainId.toString(16)}`
+                          this.emit('chainChanged', hexChainId)
+                          QRCodeModal.close()
+                          resolve(accounts)
+                        },
+                        error: reject
+                      })
                   })
                 }
 
@@ -263,7 +264,7 @@ function uauth(options: UauthInitOptions): WalletInit {
                     message: `The Provider does not support the requested method: ${method}`
                   })
                 }
-  
+
                 if (method == 'wallet_switchEthereumChain') {
                   if (!params) {
                     throw new ProviderRpcError({
@@ -353,7 +354,7 @@ function uauth(options: UauthInitOptions): WalletInit {
           }
           provider = new EthProvider({ chains, connector })
         }
-        return { 
+        return {
           provider,
           instance: {
             user
