@@ -4,7 +4,11 @@
 
 ### Install
 
-`npm i @web3-onboard/uauth`
+**NPM**
+`npm i @web3-onboard/core @web3-onboard/uauth`
+
+**Yarn**
+`yarn add @web3-onboard/core @web3-onboard/uauth`
 
 ## Options
 
