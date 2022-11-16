@@ -71,12 +71,11 @@ When Unstoppable Domains is connected the UAuth user instance is exposed.
 This can be used to get information related to the user scopes requested through the `UauthInitOptions`. 
 
 ```typescript
-const [unstoppable] = await onboard.connectWallet()
-
-try {
-  const user = unstoppable.instance.user
-  console.log(user)
-} catch {
-  // Handle errors if required!
-}
+const wallets$ = onboard.state.select('wallets').pipe(share())
+wallets$.subscribe(wallet => {
+  const unstoppableUser = wallet.find(
+    provider => provider.label === 'Unstoppable'
+  )
+  if (unstoppableUser) console.log(unstoppableUser.instance.user)
+})
 ```
