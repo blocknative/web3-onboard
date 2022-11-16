@@ -585,10 +585,10 @@ const enkrypt: InjectedWalletModule = {
     !!provider && !!provider.providers && !!provider.providers.ethereum,
   getIcon: async () => (await import('./icons/enkrypt.js')).default,
   getInterface: async () => {
-
-    const addListener: SimpleEventEmitter['on'] = window.enkrypt.providers.ethereum.on.bind(
-      window.enkrypt.providers.ethereum
-    )
+    const addListener: SimpleEventEmitter['on'] =
+      window.enkrypt.providers.ethereum.on.bind(
+        window.enkrypt.providers.ethereum
+      )
 
     window.enkrypt.providers.ethereum.on = (event, func) => {
       // intercept chainChanged event and format string
@@ -606,7 +606,7 @@ const enkrypt: InjectedWalletModule = {
       eth_chainId: ({ baseRequest }) =>
         baseRequest({ method: 'eth_chainId' }).then(
           id => `0x${parseInt(id as string).toString(16)}`
-        ),
+        )
     })
 
     provider.removeListener = (event, func) => {}

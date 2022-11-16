@@ -28,7 +28,7 @@ function enkrypt(): WalletInit {
 
           const provider = createEIP1193Provider(enkryptProvider)
 
-          provider.removeListener = (event, func) => { }
+          provider.removeListener = (event, func) => {}
 
           return {
             provider

@@ -133,11 +133,11 @@ export interface CustomWindow extends Window {
   Bitski: {
     getProvider(): InjectedProvider
   }
-  enkrypt:{
+  enkrypt: {
     providers: {
       ethereum: InjectedProvider
     }
-  } 
+  }
 }
 
 export type InjectedProvider = ExternalProvider &
