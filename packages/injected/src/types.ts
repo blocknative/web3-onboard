@@ -48,7 +48,8 @@ export enum ProviderIdentityFlag {
   Sequence = 'isSequence',
   Core = 'isAvalanche',
   Opera = 'isOpera',
-  Bitski = 'isBitski'
+  Bitski = 'isBitski',
+  Enkrypt = 'isEnkrypt'
 }
 
 export enum ProviderLabel {
@@ -87,7 +88,8 @@ export enum ProviderLabel {
   GameStop = 'GameStop Wallet',
   BitKeep = 'BitKeep',
   Sequence = 'Sequence',
-  Core = 'Core'
+  Core = 'Core',
+  Enkrypt = 'Enkrypt'
 }
 
 export interface MeetOneProvider extends ExternalProvider {
@@ -110,7 +112,8 @@ export enum InjectedNameSpace {
   GameStop = 'gamestop',
   BitKeep = 'bitkeep',
   Avalanche = 'avalanche',
-  Bitski = 'Bitski'
+  Bitski = 'Bitski',
+  Enkrypt = 'enkrypt'
 }
 
 export interface CustomWindow extends Window {
@@ -129,6 +132,11 @@ export interface CustomWindow extends Window {
   avalanche: InjectedProvider
   Bitski: {
     getProvider(): InjectedProvider
+  }
+  enkrypt: {
+    providers: {
+      ethereum: InjectedProvider
+    }
   }
 }
 
