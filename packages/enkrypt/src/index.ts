@@ -1,8 +1,6 @@
 import type {
   WalletInit,
   SimpleEventEmitter,
-  ChainListener,
-  ChainId,
   EIP1193Provider
 } from '@web3-onboard/common'
 import { createEIP1193Provider } from '@web3-onboard/common'
