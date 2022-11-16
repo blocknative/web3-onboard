@@ -66,6 +66,7 @@
     "@walletconnect/client": "^1.7.1",
     "@walletconnect/qrcode-modal": "^1.7.1",
     "@web3-onboard/common": "^2.2.3",
+    "joi": "^17.6.1",
     "rxjs": "^7.5.2"
   }
 }

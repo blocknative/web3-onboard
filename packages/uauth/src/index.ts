@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import type { StaticJsonRpcProvider as StaticJsonRpcProviderType } from '@ethersproject/providers'
 import type { UserInfo } from '@uauth/js'
+import type { UauthInitOptions } from './types.js'
+import { validateUauthInitOptions } from './validation.js'
 import {
   WalletInit,
   createEIP1193Provider,
@@ -8,18 +10,6 @@ import {
   Chain,
   ProviderAccounts
 } from '@web3-onboard/common'
-
-interface uauthOptions {
-  clientID: string
-  redirectUri: string
-  scope?: string
-  shouldLoginWithRedirect?: boolean
-  bridge?: string
-  qrcodeModalOptions?: {
-    mobileLinks: string[]
-  }
-  connectFirstChainId?: boolean
-}
 
 const isHexString = (value: string | number) => {
   if (typeof value !== 'string' || !value.match(/^0x[0-9A-Fa-f]*$/)) {
@@ -29,8 +19,15 @@ const isHexString = (value: string | number) => {
   return true
 }
 
-export async function getUauthUser(options: uauthOptions): Promise<UserInfo> {
+export async function getUauthUser(options: UauthInitOptions): Promise<UserInfo> {
   const UAuth = await import('@uauth/js')
+  if (options) {
+    const error = validateUauthInitOptions(options)
+
+    if (error) {
+      throw error
+    }
+  }
   const { clientID, redirectUri, scope = 'openid wallet' } = options || {}
 
   const uauthInstance = new UAuth.default({
@@ -44,8 +41,16 @@ export async function getUauthUser(options: uauthOptions): Promise<UserInfo> {
   })
 }
 
-function uauth(options: uauthOptions): WalletInit {
+function uauth(options: UauthInitOptions): WalletInit {
   return () => {
+    if (options) {
+      const error = validateUauthInitOptions(options)
+  
+      if (error) {
+        throw error
+      }
+    }
+
     const {
       clientID,
       redirectUri,
@@ -74,6 +79,12 @@ function uauth(options: uauthOptions): WalletInit {
           if (!uauthInstance.fallbackLoginOptions.scope.includes('wallet')) {
             throw new Error(
               'Must request the "wallet" scope for connector to work.'
+            )
+          }
+
+          if (!uauthInstance.fallbackLoginOptions.scope.includes('openid')) {
+            throw new Error(
+              'Must request the "openid" scope for connector to work.'
             )
           }
 
@@ -119,9 +130,7 @@ function uauth(options: uauthOptions): WalletInit {
           // This is a cjs module and therefor depending on build tooling
           // sometimes it will be nested in the { default } object and
           // other times it will be the actual import
-          // @ts-ignore - It thinks it is missing properties since it expect it to be nested under default
-          let QRCodeModal: typeof import('@walletconnect/qrcode-modal').default =
-            await import('@walletconnect/qrcode-modal')
+          let QRCodeModal = (await import('@walletconnect/qrcode-modal')).default
 
           // @ts-ignore - TS thinks that there is no default property on the `QRCodeModal` but sometimes there is
           QRCodeModal = QRCodeModal.default || QRCodeModal
