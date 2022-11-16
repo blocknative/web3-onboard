@@ -1,6 +1,6 @@
 # @web3-onboard/mew-wallet
 
-## Wallet module for connecting Mew wallet to web3-onboard
+## Wallet module for connecting Mew wallet through web3-onboard
 
 ### Install
 

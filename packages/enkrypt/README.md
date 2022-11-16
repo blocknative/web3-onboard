@@ -1,6 +1,6 @@
 # @web3-onboard/enkrypt
 
-## Wallet module for connecting Enkrypt wallet to web3-onboard
+## Wallet module for connecting Enkrypt wallet through web3-onboard
 
 ### Install
 
