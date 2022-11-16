@@ -4,7 +4,11 @@
 
 ### Install
 
-`npm i @web3-onboard/enrkypt`
+**NPM**
+`npm i @web3-onboard/core @web3-onboard/enkrypt`
+
+**Yarn**
+`yarn add @web3-onboard/core @web3-onboard/enkrypt`
 
 ## Usage
 
