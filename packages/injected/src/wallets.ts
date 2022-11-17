@@ -624,7 +624,7 @@ const phantom: InjectedWalletModule = {
   checkProviderIdentity: ({ provider }) =>
     !!provider && !!provider[ProviderIdentityFlag.Phantom],
   getIcon: async () => (await import('./icons/phantom.js')).default,
-  getInterface: getInjectedInterface(ProviderIdentityFlag.Phantom, true),
+  getInterface: getInjectedInterface(ProviderIdentityFlag.Phantom),
   platforms: ['all']
 }
 

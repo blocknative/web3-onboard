@@ -115,7 +115,8 @@ export enum InjectedNameSpace {
   BitKeep = 'bitkeep',
   Avalanche = 'avalanche',
   Bitski = 'Bitski',
-  Enkrypt = 'enkrypt'
+  Enkrypt = 'enkrypt',
+  Phantom = 'phantom'
 }
 
 export interface CustomWindow extends Window {
@@ -139,6 +140,10 @@ export interface CustomWindow extends Window {
     providers: {
       ethereum: InjectedProvider
     }
+  }
+  phantom: {
+    ethereum: InjectedProvider
+    solana: any
   }
 }
 
