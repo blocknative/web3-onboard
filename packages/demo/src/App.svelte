@@ -32,7 +32,6 @@
   import blocknativeIcon from './blocknative-icon'
   import blocknativeLogo from './blocknative-logo'
   import { onMount } from 'svelte'
-  import wallets from '@web3-onboard/injected-wallets/dist/wallets'
 
   let windowWidth
 
