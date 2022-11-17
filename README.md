@@ -98,6 +98,7 @@ For full documentation, check out the README.md for each package:
 - [Sequence](packages/sequence/README.md)
 - [TallyHo](packages/tallyho/README.md)
 - [Enkrypt](packages/enkrypt/README.md)
+- [Unstoppable Domains](packages/uauth/README.md)
 
 **Hardware Wallets**
 
