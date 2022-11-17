@@ -21,12 +21,12 @@ export type TransactionPreviewAPI = {
    * Pass this method an HTML element ID to allow for
    * the Transaction Preview UI to mount to it.
    * Note: The element must exist within the DOM tree
-   *  at time of preview/rendering
+   * at time of preview/rendering
    */
   setContainerElement: (elementId: string) => void
   /**
    * This property will return the container element HTML ID
-   *  set for the Transaction Preview UI to mount to
+   * set for the Transaction Preview UI to mount to
    */
   containerElement?: string
 }
@@ -63,7 +63,7 @@ export type TransactionPreviewInitOptions = {
   /**
    * An optional internationalization object that defines the display
    * text for different locales. Can also be used to override the default text.
-   *  To override the default text, pass in a object for the en locale
+   * To override the default text, pass in a object for the en locale
    */
   i18n?: i18nOptions
 }

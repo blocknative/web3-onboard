@@ -31,6 +31,7 @@
   import blocknativeLogo from './blocknative-logo'
   import { onMount } from 'svelte'
 
+  const apiKey = '0e5f8cec-4729-457a-8d76-d6d15692657b'
   let windowWidth
 
   if (window.innerWidth < 700) {
@@ -108,7 +109,7 @@
 
   const sequence = sequenceModule()
   const transactionPreview = transactionPreviewModule({
-    apiKey: '0e5f8cec-4729-457a-8d76-d6d15692657b',
+    apiKey,
     secretKey: '196bf536-f0e8-40ec-b49a-2571715642cb',
     requireTransactionApproval: true
   })
@@ -250,7 +251,7 @@
     //   accountCenter: '#sample-container-el'
     // },
     // Sign up for your free api key at www.Blocknative.com
-    apiKey: '0e5f8cec-4729-457a-8d76-d6d15692657b'
+    apiKey
   })
 
   // Subscribe to wallet updates
