@@ -13,12 +13,17 @@ function coinbaseWallet({
         const [chain] = chains
         const { name, icon } = appMetadata || {}
 
-        const { CoinbaseWalletSDK } = await import('@coinbase/wallet-sdk')
+        const { default: CoinbaseWalletSDK } = await import(
+          '@coinbase/wallet-sdk'
+        )
+        const CoinbaseWalletSDKConstructor = (CoinbaseWalletSDK as any).default
+          ? (CoinbaseWalletSDK as any).default
+          : CoinbaseWalletSDK
 
         const base64 = window.btoa(icon || '')
         const appLogoUrl = `data:image/svg+xml;base64,${base64}`
 
-        const instance = new CoinbaseWalletSDK({
+        const instance = new CoinbaseWalletSDKConstructor({
           appName: name || '',
           appLogoUrl,
           darkMode
