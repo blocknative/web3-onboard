@@ -118,7 +118,7 @@
 
   const sequence = sequenceModule()
 
-  const enrkypt = enkryptModule()
+  const enkrypt = enkryptModule()
   const mewWallet = mewWalletModule()
 
   const onboard = Onboard({
@@ -128,7 +128,7 @@
       ledger,
       trezor,
       walletConnect,
-      enrkypt,
+      enkrypt,
       mewWallet,
       keepkey,
       keystone,
