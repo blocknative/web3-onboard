@@ -12,7 +12,8 @@
 
 ## Options
 
-Follow the [Login Client Congifuration Docs](https://docs.unstoppabledomains.com/login-with-unstoppable/login-integration-guides/login-client-configuration/) on the Unstoppable Domains website to get setup with your clientID and redirectUri. Note that the Redirection URI value(s) in the client configuration MUST exactly match the redirect_uri parameter value used in `UauthInitOptions`. More specifics can be found in the [Rules for Redirect URIs Docs](https://docs.unstoppabledomains.com/login-with-unstoppable/login-integration-guides/login-client-configuration/#rules-for-redirect-uris).
+Follow the [Login Client Congifuration Docs](https://docs.unstoppabledomains.com/login-with-unstoppable/login-integration-guides/login-client-configuration/) on the Unstoppable Domains website to get setup with your clientID and redirectUri. 
+**Note:** The Redirection URI value(s) in the client configuration MUST exactly match the redirect_uri parameter value used in `UauthInitOptions`. More specifics can be found in the [Rules for Redirect URIs Docs](https://docs.unstoppabledomains.com/login-with-unstoppable/login-integration-guides/login-client-configuration/#rules-for-redirect-uris).
 
 ```typescript
 type UauthInitOptions = {
