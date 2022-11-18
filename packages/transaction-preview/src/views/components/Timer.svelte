@@ -5,9 +5,13 @@
 
   export let startTime: number
 
-  function timeString(time: number): string {
+  const formatSeconds = (time: number) => {
     const seconds = Math.floor(time / 1000)
-    const formattedSeconds = seconds < 0 ? 0 : seconds
+    return seconds < 0 ? 0 : seconds
+  }
+
+  const timeString = (time: number): string => {
+    const formattedSeconds = formatSeconds(time)
     return formattedSeconds >= 60
       ? `${Math.floor(formattedSeconds / 60).toLocaleString(
           $locale
@@ -44,14 +48,15 @@
   }
 
   .time {
-    color: var(
-      --transaction-sim-timer-color,
-      var(--onboard-gray-300, var(--gray-300))
-    );
+    color: var(--onboard-gray-300, var(--gray-300))
+  }
+
+  .stale {
+    color: var(--onboard-warning-300, var(--warning-300));
   }
 </style>
 
-<div class="time">
+<div class={`time ${formatSeconds(currentTime - startTime) >= 60 && 'stale'}`}>
   {$formatter('timeSection.action', {
     default: en.timeSection.action
   })}

@@ -11,7 +11,7 @@
     font-family: inherit;
     margin: 0px 20px 0px 8px;
     justify-content: center;
-    gap: 0.25rem;
+    gap: 4px;
   }
 
   .timer {
