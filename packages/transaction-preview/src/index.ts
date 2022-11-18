@@ -193,31 +193,6 @@ const mountTransactionPreview = (simResponse: SimPlatformResponse) => {
 
   target.innerHTML = `
     <style>
-      :host {  
-
-        --transaction-notification-border-radius
-        
-        /* COLORS */
-        --transaction-notification-background
-
-        /* FONTS */
-  
-        /* FONTS */
-        --font-family-normal: Sofia Pro;
-
-        /* SPACING */
-
-
-        /* MODAL POSITION */
-        --transaction-preview-modal-z-index: 20;
-        --transaction-preview-modal-top: unset;
-        --transaction-preview-modal-right: unset;
-        --transaction-preview-modal-bottom: unset;
-        --transaction-preview-modal-left: unset;
-
-        /* SHADOWS */
-      }
-
     </style>
   `
   const getW3OEl = document.querySelector('onboard-v2')
