@@ -78,6 +78,19 @@ const handleRequireApproval = async (
   fullProviderRequest(req)
 }
 
+const netBalanceChangesExist = (simResp: SimPlatformResponse): boolean => {
+  if (
+    simResp &&
+    simResp.netBalanceChanges &&
+    simResp.netBalanceChanges.length
+  ) {
+    return simResp.netBalanceChanges.some(balChange => {
+      return balChange.length && balChange.length > 0
+    })
+  }
+  return false
+}
+
 export const patchProvider = (
   walletProvider: PatchedEIP1193Provider
 ): PatchedEIP1193Provider => {
@@ -104,8 +117,9 @@ export const patchProvider = (
         req.params as EthSignTransactionRequest['params']
       try {
         const preview = await simulateTransactions(options, transactionParams)
-        if (preview.status !== 'simulated') {
-          // If transaction simulation was unsuccessful do not create DOM el
+        if (preview.status !== 'simulated' || !netBalanceChangesExist(preview)) {
+          // If transaction simulation was unsuccessful or balanceChanges do
+          // not exist do not create DOM el
           return fullProviderRequest(req)
         }
         if (app) app.$destroy()
