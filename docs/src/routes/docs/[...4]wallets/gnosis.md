@@ -1,4 +1,4 @@
-# @web3-onboard/gnosis
+# Gnosis
 
 Wallet module for connecting Gnosis Safe to web3-onboard
 

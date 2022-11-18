@@ -1,6 +1,6 @@
-# @web3-onboard/dcent
+# Torus
 
-## Wallet module for connecting D'CENT hardware wallets to web3-onboard
+## Wallet module for connecting Torus wallet to web3-onboard
 
 ### Install
 
@@ -8,31 +8,35 @@
 <TabPanel value="yarn">
 
 ```sh copy
-yarn add @web3-onboard/dcent
+yarn add @web3-onboard/torus
 ```
 
   </TabPanel>
   <TabPanel value="npm">
 
 ```sh copy
-npm install @web3-onboard/dcent
+npm install @web3-onboard/torus
 ```
 
   </TabPanel>
 </Tabs>
 
-### Usage
+## Options
+
+See the [Torus Docs](https://docs.tor.us/wallet/api-reference/class) for the extensive list of options
+
+## Usage
 
 ```typescript
 import Onboard from '@web3-onboard/core'
-import dcentModule from '@web3-onboard/dcent'
+import torusModule from '@web3-onboard/torus'
 
-const dcent = dcentModule()
+const torus = torusModule()
 
 const onboard = Onboard({
   // ... other Onboard options
   wallets: [
-    dcent
+    torus
     //... other wallets
   ]
 })

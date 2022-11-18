@@ -1,46 +1,38 @@
-# @web3-onboard/portis
+# Dcent
 
-Wallet module for connecting Portis wallet to web3-onboard
+## Wallet module for connecting D'CENT hardware wallets to web3-onboard
 
-## Install
+### Install
 
 <Tabs values={['yarn', 'npm']}>
 <TabPanel value="yarn">
 
 ```sh copy
-yarn add @web3-onboard/portis
+yarn add @web3-onboard/dcent
 ```
 
   </TabPanel>
   <TabPanel value="npm">
 
 ```sh copy
-npm install @web3-onboard/portis
+npm install @web3-onboard/dcent
 ```
 
   </TabPanel>
 </Tabs>
 
-## Options
-
-```typescript
-type PortisOptions {
-  apiKey: string // required
-}
-```
-
-## Usage
+### Usage
 
 ```typescript
 import Onboard from '@web3-onboard/core'
-import portisModule from '@web3-onboard/portis'
+import dcentModule from '@web3-onboard/dcent'
 
-const portis = portisModule({ apiKey: 'API_KEY' })
+const dcent = dcentModule()
 
 const onboard = Onboard({
   // ... other Onboard options
   wallets: [
-    portis
+    dcent
     //... other wallets
   ]
 })

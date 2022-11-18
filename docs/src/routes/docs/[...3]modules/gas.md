@@ -1,7 +1,7 @@
 <script>
     import {Gas} from '$lib/components'
 </script>
-# @web3-onboard/gas
+# Gas
 
 A module for requesting streams or single requests of gas price estimates from the [Blocknative Gas Platform API](https://docs.blocknative.com/gas-platform).
 
@@ -79,7 +79,7 @@ const gasBlockPrices = await gas.get({
 ## Usage with Web3-Onboard wallet Connect and Ethers.js
 
 This example assumes you have already setup web3-onboard to connect wallets to your dapp. 
-For more information see [web3-onboard docs](/docs/packages/core#install).
+For more information see [web3-onboard docs](/docs/modules/core#install).
 ```ts
 import gas from '@web3-onboard/gas'
 import { ethers } from 'ethers'

@@ -1,4 +1,4 @@
-# @web3-onboard/fortmatic
+# Fortmatic
 
 Wallet module for connecting Ledger hardware wallets to web3-onboard
 
