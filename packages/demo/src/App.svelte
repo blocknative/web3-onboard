@@ -32,7 +32,6 @@
   import blocknativeIcon from './blocknative-icon'
   import blocknativeLogo from './blocknative-logo'
   import { onMount } from 'svelte'
-  import wallets from '@web3-onboard/injected-wallets/dist/wallets'
 
   let windowWidth
 
@@ -119,7 +118,7 @@
 
   const sequence = sequenceModule()
 
-  const enrkypt = enkryptModule()
+  const enkrypt = enkryptModule()
   const mewWallet = mewWalletModule()
 
   const onboard = Onboard({
@@ -129,7 +128,7 @@
       ledger,
       trezor,
       walletConnect,
-      enrkypt,
+      enkrypt,
       mewWallet,
       keepkey,
       keystone,
