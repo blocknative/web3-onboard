@@ -1,10 +1,11 @@
 <script lang="ts">
+  import { ethers } from 'ethers'
   import { _ } from 'svelte-i18n'
   import en from '../i18n/en.json'
   import type { SimPlatformResponse } from '../types'
   import SimulationHeader from './components/SimulationHeader.svelte'
   import IconBadge from './components/IconBadge.svelte'
-  import { ethers } from 'ethers'
+  import Button from './components/Button.svelte'
   import closeIcon from '../icons/close-circle.js'
   import { getDevice } from '../utils'
 
@@ -14,21 +15,25 @@
   export let destroyApp: () => void
   export let simResponse: SimPlatformResponse
   export let startTime: number
+  console.log(simResponse)
   const device = getDevice()
 
   const transactionOriginator = simResponse.transactions[0].from
-  const balanceChanges = simResponse.netBalanceChanges.reduce((arr, changes) => {
-    if (changes.length) {
-      changes.forEach(change => {
-        if (
-          change.address.toLowerCase() === transactionOriginator.toLowerCase()
-        ) {
-          arr.push(change)
-        }
-      })
-    }
-    return arr
-  }, [])
+  const balanceChanges = simResponse.netBalanceChanges.reduce(
+    (arr, changes) => {
+      if (changes.length) {
+        changes.forEach(change => {
+          if (
+            change.address.toLowerCase() === transactionOriginator.toLowerCase()
+          ) {
+            arr.push(change)
+          }
+        })
+      }
+      return arr
+    },
+    []
+  )
 
   function addCommasToNumber(x: number): string {
     const parts = x.toString().split('.')
@@ -54,11 +59,8 @@
     pointer-events: all;
     backdrop-filter: blur(5px);
     width: 100%;
-    min-height: 56px;
-    background: var(
-      --transaction-sim-background,
-      var(--onboard-gray-600, var(--gray-600))
-    );
+    min-height: 3.5rem;
+    background: var(--onboard-gray-600, var(--gray-600));
     display: flex;
     flex-direction: column;
     position: relative;
@@ -66,10 +68,7 @@
   }
 
   .radius {
-    border-radius: var(
-      --transaction-sim-border-radius,
-      var(--onboard-border-radius-4, var(--border-radius-4))
-    );
+    border-radius: var(--onboard-border-radius-4, var(--border-radius-4));
   }
 
   div.tp-close-btn {
@@ -80,11 +79,11 @@
   div.tp-close-btn {
     margin-left: auto;
     margin-bottom: auto;
-    height: 24px;
-    width: 24px;
+    height: 1.5rem;
+    width: 1.5rem;
     position: absolute;
-    top: 8px;
-    right: 8px;
+    top: 0.5rem;
+    right: 0.5rem;
     justify-content: center;
     align-items: center;
   }
@@ -101,39 +100,27 @@
   }
 
   .tp-close-btn .close-icon {
-    width: 20px;
+    width: 1.25rem;
     margin: auto;
   }
 
   .tp-close-btn > .close-icon {
-    color: var(
-      --notify-onboard-close-icon-color,
-      var(--onboard-gray-300, var(--gray-300))
-    );
+    color: var(--onboard-gray-300, var(--gray-300));
   }
 
   .tp-close-btn:hover > .close-icon {
-    color: var(
-      --notify-onboard-close-icon-hover,
-      var(--onboard-gray-100, var(--gray-100))
-    );
+    color: var(--onboard-gray-100, var(--gray-100));
   }
 
   .table-radius {
-    border-radius: var(
-      --transaction-sim-border-radius,
-      var(--onboard-border-radius-5, var(--border-radius-5))
-    );
+    border-radius: var(--onboard-border-radius-5, var(--border-radius-5));
   }
 
   .bn-notify-notification-inner {
     padding: 0.75rem;
   }
   .details {
-    background: var(
-      --transaction-sim-details-background,
-      var(--onboard-gray-700, var(--gray-700))
-    );
+    background: var(--onboard-gray-700, var(--gray-700));
     display: flex;
     flex-direction: column;
     padding: 0.75rem 1rem;
@@ -142,93 +129,36 @@
     font-size: 0.75rem;
     margin-bottom: 0.5rem;
     font-weight: 400;
-    line-height: 16px;
+    line-height: 1rem;
     display: inline-flex;
-    color: var(
-      --transaction-sim-address-info-color,
-      var(--onboard-gray-200, var(--gray-200))
-    );
+    color: var(--onboard-gray-200, var(--gray-200));
   }
   .details-cta {
-    color: var(
-      --transaction-sim-details-cta-color,
-      var(--onboard-primary-400, var(--primary-400))
-    );
-    font-style: normal;
+    color: var(--onboard-primary-400, var(--primary-400));
     font-weight: 700;
-    font-size: 14px;
+    font-size: 0.875rem;
     display: flex;
     justify-content: flex-end;
-    background: var(
-      --transaction-sim-details-background,
-      var(--onboard-gray-700, var(--gray-700))
-    );
-    display: flex;
+    background: var(--onboard-gray-700, var(--gray-700));
     flex-direction: row;
-    justify-content: flex-end;
     align-items: center;
-    padding: 8px;
-    gap: 8px;
-    width: 314px;
-    height: 48px;
-    border: 1px solid
-      var(
-        --transaction-sim-details-background,
-        var(--onboard-gray-600, var(--gray-600))
-      );
+    padding: 0.5rem;
+    gap: 0.5rem;
+    height: 3rem;
+    border: 1px solid var(--onboard-gray-600, var(--gray-600));
     flex: none;
     order: 2;
     align-self: stretch;
     flex-grow: 0;
   }
 
-  .cancel {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 4px 8px 4px 12px;
-    gap: 4px;
-    cursor: pointer;
-    width: 73px;
-    height: 32px;
-  }
-
-  .confirm {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 4px 12px;
-    gap: 4px;
-    cursor: pointer;
-    width: 69px;
-    height: 32px;
-  }
-
-  .cta {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 4px 12px;
-    gap: 4px;
-    cursor: pointer;
-  }
-
   table.balance-change-table {
     width: 100%;
-    background: var(
-      --transaction-sim-table-background,
-      var(--onboard-gray-600, var(--gray-600))
-    );
+    background: var(--onboard-gray-600, var(--gray-600));
     border-width: 1px;
-    border-color: var(
-      --transaction-sim-table-border,
-      var(--onboard-gray-500, var(--gray-500))
-    );
+    border-color: var(--onboard-gray-500, var(--gray-500));
     border-style: solid;
-    color: var(
-      --transaction-sim-details-cta-color,
-      var(--onboard-gray-100, var(--gray-100))
-    );
+    color: var(--onboard-gray-100, var(--gray-100));
     overflow: hidden;
     border-collapse: collapse;
   }
@@ -237,8 +167,6 @@
   table.balance-change-table th {
     padding: 0.25rem 1rem;
     text-align: start;
-    font-family: 'Sofia Pro';
-    font-style: normal;
     font-weight: 400;
     line-height: 1rem;
   }
@@ -246,7 +174,7 @@
     font-size: 0.75rem;
   }
   table.balance-change-table td {
-    font-size: 14px;
+    font-size: 0.875rem;
   }
 
   tbody > tr:not(:first-child) {
@@ -254,27 +182,15 @@
   }
 
   table.balance-change-table thead {
-    background: var(
-      --transaction-sim-thead-background,
-      var(--onboard-gray-500, var(--gray-500))
-    );
-    color: var(
-      --transaction-sim-thead-color,
-      var(--onboard-gray-100, var(--gray-100))
-    );
+    background: var(--onboard-gray-500, var(--gray-500));
+    color: var(--onboard-gray-100, var(--gray-100));
   }
 
   .negative {
-    color: var(
-      --transaction-sim-thead-color,
-      var(--onboard-danger-400, var(--danger-400))
-    );
+    color: var(--onboard-danger-400, var(--danger-400));
   }
   .positive {
-    color: var(
-      --transaction-sim-thead-color,
-      var(--onboard-success-500, var(--success-500))
-    );
+    color: var(--onboard-success-500, var(--success-500));
   }
 </style>
 
@@ -295,13 +211,13 @@
     <IconBadge />
     <SimulationHeader {startTime} />
   </div>
-  <section class="details">
-    <section class="address-info">
+  <div class="details">
+    <div class="address-info">
       {$_('maximized.sectionHeading', {
         default: en.maximized.sectionHeading
       })}
       {shortenAddress(transactionOriginator)}
-    </section>
+    </div>
     <table class="balance-change-table table-radius">
       <colgroup>
         <col span="1" style="width: 28%;" />
@@ -338,34 +254,28 @@
         {/if}
       </tbody>
     </table>
-  </section>
+  </div>
   <div class="details-cta">
     {#if requireTransactionApproval}
-      <section
-        class="cancel"
-        on:click|stopPropagation={() => transactionApproved(false)}
-      >
-        {$_('maximized.cancel', {
+      <Button
+        btnText={$_('maximized.cancel', {
           default: en.maximized.cancel
         })}
-      </section>
-      <section
-        class="confirm"
-        on:click|stopPropagation={() => transactionApproved(true)}
-      >
-        {$_('maximized.confirm', {
+        btnFunction={() => transactionApproved(false)}
+      />
+      <Button
+        btnText={$_('maximized.confirm', {
           default: en.maximized.confirm
         })}
-      </section>
+        btnFunction={() => transactionApproved(true)}
+      />
     {:else}
-      <section
-        class="cta"
-        on:click|stopPropagation={() => toggleExpanded(false)}
-      >
-        {$_('maximized.hide', {
+      <Button
+        btnText={$_('maximized.hide', {
           default: en.maximized.hide
         })}
-      </section>
+        btnFunction={() => toggleExpanded(false)}
+      />
     {/if}
   </div>
 </div>

@@ -34,7 +34,6 @@
     justify-content: center;
     font-size: inherit;
     font-family: inherit;
-    margin: 0 1.5rem 0 0.75rem;
   }
 
   span {
@@ -49,7 +48,6 @@
       --transaction-sim-timer-color,
       var(--onboard-gray-300, var(--gray-300))
     );
-    margin-left: 4px;
   }
 </style>
 

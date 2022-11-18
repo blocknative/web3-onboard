@@ -1,6 +1,5 @@
 import { catchError, firstValueFrom, map, of } from 'rxjs'
 import { ajax } from 'rxjs/ajax'
-import { ethers } from 'ethers'
 import { hexFieldsToNumber } from './utils'
 import type {
   SimPlatformResponse,

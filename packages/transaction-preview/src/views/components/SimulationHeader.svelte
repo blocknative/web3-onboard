@@ -7,37 +7,22 @@
 
 <style>
   div.notify-transaction-data {
-    font-size: var(
-      --notify-onboard-transaction-font-size,
-      var(--onboard-font-size-6, var(--font-size-6))
-    );
+    font-size: var(--onboard-font-size-6, var(--font-size-6));
     font-family: inherit;
     margin: 0px 20px 0px 8px;
     justify-content: center;
+    gap: 0.25rem;
   }
 
   .timer {
     display: inline-flex;
-    margin-top: 4px;
-    font-size: var(
-      --notify-onboard-hash-time-font-size,
-      var(--onboard-font-size-7, var(--font-size-7))
-    );
-    line-height: var(
-      --notify-onboard-hash-time-font-line-height,
-      var(--onboard-font-line-height-4, var(--font-line-height-4))
-    );
+    font-size: var(--onboard-font-size-7, var(--font-size-7));
+    line-height: var(--onboard-font-line-height-4, var(--font-line-height-4));
   }
 
   .transaction-status {
-    color: var(
-      --notify-onboard-transaction-status,
-      var(--onboard-primary-100, var(--primary-100))
-    );
-    line-height: var(
-      --notify-onboard-font-size-5,
-      var(--onboard-font-size-5, var(--font-size-5))
-    );
+    color: var(--onboard-primary-100, var(--primary-100));
+    line-height: var(--onboard-font-size-5, var(--font-size-5));
     font-weight: 400;
     overflow: hidden;
     text-overflow: ellipsis;

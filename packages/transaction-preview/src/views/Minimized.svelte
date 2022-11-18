@@ -6,6 +6,7 @@
   import SimulationHeader from './components/SimulationHeader.svelte'
   import IconBadge from './components/IconBadge.svelte'
   import closeIcon from '../icons/close-circle.js'
+  import Button from './components/Button.svelte'
 
   export let toggleExpanded: (maximize: boolean) => void
   export let destroyApp: () => void
@@ -21,11 +22,8 @@
     pointer-events: all;
     backdrop-filter: blur(5px);
     width: 100%;
-    min-height: 56px;
-    background: var(
-      --transaction-sim-background,
-      var(--onboard-gray-600, var(--gray-600))
-    );
+    min-height: 3.5rem;
+    background: var(--onboard-gray-600, var(--gray-600));
     display: flex;
     flex-direction: column;
     position: relative;
@@ -33,10 +31,7 @@
   }
 
   .radius {
-    border-radius: var(
-      --transaction-sim-border-radius,
-      var(--onboard-border-radius-4, var(--border-radius-4))
-    );
+    border-radius: var(--onboard-border-radius-4, var(--border-radius-4));
   }
 
   .bn-notify-notification-inner {
@@ -51,11 +46,11 @@
   div.tp-close-btn {
     margin-left: auto;
     margin-bottom: auto;
-    height: 24px;
-    width: 24px;
+    height: 1.5rem;
+    width: 1.5rem;
     position: absolute;
-    top: 8px;
-    right: 8px;
+    top: 0.5rem;
+    right: 0.5rem;
     justify-content: center;
     align-items: center;
   }
@@ -72,67 +67,39 @@
   }
 
   .tp-close-btn .close-icon {
-    width: 20px;
+    width: 1.25rem;
     margin: auto;
   }
 
   .tp-close-btn > .close-icon {
-    color: var(
-      --notify-onboard-close-icon-color,
-      var(--onboard-gray-300, var(--gray-300))
-    );
+    color: var(--onboard-gray-300, var(--gray-300));
   }
 
   .tp-close-btn:hover > .close-icon {
-    color: var(
-      --notify-onboard-close-icon-hover,
-      var(--onboard-gray-100, var(--gray-100))
-    );
+    color: var(--onboard-gray-100, var(--gray-100));
   }
 
   .details-cta {
-    color: var(
-      --transaction-sim-details-cta-color,
-      var(--onboard-primary-400, var(--primary-400))
-    );
     font-style: normal;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 0.875rem;
     display: flex;
     justify-content: flex-end;
-    background: var(
-      --transaction-sim-details-background,
-      var(--onboard-gray-700, var(--gray-700))
-    );
-    display: flex;
     flex-direction: row;
-    justify-content: flex-end;
     align-items: center;
-    padding: 8px;
-    gap: 8px;
-    width: 314px;
-    height: 48px;
-    border:  1px solid var(
-      --transaction-sim-details-background,
-      var(--onboard-gray-600, var(--gray-600))
-    );
+    background: var(--onboard-gray-700, var(--gray-700));
+    padding: 0.5rem;
+    gap: 0.5rem;
+    height: 3rem;
+    border: 1px solid var(--onboard-gray-600, var(--gray-600));
     flex: none;
     order: 2;
     align-self: stretch;
     flex-grow: 0;
   }
-
-  .cta {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 4px 12px;
-    gap: 4px;
-    cursor: pointer;
-  }
 </style>
 
-<div class="minimized radius padding-5" >
+<div class="minimized radius padding-5">
   <div
     on:click|stopPropagation={() => {
       destroyApp()
@@ -148,10 +115,11 @@
     <SimulationHeader {startTime} />
   </div>
   <div class="details-cta">
-    <section class="cta" on:click|stopPropagation={() => toggleExpanded(true)}>
-      {$_('minimized.show', {
+    <Button
+      btnText={$_('minimized.show', {
         default: en.minimized.show
       })}
-    </section>
+      btnFunction={() => toggleExpanded(true)}
+    />
   </div>
 </div>
