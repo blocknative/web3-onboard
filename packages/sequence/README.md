@@ -4,7 +4,7 @@
 
 ### Install
 
-`npm i @web3-onboard/sequence`
+`npm i @web3-onboard/sequence @0xsequence`
 
 ## Options
 
