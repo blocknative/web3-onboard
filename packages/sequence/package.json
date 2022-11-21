@@ -57,9 +57,11 @@
   },
   "dependencies": {
     "@web3-onboard/common": "^2.2.3",
-    "0xsequence": "^0.40.5"
+    "0xsequence": "^0.43.0",
+    "ethers": "^5.7.2"
   },
   "peerDependencies": {
-    "0xsequence": ">=0.40.5"
+    "0xsequence": ">=0.43.0",
+    "ethers": ">=5.5"
   }
 }
