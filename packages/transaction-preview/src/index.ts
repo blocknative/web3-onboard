@@ -78,6 +78,10 @@ const handleRequireApproval = async (
   fullProviderRequest(req)
 }
 
+const ethTransactionExists = (arr: EthSignTransactionRequest['params']) => {
+  return arr.some((trans: TransactionObject) => trans.chainId == 1 )
+}
+
 const netBalanceChangesExist = (simResp: SimPlatformResponse): boolean => {
   if (
     simResp &&
@@ -111,7 +115,8 @@ export const patchProvider = (
     if (
       req.method === 'eth_sendTransaction' &&
       req.params &&
-      req.params.length
+      req.params.length &&
+      ethTransactionExists(req.params as EthSignTransactionRequest['params'])
     ) {
       const transactionParams =
         req.params as EthSignTransactionRequest['params']
