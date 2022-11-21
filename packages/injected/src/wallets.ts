@@ -620,7 +620,7 @@ const enkrypt: InjectedWalletModule = {
 
 const phantom: InjectedWalletModule = {
   label: ProviderLabel.Phantom,
-  injectedNamespace: InjectedNameSpace.Ethereum,
+  injectedNamespace: InjectedNameSpace.Phantom,
   checkProviderIdentity: ({ provider }) =>
     !!provider && !!provider[ProviderIdentityFlag.Phantom],
   getIcon: async () => (await import('./icons/phantom.js')).default,

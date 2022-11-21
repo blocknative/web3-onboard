@@ -5,10 +5,6 @@ function phantom(): WalletInit {
   return () => {
     return {
       label: 'Phantom',
-      injectedNamespace: 'phantom',
-      checkProviderIdentity: ({ provider }: { provider: any }) => {
-        !!provider && !!provider['isPhantom']
-      },
       getIcon: async () => (await import('./icon.js')).default,
       getInterface: async () => {
         if ('phantom' in window) {
