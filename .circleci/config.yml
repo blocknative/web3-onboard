@@ -327,6 +327,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/uauth
     steps:
       - node-build-steps
+  build-phantom:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/phantom
+    steps:
+      - node-build-steps
 
   # Build staging/Alpha releases
   build-staging-core:
@@ -489,6 +495,12 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/uauth
+    steps:
+      - node-staging-build-steps
+  build-staging-phantom:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/phantom
     steps:
       - node-staging-build-steps
 
@@ -656,4 +668,10 @@ workflows:
       - build-uauth:
           <<: *deploy_production_filters
       - build-staging-uauth:
+          <<: *deploy_staging_filters
+  phantom:
+    jobs:
+      - build-phantom:
+          <<: *deploy_production_filters
+      - build-staging-phantom:
           <<: *deploy_staging_filters
