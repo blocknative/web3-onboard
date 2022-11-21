@@ -18,6 +18,9 @@
   import sequenceModule from '@web3-onboard/sequence'
   import tallyHoModule from '@web3-onboard/tallyho'
   import transactionPreviewModule from '@web3-onboard/transaction-preview'
+  import enkryptModule from '@web3-onboard/enkrypt'
+  import mewWalletModule from '@web3-onboard/mew-wallet'
+  import uauthModule from '@web3-onboard/uauth'
   import {
     recoverAddress,
     arrayify,
@@ -98,6 +101,14 @@
   }
   const trezor = trezorModule(trezorOptions)
 
+  const uauthOptions = {
+    clientID: 'a25c3a65-a1f2-46cc-a515-a46fe7acb78c',
+    redirectUri: 'http://localhost:8080/',
+    scope:
+      'openid wallet email:optional humanity_check:optional profile:optional social:optional'
+  }
+  const uauth = uauthModule(uauthOptions)
+
   const magic = magicModule({
     apiKey: 'pk_live_02207D744E81C2BA'
     // userEmail: 'test@test.com'
@@ -114,6 +125,9 @@
     requireTransactionApproval: true
   })
 
+  const enkrypt = enkryptModule()
+  const mewWallet = mewWalletModule()
+
   const onboard = Onboard({
     wallets: [
       injected,
@@ -121,6 +135,8 @@
       ledger,
       trezor,
       walletConnect,
+      enkrypt,
+      mewWallet,
       keepkey,
       keystone,
       coinbaseWallet,
@@ -131,7 +147,8 @@
       gnosis,
       dcent,
       sequence,
-      tallyho
+      tallyho,
+      uauth
     ],
     transactionPreview,
     gas,
@@ -256,6 +273,12 @@
 
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
+  wallets$.subscribe(wallet => {
+    const unstoppableUser = wallet.find(
+      provider => provider.label === 'Unstoppable'
+    )
+    if (unstoppableUser) console.log(unstoppableUser.instance.user)
+  })
 
   const signTransactionMessage = async provider => {
     const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
@@ -952,7 +975,7 @@
     {/if}
   </div>
   {#if $wallets$ && !hideForIframe}
-    {#each $wallets$ as { icon, label, accounts, chains, provider }}
+    {#each $wallets$ as { icon, label, accounts, chains, provider, instance }}
       <div class="connected-wallet">
         <div class="flex-centered" style="width: 10rem;">
           <div style="width: 2rem; height: 2rem">{@html icon}</div>
@@ -960,6 +983,16 @@
         </div>
 
         <div>Chains: {JSON.stringify(chains, null, 2)}</div>
+
+        {#if label === 'Unstoppable'}
+          <div>Unstoppable User: {instance.user.sub}</div>
+          <div>Unstoppable Wallet: {instance.user.wallet_address}</div>
+          <div>Unstoppable Email: {instance.user.email || ''}</div>
+          <div>
+            Unstoppable Humanity: {instance.user.humanity_check_id || ''}
+          </div>
+          <div>Unstoppable Profile: {instance.user.profile || ''}</div>
+        {/if}
 
         {#each accounts as { address, ens, balance }}
           <div

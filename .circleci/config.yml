@@ -219,6 +219,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/mew
     steps:
       - node-build-steps
+  build-mew-wallet:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/mew-wallet
+    steps:
+      - node-build-steps
   build-portis:
     docker:
       - image: cimg/node:16.13.1
@@ -309,6 +315,18 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/tallyho
     steps:
       - node-build-steps
+  build-enkrypt:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/enkrypt
+    steps:
+      - node-build-steps
+  build-uauth:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/uauth
+    steps:
+      - node-build-steps
 
   # Build staging/Alpha releases
   build-staging-core:
@@ -363,6 +381,12 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/mew
+    steps:
+      - node-staging-build-steps
+  build-staging-mew-wallet:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/mew-wallet
     steps:
       - node-staging-build-steps
   build-staging-portis:
@@ -455,6 +479,18 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/tallyho
     steps:
       - node-staging-build-steps
+  build-staging-enkrypt:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/enkrypt
+    steps:
+      - node-staging-build-steps
+  build-staging-uauth:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/uauth
+    steps:
+      - node-staging-build-steps
 
 workflows:
   version: 2
@@ -512,6 +548,12 @@ workflows:
       - build-mew:
           <<: *deploy_production_filters
       - build-staging-mew:
+          <<: *deploy_staging_filters
+  mew-wallet:
+    jobs:
+      - build-mew-wallet:
+          <<: *deploy_production_filters
+      - build-staging-mew-wallet:
           <<: *deploy_staging_filters
   portis:
     jobs:
@@ -602,4 +644,16 @@ workflows:
       - build-tallyho:
           <<: *deploy_production_filters
       - build-staging-tallyho:
+          <<: *deploy_staging_filters
+  enkrypt:
+    jobs:
+      - build-enkrypt:
+          <<: *deploy_production_filters
+      - build-staging-enkrypt:
+          <<: *deploy_staging_filters
+  uauth:
+    jobs:
+      - build-uauth:
+          <<: *deploy_production_filters
+      - build-staging-uauth:
           <<: *deploy_staging_filters
