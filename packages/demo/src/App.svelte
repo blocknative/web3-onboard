@@ -17,7 +17,7 @@
   import dcentModule from '@web3-onboard/dcent'
   import sequenceModule from '@web3-onboard/sequence'
   import tallyHoModule from '@web3-onboard/tallyho'
-  import transactionPreviewModule from '@web3-onboard/transaction-preview'
+  import transactionPreview from '@web3-onboard/transaction-preview'
   import enkryptModule from '@web3-onboard/enkrypt'
   import mewWalletModule from '@web3-onboard/mew-wallet'
   import uauthModule from '@web3-onboard/uauth'
@@ -34,7 +34,7 @@
   import blocknativeLogo from './blocknative-logo'
   import { onMount } from 'svelte'
 
-  const apiKey = '0e5f8cec-4729-457a-8d76-d6d15692657b'
+  const apiKey = '937627e1-3507-44b8-af10-72728aa5f74b'
   let windowWidth
 
   if (window.innerWidth < 700) {
@@ -117,14 +117,7 @@
   })
 
   const dcent = dcentModule()
-
   const sequence = sequenceModule()
-  const transactionPreview = transactionPreviewModule({
-    apiKey,
-    secretKey: '196bf536-f0e8-40ec-b49a-2571715642cb',
-    requireTransactionApproval: true
-  })
-
   const enkrypt = enkryptModule()
   const mewWallet = mewWalletModule()
 

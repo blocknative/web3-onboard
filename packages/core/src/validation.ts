@@ -186,12 +186,7 @@ const initOptions = Joi.object({
   }),
   connect: connectModalOptions,
   containerElements: containerElements,
-  transactionPreview: Joi.object({
-    patchProvider: Joi.function().required(),
-    simTransactions: Joi.function().required(),
-    setContainerElement: Joi.function().required(),
-    containerElement: Joi.string()
-  }),
+  transactionPreview: Joi.function(),
 })
 
 const connectOptions = Joi.object({

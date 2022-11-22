@@ -1,5 +1,6 @@
 import type { EIP1193Provider } from '@web3-onboard/common'
 import type en from './i18n/en.json'
+import type SDK from 'bnc-sdk'
 
 export type TransactionPreviewModule = (
   options: TransactionPreviewInitOptions
@@ -12,23 +13,6 @@ export type TransactionPreviewAPI = {
    * and it will be patched to allow for transaction previewing
    */
   patchProvider: (provider: PatchedEIP1193Provider) => PatchedEIP1193Provider
-  /**
-   * Pass this method any full, presigned ethereum transaction
-   * for previewing and simulation
-   */
-  simTransactions: (txs: [TransactionObject]) => Promise<SimPlatformResponse>
-  /**
-   * Pass this method an HTML element ID to allow for
-   * the Transaction Preview UI to mount to it.
-   * Note: The element must exist within the DOM tree
-   * at time of preview/rendering
-   */
-  setContainerElement: (elementId: string) => void
-  /**
-   * This property will return the container element HTML ID
-   * set for the Transaction Preview UI to mount to
-   */
-  containerElement?: string
 }
 
 export type PatchedEIP1193Provider = EIP1193Provider & { simPatched: boolean }
@@ -46,15 +30,13 @@ export type TransactionPreviewInitOptions = {
    */
   apiKey: string
   /**
-   * Your Blocknative API secret key: Add a Secret Key to your API key
-   * by using the three dot menu next to the name of your API key.
-   * (https://docs.blocknative.com/account#secret-key)
+   * Your Blocknative SDK instance
    * */
-  secretKey: string
+  sdk: SDK
   /**
    * Optional dom query string to mount UI to
    * */
-  containerElement?: string
+  containerElement: string
   /**
    * Optional requirement for user to accept transaction balance changes
    * prior to sending the transaction to the wallet

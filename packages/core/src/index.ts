@@ -30,6 +30,7 @@ import {
   updateConnectModal
 } from './store/actions.js'
 import type { PatchedEIP1193Provider } from '@web3-onboard/transaction-preview'
+import { getBlocknativeSdk } from './services'
 
 const API = {
   connectWallet,
@@ -192,19 +193,6 @@ function init(options: InitOptions): OnboardAPI {
     updateNotify(notifyUpdate)
   }
 
-  if (transactionPreview) {
-    if (!transactionPreview.containerElement) {
-      transactionPreview.setContainerElement(
-        '#transaction-preview-container'
-      )
-    }
-    wallets$.subscribe(wallets => {
-      wallets.forEach(({ provider }) => {
-        transactionPreview.patchProvider(provider as PatchedEIP1193Provider)
-      })
-    })
-  }
-
   const app = svelteInstance || mountApp()
 
   updateConfiguration({
@@ -215,6 +203,22 @@ function init(options: InitOptions): OnboardAPI {
     gas,
     transactionPreview
   })
+
+  if (transactionPreview) {
+    const getBnSDK = async() => {
+      const tp = transactionPreview({
+        containerElement: '#transaction-preview-container',
+        sdk: await getBlocknativeSdk(),
+        apiKey
+      })
+      wallets$.subscribe(wallets => {
+        wallets.forEach(({ provider }) => {
+          tp.patchProvider(provider as PatchedEIP1193Provider)
+        })
+      })
+    }
+    getBnSDK()
+  }
 
   return API
 }

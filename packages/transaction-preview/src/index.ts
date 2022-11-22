@@ -16,14 +16,14 @@ import type {
 } from './types.js'
 import type { EIP1193Provider } from '@web3-onboard/common'
 
-import {
-  validateSetContainerEl,
-  validateSimTransactions,
-  validateTPInit
-} from './validation'
+import { validateSimTransactions, validateTPInit } from './validation'
 import TransactionPreview from './views/Index.svelte'
 import initI18N from './i18n/index.js'
 import simulateTransactions from './simulateTransactions.js'
+import {
+  SimulationTransaction,
+  SimulationTransactionOutput
+} from 'bnc-sdk/dist/types/src/types'
 
 export * from './types.js'
 
@@ -31,32 +31,8 @@ const approved$ = new Subject<boolean>()
 let options: TransactionPreviewInitOptions
 let app: TransactionPreview
 
-export const setContainerElement = (containerElement: string): void => {
-  if (containerElement) {
-    const error = validateSetContainerEl(containerElement)
-
-    if (error) {
-      throw error
-    }
-  }
-  options.containerElement = containerElement
-}
-
 const destroyApp = () => {
   app.$destroy()
-}
-
-const simTransactions = (
-  txs: [TransactionObject]
-): Promise<SimPlatformResponse> => {
-  if (txs) {
-    const error = validateSimTransactions(txs)
-
-    if (error) {
-      throw error
-    }
-  }
-  return simulateTransactions(options, txs)
 }
 
 const handleRequireApproval = async (
@@ -79,10 +55,12 @@ const handleRequireApproval = async (
 }
 
 const ethTransactionExists = (arr: EthSignTransactionRequest['params']) => {
-  return arr.some((trans: TransactionObject) => trans.chainId == 1 )
+  return arr.some((trans: TransactionObject) => trans.chainId == 1)
 }
 
-const netBalanceChangesExist = (simResp: SimPlatformResponse): boolean => {
+const netBalanceChangesExist = (
+  simResp: SimulationTransactionOutput[]
+): boolean => {
   if (
     simResp &&
     simResp.netBalanceChanges &&
@@ -115,14 +93,19 @@ export const patchProvider = (
     if (
       req.method === 'eth_sendTransaction' &&
       req.params &&
-      req.params.length &&
-      ethTransactionExists(req.params as EthSignTransactionRequest['params'])
+      req.params.length
+      // ethTransactionExists(req.params as EthSignTransactionRequest['params'])
     ) {
       const transactionParams =
         req.params as EthSignTransactionRequest['params']
       try {
+        console.log(transactionParams)
         const preview = await simulateTransactions(options, transactionParams)
-        if (preview.status !== 'simulated' || !netBalanceChangesExist(preview)) {
+        if (
+          preview.status !== 'simulated' 
+          // ||
+          // !netBalanceChangesExist(preview)
+        ) {
           // If transaction simulation was unsuccessful or balanceChanges do
           // not exist do not create DOM el
           return fullProviderRequest(req)
@@ -169,16 +152,13 @@ const transactionPreview: TransactionPreviewModule = (
       throw error
     }
   }
-  const { i18n, containerElement } = initOptions
+  const { i18n } = initOptions
   options = initOptions
-
+console.log(options)
   initI18N(i18n)
 
   return {
-    patchProvider,
-    simTransactions,
-    setContainerElement,
-    containerElement
+    patchProvider
   }
 }
 

@@ -6,6 +6,7 @@ import type {
   DeviceOS,
   DeviceType
 } from '@web3-onboard/common'
+import { SimulationTransaction } from 'bnc-sdk/dist/types/src/types'
 
 /**
  * Takes in TransactionRequest and converts all Hex values to numbers
@@ -13,23 +14,23 @@ import type {
  * @returns a transaction where all Hex properties are now numbers
  */
 export const hexFieldsToNumber = (
-  transaction: TransactionObject
+  transaction: SimulationTransaction
 ): TransactionRequestWithNumberFields =>
   Object.keys(transaction).reduce(
     (transaction, txnProperty) => ({
       ...transaction,
-      ...(typeof transaction[txnProperty as keyof TransactionObject] ===
+      ...(typeof transaction[txnProperty as keyof SimulationTransaction] ===
         'string' &&
-      (transaction[txnProperty as keyof TransactionObject] as string).includes(
-        '0x'
-      ) &&
+      (
+        transaction[txnProperty as keyof SimulationTransaction] as string
+      ).includes('0x') &&
       txnProperty !== 'to' &&
       txnProperty !== 'input' &&
       txnProperty !== 'data' &&
       txnProperty !== 'from'
         ? {
             [txnProperty]: parseInt(
-              transaction[txnProperty as keyof TransactionObject] as string,
+              transaction[txnProperty as keyof SimulationTransaction] as string,
               16
             )
           }
@@ -38,7 +39,7 @@ export const hexFieldsToNumber = (
     transaction
   ) as TransactionRequestWithNumberFields
 
-type TransactionRequestWithNumberFields = TransactionObject & {
+type TransactionRequestWithNumberFields = SimulationTransaction & {
   gas: number
   value: number
   gasPrice?: number
