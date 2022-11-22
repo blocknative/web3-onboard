@@ -78,6 +78,7 @@ export interface TransactionObject {
   maxPriorityFeePerGas?: string
 }
 
+// TODO: Remove these after importing from SDK after release
 export type SimPlatformResponse = {
   contractCall: ContractCall[]
   error: unknown[]

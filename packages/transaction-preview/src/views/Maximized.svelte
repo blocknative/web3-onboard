@@ -2,7 +2,7 @@
   import { ethers } from 'ethers'
   import { _ } from 'svelte-i18n'
   import en from '../i18n/en.json'
-  import type { SimPlatformResponse } from '../types'
+  import { MultiSimOutput } from 'bnc-sdk/dist/types/src/types'
   import SimulationHeader from './components/SimulationHeader.svelte'
   import IconBadge from './components/IconBadge.svelte'
   import Button from './components/Button.svelte'
@@ -13,9 +13,8 @@
   export let transactionApproved: (approved: boolean) => void
   export let toggleExpanded: (maximize: boolean) => void
   export let destroyApp: () => void
-  export let simResponse: SimPlatformResponse
+  export let simResponse: MultiSimResponse
   export let startTime: number
-  console.log(simResponse)
   const device = getDevice()
 
   const transactionOriginator = simResponse.transactions[0].from

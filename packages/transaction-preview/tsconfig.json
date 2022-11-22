@@ -13,7 +13,6 @@
     "module": "esnext",
     "resolveJsonModule": true,
     "strictNullChecks": false,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    "allowSyntheticDefaultImports": true
   }
 }

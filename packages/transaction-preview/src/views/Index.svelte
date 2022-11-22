@@ -1,13 +1,13 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
   import { cubicOut } from 'svelte/easing'
-  import type { SimPlatformResponse } from '../types'
+  import { MultiSimOutput } from 'bnc-sdk/dist/types/src/types'
   import Maximized from './Maximized.svelte'
   import Minimized from './Minimized.svelte'
   import { getDevice } from '../utils'
   import type { Subject } from 'rxjs'
 
-  export let simResponse: SimPlatformResponse
+  export let simResponse: MultiSimOutput
   export let requireTransactionApproval: boolean
   export let approved$: Subject<boolean>
   export let destroyApp: () => void

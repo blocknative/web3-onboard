@@ -8,7 +8,6 @@ import {
 } from '@web3-onboard/common'
 import type {
   PatchedEIP1193Provider,
-  SimPlatformResponse,
   TransactionPreviewInitOptions,
   TransactionPreviewModule,
   TransactionPreviewAPI,
@@ -17,17 +16,14 @@ import type {
 } from './types.js'
 import type { EIP1193Provider } from '@web3-onboard/common'
 
-import {
-  validateSimTransactions,
-  validateTPInit,
-  validateTPOptions
-} from './validation'
+import { validateTPInit, validateTPOptions } from './validation'
 import TransactionPreview from './views/Index.svelte'
 import initI18N from './i18n/index.js'
 import simulateTransactions from './simulateTransactions.js'
+// TODO: fix imports after updating SDK!!
 import {
-  SimulationTransaction,
-  SimulationTransactionOutput
+  MultiSimOutput,
+  SimulationTransaction
 } from 'bnc-sdk/dist/types/src/types'
 
 export * from './types.js'
@@ -65,7 +61,7 @@ const ethTransactionExists = (arr: EthSignTransactionRequest['params']) => {
 }
 
 const netBalanceChangesExist = (
-  simResp: SimulationTransactionOutput[]
+  simResp: MultiSimOutput
 ): boolean => {
   if (
     simResp &&
@@ -99,18 +95,16 @@ export const patchProvider = (
     if (
       req.method === 'eth_sendTransaction' &&
       req.params &&
-      req.params.length
-      // ethTransactionExists(req.params as EthSignTransactionRequest['params'])
+      req.params.length &&
+      ethTransactionExists(req.params as EthSignTransactionRequest['params'])
     ) {
-      const transactionParams =
-        req.params as EthSignTransactionRequest['params']
+      const transactionParams = req.params as SimulationTransaction[]
       try {
-        console.log(transactionParams)
         const preview = await simulateTransactions(options, transactionParams)
+        console.log(preview)
         if (
-          preview.status !== 'simulated'
-          // ||
-          // !netBalanceChangesExist(preview)
+          preview.status !== 'simulated' ||
+          !netBalanceChangesExist(preview)
         ) {
           // If transaction simulation was unsuccessful or balanceChanges do
           // not exist do not create DOM el
@@ -180,7 +174,7 @@ const init = (initOptions: TransactionPreviewInitOptions): void => {
   options = { ...initOptions, ...optionalSettings }
 }
 
-const mountTransactionPreview = (simResponse: SimPlatformResponse) => {
+const mountTransactionPreview = (simResponse: MultiSimOutput) => {
   class TransactionPreviewEl extends HTMLElement {
     constructor() {
       super()
