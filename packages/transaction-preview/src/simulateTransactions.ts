@@ -80,8 +80,6 @@ const simulateTransactions = async (
 
   const stubTrans = [
     {
-      type: '0x0',
-      chainId: 1,
       from: account_address,
       to: dai,
       input: approveTxData.data,
@@ -90,8 +88,6 @@ const simulateTransactions = async (
       value: 0
     },
     {
-      type: '0x0',
-      chainId: 1,
       from: account_address,
       to: uniswapV2Router,
       input: swapTxData.data,
@@ -100,9 +96,6 @@ const simulateTransactions = async (
       value: 0
     }
   ]
-  console.log(sdk)
-console.log(await sdk.simulate('ethereum', 'main', stubTrans[0]))
-console.log(await sdk.multiSim(stubTrans))
   return sdk.multiSim(stubTrans)
 }
 
