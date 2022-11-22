@@ -1,4 +1,4 @@
-import { getBlocknativeMulitChainSdk } from './services.js'
+import { getBNMulitChainSdk } from './services.js'
 import { state } from './store/index.js'
 import { removeWallet } from './store/actions.js'
 import { disconnectWallet$ } from './streams.js'
@@ -15,7 +15,7 @@ async function disconnect(options: DisconnectOptions): Promise<WalletState[]> {
 
   if (state.get().notify.enabled) {
     // handle unwatching addresses
-    const sdk = await getBlocknativeMulitChainSdk()
+    const sdk = await getBNMulitChainSdk()
 
     if (sdk) {
       const wallet = state.get().wallets.find(wallet => wallet.label === label)

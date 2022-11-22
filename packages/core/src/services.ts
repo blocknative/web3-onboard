@@ -8,9 +8,10 @@ let blocknativeSdk: SDK
 
 /**
  *
- * @returns SDK if apiKey
+ * @returns MultiChain SDK if apiKey
  */
-export async function getBlocknativeMulitChainSdk(): Promise<MultiChain | null> {
+
+export async function getBNMulitChainSdk(): Promise<MultiChain | null> {
   const { apiKey } = configuration
 
   if (!apiKey) return null

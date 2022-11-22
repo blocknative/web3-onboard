@@ -10,9 +10,7 @@ const simulateTransactions = async (
   options: Omit<TransactionPreviewInitOptions, 'provider'>,
   transactions: SimulationTransaction[]
 ): Promise<SimulationTransactionOutput[]> => {
-  console.log(transactions)
   const { sdk } = options
-  console.log(sdk)
   const cleanedTransactions: SimulationTransaction[] = transactions.map(
     transaction => {
       const convertedTransaction = hexFieldsToNumber(

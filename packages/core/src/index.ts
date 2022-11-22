@@ -206,14 +206,14 @@ function init(options: InitOptions): OnboardAPI {
 
   if (transactionPreview) {
     const getBnSDK = async() => {
-      const tp = transactionPreview({
+      transactionPreview.init({
         containerElement: '#transaction-preview-container',
         sdk: await getBlocknativeSdk(),
         apiKey
       })
       wallets$.subscribe(wallets => {
         wallets.forEach(({ provider }) => {
-          tp.patchProvider(provider as PatchedEIP1193Provider)
+          transactionPreview.patchProvider(provider as PatchedEIP1193Provider)
         })
       })
     }

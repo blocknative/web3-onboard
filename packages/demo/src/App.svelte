@@ -17,7 +17,7 @@
   import dcentModule from '@web3-onboard/dcent'
   import sequenceModule from '@web3-onboard/sequence'
   import tallyHoModule from '@web3-onboard/tallyho'
-  import transactionPreview from '@web3-onboard/transaction-preview'
+  import transactionPreviewModule from '@web3-onboard/transaction-preview'
   import enkryptModule from '@web3-onboard/enkrypt'
   import mewWalletModule from '@web3-onboard/mew-wallet'
   import uauthModule from '@web3-onboard/uauth'
@@ -120,6 +120,9 @@
   const sequence = sequenceModule()
   const enkrypt = enkryptModule()
   const mewWallet = mewWalletModule()
+  const transactionPreview = transactionPreviewModule({
+    requireTransactionApproval: true
+  })
 
   const onboard = Onboard({
     wallets: [

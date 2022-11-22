@@ -8,7 +8,7 @@ import { updateAccount, updateWallet } from './store/actions.js'
 import { validEnsChain } from './utils.js'
 import disconnect from './disconnect.js'
 import { state } from './store/index.js'
-import { getBlocknativeMulitChainSdk } from './services.js'
+import { getBNMulitChainSdk } from './services.js'
 
 import type {
   ChainId,
@@ -157,7 +157,7 @@ export function trackWallet(
     // if not existing account and notifications,
     // then subscribe to transaction events
     if (state.get().notify.enabled && !existingAccount) {
-      const sdk = await getBlocknativeMulitChainSdk()
+      const sdk = await getBNMulitChainSdk()
 
       if (sdk) {
         const wallet = state
@@ -227,7 +227,7 @@ export function trackWallet(
     if (chainId === connectedWalletChain.id) return
 
     if (state.get().notify.enabled) {
-      const sdk = await getBlocknativeMulitChainSdk()
+      const sdk = await getBNMulitChainSdk()
 
       if (sdk) {
         const wallet = state

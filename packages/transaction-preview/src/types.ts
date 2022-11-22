@@ -3,7 +3,7 @@ import type en from './i18n/en.json'
 import type SDK from 'bnc-sdk'
 
 export type TransactionPreviewModule = (
-  options: TransactionPreviewInitOptions
+  options: TransactionPreviewOptions
 ) => TransactionPreviewAPI
 
 export type TransactionPreviewAPI = {
@@ -13,6 +13,12 @@ export type TransactionPreviewAPI = {
    * and it will be patched to allow for transaction previewing
    */
   patchProvider: (provider: PatchedEIP1193Provider) => PatchedEIP1193Provider
+  /**
+   * Pass this method a standard EIP1193 provider
+   * (such as an injected wallet from window.ethereum)
+   * and it will be patched to allow for transaction previewing
+   */
+  init: (initializationOptions: TransactionPreviewInitOptions) => void
 }
 
 export type PatchedEIP1193Provider = EIP1193Provider & { simPatched: boolean }
@@ -37,6 +43,9 @@ export type TransactionPreviewInitOptions = {
    * Optional dom query string to mount UI to
    * */
   containerElement: string
+}
+
+export type TransactionPreviewOptions = {
   /**
    * Optional requirement for user to accept transaction balance changes
    * prior to sending the transaction to the wallet

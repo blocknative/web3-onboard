@@ -17,7 +17,7 @@
   import SelectingWallet from './SelectingWallet.svelte'
   import Sidebar from './Sidebar.svelte'
   import { configuration } from '../../configuration.js'
-  import { getBlocknativeMulitChainSdk } from '../../services.js'
+  import { getBNMulitChainSdk } from '../../services.js'
   import { BigNumber } from 'ethers'
 
   import {
@@ -211,7 +211,7 @@
       const chain = await getChainId(provider)
 
       if (state.get().notify.enabled) {
-        const sdk = await getBlocknativeMulitChainSdk()
+        const sdk = await getBNMulitChainSdk()
 
         if (sdk) {
           try {

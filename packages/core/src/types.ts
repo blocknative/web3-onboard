@@ -12,7 +12,7 @@ import type {
 } from '@web3-onboard/common'
 
 import type gas from '@web3-onboard/gas'
-import type { TransactionPreviewModule } from '@web3-onboard/transaction-preview'
+import type { TransactionPreviewAPI } from '@web3-onboard/transaction-preview'
 
 import type en from './i18n/en.json'
 import type { EthereumTransactionData, Network } from 'bnc-sdk'
@@ -62,7 +62,7 @@ export interface InitOptions {
   /**
    * Transaction Preview module
    */
-  transactionPreview?: TransactionPreviewModule
+  transactionPreview?: TransactionPreviewAPI
 }
 
 export interface ConnectOptions {
@@ -143,7 +143,7 @@ export type Configuration = {
   apiKey?: string
   gas?: typeof gas
   containerElements?: ContainerElements
-  transactionPreview?: TransactionPreviewModule
+  transactionPreview?: TransactionPreviewAPI
 }
 
 export type Locale = string

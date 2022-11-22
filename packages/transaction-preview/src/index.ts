@@ -12,11 +12,16 @@ import type {
   TransactionPreviewInitOptions,
   TransactionPreviewModule,
   TransactionPreviewAPI,
-  TransactionObject
+  TransactionObject,
+  TransactionPreviewOptions
 } from './types.js'
 import type { EIP1193Provider } from '@web3-onboard/common'
 
-import { validateSimTransactions, validateTPInit } from './validation'
+import {
+  validateSimTransactions,
+  validateTPInit,
+  validateTPOptions
+} from './validation'
 import TransactionPreview from './views/Index.svelte'
 import initI18N from './i18n/index.js'
 import simulateTransactions from './simulateTransactions.js'
@@ -28,7 +33,8 @@ import {
 export * from './types.js'
 
 const approved$ = new Subject<boolean>()
-let options: TransactionPreviewInitOptions
+let options: TransactionPreviewOptions & TransactionPreviewInitOptions
+let optionalSettings: TransactionPreviewOptions
 let app: TransactionPreview
 
 const destroyApp = () => {
@@ -102,7 +108,7 @@ export const patchProvider = (
         console.log(transactionParams)
         const preview = await simulateTransactions(options, transactionParams)
         if (
-          preview.status !== 'simulated' 
+          preview.status !== 'simulated'
           // ||
           // !netBalanceChangesExist(preview)
         ) {
@@ -143,8 +149,27 @@ export const patchProvider = (
 }
 
 const transactionPreview: TransactionPreviewModule = (
-  initOptions: TransactionPreviewInitOptions
+  tpOptions: TransactionPreviewOptions
 ): TransactionPreviewAPI => {
+  if (tpOptions) {
+    const error = validateTPOptions(tpOptions)
+
+    if (error) {
+      throw error
+    }
+  }
+  const { i18n } = tpOptions
+  optionalSettings = tpOptions
+
+  initI18N(i18n)
+
+  return {
+    patchProvider,
+    init
+  }
+}
+
+const init = (initOptions: TransactionPreviewInitOptions): void => {
   if (initOptions) {
     const error = validateTPInit(initOptions)
 
@@ -152,14 +177,7 @@ const transactionPreview: TransactionPreviewModule = (
       throw error
     }
   }
-  const { i18n } = initOptions
-  options = initOptions
-console.log(options)
-  initI18N(i18n)
-
-  return {
-    patchProvider
-  }
+  options = { ...initOptions, ...optionalSettings }
 }
 
 const mountTransactionPreview = (simResponse: SimPlatformResponse) => {
