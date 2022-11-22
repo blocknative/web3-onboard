@@ -14,7 +14,7 @@ Full Simulation Platform API documentation can be found [here](https://docs.bloc
 **Yarn**
 `yarn add @web3-onboard/core @web3-onboard/injected @web3-onboard/transaction-preview`
 
-### Usage with Web3-Onboard Core package (recommended)
+### Usage with Web3-Onboard Core package 
 To use the Transaction Preview package with web3-onboard all a user needs to do is initialize with their Blocknative API key and the associated [Secret Key](https://docs.blocknative.com/account#secret-key) and the package handles the rest!
 
 ```typescript
@@ -24,10 +24,10 @@ import transactionPreviewModule from '@web3-onboard/transaction-preview'
 
 const injected = injectedModule({})
 const transactionPreview = transactionPreviewModule({
-  apiKey: 'xxxxx-4729-457a-8d76-d6d15692657b',
-  secretKey: 'xxxxx-f0e8-40ec-b49a-2571715642cb',
     // Optional: Require balance change approval prior to sending transaction to wallet
   requireTransactionApproval: true
+  //  i18n?: i18nOptions - Internationalization options
+
 })
 
 const onboard = Onboard({
@@ -48,69 +48,54 @@ const onboard = Onboard({
 // The transaction will automatically be picked up and simulated with a UI displaying in the upper right corner
 ```
 
-### Standalone Usage
-
-If you would like to use outside of web3-onboard wallet connect more steps are required
-
-```typescript
-import transactionPreviewModule from '@web3-onboard/transaction-preview'
-const transactionPreview = transactionPreviewModule({
-  apiKey: 'xxxxx-4729-457a-8d76-d6d15692657b',
-  secretKey: 'xxxxx-f0e8-40ec-b49a-2571715642cb',
-  // Optional: Require balance change approval prior to sending transaction to wallet
-  requireTransactionApproval: true
-})
-
-transactionPreview.setContainerElement(
-  '#existing-html-element-to-append-preview-ui'
-)
-
-// Can be any standardized EIP1193 Wallet Provider
-transactionPreview.patchProvider(window.ethereum)
-
-// Transaction code here using Ether.js or Web3.js or custom
-
-// UI will display within DOM element specified as containerElement
-```
-
-Alternatively Transaction Preview can be run headless without a UI and the preview results will be returned by the `simTransactions` method.
-
-```typescript
-import transactionPreviewModule from '@web3-onboard/transaction-preview'
-const transactionPreview = transactionPreviewModule({
-  apiKey: 'xxxxx-4729-457a-8d76-d6d15692657b',
-  secretKey: 'xxxxx-f0e8-40ec-b49a-2571715642cb'
-})
-
-// Transaction code here using Ether.js or Web3.js or custom
-// Pass unsigned transactions into the below method to receive a transaction preview for all transaction passed
-
-const previewResults = await transactionPreview.simTransactions(arrayOfUnsignedTransactions)
-console.log(previewResults)
-```
-
 ### Options & Types
 
 ```typescript
-type TransactionPreviewModule = (
-  options: TransactionPreviewInitOptions
+
+export type TransactionPreviewModule = (
+  options: TransactionPreviewOptions
 ) => TransactionPreviewAPI
 
-type TransactionPreviewInitOptions = {
+export type TransactionPreviewAPI = {
+  /**
+   * Pass this method a standard EIP1193 provider
+   * (such as an injected wallet from window.ethereum)
+   * and it will be patched to allow for transaction previewing
+   */
+  patchProvider: (provider: PatchedEIP1193Provider) => PatchedEIP1193Provider
+  /**
+   * Pass this method a standard EIP1193 provider
+   * (such as an injected wallet from window.ethereum)
+   * and it will be patched to allow for transaction previewing
+   */
+  init: (initializationOptions: TransactionPreviewInitOptions) => void
+}
+
+export type PatchedEIP1193Provider = EIP1193Provider & { simPatched: boolean }
+
+export interface ProviderReq {
+  method: string
+  params?: Array<unknown>
+}
+
+export type RequestOptions = Pick<TransactionPreviewInitOptions, 'apiKey'>
+
+export type TransactionPreviewInitOptions = {
   /**
    * Blocknative API key (https://explorer.blocknative.com/account)
    */
   apiKey: string
   /**
-   * Your Blocknative API secret key: Add a Secret Key to your API key
-   * by using the three dot menu next to the name of your API key.
-   * (https://docs.blocknative.com/account#secret-key)
+   * Your Blocknative SDK instance
    * */
-  secretKey: string
+  sdk: SDK
   /**
    * Optional dom query string to mount UI to
    * */
-  containerElement?: string
+  containerElement: string
+}
+
+export type TransactionPreviewOptions = {
   /**
    * Optional requirement for user to accept transaction balance changes
    * prior to sending the transaction to the wallet
@@ -119,139 +104,109 @@ type TransactionPreviewInitOptions = {
   /**
    * An optional internationalization object that defines the display
    * text for different locales. Can also be used to override the default text.
-   *  To override the default text, pass in a object for the en locale
+   * To override the default text, pass in a object for the en locale
    */
   i18n?: i18nOptions
 }
 
-type TransactionPreviewAPI = {
-  /**
-   * Pass this method a standard EIP1193 provider
-   * (such as an injected wallet from window.ethereum)
-   * and it will be patched to allow for transaction previewing
-   */
-  patchProvider: (provider: PatchedEIP1193Provider) => PatchedEIP1193Provider
-  /**
-   * Pass this method any full, presigned ethereum transaction
-   * for previewing and simulation
-   */
-  simTransactions: (txs: [TransactionObject]) => Promise<SimPlatformResponse>
-  /**
-   * Pass this method an HTML element ID to allow for
-   * the Transaction Preview UI to mount to it.
-   * Note: The element must exist within the DOM tree
-   *  at time of preview/rendering
-   */
-  setContainerElement: (elementId: string) => void
-  /**
-   * This property will return the container element HTML ID
-   *  set for the Transaction Preview UI to mount to
-   */
-  containerElement?: string
-}
 
-type PatchedEIP1193Provider = EIP1193Provider & { simPatched: boolean }
-
-interface ProviderReq {
-  method: string
-  params?: Array<unknown>
-}
-
-type RequestOptions = Pick<TransactionPreviewInitOptions, 'apiKey'>
-
-interface TransactionObject {
-  data?: string
-  from: string
-  gas?: string
-  gasLimit?: string
-  to: string
-  chainId: number
-  value?: string
-  nonce?: string
-
-  /**
-   *  Either include gasPrice or maxFeePerGas and maxPriorityFeePerGas
-   * to differentiate between a type 0 and type 2 (EIP1559) transaction
-   */
-  gasPrice?: string
-  maxFeePerGas?: string
-  maxPriorityFeePerGas?: string
-}
-
-type SimPlatformResponse = {
+export type MultiSimOutput = {
+  id?: string
   contractCall: ContractCall[]
-  error: unknown[]
+  error?: any
   gasUsed: number[]
-  internalTransactions: TransactionObject[][]
+  internalTransactions: InternalTransaction[][]
   netBalanceChanges: NetBalanceChange[][]
-  network: string
+  network: Network
   simDetails: SimDetails
-  system: string
-  status: string
+  serverVersion: string
+  system: System
+  status: Status
   simulatedBlockNumber: number
-  transactions: TransactionObject[]
+  transactions: InternalTransaction[]
 }
 
-interface NetBalanceChange {
+export interface ContractCall {
+  contractType?: string
+  contractAddress?: string
+  methodName: string
+  params: Record<string, unknown>
+  contractName?: string
+  contractDecimals?: number
+  decimalValue?: string
+}
+
+export interface InternalTransaction {
+  type: string
+  from: string
+  to: string
+  input: string
+  gas: number
+  gasUsed: number
+  value: string
+  contractCall: ContractCall
+}
+
+export interface NetBalanceChange {
   address: string
   balanceChanges: BalanceChange[]
 }
 
-interface BalanceChange {
+export interface BalanceChange {
   delta: string
   asset: Asset
-  breakdown: Breakdown[]
+  breakdown: BreakDown[]
 }
 
-interface Asset {
+export interface Asset {
   type: string
   symbol: string
   contractAddress: string
 }
 
-interface Breakdown {
+export interface BreakDown {
   counterparty: string
   amount: string
 }
 
-interface SimDetails {
+export interface InternalTransaction {
+  type: string
+  from: string
+  to: string
+  input: string
+  gas: number
+  gasUsed: number
+  value: string
+  contractCall: ContractCall
+}
+
+export type System = 'bitcoin' | 'ethereum'
+export type Network =
+  | 'main'
+  | 'testnet'
+  | 'ropsten'
+  | 'rinkeby'
+  | 'goerli'
+  | 'kovan'
+  | 'xdai'
+  | 'bsc-main'
+  | 'matic-main'
+  | 'fantom-main'
+  | 'matic-mumbai'
+  | 'local'
+
+export type Status =
+  | 'pending'
+  | 'confirmed'
+  | 'speedup'
+  | 'cancel'
+  | 'failed'
+  | 'dropped'
+  | 'simulated'
+
+export interface SimDetails {
   blockNumber: number
-  performanceProfile: PerformanceProfile
   e2eMs: number
+  performanceProfile: any
 }
-
-interface PerformanceProfile {
-  breakdown: SimDetailsBreakdown[]
-}
-
-interface SimDetailsBreakdown {
-  label: string
-  timeStamp: string
-}
-
-interface ContractCall {
-  status: string
-  value: ContractCallValue[]
-}
-
-interface ContractCallValue {
-  methodName: string
-  params: {
-    _amount?: string
-    _spender?: string
-    amountIn?: string
-    amountOutMin?: string
-    deadline?: string
-    path?: string[]
-    to?: string
-  }
-  contractAddress: string
-  contractType?: string
-  contractAlias?: string
-  contractDecimals?: string
-  contractName?: string
-}
-
-type Locale = string
-type i18nOptions = Record<Locale, i18n>
 ```
