@@ -2,24 +2,25 @@
   import { ethers } from 'ethers'
   import { _ } from 'svelte-i18n'
   import en from '../i18n/en.json'
-  import { MultiSimOutput } from 'bnc-sdk/dist/types/src/types'
-  import SimulationHeader from './components/SimulationHeader.svelte'
+  import { getDevice } from '../utils'
+  import { NetBalanceChange } from '../types'
   import IconBadge from './components/IconBadge.svelte'
   import Button from './components/Button.svelte'
   import closeIcon from '../icons/close-circle.js'
-  import { getDevice } from '../utils'
+  import SimulationHeader from './components/SimulationHeader.svelte'
+  import type { MultiSimOutput } from 'bnc-sdk'
 
   export let requireTransactionApproval: boolean
   export let transactionApproved: (approved: boolean) => void
   export let toggleExpanded: (maximize: boolean) => void
   export let destroyApp: () => void
-  export let simResponse: MultiSimResponse
+  export let simResponse: MultiSimOutput
   export let startTime: number
   const device = getDevice()
 
   const transactionOriginator = simResponse.transactions[0].from
   const balanceChanges = simResponse.netBalanceChanges.reduce(
-    (arr, changes) => {
+    (arr: NetBalanceChange[], changes: NetBalanceChange[]) => {
       if (changes.length) {
         changes.forEach(change => {
           if (

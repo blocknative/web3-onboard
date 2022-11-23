@@ -1,7 +1,7 @@
 <script lang="ts">
+  import { onDestroy } from 'svelte'
   import { _ as formatter, locale } from 'svelte-i18n'
   import en from '../../i18n/en.json'
-  import { onDestroy } from 'svelte'
 
   export let startTime: number
 

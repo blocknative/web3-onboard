@@ -20,11 +20,7 @@ import { validateTPInit, validateTPOptions } from './validation'
 import TransactionPreview from './views/Index.svelte'
 import initI18N from './i18n/index.js'
 import simulateTransactions from './simulateTransactions.js'
-// TODO: fix imports after updating SDK!!
-import {
-  MultiSimOutput,
-  SimulationTransaction
-} from 'bnc-sdk/dist/types/src/types'
+import type { MultiSimOutput, SimulationTransaction } from 'bnc-sdk'
 
 export * from './types.js'
 
@@ -60,9 +56,7 @@ const ethTransactionExists = (arr: EthSignTransactionRequest['params']) => {
   return arr.some((trans: TransactionObject) => trans.chainId == 1)
 }
 
-const netBalanceChangesExist = (
-  simResp: MultiSimOutput
-): boolean => {
+const netBalanceChangesExist = (simResp: MultiSimOutput): boolean => {
   if (
     simResp &&
     simResp.netBalanceChanges &&
@@ -101,7 +95,6 @@ export const patchProvider = (
       const transactionParams = req.params as SimulationTransaction[]
       try {
         const preview = await simulateTransactions(options, transactionParams)
-        console.log(preview)
         if (
           preview.status !== 'simulated' ||
           !netBalanceChangesExist(preview)

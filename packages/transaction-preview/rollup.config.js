@@ -43,6 +43,7 @@ export default {
   ],
   external: [
     '@web3-onboard/common',
+    'bnc-sdk',
     'ethers',
     'bowser',
     'joi',
