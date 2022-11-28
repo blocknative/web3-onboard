@@ -223,9 +223,13 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                     message: `The Provider requires a chainId to be passed in as an argument`
                   })
                 }
-                return this.connector.updateSession({
-                  chainId: chainIdObj.chainId,
-                  accounts: this.connector.accounts
+                return this.connector.sendCustomRequest({
+                  method: 'wallet_switchEthereumChain',
+                  params: [
+                    {
+                      chainId: chainIdObj.chainId
+                    }
+                  ]
                 })
               }
 
