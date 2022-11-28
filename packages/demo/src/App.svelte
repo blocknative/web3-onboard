@@ -40,7 +40,7 @@
   }
 
   const infura_key = '80633e48116943128cbab25e402764ab'
-  
+
   let defaultTransactionObject = JSON.stringify(
     {
       from: '0xD87927847330FC926afd2B66C478A42a004aB4e7',

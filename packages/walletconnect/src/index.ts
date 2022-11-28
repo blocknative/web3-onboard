@@ -227,9 +227,9 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                   method: 'wallet_switchEthereumChain',
                   params: [
                     {
-                      chainId: chainIdObj.chainId,
-                    },
-                  ],
+                      chainId: chainIdObj.chainId
+                    }
+                  ]
                 })
               }
 
