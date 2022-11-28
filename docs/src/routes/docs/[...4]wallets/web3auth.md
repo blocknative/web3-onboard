@@ -1,4 +1,4 @@
-# @web3-onboard/web3auth
+# Web3auth
 
 Wallet module for connecting Web3auth to web3-onboard
 
