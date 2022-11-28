@@ -141,6 +141,11 @@ export type AccountCenter = {
   position?: AccountCenterPosition // default: 'topRight'
   expanded?: boolean // default: true
   minimal?: boolean // enabled by default for mobile
+
+  /**
+   * @deprecated Use top level containerElements property
+   * with the accountCenter prop set to the desired container El. See documentation below
+   */
   containerElement?: string // defines the DOM container element for svelte to attach
 }
 
