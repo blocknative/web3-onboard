@@ -1,7 +1,7 @@
 # Mew
 
 :::admonition type=warning
-_Wallet module for connecting Mew to web3-onboard is now deprecated. Please use [@web3-onboard/mewwallet](./mewwallet.md)_
+_Wallet module for connecting Mew to web3-onboard is now deprecated. Please use [@web3-onboard/mew-wallet](./mewwallet.md)_
 :::
 
 Wallet module for connecting Mew wallet to web3-onboard
