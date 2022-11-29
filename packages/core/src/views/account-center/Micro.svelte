@@ -1,9 +1,8 @@
 <script lang="ts">
   import { wallets$ } from '../../streams.js'
   import { updateAccountCenter } from '../../store/actions.js'
-  import questionIcon from '../../icons/question.js'
-  import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
-  import WalletAppBadge from '../shared/WalletAppBadge.svelte'
+  import { questionIcon } from '../../icons'
+  import { WalletAppBadge, SuccessStatusIcon } from '../shared'
   import { configuration } from '../../configuration.js'
 
   const { appMetadata } = configuration

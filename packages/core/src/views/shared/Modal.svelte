@@ -73,6 +73,18 @@
   }
 
   @media all and (max-width: 520px) {
+    section, .background {
+      height: 100%;
+    }
+
+    .modal-container-mobile {
+      min-height: 50%;
+    }
+
+    .modal-position {
+      bottom: 0;
+    }
+
     .relative {
       width: 100vw;
     }
@@ -83,7 +95,9 @@
 
     .modal {
       width: 100%;
-      margin: 0 16px;
+    }
+    .modal, .modal-styling {
+      border-radius: var(--onboard-modal-border-radius, var(--border-radius-1)) var(--onboard-modal-border-radius, var(--border-radius-1)) 0 0;
     }
   }
 </style>
@@ -93,7 +107,7 @@
     on:click={close}
     class="background flex items-center justify-center relative"
   >
-    <div class="flex modal-position absolute">
+    <div class="flex modal-container-mobile modal-position absolute">
       <div on:click|stopPropagation class="flex relative max-height">
         <div class="modal-overflow modal-styling relative flex justify-center">
           <div class="modal relative">

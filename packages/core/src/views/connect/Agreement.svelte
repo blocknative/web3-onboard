@@ -54,6 +54,12 @@
   .spacer {
     padding-top: var(--onboard-spacing-4, var(--spacing-4));
   }
+
+  @media all and (max-width: 520px) {
+    .spacer {
+      padding: 0;
+    }
+  }
 </style>
 
 {#if showTermsOfService}

@@ -53,8 +53,10 @@ export interface InitOptions {
   /** Gas module */
   gas?: typeof gas
   /**
-   * Object mapping for W3O components with the key being the DOM element to mount
-   * the component to, this defines the DOM container element for svelte to attach the component
+   * Object mapping for W3O components with
+   * the key being the DOM element to mount
+   * the component to, this defines the DOM
+   * container element for svelte to attach the component
    */
   containerElements?: Partial<ContainerElements>
 }

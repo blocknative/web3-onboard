@@ -1,7 +1,10 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
+
   import { isSVG } from '../../utils.js'
   import Spinner from './Spinner.svelte'
+  import { PendingStatusIcon } from '../shared'
+
   export let size: number // px
   export let icon: Promise<string> | string // svg string or url string
   export let loading = false
@@ -30,6 +33,8 @@
 
   export let customBackgroundColor = ''
   export let radius = 12
+
+  let windowWidth: number
 </script>
 
 <style>
@@ -78,27 +83,45 @@
   }
 
   .background-gray {
-    background: var(--onboard-wallet-app-icon-background-gray, var(--onboard-gray-500, var(--gray-500)));
+    background: var(
+      --onboard-wallet-app-icon-background-gray,
+      var(--onboard-gray-500, var(--gray-500))
+    );
   }
 
   .background-light-gray {
-    background: var(--onboard-wallet-app-icon-background-light-gray, var(--onboard-gray-100, var(--gray-100)));
+    background: var(
+      --onboard-wallet-app-icon-background-light-gray,
+      var(--onboard-gray-100, var(--gray-100))
+    );
   }
 
   .background-light-blue {
-    background: var(--onboard-wallet-app-icon-background-light-blue, var(--onboard-primary-100, var(--primary-100)));
+    background: var(
+      --onboard-wallet-app-icon-background-light-blue,
+      var(--onboard-primary-100, var(--primary-100))
+    );
   }
 
   .background-green {
-    background: var(--onboard-wallet-app-icon-background-green, var(--onboard-success-100, var(--success-100)));
+    background: var(
+      --onboard-wallet-app-icon-background-green,
+      var(--onboard-success-100, var(--success-100))
+    );
   }
 
   .background-white {
-    background: var(--onboard-wallet-app-icon-background-white, var(--onboard-white, var(--white)));
+    background: var(
+      --onboard-wallet-app-icon-background-white,
+      var(--onboard-white, var(--white))
+    );
   }
 
   .background-transparent {
-    background: var(--onboard-wallet-app-icon-background-transparent, transparent);
+    background: var(
+      --onboard-wallet-app-icon-background-transparent,
+      transparent
+    );
   }
 
   @keyframes pulse {
@@ -127,7 +150,19 @@
     max-width: 100%;
     height: auto;
   }
+
+  @media all and (max-width: 520px) {
+    :global(.pending-status-icon) {
+      z-index: 1;
+      fill: white;
+      box-shadow: 0px 2px 12px 0px rgba(0, 0, 0, 0.1);
+      right: -12%;
+      bottom: -12%;
+    }
+  }
 </style>
+
+<svelte:window bind:innerWidth={windowWidth} />
 
 <div
   class:border-yellow={border === 'yellow'}
@@ -151,7 +186,7 @@
     padding - 1
   }px; width: ${size}px; height: ${size}px; border-radius: ${radius}px; color: ${color};`}
 >
-  {#if loading}
+  {#if loading && windowWidth >= 809}
     <div class="spinner-container">
       <Spinner size="2rem" />
     </div>
@@ -168,6 +203,9 @@
           <img src={iconLoaded} alt="logo" />
         {/if}
       </div>
+      {#if loading && windowWidth <= 809}
+        <PendingStatusIcon class="pending-status-icon" size={22} />
+      {/if}
     {/await}
   {/if}
   <slot name="status" />

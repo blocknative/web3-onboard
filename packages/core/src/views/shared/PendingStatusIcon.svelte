@@ -1,8 +1,10 @@
 <script lang="ts">
-  import pendingIcon from '../../icons/pending.js'
+  import { pendingIcon } from '../../icons'
 
   export let size: number // px
   export let color = 'yellow'
+  let className = 'test'
+  export { className as class }
 </script>
 
 <style>
@@ -20,7 +22,7 @@
 
 <div
   class:yellow={color === 'yellow'}
-  class="icon flex absolute"
+  class={`${className} icon flex absolute`}
   style={`width: ${size}px; height: ${size}px; padding: ${size / 6}px;`}
 >
   {@html pendingIcon}

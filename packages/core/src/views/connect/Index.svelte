@@ -2,24 +2,7 @@
   import { ProviderRpcErrorCode, WalletModule } from '@web3-onboard/common'
   import EventEmitter from 'eventemitter3'
   import { _ } from 'svelte-i18n'
-  import en from '../../i18n/en.json'
-  import { listenAccountsChanged, selectAccounts } from '../../provider.js'
-  import { state } from '../../store/index.js'
-  import { connectWallet$, onDestroy$ } from '../../streams.js'
-  import { addWallet, updateAccount } from '../../store/actions.js'
-  import { validEnsChain } from '../../utils.js'
-  import CloseButton from '../shared/CloseButton.svelte'
-  import Modal from '../shared/Modal.svelte'
-  import Agreement from './Agreement.svelte'
-  import ConnectedWallet from './ConnectedWallet.svelte'
-  import ConnectingWallet from './ConnectingWallet.svelte'
-  import InstallWallet from './InstallWallet.svelte'
-  import SelectingWallet from './SelectingWallet.svelte'
-  import Sidebar from './Sidebar.svelte'
-  import { configuration } from '../../configuration.js'
-  import { getBlocknativeSdk } from '../../services.js'
   import { BigNumber } from 'ethers'
-
   import {
     BehaviorSubject,
     distinctUntilChanged,
@@ -30,6 +13,23 @@
     take,
     takeUntil
   } from 'rxjs'
+
+  import en from '../../i18n/en.json'
+  import { listenAccountsChanged, selectAccounts } from '../../provider.js'
+  import { state } from '../../store/index.js'
+  import { connectWallet$, onDestroy$ } from '../../streams.js'
+  import { addWallet, updateAccount } from '../../store/actions.js'
+  import { validEnsChain, isSVG } from '../../utils.js'
+  import { Modal, CloseButton } from '../shared'
+  import Agreement from './Agreement.svelte'
+  import ConnectedWallet from './ConnectedWallet.svelte'
+  import ConnectingWallet from './ConnectingWallet.svelte'
+  import InstallWallet from './InstallWallet.svelte'
+  import SelectingWallet from './SelectingWallet.svelte'
+  import Sidebar from './Sidebar.svelte'
+  import { getBlocknativeSdk } from '../../services.js'
+  import { configuration } from '../../configuration.js'
+  import { blocknative } from '../../icons'
 
   import {
     getChainId,
@@ -49,6 +49,8 @@
   export let autoSelect: ConnectOptions['autoSelect']
 
   const { appMetadata } = configuration
+  const { icon } = appMetadata || {}
+
   const { walletModules, connect } = state.get()
   const cancelPreviousConnect$ = new Subject<void>()
 
@@ -154,8 +156,6 @@
       const { message } = error as { message: string }
       connectingErrorMessage = message
       scrollToTop()
-    } finally {
-      connectingWalletLabel = ''
     }
   }
 
@@ -328,6 +328,7 @@
             connectWallet$.next({ inProgress: false })
           }
         } else {
+          connectingWalletLabel = ''
           loadWalletsForSelection()
         }
         break
@@ -337,6 +338,7 @@
         break
       }
       case 'connectedWallet': {
+        connectingWalletLabel = ''
         updateAccountDetails()
         break
       }
@@ -408,14 +410,55 @@
     pointer-events: none;
   }
 
+  .mobile-subheader {
+    display: none;
+  }
+
   @media all and (max-width: 520px) {
     .content {
       width: 100%;
     }
 
     .container {
-      height: auto;
-      min-height: 228px;
+      height: 100%;
+      flex-flow: column-reverse;
+    }
+
+    .mobile-subheader {
+      color: var(--onboard-gray-400, var(--gray-400));
+      display: block;
+      font-size: var(--onboard-font-size-6, var(--font-size-6));
+      line-height: 100%;
+      margin: 4px 0 0 0;
+      font-weight: 400;
+    }
+
+    .mobile-header {
+      display: flex;
+      padding: 16px;
+
+      border-bottom: 1px solid
+        var(
+          --onboard-wallet-button-border-color,
+          var(--onboard-primary-200, var(--primary-200))
+        );
+    }
+
+    .header-heading {
+      margin-bottom: 4px;
+    }
+
+    .w-full {
+      width: 100%;
+    }
+
+    .icon-container {
+      width: 40px;
+      margin-right: 8px;
+    }
+
+    .header-heading {
+      margin: 0;
     }
   }
 </style>
@@ -425,28 +468,70 @@
 {#if !autoSelect.disableModals}
   <Modal {close}>
     <div class="container relative flex">
-      {#if windowWidth >= 809 && connect.showSidebar}
+      {#if connect.showSidebar}
         <Sidebar step={$modalStep$} />
       {/if}
 
       <div class="content flex flex-column">
-        <div class="header relative flex items-center">
-          <h4 class="header-heading">
-            {$_(`connect.${$modalStep$}.header`, {
-              default: en.connect[$modalStep$].header,
-              values: {
-                connectionRejected,
-                wallet: selectedWallet && selectedWallet.label
-              }
-            })}
-          </h4>
-          <div on:click={close} class="button-container absolute">
-            <CloseButton />
+        {#if windowWidth <= 809}
+          <div class="mobile-header">
+            <div class="icon-container flex">
+              {#if icon}
+                {#if isSVG(icon)}
+                  {@html icon}
+                {:else}
+                  <img src={icon} alt="logo" />
+                {/if}
+              {:else}
+                {@html blocknative}
+              {/if}
+            </div>
+            <div class="flex flex-column justify-center w-full">
+              <h4 class="header-heading">
+                {$_(
+                  $modalStep$ === 'connectingWallet' && selectedWallet
+                    ? `connect.${$modalStep$}.header`
+                    : `connect.${$modalStep$}.sidebar.subheading`,
+                  {
+                    default:
+                      $modalStep$ === 'connectingWallet' && selectedWallet
+                        ? en.connect[$modalStep$].header
+                        : en.connect[$modalStep$].sidebar.subheading,
+                    values: {
+                      connectionRejected,
+                      wallet: selectedWallet && selectedWallet.label
+                    }
+                  }
+                )}
+              </h4>
+              <h5 class="mobile-subheader">
+                {$modalStep$ === 'selectingWallet'
+                  ? `${wallets.length} available wallets`
+                  : '1 account selected'}
+              </h5>
+            </div>
           </div>
+        {:else}
+          <div class="header relative flex items-center">
+            <h4 class="header-heading">
+              {$_(`connect.${$modalStep$}.header`, {
+                default: en.connect[$modalStep$].header,
+                values: {
+                  connectionRejected,
+                  wallet: selectedWallet && selectedWallet.label
+                }
+              })}
+              {$modalStep$ === 'selectingWallet' ? `(${wallets.length})` : ''}
+            </h4>
+          </div>
+        {/if}
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <div on:click={close} class="button-container absolute">
+          <CloseButton />
         </div>
 
         <div class="scroll-container" bind:this={scrollContainer}>
-          {#if $modalStep$ === 'selectingWallet'}
+          {#if $modalStep$ === 'selectingWallet' || windowWidth <= 809}
             {#if wallets.length}
               <Agreement bind:agreed />
 
@@ -463,7 +548,7 @@
             {/if}
           {/if}
 
-          {#if $modalStep$ === 'connectingWallet' && selectedWallet}
+          {#if ($modalStep$ === 'connectingWallet' && selectedWallet && windowWidth >= 809) || (windowWidth <= 809 && connectionRejected && $modalStep$ === 'connectingWallet' && selectedWallet)}
             <ConnectingWallet
               {connectWallet}
               {connectionRejected}
@@ -474,7 +559,7 @@
             />
           {/if}
 
-          {#if $modalStep$ === 'connectedWallet' && selectedWallet}
+          {#if $modalStep$ === 'connectedWallet' && selectedWallet && windowWidth >= 809}
             <ConnectedWallet {selectedWallet} />
           {/if}
         </div>

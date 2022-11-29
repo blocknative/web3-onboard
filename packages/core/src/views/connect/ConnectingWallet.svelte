@@ -65,6 +65,28 @@
   .ml {
     margin-left: var(--onboard-spacing-4, var(--spacing-4));
   }
+
+  @media all and (max-width: 520px) {
+    .connecting-container {
+      border-radius: var(--onboard-border-radius-4, var(--border-radius-4));
+    }
+
+    .container {
+      padding-bottom: 0;
+    }
+
+    .wallet-badges {
+      display: none;
+    }
+
+    .connecting-wallet-info {
+      margin: 0;
+    }
+
+    .onboard-button-primary {
+      display: none;
+    }
+  }
 </style>
 
 <div class="container flex flex-column items-center">
@@ -73,7 +95,7 @@
     class:warning={connectionRejected || previousConnectionRequest}
   >
     <div class="flex">
-      <div class="flex justify-center relative">
+      <div class="flex justify-center relative wallet-badges">
         <WalletAppBadge
           size={40}
           padding={8}
@@ -97,7 +119,7 @@
         </div>
       </div>
 
-      <div class="flex flex-column justify-center ml">
+      <div class="flex flex-column justify-center ml connecting-wallet-info">
         <div class="text" class:text-rejected={connectionRejected}>
           {$_(
             `connect.connectingWallet.${

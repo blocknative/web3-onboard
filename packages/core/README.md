@@ -117,7 +117,7 @@ Onboard is using the [ICU syntax](https://formatjs.io/docs/core-concepts/icu-syn
 An object mapping for W3O components with the key being the DOM element to mount the specified component to.
 This defines the DOM container element for svelte to attach the component.
 
-**NOTE**: containerElement must be a DOM element with a styleSheet property attached and the element must be available on the DOM at the time of component mounting. 
+**NOTE**: containerElement must be a DOM element with a styleSheet property attached and the element must be available on the DOM at the time of component mounting.
 For an example please see containerElement usage [here](https://github.com/blocknative/web3-onboard/blob/8531a73d69365f7d584320f1c4b97a5d90f1c34e/packages/demo/src/App.svelte#L227)
 
 ```typescript
@@ -942,6 +942,7 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-border-radius-1: 24px;
   --onboard-border-radius-2: 20px;
   --onboard-border-radius-3: 16px;
+  --onboard-border-radius-4: 12px;
 
   /* SHADOWS */
   --onboard-shadow-0: none;

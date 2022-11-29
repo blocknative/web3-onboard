@@ -15,6 +15,8 @@
   const { subheading, paragraph } = defaultContent
   const { heading } =
     defaultContent as i18n['connect']['selectingWallet']['sidebar']
+
+  let windowWidth: number
 </script>
 
 <style>
@@ -22,7 +24,7 @@
     padding: var(--onboard-spacing-3, var(--spacing-3));
     background: var(
       --onboard-connect-sidebar-background,
-      var(--onboard-gray-100, var(--gray-100))
+      var(--onboard-primary-100, var(--primary-100))
     );
     color: var(
       --onboard-connect-sidebar-color,
@@ -106,27 +108,52 @@
     max-width: 100%;
     height: auto;
   }
+
+  @media all and (max-width: 520px) {
+    .sidebar {
+      margin: 16px;
+      border: 1px solid var(--onboard-primary-200, var(--primary-200));
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .inner-container {
+      max-width: 100%;
+      padding: 0;
+    }
+
+    .indicators {
+      justify-content: center;
+      margin-top: var(--onboard-spacing-4, var(--spacing-4));
+    }
+  }
 </style>
+
+<svelte:window bind:innerWidth={windowWidth} />
 
 <div class="sidebar">
   <div class="inner-container">
-    <div class="icon-container flex">
-      {#if logo || icon}
-        {#if isSVG(logo || icon)}
-          {@html logo || icon}
+    <!-- On Mobile we display the icon only & within the header rather than the sidebar -->
+    {#if windowWidth >= 809}
+      <div class="icon-container flex">
+        {#if logo || icon}
+          {#if isSVG(logo || icon)}
+            {@html logo || icon}
+          {:else}
+            <img src={logo || icon} alt="logo" />
+          {/if}
         {:else}
-          <img src={logo || icon} alt="logo" />
+          {@html blocknative}
         {/if}
-      {:else}
-        {@html blocknative}
+      </div>
+
+      {#if $_(`connect.${step}.sidebar.heading`, { default: '' })}
+        <h2 class="heading">
+          {$_(`connect.${step}.sidebar.heading`, {
+            default: heading
+          })}
+        </h2>
       {/if}
-    </div>
-    {#if $_(`connect.${step}.sidebar.heading`, { default: '' })}
-      <h2 class="heading">
-        {$_(`connect.${step}.sidebar.heading`, {
-          default: heading
-        })}
-      </h2>
     {/if}
 
     <h4 class="subheading">
