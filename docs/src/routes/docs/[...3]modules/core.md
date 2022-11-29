@@ -63,6 +63,11 @@ type InitOptions {
   accountCenter?: AccountCenterOptions
   apiKey?: string
   notify?: Partial<NotifyOptions>
+  gas?: typeof gas
+  /**
+   * Object mapping for W3O components with the key being the component and the value the DOM element to mount the component to. This element must be available at time of package script execution.
+   */
+  containerElements?: Partial<ContainerElements>
 }
 ```
 
@@ -136,6 +141,11 @@ export type AccountCenter = {
   position?: AccountCenterPosition // default: 'topRight'
   expanded?: boolean // default: true
   minimal?: boolean // enabled by default for mobile
+
+  /**
+   * @deprecated Use top level containerElements property
+   * with the accountCenter prop set to the desired container El. See documentation below
+   */
   containerElement?: string // defines the DOM container element for svelte to attach
 }
 
@@ -145,6 +155,20 @@ export type AccountCenterOptions = {
 }
 
 type AccountCenterPosition = 'topRight' | 'bottomRight' | 'bottomLeft' | 'topLeft'
+```
+
+**`containerElements`**
+An object mapping for W3O components with the key being the DOM element to mount the specified component to.
+This defines the DOM container element for svelte to attach the component.
+
+**NOTE**: containerElement must be a DOM element with a styleSheet property attached and the element must be available on the DOM at the time of component mounting. 
+For an example please see containerElement usage [here](https://github.com/blocknative/web3-onboard/blob/8531a73d69365f7d584320f1c4b97a5d90f1c34e/packages/demo/src/App.svelte#L227)
+
+```typescript
+type ContainerElements = {
+  // when using the accountCenter with a container el the accountCenter position properties are ignored
+  accountCenter?: string
+}
 ```
 
 **`notify`**
@@ -252,19 +276,13 @@ const onboard = Onboard({
       id: '0x1',
       token: 'ETH',
       label: 'Ethereum Mainnet',
-      rpcUrl: 'https://mainnet.infura.io/v3/{INFURA_ID}'
+      rpcUrl: `https://mainnet.infura.io/v3/${INFURA_ID}`
     },
     {
-      id: '0x3',
-      token: 'tROP',
-      label: 'Ethereum Ropsten Testnet',
-      rpcUrl: 'https://ropsten.infura.io/v3/{INFURA_ID}'
-    },
-    {
-      id: '0x4',
-      token: 'rETH',
-      label: 'Ethereum Rinkeby Testnet',
-      rpcUrl: 'https://rinkeby.infura.io/v3/{INFURA_ID}'
+      id: '0x5',
+      token: 'ETH',
+      label: 'Goerli',
+      rpcUrl: `https://goerli.infura.io/v3/${INFURA_ID}`
     },
     {
       id: '0x38',
@@ -279,10 +297,16 @@ const onboard = Onboard({
       rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
     },
     {
-      id: '0xfa',
-      token: 'FTM',
-      label: 'Fantom Mainnet',
-      rpcUrl: 'https://rpc.ftm.tools/'
+      id: 10,
+      token: 'OETH',
+      label: 'Optimism',
+      rpcUrl: 'https://mainnet.optimism.io'
+    },
+    {
+      id: 42161,
+      token: 'ARB-ETH',
+      label: 'Arbitrum',
+      rpcUrl: 'https://rpc.ankr.com/arbitrum'
     }
   ],
   appMetadata: {
