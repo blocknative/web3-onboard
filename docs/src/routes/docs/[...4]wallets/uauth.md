@@ -4,8 +4,6 @@ Wallet module for connecting Unstoppable Domains to web3-onboard
 
 ### Install
 
-### Install
-
 <Tabs values={['yarn', 'npm']}>
 <TabPanel value="yarn">
 
