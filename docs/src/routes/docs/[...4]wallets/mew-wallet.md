@@ -8,14 +8,14 @@ Wallet module for connecting Mew wallet through web3-onboard
 <TabPanel value="yarn">
 
 ```sh copy
-yarn add @web3-onboard/mew-2allet
+yarn add @web3-onboard/mew-wallet
 ```
 
   </TabPanel>
   <TabPanel value="npm">
 
 ```sh copy
-npm install @web3-onboard/mew-2allet
+npm install @web3-onboard/mew-wallet
 ```
 
   </TabPanel>
