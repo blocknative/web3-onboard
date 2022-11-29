@@ -11,7 +11,7 @@
 
   let text = {
     license: 'Released under the MIT License.',
-    copyright: 'Copyright © 2022'
+    copyright: '© 2022 Blocknative. All Rights Reserved.'
   }
 </script>
 
@@ -43,13 +43,28 @@
       </a>
     </Flexbox>
     <a href="//www.blocknative.com/" target="_blank">
-      <img src={PoweredByBn} alt="Powered by Blocknative">
+      <img src={PoweredByBn} alt="Powered by Blocknative" />
       <span class="sr-only">Powered by Blocknative</span>
     </a>
   </Flexbox>
   <div class="copyright-box">
-    <div class="text">{text.license}</div>
-    <div class="text">{text.copyright}</div>
+    <div class="flex flex-row flex-wrap justify-center">
+      <div class="text">{text.license}</div>
+      <div class="text">{text.copyright}</div>
+    </div>
+    <div class="flex">
+      <a
+        target="_blank"
+        href="https://www.blocknative.com/privacy-policy"
+        class="text-sm hover:text-white">Privacy Policy</a
+      >
+      <div class="w-px bg-gray-divider mx-2 h-4" />
+      <a
+        target="_blank"
+        href="https://www.blocknative.com/terms-conditions"
+        class="text-sm hover:text-white">Terms of Service</a
+      >
+    </div>
   </div>
 </footer>
 
@@ -57,32 +72,8 @@
   footer {
     background: #1a1d26;
     min-height: 400px;
-
     display: flex;
     flex-flow: column;
-  }
-
-  .copyright-box {
-    /* grey/600 */
-    background: #242835;
-
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    align-items: center;
-    padding: 1.5rem 2rem;
-  }
-
-  .text {
-    /* F6 */
-    font-family: 'Sofia Pro';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 16px;
-
-    /* grey/300 */
-    color: #999ca5;
   }
 
   a.icon-link {
@@ -95,6 +86,35 @@
   }
   a.icon-link:focus {
     transform: none;
+  }
+
+  .copyright-box {
+    /* grey/600 */
+    background: #242835;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    gap: 1rem;
+  }
+  @media screen and (min-width: 1024px) {
+    .copyright-box {
+      flex-flow: row;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+  }
+
+  .text {
+    /* F6 */
+    font-family: 'Sofia Pro';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    /* grey/300 */
+    color: #999ca5;
   }
 
   /* screen reader class */
@@ -110,4 +130,5 @@
     white-space: nowrap;
     border-width: 0;
   }
+
 </style>

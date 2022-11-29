@@ -1,30 +1,32 @@
-# @web3-onboard/ledger
+# Trezor
 
-Wallet module for connecting Ledger hardware wallets to web3-onboard
+Wallet module for connecting Trezor hardware wallets to web3-onboard
 
-## Install
+### Install
 
 <Tabs values={['yarn', 'npm']}>
 <TabPanel value="yarn">
 
 ```sh copy
-yarn add @web3-onboard/ledger
+yarn add @web3-onboard/trezor
 ```
 
   </TabPanel>
   <TabPanel value="npm">
 
 ```sh copy
-npm install @web3-onboard/ledger
+npm install @web3-onboard/trezor
 ```
 
   </TabPanel>
 </Tabs>
 
-## Options
+### Options
 
 ```typescript
-type LedgerOptions = {
+type TrezorOptions = {
+  email: string
+  appUrl: string
   customNetwork?: CustomNetwork
 }
 
@@ -61,18 +63,21 @@ interface BootstrapNode {
 }
 ```
 
-## Usage
+### Usage
 
 ```typescript
 import Onboard from '@web3-onboard/core'
-import ledgerModule from '@web3-onboard/ledger'
+import trezorModule from '@web3-onboard/trezor'
 
-const ledger = ledgerModule()
+const trezor = trezorModule({
+  email: '<EMAIL_CONTACT>',
+  appUrl: '<APP_URL>'
+})
 
 const onboard = Onboard({
   // ... other Onboard options
   wallets: [
-    ledger
+    trezor
     //... other wallets
   ]
 })

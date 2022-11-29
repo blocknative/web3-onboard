@@ -1,21 +1,21 @@
-# @web3-onboard/mew
+# Mew Wallet
 
-Wallet module for connecting Mew wallet to web3-onboard
+Wallet module for connecting Mew wallet through web3-onboard
 
-## Install
+### Install
 
 <Tabs values={['yarn', 'npm']}>
 <TabPanel value="yarn">
 
 ```sh copy
-yarn add @web3-onboard/mew
+yarn add @web3-onboard/mew-wallet
 ```
 
   </TabPanel>
   <TabPanel value="npm">
 
 ```sh copy
-npm install @web3-onboard/mew
+npm install @web3-onboard/mew-wallet
 ```
 
   </TabPanel>
@@ -25,14 +25,14 @@ npm install @web3-onboard/mew
 
 ```typescript
 import Onboard from '@web3-onboard/core'
-import mewModule from '@web3-onboard/mew'
+import mewWallet from '@web3-onboard/mew-wallet'
 
-const mew = mewModule()
+const mewWalletModule = mewWallet()
 
 const onboard = Onboard({
   // ... other Onboard options
   wallets: [
-    mew
+    mewWalletModule
     //... other wallets
   ]
 })
@@ -40,7 +40,3 @@ const onboard = Onboard({
 const connectedWallets = await onboard.connectWallet()
 console.log(connectedWallets)
 ```
-
-:::admonition type=warning
-Currently not building on M1 Macs
-:::

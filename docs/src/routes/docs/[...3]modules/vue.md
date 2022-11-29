@@ -1,4 +1,4 @@
-# @web3-onboard/vue
+# Vue
 
 A collection of composable functions for implementing web3-onboard in to a Vue project; compatible both with Vue 2 + composition-api and Vue 3
 

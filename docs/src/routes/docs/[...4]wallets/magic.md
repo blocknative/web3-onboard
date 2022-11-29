@@ -1,4 +1,4 @@
-# @web3-onboard/magic
+# Magic
 
 Wallet module for connecting Magic wallets to Onboard V2
 
