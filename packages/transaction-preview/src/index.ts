@@ -97,6 +97,7 @@ export const patchProvider = (
         const preview = await simulateTransactions(options, transactionParams)
         if (
           preview.status !== 'simulated' ||
+          preview.error.length ||
           !netBalanceChangesExist(preview)
         ) {
           // If transaction simulation was unsuccessful or balanceChanges do
