@@ -75,7 +75,7 @@ const config = {
         'import.meta.env.VERCEL': JSON.stringify(process.env.VERCEL)
       },
       optimizeDeps: {
-        exclude: ['@ethersproject/hash', 'wrtc'],
+        exclude: ['@ethersproject/hash', 'wrtc', 'http'],
         include: [
           '@web3-onboard/core',
           '@web3-onboard/coinbase',

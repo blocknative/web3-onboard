@@ -10,10 +10,10 @@
   import magicModule from '@web3-onboard/magic'
   import keystoneModule from '@web3-onboard/keystone'
   import fortmaticModule from '@web3-onboard/fortmatic'
-  // import torusModule from '@web3-onboard/torus'
   import keepkeyModule from '@web3-onboard/keepkey'
   import gnosisModule from '@web3-onboard/gnosis'
-  // import web3authModule from '@web3-onboard/web3auth'
+  // import torusModule from '@web3-onboard/torus'
+  import uauthModule from '@web3-onboard/uauth'
   // import sequenceModule from '@web3-onboard/sequence'
   import tallyModule from '@web3-onboard/tallyho'
   import enkryptModule from '@web3-onboard/enkrypt'
@@ -58,12 +58,6 @@
   //     'DJuUOKvmNnlzy6ruVgeWYWIMKLRyYtjYa9Y10VCeJzWZcygDlrYLyXsBQjpJ2hxlBO9dnl8t9GmAC2qOP5vnIGo'
   // })
 
-  // // const uauthOptions = {
-  // //   clientID: '2d14b025-cb94-44b9-85ac-ce2397e6f10b',
-  // //   redirectUri: window.location.href,
-  // //   scope: 'openid wallet email:optional humanity_check:optional profile:optional social:optional'
-  // // }
-  // // const uauth = uauthModule(uauthOptions)
   const enkrypt = enkryptModule()
   const mewWallet = mewWalletModule()
 
@@ -71,6 +65,8 @@
     wallets: [
       // keepkey,
       // sequence,
+      // web3auth,
+      // torus,
       injected,
       tally,
       ledger,
@@ -78,16 +74,13 @@
       dcent,
       trezor,
       walletConnect,
-      // // uauth,
       enkrypt,
       mewWallet,
-      // web3auth,
       gnosis,
       magic,
       fortmatic,
       keystone,
-      portis,
-      // torus,
+      portis
     ],
     chains: [
       {
@@ -171,7 +164,29 @@
   $: buttonText = $wallets$?.[0]?.provider ? 'Disconnect' : connecting ? 'Connecting' : 'Connect'
 
   onMount(() => {
-
+    const uauthOptions = {
+      clientID: '2d14b025-cb94-44b9-85ac-ce2397e6f10b',
+      redirectUri: window.location.href,
+      scope: 'openid wallet email:optional humanity_check:optional profile:optional social:optional'
+    }
+    const uauth = uauthModule(uauthOptions)
+    onboard.state.actions.setWalletModules([
+      uauth,
+      injected,
+      tally,
+      ledger,
+      coinbase,
+      dcent,
+      trezor,
+      walletConnect,
+      enkrypt,
+      mewWallet,
+      gnosis,
+      magic,
+      fortmatic,
+      keystone,
+      portis
+    ])
   })
 </script>
 
