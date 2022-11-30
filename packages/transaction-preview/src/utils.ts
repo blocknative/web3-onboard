@@ -1,4 +1,4 @@
-import type { DeviceNotBrowser, TransactionObject } from './types'
+import type { DeviceNotBrowser } from './types'
 import bowser from 'bowser'
 import type {
   Device,
