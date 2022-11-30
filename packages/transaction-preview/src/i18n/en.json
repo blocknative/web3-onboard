@@ -3,7 +3,7 @@
     "minutes": "min",
     "seconds": "sec"
   },
-  "header":"New Transaction Detected",
+  "header":"Transaction Preview",
   "timeSection": {
     "action": "Simulated",
     "past": "ago"

@@ -123,11 +123,11 @@
     background: var(--onboard-gray-700, var(--gray-700));
     display: flex;
     flex-direction: column;
-    padding: 0.75rem 1rem;
+    padding: 0.75rem;
+    gap: 0.5rem;
   }
   .address-info {
     font-size: 0.75rem;
-    margin-bottom: 0.5rem;
     font-weight: 400;
     line-height: 1rem;
     display: inline-flex;
@@ -155,19 +155,16 @@
   table.balance-change-table {
     width: 100%;
     background: var(--onboard-gray-600, var(--gray-600));
-    border-width: 1px;
-    border-color: var(--onboard-gray-500, var(--gray-500));
-    border-style: solid;
+    border: 1px solid var(--onboard-gray-500, var(--gray-500));
     color: var(--onboard-gray-100, var(--gray-100));
     overflow: hidden;
-    border-collapse: collapse;
+    border-spacing: 0;
   }
 
   table.balance-change-table td,
   table.balance-change-table th {
     padding: 0.25rem 1rem;
     text-align: start;
-    font-weight: 400;
     line-height: 1rem;
   }
   table.balance-change-table th {
@@ -177,8 +174,12 @@
     font-size: 0.875rem;
   }
 
+  table.balance-change-table td.token-text {
+    font-weight: 700;
+  }
+
   tbody > tr:not(:first-child) {
-    box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0px 1px 0px var(--onboard-gray-500, var(--gray-500));
   }
 
   table.balance-change-table thead {
@@ -220,8 +221,8 @@
     </div>
     <table class="balance-change-table table-radius">
       <colgroup>
-        <col span="1" style="width: 28%;" />
-        <col span="1" style="width: 72%;" />
+        <col span="1" style="width: 20%;" />
+        <col span="1" style="width: 80%;" />
       </colgroup>
       <thead>
         <tr>
@@ -242,7 +243,7 @@
           {#each balanceChanges as assetChanges}
             {#each assetChanges.balanceChanges as asset}
               <tr>
-                <td>{asset.asset.symbol}</td>
+                <td class="token-text">{asset.asset.symbol}</td>
                 <td class={asset.delta.includes('-') ? 'negative' : 'positive'}
                   >{!asset.delta.includes('-') ? '+' : ''}{cleanBalance(
                     asset.delta
