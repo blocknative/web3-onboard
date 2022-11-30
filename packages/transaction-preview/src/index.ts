@@ -1,6 +1,5 @@
 import { firstValueFrom, Subject } from 'rxjs'
 import {
-  EthSignTransactionRequest,
   ProviderRpcError,
   ProviderRpcErrorCode,
   SofiaProLight,
@@ -11,7 +10,6 @@ import type {
   TransactionPreviewInitOptions,
   TransactionPreviewModule,
   TransactionPreviewAPI,
-  TransactionObject,
   TransactionPreviewOptions
 } from './types.js'
 import type { EIP1193Provider } from '@web3-onboard/common'
@@ -52,10 +50,6 @@ const handleRequireApproval = async (
   fullProviderRequest(req)
 }
 
-const ethTransactionExists = (arr: EthSignTransactionRequest['params']) => {
-  return arr.some((trans: TransactionObject) => trans.chainId == 1)
-}
-
 const netBalanceChangesExist = (simResp: MultiSimOutput): boolean => {
   if (
     simResp &&
@@ -89,15 +83,19 @@ export const patchProvider = (
     if (
       req.method === 'eth_sendTransaction' &&
       req.params &&
-      req.params.length &&
-      ethTransactionExists(req.params as EthSignTransactionRequest['params'])
+      req.params.length
     ) {
       const transactionParams = req.params as SimulationTransaction[]
       try {
         const preview = await simulateTransactions(options, transactionParams)
+        if (preview.error.length) {
+          fullProviderRequest(req)
+          throw new Error(
+            `An error occurred during transaction simulation: ${preview.error.join(' - ')}`
+          )
+        }
         if (
           preview.status !== 'simulated' ||
-          preview.error.length ||
           !netBalanceChangesExist(preview)
         ) {
           // If transaction simulation was unsuccessful or balanceChanges do
@@ -114,11 +112,9 @@ export const patchProvider = (
               })
               .catch(() => app.$destroy())
       } catch (e) {
+        fullProviderRequest(req)
         if (app) app.$destroy()
-        throw new ProviderRpcError({
-          code: ProviderRpcErrorCode.ACCOUNT_ACCESS_REJECTED,
-          message: `User rejected the transaction: ${e}`
-        })
+        throw new Error(`${e}`)
       }
     } else {
       return fullProviderRequest(req)
