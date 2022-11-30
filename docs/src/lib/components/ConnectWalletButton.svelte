@@ -165,7 +165,7 @@
 
   onMount(() => {
     const uauthOptions = {
-      clientID: '2d14b025-cb94-44b9-85ac-ce2397e6f10b',
+      clientID: '4d88178c-07c5-420c-99dc-c1b3a73aeb7d',
       redirectUri: window.location.href,
       scope: 'openid wallet email:optional humanity_check:optional profile:optional social:optional'
     }
