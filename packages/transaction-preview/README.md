@@ -1,5 +1,7 @@
 # @web3-onboard/transaction-preview
 
+![Transaction Preview Flow](https://github.com/blocknative/web3-onboard/blob/feature/testing_transaction_preview/packages/transaction-preview/assets/preview.gif "Transaction Preview Flow")
+
 ## A modular UI for previewing a single or set of unsigned Ethereum transactions.
 
 #### Full Transaction Preview package documentation available [here](https://onboard.blocknative.com/docs/packages/transaction-preview)
@@ -16,20 +18,14 @@ Full Simulation Platform API documentation can be found [here](https://docs.bloc
 
 ### Usage with Web3-Onboard Core package
 
-To use the Transaction Preview package with web3-onboard all a user needs to do is initialize with their Blocknative API key and the associated [Secret Key](https://docs.blocknative.com/account#secret-key) and the package handles the rest!
-
-![Transaction Preview Flow](https://github.com/blocknative/web3-onboard/blob/feature/testing_transaction_preview/packages/transaction-preview/assets/preview.gif "Transaction Preview Flow")
-
-
-<img src="https://github.com/blocknative/web3-onboard/blob/feature/testing_transaction_preview/packages/transaction-preview/assets/preview.gif" width="400" height="400" />
-
+To use the Transaction Preview package with web3-onboard all a developer needs to do is initialize web3-onboard with their [Blocknative API key](https://onboard.blocknative.com/docs/overview/introduction#optional-use-an-api-key-to-fetch-real-time-transaction-data-balances-gas) and pass in the module as shown below.
 
 ```typescript
 import Onboard from '@web3-onboard/core'
 import injectedModule from '@web3-onboard/injected'
 import transactionPreviewModule from '@web3-onboard/transaction-preview'
 
-const injected = injectedModule({})
+const injected = injectedModule()
 const transactionPreview = transactionPreviewModule({
   // Optional: Require balance change approval prior to sending transaction to wallet
   // Defaults to true
@@ -40,6 +36,7 @@ const transactionPreview = transactionPreviewModule({
 
 const onboard = Onboard({
   transactionPreview,
+  apiKey: 'xxx387fb-bxx1-4xxc-a0x3-9d37e426xxxx'
   wallets: [injected],
   chains: [
     {
