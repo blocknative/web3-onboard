@@ -18,6 +18,12 @@ Full Simulation Platform API documentation can be found [here](https://docs.bloc
 
 To use the Transaction Preview package with web3-onboard all a user needs to do is initialize with their Blocknative API key and the associated [Secret Key](https://docs.blocknative.com/account#secret-key) and the package handles the rest!
 
+![Transaction Preview Flow](https://github.com/blocknative/web3-onboard/blob/feature/testing_transaction_preview/packages/transaction-preview/assets/preview.gif "Transaction Preview Flow")
+
+
+<img src="https://github.com/blocknative/web3-onboard/blob/feature/testing_transaction_preview/packages/transaction-preview/assets/preview.gif" width="400" height="400" />
+
+
 ```typescript
 import Onboard from '@web3-onboard/core'
 import injectedModule from '@web3-onboard/injected'
