@@ -27,7 +27,8 @@ const injected = injectedModule({})
 const transactionPreview = transactionPreviewModule({
   // Optional: Require balance change approval prior to sending transaction to wallet
   // Defaults to true
-  requireTransactionApproval: true
+  // requireTransactionApproval?: false
+  
   //  i18n?: i18nOptions - Internationalization options
 })
 
