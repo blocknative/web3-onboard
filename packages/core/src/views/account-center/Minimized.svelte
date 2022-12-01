@@ -4,7 +4,7 @@
   import {
     getDefaultChainStyles,
     shortenAddress,
-    shortenEns,
+    shortenDomain,
     unrecognizedChainStyle
   } from '../../utils.js'
   import { updateAccountCenter } from '../../store/actions.js'
@@ -25,7 +25,7 @@
   $: [firstAccount] = primaryWallet ? primaryWallet.accounts : []
 
   $: ensName =
-    firstAccount && firstAccount.ens && shortenEns(firstAccount.ens.name)
+    firstAccount && firstAccount.ens && shortenDomain(firstAccount.ens.name)
 
   $: shortenedFirstAddress = firstAccount
     ? shortenAddress(firstAccount.address)
@@ -179,7 +179,7 @@
       <!-- address and balance -->
       <div class="flex flex-column" style="height: 40px;">
         <div class="address">
-          {ensName ? shortenEns(ensName) : shortenedFirstAddress}
+          {ensName ? shortenDomain(ensName) : shortenedFirstAddress}
         </div>
         {#if firstAddressBalance}
           <div in:fade class="balance">

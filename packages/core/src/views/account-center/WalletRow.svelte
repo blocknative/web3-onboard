@@ -3,7 +3,7 @@
   import { fade } from 'svelte/transition'
   import { ProviderRpcErrorCode } from '@web3-onboard/common'
   import type { WalletState } from '../../types.js'
-  import { shortenAddress, shortenEns, copyWalletAddress } from '../../utils.js'
+  import { shortenAddress, shortenDomain, copyWalletAddress } from '../../utils.js'
   import en from '../../i18n/en.json'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
@@ -190,7 +190,7 @@
 
         <!-- ADDRESS / ENS -->
         <span class="address-ens"
-          >{ens ? shortenEns(ens.name) : shortenAddress(address)}</span
+          >{ens ? shortenDomain(ens.name) : shortenAddress(address)}</span
         >
       </div>
 
