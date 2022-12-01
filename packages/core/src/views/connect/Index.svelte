@@ -69,6 +69,8 @@
     'selectingWallet'
   )
 
+  $: availableWallets = wallets.length - state.get().wallets.length
+
   // handle the edge case where disableModals was set to true on first call
   // and then set to false on second call and there is still a pending call
   connectWallet$
@@ -367,6 +369,7 @@
       --onboard-main-scroll-container-background,
       var(--onboard-white, var(--white))
     );
+    border: 1px solid var(--onboard-primary-200, var(--primary-200));
   }
 
   .content {
@@ -384,7 +387,6 @@
   }
 
   .header {
-    box-shadow: var(--onboard-shadow-2, var(--shadow-2));
     background: var(
       --onboard-connect-header-background,
       var(--onboard-white, var(--white))
@@ -393,6 +395,7 @@
       --onboard-connect-header-color,
       var(--onboard-black, var(--black))
     );
+    border-bottom: 1px solid var(--onboard-primary-200, var(--primary-200));
   }
 
   .header-heading {
@@ -420,22 +423,25 @@
     }
 
     .container {
-      height: 100%;
+      height: min-content;
       flex-flow: column-reverse;
+      border: 0;
     }
 
     .mobile-subheader {
       color: var(--onboard-gray-400, var(--gray-400));
       display: block;
       font-size: var(--onboard-font-size-6, var(--font-size-6));
-      line-height: 100%;
-      margin: 4px 0 0 0;
+      line-height: 1rem;
+      margin: 0.25rem 0 0 0;
       font-weight: 400;
     }
 
     .mobile-header {
+      height: 4.5rem; /* 72px */
       display: flex;
-      padding: 16px;
+      padding: 1rem;
+      gap: 0.5rem;
 
       border-bottom: 1px solid
         var(
@@ -444,17 +450,17 @@
         );
     }
 
-    .header-heading {
-      margin-bottom: 4px;
-    }
-
     .w-full {
       width: 100%;
     }
 
     .icon-container {
-      width: 40px;
-      margin-right: 8px;
+      display: flex;
+      flex: 0 0 auto;
+      height: 2.5rem;
+      width: 2.5rem;
+      min-width: 2.5rem;
+      justify-content: center;
     }
 
     .header-heading {
@@ -475,7 +481,7 @@
       <div class="content flex flex-column">
         {#if windowWidth <= 809}
           <div class="mobile-header">
-            <div class="icon-container flex">
+            <div class="icon-container">
               {#if icon}
                 {#if isSVG(icon)}
                   {@html icon}
@@ -506,7 +512,7 @@
               </h4>
               <h5 class="mobile-subheader">
                 {$modalStep$ === 'selectingWallet'
-                  ? `${wallets.length} available wallets`
+                  ? `${availableWallets} available wallets`
                   : '1 account selected'}
               </h5>
             </div>
@@ -521,7 +527,7 @@
                   wallet: selectedWallet && selectedWallet.label
                 }
               })}
-              {$modalStep$ === 'selectingWallet' ? `(${wallets.length})` : ''}
+              {$modalStep$ === 'selectingWallet' ? `(${availableWallets})` : ''}
             </h4>
           </div>
         {/if}

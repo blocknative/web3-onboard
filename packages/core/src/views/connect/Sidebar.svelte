@@ -1,6 +1,6 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
-  import blocknative from '../../icons/blocknative.js'
+  import { blocknative, poweredByBlocknativeIcon } from '../../icons'
   import en from '../../i18n/en.json'
   import type { i18n } from '../../types.js'
   import { isSVG } from '../../utils.js'
@@ -21,7 +21,7 @@
 
 <style>
   .sidebar {
-    padding: var(--onboard-spacing-3, var(--spacing-3));
+    padding: var(--onboard-spacing-2, var(--spacing-2));
     background: var(
       --onboard-connect-sidebar-background,
       var(--onboard-primary-100, var(--primary-100))
@@ -30,6 +30,7 @@
       --onboard-connect-sidebar-color,
       var(--onboard-gray-700, var(--gray-700))
     );
+    border-right: 1px solid var(--onboard-primary-200, var(--primary-200));
   }
 
   .inner-container {
@@ -68,7 +69,7 @@
     border-radius: 8px;
     background: var(
       --onboard-connect-sidebar-progress-background,
-      var(--onboard-gray-200, var(--gray-200))
+      var(--onboard-gray-700, var(--gray-700))
     );
     transition: background 250ms ease-in-out;
   }
@@ -81,7 +82,7 @@
     border: 2px solid
       var(
         --onboard-connect-sidebar-progress-background,
-        var(--onboard-gray-200, var(--gray-200))
+        var(--onboard-gray-700, var(--gray-700))
       );
   }
 
@@ -92,7 +93,7 @@
     height: 2px;
     background: var(
       --onboard-connect-sidebar-progress-background,
-      var(--onboard-gray-200, var(--gray-200))
+      var(--onboard-gray-700, var(--gray-700))
     );
     transition: background 250ms ease-in-out;
   }
@@ -109,12 +110,21 @@
     height: auto;
   }
 
+  .poweredby {
+    margin-top: 50%;
+    text-align: center;
+  }
+
   @media all and (max-width: 520px) {
     .sidebar {
-      margin: 16px;
-      border: 1px solid var(--onboard-primary-200, var(--primary-200));
-      border-radius: 12px;
+      margin: 1rem 1rem 4rem 1rem;
+      border-radius: 0.75rem;
       text-align: center;
+      background: var(
+        --onboard-primary-100,
+        var(--onboard-primary-100, var(--primary-100))
+      );
+      border: 1px solid var(--onboard-primary-200, var(--primary-200));
     }
 
     .inner-container {
@@ -125,6 +135,18 @@
     .indicators {
       justify-content: center;
       margin-top: var(--onboard-spacing-4, var(--spacing-4));
+    }
+
+    .poweredby {
+      position: absolute;
+      bottom: 2rem;
+      display: block;
+      right: 50%;
+      transform: translate(50%, 0);
+    }
+
+    .subheading {
+      line-height: 1rem;
     }
   }
 </style>
@@ -200,5 +222,8 @@
         class:on={step === 'connectedWallet'}
       />
     </div>
+  </div>
+  <div class="poweredby">
+    {@html poweredByBlocknativeIcon}
   </div>
 </div>

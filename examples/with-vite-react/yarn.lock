@@ -2984,10 +2984,10 @@
     "@web3-onboard/core" "^2.8.5"
     use-sync-external-store "1.0.0"
 
-"@web3-onboard/sequence@^2.0.2":
-  version "2.0.2"
-  resolved "https://registry.npmjs.org/@web3-onboard/sequence/-/sequence-2.0.2.tgz#e95d5382771c1220e05d8bbc6e68f5dcdfd05394"
-  integrity sha512-1Cy0CG6zNgyRG1G453XfxjMx59jqrDXpPFNjzg645/6bW6jdyqEEPa7rTXcSx3Dav5A93E6ePH1vJtZKW64Hhw==
+"@web3-onboard/sequence@^2.0.3-alpha.1":
+  version "2.0.3"
+  resolved "https://registry.npmjs.org/@web3-onboard/sequence/-/sequence-2.0.3.tgz#58c99f1445c01bfeac010067e4c7b9a8fab0d27e"
+  integrity sha512-poIRx3wwfIdO8VKUz3kM9o+UbKW6Q6C7YSGc2/gFHx/Byyxz8UprvewoAMq2OWuf4d8q4m657PtttHxri6hYFg==
   dependencies:
     "0xsequence" "^0.40.5"
     "@web3-onboard/common" "^2.2.3"

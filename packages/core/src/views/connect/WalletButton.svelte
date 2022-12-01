@@ -55,6 +55,7 @@
   }
 
   button.wallet-button-styling {
+    width: 100%;
     border-radius: var(
       --onboard-wallet-button-border-radius,
       var(--border-radius-1)
@@ -78,10 +79,18 @@
     right: 16px;
   }
 
+  .wallet-button-container {
+    width: 100%;
+  }
+
   @media all and (max-width: 520px) {
     button {
       display: block;
       border: 0;
+      max-height: 6rem;
+      max-width: 5rem;
+      min-height: 6rem;
+      min-width: 5rem;
     }
 
     button:disabled {
@@ -92,16 +101,17 @@
       margin: unset;
       font-size: var(--onboard-font-size-7, var(--font-size-7));
       line-height: 1rem;
-      margin-top: 8px;
+      margin-top: 0.5rem;
     }
     .wallet-button-container-inner {
       flex-flow: column;
       position: relative;
     }
 
-    .wallet-button-styling {
-      display: block;
-      padding: var(--onboard-spacing-5, var(--spacing-5));
+    button.wallet-button-styling {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
     }
 
     button.connected {
@@ -112,31 +122,62 @@
       right: -4%;
       bottom: 24%;
     }
+
+    .wallet-button-container {
+      padding: 0.25rem;
+      border-radius: var(
+        --onboard-wallet-button-border-radius,
+        var(--border-radius-4)
+      );
+    }
+
+    .wallet-button-container:hover {
+      box-shadow: var(
+        --onboard-wallet-button-box-shadow-hover,
+        var(--box-shadow-0)
+      );
+      background: var(
+        --onboard-wallet-button-background-hover,
+        var(--onboard-primary-100, var(--primary-100))
+      );
+      color: var(
+        --onboard-wallet-button-color-hover,
+        var(--onboard-gray-700, var(--gray-700))
+      );
+    }
+
+    button:hover {
+      box-shadow: unset;
+      background: unset;
+      color: unset;
+    }
   }
 </style>
 
 <svelte:window bind:innerWidth={windowWidth} />
 
-<button
-  class="relative justify-start wallet-button-styling"
-  class:connected
-  {disabled}
-  in:fade
-  on:click={onClick}
->
-  <div class="wallet-button-container-inner">
-    <WalletAppBadge
-      size={windowWidth >= 809 ? 48 : 56}
-      {icon}
-      loading={connecting}
-      border={connected ? 'green' : 'blue'}
-      background="transparent"
-    />
-    <span class="name">{label}</span>
-    {#if connected}
-      <div class="absolute status-icon-mobile status-icon">
-        <SuccessStatusIcon size={16} />
-      </div>
-    {/if}
-  </div>
-</button>
+<div class="wallet-button-container">
+  <button
+    class="relative justify-start wallet-button-styling"
+    class:connected
+    {disabled}
+    in:fade
+    on:click={onClick}
+  >
+    <div class="wallet-button-container-inner">
+      <WalletAppBadge
+        size={windowWidth >= 809 ? 48 : 56}
+        {icon}
+        loading={connecting}
+        border={connected ? 'green' : 'blue'}
+        background="transparent"
+      />
+      <span class="name">{label}</span>
+      {#if connected}
+        <div class="absolute status-icon-mobile status-icon">
+          <SuccessStatusIcon size={16} />
+        </div>
+      {/if}
+    </div>
+  </button>
+</div>

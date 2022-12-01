@@ -41,7 +41,11 @@
       overflow-x: scroll;
       overflow-y: hidden;
 
-      padding: var(--onboard-spacing-4, var(--spacing-4));
+      padding: var(
+          --onboard-spacing-5,
+          calc(var(--spacing-5) + var(--spacing-6))
+        )
+        var(--onboard-spacing-5, var(--spacing-5));
 
       border-bottom: 1px solid
         var(

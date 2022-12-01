@@ -156,8 +156,12 @@
       z-index: 1;
       fill: white;
       box-shadow: 0px 2px 12px 0px rgba(0, 0, 0, 0.1);
-      right: -12%;
-      bottom: -12%;
+    }
+
+    .status-icon-container {
+      right: -0.25rem;
+      bottom: -0.25rem;
+      position: absolute;
     }
   }
 </style>
@@ -204,7 +208,9 @@
         {/if}
       </div>
       {#if loading && windowWidth <= 809}
-        <PendingStatusIcon class="pending-status-icon" size={22} />
+        <div class="status-icon-container">
+          <PendingStatusIcon class="pending-status-icon" size={22} />
+        </div>
       {/if}
     {/await}
   {/if}
