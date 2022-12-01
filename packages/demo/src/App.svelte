@@ -120,9 +120,7 @@
   const sequence = sequenceModule()
   const enkrypt = enkryptModule()
   const mewWallet = mewWalletModule()
-  const transactionPreview = transactionPreviewModule({
-    requireTransactionApproval: true
-  })
+  const transactionPreview = transactionPreviewModule()
 
   const onboard = Onboard({
     wallets: [
