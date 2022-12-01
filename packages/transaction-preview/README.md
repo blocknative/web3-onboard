@@ -26,6 +26,7 @@ import transactionPreviewModule from '@web3-onboard/transaction-preview'
 const injected = injectedModule({})
 const transactionPreview = transactionPreviewModule({
   // Optional: Require balance change approval prior to sending transaction to wallet
+  // Defaults to true
   requireTransactionApproval: true
   //  i18n?: i18nOptions - Internationalization options
 })
@@ -98,6 +99,7 @@ export type TransactionPreviewOptions = {
   /**
    * Optional requirement for user to accept transaction balance changes
    * prior to sending the transaction to the wallet
+   * Defaults to true
    * */
   requireTransactionApproval?: boolean
   /**
