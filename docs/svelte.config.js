@@ -79,6 +79,8 @@ const config = {
         include: [
           '@web3-onboard/core',
           '@web3-onboard/coinbase',
+          '@web3-onboard/keepkey',
+          '@web3-onboard/sequence',
           'js-sha3',
           '@ethersproject/bignumber'
         ]

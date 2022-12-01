@@ -14,7 +14,7 @@
   import gnosisModule from '@web3-onboard/gnosis'
   // import torusModule from '@web3-onboard/torus'
   import uauthModule from '@web3-onboard/uauth'
-  // import sequenceModule from '@web3-onboard/sequence'
+  import sequenceModule from '@web3-onboard/sequence'
   import tallyModule from '@web3-onboard/tallyho'
   import enkryptModule from '@web3-onboard/enkrypt'
   import mewWalletModule from '@web3-onboard/mew-wallet'
@@ -39,7 +39,7 @@
   const keystone = keystoneModule()
   const keepkey = keepkeyModule()
   const gnosis = gnosisModule()
-  // const sequence = sequenceModule()
+  const sequence = sequenceModule()
   const tally = tallyModule()
 
   const trezorOptions = {
@@ -63,8 +63,8 @@
 
   const onboard = Onboard({
     wallets: [
-      // keepkey,
-      // sequence,
+      keepkey,
+      sequence,
       // web3auth,
       // torus,
       injected,
@@ -171,6 +171,8 @@
     }
     const uauth = uauthModule(uauthOptions)
     onboard.state.actions.setWalletModules([
+      keepkey,
+      sequence,
       uauth,
       injected,
       tally,
