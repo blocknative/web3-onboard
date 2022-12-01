@@ -6,7 +6,7 @@ import type {
 } from '@web3-onboard/common'
 
 import type { ModalConfig, Web3AuthOptions } from '@web3auth/web3auth'
-import type { CustomChainConfig, CONNECTED_EVENT_DATA } from '@web3auth/base'
+import type { CustomChainConfig } from '@web3auth/base'
 
 type Web3AuthModuleOptions = Omit<Web3AuthOptions, 'chainConfig'> & {
   chainConfig?: Partial<CustomChainConfig> &

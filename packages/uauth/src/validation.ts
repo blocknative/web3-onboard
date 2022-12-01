@@ -1,4 +1,4 @@
-import * as Joi from 'joi'
+import Joi from 'joi'
 import type { UauthInitOptions } from './types.js'
 
 const uauthOptions = Joi.object({
