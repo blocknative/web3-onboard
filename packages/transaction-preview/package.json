@@ -1,7 +1,7 @@
 {
   "name": "@web3-onboard/transaction-preview",
   "version": "2.0.0-alpha.1",
-  "description": "Preview Ethereum transaction when they are sent to the users wallet for approval",
+  "description": "In app preview of Ethereum transactions",
   "keywords": [
     "Ethereum",
     "Preview Transactions",
