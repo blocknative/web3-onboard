@@ -1,6 +1,7 @@
 import Joi from 'joi'
 import type {
-  TransactionPreviewInitOptions, TransactionPreviewOptions
+  TransactionPreviewInitOptions,
+  TransactionPreviewOptions
 } from './types.js'
 import { validate, type ValidateReturn } from '@web3-onboard/common'
 

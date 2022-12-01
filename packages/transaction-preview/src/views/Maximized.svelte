@@ -3,12 +3,11 @@
   import { _ } from 'svelte-i18n'
   import en from '../i18n/en.json'
   import { getDevice } from '../utils'
-  import { NetBalanceChange } from '../types'
   import IconBadge from './components/IconBadge.svelte'
   import Button from './components/Button.svelte'
   import closeIcon from '../icons/close-circle.js'
   import SimulationHeader from './components/SimulationHeader.svelte'
-  import type { MultiSimOutput } from 'bnc-sdk'
+  import type { MultiSimOutput, NetBalanceChange } from 'bnc-sdk'
 
   export let requireTransactionApproval: boolean
   export let transactionApproved: (approved: boolean) => void

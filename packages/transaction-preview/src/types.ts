@@ -1,6 +1,7 @@
 import type { EIP1193Provider } from '@web3-onboard/common'
 import type en from './i18n/en.json'
 import type SDK from 'bnc-sdk'
+import type { SimulationTransaction } from 'bnc-sdk'
 
 export type TransactionPreviewModule = (
   options: TransactionPreviewOptions
@@ -45,6 +46,10 @@ export type TransactionPreviewInitOptions = {
   containerElement: string
 }
 
+export type TransactionForSim = SimulationTransaction & {
+  data?: string
+}
+
 export type TransactionPreviewOptions = {
   /**
    * Optional requirement for user to accept transaction balance changes
@@ -57,100 +62,6 @@ export type TransactionPreviewOptions = {
    * To override the default text, pass in a object for the en locale
    */
   i18n?: i18nOptions
-}
-
-export interface TransactionObject {
-  data?: string
-  from: string
-  gas?: string
-  gasLimit?: string
-  to: string
-  chainId: number
-  value?: string
-  nonce?: string
-
-  /**
-   *  Either include gasPrice or maxFeePerGas and maxPriorityFeePerGas
-   * to differentiate between a type 0 and type 2 (EIP1559) transaction
-   */
-  gasPrice?: string
-  maxFeePerGas?: string
-  maxPriorityFeePerGas?: string
-}
-
-// TODO: Remove these after importing from SDK after release
-export type SimPlatformResponse = {
-  contractCall: ContractCall[]
-  error: unknown[]
-  gasUsed: number[]
-  internalTransactions: TransactionObject[][]
-  netBalanceChanges: NetBalanceChange[][]
-  network: string
-  simDetails: SimDetails
-  system: string
-  status: string
-  simulatedBlockNumber: number
-  transactions: TransactionObject[]
-}
-
-export interface NetBalanceChange {
-  address: string
-  balanceChanges: BalanceChange[]
-}
-
-interface BalanceChange {
-  delta: string
-  asset: Asset
-  breakdown: Breakdown[]
-}
-
-interface Asset {
-  type: string
-  symbol: string
-  contractAddress: string
-}
-
-interface Breakdown {
-  counterparty: string
-  amount: string
-}
-
-interface SimDetails {
-  blockNumber: number
-  performanceProfile: PerformanceProfile
-  e2eMs: number
-}
-
-interface PerformanceProfile {
-  breakdown: SimDetailsBreakdown[]
-}
-
-interface SimDetailsBreakdown {
-  label: string
-  timeStamp: string
-}
-
-interface ContractCall {
-  status: string
-  value: ContractCallValue[]
-}
-
-interface ContractCallValue {
-  methodName: string
-  params: {
-    _amount?: string
-    _spender?: string
-    amountIn?: string
-    amountOutMin?: string
-    deadline?: string
-    path?: string[]
-    to?: string
-  }
-  contractAddress: string
-  contractType?: string
-  contractAlias?: string
-  contractDecimals?: string
-  contractName?: string
 }
 
 export type Locale = string

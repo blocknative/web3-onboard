@@ -289,7 +289,7 @@
     console.log(signature)
   }
 
-  let toAddress = '0xc572779D7839B998DF24fc316c89BeD3D450ED13'
+  let toAddress
   const sendTransaction = async (provider, fromAddress) => {
     const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 

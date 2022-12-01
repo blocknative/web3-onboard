@@ -39,7 +39,6 @@ module.exports = {
     ],
     'object-curly-spacing': ['error', 'always'],
     '@typescript-eslint/no-empty-function': 'off',
-    quotes: ['error', 'single', { allowTemplateLiterals: true }],
-    "@typescript-eslint/ban-ts-comment": "off"
+    quotes: ['error', 'single', { allowTemplateLiterals: true }]
   }
 }

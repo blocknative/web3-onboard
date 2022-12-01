@@ -1,16 +1,19 @@
 import { hexFieldsToNumber } from './utils'
-import type { TransactionPreviewInitOptions } from './types.js'
-import type { SimulationTransaction, MultiSimOutput } from 'bnc-sdk'
+import type {
+  TransactionForSim,
+  TransactionPreviewInitOptions
+} from './types.js'
+import type { MultiSimOutput } from 'bnc-sdk'
 
 const simulateTransactions = async (
   options: Omit<TransactionPreviewInitOptions, 'provider'>,
-  transactions: SimulationTransaction[]
+  transactions: TransactionForSim[]
 ): Promise<MultiSimOutput> => {
   const { sdk } = options
-  const cleanedTransactions: SimulationTransaction[] = transactions.map(
+  const cleanedTransactions: TransactionForSim[] = transactions.map(
     transaction => {
       const convertedTransaction = hexFieldsToNumber(
-        transaction as SimulationTransaction
+        transaction as TransactionForSim
       )
       const cleanedTrans = {
         from: convertedTransaction.from,
@@ -29,7 +32,7 @@ const simulateTransactions = async (
       return cleanedTrans
     }
   )
- 
+
   return sdk.multiSim(cleanedTransactions) as Promise<MultiSimOutput>
 }
 

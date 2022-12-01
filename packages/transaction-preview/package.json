@@ -77,11 +77,11 @@
     "svelte-check": "^2.2.6",
     "svelte-preprocess": "^4.9.4",
     "tslib": "^2.0.0",
-    "typescript": "^4.5.5",
-    "bnc-sdk": "^4.6.2"
+    "typescript": "^4.5.5"
   },
   "dependencies": {
     "@web3-onboard/common": "^2.2.3",
+    "bnc-sdk": "^4.6.2",
     "bowser": "^2.11.0",
     "joi": "^17.6.1",
     "rxjs": "^7.5.2",

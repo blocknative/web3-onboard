@@ -14,7 +14,8 @@ Full Simulation Platform API documentation can be found [here](https://docs.bloc
 **Yarn**
 `yarn add @web3-onboard/core @web3-onboard/injected @web3-onboard/transaction-preview`
 
-### Usage with Web3-Onboard Core package 
+### Usage with Web3-Onboard Core package
+
 To use the Transaction Preview package with web3-onboard all a user needs to do is initialize with their Blocknative API key and the associated [Secret Key](https://docs.blocknative.com/account#secret-key) and the package handles the rest!
 
 ```typescript
@@ -24,10 +25,9 @@ import transactionPreviewModule from '@web3-onboard/transaction-preview'
 
 const injected = injectedModule({})
 const transactionPreview = transactionPreviewModule({
-    // Optional: Require balance change approval prior to sending transaction to wallet
+  // Optional: Require balance change approval prior to sending transaction to wallet
   requireTransactionApproval: true
   //  i18n?: i18nOptions - Internationalization options
-
 })
 
 const onboard = Onboard({
@@ -51,7 +51,6 @@ const onboard = Onboard({
 ### Options & Types
 
 ```typescript
-
 export type TransactionPreviewModule = (
   options: TransactionPreviewOptions
 ) => TransactionPreviewAPI
@@ -109,6 +108,32 @@ export type TransactionPreviewOptions = {
   i18n?: i18nOptions
 }
 
+export type Locale = string
+export type i18nOptions = Record<Locale, i18n>
+export type i18n = typeof en
+
+export type DeviceNotBrowser = {
+  type: null
+  os: null
+  browser: null
+}
+
+export type TransactionForSim = SimulationTransaction & {
+  data?: string
+}
+
+export interface SimulationTransaction {
+  from: string
+  to: string
+  value: number
+  gas: number
+  input: string
+  // Either Type 1 Gas (gasPrice) or Type 2 Gas (maxPriorityFeePerGas & maxFeePerGas)
+  // must be included in the payload
+  gasPrice?: number
+  maxPriorityFeePerGas?: number
+  maxFeePerGas?: number
+}
 
 export type MultiSimOutput = {
   id?: string

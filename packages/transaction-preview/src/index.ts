@@ -10,7 +10,8 @@ import type {
   TransactionPreviewInitOptions,
   TransactionPreviewModule,
   TransactionPreviewAPI,
-  TransactionPreviewOptions
+  TransactionPreviewOptions,
+  TransactionForSim
 } from './types.js'
 import type { EIP1193Provider } from '@web3-onboard/common'
 
@@ -18,7 +19,7 @@ import { validateTPInit, validateTPOptions } from './validation'
 import TransactionPreview from './views/Index.svelte'
 import initI18N from './i18n/index.js'
 import simulateTransactions from './simulateTransactions.js'
-import type { MultiSimOutput, SimulationTransaction } from 'bnc-sdk'
+import type { MultiSimOutput } from 'bnc-sdk'
 
 export * from './types.js'
 
@@ -85,13 +86,15 @@ export const patchProvider = (
       req.params &&
       req.params.length
     ) {
-      const transactionParams = req.params as SimulationTransaction[]
+      const transactionParams = req.params as TransactionForSim[]
       try {
         const preview = await simulateTransactions(options, transactionParams)
         if (preview.error.length) {
           fullProviderRequest(req)
           throw new Error(
-            `An error occurred during transaction simulation: ${preview.error.join(' - ')}`
+            `An error occurred during transaction simulation: ${preview.error.join(
+              ' - '
+            )}`
           )
         }
         if (

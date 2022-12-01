@@ -205,7 +205,7 @@ function init(options: InitOptions): OnboardAPI {
   })
 
   if (transactionPreview) {
-    const getBnSDK = async() => {
+    const getBnSDK = async () => {
       transactionPreview.init({
         containerElement: '#transaction-preview-container',
         sdk: await getBlocknativeSdk(),
