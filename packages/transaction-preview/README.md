@@ -1,8 +1,8 @@
 # @web3-onboard/transaction-preview
 
-![Transaction Preview Flow](https://github.com/blocknative/web3-onboard/blob/feature/testing_transaction_preview/packages/transaction-preview/assets/preview.gif "Transaction Preview Flow")
-
 ## A modular UI for previewing a single or set of unsigned Ethereum transactions.
+
+![Transaction Preview Flow](https://github.com/blocknative/web3-onboard/blob/feature/testing_transaction_preview/packages/transaction-preview/assets/preview.gif "Transaction Preview Flow")
 
 #### Full Transaction Preview package documentation available [here](https://onboard.blocknative.com/docs/packages/transaction-preview)
 
