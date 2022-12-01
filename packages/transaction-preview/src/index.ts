@@ -145,10 +145,10 @@ const transactionPreview: TransactionPreviewModule = (
       throw error
     }
   }
-  const { i18n } = tpOptions
-  optionalSettings = tpOptions
+  // defaults requireTransactionApproval to true
+  optionalSettings = { requireTransactionApproval: true, ...tpOptions }
 
-  initI18N(i18n)
+  initI18N(tpOptions && tpOptions.i18n || {})
 
   return {
     patchProvider,
