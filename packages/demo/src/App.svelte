@@ -41,6 +41,8 @@
     new VConsole()
   }
 
+  const infura_key = '80633e48116943128cbab25e402764ab'
+
   let defaultTransactionObject = JSON.stringify(
     {
       from: '0xD87927847330FC926afd2B66C478A42a004aB4e7',
@@ -151,19 +153,19 @@
         id: '0x1',
         token: 'ETH',
         label: 'Ethereum',
-        rpcUrl: 'https://mainnet.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
+        rpcUrl: `https://mainnet.infura.io/v3/${infura_key}`
       },
       {
         id: 3,
         token: 'tROP',
         label: 'Ropsten',
-        rpcUrl: 'https://ropsten.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
+        rpcUrl: `https://ropsten.infura.io/v3/${infura_key}`
       },
       {
         id: '0x5',
         token: 'ETH',
         label: 'Goerli',
-        rpcUrl: `https://goerli.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e`
+        rpcUrl: `https://goerli.infura.io/v3/${infura_key}`
       },
       {
         id: '0x13881',

@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/sequence",
-  "version": "2.0.3",
+  "version": "2.0.4-alpha.1",
   "description": "Sequence is the smartest Web3 wallet. Easy, fun and secure.",
   "keywords": [
     "Ethereum",
@@ -57,9 +57,10 @@
   },
   "dependencies": {
     "@web3-onboard/common": "^2.2.3",
-    "0xsequence": "^0.40.5"
+    "0xsequence": "^0.43.1"
   },
   "peerDependencies": {
-    "0xsequence": ">=0.40.5"
+    "0xsequence": ">=0.43.0",
+    "ethers": ">=5.5"
   }
 }
