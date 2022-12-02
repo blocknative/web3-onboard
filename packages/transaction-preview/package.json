@@ -1,13 +1,14 @@
 {
-  "name": "@web3-onboard/core",
-  "version": "2.11.0-alpha.1",
-  "description": "Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardized spec compliant web3 providers for all supported wallets, framework agnostic modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
+  "name": "@web3-onboard/transaction-preview",
+  "version": "2.0.0-alpha.1",
+  "description": "In app preview of Ethereum transactions",
   "keywords": [
     "Ethereum",
+    "Preview Transactions",
+    "Transaction Preview",
     "Web3",
     "EVM",
     "dapp",
-    "Multichain",
     "Wallet",
     "Transaction",
     "Provider",
@@ -24,20 +25,18 @@
     "Ledger",
     "Trezor",
     "Connect Wallet",
-    "Ethereum Hooks",
     "Blocknative",
     "Mempool",
     "pending",
     "confirmed",
     "Injected Wallet",
-    "GameStop",
     "Crypto",
     "Crypto Wallet"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/blocknative/web3-onboard.git",
-    "directory": "packages/core"
+    "directory": "packages/transaction-preview"
   },
   "homepage": "https://onboard.blocknative.com",
   "bugs": "https://github.com/blocknative/web3-onboard/issues",
@@ -48,14 +47,14 @@
     "type-check": "svelte-check --tsconfig ./tsconfig.json",
     "lint": "eslint -c './.eslintrc.cjs' './src' && prettier --check './src/**/*'"
   },
-  "typings": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
   "module": "dist/index.js",
   "browser": "dist/index.js",
   "main": "dist/index.js",
   "type": "module",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "license": "MIT",
   "devDependencies": {
     "@rollup-extras/plugin-copy": "~1.2.2",
@@ -68,7 +67,6 @@
     "@types/lodash.partition": "^4.6.6",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
-    "@web3-onboard/gas": "^2.0.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-svelte3": "^3.2.1",
@@ -83,17 +81,10 @@
   },
   "dependencies": {
     "@web3-onboard/common": "^2.2.3",
-    "bignumber.js": "^9.0.0",
     "bnc-sdk": "^4.6.2",
     "bowser": "^2.11.0",
-    "ethers": "5.5.3",
-    "eventemitter3": "^4.0.7",
     "joi": "^17.6.1",
-    "lodash.merge": "^4.6.2",
-    "lodash.partition": "^4.6.0",
-    "nanoid": "^4.0.0",
-    "rxjs": "^7.5.5",
-    "svelte": "^3.49.0",
+    "rxjs": "^7.5.2",
     "svelte-i18n": "^3.3.13"
   }
 }
