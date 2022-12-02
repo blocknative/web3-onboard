@@ -14,12 +14,14 @@ import type {
   TransactionForSim
 } from './types.js'
 import type { EIP1193Provider } from '@web3-onboard/common'
-
-import { validateTPInit, validateTPOptions } from './validation'
-import TransactionPreview from './views/Index.svelte'
-import initI18N from './i18n/index.js'
-import simulateTransactions from './simulateTransactions.js'
 import type { MultiSimOutput } from 'bnc-sdk'
+
+import initI18N from './i18n/index.js'
+import { validateTPInit, validateTPOptions } from './validation'
+import simulateTransactions from './simulateTransactions.js'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-ignore
+import TransactionPreview from './views/Index.svelte'
 
 export * from './types.js'
 
@@ -148,7 +150,7 @@ const transactionPreview: TransactionPreviewModule = (
   // defaults requireTransactionApproval to true
   optionalSettings = { requireTransactionApproval: true, ...tpOptions }
 
-  initI18N(tpOptions && tpOptions.i18n || {})
+  initI18N((tpOptions && tpOptions.i18n) || {})
 
   return {
     patchProvider,
@@ -216,6 +218,7 @@ const mountTransactionPreview = (simResponse: MultiSimOutput) => {
       )
     })
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     target.adoptedStyleSheets = [transactionPreviewStyleSheet]
     containerEl = getW3OEl.shadowRoot.querySelector(containerElementQuery)
