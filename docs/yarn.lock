@@ -2977,6 +2977,15 @@
     "@web3-onboard/common" "^2.2.3"
     fortmatic "^2.2.1"
 
+"@web3-onboard/gas@^2.1.4":
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/gas/-/gas-2.1.4.tgz#6022cd10419c5b28b93d7c914e2165e33098a027"
+  integrity sha512-7yGYQ5/KTdZqt2TtHQi7kTTL9Fp1nQRAARct0JgJLbwG6XbVd+5GG47Nc4KXeCFAYjBWzJ2rBO59zejt3/R9uA==
+  dependencies:
+    "@web3-onboard/common" "^2.2.3"
+    joi "^17.6.1"
+    rxjs "^7.5.2"
+
 "@web3-onboard/gnosis@^2.1.5":
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@web3-onboard/gnosis/-/gnosis-2.1.5.tgz#c49b1734fca7042543029312581fc0e29bc4cb66"

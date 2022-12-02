@@ -60,6 +60,7 @@
     "@web3-onboard/enkrypt": "^2.0.0",
     "@web3-onboard/fortmatic": "^2.0.14",
     "@web3-onboard/gnosis": "^2.1.5",
+    "@web3-onboard/gas": "^2.1.4",
     "@web3-onboard/injected-wallets": "^2.4.0",
     "@web3-onboard/keepkey": "^2.3.2",
     "@web3-onboard/keystone": "^2.3.2",
