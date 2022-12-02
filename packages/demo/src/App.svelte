@@ -34,13 +34,13 @@
   import blocknativeLogo from './blocknative-logo'
   import { onMount } from 'svelte'
 
-  const apiKey = '937627e1-3507-44b8-af10-72728aa5f74b'
   let windowWidth
-
+  
   if (window.innerWidth < 700) {
     new VConsole()
   }
-
+  
+  const apiKey = 'xxxxxx-bf21-42ec-a093-9d37e426xxxx'
   const infura_key = '80633e48116943128cbab25e402764ab'
 
   let defaultTransactionObject = JSON.stringify(
@@ -290,7 +290,7 @@
   }
 
   let toAddress
-  const sendTransaction = async (provider, fromAddress) => {
+  const sendTransaction = async (provider) => {
     const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 
     const signer = ethersProvider.getSigner()
@@ -1039,7 +1039,7 @@
               placeholder="0x..."
               bind:value={toAddress}
             />
-            <button on:click={sendTransaction(provider, address)}>
+            <button on:click={sendTransaction(provider)}>
               Send Transaction
             </button>
           </div>
