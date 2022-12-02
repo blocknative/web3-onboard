@@ -3,37 +3,29 @@
   import type { OnboardAPI, WalletState } from '@web3-onboard/core'
   import getOnboard from '$lib/services/onboard.js'
   let onboard: OnboardAPI
-  let connecting = false
   let connectedWallets: WalletState[]
+  let buttonText = 'Connect'
 
   async function connectWallet() {
-    if (onboard && connectedWallets?.[0]?.provider) {
-      onboard.disconnectWallet({ label: connectedWallets?.[0]?.label })
+    if (onboard && onboard.state.get().wallets.length) {
+      onboard.disconnectWallet({ label: onboard.state.get().wallets[0].label })
+      buttonText = 'Connect'
+      return
     }
     if (onboard) {
-      connecting = true
       await onboard.connectWallet()
-      connecting = false
     }
-    onboard.state.select('wallets').subscribe((wallets) => {
-      connectedWallets = wallets
-    })
   }
-
-  $: buttonText =
-    onboard && connectedWallets?.[0]?.provider
-      ? 'Disconnect'
-      : connecting
-      ? 'Connecting'
-      : 'Connect'
 
   onMount(async () => {
     if (!onboard) {
       onboard = await getOnboard()
-      onboard.state.select('wallets').subscribe((wallets) => {
-        connectedWallets = wallets
-      })
     }
+    const sub = onboard.state.select('wallets').subscribe((wallets) => {
+      connectedWallets = wallets
+      buttonText = wallets.length ? 'Disconnect' : (buttonText = 'Connect')
+    })
+    buttonText = onboard.state.get().wallets.length ? 'Disconnect' : (buttonText = 'Connect')
   })
 </script>
 

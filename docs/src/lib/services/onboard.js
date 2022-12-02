@@ -63,21 +63,21 @@ const intiOnboard = async () => {
 
   return Onboard({
     wallets: [
-      keepkey,
-      sequence,
       injected,
-      tally,
+      walletConnect,
       ledger,
       coinbase,
-      dcent,
       trezor,
-      walletConnect,
+      gnosis,
+      tally,
+      dcent,
       enkrypt,
       mewWallet,
-      gnosis,
       magic,
       fortmatic,
       keystone,
+      keepkey,
+      sequence,
       portis
     ],
     chains: [
