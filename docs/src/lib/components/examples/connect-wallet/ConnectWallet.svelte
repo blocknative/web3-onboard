@@ -1,39 +1,19 @@
 <script lang="ts">
   import { Chip } from '@svelteness/kit-docs'
+  import { onMount } from 'svelte'
 
-  import Onboard from '@web3-onboard/core'
-  import injectedModule from '@web3-onboard/injected-wallets'
+  import getOnboard from '$lib/services/onboard.js'
+  import ConnectWalletButton from '../../ConnectWalletButton.svelte'
+  let onboard: OnboardAPI
+  let connectedWallets: WalletState[]
 
-  const INFURA_ID = '8b60d52405694345a99bcb82e722e0af'
-
-  const injected = injectedModule()
-
-  const onboard = Onboard({
-    wallets: [injected],
-    chains: [
-      {
-        id: '0x1',
-        token: 'ETH',
-        label: 'Ethereum Mainnet',
-        rpcUrl: `https://mainnet.infura.io/v3/${INFURA_ID}`
-      },
-      {
-        id: '0x3',
-        token: 'tROP',
-        label: 'Ethereum Ropsten Testnet',
-        rpcUrl: `https://ropsten.infura.io/v3/${INFURA_ID}`
-      }
-    ],
-    appMetadata: {
-      name: 'Documentation',
-      icon: '<svg></svg>',
-      description: 'Example showcasing how to connect a wallet.',
-      recommendedInjectedWallets: [
-        { name: 'MetaMask', url: 'https://metamask.io' },
-        { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
-      ]
-    },
-    accountCenter: { desktop: { enabled: false }, mobile: { enabled: false } }
+  onMount(async () => {
+    if (!onboard) {
+      onboard = await getOnboard()
+    }
+    onboard.state.select('wallets').subscribe((wallets) => {
+      connectedWallets = wallets
+    })
   })
 
   const trunc = (address: string) =>
@@ -41,24 +21,19 @@
 
   let connecting = false
 
-  // Subscribe to wallet updates
-  const wallets$ = onboard.state.select('wallets')
-
   // The first wallet in the array of connected wallets
-  $: connectedAccount = $wallets$?.[0]?.accounts?.[0]
+  $: connectedAccount = connectedWallets?.[0]?.accounts?.[0]
 
   async function connectWallet() {
-    if ($wallets$?.[0]?.provider) {
-      onboard.disconnectWallet({ label: $wallets$?.[0]?.label })
-    } else {
+    if (onboard && connectedWallets?.[0]?.provider) {
+      onboard.disconnectWallet({ label: connectedWallets?.[0]?.label })
+    }
+    if (onboard) {
       connecting = true
       await onboard.connectWallet()
       connecting = false
     }
   }
-
-  $: buttonText = $wallets$?.[0]?.provider ? 'Disconnect' : connecting ? 'Connecting' : 'Connect'
-
   $: account = connectedAccount?.ens?.name
     ? {
         ens: connectedAccount?.ens,
@@ -68,7 +43,7 @@
 </script>
 
 <div class="flex items-center justify-center border-gray-divider border rounded-md h-40 p-4">
-  {#if $wallets$?.[0]?.provider}
+  {#if connectedWallets?.[0]?.provider}
     <div
       class="flex items-center w-full px-3 py-2 border border-gray-divider bg-gray-elevate text-gray-inverse rounded-md"
     >
@@ -83,22 +58,13 @@
         <div class="">
           {account?.ens ? `${account?.ens?.name} (${account?.address})` : `${account?.address}`}
         </div>
-        <div class=" text-sm">Connected to <Chip>{$wallets$?.[0]?.label}</Chip></div>
+        <div class=" text-sm">Connected to <Chip>{connectedWallets?.[0]?.label}</Chip></div>
       </div>
-
-      <button
-        class="ml-auto rounded-lg bg-gray-inverse hover:bg-gray-hover hover:text-gray-inverse transition-all px-4 h-10 text-base text-gray-current"
-        on:click={connectWallet}
-      >
-        {buttonText}
-      </button>
+      <div class="ml-auto">
+        <ConnectWalletButton />
+      </div>
     </div>
   {:else}
-    <button
-      class=" rounded-lg bg-gray-inverse hover:bg-gray-hover hover:text-gray-inverse transition-all px-4 h-10 text-base text-gray-current"
-      on:click={connectWallet}
-    >
-      {buttonText}
-    </button>
+    <ConnectWalletButton />
   {/if}
 </div>
