@@ -327,6 +327,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/uauth
     steps:
       - node-build-steps
+  build-transaction-preview:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/transaction-preview
+    steps:
+      - node-build-steps
   build-phantom:
     docker:
       - image: cimg/node:16.13.1
@@ -495,6 +501,12 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/uauth
+    steps:
+      - node-staging-build-steps
+  build-staging-transaction-preview:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/transaction-preview
     steps:
       - node-staging-build-steps
   build-staging-phantom:
@@ -668,6 +680,12 @@ workflows:
       - build-uauth:
           <<: *deploy_production_filters
       - build-staging-uauth:
+          <<: *deploy_staging_filters
+  transaction-preview:
+    jobs:
+      - build-transaction-preview:
+          <<: *deploy_production_filters
+      - build-staging-transaction-preview:
           <<: *deploy_staging_filters
   phantom:
     jobs:

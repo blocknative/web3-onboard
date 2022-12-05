@@ -17,6 +17,7 @@
   import dcentModule from '@web3-onboard/dcent'
   import sequenceModule from '@web3-onboard/sequence'
   import tallyHoModule from '@web3-onboard/tallyho'
+  import transactionPreviewModule from '@web3-onboard/transaction-preview'
   import enkryptModule from '@web3-onboard/enkrypt'
   import mewWalletModule from '@web3-onboard/mew-wallet'
   import uauthModule from '@web3-onboard/uauth'
@@ -35,10 +36,13 @@
   import { onMount } from 'svelte'
 
   let windowWidth
-
+  
   if (window.innerWidth < 700) {
     new VConsole()
   }
+  
+  const apiKey = 'xxxxxx-bf21-42ec-a093-9d37e426xxxx'
+  const infura_key = '80633e48116943128cbab25e402764ab'
 
   let defaultTransactionObject = JSON.stringify(
     {
@@ -117,11 +121,10 @@
   })
 
   const dcent = dcentModule()
-
   const sequence = sequenceModule()
-
   const enkrypt = enkryptModule()
   const mewWallet = mewWalletModule()
+  const transactionPreview = transactionPreviewModule()
 
   const onboard = Onboard({
     wallets: [
@@ -146,25 +149,26 @@
       uauth,
       phantom
     ],
+    transactionPreview,
     gas,
     chains: [
       {
         id: '0x1',
         token: 'ETH',
         label: 'Ethereum',
-        rpcUrl: 'https://mainnet.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
+        rpcUrl: `https://mainnet.infura.io/v3/${infura_key}`
       },
       {
         id: 3,
         token: 'tROP',
         label: 'Ropsten',
-        rpcUrl: 'https://ropsten.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
+        rpcUrl: `https://ropsten.infura.io/v3/${infura_key}`
       },
       {
         id: '0x5',
         token: 'ETH',
         label: 'Goerli',
-        rpcUrl: `https://goerli.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e`
+        rpcUrl: `https://goerli.infura.io/v3/${infura_key}`
       },
       {
         id: '0x13881',
@@ -263,7 +267,7 @@
     //   accountCenter: '#sample-container-el'
     // },
     // Sign up for your free api key at www.Blocknative.com
-    apiKey: 'xxxxxx-bf21-42ec-a093-9d37e426xxxx'
+    apiKey
   })
 
   // Subscribe to wallet updates
@@ -289,15 +293,17 @@
   }
 
   let toAddress
-  const sendTransaction = async provider => {
+  const sendTransaction = async (provider) => {
     const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 
     const signer = ethersProvider.getSigner()
 
-    const txn = await signer.sendTransaction({
+    const popTransaction = await signer.populateTransaction({
       to: toAddress,
       value: 100000000000000
     })
+
+    await signer.sendTransaction(popTransaction)
 
     const receipt = await txn.wait()
     console.log(receipt)
