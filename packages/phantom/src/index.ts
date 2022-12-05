@@ -1,4 +1,4 @@
-import { WalletInit } from '@web3-onboard/common'
+import { WalletInit, createEIP1193Provider } from '@web3-onboard/common'
 
 function phantom(): WalletInit {
   if (typeof window === 'undefined') return () => null
@@ -9,10 +9,15 @@ function phantom(): WalletInit {
       getInterface: async () => {
         if ('phantom' in window) {
           const anyWindow: any = window
-          const provider = anyWindow.phantom?.ethereum
 
-          if (provider && provider.isPhantom) {
-            return { provider }
+          if (
+            'phantom' in anyWindow &&
+            'ethereum' in anyWindow.phantom &&
+            anyWindow.phantom.ethereum.isPhantom
+          ) {
+            return {
+              provider: createEIP1193Provider(anyWindow.phantom.ethereum)
+            }
           }
         }
         window.open('https://phantom.app/download', '_blank')

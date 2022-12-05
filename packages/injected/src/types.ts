@@ -143,7 +143,6 @@ export interface CustomWindow extends Window {
   }
   phantom: {
     ethereum: InjectedProvider
-    solana: any
   }
 }
 
