@@ -33,6 +33,11 @@ type InitOptions {
   apiKey?: string
   notify?: Partial<NotifyOptions>
   connect?: Partial<ConnectModalOptions>
+  gas?: typeof gas
+  /**
+   * Object mapping for W3O components with the key being the component and the value the DOM element to mount the component to. This element must be available at time of package script execution.
+   */
+  containerElements?: Partial<ContainerElements>
 }
 ```
 
@@ -78,13 +83,6 @@ type AppMetadata = {
   explore?: string
   // if your app only supports injected wallets and when no injected wallets detected, recommend the user to install some
   recommendedInjectedWallets?: RecommendedInjectedWallets[]
-  /** Gas module */
-  gas?: typeof gas
-  /**
-   * Object mapping for W3O components with the key being the component and the value the DOM element to mount
-   * the component to. This element must be available at time of package script execution.
-   */
-  containerElements?: Partial<ContainerElements>
 }
 
 type RecommendedInjectedWallets = {
