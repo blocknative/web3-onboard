@@ -8,7 +8,8 @@ export let configuration: Configuration = {
   device: getDevice(),
   initialWalletInit: [],
   gas: null,
-  containerElements: { accountCenter: null }
+  containerElements: { accountCenter: null },
+  transactionPreview: null
 }
 
 export function updateConfiguration(update: Partial<Configuration>): void {

@@ -17,6 +17,7 @@
   import dcentModule from '@web3-onboard/dcent'
   import sequenceModule from '@web3-onboard/sequence'
   import tallyHoModule from '@web3-onboard/tallyho'
+  import transactionPreviewModule from '@web3-onboard/transaction-preview'
   import enkryptModule from '@web3-onboard/enkrypt'
   import mewWalletModule from '@web3-onboard/mew-wallet'
   import uauthModule from '@web3-onboard/uauth'
@@ -34,11 +35,12 @@
   import { onMount } from 'svelte'
 
   let windowWidth
-
+  
   if (window.innerWidth < 700) {
     new VConsole()
   }
-
+  
+  const apiKey = 'xxxxxx-bf21-42ec-a093-9d37e426xxxx'
   const infura_key = '80633e48116943128cbab25e402764ab'
 
   let defaultTransactionObject = JSON.stringify(
@@ -117,11 +119,10 @@
   })
 
   const dcent = dcentModule()
-
   const sequence = sequenceModule()
-
   const enkrypt = enkryptModule()
   const mewWallet = mewWalletModule()
+  const transactionPreview = transactionPreviewModule()
 
   const onboard = Onboard({
     wallets: [
@@ -145,6 +146,7 @@
       tallyho,
       uauth
     ],
+    transactionPreview,
     gas,
     chains: [
       {
@@ -262,7 +264,7 @@
     //   accountCenter: '#sample-container-el'
     // },
     // Sign up for your free api key at www.Blocknative.com
-    apiKey: 'xxxxxx-bf21-42ec-a093-9d37e426xxxx'
+    apiKey
   })
 
   // Subscribe to wallet updates
@@ -288,15 +290,17 @@
   }
 
   let toAddress
-  const sendTransaction = async provider => {
+  const sendTransaction = async (provider) => {
     const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 
     const signer = ethersProvider.getSigner()
 
-    const txn = await signer.sendTransaction({
+    const popTransaction = await signer.populateTransaction({
       to: toAddress,
       value: 100000000000000
     })
+
+    await signer.sendTransaction(popTransaction)
 
     const receipt = await txn.wait()
     console.log(receipt)
