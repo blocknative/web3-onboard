@@ -6,7 +6,6 @@
     "outDir": "dist",
     "rootDir": "src",
     "declarationDir": "dist",
-    "allowSyntheticDefaultImports": true,
     "paths": {
       "*": ["./src/*", "./node_modules/*"]
     },

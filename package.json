@@ -59,7 +59,7 @@
     "dev": "yarn wsrun dev",
     "build": "yarn wsrun --serial build",
     "type-check": "yarn wsrun type-check",
-    "check-files": "yarn install --check-files"
+    "file-check": "yarn install --check-files"
   },
   "devDependencies": {
     "prettier": "^2.4.1",
