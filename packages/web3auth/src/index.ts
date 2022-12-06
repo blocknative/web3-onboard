@@ -14,6 +14,7 @@ type Web3AuthModuleOptions = Omit<Web3AuthCoreOptions, 'chainConfig'> & {
   chainConfig?: Partial<CustomChainConfig> &
     Pick<CustomChainConfig, 'chainNamespace'>
   modalConfig?: Record<string, ModalConfig> | undefined
+  loginModalZIndex?: string
 }
 
 function web3auth(options: Web3AuthModuleOptions): WalletInit {
@@ -59,6 +60,7 @@ function web3auth(options: Web3AuthModuleOptions): WalletInit {
       let web3auth = new Web3Auth(web3authCoreOptions)
 
       // There is no exposed z-index setter so we must set through modal events
+      // Tracking a permanent fix here - https://github.com/Web3Auth/web3auth-web/issues/1018
       // subscribe to lifecycle events emitted by web3auth
       const subscribeAuthEvents = (web3auth: Web3Auth) => {
         // emitted when modal visibility changes.
@@ -68,7 +70,7 @@ function web3auth(options: Web3AuthModuleOptions): WalletInit {
             setTimeout(() => {
               const modal = document.getElementById('w3a-modal')
               if (modal) {
-                modal.style.zIndex = '50'
+                modal.style.zIndex = options.loginModalZIndex || '50'
               }
             }, 10)
           }
