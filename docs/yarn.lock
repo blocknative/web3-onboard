@@ -2,183 +2,152 @@
 # yarn lockfile v1
 
 
-"0xsequence@^0.40.5":
-  version "0.40.6"
-  resolved "https://registry.yarnpkg.com/0xsequence/-/0xsequence-0.40.6.tgz#05752173f28ddaa5af5479b0444089f518767279"
-  integrity sha512-UF19TsayRm2COeWfpyjA3DsB75pZ61eFPDmuR4jGd0ZPJj384SlQTMeyDH4z7a69lXBScBsibOu4OzveNNFSDg==
+"0xsequence@^0.43.1":
+  version "0.43.5"
+  resolved "https://registry.yarnpkg.com/0xsequence/-/0xsequence-0.43.5.tgz#dda31a1d6a5bc3e2fefdc964420dcfbfd052374e"
+  integrity sha512-c624JZlxWS9lrzSu6Drdc6m3KcjydhV654wC36B8fM0k0B+8Imr8KDRYDNw/RPkGtXrtx/7i0e3fSPgxNPK/xw==
   dependencies:
-    "@0xsequence/abi" "^0.40.6"
-    "@0xsequence/api" "^0.40.6"
-    "@0xsequence/auth" "^0.40.6"
-    "@0xsequence/config" "^0.40.6"
-    "@0xsequence/guard" "^0.40.6"
-    "@0xsequence/indexer" "^0.40.6"
-    "@0xsequence/metadata" "^0.40.6"
-    "@0xsequence/multicall" "^0.40.6"
-    "@0xsequence/network" "^0.40.6"
-    "@0xsequence/provider" "^0.40.6"
-    "@0xsequence/relayer" "^0.40.6"
-    "@0xsequence/transactions" "^0.40.6"
-    "@0xsequence/utils" "^0.40.6"
-    "@0xsequence/wallet" "^0.40.6"
-    ethers "^5.5.2"
+    "@0xsequence/abi" "^0.43.5"
+    "@0xsequence/api" "^0.43.5"
+    "@0xsequence/auth" "^0.43.5"
+    "@0xsequence/config" "^0.43.5"
+    "@0xsequence/guard" "^0.43.5"
+    "@0xsequence/indexer" "^0.43.5"
+    "@0xsequence/metadata" "^0.43.5"
+    "@0xsequence/multicall" "^0.43.5"
+    "@0xsequence/network" "^0.43.5"
+    "@0xsequence/provider" "^0.43.5"
+    "@0xsequence/relayer" "^0.43.5"
+    "@0xsequence/transactions" "^0.43.5"
+    "@0xsequence/utils" "^0.43.5"
+    "@0xsequence/wallet" "^0.43.5"
 
-"@0xsequence/abi@^0.40.6":
-  version "0.40.6"
-  resolved "https://registry.yarnpkg.com/@0xsequence/abi/-/abi-0.40.6.tgz#44ce0b4a596c97425e2135da1babd84c0562a048"
-  integrity sha512-ytAWOLBy8XUgBJD4lpkZWPa8xCefgqJr8M9YadUXWsKiTsY0cl09GqMKh2yK8R9PXBo5OQ1IyGjPqYgXOCulUw==
+"@0xsequence/abi@^0.43.5":
+  version "0.43.5"
+  resolved "https://registry.yarnpkg.com/@0xsequence/abi/-/abi-0.43.5.tgz#6419346c9b1764d42a53c12a29f7bfc1bdea9f6f"
+  integrity sha512-9Vzq1Kzc1oCI1S7f6yE57xUoGeQzeQNirnTkjVoRqBNpVTAPMxYax+uAIyvZljVs/VqwLvjfCk6mneY1HYaNDQ==
 
-"@0xsequence/api@^0.40.6":
-  version "0.40.6"
-  resolved "https://registry.yarnpkg.com/@0xsequence/api/-/api-0.40.6.tgz#cd7aaf4cd6e8e87f5c00ea4a2951f3b120a0be5b"
-  integrity sha512-IAQvP2fV1OIVzj4F9Cfuf3Wfa6beqw7NDqLn8XrmAblB9QLAYkNybncx/aGg13XpbIVqz+bIvLz+v4Mbq5xSTw==
+"@0xsequence/api@^0.43.5":
+  version "0.43.5"
+  resolved "https://registry.yarnpkg.com/@0xsequence/api/-/api-0.43.5.tgz#f89ee56598aafb0f38687e69c4a7829b81f7db5b"
+  integrity sha512-ZfoK8EJEO4MUknO/dYDELFOaz3KN0XgbZL9If+4Aoyop5s1W56U4mVfUZzvh5aIcSAMXv3P6yv8lzOy7/oWTyA==
+
+"@0xsequence/auth@^0.43.5":
+  version "0.43.5"
+  resolved "https://registry.yarnpkg.com/@0xsequence/auth/-/auth-0.43.5.tgz#3efe2fcc443cf693f64605cd7c456bd12531d3b0"
+  integrity sha512-lB1/voHhkuP28wmqsLbw3bWgdsM404ocPSuYwqoMtcjPK/LeDck+HWgFBRQhgsx+CDzhwupI9LL8GROZJNrQ2w==
   dependencies:
-    cross-fetch "^3.1.5"
+    "@0xsequence/abi" "^0.43.5"
+    "@0xsequence/api" "^0.43.5"
+    "@0xsequence/config" "^0.43.5"
+    "@0xsequence/ethauth" "^0.8.0"
+    "@0xsequence/indexer" "^0.43.5"
+    "@0xsequence/metadata" "^0.43.5"
+    "@0xsequence/network" "^0.43.5"
+    "@0xsequence/utils" "^0.43.5"
+    "@0xsequence/wallet" "^0.43.5"
 
-"@0xsequence/auth@^0.40.6":
-  version "0.40.6"
-  resolved "https://registry.yarnpkg.com/@0xsequence/auth/-/auth-0.40.6.tgz#bb06d145b97bfeaee6cfbbd570e0ee2e39fd4084"
-  integrity sha512-hqzPH9021OEsTEh4/ZNENwhzgy0tvpOQ/mgyB4vX8pqEz5MCW9ugrErCWdyQ+SUP12oPclKJTAq+nAkC3rBNsw==
+"@0xsequence/config@^0.43.5":
+  version "0.43.5"
+  resolved "https://registry.yarnpkg.com/@0xsequence/config/-/config-0.43.5.tgz#cf7c841dcfcdcc7619ad9b8dbd691210056432e5"
+  integrity sha512-r/fZ7E+SOkB/a/X6hnAmyR5ahR6ULL6BrFTA6yBixGzpoheU6u3Ii8tv8YINF2n0lFl0UCORaJWWGRQOQtuKbQ==
   dependencies:
-    "@0xsequence/abi" "^0.40.6"
-    "@0xsequence/api" "^0.40.6"
-    "@0xsequence/config" "^0.40.6"
-    "@0xsequence/ethauth" "^0.7.0"
-    "@0xsequence/indexer" "^0.40.6"
-    "@0xsequence/metadata" "^0.40.6"
-    "@0xsequence/network" "^0.40.6"
-    "@0xsequence/utils" "^0.40.6"
-    "@0xsequence/wallet" "^0.40.6"
-    ethers "^5.5.2"
+    "@0xsequence/abi" "^0.43.5"
+    "@0xsequence/multicall" "^0.43.5"
+    "@0xsequence/network" "^0.43.5"
+    "@0xsequence/utils" "^0.43.5"
 
-"@0xsequence/config@^0.40.6":
-  version "0.40.6"
-  resolved "https://registry.yarnpkg.com/@0xsequence/config/-/config-0.40.6.tgz#144c15e6fee4875ecf4813789ba4ce1d7d32e98a"
-  integrity sha512-A0h+j7a2DcW4FOCnCjIhzJsrjR3uxYhAssljSATEBxJrQV0jqk3AWU2n9jSL0Qb5PCkPzxnm/YFVjvkUP8P83A==
-  dependencies:
-    "@0xsequence/abi" "^0.40.6"
-    "@0xsequence/multicall" "^0.40.6"
-    "@0xsequence/network" "^0.40.6"
-    "@0xsequence/utils" "^0.40.6"
-    ethers "^5.5.2"
-
-"@0xsequence/ethauth@^0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@0xsequence/ethauth/-/ethauth-0.7.0.tgz#267f164404e1cafbfca534e0683cc4798ba4e8db"
-  integrity sha512-pghfR+OLm82wLMR9Uvvf53f0LniZLhcqw0G4EthFw1ME71/CWUskhR2MIeYKh1t7+OE3TqCbOBJ/p/buv8XynQ==
+"@0xsequence/ethauth@^0.8.0":
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/@0xsequence/ethauth/-/ethauth-0.8.1.tgz#9b97a17e74ca9559b79a93a8e39ca77baaccc943"
+  integrity sha512-P21cxRSS+2mDAqFVAJt0lwQFtbObX+Ewlj8DMyDELp81+QbfHFh6LCyu8dTXNdBx6UbmRFOCSBno5Txd50cJPQ==
   dependencies:
     js-base64 "^3.7.2"
 
-"@0xsequence/guard@^0.40.6":
-  version "0.40.6"
-  resolved "https://registry.yarnpkg.com/@0xsequence/guard/-/guard-0.40.6.tgz#fa2c0981d011a4f2a3368d14b6c4840747b46256"
-  integrity sha512-5jiHttpA2ICBxaOvFdB/36uDNQONQzlNDShFH51jGeqkW821KsttzXCJwEoy6LVUDuayC3+Vt7HaEs0j3Ml4wg==
+"@0xsequence/guard@^0.43.5":
+  version "0.43.5"
+  resolved "https://registry.yarnpkg.com/@0xsequence/guard/-/guard-0.43.5.tgz#543b40a4bb55f52f3b77376177b70745e89013a0"
+  integrity sha512-7NJvBztcxB5zxoOB7QkjhK79p063wq2SL5qHdgUmqgBTDANQHviqy8uB2IHIQQZhZogzCMKuqxmtpMAndN+n5A==
 
-"@0xsequence/indexer@^0.40.6":
-  version "0.40.6"
-  resolved "https://registry.yarnpkg.com/@0xsequence/indexer/-/indexer-0.40.6.tgz#cb94e83fb6f1ba8d25f00850f4edd0cd0e2ed749"
-  integrity sha512-roo+aeU+zlfk74WxMjIeQqfDiTBUDqqNiljgov02wpZqWmBKx3VULsj1EYAoc6gwwik0rqz0q56AWwNfY/W7lw==
-  dependencies:
-    cross-fetch "^3.1.5"
+"@0xsequence/indexer@^0.43.5":
+  version "0.43.5"
+  resolved "https://registry.yarnpkg.com/@0xsequence/indexer/-/indexer-0.43.5.tgz#29d97534856e3c0c1e02c047b17bce0fd2666867"
+  integrity sha512-sj1KcwryYcBs2OuRTHqaj1QJl8TTzgi0LXMNFzeL0YtAGimlG2Pk8MIuPkNnOb5u1ZLahRTPjpK+kQgp5CqFUQ==
 
-"@0xsequence/metadata@^0.40.6":
-  version "0.40.6"
-  resolved "https://registry.yarnpkg.com/@0xsequence/metadata/-/metadata-0.40.6.tgz#743218ebac004d6c6f039429e8226e6284eb737c"
-  integrity sha512-gFXY5m8BK2Df2m2uhopiA1s37isQz+hp+zkB/xLdmvDUvMDiXfNuhMXV7oThwCIhf8/YMtDw6tSasiwTcdtTVA==
-  dependencies:
-    cross-fetch "^3.1.5"
+"@0xsequence/metadata@^0.43.5":
+  version "0.43.5"
+  resolved "https://registry.yarnpkg.com/@0xsequence/metadata/-/metadata-0.43.5.tgz#04676ff45165eaff83a845c183823bd28769daf3"
+  integrity sha512-WrwiG5upHGWuh0114QUyxilLQ5rSgyKdy6H/M5vFYcygMQ64WkM7zTrkECV2a9dtNe2HCNFqnOq3mhHA2Uzzeg==
 
-"@0xsequence/multicall@^0.40.6":
-  version "0.40.6"
-  resolved "https://registry.yarnpkg.com/@0xsequence/multicall/-/multicall-0.40.6.tgz#522ea2e3cdd36b9e977f736654707dfcd5212fbe"
-  integrity sha512-sJguwImSNRj5/4gQrXqUvkMQPaGsiSfYOtSDD8VCsjefdX86oO11FVuiLgQxLmbeVeiQUwdL/A33osfCJaH3Zw==
+"@0xsequence/multicall@^0.43.5":
+  version "0.43.5"
+  resolved "https://registry.yarnpkg.com/@0xsequence/multicall/-/multicall-0.43.5.tgz#64efb52d19d42204ce9df08bebcc265149214640"
+  integrity sha512-eYaY9htGvPeSsm8binA6ZwNIVKHY686Fmo0cdgu+aAYaOHEK/RACZ0DqihexkPGSTqhIhn7rFHIGj9+f+ozcdw==
   dependencies:
-    "@0xsequence/abi" "^0.40.6"
-    "@0xsequence/network" "^0.40.6"
-    "@0xsequence/utils" "^0.40.6"
-    "@ethersproject/providers" "^5.5.1"
-    ethers "^5.5.2"
+    "@0xsequence/abi" "^0.43.5"
+    "@0xsequence/network" "^0.43.5"
+    "@0xsequence/utils" "^0.43.5"
 
-"@0xsequence/network@^0.40.6":
-  version "0.40.6"
-  resolved "https://registry.yarnpkg.com/@0xsequence/network/-/network-0.40.6.tgz#c075d9c7b39cdb2c2963a6eebbe4bad6dbdd9e79"
-  integrity sha512-Wbx0s1SEqbQP0SJlIW6R60JqmN7xEh109UcQNwZvGhIa2nwwhkNS0VJtvyUm6x3t99VBXvYjOxsMM9VxofRHvA==
+"@0xsequence/network@^0.43.5":
+  version "0.43.5"
+  resolved "https://registry.yarnpkg.com/@0xsequence/network/-/network-0.43.5.tgz#599a62e61c06157735e822b8988b60c158f22213"
+  integrity sha512-SYXyedalEtwrlt4vEvgvKw4yMPVmyiwJrkTLXqBtiCUisDexnddDonZ0yBfu5LoxkwrmEgelw8iwf1o9snYhag==
   dependencies:
-    "@0xsequence/utils" "^0.40.6"
-    "@ethersproject/providers" "^5.5.1"
-    ethers "^5.5.2"
+    "@0xsequence/utils" "^0.43.5"
 
-"@0xsequence/provider@^0.40.6":
-  version "0.40.6"
-  resolved "https://registry.yarnpkg.com/@0xsequence/provider/-/provider-0.40.6.tgz#e957270c7fd882a1e508f238cf58fba50f1a7efc"
-  integrity sha512-0bCdx9+oHN/BFivJ2A2tRx9GPZwWvX6A/TSx+mYNMe1DC7QscfKxJnJS9+3aEsRG17VoG/RLEc+01t7zah2dNA==
+"@0xsequence/provider@^0.43.5":
+  version "0.43.5"
+  resolved "https://registry.yarnpkg.com/@0xsequence/provider/-/provider-0.43.5.tgz#ba8377813d8c9af1facf1960bbcafdc41ffe7bb1"
+  integrity sha512-txpG3rLw5gNdn2AXwStPBGS0uo89NK106gx+47TPyYyM+WeXVdHAFMPs9wA2Oul0dAalRE+9bkfLrexjeqd3oA==
   dependencies:
-    "@0xsequence/abi" "^0.40.6"
-    "@0xsequence/auth" "^0.40.6"
-    "@0xsequence/config" "^0.40.6"
-    "@0xsequence/network" "^0.40.6"
-    "@0xsequence/transactions" "^0.40.6"
-    "@0xsequence/utils" "^0.40.6"
-    "@0xsequence/wallet" "^0.40.6"
-    "@ethersproject/abstract-signer" "^5.5.0"
-    "@ethersproject/hash" "^5.5.0"
-    "@ethersproject/providers" "^5.5.1"
-    "@ethersproject/web" "^5.5.1"
-    ethers "^5.5.2"
+    "@0xsequence/abi" "^0.43.5"
+    "@0xsequence/auth" "^0.43.5"
+    "@0xsequence/config" "^0.43.5"
+    "@0xsequence/network" "^0.43.5"
+    "@0xsequence/transactions" "^0.43.5"
+    "@0xsequence/utils" "^0.43.5"
+    "@0xsequence/wallet" "^0.43.5"
     eventemitter2 "^6.4.5"
     webextension-polyfill-ts "^0.26.0"
 
-"@0xsequence/relayer@^0.40.6":
-  version "0.40.6"
-  resolved "https://registry.yarnpkg.com/@0xsequence/relayer/-/relayer-0.40.6.tgz#e8c326c8ac864def1f051d44e6fe747e4dfb12fa"
-  integrity sha512-P7qGeu0gZF8mtFrOMhw78r0DMlVStTr7mYVz4fqPOkrK/Apr9DBWCFAsu32K4QQwx/Ae2jg5bgf4hbV8JWofVw==
+"@0xsequence/relayer@^0.43.5":
+  version "0.43.5"
+  resolved "https://registry.yarnpkg.com/@0xsequence/relayer/-/relayer-0.43.5.tgz#05022253360c49f42b8f3958f3ad39bf3d13fafd"
+  integrity sha512-sXz5bX8jzCsSfNH3ZQvIByJoow5d0C8i27Zyq3ynEZ3DP2uVx/2buBB5aHkjHmAlhduNTRzvTHO/hugiLUblug==
   dependencies:
-    "@0xsequence/abi" "^0.40.6"
-    "@0xsequence/config" "^0.40.6"
-    "@0xsequence/transactions" "^0.40.6"
-    "@0xsequence/utils" "^0.40.6"
-    "@ethersproject/providers" "^5.5.1"
-    ethers "^5.5.2"
-    fetch-ponyfill "^7.1.0"
+    "@0xsequence/abi" "^0.43.5"
+    "@0xsequence/config" "^0.43.5"
+    "@0xsequence/transactions" "^0.43.5"
+    "@0xsequence/utils" "^0.43.5"
 
-"@0xsequence/transactions@^0.40.6":
-  version "0.40.6"
-  resolved "https://registry.yarnpkg.com/@0xsequence/transactions/-/transactions-0.40.6.tgz#4e6998ef8f30daf6c83ed12814ba22faf1ba5c23"
-  integrity sha512-zKEr5Ea3eKmyF1Df1iSXpHiulDUtS71WM25M8PfUGnqn5O4yBi62qZs/sZU7iYN0n8lz9gIxJgDffARHx9lyMQ==
+"@0xsequence/transactions@^0.43.5":
+  version "0.43.5"
+  resolved "https://registry.yarnpkg.com/@0xsequence/transactions/-/transactions-0.43.5.tgz#a853fb449fa37d1b1013fe9a9ad79aa33a3e58dc"
+  integrity sha512-H32UFQWrlRKtH1Jy1Ypx+bKHwfvHS8340oQjB+ogxenc5jee3I1Vzvv4dpoU4dp8X40bDN5FijT30ZVMKorS2A==
   dependencies:
-    "@0xsequence/abi" "^0.40.6"
-    "@0xsequence/network" "^0.40.6"
-    "@0xsequence/utils" "^0.40.6"
-    "@ethersproject/abi" "^5.5.0"
-    ethers "^5.5.2"
+    "@0xsequence/abi" "^0.43.5"
+    "@0xsequence/network" "^0.43.5"
+    "@0xsequence/utils" "^0.43.5"
 
-"@0xsequence/utils@^0.40.6":
-  version "0.40.6"
-  resolved "https://registry.yarnpkg.com/@0xsequence/utils/-/utils-0.40.6.tgz#5974e351a95d78e6a95afb054e4ba69670a56380"
-  integrity sha512-gc0iMDvUNZXBAMsiIqRd0mm2Ltejmm8gVCTm02AKTFu7P9Q8J+999zdbksQTnp8mFuIzZcQxBYTR1l/e9l2omw==
+"@0xsequence/utils@^0.43.5":
+  version "0.43.5"
+  resolved "https://registry.yarnpkg.com/@0xsequence/utils/-/utils-0.43.5.tgz#b14832d3cd0a53a09fb3d26206f8ca2e22a9b8f5"
+  integrity sha512-8jOnWFj7od+DIJiGDKFgfRK2hH23W3g0YxZm3d+JlcNU1PdOqqZ+XAwYQsHK6AGWAmp4mOomgZCua+H2LYT6tg==
   dependencies:
-    "@ethersproject/abstract-signer" "^5.5.0"
-    "@ethersproject/properties" "^5.5.0"
-    ethers "^5.5.2"
     js-base64 "^3.7.2"
 
-"@0xsequence/wallet@^0.40.6":
-  version "0.40.6"
-  resolved "https://registry.yarnpkg.com/@0xsequence/wallet/-/wallet-0.40.6.tgz#63a9fea2ab292a24599065c0b86df3149cf295f7"
-  integrity sha512-CjQNnVe9jvK+7nWOcsmSttxvwlQSYTjqEwn08WghbeH/DSOMamBD/Gr/ceYYvUNteGpZoNnLZqK1CamBJWlzXQ==
+"@0xsequence/wallet@^0.43.5":
+  version "0.43.5"
+  resolved "https://registry.yarnpkg.com/@0xsequence/wallet/-/wallet-0.43.5.tgz#a365bd980595e7c3272f4749e6274d15f42df999"
+  integrity sha512-ANtUdE3mFY/EQUX9Pzh8PZM6kx9BOWQSP3iQ1D9KkR3Ajh9AKmIXSUE5Z7YTyvvmxFahrOEPyHIEj4fikE4aBw==
   dependencies:
-    "@0xsequence/abi" "^0.40.6"
-    "@0xsequence/config" "^0.40.6"
-    "@0xsequence/guard" "^0.40.6"
-    "@0xsequence/network" "^0.40.6"
-    "@0xsequence/relayer" "^0.40.6"
-    "@0xsequence/transactions" "^0.40.6"
-    "@0xsequence/utils" "^0.40.6"
-    "@ethersproject/abi" "^5.5.0"
-    "@ethersproject/properties" "^5.5.0"
-    "@ethersproject/providers" "^5.5.1"
-    ethers "^5.5.2"
-    fetch-ponyfill "^7.1.0"
+    "@0xsequence/abi" "^0.43.5"
+    "@0xsequence/config" "^0.43.5"
+    "@0xsequence/guard" "^0.43.5"
+    "@0xsequence/network" "^0.43.5"
+    "@0xsequence/relayer" "^0.43.5"
+    "@0xsequence/transactions" "^0.43.5"
+    "@0xsequence/utils" "^0.43.5"
 
 "@algolia/autocomplete-core@1.7.1":
   version "1.7.1"
@@ -410,10 +379,10 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
-"@coinbase/wallet-sdk@^3.0.5":
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/@coinbase/wallet-sdk/-/wallet-sdk-3.6.0.tgz#52cc01d6721b171b69f8c4a83ef5029e52d997d4"
-  integrity sha512-p7RHnbhWiwVr9viX9Z5KLxKgzGoJRKcAN/BYRTsodnesgA7y+omangXncsxY+5eyQSflEL7Dqs0dv/yeDsomow==
+"@coinbase/wallet-sdk@^3.6.0":
+  version "3.6.2"
+  resolved "https://registry.yarnpkg.com/@coinbase/wallet-sdk/-/wallet-sdk-3.6.2.tgz#e8633001136e0236a746f6462c0dff2f881db343"
+  integrity sha512-HzxajB+qS+G9//c+th5uJ8KSt+jQ6/U+cgL9Sv89Wx6Mif+Lg5HxGtc6JQcIdHuYk9AFX+nXNSXtTGRdpHkdDg==
   dependencies:
     "@metamask/safe-event-emitter" "2.0.0"
     "@solana/web3.js" "1.52.0"
@@ -1253,7 +1222,7 @@
     bech32 "1.1.4"
     ws "7.4.6"
 
-"@ethersproject/providers@5.7.2", "@ethersproject/providers@^5.5.0", "@ethersproject/providers@^5.5.1":
+"@ethersproject/providers@5.7.2", "@ethersproject/providers@^5.5.0":
   version "5.7.2"
   resolved "https://registry.yarnpkg.com/@ethersproject/providers/-/providers-5.7.2.tgz#f8b1a4f275d7ce58cf0a2eec222269a08beb18cb"
   integrity sha512-g34EWZ1WWAVgr4aptGlVBF8mhl3VWjv+8hoAnzStu8Ah22VHBsuGzP17eb6xDVRzw895G4W7vvx60lFFur/1Rg==
@@ -1557,7 +1526,7 @@
     "@ethersproject/properties" "^5.5.0"
     "@ethersproject/strings" "^5.5.0"
 
-"@ethersproject/web@5.7.1", "@ethersproject/web@^5.5.1", "@ethersproject/web@^5.7.0":
+"@ethersproject/web@5.7.1", "@ethersproject/web@^5.7.0":
   version "5.7.1"
   resolved "https://registry.yarnpkg.com/@ethersproject/web/-/web-5.7.1.tgz#de1f285b373149bee5928f4eb7bcb87ee5fbb4ae"
   integrity sha512-Gueu8lSvyjBWL4cYsWsjh6MtMwM0+H4HvqFPZfB6dV8ctbP9zFAO73VG1cMWae0FLPCtz0peKPpZY8/ugJJX2w==
@@ -2915,12 +2884,12 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.0"
 
-"@web3-onboard/coinbase@^2.1.4-alpha.1":
-  version "2.1.4-alpha.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/coinbase/-/coinbase-2.1.4-alpha.1.tgz#a90e6c0dc5d09c3ce094d6e04f948920b0be0ee1"
-  integrity sha512-ldYvPD9sEo956Ndt4/2Dezzk2OQ7hWYWlganViO4RD0AnRXnL/h0rPfOU69tsVaMMslCwE7M3RAIj94TkgNHuw==
+"@web3-onboard/coinbase@^2.1.4":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/coinbase/-/coinbase-2.2.0.tgz#1421dd04a43a9cb2a813bc2f77baa18ba8dac282"
+  integrity sha512-hS392D008HpWWZx5Tgc/xJm6JJOurKn8yXALlgU22o3N26hbAUcA9wfkEeo78Sj0xFdyjFzCRZ/JqXolK61tKA==
   dependencies:
-    "@coinbase/wallet-sdk" "^3.0.5"
+    "@coinbase/wallet-sdk" "^3.6.0"
     "@web3-onboard/common" "^2.2.3"
 
 "@web3-onboard/common@^2.2.3":
@@ -2932,14 +2901,14 @@
     ethers "5.5.4"
     joi "^17.6.1"
 
-"@web3-onboard/core@^2.10.1":
-  version "2.10.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.10.1.tgz#c437a7889792e3eb3cbdf9bae693280785f91502"
-  integrity sha512-PF3p0nQMjecsLTvSqTRNtbmKSAUYW8wCuZcGph+WSUl6HITMyPj2Z5SPcJR1vMc54YlnYRVtMN1DqLB3Mvwadw==
+"@web3-onboard/core@^2.11.0":
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.11.0.tgz#267db444fa39cc9059850bc462286646f4531ed0"
+  integrity sha512-bNQEVgZKiKiddI/+wDS4KzmNUsqAiNL9xpPyBWSjtGC7/S/N9602quqDQzQxle8ZC/BnrQhaIpNexHvydaVaEQ==
   dependencies:
     "@web3-onboard/common" "^2.2.3"
     bignumber.js "^9.0.0"
-    bnc-sdk "^4.4.1"
+    bnc-sdk "^4.6.2"
     bowser "^2.11.0"
     ethers "5.5.3"
     eventemitter3 "^4.0.7"
@@ -3080,12 +3049,12 @@
     "@portis/web3" "^4.0.6"
     "@web3-onboard/common" "^2.2.3"
 
-"@web3-onboard/sequence@^2.0.3":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/sequence/-/sequence-2.0.3.tgz#58c99f1445c01bfeac010067e4c7b9a8fab0d27e"
-  integrity sha512-poIRx3wwfIdO8VKUz3kM9o+UbKW6Q6C7YSGc2/gFHx/Byyxz8UprvewoAMq2OWuf4d8q4m657PtttHxri6hYFg==
+"@web3-onboard/sequence@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/sequence/-/sequence-2.0.4.tgz#424e120e78578a9655f8168ae2cad45372a41c8a"
+  integrity sha512-qz6qblHusoyj12A6NnIlqDl6kmeACFrA03gmEufmiPUCH3AX5fVBMK2f0xiM30sWoeYjTYGrUrgDmAmfjKytTg==
   dependencies:
-    "0xsequence" "^0.40.5"
+    "0xsequence" "^0.43.1"
     "@web3-onboard/common" "^2.2.3"
 
 "@web3-onboard/tallyho@^2.0.1":
@@ -3133,10 +3102,10 @@
     joi "^17.6.1"
     rxjs "^7.5.2"
 
-"@web3-onboard/walletconnect@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/walletconnect/-/walletconnect-2.2.0.tgz#ea537d91f891406fa1a4875833e45e6f154f2aff"
-  integrity sha512-nZAZo+oiWNHarggK4qVwknIg4cW6aUcVAwYMbQUQWtuLW8Fx3sW80xwUeLGfnyIWs7DWxS3SK5Rp2+Uk2Xl9uQ==
+"@web3-onboard/walletconnect@^2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/walletconnect/-/walletconnect-2.2.1.tgz#02b9688e00c75f2ea16d9c2d466ea09d3dbe5a12"
+  integrity sha512-XqhspQRzCxCFil1V/o7g8qXW8JPmYEiz1dIb1aMNOh//55WgT5+d0vF8Er3oJndh6+KAWRNQoWe+WNJIP9pBDw==
   dependencies:
     "@ethersproject/providers" "^5.5.0"
     "@walletconnect/client" "^1.7.1"
@@ -3671,10 +3640,10 @@ bnb-javascript-sdk-nobroadcast@^2.16.14:
     uuid "^3.3.2"
     websocket-stream "^5.5.0"
 
-bnc-sdk@^4.4.1:
-  version "4.6.0"
-  resolved "https://registry.npmjs.org/bnc-sdk/-/bnc-sdk-4.6.0.tgz#968d80d53863336007b7b46cceff795cb0bc84fe"
-  integrity sha512-ESN5pRkbAXwYqcgoi4vuDkVBjdVwV0DcNbQKWShYTh0I0anzsIZd52mKM929HPi4iuSnfmNkqSrDqvFcMCAvFQ==
+bnc-sdk@^4.6.2:
+  version "4.6.3"
+  resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-4.6.3.tgz#c852f091a5e84bb77864543b0775b35ebdbb1724"
+  integrity sha512-rva+LyJuAm+U6xwZYqlsDxKaMy3EpHBqkOL93UDih7iwXDYnUr87n27pnGCw3B8xRBeRhCBC/VZMuzRFeea/Hw==
   dependencies:
     crypto-es "^1.2.2"
     nanoid "^3.3.1"
@@ -5418,7 +5387,7 @@ ethers@5.5.4:
     "@ethersproject/web" "5.5.1"
     "@ethersproject/wordlists" "5.5.0"
 
-ethers@5.7.2, ethers@^5.4.7, ethers@^5.5.2, ethers@^5.7.0:
+ethers@5.7.2, ethers@^5.4.7, ethers@^5.7.0:
   version "5.7.2"
   resolved "https://registry.yarnpkg.com/ethers/-/ethers-5.7.2.tgz#3a7deeabbb8c030d4126b24f84e525466145872e"
   integrity sha512-wswUsmWo1aOK8rR7DIKiWSw9DbLWe6x98Jrn8wcTflTVvaXhAMaB5zGAXy0GYQEQp9iO1iSHWVyARQm11zUtyg==
@@ -5611,13 +5580,6 @@ fastq@^1.6.0:
   integrity sha512-YpkpUnK8od0o1hmeSc7UUs/eB/vIPWJYjKck2QKIzAf71Vm1AAQ3EbuZB3g2JIy+pg+ERD0vqI79KyZiB2e2Nw==
   dependencies:
     reusify "^1.0.4"
-
-fetch-ponyfill@^7.1.0:
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/fetch-ponyfill/-/fetch-ponyfill-7.1.0.tgz#4266ed48b4e64663a50ab7f7fcb8e76f990526d0"
-  integrity sha512-FhbbL55dj/qdVO3YNK7ZEkshvj3eQ7EuIGV2I6ic/2YiocvyWv+7jg2s4AyS0wdRU75s3tA8ZxI/xPigb0v5Aw==
-  dependencies:
-    node-fetch "~2.6.1"
 
 file-entry-cache@^6.0.1:
   version "6.0.1"
@@ -6898,7 +6860,7 @@ node-addon-api@^2.0.0:
   resolved "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-2.0.2.tgz#432cfa82962ce494b132e9d72a15b29f71ff5d32"
   integrity sha512-Ntyt4AIXyaLIuMHF6IOoTakB3K+RWxwtsHNRxllEoA6vPwP9o4866g6YWDLUdnucilZhmkxiHwHr11gAENw+QA==
 
-node-fetch@2, node-fetch@2.6.7, node-fetch@^2.6.0, node-fetch@^2.6.1, node-fetch@^2.6.7, node-fetch@~2.6.1:
+node-fetch@2, node-fetch@2.6.7, node-fetch@^2.6.0, node-fetch@^2.6.1, node-fetch@^2.6.7:
   version "2.6.7"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
   integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
