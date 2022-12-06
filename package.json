@@ -58,7 +58,7 @@
     "format": "prettier --write 'packages/**/*.ts'",
     "dev": "yarn wsrun dev",
     "build": "yarn wsrun --serial build",
-    "check": "yarn wsrun type-check"
+    "type-check": "yarn wsrun type-check"
   },
   "devDependencies": {
     "prettier": "^2.4.1",
