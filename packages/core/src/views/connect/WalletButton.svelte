@@ -83,7 +83,7 @@
     width: 100%;
   }
 
-  @media all and (max-width: 520px) {
+  @media all and (max-width: 768px) {
     button {
       display: block;
       border: 0;
@@ -103,6 +103,7 @@
       line-height: 1rem;
       margin-top: 0.5rem;
     }
+
     .wallet-button-container-inner {
       flex-flow: column;
       position: relative;
@@ -124,7 +125,7 @@
     }
 
     .wallet-button-container {
-      padding: 0.25rem;
+      padding-bottom: 1rem;
       border-radius: var(
         --onboard-wallet-button-border-radius,
         var(--border-radius-4)
@@ -166,7 +167,7 @@
   >
     <div class="wallet-button-container-inner">
       <WalletAppBadge
-        size={windowWidth >= 809 ? 48 : 56}
+        size={windowWidth >= 768 ? 48 : 56}
         {icon}
         loading={connecting}
         border={connected ? 'green' : 'blue'}

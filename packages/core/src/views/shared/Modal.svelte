@@ -61,43 +61,28 @@
   }
 
   .modal-styling {
-    border-radius: var(--onboard-modal-border-radius, var(--border-radius-1));
+    border-radius: var(--onboard-modal-border-radius, var(--border-radius-1)) var(--onboard-modal-border-radius, var(--border-radius-1)) 0 0;
     box-shadow: var(--onboard-modal-box-shadow, var(--box-shadow-0));
   }
 
   .modal {
-    border-radius: var(--onboard-modal-border-radius, var(--border-radius-1));
     overflow-y: auto;
     background: var(--onboard-modal-background, white);
     color: var(--onboard-modal-color, initial);
+    max-width: 100vw;
   }
 
-  @media all and (max-width: 520px) {
-    section, .background {
-      height: 100%;
-    }
+  .modal-container-mobile {
+    bottom: 0;
+  }
 
+  @media all and (min-width:768px) {
+    .modal-styling {
+      border-radius: var(--onboard-modal-border-radius, var(--border-radius-1));
+    }
     .modal-container-mobile {
-      min-height: 50%;
-    }
-
-    .modal-position {
-      bottom: 0;
-    }
-
-    .relative {
-      width: 100vw;
-    }
-
-    .modal-overflow {
-      width: 100%;
-    }
-
-    .modal {
-      width: 100%;
-    }
-    .modal, .modal-styling {
-      border-radius: var(--onboard-modal-border-radius, var(--border-radius-1)) var(--onboard-modal-border-radius, var(--border-radius-1)) 0 0;
+      bottom: unset;
+      margin: 1rem;
     }
   }
 </style>
@@ -107,7 +92,7 @@
     on:click={close}
     class="background flex items-center justify-center relative"
   >
-    <div class="flex modal-container-mobile modal-position absolute">
+    <div class="modal-container-mobile modal-position flex absolute">
       <div on:click|stopPropagation class="flex relative max-height">
         <div class="modal-overflow modal-styling relative flex justify-center">
           <div class="modal relative">

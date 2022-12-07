@@ -50,16 +50,6 @@
     width: 1rem;
     margin-right: 0.5rem;
   }
-
-  .spacer {
-    padding-top: var(--onboard-spacing-4, var(--spacing-4));
-  }
-
-  @media all and (max-width: 520px) {
-    .spacer {
-      padding: 0;
-    }
-  }
 </style>
 
 {#if showTermsOfService}
@@ -82,5 +72,5 @@
     </label>
   </div>
 {:else}
-  <div class="spacer" />
+
 {/if}

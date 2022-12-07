@@ -18,68 +18,60 @@
 </script>
 
 <style>
-  .outer-container {
-    padding: var(--onboard-spacing-4, var(--spacing-4));
-    padding-top: 0;
-  }
+  /* .outer-container {
+    padding: 0;
+    flex-direction: column-reverse;
+  } */
 
   .wallets-container {
-    display: grid;
-    grid-template-columns: repeat(var(--onboard-wallet-columns, 2), 1fr);
-    gap: var(--onboard-spacing-5, var(--spacing-5));
-    width: 100%;
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: scroll;
+    overflow-y: hidden;
+
+    padding: 0.75rem 0.5rem;
+
+    border-bottom: 1px solid
+      var(
+        --onboard-wallet-button-border-color,
+        var(--onboard-primary-200, var(--primary-200))
+      );
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .wallets-container::-webkit-scrollbar {
+    display: none;
   }
 
   .warning-container {
     margin-bottom: 1rem;
   }
 
-  @media all and (max-width: 520px) {
+  @media all and (min-width: 768px) {
     .wallets-container {
-      display: flex;
-      gap: unset;
-      overflow-x: scroll;
-      overflow-y: hidden;
-
-      padding: var(
-          --onboard-spacing-5,
-          calc(var(--spacing-5) + var(--spacing-6))
-        )
-        var(--onboard-spacing-5, var(--spacing-5));
-
-      border-bottom: 1px solid
-        var(
-          --onboard-wallet-button-border-color,
-          var(--onboard-primary-200, var(--primary-200))
-        );
-
-      /* Hide scrollbar for IE, Edge and Firefox */
-      -ms-overflow-style: none; /* IE and Edge */
-      scrollbar-width: none; /* Firefox */
+      display: grid;
+      grid-template-columns: repeat(var(--onboard-wallet-columns, 2), 1fr);
+      padding: 1rem;
     }
+  }
 
-    /* Hide scrollbar for Chrome, Safari and Opera */
-    .wallets-container::-webkit-scrollbar {
-      display: none;
-    }
-
-    .outer-container {
-      padding: 0;
-      flex-direction: column-reverse;
-    }
-
+  /* @media all and (max-width: 520px) {
     .warning-container {
       padding: var(--onboard-spacing-4, var(--spacing-4))
         var(--onboard-spacing-4, var(--spacing-4)) 0
         var(--onboard-spacing-4, var(--spacing-4));
       margin: 0;
     }
-  }
+  } */
 </style>
 
 <svelte:window bind:innerWidth={windowWidth} />
 
-<div class="outer-container flex flex-column">
+<div class="outer-container">
   {#if connectingErrorMessage}
     <div class="warning-container">
       <Warning>{@html connectingErrorMessage}</Warning>

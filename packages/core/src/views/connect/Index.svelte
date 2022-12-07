@@ -360,20 +360,24 @@
 <style>
   .container {
     font-family: var(--onboard-font-family-normal, var(--font-family-normal));
-    line-height: 24px;
-    color: var(--onboard-gray-700, var(--gray-700));
     font-size: var(--onboard-font-size-5, var(--font-size-5));
-    height: var(--onboard-connect-content-height, 440px);
-    overflow: hidden;
+    color: var(--onboard-gray-700, var(--gray-700));
     background: var(
       --onboard-main-scroll-container-background,
       var(--onboard-white, var(--white))
     );
-    border: 1px solid var(--onboard-primary-200, var(--primary-200));
+    line-height: 24px;
+    /* border: 1px solid var(--onboard-primary-200, var(--primary-200)); */
+
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    height: min-content;
+    flex-flow: column-reverse;
   }
 
   .content {
-    width: var(--onboard-connect-content-width, 488px);
+    width: 100%;
   }
 
   .scroll-container {
@@ -387,6 +391,9 @@
   }
 
   .header {
+    display: flex;
+    padding: 1rem;
+    border-bottom: 1px solid var(--onboard-primary-200, var(--primary-200));
     background: var(
       --onboard-connect-header-background,
       var(--onboard-white, var(--white))
@@ -395,11 +402,9 @@
       --onboard-connect-header-color,
       var(--onboard-black, var(--black))
     );
-    border-bottom: 1px solid var(--onboard-primary-200, var(--primary-200));
   }
 
   .header-heading {
-    margin: var(--onboard-spacing-4, var(--spacing-4));
     line-height: 16px;
   }
 
@@ -413,58 +418,53 @@
     pointer-events: none;
   }
 
-  .mobile-subheader {
-    display: none;
+  .mobile-header {
+    height: 4.5rem; /* 72px */
+    padding: 1rem;
+    display: flex;
+    gap: 0.5rem;
+
+    border-bottom: 1px solid
+      var(
+        --onboard-wallet-button-border-color,
+        var(--onboard-primary-200, var(--primary-200))
+      );
   }
 
-  @media all and (max-width: 520px) {
-    .content {
-      width: 100%;
-    }
+  .mobile-subheader {
+    color: var(--onboard-gray-400, var(--gray-400));
+    font-size: var(--onboard-font-size-6, var(--font-size-6));
+    font-weight: 400;
+    line-height: 1rem;
+    margin-top: 0.25rem;
+  }
 
+  .icon-container {
+    display: flex;
+    flex: 0 0 auto;
+    height: 2.5rem;
+    width: 2.5rem;
+    min-width: 2.5rem;
+    justify-content: center;
+  }
+
+  .w-full {
+    width: 100%;
+  }
+
+  @media all and (min-width: 768px) {
     .container {
-      height: min-content;
-      flex-flow: column-reverse;
-      border: 0;
+      flex-flow: row;
+      height: var(--onboard-connect-content-height, 440px);
     }
-
+    .content {
+      width: var(--onboard-connect-content-width, 488px);
+    }
     .mobile-subheader {
-      color: var(--onboard-gray-400, var(--gray-400));
-      display: block;
-      font-size: var(--onboard-font-size-6, var(--font-size-6));
-      line-height: 1rem;
-      margin: 0.25rem 0 0 0;
-      font-weight: 400;
+      display: none;
     }
-
-    .mobile-header {
-      height: 4.5rem; /* 72px */
-      display: flex;
-      padding: 1rem;
-      gap: 0.5rem;
-
-      border-bottom: 1px solid
-        var(
-          --onboard-wallet-button-border-color,
-          var(--onboard-primary-200, var(--primary-200))
-        );
-    }
-
-    .w-full {
-      width: 100%;
-    }
-
     .icon-container {
-      display: flex;
-      flex: 0 0 auto;
-      height: 2.5rem;
-      width: 2.5rem;
-      min-width: 2.5rem;
-      justify-content: center;
-    }
-
-    .header-heading {
-      margin: 0;
+      display: none;
     }
   }
 </style>
@@ -473,7 +473,7 @@
 
 {#if !autoSelect.disableModals}
   <Modal {close}>
-    <div class="container relative flex">
+    <div class="container">
       {#if connect.showSidebar}
         <Sidebar step={$modalStep$} />
       {/if}
@@ -493,7 +493,7 @@
               {/if}
             </div>
             <div class="flex flex-column justify-center w-full">
-              <h4 class="header-heading">
+              <div class="header-heading">
                 {$_(
                   $modalStep$ === 'connectingWallet' && selectedWallet
                     ? `connect.${$modalStep$}.header`
@@ -509,17 +509,17 @@
                     }
                   }
                 )}
-              </h4>
-              <h5 class="mobile-subheader">
+              </div>
+              <div class="mobile-subheader">
                 {$modalStep$ === 'selectingWallet'
                   ? `${availableWallets} available wallets`
                   : '1 account selected'}
-              </h5>
+              </div>
             </div>
           </div>
         {:else}
           <div class="header relative flex items-center">
-            <h4 class="header-heading">
+            <div class="header-heading">
               {$_(`connect.${$modalStep$}.header`, {
                 default: en.connect[$modalStep$].header,
                 values: {
@@ -528,7 +528,7 @@
                 }
               })}
               {$modalStep$ === 'selectingWallet' ? `(${availableWallets})` : ''}
-            </h4>
+            </div>
           </div>
         {/if}
         <!-- svelte-ignore a11y-click-events-have-key-events -->

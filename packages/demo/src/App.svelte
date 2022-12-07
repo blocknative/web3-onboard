@@ -523,9 +523,9 @@
   :root {
     --background-color: #ffffff; /* --white */
     --text-color: #1a1d26; /* --gray-700 */
-    --border-color: #ebebed; /* --gray-100 taken from future mock */
+    --border-color: #D0D4F7; /* --gray-100 taken from future mock */
 
-    --accent-background: #ebebed; /* --gray-100 (currently gray-100 in connect modal) */
+    --accent-background: #EFF1FC; /* --gray-100 (currently gray-100 in connect modal) */
     --accent-color: #929bed; /* --primary-400 */
     --accent-color-hover: #eff1fc; /* --primary-200 */
 
@@ -594,8 +594,8 @@
     --notify-onboard-anchor-color: var(--accent-color);
     --notify-onboard-timer-color: var(--secondary-text-color);
 
-    /* 
-		NEEDS TARGET AS IT USES OPACITY: 
+    /*
+		NEEDS TARGET AS IT USES OPACITY:
 		--account-center-maximized-upper-action-background-hover
 		NEEDS UPDATES FOR DIFFERNT STYLING, DOESNT FIT BASIC VARIABLES ABOVE:
 		Notify status icons, icon backgrounds and icon borders
