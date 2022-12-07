@@ -161,7 +161,7 @@ type AccountCenterPosition = 'topRight' | 'bottomRight' | 'bottomLeft' | 'topLef
 An object mapping for W3O components with the key being the DOM element to mount the specified component to.
 This defines the DOM container element for svelte to attach the component.
 
-**NOTE**: containerElement must be a DOM element with a styleSheet property attached and the element must be available on the DOM at the time of component mounting. 
+**NOTE**: containerElement must be a DOM element with a styleSheet property attached and the element must be available on the DOM at the time of component mounting.
 For an example please see containerElement usage [here](https://github.com/blocknative/web3-onboard/blob/8531a73d69365f7d584320f1c4b97a5d90f1c34e/packages/demo/src/App.svelte#L227)
 
 ```typescript
@@ -408,12 +408,9 @@ You could enable this in your app by first syncing the `wallets` array to localS
 
 ```javascript
 const walletsSub = onboard.state.select('wallets')
-const { unsubscribe } = walletsSub.subscribe(wallets => {
+const { unsubscribe } = walletsSub.subscribe((wallets) => {
   const connectedWallets = wallets.map(({ label }) => label)
-  window.localStorage.setItem(
-    'connectedWallets',
-    JSON.stringify(connectedWallets)
-  )
+  window.localStorage.setItem('connectedWallets', JSON.stringify(connectedWallets))
 })
 
 // Don't forget to unsubscribe when your app or component un mounts to prevent memory leaks
@@ -423,9 +420,7 @@ const { unsubscribe } = walletsSub.subscribe(wallets => {
 Now that you have the most recent wallets connected saved in local storage, you can auto select those wallet(s) when your app loads:
 
 ```javascript
-const previouslyConnectedWallets = JSON.parse(
-  window.localStorage.getItem('connectedWallets')
-)
+const previouslyConnectedWallets = JSON.parse(window.localStorage.getItem('connectedWallets'))
 
 if (previouslyConnectedWallets) {
   // Connect the most recently connected wallet (first in the array)
@@ -550,9 +545,7 @@ To subscribe to all state updates, call the `select` method with no arguments:
 
 ```javascript
 const state = onboard.state.select()
-const { unsubscribe } = state.subscribe(update =>
-  console.log('state update: ', update)
-)
+const { unsubscribe } = state.subscribe((update) => console.log('state update: ', update))
 
 // remember to unsubscribe when updates are no longer needed
 // unsubscribe()
@@ -562,9 +555,7 @@ Specific top level slices of state can be subscribed to. For example you may wan
 
 ```javascript
 const wallets = onboard.state.select('wallets')
-const { unsubscribe } = wallets.subscribe(update =>
-  console.log('wallets update: ', update)
-)
+const { unsubscribe } = wallets.subscribe((update) => console.log('wallets update: ', update))
 
 // unsubscribe when updates are no longer needed
 unsubscribe()
@@ -599,7 +590,9 @@ const onboard = Onboard({
       token: 'ETH',
       label: 'Ethereum Mainnet',
       // Only one RPC required
-      rpcUrl: `https://mainnet.infura.io/v3/${INFURA_KEY}` || `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
+      rpcUrl:
+        `https://mainnet.infura.io/v3/${INFURA_KEY}` ||
+        `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
     }
   ]
 })
@@ -614,10 +607,7 @@ You may decide to get updated balances for connected wallets after a user action
 ```javascript
 onboard.state.actions.updateBalances() // update all balances for all connected addresses
 onboard.state.actions.updateBalances(['0xfdadfadsadsadsadasdsa']) // update balance for one address
-onboard.state.actions.updateBalances([
-  '0xfdadfadsadsadsadasdsa',
-  '0xfdsafdsfdsfdsfds'
-]) // update balance for two addresses
+onboard.state.actions.updateBalances(['0xfdadfadsadsadsadasdsa', '0xfdsafdsfdsfdsfds']) // update balance for two addresses
 ```
 
 **`setLocale`**
@@ -634,7 +624,7 @@ If you need to update your notify configuration after initialization, you can do
 onboard.state.actions.updateNotify({
   desktop: {
     enabled: true,
-    transactionHandler: transaction => {
+    transactionHandler: (transaction) => {
       console.log({ transaction })
       if (transaction.eventCode === 'txPool') {
         return {
@@ -647,7 +637,7 @@ onboard.state.actions.updateNotify({
   },
   mobile: {
     enabled: true,
-    transactionHandler: transaction => {
+    transactionHandler: (transaction) => {
       console.log({ transaction })
       if (transaction.eventCode === 'txPool') {
         return {
@@ -723,13 +713,13 @@ const txDetails = {
 }
 
 const sendTransaction = () => {
-  return signer.sendTransaction(txDetails).then(tx => tx.hash)
+  return signer.sendTransaction(txDetails).then((tx) => tx.hash)
 }
 
-const gasPrice = () => ethersProvider.getGasPrice().then(res => res.toString())
+const gasPrice = () => ethersProvider.getGasPrice().then((res) => res.toString())
 
 const estimateGas = () => {
-  return ethersProvider.estimateGas(txDetails).then(res => res.toString())
+  return ethersProvider.estimateGas(txDetails).then((res) => res.toString())
 }
 const transactionHash = await onboard.state.actions.preflightNotifications({
   sendTransaction,
@@ -761,10 +751,7 @@ onboard.state.actions.setPrimaryWallet(wallets[1])
 
 // set the second wallet in the wallets array as the primary wallet
 // as well as setting the third account in that wallet as the primary account
-onboard.state.actions.setPrimaryWallet(
-  wallets[1],
-  wallets[1].accounts[2].address
-)
+onboard.state.actions.setPrimaryWallet(wallets[1], wallets[1].accounts[2].address)
 ```
 
 ## Setting the User's Chain/Network
@@ -1065,10 +1052,7 @@ const config = {
       plugins: [
         development &&
           nodePolyfills({
-            include: [
-              'node_modules/**/*.js',
-              new RegExp('node_modules/.vite/.*js')
-            ],
+            include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js')],
             http: true,
             crypto: true
           })
@@ -1082,11 +1066,22 @@ const config = {
       },
       build: {
         rollupOptions: {
+          external: ['@web3-onboard/*'],
           plugins: [nodePolyfills({ crypto: true, http: true })]
         },
         commonjsOptions: {
           transformMixedEsModules: true
         }
+      },
+      optimizeDeps: {
+        exclude: ['@ethersproject/hash', 'wrtc', 'http'],
+        include: [
+          '@web3-onboard/core',
+          '@web3-onboard/gas',
+          '@web3-onboard/sequence',
+          'js-sha3',
+          '@ethersproject/bignumber'
+        ]
       }
     }
   }
@@ -1114,10 +1109,7 @@ export default {
   plugins: [
     development &&
       nodePolyfills({
-        include: [
-          'node_modules/**/*.js',
-          new RegExp('node_modules/.vite/.*js')
-        ],
+        include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js')],
         http: true,
         crypto: true
       })
