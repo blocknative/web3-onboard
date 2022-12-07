@@ -25,6 +25,7 @@ const intiOnboard = async () => {
   const { default: tallyModule } = await import('@web3-onboard/tallyho')
   const { default: enkryptModule } = await import('@web3-onboard/enkrypt')
   const { default: mewWalletModule } = await import('@web3-onboard/mew-wallet')
+  const { default: torusModule } = await import('@web3-onboard/torus')
   const INFURA_ID = '8b60d52405694345a99bcb82e722e0af'
 
   const injected = injectedModule()
@@ -53,6 +54,7 @@ const intiOnboard = async () => {
   }
 
   const trezor = trezorModule(trezorOptions)
+  const torus = torusModule()
 
   const magic = magicModule({
     apiKey: 'pk_live_02207D744E81C2BA'
@@ -70,6 +72,8 @@ const intiOnboard = async () => {
       trezor,
       gnosis,
       tally,
+      torus,
+      sequence,
       dcent,
       enkrypt,
       mewWallet,
@@ -77,7 +81,6 @@ const intiOnboard = async () => {
       fortmatic,
       keystone,
       keepkey,
-      sequence,
       portis
     ],
     chains: [
