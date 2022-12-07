@@ -108,6 +108,8 @@
         accountCenterStyleSheet.insertRule(rule.cssText)
       )
     })
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
     target.adoptedStyleSheets = [accountCenterStyleSheet]
 
     const containerElement = document.querySelector(accountCenterMountToElement)
@@ -428,7 +430,7 @@
       {/await}
     {/if}
     {#if $accountCenter$.position.includes('bottom')}
-      <div id="transaction-preview-container" style="margin-bottom: 8px;"/>
+      <div id="transaction-preview-container" style="margin-bottom: 8px;" />
     {/if}
     <div
       style={!$accountCenter$.expanded &&
@@ -449,7 +451,7 @@
       {/await}
     </div>
     {#if $accountCenter$.position.includes('top')}
-      <div id="transaction-preview-container" style="margin-top: 8px;"/>
+      <div id="transaction-preview-container" style="margin-top: 8px;" />
     {/if}
     {#if $notify$.position.includes('top') && $accountCenter$.position.includes('top') && samePositionOrMobile}
       {#await notifyComponent then Notify}
@@ -477,7 +479,7 @@
       : ''} "
   >
     {#if $accountCenter$.position.includes('bottom')}
-      <div id="transaction-preview-container" style="margin-bottom: 8px;"/>
+      <div id="transaction-preview-container" style="margin-bottom: 8px;" />
     {/if}
     <div
       style={!$accountCenter$.expanded &&
@@ -499,7 +501,7 @@
       {/if}
     </div>
     {#if $accountCenter$.position.includes('top')}
-      <div id="transaction-preview-container" style="margin-top: 8px;"/>
+      <div id="transaction-preview-container" style="margin-top: 8px;" />
     {/if}
   </div>
 {/if}

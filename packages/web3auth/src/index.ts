@@ -5,13 +5,16 @@ import type {
   WalletInit
 } from '@web3-onboard/common'
 
-import type { ModalConfig, Web3AuthOptions } from '@web3auth/web3auth'
-import type { CustomChainConfig, CONNECTED_EVENT_DATA } from '@web3auth/base'
+import type { Web3AuthCoreOptions } from '@web3auth/core'
+import type { ModalConfig, Web3Auth } from '@web3auth/modal'
+import type { CustomChainConfig } from '@web3auth/base'
+import { LOGIN_MODAL_EVENTS } from '@web3auth/ui'
 
-type Web3AuthModuleOptions = Omit<Web3AuthOptions, 'chainConfig'> & {
+type Web3AuthModuleOptions = Omit<Web3AuthCoreOptions, 'chainConfig'> & {
   chainConfig?: Partial<CustomChainConfig> &
     Pick<CustomChainConfig, 'chainNamespace'>
   modalConfig?: Record<string, ModalConfig> | undefined
+  loginModalZIndex?: string
 }
 
 function web3auth(options: Web3AuthModuleOptions): WalletInit {
@@ -19,7 +22,7 @@ function web3auth(options: Web3AuthModuleOptions): WalletInit {
     label: 'Web3Auth',
     getIcon: async () => (await import('./icon.js')).default,
     getInterface: async ({ EventEmitter, chains }) => {
-      const { Web3Auth } = await import('@web3auth/web3auth')
+      const { Web3Auth } = await import('@web3auth/modal')
       const { CHAIN_NAMESPACES, ADAPTER_EVENTS } = await import(
         '@web3auth/base'
       )
@@ -49,13 +52,31 @@ function web3auth(options: Web3AuthModuleOptions): WalletInit {
         }
       })
 
-      const web3authOptions = {
+      const web3authCoreOptions = {
         ...options,
         ...getChainConfig(currentChain)
       }
 
-      let web3auth = new Web3Auth(web3authOptions)
+      let web3auth = new Web3Auth(web3authCoreOptions)
 
+      // There is no exposed z-index setter so we must set through modal events
+      // Tracking a permanent fix here - https://github.com/Web3Auth/web3auth-web/issues/1018
+      // subscribe to lifecycle events emitted by web3auth
+      const subscribeAuthEvents = (web3auth: Web3Auth) => {
+        // emitted when modal visibility changes.
+        web3auth.on(LOGIN_MODAL_EVENTS.MODAL_VISIBILITY, isVisible => {
+          if (isVisible) {
+            // Move to bottom of stack
+            setTimeout(() => {
+              const modal = document.getElementById('w3a-modal')
+              if (modal) {
+                modal.style.zIndex = options.loginModalZIndex || '50'
+              }
+            }, 10)
+          }
+        })
+      }
+      subscribeAuthEvents(web3auth)
       const { modalConfig } = options || {}
       await web3auth.initModal(modalConfig)
 
@@ -88,7 +109,7 @@ function web3auth(options: Web3AuthModuleOptions): WalletInit {
 
             // re-instantiate instance with new network
             web3auth = new Web3Auth({
-              ...web3authOptions,
+              ...web3authCoreOptions,
               ...getChainConfig(currentChain)
             })
 
