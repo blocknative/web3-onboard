@@ -1,0 +1,68 @@
+{
+  "name": "@web3-onboard/enkrypt",
+  "version": "2.0.0",
+  "description": "Enkrypt SDK wallet module for connecting to Web3-Onboard. Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardised spec compliant web3 providers for all supported wallets, framework agnostic modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
+  "keywords": [
+    "Ethereum",
+    "Web3",
+    "EVM",
+    "dapp",
+    "Multichain",
+    "Wallet",
+    "Transaction",
+    "Provider",
+    "Hardware Wallet",
+    "Notifications",
+    "React",
+    "Svelte",
+    "Vue",
+    "Next",
+    "Nuxt",
+    "MetaMask",
+    "Coinbase",
+    "WalletConnect",
+    "Ledger",
+    "Trezor",
+    "Connect Wallet",
+    "Ethereum Hooks",
+    "Blocknative",
+    "Mempool",
+    "pending",
+    "confirmed",
+    "Injected Wallet",
+    "Crypto",
+    "Crypto Wallet",
+    "Enkrypt"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blocknative/web3-onboard.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://www.blocknative.com/onboard",
+  "bugs": "https://github.com/blocknative/web3-onboard/issues",
+  "module": "dist/index.js",
+  "browser": "dist/index.js",
+  "main": "dist/index.js",
+  "type": "module",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w",
+    "type-check": "tsc --noEmit"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@ethersproject/providers": "^5.5.0",
+    "@types/node": "^17.0.21",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.5.5",
+    "window": "^4.2.7"
+  },
+  "dependencies": {
+    "@web3-onboard/common": "^2.2.3"
+  }
+}

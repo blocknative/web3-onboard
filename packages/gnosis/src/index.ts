@@ -5,11 +5,13 @@ type GnosisOptions = {
 }
 
 function gnosis(options?: GnosisOptions): WalletInit {
-  const { whitelistedDomains = [
-    /^https:\/\/gnosis-safe\.io$/,
-    /^https:\/\/app\.safe\.global$/,
-    /^https:\/\/safe\.global$/
-  ] } = options || {}
+  const {
+    whitelistedDomains = [
+      /^https:\/\/gnosis-safe\.io$/,
+      /^https:\/\/app\.safe\.global$/,
+      /^https:\/\/safe\.global$/
+    ]
+  } = options || {}
 
   return () => {
     const loadedInIframe = window.self !== window.top
