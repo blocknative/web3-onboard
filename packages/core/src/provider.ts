@@ -378,7 +378,6 @@ export async function getUns(
 
   try {
     const name = await resolutionInstance.reverse(address)
-    console.log(name)
     let uns = null
 
     if (name) {
