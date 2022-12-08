@@ -1,6 +1,6 @@
 {
   "name": "web3-onboard-monorepo",
-  "version": "2.14.2",
+  "version": "2.15.0",
   "private": true,
   "workspaces": {
     "packages": [
@@ -58,7 +58,8 @@
     "format": "prettier --write 'packages/**/*.ts'",
     "dev": "yarn wsrun dev",
     "build": "yarn wsrun --serial build",
-    "check": "yarn wsrun type-check"
+    "type-check": "yarn wsrun type-check",
+    "file-check": "yarn install --check-files"
   },
   "devDependencies": {
     "prettier": "^2.4.1",
