@@ -48,7 +48,7 @@
   }
 
   .warning-container {
-    margin-bottom: 1rem;
+    margin: 1rem 1rem 0;
   }
 
   @media all and (min-width: 768px) {
