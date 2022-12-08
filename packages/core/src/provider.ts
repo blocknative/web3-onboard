@@ -1,7 +1,7 @@
 import { fromEventPattern, Observable } from 'rxjs'
 import { filter, takeUntil, take, share, switchMap } from 'rxjs/operators'
 import partition from 'lodash.partition'
-import { providers } from 'ethers'
+import { providers, utils } from 'ethers'
 import { weiToEth } from '@web3-onboard/common'
 import { disconnectWallet$ } from './streams.js'
 import { updateAccount, updateWallet } from './store/actions.js'
@@ -9,6 +9,7 @@ import { validEnsChain } from './utils.js'
 import disconnect from './disconnect.js'
 import { state } from './store/index.js'
 import { getBNMulitChainSdk } from './services.js'
+import { Resolution } from '@unstoppabledomains/resolution'
 
 import type {
   ChainId,
@@ -26,6 +27,7 @@ import type {
   Address,
   Balances,
   Ens,
+  Uns,
   WalletPermission,
   WalletState
 } from './types.js'
@@ -146,10 +148,10 @@ export function trackWallet(
       account => account.address === address
     )
 
-    // update accounts without ens and balance first
+    // update accounts without ens/uns and balance first
     updateWallet(label, {
       accounts: [
-        existingAccount || { address: address, ens: null, balance: null },
+        existingAccount || { address: address, ens: null, uns: null, balance: null },
         ...restAccounts
       ]
     })
@@ -176,7 +178,7 @@ export function trackWallet(
     }
   })
 
-  // also when accounts change, update Balance and ENS
+  // also when accounts change, update Balance and ENS/UNS
   accountsChanged$
     .pipe(
       switchMap(async ([address]) => {
@@ -204,14 +206,19 @@ export function trackWallet(
             : validEnsChain(connectedWalletChain.id)
             ? getEns(address, chain)
             : Promise.resolve(null)
+        
+        const unsProm =
+          account && account.uns
+            ? Promise.resolve(account.uns)
+            : getUns(address, chain)
 
-        return Promise.all([Promise.resolve(address), balanceProm, ensProm])
+        return Promise.all([Promise.resolve(address), balanceProm, ensProm, unsProm])
       })
     )
     .subscribe(res => {
       if (!res) return
-      const [address, balance, ens] = res
-      updateAccount(label, address, { balance, ens })
+      const [address, balance, ens, uns] = res
+      updateAccount(label, address, { balance, ens, uns})
     })
 
   const chainChanged$ = listenChainChanged({ provider, disconnected$ }).pipe(
@@ -264,6 +271,7 @@ export function trackWallet(
         ({
           address,
           ens: null,
+          uns: null,
           balance: null
         } as Account)
     )
@@ -274,7 +282,7 @@ export function trackWallet(
     })
   })
 
-  // when chain changes get ens and balance for each account for wallet
+  // when chain changes get ens/uns and balance for each account for wallet
   chainChanged$
     .pipe(
       switchMap(async chainId => {
@@ -292,13 +300,18 @@ export function trackWallet(
             const ensProm = validEnsChain(chainId)
               ? getEns(address, chain)
               : Promise.resolve(null)
+            
+            const unsProm = validEnsChain(chainId)
+              ? getUns(address, chain)
+              : Promise.resolve(null)
 
-            const [balance, ens] = await Promise.all([balanceProm, ensProm])
+            const [balance, ens, uns] = await Promise.all([balanceProm, ensProm, unsProm])
 
             return {
               address,
               balance,
-              ens
+              ens,
+              uns
             }
           })
         )
@@ -347,6 +360,34 @@ export async function getEns(
     }
 
     return ens
+  } catch (error) {
+    console.error(error)
+    return null
+  }
+}
+
+export async function getUns(
+  address: Address,
+  chain: Chain
+): Promise<Uns | null> {
+  // check if address is valid ETH address before attempting to resolve
+  // chain we don't recognize and don't have a rpcUrl for requests
+  if(!utils.isAddress(address) || !chain) return null
+
+  const resolutionInstance = new Resolution()
+
+  try {
+    const name = await resolutionInstance.reverse(address)
+    console.log(name)
+    let uns = null
+
+    if (name) {
+      uns = {
+        name
+      }
+    }
+
+    return uns
   } catch (error) {
     console.error(error)
     return null

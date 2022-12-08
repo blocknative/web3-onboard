@@ -87,7 +87,7 @@
     );
   }
 
-  .address-ens {
+  .address-domain {
     margin-left: 0.5rem;
     font-weight: 700;
     color: var(
@@ -156,7 +156,7 @@
   }
 </style>
 
-{#each wallet.accounts as { address, ens, balance }, i}
+{#each wallet.accounts as { address, ens, uns, balance }, i}
   <div class="relative">
     <div
       on:click={() => setPrimaryWallet(wallet, address)}
@@ -188,9 +188,9 @@
           {/if}
         </div>
 
-        <!-- ADDRESS / ENS -->
-        <span class="address-ens"
-          >{ens ? shortenDomain(ens.name) : shortenAddress(address)}</span
+        <!-- ADDRESS / DOMAIN -->
+        <span class="address-domain"
+          >{ens ? shortenDomain(ens.name) : uns ? shortenDomain(uns.name) : shortenAddress(address)}</span
         >
       </div>
 
@@ -249,7 +249,7 @@
         </li>
         <li
           on:click|stopPropagation={() => {
-            copyWalletAddress(ens ? ens.name : address).then(() => {
+            copyWalletAddress(ens ? ens.name : uns ? uns.name : address).then(() => {
               changeText()
             })
           }}

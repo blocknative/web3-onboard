@@ -980,17 +980,7 @@
 
         <div>Chains: {JSON.stringify(chains, null, 2)}</div>
 
-        {#if label === 'Unstoppable'}
-          <div>Unstoppable User: {instance.user.sub}</div>
-          <div>Unstoppable Wallet: {instance.user.wallet_address}</div>
-          <div>Unstoppable Email: {instance.user.email || ''}</div>
-          <div>
-            Unstoppable Humanity: {instance.user.humanity_check_id || ''}
-          </div>
-          <div>Unstoppable Profile: {instance.user.profile || ''}</div>
-        {/if}
-
-        {#each accounts as { address, ens, balance }}
+        {#each accounts as { address, ens, uns, balance }}
           <div
             class="account-info"
             style="margin-top: 0.25rem; margin-bottom: 0.25rem; padding: 0.25rem; border: 1px solid gray;"
@@ -1005,6 +995,18 @@
 
             {#if ens}
               <div>ENS Name: {(ens && ens.name) || ''}</div>
+            {/if}
+
+            {#if uns}
+              <div>UNS Name: {(uns && uns.name) || ''}</div>
+            {/if}
+
+            {#if label === 'Unstoppable'}
+              <div>Unstoppable Email: {instance.user.email || ''}</div>
+              <div>
+                Unstoppable Humanity: {instance.user.humanity_check_id || ''}
+              </div>
+              <div>Unstoppable Profile: {instance.user.profile || ''}</div>
             {/if}
           </div>
           <div>
