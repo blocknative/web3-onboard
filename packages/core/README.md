@@ -33,6 +33,11 @@ type InitOptions {
   apiKey?: string
   notify?: Partial<NotifyOptions>
   connect?: Partial<ConnectModalOptions>
+  gas?: typeof gas
+  /**
+   * Object mapping for W3O components with the key being the component and the value the DOM element to mount the component to. This element must be available at time of package script execution.
+   */
+  containerElements?: Partial<ContainerElements>
 }
 ```
 
@@ -78,13 +83,6 @@ type AppMetadata = {
   explore?: string
   // if your app only supports injected wallets and when no injected wallets detected, recommend the user to install some
   recommendedInjectedWallets?: RecommendedInjectedWallets[]
-  /** Gas module */
-  gas?: typeof gas
-  /**
-   * Object mapping for W3O components with the key being the component and the value the DOM element to mount
-   * the component to. This element must be available at time of package script execution.
-   */
-  containerElements?: Partial<ContainerElements>
 }
 
 type RecommendedInjectedWallets = {
@@ -1107,10 +1105,7 @@ const config = {
       plugins: [
         development &&
           nodePolyfills({
-            include: [
-              'node_modules/**/*.js',
-              new RegExp('node_modules/.vite/.*js')
-            ],
+            include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js')],
             http: true,
             crypto: true
           })
@@ -1124,11 +1119,22 @@ const config = {
       },
       build: {
         rollupOptions: {
+          external: ['@web3-onboard/*'],
           plugins: [nodePolyfills({ crypto: true, http: true })]
         },
         commonjsOptions: {
           transformMixedEsModules: true
         }
+      },
+      optimizeDeps: {
+        exclude: ['@ethersproject/hash', 'wrtc', 'http'],
+        include: [
+          '@web3-onboard/core',
+          '@web3-onboard/gas',
+          '@web3-onboard/sequence',
+          'js-sha3',
+          '@ethersproject/bignumber'
+        ]
       }
     }
   }

@@ -13,12 +13,22 @@ function coinbaseWallet({
         const [chain] = chains
         const { name, icon } = appMetadata || {}
 
-        const { CoinbaseWalletSDK } = await import('@coinbase/wallet-sdk')
+        // according to https://github.com/wagmi-dev/wagmi/issues/383
+        // @coinbase/wallet-sdk export double default fields
+        // so we need to detect it to get the real constructor
+        const { default: CoinbaseWalletSDK } = await import(
+          '@coinbase/wallet-sdk'
+        )
+        const CoinbaseWalletSDKConstructor = (
+          (CoinbaseWalletSDK as any).default
+            ? (CoinbaseWalletSDK as any).default
+            : CoinbaseWalletSDK
+        ) as typeof CoinbaseWalletSDK
 
         const base64 = window.btoa(icon || '')
         const appLogoUrl = `data:image/svg+xml;base64,${base64}`
 
-        const instance = new CoinbaseWalletSDK({
+        const instance = new CoinbaseWalletSDKConstructor({
           appName: name || '',
           appLogoUrl,
           darkMode

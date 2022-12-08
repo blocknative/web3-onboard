@@ -18,7 +18,7 @@
 
   .connecting-container {
     padding: var(--onboard-spacing-4, var(--spacing-4));
-    border-radius: 24px;
+    border-radius: var(--onboard-border-radius-1, var(--border-radius-1));
     background: var(--onboard-success-100, var(--success-100));
     border: 1px solid var(--onboard-success-600, var(--success-600));
     width: 100%;

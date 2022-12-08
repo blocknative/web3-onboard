@@ -4,7 +4,7 @@
 
 ### Install
 
-`npm i @web3-onboard/sequence @0xsequence`
+`npm i @web3-onboard/sequence @0xsequence ethers`
 
 ## Options
 
