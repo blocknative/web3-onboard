@@ -151,7 +151,7 @@
     height: auto;
   }
 
-  @media all and (max-width: 520px) {
+  /* @media all and (max-width: 520px) { */
     :global(.pending-status-icon) {
       z-index: 1;
       fill: white;
@@ -163,7 +163,7 @@
       bottom: -0.25rem;
       position: absolute;
     }
-  }
+  /* } */
 </style>
 
 <svelte:window bind:innerWidth={windowWidth} />
@@ -207,9 +207,9 @@
           <img src={iconLoaded} alt="logo" />
         {/if}
       </div>
-      {#if loading && windowWidth <= 809}
+      {#if loading && windowWidth <= 768}
         <div class="status-icon-container">
-          <PendingStatusIcon class="pending-status-icon" size={22} />
+          <PendingStatusIcon class="pending-status-icon" size={20} />
         </div>
       {/if}
     {/await}
