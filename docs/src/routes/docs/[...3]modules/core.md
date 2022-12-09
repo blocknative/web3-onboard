@@ -988,7 +988,7 @@ Everything should just work since the node built-ins are automatically bundled i
 
 You'll need to add some dev dependencies with the following command:
 
-`npm i --save-dev assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util`
+`npm i --save-dev assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify`
 
 Then add the following to your `webpack.config.js` file:
 
@@ -997,6 +997,9 @@ const webpack = require('webpack')
 
 module.exports = {
   resolve: {
+    fallback: {
+      path: require.resolve('path-browserify')
+    },
     alias: {
       assert: 'assert',
       buffer: 'buffer',
@@ -1030,8 +1033,11 @@ The above webpack 5 example can be used in the `craco.config.js` file at the roo
 [React App Rewired](https://www.npmjs.com/package/react-app-rewired) is another option for working with Create React App DApps
 
 Add the following dev dependencies:
+`npm i --save-dev rollup-plugin-polyfill-node webpack-bundle-analyzer assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify`
 
-`yarn add rollup-plugin-polyfill-node webpack-bundle-analyzer -D`
+**OR**
+
+`yarn add rollup-plugin-polyfill-node webpack-bundle-analyzer assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify -D`
 
 ```javascript
 const webpack = require("webpack");
