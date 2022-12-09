@@ -96,7 +96,7 @@ export async function copyWalletAddress(text: string): Promise<void> {
 export const toHexString = (val: number | string): string =>
   typeof val === 'number' ? `0x${val.toString(16)}` : val
 
-export function chainIdToHex(chains: Chain[] | ChainWithDecimalId[]): Chain[] {
+export function chainIdToHex(chains: (Chain | ChainWithDecimalId)[]): Chain[] {
   return chains.map(({ id, ...rest }) => {
     const hexId = toHexString(id)
     return { id: hexId, ...rest }
