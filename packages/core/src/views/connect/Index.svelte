@@ -371,7 +371,7 @@
     );
     line-height: 24px;
     /* border: 1px solid var(--onboard-primary-200, var(--primary-200)); */
-
+    margin-bottom: 2rem;
     overflow: hidden;
     position: relative;
     display: flex;
@@ -457,6 +457,7 @@
 
   @media all and (min-width: 768px) {
     .container {
+      margin: 0;
       flex-flow: row;
       height: var(--onboard-connect-content-height, 440px);
     }
