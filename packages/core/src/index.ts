@@ -117,10 +117,10 @@ function init(options: InitOptions): OnboardAPI {
   if (typeof accountCenter !== 'undefined') {
     let accountCenterUpdate
 
-    if (device.type === 'mobile' && accountCenter.mobile) {
+    if (device.type === 'mobile') {
       accountCenterUpdate = {
         ...APP_INITIAL_STATE.accountCenter,
-        ...accountCenter.mobile
+        ...(accountCenter.mobile ? accountCenter.mobile : {})
       }
     } else if (accountCenter.desktop) {
       accountCenterUpdate = {
