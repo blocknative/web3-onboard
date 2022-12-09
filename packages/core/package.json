@@ -46,7 +46,8 @@
     "dev": "rollup -c -w",
     "start": "sirv public --no-clear",
     "type-check": "svelte-check --tsconfig ./tsconfig.json",
-    "lint": "eslint -c './.eslintrc.cjs' './src' && prettier --check './src/**/*'"
+    "lint": "eslint -c './.eslintrc.cjs' './src' && prettier --check './src/**/*'",
+    "lint:fix": "eslint --fix -c './.eslintrc.cjs' './src' && prettier --write './src/**/*'"
   },
   "typings": "dist/index.d.ts",
   "files": [

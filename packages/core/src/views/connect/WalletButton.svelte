@@ -1,5 +1,6 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
+  import { MOBILE_WINDOW_WIDTH } from '../../constants'
 
   import { WalletAppBadge, SuccessStatusIcon } from '../shared'
 
@@ -36,7 +37,7 @@
     flex-flow: column;
     align-items: center;
     gap: 0.5rem;
-    padding: .75rem;
+    padding: 0.75rem;
     width: 5rem;
   }
 
@@ -66,10 +67,11 @@
         --onboard-wallet-button-border-radius,
         var(--border-radius-1)
       );
-      border: 1px solid var(
-        --onboard-wallet-button-border-color,
-        var(--onboard-primary-200, var(--primary-200))
-      );
+      border: 1px solid
+        var(
+          --onboard-wallet-button-border-color,
+          var(--onboard-primary-200, var(--primary-200))
+        );
     }
 
     button.wallet-button-styling:hover {
@@ -87,7 +89,7 @@
     }
 
     button.connected {
-      border-color: var(--onboard-success-500, var(--success-500))
+      border-color: var(--onboard-success-500, var(--success-500));
     }
 
     button.connected:hover {
@@ -110,9 +112,7 @@
       margin: auto;
       height: 20px;
     }
-
   }
-
 </style>
 
 <svelte:window bind:innerWidth={windowWidth} />
@@ -127,7 +127,7 @@
   >
     <div class="wallet-button-container-inner">
       <WalletAppBadge
-        size={windowWidth >= 768 ? 48 : 56}
+        size={windowWidth >= MOBILE_WINDOW_WIDTH ? 48 : 56}
         {icon}
         loading={connecting}
         border={connected ? 'green' : 'blue'}

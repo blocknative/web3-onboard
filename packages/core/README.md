@@ -882,6 +882,7 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-connect-content-width
   --onboard-connect-content-height
   --onboard-wallet-columns
+  --onboard-connect-sidebar-border-color
   --onboard-connect-sidebar-background
   --onboard-connect-sidebar-color
   --onboard-connect-sidebar-progress-background

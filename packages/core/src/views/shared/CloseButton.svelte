@@ -17,11 +17,13 @@
       var(--onboard-gray-300, var(--gray-300))
     );
   }
-
 </style>
 
 <div class="flex justify-center items-center pointer">
-  <div class="close-button flex justify-center items-center" style={`background:${backgroundColor}`}>
+  <div
+    class="close-button flex justify-center items-center"
+    style={`background:${backgroundColor}`}
+  >
     <div class="flex items-center" style="width:{width};">
       {@html closeIcon}
     </div>

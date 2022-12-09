@@ -71,6 +71,4 @@
       </span>
     </label>
   </div>
-{:else}
-
-{/if}
+{:else}{/if}

@@ -4,12 +4,13 @@
   import { isSVG } from '../../utils.js'
   import Spinner from './Spinner.svelte'
   import { PendingStatusIcon } from '../shared'
+  import { MOBILE_WINDOW_WIDTH } from '../../constants.js'
 
   export let size: number // px
   export let icon: Promise<string> | string // svg string or url string
   export let loading = false
   export let padding = size / 6
-  export let color: string = 'black'
+  export let color = 'black'
 
   export let border:
     | 'yellow'
@@ -152,17 +153,17 @@
   }
 
   /* @media all and (max-width: 520px) { */
-    :global(.pending-status-icon) {
-      z-index: 1;
-      fill: white;
-      box-shadow: 0px 2px 12px 0px rgba(0, 0, 0, 0.1);
-    }
+  :global(.pending-status-icon) {
+    z-index: 1;
+    fill: white;
+    box-shadow: 0px 2px 12px 0px rgba(0, 0, 0, 0.1);
+  }
 
-    .status-icon-container {
-      right: -0.25rem;
-      bottom: -0.25rem;
-      position: absolute;
-    }
+  .status-icon-container {
+    right: -0.25rem;
+    bottom: -0.25rem;
+    position: absolute;
+  }
   /* } */
 </style>
 
@@ -190,7 +191,7 @@
     padding - 1
   }px; width: ${size}px; height: ${size}px; border-radius: ${radius}px; color: ${color};`}
 >
-  {#if loading && windowWidth >= 809}
+  {#if loading && windowWidth >= MOBILE_WINDOW_WIDTH}
     <div class="spinner-container">
       <Spinner size="2rem" />
     </div>
@@ -207,7 +208,7 @@
           <img src={iconLoaded} alt="logo" />
         {/if}
       </div>
-      {#if loading && windowWidth <= 768}
+      {#if loading && windowWidth <= MOBILE_WINDOW_WIDTH}
         <div class="status-icon-container">
           <PendingStatusIcon class="pending-status-icon" size={20} />
         </div>

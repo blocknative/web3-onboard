@@ -8,7 +8,7 @@
   import { state } from '../../store/index.js'
   import { connectWallet$, onDestroy$ } from '../../streams.js'
   import { addWallet, updateAccount } from '../../store/actions.js'
-  import { validEnsChain , isSVG} from '../../utils.js'
+  import { validEnsChain, isSVG } from '../../utils.js'
   import CloseButton from '../shared/CloseButton.svelte'
   import Modal from '../shared/Modal.svelte'
   import Agreement from './Agreement.svelte'
@@ -48,6 +48,7 @@
     WalletState,
     WalletWithLoadingIcon
   } from '../../types.js'
+  import { MOBILE_WINDOW_WIDTH } from '../../constants'
 
   export let autoSelect: ConnectOptions['autoSelect']
 
@@ -370,7 +371,6 @@
       var(--onboard-white, var(--white))
     );
     line-height: 24px;
-    /* border: 1px solid var(--onboard-primary-200, var(--primary-200)); */
     margin-bottom: 2rem;
     overflow: hidden;
     position: relative;
@@ -483,7 +483,7 @@
       {/if}
 
       <div class="content flex flex-column">
-        {#if windowWidth <= 809}
+        {#if windowWidth <= MOBILE_WINDOW_WIDTH}
           <div class="mobile-header">
             <div class="icon-container">
               {#if icon}
@@ -541,7 +541,7 @@
         </div>
 
         <div class="scroll-container" bind:this={scrollContainer}>
-          {#if $modalStep$ === 'selectingWallet' || windowWidth <= 809}
+          {#if $modalStep$ === 'selectingWallet' || windowWidth <= MOBILE_WINDOW_WIDTH}
             {#if wallets.length}
               <Agreement bind:agreed />
 
@@ -558,7 +558,7 @@
             {/if}
           {/if}
 
-          {#if ($modalStep$ === 'connectingWallet' && selectedWallet && windowWidth >= 809) || (windowWidth <= 809 && connectionRejected && $modalStep$ === 'connectingWallet' && selectedWallet)}
+          {#if ($modalStep$ === 'connectingWallet' && selectedWallet && windowWidth >= MOBILE_WINDOW_WIDTH) || (windowWidth <= MOBILE_WINDOW_WIDTH && connectionRejected && $modalStep$ === 'connectingWallet' && selectedWallet)}
             <ConnectingWallet
               {connectWallet}
               {connectionRejected}
@@ -569,7 +569,7 @@
             />
           {/if}
 
-          {#if $modalStep$ === 'connectedWallet' && selectedWallet && windowWidth >= 809}
+          {#if $modalStep$ === 'connectedWallet' && selectedWallet && windowWidth >= MOBILE_WINDOW_WIDTH}
             <ConnectedWallet {selectedWallet} />
           {/if}
         </div>

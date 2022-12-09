@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { MOBILE_WINDOW_WIDTH } from '../../constants.js'
   import { state } from '../../store/index.js'
   import type { WalletWithLoadingIcon } from '../../types.js'
   import { Warning } from '../shared'
@@ -18,10 +19,6 @@
 </script>
 
 <style>
-  /* .outer-container {
-    padding: 0;
-    flex-direction: column-reverse;
-  } */
 
   .wallets-container {
     display: flex;
@@ -59,14 +56,6 @@
     }
   }
 
-  /* @media all and (max-width: 520px) {
-    .warning-container {
-      padding: var(--onboard-spacing-4, var(--spacing-4))
-        var(--onboard-spacing-4, var(--spacing-4)) 0
-        var(--onboard-spacing-4, var(--spacing-4));
-      margin: 0;
-    }
-  } */
 </style>
 
 <svelte:window bind:innerWidth={windowWidth} />
@@ -86,7 +75,7 @@
         label={wallet.label}
         icon={wallet.icon}
         onClick={() => selectWallet(wallet)}
-        disabled={windowWidth <= 809 &&
+        disabled={windowWidth <= MOBILE_WINDOW_WIDTH &&
           connectingWalletLabel &&
           connectingWalletLabel !== wallet.label}
       />

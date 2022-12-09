@@ -11,11 +11,7 @@
   import disconnect from '../../disconnect.js'
   import { state } from '../../store/index.js'
   import { getDefaultChainStyles, unrecognizedChainStyle } from '../../utils.js'
-  import {
-    NetworkSelector,
-    SuccessStatusIcon,
-    WalletAppBadge
-  } from '../shared'
+  import { NetworkSelector, SuccessStatusIcon, WalletAppBadge } from '../shared'
   import caretLightIcon from '../../icons/caret-light.js'
   import warningIcon from '../../icons/warning.js'
   import questionIcon from '../../icons/question.js'

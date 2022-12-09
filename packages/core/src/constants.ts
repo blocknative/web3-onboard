@@ -32,3 +32,5 @@ export const APP_INITIAL_STATE: AppState = {
 export const STORAGE_KEYS = {
   TERMS_AGREEMENT: 'onboard.js:agreement'
 }
+
+export const MOBILE_WINDOW_WIDTH = 768

@@ -61,7 +61,8 @@
   }
 
   .modal-styling {
-    border-radius: var(--onboard-modal-border-radius, var(--border-radius-1)) var(--onboard-modal-border-radius, var(--border-radius-1)) 0 0;
+    border-radius: var(--onboard-modal-border-radius, var(--border-radius-1))
+      var(--onboard-modal-border-radius, var(--border-radius-1)) 0 0;
     box-shadow: var(--onboard-modal-box-shadow, var(--box-shadow-0));
   }
 
@@ -76,7 +77,7 @@
     bottom: 0;
   }
 
-  @media all and (min-width:768px) {
+  @media all and (min-width: 768px) {
     .modal-styling {
       border-radius: var(--onboard-modal-border-radius, var(--border-radius-1));
     }

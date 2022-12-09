@@ -5,6 +5,7 @@
   import type { i18n } from '../../types.js'
   import { isSVG } from '../../utils.js'
   import { configuration } from '../../configuration.js'
+  import { MOBILE_WINDOW_WIDTH } from '../../constants'
 
   export let step: keyof i18n['connect']
 
@@ -13,8 +14,6 @@
 
   const defaultContent = en.connect[step].sidebar
   const { subheading, paragraph } = defaultContent
-  const { heading } =
-    defaultContent as i18n['connect']['selectingWallet']['sidebar']
 
   let windowWidth: number
 </script>
@@ -38,7 +37,7 @@
     flex-flow: column;
     align-items: center;
     align-self: stretch;
-    gap: .5rem;
+    gap: 0.5rem;
     padding: 1.5rem;
     text-align: center;
 
@@ -46,7 +45,7 @@
     border-radius: 12px;
 
     border-color: var(
-      --border-color,
+      --onboard-connect-sidebar-border-color,
       var(--onboard-primary-200, var(--primary-200))
     );
 
@@ -58,7 +57,6 @@
 
   .icon-container {
     display: flex;
-    /* height: 3rem; */
   }
 
   .subheading {
@@ -127,7 +125,7 @@
       max-width: 280px;
       border-right: 1px solid;
       border-color: var(
-        --border-color,
+        --onboard-connect-sidebar-border-color,
         var(--onboard-primary-200, var(--primary-200))
       );
       background: var(
@@ -150,7 +148,7 @@
 <div class="sidebar">
   <div class="inner-container">
     <!-- On Mobile we display the icon only & within the header rather than the sidebar -->
-    {#if windowWidth >= 768}
+    {#if windowWidth >= MOBILE_WINDOW_WIDTH}
       <div class="icon-container">
         {#if logo || icon}
           {#if isSVG(logo || icon)}
@@ -162,15 +160,6 @@
           {@html blocknative}
         {/if}
       </div>
-
-      <!-- {#if $_(`connect.${step}.sidebar.heading`, { default: '' })}
-        <div class="heading">
-          {$_(`connect.${step}.sidebar.heading`, {
-            default: heading
-          })}
-        </div>
-      {/if} -->
-
     {/if}
 
     <div class="subheading">
@@ -217,7 +206,6 @@
         class:on={step === 'connectedWallet'}
       />
     </div>
-
   </div>
   <div>
     {@html poweredByBlocknativeIcon}
