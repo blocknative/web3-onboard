@@ -25,7 +25,7 @@ export interface InitOptions {
   /**
    * The chains that your app works with
    */
-  chains: Chain[] | ChainWithDecimalId[]
+  chains: (Chain | ChainWithDecimalId)[]
   /**
    * Additional metadata about your app to be displayed in the Onboard UI
    */
