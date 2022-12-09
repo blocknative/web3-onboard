@@ -563,7 +563,7 @@
 
     /* --onboard-font-family-normal: System,monospace; */
     --onboard-connect-sidebar-background: var(--accent-background);
-    --onboard-close-button-background: var(--accent-background);
+    /* --onboard-close-button-background: var(--accent-background); */
     --onboard-connect-sidebar-color: var(--text-color);
     --onboard-connect-sidebar-progress-background: var(
       --secondary-text-color
