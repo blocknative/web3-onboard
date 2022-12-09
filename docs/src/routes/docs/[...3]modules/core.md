@@ -1023,15 +1023,77 @@ module.exports = {
 
 #### If using create-react-app
 
-[CRACO](https://www.npmjs.com/package/@craco/craco) provides an easy way to override webpack config which is obfuscated in Create React App built applications.
+[CRACO](https://www.npmjs.com/package/@craco/craco) provides an similar way to override webpack config which is obfuscated in Create React App built applications.
 
 The above webpack 5 example can be used in the `craco.config.js` file at the root level in this case.
+
+[React App Rewired](https://www.npmjs.com/package/react-app-rewired) is another option for working with Create React App DApps
+
+Add the following dev dependencies:
+
+`yarn add rollup-plugin-polyfill-node webpack-bundle-analyzer -D`
+
+```javascript
+const webpack = require("webpack");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+const path = require("path");
+
+module.exports = function override(config) {
+  const fallback = config.resolve.fallback || {};
+  Object.assign(fallback, {
+    assert: require.resolve("assert"),
+    buffer: require.resolve("buffer"),
+    crypto: require.resolve("crypto-browserify"),
+    http: require.resolve("stream-http"),
+    https: require.resolve("https-browserify"),
+    os: require.resolve("os-browserify/browser"),
+    path: require.resolve("path-browserify"),
+    process: require.resolve("process/browser"),
+    stream: require.resolve("stream-browserify"),
+    url: require.resolve("url"),
+    util: require.resolve("util"),
+  });
+  config.resolve.fallback = fallback;
+  config.resolve.alias = {
+    ...config.resolve.alias,
+    "bn.js": path.resolve(__dirname, "node_modules/bn.js"),
+    lodash: path.resolve(__dirname, "node_modules/lodash"),
+    "magic-sdk": path.resolve(
+      __dirname,
+      "node_modules/magic-sdk/dist/cjs/index.js"
+    ),
+  };
+  config.plugins = (config.plugins || []).concat([
+    new webpack.ProvidePlugin({
+      process: "process/browser",
+      Buffer: ["buffer", "Buffer"],
+    }),
+    new webpack.IgnorePlugin({
+      resourceRegExp: /genesisStates\/[a-z]*\.json$/,
+      contextRegExp: /@ethereumjs\/common/,
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: "disabled"
+    }),
+  ]);
+  config.ignoreWarnings = [/Failed to parse source map/];
+  config.module.rules.push({
+    test: /\.(js|mjs|jsx)$/,
+    enforce: "pre",
+    loader: require.resolve("source-map-loader"),
+    resolve: {
+      fullySpecified: false,
+    },
+  });
+  return config;
+};
+```
 
 ### SvelteKit
 
 Add the following dev dependencies:
 
-`npm i --save-dev rollup-plugin-polyfill-node`
+`yarn add rollup-plugin-polyfill-node -D`
 
 Then add the following to your `svelte.config.js` file:
 
