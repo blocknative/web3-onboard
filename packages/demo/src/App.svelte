@@ -35,11 +35,11 @@
   import { onMount } from 'svelte'
 
   let windowWidth
-  
+
   if (window.innerWidth < 700) {
     new VConsole()
   }
-  
+
   const apiKey = 'xxxxxx-bf21-42ec-a093-9d37e426xxxx'
   const infura_key = '80633e48116943128cbab25e402764ab'
 
@@ -383,7 +383,6 @@
   }
 
   const baseStyling = `--onboard-connect-sidebar-background: var(--accent-background);
-  --onboard-close-button-background: var(--accent-background);
   --onboard-connect-sidebar-color: var(--text-color);
   --onboard-connect-sidebar-progress-background: var(--secondary-text-color);
   --onboard-connect-sidebar-progress-color: var(--accent-color);
