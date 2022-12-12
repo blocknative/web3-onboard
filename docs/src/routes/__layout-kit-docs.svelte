@@ -32,6 +32,7 @@
     createSidebarContext
   } from '@svelteness/kit-docs'
   import { Algolia } from '@svelteness/kit-docs/client/algolia'
+  import ConnectWalletButton from '$lib/components/ConnectWalletButton.svelte'
 
   import IconBN from '$lib/components/icons/blocknative.svelte'
 
@@ -85,7 +86,8 @@
       slot="search"
     />
     <div slot="navbar-right-alt">
-      <div class="flex">
+      <div class="flex items-center">
+        <ConnectWalletButton />
         <SocialLink type="gitHub" href="//github.com/blocknative/web3-onboard" />
         <SocialLink type="discord" href="//discord.com/invite/KZaBVME" />
       </div>
@@ -98,5 +100,6 @@
   :global(:root) {
     --kd-color-brand-rgb: 99, 112, 229;
     /* --kd-font-family-sans: 'Sofia Pro'; */
+    --account-center-position-top: 5rem;
   }
 </style>

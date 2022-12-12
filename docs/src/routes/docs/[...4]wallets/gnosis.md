@@ -72,3 +72,6 @@ let trans = await wallet.instance.txs.send({txs:[tx], params})
 ```
 
 Note: With the `safeTxGas` you will see additional value on the `gasLimit` displayed in the Safe. Check [Gnosis docs](https://github.com/safe-global/safe-contracts/blob/a6504a9afdeac186a8cdb29ad68b189523c80eda/docs/safe_tx_gas.md) for full details on that computation.
+
+## Build Environments
+For build env configurations and setups please see the Build Env section [here](/docs/modules/core#build-environments)

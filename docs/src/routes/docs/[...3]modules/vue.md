@@ -360,3 +360,137 @@ export default {
   <span>Your last connection timestamp was: {{ lastConnectedTimestamp }}</span>
 </template>
 ```
+
+
+## Build Environments
+
+Many of the wallet modules require dependencies that are not normally included in browser builds (namely the node builtin modules such as `crypto`, `buffer`, `util` etc). If you are having build issues you can try the following bundler configs to resolve these dependency issues:
+
+### Webpack 4
+
+Node built-ins are automatically bundled in v4 so that portion is handled automatically.
+
+**web3auth** and **torus** will require a Babel to compile from es6 if not already supported. See config for Babel and Webpack4 as follows
+
+`npm i --save-dev @babel/cli @babel/core @babel/node @babel/plugin-proposal-nullish-coalescing-operator @babel/plugin-proposal-optional-chaining @babel/plugin-syntax-bigint @babel/register`
+**AND**
+`npm i babel-loader`
+
+**babel.config.js**
+
+```javascript
+module.exports = (api) => {
+  api.cache(true)
+  const plugins = [
+    '@babel/plugin-proposal-optional-chaining',
+    '@babel/plugin-proposal-nullish-coalescing-operator',
+    '@babel/plugin-syntax-bigint'
+  ]
+  return { plugins }
+}
+```
+
+**webpack.config.js**
+
+```javascript
+config.module.rules = [
+  ...otherModuleRules,
+  {
+    test: /\.js$/,
+    exclude: (_) => !/node_modules\/(@web3auth|@ethereumjs)/.test(_),
+    loader: 'babel-loader'
+  }
+]
+```
+
+### Webpack 5
+
+You'll need to add some dev dependencies with the following command:
+
+`npm i --save-dev assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify`
+
+Then add the following to your `webpack.config.js` file:
+
+```javascript
+const webpack = require('webpack')
+
+module.exports = {
+  resolve: {
+    fallback: {
+      path: require.resolve('path-browserify')
+    },
+    alias: {
+      assert: 'assert',
+      buffer: 'buffer',
+      crypto: 'crypto-browserify',
+      http: 'stream-http',
+      https: 'https-browserify',
+      os: 'os-browserify/browser',
+      process: 'process/browser',
+      stream: 'stream-browserify',
+      util: 'util'
+    }
+  },
+  experiments: {
+    asyncWebAssembly: true
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+      Buffer: ['buffer', 'Buffer']
+    })
+  ]
+}
+```
+
+### Vite
+
+Add the following dev dependencies:
+
+`npm i --save-dev rollup-plugin-polyfill-node`
+
+Then add the following to your `vite.config.js` file:
+
+```javascript
+import nodePolyfills from 'rollup-plugin-polyfill-node'
+
+const MODE = process.env.NODE_ENV
+const development = MODE === 'development'
+
+export default {
+  // other config options
+  plugins: [
+    development &&
+      nodePolyfills({
+        include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js')],
+        http: true,
+        crypto: true
+      })
+  ],
+  resolve: {
+    alias: {
+      crypto: 'crypto-browserify',
+      stream: 'stream-browserify',
+      assert: 'assert'
+    }
+  },
+  build: {
+    rollupOptions: {
+      plugins: [nodePolyfills({ crypto: true, http: true })]
+    },
+    commonjsOptions: {
+      transformMixedEsModules: true
+    }
+  }
+}
+```
+
+### Nuxt.js
+
+Add the following to your `nuxt.config.js`:
+
+```javascript
+build: {
+  standalone: true,
+}
+```
