@@ -3009,19 +3009,6 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.0"
 
-"@web3-onboard/uauth@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/uauth/-/uauth-2.0.0.tgz#f667840e4013004a9c54aa38b33e537e55ac1e67"
-  integrity sha512-Q5yGCJAyjvkNHWN2gqI3cQpxMJnMB8lonxzlGkdH/chWeJhwJ2RGQyUGOdScyNiil4++wnCQe56miou1MFnzXw==
-  dependencies:
-    "@ethersproject/providers" "^5.5.0"
-    "@uauth/js" "^2.4.0"
-    "@walletconnect/client" "^1.7.1"
-    "@walletconnect/qrcode-modal" "^1.7.1"
-    "@web3-onboard/common" "^2.2.3"
-    joi "^17.6.1"
-    rxjs "^7.5.2"
-
 "@web3auth/base-evm-adapter@^3.3.0":
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/@web3auth/base-evm-adapter/-/base-evm-adapter-3.3.0.tgz#ab8575ac5d05dfe055e52500b61691cefdd6268f"
