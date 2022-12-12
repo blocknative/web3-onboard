@@ -27,6 +27,7 @@ export default function Home() {
   if (wallet) {
     ethersProvider = new ethers.providers.Web3Provider(wallet.provider, 'any')
   }
+  
   return (
     <div className={styles.container}>
       <Head>

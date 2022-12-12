@@ -1,3 +1,62 @@
+# Web3-Onboard + NextJs
+
+
+
+This should serve as a reference example for how to integrate Web3-Onboard with a NextJs app! 🙌
+
+The [web3-onboard.ts](./web3-onboard.ts) file contains everything necessary to configure and initialize Web3-Onboard.
+
+Here's the TL;DR
+
+1. Wrap the provider
+
+[_app.tsx](./pages/_app.tsx)
+```react
+export default function App({ Component, pageProps }: AppProps) {
+  return (
+    <Web3OnboardProvider web3Onboard={web3Onboard}>
+      <Component {...pageProps} />
+    </Web3OnboardProvider>
+  )
+}
+```
+
+2. Import and Setup
+
+[index.tsx](./pages/index.tsx)
+```ts
+// ...
+export default function Home() {
+  const [{ wallet, connecting }, connect, disconnect] = useConnectWallet()
+
+  // create an ethers provider
+  let ethersProvider
+
+  if (wallet) {
+    ethersProvider = new ethers.providers.Web3Provider(wallet.provider, 'any')
+  }
+  
+  return (/* ... */)
+}
+```
+
+3. Add the wallet connect button
+
+[index.tsx](./pages/index.tsx)
+```html
+<button
+    style={buttonStyles}
+    disabled={connecting}
+    onClick={() => (wallet ? disconnect(wallet) : connect())}
+>
+    {connecting ? 'Connecting' : wallet ? 'Disconnect' : 'Connect'}
+</button>
+```
+
+And that's it! 🎉 You should be well on your way to **buidl**ing that next killer dApp!
+
+--- 
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
