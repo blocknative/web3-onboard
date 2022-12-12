@@ -194,3 +194,12 @@ const onboard = Onboard({
 - GameStop - *Desktop*
 - Rabby - *Desktop*
 - MathWallet - *Desktop & Mobile*
+- Gamestop - *Desktop*
+- Bitkeep - *Desktop & Mobile*
+- Sequence - *Desktop & Mobile*
+- Core - *Desktop*
+- Bitski - *Desktop & Mobile*
+- Enkrypt - *Desktop & Mobile*
+
+## Build Environments
+For build env configurations and setups please see the Build Env section [here](/docs/modules/core#build-environments)

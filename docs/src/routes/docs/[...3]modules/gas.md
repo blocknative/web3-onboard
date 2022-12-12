@@ -129,3 +129,6 @@ const sendTransaction = async () => {
   console.log(rc)
 }
 ```
+
+## Build Environments
+For build env configurations and setups please see the Build Env section [here](/docs/modules/core#build-environments)

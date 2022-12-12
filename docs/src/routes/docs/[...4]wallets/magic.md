@@ -120,3 +120,6 @@ The Magic Wallet Login styles can customized via [CSS variables](https://develop
 
 }
 ```
+
+## Build Environments
+For build env configurations and setups please see the Build Env section [here](/docs/modules/core#build-environments)

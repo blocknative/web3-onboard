@@ -982,7 +982,40 @@ Many of the wallet modules require dependencies that are not normally included i
 
 ### Webpack 4
 
-Everything should just work since the node built-ins are automatically bundled in v4
+Node built-ins are automatically bundled in v4 so that portion is handled automatically.
+
+**web3auth** and **torus** will require a Babel to compile from es6 if not already supported. See config for Babel and Webpack4 as follows
+
+`npm i --save-dev @babel/cli @babel/core @babel/node @babel/plugin-proposal-nullish-coalescing-operator @babel/plugin-proposal-optional-chaining @babel/plugin-syntax-bigint @babel/register`
+**AND**
+`npm i babel-loader`
+
+**babel.config.js**
+
+```javascript
+module.exports = (api) => {
+  api.cache(true)
+  const plugins = [
+    '@babel/plugin-proposal-optional-chaining',
+    '@babel/plugin-proposal-nullish-coalescing-operator',
+    '@babel/plugin-syntax-bigint'
+  ]
+  return { plugins }
+}
+```
+
+**webpack.config.js**
+
+```javascript
+config.module.rules = [
+  ...otherModuleRules,
+  {
+    test: /\.js$/,
+    exclude: (_) => !/node_modules\/(@web3auth|@ethereumjs)/.test(_),
+    loader: 'babel-loader'
+  }
+]
+```
 
 ### Webpack 5
 
@@ -1040,59 +1073,56 @@ Add the following dev dependencies:
 `yarn add rollup-plugin-polyfill-node webpack-bundle-analyzer assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify -D`
 
 ```javascript
-const webpack = require("webpack");
-const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
-const path = require("path");
+const webpack = require('webpack')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const path = require('path')
 
 module.exports = function override(config) {
-  const fallback = config.resolve.fallback || {};
+  const fallback = config.resolve.fallback || {}
   Object.assign(fallback, {
-    assert: require.resolve("assert"),
-    buffer: require.resolve("buffer"),
-    crypto: require.resolve("crypto-browserify"),
-    http: require.resolve("stream-http"),
-    https: require.resolve("https-browserify"),
-    os: require.resolve("os-browserify/browser"),
-    path: require.resolve("path-browserify"),
-    process: require.resolve("process/browser"),
-    stream: require.resolve("stream-browserify"),
-    url: require.resolve("url"),
-    util: require.resolve("util"),
-  });
-  config.resolve.fallback = fallback;
+    assert: require.resolve('assert'),
+    buffer: require.resolve('buffer'),
+    crypto: require.resolve('crypto-browserify'),
+    http: require.resolve('stream-http'),
+    https: require.resolve('https-browserify'),
+    os: require.resolve('os-browserify/browser'),
+    path: require.resolve('path-browserify'),
+    process: require.resolve('process/browser'),
+    stream: require.resolve('stream-browserify'),
+    url: require.resolve('url'),
+    util: require.resolve('util')
+  })
+  config.resolve.fallback = fallback
   config.resolve.alias = {
     ...config.resolve.alias,
-    "bn.js": path.resolve(__dirname, "node_modules/bn.js"),
-    lodash: path.resolve(__dirname, "node_modules/lodash"),
-    "magic-sdk": path.resolve(
-      __dirname,
-      "node_modules/magic-sdk/dist/cjs/index.js"
-    ),
-  };
+    'bn.js': path.resolve(__dirname, 'node_modules/bn.js'),
+    lodash: path.resolve(__dirname, 'node_modules/lodash'),
+    'magic-sdk': path.resolve(__dirname, 'node_modules/magic-sdk/dist/cjs/index.js')
+  }
   config.plugins = (config.plugins || []).concat([
     new webpack.ProvidePlugin({
-      process: "process/browser",
-      Buffer: ["buffer", "Buffer"],
+      process: 'process/browser',
+      Buffer: ['buffer', 'Buffer']
     }),
     new webpack.IgnorePlugin({
       resourceRegExp: /genesisStates\/[a-z]*\.json$/,
-      contextRegExp: /@ethereumjs\/common/,
+      contextRegExp: /@ethereumjs\/common/
     }),
     new BundleAnalyzerPlugin({
-      analyzerMode: "disabled"
-    }),
-  ]);
-  config.ignoreWarnings = [/Failed to parse source map/];
+      analyzerMode: 'disabled'
+    })
+  ])
+  config.ignoreWarnings = [/Failed to parse source map/]
   config.module.rules.push({
     test: /\.(js|mjs|jsx)$/,
-    enforce: "pre",
-    loader: require.resolve("source-map-loader"),
+    enforce: 'pre',
+    loader: require.resolve('source-map-loader'),
     resolve: {
-      fullySpecified: false,
-    },
-  });
-  return config;
-};
+      fullySpecified: false
+    }
+  })
+  return config
+}
 ```
 
 ### SvelteKit
