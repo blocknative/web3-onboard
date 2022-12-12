@@ -3,7 +3,7 @@
   import fortmaticModule from '@web3-onboard/fortmatic'
   import gnosisModule from '@web3-onboard/gnosis'
   import injectedModule from '@web3-onboard/injected-wallets'
-  import keepkeyModule from '@web3-onboard/keepkey'
+  // import keepkeyModule from '@web3-onboard/keepkey'
   import keystoneModule from '@web3-onboard/keystone'
   import ledgerModule from '@web3-onboard/ledger'
   import portisModule from '@web3-onboard/portis'
@@ -92,7 +92,7 @@
 
   const torus = torusModule()
   const ledger = ledgerModule()
-  const keepkey = keepkeyModule()
+  // const keepkey = keepkeyModule()
   const keystone = keystoneModule()
   const gnosis = gnosisModule()
   const tallyho = tallyHoModule()
@@ -133,7 +133,7 @@
       walletConnect,
       enkrypt,
       mewWallet,
-      keepkey,
+      // keepkey,
       keystone,
       coinbaseWallet,
       magic,
@@ -374,7 +374,7 @@
   const defaultStyling = {
     '--background-color': '#ffffff',
     '--text-color': '#1a1d26',
-    '--border-color': '#ebebed',
+    '--border-color': '#d0d4f7',
     '--accent-background': '#ebebed',
     '--accent-color': '#929bed',
     '--accent-color-hover': '#eff1fc',
@@ -382,7 +382,8 @@
     '--secondary-accent-background': '#242835'
   }
 
-  const baseStyling = `--onboard-connect-sidebar-background: var(--accent-background);
+  const baseStyling = `--onboard-connect-sidebar-border-color: var(--border-color);
+  --onboard-connect-sidebar-background: var(--accent-background);
   --onboard-connect-sidebar-color: var(--text-color);
   --onboard-connect-sidebar-progress-background: var(--secondary-text-color);
   --onboard-connect-sidebar-progress-color: var(--accent-color);
@@ -563,7 +564,8 @@
 
     /* --onboard-font-family-normal: System,monospace; */
     --onboard-connect-sidebar-background: var(--accent-background);
-    /* --onboard-close-button-background: var(--accent-background); */
+    --onboard-connect-sidebar-border-color: var(--border-color);
+    --onboard-close-button-background: var(--accent-background);
     --onboard-connect-sidebar-color: var(--text-color);
     --onboard-connect-sidebar-progress-background: var(
       --secondary-text-color

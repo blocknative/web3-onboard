@@ -152,7 +152,6 @@
     height: auto;
   }
 
-  /* @media all and (max-width: 520px) { */
   :global(.pending-status-icon) {
     z-index: 1;
     fill: white;
@@ -164,7 +163,6 @@
     bottom: -0.25rem;
     position: absolute;
   }
-  /* } */
 </style>
 
 <svelte:window bind:innerWidth={windowWidth} />

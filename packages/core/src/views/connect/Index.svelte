@@ -75,6 +75,15 @@
 
   $: availableWallets = wallets.length - state.get().wallets.length
 
+  $: displayConnectingWallet =
+    ($modalStep$ === 'connectingWallet' &&
+      selectedWallet &&
+      windowWidth >= MOBILE_WINDOW_WIDTH) ||
+    (windowWidth <= MOBILE_WINDOW_WIDTH &&
+      connectionRejected &&
+      $modalStep$ === 'connectingWallet' &&
+      selectedWallet)
+
   // handle the edge case where disableModals was set to true on first call
   // and then set to false on second call and there is still a pending call
   connectWallet$
@@ -558,7 +567,7 @@
             {/if}
           {/if}
 
-          {#if ($modalStep$ === 'connectingWallet' && selectedWallet && windowWidth >= MOBILE_WINDOW_WIDTH) || (windowWidth <= MOBILE_WINDOW_WIDTH && connectionRejected && $modalStep$ === 'connectingWallet' && selectedWallet)}
+          {#if displayConnectingWallet}
             <ConnectingWallet
               {connectWallet}
               {connectionRejected}
