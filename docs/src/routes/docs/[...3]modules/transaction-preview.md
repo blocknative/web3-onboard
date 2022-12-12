@@ -259,3 +259,6 @@ export interface SimDetails {
   performanceProfile: any
 }
 ```
+
+## Build Environments
+For build env configurations and setups please see the Build Env section [here](/docs/modules/core#build-environments)

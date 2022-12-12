@@ -41,13 +41,20 @@ const config = {
             '@web3-react/walletconnect',
             '@web3-react/types',
             '@web3-react/url',
-            '@web3-onboard/*',
-          ]
+            '@web3-onboard/*'
+          ],
+          plugins: [nodePolyfills({ crypto: true, http: true })]
+        },
+        commonjsOptions: {
+          transformMixedEsModules: true
         }
       },
       resolve: {
         alias: {
-          $fonts: resolve(process.cwd(), 'src/lib/fonts')
+          $fonts: resolve(process.cwd(), 'src/lib/fonts'),
+          crypto: 'crypto-browserify',
+          stream: 'stream-browserify',
+          assert: 'assert'
         }
       },
       plugins: [
@@ -56,13 +63,26 @@ const config = {
           shiki: {
             theme: 'material-ocean'
           }
-        })
+        }),
+        development &&
+          nodePolyfills({
+            include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js')],
+            http: true,
+            crypto: true
+          })
       ],
       define: {
         'import.meta.env.VERCEL': JSON.stringify(process.env.VERCEL)
       },
       optimizeDeps: {
-        include: ['@web3-onboard/core']
+        exclude: ['@ethersproject/hash', 'wrtc', 'http'],
+        include: [
+          '@web3-onboard/core',
+          '@web3-onboard/gas',
+          '@web3-onboard/sequence',
+          'js-sha3',
+          '@ethersproject/bignumber'
+        ]
       }
     }
   }
