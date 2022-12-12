@@ -4,7 +4,7 @@ name: Deploy documentation to Pages
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ["docs-main"]
+    branches: ["docs-main", "docs-develop"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -47,6 +47,8 @@ jobs:
         run: yarn install --immutable
 
       - name: Build Documentation
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"
         run: yarn build
 
       - name: Peak at folder contents
