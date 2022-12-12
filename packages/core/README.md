@@ -915,6 +915,8 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
 
   /* CUSTOMIZE THE ACTION REQUIRED MODAL */
   --onboard-action-required-modal-background
+  --onboard-action-required-text-color
+  --onboard-action-required-btn-text-color
 
   /* FONTS */
   --onboard-font-family-normal: Sofia Pro;
@@ -1075,9 +1077,71 @@ module.exports = {
 
 #### If using create-react-app
 
-[CRACO](https://www.npmjs.com/package/@craco/craco) provides an easy way to override webpack config which is obfuscated in Create React App built applications.
+[CRACO](https://www.npmjs.com/package/@craco/craco) provides a way to override webpack config which is obfuscated in Create React App built applications.
 
 The above webpack 5 example can be used in the `craco.config.js` file at the root level in this case.
+
+[React App Rewired](https://www.npmjs.com/package/react-app-rewired) is another option for working with Create React App DApps
+
+Add the following dev dependencies:
+
+`yarn add rollup-plugin-polyfill-node webpack-bundle-analyzer -D`
+
+```javascript
+const webpack = require("webpack");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+const path = require("path");
+
+module.exports = function override(config) {
+  const fallback = config.resolve.fallback || {};
+  Object.assign(fallback, {
+    assert: require.resolve("assert"),
+    buffer: require.resolve("buffer"),
+    crypto: require.resolve("crypto-browserify"),
+    http: require.resolve("stream-http"),
+    https: require.resolve("https-browserify"),
+    os: require.resolve("os-browserify/browser"),
+    path: require.resolve("path-browserify"),
+    process: require.resolve("process/browser"),
+    stream: require.resolve("stream-browserify"),
+    url: require.resolve("url"),
+    util: require.resolve("util"),
+  });
+  config.resolve.fallback = fallback;
+  config.resolve.alias = {
+    ...config.resolve.alias,
+    "bn.js": path.resolve(__dirname, "node_modules/bn.js"),
+    lodash: path.resolve(__dirname, "node_modules/lodash"),
+    "magic-sdk": path.resolve(
+      __dirname,
+      "node_modules/magic-sdk/dist/cjs/index.js"
+    ),
+  };
+  config.plugins = (config.plugins || []).concat([
+    new webpack.ProvidePlugin({
+      process: "process/browser",
+      Buffer: ["buffer", "Buffer"],
+    }),
+    new webpack.IgnorePlugin({
+      resourceRegExp: /genesisStates\/[a-z]*\.json$/,
+      contextRegExp: /@ethereumjs\/common/,
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: "disabled"
+    }),
+  ]);
+  config.ignoreWarnings = [/Failed to parse source map/];
+  config.module.rules.push({
+    test: /\.(js|mjs|jsx)$/,
+    enforce: "pre",
+    loader: require.resolve("source-map-loader"),
+    resolve: {
+      fullySpecified: false,
+    },
+  });
+  return config;
+};
+```
 
 ### SvelteKit
 
@@ -1104,10 +1168,7 @@ const config = {
       plugins: [
         development &&
           nodePolyfills({
-            include: [
-              'node_modules/**/*.js',
-              new RegExp('node_modules/.vite/.*js')
-            ],
+            include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js')],
             http: true,
             crypto: true
           })
@@ -1121,11 +1182,22 @@ const config = {
       },
       build: {
         rollupOptions: {
+          external: ['@web3-onboard/*'],
           plugins: [nodePolyfills({ crypto: true, http: true })]
         },
         commonjsOptions: {
           transformMixedEsModules: true
         }
+      },
+      optimizeDeps: {
+        exclude: ['@ethersproject/hash', 'wrtc', 'http'],
+        include: [
+          '@web3-onboard/core',
+          '@web3-onboard/gas',
+          '@web3-onboard/sequence',
+          'js-sha3',
+          '@ethersproject/bignumber'
+        ]
       }
     }
   }
