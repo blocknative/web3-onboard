@@ -18,7 +18,8 @@ import web3authModule from '@web3-onboard/web3auth'
 
 import { init } from '@web3-onboard/react'
 
-const INFURA_KEY = '2896ff3d0a1143689424a8341cb75c67'
+// Example key • Replace with your infura key
+const INFURA_KEY = '2996ff3d1a1142689324a8341cb75c68'
 
 const injected = injectedModule({
   custom: [
