@@ -3,7 +3,7 @@
   import fortmaticModule from '@web3-onboard/fortmatic'
   import gnosisModule from '@web3-onboard/gnosis'
   import injectedModule from '@web3-onboard/injected-wallets'
-  // import keepkeyModule from '@web3-onboard/keepkey'
+  import keepkeyModule from '@web3-onboard/keepkey'
   import keystoneModule from '@web3-onboard/keystone'
   import ledgerModule from '@web3-onboard/ledger'
   import portisModule from '@web3-onboard/portis'
@@ -92,7 +92,7 @@
 
   const torus = torusModule()
   const ledger = ledgerModule()
-  // const keepkey = keepkeyModule()
+  const keepkey = keepkeyModule()
   const keystone = keystoneModule()
   const gnosis = gnosisModule()
   const tallyho = tallyHoModule()
@@ -133,7 +133,7 @@
       walletConnect,
       enkrypt,
       mewWallet,
-      // keepkey,
+      keepkey,
       keystone,
       coinbaseWallet,
       magic,
