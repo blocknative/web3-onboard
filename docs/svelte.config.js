@@ -43,7 +43,13 @@ const config = {
             '@web3-react/url',
             '@web3-onboard/*'
           ],
-          plugins: [nodePolyfills({ crypto: true, http: true })]
+          plugins: [
+            nodePolyfills({
+              include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js')],
+              crypto: true,
+              http: true
+            })
+          ]
         },
         commonjsOptions: {
           transformMixedEsModules: true
