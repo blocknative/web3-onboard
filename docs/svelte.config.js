@@ -45,7 +45,6 @@ const config = {
           ],
           plugins: [
             nodePolyfills({
-              include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js')],
               crypto: true,
               http: true
             })
@@ -60,7 +59,13 @@ const config = {
           $fonts: resolve(process.cwd(), 'src/lib/fonts'),
           crypto: 'crypto-browserify',
           stream: 'stream-browserify',
-          assert: 'assert'
+          assert: 'assert',
+          buffer: 'buffer',
+          http: 'stream-http',
+          https: 'https-browserify',
+          os: 'os-browserify/browser',
+          process: 'process/browser',
+          util: 'util'
         }
       },
       plugins: [
