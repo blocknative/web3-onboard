@@ -43,12 +43,7 @@ const config = {
             '@web3-react/url',
             '@web3-onboard/*'
           ],
-          plugins: [
-            nodePolyfills({
-              crypto: true,
-              http: true
-            })
-          ]
+          plugins: [nodePolyfills({ crypto: true, http: true })]
         },
         commonjsOptions: {
           transformMixedEsModules: true
@@ -59,13 +54,7 @@ const config = {
           $fonts: resolve(process.cwd(), 'src/lib/fonts'),
           crypto: 'crypto-browserify',
           stream: 'stream-browserify',
-          assert: 'assert',
-          buffer: 'buffer',
-          http: 'stream-http',
-          https: 'https-browserify',
-          os: 'os-browserify/browser',
-          process: 'process/browser',
-          util: 'util'
+          assert: 'assert'
         }
       },
       plugins: [
