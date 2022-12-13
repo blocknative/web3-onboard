@@ -73,8 +73,8 @@
     "@web3-onboard/torus": "^2.2.0-alpha.1",
     "@web3-onboard/trezor": "^2.3.2",
     "@web3-onboard/uauth": "^2.0.1-alpha.1",
-    "@web3-onboard/web3auth": "^2.1.4-alpha.1",
     "@web3-onboard/walletconnect": "^2.2.1",
+    "@web3-onboard/web3auth": "^2.1.4-alpha.1",
     "animejs": "^3.2.1",
     "ethers": "^5.7.0"
   }
