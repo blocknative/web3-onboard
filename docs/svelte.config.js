@@ -64,12 +64,11 @@ const config = {
             theme: 'material-ocean'
           }
         }),
-        development &&
-          nodePolyfills({
-            include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js')],
-            http: true,
-            crypto: true
-          })
+        nodePolyfills({
+          include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js')],
+          http: true,
+          crypto: true
+        })
       ],
       define: {
         'import.meta.env.VERCEL': JSON.stringify(process.env.VERCEL)
