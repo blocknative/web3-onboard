@@ -99,7 +99,6 @@ const config = {
           '@web3-onboard/core',
           '@web3-onboard/gas',
           '@web3-onboard/sequence',
-          '@web3-onboard/torus',
           'js-sha3',
           '@ethersproject/bignumber'
         ]
