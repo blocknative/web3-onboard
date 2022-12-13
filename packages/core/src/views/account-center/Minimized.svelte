@@ -8,12 +8,8 @@
     unrecognizedChainStyle
   } from '../../utils.js'
   import { updateAccountCenter } from '../../store/actions.js'
-  import questionIcon from '../../icons/question.js'
-  import caretIcon from '../../icons/caret.js'
-  import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
-  import warningIcon from '../../icons/warning.js'
-  import WalletAppBadge from '../shared/WalletAppBadge.svelte'
-  import NetworkSelector from '../shared/NetworkSelector.svelte'
+  import { questionIcon, caretIcon, warningIcon } from '../../icons'
+  import { NetworkSelector, WalletAppBadge, SuccessStatusIcon } from '../shared'
   import { state } from '../../store/index.js'
   import { configuration } from '../../configuration.js'
 
