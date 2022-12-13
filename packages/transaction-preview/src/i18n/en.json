@@ -1,0 +1,22 @@
+{
+  "time": {
+    "minutes": "min",
+    "seconds": "sec"
+  },
+  "header":"Transaction Preview",
+  "timeSection": {
+    "action": "Simulated",
+    "past": "ago"
+  },
+  "minimized": {
+    "show": "Show details"
+  },
+  "maximized": {
+    "sectionHeading": "Simulated balance changes for",
+    "tokenColumnHeader": "Token",
+    "balanceColumnHeader": "Balance",
+    "hide": "Hide details",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  }
+}

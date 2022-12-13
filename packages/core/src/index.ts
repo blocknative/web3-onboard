@@ -3,7 +3,7 @@ import connectWallet from './connect.js'
 import disconnectWallet from './disconnect.js'
 import setChain from './chain.js'
 import { state } from './store/index.js'
-import { reset$ } from './streams.js'
+import { reset$, wallets$ } from './streams.js'
 import initI18N from './i18n/index.js'
 import App from './views/Index.svelte'
 import type { InitOptions, Notify } from './types.js'
@@ -29,6 +29,8 @@ import {
   setWalletModules,
   updateConnectModal
 } from './store/actions.js'
+import type { PatchedEIP1193Provider } from '@web3-onboard/transaction-preview'
+import { getBlocknativeSdk } from './services'
 
 const API = {
   connectWallet,
@@ -90,7 +92,8 @@ function init(options: InitOptions): OnboardAPI {
     notify,
     gas,
     connect,
-    containerElements
+    containerElements,
+    transactionPreview
   } = options
 
   updateConfiguration({ containerElements })
@@ -114,10 +117,10 @@ function init(options: InitOptions): OnboardAPI {
   if (typeof accountCenter !== 'undefined') {
     let accountCenterUpdate
 
-    if (device.type === 'mobile' && accountCenter.mobile) {
+    if (device.type === 'mobile') {
       accountCenterUpdate = {
         ...APP_INITIAL_STATE.accountCenter,
-        ...accountCenter.mobile
+        ...(accountCenter.mobile ? accountCenter.mobile : {})
       }
     } else if (accountCenter.desktop) {
       accountCenterUpdate = {
@@ -197,8 +200,25 @@ function init(options: InitOptions): OnboardAPI {
     svelteInstance: app,
     apiKey,
     initialWalletInit: wallets,
-    gas
+    gas,
+    transactionPreview
   })
+
+  if (transactionPreview) {
+    const getBnSDK = async () => {
+      transactionPreview.init({
+        containerElement: '#transaction-preview-container',
+        sdk: await getBlocknativeSdk(),
+        apiKey
+      })
+      wallets$.subscribe(wallets => {
+        wallets.forEach(({ provider }) => {
+          transactionPreview.patchProvider(provider as PatchedEIP1193Provider)
+        })
+      })
+    }
+    getBnSDK()
+  }
 
   return API
 }

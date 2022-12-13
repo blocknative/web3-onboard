@@ -16,5 +16,6 @@ export const WALLET_NAMES: { [key: string]: string } = {
   frame: 'Frame',
   bitkeep: 'BitKeep',
   sequence: 'Sequence',
-  core: 'Core'
+  core: 'Core',
+  enkrypt: 'Enkrypt'
 }

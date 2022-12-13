@@ -1,11 +1,8 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
-  import success from '../../icons/success.js'
-  import WalletAppBadge from '../shared/WalletAppBadge.svelte'
-
+  import { WalletAppBadge, SuccessStatusIcon } from '../shared'
   import type { WalletState } from '../../types.js'
-  import questionIcon from '../../icons/question.js'
-  import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
+  import { questionIcon, successIcon } from '../../icons'
   import en from '../../i18n/en.json'
   import { configuration } from '../../configuration.js'
 
@@ -21,7 +18,7 @@
 
   .connecting-container {
     padding: var(--onboard-spacing-4, var(--spacing-4));
-    border-radius: 24px;
+    border-radius: var(--onboard-border-radius-1, var(--border-radius-1));
     background: var(--onboard-success-100, var(--success-100));
     border: 1px solid var(--onboard-success-600, var(--success-600));
     width: 100%;
@@ -33,9 +30,6 @@
 
   .tick {
     color: var(--onboard-success-700, var(--success-700));
-  }
-
-  @media all and (max-width: 520px) {
   }
 </style>
 
@@ -75,7 +69,7 @@
     </div>
 
     <div class="tick flex items-center" style="width: 24px;">
-      {@html success}
+      {@html successIcon}
     </div>
   </div>
 </div>

@@ -7,8 +7,8 @@
   import Maximized from './Maximized.svelte'
   import Minimized from './Minimized.svelte'
   import Micro from './Micro.svelte'
-  
-  export let mountInContainer: boolean = false
+
+  export let mountInContainer = false
 
   const accountCenter$ = state
     .select('accountCenter')
