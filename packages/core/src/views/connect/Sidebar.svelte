@@ -1,11 +1,11 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
-  import { blocknative, poweredByBlocknativeIcon } from '../../icons'
+  import { blocknative, poweredByBlocknativeIcon } from '../../icons/index.js'
   import en from '../../i18n/en.json'
   import type { i18n } from '../../types.js'
   import { isSVG } from '../../utils.js'
   import { configuration } from '../../configuration.js'
-  import { MOBILE_WINDOW_WIDTH } from '../../constants'
+  import { MOBILE_WINDOW_WIDTH } from '../../constants.js'
 
   export let step: keyof i18n['connect']
 

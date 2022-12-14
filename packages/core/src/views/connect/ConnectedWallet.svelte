@@ -1,8 +1,8 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
-  import { WalletAppBadge, SuccessStatusIcon } from '../shared'
+  import { WalletAppBadge, SuccessStatusIcon } from '../shared/index.js'
   import type { WalletState } from '../../types.js'
-  import { questionIcon, successIcon } from '../../icons'
+  import { questionIcon, successIcon } from '../../icons/index.js'
   import en from '../../i18n/en.json'
   import { configuration } from '../../configuration.js'
 

@@ -28,7 +28,7 @@ import {
   avalancheIcon,
   harmonyOneIcon,
   arbitrumIcon
-} from './icons'
+} from './icons/index.js'
 
 import type {
   ChainStyle,

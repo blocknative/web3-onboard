@@ -8,8 +8,12 @@
     unrecognizedChainStyle
   } from '../../utils.js'
   import { updateAccountCenter } from '../../store/actions.js'
-  import { questionIcon, caretIcon, warningIcon } from '../../icons'
-  import { NetworkSelector, WalletAppBadge, SuccessStatusIcon } from '../shared'
+  import { questionIcon, caretIcon, warningIcon } from '../../icons/index.js'
+  import {
+    NetworkSelector,
+    WalletAppBadge,
+    SuccessStatusIcon
+  } from '../shared/index.js'
   import { state } from '../../store/index.js'
   import { configuration } from '../../configuration.js'
 
