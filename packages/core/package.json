@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/core",
-  "version": "2.11.1",
+  "version": "2.12.0",
   "description": "Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardized spec compliant web3 providers for all supported wallets, framework agnostic modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
   "keywords": [
     "Ethereum",
@@ -46,7 +46,8 @@
     "dev": "rollup -c -w",
     "start": "sirv public --no-clear",
     "type-check": "svelte-check --tsconfig ./tsconfig.json",
-    "lint": "eslint -c './.eslintrc.cjs' './src' && prettier --check './src/**/*'"
+    "lint": "eslint -c './.eslintrc.cjs' './src' && prettier --check './src/**/*'",
+    "lint:fix": "eslint --fix -c './.eslintrc.cjs' './src' && prettier --write './src/**/*'"
   },
   "typings": "dist/index.d.ts",
   "files": [

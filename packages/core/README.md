@@ -115,7 +115,7 @@ Onboard is using the [ICU syntax](https://formatjs.io/docs/core-concepts/icu-syn
 An object mapping for W3O components with the key being the DOM element to mount the specified component to.
 This defines the DOM container element for svelte to attach the component.
 
-**NOTE**: containerElement must be a DOM element with a styleSheet property attached and the element must be available on the DOM at the time of component mounting. 
+**NOTE**: containerElement must be a DOM element with a styleSheet property attached and the element must be available on the DOM at the time of component mounting.
 For an example please see containerElement usage [here](https://github.com/blocknative/web3-onboard/blob/8531a73d69365f7d584320f1c4b97a5d90f1c34e/packages/demo/src/App.svelte#L227)
 
 ```typescript
@@ -882,6 +882,7 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-connect-content-width
   --onboard-connect-content-height
   --onboard-wallet-columns
+  --onboard-connect-sidebar-border-color
   --onboard-connect-sidebar-background
   --onboard-connect-sidebar-color
   --onboard-connect-sidebar-progress-background
@@ -942,6 +943,7 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-border-radius-1: 24px;
   --onboard-border-radius-2: 20px;
   --onboard-border-radius-3: 16px;
+  --onboard-border-radius-4: 12px;
 
   /* SHADOWS */
   --onboard-shadow-0: none;
@@ -1050,6 +1052,9 @@ Then add the following to your `webpack.config.js` file:
 const webpack = require('webpack')
 
 module.exports = {
+  fallback: {
+    path: require.resolve('path-browserify')
+  },
   resolve: {
     alias: {
       assert: 'assert',
@@ -1088,59 +1093,59 @@ Add the following dev dependencies:
 `yarn add rollup-plugin-polyfill-node webpack-bundle-analyzer -D`
 
 ```javascript
-const webpack = require("webpack");
-const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
-const path = require("path");
+const webpack = require('webpack')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const path = require('path')
 
 module.exports = function override(config) {
-  const fallback = config.resolve.fallback || {};
+  const fallback = config.resolve.fallback || {}
   Object.assign(fallback, {
-    assert: require.resolve("assert"),
-    buffer: require.resolve("buffer"),
-    crypto: require.resolve("crypto-browserify"),
-    http: require.resolve("stream-http"),
-    https: require.resolve("https-browserify"),
-    os: require.resolve("os-browserify/browser"),
-    path: require.resolve("path-browserify"),
-    process: require.resolve("process/browser"),
-    stream: require.resolve("stream-browserify"),
-    url: require.resolve("url"),
-    util: require.resolve("util"),
-  });
-  config.resolve.fallback = fallback;
+    assert: require.resolve('assert'),
+    buffer: require.resolve('buffer'),
+    crypto: require.resolve('crypto-browserify'),
+    http: require.resolve('stream-http'),
+    https: require.resolve('https-browserify'),
+    os: require.resolve('os-browserify/browser'),
+    path: require.resolve('path-browserify'),
+    process: require.resolve('process/browser'),
+    stream: require.resolve('stream-browserify'),
+    url: require.resolve('url'),
+    util: require.resolve('util')
+  })
+  config.resolve.fallback = fallback
   config.resolve.alias = {
     ...config.resolve.alias,
-    "bn.js": path.resolve(__dirname, "node_modules/bn.js"),
-    lodash: path.resolve(__dirname, "node_modules/lodash"),
-    "magic-sdk": path.resolve(
+    'bn.js': path.resolve(__dirname, 'node_modules/bn.js'),
+    lodash: path.resolve(__dirname, 'node_modules/lodash'),
+    'magic-sdk': path.resolve(
       __dirname,
-      "node_modules/magic-sdk/dist/cjs/index.js"
-    ),
-  };
+      'node_modules/magic-sdk/dist/cjs/index.js'
+    )
+  }
   config.plugins = (config.plugins || []).concat([
     new webpack.ProvidePlugin({
-      process: "process/browser",
-      Buffer: ["buffer", "Buffer"],
+      process: 'process/browser',
+      Buffer: ['buffer', 'Buffer']
     }),
     new webpack.IgnorePlugin({
       resourceRegExp: /genesisStates\/[a-z]*\.json$/,
-      contextRegExp: /@ethereumjs\/common/,
+      contextRegExp: /@ethereumjs\/common/
     }),
     new BundleAnalyzerPlugin({
-      analyzerMode: "disabled"
-    }),
-  ]);
-  config.ignoreWarnings = [/Failed to parse source map/];
+      analyzerMode: 'disabled'
+    })
+  ])
+  config.ignoreWarnings = [/Failed to parse source map/]
   config.module.rules.push({
     test: /\.(js|mjs|jsx)$/,
-    enforce: "pre",
-    loader: require.resolve("source-map-loader"),
+    enforce: 'pre',
+    loader: require.resolve('source-map-loader'),
     resolve: {
-      fullySpecified: false,
-    },
-  });
-  return config;
-};
+      fullySpecified: false
+    }
+  })
+  return config
+}
 ```
 
 ### SvelteKit
@@ -1168,7 +1173,10 @@ const config = {
       plugins: [
         development &&
           nodePolyfills({
-            include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js')],
+            include: [
+              'node_modules/**/*.js',
+              new RegExp('node_modules/.vite/.*js')
+            ],
             http: true,
             crypto: true
           })
