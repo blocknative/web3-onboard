@@ -1,38 +1,38 @@
-# @web3-onboard/keepkey
+# Dcent
 
-Wallet module for connecting KeepKey hardware wallets to web3-onboard
+## Wallet module for connecting D'CENT hardware wallets to web3-onboard
 
-## Install
+### Install
 
 <Tabs values={['yarn', 'npm']}>
 <TabPanel value="yarn">
 
 ```sh copy
-yarn add @web3-onboard/keepkey
+yarn add @web3-onboard/dcent
 ```
 
   </TabPanel>
   <TabPanel value="npm">
 
 ```sh copy
-npm install @web3-onboard/keepkey
+npm install @web3-onboard/dcent
 ```
 
   </TabPanel>
 </Tabs>
 
-## Usage
+### Usage
 
 ```typescript
 import Onboard from '@web3-onboard/core'
-import keepkeyModule from '@web3-onboard/keepkey'
+import dcentModule from '@web3-onboard/dcent'
 
-const keepkey = keepkeyModule()
+const dcent = dcentModule()
 
 const onboard = Onboard({
   // ... other Onboard options
   wallets: [
-    keepkey
+    dcent
     //... other wallets
   ]
 })
@@ -40,3 +40,6 @@ const onboard = Onboard({
 const connectedWallets = await onboard.connectWallet()
 console.log(connectedWallets)
 ```
+
+## Build Environments
+For build env configurations and setups please see the Build Env section [here](/docs/modules/core#build-environments)

@@ -1,4 +1,4 @@
-# @web3-onboard/ledger
+# Ledger
 
 Wallet module for connecting Ledger hardware wallets to web3-onboard
 
@@ -80,3 +80,6 @@ const onboard = Onboard({
 const connectedWallets = await onboard.connectWallet()
 console.log(connectedWallets)
 ```
+
+## Build Environments
+For build env configurations and setups please see the Build Env section [here](/docs/modules/core#build-environments)

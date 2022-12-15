@@ -1,4 +1,4 @@
-# @web3-onboard/magic
+# Magic
 
 Wallet module for connecting Magic wallets to Onboard V2
 
@@ -120,3 +120,6 @@ The Magic Wallet Login styles can customized via [CSS variables](https://develop
 
 }
 ```
+
+## Build Environments
+For build env configurations and setups please see the Build Env section [here](/docs/modules/core#build-environments)

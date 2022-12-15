@@ -1,6 +1,6 @@
-# @web3-onboard/torus
+# Mew Wallet
 
-## Wallet module for connecting Torus wallet to web3-onboard
+Wallet module for connecting Mew wallet through web3-onboard
 
 ### Install
 
@@ -8,35 +8,31 @@
 <TabPanel value="yarn">
 
 ```sh copy
-yarn add @web3-onboard/torus
+yarn add @web3-onboard/mew-wallet
 ```
 
   </TabPanel>
   <TabPanel value="npm">
 
 ```sh copy
-npm install @web3-onboard/torus
+npm install @web3-onboard/mew-wallet
 ```
 
   </TabPanel>
 </Tabs>
 
-## Options
-
-See the [Torus Docs](https://docs.tor.us/wallet/api-reference/class) for the extensive list of options
-
 ## Usage
 
 ```typescript
 import Onboard from '@web3-onboard/core'
-import torusModule from '@web3-onboard/torus'
+import mewWallet from '@web3-onboard/mew-wallet'
 
-const torus = torusModule()
+const mewWalletModule = mewWallet()
 
 const onboard = Onboard({
   // ... other Onboard options
   wallets: [
-    torus
+    mewWalletModule
     //... other wallets
   ]
 })
@@ -44,3 +40,6 @@ const onboard = Onboard({
 const connectedWallets = await onboard.connectWallet()
 console.log(connectedWallets)
 ```
+
+## Build Environments
+For build env configurations and setups please see the Build Env section [here](/docs/modules/core#build-environments)

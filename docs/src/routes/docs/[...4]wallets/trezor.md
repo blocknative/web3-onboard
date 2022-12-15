@@ -1,30 +1,32 @@
-# @web3-onboard/keystone
+# Trezor
 
-Wallet module for connecting Keystone hardware wallets to web3-onboard
+Wallet module for connecting Trezor hardware wallets to web3-onboard
 
-## Install
+### Install
 
 <Tabs values={['yarn', 'npm']}>
 <TabPanel value="yarn">
 
 ```sh copy
-yarn add @web3-onboard/keystone
+yarn add @web3-onboard/trezor
 ```
 
   </TabPanel>
   <TabPanel value="npm">
 
 ```sh copy
-npm install @web3-onboard/keystone
+npm install @web3-onboard/trezor
 ```
 
   </TabPanel>
 </Tabs>
 
-## Options
+### Options
 
 ```typescript
-type KeystoneOptions = {
+type TrezorOptions = {
+  email: string
+  appUrl: string
   customNetwork?: CustomNetwork
 }
 
@@ -61,18 +63,21 @@ interface BootstrapNode {
 }
 ```
 
-## Usage
+### Usage
 
 ```typescript
 import Onboard from '@web3-onboard/core'
-import keystoneModule from '@web3-onboard/keystone'
+import trezorModule from '@web3-onboard/trezor'
 
-const keystone = keystoneModule()
+const trezor = trezorModule({
+  email: '<EMAIL_CONTACT>',
+  appUrl: '<APP_URL>'
+})
 
 const onboard = Onboard({
   // ... other Onboard options
   wallets: [
-    keystone
+    trezor
     //... other wallets
   ]
 })
@@ -80,3 +85,6 @@ const onboard = Onboard({
 const connectedWallets = await onboard.connectWallet()
 console.log(connectedWallets)
 ```
+
+## Build Environments
+For build env configurations and setups please see the Build Env section [here](/docs/modules/core#build-environments)

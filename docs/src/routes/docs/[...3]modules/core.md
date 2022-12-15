@@ -1,4 +1,4 @@
-# @web3-onboard/core
+# Core
 
 This is the core package that contains all of the UI and logic to be able to seamlessly connect user's wallets to your app and track the state of those wallets. Onboard no longer contains any wallet specific code, so wallets need to be passed in upon initialization.
 
@@ -63,6 +63,11 @@ type InitOptions {
   accountCenter?: AccountCenterOptions
   apiKey?: string
   notify?: Partial<NotifyOptions>
+  gas?: typeof gas
+  /**
+   * Object mapping for W3O components with the key being the component and the value the DOM element to mount the component to. This element must be available at time of package script execution.
+   */
+  containerElements?: Partial<ContainerElements>
 }
 ```
 
@@ -136,6 +141,11 @@ export type AccountCenter = {
   position?: AccountCenterPosition // default: 'topRight'
   expanded?: boolean // default: true
   minimal?: boolean // enabled by default for mobile
+
+  /**
+   * @deprecated Use top level containerElements property
+   * with the accountCenter prop set to the desired container El. See documentation below
+   */
   containerElement?: string // defines the DOM container element for svelte to attach
 }
 
@@ -145,6 +155,20 @@ export type AccountCenterOptions = {
 }
 
 type AccountCenterPosition = 'topRight' | 'bottomRight' | 'bottomLeft' | 'topLeft'
+```
+
+**`containerElements`**
+An object mapping for W3O components with the key being the DOM element to mount the specified component to.
+This defines the DOM container element for svelte to attach the component.
+
+**NOTE**: containerElement must be a DOM element with a styleSheet property attached and the element must be available on the DOM at the time of component mounting.
+For an example please see containerElement usage [here](https://github.com/blocknative/web3-onboard/blob/8531a73d69365f7d584320f1c4b97a5d90f1c34e/packages/demo/src/App.svelte#L227)
+
+```typescript
+type ContainerElements = {
+  // when using the accountCenter with a container el the accountCenter position properties are ignored
+  accountCenter?: string
+}
 ```
 
 **`notify`**
@@ -252,19 +276,13 @@ const onboard = Onboard({
       id: '0x1',
       token: 'ETH',
       label: 'Ethereum Mainnet',
-      rpcUrl: 'https://mainnet.infura.io/v3/{INFURA_ID}'
+      rpcUrl: `https://mainnet.infura.io/v3/${INFURA_ID}`
     },
     {
-      id: '0x3',
-      token: 'tROP',
-      label: 'Ethereum Ropsten Testnet',
-      rpcUrl: 'https://ropsten.infura.io/v3/{INFURA_ID}'
-    },
-    {
-      id: '0x4',
-      token: 'rETH',
-      label: 'Ethereum Rinkeby Testnet',
-      rpcUrl: 'https://rinkeby.infura.io/v3/{INFURA_ID}'
+      id: '0x5',
+      token: 'ETH',
+      label: 'Goerli',
+      rpcUrl: `https://goerli.infura.io/v3/${INFURA_ID}`
     },
     {
       id: '0x38',
@@ -279,10 +297,16 @@ const onboard = Onboard({
       rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
     },
     {
-      id: '0xfa',
-      token: 'FTM',
-      label: 'Fantom Mainnet',
-      rpcUrl: 'https://rpc.ftm.tools/'
+      id: 10,
+      token: 'OETH',
+      label: 'Optimism',
+      rpcUrl: 'https://mainnet.optimism.io'
+    },
+    {
+      id: 42161,
+      token: 'ARB-ETH',
+      label: 'Arbitrum',
+      rpcUrl: 'https://rpc.ankr.com/arbitrum'
     }
   ],
   appMetadata: {
@@ -384,12 +408,9 @@ You could enable this in your app by first syncing the `wallets` array to localS
 
 ```javascript
 const walletsSub = onboard.state.select('wallets')
-const { unsubscribe } = walletsSub.subscribe(wallets => {
+const { unsubscribe } = walletsSub.subscribe((wallets) => {
   const connectedWallets = wallets.map(({ label }) => label)
-  window.localStorage.setItem(
-    'connectedWallets',
-    JSON.stringify(connectedWallets)
-  )
+  window.localStorage.setItem('connectedWallets', JSON.stringify(connectedWallets))
 })
 
 // Don't forget to unsubscribe when your app or component un mounts to prevent memory leaks
@@ -399,9 +420,7 @@ const { unsubscribe } = walletsSub.subscribe(wallets => {
 Now that you have the most recent wallets connected saved in local storage, you can auto select those wallet(s) when your app loads:
 
 ```javascript
-const previouslyConnectedWallets = JSON.parse(
-  window.localStorage.getItem('connectedWallets')
-)
+const previouslyConnectedWallets = JSON.parse(window.localStorage.getItem('connectedWallets'))
 
 if (previouslyConnectedWallets) {
   // Connect the most recently connected wallet (first in the array)
@@ -526,9 +545,7 @@ To subscribe to all state updates, call the `select` method with no arguments:
 
 ```javascript
 const state = onboard.state.select()
-const { unsubscribe } = state.subscribe(update =>
-  console.log('state update: ', update)
-)
+const { unsubscribe } = state.subscribe((update) => console.log('state update: ', update))
 
 // remember to unsubscribe when updates are no longer needed
 // unsubscribe()
@@ -538,9 +555,7 @@ Specific top level slices of state can be subscribed to. For example you may wan
 
 ```javascript
 const wallets = onboard.state.select('wallets')
-const { unsubscribe } = wallets.subscribe(update =>
-  console.log('wallets update: ', update)
-)
+const { unsubscribe } = wallets.subscribe((update) => console.log('wallets update: ', update))
 
 // unsubscribe when updates are no longer needed
 unsubscribe()
@@ -575,7 +590,9 @@ const onboard = Onboard({
       token: 'ETH',
       label: 'Ethereum Mainnet',
       // Only one RPC required
-      rpcUrl: `https://mainnet.infura.io/v3/${INFURA_KEY}` || `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
+      rpcUrl:
+        `https://mainnet.infura.io/v3/${INFURA_KEY}` ||
+        `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
     }
   ]
 })
@@ -590,10 +607,7 @@ You may decide to get updated balances for connected wallets after a user action
 ```javascript
 onboard.state.actions.updateBalances() // update all balances for all connected addresses
 onboard.state.actions.updateBalances(['0xfdadfadsadsadsadasdsa']) // update balance for one address
-onboard.state.actions.updateBalances([
-  '0xfdadfadsadsadsadasdsa',
-  '0xfdsafdsfdsfdsfds'
-]) // update balance for two addresses
+onboard.state.actions.updateBalances(['0xfdadfadsadsadsadasdsa', '0xfdsafdsfdsfdsfds']) // update balance for two addresses
 ```
 
 **`setLocale`**
@@ -610,7 +624,7 @@ If you need to update your notify configuration after initialization, you can do
 onboard.state.actions.updateNotify({
   desktop: {
     enabled: true,
-    transactionHandler: transaction => {
+    transactionHandler: (transaction) => {
       console.log({ transaction })
       if (transaction.eventCode === 'txPool') {
         return {
@@ -623,7 +637,7 @@ onboard.state.actions.updateNotify({
   },
   mobile: {
     enabled: true,
-    transactionHandler: transaction => {
+    transactionHandler: (transaction) => {
       console.log({ transaction })
       if (transaction.eventCode === 'txPool') {
         return {
@@ -699,13 +713,13 @@ const txDetails = {
 }
 
 const sendTransaction = () => {
-  return signer.sendTransaction(txDetails).then(tx => tx.hash)
+  return signer.sendTransaction(txDetails).then((tx) => tx.hash)
 }
 
-const gasPrice = () => ethersProvider.getGasPrice().then(res => res.toString())
+const gasPrice = () => ethersProvider.getGasPrice().then((res) => res.toString())
 
 const estimateGas = () => {
-  return ethersProvider.estimateGas(txDetails).then(res => res.toString())
+  return ethersProvider.estimateGas(txDetails).then((res) => res.toString())
 }
 const transactionHash = await onboard.state.actions.preflightNotifications({
   sendTransaction,
@@ -737,10 +751,7 @@ onboard.state.actions.setPrimaryWallet(wallets[1])
 
 // set the second wallet in the wallets array as the primary wallet
 // as well as setting the third account in that wallet as the primary account
-onboard.state.actions.setPrimaryWallet(
-  wallets[1],
-  wallets[1].accounts[2].address
-)
+onboard.state.actions.setPrimaryWallet(wallets[1], wallets[1].accounts[2].address)
 ```
 
 ## Setting the User's Chain/Network
@@ -971,13 +982,46 @@ Many of the wallet modules require dependencies that are not normally included i
 
 ### Webpack 4
 
-Everything should just work since the node built-ins are automatically bundled in v4
+Node built-ins are automatically bundled in v4 so that portion is handled automatically.
+
+**web3auth** and **torus** will require a Babel to compile from es6 if not already supported. See config for Babel and Webpack4 as follows
+
+`npm i --save-dev @babel/cli @babel/core @babel/node @babel/plugin-proposal-nullish-coalescing-operator @babel/plugin-proposal-optional-chaining @babel/plugin-syntax-bigint @babel/register`
+**AND**
+`npm i babel-loader`
+
+**babel.config.js**
+
+```javascript
+module.exports = (api) => {
+  api.cache(true)
+  const plugins = [
+    '@babel/plugin-proposal-optional-chaining',
+    '@babel/plugin-proposal-nullish-coalescing-operator',
+    '@babel/plugin-syntax-bigint'
+  ]
+  return { plugins }
+}
+```
+
+**webpack.config.js**
+
+```javascript
+config.module.rules = [
+  ...otherModuleRules,
+  {
+    test: /\.js$/,
+    exclude: (_) => !/node_modules\/(@web3auth|@ethereumjs)/.test(_),
+    loader: 'babel-loader'
+  }
+]
+```
 
 ### Webpack 5
 
 You'll need to add some dev dependencies with the following command:
 
-`npm i --save-dev assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util`
+`npm i --save-dev assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify`
 
 Then add the following to your `webpack.config.js` file:
 
@@ -986,6 +1030,9 @@ const webpack = require('webpack')
 
 module.exports = {
   resolve: {
+    fallback: {
+      path: require.resolve('path-browserify')
+    },
     alias: {
       assert: 'assert',
       buffer: 'buffer',
@@ -1012,15 +1059,77 @@ module.exports = {
 
 #### If using create-react-app
 
-[CRACO](https://www.npmjs.com/package/@craco/craco) provides an easy way to override webpack config which is obfuscated in Create React App built applications.
+[CRACO](https://www.npmjs.com/package/@craco/craco) provides an similar way to override webpack config which is obfuscated in Create React App built applications.
 
 The above webpack 5 example can be used in the `craco.config.js` file at the root level in this case.
+
+[React App Rewired](https://www.npmjs.com/package/react-app-rewired) is another option for working with Create React App DApps
+
+Add the following dev dependencies:
+`npm i --save-dev rollup-plugin-polyfill-node webpack-bundle-analyzer assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify`
+
+**OR**
+
+`yarn add rollup-plugin-polyfill-node webpack-bundle-analyzer assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify -D`
+
+```javascript
+const webpack = require('webpack')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const path = require('path')
+
+module.exports = function override(config) {
+  const fallback = config.resolve.fallback || {}
+  Object.assign(fallback, {
+    assert: require.resolve('assert'),
+    buffer: require.resolve('buffer'),
+    crypto: require.resolve('crypto-browserify'),
+    http: require.resolve('stream-http'),
+    https: require.resolve('https-browserify'),
+    os: require.resolve('os-browserify/browser'),
+    path: require.resolve('path-browserify'),
+    process: require.resolve('process/browser'),
+    stream: require.resolve('stream-browserify'),
+    url: require.resolve('url'),
+    util: require.resolve('util')
+  })
+  config.resolve.fallback = fallback
+  config.resolve.alias = {
+    ...config.resolve.alias,
+    'bn.js': path.resolve(__dirname, 'node_modules/bn.js'),
+    lodash: path.resolve(__dirname, 'node_modules/lodash'),
+    'magic-sdk': path.resolve(__dirname, 'node_modules/magic-sdk/dist/cjs/index.js')
+  }
+  config.plugins = (config.plugins || []).concat([
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+      Buffer: ['buffer', 'Buffer']
+    }),
+    new webpack.IgnorePlugin({
+      resourceRegExp: /genesisStates\/[a-z]*\.json$/,
+      contextRegExp: /@ethereumjs\/common/
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'disabled'
+    })
+  ])
+  config.ignoreWarnings = [/Failed to parse source map/]
+  config.module.rules.push({
+    test: /\.(js|mjs|jsx)$/,
+    enforce: 'pre',
+    loader: require.resolve('source-map-loader'),
+    resolve: {
+      fullySpecified: false
+    }
+  })
+  return config
+}
+```
 
 ### SvelteKit
 
 Add the following dev dependencies:
 
-`npm i --save-dev rollup-plugin-polyfill-node`
+`yarn add rollup-plugin-polyfill-node -D`
 
 Then add the following to your `svelte.config.js` file:
 
@@ -1041,10 +1150,7 @@ const config = {
       plugins: [
         development &&
           nodePolyfills({
-            include: [
-              'node_modules/**/*.js',
-              new RegExp('node_modules/.vite/.*js')
-            ],
+            include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js')],
             http: true,
             crypto: true
           })
@@ -1058,11 +1164,22 @@ const config = {
       },
       build: {
         rollupOptions: {
+          external: ['@web3-onboard/*'],
           plugins: [nodePolyfills({ crypto: true, http: true })]
         },
         commonjsOptions: {
           transformMixedEsModules: true
         }
+      },
+      optimizeDeps: {
+        exclude: ['@ethersproject/hash', 'wrtc', 'http'],
+        include: [
+          '@web3-onboard/core',
+          '@web3-onboard/gas',
+          '@web3-onboard/sequence',
+          'js-sha3',
+          '@ethersproject/bignumber'
+        ]
       }
     }
   }
@@ -1090,10 +1207,7 @@ export default {
   plugins: [
     development &&
       nodePolyfills({
-        include: [
-          'node_modules/**/*.js',
-          new RegExp('node_modules/.vite/.*js')
-        ],
+        include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js')],
         http: true,
         crypto: true
       })

@@ -1,6 +1,6 @@
-# @web3-onboard/dcent
+# Enkrypt
 
-## Wallet module for connecting D'CENT hardware wallets to web3-onboard
+Wallet module for connecting Enkrypt wallet through web3-onboard
 
 ### Install
 
@@ -8,31 +8,31 @@
 <TabPanel value="yarn">
 
 ```sh copy
-yarn add @web3-onboard/dcent
+yarn add @web3-onboard/enkrypt
 ```
 
   </TabPanel>
   <TabPanel value="npm">
 
 ```sh copy
-npm install @web3-onboard/dcent
+npm install @web3-onboard/enkrypt
 ```
 
   </TabPanel>
 </Tabs>
 
-### Usage
+## Usage
 
 ```typescript
 import Onboard from '@web3-onboard/core'
-import dcentModule from '@web3-onboard/dcent'
+import enrkypt from '@web3-onboard/enkrypt'
 
-const dcent = dcentModule()
+const enrkyptModule = enrkypt()
 
 const onboard = Onboard({
   // ... other Onboard options
   wallets: [
-    dcent
+    enrkyptModule
     //... other wallets
   ]
 })
@@ -40,3 +40,6 @@ const onboard = Onboard({
 const connectedWallets = await onboard.connectWallet()
 console.log(connectedWallets)
 ```
+
+## Build Environments
+For build env configurations and setups please see the Build Env section [here](/docs/modules/core#build-environments)

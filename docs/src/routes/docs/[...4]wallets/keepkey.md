@@ -1,6 +1,6 @@
-# @web3-onboard/mew
+# Keepkey
 
-Wallet module for connecting Mew wallet to web3-onboard
+Wallet module for connecting KeepKey hardware wallets to web3-onboard
 
 ## Install
 
@@ -8,14 +8,14 @@ Wallet module for connecting Mew wallet to web3-onboard
 <TabPanel value="yarn">
 
 ```sh copy
-yarn add @web3-onboard/mew
+yarn add @web3-onboard/keepkey
 ```
 
   </TabPanel>
   <TabPanel value="npm">
 
 ```sh copy
-npm install @web3-onboard/mew
+npm install @web3-onboard/keepkey
 ```
 
   </TabPanel>
@@ -25,14 +25,14 @@ npm install @web3-onboard/mew
 
 ```typescript
 import Onboard from '@web3-onboard/core'
-import mewModule from '@web3-onboard/mew'
+import keepkeyModule from '@web3-onboard/keepkey'
 
-const mew = mewModule()
+const keepkey = keepkeyModule()
 
 const onboard = Onboard({
   // ... other Onboard options
   wallets: [
-    mew
+    keepkey
     //... other wallets
   ]
 })
@@ -41,6 +41,5 @@ const connectedWallets = await onboard.connectWallet()
 console.log(connectedWallets)
 ```
 
-:::admonition type=warning
-Currently not building on M1 Macs
-:::
+## Build Environments
+For build env configurations and setups please see the Build Env section [here](/docs/modules/core#build-environments)

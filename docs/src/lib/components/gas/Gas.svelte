@@ -2,7 +2,7 @@
   import anime from 'animejs'
   import GasCard from './GasCard.svelte'
   import gasModule from '@web3-onboard/gas'
-  import { onMount } from 'svelte'
+  import { onDestroy, onMount } from 'svelte'
   import { ethers } from 'ethers'
   import type { GasPrice, RPCGasPrice, GasData } from './types'
 
@@ -19,6 +19,7 @@
     })
   }
   let ethMainnetGasBlockPrices
+  let gasSub
   let rpcGasData: RPCGasPrice
   onMount(() => {
     ethMainnetGasBlockPrices = gasModule.stream({
@@ -26,7 +27,7 @@
       apiKey: 'da1b962d-314d-4903-bfe1-426821d14a35',
       endpoint: 'blockPrices'
     })
-    ethMainnetGasBlockPrices.subscribe(() => {
+    gasSub = ethMainnetGasBlockPrices.subscribe(() => {
       async function getEtherGasFromRPC() {
         const INFURA_ID = '8b60d52405694345a99bcb82e722e0af'
         const infuraRPC = `https://mainnet.infura.io/v3/${INFURA_ID}`
@@ -62,6 +63,10 @@
     estimatedTransactionCount: null,
     seconds: null
   }
+
+  onDestroy(() => {
+    gasSub && gasSub.unsubscribe()
+  })
 </script>
 
 <div class="Gas px-6  p-4">
