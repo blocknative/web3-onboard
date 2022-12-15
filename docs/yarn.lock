@@ -3084,10 +3084,10 @@
     ethers "5.5.4"
     joi "^17.6.1"
 
-"@web3-onboard/core@^2.11.1-alpha.1":
-  version "2.11.1-alpha.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.11.1-alpha.1.tgz#5f48fa7732dfc8dc946a944992c8ce011869f7c1"
-  integrity sha512-puSi/Noiwe8gK2xSZqFufP4mRSrn+aV4ODL37C3iy1XE79wazPqHDM3Sn8mT8EOz+ptZ1urvf1qSdOq6x/fsjg==
+"@web3-onboard/core@^2.12.0":
+  version "2.12.0"
+  resolved "https://registry.npmjs.org/@web3-onboard/core/-/core-2.12.0.tgz#6f2c775064ff9cd1fe6619c62f1b6c1fa71db679"
+  integrity sha512-c4ZPOXqrT8NCT7Sc/EbwGU4UIpULpgWoDpFaQi5gvSLjvcIEUDCrwicEYBxXZ+4UPgONOxcW+PDiSBBVNUqRzg==
   dependencies:
     "@web3-onboard/common" "^2.2.3"
     bignumber.js "^9.0.0"
@@ -8249,10 +8249,17 @@ rxjs@6, rxjs@^6.4.0, rxjs@^6.6.3:
   dependencies:
     tslib "^1.9.0"
 
-rxjs@^7.5.2, rxjs@^7.5.5:
+rxjs@^7.5.2:
   version "7.5.7"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.5.7.tgz#2ec0d57fdc89ece220d2e702730ae8f1e49def39"
   integrity sha512-z9MzKh/UcOqB3i20H6rtrlaE/CgjLOvheWK/9ILrbhROGTweAi1BaFsTT9FbwZi5Trr1qNRs+MXkhmR06awzQA==
+  dependencies:
+    tslib "^2.1.0"
+
+rxjs@^7.5.5:
+  version "7.6.0"
+  resolved "https://registry.npmjs.org/rxjs/-/rxjs-7.6.0.tgz#361da5362b6ddaa691a2de0b4f2d32028f1eb5a2"
+  integrity sha512-DDa7d8TFNUalGC9VqXvQ1euWNN7sc63TrUCuM9J998+ViviahMIjKSOU7rfcgFOF+FCD71BhDRv4hrFz+ImDLQ==
   dependencies:
     tslib "^2.1.0"
 
