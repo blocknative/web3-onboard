@@ -53,9 +53,9 @@
   },
   "type": "module",
   "dependencies": {
-    "@web3-onboard/core": "^2.8.4",
+    "@web3-onboard/core": "^2.12.0",
     "@web3-onboard/gas": "^2.1.4",
-    "@web3-onboard/injected-wallets": "^2.2.3",
+    "@web3-onboard/injected-wallets": "^2.4.0",
     "animejs": "^3.2.1",
     "ethers": "^5.7.0",
     "rollup-plugin-polyfill-node": "^0.10.2"
