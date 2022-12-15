@@ -54,7 +54,7 @@
 
 {#if showTermsOfService}
   <div class="container flex items-center">
-    <label class="flex items-center">
+    <label class="flex">
       <input class="" type="checkbox" bind:checked={agreed} />
       <span>
         {$_('connect.selectingWallet.agreement.agree')}

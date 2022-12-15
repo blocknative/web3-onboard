@@ -1,8 +1,8 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
-  import { MOBILE_WINDOW_WIDTH } from '../../constants'
+  import { MOBILE_WINDOW_WIDTH } from '../../constants.js'
 
-  import { WalletAppBadge, SuccessStatusIcon } from '../shared'
+  import { WalletAppBadge, SuccessStatusIcon } from '../shared/index.js'
 
   export let icon: Promise<string>
   export let label: string

@@ -3,7 +3,7 @@
 
   import { isSVG } from '../../utils.js'
   import Spinner from './Spinner.svelte'
-  import { PendingStatusIcon } from '../shared'
+  import { PendingStatusIcon } from '../shared/index.js'
   import { MOBILE_WINDOW_WIDTH } from '../../constants.js'
 
   export let size: number // px

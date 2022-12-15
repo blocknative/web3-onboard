@@ -2,7 +2,7 @@
   import { MOBILE_WINDOW_WIDTH } from '../../constants.js'
   import { state } from '../../store/index.js'
   import type { WalletWithLoadingIcon } from '../../types.js'
-  import { Warning } from '../shared'
+  import { Warning } from '../shared/index.js'
   import WalletButton from './WalletButton.svelte'
 
   export let wallets: WalletWithLoadingIcon[]
@@ -19,7 +19,6 @@
 </script>
 
 <style>
-
   .wallets-container {
     display: flex;
     gap: 0.5rem;
@@ -55,7 +54,6 @@
       padding: 1rem;
     }
   }
-
 </style>
 
 <svelte:window bind:innerWidth={windowWidth} />

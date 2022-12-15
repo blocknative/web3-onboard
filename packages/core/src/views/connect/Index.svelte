@@ -2,7 +2,6 @@
   import { ProviderRpcErrorCode, WalletModule } from '@web3-onboard/common'
   import EventEmitter from 'eventemitter3'
   import { _ } from 'svelte-i18n'
-
   import en from '../../i18n/en.json'
   import { listenAccountsChanged, selectAccounts } from '../../provider.js'
   import { state } from '../../store/index.js'
@@ -32,7 +31,7 @@
     takeUntil
   } from 'rxjs'
 
-  import { blocknative } from '../../icons'
+  import { blocknative } from '../../icons/index.js'
 
   import {
     getChainId,
@@ -48,7 +47,7 @@
     WalletState,
     WalletWithLoadingIcon
   } from '../../types.js'
-  import { MOBILE_WINDOW_WIDTH } from '../../constants'
+  import { MOBILE_WINDOW_WIDTH } from '../../constants.js'
 
   export let autoSelect: ConnectOptions['autoSelect']
 
