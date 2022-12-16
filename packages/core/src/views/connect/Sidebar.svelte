@@ -74,7 +74,9 @@
   }
 
   .indicators {
-    margin-top: 1rem;
+    margin-top: auto;
+    width: 100%;
+    padding: 0 1.5rem 0.5rem;
   }
 
   .indicator {
@@ -175,37 +177,37 @@
       })}
     </div>
 
-    <div class="indicators flex items-center">
-      <div class="indicator relative" class:on={true} />
-      <div
-        class:active={step !== 'selectingWallet'}
-        class="join relative"
-        style={`${
-          step !== 'selectingWallet'
-            ? 'right: 4px; width: 52px;'
-            : 'right: 2px; width: 54px;'
-        }`}
-      />
-      <div
-        class="indicator relative"
-        style={`right: 8px;`}
-        class:on={step !== 'selectingWallet'}
-      />
-      <div
-        class:active={step === 'connectedWallet'}
-        class="join relative"
-        style={`${
-          step === 'connectedWallet'
-            ? 'right: 12px; width: 52px;'
-            : 'right: 10px; width: 54px;'
-        }`}
-      />
-      <div
-        style={`right: 16px;`}
-        class="indicator relative"
-        class:on={step === 'connectedWallet'}
-      />
-    </div>
+  </div>
+  <div class="indicators flex items-center">
+    <div class="indicator relative" class:on={true} />
+    <div
+      class:active={step !== 'selectingWallet'}
+      class="join relative"
+      style={`${
+        step !== 'selectingWallet'
+          ? 'right: 4px; width: 49%;'
+          : 'right: 2px; width: 50%;'
+      }`}
+    />
+    <div
+      class="indicator relative"
+      style={`right: 8px;`}
+      class:on={step !== 'selectingWallet'}
+    />
+    <div
+      class:active={step === 'connectedWallet'}
+      class="join relative"
+      style={`${
+        step === 'connectedWallet'
+          ? 'right: 12px; width: 49%;'
+          : 'right: 10px; width: 50%;'
+      }`}
+    />
+    <div
+      style={`right: 16px;`}
+      class="indicator relative"
+      class:on={step === 'connectedWallet'}
+    />
   </div>
   <div>
     {@html poweredByBlocknativeIcon}

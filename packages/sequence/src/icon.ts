@@ -18,7 +18,7 @@ export default `
 <defs>
 <linearGradient id="paint0_linear_5_131" x1="198" y1="4.05854e-05" x2="198" y2="318" gradientUnits="userSpaceOnUse">
 <stop stop-color="#1D273D"/>
-<stop offset="1" stop-color="#0D0F13"/>
+<stop offset="1" stop-color="var(--w3o-text-color, #0D0F13)"/>
 </linearGradient>
 <linearGradient id="paint1_linear_5_131" x1="65.5" y1="99" x2="92.5" y2="63" gradientUnits="userSpaceOnUse">
 <stop stop-color="#4462FE"/>

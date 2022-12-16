@@ -63,7 +63,7 @@
       var(--onboard-white, var(--white))
     );
     border: 1px solid
-      var(--account-center-border, var(--onboard-gray-100, var(--gray-100)));
+      var(--account-center-border, var(--onboard-gray-100, transparent));
     width: 100%;
     box-shadow: var(
       --account-center-box-shadow,
