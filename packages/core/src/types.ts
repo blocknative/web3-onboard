@@ -63,8 +63,28 @@ export interface InitOptions {
    * Transaction Preview module
    */
   transactionPreview?: TransactionPreviewAPI
+  /**
+   * Custom or predefined theme for Web3Onboard i.e. default, dark, Custom, etc.
+   */
+  theme?: Theme | BuiltInThemes
 }
 
+export type BuiltInThemes = 'default' | 'dark'
+
+export type Theme = {
+  [Key in keyof ThemingMap]?: string
+}
+
+export type ThemingMap = {
+  '--w3o-background-color'?: string
+  '--w3o-text-color'?: string
+  '--w3o-border-color'?: string
+  '--w3o-accent-background'?: string
+  '--w3o-accent-color'?: string
+  '--w3o-secondary-text-color'?: string
+  '--w3o-border-radius'?: string
+  '--w3o-secondary-accent-background'?: string
+}
 export interface ConnectOptions {
   autoSelect?: { label: string; disableModals: boolean }
 }

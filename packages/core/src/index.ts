@@ -6,7 +6,7 @@ import { state } from './store/index.js'
 import { reset$, wallets$ } from './streams.js'
 import initI18N from './i18n/index.js'
 import App from './views/Index.svelte'
-import type { InitOptions, Notify } from './types.js'
+import type { InitOptions, Notify, Theme } from './types.js'
 import { APP_INITIAL_STATE } from './constants.js'
 import { configuration, updateConfiguration } from './configuration.js'
 import updateBalances from './update-balances.js'
@@ -27,10 +27,12 @@ import {
   setLocale,
   setPrimaryWallet,
   setWalletModules,
-  updateConnectModal
+  updateConnectModal,
+  updateTheme
 } from './store/actions.js'
 import type { PatchedEIP1193Provider } from '@web3-onboard/transaction-preview'
 import { getBlocknativeSdk } from './services.js'
+import themes from './themes.js'
 
 const API = {
   connectWallet,
@@ -47,7 +49,8 @@ const API = {
       preflightNotifications,
       updateBalances,
       updateAccountCenter,
-      setPrimaryWallet
+      setPrimaryWallet,
+      updateTheme
     }
   }
 }
@@ -93,7 +96,8 @@ function init(options: InitOptions): OnboardAPI {
     gas,
     connect,
     containerElements,
-    transactionPreview
+    transactionPreview,
+    theme
   } = options
 
   updateConfiguration({ containerElements })
@@ -220,6 +224,10 @@ function init(options: InitOptions): OnboardAPI {
     getBnSDK()
   }
 
+  if (theme) {
+    updateTheme(typeof theme === 'string' ? themes[theme] : theme)
+  }
+
   return API
 }
 
@@ -339,6 +347,69 @@ function mountApp() {
           
           /* MODAL STYLES */
           --modal-backdrop: rgba(0, 0, 0, 0.6);
+
+          /* THEME MAPPING */
+          --onboard-connect-sidebar-border-color: var(--w3o-border-color);
+          --onboard-connect-sidebar-background: var(--w3o-accent-background);
+          --onboard-connect-sidebar-color: var(--w3o-text-color);
+          --onboard-connect-sidebar-progress-background: var(--w3o-text-color);
+          --onboard-connect-sidebar-progress-color: var(--w3o-accent-color);
+          --onboard-connect-header-background: var(--w3o-background-color);
+          --onboard-connect-header-color: var(--w3o-text-color);
+          --onboard-main-scroll-container-background: var(--w3o-background-color);
+          --onboard-link-color: var(--w3o-accent-color);
+          --onboard-wallet-button-background: var(--w3o-background-color);
+          --onboard-wallet-button-background-hover: var(--w3o-accent-background);
+          --onboard-wallet-button-border-color: var(--w3o-border-color);
+          --onboard-wallet-app-icon-border-color: var(--w3o-border-color);
+          --onboard-close-button-background: var(--w3o-accent-background);
+          --onboard-wallet-button-color-hover: var(--w3o-text-color);
+          --onboard-wallet-button-color: var(--w3o-text-color);
+          --onboard-wallet-button-border-radius: var(--w3o-border-radius)
+          --onboard-modal-border-radius: var(--w3o-border-radius)
+
+
+          /* ACCOUNT CENTER THEMING */
+          --account-center-minimized-background: var(--w3o-background-color);
+          --account-center-minimized-address-color: var(--w3o-text-color);
+          --account-center-minimized-balance-color: var(--w3o-secondary-text-color);
+
+          --account-center-maximized-info-section-background: var(
+            --w3o-background-color
+          );
+          --account-center-maximized-network-section-background: var(
+            --w3o-accent-background
+          );
+          --account-center-maximized-upper-background: var(
+            --w3o-secondary-accent-background
+          );
+          --account-center-maximized-address-color: var(--w3o-background-color);
+          --account-center-maximized-account-section-background-hover: var(
+            --w3o-text-color
+          );
+          --account-center-maximized-balance-color: var(--w3o-border-color);
+          --account-center-maximized-upper-action-color: var(--w3o-accent-color);
+          --account-center-maximized-network-text-color: var(
+            --w3o-secondary-accent-background
+          );
+          --account-center-maximized-info-section-background-color: var(
+            --w3o-background-color
+          );
+          --account-center-maximized-app-name-color: var(
+            --w3o-secondary-accent-background
+          );
+          --account-center-maximized-app-info-color: var(
+            --w3o-secondary-accent-background
+          );
+          --account-center-app-btn-background: var(--w3o-secondary-accent-background);
+          --account-center-app-btn-text-color: var(--w3o-background-color);
+          
+          /* NOTIFY THEMING */
+          --notify-onboard-background: var(----secondary-accent-color);
+          --notify-onboard-transaction-status: var(--w3o-accent-background);
+          --notify-onboard-address-hash-color: var(--w3o-accent-background);
+          --notify-onboard-anchor-color: var(--w3o-accent-color);
+          --notify-onboard-timer-color: var(--w3o-text-color);
         }
       </style>
     `

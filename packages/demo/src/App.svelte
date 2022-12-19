@@ -264,7 +264,8 @@
     //   accountCenter: '#sample-container-el'
     // },
     // Sign up for your free api key at www.Blocknative.com
-    apiKey
+    apiKey,
+    theme: 'dark'
   })
 
   // Subscribe to wallet updates

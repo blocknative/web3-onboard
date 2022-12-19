@@ -26,7 +26,8 @@ import type {
   CustomNotificationUpdate,
   Notify,
   ConnectModalOptions,
-  UpdateConnectModalAction
+  UpdateConnectModalAction,
+  ThemingMap
 } from '../types.js'
 
 import {
@@ -397,4 +398,13 @@ export function uniqueWalletsByLabel(
         (innerWallet: WalletModule) => innerWallet.label === wallet.label
       ) === i
   )
+}
+
+export function updateTheme(theme: ThemingMap): void {
+  Object.keys(theme).forEach(targetStyle => {
+    document.documentElement.style.setProperty(
+      targetStyle,
+      theme[targetStyle as keyof ThemingMap]
+    )
+  })
 }

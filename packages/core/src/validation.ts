@@ -26,7 +26,8 @@ import type {
   CustomNotificationUpdate,
   Notify,
   PreflightNotificationsOptions,
-  ConnectModalOptions
+  ConnectModalOptions,
+  Theme
 } from './types.js'
 
 const unknownObject = Joi.object().unknown()
@@ -169,6 +170,17 @@ const containerElements = Joi.object({
   accountCenter: Joi.string()
 })
 
+const theme = Joi.object({
+  '--w3o-background-color': Joi.string(),
+  '--w3o-text-color': Joi.string(),
+  '--w3o-border-color': Joi.string(),
+  '--w3o-accent-background': Joi.string(),
+  '--w3o-accent-color': Joi.string(),
+  '--w3o-secondary-text-color': Joi.string(),
+  '--w3o-border-radius': Joi.string(),
+  '--w3o-secondary-accent-background': Joi.string()
+})
+
 const initOptions = Joi.object({
   wallets: walletInit,
   chains: chains.required(),
@@ -189,7 +201,8 @@ const initOptions = Joi.object({
   transactionPreview: Joi.object({
     patchProvider: Joi.function().required(),
     init: Joi.function().required()
-  })
+  }),
+  theme: Joi.alternatives().try(theme, Joi.string())
 })
 
 const connectOptions = Joi.object({
