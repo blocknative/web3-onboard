@@ -132,11 +132,6 @@
         --onboard-connect-sidebar-background,
         var(--onboard-primary-100, var(--primary-100))
       );
-
-      color: var(
-        --onboard-connect-mobile-header-color,
-        var(--onboard-gray-700, var(--gray-700))
-      );
     }
     .inner-container {
       border: none;
