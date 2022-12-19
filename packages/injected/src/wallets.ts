@@ -496,6 +496,18 @@ const tally: InjectedWalletModule = {
   platforms: ['desktop']
 }
 
+const zeal: InjectedWalletModule = {
+  label: ProviderLabel.Zeal,
+  injectedNamespace: InjectedNameSpace.Zeal,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Zeal],
+  getIcon: async () => (await import('./icons/zeal.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.zeal)
+  }),
+  platforms: ['desktop']
+}
+
 const rabby: InjectedWalletModule = {
   label: ProviderLabel.Rabby,
   injectedNamespace: InjectedNameSpace.Ethereum,
@@ -619,6 +631,7 @@ const enkrypt: InjectedWalletModule = {
 }
 
 const wallets = [
+  zeal,
   exodus,
   metamask,
   binance,
