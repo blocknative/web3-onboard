@@ -622,7 +622,9 @@ const phantom: InjectedWalletModule = {
   label: ProviderLabel.Phantom,
   injectedNamespace: InjectedNameSpace.Phantom,
   checkProviderIdentity: ({ provider }) =>
-    !!provider && !!provider['ethereum'][ProviderIdentityFlag.Phantom],
+    !!provider &&
+    !!provider['ethereum'] &&
+    !!provider['ethereum'][ProviderIdentityFlag.Phantom],
   getIcon: async () => (await import('./icons/phantom.js')).default,
   getInterface: async () => ({
     provider: createEIP1193Provider(window.phantom.ethereum)
