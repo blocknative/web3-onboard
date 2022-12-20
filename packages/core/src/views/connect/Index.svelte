@@ -388,7 +388,7 @@
   }
 
   .content {
-    width: 100%;
+    width: var(--onboard-connect-content-width, 100%);
   }
 
   .scroll-container {

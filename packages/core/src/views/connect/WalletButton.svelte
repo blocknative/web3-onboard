@@ -25,6 +25,21 @@
     flex: 1;
     padding: 0;
     background: none;
+    color: var(
+      --onboard-wallet-button-color,
+      var(--onboard-gray-700, var(--gray-700))
+    );
+  }
+
+  button.wallet-button-styling:hover {
+    background: var(
+      --onboard-wallet-button-background-hover,
+      var(--onboard-primary-100, var(--primary-100))
+    );
+    color: var(
+      --onboard-wallet-button-color-hover,
+      var(--onboard-gray-700, var(--gray-700))
+    );
   }
 
   .wallet-button-container {
