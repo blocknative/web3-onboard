@@ -29,4 +29,7 @@ jobs:
         run: yarn build
 
       - name: Check formatting and types
-        run: yarn check
+        run: yarn type-check
+
+      - name: Check that versions of the package dependencies match those in yarn’s lock file
+        run: yarn file-check

@@ -8,6 +8,9 @@ const prod = mode === 'production'
 module.exports = {
   entry: './src/main.js',
   resolve: {
+    fallback: {
+      path: require.resolve('path-browserify')
+    },
     alias: {
       svelte: path.dirname(require.resolve('svelte/package.json')),
       assert: 'assert',

@@ -4,7 +4,7 @@
 
 ### Install
 
-`npm i @web3-onboard/web3auth`
+`npm i @web3-onboard/core @web3-onboard/web3auth`
 
 ## Options
 

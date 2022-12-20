@@ -12,22 +12,23 @@ import type {
   ChainWithDecimalId
 } from '@web3-onboard/common'
 
-import ethereumIcon from './icons/ethereum.js'
-import polygonIcon from './icons/polygon.js'
-import questionIcon from './icons/question.js'
-import binanceIcon from './icons/binance.js'
-import fantomIcon from './icons/fantom.js'
-import optimismIcon from './icons/optimism.js'
-import avalancheIcon from './icons/avalanche.js'
-import celoIcon from './icons/celo.js'
-import gnosisIcon from './icons/gnosis.js'
-import harmonyOneIcon from './icons/harmony-one.js'
-import arbitrumIcon from './icons/arbitrum.js'
-
-import hourglass from './icons/hourglass.js'
-import checkmark from './icons/checkmark.js'
-import error from './icons/error.js'
-import info from './icons/info.js'
+import {
+  hourglass,
+  gnosisIcon,
+  checkmark,
+  errorIcon,
+  infoIcon,
+  ethereumIcon,
+  polygonIcon,
+  binanceIcon,
+  questionIcon,
+  fantomIcon,
+  optimismIcon,
+  celoIcon,
+  avalancheIcon,
+  harmonyOneIcon,
+  arbitrumIcon
+} from './icons/index.js'
 
 import type {
   ChainStyle,
@@ -96,7 +97,7 @@ export async function copyWalletAddress(text: string): Promise<void> {
 export const toHexString = (val: number | string): string =>
   typeof val === 'number' ? `0x${val.toString(16)}` : val
 
-export function chainIdToHex(chains: Chain[] | ChainWithDecimalId[]): Chain[] {
+export function chainIdToHex(chains: (Chain | ChainWithDecimalId)[]): Chain[] {
   return chains.map(({ id, ...rest }) => {
     const hexId = toHexString(id)
     return { id: hexId, ...rest }
@@ -248,13 +249,13 @@ export const defaultNotifyEventStyles: Record<string, NotifyEventStyles> = {
   error: {
     backgroundColor: '#FDB1B11A',
     borderColor: 'var(--onboard-danger-300, var(--danger-300))',
-    eventIcon: error
+    eventIcon: errorIcon
   },
   hint: {
     backgroundColor: 'var(--onboard-gray-500, var(--gray-500))',
     borderColor: 'var(--onboard-gray-500, var(--gray-500))',
     iconColor: 'var(--onboard-gray-100, var(--gray-100))',
-    eventIcon: info
+    eventIcon: infoIcon
   }
 }
 
