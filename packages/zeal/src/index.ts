@@ -2,7 +2,7 @@ import type { WalletInit } from '@web3-onboard/common'
 import type { ExternalProvider } from '@ethersproject/providers'
 import { createEIP1193Provider } from '@web3-onboard/common'
 
-declare const window: Window & { zeal: ExternalProvider }
+declare const window: Window & { zeal: ExternalProvider & { isZeal: boolean } }
 
 function zealWallet(): WalletInit {
   if (typeof window === 'undefined') return () => null
