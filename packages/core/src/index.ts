@@ -349,7 +349,7 @@ function mountApp() {
           --modal-backdrop: rgba(0, 0, 0, 0.6);
 
           /* THEME MAPPING */
-          --onboard-font-family-normal: var(--w3o-font-family)
+          --onboard-font-family-normal: var(--w3o-font-family);
           --onboard-connect-sidebar-border-color: var(--w3o-border-color);
           --onboard-connect-sidebar-background: var(--w3o-accent-background);
           --onboard-connect-sidebar-color: var(--w3o-text-color);
@@ -366,8 +366,8 @@ function mountApp() {
           --onboard-close-button-background: var(--w3o-accent-background);
           --onboard-wallet-button-color-hover: var(--w3o-text-color);
           --onboard-wallet-button-color: var(--w3o-text-color);
-          --onboard-wallet-button-border-radius: var(--w3o-border-radius)
-          --onboard-modal-border-radius: var(--w3o-border-radius)
+          --onboard-wallet-button-border-radius: var(--w3o-border-radius);
+          --onboard-modal-border-radius: var(--w3o-border-radius);
 
 
           /* ACCOUNT CENTER THEMING */

@@ -275,6 +275,7 @@
       '--w3o-border-radius': '24px',
       // '--w3o-accent-color-hover': '#eff1fc',
       '--w3o-secondary-accent-background': '#242835',
+      '--w3o-font-family': 'cursive'
     }
   })
 
@@ -421,11 +422,6 @@
 
   const baseStyling = ``
 
-  // Temp Removed   
-  // --account-center-minimized-chain-select-background: var(
-  //   --w3o-accent-background
-  // );
-
 
   const styleToString = style => {
     return Object.keys(style).reduce(
@@ -443,7 +439,7 @@
     }
   }
 
-  let copyableStyles = `:root {\n  ${styleToString(
+  let copyableStyles = `{\n  ${styleToString(
     themes.DefaultTheme
   )}${baseStyling}\n}`
 
@@ -455,7 +451,7 @@
       value
     )
 
-    copyableStyles = `:root {\n  ${styleToString(
+    copyableStyles = `{\n  ${styleToString(
       themes.DefaultTheme
     )}${baseStyling}\n}`
   }
@@ -542,93 +538,6 @@
 </script>
 
 <style>
-  :root {
-    --w3o-background-color: #ffffff; /* --white */
-    --w3o-text-color: #1a1d26; /* --gray-700 */
-    --w3o-border-color: #d0d4f7; /* --gray-100 taken from future mock */
-
-    --w3o-accent-background: #eff1fc; /* --gray-100 (currently gray-100 in connect modal) */
-    --w3o-accent-color: #929bed; /* --primary-400 */
-    /* --w3o-accent-color-hover: #eff1fc; --primary-200 - replaced with accent-background */
-    --w3o-border-radius: 24px;
-
-    /* Account Center & Notify */
-    --w3o-secondary-text-color: #707481; /* --gray-400 (balance and token name)  Account center min balance*/
-    --w3o-secondary-accent-background: #242835; /* --gray-600 (Upper background in maximized) */
-
-    /* --onboard-font-family-normal: System,monospace; */
-    --onboard-connect-sidebar-background: var(--w3o-accent-background);
-    --onboard-connect-sidebar-border-color: var(--w3o-border-color);
-    --onboard-close-button-background: var(--w3o-accent-background);
-    --onboard-connect-sidebar-color: var(--w3o-text-color);
-    --onboard-connect-sidebar-progress-background: var(
-      --w3o-text-color
-    ); /* defaults to gray-200 */
-    --onboard-connect-sidebar-progress-color: var(
-      --w3o-accent-color
-    ); /* defaults to  primary-600 */
-    --onboard-connect-header-background: var(--w3o-background-color);
-    --onboard-connect-header-color: var(--w3o-text-color);
-    --onboard-main-scroll-container-background: var(--w3o-background-color);
-    --onboard-link-color: var(--w3o-accent-color);
-    --onboard-wallet-button-background: var(--w3o-background-color);
-    --onboard-wallet-button-background-hover: var(--w3o-accent-background);
-    --onboard-wallet-button-color-hover: var(--w3o-text-color);
-    --onboard-wallet-button-color: var(--w3o-text-color);
-    --onboard-wallet-button-border-color: var(--w3o-border-color);
-    --onboard-wallet-app-icon-border-color: var(--w3o-border-color);
-    --onboard-modal-border-radius: var(--w3o-border-radius);
-    --onboard-wallet-button-border-radius: var(--w3o-border-radius);
-
-    --account-center-minimized-background: var(--w3o-background-color);
-    --account-center-minimized-address-color: var(--w3o-text-color);
-    --account-center-minimized-balance-color: var(--w3o-secondary-text-color);
-    /* --account-center-minimized-chain-select-background: var(
-      --w3o-accent-background
-    ); */
-    --account-center-maximized-info-section-background: var(
-      --w3o-background-color
-    );
-    --account-center-maximized-network-section-background: var(
-      --w3o-accent-background
-    );
-    --account-center-maximized-upper-background: var(
-      --w3o-secondary-accent-background
-    );
-    --account-center-maximized-address-color: var(--w3o-background-color);
-    --account-center-maximized-account-section-background-hover: var(
-      --w3o-text-color
-    );
-    --account-center-maximized-balance-color: var(--w3o-border-color);
-    --account-center-maximized-upper-action-color: var(--w3o-accent-color);
-    --account-center-maximized-network-text-color: var(
-      --w3o-secondary-accent-background
-    );
-    --account-center-maximized-info-section-background-color: var(
-      --w3o-background-color
-    );
-    --account-center-maximized-app-name-color: var(
-      --w3o-secondary-accent-background
-    );
-    --account-center-maximized-app-info-color: var(
-      --w3o-secondary-accent-background
-    );
-    --account-center-app-btn-background: var(--w3o-secondary-accent-background);
-    --account-center-app-btn-text-color: var(--w3o-background-color);
-
-    --notify-onboard-background: var(--w3o-secondary-accent-background);
-    --notify-onboard-transaction-status: var(--w3o-accent-background);
-    --notify-onboard-address-hash-color: var(--w3o-accent-background);
-    --notify-onboard-anchor-color: var(--w3o-accent-color);
-    --notify-onboard-timer-color: var(--w3o-secondary-text-color);
-
-    /*
-		NEEDS TARGET AS IT USES OPACITY:
-		--account-center-maximized-upper-action-background-hover
-		NEEDS UPDATES FOR DIFFERNT STYLING, DOESNT FIT BASIC VARIABLES ABOVE:
-		Notify status icons, icon backgrounds and icon borders
-	*/
-  }
   main {
     height: 100%;
   }
