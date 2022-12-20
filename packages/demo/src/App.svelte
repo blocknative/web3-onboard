@@ -265,7 +265,7 @@
     // },
     // Sign up for your free api key at www.Blocknative.com
     apiKey,
-    // theme: 'dark'
+    theme: 'default'
   })
 
   // Subscribe to wallet updates
@@ -372,9 +372,20 @@
     console.log(verifyTypedData(domain, types, message, signature))
   }
 
-  let selectedTheme = 'DefaultTheme'
+  let selectedTheme = 'default'
   const themes = {
-    DefaultTheme: {
+    default: {
+      '--w3o-background-color': 'initial',
+      '--w3o-text-color': 'initial',
+      '--w3o-border-color': 'initial',
+      '--w3o-accent-background': 'initial',
+      '--w3o-accent-color': 'initial',
+      '--w3o-secondary-text-color': 'initial',
+      '--w3o-border-radius': 'initial',
+      // '--w3o-accent-color-hover': 'initial', Replaced with accent-background
+      '--w3o-secondary-accent-background': 'initial'
+    },
+    light: {
       '--w3o-background-color': '#ffffff',
       '--w3o-text-color': '#1a1d26',
       '--w3o-border-color': '#d0d4f7',
@@ -383,9 +394,9 @@
       '--w3o-secondary-text-color': '#707481',
       '--w3o-border-radius': '24px',
       // '--w3o-accent-color-hover': '#eff1fc', Replaced with accent-background
-      '--w3o-secondary-accent-background': '#242835',
+      '--w3o-secondary-accent-background': '#242835'
     },
-    Dark: {
+    dark: {
       '--w3o-background-color': '#1A1D26',
       '--w3o-text-color': '#EFF1FC',
       '--w3o-border-color': '#33394B',
@@ -394,23 +405,11 @@
       '--w3o-secondary-text-color': '#999CA5',
       '--w3o-border-radius': '24px',
       // '--w3o-accent-color-hover': '#eff1fc',
-      '--w3o-secondary-accent-background': '#242835',
+      '--w3o-secondary-accent-background': '#242835'
     }
   }
-  // Dark: {
-  //     '--w3o-background-color': '#1A1D26', /* grey 700 */
-  //     '--w3o-text-color': '#EFF1FC',/* primary 100 */
-  //     '--w3o-border-color': '#33394B',/* grey 500 */
-  //     '--w3o-accent-background': '#242835', /* grey 600 */
-  //     '--w3o-accent-color': '#929bed',
-  //     '--w3o-accent-color-hover': '#eff1fc',
-  //     '--w3o-secondary-text-color': '#707481',
-  //     '--w3o-secondary-accent-background': '#242835',
-  //     '--w3o-border-radius': '24px'
-  //   }
 
   const baseStyling = ``
-
 
   const styleToString = style => {
     return Object.keys(style).reduce(
@@ -429,7 +428,7 @@
   }
 
   let copyableStyles = `{\n  ${styleToString(
-    themes.DefaultTheme
+    themes[selectedTheme]
   )}${baseStyling}\n}`
 
   const updateThemeEl = (targetStyle, value) => {
@@ -441,7 +440,7 @@
     )
 
     copyableStyles = `{\n  ${styleToString(
-      themes.DefaultTheme
+      themes[selectedTheme]
     )}${baseStyling}\n}`
   }
 
@@ -1013,7 +1012,7 @@
       <div class="theming-container">
         {#each Object.keys(themes[selectedTheme]) as target}
           <div class="theming-inputs-wrapper">
-            {#if !target.includes('border-radius')}
+            {#if !target.includes('border-radius') && selectedTheme !== 'default'}
               <div class="theming-inputs">
                 <input
                   type="color"
@@ -1025,7 +1024,7 @@
               <span class="text" id="current-theme"
                 >{target} : {themes[selectedTheme][target]}</span
               >
-            {:else}
+            {:else if target.includes('border-radius')}
               <div class="theming-inputs-number">
                 <input
                   type="number"
