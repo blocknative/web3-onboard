@@ -147,7 +147,7 @@
       sequence,
       tallyho,
       uauth,
-      // phantom
+      phantom
     ],
     transactionPreview,
     gas,
