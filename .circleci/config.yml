@@ -333,6 +333,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/transaction-preview
     steps:
       - node-build-steps
+  build-zeal:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/zeal
+    steps:
+      - node-build-steps
 
   # Build staging/Alpha releases
   build-staging-core:
@@ -501,6 +507,12 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/transaction-preview
+    steps:
+      - node-staging-build-steps
+  build-staging-zeal:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/zeal
     steps:
       - node-staging-build-steps
 
@@ -674,4 +686,10 @@ workflows:
       - build-transaction-preview:
           <<: *deploy_production_filters
       - build-staging-transaction-preview:
+          <<: *deploy_staging_filters
+  zeal:
+    jobs:
+      - build-zeal:
+          <<: *deploy_production_filters
+      - build-staging-zeal:
           <<: *deploy_staging_filters

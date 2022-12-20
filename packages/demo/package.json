@@ -45,6 +45,7 @@
     "@web3-onboard/enkrypt": "^2.0.0",
     "@web3-onboard/mew-wallet": "^2.0.0",
     "@web3-onboard/uauth": "^2.0.0",
+    "@web3-onboard/zeal": "^2.0.0",
     "vconsole": "^3.9.5"
   },
   "license": "MIT",

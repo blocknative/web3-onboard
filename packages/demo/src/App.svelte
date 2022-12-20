@@ -17,6 +17,7 @@
   import dcentModule from '@web3-onboard/dcent'
   import sequenceModule from '@web3-onboard/sequence'
   import tallyHoModule from '@web3-onboard/tallyho'
+  import zealModule from '@web3-onboard/zeal'
   import transactionPreviewModule from '@web3-onboard/transaction-preview'
   import enkryptModule from '@web3-onboard/enkrypt'
   import mewWalletModule from '@web3-onboard/mew-wallet'
@@ -96,6 +97,7 @@
   const keystone = keystoneModule()
   const gnosis = gnosisModule()
   const tallyho = tallyHoModule()
+  const zeal = zealModule()
 
   const trezorOptions = {
     email: 'test@test.com',
@@ -127,6 +129,7 @@
   const onboard = Onboard({
     wallets: [
       injected,
+      zeal,
       web3auth,
       ledger,
       trezor,
@@ -290,7 +293,7 @@
   }
 
   let toAddress
-  const sendTransaction = async (provider) => {
+  const sendTransaction = async provider => {
     const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 
     const signer = ethersProvider.getSigner()
@@ -552,9 +555,9 @@
   :root {
     --background-color: #ffffff; /* --white */
     --text-color: #1a1d26; /* --gray-700 */
-    --border-color: #D0D4F7; /* --gray-100 taken from future mock */
+    --border-color: #d0d4f7; /* --gray-100 taken from future mock */
 
-    --accent-background: #EFF1FC; /* --gray-100 (currently gray-100 in connect modal) */
+    --accent-background: #eff1fc; /* --gray-100 (currently gray-100 in connect modal) */
     --accent-color: #929bed; /* --primary-400 */
     --accent-color-hover: #eff1fc; /* --primary-200 */
 
