@@ -25,8 +25,14 @@
     approved$.next(approved)
   }
 </script>
+<style>
+  .tp-main {
+    font-family: var(--onboard-font-family-normal, inherit);
+    background: var(--w3o-tp-background, --grey-700)
+  }
+</style>
 
-<div in:fade={{ duration: 250, easing: cubicOut }}>
+<div in:fade={{ duration: 250, easing: cubicOut }} class="tp-main">
   {#if expanded || requireTransactionApproval}
     <Maximized
       {toggleExpanded}

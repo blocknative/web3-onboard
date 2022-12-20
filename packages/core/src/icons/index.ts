@@ -1,5 +1,6 @@
 export { default as hourglass } from './hourglass.js'
 export { default as blocknative } from './blocknative.js'
+export { default as blocknativeIcon } from './blocknative-icon.js'
 export { default as ethereumIcon } from './ethereum.js'
 export { default as polygonIcon } from './polygon.js'
 export { default as questionIcon } from './question.js'

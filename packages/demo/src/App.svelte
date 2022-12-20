@@ -201,23 +201,23 @@
     // connect: {
     //   showSidebar: false
     // },
-    appMetadata: {
-      name: 'Blocknative',
-      icon: blocknativeIcon,
-      logo: blocknativeLogo,
-      description: 'Demo app for Onboard V2',
-      recommendedInjectedWallets: [
-        { name: 'MetaMask', url: 'https://metamask.io' },
-        { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
-      ],
-      agreement: {
-        version: '1.0.0',
-        termsUrl: 'https://www.blocknative.com/terms-conditions',
-        privacyUrl: 'https://www.blocknative.com/privacy-policy'
-      },
-      gettingStartedGuide: 'https://blocknative.com',
-      explore: 'https://blocknative.com'
-    },
+    // appMetadata: {
+    //   name: 'Blocknative',
+    //   // icon: blocknativeIcon,
+    //   // logo: blocknativeLogo,
+    //   description: 'Demo app for Onboard V2',
+    //   recommendedInjectedWallets: [
+    //     { name: 'MetaMask', url: 'https://metamask.io' },
+    //     { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
+    //   ],
+    //   agreement: {
+    //     version: '1.0.0',
+    //     termsUrl: 'https://www.blocknative.com/terms-conditions',
+    //     privacyUrl: 'https://www.blocknative.com/privacy-policy'
+    //   },
+    //   gettingStartedGuide: 'https://blocknative.com',
+    //   explore: 'https://blocknative.com'
+    // },
     // // example customizing account center
     accountCenter: {
       desktop: {
@@ -265,7 +265,17 @@
     // },
     // Sign up for your free api key at www.Blocknative.com
     apiKey,
-    theme: 'dark'
+    theme: {
+      '--w3o-background-color': 'purple',
+      '--w3o-text-color': '#EFF1FC',
+      '--w3o-border-color': '#33394B',
+      '--w3o-accent-background': '#242835',
+      '--w3o-accent-color': '#929bed',
+      '--w3o-secondary-text-color': '#999CA5',
+      '--w3o-border-radius': '24px',
+      // '--w3o-accent-color-hover': '#eff1fc',
+      '--w3o-secondary-accent-background': '#242835',
+    }
   })
 
   // Subscribe to wallet updates
@@ -409,66 +419,7 @@
   //     '--w3o-border-radius': '24px'
   //   }
 
-  const baseStyling = `--onboard-connect-sidebar-border-color: var(--w3o-border-color);
-  --onboard-connect-sidebar-background: var(--w3o-accent-background);
-  --onboard-connect-sidebar-color: var(--w3o-text-color);
-  --onboard-connect-sidebar-progress-background: var(--w3o-text-color);
-  --onboard-connect-sidebar-progress-color: var(--w3o-accent-color);
-  --onboard-connect-header-background: var(--w3o-background-color);
-  --onboard-connect-header-color: var(--w3o-text-color);
-  --onboard-main-scroll-container-background: var(--w3o-background-color);
-  --onboard-link-color: var(--w3o-accent-color);
-  --onboard-wallet-button-background: var(--w3o-background-color);
-  --onboard-wallet-button-background-hover: var(--w3o-accent-background);
-  --onboard-wallet-button-border-color: var(--w3o-border-color);
-  --onboard-wallet-app-icon-border-color: var(--w3o-border-color);
-  --onboard-close-button-background: var(--w3o-accent-background);
-  --onboard-wallet-button-color-hover: var(--w3o-text-color);
-  --onboard-wallet-button-color: var(--w3o-text-color);
-  --onboard-wallet-button-border-radius: var(--w3o-border-radius)
-  --onboard-modal-border-radius: var(--w3o-border-radius)
-
-
-
-  --account-center-minimized-background: var(--w3o-background-color);
-  --account-center-minimized-address-color: var(--w3o-text-color);
-  --account-center-minimized-balance-color: var(--w3o-secondary-text-color);
-
-  --account-center-maximized-info-section-background: var(
-    --w3o-background-color
-  );
-  --account-center-maximized-network-section-background: var(
-    --w3o-accent-background
-  );
-  --account-center-maximized-upper-background: var(
-    --w3o-secondary-accent-background
-  );
-  --account-center-maximized-address-color: var(--w3o-background-color);
-  --account-center-maximized-account-section-background-hover: var(
-    --w3o-text-color
-  );
-  --account-center-maximized-balance-color: var(--w3o-border-color);
-  --account-center-maximized-upper-action-color: var(--w3o-accent-color);
-  --account-center-maximized-network-text-color: var(
-    --w3o-secondary-accent-background
-  );
-  --account-center-maximized-info-section-background-color: var(
-    --w3o-background-color
-  );
-  --account-center-maximized-app-name-color: var(
-    --w3o-secondary-accent-background
-  );
-  --account-center-maximized-app-info-color: var(
-    --w3o-secondary-accent-background
-  );
-  --account-center-app-btn-background: var(--w3o-secondary-accent-background);
-  --account-center-app-btn-text-color: var(--w3o-background-color);
-
-  --notify-onboard-background: var(----secondary-accent-color);
-  --notify-onboard-transaction-status: var(--w3o-accent-background);
-  --notify-onboard-address-hash-color: var(--w3o-accent-background);
-  --notify-onboard-anchor-color: var(--w3o-accent-color);
-  --notify-onboard-timer-color: var(--w3o-text-color);`
+  const baseStyling = ``
 
   // Temp Removed   
   // --account-center-minimized-chain-select-background: var(

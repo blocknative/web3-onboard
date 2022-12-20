@@ -26,8 +26,7 @@ import type {
   CustomNotificationUpdate,
   Notify,
   PreflightNotificationsOptions,
-  ConnectModalOptions,
-  Theme
+  ConnectModalOptions
 } from './types.js'
 
 const unknownObject = Joi.object().unknown()
@@ -101,7 +100,7 @@ const agreement = Joi.object({
 const appMetadata = Joi.object({
   name: Joi.string().required(),
   description: Joi.string().required(),
-  icon: Joi.string().required(),
+  icon: Joi.string(),
   logo: Joi.string(),
   gettingStartedGuide: Joi.string(),
   email: Joi.string(),
@@ -178,7 +177,8 @@ const theme = Joi.object({
   '--w3o-accent-color': Joi.string(),
   '--w3o-secondary-text-color': Joi.string(),
   '--w3o-border-radius': Joi.string(),
-  '--w3o-secondary-accent-background': Joi.string()
+  '--w3o-secondary-accent-background': Joi.string(),
+  '--w3o-font-family': Joi.string()
 })
 
 const initOptions = Joi.object({

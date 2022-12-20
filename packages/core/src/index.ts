@@ -349,6 +349,7 @@ function mountApp() {
           --modal-backdrop: rgba(0, 0, 0, 0.6);
 
           /* THEME MAPPING */
+          --onboard-font-family-normal: var(--w3o-font-family)
           --onboard-connect-sidebar-border-color: var(--w3o-border-color);
           --onboard-connect-sidebar-background: var(--w3o-accent-background);
           --onboard-connect-sidebar-color: var(--w3o-text-color);

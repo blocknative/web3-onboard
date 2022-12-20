@@ -54,12 +54,10 @@
 
 <style>
   .maximized {
-    font-family: var(--onboard-font-family-normal, var(--font-family-normal));
     pointer-events: all;
     backdrop-filter: blur(5px);
     width: 100%;
     min-height: 3.5rem;
-    background: var(--onboard-gray-600, var(--gray-600));
     display: flex;
     flex-direction: column;
     position: relative;
