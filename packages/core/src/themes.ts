@@ -14,7 +14,7 @@ export default {
     '--w3o-background-color': '#ffffff',
     '--w3o-text-color': '#1a1d26',
     '--w3o-border-color': '#d0d4f7',
-    '--w3o-accent-background': '#ebebed',
+    '--w3o-accent-background': '#EFF1FC',
     '--w3o-accent-color': '#929bed',
     '--w3o-secondary-text-color': '#707481',
     '--w3o-border-radius': '24px',

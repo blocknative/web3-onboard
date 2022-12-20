@@ -17,13 +17,15 @@
 
 <style>
   .minimized {
-    font-family: var(--onboard-font-family-normal, var(--font-family-normal));
     transition: background 300ms ease-in-out, color 300ms ease-in-out;
     pointer-events: all;
     backdrop-filter: blur(5px);
     width: 100%;
     min-height: 3.5rem;
-    background: var(--onboard-gray-600, var(--gray-600));
+    background: var(
+      --w3o-tp-accent-background,
+      var(--onboard-gray-600, var(--gray-600))
+    );
     display: flex;
     flex-direction: column;
     position: relative;
@@ -31,11 +33,12 @@
   }
 
   .radius {
-    border-radius: var(--onboard-border-radius-4, var(--border-radius-4));
+    border-radius: inherit;
   }
 
-  .bn-notify-notification-inner {
+  .tp-header {
     padding: 0.75rem;
+    border-bottom: var(--w3o-tp-border-color, transparent) 1px solid;
   }
 
   div.tp-close-btn {
@@ -72,26 +75,29 @@
   }
 
   .tp-close-btn > .close-icon {
-    color: var(--onboard-gray-300, var(--gray-300));
+    color: var(--tp-close-icon-color, var(--onboard-gray-300, var(--gray-300)));
   }
 
   .tp-close-btn:hover > .close-icon {
-    color: var(--onboard-gray-100, var(--gray-100));
+    color: var(--tp-close-icon-hover, var(--onboard-gray-100, var(--gray-100)));
   }
 
   .details-cta {
-    font-style: normal;
     font-weight: 700;
     font-size: 0.875rem;
     display: flex;
     justify-content: flex-end;
     flex-direction: row;
     align-items: center;
-    background: var(--onboard-gray-700, var(--gray-700));
+    background: var(
+      --w3o-tp-accent-background,
+      var(--onboard-gray-700, var(--gray-700))
+    );
     padding: 0.5rem;
     gap: 0.5rem;
     height: 3rem;
-    border: 1px solid var(--onboard-gray-600, var(--gray-600));
+    border: 1px solid
+      var(--w3o-tp-accent-background, var(--onboard-gray-600, var(--gray-600)));
     flex: none;
     order: 2;
     align-self: stretch;
@@ -110,7 +116,7 @@
       {@html closeIcon}
     </div>
   </div>
-  <div class="flex bn-notify-notification-inner">
+  <div class="flex tp-header">
     <IconBadge />
     <SimulationHeader {startTime} />
   </div>

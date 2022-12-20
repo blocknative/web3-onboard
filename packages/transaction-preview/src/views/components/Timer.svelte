@@ -48,7 +48,10 @@
   }
 
   .time {
-    color: var(--onboard-gray-300, var(--gray-300))
+    color: var(
+      --w3o-text-color,
+      var(--onboard-gray-300, var(--gray-300))
+    );
   }
 
   .stale {

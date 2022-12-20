@@ -199,6 +199,13 @@ const mountTransactionPreview = (simResponse: MultiSimOutput) => {
 
   target.innerHTML = `
     <style>
+    --onboard-font-family-normal: var(--w3o-font-family, initial);
+    --w3o-tp-background: var(--w3o-background, initial);
+    --w3o-tp-accent-background: var(--w3o-accent-background, initial);
+    --w3o-tp-border-radius: var(--w3o-border-radius, initial);
+    --w3o-tp-close-icon-hover: var(--w3o-text-color, initial);
+    --w3o-tp-text-color: var(--w3o-text-color, initial);
+    --w3o-tp-border-color: var(--w3o-border-color, initial);
     </style>
   `
   const getW3OEl = document.querySelector('onboard-v2')

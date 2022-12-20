@@ -11,14 +11,11 @@
     padding: 0.25rem 0.75rem;
     gap: 0.25rem;
     border-radius: var(--onboard-border-radius-5, var(--border-radius-5));
-    background: var(--onboard-gray-700, var(--gray-700));
-    color: var(
-      --transaction-sim-details-cta-color,
-      var(--onboard-primary-400, var(--primary-400))
-    );
+    background: transparent;
+    color: inherit;
   }
   button:hover {
-    background: rgba(146, 155, 237, 0.2);
+    background: var(--w3o-tp-border-color, rgba(146, 155, 237, 0.2));
   }
 </style>
 

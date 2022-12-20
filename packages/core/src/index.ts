@@ -224,9 +224,9 @@ function init(options: InitOptions): OnboardAPI {
     getBnSDK()
   }
 
-  if (theme) {
-    updateTheme(typeof theme === 'string' ? themes[theme] : theme)
-  }
+  theme
+    ? updateTheme(typeof theme === 'string' ? themes[theme] : theme)
+    : updateTheme(themes['default'])
 
   return API
 }
@@ -410,6 +410,15 @@ function mountApp() {
           --notify-onboard-dropdown-text-color: var(--w3o-accent-color, initial);
           --notify-onboard-dropdown-btn-hover-background: var(--w3o-accent-background, initial);
           --notify-onboard-close-icon-hover: var(--w3o-text-color, initial);
+          
+          /* TRANSACTION PREVIEW THEMING */
+          --w3o-tp-accent-background: var(--w3o-accent-background, initial);
+          --w3o-tp-background: var(--w3o-background, initial);
+          --w3o-tp-border-radius: var(--w3o-border-radius, initial);
+          --w3o-tp-close-icon-hover: var(--w3o-text-color, initial);
+          --w3o-tp-text-color: var(--w3o-text-color, initial);
+          --w3o-tp-secondary-secondary-text-color: var(--w3o-text-color, initial);
+          --w3o-tp-border-color: var(--w3o-border-color, initial);
         }
       </style>
     `

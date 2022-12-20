@@ -124,7 +124,7 @@
   const sequence = sequenceModule()
   const enkrypt = enkryptModule()
   const mewWallet = mewWalletModule()
-  const transactionPreview = transactionPreviewModule()
+  const transactionPreview = transactionPreviewModule({requireTransactionApproval: false})
 
   const onboard = Onboard({
     wallets: [
@@ -268,7 +268,7 @@
     // },
     // Sign up for your free api key at www.Blocknative.com
     apiKey,
-    theme: 'default'
+    // theme: 'default'
   })
 
   // Subscribe to wallet updates
