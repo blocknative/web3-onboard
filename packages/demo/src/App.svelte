@@ -40,7 +40,7 @@
     new VConsole()
   }
 
-  const apiKey = 'xxxxxx-bf21-42ec-a093-9d37e426xxxx'
+  const apiKey = '0fcf74ed-b95b-4b8d-a8d8-4d655ae479d9'
   const infura_key = '80633e48116943128cbab25e402764ab'
 
   let defaultTransactionObject = JSON.stringify(
@@ -265,18 +265,7 @@
     // },
     // Sign up for your free api key at www.Blocknative.com
     apiKey,
-    theme: {
-      '--w3o-background-color': 'purple',
-      '--w3o-text-color': '#EFF1FC',
-      '--w3o-border-color': '#33394B',
-      '--w3o-accent-background': '#242835',
-      '--w3o-accent-color': '#929bed',
-      '--w3o-secondary-text-color': '#999CA5',
-      '--w3o-border-radius': '24px',
-      // '--w3o-accent-color-hover': '#eff1fc',
-      '--w3o-secondary-accent-background': '#242835',
-      '--w3o-font-family': 'cursive'
-    }
+    theme: 'dark'
   })
 
   // Subscribe to wallet updates

@@ -149,7 +149,7 @@
 
   .dropdown-buttons {
     background-color: var(
-      --notify-onboard-gray-700,
+      --notify-onboard-dropdown-background,
       var(--onboard-gray-700, var(--gray-700))
     );
     width: 100%;
@@ -159,16 +159,16 @@
   .dropdown-button {
     padding: 4px 12px;
     border-radius: var(
-      --notify-onboard-border-radius-5,
+      --notify-onboard-dropdown-border-radius,
       var(--onboard-border-radius-5, var(--border-radius-5))
     );
     background-color: transparent;
     font-size: var(
-      --notify-onboard-font-size-6,
+      --notify-onboard-dropdown-font-size,
       var(--onboard-font-size-6, var(--font-size-6))
     );
     color: var(
-      --notify-onboard-primary-400,
+      --notify-onboard-dropdown-text-color,
       var(--onboard-primary-400, var(--primary-400))
     );
     transition: all 150ms ease-in-out;
@@ -176,7 +176,10 @@
   }
 
   .dropdown-button:hover {
-    background-color: rgba(146, 155, 237, 0.2);
+    background: var(
+      --notify-onboard-dropdown-btn-hover-background,
+      rgba(146, 155, 237, 0.2)
+    );
   }
 </style>
 

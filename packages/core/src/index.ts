@@ -406,11 +406,14 @@ function mountApp() {
           --account-center-app-btn-text-color: var(--w3o-background-color);
           
           /* NOTIFY THEMING */
-          --notify-onboard-background: var(----secondary-accent-color);
-          --notify-onboard-transaction-status: var(--w3o-accent-background);
-          --notify-onboard-address-hash-color: var(--w3o-accent-background);
+          --notify-onboard-background: var(--w3o-accent-background);
+          --notify-onboard-transaction-status: var(--w3o-text-color);
+          --notify-onboard-address-hash-color: var(--w3o-secondary-text-color);
           --notify-onboard-anchor-color: var(--w3o-accent-color);
-          --notify-onboard-timer-color: var(--w3o-text-color);
+          --notify-onboard-timer-color: var(--w3o-secondary-text-color);
+          --notify-onboard-dropdown-background: var(--w3o-background-color);
+          --notify-onboard-dropdown-text-color: var(--w3o-accent-color);
+          --notify-onboard-dropdown-btn-hover-background: var(--w3o-accent-background)
         }
       </style>
     `
