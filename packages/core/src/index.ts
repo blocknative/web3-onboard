@@ -6,7 +6,7 @@ import { state } from './store/index.js'
 import { reset$, wallets$ } from './streams.js'
 import initI18N from './i18n/index.js'
 import App from './views/Index.svelte'
-import type { InitOptions, Notify, Theme } from './types.js'
+import type { InitOptions, Notify } from './types.js'
 import { APP_INITIAL_STATE } from './constants.js'
 import { configuration, updateConfiguration } from './configuration.js'
 import updateBalances from './update-balances.js'
@@ -32,7 +32,7 @@ import {
 } from './store/actions.js'
 import type { PatchedEIP1193Provider } from '@web3-onboard/transaction-preview'
 import { getBlocknativeSdk } from './services.js'
-import { themeMapping, themes } from './themes'
+import { themeMapping } from './themes'
 
 const API = {
   connectWallet,
@@ -69,7 +69,8 @@ export type {
   Notification,
   Notify,
   UpdateNotification,
-  PreflightNotificationsOptions
+  PreflightNotificationsOptions,
+  Theme
 } from './types.js'
 
 export type { EIP1193Provider } from '@web3-onboard/common'
@@ -224,18 +225,7 @@ function init(options: InitOptions): OnboardAPI {
     getBnSDK()
   }
 
-  console.log('theme', theme)
-  if (theme) {
-    console.log(theme)
-    if (typeof theme === 'string' && theme in themes) {
-      updateTheme(themes[theme])
-    }
-    if (typeof theme === 'object') {
-      updateTheme(theme)
-    }
-  } else {
-    updateTheme(themes['default'])
-  }
+  theme ? updateTheme(theme) : updateTheme('default')
 
   return API
 }

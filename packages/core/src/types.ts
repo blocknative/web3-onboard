@@ -66,14 +66,12 @@ export interface InitOptions {
   /**
    * Custom or predefined theme for Web3Onboard i.e. default, dark, Custom, etc.
    */
-  theme?: Theme | BuiltInThemes
+  theme?: Theme
 }
+
+export type Theme = ThemingMap | BuiltInThemes
 
 export type BuiltInThemes = 'default' | 'dark'
-
-export type Theme = {
-  [Key in keyof ThemingMap]?: string
-}
 
 export type ThemingMap = {
   '--w3o-background-color'?: string

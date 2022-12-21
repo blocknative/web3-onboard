@@ -2,6 +2,7 @@ import type { Chain, WalletInit, WalletModule } from '@web3-onboard/common'
 import { nanoid } from 'nanoid'
 import { dispatch } from './index.js'
 import { configuration } from '../configuration.js'
+import { themes } from '../themes.js'
 
 import type {
   Account,
@@ -27,6 +28,7 @@ import type {
   Notify,
   ConnectModalOptions,
   UpdateConnectModalAction,
+  Theme,
   ThemingMap
 } from '../types.js'
 
@@ -400,11 +402,23 @@ export function uniqueWalletsByLabel(
   )
 }
 
-export function updateTheme(theme: ThemingMap): void {
-  Object.keys(theme).forEach(targetStyle => {
+export function updateTheme(theme: Theme): void {
+  let update: ThemingMap
+  if (typeof theme === 'string' && theme in themes) {
+    update = themes[theme]
+  }
+  if (typeof theme === 'object') {
+    update = theme
+  }
+  if (!update) {
+    throw new Error(
+      'The theme passed is not found in our native themes or is not formatted properly'
+    )
+  }
+  Object.keys(update).forEach(targetStyle => {
     document.documentElement.style.setProperty(
       targetStyle,
-      theme[targetStyle as keyof ThemingMap]
+      update[targetStyle as keyof ThemingMap]
     )
   })
 }

@@ -204,23 +204,23 @@
     // connect: {
     //   showSidebar: false
     // },
-    // appMetadata: {
-    //   name: 'Blocknative',
-    //   // icon: blocknativeIcon,
-    //   // logo: blocknativeLogo,
-    //   description: 'Demo app for Onboard V2',
-    //   recommendedInjectedWallets: [
-    //     { name: 'MetaMask', url: 'https://metamask.io' },
-    //     { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
-    //   ],
-    //   agreement: {
-    //     version: '1.0.0',
-    //     termsUrl: 'https://www.blocknative.com/terms-conditions',
-    //     privacyUrl: 'https://www.blocknative.com/privacy-policy'
-    //   },
-    //   gettingStartedGuide: 'https://blocknative.com',
-    //   explore: 'https://blocknative.com'
-    // },
+    appMetadata: {
+      name: 'Blocknative',
+      // icon: blocknativeIcon,
+      // logo: blocknativeLogo,
+      description: 'Demo app for Onboard V2',
+      recommendedInjectedWallets: [
+        { name: 'MetaMask', url: 'https://metamask.io' },
+        { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
+      ],
+      agreement: {
+        version: '1.0.0',
+        termsUrl: 'https://www.blocknative.com/terms-conditions',
+        privacyUrl: 'https://www.blocknative.com/privacy-policy'
+      },
+      gettingStartedGuide: 'https://blocknative.com',
+      explore: 'https://blocknative.com'
+    },
     // // example customizing account center
     accountCenter: {
       desktop: {
@@ -268,7 +268,7 @@
     // },
     // Sign up for your free api key at www.Blocknative.com
     apiKey,
-    theme: 'light'
+    theme: 'dark'
   })
 
   // Subscribe to wallet updates
