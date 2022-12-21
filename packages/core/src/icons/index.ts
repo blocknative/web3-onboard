@@ -1,4 +1,3 @@
-// export { default as blocknative } from './blocknative.js'
 export { default as blocknativeIcon } from './blocknative-icon.js'
 export { default as poweredByBlocknative } from './poweredByBlocknative.js'
 export { default as hourglass } from './hourglass.js'

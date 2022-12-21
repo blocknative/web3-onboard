@@ -268,7 +268,7 @@
     // },
     // Sign up for your free api key at www.Blocknative.com
     apiKey,
-    theme: 'dark'
+    // theme: 'dark'
   })
 
   // Subscribe to wallet updates
@@ -437,10 +437,10 @@
   const updateThemeEl = (targetStyle, value) => {
     console.log(targetStyle, value)
     const iframe = document.getElementById('inlineFrameExample')
-    iframe.contentWindow.document.documentElement.style.setProperty(
-      targetStyle,
-      value
-    )
+    // iframe.contentWindow.document.documentElement.style.setProperty(
+    //   targetStyle,
+    //   value
+    // )
 
     copyableStyles = `{\n  ${styleToString(
       themes[selectedTheme]
