@@ -7,7 +7,6 @@ export default {
     '--w3o-accent-color': 'initial',
     '--w3o-secondary-text-color': 'initial',
     '--w3o-border-radius': 'initial',
-    // '--w3o-accent-color-hover': 'initial', Replaced with accent-background
     '--w3o-secondary-accent-background': 'initial'
   },
   light: {
@@ -18,7 +17,6 @@ export default {
     '--w3o-accent-color': '#929bed',
     '--w3o-secondary-text-color': '#707481',
     '--w3o-border-radius': '24px',
-    // '--w3o-accent-color-hover': '#eff1fc', Replaced with accent-background
     '--w3o-secondary-accent-background': '#242835'
   },
   dark: {
@@ -29,7 +27,6 @@ export default {
     '--w3o-accent-color': '#929bed',
     '--w3o-secondary-text-color': '#999CA5',
     '--w3o-border-radius': '24px',
-    // '--w3o-accent-color-hover': '#eff1fc',
     '--w3o-secondary-accent-background': '#242835'
   }
 }

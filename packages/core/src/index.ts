@@ -362,6 +362,7 @@ function mountApp() {
           --onboard-connect-sidebar-progress-color: var(--w3o-accent-color, initial);
           --onboard-connect-header-background: var(--w3o-background-color, initial);
           --onboard-connect-header-color: var(--w3o-text-color, initial);
+          --onboard-connect-text-color: var(--w3o-text-color, initial);
           --onboard-main-scroll-container-background: var(--w3o-background-color, initial);
           --onboard-link-color: var(--w3o-accent-color, initial);
           --onboard-wallet-button-background: var(--w3o-background-color, initial);
