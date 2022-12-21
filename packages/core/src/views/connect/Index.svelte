@@ -31,7 +31,7 @@
     takeUntil
   } from 'rxjs'
 
-  import { blocknative } from '../../icons/index.js'
+  import { blocknativeIcon } from '../../icons/index.js'
 
   import {
     getChainId,
@@ -373,7 +373,7 @@
   .container {
     font-family: var(--onboard-font-family-normal, var(--font-family-normal));
     font-size: var(--onboard-font-size-5, var(--font-size-5));
-    color: var(--onboard-gray-700, var(--gray-700));
+    color: var(--onboard-connect-text-color, var(--onboard-gray-700, var(--gray-700)));
     background: var(
       --onboard-main-scroll-container-background,
       var(--onboard-white, var(--white))
@@ -457,6 +457,7 @@
     width: 2.5rem;
     min-width: 2.5rem;
     justify-content: center;
+    align-items: center;
   }
 
   .w-full {
@@ -501,7 +502,7 @@
                   <img src={icon} alt="logo" />
                 {/if}
               {:else}
-                {@html blocknative}
+                {@html blocknativeIcon}
               {/if}
             </div>
             <div class="flex flex-column justify-center w-full">
