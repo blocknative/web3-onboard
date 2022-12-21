@@ -224,9 +224,14 @@ function init(options: InitOptions): OnboardAPI {
     getBnSDK()
   }
 
-  theme
-    ? updateTheme(typeof theme === 'string' ? themes[theme] : theme)
-    : updateTheme(themes['default'])
+  if (theme) {
+    if (typeof theme === 'string' && theme in themes) {
+      updateTheme(themes[theme])
+    }
+    if (typeof theme === 'object') {
+      updateTheme(theme)
+    }
+  }
 
   return API
 }
