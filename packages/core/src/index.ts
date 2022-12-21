@@ -74,8 +74,6 @@ export type {
 
 export type { EIP1193Provider } from '@web3-onboard/common'
 
-let themeSelected = false
-
 function init(options: InitOptions): OnboardAPI {
   if (typeof window === 'undefined') return API
 
@@ -231,12 +229,12 @@ function init(options: InitOptions): OnboardAPI {
     console.log(theme)
     if (typeof theme === 'string' && theme in themes) {
       updateTheme(themes[theme])
-      themeSelected = true
     }
     if (typeof theme === 'object') {
       updateTheme(theme)
-      themeSelected = true
     }
+  } else {
+    updateTheme(themes['default'])
   }
 
   return API
@@ -359,7 +357,7 @@ function mountApp() {
           /* MODAL STYLES */
           --modal-backdrop: rgba(0, 0, 0, 0.6);
 
-          ${themeSelected && themeMapping}
+          ${themeMapping}
           
         }
       </style>

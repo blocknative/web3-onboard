@@ -14,6 +14,10 @@
 <style>
   .container {
     padding: var(--onboard-spacing-4, var(--spacing-4));
+    color: var(
+      --onboard-connect-accent-text-color,
+      var(--onboard-gray-700, var(--gray-700))
+    );
   }
 
   .connecting-container {
