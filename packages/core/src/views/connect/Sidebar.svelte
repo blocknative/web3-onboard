@@ -1,6 +1,6 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
-  import { blocknativeIcon, poweredByBlocknativeIcon } from '../../icons/index.js'
+  import { blocknativeIcon, poweredByBlocknative } from '../../icons/index.js'
   import en from '../../i18n/en.json'
   import type { i18n } from '../../types.js'
   import { isSVG } from '../../utils.js'
@@ -209,6 +209,6 @@
 
   </div>
   <div>
-    {@html poweredByBlocknativeIcon}
+    {@html poweredByBlocknative}
   </div>
 </div>
