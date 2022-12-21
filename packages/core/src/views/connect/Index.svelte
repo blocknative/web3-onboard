@@ -371,13 +371,22 @@
 
 <style>
   .container {
+    /* component values */
+    /* --background-color: var(--onboard-main-scroll-container-background, var(--onboard-white, var(--white)));
+    --text-color: var(--onboard-connect-text-color, var(--onboard-gray-700, var(--gray-700))); */
+    --background-color: var(--w3o-background-color);
+    --text-color: var(--w3o-text-color);
+    --border-color: var(--w3o-border-color);
+    --action-color: var(--w3o-accent-color);
+
+    /* themeable properties */
     font-family: var(--onboard-font-family-normal, var(--font-family-normal));
-    font-size: var(--onboard-font-size-5, var(--font-size-5));
-    color: var(--onboard-connect-text-color, var(--onboard-gray-700, var(--gray-700)));
-    background: var(
-      --onboard-main-scroll-container-background,
-      var(--onboard-white, var(--white))
-    );
+    font-size: var(--onboard-font-size-5, 1rem);
+    background: var(--background-color);
+    color: var(--text-color);
+    border-color: var(--border-color);
+
+    /* non-themeable properties */
     line-height: 24px;
     margin-bottom: 2rem;
     overflow: hidden;
@@ -391,60 +400,45 @@
     width: var(--onboard-connect-content-width, 100%);
   }
 
-  .scroll-container {
-    overflow-y: auto;
-    transition: opacity 250ms ease-in-out;
-    scrollbar-width: none; /* Firefox */
-  }
-
-  .scroll-container::-webkit-scrollbar {
-    display: none; /* Chrome, Safari and Opera */
-  }
-
   .header {
     display: flex;
     padding: 1rem;
-    border-bottom: 1px solid var(--onboard-primary-200, var(--primary-200));
-    background: var(
+    border-bottom: 1px solid;
+    border-color: var(--border-color);
+
+    /* border-bottom: 1px solid var(--onboard-primary-200, var(--primary-200)); */
+    /* background: var(
       --onboard-connect-header-background,
       var(--onboard-white, var(--white))
-    );
-    color: var(
+    ); */
+    /* color: var(
       --onboard-connect-header-color,
       var(--onboard-black, var(--black))
-    );
+    ); */
   }
 
   .header-heading {
-    line-height: 16px;
+    line-height: 1rem;
   }
 
   .button-container {
-    right: var(--onboard-spacing-5, var(--spacing-5));
-    top: var(--onboard-spacing-5, var(--spacing-5));
-  }
-
-  .disabled {
-    opacity: 0.2;
-    pointer-events: none;
+    right: 0.5rem;
+    top: 0.5rem;
   }
 
   .mobile-header {
-    height: 4.5rem; /* 72px */
-    padding: 1rem;
     display: flex;
     gap: 0.5rem;
-
-    border-bottom: 1px solid
-      var(
-        --onboard-wallet-button-border-color,
-        var(--onboard-primary-200, var(--primary-200))
-      );
+    height: 4.5rem; /* 72px */
+    padding: 1rem;
+    border-bottom: 1px solid;
+    border-color: var(--border-color);
   }
 
   .mobile-subheader {
-    color: var(--onboard-gray-400, var(--gray-400));
-    font-size: var(--onboard-font-size-6, var(--font-size-6));
+    /* color: var(--onboard-gray-400, var(--gray-400)); */
+    opacity: 0.6;
+    font-size: 0.875rem;
     font-weight: 400;
     line-height: 1rem;
     margin-top: 0.25rem;
@@ -460,8 +454,23 @@
     align-items: center;
   }
 
+  .disabled {
+    opacity: 0.2;
+    pointer-events: none;
+  }
+
   .w-full {
     width: 100%;
+  }
+
+  .scroll-container {
+    overflow-y: auto;
+    transition: opacity 250ms ease-in-out;
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .scroll-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
   }
 
   @media all and (min-width: 768px) {

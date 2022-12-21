@@ -20,16 +20,22 @@
 
 <style>
   .sidebar {
+    --background-color: var(--onboard-connect-sidebar-background, initial);
+    --text-color: var(--onboard-connect-sidebar-color, initial);
+    /* --border-color: #f00; */
+    /* --action-color: #00f; */
+
     display: flex;
     flex-flow: column;
     gap: 1rem;
     padding: 1rem;
     align-items: center;
 
-    color: var(
+    color: var(--text-color);
+    /* color: var(
       --onboard-connect-sidebar-color,
       var(--onboard-gray-700, var(--gray-700))
-    );
+    ); */
   }
 
   .inner-container {
@@ -44,15 +50,17 @@
     border: 1px solid;
     border-radius: 12px;
 
-    border-color: var(
+    border-color: var(--border-color);
+    background-color: var(--background-color);
+
+    /* border-color: var(
       --onboard-connect-sidebar-border-color,
       var(--onboard-primary-200, var(--primary-200))
-    );
-
-    background: var(
+    ); */
+    /* background: var(
       --onboard-connect-sidebar-background,
       var(--onboard-primary-100, var(--primary-100))
-    );
+    ); */
   }
 
   .icon-container {
@@ -124,14 +132,18 @@
     .sidebar {
       max-width: 280px;
       border-right: 1px solid;
-      border-color: var(
+
+      border-color: var(--border-color);
+      background-color: var(--background-color);
+
+      /* border-color: var(
         --onboard-connect-sidebar-border-color,
         var(--onboard-primary-200, var(--primary-200))
-      );
-      background: var(
+      ); */
+      /* background: var(
         --onboard-connect-sidebar-background,
         var(--onboard-primary-100, var(--primary-100))
-      );
+      ); */
     }
     .inner-container {
       border: none;

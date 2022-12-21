@@ -25,10 +25,11 @@
     flex: 1;
     padding: 0;
     background: none;
-    color: var(
+    color: inherit;
+    /* color: var(
       --onboard-wallet-button-color,
       var(--onboard-gray-700, var(--gray-700))
-    );
+    ); */
   }
 
   .wallet-button-container {
@@ -63,19 +64,25 @@
   @media screen and (min-width: 768px) {
     button.wallet-button-styling {
       transition: background-color 250ms ease-in-out;
-      background: var(
+
+      /* background: var(
         --onboard-wallet-button-background,
         var(--onboard-white, var(--white))
-      );
+      ); */
+
       border-radius: var(
         --onboard-wallet-button-border-radius,
         var(--border-radius-1)
       );
-      border: 1px solid
+
+      /* border: 1px solid
         var(
           --onboard-wallet-button-border-color,
           var(--onboard-primary-200, var(--primary-200))
-        );
+        ); */
+
+      border: 1px solid;
+      border-color: var(--border-color);
     }
 
     button.wallet-button-styling:hover {
@@ -100,9 +107,9 @@
       border-color: var(--onboard-success-500, var(--success-500));
     }
 
-    button.connected:hover {
+    /* button.connected:hover {
       background: var(--onboard-success-100, var(--success-100));
-    }
+    } */
 
     .name {
       font-size: 1rem;
@@ -138,7 +145,7 @@
         size={windowWidth >= MOBILE_WINDOW_WIDTH ? 48 : 56}
         {icon}
         loading={connecting}
-        border={connected ? 'green' : 'blue'}
+        border={connected ? 'green' : 'custom'}
         background="transparent"
       />
       <div class="name">{label}</div>
