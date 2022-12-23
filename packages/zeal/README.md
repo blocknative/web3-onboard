@@ -8,7 +8,7 @@ For any questions or issues related to integration with Zeal wallet do not hesit
 
 ### Install
 
-`npm i @web3-onboard/zeal`
+`npm i @web3-onboard/core @web3-onboard/zeal`
 
 ## Usage
 

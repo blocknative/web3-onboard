@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/zeal",
-  "version": "2.0.0",
+  "version": "2.0.0-alpha.1",
   "description": "Zeal SDK wallet module for connecting to Web3-Onboard.",
   "keywords": [
     "Ethereum",
