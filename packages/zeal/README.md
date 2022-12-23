@@ -6,7 +6,7 @@ See [Zeal](https://www.zeal.app/) for details
 
 ### Install
 
-`npm i @web3-onboard/zeal`
+`npm i @web3-onboard/core @web3-onboard/zeal`
 
 ## Usage
 
