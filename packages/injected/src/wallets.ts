@@ -630,6 +630,20 @@ const enkrypt: InjectedWalletModule = {
   platforms: ['all']
 }
 
+const phantom: InjectedWalletModule = {
+  label: ProviderLabel.Phantom,
+  injectedNamespace: InjectedNameSpace.Phantom,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider &&
+    !!provider['ethereum'] &&
+    !!provider['ethereum'][ProviderIdentityFlag.Phantom],
+  getIcon: async () => (await import('./icons/phantom.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.phantom.ethereum)
+  }),
+  platforms: ['all']
+}
+
 const wallets = [
   zeal,
   exodus,
@@ -666,7 +680,8 @@ const wallets = [
   sequence,
   core,
   bitski,
-  enkrypt
+  enkrypt,
+  phantom
 ]
 
 export default wallets

@@ -22,6 +22,7 @@
   import enkryptModule from '@web3-onboard/enkrypt'
   import mewWalletModule from '@web3-onboard/mew-wallet'
   import uauthModule from '@web3-onboard/uauth'
+  import phantomModule from '@web3-onboard/phantom'
   import {
     recoverAddress,
     arrayify,
@@ -98,6 +99,7 @@
   const gnosis = gnosisModule()
   const tallyho = tallyHoModule()
   const zeal = zealModule()
+  const phantom = phantomModule()
 
   const trezorOptions = {
     email: 'test@test.com',
@@ -147,7 +149,8 @@
       dcent,
       sequence,
       tallyho,
-      uauth
+      uauth,
+      phantom
     ],
     transactionPreview,
     gas,
