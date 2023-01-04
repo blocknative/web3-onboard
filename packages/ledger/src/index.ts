@@ -3,7 +3,7 @@ import {
   WalletInit,
   GetInterfaceHelpers,
   EIP1193Provider,
-  ProviderAccounts,
+  ProviderAccounts
 } from '@web3-onboard/common'
 import type { EthereumProvider } from '@ledgerhq/connect-kit-loader'
 import type { StaticJsonRpcProvider as StaticJsonRpcProviderType } from '@ethersproject/providers'
@@ -21,7 +21,7 @@ interface LedgerOptions {
   chainId?: number
   bridge?: string
   infuraId?: string
-  rpc?: { [chainId: number]: string; }
+  rpc?: { [chainId: number]: string }
 }
 
 function ledger(options?: LedgerOptions): WalletInit {
@@ -30,9 +30,11 @@ function ledger(options?: LedgerOptions): WalletInit {
       label: 'Ledger',
       getIcon: async () => (await import('./icon.js')).default,
       getInterface: async ({ chains, EventEmitter }: GetInterfaceHelpers) => {
-        const { loadConnectKit, SupportedProviders, SupportedProviderImplementations } = await import(
-          '@ledgerhq/connect-kit-loader'
-        )
+        const {
+          loadConnectKit,
+          SupportedProviders,
+          SupportedProviderImplementations
+        } = await import('@ledgerhq/connect-kit-loader')
 
         const connectKit = await loadConnectKit()
         connectKit.enableDebugLogs()
@@ -40,23 +42,30 @@ function ledger(options?: LedgerOptions): WalletInit {
           providerType: SupportedProviders.Ethereum,
           chainId: options?.chainId,
           infuraId: options?.infuraId,
-          rpc: options?.rpc,
+          rpc: options?.rpc
         })
 
         // get the Ledger provider instance, it can be either Ledger Connect
         // or WalletConnect
-        const instance = await connectKit.getProvider() as EthereumProvider
+        const instance = (await connectKit.getProvider()) as EthereumProvider
 
         // return the Ledger Connect provider
-        if (checkSupportResult.providerImplementation === SupportedProviderImplementations.LedgerConnect) {
+        if (
+          checkSupportResult.providerImplementation ===
+          SupportedProviderImplementations.LedgerConnect
+        ) {
           return {
             provider: instance as EIP1193Provider
           }
         }
 
         // fallback to WalletConnect on unsupported platforms
-        const { StaticJsonRpcProvider } = await import('@ethersproject/providers')
-        const { ProviderRpcError, ProviderRpcErrorCode } = await import('@web3-onboard/common')
+        const { StaticJsonRpcProvider } = await import(
+          '@ethersproject/providers'
+        )
+        const { ProviderRpcError, ProviderRpcErrorCode } = await import(
+          '@web3-onboard/common'
+        )
         const { default: WalletConnect } = await import('@walletconnect/client')
         const { Subject, fromEvent } = await import('rxjs')
         const { takeUntil, take } = await import('rxjs/operators')
