@@ -3,7 +3,11 @@
   import { fade } from 'svelte/transition'
   import { ProviderRpcErrorCode } from '@web3-onboard/common'
   import type { WalletState } from '../../types.js'
-  import { shortenAddress, shortenEns, copyWalletAddress } from '../../utils.js'
+  import {
+    shortenAddress,
+    shortenDomain,
+    copyWalletAddress
+  } from '../../utils.js'
   import en from '../../i18n/en.json'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
@@ -87,7 +91,7 @@
     );
   }
 
-  .address-ens {
+  .address-domain {
     margin-left: 0.5rem;
     font-weight: 700;
     color: var(
@@ -156,7 +160,7 @@
   }
 </style>
 
-{#each wallet.accounts as { address, ens, balance }, i}
+{#each wallet.accounts as { address, ens, uns, balance }, i}
   <div class="relative">
     <div
       on:click={() => setPrimaryWallet(wallet, address)}
@@ -188,9 +192,13 @@
           {/if}
         </div>
 
-        <!-- ADDRESS / ENS -->
-        <span class="address-ens"
-          >{ens ? shortenEns(ens.name) : shortenAddress(address)}</span
+        <!-- ADDRESS / DOMAIN -->
+        <span class="address-domain"
+          >{ens
+            ? shortenDomain(ens.name)
+            : uns
+            ? shortenDomain(uns.name)
+            : shortenAddress(address)}</span
         >
       </div>
 
@@ -249,9 +257,11 @@
         </li>
         <li
           on:click|stopPropagation={() => {
-            copyWalletAddress(ens ? ens.name : address).then(() => {
-              changeText()
-            })
+            copyWalletAddress(ens ? ens.name : uns ? uns.name : address).then(
+              () => {
+                changeText()
+              }
+            )
           }}
         >
           {en.accountCenter.copyAddress}
