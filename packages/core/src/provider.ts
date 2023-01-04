@@ -151,7 +151,12 @@ export function trackWallet(
     // update accounts without ens/uns and balance first
     updateWallet(label, {
       accounts: [
-        existingAccount || { address: address, ens: null, uns: null, balance: null },
+        existingAccount || {
+          address: address,
+          ens: null,
+          uns: null,
+          balance: null
+        },
         ...restAccounts
       ]
     })
@@ -206,19 +211,24 @@ export function trackWallet(
             : validEnsChain(connectedWalletChain.id)
             ? getEns(address, chain)
             : Promise.resolve(null)
-        
+
         const unsProm =
           account && account.uns
             ? Promise.resolve(account.uns)
             : getUns(address, chain)
 
-        return Promise.all([Promise.resolve(address), balanceProm, ensProm, unsProm])
+        return Promise.all([
+          Promise.resolve(address),
+          balanceProm,
+          ensProm,
+          unsProm
+        ])
       })
     )
     .subscribe(res => {
       if (!res) return
       const [address, balance, ens, uns] = res
-      updateAccount(label, address, { balance, ens, uns})
+      updateAccount(label, address, { balance, ens, uns })
     })
 
   const chainChanged$ = listenChainChanged({ provider, disconnected$ }).pipe(
@@ -300,12 +310,16 @@ export function trackWallet(
             const ensProm = validEnsChain(chainId)
               ? getEns(address, chain)
               : Promise.resolve(null)
-            
+
             const unsProm = validEnsChain(chainId)
               ? getUns(address, chain)
               : Promise.resolve(null)
 
-            const [balance, ens, uns] = await Promise.all([balanceProm, ensProm, unsProm])
+            const [balance, ens, uns] = await Promise.all([
+              balanceProm,
+              ensProm,
+              unsProm
+            ])
 
             return {
               address,
@@ -372,7 +386,7 @@ export async function getUns(
 ): Promise<Uns | null> {
   // check if address is valid ETH address before attempting to resolve
   // chain we don't recognize and don't have a rpcUrl for requests
-  if(!utils.isAddress(address) || !chain) return null
+  if (!utils.isAddress(address) || !chain) return null
 
   const resolutionInstance = new Resolution()
 

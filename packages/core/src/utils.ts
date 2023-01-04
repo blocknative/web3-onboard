@@ -82,7 +82,9 @@ export function shortenAddress(add: string): string {
 }
 
 export function shortenDomain(domain: string): string {
-  return domain.length > 11 ? `${domain.slice(0, 4)}...${domain.slice(-6)}` : domain
+  return domain.length > 11
+    ? `${domain.slice(0, 4)}...${domain.slice(-6)}`
+    : domain
 }
 
 export async function copyWalletAddress(text: string): Promise<void> {
