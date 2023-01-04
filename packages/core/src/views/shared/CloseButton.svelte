@@ -1,31 +1,52 @@
 <script>
   import closeIcon from '../../icons/close.js'
-
-  export let width = '24px'
-  export let backgroundColor = `var(
-      --onboard-close-button-background,
-      var(--onboard-gray-100, var(--gray-100))
-    );`
 </script>
 
 <style>
   .close-button {
-    padding: 0.25rem;
-    border-radius: 40px;
-    color: var(
-      --onboard-close-button-color,
-      var(--onboard-gray-300, var(--gray-300))
-    );
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2rem;
+    width: 2rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    /* color: var(
+    --onboard-close-button-color,
+    var(--onboard-gray-300, var(--gray-300))
+    ); */
+  }
+
+  .close-button:hover::before {
+    opacity: 0.2;
+  }
+  .close-button:hover .svg-box {
+    opacity: 1;
+  }
+
+  .close-button::before {
+    content: '';
+    position: absolute;
+    height: inherit;
+    width: inherit;
+    opacity: 0.1;
+    background: currentColor;
+    transition: 300ms ease-in-out opacity;
+  }
+
+   .svg-box {
+    position: absolute;
+    height: 1.5rem;
+    width: 1.5rem;
+    opacity: 0.6;
+    transition: 300ms ease-in-out opacity;
   }
 </style>
 
-<div class="flex justify-center items-center pointer">
-  <div
-    class="close-button flex justify-center items-center"
-    style={`background:${backgroundColor}`}
-  >
-    <div class="flex items-center" style="width:{width};">
-      {@html closeIcon}
-    </div>
+<div class="close-button">
+  <div class="svg-box">
+    {@html closeIcon}
   </div>
 </div>
