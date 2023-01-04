@@ -303,7 +303,7 @@
       value: 100000000000000
     })
 
-    await signer.sendTransaction(popTransaction)
+    const txn = await signer.sendTransaction(popTransaction)
 
     const receipt = await txn.wait()
     console.log(receipt)
