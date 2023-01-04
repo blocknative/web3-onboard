@@ -41,7 +41,7 @@ export default function Home() {
       <main className={styles.main}>
         <h1 className={styles.title}>
           Welcome to this demo of
-          <a href="https://github.com/blocknative/web3-onboard">
+          <a href="https://onboard.blocknative.com">
             {' '}
             Web3-Onboard
           </a>

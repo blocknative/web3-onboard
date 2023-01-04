@@ -15,8 +15,10 @@ import mewModule from '@web3-onboard/mew'
 import sequenceModule from '@web3-onboard/sequence'
 import tallyHoWalletModule from '@web3-onboard/tallyho'
 import web3authModule from '@web3-onboard/web3auth'
-
 import { init } from '@web3-onboard/react'
+
+// Import the blocknative icon
+import icon from './blocknative'
 
 const INFURA_KEY = '2896ff3d0a1143689424a8341cb75c67'
 
@@ -128,7 +130,7 @@ export default init({
     // The name of your dApp
     name: 'Blocknative',
     // SVG icon string, with height or width (whichever is larger) set to 100% or a valid image URL
-    icon: '<svg></svg>',
+    icon,
     // Optional wide format logo (ie icon and text) to be displayed in the sidebar of connect modal. Defaults to icon if not provided
     logo: '<svg></svg>',
     // The description of your app

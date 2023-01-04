@@ -1,10 +1,11 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
-  import blocknative from '../../icons/blocknative.js'
+  import { blocknative, poweredByBlocknativeIcon } from '../../icons/index.js'
   import en from '../../i18n/en.json'
   import type { i18n } from '../../types.js'
   import { isSVG } from '../../utils.js'
   import { configuration } from '../../configuration.js'
+  import { MOBILE_WINDOW_WIDTH } from '../../constants.js'
 
   export let step: keyof i18n['connect']
 
@@ -13,17 +14,18 @@
 
   const defaultContent = en.connect[step].sidebar
   const { subheading, paragraph } = defaultContent
-  const { heading } =
-    defaultContent as i18n['connect']['selectingWallet']['sidebar']
+
+  let windowWidth: number
 </script>
 
 <style>
   .sidebar {
-    padding: var(--onboard-spacing-3, var(--spacing-3));
-    background: var(
-      --onboard-connect-sidebar-background,
-      var(--onboard-gray-100, var(--gray-100))
-    );
+    display: flex;
+    flex-flow: column;
+    gap: 1rem;
+    padding: 1rem;
+    align-items: center;
+
     color: var(
       --onboard-connect-sidebar-color,
       var(--onboard-gray-700, var(--gray-700))
@@ -31,32 +33,48 @@
   }
 
   .inner-container {
-    padding-left: var(--onboard-spacing-5, var(--spacing-5));
-    max-width: 236px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    align-self: stretch;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    text-align: center;
+
+    border: 1px solid;
+    border-radius: 12px;
+
+    border-color: var(
+      --onboard-connect-sidebar-border-color,
+      var(--onboard-primary-200, var(--primary-200))
+    );
+
+    background: var(
+      --onboard-connect-sidebar-background,
+      var(--onboard-primary-100, var(--primary-100))
+    );
   }
 
   .icon-container {
-    height: 3rem;
-    margin-bottom: var(--onboard-spacing-4, var(--spacing-4));
-  }
-
-  .heading {
-    font-size: var(--onboard-font-size-3, var(--font-size-3));
-    margin: 0 0 var(--onboard-spacing-5, var(--spacing-5)) 0;
+    display: flex;
   }
 
   .subheading {
-    margin: 0 0 var(--onboard-spacing-5, var(--spacing-5)) 0;
+    line-height: 1rem;
   }
 
   .description {
-    line-height: 20px;
+    line-height: 1.25rem;
     font-size: var(--onboard-font-size-6, var(--font-size-6));
-    margin: 0;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
   }
 
   .indicators {
-    margin-top: var(--onboard-spacing-2, var(--spacing-2));
+    margin-top: 1rem;
   }
 
   .indicator {
@@ -66,7 +84,7 @@
     border-radius: 8px;
     background: var(
       --onboard-connect-sidebar-progress-background,
-      var(--onboard-gray-200, var(--gray-200))
+      var(--onboard-gray-700, var(--gray-700))
     );
     transition: background 250ms ease-in-out;
   }
@@ -79,7 +97,7 @@
     border: 2px solid
       var(
         --onboard-connect-sidebar-progress-background,
-        var(--onboard-gray-200, var(--gray-200))
+        var(--onboard-gray-700, var(--gray-700))
       );
   }
 
@@ -90,7 +108,7 @@
     height: 2px;
     background: var(
       --onboard-connect-sidebar-progress-background,
-      var(--onboard-gray-200, var(--gray-200))
+      var(--onboard-gray-700, var(--gray-700))
     );
     transition: background 250ms ease-in-out;
   }
@@ -102,45 +120,60 @@
     );
   }
 
-  img {
-    max-width: 100%;
-    height: auto;
+  @media all and (min-width: 768px) {
+    .sidebar {
+      max-width: 280px;
+      border-right: 1px solid;
+      border-color: var(
+        --onboard-connect-sidebar-border-color,
+        var(--onboard-primary-200, var(--primary-200))
+      );
+      background: var(
+        --onboard-connect-sidebar-background,
+        var(--onboard-primary-100, var(--primary-100))
+      );
+    }
+    .inner-container {
+      border: none;
+      text-align: initial;
+      flex: 1;
+      align-items: flex-start;
+      gap: 1rem;
+    }
   }
 </style>
 
+<svelte:window bind:innerWidth={windowWidth} />
+
 <div class="sidebar">
   <div class="inner-container">
-    <div class="icon-container flex">
-      {#if logo || icon}
-        {#if isSVG(logo || icon)}
-          {@html logo || icon}
+    <!-- On Mobile we display the icon only & within the header rather than the sidebar -->
+    {#if windowWidth >= MOBILE_WINDOW_WIDTH}
+      <div class="icon-container">
+        {#if logo || icon}
+          {#if isSVG(logo || icon)}
+            {@html logo || icon}
+          {:else}
+            <img src={logo || icon} alt="logo" />
+          {/if}
         {:else}
-          <img src={logo || icon} alt="logo" />
+          {@html blocknative}
         {/if}
-      {:else}
-        {@html blocknative}
-      {/if}
-    </div>
-    {#if $_(`connect.${step}.sidebar.heading`, { default: '' })}
-      <h2 class="heading">
-        {$_(`connect.${step}.sidebar.heading`, {
-          default: heading
-        })}
-      </h2>
+      </div>
     {/if}
 
-    <h4 class="subheading">
+    <div class="subheading">
       {$_(`connect.${step}.sidebar.subheading`, {
         default: subheading
       })}
-    </h4>
+    </div>
 
-    <p class="description">
+    <div class="description">
       {$_(`connect.${step}.sidebar.paragraph`, {
         values: { app: name },
         default: paragraph
       })}
-    </p>
+    </div>
 
     <div class="indicators flex items-center">
       <div class="indicator relative" class:on={true} />
@@ -173,5 +206,8 @@
         class:on={step === 'connectedWallet'}
       />
     </div>
+  </div>
+  <div>
+    {@html poweredByBlocknativeIcon}
   </div>
 </div>

@@ -21,6 +21,7 @@
   import enkryptModule from '@web3-onboard/enkrypt'
   import mewWalletModule from '@web3-onboard/mew-wallet'
   import uauthModule from '@web3-onboard/uauth'
+  import phantomModule from '@web3-onboard/phantom'
   import {
     recoverAddress,
     arrayify,
@@ -35,11 +36,11 @@
   import { onMount } from 'svelte'
 
   let windowWidth
-  
+
   if (window.innerWidth < 700) {
     new VConsole()
   }
-  
+
   const apiKey = 'xxxxxx-bf21-42ec-a093-9d37e426xxxx'
   const infura_key = '80633e48116943128cbab25e402764ab'
 
@@ -96,6 +97,7 @@
   const keystone = keystoneModule()
   const gnosis = gnosisModule()
   const tallyho = tallyHoModule()
+  const phantom = phantomModule()
 
   const trezorOptions = {
     email: 'test@test.com',
@@ -144,7 +146,8 @@
       dcent,
       sequence,
       tallyho,
-      uauth
+      uauth,
+      phantom
     ],
     transactionPreview,
     gas,
@@ -374,7 +377,7 @@
   const defaultStyling = {
     '--background-color': '#ffffff',
     '--text-color': '#1a1d26',
-    '--border-color': '#ebebed',
+    '--border-color': '#d0d4f7',
     '--accent-background': '#ebebed',
     '--accent-color': '#929bed',
     '--accent-color-hover': '#eff1fc',
@@ -382,8 +385,8 @@
     '--secondary-accent-background': '#242835'
   }
 
-  const baseStyling = `--onboard-connect-sidebar-background: var(--accent-background);
-  --onboard-close-button-background: var(--accent-background);
+  const baseStyling = `--onboard-connect-sidebar-border-color: var(--border-color);
+  --onboard-connect-sidebar-background: var(--accent-background);
   --onboard-connect-sidebar-color: var(--text-color);
   --onboard-connect-sidebar-progress-background: var(--secondary-text-color);
   --onboard-connect-sidebar-progress-color: var(--accent-color);
@@ -552,9 +555,9 @@
   :root {
     --background-color: #ffffff; /* --white */
     --text-color: #1a1d26; /* --gray-700 */
-    --border-color: #ebebed; /* --gray-100 taken from future mock */
+    --border-color: #D0D4F7; /* --gray-100 taken from future mock */
 
-    --accent-background: #ebebed; /* --gray-100 (currently gray-100 in connect modal) */
+    --accent-background: #EFF1FC; /* --gray-100 (currently gray-100 in connect modal) */
     --accent-color: #929bed; /* --primary-400 */
     --accent-color-hover: #eff1fc; /* --primary-200 */
 
@@ -564,6 +567,7 @@
 
     /* --onboard-font-family-normal: System,monospace; */
     --onboard-connect-sidebar-background: var(--accent-background);
+    --onboard-connect-sidebar-border-color: var(--border-color);
     --onboard-close-button-background: var(--accent-background);
     --onboard-connect-sidebar-color: var(--text-color);
     --onboard-connect-sidebar-progress-background: var(
@@ -623,8 +627,8 @@
     --notify-onboard-anchor-color: var(--accent-color);
     --notify-onboard-timer-color: var(--secondary-text-color);
 
-    /* 
-		NEEDS TARGET AS IT USES OPACITY: 
+    /*
+		NEEDS TARGET AS IT USES OPACITY:
 		--account-center-maximized-upper-action-background-hover
 		NEEDS UPDATES FOR DIFFERNT STYLING, DOESNT FIT BASIC VARIABLES ABOVE:
 		Notify status icons, icon backgrounds and icon borders

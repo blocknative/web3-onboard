@@ -30,7 +30,7 @@ import {
   updateConnectModal
 } from './store/actions.js'
 import type { PatchedEIP1193Provider } from '@web3-onboard/transaction-preview'
-import { getBlocknativeSdk } from './services'
+import { getBlocknativeSdk } from './services.js'
 
 const API = {
   connectWallet,
@@ -117,10 +117,10 @@ function init(options: InitOptions): OnboardAPI {
   if (typeof accountCenter !== 'undefined') {
     let accountCenterUpdate
 
-    if (device.type === 'mobile' && accountCenter.mobile) {
+    if (device.type === 'mobile') {
       accountCenterUpdate = {
         ...APP_INITIAL_STATE.accountCenter,
-        ...accountCenter.mobile
+        ...(accountCenter.mobile ? accountCenter.mobile : {})
       }
     } else if (accountCenter.desktop) {
       accountCenterUpdate = {

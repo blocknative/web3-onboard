@@ -524,9 +524,18 @@ const gamestop: InjectedWalletModule = {
   checkProviderIdentity: ({ provider }) =>
     !!provider && !!provider[ProviderIdentityFlag.GameStop],
   getIcon: async () => (await import('./icons/gamestop.js')).default,
-  getInterface: async () => ({
-    provider: createEIP1193Provider(window.gamestop)
-  }),
+  getInterface: async () => {
+    const provider = createEIP1193Provider(window.gamestop, {
+      eth_chainId: ({ baseRequest }) =>
+        baseRequest({ method: 'eth_chainId' }).then(
+          id => `0x${parseInt(id).toString(16)}`
+        ),
+      wallet_switchEthereumChain: UNSUPPORTED_METHOD
+    })
+    provider.removeListener = (event, listener) => {}
+    provider.on = (event, listener) => {}
+    return { provider }
+  },
   platforms: ['desktop']
 }
 
@@ -618,6 +627,20 @@ const enkrypt: InjectedWalletModule = {
   platforms: ['all']
 }
 
+const phantom: InjectedWalletModule = {
+  label: ProviderLabel.Phantom,
+  injectedNamespace: InjectedNameSpace.Phantom,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider &&
+    !!provider['ethereum'] &&
+    !!provider['ethereum'][ProviderIdentityFlag.Phantom],
+  getIcon: async () => (await import('./icons/phantom.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.phantom.ethereum)
+  }),
+  platforms: ['all']
+}
+
 const wallets = [
   exodus,
   metamask,
@@ -653,7 +676,8 @@ const wallets = [
   sequence,
   core,
   bitski,
-  enkrypt
+  enkrypt,
+  phantom
 ]
 
 export default wallets
