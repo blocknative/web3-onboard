@@ -63,7 +63,6 @@
 
   let transactionObject = defaultTransactionObject
   let signMsg = 'Any string message'
-  let signTypedMsg
 
   const injected = injectedModule({
     custom: [
@@ -297,6 +296,8 @@
 
   let toAddress
   const sendTransaction = async provider => {
+    await onboard.setChain({ chainId: '0x5' })
+
     const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 
     const signer = ethersProvider.getSigner()
@@ -313,6 +314,8 @@
   }
 
   const sendTransactionWithPreFlight = async (provider, balance) => {
+    await onboard.setChain({ chainId: '0x5' })
+
     const balanceValue = Object.values(balance)[0]
     const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 
@@ -365,13 +368,63 @@
     console.log({ signMsg, signature, recoveredAddress, addr })
   }
 
+  let typedMsg = JSON.stringify(
+    {
+      domain: {
+        chainId: '0x5',
+        name: 'Web3-Onboard Test App',
+        verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
+        version: '1'
+      },
+      message: {
+        contents: 'Hello, Bob!',
+        from: {
+          name: 'Cow',
+          wallets: [
+            '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826',
+            '0xDeaDbeefdEAdbeefdEadbEEFdeadbeEFdEaDbeeF'
+          ]
+        },
+        to: [
+          {
+            name: 'Bob',
+            wallets: [
+              '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
+              '0xB0BdaBea57B0BDABeA57b0bdABEA57b0BDabEa57',
+              '0xB0B0b0b0b0b0B000000000000000000000000000'
+            ]
+          }
+        ]
+      },
+      primaryType: 'Message',
+      types: {
+        EIP712Domain: [
+          { name: 'name', type: 'string' },
+          { name: 'version', type: 'string' },
+          { name: 'chainId', type: 'uint256' },
+          { name: 'verifyingContract', type: 'address' }
+        ],
+        Message: [
+          { name: 'from', type: 'Person' },
+          { name: 'to', type: 'Person[]' },
+          { name: 'contents', type: 'string' }
+        ],
+        Person: [
+          { name: 'name', type: 'string' },
+          { name: 'wallets', type: 'address[]' }
+        ]
+      }
+    },
+    undefined,
+    2
+  )
   const signTypedMessage = async (provider, address) => {
-    const data = JSON.parse(signTypedMsg)
+    await onboard.setChain({ chainId: '0x5' })
     const signature = await provider.request({
-      method: 'eth_signTypedData',
-      params: [address, data]
+      method: 'eth_signTypedData_v4',
+      params: [address, typedMsg]
     })
-    const { domain, types, message } = data
+    const { domain, types, message } = JSON.parse(typedMsg)
 
     delete types.EIP712Domain
     console.log(verifyTypedData(domain, types, message, signature))
@@ -1016,31 +1069,6 @@
           </div>
           <div>
             <input
-              id="sign-msg-input"
-              type="text"
-              class="text-input"
-              placeholder="Message..."
-              bind:value={signMsg}
-            />
-            <button on:click={signMessage(provider, address)}>
-              Sign Message
-            </button>
-          </div>
-          <div>
-            <input
-              id="sign-type-msg-input"
-              type="text"
-              class="text-input"
-              placeholder="Typed message..."
-              bind:value={signTypedMsg}
-            />
-            <button on:click={signTypedMessage(provider, address)}>
-              Sign Typed Message
-            </button>
-          </div>
-
-          <div>
-            <input
               type="text"
               class="text-input"
               placeholder="0x..."
@@ -1061,7 +1089,28 @@
               Send with Preflight Notifications
             </button>
           </div>
-
+          <div>
+            <input
+              id="sign-msg-input"
+              type="text"
+              class="text-input"
+              placeholder="Message..."
+              bind:value={signMsg}
+            />
+            <button on:click={signMessage(provider, address)}>
+              Sign Message
+            </button>
+          </div>
+          <div>
+            <textarea
+              bind:value={typedMsg}
+              type="text"
+              class="sign-transaction-textarea"
+            />
+            <button on:click={signTypedMessage(provider, address)}>
+              Sign Typed Message
+            </button>
+          </div>
           <div class="sign-transaction">
             <textarea
               bind:value={transactionObject}
