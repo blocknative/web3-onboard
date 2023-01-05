@@ -46,6 +46,13 @@ const ens = Joi.any().allow(
   null
 )
 
+const uns = Joi.any().allow(
+  Joi.object({
+    name: Joi.string().required()
+  }),
+  null
+)
+
 const balance = Joi.any().allow(
   Joi.object({
     eth: Joi.number()
@@ -56,6 +63,7 @@ const balance = Joi.any().allow(
 const account = Joi.object({
   address: Joi.string().required(),
   ens,
+  uns,
   balance
 })
 

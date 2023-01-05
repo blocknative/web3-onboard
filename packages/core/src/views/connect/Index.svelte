@@ -38,7 +38,8 @@
     requestAccounts,
     trackWallet,
     getBalance,
-    getEns
+    getEns,
+    getUns
   } from '../../provider.js'
 
   import type {
@@ -241,7 +242,7 @@
       }
 
       const update: Pick<WalletState, 'accounts' | 'chains'> = {
-        accounts: [{ address, ens: null, balance: null }],
+        accounts: [{ address, ens: null, uns: null, balance: null }],
         chains: [{ namespace: 'evm', id: chain }]
       }
 
@@ -306,7 +307,7 @@
     )
 
     const { address } = accounts[0]
-    let { balance, ens } = accounts[0]
+    let { balance, ens, uns } = accounts[0]
 
     if (balance === null) {
       getBalance(address, appChain).then(balance => {
@@ -320,6 +321,14 @@
       getEns(address, appChain).then(ens => {
         updateAccount(selectedWallet.label, address, {
           ens
+        })
+      })
+    }
+
+    if (uns === null) {
+      getUns(address, appChain).then(uns => {
+        updateAccount(selectedWallet.label, address, {
+          uns
         })
       })
     }
