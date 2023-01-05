@@ -198,30 +198,9 @@ function ledger(options?: LedgerOptions): WalletInit {
               }
 
               if (method == 'wallet_switchEthereumChain') {
-                if (!params) {
-                  throw new ProviderRpcError({
-                    code: ProviderRpcErrorCode.INVALID_PARAMS,
-                    message: `The Provider requires a chainId to be passed in as an argument`
-                  })
-                }
-                const chainIdObj = params[0] as { chainId?: number }
-                if (
-                  !chainIdObj.hasOwnProperty('chainId') ||
-                  typeof chainIdObj['chainId'] === 'undefined'
-                ) {
-                  throw new ProviderRpcError({
-                    code: ProviderRpcErrorCode.INVALID_PARAMS,
-                    message: `The Provider requires a chainId to be passed in as an argument`
-                  })
-                }
-
-                return this.connector.sendCustomRequest({
-                  method: 'wallet_switchEthereumChain',
-                  params: [
-                    {
-                      chainId: chainIdObj.chainId
-                    }
-                  ]
+                throw new ProviderRpcError({
+                  code: ProviderRpcErrorCode.UNSUPPORTED_METHOD,
+                  message: `The Provider does not support the requested method: ${method}`
                 })
               }
 
