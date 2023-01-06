@@ -18,8 +18,11 @@
     align-items: center;
     padding: 0.4rem;
     border-radius: 40px;
-    color: var(--onboard-gray-400, var(--gray-400));
-    background: var(--onboard-white, var(--white));
+    color: var(--onboard-gray-300, var(--gray-300));
+    background: var(
+      --account-select-accent-background-color,
+      var(--onboard-gray-100, var(--gray-100))
+    );
   }
   .close-icon {
     width: 14px;

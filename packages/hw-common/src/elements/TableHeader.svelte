@@ -72,7 +72,7 @@
 
   input:disabled {
     background: var(
-      --account-select-gray-100,
+      --account-select-accent-background-color,
       var(--onboard-gray-100, var(--gray-100))
     );
   }
@@ -80,7 +80,7 @@
   input[type='checkbox'] {
     -webkit-appearance: none;
     width: auto;
-    background: var(--account-select-white, var(--onboard-white, var(--white)));
+    background: var(--account-select-background-color, var(--onboard-white, var(--white)));
     border: 1px solid
       var(--account-select-gray-300, var(--onboard-gray-300, var(--gray-300)));
     padding: 0.5em;
@@ -155,7 +155,7 @@
     padding: 0.5rem;
     border-radius: 0.4rem 0.4rem 0 0;
     background: var(
-      --account-select-gray-100,
+      --account-select-accent-background-color,
       var(--onboard-gray-100, var(--gray-100))
     );
     border-bottom: 1px solid

@@ -57,7 +57,7 @@
   },
   "dependencies": {
     "@web3-onboard/common": "^2.2.3",
-    "@web3-onboard/hw-common": "^2.0.4",
+    "@web3-onboard/hw-common": "^2.1.0-alpha.1",
     "@ethereumjs/tx": "^3.4.0",
     "@ethersproject/providers": "^5.5.0",
     "eth-dcent-keyring": "^0.2.2"
