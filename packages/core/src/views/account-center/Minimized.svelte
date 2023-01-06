@@ -61,56 +61,73 @@
 
 <style>
   .minimized {
-    background: var(
+    --background-color: var(--w3o-background-color);
+    --text-color: var(--w3o-text-color);
+    --border-color: var(--w3o-border-color, var(--account-center-border, var(--onboard-gray-100, transparent)));
+    /* --action-color: var(--w3o-accent-color); */
+
+    cursor: pointer;
+    pointer-events: auto;
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid;
+
+    background: var(--background-color);
+    color: var(--text-color);
+    border-color: var(--border-color);
+    border-radius: var(--account-center-border-radius, 1rem);
+
+    /* border-color: var(--account-center-border, var(--onboard-gray-100, transparent)); */
+    /* background: var(
       --account-center-minimized-background,
       var(--onboard-white, var(--white))
-    );
-    border: 1px solid
-      var(--account-center-border, var(--onboard-gray-100, transparent));
-    width: 100%;
+    ); */
+
     box-shadow: var(
       --account-center-box-shadow,
       var(--onboard-shadow-3, var(--shadow-3))
     );
-    pointer-events: auto;
   }
 
-  .radius {
-    border-radius: var(
-      --account-center-border-radius,
-      var(--onboard-border-radius-3, var(--border-radius-3))
-    );
+  .inner-row {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 0.25rem;
   }
 
-  .padding-5 {
-    padding: var(--onboard-spacing-5, var(--spacing-5));
-  }
-
-  .drop-shadow {
-    filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.2));
+  .wallet-info {
+    display: flex;
+    flex: 1;
+    flex-flow: column;
+    height: 2.5rem;
+    overflow: hidden;
   }
 
   .address {
     font-weight: 700;
-    line-height: var(--onboard-font-line-height-2, var(--font-line-height-2));
-    color: var(--account-center-minimized-address-color, initial);
+    line-height: 1.25rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    /* line-height: var(--onboard-font-line-height-2, var(--font-line-height-2)); */
+    /* color: var(--account-center-minimized-address-color, initial); */
   }
 
   .balance {
     font-weight: 400;
-    line-height: var(--onboard-font-line-height-2, var(--font-line-height-2));
-    color: var(
-      --account-center-minimized-balance-color,
-      var(--onboard-gray-400, var(--gray-400))
-    );
+    line-height: 1.25rem;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    width: 7.25rem;
-  }
-
-  .network {
-    margin-left: 0.2rem;
+    opacity: 0.6;
+    /* line-height: var(--onboard-font-line-height-2, var(--font-line-height-2)); */
+    /* color: var(
+      --account-center-minimized-balance-color,
+      var(--onboard-gray-400, var(--gray-400))
+    ); */
+    /* width: 7.25rem; */
   }
 
   .chain-icon {
@@ -130,6 +147,10 @@
     cursor: default;
   }
 
+  .drop-shadow {
+    filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.2));
+  }
+
   .color-yellow {
     color: var(
       --account-center-chain-warning,
@@ -145,58 +166,55 @@
 <div
   in:fade={{ duration: 250 }}
   out:fade={{ duration: 100 }}
-  class="minimized pointer radius padding-5"
+  class="minimized"
   on:click|stopPropagation={maximize}
 >
-  <div class="flex items-center justify-between" style="padding: 0 4px;">
-    <div class="flex items-center w-100">
-      <!-- app and wallet icon badge -->
-      <div class="flex items-centered relative">
-        <div class="drop-shadow">
-          <WalletAppBadge
-            size={32}
-            padding={4}
-            background={'white'}
-            border="darkGreen"
-            radius={8}
-            icon={appIcon}
-          />
-        </div>
-
-        <div style="right: 0.5rem;" class="drop-shadow relative">
-          <WalletAppBadge
-            size={32}
-            padding={4}
-            background="green"
-            border="darkGreen"
-            radius={8}
-            icon={primaryWallet ? primaryWallet.icon : ''}
-          />
-        </div>
-
-        <div style="right: 5px; bottom: -5px;" class="drop-shadow absolute">
-          <SuccessStatusIcon size={14} />
-        </div>
+  <div class="inner-row">
+    <div class="flex relative">
+      <div class="drop-shadow">
+        <WalletAppBadge
+          size={32}
+          padding={4}
+          background={'white'}
+          border="darkGreen"
+          radius={8}
+          icon={appIcon}
+        />
       </div>
 
-      <!-- address and balance -->
-      <div class="flex flex-column" style="height: 40px;">
-        <div class="address">
-          {ensName
-            ? shortenDomain(ensName)
-            : unsName
-            ? shortenDomain(unsName)
-            : shortenedFirstAddress}
-        </div>
-        {#if firstAddressBalance}
-          <div in:fade class="balance">
-            {firstAddressBalance.length > 8
-              ? firstAddressBalance.slice(0, 8)
-              : firstAddressBalance}
-            {firstAddressAsset}
-          </div>
-        {/if}
+      <div style="margin-left: -0.5rem;" class="drop-shadow">
+        <WalletAppBadge
+          size={32}
+          padding={4}
+          background="green"
+          border="darkGreen"
+          radius={8}
+          icon={primaryWallet ? primaryWallet.icon : ''}
+        />
       </div>
+
+      <div style="right: -4px; bottom: -4px;" class="drop-shadow absolute">
+        <SuccessStatusIcon size={14} />
+      </div>
+    </div>
+
+    <!-- address and balance -->
+    <div class="wallet-info">
+      <div class="address">
+        {ensName
+          ? shortenDomain(ensName)
+          : unsName
+          ? shortenDomain(unsName)
+          : shortenedFirstAddress}
+      </div>
+      {#if firstAddressBalance}
+        <div in:fade class="balance">
+          {firstAddressBalance.length > 8
+            ? firstAddressBalance.slice(0, 8)
+            : firstAddressBalance}
+          {firstAddressAsset}
+        </div>
+      {/if}
     </div>
 
     <!-- network badge -->
@@ -243,5 +261,6 @@
         </div>
       </div>
     </div>
+
   </div>
 </div>
