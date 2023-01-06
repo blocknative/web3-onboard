@@ -95,8 +95,17 @@ const mountAccountSelect = (
 
         /* SHADOWS */
         --shadow-1: 0px 4px 12px rgba(0, 0, 0, 0.1);
-      }
+        
+        /* THEMING */
+        --account-select-text-color: var(--w3o-text-color, initial);
+        --account-select-background-color: var(--w3o-background-color, initial);
+        --account-select-accent-background-color: var(--w3o-accent-background-color, initial);
+        --account-select-primary-100: var(--w3o-accent-background-color, initial);
+        --account-select-gray-500: var(--w3o-secondary-text-color, initial);
+        --account-select-gray-200: var(--w3o-accent-background-color, initial);
+        --account-select-gray-600: var(--w3o-accent-background-color, initial);
 
+      }
     </style>
   `
 

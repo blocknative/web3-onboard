@@ -123,6 +123,7 @@ export interface WalletState {
 export type Account = {
   address: Address
   ens: Ens | null
+  uns: Uns | null
   balance: Balances | null
 }
 
@@ -133,6 +134,10 @@ export interface Ens {
   avatar: Avatar | null
   contentHash: string | null
   getText: (key: string) => Promise<string | undefined>
+}
+
+export interface Uns {
+  name: string
 }
 
 export type Avatar = {

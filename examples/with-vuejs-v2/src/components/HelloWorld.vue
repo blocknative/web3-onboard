@@ -7,6 +7,7 @@
         <div class="avatar" />
         <div class="details">
           <div v-if="ens">{{ ens.name }}</div>
+          <div v-if="uns">{{ uns.name }}</div>
           <div v-if="address">{{ address }}</div>
 
           <span>Connected Wallet: {{ connectedWallet.label }}</span>
@@ -81,6 +82,14 @@ export default {
         this.connectedWallet.accounts[0].ens?.name
       ) {
         return trunc(this.connectedWallet.accounts[0].ens);
+      }
+    },
+    uns: function () {
+      if (
+        this.connectedWallet.accounts &&
+        this.connectedWallet.accounts[0].uns?.name
+      ) {
+        return trunc(this.connectedWallet.accounts[0].uns);
       }
     },
   },
