@@ -640,6 +640,18 @@ const phantom: InjectedWalletModule = {
   }),
   platforms: ['all']
 }
+ 
+const safepal: InjectedWalletModule = {
+  label: ProviderLabel.SafePal,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.SafePal],
+  getIcon: async () => (await import('./icons/safepal.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.ethereum)
+  }),
+  platforms: ['desktop']
+}
 
 const wallets = [
   exodus,
@@ -677,7 +689,8 @@ const wallets = [
   core,
   bitski,
   enkrypt,
-  phantom
+  phantom,
+  safepal
 ]
 
 export default wallets
