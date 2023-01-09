@@ -124,7 +124,7 @@ type ContainerElements = {
   // mounted through the app to the html body and will respond to screen width rather than container width
   // This is specifically apparent on mobile so please test thoroughly
   // Also consider that other DOM elements(specifically Notifications and Account Center) will also 
-  // append to this DOM el if enabled
+  // append to this DOM el if enabled and their own containerEl are not defined
   connectModal?: string
   // when using the accountCenter with a container el the accountCenter position properties are ignored
   accountCenter?: string
