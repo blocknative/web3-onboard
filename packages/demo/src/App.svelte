@@ -261,11 +261,11 @@
         position: 'topRight'
       }
     },
-    // containerElements: {
+    containerElements: {
     // El must be present at time of JS script execution
     // See ../public/index.html for element example
-    //   accountCenter: '#sample-container-el'
-    // },
+      connectModal: '#sample-container-el'
+    },
     // Sign up for your free api key at www.Blocknative.com
     apiKey
   })

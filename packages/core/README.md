@@ -120,6 +120,10 @@ For an example please see containerElement usage [here](https://github.com/block
 
 ```typescript
 type ContainerElements = {
+  // When attaching the Connect Modal to a container el be aware that the modal was styled to be 
+  // mounted through the app to the html body and will respond to screen width rather than container width
+  // This is specifically apparent on mobile so please test thoroughly
+  connectModal?: string
   // when using the accountCenter with a container el the accountCenter position properties are ignored
   accountCenter?: string
 }

@@ -188,6 +188,7 @@ export type AccountCenterOptions = {
 
 export type ContainerElements = {
   accountCenter?: string
+  connectModal?: string
 }
 
 export type Notify = {

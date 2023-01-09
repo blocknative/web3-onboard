@@ -16,16 +16,23 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
   import { onDestroy, onMount } from 'svelte'
+  import { configuration } from '../../configuration.js'
+
+  const connectContainerEl = !!configuration.containerElements.connectModal
 
   const html = document.documentElement
   onMount(() => {
-    html.style.position = 'sticky'
-    html.style.overflow = 'hidden'
+    if (!connectContainerEl) {
+      html.style.position = 'sticky'
+      html.style.overflow = 'hidden'
+    }
   })
 
   onDestroy(() => {
-    html.style.position = ''
-    html.style.removeProperty('overflow')
+    if (!connectContainerEl) {
+      html.style.position = ''
+      html.style.removeProperty('overflow')
+    }
   })
   export let close: () => void
 </script>
@@ -39,10 +46,13 @@
   }
 
   .background {
-    width: 100vw;
-    height: 100vh;
     background: var(--onboard-modal-backdrop, var(--modal-backdrop));
     pointer-events: all;
+  }
+
+  .full-screen-background {
+    width: 100vw;
+    height: 100vh;
   }
 
   .max-height {
@@ -88,12 +98,16 @@
   }
 </style>
 
-<section class="fixed" transition:fade>
+<section class:fixed={!connectContainerEl} transition:fade>
   <div
     on:click={close}
     class="background flex items-center justify-center relative"
+    class:full-screen-background={!connectContainerEl}
   >
-    <div class="modal-container-mobile modal-position flex absolute">
+    <div
+      class="modal-container-mobile modal-position flex"
+      class:absolute={!connectContainerEl}
+    >
       <div on:click|stopPropagation class="flex relative max-height">
         <div class="modal-overflow modal-styling relative flex justify-center">
           <div class="modal relative">
