@@ -50,6 +50,7 @@ export enum ProviderIdentityFlag {
   Opera = 'isOpera',
   Bitski = 'isBitski',
   Enkrypt = 'isEnkrypt',
+  Zeal = 'isZeal',
   Phantom = 'isPhantom'
 }
 
@@ -91,6 +92,7 @@ export enum ProviderLabel {
   Sequence = 'Sequence',
   Core = 'Core',
   Enkrypt = 'Enkrypt',
+  Zeal = 'Zeal',
   Phantom = 'Phantom'
 }
 
@@ -116,6 +118,7 @@ export enum InjectedNameSpace {
   Avalanche = 'avalanche',
   Bitski = 'Bitski',
   Enkrypt = 'enkrypt',
+  Zeal = 'zeal',
   Phantom = 'phantom'
 }
 
@@ -123,6 +126,7 @@ export interface CustomWindow extends Window {
   BinanceChain: BinanceProvider
   ethereum: InjectedProvider
   tally: InjectedProvider
+  zeal: InjectedProvider
   web3: ExternalProvider | MeetOneProvider
   arbitrum: InjectedProvider
   xfi: {
