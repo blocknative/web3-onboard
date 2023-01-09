@@ -64,7 +64,7 @@
 
   .address-table {
     min-height: 4.5rem;
-    max-height: 27rem;
+    max-height: 14rem;
     overflow: auto;
   }
 
@@ -89,6 +89,12 @@
 
   .pointer {
     cursor: pointer;
+  }
+
+  @media all and (min-width: 768px) {
+    .address-table {
+      max-height: 27rem;
+    }
   }
 </style>
 

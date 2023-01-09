@@ -291,9 +291,12 @@
   }
 
   .hardware-connect-modal {
-    width: 50rem;
+    width: 100%;
+    flex-flow: column;
+    display: flex;
+
     max-height: 51.75rem;
-    display: table;
+
     background: var(--account-select-white, var(--onboard-white, var(--white)));
     box-shadow: var(
       --account-select-shadow-1,
@@ -337,6 +340,7 @@
 
   .modal-controls {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
@@ -370,10 +374,6 @@
       --account-select-gray-700,
       var(--onboard-gray-700, var(--gray-700))
     );
-  }
-
-  .base-path-select {
-    min-width: 20rem;
   }
 
   .asset-select {
@@ -421,6 +421,7 @@
   .table-section {
     max-height: 31.8rem;
     padding: 1rem;
+    margin-top: 2rem;
   }
 
   .table-container {
@@ -437,6 +438,24 @@
       --account-select-gray-500,
       var(--onboard-gray-500, var(--gray-500))
     );
+  }
+  @media all and (min-width: 768px) {
+    .hardware-connect-modal {
+      width: 50rem;
+      display: table;
+      flex-flow: unset;
+    }
+    .modal-controls {
+      flex-wrap: nowrap;
+    }
+
+    .base-path-select {
+      min-width: 20rem;
+    }
+
+    .table-section {
+      margin-top: unset;
+    }
   }
 </style>
 

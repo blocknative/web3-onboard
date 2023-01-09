@@ -31,6 +31,7 @@ import {
 } from './store/actions.js'
 import type { PatchedEIP1193Provider } from '@web3-onboard/transaction-preview'
 import { getBlocknativeSdk } from './services.js'
+import { defaultBnIcon } from './icons/index.js'
 
 const API = {
   connectWallet,
@@ -194,6 +195,11 @@ function init(options: InitOptions): OnboardAPI {
   }
 
   const app = svelteInstance || mountApp()
+
+  // Set default icon to blocknative if known provided
+  if (appMetadata && !appMetadata.icon) {
+    appMetadata.icon = defaultBnIcon
+  }
 
   updateConfiguration({
     appMetadata,
