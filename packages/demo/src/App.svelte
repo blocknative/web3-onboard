@@ -270,7 +270,8 @@
       accountCenter: '#sample-container-el2'
     },
     // Sign up for your free api key at www.Blocknative.com
-    apiKey
+    // Add apiKey to test transaction notifications
+    // apiKey
   })
 
   // Subscribe to wallet updates
