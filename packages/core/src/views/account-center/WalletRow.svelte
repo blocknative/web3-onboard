@@ -94,10 +94,10 @@
   .address-domain {
     margin-left: 0.5rem;
     font-weight: 700;
-    color: var(
+    /* color: var(
       --account-center-maximized-address-color,
       var(--onboard-primary-100, var(--primary-100))
-    );
+    ); */
   }
 
   .balance {

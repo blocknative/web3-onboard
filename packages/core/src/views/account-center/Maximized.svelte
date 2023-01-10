@@ -48,18 +48,27 @@
 
 <style>
   .outer-container {
-    background: var(
+    --background-color: var(--w3o-background-color);
+    --text-color: var(--w3o-text-color);
+    --border-color: var(--w3o-border-color);
+    --action-color: var(--w3o-accent-color);
+
+    /* background: var(
       --account-center-maximized-upper-background,
       var(--onboard-gray-600, var(--gray-600))
-    );
+    ); */
     border-radius: var(
       --account-center-border-radius,
       var(--onboard-border-radius-3, var(--border-radius-3))
     );
     width: 100%;
     filter: drop-shadow(0px 4px 16px rgba(178, 178, 178, 0.2));
-    padding: 0 1px 1px 1px;
+    /* padding: 0 1px 1px 1px; */
     pointer-events: auto;
+    border: 1px solid transparent;
+    background: var(--background-color);
+    border-color: var(--border-color);
+    color: var(--text-color);
   }
 
   .wallets-section {
@@ -134,17 +143,20 @@
   }
 
   .network-container {
+    background: var(--backround-color);
+    border-top: 1px solid var(--border-color);
+
     border-radius: var(
       --account-center-border-radius,
       var(--onboard-border-radius-3, var(--border-radius-3))
     );
-    color: var(
+    /* color: var(
       --account-center-maximized-network-text-color,
       var(
         --account-center-maximized-network-section,
         var(--onboard-gray-500, var(--gray-500))
       )
-    );
+    ); */
   }
 
   .p5-5 {
@@ -162,28 +174,30 @@
   }
 
   .app-info-container {
-    background: var(
+    /* background: var(
       --account-center-maximized-info-section-background-color,
       var(
         --account-center-maximized-info-section,
         var(--onboard-white, var(--white))
       )
-    );
+    ); */
+    background: var(--backround-color);
     border-radius: var(
       --account-center-border-radius,
       var(--onboard-border-radius-3, var(--border-radius-3))
     );
     padding: 12px;
+    border-top: 1px solid var(--border-color);
   }
 
   .app-name {
     font-weight: 700;
     font-size: var(--onboard-font-size-5, var(--font-size-5));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
-    color: var(
+    /* color: var(
       --account-center-maximized-app-name-color,
       var(--onboard-gray-600, var(--gray-600))
-    );
+    ); */
     margin-bottom: var(--onboard-spacing-5, var(--spacing-5));
     margin-top: 0;
   }
@@ -191,26 +205,26 @@
   .app-description {
     font-size: var(--onboard-font-size-7, var(--font-size-7));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
-    color: var(
+    /* color: var(
       --account-center-maximized-app-info-color,
       var(--onboard-gray-500, var(--gray-500))
-    );
+    ); */
     margin: 0;
   }
 
   .app-info {
     font-size: var(--onboard-font-size-7, var(--font-size-7));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
-    color: var(
+    /* color: var(
       --account-center-maximized-app-info-color,
       var(--onboard-gray-500, var(--gray-500))
-    );
+    ); */
   }
   .app-info-heading {
-    color: var(
+    /* color: var(
       --account-center-maximized-app-info-color,
       var(--onboard-gray-600, var(--gray-600))
-    );
+    ); */
     font-weight: 700;
     margin-top: var(--onboard-spacing-5, var(--spacing-5));
     margin-bottom: var(--onboard-spacing-7, var(--spacing-7));
@@ -230,10 +244,10 @@
 
   .app-button {
     margin-top: var(--onboard-spacing-5, var(--spacing-5));
-    color: var(
+    /* color: var(
       --account-center-app-btn-text-color,
       var(--onboard-white, var(--white))
-    );
+    ); */
     background: var(
       --account-center-app-btn-background,
       var(--onboard-gray-500, var(--gray-500))
