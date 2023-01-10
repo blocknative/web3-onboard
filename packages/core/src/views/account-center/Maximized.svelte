@@ -410,13 +410,6 @@
               radius={8}
               icon={(appMetadata && appMetadata.icon) || questionIcon}
             />
-
-            <div
-              style="right: -5px; bottom: -5px;"
-              class="drop-shadow absolute"
-            >
-              <SuccessStatusIcon size={14} color="blue" />
-            </div>
           </div>
 
           <div class="ml4">
