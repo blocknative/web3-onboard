@@ -510,6 +510,9 @@ type Account = {
     contentHash?: string
     getText?: (key: string) => Promise<string | undefined>
   }
+  uns: {
+    name?: string
+  }
   balance: Record<TokenSymbol, string>
 }
 

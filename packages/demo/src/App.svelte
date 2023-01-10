@@ -17,10 +17,12 @@
   import dcentModule from '@web3-onboard/dcent'
   import sequenceModule from '@web3-onboard/sequence'
   import tallyHoModule from '@web3-onboard/tallyho'
+  import zealModule from '@web3-onboard/zeal'
   import transactionPreviewModule from '@web3-onboard/transaction-preview'
   import enkryptModule from '@web3-onboard/enkrypt'
   import mewWalletModule from '@web3-onboard/mew-wallet'
   import uauthModule from '@web3-onboard/uauth'
+  import phantomModule from '@web3-onboard/phantom'
   import {
     recoverAddress,
     arrayify,
@@ -61,7 +63,6 @@
 
   let transactionObject = defaultTransactionObject
   let signMsg = 'Any string message'
-  let signTypedMsg
 
   const injected = injectedModule({
     custom: [
@@ -96,6 +97,8 @@
   const keystone = keystoneModule()
   const gnosis = gnosisModule()
   const tallyho = tallyHoModule()
+  const zeal = zealModule()
+  const phantom = phantomModule()
 
   const trezorOptions = {
     email: 'test@test.com',
@@ -127,6 +130,7 @@
   const onboard = Onboard({
     wallets: [
       injected,
+      zeal,
       web3auth,
       ledger,
       trezor,
@@ -144,7 +148,8 @@
       dcent,
       sequence,
       tallyho,
-      uauth
+      uauth,
+      phantom
     ],
     transactionPreview,
     gas,
@@ -264,7 +269,8 @@
     //   accountCenter: '#sample-container-el'
     // },
     // Sign up for your free api key at www.Blocknative.com
-    apiKey
+    // Add apiKey to test transaction notifications
+    // apiKey
   })
 
   // Subscribe to wallet updates
@@ -290,7 +296,9 @@
   }
 
   let toAddress
-  const sendTransaction = async (provider) => {
+  const sendTransaction = async provider => {
+    await onboard.setChain({ chainId: '0x5' })
+
     const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 
     const signer = ethersProvider.getSigner()
@@ -300,13 +308,15 @@
       value: 100000000000000
     })
 
-    await signer.sendTransaction(popTransaction)
+    const txn = await signer.sendTransaction(popTransaction)
 
     const receipt = await txn.wait()
     console.log(receipt)
   }
 
   const sendTransactionWithPreFlight = async (provider, balance) => {
+    await onboard.setChain({ chainId: '0x5' })
+
     const balanceValue = Object.values(balance)[0]
     const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 
@@ -359,13 +369,63 @@
     console.log({ signMsg, signature, recoveredAddress, addr })
   }
 
+  let typedMsg = JSON.stringify(
+    {
+      domain: {
+        chainId: '0x5',
+        name: 'Web3-Onboard Test App',
+        verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
+        version: '1'
+      },
+      message: {
+        contents: 'Hello, Bob!',
+        from: {
+          name: 'Cow',
+          wallets: [
+            '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826',
+            '0xDeaDbeefdEAdbeefdEadbEEFdeadbeEFdEaDbeeF'
+          ]
+        },
+        to: [
+          {
+            name: 'Bob',
+            wallets: [
+              '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
+              '0xB0BdaBea57B0BDABeA57b0bdABEA57b0BDabEa57',
+              '0xB0B0b0b0b0b0B000000000000000000000000000'
+            ]
+          }
+        ]
+      },
+      primaryType: 'Message',
+      types: {
+        EIP712Domain: [
+          { name: 'name', type: 'string' },
+          { name: 'version', type: 'string' },
+          { name: 'chainId', type: 'uint256' },
+          { name: 'verifyingContract', type: 'address' }
+        ],
+        Message: [
+          { name: 'from', type: 'Person' },
+          { name: 'to', type: 'Person[]' },
+          { name: 'contents', type: 'string' }
+        ],
+        Person: [
+          { name: 'name', type: 'string' },
+          { name: 'wallets', type: 'address[]' }
+        ]
+      }
+    },
+    undefined,
+    2
+  )
   const signTypedMessage = async (provider, address) => {
-    const data = JSON.parse(signTypedMsg)
+    await onboard.setChain({ chainId: '0x5' })
     const signature = await provider.request({
-      method: 'eth_signTypedData',
-      params: [address, data]
+      method: 'eth_signTypedData_v4',
+      params: [address, typedMsg]
     })
-    const { domain, types, message } = data
+    const { domain, types, message } = JSON.parse(typedMsg)
 
     delete types.EIP712Domain
     console.log(verifyTypedData(domain, types, message, signature))
@@ -552,9 +612,9 @@
   :root {
     --background-color: #ffffff; /* --white */
     --text-color: #1a1d26; /* --gray-700 */
-    --border-color: #D0D4F7; /* --gray-100 taken from future mock */
+    --border-color: #d0d4f7; /* --gray-100 taken from future mock */
 
-    --accent-background: #EFF1FC; /* --gray-100 (currently gray-100 in connect modal) */
+    --accent-background: #eff1fc; /* --gray-100 (currently gray-100 in connect modal) */
     --accent-color: #929bed; /* --primary-400 */
     --accent-color-hover: #eff1fc; /* --primary-200 */
 
@@ -981,17 +1041,7 @@
 
         <div>Chains: {JSON.stringify(chains, null, 2)}</div>
 
-        {#if label === 'Unstoppable'}
-          <div>Unstoppable User: {instance.user.sub}</div>
-          <div>Unstoppable Wallet: {instance.user.wallet_address}</div>
-          <div>Unstoppable Email: {instance.user.email || ''}</div>
-          <div>
-            Unstoppable Humanity: {instance.user.humanity_check_id || ''}
-          </div>
-          <div>Unstoppable Profile: {instance.user.profile || ''}</div>
-        {/if}
-
-        {#each accounts as { address, ens, balance }}
+        {#each accounts as { address, ens, uns, balance }}
           <div
             class="account-info"
             style="margin-top: 0.25rem; margin-bottom: 0.25rem; padding: 0.25rem; border: 1px solid gray;"
@@ -1007,32 +1057,19 @@
             {#if ens}
               <div>ENS Name: {(ens && ens.name) || ''}</div>
             {/if}
-          </div>
-          <div>
-            <input
-              id="sign-msg-input"
-              type="text"
-              class="text-input"
-              placeholder="Message..."
-              bind:value={signMsg}
-            />
-            <button on:click={signMessage(provider, address)}>
-              Sign Message
-            </button>
-          </div>
-          <div>
-            <input
-              id="sign-type-msg-input"
-              type="text"
-              class="text-input"
-              placeholder="Typed message..."
-              bind:value={signTypedMsg}
-            />
-            <button on:click={signTypedMessage(provider, address)}>
-              Sign Typed Message
-            </button>
-          </div>
 
+            {#if uns}
+              <div>UNS Name: {(uns && uns.name) || ''}</div>
+            {/if}
+
+            {#if label === 'Unstoppable'}
+              <div>Unstoppable Email: {instance.user.email || ''}</div>
+              <div>
+                Unstoppable Humanity: {instance.user.humanity_check_id || ''}
+              </div>
+              <div>Unstoppable Profile: {instance.user.profile || ''}</div>
+            {/if}
+          </div>
           <div>
             <input
               type="text"
@@ -1055,7 +1092,28 @@
               Send with Preflight Notifications
             </button>
           </div>
-
+          <div>
+            <input
+              id="sign-msg-input"
+              type="text"
+              class="text-input"
+              placeholder="Message..."
+              bind:value={signMsg}
+            />
+            <button on:click={signMessage(provider, address)}>
+              Sign Message
+            </button>
+          </div>
+          <div>
+            <textarea
+              bind:value={typedMsg}
+              type="text"
+              class="sign-transaction-textarea"
+            />
+            <button on:click={signTypedMessage(provider, address)}>
+              Sign Typed Message
+            </button>
+          </div>
           <div class="sign-transaction">
             <textarea
               bind:value={transactionObject}
