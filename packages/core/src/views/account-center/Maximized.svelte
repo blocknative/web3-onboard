@@ -51,7 +51,7 @@
     --background-color: var(--w3o-background-color);
     --text-color: var(--w3o-text-color);
     --border-color: var(--w3o-border-color);
-    --action-color: var(--w3o-accent-color);
+    --action-color: var(--w3o-accent-text-color);
 
     /* background: var(
       --account-center-maximized-upper-background,
@@ -73,10 +73,10 @@
 
   .wallets-section {
     width: 100%;
-    border-radius: var(
+    /* border-radius: var(
       --account-center-border-radius,
       var(--onboard-border-radius-3, var(--border-radius-3))
-    );
+    ); */
   }
 
   .p5 {
@@ -405,7 +405,7 @@
             <WalletAppBadge
               size={32}
               padding={4}
-              background="transparent"
+              background="white"
               border="black"
               radius={8}
               icon={(appMetadata && appMetadata.icon) || questionIcon}
