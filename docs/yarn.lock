@@ -3249,10 +3249,10 @@
     tallyho-detect-provider "^1.0.0"
     tallyho-onboarding "^1.0.2"
 
-"@web3-onboard/torus@^2.2.0-alpha.1":
-  version "2.2.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/torus/-/torus-2.2.0-alpha.1.tgz#e86498bf9c9151968d33605134e5ac40149512ef"
-  integrity sha512-6A6gOtcsd+Bcx7pAx5enk7JNsEpq6hmMq40+zJgdmue4MT8BnyNeQM8V/8CWrJKxfQx0IExakiVpVDj303wBhA==
+"@web3-onboard/torus@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/torus/-/torus-2.2.0.tgz#6a844c99d783bbab2370f87b70f30a4cb8f36f07"
+  integrity sha512-0iaN3o13p5oCy//3FfEDdbRJnV1Y3QWXLWDTuaxJiYh/Qdj7tc7OORWxfAb3FB94vyaqIFV5jvLK8p7AYoQHmQ==
   dependencies:
     "@toruslabs/torus-embed" "1.38.2"
     "@web3-onboard/common" "^2.2.3"
@@ -3272,10 +3272,10 @@
     hdkey "^2.0.1"
     trezor-connect "^8.2.11"
 
-"@web3-onboard/uauth@^2.0.1-alpha.1":
-  version "2.0.1-alpha.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/uauth/-/uauth-2.0.1-alpha.1.tgz#7cc64fa99d8018688805e6bd7c482940afe3ab79"
-  integrity sha512-LCVgvF7UZ1VHYoHV8W/hadTXkQQVO+v0H9Ack7olBRuUBAJwcO+6cPe+bflmKhZXanunFwtVwBSeQkPyPqOMmA==
+"@web3-onboard/uauth@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/uauth/-/uauth-2.0.1.tgz#998eff50eb1b0a109d48748a122e7a277229a7fd"
+  integrity sha512-wSS9E8rpGubKzttDei2RgU+fdGr4u1/wuV36QjFQyf/ADWHbd4EiILs+iRdf0HxG7UBRVtqSDyv1r6uGeIixmg==
   dependencies:
     "@ethersproject/providers" "^5.5.0"
     "@uauth/js" "^2.4.0"
@@ -3296,10 +3296,10 @@
     "@web3-onboard/common" "^2.2.3"
     rxjs "^7.5.2"
 
-"@web3-onboard/web3auth@^2.1.4-alpha.1":
-  version "2.1.4-alpha.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/web3auth/-/web3auth-2.1.4-alpha.1.tgz#4fc916c245669ed298c48aae0797ad7e4197a1a2"
-  integrity sha512-ipIpXiwIB+trnCTjW/Z+gk8YraGb++QxuET4AP4dpwi/heivHGts64yiuddIxvSTXUipcoUwKjhTjp5GzPMDLw==
+"@web3-onboard/web3auth@^2.1.4":
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/web3auth/-/web3auth-2.1.4.tgz#2972914deec9b88ee5619822eebb651087735ff3"
+  integrity sha512-9G68PwvMhaN/F8pW2drxiGX/C5J/Vq6Vmb+u3XqLezkJjx2fZ15NzwBpnq538ChCQQIOOUE1yaKAZwIqNMDUbw==
   dependencies:
     "@web3-onboard/common" "^2.2.3"
     "@web3auth/base" "^3.3.0"
