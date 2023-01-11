@@ -17,6 +17,7 @@
   import dcentModule from '@web3-onboard/dcent'
   import sequenceModule from '@web3-onboard/sequence'
   import tallyHoModule from '@web3-onboard/tallyho'
+  import zealModule from '@web3-onboard/zeal'
   import transactionPreviewModule from '@web3-onboard/transaction-preview'
   import enkryptModule from '@web3-onboard/enkrypt'
   import mewWalletModule from '@web3-onboard/mew-wallet'
@@ -62,7 +63,6 @@
 
   let transactionObject = defaultTransactionObject
   let signMsg = 'Any string message'
-  let signTypedMsg
 
   const injected = injectedModule({
     custom: [
@@ -97,6 +97,7 @@
   const keystone = keystoneModule()
   const gnosis = gnosisModule()
   const tallyho = tallyHoModule()
+  const zeal = zealModule()
   const phantom = phantomModule()
 
   const trezorOptions = {
@@ -129,6 +130,7 @@
   const onboard = Onboard({
     wallets: [
       injected,
+      zeal,
       web3auth,
       ledger,
       trezor,
@@ -295,6 +297,8 @@
 
   let toAddress
   const sendTransaction = async provider => {
+    await onboard.setChain({ chainId: '0x5' })
+
     const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 
     const signer = ethersProvider.getSigner()
@@ -311,6 +315,8 @@
   }
 
   const sendTransactionWithPreFlight = async (provider, balance) => {
+    await onboard.setChain({ chainId: '0x5' })
+
     const balanceValue = Object.values(balance)[0]
     const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 
@@ -363,13 +369,63 @@
     console.log({ signMsg, signature, recoveredAddress, addr })
   }
 
+  let typedMsg = JSON.stringify(
+    {
+      domain: {
+        chainId: '0x5',
+        name: 'Web3-Onboard Test App',
+        verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
+        version: '1'
+      },
+      message: {
+        contents: 'Hello, Bob!',
+        from: {
+          name: 'Cow',
+          wallets: [
+            '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826',
+            '0xDeaDbeefdEAdbeefdEadbEEFdeadbeEFdEaDbeeF'
+          ]
+        },
+        to: [
+          {
+            name: 'Bob',
+            wallets: [
+              '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
+              '0xB0BdaBea57B0BDABeA57b0bdABEA57b0BDabEa57',
+              '0xB0B0b0b0b0b0B000000000000000000000000000'
+            ]
+          }
+        ]
+      },
+      primaryType: 'Message',
+      types: {
+        EIP712Domain: [
+          { name: 'name', type: 'string' },
+          { name: 'version', type: 'string' },
+          { name: 'chainId', type: 'uint256' },
+          { name: 'verifyingContract', type: 'address' }
+        ],
+        Message: [
+          { name: 'from', type: 'Person' },
+          { name: 'to', type: 'Person[]' },
+          { name: 'contents', type: 'string' }
+        ],
+        Person: [
+          { name: 'name', type: 'string' },
+          { name: 'wallets', type: 'address[]' }
+        ]
+      }
+    },
+    undefined,
+    2
+  )
   const signTypedMessage = async (provider, address) => {
-    const data = JSON.parse(signTypedMsg)
+    await onboard.setChain({ chainId: '0x5' })
     const signature = await provider.request({
-      method: 'eth_signTypedData',
-      params: [address, data]
+      method: 'eth_signTypedData_v4',
+      params: [address, typedMsg]
     })
-    const { domain, types, message } = data
+    const { domain, types, message } = JSON.parse(typedMsg)
 
     delete types.EIP712Domain
     console.log(verifyTypedData(domain, types, message, signature))
@@ -529,6 +585,88 @@
 </script>
 
 <style>
+  :root {
+    --background-color: #ffffff; /* --white */
+    --text-color: #1a1d26; /* --gray-700 */
+    --border-color: #d0d4f7; /* --gray-100 taken from future mock */
+
+    --accent-background: #eff1fc; /* --gray-100 (currently gray-100 in connect modal) */
+    --accent-color: #929bed; /* --primary-400 */
+    --accent-color-hover: #eff1fc; /* --primary-200 */
+
+    /* Account Center & Notify */
+    --secondary-text-color: #707481; /* --gray-400 (balance and token name) */
+    --secondary-accent-background: #242835; /* --gray-600 (Upper background in maximized) */
+
+    /* --onboard-font-family-normal: System,monospace; */
+    --onboard-connect-sidebar-background: var(--accent-background);
+    --onboard-connect-sidebar-border-color: var(--border-color);
+    --onboard-close-button-background: var(--accent-background);
+    --onboard-connect-sidebar-color: var(--text-color);
+    --onboard-connect-sidebar-progress-background: var(
+      --secondary-text-color
+    ); /* defaults to gray-200 */
+    --onboard-connect-sidebar-progress-color: var(
+      --accent-color
+    ); /* defaults to  primary-600 */
+    --onboard-connect-header-background: var(--background-color);
+    --onboard-connect-header-color: var(--text-color);
+    --onboard-main-scroll-container-background: var(--background-color);
+    --onboard-link-color: var(--accent-color);
+    --onboard-wallet-button-background: var(--background-color);
+    --onboard-wallet-button-background-hover: var(--accent-color-hover);
+    --onboard-wallet-button-color-hover: var(--text-color);
+    --onboard-wallet-button-color: var(--text-color);
+    --onboard-wallet-button-border-color: var(--border-color);
+    --onboard-wallet-app-icon-border-color: var(--border-color);
+
+    --account-center-minimized-background: var(--background-color);
+    --account-center-minimized-address-color: var(--text-color);
+    --account-center-minimized-balance-color: var(--secondary-text-color);
+    --account-center-minimized-chain-select-background: var(
+      --accent-color-hover
+    );
+    --account-center-maximized-info-section-background: var(--background-color);
+    --account-center-maximized-network-section-background: var(
+      --accent-background
+    );
+    --account-center-maximized-upper-background: var(
+      --secondary-accent-background
+    );
+    --account-center-maximized-address-color: var(--background-color);
+    --account-center-maximized-account-section-background-hover: var(
+      --text-color
+    );
+    --account-center-maximized-balance-color: var(--border-color);
+    --account-center-maximized-upper-action-color: var(--accent-color);
+    --account-center-maximized-network-text-color: var(
+      --secondary-accent-background
+    );
+    --account-center-maximized-info-section-background-color: var(
+      --background-color
+    );
+    --account-center-maximized-app-name-color: var(
+      --secondary-accent-background
+    );
+    --account-center-maximized-app-info-color: var(
+      --secondary-accent-background
+    );
+    --account-center-app-btn-background: var(--secondary-accent-background);
+    --account-center-app-btn-text-color: var(--background-color);
+
+    --notify-onboard-background: var(--secondary-accent-background);
+    --notify-onboard-transaction-status: var(--accent-background);
+    --notify-onboard-address-hash-color: var(--accent-color-hover);
+    --notify-onboard-anchor-color: var(--accent-color);
+    --notify-onboard-timer-color: var(--secondary-text-color);
+
+    /*
+		NEEDS TARGET AS IT USES OPACITY:
+		--account-center-maximized-upper-action-background-hover
+		NEEDS UPDATES FOR DIFFERNT STYLING, DOESNT FIT BASIC VARIABLES ABOVE:
+		Notify status icons, icon backgrounds and icon borders
+	*/
+  }
   main {
     height: 100%;
   }
@@ -927,31 +1065,6 @@
           </div>
           <div>
             <input
-              id="sign-msg-input"
-              type="text"
-              class="text-input"
-              placeholder="Message..."
-              bind:value={signMsg}
-            />
-            <button on:click={signMessage(provider, address)}>
-              Sign Message
-            </button>
-          </div>
-          <div>
-            <input
-              id="sign-type-msg-input"
-              type="text"
-              class="text-input"
-              placeholder="Typed message..."
-              bind:value={signTypedMsg}
-            />
-            <button on:click={signTypedMessage(provider, address)}>
-              Sign Typed Message
-            </button>
-          </div>
-
-          <div>
-            <input
               type="text"
               class="text-input"
               placeholder="0x..."
@@ -972,7 +1085,28 @@
               Send with Preflight Notifications
             </button>
           </div>
-
+          <div>
+            <input
+              id="sign-msg-input"
+              type="text"
+              class="text-input"
+              placeholder="Message..."
+              bind:value={signMsg}
+            />
+            <button on:click={signMessage(provider, address)}>
+              Sign Message
+            </button>
+          </div>
+          <div>
+            <textarea
+              bind:value={typedMsg}
+              type="text"
+              class="sign-transaction-textarea"
+            />
+            <button on:click={signTypedMessage(provider, address)}>
+              Sign Typed Message
+            </button>
+          </div>
           <div class="sign-transaction">
             <textarea
               bind:value={transactionObject}

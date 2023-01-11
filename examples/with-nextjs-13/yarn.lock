@@ -2227,9 +2227,9 @@
     "@web3-onboard/core" "^2.10.1"
     use-sync-external-store "1.0.0"
 
-"@web3-onboard/sequence@^2.0.3-alpha.1":
+"@web3-onboard/sequence@^2.0.3":
   version "2.0.4"
-  resolved "https://registry.npmjs.org/@web3-onboard/sequence/-/sequence-2.0.4.tgz#424e120e78578a9655f8168ae2cad45372a41c8a"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/sequence/-/sequence-2.0.4.tgz#424e120e78578a9655f8168ae2cad45372a41c8a"
   integrity sha512-qz6qblHusoyj12A6NnIlqDl6kmeACFrA03gmEufmiPUCH3AX5fVBMK2f0xiM30sWoeYjTYGrUrgDmAmfjKytTg==
   dependencies:
     "0xsequence" "^0.43.1"
