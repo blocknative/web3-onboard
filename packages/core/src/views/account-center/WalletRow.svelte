@@ -85,6 +85,7 @@
     width: 100%;
     background: var(--action-color);
     border-radius: 12px;
+    z-index: -1;
     opacity: 0;
   }
 
