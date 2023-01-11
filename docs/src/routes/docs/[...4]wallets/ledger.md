@@ -8,14 +8,14 @@ Wallet module for connecting Ledger hardware wallets to web3-onboard
 <TabPanel value="yarn">
 
 ```sh copy
-yarn add @web3-onboard/ledger
+yarn add @web3-onboard/core @web3-onboard/ledger
 ```
 
   </TabPanel>
   <TabPanel value="npm">
 
 ```sh copy
-npm install @web3-onboard/ledger
+npm install @web3-onboard/core @web3-onboard/ledger
 ```
 
   </TabPanel>
@@ -24,40 +24,11 @@ npm install @web3-onboard/ledger
 ## Options
 
 ```typescript
-type LedgerOptions = {
-  customNetwork?: CustomNetwork
-}
-
-interface CustomNetwork {
-  networkId: number
-  genesis: GenesisBlock
-  hardforks: Hardfork[]
-  bootstrapNodes: BootstrapNode[]
-}
-
-interface GenesisBlock {
-  hash: string
-  timestamp: string | null
-  gasLimit: number
-  difficulty: number
-  nonce: string
-  extraData: string
-  stateRoot: string
-}
-
-interface Hardfork {
-  name: string
-  block: number | null
-}
-
-interface BootstrapNode {
-  ip: string
-  port: number | string
-  network?: string
+interface LedgerOptions {
   chainId?: number
-  id: string
-  location: string
-  comment: string
+  bridge?: string
+  infuraId?: string
+  rpc?: { [chainId: number]: string }
 }
 ```
 
