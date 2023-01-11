@@ -69,9 +69,9 @@ export interface InitOptions {
   theme?: Theme
 }
 
-export type Theme = ThemingMap | BuiltInThemes
+export type Theme = ThemingMap | BuiltInThemes | 'system'
 
-export type BuiltInThemes = 'default' | 'dark'
+export type BuiltInThemes = 'default' | 'dark' | 'light'
 
 export type ThemingMap = {
   '--w3o-background-color'?: string
