@@ -1,12 +1,15 @@
 import uniqBy from 'lodash.uniqby'
-
 import type { WalletInit } from '@web3-onboard/common'
-import type { InjectedWalletOptions, CustomWindow } from './types.js'
 import { ProviderLabel } from './types.js'
-
 import standardWallets from './wallets.js'
-import { remove } from './helpers.js'
 import { validateWalletOptions } from './validation.js'
+import { defaultWalletUnavailableMsg } from './helpers'
+
+import type {
+  InjectedWalletOptions,
+  CustomWindow,
+  InjectedWalletModule
+} from './types.js'
 
 declare const window: CustomWindow
 
@@ -23,9 +26,15 @@ function injected(options?: InjectedWalletOptions): WalletInit {
 
   return helpers => {
     const { device } = helpers
-    const { custom = [], filter = {} } = options || {}
+    const {
+      custom = [],
+      filter = {},
+      displayUnavailable,
+      sort,
+      walletUnavailableMessage
+    } = options || {}
     const allWallets = [...custom, ...standardWallets]
-    const deduped = uniqBy(allWallets, ({ label }) => `${label}`)
+    const deduped = uniqBy(allWallets, ({ label }) => label)
 
     const filteredWallets = deduped.filter(wallet => {
       const { label, platforms } = wallet
@@ -51,51 +60,69 @@ function injected(options?: InjectedWalletOptions): WalletInit {
 
     let removeMetaMask = false
 
-    const validWallets = filteredWallets.filter(
-      ({ injectedNamespace, checkProviderIdentity, label }) => {
-        const provider = window[injectedNamespace] as CustomWindow['ethereum']
+    const validWallets = filteredWallets.map(wallet => {
+      const { injectedNamespace, checkProviderIdentity, label } = wallet
+      const provider = window[injectedNamespace] as CustomWindow['ethereum']
 
-        if (!provider) return
+      let walletExists = false
 
-        let walletExists
-
-        if (provider.providers && Array.isArray(provider.providers)) {
-          walletExists = !!provider.providers.filter(provider =>
-            checkProviderIdentity({ provider, device })
-          ).length
-        } else {
-          walletExists = checkProviderIdentity({ provider, device })
-        }
-
-        if (
-          walletExists &&
-          provider.isMetaMask &&
-          !provider.overrideIsMetaMask &&
-          label !== ProviderLabel.MetaMask &&
-          label !== 'Detected Wallet'
-        ) {
-          removeMetaMask = true
-        }
-
-        return walletExists
+      if (provider && provider.providers && Array.isArray(provider.providers)) {
+        walletExists = !!provider.providers.filter(provider =>
+          checkProviderIdentity({ provider, device })
+        ).length
+      } else {
+        walletExists = checkProviderIdentity({ provider, device })
       }
-    )
+
+      if (
+        walletExists &&
+        provider.isMetaMask &&
+        !provider.overrideIsMetaMask &&
+        label !== ProviderLabel.MetaMask &&
+        label !== 'Detected Wallet'
+      ) {
+        removeMetaMask = true
+      }
+
+      return walletExists
+        ? wallet
+        : displayUnavailable
+        ? {
+            ...wallet,
+            getInterface: async () => {
+              throw new Error(
+                walletUnavailableMessage
+                  ? walletUnavailableMessage(wallet)
+                  : defaultWalletUnavailableMsg(wallet)
+              )
+            }
+          }
+        : null
+    })
 
     if (validWallets.length) {
       const moreThanOneWallet = validWallets.length > 1
       // if more than one wallet, then remove detected wallet
-      return validWallets
-        .filter(
-          remove({
-            detected: moreThanOneWallet,
-            metamask: moreThanOneWallet && removeMetaMask
-          })
-        )
-        .map(({ label, getIcon, getInterface }) => ({
+      const formattedWallets = validWallets
+        .filter((wallet): wallet is InjectedWalletModule => {
+          if (wallet === null) return false
+
+          const { label } = wallet
+          return !(
+            (label === ProviderLabel.Detected && moreThanOneWallet) ||
+            (label === ProviderLabel.MetaMask &&
+              moreThanOneWallet &&
+              removeMetaMask)
+          )
+        })
+        .map(({ label, getIcon, getInterface }: InjectedWalletModule) => ({
           label,
           getIcon,
           getInterface
         }))
+        .sort((a, b) => (a.label < b.label ? -1 : a.label > b.label ? 1 : 0))
+
+      return sort ? sort(formattedWallets) : formattedWallets
     }
 
     return []

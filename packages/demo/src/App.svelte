@@ -70,7 +70,8 @@
     ],
     filter: {
       // mapping of wallet label to filter here
-    }
+    },
+    displayUnavailable: true
   })
 
   const coinbaseWallet = coinbaseModule()
@@ -262,7 +263,7 @@
         },
         position: 'topRight'
       }
-    },
+    }
     // containerElements: {
     // El must be present at time of JS script execution
     // See ../public/index.html for element example
@@ -297,8 +298,6 @@
 
   let toAddress
   const sendTransaction = async provider => {
-    await onboard.setChain({ chainId: '0x5' })
-
     const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 
     const signer = ethersProvider.getSigner()
