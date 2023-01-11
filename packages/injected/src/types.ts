@@ -159,7 +159,7 @@ export type InjectedProvider = ExternalProvider &
 export type WalletFilters = {
   /**A provider label mapped to a list of excluded platforms
    * or a boolean indicating if it should be included. */
-  [key in ProviderLabel | string]?: Platform[] | boolean
+  [key in ProviderLabel | string]?: Platform[] | boolean | 'unavailable'
 }
 
 export interface InjectedWalletOptions {

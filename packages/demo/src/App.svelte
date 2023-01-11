@@ -35,6 +35,7 @@
   import blocknativeIcon from './blocknative-icon'
   import blocknativeLogo from './blocknative-logo'
   import { onMount } from 'svelte'
+  import { ProviderLabel } from '@web3-onboard/injected-wallets'
 
   let windowWidth
 
@@ -68,10 +69,11 @@
     custom: [
       // include custom injected wallet modules here
     ],
+    displayUnavailable: true,
     filter: {
-      // mapping of wallet label to filter here
-    },
-    displayUnavailable: true
+      [ProviderLabel.Binance]: 'unavailable',
+      [ProviderLabel.Bitski]: 'unavailable'
+    }
   })
 
   const coinbaseWallet = coinbaseModule()

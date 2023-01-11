@@ -3,7 +3,7 @@ import type { WalletInit } from '@web3-onboard/common'
 import { ProviderLabel } from './types.js'
 import standardWallets from './wallets.js'
 import { validateWalletOptions } from './validation.js'
-import { defaultWalletUnavailableMsg } from './helpers'
+import { defaultWalletUnavailableMsg, isWalletAvailable } from './helpers'
 
 import type {
   InjectedWalletOptions,
@@ -42,10 +42,31 @@ function injected(options?: InjectedWalletOptions): WalletInit {
 
       const filteredWallet = walletFilters === false
 
-      const excludedDevice =
+      const provider = window[
+        wallet.injectedNamespace
+      ] as CustomWindow['ethereum']
+
+      const walletAvailable = isWalletAvailable(
+        provider,
+        wallet.checkProviderIdentity,
+        device
+      )
+
+      let excludedDevice: boolean = false
+
+      if (
+        // platform filters
         Array.isArray(walletFilters) &&
         (walletFilters.includes(device.type) ||
           walletFilters.includes(device.os.name))
+      ) {
+        excludedDevice = true
+      }
+
+      // remove if filtered by unavailable
+      if (walletFilters === 'unavailable' && !walletAvailable) {
+        excludedDevice = true
+      }
 
       const invalidPlatform =
         !platforms.includes('all') &&
@@ -64,18 +85,14 @@ function injected(options?: InjectedWalletOptions): WalletInit {
       const { injectedNamespace, checkProviderIdentity, label } = wallet
       const provider = window[injectedNamespace] as CustomWindow['ethereum']
 
-      let walletExists = false
-
-      if (provider && provider.providers && Array.isArray(provider.providers)) {
-        walletExists = !!provider.providers.filter(provider =>
-          checkProviderIdentity({ provider, device })
-        ).length
-      } else {
-        walletExists = checkProviderIdentity({ provider, device })
-      }
+      const walletAvailable = isWalletAvailable(
+        provider,
+        checkProviderIdentity,
+        device
+      )
 
       if (
-        walletExists &&
+        walletAvailable &&
         provider.isMetaMask &&
         !provider.overrideIsMetaMask &&
         label !== ProviderLabel.MetaMask &&
@@ -84,7 +101,7 @@ function injected(options?: InjectedWalletOptions): WalletInit {
         removeMetaMask = true
       }
 
-      return walletExists
+      return walletAvailable
         ? wallet
         : displayUnavailable
         ? {
