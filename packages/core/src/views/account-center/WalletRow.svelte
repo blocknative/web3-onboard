@@ -67,28 +67,52 @@
     padding: 0.25rem;
     margin-bottom: 0.25rem;
     width: 100%;
-    font-size: var(--onboard-font-size-5, var(--font-size-5));
-    line-height: var(--onboard-font-line-height-2, var(--font-line-height-2));
+    /* font-size: var(--onboard-font-size-5, var(--font-size-5)); */
+    /* line-height: var(--onboard-font-line-height-2, var(--font-line-height-2)); */
     border-radius: 12px;
     transition: background-color 150ms ease-in-out;
   }
 
-  .container:hover {
-    background: var(--onboard-gray-500, var(--gray-500));
+  .container::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    background: var(--action-color);
+    border-radius: 12px;
+    opacity: 0;
   }
 
-  .container:hover > div > span.balance {
+  .container:hover::before {
+    opacity: 0.2;
+  }
+
+  /* .container:hover {
+    background: var(--onboard-gray-500, var(--gray-500));
+  } */
+
+  .container:hover .balance,
+  .container:hover .elipsis-container {
+    opacity: 1;
+  }
+
+  /* .container:hover span.balance {
     color: var(
       --account-center-maximized-balance-color,
       var(--onboard-gray-100, var(--gray-100))
     );
-  }
+  } */
 
   .container.primary:hover {
-    background: var(
+    /* background: var(
       --account-center-maximized-account-section-background-hover,
       var(--onboard-gray-700, var(--gray-700))
-    );
+    ); */
   }
 
   .address-domain {
@@ -102,13 +126,15 @@
 
   .balance {
     margin-left: 0.5rem;
-    color: var(--onboard-gray-300, var(--gray-300));
+    /* color: var(--onboard-gray-300, var(--gray-300)); */
     transition: color 150ms ease-in-out, background-color 150ms ease-in-out;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     width: 7.25rem;
     text-align: end;
+
+    opacity: 0.4;
   }
 
   .elipsis-container {
@@ -117,7 +143,9 @@
     border-radius: 24px;
     transition: color 150ms ease-in-out, background-color 150ms ease-in-out;
     background-color: transparent;
-    color: var(--onboard-gray-400, var(--gray-400));
+    /* color: var(--onboard-gray-400, var(--gray-400)); */
+
+    opacity: 0.4;
   }
 
   .elipsis {
@@ -125,11 +153,13 @@
   }
 
   .elipsis-container:hover {
-    color: var(--onboard-gray-100, var(--gray-100));
+    /* color: var(--onboard-gray-100, var(--gray-100)); */
+    color: var(--text-color)
   }
 
   .elipsis-container.active {
-    background: var(--onboard-gray-700, var(--gray-700));
+    /* background: var(--onboard-gray-700, var(--gray-700)); */
+    color: var(--text-color)
   }
 
   .menu {
