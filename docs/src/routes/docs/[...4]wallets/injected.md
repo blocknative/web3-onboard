@@ -162,44 +162,148 @@ const onboard = Onboard({
 })
 ```
 
+## Display Unavailable Wallets
+
+You may want to display injected wallets that are not currently available to the user and you can use the `displayUnavailable` option to do that:
+
+```javascript
+const injected = injectedModule({
+  displayUnavailable: true
+})
+```
+
+This will render every injected wallet as regardless of whether it has been detected in the window, happy days.
+Then the issue of the order of wallets displayed becomes apparent when you have 21 injected wallets at the top of the wallets list. To solve this, all injected wallets are sorted alphabetically by default and there is an additional `sort` parameter which receives the final list of wallets and then returns the list to be rendered. This allows for example setting MetaMask and Coinbase first and then just the rest alphabetically:
+
+```javascript
+const injected = injectedModule({
+  // display all wallets even if they are unavailable
+  displayUnavailable: true,
+  // do a manual sort of injected wallets so that MetaMask and Coinbase are ordered first
+  sort: (wallets) => {
+    const metaMask = wallets.find(({ label }) => label === ProviderLabel.MetaMask)
+    const coinbase = wallets.find(({ label }) => label === ProviderLabel.Coinbase)
+
+    return (
+      [
+        metaMask,
+        coinbase,
+        ...wallets.filter(
+          ({ label }) => label !== ProviderLabel.MetaMask && label !== ProviderLabel.Coinbase
+        )
+      ]
+        // remove undefined values
+        .filter((wallet) => wallet)
+    )
+  }
+})
+```
+
+You may want to display all wallets, but filter out specific wallets based on their availability. For example I may want to display all unavailable wallets except when Binance and Bitski wallet is unavailable, then don't show them, but if they are available, then do show them. To do this, the filters value has been extended to have a new value: `'unavailable'`, as in; remove this wallet if it is unavailable, even though `displayUnavailable` wallets is set:
+
+```javascript
+const injected = injectedModule({
+  // display all wallets even if they are unavailable
+  displayUnavailable: true,
+  // but only show Binance and Bitski wallet if they are available
+  filter: {
+    [ProviderLabel.Binance]: 'unavailable',
+    [ProviderLabel.Bitski]: 'unavailable'
+  },
+  // do a manual sort of injected wallets so that MetaMask and Coinbase are ordered first
+  sort: (wallets) => {
+    const metaMask = wallets.find(({ label }) => label === ProviderLabel.MetaMask)
+    const coinbase = wallets.find(({ label }) => label === ProviderLabel.Coinbase)
+
+    return (
+      [
+        metaMask,
+        coinbase,
+        ...wallets.filter(
+          ({ label }) => label !== ProviderLabel.MetaMask && label !== ProviderLabel.Coinbase
+        )
+      ]
+        // remove undefined values
+        .filter((wallet) => wallet)
+    )
+  }
+})
+```
+
+If a wallet is selected, but is not available the default error message is: `Please install or enable ${walletName} to continue`. You may want to customise that message, so there is the `walletUnavailableMessage` parameter which is a function that takes the wallet object that is unavailable and returns a string which is the message to display:
+
+```javascript
+const injected = injectedModule({
+  custom: [
+    // include custom (not natively supported) injected wallet modules here
+  ],
+  // display all wallets even if they are unavailable
+  displayUnavailable: true,
+  // but only show Binance and Bitski wallet if they are available
+  filter: {
+    [ProviderLabel.Binance]: 'unavailable',
+    [ProviderLabel.Bitski]: 'unavailable'
+  },
+  // do a manual sort of injected wallets so that MetaMask and Coinbase are ordered first
+  sort: (wallets) => {
+    const metaMask = wallets.find(({ label }) => label === ProviderLabel.MetaMask)
+    const coinbase = wallets.find(({ label }) => label === ProviderLabel.Coinbase)
+
+    return (
+      [
+        metaMask,
+        coinbase,
+        ...wallets.filter(
+          ({ label }) => label !== ProviderLabel.MetaMask && label !== ProviderLabel.Coinbase
+        )
+      ]
+        // remove undefined values
+        .filter((wallet) => wallet)
+    )
+  },
+  walletUnavailableMessage: (wallet) => `Oops ${wallet.label} is unavailable!`
+})
+```
+
 ### Injected Wallets Supported Natively
 
-- Metamask - *Desktop & Mobile* (Mobile relies on Wallet Connect and is detected inside MetaMask app browser)
-- Binance - *Desktop*
-- Coinbase - *Desktop & Mobile*
-- Tally - *Desktop*
-- Exodus - *Desktop & Mobile*
-- Trust - *Mobile*
-- Opera - *Desktop & Mobile*
-- Status - *Mobile*
-- Alphawallet - *Mobile*
-- Atoken - *Mobile*
-- Bitpie - *Mobile*
-- Blockwallet - *Desktop*
-- Brave - *Desktop & Mobile*
-- D'Cent - *Mobile*
-- Frame - *Desktop*
-- Huobiwallet - *Mobile*
-- Hyperpay - *Mobile*
-- IMtoken - *Mobile*
-- Liquality - *Desktop*
-- Meetone - *Mobile*
-- Mykey - *Mobile*
-- Ownbit - *Mobile*
-- Tokenpocket - *Desktop & Mobile*
-- TP - *Mobile*
-- xDefi - *Desktop & Mobile*
-- 1inch - *Mobile*
-- Tokenary - *Mobile*
-- GameStop - *Desktop*
-- Rabby - *Desktop*
-- MathWallet - *Desktop & Mobile*
-- Gamestop - *Desktop*
-- Bitkeep - *Desktop & Mobile*
-- Sequence - *Desktop & Mobile*
-- Core - *Desktop*
-- Bitski - *Desktop & Mobile*
-- Enkrypt - *Desktop & Mobile*
+- Metamask - _Desktop & Mobile_ (Mobile relies on Wallet Connect and is detected inside MetaMask app browser)
+- Binance - _Desktop_
+- Coinbase - _Desktop & Mobile_
+- Tally - _Desktop_
+- Exodus - _Desktop & Mobile_
+- Trust - _Mobile_
+- Opera - _Desktop & Mobile_
+- Status - _Mobile_
+- Alphawallet - _Mobile_
+- Atoken - _Mobile_
+- Bitpie - _Mobile_
+- Blockwallet - _Desktop_
+- Brave - _Desktop & Mobile_
+- D'Cent - _Mobile_
+- Frame - _Desktop_
+- Huobiwallet - _Mobile_
+- Hyperpay - _Mobile_
+- IMtoken - _Mobile_
+- Liquality - _Desktop_
+- Meetone - _Mobile_
+- Mykey - _Mobile_
+- Ownbit - _Mobile_
+- Tokenpocket - _Desktop & Mobile_
+- TP - _Mobile_
+- xDefi - _Desktop & Mobile_
+- 1inch - _Mobile_
+- Tokenary - _Mobile_
+- GameStop - _Desktop_
+- Rabby - _Desktop_
+- MathWallet - _Desktop & Mobile_
+- Gamestop - _Desktop_
+- Bitkeep - _Desktop & Mobile_
+- Sequence - _Desktop & Mobile_
+- Core - _Desktop_
+- Bitski - _Desktop & Mobile_
+- Enkrypt - _Desktop & Mobile_
 
 ## Build Environments
+
 For build env configurations and setups please see the Build Env section [here](/docs/modules/core#build-environments)
