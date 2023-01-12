@@ -26,6 +26,7 @@ function injected(options?: InjectedWalletOptions): WalletInit {
 
   return helpers => {
     const { device } = helpers
+
     const {
       custom = [],
       filter = {},
@@ -33,56 +34,21 @@ function injected(options?: InjectedWalletOptions): WalletInit {
       sort,
       walletUnavailableMessage
     } = options || {}
-    const allWallets = [...custom, ...standardWallets]
-    const deduped = uniqBy(allWallets, ({ label }) => label)
 
-    const filteredWallets = deduped.filter(wallet => {
-      const { label, platforms } = wallet
-      const walletFilters = filter[label]
-
-      const filteredWallet = walletFilters === false
-
-      const provider = window[
-        wallet.injectedNamespace
-      ] as CustomWindow['ethereum']
-
-      const walletAvailable = isWalletAvailable(
-        provider,
-        wallet.checkProviderIdentity,
-        device
-      )
-
-      let excludedDevice: boolean = false
-
-      if (
-        // platform filters
-        Array.isArray(walletFilters) &&
-        (walletFilters.includes(device.type) ||
-          walletFilters.includes(device.os.name))
-      ) {
-        excludedDevice = true
-      }
-
-      // remove if filtered by unavailable
-      if (walletFilters === 'unavailable' && !walletAvailable) {
-        excludedDevice = true
-      }
-
-      const invalidPlatform =
-        !platforms.includes('all') &&
-        !platforms.includes(device.type) &&
-        !platforms.includes(device.os.name)
-
-      const supportedWallet =
-        !filteredWallet && !excludedDevice && !invalidPlatform
-
-      return supportedWallet
-    })
+    // combine custom with standard wallets and dedupe
+    const allWallets = uniqBy(
+      [...custom, ...standardWallets],
+      ({ label }) => label
+    )
 
     let removeMetaMask = false
 
-    const validWallets = filteredWallets.map(wallet => {
-      const { injectedNamespace, checkProviderIdentity, label } = wallet
+    const wallets = allWallets.reduce((acc, wallet) => {
+      const { label, platforms, injectedNamespace, checkProviderIdentity } =
+        wallet
+
+      const walletFilters = filter[label]
+      const filteredWallet = walletFilters === false
       const provider = window[injectedNamespace] as CustomWindow['ethereum']
 
       const walletAvailable = isWalletAvailable(
@@ -91,6 +57,56 @@ function injected(options?: InjectedWalletOptions): WalletInit {
         device
       )
 
+      let excludedDevice: boolean = false
+
+      // dev specified platform filters
+      if (
+        Array.isArray(walletFilters) &&
+        (walletFilters.includes(device.type) ||
+          walletFilters.includes(device.os.name))
+      ) {
+        excludedDevice = true
+      }
+
+      // unavailable filter
+      if (walletFilters === 'unavailable' && !walletAvailable) {
+        excludedDevice = true
+      }
+
+      // wallet specified platform filters
+      const invalidPlatform =
+        !platforms.includes('all') &&
+        !platforms.includes(device.type) &&
+        !platforms.includes(device.os.name)
+
+      const supportedWallet =
+        !filteredWallet &&
+        !excludedDevice &&
+        !invalidPlatform &&
+        (walletAvailable || displayUnavailable)
+
+      if (supportedWallet) {
+        acc.push(
+          // modify wallet to display error if unavailable but displayUnavailable is set
+          displayUnavailable && !walletAvailable
+            ? {
+                ...wallet,
+                getInterface: async () => {
+                  throw new Error(
+                    walletUnavailableMessage
+                      ? walletUnavailableMessage(wallet)
+                      : defaultWalletUnavailableMsg(wallet)
+                  )
+                }
+              }
+            : // otherwise add wallet to list as is
+              wallet
+        )
+      }
+
+      // check to see if we need to remove MetaMask
+      // in the case that the provider gave us a false positive
+      // for MM wallet
       if (
         walletAvailable &&
         provider.isMetaMask &&
@@ -101,29 +117,15 @@ function injected(options?: InjectedWalletOptions): WalletInit {
         removeMetaMask = true
       }
 
-      return walletAvailable
-        ? wallet
-        : displayUnavailable
-        ? {
-            ...wallet,
-            getInterface: async () => {
-              throw new Error(
-                walletUnavailableMessage
-                  ? walletUnavailableMessage(wallet)
-                  : defaultWalletUnavailableMsg(wallet)
-              )
-            }
-          }
-        : null
-    })
+      return acc
+    }, [] as InjectedWalletModule[])
 
-    if (validWallets.length) {
-      const moreThanOneWallet = validWallets.length > 1
+    if (wallets.length) {
+      const moreThanOneWallet = wallets.length > 1
+
       // if more than one wallet, then remove detected wallet
-      const formattedWallets = validWallets
-        .filter((wallet): wallet is InjectedWalletModule => {
-          if (wallet === null) return false
-
+      const formattedWallets = wallets
+        .filter(wallet => {
           const { label } = wallet
           return !(
             (label === ProviderLabel.Detected && moreThanOneWallet) ||
@@ -132,11 +134,13 @@ function injected(options?: InjectedWalletOptions): WalletInit {
               removeMetaMask)
           )
         })
+        // then map to the WalletModule interface
         .map(({ label, getIcon, getInterface }: InjectedWalletModule) => ({
           label,
           getIcon,
           getInterface
         }))
+        // default sort by alphabetical
         .sort((a, b) => (a.label < b.label ? -1 : a.label > b.label ? 1 : 0))
 
       return sort ? sort(formattedWallets) : formattedWallets
