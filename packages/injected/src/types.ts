@@ -95,7 +95,7 @@ export enum ProviderLabel {
   Enkrypt = 'Enkrypt',
   Zeal = 'Zeal',
   Phantom = 'Phantom',
-  OKXWallet = 'OKXWallet',
+  OKXWallet = 'OKX Wallet',
 }
 
 export interface MeetOneProvider extends ExternalProvider {
