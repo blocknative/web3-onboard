@@ -52,7 +52,7 @@ export enum ProviderIdentityFlag {
   Enkrypt = 'isEnkrypt',
   Zeal = 'isZeal',
   Phantom = 'isPhantom',
-  OkxWallet = 'isOkxWallet',
+  OKXWallet = 'isOkxWallet',
 }
 
 export enum ProviderLabel {
@@ -95,7 +95,7 @@ export enum ProviderLabel {
   Enkrypt = 'Enkrypt',
   Zeal = 'Zeal',
   Phantom = 'Phantom',
-  OkxWallet = 'Okx Wallet',
+  OKXWallet = 'OKXWallet',
 }
 
 export interface MeetOneProvider extends ExternalProvider {
@@ -122,7 +122,7 @@ export enum InjectedNameSpace {
   Enkrypt = 'enkrypt',
   Zeal = 'zeal',
   Phantom = 'phantom',
-  OkxWallet = 'okxwallet'
+  OKXWallet = 'okxwallet'
 }
 
 export interface CustomWindow extends Window {

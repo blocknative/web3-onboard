@@ -654,13 +654,13 @@ const phantom: InjectedWalletModule = {
 }
 
 const okxwallet: InjectedWalletModule = {
-  label: ProviderLabel.OkxWallet,
-  injectedNamespace: InjectedNameSpace.OkxWallet,
+  label: ProviderLabel.OKXWallet,
+  injectedNamespace: InjectedNameSpace.OKXWallet,
   checkProviderIdentity: ({ provider }) =>
     !!provider &&
-    !!provider[ProviderIdentityFlag.OkxWallet],
+    !!provider[ProviderIdentityFlag.OKXWallet],
   getIcon: async () => (await import('./icons/okxwallet.js')).default,
-  getInterface: getInjectedInterface(ProviderIdentityFlag.OkxWallet, true),
+  getInterface: getInjectedInterface(ProviderIdentityFlag.OKXWallet, true),
   platforms: ['desktop']
 }
 
