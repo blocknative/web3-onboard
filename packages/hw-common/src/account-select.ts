@@ -99,8 +99,17 @@ const mountAccountSelect = (
 
     </style>
   `
+  const containerElementQuery = selectAccountOptions.containerElement || 'body'
 
-  document.body.appendChild(accountSelectDomElement)
+  const containerElement = document.querySelector(containerElementQuery)
+
+  if (!containerElement) {
+    throw new Error(
+      `Element with query ${containerElementQuery} does not exist.`
+    )
+  }
+
+  containerElement.appendChild(accountSelectDomElement)
 
   const app = new AccountSelect({
     target: target,

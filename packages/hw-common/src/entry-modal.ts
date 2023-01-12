@@ -215,7 +215,8 @@ const passphraseHTML = `
 export const entryModal = (
   modalType: string,
   submit: (value: string) => void,
-  cancel: () => void
+  cancel: () => void,
+  containerElement?: string
 ): void => {
   const modalHtml = modalType === 'pin' ? pinHTML : passphraseHTML
 
@@ -236,13 +237,23 @@ export const entryModal = (
     }
   }
 
+  const containerElementQuery = containerElement || 'body'
+
+  const containerEl = document.querySelector(containerElementQuery)
+
+  if (!containerEl) {
+    throw new Error(
+      `Element with query ${containerElementQuery} does not exist.`
+    )
+  }
+
   // Creates a modal component which gets
   // mounted to the body and is passed the pin html into it's slot
   const div = document.createElement('div')
   div.innerHTML = modalHtml
   div.className = 'keepkey-modal'
   const pinModal = new Modal({
-    target: document.body,
+    target: containerEl,
     props: {
       closeModal: () => {
         // Cancels any action that the keepkey wallet may be doing

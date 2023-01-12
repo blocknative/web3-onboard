@@ -102,7 +102,8 @@
 
   const trezorOptions = {
     email: 'test@test.com',
-    appUrl: 'https://www.blocknative.com'
+    appUrl: 'https://www.blocknative.com',
+    containerElement: '#sample-container-el'
   }
   const trezor = trezorModule(trezorOptions)
 
@@ -263,12 +264,12 @@
         position: 'topRight'
       }
     },
-    // containerElements: {
-    // // El must be present at time of JS script execution
-    // // See ../public/index.html for element example
-    //   connectModal: '#sample-container-el',
-    //   accountCenter: '#sample-container-el2'
-    // },
+    containerElements: {
+    // El must be present at time of JS script execution
+    // See ../public/index.html for element example
+      connectModal: '#sample-container-el',
+      accountCenter: '#sample-container-el2'
+    },
     // Sign up for your free api key at www.Blocknative.com
     // Add apiKey to test transaction notifications
     // apiKey

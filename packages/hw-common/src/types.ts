@@ -43,6 +43,7 @@ export type SelectAccountOptions = {
   chains: Chain[] // the selectable chains/networks to scan for balance
   scanAccounts: ScanAccounts
   supportsCustomPath?: boolean
+  containerElement?: string
 }
 
 export type BasePath = {

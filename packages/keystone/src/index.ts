@@ -65,10 +65,12 @@ const generateAccounts = async (
 
 function keystone({
   customNetwork,
-  filter
+  filter,
+  containerElement
 }: {
   customNetwork?: CustomNetwork
   filter?: Platform[]
+  containerElement?: string
 } = {}): WalletInit {
   const getIcon = async () => (await import('./icon.js')).default
 
@@ -142,7 +144,8 @@ function keystone({
             assets,
             chains,
             scanAccounts,
-            supportsCustomPath: false
+            supportsCustomPath: false,
+            containerElement
           })
 
           if (accounts.length) {
