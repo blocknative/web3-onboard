@@ -393,8 +393,10 @@ export function uniqueWalletsByLabel(
 ): WalletModule[] {
   return walletModuleList.filter(
     (wallet, i) =>
+      wallet &&
       walletModuleList.findIndex(
-        (innerWallet: WalletModule) => innerWallet.label === wallet.label
+        (innerWallet: WalletModule) =>
+          innerWallet && innerWallet.label === wallet.label
       ) === i
   )
 }
