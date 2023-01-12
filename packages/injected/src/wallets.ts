@@ -653,6 +653,17 @@ const phantom: InjectedWalletModule = {
   platforms: ['all']
 }
 
+const okxwallet: InjectedWalletModule = {
+  label: ProviderLabel.OkxWallet,
+  injectedNamespace: InjectedNameSpace.OkxWallet,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider &&
+    !!provider[ProviderIdentityFlag.OkxWallet],
+  getIcon: async () => (await import('./icons/okxwallet.js')).default,
+  getInterface: getInjectedInterface(ProviderIdentityFlag.OkxWallet, true),
+  platforms: ['all']
+}
+
 const wallets = [
   zeal,
   exodus,
@@ -690,7 +701,8 @@ const wallets = [
   core,
   bitski,
   enkrypt,
-  phantom
+  phantom,
+  okxwallet
 ]
 
 export default wallets
