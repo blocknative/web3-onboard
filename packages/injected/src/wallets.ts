@@ -661,7 +661,7 @@ const okxwallet: InjectedWalletModule = {
     !!provider[ProviderIdentityFlag.OkxWallet],
   getIcon: async () => (await import('./icons/okxwallet.js')).default,
   getInterface: getInjectedInterface(ProviderIdentityFlag.OkxWallet, true),
-  platforms: ['all']
+  platforms: ['desktop']
 }
 
 const wallets = [
