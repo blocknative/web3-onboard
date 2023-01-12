@@ -18,35 +18,21 @@
   import { onDestroy, onMount } from 'svelte'
   import { configuration } from '../../configuration.js'
 
-  const { device } = configuration
+  const connectContainerEl = !!configuration.containerElements.connectModal
 
-  const body = document.body
   const html = document.documentElement
-  const trackYScrollPosition = () => {
-    document.documentElement.style.setProperty(
-      '--scroll-y',
-      `${window.scrollY}px`
-    )
-  }
-
   onMount(() => {
-    window.addEventListener('scroll', trackYScrollPosition, { passive: true })
-    const scrollY = html.style.getPropertyValue('--scroll-y')
-    device.type === 'mobile'
-      ? (html.style.position = 'fixed')
-      : (html.style.overflow = 'hidden')
-
-    body.style.top = `-${scrollY}`
+    if (!connectContainerEl) {
+      html.style.position = 'sticky'
+      html.style.overflow = 'hidden'
+    }
   })
 
   onDestroy(() => {
-    device.type === 'mobile'
-      ? (html.style.position = '')
-      : (html.style.overflow = 'auto')
-    const scrollY = body.style.top
-    body.style.top = ''
-    window.scrollTo(0, parseInt(scrollY || '0') * -1)
-    window.removeEventListener('scroll', trackYScrollPosition)
+    if (!connectContainerEl) {
+      html.style.position = ''
+      html.style.removeProperty('overflow')
+    }
   })
   export let close: () => void
 </script>
@@ -60,10 +46,13 @@
   }
 
   .background {
-    width: 100vw;
-    height: 100vh;
     background: var(--onboard-modal-backdrop, var(--modal-backdrop));
     pointer-events: all;
+  }
+
+  .full-screen-background {
+    width: 100vw;
+    height: 100vh;
   }
 
   .max-height {
@@ -82,41 +71,59 @@
   }
 
   .modal-styling {
-    border-radius: var(--onboard-modal-border-radius, var(--border-radius-1));
+    border-radius: var(--onboard-modal-border-radius, var(--border-radius-1))
+      var(--onboard-modal-border-radius, var(--border-radius-1)) 0 0;
     box-shadow: var(--onboard-modal-box-shadow, var(--box-shadow-0));
   }
 
   .modal {
-    border-radius: var(--onboard-modal-border-radius, var(--border-radius-1));
     overflow-y: auto;
     background: var(--onboard-modal-background, white);
     color: var(--onboard-modal-color, initial);
   }
 
-  @media all and (max-width: 520px) {
-    .relative {
-      width: 100vw;
-    }
+  .width-100 {
+    width: 100%;
+  }
 
-    .modal-overflow {
-      width: 100%;
-    }
+  .modal-container-mobile {
+    bottom: 0;
+  }
 
-    .modal {
-      width: 100%;
-      margin: 0 16px;
+  @media all and (min-width: 768px) {
+    .modal-styling {
+      border-radius: var(--onboard-modal-border-radius, var(--border-radius-1));
+    }
+    .modal-container-mobile {
+      bottom: unset;
+      margin: 1rem;
+    }
+    .width-100 {
+      width: unset;
     }
   }
 </style>
 
-<section class="fixed" transition:fade>
+<section class:fixed={!connectContainerEl} transition:fade>
   <div
     on:click={close}
     class="background flex items-center justify-center relative"
+    class:full-screen-background={!connectContainerEl}
   >
-    <div class="flex modal-position absolute">
-      <div on:click|stopPropagation class="flex relative max-height">
-        <div class="modal-overflow modal-styling relative flex justify-center">
+    <div
+      class="modal-container-mobile modal-position flex"
+      class:absolute={!connectContainerEl}
+      class:width-100={connectContainerEl}
+    >
+      <div
+        on:click|stopPropagation
+        class="flex relative max-height"
+        class:width-100={connectContainerEl}
+      >
+        <div
+          class="modal-overflow modal-styling relative flex justify-center"
+          style={`max-width=${connectContainerEl ? '100%' : '100vw'};`}
+        >
           <div class="modal relative">
             <slot />
           </div>

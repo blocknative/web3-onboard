@@ -47,7 +47,11 @@ export enum ProviderIdentityFlag {
   BitKeep = 'isBitKeep',
   Sequence = 'isSequence',
   Core = 'isAvalanche',
-  Opera = 'isOpera'
+  Opera = 'isOpera',
+  Bitski = 'isBitski',
+  Enkrypt = 'isEnkrypt',
+  Zeal = 'isZeal',
+  Phantom = 'isPhantom'
 }
 
 export enum ProviderLabel {
@@ -55,6 +59,7 @@ export enum ProviderLabel {
   AToken = 'AToken',
   Binance = 'Binance Smart Wallet',
   Bitpie = 'Bitpie',
+  Bitski = 'Bitski',
   BlockWallet = 'BlockWallet',
   Brave = 'Brave Wallet',
   Coinbase = 'Coinbase Wallet',
@@ -85,7 +90,10 @@ export enum ProviderLabel {
   GameStop = 'GameStop Wallet',
   BitKeep = 'BitKeep',
   Sequence = 'Sequence',
-  Core = 'Core'
+  Core = 'Core',
+  Enkrypt = 'Enkrypt',
+  Zeal = 'Zeal',
+  Phantom = 'Phantom'
 }
 
 export interface MeetOneProvider extends ExternalProvider {
@@ -107,13 +115,18 @@ export enum InjectedNameSpace {
   XFI = 'xfi',
   GameStop = 'gamestop',
   BitKeep = 'bitkeep',
-  Avalanche = 'avalanche'
+  Avalanche = 'avalanche',
+  Bitski = 'Bitski',
+  Enkrypt = 'enkrypt',
+  Zeal = 'zeal',
+  Phantom = 'phantom'
 }
 
 export interface CustomWindow extends Window {
   BinanceChain: BinanceProvider
   ethereum: InjectedProvider
   tally: InjectedProvider
+  zeal: InjectedProvider
   web3: ExternalProvider | MeetOneProvider
   arbitrum: InjectedProvider
   xfi: {
@@ -124,6 +137,17 @@ export interface CustomWindow extends Window {
     ethereum: InjectedProvider
   }
   avalanche: InjectedProvider
+  Bitski: {
+    getProvider(): InjectedProvider
+  }
+  enkrypt: {
+    providers: {
+      ethereum: InjectedProvider
+    }
+  }
+  phantom: {
+    ethereum: InjectedProvider
+  }
 }
 
 export type InjectedProvider = ExternalProvider &

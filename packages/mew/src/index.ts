@@ -68,4 +68,7 @@ function mew(): WalletInit {
   }
 }
 
+/**
+ * @deprecated Use @web3-onboard/mew-wallet
+ */
 export default mew

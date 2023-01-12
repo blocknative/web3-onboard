@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/sequence",
-  "version": "2.0.1",
+  "version": "2.0.4",
   "description": "Sequence is the smartest Web3 wallet. Easy, fun and secure.",
   "keywords": [
     "Ethereum",
@@ -36,7 +36,7 @@
     "url": "https://github.com/blocknative/web3-onboard.git",
     "directory": "packages/core"
   },
-  "homepage": "https://www.blocknative.com/onboard",
+  "homepage": "https://onboard.blocknative.com",
   "bugs": "https://github.com/blocknative/web3-onboard/issues",
   "module": "dist/index.js",
   "browser": "dist/index.js",
@@ -56,7 +56,11 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.2.2",
-    "0xsequence": "^0.40.5"
+    "@web3-onboard/common": "^2.2.3",
+    "0xsequence": "^0.43.1"
+  },
+  "peerDependencies": {
+    "0xsequence": ">=0.43.0",
+    "ethers": ">=5.5"
   }
 }

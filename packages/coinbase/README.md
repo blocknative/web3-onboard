@@ -25,7 +25,7 @@ import coinbaseWalletModule from '@web3-onboard/coinbase'
 const coinbaseWalletSdk = coinbaseWalletModule({ darkMode: true })
 
 // can also initialize with no options...
-// const coinbaseWalletSdk = coinbaseWalletSdk()
+// const coinbaseWalletSdk = coinbaseWalletModule()
 
 const onboard = Onboard({
   // ... other Onboard options

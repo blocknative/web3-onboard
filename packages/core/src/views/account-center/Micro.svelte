@@ -1,9 +1,8 @@
 <script lang="ts">
   import { wallets$ } from '../../streams.js'
   import { updateAccountCenter } from '../../store/actions.js'
-  import questionIcon from '../../icons/question.js'
-  import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
-  import WalletAppBadge from '../shared/WalletAppBadge.svelte'
+  import { questionIcon } from '../../icons/index.js'
+  import { WalletAppBadge, SuccessStatusIcon } from '../shared/index.js'
   import { configuration } from '../../configuration.js'
 
   const { appMetadata } = configuration
@@ -22,7 +21,7 @@
       var(--onboard-white, var(--white))
     );
     border: 1px solid
-      var(--acount-center-border, var(--onboard-gray-100, var(--gray-100)));
+      var(--account-center-border, var(--onboard-gray-100, var(--gray-100)));
     box-shadow: var(
       --account-center-box-shadow,
       var(--onboard-shadow-3, var(--shadow-3))

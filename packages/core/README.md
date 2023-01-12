@@ -33,6 +33,11 @@ type InitOptions {
   apiKey?: string
   notify?: Partial<NotifyOptions>
   connect?: Partial<ConnectModalOptions>
+  gas?: typeof gas
+  /**
+   * Object mapping for W3O components with the key being the component and the value the DOM element to mount the component to. This element must be available at time of package script execution.
+   */
+  containerElements?: Partial<ContainerElements>
 }
 ```
 
@@ -106,21 +111,44 @@ type i18nOptions = Record<Locale, i18n>
 To see a list of all of the text values that can be internationalized or replaced, check out the [default en file](src/i18n/en.json).
 Onboard is using the [ICU syntax](https://formatjs.io/docs/core-concepts/icu-syntax/) for formatting under the hood.
 
+**`containerElements`**
+An object mapping for W3O components with the key being the DOM element to mount the specified component to.
+This defines the DOM container element for svelte to attach the component.
+
+**NOTE**: containerElement must be a DOM element with a styleSheet property attached and the element must be available on the DOM at the time of component mounting.
+For an example please see containerElement usage [here](https://github.com/blocknative/web3-onboard/blob/8531a73d69365f7d584320f1c4b97a5d90f1c34e/packages/demo/src/App.svelte#L227)
+
+```typescript
+type ContainerElements = {
+  // When attaching the Connect Modal to a container el be aware that the modal was styled to be 
+  // mounted through the app to the html body and will respond to screen width rather than container width
+  // This is specifically apparent on mobile so please test thoroughly
+  // Also consider that other DOM elements(specifically Notifications and Account Center) will also 
+  // append to this DOM el if enabled and their own containerEl are not defined
+  connectModal?: string
+  // when using the accountCenter with a container el the accountCenter position properties are ignored
+  accountCenter?: string
+}
+```
+
 **`accountCenter`**
 An object that defines whether the account center UI (default and minimal) is enabled and it's position on the screen. Currently the account center is enabled for both desktop and mobile devices.
 
 ```typescript
-export type AccountCenter = {
+type AccountCenter = {
   enabled: boolean
   position?: AccountCenterPosition // default: 'topRight'
   expanded?: boolean // default: true
   minimal?: boolean // enabled by default for mobile
-  containerElement?: string // defines the DOM container element for svelte to attach 
-  // **NOTE: containerElement must be a DOM element with a styleSheet property attached.
-  // This property can normally be omitted from the config and allowed to default to document.body
+
+  /**
+   * @deprecated Use top level containerElements property
+   * with the accountCenter prop set to the desired container El
+   */
+  containerElement?: string // defines the DOM container element for svelte to attach
 }
 
-export type AccountCenterOptions = {
+type AccountCenterOptions = {
   desktop: Omit<AccountCenter, 'expanded'>
   mobile: Omit<AccountCenter, 'expanded'>
 }
@@ -170,11 +198,11 @@ unsubscribe()
 ```
 
 ```typescript
-export type NotifyOptions = {
+type NotifyOptions = {
   desktop: Notify
   mobile: Notify
 }
-export type Notify = {
+type Notify = {
   enabled: boolean // default: true
   /**
    * Callback that receives all transaction events
@@ -196,17 +224,13 @@ export type Notify = {
   }
 }
 
-export type CommonPositions =
-  | 'topRight'
-  | 'bottomRight'
-  | 'bottomLeft'
-  | 'topLeft'
+type CommonPositions = 'topRight' | 'bottomRight' | 'bottomLeft' | 'topLeft'
 
-export type TransactionHandlerReturn = CustomNotification | boolean | void
+type TransactionHandlerReturn = CustomNotification | boolean | void
 
-export type CustomNotification = Partial<Omit<Notification, 'id' | 'startTime'>>
+type CustomNotification = Partial<Omit<Notification, 'id' | 'startTime'>>
 
-export type Notification = {
+type Notification = {
   id: string
   key: string
   type: NotificationType
@@ -219,7 +243,7 @@ export type Notification = {
   onClick?: (event: Event) => void
 }
 
-export type NotificationType = 'pending' | 'success' | 'error' | 'hint'
+type NotificationType = 'pending' | 'success' | 'error' | 'hint'
 
 export declare type Network =
   | 'main'
@@ -492,6 +516,9 @@ type Account = {
     contentHash?: string
     getText?: (key: string) => Promise<string | undefined>
   }
+  uns: {
+    name?: string
+  }
   balance: Record<TokenSymbol, string>
 }
 
@@ -588,7 +615,9 @@ const onboard = Onboard({
       token: 'ETH',
       label: 'Ethereum Mainnet',
       // Only one RPC required
-      rpcUrl: `https://mainnet.infura.io/v3/${INFURA_KEY}` || `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
+      rpcUrl:
+        `https://mainnet.infura.io/v3/${INFURA_KEY}` ||
+        `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
     }
   ]
 })
@@ -862,6 +891,7 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-connect-content-width
   --onboard-connect-content-height
   --onboard-wallet-columns
+  --onboard-connect-sidebar-border-color
   --onboard-connect-sidebar-background
   --onboard-connect-sidebar-color
   --onboard-connect-sidebar-progress-background
@@ -895,6 +925,8 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
 
   /* CUSTOMIZE THE ACTION REQUIRED MODAL */
   --onboard-action-required-modal-background
+  --onboard-action-required-text-color
+  --onboard-action-required-btn-text-color
 
   /* FONTS */
   --onboard-font-family-normal: Sofia Pro;
@@ -920,6 +952,7 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-border-radius-1: 24px;
   --onboard-border-radius-2: 20px;
   --onboard-border-radius-3: 16px;
+  --onboard-border-radius-4: 12px;
 
   /* SHADOWS */
   --onboard-shadow-0: none;
@@ -1028,6 +1061,9 @@ Then add the following to your `webpack.config.js` file:
 const webpack = require('webpack')
 
 module.exports = {
+  fallback: {
+    path: require.resolve('path-browserify')
+  },
   resolve: {
     alias: {
       assert: 'assert',
@@ -1055,9 +1091,71 @@ module.exports = {
 
 #### If using create-react-app
 
-[CRACO](https://www.npmjs.com/package/@craco/craco) provides an easy way to override webpack config which is obfuscated in Create React App built applications.
+[CRACO](https://www.npmjs.com/package/@craco/craco) provides a way to override webpack config which is obfuscated in Create React App built applications.
 
 The above webpack 5 example can be used in the `craco.config.js` file at the root level in this case.
+
+[React App Rewired](https://www.npmjs.com/package/react-app-rewired) is another option for working with Create React App DApps
+
+Add the following dev dependencies:
+
+`yarn add rollup-plugin-polyfill-node webpack-bundle-analyzer -D`
+
+```javascript
+const webpack = require('webpack')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const path = require('path')
+
+module.exports = function override(config) {
+  const fallback = config.resolve.fallback || {}
+  Object.assign(fallback, {
+    assert: require.resolve('assert'),
+    buffer: require.resolve('buffer'),
+    crypto: require.resolve('crypto-browserify'),
+    http: require.resolve('stream-http'),
+    https: require.resolve('https-browserify'),
+    os: require.resolve('os-browserify/browser'),
+    path: require.resolve('path-browserify'),
+    process: require.resolve('process/browser'),
+    stream: require.resolve('stream-browserify'),
+    url: require.resolve('url'),
+    util: require.resolve('util')
+  })
+  config.resolve.fallback = fallback
+  config.resolve.alias = {
+    ...config.resolve.alias,
+    'bn.js': path.resolve(__dirname, 'node_modules/bn.js'),
+    lodash: path.resolve(__dirname, 'node_modules/lodash'),
+    'magic-sdk': path.resolve(
+      __dirname,
+      'node_modules/magic-sdk/dist/cjs/index.js'
+    )
+  }
+  config.plugins = (config.plugins || []).concat([
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+      Buffer: ['buffer', 'Buffer']
+    }),
+    new webpack.IgnorePlugin({
+      resourceRegExp: /genesisStates\/[a-z]*\.json$/,
+      contextRegExp: /@ethereumjs\/common/
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'disabled'
+    })
+  ])
+  config.ignoreWarnings = [/Failed to parse source map/]
+  config.module.rules.push({
+    test: /\.(js|mjs|jsx)$/,
+    enforce: 'pre',
+    loader: require.resolve('source-map-loader'),
+    resolve: {
+      fullySpecified: false
+    }
+  })
+  return config
+}
+```
 
 ### SvelteKit
 
@@ -1101,11 +1199,22 @@ const config = {
       },
       build: {
         rollupOptions: {
+          external: ['@web3-onboard/*'],
           plugins: [nodePolyfills({ crypto: true, http: true })]
         },
         commonjsOptions: {
           transformMixedEsModules: true
         }
+      },
+      optimizeDeps: {
+        exclude: ['@ethersproject/hash', 'wrtc', 'http'],
+        include: [
+          '@web3-onboard/core',
+          '@web3-onboard/gas',
+          '@web3-onboard/sequence',
+          'js-sha3',
+          '@ethersproject/bignumber'
+        ]
       }
     }
   }

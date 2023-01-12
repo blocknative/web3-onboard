@@ -1,434 +1,275 @@
-// these cannot be dynamically imported
-import { TypedDataUtils } from '@metamask/eth-sig-util'
-import type Transport from '@ledgerhq/hw-transport'
-import type { StaticJsonRpcProvider } from '@ethersproject/providers'
-import type Eth from '@ledgerhq/hw-app-eth'
-
-import type {
+import {
   Chain,
   WalletInit,
   GetInterfaceHelpers,
-  Platform
+  EIP1193Provider,
+  ProviderAccounts
 } from '@web3-onboard/common'
+import type { EthereumProvider } from '@ledgerhq/connect-kit-loader'
+import type { StaticJsonRpcProvider as StaticJsonRpcProviderType } from '@ethersproject/providers'
+import WalletConnect from '@walletconnect/client'
 
-import type {
-  CustomNetwork,
-  ScanAccountsOptions,
-  Account,
-  Asset
-} from '@web3-onboard/hw-common'
-
-const LEDGER_LIVE_PATH = `m/44'/60'`
-const LEDGER_DEFAULT_PATH = `m/44'/60'/0'`
-
-const DEFAULT_BASE_PATHS = [
-  {
-    label: 'Ledger Live',
-    value: LEDGER_LIVE_PATH
-  },
-  {
-    label: 'Ledger Legacy',
-    value: LEDGER_DEFAULT_PATH
+const isHexString = (value: string | number) => {
+  if (typeof value !== 'string' || !value.match(/^0x[0-9A-Fa-f]*$/)) {
+    return false
   }
-]
 
-const assets = [
-  {
-    label: 'ETH'
-  }
-]
-
-type CustomNavigator = Navigator & { usb: { getDevices(): void } }
-
-const supportsWebUSB = (): Promise<boolean> =>
-  Promise.resolve(
-    !!navigator &&
-      !!(navigator as CustomNavigator).usb &&
-      typeof (navigator as CustomNavigator).usb.getDevices === 'function'
-  )
-
-/**
- * Returns the correct ledger transport based on browser compatibility for webUSB.
- * @returns
- */
-const getTransport = async () =>
-  ((await supportsWebUSB())
-    ? (await import('@ledgerhq/hw-transport-webusb')).default
-    : (await import('@ledgerhq/hw-transport-u2f')).default
-  ).create()
-
-const getAccount = async (
-  derivationPath: string,
-  asset: Asset,
-  index: number,
-  provider: StaticJsonRpcProvider,
-  eth: Eth
-): Promise<Account> => {
-  const dPath =
-    derivationPath === LEDGER_LIVE_PATH
-      ? `${derivationPath}/${index}'/0/0`
-      : `${derivationPath}/${index}`
-  const { address } = await eth.getAddress(dPath)
-  return {
-    derivationPath: dPath,
-    address,
-    balance: {
-      asset: asset.label,
-      value: await provider.getBalance(address)
-    }
-  }
+  return true
 }
 
-const getAddresses = async (
-  derivationPath: string,
-  asset: Asset,
-  provider: StaticJsonRpcProvider,
-  eth: Eth
-): Promise<Account[]> => {
-  const accounts = []
-  let index = 0
-  let zeroBalanceAccounts = 0
-
-  // Iterates until a 0 balance account is found
-  // Then adds 4 more 0 balance accounts to the array
-  while (zeroBalanceAccounts < 5) {
-    const acc = await getAccount(derivationPath, asset, index, provider, eth)
-
-    if (acc.balance.value.isZero()) {
-      zeroBalanceAccounts++
-      accounts.push(acc)
-    } else {
-      accounts.push(acc)
-      // Reset the number of 0 balance accounts
-      zeroBalanceAccounts = 0
-    }
-    index++
-  }
-
-  return accounts
+interface LedgerOptions {
+  chainId?: number
+  bridge?: string
+  infuraId?: string
+  rpc?: { [chainId: number]: string }
 }
 
-function ledger({
-  customNetwork,
-  filter
-}: {
-  customNetwork?: CustomNetwork
-  filter?: Platform[]
-} = {}): WalletInit {
-  const getIcon = async () => (await import('./icon.js')).default
-
-  return ({ device }) => {
-    let accounts: Account[] | undefined
-
-    const filtered =
-      Array.isArray(filter) &&
-      (filter.includes(device.type) || filter.includes(device.os.name))
-
-    if (filtered) return null
-
+function ledger(options?: LedgerOptions): WalletInit {
+  return () => {
     return {
       label: 'Ledger',
-      getIcon,
-      getInterface: async ({ EventEmitter, chains }: GetInterfaceHelpers) => {
-        const Eth = (await import('@ledgerhq/hw-app-eth')).default
-        const ethUtil = await import('ethereumjs-util')
+      getIcon: async () => (await import('./icon.js')).default,
+      getInterface: async ({ chains, EventEmitter }: GetInterfaceHelpers) => {
+        const {
+          loadConnectKit,
+          SupportedProviders,
+          SupportedProviderImplementations
+        } = await import('@ledgerhq/connect-kit-loader')
 
-        const { SignTypedDataVersion } = await import('@metamask/eth-sig-util')
+        const connectKit = await loadConnectKit()
+        connectKit.enableDebugLogs()
+        const checkSupportResult = connectKit.checkSupport({
+          providerType: SupportedProviders.Ethereum,
+          chainId: options?.chainId,
+          infuraId: options?.infuraId,
+          rpc: options?.rpc
+        })
+
+        // get the Ledger provider instance, it can be either Ledger Connect
+        // or WalletConnect
+        const instance = (await connectKit.getProvider()) as EthereumProvider
+
+        // return the Ledger Connect provider
+        if (
+          checkSupportResult.providerImplementation ===
+          SupportedProviderImplementations.LedgerConnect
+        ) {
+          return {
+            provider: instance as EIP1193Provider
+          }
+        }
+
+        // fallback to WalletConnect on unsupported platforms
         const { StaticJsonRpcProvider } = await import(
           '@ethersproject/providers'
         )
-
-        const { createEIP1193Provider, ProviderRpcError } = await import(
+        const { ProviderRpcError, ProviderRpcErrorCode } = await import(
           '@web3-onboard/common'
         )
+        const { default: WalletConnect } = await import('@walletconnect/client')
+        const { Subject, fromEvent } = await import('rxjs')
+        const { takeUntil, take } = await import('rxjs/operators')
+        const connector = instance.connector as WalletConnect
+        const emitter = new EventEmitter()
 
-        const { accountSelect } = await import('@web3-onboard/hw-common')
+        class EthProvider {
+          public request: EIP1193Provider['request']
+          public connector: InstanceType<typeof WalletConnect>
+          public chains: Chain[]
+          public disconnect: EIP1193Provider['disconnect']
+          public emit: typeof EventEmitter['emit']
+          public on: typeof EventEmitter['on']
+          public removeListener: typeof EventEmitter['removeListener']
 
-        const {
-          getCommon,
-          bigNumberFieldsToStrings,
-          getHardwareWalletProvider
-        } = await import('@web3-onboard/hw-common')
+          private disconnected$: InstanceType<typeof Subject>
+          private providers: Record<string, StaticJsonRpcProviderType>
 
-        const { TransactionFactory: Transaction, Capability } = await import(
-          '@ethereumjs/tx'
-        )
+          constructor({
+            connector,
+            chains
+          }: {
+            connector: InstanceType<typeof WalletConnect>
+            chains: Chain[]
+          }) {
+            this.emit = emitter.emit.bind(emitter)
+            this.on = emitter.on.bind(emitter)
+            this.removeListener = emitter.removeListener.bind(emitter)
+            this.connector = connector
+            this.chains = chains
+            this.disconnected$ = new Subject()
+            this.providers = {}
 
-        const transport: Transport = await getTransport()
-        const eth = new Eth(transport)
-        const eventEmitter = new EventEmitter()
-
-        let ethersProvider: StaticJsonRpcProvider
-
-        let currentChain: Chain = chains[0]
-
-        const scanAccounts = async ({
-          derivationPath,
-          chainId,
-          asset
-        }: ScanAccountsOptions): Promise<Account[]> => {
-          try {
-            currentChain =
-              chains.find(({ id }: Chain) => id === chainId) || currentChain
-            ethersProvider = new StaticJsonRpcProvider(currentChain.rpcUrl)
-
-            // Checks to see if this is a custom derivation path
-            // If it is then just return the single account
-            if (
-              derivationPath !== LEDGER_LIVE_PATH &&
-              derivationPath !== LEDGER_DEFAULT_PATH
-            ) {
-              const { address } = await eth.getAddress(derivationPath)
-              return [
-                {
-                  derivationPath,
-                  address,
-                  balance: {
-                    asset: asset.label,
-                    value: await ethersProvider.getBalance(address)
-                  }
-                }
-              ]
-            }
-
-            const accounts = await getAddresses(
-              derivationPath,
-              asset,
-              ethersProvider,
-              eth
-            )
-
-            return accounts
-          } catch (error) {
-            const { statusText } = error as { statusText: string }
-
-            throw new Error(
-              statusText === 'UNKNOWN_ERROR'
-                ? 'Ledger device is locked, please unlock to continue'
-                : statusText
-            )
-          }
-        }
-
-        const getAccounts = async () => {
-          accounts = await accountSelect({
-            basePaths: DEFAULT_BASE_PATHS,
-            assets,
-            chains,
-            scanAccounts
-          })
-
-          if (accounts && accounts.length) {
-            eventEmitter.emit('accountsChanged', [accounts[0].address])
-          }
-
-          return accounts
-        }
-
-        const signMessage = async (address: string, message: string) => {
-          if (!(accounts && accounts.length && accounts.length > 0))
-            throw new Error(
-              'No account selected. Must call eth_requestAccounts first.'
-            )
-
-          const account =
-            accounts.find(account => account.address === address) || accounts[0]
-
-          return eth
-            .signPersonalMessage(
-              account.derivationPath,
-              ethUtil.stripHexPrefix(message)
-            )
-            .then(result => {
-              let v = (result['v'] - 27).toString(16)
-              if (v.length < 2) {
-                v = '0' + v
+            // listen for session updates
+            fromEvent(this.connector, 'session_update', (error, payload) => {
+              if (error) {
+                throw error
               }
-              return `0x${result['r']}${result['s']}${v}`
+
+              return payload
             })
-        }
-
-        const ledgerProvider = getHardwareWalletProvider(
-          () => currentChain?.rpcUrl
-        )
-
-        const provider = createEIP1193Provider(ledgerProvider, {
-          eth_requestAccounts: async () => {
-            // Triggers the account select modal if no accounts have been selected
-            const accounts = await getAccounts()
-
-            if (!Array.isArray(accounts))
-              throw new Error(
-                'No account selected. Must call eth_requestAccounts first.'
-              )
-            if (accounts.length === 0) {
-              throw new ProviderRpcError({
-                code: 4001,
-                message: 'User rejected the request.'
+              .pipe(takeUntil(this.disconnected$))
+              .subscribe({
+                next: ({ params }) => {
+                  const [{ accounts, chainId }] = params
+                  this.emit('accountsChanged', accounts)
+                  const hexChainId = isHexString(chainId)
+                    ? chainId
+                    : `0x${chainId.toString(16)}`
+                  this.emit('chainChanged', hexChainId)
+                },
+                error: console.warn
               })
-            }
-            if (!accounts[0].hasOwnProperty('address'))
-              throw new Error(
-                'No address property associated with the selected account'
-              )
-            return [accounts[0].address]
-          },
-          eth_selectAccounts: async () => {
-            const accounts = await getAccounts()
-            return accounts.map(({ address }) => address)
-          },
-          eth_accounts: async () => {
-            return Array.isArray(accounts) &&
-              accounts.length &&
-              accounts[0].hasOwnProperty('address')
-              ? [accounts[0].address]
-              : []
-          },
-          eth_chainId: async () => {
-            return (currentChain && currentChain.id) || ''
-          },
-          eth_signTransaction: async ({ params: [transactionObject] }) => {
-            if (!accounts || !Array.isArray(accounts) || !accounts.length)
-              throw new Error(
-                'No account selected. Must call eth_requestAccounts first.'
-              )
 
-            let account
-            if (transactionObject.hasOwnProperty('from')) {
-              account = accounts.find(
-                account => account.address === transactionObject.from
-              )
-            }
-            account = account ? account : accounts[0]
+            // listen for disconnect event
+            fromEvent(this.connector, 'disconnect', (error, payload) => {
+              if (error) {
+                throw error
+              }
 
-            const { address: from, derivationPath } = account
-
-            // Set the `from` field to the currently selected account
-            transactionObject = { ...transactionObject, from }
-
-            const chainId = currentChain.hasOwnProperty('id')
-              ? Number.parseInt(currentChain.id)
-              : 1
-
-            const common = await getCommon({ customNetwork, chainId })
-
-            transactionObject.gasLimit =
-              transactionObject.gas || transactionObject.gasLimit
-
-            // 'gas' is an invalid property for the TransactionRequest type
-            delete transactionObject.gas
-
-            const signer = ethersProvider.getSigner(from)
-
-            let populatedTransaction = await signer.populateTransaction(
-              transactionObject
-            )
-
-            populatedTransaction =
-              bigNumberFieldsToStrings(populatedTransaction)
-
-            const transaction = Transaction.fromTxData(populatedTransaction, {
-              common
+              return payload
             })
+              .pipe(takeUntil(this.disconnected$))
+              .subscribe({
+                next: () => {
+                  this.emit('accountsChanged', [])
+                  this.disconnected$.next(true)
+                  typeof localStorage !== 'undefined' &&
+                    localStorage.removeItem('walletconnect')
+                },
+                error: console.warn
+              })
 
-            let unsignedTx = transaction.getMessageToSign(false)
+            this.disconnect = () => this.connector.killSession()
 
-            // If this is not an EIP1559 transaction then it is legacy and it needs to be
-            // rlp encoded before being passed to ledger
-            if (!transaction.supports(Capability.EIP1559FeeMarket)) {
-              unsignedTx = ethUtil.rlp.encode(unsignedTx)
-            }
+            this.request = async ({ method, params }) => {
+              if (method === 'eth_chainId') {
+                return isHexString(this.connector.chainId)
+                  ? this.connector.chainId
+                  : `0x${this.connector.chainId.toString(16)}`
+              }
 
-            const { v, r, s } = await eth.signTransaction(
-              derivationPath,
-              unsignedTx.toString('hex')
-            )
+              if (method === 'eth_requestAccounts') {
+                return new Promise<ProviderAccounts>((resolve, reject) => {
+                  // Check if connection is already established
+                  if (!this.connector.connected) {
+                    resolve((instance as any).request({ method }))
+                  } else {
+                    const { accounts, chainId } = this.connector.session
 
-            // Reconstruct the signed transaction
-            const signedTx = Transaction.fromTxData(
-              {
-                ...populatedTransaction,
-                v: `0x${v}`,
-                r: `0x${r}`,
-                s: `0x${s}`
-              },
-              { common }
-            )
+                    const hexChainId = isHexString(chainId)
+                      ? chainId
+                      : `0x${chainId.toString(16)}`
 
-            return signedTx ? `0x${signedTx.serialize().toString('hex')}` : ''
-          },
-          eth_sendTransaction: async ({ baseRequest, params }) => {
-            const signedTx = await provider.request({
-              method: 'eth_signTransaction',
-              params
-            })
+                    this.emit('chainChanged', hexChainId)
+                    return resolve(accounts)
+                  }
 
-            const transactionHash = await baseRequest({
-              method: 'eth_sendRawTransaction',
-              params: [signedTx]
-            })
+                  // Subscribe to connection events
+                  fromEvent(this.connector, 'connect', (error, payload) => {
+                    if (error) {
+                      throw error
+                    }
 
-            return transactionHash as string
-          },
-          eth_sign: async ({ params: [address, message] }) =>
-            signMessage(address, message),
-          personal_sign: async ({ params: [message, address] }) =>
-            signMessage(address, message),
-          eth_signTypedData: async ({ params: [address, typedData] }) => {
-            if (!(accounts && accounts.length && accounts.length > 0))
-              throw new Error(
-                'No account selected. Must call eth_requestAccounts first.'
-              )
+                    return payload
+                  })
+                    .pipe(take(1))
+                    .subscribe({
+                      next: ({ params }) => {
+                        const [{ accounts, chainId }] = params
+                        this.emit('accountsChanged', accounts)
 
-            const account =
-              accounts.find(account => account.address === address) ||
-              accounts[0]
+                        const hexChainId = isHexString(chainId)
+                          ? chainId
+                          : `0x${chainId.toString(16)}`
+                        this.emit('chainChanged', hexChainId)
+                        resolve(accounts)
+                      },
+                      error: reject
+                    })
+                })
+              }
 
-            const domainHash = TypedDataUtils.hashStruct(
-              'EIP712Domain',
-              typedData.domain,
-              typedData.types,
-              SignTypedDataVersion.V3
-            ).toString('hex')
+              if (method === 'eth_selectAccounts') {
+                throw new ProviderRpcError({
+                  code: ProviderRpcErrorCode.UNSUPPORTED_METHOD,
+                  message: `The Provider does not support the requested method: ${method}`
+                })
+              }
 
-            const messageHash = TypedDataUtils.hashStruct(
-              typedData.primaryType,
-              typedData.message,
-              typedData.types,
-              SignTypedDataVersion.V3
-            ).toString('hex')
+              if (method == 'wallet_switchEthereumChain') {
+                throw new ProviderRpcError({
+                  code: ProviderRpcErrorCode.UNSUPPORTED_METHOD,
+                  message: `The Provider does not support the requested method: ${method}`
+                })
+              }
 
-            return eth
-              .signEIP712HashedMessage(
-                account.derivationPath,
-                domainHash,
-                messageHash
-              )
-              .then(result => {
-                let v = (result['v'] - 27).toString(16)
-                if (v.length < 2) {
-                  v = '0' + v
+              // @ts-ignore
+              if (method === 'eth_sendTransaction') {
+                // @ts-ignore
+                return this.connector.sendTransaction(params[0])
+              }
+
+              // @ts-ignore
+              if (method === 'eth_signTransaction') {
+                // @ts-ignore
+                return this.connector.signTransaction(params[0])
+              }
+
+              // @ts-ignore
+              if (method === 'personal_sign') {
+                // @ts-ignore
+                return this.connector.signPersonalMessage(params)
+              }
+
+              // @ts-ignore
+              if (method === 'eth_sign') {
+                // @ts-ignore
+                return this.connector.signMessage(params)
+              }
+
+              // @ts-ignore
+              if (method.includes('eth_signTypedData')) {
+                // @ts-ignore
+                return this.connector.signTypedData(params)
+              }
+
+              if (method === 'eth_accounts') {
+                return this.connector.sendCustomRequest({
+                  id: 1337,
+                  jsonrpc: '2.0',
+                  method,
+                  params
+                })
+              }
+
+              const chainId = await this.request({ method: 'eth_chainId' })
+
+              if (!this.providers[chainId]) {
+                const currentChain = chains.find(({ id }) => id === chainId)
+
+                if (!currentChain) {
+                  throw new ProviderRpcError({
+                    code: ProviderRpcErrorCode.CHAIN_NOT_ADDED,
+                    message: `The Provider does not have a rpcUrl to make a request for the requested method: ${method}`
+                  })
                 }
 
-                return `0x${result['r']}${result['s']}${v}`
-              })
-          },
-          wallet_switchEthereumChain: async ({ params: [{ chainId }] }) => {
-            currentChain =
-              chains.find(({ id }) => id === chainId) || currentChain
-            if (!currentChain)
-              throw new Error('chain must be set before switching')
+                this.providers[chainId] = new StaticJsonRpcProvider(
+                  currentChain.rpcUrl
+                )
+              }
 
-            eventEmitter.emit('chainChanged', currentChain.id)
-            return null
-          },
-          wallet_addEthereumChain: null
-        })
-
-        provider.on = eventEmitter.on.bind(eventEmitter)
+              return this.providers[chainId].send(
+                method,
+                // @ts-ignore
+                params
+              )
+            }
+          }
+        }
 
         return {
-          provider
+          provider: new EthProvider({ chains, connector })
         }
       }
     }

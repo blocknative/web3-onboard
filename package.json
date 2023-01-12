@@ -1,6 +1,6 @@
 {
   "name": "web3-onboard-monorepo",
-  "version": "2.11.1",
+  "version": "2.17.0",
   "private": true,
   "workspaces": {
     "packages": [
@@ -51,14 +51,16 @@
     "url": "https://github.com/blocknative/web3-onboard.git",
     "directory": "packages/core"
   },
-  "homepage": "https://www.blocknative.com/onboard",
+  "homepage": "https://onboard.blocknative.com",
   "bugs": "https://github.com/blocknative/web3-onboard/issues",
   "scripts": {
     "install-m1-mac": "yarn install --ignore-optional",
     "format": "prettier --write 'packages/**/*.ts'",
     "dev": "yarn wsrun dev",
     "build": "yarn wsrun --serial build",
-    "check": "yarn wsrun type-check"
+    "type-check": "yarn wsrun type-check",
+    "file-check": "yarn install --check-files",
+    "check-all": "yarn build && yarn file-check && yarn type-check"
   },
   "devDependencies": {
     "prettier": "^2.4.1",

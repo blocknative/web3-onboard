@@ -14,8 +14,7 @@ function torus(options?: TorusOptions): WalletInit {
     showTorusButton,
     integrity,
     whiteLabel,
-    skipTKey,
-    useLocalStorage
+    skipTKey
   } = options || {}
 
   return () => {
@@ -51,8 +50,7 @@ function torus(options?: TorusOptions): WalletInit {
           loginConfig,
           integrity,
           whiteLabel,
-          skipTKey,
-          useLocalStorage
+          skipTKey
         })
 
         const torusProvider = instance.provider

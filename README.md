@@ -71,7 +71,7 @@ if (wallets[0]) {
 
 **Onboard v1 migration guide**
 
-If you're coming from v1, we've created a [migration guide for you](https://docs.blocknative.com/onboard/migration-guide).
+If you're coming from v1, we've created a [migration guide for you](https://onboard.blocknative.com/docs/overview/onboard.js-migration-guide#background).
 
 ## Documentation
 
@@ -93,10 +93,12 @@ For full documentation, check out the README.md for each package or the [docs pa
 - [Magic](packages/magic/README.md)
 - [Fortmatic](packages/fortmatic/README.md)
 - [Portis](packages/portis/README.md)
-- [MEW](packages/mew/README.md)
+- [MEW-Wallet](packages/mew-wallet/README.md)
 - [Web3Auth](packages/web3auth/README.md)
 - [Sequence](packages/sequence/README.md)
 - [TallyHo](packages/tallyho/README.md)
+- [Enkrypt](packages/enkrypt/README.md)
+- [Unstoppable Domains](packages/uauth/README.md)
 
 **Hardware Wallets**
 
