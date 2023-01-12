@@ -466,6 +466,7 @@
     width: 2.5rem;
     min-width: 2.5rem;
     justify-content: center;
+    overflow: hidden;
   }
 
   .w-full {
