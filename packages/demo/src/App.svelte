@@ -23,6 +23,7 @@
   import mewWalletModule from '@web3-onboard/mew-wallet'
   import uauthModule from '@web3-onboard/uauth'
   import phantomModule from '@web3-onboard/phantom'
+  import trustModule from '@web3-onboard/trust'
   import {
     recoverAddress,
     arrayify,
@@ -99,6 +100,7 @@
   const tallyho = tallyHoModule()
   const zeal = zealModule()
   const phantom = phantomModule()
+  const trust = trustModule()
 
   const trezorOptions = {
     email: 'test@test.com',
@@ -135,6 +137,7 @@
       ledger,
       trezor,
       walletConnect,
+      trust,
       enkrypt,
       mewWallet,
       keepkey,
@@ -262,7 +265,7 @@
         },
         position: 'topRight'
       }
-    },
+    }
     // containerElements: {
     // El must be present at time of JS script execution
     // See ../public/index.html for element example
