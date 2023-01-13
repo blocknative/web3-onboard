@@ -119,7 +119,8 @@ export enum InjectedNameSpace {
   Bitski = 'Bitski',
   Enkrypt = 'enkrypt',
   Zeal = 'zeal',
-  Phantom = 'phantom'
+  Phantom = 'phantom',
+  Trust = 'trustwallet'
 }
 
 export interface CustomWindow extends Window {
