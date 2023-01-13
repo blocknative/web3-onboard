@@ -56,6 +56,7 @@ body:
         - "@web3-onboard/react"
         - "@web3-onboard/torus"
         - "@web3-onboard/trezor"
+        - "@web3-onboard/trust"
         - "@web3-onboard/vue"
         - "@web3-onboard/walletconnect"
         - "@web3-onboard/walletlink"
