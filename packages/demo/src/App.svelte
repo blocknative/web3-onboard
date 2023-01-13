@@ -125,7 +125,7 @@
   const sequence = sequenceModule()
   const enkrypt = enkryptModule()
   const mewWallet = mewWalletModule()
-  const transactionPreview = transactionPreviewModule({requireTransactionApproval: false})
+  const transactionPreview = transactionPreviewModule({requireTransactionApproval: true})
 
   const onboard = Onboard({
     wallets: [
@@ -271,7 +271,7 @@
     // },
     // Sign up for your free api key at www.Blocknative.com
     apiKey,
-    theme: 'system'
+    theme: 'default'
   })
 
   // Subscribe to wallet updates
@@ -435,38 +435,33 @@
   let selectedTheme = 'default'
   const themes = {
     default: {
-      '--w3o-background-color': 'initial',
-      '--w3o-text-color': 'initial',
-      '--w3o-border-color': 'initial',
-      '--w3o-accent-background': 'initial',
-      '--w3o-accent-color': 'initial',
-      '--w3o-secondary-text-color': 'initial',
-      '--w3o-border-radius': 'initial',
-      // '--w3o-accent-color-hover': 'initial', Replaced with accent-background
-      '--w3o-secondary-accent-background': 'initial'
-    },
-    light: {
-      '--w3o-background-color': '#ffffff',
-      '--w3o-text-color': '#1a1d26',
-      '--w3o-border-color': '#d0d4f7',
-      '--w3o-accent-background': '#ebebed',
-      '--w3o-accent-color': '#929bed',
-      '--w3o-secondary-text-color': '#707481',
-      '--w3o-border-radius': '24px',
-      // '--w3o-accent-color-hover': '#eff1fc', Replaced with accent-background
-      '--w3o-secondary-accent-background': '#242835'
-    },
-    dark: {
-      '--w3o-background-color': '#1A1D26',
-      '--w3o-text-color': '#EFF1FC',
-      '--w3o-border-color': '#33394B',
-      '--w3o-accent-background': '#242835',
-      '--w3o-accent-color': '#929bed',
-      '--w3o-secondary-text-color': '#999CA5',
-      '--w3o-border-radius': '24px',
-      // '--w3o-accent-color-hover': '#eff1fc',
-      '--w3o-secondary-accent-background': '#242835'
-    }
+    '--w3o-background-color': 'unset',
+    '--w3o-text-color': 'unset',
+    '--w3o-border-color': 'unset',
+    '--w3o-accent-background-color': 'unset',
+    '--w3o-accent-text-color': 'unset',
+    '--w3o-secondary-text-color': 'unset',
+    '--w3o-border-radius': 'unset',
+  },
+  light: {
+    '--w3o-background-color': '#ffffff',
+    '--w3o-text-color': '#1a1d26',
+    '--w3o-border-color': '#d0d4f7',
+    '--w3o-accent-background-color': '#EFF1FC',
+    '--w3o-accent-text-color': '#929bed',
+    '--w3o-secondary-text-color': '#707481',
+    '--w3o-border-radius': '24px',
+  },
+  dark: {
+    '--w3o-background-color': '#1A1D26',
+    '--w3o-text-color': '#EFF1FC',
+    '--w3o-border-color': '#33394B',
+    '--w3o-accent-background-color': '#242835',
+    '--w3o-accent-text-color': '#929bed',
+    '--w3o-secondary-text-color': '#999CA5',
+    '--w3o-border-radius': '24px',
+  },
+  system:'system'
   }
 
   const baseStyling = ``
@@ -492,12 +487,11 @@
   )}${baseStyling}\n}`
 
   const updateThemeEl = (targetStyle, value) => {
-    console.log(targetStyle, value)
     const iframe = document.getElementById('inlineFrameExample')
-    // iframe.contentWindow.document.documentElement.style.setProperty(
-    //   targetStyle,
-    //   value
-    // )
+    iframe.contentWindow.document.documentElement.style.setProperty(
+      targetStyle,
+      value
+    )
 
     copyableStyles = `{\n  ${styleToString(
       themes[selectedTheme]
@@ -505,9 +499,13 @@
   }
 
   const updateTheme = theme => {
-    Object.keys(themes[theme]).forEach(setting => {
-      updateThemeEl(setting, themes[theme][setting])
-    })
+    if(theme === 'system') {
+      onboard.state.actions.updateTheme('system')
+    } else {
+      Object.keys(themes[theme]).forEach(setting => {
+        updateThemeEl(setting, themes[theme][setting])
+      })
+    }
   }
 
   let checked = false
@@ -586,88 +584,6 @@
 </script>
 
 <style>
-  :root {
-    --background-color: #ffffff; /* --white */
-    --text-color: #1a1d26; /* --gray-700 */
-    --border-color: #d0d4f7; /* --gray-100 taken from future mock */
-
-    --accent-background: #eff1fc; /* --gray-100 (currently gray-100 in connect modal) */
-    --accent-color: #929bed; /* --primary-400 */
-    --accent-color-hover: #eff1fc; /* --primary-200 */
-
-    /* Account Center & Notify */
-    --secondary-text-color: #707481; /* --gray-400 (balance and token name) */
-    --secondary-accent-background: #242835; /* --gray-600 (Upper background in maximized) */
-
-    /* --onboard-font-family-normal: System,monospace; */
-    --onboard-connect-sidebar-background: var(--accent-background);
-    --onboard-connect-sidebar-border-color: var(--border-color);
-    --onboard-close-button-background: var(--accent-background);
-    --onboard-connect-sidebar-color: var(--text-color);
-    --onboard-connect-sidebar-progress-background: var(
-      --secondary-text-color
-    ); /* defaults to gray-200 */
-    --onboard-connect-sidebar-progress-color: var(
-      --accent-color
-    ); /* defaults to  primary-600 */
-    --onboard-connect-header-background: var(--background-color);
-    --onboard-connect-header-color: var(--text-color);
-    --onboard-main-scroll-container-background: var(--background-color);
-    --onboard-link-color: var(--accent-color);
-    --onboard-wallet-button-background: var(--background-color);
-    --onboard-wallet-button-background-hover: var(--accent-color-hover);
-    --onboard-wallet-button-color-hover: var(--text-color);
-    --onboard-wallet-button-color: var(--text-color);
-    --onboard-wallet-button-border-color: var(--border-color);
-    --onboard-wallet-app-icon-border-color: var(--border-color);
-
-    --account-center-minimized-background: var(--background-color);
-    --account-center-minimized-address-color: var(--text-color);
-    --account-center-minimized-balance-color: var(--secondary-text-color);
-    --account-center-minimized-chain-select-background: var(
-      --accent-color-hover
-    );
-    --account-center-maximized-info-section-background: var(--background-color);
-    --account-center-maximized-network-section-background: var(
-      --accent-background
-    );
-    --account-center-maximized-upper-background: var(
-      --secondary-accent-background
-    );
-    --account-center-maximized-address-color: var(--background-color);
-    --account-center-maximized-account-section-background-hover: var(
-      --text-color
-    );
-    --account-center-maximized-balance-color: var(--border-color);
-    --account-center-maximized-upper-action-color: var(--accent-color);
-    --account-center-maximized-network-text-color: var(
-      --secondary-accent-background
-    );
-    --account-center-maximized-info-section-background-color: var(
-      --background-color
-    );
-    --account-center-maximized-app-name-color: var(
-      --secondary-accent-background
-    );
-    --account-center-maximized-app-info-color: var(
-      --secondary-accent-background
-    );
-    --account-center-app-btn-background: var(--secondary-accent-background);
-    --account-center-app-btn-text-color: var(--background-color);
-
-    --notify-onboard-background: var(--secondary-accent-background);
-    --notify-onboard-transaction-status: var(--accent-background);
-    --notify-onboard-address-hash-color: var(--accent-color-hover);
-    --notify-onboard-anchor-color: var(--accent-color);
-    --notify-onboard-timer-color: var(--secondary-text-color);
-
-    /*
-		NEEDS TARGET AS IT USES OPACITY:
-		--account-center-maximized-upper-action-background-hover
-		NEEDS UPDATES FOR DIFFERNT STYLING, DOESNT FIT BASIC VARIABLES ABOVE:
-		Notify status icons, icon backgrounds and icon borders
-	*/
-  }
   main {
     height: 100%;
   }

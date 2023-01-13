@@ -39,6 +39,13 @@
     }
   })
 
+  const themes = ['system', 'default', 'light', 'dark']
+  let selectedTheme = 'default'
+
+  const setTheme = (theme) => {
+    onboard.state.actions.setTheme(theme)
+  }
+
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
 
@@ -73,8 +80,9 @@
     uploaded_image = undefined
     webURL = ''
     resetTheme()
-    const onboardCloseBtnVisible =
-      document?.querySelector('body > onboard-v2')?.shadowRoot?.querySelector('.close-button')
+    const onboardCloseBtnVisible = document
+      ?.querySelector('body > onboard-v2')
+      ?.shadowRoot?.querySelector('.close-button')
     if (onboardCloseBtnVisible) onboardCloseBtnVisible?.click()
   }
 
@@ -85,30 +93,38 @@
   }
 
   const baseStyles = {
-    '--background-color': '#ffffff',
-    '--text-color': '#1a1d26',
-    '--border-color': '#ebebed',
-    '--accent-background': '#ebebed',
-    '--accent-color': '#929bed',
-    '--accent-color-hover': '#eff1fc',
-    '--secondary-text-color': '#707481'
+    default: {
+      '--w3o-background-color': 'unset',
+      '--w3o-text-color': 'unset',
+      '--w3o-border-color': 'unset',
+      '--w3o-accent-background-color': 'unset',
+      '--w3o-accent-text-color': 'unset',
+      '--w3o-secondary-text-color': 'unset',
+      '--w3o-border-radius': 'unset'
+    },
+    light: {
+      '--w3o-background-color': '#ffffff',
+      '--w3o-text-color': '#1a1d26',
+      '--w3o-border-color': '#d0d4f7',
+      '--w3o-accent-background-color': '#EFF1FC',
+      '--w3o-accent-text-color': '#929bed',
+      '--w3o-secondary-text-color': '#707481',
+      '--w3o-border-radius': '24px'
+    },
+    dark: {
+      '--w3o-background-color': '#1A1D26',
+      '--w3o-text-color': '#EFF1FC',
+      '--w3o-border-color': '#33394B',
+      '--w3o-accent-background-color': '#242835',
+      '--w3o-accent-text-color': '#929bed',
+      '--w3o-secondary-text-color': '#999CA5',
+      '--w3o-border-radius': '24px'
+    }
   }
 
-  let defaultStyling = {...baseStyles}
+  let defaultStyling = { ...baseStyles }
 
-  const baseStyling = `--onboard-connect-sidebar-background: var(--accent-background);
-  --onboard-close-button-background: var(--accent-background);
-  --onboard-connect-sidebar-color: var(--text-color);
-  --onboard-connect-sidebar-progress-background: var(--secondary-text-color);
-  --onboard-connect-sidebar-progress-color: var(--accent-color);
-  --onboard-connect-header-background: var(--background-color);
-  --onboard-connect-header-color: var(--text-color);
-  --onboard-main-scroll-container-background: var(--background-color);
-  --onboard-link-color: var(--accent-color);
-  --onboard-wallet-button-background: var(--background-color);
-  --onboard-wallet-button-background-hover: var(--accent-color-hover);
-  --onboard-wallet-button-border-color: var(--border-color);
-  --onboard-wallet-app-icon-border-color: var(--border-color);`
+  const baseStyling = ``
 
   const styleToString = (style) => {
     return Object.keys(style).reduce((acc, key) => acc + key + ': ' + style[key] + '; \n  ', '')
@@ -123,17 +139,20 @@
     }
   }
 
-  let copyableStyles = `:root {\n  ${styleToString(defaultStyling)}${baseStyling}\n}`
+  let copyableStyles = `:root {\n  ${styleToString(defaultStyling[selectedTheme])}${baseStyling}}`
 
-  const updateTheme = (e, targetStyle) => {
+  const updateTheme = () => {
+    onboard.state.actions.updateTheme(selectedTheme)
+  }
+  const updateThemeEl = (e, targetStyle) => {
     document.documentElement.style.setProperty(targetStyle, e.target.value)
 
-    copyableStyles = `:root {\n  ${styleToString(defaultStyling)}${baseStyling}\n}`
+    copyableStyles = `:root {\n  ${styleToString(defaultStyling[selectedTheme])}${baseStyling}}`
   }
 
   const resetTheme = () => {
-    defaultStyling = {...baseStyles}
-    Object.keys(defaultStyling).forEach(style => {
+    defaultStyling = { ...baseStyles }
+    Object.keys(defaultStyling).forEach((style) => {
       document.documentElement.style.setProperty(style, defaultStyling[style])
     })
   }
@@ -187,23 +206,56 @@
 
 <section>
   <div class="control-panel">
-    <label for="Theme">Click Color Circles to Set Theme: </label>
-    <hr />
-    <div class="theming-container">
-      {#each Object.keys(defaultStyling) as target}
-        <div class="theming-inputs-wrapper">
-          <div class="theming-inputs">
-            <input
-              type="color"
-              name="Theme"
-              bind:value={defaultStyling[target]}
-              on:input={(e) => updateTheme(e, target)}
-            />
-          </div>
-          <span class="text" id="current-theme">{target} : {defaultStyling[target]}</span>
-        </div>
+    <select bind:value={selectedTheme} on:change={() => updateTheme()}>
+      {#each themes as theme}
+        <option value={theme}>
+          {theme}
+        </option>
       {/each}
-    </div>
+    </select>
+    {#if selectedTheme !== 'system'}
+      <label for="Theme">Click Color Circles to Set Theme: </label>
+      <hr />
+      <div class="theming-container">
+        {#each Object.keys(defaultStyling[selectedTheme]) as target}
+          {#if !target.includes('border-radius')}
+            <div class="theming-inputs-wrapper">
+              <div class="theming-inputs">
+                <input
+                  type="color"
+                  name="Theme"
+                  bind:value={defaultStyling[selectedTheme][target]}
+                  on:input={(e) => updateThemeEl(e, target)}
+                />
+              </div>
+              <span class="text" id="current-theme"
+                >{target} : {defaultStyling[selectedTheme][target]}</span
+              >
+            </div>
+          {:else}
+            <div class="theming-inputs-wrapper">
+              <div class="theming-inputs-text">
+                <input
+                  class="br-text-input"
+                  type="text"
+                  bind:value={defaultStyling[selectedTheme][target]}
+                  on:input={(e) => updateThemeEl(e, target)}
+                />
+              </div>
+              <span class="text" id="current-theme"
+                >{target} : {defaultStyling[selectedTheme][target]}</span
+              >
+            </div>
+          {/if}
+        {/each}
+      </div>
+    {:else}
+      <label for="Theme"
+        >The system theme will align the theme with the users system preferences
+      </label>
+      <hr />
+      <div class="theming-container" />
+    {/if}
     <div class="copy-styles-container">
       <textarea readonly bind:value={copyableStyles} rows="10" class="copy-styles-textarea" />
       <button on:click={async () => await copyStylingConfig()}> Copy Styling Config </button>
@@ -367,6 +419,18 @@
     width: 2em;
     height: 2em;
     margin: 0.5em;
+  }
+  .theming-inputs-text {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 2em;
+    margin: 0.25em;
+  }
+  .br-text-input {
+    width: 3rem;
+    padding: 0.25rem;
+    text-align: center;
   }
   .iframe-input {
     flex: 1;

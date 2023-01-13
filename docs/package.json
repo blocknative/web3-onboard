@@ -55,7 +55,7 @@
   "type": "module",
   "dependencies": {
     "@web3-onboard/coinbase": "^2.1.4",
-    "@web3-onboard/core": "^2.12.0",
+    "@web3-onboard/core": "^2.13.1-alpha.2",
     "@web3-onboard/dcent": "^2.2.2",
     "@web3-onboard/enkrypt": "^2.0.0",
     "@web3-onboard/fortmatic": "^2.0.14",
