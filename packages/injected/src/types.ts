@@ -149,6 +149,7 @@ export interface CustomWindow extends Window {
   phantom: {
     ethereum: InjectedProvider
   }
+  trustwallet: InjectedProvider
 }
 
 export type InjectedProvider = ExternalProvider &
