@@ -176,21 +176,12 @@ const detected: InjectedWalletModule = {
 
 const trust: InjectedWalletModule = {
   label: ProviderLabel.Trust,
-  injectedNamespace: InjectedNameSpace.Ethereum,
+  injectedNamespace: InjectedNameSpace.Trust,
   checkProviderIdentity: ({ provider }) =>
-    !!provider &&
-    !!provider[ProviderIdentityFlag.Trust] &&
-    !!provider &&
-    !provider[ProviderIdentityFlag.TokenPocket],
-
+    !!provider && !!provider[ProviderIdentityFlag.Trust],
   getIcon: async () => (await import('./icons/trust.js')).default,
-  getInterface: async () => ({
-    provider: createEIP1193Provider(window.ethereum, {
-      wallet_switchEthereumChain: UNSUPPORTED_METHOD,
-      eth_selectAccounts: UNSUPPORTED_METHOD
-    })
-  }),
-  platforms: ['mobile']
+  getInterface: getInjectedInterface(ProviderIdentityFlag.Trust),
+  platforms: ['all']
 }
 
 const opera: InjectedWalletModule = {
