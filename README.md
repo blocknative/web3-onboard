@@ -88,6 +88,7 @@ For full documentation, check out the README.md for each package:
 **SDK Wallets**
 
 - [Coinbase](packages/coinbase/README.md)
+- [Trust](packages/trust/README.md)
 - [WalletConnect](packages/walletconnect/README.md)
 - [Gnosis](packages/gnosis/README.md)
 - [Magic](packages/magic/README.md)
