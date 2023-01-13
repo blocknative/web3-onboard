@@ -11,8 +11,7 @@ function trust(): WalletInit {
       label: 'Trust Wallet',
       getIcon: async () => (await import('./icon.js')).default,
       getInterface: async () => {
-        const trustExists =
-          window.hasOwnProperty('trustwallet') && window.ethereum?.isTrust
+        const trustExists = window.hasOwnProperty('trustwallet')
 
         if (trustExists) {
           const enkryptProvider: EIP1193Provider = window.trustwallet
