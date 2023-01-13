@@ -2,7 +2,7 @@
   import Onboard from '@web3-onboard/core'
   import fortmaticModule from '@web3-onboard/fortmatic'
   import gnosisModule from '@web3-onboard/gnosis'
-  import injectedModule from '@web3-onboard/injected-wallets'
+  import injectedModule, { ProviderLabel } from '@web3-onboard/injected-wallets'
   import keepkeyModule from '@web3-onboard/keepkey'
   import keystoneModule from '@web3-onboard/keystone'
   import ledgerModule from '@web3-onboard/ledger'
@@ -67,11 +67,39 @@
 
   const injected = injectedModule({
     custom: [
-      // include custom injected wallet modules here
-    ],
-    filter: {
-      // mapping of wallet label to filter here
-    }
+      // include custom (not natively supported) injected wallet modules here
+    ]
+    // display all wallets even if they are unavailable
+    // displayUnavailable: true
+    // but only show Binance and Bitski wallet if they are available
+    // filter: {
+    //   [ProviderLabel.Binance]: 'unavailable',
+    //   [ProviderLabel.Bitski]: 'unavailable'
+    // }
+    // do a manual sort of injected wallets so that MetaMask and Coinbase are ordered first
+    // sort: wallets => {
+    //   const metaMask = wallets.find(
+    //     ({ label }) => label === ProviderLabel.MetaMask
+    //   )
+    //   const coinbase = wallets.find(
+    //     ({ label }) => label === ProviderLabel.Coinbase
+    //   )
+
+    //   return (
+    //     [
+    //       metaMask,
+    //       coinbase,
+    //       ...wallets.filter(
+    //         ({ label }) =>
+    //           label !== ProviderLabel.MetaMask &&
+    //           label !== ProviderLabel.Coinbase
+    //       )
+    //     ]
+    //       // remove undefined values
+    //       .filter(wallet => wallet)
+    //   )
+    // }
+    // walletUnavailableMessage: wallet => `Oops ${wallet.label} is unavailable!`
   })
 
   const coinbaseWallet = coinbaseModule()
@@ -267,9 +295,10 @@
       }
     }
     // containerElements: {
-    // El must be present at time of JS script execution
-    // See ../public/index.html for element example
-    //   accountCenter: '#sample-container-el'
+    // // El must be present at time of JS script execution
+    // // See ../public/index.html for element example
+    //   connectModal: '#sample-container-el',
+    //   accountCenter: '#sample-container-el2'
     // },
     // Sign up for your free api key at www.Blocknative.com
     // Add apiKey to test transaction notifications
@@ -300,8 +329,6 @@
 
   let toAddress
   const sendTransaction = async provider => {
-    await onboard.setChain({ chainId: '0x5' })
-
     const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 
     const signer = ethersProvider.getSigner()

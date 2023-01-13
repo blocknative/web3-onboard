@@ -1,5 +1,5 @@
-import { ProviderRpcErrorCode, WalletModule } from '@web3-onboard/common'
-import { ProviderLabel } from './types.js'
+import type { Device, ProviderRpcErrorCode } from '@web3-onboard/common'
+import type { InjectedProvider, InjectedWalletModule } from './types.js'
 
 export class ProviderRpcError extends Error {
   message: string
@@ -14,10 +14,19 @@ export class ProviderRpcError extends Error {
   }
 }
 
-export const remove =
-  ({ detected, metamask }: { detected: boolean; metamask: boolean }) =>
-  ({ label }: Partial<WalletModule>) =>
-    !(
-      (label === ProviderLabel.Detected && detected) ||
-      (label === ProviderLabel.MetaMask && metamask)
-    )
+export const defaultWalletUnavailableMsg = ({ label }: InjectedWalletModule) =>
+  `Please install or enable ${label} to continue`
+
+export const isWalletAvailable = (
+  provider: InjectedProvider,
+  checkProviderIdentity: InjectedWalletModule['checkProviderIdentity'],
+  device: Device
+): boolean => {
+  if (provider && provider.providers && Array.isArray(provider.providers)) {
+    return !!provider.providers.filter(provider =>
+      checkProviderIdentity({ provider, device })
+    ).length
+  } else {
+    return checkProviderIdentity({ provider, device })
+  }
+}
