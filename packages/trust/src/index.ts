@@ -1,5 +1,4 @@
 import type { WalletInit, EIP1193Provider } from '@web3-onboard/common'
-import { createEIP1193Provider } from '@web3-onboard/common'
 import { CustomWindow } from './types.js'
 declare const window: CustomWindow
 
@@ -11,18 +10,25 @@ function trust(): WalletInit {
       label: 'Trust Wallet',
       getIcon: async () => (await import('./icon.js')).default,
       getInterface: async () => {
-        const trustExists = window.hasOwnProperty('trustwallet')
+        const ethereumInjectionExists = window.hasOwnProperty('ethereum')
 
-        if (trustExists) {
-          const enkryptProvider: EIP1193Provider = window.trustwallet
-          const provider = createEIP1193Provider(enkryptProvider)
+        let provider: EIP1193Provider
 
-          return {
-            provider
-          }
+        // check if trust is injected into window.ethereum
+        if (ethereumInjectionExists && window['ethereum'].isTrust) {
+          provider = window['ethereum']
+        } else if (window['trustwallet']) {
+          // directly use the window.trustwallet injection
+          provider = window['trustwallet']
         } else {
+          // trustwallet extension is not installed
+          // send user to install page
           window.open('https://trustwallet.com/browser-extension', '_blank')
           throw new Error('Please Install Trust to use this wallet')
+        }
+
+        return {
+          provider
         }
       }
     }

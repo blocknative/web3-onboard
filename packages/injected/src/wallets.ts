@@ -180,7 +180,25 @@ const trust: InjectedWalletModule = {
   checkProviderIdentity: ({ provider }) =>
     !!provider && !!provider[ProviderIdentityFlag.Trust],
   getIcon: async () => (await import('./icons/trust.js')).default,
-  getInterface: getInjectedInterface(ProviderIdentityFlag.Trust),
+  getInterface: async () => {
+    const ethereumInjectionExists = window.hasOwnProperty(
+      InjectedNameSpace.Ethereum
+    )
+
+    let provider: EIP1193Provider
+
+    // check if trust is injected into window.ethereum
+    if (ethereumInjectionExists && window[InjectedNameSpace.Ethereum].isTrust) {
+      provider = window[InjectedNameSpace.Ethereum]
+    } else {
+      // directly use the window.trustwallet injection
+      provider = window[InjectedNameSpace.Trust]
+    }
+
+    return {
+      provider
+    }
+  },
   platforms: ['all']
 }
 
