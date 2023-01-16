@@ -23,6 +23,7 @@
   import mewWalletModule from '@web3-onboard/mew-wallet'
   import uauthModule from '@web3-onboard/uauth'
   import phantomModule from '@web3-onboard/phantom'
+  import frontierModule from '@web3-onboard/frontier'
   import {
     recoverAddress,
     arrayify,
@@ -127,6 +128,7 @@
   const tallyho = tallyHoModule()
   const zeal = zealModule()
   const phantom = phantomModule()
+  const frontier = frontierModule()
 
   const trezorOptions = {
     email: 'test@test.com',
@@ -162,6 +164,7 @@
       web3auth,
       ledger,
       trezor,
+      frontier,
       walletConnect,
       enkrypt,
       mewWallet,

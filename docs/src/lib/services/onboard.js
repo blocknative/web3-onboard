@@ -28,6 +28,7 @@ const intiOnboard = async () => {
   const { default: torusModule } = await import('@web3-onboard/torus')
   const { default: web3authModule } = await import('@web3-onboard/web3auth')
   const { default: uauthModule } = await import('@web3-onboard/uauth')
+  const { default: frontierModule } = await import('@web3-onboard/frontier')
   const INFURA_ID = '8b60d52405694345a99bcb82e722e0af'
 
   const injected = injectedModule()
@@ -43,6 +44,7 @@ const intiOnboard = async () => {
   const mewWallet = mewWalletModule()
   const tally = tallyModule()
   const torus = torusModule()
+  const frontier = frontierModule()
 
   const portis = portisModule({
     apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
@@ -82,6 +84,7 @@ const intiOnboard = async () => {
       coinbase,
       ledger,
       trezor,
+      frontier,
       gnosis,
       uauth,
       tally,
