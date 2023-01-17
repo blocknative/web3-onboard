@@ -141,6 +141,24 @@ const intiOnboard = async () => {
         rpcUrl: 'https://mainnet.optimism.io'
       },
       {
+        id: '0x150',
+        token: 'SDN',
+        label: 'Shiden',
+        rpcUrl: 'https://evm.shiden.astar.network'
+      },
+      {
+        id: '0x250',
+        token: 'ASTR',
+        label: 'Astar',
+        rpcUrl: 'https://evm.astar.network'
+      },
+      {
+        id: '0x51',
+        token: 'SBY',
+        label: 'Shibuya',
+        rpcUrl: 'https://evm.shibuya.astar.network'
+      },
+      {
         id: '0xA4B1',
         token: 'ARB-ETH',
         label: 'Arbitrum',

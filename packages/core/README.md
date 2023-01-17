@@ -253,6 +253,9 @@ export declare type Network =
   | 'goerli'
   | 'kovan'
   | 'xdai'
+  | 'shiden'
+  | 'astar'
+  | 'shibuya'
   | 'bsc-main'
   | 'matic-main'
   | 'fantom-main'
@@ -314,6 +317,24 @@ const onboard = Onboard({
       token: 'MATIC',
       label: 'Matic Mainnet',
       rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+    },
+    {
+      id: '0x150',
+      token: 'SDN',
+      label: 'Shiden',
+      rpcUrl: 'https://evm.shiden.astar.network'
+    },
+    {
+      id: '0x250',
+      token: 'ASTR',
+      label: 'Astar',
+      rpcUrl: 'https://evm.astar.network'
+    },
+    {
+      id: '0x51',
+      token: 'SBY',
+      label: 'Shibuya',
+      rpcUrl: 'https://evm.shibuya.astar.network'
     },
     {
       id: '0xfa',
