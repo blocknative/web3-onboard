@@ -177,11 +177,10 @@
   }
 
   .app-name {
-    font-weight: 700;
+    /* font-weight: 700; */
     font-size: var(--onboard-font-size-5, var(--font-size-5));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
-    margin-top: 0;
-    margin-bottom: var(--onboard-spacing-5, var(--spacing-5));
+    margin-bottom: 0.25rem;
     color: var(--account-center-maximized-app-name-color, inherit);
   }
 
@@ -387,13 +386,13 @@
           </div>
 
           <div class="ml4">
-            <h4 class="app-name">
+            <div class="app-name">
               {(appMetadata && appMetadata.name) || 'App Name'}
-            </h4>
-            <p class="app-description">
+            </div>
+            <div class="app-description">
               {(appMetadata && appMetadata.description) ||
                 'This app has not added a description.'}
-            </p>
+            </div>
           </div>
         </div>
 
