@@ -27,12 +27,10 @@
     "Ethereum Hooks",
     "Blocknative",
     "Mempool",
-    "pending",
-    "confirmed",
     "Injected Wallet",
     "Crypto",
     "Crypto Wallet",
-    "Enkrypt",
+    "Onboard",
     "Frontier"
   ],
   "repository": {
