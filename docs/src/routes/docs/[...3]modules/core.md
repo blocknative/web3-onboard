@@ -113,6 +113,17 @@ type AppMetadata = {
   explore?: string
   // if your app only supports injected wallets and when no injected wallets detected, recommend the user to install some
   recommendedInjectedWallets?: RecommendedInjectedWallets[]
+  // allows for dapps to require users to agree to TOS and privacy policy before connecting a wallet
+  agreement?: TermsOfServiceAgreementOptions | null
+}
+
+type TermsOfServiceAgreementOptions = {
+  // user aggrees with exact version of terms and privacy policy
+  version: string
+  // url that points to the Terms & Conditions of the dapp
+  termsUrl?: string
+  // url that points to the Privacy policy of the dapp
+  privacyUrl?: string
 }
 
 type RecommendedInjectedWallets = {
