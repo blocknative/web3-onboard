@@ -74,6 +74,7 @@
     border-radius: var(--onboard-modal-border-radius, var(--border-radius-1))
       var(--onboard-modal-border-radius, var(--border-radius-1)) 0 0;
     box-shadow: var(--onboard-modal-box-shadow, var(--box-shadow-0));
+    max-width: 100vw;
   }
 
   .modal {
@@ -122,7 +123,7 @@
       >
         <div
           class="modal-overflow modal-styling relative flex justify-center"
-          style={`max-width: ${connectContainerEl ? '100%' : '100vw'};`}
+          style={`${connectContainerEl ? 'max-width: 100%' : '100vw'};`}
         >
           <div class="modal relative">
             <slot />
