@@ -3,6 +3,7 @@ export interface CustomWindow extends Window {
   ethereum: EIP1193Provider & {
     isFrontier?: boolean
   }
-  frontier: EIP1193Provider
+  frontier: {
+    ethereum: EIP1193Provider
+  }
 }
-

@@ -159,7 +159,7 @@
 
   const onboard = Onboard({
     wallets: [
-      injected,
+      // injected,
       zeal,
       web3auth,
       ledger,

@@ -10,16 +10,17 @@ function frontier(): WalletInit {
       label: 'Frontier',
       getIcon: async () => (await import('./icon.js')).default,
       getInterface: async () => {
+        const { createEIP1193Provider } = await import('@web3-onboard/common')
         const ethereumInjectionExists = window.hasOwnProperty('ethereum')
 
         let provider: EIP1193Provider
 
         // check if frontier is injected into window.ethereum
         if (ethereumInjectionExists && window['ethereum'].isFrontier) {
-          provider = window['ethereum']
+          provider = createEIP1193Provider(window['ethereum'])
         } else if (window['frontier']) {
           // directly use the window.frontier injection
-          provider = window['frontier']
+          provider = createEIP1193Provider(window['frontier']['ethereum'])
         } else {
           // frontier extension is not installed
           // send user to install page
@@ -27,9 +28,7 @@ function frontier(): WalletInit {
           throw new Error('Please Install Frontier to use this wallet')
         }
 
-        return {
-          provider
-        }
+        return { provider }
       }
     }
   }
