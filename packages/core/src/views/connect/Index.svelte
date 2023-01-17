@@ -381,11 +381,9 @@
 <style>
   .container {
     /* component values */
-    /* --background-color: var(--onboard-main-scroll-container-background, var(--onboard-white, var(--white)));
-    --text-color: var(--onboard-connect-text-color, var(--onboard-gray-700, var(--gray-700))); */
-    --background-color: var(--w3o-background-color);
-    --text-color: var(--w3o-text-color);
-    --border-color: var(--w3o-border-color);
+    --background-color: var(--onboard-main-scroll-container-background, white);
+    --text-color: var(--onboard-connect-text-color, var(--gray-700));
+    --border-color: var(--w3o-border-color, var(--gray-200));
     --action-color: var(--w3o-accent-color);
 
     /* themeable properties */
@@ -412,18 +410,10 @@
   .header {
     display: flex;
     padding: 1rem;
-    border-bottom: 1px solid;
+    border-bottom: 1px solid transparent;
+    background: var(--onboard-connect-header-background);
+    color: var(--onboard-connect-header-color);
     border-color: var(--border-color);
-
-    /* border-bottom: 1px solid var(--onboard-primary-200, var(--primary-200)); */
-    /* background: var(
-      --onboard-connect-header-background,
-      var(--onboard-white, var(--white))
-    ); */
-    /* color: var(
-      --onboard-connect-header-color,
-      var(--onboard-black, var(--black))
-    ); */
   }
 
   .header-heading {
@@ -445,7 +435,6 @@
   }
 
   .mobile-subheader {
-    /* color: var(--onboard-gray-400, var(--gray-400)); */
     opacity: 0.6;
     font-size: 0.875rem;
     font-weight: 400;

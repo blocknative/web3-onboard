@@ -27,14 +27,6 @@
 
     padding: 0.75rem 0.5rem;
 
-    border-bottom: 1px solid;
-    border-color: var(--border-color);
-
-    /* border-bottom: 1px solid var(
-      --onboard-wallet-button-border-color,
-      var(--onboard-primary-200, var(--primary-200))
-    ); */
-
     /* Hide scrollbar for IE, Edge and Firefox */
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */

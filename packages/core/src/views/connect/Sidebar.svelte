@@ -20,9 +20,9 @@
 
 <style>
   .sidebar {
-    --background-color: var(--onboard-connect-sidebar-background, initial);
-    --text-color: var(--onboard-connect-sidebar-color, initial);
-    /* --border-color: #f00; */
+    --background-color: var(--onboard-connect-sidebar-background, white);
+    --text-color: var(--onboard-connect-sidebar-color, var(--gray-700));
+    --border-color: var(--onboard-connect-sidebar-border-color, var(--gray-200));
     /* --action-color: #00f; */
 
     display: flex;
@@ -32,10 +32,6 @@
     align-items: center;
 
     color: var(--text-color);
-    /* color: var(
-      --onboard-connect-sidebar-color,
-      var(--onboard-gray-700, var(--gray-700))
-    ); */
   }
 
   .inner-container {
@@ -52,15 +48,6 @@
 
     border-color: var(--border-color);
     background-color: var(--background-color);
-
-    /* border-color: var(
-      --onboard-connect-sidebar-border-color,
-      var(--onboard-primary-200, var(--primary-200))
-    ); */
-    /* background: var(
-      --onboard-connect-sidebar-background,
-      var(--onboard-primary-100, var(--primary-100))
-    ); */
   }
 
   .icon-container {
@@ -135,15 +122,6 @@
 
       border-color: var(--border-color);
       background-color: var(--background-color);
-
-      /* border-color: var(
-        --onboard-connect-sidebar-border-color,
-        var(--onboard-primary-200, var(--primary-200))
-      ); */
-      /* background: var(
-        --onboard-connect-sidebar-background,
-        var(--onboard-primary-100, var(--primary-100))
-      ); */
     }
     .inner-container {
       border: none;

@@ -25,11 +25,7 @@
     flex: 1;
     padding: 0;
     background: none;
-    color: inherit;
-    /* color: var(
-      --onboard-wallet-button-color,
-      var(--onboard-gray-700, var(--gray-700))
-    ); */
+    color: var(--onboard-wallet-button-color, inherit);
   }
 
   .wallet-button-container {
@@ -65,24 +61,10 @@
     button.wallet-button-styling {
       transition: background-color 250ms ease-in-out;
 
-      /* background: var(
-        --onboard-wallet-button-background,
-        var(--onboard-white, var(--white))
-      ); */
-
-      border-radius: var(
-        --onboard-wallet-button-border-radius,
-        var(--border-radius-1)
-      );
-
-      /* border: 1px solid
-        var(
-          --onboard-wallet-button-border-color,
-          var(--onboard-primary-200, var(--primary-200))
-        ); */
-
-      border: 1px solid;
-      border-color: var(--border-color);
+      background: var(--onboard-wallet-button-background, none);
+      border: 1px solid transparent;
+      border-color: var(--onboard-wallet-button-border-color, var(--border-color));
+      border-radius: var(--onboard-wallet-button-border-radius, var(--border-radius-1));
     }
 
     button.wallet-button-styling:hover {
@@ -90,10 +72,7 @@
         --onboard-wallet-button-background-hover,
         var(--onboard-primary-100, var(--primary-100))
       );
-      color: var(
-        --onboard-wallet-button-color-hover,
-        var(--onboard-gray-700, var(--gray-700))
-      );
+      color: var(--onboard-wallet-button-color-hover);
     }
 
     .wallet-button-container-inner {
@@ -106,10 +85,6 @@
     button.connected {
       border-color: var(--onboard-success-500, var(--success-500));
     }
-
-    /* button.connected:hover {
-      background: var(--onboard-success-100, var(--success-100));
-    } */
 
     .name {
       font-size: 1rem;
