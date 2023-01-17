@@ -293,7 +293,7 @@
         },
         position: 'topRight'
       }
-    }
+    },
     // containerElements: {
     // // El must be present at time of JS script execution
     // // See ../public/index.html for element example
