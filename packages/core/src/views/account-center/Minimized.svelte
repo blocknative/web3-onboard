@@ -64,7 +64,6 @@
     --background-color: var(--account-center-minimized-background, var(--w3o-background-color, white));
     --text-color: var(--w3o-text-color, var(--gray-700));
     --border-color: var(--account-center-border, var(--w3o-border-color, var(--onboard-gray-200, var(--gray-200))));
-    /* --action-color: var(--w3o-accent-color); */
 
     cursor: pointer;
     pointer-events: auto;
