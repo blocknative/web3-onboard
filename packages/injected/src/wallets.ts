@@ -408,26 +408,7 @@ const tokenpocket: InjectedWalletModule = {
     !!provider[ProviderIdentityFlag.TokenPocket] &&
     !provider[ProviderIdentityFlag.TP],
   getIcon: async () => (await import('./icons/tokenpocket.js')).default,
-  getInterface: async ({ EventEmitter }) => {
-    const emitter = new EventEmitter()
-
-    const provider = createEIP1193Provider(window.ethereum, {
-      wallet_switchEthereumChain: ({ baseRequest, params }) => {
-        emitter.emit('chainChanged', params[0].chainId)
-        return baseRequest({
-          method: 'wallet_switchEthereumChain',
-          params
-        })
-      },
-      eth_selectAccounts: UNSUPPORTED_METHOD
-    })
-
-    provider.on = emitter.on.bind(emitter)
-
-    return {
-      provider
-    }
-  },
+  getInterface: getInjectedInterface(ProviderIdentityFlag.TokenPocket),
   platforms: ['all']
 }
 
