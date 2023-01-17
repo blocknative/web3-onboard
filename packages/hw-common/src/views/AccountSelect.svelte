@@ -323,6 +323,9 @@
       --onboard-account-select-modal-right,
       var(--account-select-modal-right)
     );
+
+    max-height: 100vh;
+    overflow: scroll;
   }
 
   .connect-wallet-header {
@@ -455,6 +458,11 @@
 
     .table-section {
       margin-top: unset;
+    }
+    
+    .account-select-modal-position {
+      max-height: unset;
+      overflow: unset;
     }
   }
 </style>
