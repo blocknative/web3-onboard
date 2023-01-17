@@ -139,7 +139,7 @@
     }
   }
 
-  let copyableStyles = `:root {\n  ${styleToString(defaultStyling[selectedTheme])}${baseStyling}}`
+  let copyableStyles = `{\n  ${styleToString(defaultStyling[selectedTheme])}${baseStyling}}`
 
   const updateTheme = () => {
     onboard.state.actions.updateTheme(selectedTheme)
@@ -147,7 +147,7 @@
   const updateThemeEl = (e, targetStyle) => {
     document.documentElement.style.setProperty(targetStyle, e.target.value)
 
-    copyableStyles = `:root {\n  ${styleToString(defaultStyling[selectedTheme])}${baseStyling}}`
+    copyableStyles = `{\n  ${styleToString(defaultStyling[selectedTheme])}${baseStyling}}`
   }
 
   const resetTheme = () => {
@@ -258,7 +258,7 @@
     {/if}
     <div class="copy-styles-container">
       <textarea readonly bind:value={copyableStyles} rows="10" class="copy-styles-textarea" />
-      <button on:click={async () => await copyStylingConfig()}> Copy Styling Config </button>
+      <button on:click={async () => await copyStylingConfig()}> Copy Theming Config </button>
     </div>
     <hr />
     <div class="backdrop-toggle">

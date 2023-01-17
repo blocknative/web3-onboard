@@ -74,6 +74,20 @@ const exodus: InjectedWalletModule = {
   platforms: ['all']
 }
 
+const frontier: InjectedWalletModule = {
+  label: ProviderLabel.Frontier,
+  injectedNamespace: InjectedNameSpace.Frontier,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider &&
+    !!provider['ethereum'] &&
+    !!provider['ethereum'][ProviderIdentityFlag.Frontier],
+  getIcon: async () => (await import('./icons/frontier.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.frontier.ethereum)
+  }),
+  platforms: ['all']
+}
+
 const brave: InjectedWalletModule = {
   label: ProviderLabel.Brave,
   injectedNamespace: InjectedNameSpace.Ethereum,
@@ -668,6 +682,7 @@ const phantom: InjectedWalletModule = {
 const wallets = [
   zeal,
   exodus,
+  frontier,
   metamask,
   binance,
   coinbase,
