@@ -61,9 +61,9 @@
 
 <style>
   .minimized {
-    --background-color: var(--w3o-background-color);
-    --text-color: var(--w3o-text-color);
-    --border-color: var(--w3o-border-color, var(--account-center-border, var(--onboard-gray-100, transparent)));
+    --background-color: var(--account-center-minimized-background, var(--w3o-background-color, white));
+    --text-color: var(--w3o-text-color, var(--gray-700));
+    --border-color: var(--account-center-border, var(--w3o-border-color, var(--onboard-gray-200, var(--gray-200))));
     /* --action-color: var(--w3o-accent-color); */
 
     cursor: pointer;
@@ -76,13 +76,6 @@
     color: var(--text-color);
     border-color: var(--border-color);
     border-radius: var(--account-center-border-radius, 1rem);
-
-    /* border-color: var(--account-center-border, var(--onboard-gray-100, transparent)); */
-    /* background: var(
-      --account-center-minimized-background,
-      var(--onboard-white, var(--white))
-    ); */
-
     box-shadow: var(
       --account-center-box-shadow,
       var(--onboard-shadow-3, var(--shadow-3))
@@ -111,8 +104,8 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    /* line-height: var(--onboard-font-line-height-2, var(--font-line-height-2)); */
-    /* color: var(--account-center-minimized-address-color, initial); */
+    /* legacy variables */
+    color: var(--account-center-minimized-address-color, inherit);
   }
 
   .balance {
@@ -122,12 +115,7 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     opacity: 0.6;
-    /* line-height: var(--onboard-font-line-height-2, var(--font-line-height-2)); */
-    /* color: var(
-      --account-center-minimized-balance-color,
-      var(--onboard-gray-400, var(--gray-400))
-    ); */
-    /* width: 7.25rem; */
+    color: var(--account-center-minimized-balance-color, inherit);
   }
 
   .chain-icon {

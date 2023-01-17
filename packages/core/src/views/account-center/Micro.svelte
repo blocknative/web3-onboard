@@ -16,9 +16,9 @@
 
 <style>
   .minimized {
-    --background-color: var(--w3o-background-color);
+    --background-color: var(--account-center-micro-background, var(--w3o-background-color, white));
     --text-color: var(--w3o-text-color);
-    --border-color: var(--w3o-border-color, var(--account-center-border, var(--onboard-gray-100, transparent)));
+    --border-color: var(--account-center-border, var(--w3o-border-color, var(--onboard-gray-200, var(--gray-200))));
 
     cursor: pointer;
     pointer-events: auto;
@@ -28,12 +28,6 @@
     color: var(--text-color);
     border-color: var(--border-color);
     border-radius: var(--account-center-border-radius, 1rem);
-
-    /* background: var(
-      --account-center-micro-background,
-      var(--onboard-white, var(--white))
-    ); */
-
     box-shadow: var(
       --account-center-box-shadow,
       var(--onboard-shadow-3, var(--shadow-3))

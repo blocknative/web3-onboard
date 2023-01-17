@@ -48,35 +48,27 @@
 
 <style>
   .outer-container {
-    --background-color: var(--w3o-background-color);
-    --text-color: var(--w3o-text-color);
-    --border-color: var(--w3o-border-color);
-    --action-color: var(--w3o-accent-text-color);
+    --background-color: var(--account-center-maximized-upper-background, var(--w3o-background-color, white));
+    --text-color: var(--w3o-text-color, var(--gray-700));
+    --border-color: var(--w3o-border-color, var(--gray-200));
+    --action-color: var(--w3o-accent-text-color, var(--primary-500));
 
-    /* background: var(
-      --account-center-maximized-upper-background,
-      var(--onboard-gray-600, var(--gray-600))
-    ); */
-    border-radius: var(
-      --account-center-border-radius,
-      var(--onboard-border-radius-3, var(--border-radius-3))
-    );
     width: 100%;
     filter: drop-shadow(0px 4px 16px rgba(178, 178, 178, 0.2));
-    /* padding: 0 1px 1px 1px; */
     pointer-events: auto;
     border: 1px solid transparent;
     background: var(--background-color);
     border-color: var(--border-color);
     color: var(--text-color);
+    border-radius: var(
+      --account-center-border-radius,
+      var(--onboard-border-radius-3, var(--border-radius-3))
+      );
   }
 
   .wallets-section {
     width: 100%;
-    /* border-radius: var(
-      --account-center-border-radius,
-      var(--onboard-border-radius-3, var(--border-radius-3))
-    ); */
+    border-radius: inherit;
   }
 
   .p5 {
@@ -150,13 +142,11 @@
       --account-center-border-radius,
       var(--onboard-border-radius-3, var(--border-radius-3))
     );
-    /* color: var(
+
+    color: var(
       --account-center-maximized-network-text-color,
-      var(
-        --account-center-maximized-network-section,
-        var(--onboard-gray-500, var(--gray-500))
-      )
-    ); */
+      var(--account-center-maximized-network-section, inherit)
+    );
   }
 
   .p5-5 {
@@ -174,14 +164,10 @@
   }
 
   .app-info-container {
-    /* background: var(
+    background: var(
       --account-center-maximized-info-section-background-color,
-      var(
-        --account-center-maximized-info-section,
-        var(--onboard-white, var(--white))
-      )
-    ); */
-    background: var(--backround-color);
+      var(--account-center-maximized-info-section, var(--backround-color))
+    );
     border-radius: var(
       --account-center-border-radius,
       var(--onboard-border-radius-3, var(--border-radius-3))
@@ -194,40 +180,28 @@
     font-weight: 700;
     font-size: var(--onboard-font-size-5, var(--font-size-5));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
-    /* color: var(
-      --account-center-maximized-app-name-color,
-      var(--onboard-gray-600, var(--gray-600))
-    ); */
-    margin-bottom: var(--onboard-spacing-5, var(--spacing-5));
     margin-top: 0;
+    margin-bottom: var(--onboard-spacing-5, var(--spacing-5));
+    color: var(--account-center-maximized-app-name-color, inherit);
   }
 
   .app-description {
+    margin: 0;
     font-size: var(--onboard-font-size-7, var(--font-size-7));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
-    /* color: var(
-      --account-center-maximized-app-info-color,
-      var(--onboard-gray-500, var(--gray-500))
-    ); */
-    margin: 0;
+    color: var(--account-center-maximized-app-info-color, inherit);
   }
 
   .app-info {
     font-size: var(--onboard-font-size-7, var(--font-size-7));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
-    /* color: var(
-      --account-center-maximized-app-info-color,
-      var(--onboard-gray-500, var(--gray-500))
-    ); */
+    color: var(--account-center-maximized-app-info-color, inherit);
   }
   .app-info-heading {
-    /* color: var(
-      --account-center-maximized-app-info-color,
-      var(--onboard-gray-600, var(--gray-600))
-    ); */
     font-weight: 700;
     margin-top: var(--onboard-spacing-5, var(--spacing-5));
     margin-bottom: var(--onboard-spacing-7, var(--spacing-7));
+    color: var(--account-center-maximized-app-info-color, inherit);
   }
 
   a {
@@ -243,16 +217,16 @@
   }
 
   .app-button {
+    /* font-family: var(--account-center-app-btn-font-family, inherit); */
     margin-top: var(--onboard-spacing-5, var(--spacing-5));
-    /* color: var(
-      --account-center-app-btn-text-color,
-      var(--onboard-white, var(--white))
-    ); */
     background: var(
       --account-center-app-btn-background,
       var(--onboard-gray-500, var(--gray-500))
     );
-    font-family: var(--account-center-app-btn-font-family, inherit);
+    color: var(
+      --account-center-app-btn-text-color,
+      var(--onboard-white, var(--white))
+    );
   }
 
   .powered-by-container {
