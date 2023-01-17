@@ -66,10 +66,9 @@ export const themeMapping = `/* THEME MAPPING */
 --account-center-maximized-upper-background: var(
   --w3o-secondary-accent-background, unset
 );
---account-center-maximized-address-color: var(--w3o-background-color, unset);
---account-center-maximized-account-section-background-hover: var(
-  --w3o-text-color, unset);
---account-center-maximized-balance-color: var(--w3o-border-color, unset);
+--account-center-maximized-address-color: unset;
+--account-center-maximized-account-section-background-hover: unset;
+--account-center-maximized-balance-color: unset;
 --account-center-maximized-upper-action-color: var(--w3o-accent-text-color, unset);
 --account-center-maximized-network-text-color: var(
   --w3o-secondary-accent-background, unset);
