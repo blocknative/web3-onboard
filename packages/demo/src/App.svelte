@@ -2,7 +2,7 @@
   import Onboard from '@web3-onboard/core'
   import fortmaticModule from '@web3-onboard/fortmatic'
   import gnosisModule from '@web3-onboard/gnosis'
-  import injectedModule from '@web3-onboard/injected-wallets'
+  import injectedModule, { ProviderLabel } from '@web3-onboard/injected-wallets'
   import keepkeyModule from '@web3-onboard/keepkey'
   import keystoneModule from '@web3-onboard/keystone'
   import ledgerModule from '@web3-onboard/ledger'
@@ -23,6 +23,7 @@
   import mewWalletModule from '@web3-onboard/mew-wallet'
   import uauthModule from '@web3-onboard/uauth'
   import phantomModule from '@web3-onboard/phantom'
+  import frontierModule from '@web3-onboard/frontier'
   import {
     recoverAddress,
     arrayify,
@@ -66,11 +67,39 @@
 
   const injected = injectedModule({
     custom: [
-      // include custom injected wallet modules here
-    ],
-    filter: {
-      // mapping of wallet label to filter here
-    }
+      // include custom (not natively supported) injected wallet modules here
+    ]
+    // display all wallets even if they are unavailable
+    // displayUnavailable: true
+    // but only show Binance and Bitski wallet if they are available
+    // filter: {
+    //   [ProviderLabel.Binance]: 'unavailable',
+    //   [ProviderLabel.Bitski]: 'unavailable'
+    // }
+    // do a manual sort of injected wallets so that MetaMask and Coinbase are ordered first
+    // sort: wallets => {
+    //   const metaMask = wallets.find(
+    //     ({ label }) => label === ProviderLabel.MetaMask
+    //   )
+    //   const coinbase = wallets.find(
+    //     ({ label }) => label === ProviderLabel.Coinbase
+    //   )
+
+    //   return (
+    //     [
+    //       metaMask,
+    //       coinbase,
+    //       ...wallets.filter(
+    //         ({ label }) =>
+    //           label !== ProviderLabel.MetaMask &&
+    //           label !== ProviderLabel.Coinbase
+    //       )
+    //     ]
+    //       // remove undefined values
+    //       .filter(wallet => wallet)
+    //   )
+    // }
+    // walletUnavailableMessage: wallet => `Oops ${wallet.label} is unavailable!`
   })
 
   const coinbaseWallet = coinbaseModule()
@@ -99,6 +128,7 @@
   const tallyho = tallyHoModule()
   const zeal = zealModule()
   const phantom = phantomModule()
+  const frontier = frontierModule()
 
   const trezorOptions = {
     email: 'test@test.com',
@@ -130,8 +160,6 @@
   const onboard = Onboard({
     wallets: [
       injected,
-      zeal,
-      web3auth,
       ledger,
       trezor,
       walletConnect,
@@ -149,6 +177,9 @@
       sequence,
       tallyho,
       uauth,
+      web3auth,
+      zeal,
+      frontier,
       phantom
     ],
     transactionPreview,
@@ -298,8 +329,6 @@
 
   let toAddress
   const sendTransaction = async provider => {
-    await onboard.setChain({ chainId: '0x5' })
-
     const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 
     const signer = ethersProvider.getSigner()

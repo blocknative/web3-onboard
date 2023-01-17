@@ -74,6 +74,20 @@ const exodus: InjectedWalletModule = {
   platforms: ['all']
 }
 
+const frontier: InjectedWalletModule = {
+  label: ProviderLabel.Frontier,
+  injectedNamespace: InjectedNameSpace.Frontier,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider &&
+    !!provider['ethereum'] &&
+    !!provider['ethereum'][ProviderIdentityFlag.Frontier],
+  getIcon: async () => (await import('./icons/frontier.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.frontier.ethereum)
+  }),
+  platforms: ['all']
+}
+
 const brave: InjectedWalletModule = {
   label: ProviderLabel.Brave,
   injectedNamespace: InjectedNameSpace.Ethereum,
@@ -599,6 +613,18 @@ const bitski: InjectedWalletModule = {
   platforms: ['all']
 }
 
+const zerion: InjectedWalletModule = {
+  label: ProviderLabel.Zerion,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Zerion],
+  getIcon: async () => (await import('./icons/zerion.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.ethereum)
+  }),
+  platforms: ['all']
+}
+
 const enkrypt: InjectedWalletModule = {
   label: ProviderLabel.Enkrypt,
   injectedNamespace: InjectedNameSpace.Enkrypt,
@@ -656,6 +682,7 @@ const phantom: InjectedWalletModule = {
 const wallets = [
   zeal,
   exodus,
+  frontier,
   metamask,
   binance,
   coinbase,
@@ -690,7 +717,8 @@ const wallets = [
   core,
   bitski,
   enkrypt,
-  phantom
+  phantom,
+  zerion
 ]
 
 export default wallets
