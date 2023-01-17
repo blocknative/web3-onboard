@@ -177,9 +177,9 @@
   }
 
   .app-name {
-    /* font-weight: 700; */
-    font-size: var(--onboard-font-size-5, var(--font-size-5));
-    line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1rem;
     margin-bottom: 0.25rem;
     color: var(--account-center-maximized-app-name-color, inherit);
   }
