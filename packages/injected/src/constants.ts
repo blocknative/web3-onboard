@@ -17,5 +17,6 @@ export const WALLET_NAMES: { [key: string]: string } = {
   sequence: 'Sequence',
   core: 'Core',
   enkrypt: 'Enkrypt',
+  frontier: 'Frontier',
   zerion: 'Zerion'
 }

@@ -22,6 +22,7 @@ export enum ProviderIdentityFlag {
   Detected = 'request',
   Dcent = 'isDcentWallet',
   Exodus = 'isExodus',
+  Frontier = 'isFrontier',
   Frame = 'isFrame',
   HuobiWallet = 'isHbWallet',
   HyperPay = 'isHyperPay',
@@ -68,6 +69,7 @@ export enum ProviderLabel {
   Detected = 'Detected Wallet',
   Exodus = 'Exodus',
   Frame = 'Frame',
+  Frontier = 'Frontier',
   HuobiWallet = 'Huobi Wallet',
   HyperPay = 'HyperPay',
   ImToken = 'imToken',
@@ -121,6 +123,7 @@ export enum InjectedNameSpace {
   Bitski = 'Bitski',
   Enkrypt = 'enkrypt',
   Zeal = 'zeal',
+  Frontier = 'frontier',
   Phantom = 'phantom'
 }
 
@@ -146,6 +149,9 @@ export interface CustomWindow extends Window {
     providers: {
       ethereum: InjectedProvider
     }
+  }
+  frontier: {
+    ethereum: InjectedProvider
   }
   phantom: {
     ethereum: InjectedProvider

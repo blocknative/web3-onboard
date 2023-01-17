@@ -70,7 +70,7 @@ const intiOnboard = async () => {
       'openid wallet email:optional humanity_check:optional profile:optional social:optional'
   }
   const uauth = uauthModule(uauthOptions)
-  
+
   const magic = magicModule({
     apiKey: 'pk_live_02207D744E81C2BA'
   })
