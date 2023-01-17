@@ -32,7 +32,7 @@ import {
 } from './store/actions.js'
 import type { PatchedEIP1193Provider } from '@web3-onboard/transaction-preview'
 import { getBlocknativeSdk } from './services.js'
-import { themeMapping } from './themes'
+import { themeMapping } from './themes.js'
 
 const API = {
   connectWallet,
@@ -101,7 +101,7 @@ function init(options: InitOptions): OnboardAPI {
     theme
   } = options
 
-  updateConfiguration({ containerElements })
+  if (containerElements) updateConfiguration({ containerElements })
 
   const { device, svelteInstance } = configuration
 
@@ -352,9 +352,10 @@ function mountApp() {
         }
       </style>
     `
+  const connectModalContEl = configuration.containerElements.connectModal
 
   const containerElementQuery =
-    state.get().accountCenter.containerElement || 'body'
+    connectModalContEl || state.get().accountCenter.containerElement || 'body'
 
   const containerElement = document.querySelector(containerElementQuery)
 

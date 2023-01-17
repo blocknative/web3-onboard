@@ -29,7 +29,8 @@ import type {
   ConnectModalOptions,
   UpdateConnectModalAction,
   Theme,
-  ThemingMap
+  ThemingMap,
+  BuiltInThemes
 } from '../types.js'
 
 import {
@@ -404,8 +405,17 @@ export function uniqueWalletsByLabel(
 
 export function updateTheme(theme: Theme): void {
   let update: ThemingMap
+  if (typeof theme === 'string' && theme === 'system') {
+    const systemTheme =
+      typeof window === 'undefined'
+        ? 'default'
+        : window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'dark'
+        : 'light'
+    update = themes[systemTheme]
+  }
   if (typeof theme === 'string' && theme in themes) {
-    update = themes[theme]
+    update = themes[theme as BuiltInThemes]
   }
   if (typeof theme === 'object') {
     update = theme

@@ -17,6 +17,7 @@
   import dcentModule from '@web3-onboard/dcent'
   import sequenceModule from '@web3-onboard/sequence'
   import tallyHoModule from '@web3-onboard/tallyho'
+  import zealModule from '@web3-onboard/zeal'
   import transactionPreviewModule from '@web3-onboard/transaction-preview'
   import enkryptModule from '@web3-onboard/enkrypt'
   import mewWalletModule from '@web3-onboard/mew-wallet'
@@ -62,7 +63,6 @@
 
   let transactionObject = defaultTransactionObject
   let signMsg = 'Any string message'
-  let signTypedMsg
 
   const injected = injectedModule({
     custom: [
@@ -97,6 +97,7 @@
   const keystone = keystoneModule()
   const gnosis = gnosisModule()
   const tallyho = tallyHoModule()
+  const zeal = zealModule()
   const phantom = phantomModule()
 
   const trezorOptions = {
@@ -124,11 +125,12 @@
   const sequence = sequenceModule()
   const enkrypt = enkryptModule()
   const mewWallet = mewWalletModule()
-  const transactionPreview = transactionPreviewModule({requireTransactionApproval: false})
+  const transactionPreview = transactionPreviewModule({requireTransactionApproval: true})
 
   const onboard = Onboard({
     wallets: [
       injected,
+      zeal,
       web3auth,
       ledger,
       trezor,
@@ -262,9 +264,10 @@
       }
     },
     // containerElements: {
-    // El must be present at time of JS script execution
-    // See ../public/index.html for element example
-    //   accountCenter: '#sample-container-el'
+    // // El must be present at time of JS script execution
+    // // See ../public/index.html for element example
+    //   connectModal: '#sample-container-el',
+    //   accountCenter: '#sample-container-el2'
     // },
     // Sign up for your free api key at www.Blocknative.com
     apiKey,
@@ -295,6 +298,8 @@
 
   let toAddress
   const sendTransaction = async provider => {
+    await onboard.setChain({ chainId: '0x5' })
+
     const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 
     const signer = ethersProvider.getSigner()
@@ -311,6 +316,8 @@
   }
 
   const sendTransactionWithPreFlight = async (provider, balance) => {
+    await onboard.setChain({ chainId: '0x5' })
+
     const balanceValue = Object.values(balance)[0]
     const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 
@@ -363,13 +370,63 @@
     console.log({ signMsg, signature, recoveredAddress, addr })
   }
 
+  let typedMsg = JSON.stringify(
+    {
+      domain: {
+        chainId: '0x5',
+        name: 'Web3-Onboard Test App',
+        verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
+        version: '1'
+      },
+      message: {
+        contents: 'Hello, Bob!',
+        from: {
+          name: 'Cow',
+          wallets: [
+            '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826',
+            '0xDeaDbeefdEAdbeefdEadbEEFdeadbeEFdEaDbeeF'
+          ]
+        },
+        to: [
+          {
+            name: 'Bob',
+            wallets: [
+              '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
+              '0xB0BdaBea57B0BDABeA57b0bdABEA57b0BDabEa57',
+              '0xB0B0b0b0b0b0B000000000000000000000000000'
+            ]
+          }
+        ]
+      },
+      primaryType: 'Message',
+      types: {
+        EIP712Domain: [
+          { name: 'name', type: 'string' },
+          { name: 'version', type: 'string' },
+          { name: 'chainId', type: 'uint256' },
+          { name: 'verifyingContract', type: 'address' }
+        ],
+        Message: [
+          { name: 'from', type: 'Person' },
+          { name: 'to', type: 'Person[]' },
+          { name: 'contents', type: 'string' }
+        ],
+        Person: [
+          { name: 'name', type: 'string' },
+          { name: 'wallets', type: 'address[]' }
+        ]
+      }
+    },
+    undefined,
+    2
+  )
   const signTypedMessage = async (provider, address) => {
-    const data = JSON.parse(signTypedMsg)
+    await onboard.setChain({ chainId: '0x5' })
     const signature = await provider.request({
-      method: 'eth_signTypedData',
-      params: [address, data]
+      method: 'eth_signTypedData_v4',
+      params: [address, typedMsg]
     })
-    const { domain, types, message } = data
+    const { domain, types, message } = JSON.parse(typedMsg)
 
     delete types.EIP712Domain
     console.log(verifyTypedData(domain, types, message, signature))
@@ -378,38 +435,33 @@
   let selectedTheme = 'default'
   const themes = {
     default: {
-      '--w3o-background-color': 'initial',
-      '--w3o-text-color': 'initial',
-      '--w3o-border-color': 'initial',
-      '--w3o-accent-background': 'initial',
-      '--w3o-accent-color': 'initial',
-      '--w3o-secondary-text-color': 'initial',
-      '--w3o-border-radius': 'initial',
-      // '--w3o-accent-color-hover': 'initial', Replaced with accent-background
-      '--w3o-secondary-accent-background': 'initial'
-    },
-    light: {
-      '--w3o-background-color': '#ffffff',
-      '--w3o-text-color': '#1a1d26',
-      '--w3o-border-color': '#d0d4f7',
-      '--w3o-accent-background': '#ebebed',
-      '--w3o-accent-color': '#929bed',
-      '--w3o-secondary-text-color': '#707481',
-      '--w3o-border-radius': '24px',
-      // '--w3o-accent-color-hover': '#eff1fc', Replaced with accent-background
-      '--w3o-secondary-accent-background': '#242835'
-    },
-    dark: {
-      '--w3o-background-color': '#1A1D26',
-      '--w3o-text-color': '#EFF1FC',
-      '--w3o-border-color': '#33394B',
-      '--w3o-accent-background': '#242835',
-      '--w3o-accent-color': '#929bed',
-      '--w3o-secondary-text-color': '#999CA5',
-      '--w3o-border-radius': '24px',
-      // '--w3o-accent-color-hover': '#eff1fc',
-      '--w3o-secondary-accent-background': '#242835'
-    }
+    '--w3o-background-color': 'unset',
+    '--w3o-text-color': 'unset',
+    '--w3o-border-color': 'unset',
+    '--w3o-accent-background-color': 'unset',
+    '--w3o-accent-text-color': 'unset',
+    '--w3o-secondary-text-color': 'unset',
+    '--w3o-border-radius': 'unset',
+  },
+  light: {
+    '--w3o-background-color': '#ffffff',
+    '--w3o-text-color': '#1a1d26',
+    '--w3o-border-color': '#d0d4f7',
+    '--w3o-accent-background-color': '#EFF1FC',
+    '--w3o-accent-text-color': '#929bed',
+    '--w3o-secondary-text-color': '#707481',
+    '--w3o-border-radius': '24px',
+  },
+  dark: {
+    '--w3o-background-color': '#1A1D26',
+    '--w3o-text-color': '#EFF1FC',
+    '--w3o-border-color': '#33394B',
+    '--w3o-accent-background-color': '#242835',
+    '--w3o-accent-text-color': '#929bed',
+    '--w3o-secondary-text-color': '#999CA5',
+    '--w3o-border-radius': '24px',
+  },
+  system:'system'
   }
 
   const baseStyling = ``
@@ -435,12 +487,11 @@
   )}${baseStyling}\n}`
 
   const updateThemeEl = (targetStyle, value) => {
-    console.log(targetStyle, value)
     const iframe = document.getElementById('inlineFrameExample')
-    // iframe.contentWindow.document.documentElement.style.setProperty(
-    //   targetStyle,
-    //   value
-    // )
+    iframe.contentWindow.document.documentElement.style.setProperty(
+      targetStyle,
+      value
+    )
 
     copyableStyles = `{\n  ${styleToString(
       themes[selectedTheme]
@@ -448,9 +499,13 @@
   }
 
   const updateTheme = theme => {
-    Object.keys(themes[theme]).forEach(setting => {
-      updateThemeEl(setting, themes[theme][setting])
-    })
+    if(theme === 'system') {
+      onboard.state.actions.updateTheme('system')
+    } else {
+      Object.keys(themes[theme]).forEach(setting => {
+        updateThemeEl(setting, themes[theme][setting])
+      })
+    }
   }
 
   let checked = false
@@ -927,31 +982,6 @@
           </div>
           <div>
             <input
-              id="sign-msg-input"
-              type="text"
-              class="text-input"
-              placeholder="Message..."
-              bind:value={signMsg}
-            />
-            <button on:click={signMessage(provider, address)}>
-              Sign Message
-            </button>
-          </div>
-          <div>
-            <input
-              id="sign-type-msg-input"
-              type="text"
-              class="text-input"
-              placeholder="Typed message..."
-              bind:value={signTypedMsg}
-            />
-            <button on:click={signTypedMessage(provider, address)}>
-              Sign Typed Message
-            </button>
-          </div>
-
-          <div>
-            <input
               type="text"
               class="text-input"
               placeholder="0x..."
@@ -972,7 +1002,28 @@
               Send with Preflight Notifications
             </button>
           </div>
-
+          <div>
+            <input
+              id="sign-msg-input"
+              type="text"
+              class="text-input"
+              placeholder="Message..."
+              bind:value={signMsg}
+            />
+            <button on:click={signMessage(provider, address)}>
+              Sign Message
+            </button>
+          </div>
+          <div>
+            <textarea
+              bind:value={typedMsg}
+              type="text"
+              class="sign-transaction-textarea"
+            />
+            <button on:click={signTypedMessage(provider, address)}>
+              Sign Typed Message
+            </button>
+          </div>
           <div class="sign-transaction">
             <textarea
               bind:value={transactionObject}
