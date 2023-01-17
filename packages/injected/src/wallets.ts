@@ -599,6 +599,18 @@ const bitski: InjectedWalletModule = {
   platforms: ['all']
 }
 
+const zerion: InjectedWalletModule = {
+  label: ProviderLabel.Zerion,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Zerion],
+  getIcon: async () => (await import('./icons/zerion.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.ethereum)
+  }),
+  platforms: ['all']
+}
+
 const enkrypt: InjectedWalletModule = {
   label: ProviderLabel.Enkrypt,
   injectedNamespace: InjectedNameSpace.Enkrypt,
@@ -690,7 +702,8 @@ const wallets = [
   core,
   bitski,
   enkrypt,
-  phantom
+  phantom,
+  zerion
 ]
 
 export default wallets
