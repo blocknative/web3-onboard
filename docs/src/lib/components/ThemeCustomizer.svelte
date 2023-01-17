@@ -214,7 +214,10 @@
       {/each}
     </select>
     {#if selectedTheme !== 'system'}
-      <label for="Theme">Click Color Circles to Set Theme: </label>
+      <label for="Theme"
+        >Click Color Circles to Customize Theme, Copy Config and Paste as `theme` property value in Onboard
+        config:
+      </label>
       <hr />
       <div class="theming-container">
         {#each Object.keys(defaultStyling[selectedTheme]) as target}
@@ -367,7 +370,7 @@
   }
 
   .control-panel {
-    z-index: 9999;
+    z-index: 25;
     left: auto;
     right: 0;
     bottom: 0;
