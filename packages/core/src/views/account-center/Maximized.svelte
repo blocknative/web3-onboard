@@ -216,7 +216,7 @@
   }
 
   .app-button {
-    /* font-family: var(--account-center-app-btn-font-family, inherit); */
+    font-family: var(--account-center-app-btn-font-family, inherit);
     margin-top: var(--onboard-spacing-5, var(--spacing-5));
     background: var(
       --account-center-app-btn-background,
