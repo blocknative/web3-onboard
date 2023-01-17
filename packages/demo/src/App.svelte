@@ -159,12 +159,9 @@
 
   const onboard = Onboard({
     wallets: [
-      // injected,
-      zeal,
-      web3auth,
+      injected,
       ledger,
       trezor,
-      frontier,
       walletConnect,
       enkrypt,
       mewWallet,
@@ -180,6 +177,9 @@
       sequence,
       tallyho,
       uauth,
+      web3auth,
+      zeal,
+      frontier,
       phantom
     ],
     transactionPreview,
