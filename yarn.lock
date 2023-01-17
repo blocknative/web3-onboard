@@ -2927,6 +2927,15 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.0"
 
+"@web3-onboard/injected-wallets@^2.5.0-alpha.1":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.5.0.tgz#c81bbe13937a58533f7e179ad6d8f3115cefefe4"
+  integrity sha512-cn9b2V1hPm9vhTu+MYp4MakhxKD1soOHTEg98+LZd6dlzoB27pWtm52nb22pU+9f2YK0ho9NW8gBUCwvEg5Z3g==
+  dependencies:
+    "@web3-onboard/common" "^2.2.3"
+    joi "^17.6.1"
+    lodash.uniqby "^4.7.0"
+
 "@web3auth/base-evm-adapter@^3.3.0":
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/@web3auth/base-evm-adapter/-/base-evm-adapter-3.3.0.tgz#ab8575ac5d05dfe055e52500b61691cefdd6268f"
@@ -10188,10 +10197,15 @@ svelte-preprocess@^4.0.0, svelte-preprocess@^4.9.4:
     sorcery "^0.10.0"
     strip-indent "^3.0.0"
 
-svelte@^3.42.5, svelte@^3.49.0:
+svelte@^3.42.5:
   version "3.49.0"
   resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.49.0.tgz#5baee3c672306de1070c3b7888fc2204e36a4029"
   integrity sha512-+lmjic1pApJWDfPCpUUTc1m8azDqYCG1JN9YEngrx/hUyIcFJo6VZhj0A1Ai0wqoHcEIuQy+e9tk+4uDgdtsFA==
+
+svelte@^3.49.0:
+  version "3.50.1"
+  resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.50.1.tgz#b35fbc5e79ddd71e8bb27c3149ee6ff903841239"
+  integrity sha512-bS4odcsdj5D5jEg6riZuMg5NKelzPtmsCbD9RG+8umU03TeNkdWnP6pqbCm0s8UQNBkqk29w/Bdubn3C+HWSwA==
 
 swarm-js@^0.1.40:
   version "0.1.40"
