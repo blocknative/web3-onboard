@@ -182,12 +182,10 @@ const theme = Joi.object({
   '--w3o-background-color': Joi.string(),
   '--w3o-text-color': Joi.string(),
   '--w3o-border-color': Joi.string(),
-  '--w3o-accent-background': Joi.string(),
-  '--w3o-accent-color': Joi.string(),
+  '--w3o-accent-background-color': Joi.string(),
+  '--w3o-accent-text-color': Joi.string(),
   '--w3o-secondary-text-color': Joi.string(),
   '--w3o-border-radius': Joi.string(),
-  '--w3o-secondary-accent-background': Joi.string(),
-  '--w3o-font-family': Joi.string()
 })
 
 const initOptions = Joi.object({
