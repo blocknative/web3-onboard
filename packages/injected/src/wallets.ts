@@ -686,7 +686,9 @@ const okxwallet: InjectedWalletModule = {
     !!provider &&
     !!provider[ProviderIdentityFlag.OKXWallet],
   getIcon: async () => (await import('./icons/okxwallet.js')).default,
-  getInterface: getInjectedInterface(ProviderIdentityFlag.OKXWallet, true),
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.okxwallet)
+  }),
   platforms: ['desktop']
 }
 
