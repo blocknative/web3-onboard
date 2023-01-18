@@ -52,6 +52,7 @@
     --text-color: var(--w3o-text-color, var(--gray-700));
     --border-color: var(--w3o-border-color, var(--gray-200));
     --action-color: var(--w3o-accent-text-color, var(--primary-500));
+    --account-center-network-selector-color: var(--text-color);
 
     width: 100%;
     filter: drop-shadow(0px 4px 16px rgba(178, 178, 178, 0.2));
