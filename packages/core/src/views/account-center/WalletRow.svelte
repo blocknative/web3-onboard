@@ -67,8 +67,6 @@
     padding: 0.25rem;
     margin-bottom: 0.25rem;
     width: 100%;
-    /* font-size: var(--onboard-font-size-5, var(--font-size-5)); */
-    /* line-height: var(--onboard-font-line-height-2, var(--font-line-height-2)); */
     border-radius: 12px;
     transition: background-color 150ms ease-in-out;
   }

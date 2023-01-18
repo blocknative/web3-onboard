@@ -23,7 +23,6 @@
     --background-color: var(--onboard-connect-sidebar-background, white);
     --text-color: var(--onboard-connect-sidebar-color, var(--gray-700));
     --border-color: var(--onboard-connect-sidebar-border-color, var(--gray-200));
-    /* --action-color: #00f; */
 
     display: flex;
     flex-flow: column;
