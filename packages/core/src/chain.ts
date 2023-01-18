@@ -62,6 +62,7 @@ async function setChain(options: {
     return true
   } catch (error) {
     const { code } = error as { code: number }
+    console.log('code from trying to switch to new chain: ', code)
     const switchChainModalClosed$ = switchChainModal$.pipe(
       filter(x => x === null),
       map(() => false)
@@ -96,11 +97,14 @@ const chainNotInWallet = async (
   chainIdHex: string
 ): Promise<boolean> => {
   try {
+    console.log('try adding chain with wallet_addEthereumChain')
     await addNewChain(wallet.provider, chain)
+    console.log('chain should be added - try switching to chain')
     await switchChain(wallet.provider, chainIdHex)
     return true
   } catch (error) {
     const { code } = error as { code: number }
+    console.log('code from trying to switch to new chain after adding chain: ', code)
     if (code === ProviderRpcErrorCode.ACCOUNT_ACCESS_REJECTED) {
       // add new chain rejected by user
       return false
