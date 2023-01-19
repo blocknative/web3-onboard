@@ -55,21 +55,6 @@ function torus(options?: TorusOptions): WalletInit {
 
         const torusProvider = instance.provider
 
-        // patch the chainChanged event
-        const on = torusProvider.on.bind(torusProvider)
-        torusProvider.on = (event, listener) => {
-          on(event, val => {
-            if (event === 'chainChanged') {
-              listener(`0x${(val as number).toString(16)}`)
-              return
-            }
-
-            listener(val)
-          })
-
-          return torusProvider
-        }
-
         const provider = createEIP1193Provider(torusProvider, {
           eth_requestAccounts: async () => {
             try {

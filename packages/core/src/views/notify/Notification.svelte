@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onDestroy, onMount } from 'svelte'
+  import { onDestroy } from 'svelte'
   import { _ } from 'svelte-i18n'
   import StatusIconBadge from './StatusIconBadge.svelte'
   import NotificationContent from './NotificationContent.svelte'
@@ -45,14 +45,12 @@
         )
     )
 
-  onMount(() => {
-    if (notification.autoDismiss) {
-      timeoutId = setTimeout(() => {
-        removeNotification(notification.id)
-        removeTransaction(notification.id)
-      }, notification.autoDismiss)
-    }
-  })
+  $: if (notification.autoDismiss) {
+    timeoutId = setTimeout(() => {
+      removeNotification(notification.id)
+      removeTransaction(notification.id)
+    }, notification.autoDismiss)
+  }
 
   onDestroy(() => {
     clearTimeout(timeoutId)
