@@ -70,7 +70,7 @@
   })
 
   const themes = ['system', 'default', 'light', 'dark']
-  let selectedTheme = 'default'
+  let selectedTheme = 'system'
 
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
@@ -118,7 +118,7 @@
       : onboard.connectWallet()
   }
 
-  const baseStyles = {
+  const themingObjects = {
     default: {
       '--w3o-background-color': 'unset',
       '--w3o-foreground-color': 'unset',
@@ -145,10 +145,6 @@
     }
   }
 
-  let defaultStyling = { ...baseStyles }
-
-  const baseStyling = ``
-
   const styleToString = (style) => {
     return Object.keys(style).reduce((acc, key) => acc + `"${key}": "${style[key]}", \n`, '')
   }
@@ -162,21 +158,26 @@
     }
   }
 
-  let copyableStyles = `{\n  ${styleToString(defaultStyling[selectedTheme])}${baseStyling}}`
+  let copyableStyles =
+    selectedTheme === 'system' ? '' : `{\n ${styleToString(themingObjects[selectedTheme])}}`
 
   const updateTheme = () => {
     onboard.state.actions.updateTheme(selectedTheme)
+    copyableStyles =
+      selectedTheme === 'system' ? '' : `{\n ${styleToString(themingObjects[selectedTheme])}}`
   }
+
   const updateThemeEl = (e, targetStyle) => {
+    if (selectedTheme === 'system') return
     document.documentElement.style.setProperty(targetStyle, e.target.value)
 
-    copyableStyles = `{\n  ${styleToString(defaultStyling[selectedTheme])}${baseStyling}}`
+    copyableStyles = `{\n ${styleToString(themingObjects[selectedTheme])}}`
   }
 
   const resetTheme = () => {
-    defaultStyling = { ...baseStyles }
-    Object.keys(defaultStyling).forEach((style) => {
-      document.documentElement.style.setProperty(style, defaultStyling[style])
+    selectedTheme = 'default'
+    Object.keys(themingObjects['default']).forEach((style) => {
+      document.documentElement.style.setProperty(style, themingObjects['default'][style])
     })
   }
 
@@ -243,19 +244,19 @@
       </label>
       <hr />
       <div class="theming-container">
-        {#each Object.keys(defaultStyling[selectedTheme]) as target}
+        {#each Object.keys(themingObjects[selectedTheme]) as target}
           {#if !target.includes('border-radius')}
             <div class="theming-inputs-wrapper">
               <div class="theming-inputs">
                 <input
                   type="color"
                   name="Theme"
-                  bind:value={defaultStyling[selectedTheme][target]}
+                  bind:value={themingObjects[selectedTheme][target]}
                   on:input={(e) => updateThemeEl(e, target)}
                 />
               </div>
               <span class="text" id="current-theme"
-                >{target} : {defaultStyling[selectedTheme][target]}</span
+                >{target} : {themingObjects[selectedTheme][target]}</span
               >
             </div>
           {:else}
@@ -264,17 +265,22 @@
                 <input
                   class="br-text-input"
                   type="text"
-                  bind:value={defaultStyling[selectedTheme][target]}
+                  bind:value={themingObjects[selectedTheme][target]}
                   on:input={(e) => updateThemeEl(e, target)}
                 />
               </div>
               <span class="text" id="current-theme"
-                >{target} : {defaultStyling[selectedTheme][target]}</span
+                >{target} : {themingObjects[selectedTheme][target]}</span
               >
             </div>
           {/if}
         {/each}
       </div>
+      <div class="copy-styles-container">
+        <textarea readonly bind:value={copyableStyles} rows="10" class="copy-styles-textarea" />
+        <button on:click={async () => await copyStylingConfig()}> Copy Theming Config </button>
+      </div>
+      <hr />
     {:else}
       <label for="Theme"
         >The system theme will align the theme with the users system preferences
@@ -282,11 +288,7 @@
       <hr />
       <div class="theming-container" />
     {/if}
-    <div class="copy-styles-container">
-      <textarea readonly bind:value={copyableStyles} rows="10" class="copy-styles-textarea" />
-      <button on:click={async () => await copyStylingConfig()}> Copy Theming Config </button>
-    </div>
-    <hr />
+
     <div class="backdrop-toggle">
       <label class="switch">
         <input type="checkbox" on:change={() => handleBackdrop()} bind:checked />
