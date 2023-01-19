@@ -41,8 +41,6 @@ function injected(options?: InjectedWalletOptions): WalletInit {
       ({ label }) => label
     )
 
-    let removeMetaMask = false
-
     const wallets = allWallets.reduce((acc, wallet) => {
       const { label, platforms, injectedNamespace, checkProviderIdentity } =
         wallet
@@ -104,19 +102,6 @@ function injected(options?: InjectedWalletOptions): WalletInit {
         )
       }
 
-      // check to see if we need to remove MetaMask
-      // in the case that the provider gave us a false positive
-      // for MM wallet
-      if (
-        walletAvailable &&
-        provider.isMetaMask &&
-        !provider.overrideIsMetaMask &&
-        label !== ProviderLabel.MetaMask &&
-        label !== 'Detected Wallet'
-      ) {
-        removeMetaMask = true
-      }
-
       return acc
     }, [] as InjectedWalletModule[])
 
@@ -127,12 +112,7 @@ function injected(options?: InjectedWalletOptions): WalletInit {
       const formattedWallets = wallets
         .filter(wallet => {
           const { label } = wallet
-          return !(
-            (label === ProviderLabel.Detected && moreThanOneWallet) ||
-            (label === ProviderLabel.MetaMask &&
-              moreThanOneWallet &&
-              removeMetaMask)
-          )
+          return !(label === ProviderLabel.Detected && moreThanOneWallet)
         })
         // then map to the WalletModule interface
         .map(({ label, getIcon, getInterface }: InjectedWalletModule) => ({
