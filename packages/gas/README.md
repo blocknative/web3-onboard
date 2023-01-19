@@ -4,8 +4,6 @@
 
 Supports both Eth Mainnet and Polygon gas pricing.
 
-Supports both Eth Mainnet and Polygon gas pricing.
-
 ### Install
 
 **NPM**
