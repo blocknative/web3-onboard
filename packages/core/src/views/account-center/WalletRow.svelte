@@ -64,9 +64,11 @@
 
 <style>
   .container {
+    position: relative;
+    z-index: 0;
+    width: 100%;
     padding: 0.25rem;
     margin-bottom: 0.25rem;
-    width: 100%;
     border-radius: 12px;
     transition: background-color 150ms ease-in-out;
   }
@@ -83,7 +85,7 @@
     width: 100%;
     background: var(--action-color);
     border-radius: 12px;
-    z-index: -1;
+    z-index: 0;
     opacity: 0;
   }
 
@@ -101,7 +103,7 @@
   }
 
   .container.primary:hover {
-    background: var(--account-center-maximized-account-section-background-hover, none);
+    background-color: var(--account-center-maximized-account-section-background-hover);
   }
 
   .address-domain {
