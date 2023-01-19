@@ -609,9 +609,7 @@
 </script>
 
 <style>
-  :root{
-    --onboard-modal-background: red;
-  }
+
   main {
     height: 100%;
   }
