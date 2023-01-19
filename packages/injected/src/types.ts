@@ -22,6 +22,7 @@ export enum ProviderIdentityFlag {
   Detected = 'request',
   Dcent = 'isDcentWallet',
   Exodus = 'isExodus',
+  Frontier = 'isFrontier',
   Frame = 'isFrame',
   HuobiWallet = 'isHbWallet',
   HyperPay = 'isHyperPay',
@@ -52,6 +53,7 @@ export enum ProviderIdentityFlag {
   Enkrypt = 'isEnkrypt',
   Zeal = 'isZeal',
   Phantom = 'isPhantom',
+  Zerion = 'isZerion',
   Rainbow = 'isRainbow'
 }
 
@@ -68,6 +70,7 @@ export enum ProviderLabel {
   Detected = 'Detected Wallet',
   Exodus = 'Exodus',
   Frame = 'Frame',
+  Frontier = 'Frontier',
   HuobiWallet = 'Huobi Wallet',
   HyperPay = 'HyperPay',
   ImToken = 'imToken',
@@ -95,6 +98,7 @@ export enum ProviderLabel {
   Enkrypt = 'Enkrypt',
   Zeal = 'Zeal',
   Phantom = 'Phantom',
+  Zerion = 'Zerion',
   Rainbow = 'Rainbow'
 }
 
@@ -121,6 +125,7 @@ export enum InjectedNameSpace {
   Bitski = 'Bitski',
   Enkrypt = 'enkrypt',
   Zeal = 'zeal',
+  Frontier = 'frontier',
   Phantom = 'phantom'
 }
 
@@ -147,6 +152,9 @@ export interface CustomWindow extends Window {
       ethereum: InjectedProvider
     }
   }
+  frontier: {
+    ethereum: InjectedProvider
+  }
   phantom: {
     ethereum: InjectedProvider
   }
@@ -159,20 +167,30 @@ export type InjectedProvider = ExternalProvider &
   Record<string, InjectedProvider[]>
 
 export type WalletFilters = {
-  // A provider label mapped to a list of excluded platforms
-  // or a boolean indicating if it should be included.
-  [key in ProviderLabel | string]?: Platform[] | boolean
+  /**A provider label mapped to a list of excluded platforms
+   * or a boolean indicating if it should be included. */
+  [key in ProviderLabel | string]?: Platform[] | boolean | 'unavailable'
 }
 
 export interface InjectedWalletOptions {
-  // A list of injected wallets to include that
-  // are not included by default here: ./packages/injected/
+  /**A list of injected wallets to include that
+   * are not included by default here: ./packages/injected/ */
   custom?: InjectedWalletModule[]
-  // A mapping of a provider label to a list of filtered platforms
-  // or a boolean indicating if it should be included or not.
-  // By default all wallets listed in ./packages/injected/
-  // are included add them to here to remove them.
+  /**A mapping of a provider label to a list of filtered platforms
+   * or a boolean indicating if it should be included or not.
+   * By default all wallets listed in ./packages/injected/
+   * are included add them to here to remove them. */
   filter?: WalletFilters
+  /**Will display wallets to be selected even if they
+   * are not currently available to the end user.
+   */
+  displayUnavailable?: boolean
+  /**A function that allows for customizing the message to be displayed if the wallet
+   * is unavailable
+   */
+  walletUnavailableMessage?: (wallet: WalletModule) => string
+  /**Function that can be used to sort the order of wallets that are displayed */
+  sort?: (wallets: WalletModule[]) => WalletModule[]
 }
 
 export interface InjectedWalletModule extends WalletModule {

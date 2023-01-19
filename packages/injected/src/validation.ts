@@ -12,13 +12,18 @@ const walletModule = Joi.object({
 })
 
 const wallets = Joi.array().items(walletModule)
+
 const filter = Joi.object().pattern(
   /\w+/,
   Joi.any().allow(Joi.boolean(), Joi.array().items(Joi.string()))
 )
+
 const walletOptions = Joi.object({
   custom: wallets,
-  filter
+  filter,
+  displayUnavailable: Joi.boolean(),
+  walletUnavailableMessage: Joi.function(),
+  sort: Joi.function()
 })
 
 export const validateWalletOptions = (
