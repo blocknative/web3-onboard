@@ -61,24 +61,28 @@
 
 <style>
   .bn-notify-notification {
+    --border-color: var(--w3o-border-color);
+    
     font-family: inherit;
     transition: background 300ms ease-in-out, color 300ms ease-in-out;
     pointer-events: all;
     backdrop-filter: blur(5px);
     width: 100%;
     min-height: 56px;
-    background: var(
-      --notify-onboard-background,
-      var(--onboard-gray-600, var(--gray-600))
-    );
-    border-radius: var(
-      --notify-onboard-border-radius,
-      var(--onboard-border-radius-4, var(--border-radius-4))
-    );
     display: flex;
     flex-direction: column;
     position: relative;
     overflow: hidden;
+    border: 1px solid transparent;
+    border-color: var(--border-color);
+    border-radius: var(
+      --notify-onboard-border-radius,
+      var(--onboard-border-radius-4, var(--border-radius-4))
+    );
+    background: var(
+      --notify-onboard-background,
+      var(--onboard-gray-600, var(--gray-600))
+    );
   }
 
   .bn-notify-notification-inner {
