@@ -61,8 +61,11 @@
 
 <style>
   .bn-notify-notification {
+    --backround-color: var(--notify-onboard-background, var(--w3o-backround-color, var(--gray-700)));
+    --foreground-color: var(--w3o-foreground-color, var(--gray-600));
+    --text-color: var(--w3o-text-color, #FFF);
     --border-color: var(--w3o-border-color);
-    
+
     font-family: inherit;
     transition: background 300ms ease-in-out, color 300ms ease-in-out;
     pointer-events: all;
@@ -79,10 +82,8 @@
       --notify-onboard-border-radius,
       var(--onboard-border-radius-4, var(--border-radius-4))
     );
-    background: var(
-      --notify-onboard-background,
-      var(--onboard-gray-600, var(--gray-600))
-    );
+    background: var(--foreground-color);
+    color: var(--text-color);
   }
 
   .bn-notify-notification-inner {
@@ -117,20 +118,15 @@
   .notify-close-btn .close-icon {
     width: 20px;
     margin: auto;
+    color: var(--text-color);
   }
 
   .notify-close-btn > .close-icon {
-    color: var(
-      --notify-onboard-close-icon-color,
-      var(--onboard-gray-300, var(--gray-300))
-    );
+    color: var(--notify-onboard-close-icon-color);
   }
 
   .notify-close-btn:hover > .close-icon {
-    color: var(
-      --notify-onboard-close-icon-hover,
-      var(--onboard-gray-100, var(--gray-100))
-    );
+    color: var(--notify-onboard-close-icon-hover);
   }
 
   .transaction-status {

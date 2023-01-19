@@ -160,13 +160,11 @@
 
   table.balance-change-table {
     width: 100%;
-    background: var(
-      --w3o-tp-accent-background,
-      var(--onboard-gray-600, var(--gray-600))
-    );
-    border: 1px solid
-      var(--w3o-tp-border-color, var(--onboard-gray-500, var(--gray-500)));
-    color: var(--w3o-tp-text-color, var(--onboard-gray-100, var(--gray-100)));
+    background: var(--w3o-tp-accent-background);
+    border: 1px solid transparent;
+
+    border-color:var(--w3o-tp-border-color, var(--border-color));
+    color: var(--w3o-tp-text-color, var(--text-color));
     overflow: hidden;
     border-spacing: 0;
   }
@@ -191,15 +189,15 @@
 
   tbody > tr:not(:first-child) {
     box-shadow: inset 0px 1px 0px
-      var(--w3o-tp-border-color, var(--onboard-gray-500, var(--gray-500)));
+      var(--w3o-tp-border-color, var(--border-color));
   }
 
   table.balance-change-table thead {
     background: var(
       --w3o-tp-border-color,
-      var(--onboard-gray-500, var(--gray-500))
+      var(--border-color)
     );
-    color: var(--w3o-tp-text-color, var(--onboard-gray-100, var(--gray-100)));
+    color: var(--w3o-tp-text-color);
   }
 
   .negative {

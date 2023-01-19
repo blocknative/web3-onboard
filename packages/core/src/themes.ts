@@ -63,23 +63,23 @@ export const themeMapping = `/* THEME MAPPING */
 --account-center-app-btn-text-color: unset;
 
 /* NOTIFY THEMING */
---notify-onboard-background: var(--w3o-foreground-color, unset);
---notify-onboard-transaction-status: var(--w3o-text-color, unset);
+
+--notify-onboard-transaction-status: unset;
 --notify-onboard-address-hash-color: unset;
---notify-onboard-anchor-color: var(--w3o-action-color, unset);
+--notify-onboard-anchor-color: unset;
 --notify-onboard-timer-color: unset;
---notify-onboard-dropdown-background: var(--w3o-background-color, unset);
---notify-onboard-dropdown-text-color: var(--w3o-action-color, unset);
+--notify-onboard-dropdown-background: unset;
+--notify-onboard-dropdown-text-color: unset;
 --notify-onboard-dropdown-btn-hover-background: unset;
---notify-onboard-close-icon-hover: var(--w3o-text-color, unset);
+--notify-onboard-close-icon-hover: unset;
 
 /* TRANSACTION PREVIEW THEMING */
---w3o-tp-accent-background: var(--w3o-foreground-color, unset);
---w3o-tp-background: var(--w3o-background-color, unset);
---w3o-tp-border-radius: var(--w3o-border-radius, unset);
---w3o-tp-close-icon-hover: var(--w3o-text-color, unset);
---w3o-tp-text-color: var(--w3o-text-color, unset);
---w3o-tp-secondary-secondary-text-color: var(--w3o-action-color, unset);
---w3o-tp-border-color: var(--w3o-border-color, unset);
+--w3o-tp-accent-background: unset;
+--w3o-tp-background: unset;
+--w3o-tp-border-radius: unset;
+--w3o-tp-close-icon-hover: unset;
+--w3o-tp-text-color: unset;
+--w3o-tp-secondary-secondary-text-color: unset;
+--w3o-tp-border-color: unset;
 
 `
