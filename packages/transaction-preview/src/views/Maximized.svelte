@@ -125,22 +125,20 @@
 
   .bn-notify-notification-inner {
     padding: 0.75rem;
-    border-bottom: var(--w3o-tp-border-color, transparent) 1px solid;
+    background: var(--foreground-color);
   }
   .details {
     display: flex;
     flex-direction: column;
     padding: 0.75rem;
     gap: 0.5rem;
-    border-bottom: var(--w3o-tp-border-color, transparent) 1px solid;
-    background: var(--w3o-tp-accent-background, var(--onboard-gray-700, var(--gray-700)));
+    border-top: 1px solid var(--border-color);
   }
   .address-info {
     font-size: 0.75rem;
     font-weight: 400;
     line-height: 1rem;
     display: inline-flex;
-    color: var(--w3o-tp-text-color, var(--onboard-gray-200, var(--gray-200)));
   }
   .details-cta {
     color: inherit;
@@ -153,13 +151,11 @@
     padding: 0.5rem;
     gap: 0.5rem;
     height: 3rem;
-    border: 1px solid
-      var(--w3o-tp-accent-background, var(--onboard-gray-600, var(--gray-600)));
+    border-top: 1px solid var(--border-color);
     flex: none;
     order: 2;
     align-self: stretch;
     flex-grow: 0;
-    background: var(--w3o-tp-accent-background, var(--onboard-gray-700, var(--gray-700)));
   }
 
   table.balance-change-table {

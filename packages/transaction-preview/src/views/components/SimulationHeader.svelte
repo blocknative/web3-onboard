@@ -21,10 +21,6 @@
   }
 
   .transaction-status {
-    color: var(
-      --w3o-tp-text-color,
-      var(--onboard-primary-100, var(--primary-100))
-    );
     line-height: var(--onboard-font-size-5, var(--font-size-5));
     font-weight: 400;
     overflow: hidden;

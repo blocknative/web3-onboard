@@ -28,18 +28,20 @@
 
 <style>
   .tp-main {
+    --text-color: var(--w3o-text-color, white);
+    --action-color: var(--w3o-action-color, var(--primary-400));
+    --border-color: var(--w3o-border-color, var(--gray-500));
+    --background-color: var(--w3o-background-color, var(--gray-700));
+    --foreground-color: var(--w3o-foreground-color, var(--gray-600));
+
     font-family: var(--onboard-font-family-normal, var(--font-family-normal));
-    background: var(
-      --w3o-tp-accent-background,
-      var(--onboard-gray-600, var(--gray-600))
-    );
+    border: 1px solid transparent;
+    border-color: var(--border-color);
+    background: var(--foreground-color, var(--background-color));
+    color: var(--text-color);
     border-radius: var(
       --w3o-tp-border-radius,
       var(--onboard-border-radius-4, var(--border-radius-4))
-    );
-    color: var(
-      --w3o-tp-text-color,
-      var(--onboard-primary-400, var(--primary-400))
     );
   }
 </style>

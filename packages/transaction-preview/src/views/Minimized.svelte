@@ -22,10 +22,7 @@
     backdrop-filter: blur(5px);
     width: 100%;
     min-height: 3.5rem;
-    background: var(
-      --w3o-tp-accent-background,
-      var(--onboard-gray-600, var(--gray-600))
-    );
+    background: var(--foreground-color);
     display: flex;
     flex-direction: column;
     position: relative;
@@ -38,7 +35,7 @@
 
   .tp-header {
     padding: 0.75rem;
-    border-bottom: var(--w3o-tp-border-color, transparent) 1px solid;
+    border-bottom: var(--border-color, transparent) 1px solid;
   }
 
   div.tp-close-btn {
@@ -89,15 +86,10 @@
     justify-content: flex-end;
     flex-direction: row;
     align-items: center;
-    background: var(
-      --w3o-tp-accent-background,
-      var(--onboard-gray-700, var(--gray-700))
-    );
     padding: 0.5rem;
     gap: 0.5rem;
     height: 3rem;
-    border: 1px solid
-      var(--w3o-tp-accent-background, var(--onboard-gray-600, var(--gray-600)));
+    border-top: 1px solid var(--border-color);
     flex: none;
     order: 2;
     align-self: stretch;

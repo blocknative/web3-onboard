@@ -12,10 +12,10 @@
     gap: 0.25rem;
     border-radius: var(--onboard-border-radius-5, var(--border-radius-5));
     background: transparent;
-    color: inherit;
+    color: var(--action-color);
   }
   button:hover {
-    background: var(--w3o-tp-border-color, rgba(146, 155, 237, 0.2));
+    background: var(--border-color, rgba(146, 155, 237, 0.2));
   }
 </style>
 
