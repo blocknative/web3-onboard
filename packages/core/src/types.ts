@@ -75,13 +75,11 @@ export type BuiltInThemes = 'default' | 'dark' | 'light'
 
 export type ThemingMap = {
   '--w3o-background-color'?: string
+  '--w3o-foreground-color'?: string
   '--w3o-text-color'?: string
   '--w3o-border-color'?: string
-  '--w3o-accent-background'?: string
-  '--w3o-accent-color'?: string
-  '--w3o-secondary-text-color'?: string
+  '--w3o-action-color'?: string
   '--w3o-border-radius'?: string
-  '--w3o-secondary-accent-background'?: string
 }
 export interface ConnectOptions {
   autoSelect?: { label: string; disableModals: boolean }
@@ -205,18 +203,18 @@ export type AccountCenterOptions = {
 }
 
 export type ContainerElements = {
-  /** When attaching the Connect Modal to a container el be aware that 
-   * the modal was styled to be mounted through the app to the html body 
+  /** When attaching the Connect Modal to a container el be aware that
+   * the modal was styled to be mounted through the app to the html body
    * and will respond to screen width rather than container width
    * This is specifically apparent on mobile so please test thoroughly
-   * Also consider that other DOM elements(specifically Notifications and 
-   * Account Center) will also append to this DOM el if enabled and their 
+   * Also consider that other DOM elements(specifically Notifications and
+   * Account Center) will also append to this DOM el if enabled and their
    * own containerEl are not defined
-  */
+   */
   connectModal?: string
-  /** when using the accountCenter with a container el the accountCenter 
-   * position properties are ignored 
-  */
+  /** when using the accountCenter with a container el the accountCenter
+   * position properties are ignored
+   */
   accountCenter?: string
 }
 

@@ -155,7 +155,9 @@
   const sequence = sequenceModule()
   const enkrypt = enkryptModule()
   const mewWallet = mewWalletModule()
-  const transactionPreview = transactionPreviewModule({requireTransactionApproval: true})
+  const transactionPreview = transactionPreviewModule({
+    requireTransactionApproval: true
+  })
 
   const onboard = Onboard({
     wallets: [
@@ -190,12 +192,6 @@
         token: 'ETH',
         label: 'Ethereum',
         rpcUrl: `https://mainnet.infura.io/v3/${infura_key}`
-      },
-      {
-        id: 3,
-        token: 'tROP',
-        label: 'Ropsten',
-        rpcUrl: `https://ropsten.infura.io/v3/${infura_key}`
       },
       {
         id: '0x5',
@@ -302,7 +298,7 @@
     // },
     // Sign up for your free api key at www.Blocknative.com
     apiKey,
-    theme: 'default'
+    theme: 'dark'
   })
 
   // Subscribe to wallet updates
@@ -464,33 +460,33 @@
   let selectedTheme = 'default'
   const themes = {
     default: {
-    '--w3o-background-color': 'unset',
-    '--w3o-text-color': 'unset',
-    '--w3o-border-color': 'unset',
-    '--w3o-accent-background-color': 'unset',
-    '--w3o-accent-text-color': 'unset',
-    '--w3o-secondary-text-color': 'unset',
-    '--w3o-border-radius': 'unset',
-  },
-  light: {
-    '--w3o-background-color': '#ffffff',
-    '--w3o-text-color': '#1a1d26',
-    '--w3o-border-color': '#d0d4f7',
-    '--w3o-accent-background-color': '#EFF1FC',
-    '--w3o-accent-text-color': '#929bed',
-    '--w3o-secondary-text-color': '#707481',
-    '--w3o-border-radius': '24px',
-  },
-  dark: {
-    '--w3o-background-color': '#1A1D26',
-    '--w3o-text-color': '#EFF1FC',
-    '--w3o-border-color': '#33394B',
-    '--w3o-accent-background-color': '#242835',
-    '--w3o-accent-text-color': '#929bed',
-    '--w3o-secondary-text-color': '#999CA5',
-    '--w3o-border-radius': '24px',
-  },
-  system:'system'
+      '--w3o-background-color': 'unset',
+      '--w3o-text-color': 'unset',
+      '--w3o-border-color': 'unset',
+      '--w3o-accent-background-color': 'unset',
+      '--w3o-accent-text-color': 'unset',
+      '--w3o-secondary-text-color': 'unset',
+      '--w3o-border-radius': 'unset'
+    },
+    light: {
+      '--w3o-background-color': '#ffffff',
+      '--w3o-text-color': '#1a1d26',
+      '--w3o-border-color': '#d0d4f7',
+      '--w3o-accent-background-color': '#EFF1FC',
+      '--w3o-accent-text-color': '#929bed',
+      '--w3o-secondary-text-color': '#707481',
+      '--w3o-border-radius': '24px'
+    },
+    dark: {
+      '--w3o-background-color': '#1A1D26',
+      '--w3o-text-color': '#EFF1FC',
+      '--w3o-border-color': '#33394B',
+      '--w3o-accent-background-color': '#242835',
+      '--w3o-accent-text-color': '#929bed',
+      '--w3o-secondary-text-color': '#999CA5',
+      '--w3o-border-radius': '24px'
+    },
+    system: 'system'
   }
 
   const baseStyling = ``
@@ -528,7 +524,7 @@
   }
 
   const updateTheme = theme => {
-    if(theme === 'system') {
+    if (theme === 'system') {
       onboard.state.actions.updateTheme('system')
     } else {
       Object.keys(themes[theme]).forEach(setting => {
@@ -613,6 +609,9 @@
 </script>
 
 <style>
+  :root{
+    --onboard-modal-background: red;
+  }
   main {
     height: 100%;
   }

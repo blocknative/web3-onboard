@@ -32,7 +32,6 @@ import {
 } from './store/actions.js'
 import type { PatchedEIP1193Provider } from '@web3-onboard/transaction-preview'
 import { getBlocknativeSdk } from './services.js'
-import { themeMapping } from './themes.js'
 
 const API = {
   connectWallet,
@@ -209,7 +208,7 @@ function init(options: InitOptions): OnboardAPI {
     transactionPreview
   })
 
-  if (transactionPreview) {
+  if (apiKey && transactionPreview) {
     const getBnSDK = async () => {
       transactionPreview.init({
         containerElement: '#transaction-preview-container',
@@ -225,7 +224,7 @@ function init(options: InitOptions): OnboardAPI {
     getBnSDK()
   }
 
-  theme ? updateTheme(theme) : updateTheme('default')
+  theme && updateTheme(theme)
 
   return API
 }
@@ -347,8 +346,6 @@ function mountApp() {
           /* MODAL STYLES */
           --modal-backdrop: rgba(0, 0, 0, 0.6);
 
-          ${themeMapping}
-          
         }
       </style>
     `

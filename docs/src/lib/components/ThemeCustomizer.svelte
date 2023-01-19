@@ -18,10 +18,40 @@
         rpcUrl: `https://mainnet.infura.io/v3/${INFURA_ID}`
       },
       {
-        id: '0x3',
-        token: 'tROP',
-        label: 'Ethereum Ropsten Testnet',
-        rpcUrl: `https://ropsten.infura.io/v3/${INFURA_ID}`
+        id: '0x5',
+        token: 'ETH',
+        label: 'Ethereum Goerli Testnet',
+        rpcUrl: `https://goerli.infura.io/v3/${INFURA_ID}`
+      },
+      {
+        id: '0x13881',
+        token: 'MATIC',
+        label: 'Polygon - Mumbai',
+        rpcUrl: 'https://matic-mumbai.chainstacklabs.com	'
+      },
+      {
+        id: '0x38',
+        token: 'BNB',
+        label: 'Binance',
+        rpcUrl: 'https://bsc-dataseed.binance.org/'
+      },
+      {
+        id: 137,
+        token: 'MATIC',
+        label: 'Polygon',
+        rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+      },
+      {
+        id: 10,
+        token: 'OETH',
+        label: 'Optimism',
+        rpcUrl: 'https://mainnet.optimism.io'
+      },
+      {
+        id: 42161,
+        token: 'ARB-ETH',
+        label: 'Arbitrum',
+        rpcUrl: 'https://rpc.ankr.com/arbitrum'
       }
     ],
     appMetadata: {
@@ -41,10 +71,6 @@
 
   const themes = ['system', 'default', 'light', 'dark']
   let selectedTheme = 'default'
-
-  const setTheme = (theme) => {
-    onboard.state.actions.setTheme(theme)
-  }
 
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
@@ -95,30 +121,27 @@
   const baseStyles = {
     default: {
       '--w3o-background-color': 'unset',
+      '--w3o-foreground-color': 'unset',
       '--w3o-text-color': 'unset',
       '--w3o-border-color': 'unset',
-      '--w3o-accent-background-color': 'unset',
-      '--w3o-accent-text-color': 'unset',
-      '--w3o-secondary-text-color': 'unset',
+      '--w3o-action-color': 'unset',
       '--w3o-border-radius': 'unset'
     },
     light: {
       '--w3o-background-color': '#ffffff',
+      '--w3o-foreground-color': '#EFF1FC',
       '--w3o-text-color': '#1a1d26',
       '--w3o-border-color': '#d0d4f7',
-      '--w3o-accent-background-color': '#EFF1FC',
-      '--w3o-accent-text-color': '#929bed',
-      '--w3o-secondary-text-color': '#707481',
-      '--w3o-border-radius': '24px'
+      '--w3o-action-color': '#6370E5',
+      '--w3o-border-radius': '16px'
     },
     dark: {
       '--w3o-background-color': '#1A1D26',
+      '--w3o-foreground-color': '#242835',
       '--w3o-text-color': '#EFF1FC',
       '--w3o-border-color': '#33394B',
-      '--w3o-accent-background-color': '#242835',
-      '--w3o-accent-text-color': '#929bed',
-      '--w3o-secondary-text-color': '#999CA5',
-      '--w3o-border-radius': '24px'
+      '--w3o-action-color': '#929bed',
+      '--w3o-border-radius': '16px'
     }
   }
 
@@ -310,40 +333,6 @@
 </section>
 
 <style>
-  /* iframe { width: 100%; height: 62.5rem;} */
-  :root {
-    --background-color: #ffffff; /* --white */
-    --text-color: #1a1d26; /* --gray-700 */
-    --border-color: #ebebed; /* --gray-100 taken from future mock */
-
-    --accent-background: #ebebed; /* --gray-100 (currently gray-100 in connect modal) */
-    --accent-color: #929bed; /* --primary-400 */
-    --accent-color-hover: #eff1fc; /* --primary-200 */
-
-    /* Account Center & Notify */
-    --secondary-text-color: #707481; /* --gray-400 (balance and token name) */
-    /* --secondary-accent-background: #242835; --gray-600 (Upper background in maximized) */
-
-    /* --onboard-font-family-normal: System,monospace; */
-    --onboard-connect-sidebar-background: var(--accent-background);
-    --onboard-close-button-background: var(--accent-background);
-    --onboard-connect-sidebar-color: var(--text-color);
-    --onboard-connect-sidebar-progress-background: var(
-      --secondary-text-color
-    ); /* defaults to gray-200 */
-    --onboard-connect-sidebar-progress-color: var(--accent-color); /* defaults to  primary-600 */
-    --onboard-connect-header-background: var(--background-color);
-    --onboard-connect-header-color: var(--text-color);
-    --onboard-main-scroll-container-background: var(--background-color);
-    --onboard-link-color: var(--accent-color);
-    --onboard-wallet-button-background: var(--background-color);
-    --onboard-wallet-button-background-hover: var(--accent-color-hover);
-    --onboard-wallet-button-color-hover: var(--text-color);
-    --onboard-wallet-button-color: var(--text-color);
-    --onboard-wallet-button-border-color: var(--border-color);
-    --onboard-wallet-app-icon-border-color: var(--border-color);
-  }
-
   section {
     position: relative;
     height: 100%;

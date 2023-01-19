@@ -26,7 +26,8 @@ import type {
   CustomNotificationUpdate,
   Notify,
   PreflightNotificationsOptions,
-  ConnectModalOptions
+  ConnectModalOptions,
+  Theme
 } from './types.js'
 
 const unknownObject = Joi.object().unknown()
@@ -178,15 +179,18 @@ const containerElements = Joi.object({
   connectModal: Joi.string()
 })
 
-const theme = Joi.object({
+const themeMap = Joi.object({
   '--w3o-background-color': Joi.string(),
+  '--w3o-foreground-color': Joi.string(),
   '--w3o-text-color': Joi.string(),
   '--w3o-border-color': Joi.string(),
-  '--w3o-accent-background-color': Joi.string(),
-  '--w3o-accent-text-color': Joi.string(),
-  '--w3o-secondary-text-color': Joi.string(),
-  '--w3o-border-radius': Joi.string(),
+  '--w3o-action-color': Joi.string(),
+  '--w3o-border-radius': Joi.string()
 })
+
+const presetTheme = Joi.string().valid('default', 'dark', 'light', 'system')
+
+const theme = Joi.alternatives().try(themeMap, presetTheme)
 
 const initOptions = Joi.object({
   wallets: walletInit,
@@ -209,7 +213,7 @@ const initOptions = Joi.object({
     patchProvider: Joi.function().required(),
     init: Joi.function().required()
   }),
-  theme: Joi.alternatives().try(theme, Joi.string())
+  theme: theme
 })
 
 const connectOptions = Joi.object({
@@ -389,4 +393,8 @@ export function validateCustomNotification(
 
 export function validateUpdateBalances(data: WalletState[]): ValidateReturn {
   return validate(wallets, data)
+}
+
+export function validateUpdateTheme(data: Theme): ValidateReturn {
+  return validate(theme, data)
 }
