@@ -152,7 +152,7 @@
       <div class="icon-container">
         {#if logo || icon}
           {#if isSVG(logo || icon)}
-            {@html logo || icon}
+            {@html logo || icon}​
           {:else}
             <img src={logo || icon} alt="logo" />
           {/if}
