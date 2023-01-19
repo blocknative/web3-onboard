@@ -151,7 +151,6 @@
     font-size: var(--account-select-font-size-7, var(--font-size-7));
     max-width: 15rem;
     line-height: 1;
-
     position: absolute;
     top: 260px;
     left: 18px;
