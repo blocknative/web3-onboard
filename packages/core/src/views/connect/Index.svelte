@@ -382,10 +382,11 @@
 <style>
   .container {
     /* component values */
-    --background-color: var(--onboard-main-scroll-container-background, white);
-    --text-color: var(--onboard-connect-text-color, var(--gray-700));
+    --background-color: var(--onboard-main-scroll-container-background, var(--w3o-background-color));
+    --foreground-color: var(--w3o-foreground-color);
+    --text-color: var(--onboard-connect-text-color, var(--w3o-text-color));
     --border-color: var(--w3o-border-color, var(--gray-200));
-    --action-color: var(--w3o-accent-color);
+    --action-color: var(--w3o-action-color);
 
     /* themeable properties */
     font-family: var(--onboard-font-family-normal, var(--font-family-normal));

@@ -20,17 +20,15 @@
 
 <style>
   .sidebar {
-    --background-color: var(--onboard-connect-sidebar-background, white);
-    --text-color: var(--onboard-connect-sidebar-color, var(--gray-700));
-    --border-color: var(--onboard-connect-sidebar-border-color, var(--gray-200));
+    --background-color: var(--onboard-connect-sidebar-background, var(--w3o-foreground-color, none));
+    --text-color: var(--onboard-connect-sidebar-color, inherit);
+    --border-color: var(--onboard-connect-sidebar-border-color, inherit);
 
     display: flex;
     flex-flow: column;
     gap: 1rem;
     padding: 1rem;
     align-items: center;
-
-    color: var(--text-color);
   }
 
   .inner-container {
@@ -41,10 +39,8 @@
     gap: 0.5rem;
     padding: 1.5rem;
     text-align: center;
-
-    border: 1px solid;
+    border: 1px solid transparent;
     border-radius: 12px;
-
     border-color: var(--border-color);
     background-color: var(--background-color);
   }

@@ -68,10 +68,7 @@
     }
 
     button.wallet-button-styling:hover {
-      background: var(
-        --onboard-wallet-button-background-hover,
-        var(--onboard-primary-100, var(--primary-100))
-      );
+      background: var(--onboard-wallet-button-background-hover, var(--foreground-color));
       color: var(--onboard-wallet-button-color-hover);
     }
 
