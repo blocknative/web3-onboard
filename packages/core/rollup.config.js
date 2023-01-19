@@ -5,7 +5,6 @@ import json from '@rollup/plugin-json'
 import sveltePreprocess from 'svelte-preprocess'
 import typescript from '@rollup/plugin-typescript'
 import copy from '@rollup-extras/plugin-copy'
-import commonjs from '@rollup/plugin-commonjs'
 
 const production = !process.env.ROLLUP_WATCH
 
@@ -35,9 +34,6 @@ export default {
     typescript({
       sourceMap: !production,
       inlineSources: !production
-    }),
-    commonjs({
-      include: /node_modules/
     }),
     copy({
       src: 'src/i18n/en.json',
