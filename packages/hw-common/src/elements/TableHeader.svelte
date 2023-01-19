@@ -128,7 +128,6 @@
   .checkbox-container {
     display: flex;
     align-items: center;
-
     position: absolute;
     top: 238px;
     left: 14px;
@@ -179,7 +178,6 @@
     .checkbox-container {
       display: flex;
       align-items: center;
-
       position: unset;
       top: unset;
       left: unset;

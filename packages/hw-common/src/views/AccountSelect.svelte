@@ -294,9 +294,7 @@
     width: 100%;
     flex-flow: column;
     display: flex;
-
     max-height: 51.75rem;
-
     background: var(--account-select-white, var(--onboard-white, var(--white)));
     box-shadow: var(
       --account-select-shadow-1,
@@ -323,7 +321,6 @@
       --onboard-account-select-modal-right,
       var(--account-select-modal-right)
     );
-
     max-height: 100vh;
     overflow: scroll;
   }
