@@ -48,28 +48,30 @@
 
 <style>
   .outer-container {
-    --background-color: var(--account-center-maximized-upper-background, var(--w3o-background-color, white));
-    --text-color: var(--w3o-text-color, var(--gray-700));
-    --border-color: var(--w3o-border-color, var(--gray-200));
-    --action-color: var(--w3o-accent-text-color, var(--primary-500));
-    --account-center-network-selector-color: var(--text-color);
+    --background-color: var(--w3o-background-color);
+    --text-color: var(--w3o-text-color);
+    --border-color: var(--w3o-border-color, var(--gray-500));
+    --action-color: var(--w3o-action-color, var(--primary-500));
+
+    --account-center-network-selector-color: var(--text-color, white);
 
     width: 100%;
+    overflow: hidden;
     filter: drop-shadow(0px 4px 16px rgba(178, 178, 178, 0.2));
     pointer-events: auto;
     border: 1px solid transparent;
-    background: var(--background-color);
+    background: var(--account-center-maximized-upper-background, var(--background-color));
     border-color: var(--border-color);
-    color: var(--text-color);
     border-radius: var(
       --account-center-border-radius,
       var(--onboard-border-radius-3, var(--border-radius-3))
-      );
+    );
   }
 
   .wallets-section {
     width: 100%;
-    border-radius: inherit;
+    color: var(--text-color, var(--gray-100));
+    background: var(--background-color, var(--gray-700));
   }
 
   .p5 {
@@ -165,16 +167,12 @@
   }
 
   .app-info-container {
-    background: var(
-      --account-center-maximized-info-section-background-color,
-      var(--account-center-maximized-info-section, var(--backround-color))
-    );
-    border-radius: var(
-      --account-center-border-radius,
-      var(--onboard-border-radius-3, var(--border-radius-3))
-    );
-    padding: 12px;
+    color: var(--text-color, var(--gray-700));
+    background: var(--background-color, #FFF);
+    /* background: var(--account-center-maximized-info-section-background-color, var(--account-center-maximized-info-section)); */
     border-top: 1px solid var(--border-color);
+    border-radius: var(--account-center-border-radius, inherit);
+    padding: 12px;
   }
 
   .app-name {
