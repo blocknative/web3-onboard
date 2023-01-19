@@ -127,7 +127,7 @@
   const baseStyling = ``
 
   const styleToString = (style) => {
-    return Object.keys(style).reduce((acc, key) => acc + key + ': ' + style[key] + '; \n  ', '')
+    return Object.keys(style).reduce((acc, key) => acc + `"${key}": "${style[key]}", \n`, '')
   }
 
   async function copyStylingConfig() {
@@ -215,8 +215,8 @@
     </select>
     {#if selectedTheme !== 'system'}
       <label for="Theme"
-        >Click Color Circles to Customize Theme, Copy Config and Paste as `theme` property value in Onboard
-        config:
+        >Click Color Circles to Customize Theme, Copy Config and Paste as `theme` property value in
+        Onboard config:
       </label>
       <hr />
       <div class="theming-container">
