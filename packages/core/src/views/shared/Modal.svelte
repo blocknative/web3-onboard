@@ -16,16 +16,23 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
   import { onDestroy, onMount } from 'svelte'
+  import { configuration } from '../../configuration.js'
+
+  const connectContainerEl = !!configuration.containerElements.connectModal
 
   const html = document.documentElement
   onMount(() => {
-    html.style.position = 'sticky'
-    html.style.overflow = 'hidden'
+    if (!connectContainerEl) {
+      html.style.position = 'sticky'
+      html.style.overflow = 'hidden'
+    }
   })
 
   onDestroy(() => {
-    html.style.position = ''
-    html.style.removeProperty('overflow')
+    if (!connectContainerEl) {
+      html.style.position = ''
+      html.style.removeProperty('overflow')
+    }
   })
   export let close: () => void
 </script>
@@ -39,10 +46,13 @@
   }
 
   .background {
-    width: 100vw;
-    height: 100vh;
     background: var(--onboard-modal-backdrop, var(--modal-backdrop));
     pointer-events: all;
+  }
+
+  .full-screen-background {
+    width: 100vw;
+    height: 100vh;
   }
 
   .max-height {
@@ -70,7 +80,10 @@
     overflow-y: auto;
     background: var(--onboard-modal-background, white);
     color: var(--onboard-modal-color, initial);
-    max-width: 100vw;
+  }
+
+  .width-100 {
+    width: 100%;
   }
 
   .modal-container-mobile {
@@ -85,17 +98,32 @@
       bottom: unset;
       margin: 1rem;
     }
+    .width-100 {
+      width: unset;
+    }
   }
 </style>
 
-<section class="fixed" transition:fade>
+<section class:fixed={!connectContainerEl} transition:fade>
   <div
     on:click={close}
     class="background flex items-center justify-center relative"
+    class:full-screen-background={!connectContainerEl}
   >
-    <div class="modal-container-mobile modal-position flex absolute">
-      <div on:click|stopPropagation class="flex relative max-height">
-        <div class="modal-overflow modal-styling relative flex justify-center">
+    <div
+      class="modal-container-mobile modal-position flex"
+      class:absolute={!connectContainerEl}
+      class:width-100={connectContainerEl}
+    >
+      <div
+        on:click|stopPropagation
+        class="flex relative max-height"
+        class:width-100={connectContainerEl}
+      >
+        <div
+          class="modal-overflow modal-styling relative flex justify-center"
+          style={`max-width=${connectContainerEl ? '100%' : '100vw'};`}
+        >
           <div class="modal relative">
             <slot />
           </div>

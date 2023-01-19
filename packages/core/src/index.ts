@@ -97,7 +97,7 @@ function init(options: InitOptions): OnboardAPI {
     transactionPreview
   } = options
 
-  updateConfiguration({ containerElements })
+  if (containerElements) updateConfiguration({ containerElements })
 
   const { device, svelteInstance } = configuration
 
@@ -348,9 +348,10 @@ function mountApp() {
         }
       </style>
     `
+  const connectModalContEl = configuration.containerElements.connectModal
 
   const containerElementQuery =
-    state.get().accountCenter.containerElement || 'body'
+    connectModalContEl || state.get().accountCenter.containerElement || 'body'
 
   const containerElement = document.querySelector(containerElementQuery)
 

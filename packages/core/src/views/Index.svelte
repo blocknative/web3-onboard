@@ -93,47 +93,57 @@
     containerElements &&
     containerElements.accountCenter
 
-  if (accountCenterMountToElement) {
-    const accountCenter = document.createElement('onboard-account-center')
-    const target = accountCenter.attachShadow({ mode: 'open' })
+  const attachCompToDom = (
+    domEl: HTMLElement,
+    targetEl: string,
+    component: Promise<any>,
+    compSettings: unknown
+  ) => {
+    const target = domEl.attachShadow({ mode: 'open' })
 
     let getW3OEl = document.querySelector('onboard-v2')
     let w3OStyleSheets = getW3OEl.shadowRoot.styleSheets
-    const accountCenterStyleSheet = new CSSStyleSheet()
+    const copiedStyleSheet = new CSSStyleSheet()
 
     // Copy Onboard stylesheets over to AccountCenter shadow DOM
     Object.values(w3OStyleSheets).forEach(sheet => {
       const styleRules = Object.values(sheet.cssRules)
-      styleRules.forEach(rule =>
-        accountCenterStyleSheet.insertRule(rule.cssText)
-      )
+      styleRules.forEach(rule => copiedStyleSheet.insertRule(rule.cssText))
     })
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
-    target.adoptedStyleSheets = [accountCenterStyleSheet]
+    target.adoptedStyleSheets = [copiedStyleSheet]
 
-    const containerElement = document.querySelector(accountCenterMountToElement)
+    const containerElement = document.querySelector(targetEl)
 
-    containerElement.appendChild(accountCenter)
+    containerElement.appendChild(domEl)
     if (!containerElement) {
-      throw new Error(
-        `Element with query ${accountCenterMountToElement} does not exist.`
-      )
+      throw new Error(`Element with query ${targetEl} does not exist.`)
     }
 
     const getACComp = async () => {
-      let acComponent = await accountCenterComponent
-      if (acComponent) {
-        new acComponent({
+      let newComp = await component
+      if (newComp) {
+        new newComp({
           target,
           props: {
-            settings: $accountCenter$,
+            settings: compSettings,
             mountInContainer: true
           }
         })
       }
     }
     getACComp()
+  }
+
+  if (accountCenterMountToElement) {
+    const accountCenter = document.createElement('onboard-account-center')
+    attachCompToDom(
+      accountCenter,
+      accountCenterMountToElement,
+      accountCenterComponent,
+      $accountCenter$
+    )
   }
 </script>
 

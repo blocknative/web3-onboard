@@ -75,7 +75,7 @@ If you're coming from v1, we've created a [migration guide for you](https://onbo
 
 ## Documentation
 
-For full documentation, check out the README.md for each package:
+For full documentation, check out the README.md for each package or the [docs page here](https://onboard.blocknative.com/docs/overview/introduction#features):
 
 **Core Repo**
 
@@ -99,6 +99,7 @@ For full documentation, check out the README.md for each package:
 - [TallyHo](packages/tallyho/README.md)
 - [Enkrypt](packages/enkrypt/README.md)
 - [Unstoppable Domains](packages/uauth/README.md)
+- [Frontier](packages/frontier/README.md)
 
 **Hardware Wallets**
 

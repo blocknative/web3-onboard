@@ -170,6 +170,7 @@
     } catch (error) {
       const { message } = error as { message: string }
       connectingErrorMessage = message
+      connectingWalletLabel = ''
       scrollToTop()
     }
   }

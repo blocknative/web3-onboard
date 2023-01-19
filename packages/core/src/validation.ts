@@ -174,7 +174,8 @@ const connectModalOptions = Joi.object({
 })
 
 const containerElements = Joi.object({
-  accountCenter: Joi.string()
+  accountCenter: Joi.string(),
+  connectModal: Joi.string()
 })
 
 const initOptions = Joi.object({
