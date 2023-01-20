@@ -68,7 +68,12 @@ type InitOptions {
    * Object mapping for W3O components with the key being the component and the value the DOM element to mount the component to. This element must be available at time of package script execution.
    */
   containerElements?: Partial<ContainerElements>
+    /**
+   * Custom or predefined theme for Web3Onboard i.e. default, dark, Custom, etc.
+   */
+  theme?: Theme
 }
+
 ```
 
 ### Options
@@ -142,6 +147,32 @@ type i18nOptions = Record<Locale, i18n>
 
 To see a list of all of the text values that can be internationalized or replaced, check out the [default en file](https://github.com/blocknative/web3-onboard/blob/v2-web3-onboard-develop/packages/core/src/i18n/en.json).
 Onboard is using the [ICU syntax](https://formatjs.io/docs/core-concepts/icu-syntax/) for formatting under the hood.
+
+**`theme`**
+A string or an object that defines the color theme web3-onboard will render the components.
+`system` will default to the theme set by the users system.
+
+```typescript
+export type Theme = ThemingMap | BuiltInThemes | 'system'
+
+export type BuiltInThemes = 'default' | 'dark' | 'light'
+
+export type ThemingMap = {
+  '--w3o-background-color'?: string
+  '--w3o-foreground-color'?: string
+  '--w3o-text-color'?: string
+  '--w3o-border-color'?: string
+  '--w3o-action-color'?: string
+  '--w3o-border-radius'?: string
+}
+```
+:::admonition type="experimental"
+Interested in seeing how web3-onboard will look on your site?
+
+[Try out our theming tool](/theming-tool)
+
+It will allow you to customize the look and feel of web3-onboard, try different themes or create your own, and preview how web3-onboard will look on your site by entering a URL or adding a screenshot.
+:::
 
 **`accountCenter`**
 An object that defines whether the account center UI (default and minimal) is enabled and it's position on the screen. Currently the account center is enabled for both desktop and mobile devices.
