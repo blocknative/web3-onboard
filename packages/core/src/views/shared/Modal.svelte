@@ -122,7 +122,7 @@
       >
         <div
           class="modal-overflow modal-styling relative flex justify-center"
-          style={`max-width=${connectContainerEl ? '100%' : '100vw'};`}
+          style={`max-width: ${connectContainerEl ? '100%' : '100vw'};`}
         >
           <div class="modal relative">
             <slot />

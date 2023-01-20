@@ -25,7 +25,6 @@
     gap: 1rem;
     padding: 1rem;
     align-items: center;
-
     color: var(
       --onboard-connect-sidebar-color,
       var(--onboard-gray-700, var(--gray-700))
@@ -40,15 +39,12 @@
     gap: 0.5rem;
     padding: 1.5rem;
     text-align: center;
-
     border: 1px solid;
     border-radius: 12px;
-
     border-color: var(
       --onboard-connect-sidebar-border-color,
       var(--onboard-primary-200, var(--primary-200))
     );
-
     background: var(
       --onboard-connect-sidebar-background,
       var(--onboard-primary-100, var(--primary-100))
@@ -57,6 +53,7 @@
 
   .icon-container {
     display: flex;
+    max-height: 2.5rem;
   }
 
   .subheading {
