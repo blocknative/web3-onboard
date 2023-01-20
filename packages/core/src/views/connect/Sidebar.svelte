@@ -1,6 +1,6 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
-  import { blocknative, poweredByBlocknativeIcon } from '../../icons/index.js'
+  import { defaultBnIcon, poweredByBlocknativeIcon } from '../../icons/index.js'
   import en from '../../i18n/en.json'
   import type { i18n } from '../../types.js'
   import { isSVG } from '../../utils.js'
@@ -53,7 +53,10 @@
 
   .icon-container {
     display: flex;
-    max-height: 2.5rem;
+    height: 3.5rem;
+    width: auto;
+    min-width: 3.5rem;
+    max-width: 100%;
   }
 
   .subheading {
@@ -154,7 +157,7 @@
             <img src={logo || icon} alt="logo" />
           {/if}
         {:else}
-          {@html blocknative}
+          {@html defaultBnIcon}
         {/if}
       </div>
     {/if}
