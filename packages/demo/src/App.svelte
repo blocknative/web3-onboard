@@ -133,7 +133,7 @@
   const trezorOptions = {
     email: 'test@test.com',
     appUrl: 'https://www.blocknative.com',
-    containerElement: '#sample-container-el'
+    // containerElement: '#sample-container-el'
   }
   const trezor = trezorModule(trezorOptions)
 
@@ -235,9 +235,9 @@
         rpcUrl: 'https://rpc.ankr.com/arbitrum'
       }
     ],
-    connect: {
-      disableClose: true
-    },
+    // connect: {
+    //   disableClose: true
+    // },
     appMetadata: {
       name: 'Blocknative',
       icon: blocknativeIcon,
