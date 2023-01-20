@@ -21,6 +21,7 @@ import web3authModule from '@web3-onboard/web3auth'
 import dcentModule from '@web3-onboard/dcent'
 import sequenceModule from '@web3-onboard/sequence'
 import tallyHoModule from '@web3-onboard/tallyho'
+import frontierModule from '@web3-onboard/frontier'
 
 const INFURA_KEY = ''
 
@@ -43,6 +44,7 @@ const keepkey = keepkeyModule()
 const gnosis = gnosisModule()
 const sequence = sequenceModule()
 const tally = tallyModule()
+const frontier = frontierModule()
 
 const trezorOptions = {
   email: 'test@test.com',
@@ -66,6 +68,7 @@ const wallets = [
   ledger,
   coinbase,
   dcent,
+  frontier,
   trezor,
   walletConnect,
   enkrypt,

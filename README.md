@@ -99,6 +99,7 @@ For full documentation, check out the README.md for each package or the [docs pa
 - [TallyHo](packages/tallyho/README.md)
 - [Enkrypt](packages/enkrypt/README.md)
 - [Unstoppable Domains](packages/uauth/README.md)
+- [Frontier](packages/frontier/README.md)
 
 **Hardware Wallets**
 

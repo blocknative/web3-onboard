@@ -170,6 +170,7 @@
     } catch (error) {
       const { message } = error as { message: string }
       connectingErrorMessage = message
+      connectingWalletLabel = ''
       scrollToTop()
     }
   }
@@ -388,7 +389,6 @@
       var(--onboard-white, var(--white))
     );
     line-height: 24px;
-    margin-bottom: 2rem;
     overflow: hidden;
     position: relative;
     display: flex;
@@ -493,7 +493,7 @@
 <svelte:window bind:innerWidth={windowWidth} />
 
 {#if !autoSelect.disableModals}
-  <Modal {close}>
+  <Modal close={!connect.disableClose && close}>
     <div class="container">
       {#if connect.showSidebar}
         <Sidebar step={$modalStep$} />
@@ -552,11 +552,12 @@
             </div>
           </div>
         {/if}
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <div on:click={close} class="button-container absolute">
-          <CloseButton />
-        </div>
-
+        {#if !connect.disableClose}
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <div on:click={close} class="button-container absolute">
+            <CloseButton />
+          </div>
+        {/if}
         <div class="scroll-container" bind:this={scrollContainer}>
           {#if $modalStep$ === 'selectingWallet' || windowWidth <= MOBILE_WINDOW_WIDTH}
             {#if wallets.length}

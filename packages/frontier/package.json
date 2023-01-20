@@ -1,7 +1,7 @@
 {
-  "name": "@web3-onboard/ledger",
-  "version": "2.4.1",
-  "description": "Ledger hardare wallet module for connecting to Web3-Onboard. Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardised spec compliant web3 providers for all supported wallets, framework agnostic modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
+  "name": "@web3-onboard/frontier",
+  "version": "2.0.0",
+  "description": "Frontier Wallet SDK wallet module for connecting to Web3-Onboard. Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardized spec compliant web3 providers for all supported wallets, framework agnostic modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
   "keywords": [
     "Ethereum",
     "Web3",
@@ -27,18 +27,18 @@
     "Ethereum Hooks",
     "Blocknative",
     "Mempool",
-    "pending",
-    "confirmed",
     "Injected Wallet",
     "Crypto",
-    "Crypto Wallet"
+    "Crypto Wallet",
+    "Onboard",
+    "Frontier"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/blocknative/web3-onboard.git",
-    "directory": "packages/ledger"
+    "directory": "packages/frontier"
   },
-  "homepage": "https://onboard.blocknative.com",
+  "homepage": "https://www.blocknative.com/onboard",
   "bugs": "https://github.com/blocknative/web3-onboard/issues",
   "module": "dist/index.js",
   "browser": "dist/index.js",
@@ -55,13 +55,10 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^17.0.21",
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@ethersproject/providers": "^5.5.0",
-    "@ledgerhq/connect-kit-loader": "^1.0.2",
-    "@walletconnect/client": "^1.7.1",
-    "@web3-onboard/common": "^2.2.3",
-    "rxjs": "^7.5.2"
+    "@web3-onboard/common": "^2.2.3"
   }
 }
