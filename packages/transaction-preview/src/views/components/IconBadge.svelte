@@ -5,8 +5,8 @@
   div.notification-icons-wrapper {
     height: 2rem;
     width: 2rem;
-    background: var(--w3o-tp-border-color, var(--border-color));
-    border: 2px solid var(--w3o-tp-border-color, var(--border-color));
+    background: var(--border-color);
+    border: 2px solid var(--border-color);
     font-size: 1rem;
   }
   .border {

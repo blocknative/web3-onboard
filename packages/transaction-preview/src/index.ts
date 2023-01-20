@@ -71,7 +71,7 @@ export const patchProvider = (
 ): PatchedEIP1193Provider => {
   if (!walletProvider) {
     throw new Error(
-      `An EIP 1193 wallet provider is required to preform patching and 
+      `An EIP 1193 wallet provider is required to preform patching and
       watch for transactions e.g. an injected wallet using window.ethereum`
     )
   }
@@ -130,7 +130,7 @@ export const patchProvider = (
     patchedProvider.simPatched = true
   } catch (err) {
     console.error(
-      `There was an error patching the passed in wallet provider. 
+      `There was an error patching the passed in wallet provider.
       The provider may be read only and may be incompatible with Transaction Preview`
     )
   }
@@ -197,17 +197,6 @@ const mountTransactionPreview = (simResponse: MultiSimOutput) => {
 
   transactionPreviewDomElement.style.all = 'initial'
 
-  target.innerHTML = `
-    <style>
-    --onboard-font-family-normal: var(--w3o-font-family, initial);
-    --w3o-tp-background: var(--w3o-background, initial);
-    --w3o-tp-accent-background: var(--w3o-accent-background, initial);
-    --w3o-tp-border-radius: var(--w3o-border-radius, initial);
-    --w3o-tp-close-icon-hover: var(--w3o-text-color, initial);
-    --w3o-tp-text-color: var(--w3o-text-color, initial);
-    --w3o-tp-border-color: var(--w3o-border-color, initial);
-    </style>
-  `
   const getW3OEl = document.querySelector('onboard-v2')
 
   const containerElementQuery = options.containerElement || 'body'

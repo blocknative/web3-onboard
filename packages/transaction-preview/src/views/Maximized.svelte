@@ -102,25 +102,16 @@
     margin: auto;
   }
 
-  .tp-close-btn > .close-icon {
-    color: var(
-      --w3o-tp-close-icon-color,
-      var(--onboard-gray-300, var(--gray-300))
-    );
+  .tp-close-btn .close-icon {
+    color: currentColor;
   }
 
-  .tp-close-btn:hover > .close-icon {
-    color: var(
-      --w3o-tp-close-icon-hover,
-      var(--onboard-gray-100, var(--gray-100))
-    );
+  .tp-close-btn:hover .close-icon {
+    color: currentColor;
   }
 
   .table-radius {
-    border-radius: var(
-      --w3o-tp-table-border-radius,
-      var(--onboard-border-radius-5, var(--border-radius-5))
-    );
+    border-radius: var(--border-radius-5);
   }
 
   .bn-notify-notification-inner {
@@ -160,13 +151,11 @@
 
   table.balance-change-table {
     width: 100%;
-    background: var(--w3o-tp-accent-background);
-    border: 1px solid transparent;
-
-    border-color:var(--w3o-tp-border-color, var(--border-color));
-    color: var(--w3o-tp-text-color, var(--text-color));
     overflow: hidden;
     border-spacing: 0;
+    border: 1px solid transparent;
+    border-color:var(--border-color);
+    color: var(--text-color);
   }
 
   table.balance-change-table td,
@@ -189,25 +178,18 @@
 
   tbody > tr:not(:first-child) {
     box-shadow: inset 0px 1px 0px
-      var(--w3o-tp-border-color, var(--border-color));
+      var(--border-color);
   }
 
   table.balance-change-table thead {
-    background: var(
-      --w3o-tp-border-color,
-      var(--border-color)
-    );
-    color: var(--w3o-tp-text-color);
+    background: var(--border-color);
   }
 
   .negative {
-    color: var(--w3o-tp-bal-neg, var(--onboard-danger-400, var(--danger-400)));
+    color: var(--onboard-danger-400, var(--danger-400));
   }
   .positive {
-    color: var(
-      --w3o-tp-bal-pos,
-      var(--onboard-success-500, var(--success-500))
-    );
+    color: var(--onboard-success-500, var(--success-500));
   }
 </style>
 

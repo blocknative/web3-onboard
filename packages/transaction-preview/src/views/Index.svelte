@@ -33,16 +33,14 @@
     --border-color: var(--w3o-border-color, var(--gray-500));
     --background-color: var(--w3o-background-color, var(--gray-700));
     --foreground-color: var(--w3o-foreground-color, var(--gray-600));
+    --border-radius: var(--w3o-border-radius, 1rem);
 
     font-family: var(--onboard-font-family-normal, var(--font-family-normal));
     border: 1px solid transparent;
     border-color: var(--border-color);
     background: var(--foreground-color, var(--background-color));
     color: var(--text-color);
-    border-radius: var(
-      --w3o-tp-border-radius,
-      var(--onboard-border-radius-4, var(--border-radius-4))
-    );
+    border-radius: var(--border-radius);
   }
 </style>
 
