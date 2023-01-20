@@ -1,6 +1,5 @@
-<a href="https://onboard.blocknative.com/">
-  <img alt="Web3-Onboard UI Components" src="https://github.com/blocknative/web3-onboard/blob/v2-web3-onboard-develop/assets/core.svg" />
-</a>
+![Web3-Onboard UI Components](https://github.com/blocknative/web3-onboard/blob/v2-web3-onboard-develop/assets/core.svg?raw=true "Web3-Onboard UI Components")
+
 
 # @web3-onboard/react
 
