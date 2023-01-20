@@ -159,7 +159,8 @@ export type ConnectModalOptions = {
   showSidebar?: boolean
   /**
    * Disabled close of the connect modal with background click and
-   * does not display the close button forcing an action from the connect modal
+   * hides the close button forcing an action from the connect modal
+   * Defaults to false
    */
   disableClose?: boolean
 }
