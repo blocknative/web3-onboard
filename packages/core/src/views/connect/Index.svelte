@@ -397,7 +397,6 @@
 
     /* non-themeable properties */
     line-height: 24px;
-    margin-bottom: 2rem;
     overflow: hidden;
     position: relative;
     display: flex;
