@@ -9,7 +9,7 @@
   import type { Observable } from 'rxjs'
   import type { Notification } from '../types.js'
 
-  const { device } = configuration
+  const { device, containerElements } = configuration
   const accountCenter$ = state
     .select('accountCenter')
     .pipe(startWith(state.get().accountCenter), shareReplay(1))
@@ -50,6 +50,7 @@
     : Promise.resolve(null)
 
   $: sharedContainer =
+    !accountCenterMountToElement &&
     $accountCenter$.enabled &&
     $notify$.enabled &&
     $notify$.position === $accountCenter$.position
@@ -58,25 +59,18 @@
     device.type === 'mobile' || $accountCenter$.position === $notify$.position
 
   $: sharedMobileContainerCheck =
-    device.type === 'mobile' &&
-    (($notify$.position.includes('bottom') &&
+    ($notify$.position.includes('bottom') &&
       $accountCenter$.position.includes('bottom')) ||
-      ($notify$.position.includes('top') &&
-        $accountCenter$.position.includes('top')))
-
-  $: separateMobileContainerCheck =
-    device.type === 'mobile' &&
-    (($notify$.position.includes('top') &&
-      $accountCenter$.position.includes('bottom')) ||
-      ($notify$.position.includes('bottom') &&
-        $accountCenter$.position.includes('top')))
+    ($notify$.position.includes('top') &&
+      $accountCenter$.position.includes('top'))
 
   $: displayNotifySeparate =
     $notify$.enabled &&
     (!$accountCenter$.enabled ||
+      accountCenterMountToElement ||
       ($notify$.position !== $accountCenter$.position &&
         device.type !== 'mobile') ||
-      separateMobileContainerCheck ||
+      (device.type === 'mobile' && !sharedMobileContainerCheck) ||
       !$wallets$.length)
 
   $: displayAccountCenterSeparate =
@@ -84,14 +78,73 @@
     (!$notify$.enabled ||
       ($notify$.position !== $accountCenter$.position &&
         device.type !== 'mobile') ||
-      separateMobileContainerCheck) &&
+      (device.type === 'mobile' && !sharedMobileContainerCheck)) &&
     $wallets$.length
 
   $: displayAccountCenterNotifySameContainer =
     $notify$.enabled &&
     $accountCenter$.enabled &&
-    $wallets$.length &&
-    (sharedContainer || sharedMobileContainerCheck)
+    (sharedContainer ||
+      (device.type === 'mobile' && sharedMobileContainerCheck)) &&
+    $wallets$.length
+
+  const accountCenterMountToElement =
+    $accountCenter$.enabled &&
+    containerElements &&
+    containerElements.accountCenter
+
+  const attachCompToDom = (
+    domEl: HTMLElement,
+    targetEl: string,
+    component: Promise<any>,
+    compSettings: unknown
+  ) => {
+    const target = domEl.attachShadow({ mode: 'open' })
+
+    let getW3OEl = document.querySelector('onboard-v2')
+    let w3OStyleSheets = getW3OEl.shadowRoot.styleSheets
+    const copiedStyleSheet = new CSSStyleSheet()
+
+    // Copy Onboard stylesheets over to AccountCenter shadow DOM
+    Object.values(w3OStyleSheets).forEach(sheet => {
+      const styleRules = Object.values(sheet.cssRules)
+      styleRules.forEach(rule => copiedStyleSheet.insertRule(rule.cssText))
+    })
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
+    target.adoptedStyleSheets = [copiedStyleSheet]
+
+    const containerElement = document.querySelector(targetEl)
+
+    containerElement.appendChild(domEl)
+    if (!containerElement) {
+      throw new Error(`Element with query ${targetEl} does not exist.`)
+    }
+
+    const getACComp = async () => {
+      let newComp = await component
+      if (newComp) {
+        new newComp({
+          target,
+          props: {
+            settings: compSettings,
+            mountInContainer: true
+          }
+        })
+      }
+    }
+    getACComp()
+  }
+
+  if (accountCenterMountToElement) {
+    const accountCenter = document.createElement('onboard-account-center')
+    attachCompToDom(
+      accountCenter,
+      accountCenterMountToElement,
+      accountCenterComponent,
+      $accountCenter$
+    )
+  }
 </script>
 
 <style>
@@ -353,6 +406,16 @@
   <SwitchChain />
 {/if}
 
+{#if !$accountCenter$.enabled && !$notify$.enabled}
+  <div
+    class="container flex flex-column fixed z-indexed"
+    style="top: 0; right: 0; {device.type === 'mobile'
+      ? 'padding-bottom: 0;'
+      : ''} "
+    id="transaction-preview-container"
+  />
+{/if}
+
 {#if displayAccountCenterNotifySameContainer}
   <div
     class="container flex flex-column fixed z-indexed"
@@ -376,6 +439,9 @@
         {/if}
       {/await}
     {/if}
+    {#if $accountCenter$.position.includes('bottom')}
+      <div id="transaction-preview-container" style="margin-bottom: 8px;" />
+    {/if}
     <div
       style={!$accountCenter$.expanded &&
       $accountCenter$.minimal &&
@@ -386,13 +452,17 @@
           $accountCenter$.position.includes('Left')
         ? 'margin-right: auto'
         : ''}
+      id="account-center-with-notify"
     >
       {#await accountCenterComponent then AccountCenter}
         {#if AccountCenter}
-          <svelte:component this={AccountCenter} settings={$accountCenter$} />
+          <svelte:component this={AccountCenter} />
         {/if}
       {/await}
     </div>
+    {#if $accountCenter$.position.includes('top')}
+      <div id="transaction-preview-container" style="margin-top: 8px;" />
+    {/if}
     {#if $notify$.position.includes('top') && $accountCenter$.position.includes('top') && samePositionOrMobile}
       {#await notifyComponent then Notify}
         {#if Notify}
@@ -418,6 +488,9 @@
       ? 'padding-top:0;'
       : ''} "
   >
+    {#if $accountCenter$.position.includes('bottom')}
+      <div id="transaction-preview-container" style="margin-bottom: 8px;" />
+    {/if}
     <div
       style={!$accountCenter$.expanded &&
       $accountCenter$.minimal &&
@@ -432,11 +505,14 @@
       {#if $accountCenter$.enabled && $wallets$.length}
         {#await accountCenterComponent then AccountCenter}
           {#if AccountCenter}
-            <svelte:component this={AccountCenter} settings={$accountCenter$} />
+            <svelte:component this={AccountCenter} />
           {/if}
         {/await}
       {/if}
     </div>
+    {#if $accountCenter$.position.includes('top')}
+      <div id="transaction-preview-container" style="margin-top: 8px;" />
+    {/if}
   </div>
 {/if}
 {#if displayNotifySeparate}
@@ -450,6 +526,9 @@
       ? 'padding-top:0;'
       : ''} "
   >
+    {#if $notify$.position.includes('top')}
+      <div id="transaction-preview-container" />
+    {/if}
     {#await notifyComponent then Notify}
       {#if Notify}
         <svelte:component
@@ -460,5 +539,8 @@
         />
       {/if}
     {/await}
+    {#if $notify$.position.includes('bottom')}
+      <div id="transaction-preview-container" />
+    {/if}
   </div>
 {/if}

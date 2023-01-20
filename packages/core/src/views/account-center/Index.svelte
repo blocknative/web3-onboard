@@ -1,17 +1,23 @@
 <script lang="ts">
   import { onDestroy } from 'svelte'
   import { updateAccountCenter } from '../../store/actions.js'
-  import type { AccountCenter } from '../../types.js'
+  import { wallets$ } from '../../streams.js'
+  import { state } from '../../store/index.js'
+  import { shareReplay, startWith } from 'rxjs/operators'
   import Maximized from './Maximized.svelte'
   import Minimized from './Minimized.svelte'
   import Micro from './Micro.svelte'
 
-  export let settings: AccountCenter
+  export let mountInContainer = false
+
+  const accountCenter$ = state
+    .select('accountCenter')
+    .pipe(startWith(state.get().accountCenter), shareReplay(1))
 
   onDestroy(minimize)
 
   function minimize() {
-    if (settings.expanded) {
+    if ($accountCenter$.expanded) {
       updateAccountCenter({ expanded: false })
     }
   }
@@ -19,10 +25,16 @@
 
 <svelte:window on:click={minimize} />
 
-{#if !settings.expanded && !settings.minimal}
+{#if mountInContainer}
+  {#if $wallets$.length}
+    <div class="container flex flex-column fixed z-indexed">
+      <svelte:self />
+    </div>
+  {/if}
+{:else if !$accountCenter$.expanded && !$accountCenter$.minimal}
   <!-- minimized -->
   <Minimized />
-{:else if !settings.expanded && settings.minimal}
+{:else if !$accountCenter$.expanded && $accountCenter$.minimal}
   <!-- micro -->
   <Micro />
 {:else}

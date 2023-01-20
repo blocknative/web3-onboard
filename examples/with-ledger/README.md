@@ -32,4 +32,4 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Learn More
 
-To learn more about how you can use web3Onboard to integrate Ledger and other popular web3 wallets into your dApps, take a look at our documentation: [Web3Onboard Documentation](https://docs.blocknative.com/onboard) for more details.
+To learn more about how you can use web3Onboard to integrate Ledger and other popular web3 wallets into your dApps, take a look at our documentation: [Web3Onboard Documentation](https://onboard.blocknative.com/docs/overview/introduction#features) for more details.

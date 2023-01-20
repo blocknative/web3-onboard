@@ -1130,24 +1130,24 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.0"
 
-"@web3-onboard/common@^2.2.2":
-  version "2.2.2"
-  resolved "https://registry.npmjs.org/@web3-onboard/common/-/common-2.2.2.tgz#abef8ca861835ab00e5b4641462de2c3db73fc89"
-  integrity sha512-04Y2Fryiu48nW27dgAtYmPugdhYbeIZq4HM1wsqRftQjgyEWnsam3YyeKRWBABa5iTsE2a/Fo4LofuBG5RMVYw==
+"@web3-onboard/common@^2.2.3":
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/common/-/common-2.2.3.tgz#fc0841186d84cf017f4cf0368dcd349e6ed8dc8b"
+  integrity sha512-ZI0XuCpxtuL9XGgeWglXR6rhgLP261EMEstjonxy8ptuOKLlTJcgvL7wSx2MjNDO3i/qmb/PGQpInvxYx5klSA==
   dependencies:
     bignumber.js "^9.1.0"
     ethers "5.5.4"
-    joi "^17.4.2"
+    joi "^17.6.1"
 
-"@web3-onboard/walletconnect@^2.1.2":
-  version "2.1.2"
-  resolved "https://registry.npmjs.org/@web3-onboard/walletconnect/-/walletconnect-2.1.2.tgz#5c3bbca6c370af47a1b3d37b0819fae8449e68ea"
-  integrity sha512-uE7vWc+FWO83ML00gmYQZnSc20Ro0Qxl/AcWPBWsmHGGJQOEf1r99S8WTUh0xB9gx9LryRpn9hQdRPFbW6uMwQ==
+"@web3-onboard/walletconnect@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/walletconnect/-/walletconnect-2.2.0.tgz#ea537d91f891406fa1a4875833e45e6f154f2aff"
+  integrity sha512-nZAZo+oiWNHarggK4qVwknIg4cW6aUcVAwYMbQUQWtuLW8Fx3sW80xwUeLGfnyIWs7DWxS3SK5Rp2+Uk2Xl9uQ==
   dependencies:
     "@ethersproject/providers" "^5.5.0"
     "@walletconnect/client" "^1.7.1"
     "@walletconnect/qrcode-modal" "^1.7.1"
-    "@web3-onboard/common" "^2.2.2"
+    "@web3-onboard/common" "^2.2.3"
     rxjs "^7.5.2"
 
 abbrev@1:
@@ -1488,9 +1488,9 @@ decamelize@^1.2.0:
   integrity sha512-z2S+W9X73hAUUki+N+9Za2lBlun89zigOyGrsax+KUQ6wKW4ZoWpEYBkGhQjwAjjDCkWxhY0VKEhk8wzY7F5cA==
 
 decode-uri-component@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.npmjs.org/decode-uri-component/-/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
-  integrity sha512-hjf+xovcEn31w/EUYdTXQh/8smFL/dzYjohQGEIgjyNavaJfBY2p5F527Bo1VPATxv0VYTUC2bOcXvqFwk78Og==
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.2.tgz#e69dbe25d37941171dd540e024c444cd5188e1e9"
+  integrity sha512-FqUYQ+8o158GyGTrMFJms9qh3CqTKvAqgqsTnkLI8sKu0028orqBhxNMFkFen0zGyg6epACD32pjVk58ngIErQ==
 
 deep-is@^0.1.3:
   version "0.1.4"
@@ -2346,10 +2346,10 @@ isexe@^2.0.0:
   resolved "https://registry.npmjs.org/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
   integrity sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==
 
-joi@^17.4.2:
-  version "17.6.0"
-  resolved "https://registry.npmjs.org/joi/-/joi-17.6.0.tgz#0bb54f2f006c09a96e75ce687957bd04290054b2"
-  integrity sha512-OX5dG6DTbcr/kbMFj0KGYxuew69HPcAE3K/sZpEV2nP6e/j/C0HV+HNiBPCASxdx5T7DMoa0s8UeHWMnb6n2zw==
+joi@^17.6.1:
+  version "17.7.0"
+  resolved "https://registry.yarnpkg.com/joi/-/joi-17.7.0.tgz#591a33b1fe1aca2bc27f290bcad9b9c1c570a6b3"
+  integrity sha512-1/ugc8djfn93rTE3WRKdCzGGt/EtiYKxITMO4Wiv6q5JL1gl9ePt4kBsl1S499nbosspfctIQTpYIhSmHA3WAg==
   dependencies:
     "@hapi/hoek" "^9.0.0"
     "@hapi/topo" "^5.0.0"

@@ -36,6 +36,21 @@
     font-weight: 700;
   }
 
+  .action-required-heading,
+  .action-required-info {
+    color: var(
+      --onboard-action-required-text-color,
+      var(--onboard-black, inherit)
+    );
+  }
+
+  .action-required-btn {
+    color: var(
+      --onboard-action-required-btn-text-color,
+      var(--onboard-black, inherit)
+    );
+  }
+
   p {
     margin: 0;
     font-weight: 400;
@@ -57,9 +72,11 @@
       <InfoIcon />
     </div>
 
-    <h4>{$_('modals.actionRequired.heading', { values: { wallet } })}</h4>
+    <h4 class="action-required-heading">
+      {$_('modals.actionRequired.heading', { values: { wallet } })}
+    </h4>
 
-    <p>
+    <p class="action-required-info">
       {$_('modals.actionRequired.paragraph')}
 
       {#if wallet === 'MetaMask'}
@@ -71,8 +88,9 @@
       {/if}
     </p>
 
-    <button class="button-neutral-solid rounded" on:click={close}
-      >{$_('modals.actionRequired.buttonText')}</button
+    <button
+      class="button-neutral-solid rounded action-required-btn"
+      on:click={close}>{$_('modals.actionRequired.buttonText')}</button
     >
   </div>
 </Modal>

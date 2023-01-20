@@ -20,7 +20,7 @@ function sequence(options?: SequenceOptions): WalletInit {
         const { sequence } = await import('0xsequence')
         const { createEIP1193Provider } = await import('@web3-onboard/common')
 
-        const instance = new sequence.Wallet(network);
+        const instance = await sequence.initWallet(network);
 
         if (!instance.isConnected()) {
           const connectDetails = await instance.connect({

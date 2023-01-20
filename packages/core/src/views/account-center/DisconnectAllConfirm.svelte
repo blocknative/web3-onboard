@@ -1,6 +1,6 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
-  import Modal from '../shared/Modal.svelte'
+  import { Modal } from '../shared'
   import en from '../../i18n/en.json'
   import warningIcon from '../../icons/warning.js'
 

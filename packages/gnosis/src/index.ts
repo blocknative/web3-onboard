@@ -5,14 +5,20 @@ type GnosisOptions = {
 }
 
 function gnosis(options?: GnosisOptions): WalletInit {
-  const { whitelistedDomains = [/gnosis-safe.io/] } = options || {}
+  const {
+    whitelistedDomains = [
+      /^https:\/\/gnosis-safe\.io$/,
+      /^https:\/\/app\.safe\.global$/,
+      /^https:\/\/safe\.global$/
+    ]
+  } = options || {}
 
   return () => {
     const loadedInIframe = window.self !== window.top
 
     return loadedInIframe
       ? {
-          label: 'Gnosis Safe',
+          label: 'Safe',
           getIcon: async () => (await import('./icon.js')).default,
           getInterface: async () => {
             const { default: SafeAppsSDK } = await import(
@@ -44,7 +50,7 @@ function gnosis(options?: GnosisOptions): WalletInit {
 
             if (!safe) {
               throw new Error(
-                `App must be loaded in a Safe App context, head to <a href="https://gnosis-safe.io/app">the Gnosis Safe App<a/> and open this website as an app.`
+                `App must be loaded in a Safe App context, head to <a href="https://gnosis-safe.io/app">the Safe</a> and open this website as an app.`
               )
             }
 

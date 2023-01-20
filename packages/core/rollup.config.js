@@ -54,6 +54,7 @@ export default {
     'eventemitter3',
     'bignumber.js',
     'bnc-sdk',
-    'nanoid'
+    'nanoid',
+    '@unstoppabledomains/resolution'
   ]
 }

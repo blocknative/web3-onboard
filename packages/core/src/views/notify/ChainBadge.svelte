@@ -2,8 +2,8 @@
   export let icon: string
   export let borderColorVar: string
   export let size: number
-  export let padding: number = 0
-  export let background: string = 'transparent'
+  export let padding = 0
+  export let background = 'transparent'
 </script>
 
 <style>

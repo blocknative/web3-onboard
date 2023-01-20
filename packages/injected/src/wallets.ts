@@ -74,6 +74,20 @@ const exodus: InjectedWalletModule = {
   platforms: ['all']
 }
 
+const frontier: InjectedWalletModule = {
+  label: ProviderLabel.Frontier,
+  injectedNamespace: InjectedNameSpace.Frontier,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider &&
+    !!provider['ethereum'] &&
+    !!provider['ethereum'][ProviderIdentityFlag.Frontier],
+  getIcon: async () => (await import('./icons/frontier.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.frontier.ethereum)
+  }),
+  platforms: ['all']
+}
+
 const brave: InjectedWalletModule = {
   label: ProviderLabel.Brave,
   injectedNamespace: InjectedNameSpace.Ethereum,
@@ -408,26 +422,7 @@ const tokenpocket: InjectedWalletModule = {
     !!provider[ProviderIdentityFlag.TokenPocket] &&
     !provider[ProviderIdentityFlag.TP],
   getIcon: async () => (await import('./icons/tokenpocket.js')).default,
-  getInterface: async ({ EventEmitter }) => {
-    const emitter = new EventEmitter()
-
-    const provider = createEIP1193Provider(window.ethereum, {
-      wallet_switchEthereumChain: ({ baseRequest, params }) => {
-        emitter.emit('chainChanged', params[0].chainId)
-        return baseRequest({
-          method: 'wallet_switchEthereumChain',
-          params
-        })
-      },
-      eth_selectAccounts: UNSUPPORTED_METHOD
-    })
-
-    provider.on = emitter.on.bind(emitter)
-
-    return {
-      provider
-    }
-  },
+  getInterface: getInjectedInterface(ProviderIdentityFlag.TokenPocket),
   platforms: ['all']
 }
 
@@ -496,6 +491,18 @@ const tally: InjectedWalletModule = {
   platforms: ['desktop']
 }
 
+const zeal: InjectedWalletModule = {
+  label: ProviderLabel.Zeal,
+  injectedNamespace: InjectedNameSpace.Zeal,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Zeal],
+  getIcon: async () => (await import('./icons/zeal.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.zeal)
+  }),
+  platforms: ['desktop']
+}
+
 const rabby: InjectedWalletModule = {
   label: ProviderLabel.Rabby,
   injectedNamespace: InjectedNameSpace.Ethereum,
@@ -524,9 +531,18 @@ const gamestop: InjectedWalletModule = {
   checkProviderIdentity: ({ provider }) =>
     !!provider && !!provider[ProviderIdentityFlag.GameStop],
   getIcon: async () => (await import('./icons/gamestop.js')).default,
-  getInterface: async () => ({
-    provider: createEIP1193Provider(window.gamestop)
-  }),
+  getInterface: async () => {
+    const provider = createEIP1193Provider(window.gamestop, {
+      eth_chainId: ({ baseRequest }) =>
+        baseRequest({ method: 'eth_chainId' }).then(
+          id => `0x${parseInt(id).toString(16)}`
+        ),
+      wallet_switchEthereumChain: UNSUPPORTED_METHOD
+    })
+    provider.removeListener = (event, listener) => {}
+    provider.on = (event, listener) => {}
+    return { provider }
+  },
   platforms: ['desktop']
 }
 
@@ -565,8 +581,89 @@ const core: InjectedWalletModule = {
   platforms: ['desktop', 'Chrome', 'Chromium', 'Microsoft Edge']
 }
 
+const bitski: InjectedWalletModule = {
+  label: ProviderLabel.Bitski,
+  injectedNamespace: InjectedNameSpace.Bitski,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider.getProvider && !!provider.getProvider().isBitski,
+  getIcon: async () => (await import('./icons/bitski.js')).default,
+  getInterface: async () => ({
+    provider:
+      window.Bitski && window.Bitski.getProvider && window.Bitski.getProvider()
+  }),
+  platforms: ['all']
+}
+
+const zerion: InjectedWalletModule = {
+  label: ProviderLabel.Zerion,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Zerion],
+  getIcon: async () => (await import('./icons/zerion.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.ethereum)
+  }),
+  platforms: ['all']
+}
+
+const enkrypt: InjectedWalletModule = {
+  label: ProviderLabel.Enkrypt,
+  injectedNamespace: InjectedNameSpace.Enkrypt,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider.providers && !!provider.providers.ethereum,
+  getIcon: async () => (await import('./icons/enkrypt.js')).default,
+  getInterface: async () => {
+    const addListener: SimpleEventEmitter['on'] =
+      window.enkrypt.providers.ethereum.on.bind(
+        window.enkrypt.providers.ethereum
+      )
+
+    window.enkrypt.providers.ethereum.on = (event, func) => {
+      // intercept chainChanged event and format string
+      if (event === 'chainChanged') {
+        addListener(event, (chainId: ChainId) => {
+          const cb = func as ChainListener
+          cb(`0x${parseInt(chainId as string).toString(16)}`)
+        })
+      } else {
+        addListener(event, func)
+      }
+    }
+
+    const provider = createEIP1193Provider(window.enkrypt.providers.ethereum, {
+      eth_chainId: ({ baseRequest }) =>
+        baseRequest({ method: 'eth_chainId' }).then(
+          id => `0x${parseInt(id as string).toString(16)}`
+        )
+    })
+
+    provider.removeListener = (event, func) => {}
+
+    return {
+      provider
+    }
+  },
+  platforms: ['all']
+}
+
+const phantom: InjectedWalletModule = {
+  label: ProviderLabel.Phantom,
+  injectedNamespace: InjectedNameSpace.Phantom,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider &&
+    !!provider['ethereum'] &&
+    !!provider['ethereum'][ProviderIdentityFlag.Phantom],
+  getIcon: async () => (await import('./icons/phantom.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.phantom.ethereum)
+  }),
+  platforms: ['all']
+}
+
 const wallets = [
+  zeal,
   exodus,
+  frontier,
   metamask,
   binance,
   coinbase,
@@ -598,7 +695,11 @@ const wallets = [
   gamestop,
   bitkeep,
   sequence,
-  core
+  core,
+  bitski,
+  enkrypt,
+  phantom,
+  zerion
 ]
 
 export default wallets

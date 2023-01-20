@@ -9,7 +9,6 @@ export const APP_INITIAL_STATE: AppState = {
     enabled: true,
     position: 'topRight',
     expanded: false,
-    containerElement: 'body',
     minimal: configuration.device.type === 'mobile'
   },
   notify: {
@@ -33,3 +32,5 @@ export const APP_INITIAL_STATE: AppState = {
 export const STORAGE_KEYS = {
   TERMS_AGREEMENT: 'onboard.js:agreement'
 }
+
+export const MOBILE_WINDOW_WIDTH = 768

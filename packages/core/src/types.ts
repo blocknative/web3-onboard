@@ -12,6 +12,7 @@ import type {
 } from '@web3-onboard/common'
 
 import type gas from '@web3-onboard/gas'
+import type { TransactionPreviewAPI } from '@web3-onboard/transaction-preview'
 
 import type en from './i18n/en.json'
 import type { EthereumTransactionData, Network } from 'bnc-sdk'
@@ -24,7 +25,7 @@ export interface InitOptions {
   /**
    * The chains that your app works with
    */
-  chains: Chain[] | ChainWithDecimalId[]
+  chains: (Chain | ChainWithDecimalId)[]
   /**
    * Additional metadata about your app to be displayed in the Onboard UI
    */
@@ -50,8 +51,18 @@ export interface InitOptions {
    * Transaction notification options
    */
   notify?: Partial<NotifyOptions> | Partial<Notify>
-  /**Gas module */
+  /** Gas module */
   gas?: typeof gas
+  /**
+   * Object mapping for W3O components with the key being the DOM
+   * element to mount the component to, this defines the DOM container
+   *  element for svelte to attach the component
+   */
+  containerElements?: Partial<ContainerElements>
+  /**
+   * Transaction Preview module
+   */
+  transactionPreview?: TransactionPreviewAPI
 }
 
 export interface ConnectOptions {
@@ -94,6 +105,7 @@ export interface WalletState {
 export type Account = {
   address: Address
   ens: Ens | null
+  uns: Uns | null
   balance: Balances | null
 }
 
@@ -104,6 +116,10 @@ export interface Ens {
   avatar: Avatar | null
   contentHash: string | null
   getText: (key: string) => Promise<string | undefined>
+}
+
+export interface Uns {
+  name: string
 }
 
 export type Avatar = {
@@ -131,6 +147,8 @@ export type Configuration = {
   appMetadata?: AppMetadata | null
   apiKey?: string
   gas?: typeof gas
+  containerElements?: ContainerElements
+  transactionPreview?: TransactionPreviewAPI
 }
 
 export type Locale = string
@@ -156,12 +174,32 @@ export type AccountCenter = {
   position?: AccountCenterPosition
   expanded?: boolean
   minimal?: boolean
+  /**
+   * @deprecated Use top level containerElements property
+   * with the accountCenter prop set to the desired container El
+   */
   containerElement?: string
 }
 
 export type AccountCenterOptions = {
   desktop: Omit<AccountCenter, 'expanded'>
   mobile: Omit<AccountCenter, 'expanded'>
+}
+
+export type ContainerElements = {
+  /** When attaching the Connect Modal to a container el be aware that 
+   * the modal was styled to be mounted through the app to the html body 
+   * and will respond to screen width rather than container width
+   * This is specifically apparent on mobile so please test thoroughly
+   * Also consider that other DOM elements(specifically Notifications and 
+   * Account Center) will also append to this DOM el if enabled and their 
+   * own containerEl are not defined
+  */
+  connectModal?: string
+  /** when using the accountCenter with a container el the accountCenter 
+   * position properties are ignored 
+  */
+  accountCenter?: string
 }
 
 export type Notify = {
@@ -342,4 +380,16 @@ export type DeviceNotBrowser = {
   type: null
   os: null
   browser: null
+}
+
+export type WalletPermission = {
+  id: string
+  parentCapability: string
+  invoker: string
+  caveats: {
+    type: string
+    value: string[]
+  }[]
+
+  date: number
 }

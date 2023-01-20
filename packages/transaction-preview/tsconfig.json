@@ -1,0 +1,17 @@
+{
+  "extends": "@tsconfig/svelte/tsconfig.json",
+
+  "include": ["src/**/*"],
+  "exclude": ["node_modules/*", "dist"],
+  "compilerOptions": {
+    "strict": true,
+    "declaration": true,
+    "declarationDir": "dist",
+    "target": "esnext",
+    "module": "esnext",
+    "resolveJsonModule": true,
+    "strictNullChecks": false,
+    "allowSyntheticDefaultImports": true
+  },
+  "outDir": "dist",
+}

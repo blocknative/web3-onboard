@@ -274,7 +274,7 @@
       var(--onboard-font-family-normal, var(--font-family-normal))
     );
     color: var(--account-select-black, var(--onboard-black, var(--black)));
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     z-index: var(

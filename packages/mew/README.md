@@ -1,5 +1,8 @@
 # @web3-onboard/mew
 
+## (Deprecated) Wallet module for connecting WalletLink to web3-onboard
+_Use [@web3-onboard/mew-wallet](../mew-wallet/README.md)_
+
 ## Wallet module for connecting Mew wallet to web3-onboard
 
 ### Install

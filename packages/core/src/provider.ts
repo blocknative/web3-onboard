@@ -1,7 +1,15 @@
 import { fromEventPattern, Observable } from 'rxjs'
 import { filter, takeUntil, take, share, switchMap } from 'rxjs/operators'
 import partition from 'lodash.partition'
-import { providers } from 'ethers'
+import { providers, utils } from 'ethers'
+import { weiToEth } from '@web3-onboard/common'
+import { disconnectWallet$ } from './streams.js'
+import { updateAccount, updateWallet } from './store/actions.js'
+import { validEnsChain } from './utils.js'
+import disconnect from './disconnect.js'
+import { state } from './store/index.js'
+import { getBNMulitChainSdk } from './services.js'
+import { Resolution } from '@unstoppabledomains/resolution'
 
 import type {
   ChainId,
@@ -14,14 +22,15 @@ import type {
   SelectAccountsRequest
 } from '@web3-onboard/common'
 
-import { weiToEth } from '@web3-onboard/common'
-import { disconnectWallet$ } from './streams.js'
-import type { Account, Address, Balances, Ens, WalletState } from './types.js'
-import { updateAccount, updateWallet } from './store/actions.js'
-import { validEnsChain } from './utils.js'
-import disconnect from './disconnect.js'
-import { state } from './store/index.js'
-import { getBlocknativeSdk } from './services.js'
+import type {
+  Account,
+  Address,
+  Balances,
+  Ens,
+  Uns,
+  WalletPermission,
+  WalletState
+} from './types.js'
 
 export const ethersProviders: {
   [key: string]: providers.StaticJsonRpcProvider
@@ -112,6 +121,17 @@ export function trackWallet(
 
   // when account changed, set it to first account and subscribe to events
   accountsChanged$.subscribe(async ([address]) => {
+    // sync accounts with internal state
+    // in the case of an account has been manually disconnected
+    try {
+      await syncWalletConnectedAccounts(label)
+    } catch (error) {
+      console.warn(
+        'Web3Onboard: Error whilst trying to sync connected accounts:',
+        error
+      )
+    }
+
     // no address, then no account connected, so disconnect wallet
     // this could happen if user locks wallet,
     // or if disconnects app from wallet
@@ -128,10 +148,15 @@ export function trackWallet(
       account => account.address === address
     )
 
-    // update accounts without ens and balance first
+    // update accounts without ens/uns and balance first
     updateWallet(label, {
       accounts: [
-        existingAccount || { address: address, ens: null, balance: null },
+        existingAccount || {
+          address: address,
+          ens: null,
+          uns: null,
+          balance: null
+        },
         ...restAccounts
       ]
     })
@@ -139,7 +164,7 @@ export function trackWallet(
     // if not existing account and notifications,
     // then subscribe to transaction events
     if (state.get().notify.enabled && !existingAccount) {
-      const sdk = await getBlocknativeSdk()
+      const sdk = await getBNMulitChainSdk()
 
       if (sdk) {
         const wallet = state
@@ -158,7 +183,7 @@ export function trackWallet(
     }
   })
 
-  // also when accounts change, update Balance and ENS
+  // also when accounts change, update Balance and ENS/UNS
   accountsChanged$
     .pipe(
       switchMap(async ([address]) => {
@@ -180,19 +205,30 @@ export function trackWallet(
         const balanceProm = getBalance(address, chain)
         const account = accounts.find(account => account.address === address)
 
-        const ensProm = account.ens
-          ? Promise.resolve(account.ens)
-          : validEnsChain(connectedWalletChain.id)
-          ? getEns(address, chain)
-          : Promise.resolve(null)
+        const ensProm =
+          account && account.ens
+            ? Promise.resolve(account.ens)
+            : validEnsChain(connectedWalletChain.id)
+            ? getEns(address, chain)
+            : Promise.resolve(null)
 
-        return Promise.all([Promise.resolve(address), balanceProm, ensProm])
+        const unsProm =
+          account && account.uns
+            ? Promise.resolve(account.uns)
+            : getUns(address, chain)
+
+        return Promise.all([
+          Promise.resolve(address),
+          balanceProm,
+          ensProm,
+          unsProm
+        ])
       })
     )
     .subscribe(res => {
       if (!res) return
-      const [address, balance, ens] = res
-      updateAccount(label, address, { balance, ens })
+      const [address, balance, ens, uns] = res
+      updateAccount(label, address, { balance, ens, uns })
     })
 
   const chainChanged$ = listenChainChanged({ provider, disconnected$ }).pipe(
@@ -208,7 +244,7 @@ export function trackWallet(
     if (chainId === connectedWalletChain.id) return
 
     if (state.get().notify.enabled) {
-      const sdk = await getBlocknativeSdk()
+      const sdk = await getBNMulitChainSdk()
 
       if (sdk) {
         const wallet = state
@@ -245,6 +281,7 @@ export function trackWallet(
         ({
           address,
           ens: null,
+          uns: null,
           balance: null
         } as Account)
     )
@@ -255,7 +292,7 @@ export function trackWallet(
     })
   })
 
-  // when chain changes get ens and balance for each account for wallet
+  // when chain changes get ens/uns and balance for each account for wallet
   chainChanged$
     .pipe(
       switchMap(async chainId => {
@@ -274,12 +311,21 @@ export function trackWallet(
               ? getEns(address, chain)
               : Promise.resolve(null)
 
-            const [balance, ens] = await Promise.all([balanceProm, ensProm])
+            const unsProm = validEnsChain(chainId)
+              ? getUns(address, chain)
+              : Promise.resolve(null)
+
+            const [balance, ens, uns] = await Promise.all([
+              balanceProm,
+              ensProm,
+              unsProm
+            ])
 
             return {
               address,
               balance,
-              ens
+              ens,
+              uns
             }
           })
         )
@@ -328,6 +374,33 @@ export async function getEns(
     }
 
     return ens
+  } catch (error) {
+    console.error(error)
+    return null
+  }
+}
+
+export async function getUns(
+  address: Address,
+  chain: Chain
+): Promise<Uns | null> {
+  // check if address is valid ETH address before attempting to resolve
+  // chain we don't recognize and don't have a rpcUrl for requests
+  if (!utils.isAddress(address) || !chain) return null
+
+  const resolutionInstance = new Resolution()
+
+  try {
+    const name = await resolutionInstance.reverse(address)
+    let uns = null
+
+    if (name) {
+      uns = {
+        name
+      }
+    }
+
+    return uns
   } catch (error) {
     console.error(error)
     return null
@@ -389,4 +462,42 @@ export function addNewChain(
       }
     ]
   })
+}
+
+export async function getPermissions(
+  provider: EIP1193Provider
+): Promise<WalletPermission[]> {
+  try {
+    const permissions = (await provider.request({
+      method: 'wallet_getPermissions'
+    })) as WalletPermission[]
+
+    return Array.isArray(permissions) ? permissions : []
+  } catch (error) {
+    return []
+  }
+}
+
+export async function syncWalletConnectedAccounts(
+  label: WalletState['label']
+): Promise<void> {
+  const wallet = state.get().wallets.find(wallet => wallet.label === label)
+  const permissions = await getPermissions(wallet.provider)
+  const accountsPermissions = permissions.find(
+    ({ parentCapability }) => parentCapability === 'eth_accounts'
+  )
+
+  if (accountsPermissions) {
+    const { value: connectedAccounts } = accountsPermissions.caveats.find(
+      ({ type }) => type === 'restrictReturnedAccounts'
+    ) || { value: null }
+
+    if (connectedAccounts) {
+      const syncedAccounts = wallet.accounts.filter(({ address }) =>
+        connectedAccounts.includes(address)
+      )
+
+      updateWallet(wallet.label, { ...wallet, accounts: syncedAccounts })
+    }
+  }
 }

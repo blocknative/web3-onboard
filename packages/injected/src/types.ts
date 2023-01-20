@@ -22,6 +22,7 @@ export enum ProviderIdentityFlag {
   Detected = 'request',
   Dcent = 'isDcentWallet',
   Exodus = 'isExodus',
+  Frontier = 'isFrontier',
   Frame = 'isFrame',
   HuobiWallet = 'isHbWallet',
   HyperPay = 'isHyperPay',
@@ -47,7 +48,12 @@ export enum ProviderIdentityFlag {
   BitKeep = 'isBitKeep',
   Sequence = 'isSequence',
   Core = 'isAvalanche',
-  Opera = 'isOpera'
+  Opera = 'isOpera',
+  Bitski = 'isBitski',
+  Enkrypt = 'isEnkrypt',
+  Zeal = 'isZeal',
+  Phantom = 'isPhantom',
+  Zerion = 'isZerion'
 }
 
 export enum ProviderLabel {
@@ -55,6 +61,7 @@ export enum ProviderLabel {
   AToken = 'AToken',
   Binance = 'Binance Smart Wallet',
   Bitpie = 'Bitpie',
+  Bitski = 'Bitski',
   BlockWallet = 'BlockWallet',
   Brave = 'Brave Wallet',
   Coinbase = 'Coinbase Wallet',
@@ -62,6 +69,7 @@ export enum ProviderLabel {
   Detected = 'Detected Wallet',
   Exodus = 'Exodus',
   Frame = 'Frame',
+  Frontier = 'Frontier',
   HuobiWallet = 'Huobi Wallet',
   HyperPay = 'HyperPay',
   ImToken = 'imToken',
@@ -85,7 +93,11 @@ export enum ProviderLabel {
   GameStop = 'GameStop Wallet',
   BitKeep = 'BitKeep',
   Sequence = 'Sequence',
-  Core = 'Core'
+  Core = 'Core',
+  Enkrypt = 'Enkrypt',
+  Zeal = 'Zeal',
+  Phantom = 'Phantom',
+  Zerion = 'Zerion'
 }
 
 export interface MeetOneProvider extends ExternalProvider {
@@ -107,13 +119,19 @@ export enum InjectedNameSpace {
   XFI = 'xfi',
   GameStop = 'gamestop',
   BitKeep = 'bitkeep',
-  Avalanche = 'avalanche'
+  Avalanche = 'avalanche',
+  Bitski = 'Bitski',
+  Enkrypt = 'enkrypt',
+  Zeal = 'zeal',
+  Frontier = 'frontier',
+  Phantom = 'phantom'
 }
 
 export interface CustomWindow extends Window {
   BinanceChain: BinanceProvider
   ethereum: InjectedProvider
   tally: InjectedProvider
+  zeal: InjectedProvider
   web3: ExternalProvider | MeetOneProvider
   arbitrum: InjectedProvider
   xfi: {
@@ -124,6 +142,20 @@ export interface CustomWindow extends Window {
     ethereum: InjectedProvider
   }
   avalanche: InjectedProvider
+  Bitski: {
+    getProvider(): InjectedProvider
+  }
+  enkrypt: {
+    providers: {
+      ethereum: InjectedProvider
+    }
+  }
+  frontier: {
+    ethereum: InjectedProvider
+  }
+  phantom: {
+    ethereum: InjectedProvider
+  }
 }
 
 export type InjectedProvider = ExternalProvider &
@@ -133,20 +165,30 @@ export type InjectedProvider = ExternalProvider &
   Record<string, InjectedProvider[]>
 
 export type WalletFilters = {
-  // A provider label mapped to a list of excluded platforms
-  // or a boolean indicating if it should be included.
-  [key in ProviderLabel | string]?: Platform[] | boolean
+  /**A provider label mapped to a list of excluded platforms
+   * or a boolean indicating if it should be included. */
+  [key in ProviderLabel | string]?: Platform[] | boolean | 'unavailable'
 }
 
 export interface InjectedWalletOptions {
-  // A list of injected wallets to include that
-  // are not included by default here: ./packages/injected/
+  /**A list of injected wallets to include that
+   * are not included by default here: ./packages/injected/ */
   custom?: InjectedWalletModule[]
-  // A mapping of a provider label to a list of filtered platforms
-  // or a boolean indicating if it should be included or not.
-  // By default all wallets listed in ./packages/injected/
-  // are included add them to here to remove them.
+  /**A mapping of a provider label to a list of filtered platforms
+   * or a boolean indicating if it should be included or not.
+   * By default all wallets listed in ./packages/injected/
+   * are included add them to here to remove them. */
   filter?: WalletFilters
+  /**Will display wallets to be selected even if they
+   * are not currently available to the end user.
+   */
+  displayUnavailable?: boolean
+  /**A function that allows for customizing the message to be displayed if the wallet
+   * is unavailable
+   */
+  walletUnavailableMessage?: (wallet: WalletModule) => string
+  /**Function that can be used to sort the order of wallets that are displayed */
+  sort?: (wallets: WalletModule[]) => WalletModule[]
 }
 
 export interface InjectedWalletModule extends WalletModule {

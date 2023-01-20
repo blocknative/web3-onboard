@@ -1,13 +1,16 @@
 <script lang="ts">
+  import { MOBILE_WINDOW_WIDTH } from '../../constants.js'
   import { state } from '../../store/index.js'
   import type { WalletWithLoadingIcon } from '../../types.js'
-  import Warning from '../shared/Warning.svelte'
+  import { Warning } from '../shared/index.js'
   import WalletButton from './WalletButton.svelte'
 
   export let wallets: WalletWithLoadingIcon[]
   export let selectWallet: (wallet: WalletWithLoadingIcon) => Promise<void>
   export let connectingWalletLabel: string
   export let connectingErrorMessage: string
+
+  let windowWidth: number
 
   function checkConnected(label: string) {
     const { wallets } = state.get()
@@ -16,30 +19,46 @@
 </script>
 
 <style>
-  .outer-container {
-    padding: var(--onboard-spacing-4, var(--spacing-4));
-    padding-top: 0;
+  .wallets-container {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: scroll;
+    overflow-y: hidden;
+
+    padding: 0.75rem 0.5rem;
+
+    border-bottom: 1px solid
+      var(
+        --onboard-wallet-button-border-color,
+        var(--onboard-primary-200, var(--primary-200))
+      );
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
 
-  .wallets-container {
-    display: grid;
-    grid-template-columns: repeat(var(--onboard-wallet-columns, 2), 1fr);
-    gap: var(--onboard-spacing-5, var(--spacing-5));
-    width: 100%;
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .wallets-container::-webkit-scrollbar {
+    display: none;
   }
 
   .warning-container {
-    margin-bottom: 1rem;
+    margin: 1rem 1rem 0;
   }
 
-  @media all and (max-width: 520px) {
+  @media all and (min-width: 768px) {
     .wallets-container {
-      grid-template-columns: repeat(1, 1fr);
+      display: grid;
+      grid-template-columns: repeat(var(--onboard-wallet-columns, 2), 1fr);
+      padding: 1rem;
     }
   }
 </style>
 
-<div class="outer-container flex flex-column">
+<svelte:window bind:innerWidth={windowWidth} />
+
+<div class="outer-container">
   {#if connectingErrorMessage}
     <div class="warning-container">
       <Warning>{@html connectingErrorMessage}</Warning>
@@ -54,6 +73,9 @@
         label={wallet.label}
         icon={wallet.icon}
         onClick={() => selectWallet(wallet)}
+        disabled={windowWidth <= MOBILE_WINDOW_WIDTH &&
+          connectingWalletLabel &&
+          connectingWalletLabel !== wallet.label}
       />
     {/each}
   </div>

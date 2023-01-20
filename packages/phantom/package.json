@@ -1,0 +1,64 @@
+{
+  "name": "@web3-onboard/phantom",
+  "version": "2.0.0-alpha.1",
+  "description": "Phantom wallet module for connecting to Web3-Onboard. Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardized spec compliant web3 providers for all supported wallets, framework agnostic modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
+  "keywords": [
+    "Ethereum",
+    "Web3",
+    "EVM",
+    "dapp",
+    "Multichain",
+    "Wallet",
+    "Transaction",
+    "Provider",
+    "Hardware Wallet",
+    "Notifications",
+    "React",
+    "Svelte",
+    "Vue",
+    "Next",
+    "Nuxt",
+    "MetaMask",
+    "Coinbase",
+    "WalletConnect",
+    "Ledger",
+    "Trezor",
+    "Connect Wallet",
+    "Ethereum Hooks",
+    "Blocknative",
+    "Mempool",
+    "pending",
+    "confirmed",
+    "Injected Wallet",
+    "Crypto",
+    "Crypto Wallet",
+    "Phantom"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blocknative/web3-onboard.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://onboard.blocknative.com",
+  "bugs": "https://github.com/blocknative/web3-onboard/issues",
+  "module": "dist/index.js",
+  "browser": "dist/index.js",
+  "main": "dist/index.js",
+  "type": "module",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w",
+    "type-check": "tsc --noEmit"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "@web3-onboard/common": "^2.2.3"
+  }
+}

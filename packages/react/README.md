@@ -1,3 +1,7 @@
+<a href="https://onboard.blocknative.com/">
+  <img alt="Web3-Onboard UI Components" src="https://github.com/blocknative/web3-onboard/blob/v2-web3-onboard-develop/assets/core.svg?raw=true" />
+</a>
+
 # @web3-onboard/react
 
 A collection of React hooks for implementing web3-onboard in to a React project
@@ -56,7 +60,7 @@ function App() {
     <div>
       <button
         disabled={connecting}
-        onClick={() => (wallet ? disconnect() : connect())}
+        onClick={() => (wallet ? disconnect(wallet) : connect())}
       >
         {connecting ? 'connecting' : wallet ? 'disconnect' : 'connect'}
       </button>

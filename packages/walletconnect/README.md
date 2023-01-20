@@ -1,10 +1,10 @@
 # @web3-onboard/walletconnect
 
-## Wallet module for connecting Ledger hardware wallets to web3-onboard
+## Wallet module for connecting Wallet Connect hardware wallets to web3-onboard
 
 ### Install
 
-`npm i @web3-onboard/walletconnect`
+`npm i @web3-onboard/core @web3-onboard/walletconnect`
 
 ## Options
 
