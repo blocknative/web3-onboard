@@ -170,6 +170,7 @@
     } catch (error) {
       const { message } = error as { message: string }
       connectingErrorMessage = message
+      connectingWalletLabel = ''
       scrollToTop()
     }
   }
@@ -388,7 +389,6 @@
       var(--onboard-white, var(--white))
     );
     line-height: 24px;
-    margin-bottom: 2rem;
     overflow: hidden;
     position: relative;
     display: flex;
