@@ -56,7 +56,7 @@
     ],
     appMetadata: {
       name: 'Documentation',
-      icon: '<svg></svg>',
+      // icon: '<svg></svg>',
       description: 'Example showcasing how to connect a wallet.',
       recommendedInjectedWallets: [
         { name: 'MetaMask', url: 'https://metamask.io' },
@@ -70,7 +70,7 @@
   })
 
   const themes = ['system', 'default', 'light', 'dark', 'custom']
-  let selectedTheme = 'system'
+  let selectedTheme = 'custom'
 
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
@@ -240,6 +240,7 @@
 
 <section>
   <div class="control-panel">
+    <label>Select a theme:</label>
     <select bind:value={selectedTheme} on:change={() => updateTheme()}>
       {#each themes as theme}
         <option value={theme}>
@@ -292,8 +293,8 @@
       </div>
       <hr />
     {:else}
-      <label for="Theme"
-        >The system theme will align the theme with the users system preferences
+      <label for="Theme">
+        The system theme will align the theme with the users system preferences
       </label>
       <hr />
       <div class="theming-container" />
@@ -372,8 +373,8 @@
 
   .control-panel {
     z-index: 25;
-    left: auto;
-    right: 0;
+    left: 0;
+    right: auto;
     bottom: 0;
     position: fixed;
     overflow: hidden;
@@ -569,6 +570,11 @@
     -webkit-transform: translateX(26px);
     -ms-transform: translateX(26px);
     transform: translateX(26px);
+  }
+
+  select {
+    width: 100%;
+    padding: 1rem;
   }
 
   .backdrop-toggle {
