@@ -64,12 +64,12 @@
       ]
     },
     accountCenter: {
-      desktop: { enabled: false },
-      mobile: { enabled: false }
+      desktop: { enabled: true },
+      mobile: { enabled: true }
     }
   })
 
-  const themes = ['system', 'default', 'light', 'dark']
+  const themes = ['system', 'default', 'light', 'dark', 'custom']
   let selectedTheme = 'system'
 
   // Subscribe to wallet updates
@@ -127,6 +127,14 @@
       '--w3o-action-color': 'unset',
       '--w3o-border-radius': 'unset'
     },
+    custom: {
+      '--w3o-background-color': 'unset',
+      '--w3o-foreground-color': 'unset',
+      '--w3o-text-color': 'unset',
+      '--w3o-border-color': 'unset',
+      '--w3o-action-color': 'unset',
+      '--w3o-border-radius': 'unset'
+    },
     light: {
       '--w3o-background-color': '#ffffff',
       '--w3o-foreground-color': '#EFF1FC',
@@ -159,25 +167,27 @@
   }
 
   let copyableStyles =
-    selectedTheme === 'system' ? '' : `{\n ${styleToString(themingObjects[selectedTheme])}}`
+    selectedTheme !== 'custom' ? '' : `{\n ${styleToString(themingObjects[selectedTheme])}}`
 
   const updateTheme = () => {
-    onboard.state.actions.updateTheme(selectedTheme)
+    if (selectedTheme !== 'custom') {
+      onboard.state.actions.updateTheme(selectedTheme)
+    }
     copyableStyles =
-      selectedTheme === 'system' ? '' : `{\n ${styleToString(themingObjects[selectedTheme])}}`
+      selectedTheme !== 'custom' ? '' : `{\n ${styleToString(themingObjects[selectedTheme])}}`
   }
 
   const updateThemeEl = (e, targetStyle) => {
-    if (selectedTheme === 'system') return
+    if (selectedTheme !== 'custom') return
     document.documentElement.style.setProperty(targetStyle, e.target.value)
 
     copyableStyles = `{\n ${styleToString(themingObjects[selectedTheme])}}`
   }
 
   const resetTheme = () => {
-    selectedTheme = 'default'
-    Object.keys(themingObjects['default']).forEach((style) => {
-      document.documentElement.style.setProperty(style, themingObjects['default'][style])
+    selectedTheme = 'custom'
+    Object.keys(themingObjects['custom']).forEach((style) => {
+      document.documentElement.style.setProperty(style, themingObjects['custom'][style])
     })
   }
 
@@ -237,7 +247,7 @@
         </option>
       {/each}
     </select>
-    {#if selectedTheme !== 'system'}
+    {#if selectedTheme === 'custom'}
       <label for="Theme"
         >Click Color Circles to Customize Theme, Copy Config and Paste as `theme` property value in
         Onboard config:
@@ -277,7 +287,7 @@
         {/each}
       </div>
       <div class="copy-styles-container">
-        <textarea readonly bind:value={copyableStyles} rows="10" class="copy-styles-textarea" />
+        <textarea readonly bind:value={copyableStyles} rows="8" class="copy-styles-textarea" />
         <button on:click={async () => await copyStylingConfig()}> Copy Theming Config </button>
       </div>
       <hr />
