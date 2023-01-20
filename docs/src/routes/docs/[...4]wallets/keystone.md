@@ -26,6 +26,8 @@ npm install @web3-onboard/keystone
 ```typescript
 type KeystoneOptions = {
   customNetwork?: CustomNetwork
+  filter?: Platform[]
+  containerElement?: string
 }
 
 interface CustomNetwork {
