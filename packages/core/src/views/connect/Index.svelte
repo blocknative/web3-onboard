@@ -386,7 +386,7 @@
     --foreground-color: var(--w3o-foreground-color);
     --text-color: var(--onboard-connect-text-color, var(--w3o-text-color));
     --border-color: var(--w3o-border-color, var(--gray-200));
-    --action-color: var(--w3o-action-color);
+    --action-color: var(--w3o-action-color, var(--primary-500));
 
     /* themeable properties */
     font-family: var(--onboard-font-family-normal, var(--font-family-normal));

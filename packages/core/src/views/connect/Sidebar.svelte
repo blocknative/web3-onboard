@@ -82,7 +82,7 @@
   .indicator.on {
     background: var(
       --onboard-connect-sidebar-progress-color,
-      var(--onboard-primary-600, var(--primary-600))
+      var(--action-color)
     );
     border: 2px solid
       var(
@@ -106,7 +106,7 @@
   .join.active {
     background: var(
       --onboard-connect-sidebar-progress-color,
-      var(--onboard-primary-600, var(--primary-600))
+      var(--action-color)
     );
   }
 
