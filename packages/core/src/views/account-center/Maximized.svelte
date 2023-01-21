@@ -52,6 +52,7 @@
     --text-color: var(--w3o-text-color);
     --border-color: var(--w3o-border-color, var(--gray-500));
     --action-color: var(--w3o-action-color, var(--primary-500));
+    --border-radius: var(--w3o-border-radius, 1rem);
 
     --account-center-network-selector-color: var(--text-color, white);
 
@@ -62,10 +63,7 @@
     border: 1px solid transparent;
     background: var(--account-center-maximized-upper-background, var(--background-color));
     border-color: var(--border-color);
-    border-radius: var(
-      --account-center-border-radius,
-      var(--onboard-border-radius-3, var(--border-radius-3))
-    );
+    border-radius: var(--account-center-border-radius, var(--border-radius));
   }
 
   .wallets-section {
@@ -84,10 +82,7 @@
   }
 
   .actions {
-    color: var(
-      --account-center-maximized-upper-action-color,
-      var(--onboard-primary-400, var(--primary-400))
-    );
+    color: var(--account-center-maximized-upper-action-color, var(--action-color));
     padding-left: 2px;
   }
 
@@ -168,8 +163,9 @@
 
   .app-info-container {
     color: var(--text-color, var(--gray-700));
-    background: var(--background-color, #FFF);
-    /* background: var(--account-center-maximized-info-section-background-color, var(--account-center-maximized-info-section)); */
+    background: var(--account-center-maximized-info-section-background-color,
+      var(--account-center-maximized-info-section, var(--background-color, #FFF))
+    );
     border-top: 1px solid var(--border-color);
     border-radius: var(--account-center-border-radius, inherit);
     padding: 12px;
@@ -217,14 +213,8 @@
   .app-button {
     font-family: var(--account-center-app-btn-font-family, inherit);
     margin-top: var(--onboard-spacing-5, var(--spacing-5));
-    background: var(
-      --account-center-app-btn-background,
-      var(--onboard-gray-500, var(--gray-500))
-    );
-    color: var(
-      --account-center-app-btn-text-color,
-      var(--onboard-white, var(--white))
-    );
+    color: var(--account-center-app-btn-text-color, var(--background-color, #FFF));
+    background: var(--account-center-app-btn-background, var(--action-color));
   }
 
   .powered-by-container {

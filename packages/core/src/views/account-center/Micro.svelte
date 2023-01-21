@@ -19,6 +19,7 @@
     --background-color: var(--account-center-micro-background, var(--w3o-background-color, white));
     --text-color: var(--w3o-text-color);
     --border-color: var(--account-center-border, var(--w3o-border-color, var(--onboard-gray-200, var(--gray-200))));
+    --border-radius: var(--account-center-border-radius, var(--w3o-border-radius, 1rem));
 
     cursor: pointer;
     pointer-events: auto;
@@ -27,7 +28,7 @@
     background: var(--background-color);
     color: var(--text-color);
     border-color: var(--border-color);
-    border-radius: var(--account-center-border-radius, 1rem);
+    border-radius: var(--border-radius);
     box-shadow: var(
       --account-center-box-shadow,
       var(--onboard-shadow-3, var(--shadow-3))
