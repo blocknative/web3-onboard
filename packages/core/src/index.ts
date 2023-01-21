@@ -257,7 +257,7 @@ function mountApp() {
 
   target.innerHTML = `
       <style>
-        :host {  
+        :host {
           /* COLORS */
           --white: white;
           --black: black;
@@ -297,10 +297,10 @@ function mountApp() {
           --warning-500: #ffaf00;
           --warning-600: #cc8c00;
           --warning-700: #664600;
-  
+
           /* FONTS */
           --font-family-normal: Sofia Pro;
-  
+
           --font-size-1: 3rem;
           --font-size-2: 2.25rem;
           --font-size-3: 1.5rem;
@@ -308,12 +308,12 @@ function mountApp() {
           --font-size-5: 1rem;
           --font-size-6: .875rem;
           --font-size-7: .75rem;
-  
+
           --font-line-height-1: 24px;
           --font-line-height-2: 20px;
           --font-line-height-3: 16px;
           --font-line-height-4: 12px;
-  
+
           /* SPACING */
           --spacing-1: 3rem;
           --spacing-2: 2rem;
@@ -322,19 +322,19 @@ function mountApp() {
           --spacing-5: 0.5rem;
           --spacing-6: 0.25rem;
           --spacing-7: 0.125rem;
-  
+
           /* BORDER RADIUS */
-          --border-radius-1: 24px;  
-          --border-radius-2: 20px;  
-          --border-radius-3: 16px;  
-          --border-radius-4: 12px;  
-          --border-radius-5: 8px;  
+          --border-radius-1: 24px;
+          --border-radius-2: 20px;
+          --border-radius-3: 16px;
+          --border-radius-4: 12px;
+          --border-radius-5: 8px;
 
           /* SHADOWS */
           --shadow-0: none;
           --shadow-1: 0px 4px 12px rgba(0, 0, 0, 0.1);
           --shadow-2: inset 0px -1px 0px rgba(0, 0, 0, 0.1);
-          --shadow-3: 0px 4px 16px rgba(179, 179, 179, 0.2);
+          --shadow-3: 0px 4px 16px rgba(0, 0, 0, 0.2);
 
           /* MODAL POSITIONING */
           --modal-z-index: 10;
@@ -342,7 +342,7 @@ function mountApp() {
           --modal-right: unset;
           --modal-bottom: unset;
           --modal-left: unset;
-          
+
           /* MODAL STYLES */
           --modal-backdrop: rgba(0, 0, 0, 0.6);
 

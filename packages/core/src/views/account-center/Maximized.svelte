@@ -58,7 +58,6 @@
 
     width: 100%;
     overflow: hidden;
-    filter: drop-shadow(0px 4px 16px rgba(178, 178, 178, 0.2));
     pointer-events: auto;
     border: 1px solid transparent;
     background: var(--account-center-maximized-upper-background, var(--background-color));
