@@ -10,12 +10,13 @@ This is the core package that contains all of the UI and logic to be able to sea
 Checkout our full library of quick start examples for connecting and interacting with EVM based wallets
 
 - **[React](https://github.com/blocknative/react-demo)**
-- **[Nextjs 13](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard-develop/examples/with-nextjs-13)**
-- **[Nextjs](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard-develop/examples/with-nextjs)**
-- **[SvelteKit](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard-develop/examples/with-sveltekit)**
-- **[Vite/React](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard-develop/examples/with-vite-react)**
-- **[Vue](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard-develop/examples/with-vuejs)**
-- **[Vue2](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard-develop/examples/with-vuejs-v2)**
+- **[Nextjs 13](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-nextjs-13)**
+- **[Nextjs](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-nextjs)**
+- **[Svelte](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/packages/demo)**
+- **[SvelteKit](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-sveltekit)**
+- **[Vite/React](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-vite-react)**
+- **[Vue](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-vuejs)**
+- **[Vue2](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-vuejs-v2)**
 
 ## Installation
 
