@@ -120,7 +120,6 @@
     text-overflow: ellipsis;
     width: 7.25rem;
     text-align: end;
-
     opacity: 0.4;
   }
 
