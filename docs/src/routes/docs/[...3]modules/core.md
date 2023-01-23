@@ -150,7 +150,11 @@ Onboard is using the [ICU syntax](https://formatjs.io/docs/core-concepts/icu-syn
 
 **`theme`**
 A string or an object that defines the color theme web3-onboard will render the components.
-`system` will default to the theme set by the users system.
+Define a custom or predefined theme for Web3Onboard using either: 
+  * BuiltInThemes: ['default', 'dark', 'light', 'system']
+  * ThemingMap object to create a totally custom theme
+
+Note: `system` will default to the theme set by the users system.
 
 ```typescript
 export type Theme = ThemingMap | BuiltInThemes | 'system'

@@ -64,7 +64,9 @@ export interface InitOptions {
    */
   transactionPreview?: TransactionPreviewAPI
   /**
-   * Custom or predefined theme for Web3Onboard i.e. default, dark, Custom, etc.
+   * Custom or predefined theme for Web3Onboard 
+   * BuiltInThemes: ['default', 'dark', 'light', 'system']
+   * or customize with a ThemingMap object.
    */
   theme?: Theme
 }

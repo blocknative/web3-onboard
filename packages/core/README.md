@@ -28,7 +28,7 @@ Note:
 Onboard needs to be initialized with an options object before the API can be used:
 
 ```typescript
-type InitOptions {
+type InitOptions = {
   wallets: WalletInit[]
   chains: Chain[]
   appMetadata?: AppMetadata
@@ -42,6 +42,12 @@ type InitOptions {
    * Object mapping for W3O components with the key being the component and the value the DOM element to mount the component to. This element must be available at time of package script execution.
    */
   containerElements?: Partial<ContainerElements>
+  /**
+   * Custom or predefined theme for Web3Onboard
+   * BuiltInThemes: ['default', 'dark', 'light', 'system']
+   * or customize with a ThemingMap object.
+   */
+  theme?: Theme
 }
 ```
 
@@ -104,6 +110,27 @@ type ConnectModalOptions = {
 }
 ```
 
+**`theme`**
+A string or an object that defines the color theme web3-onboard will render the components.
+Define a custom or predefined theme for Web3Onboard using either: 
+  * BuiltInThemes: ['default', 'dark', 'light', 'system']
+  * ThemingMap object to create a totally custom theme
+
+Note: `system` will default to the theme set by the users system.
+
+```typescript
+export type Theme = ThemingMap | BuiltInThemes | 'system'
+export type BuiltInThemes = 'default' | 'dark' | 'light'
+export type ThemingMap = {
+  '--w3o-background-color'?: string
+  '--w3o-foreground-color'?: string
+  '--w3o-text-color'?: string
+  '--w3o-border-color'?: string
+  '--w3o-action-color'?: string
+  '--w3o-border-radius'?: string
+}
+```
+
 **`i18n`**
 An object that defines the display text for different locales. Can also be used to override the default text. To override the default text, pass in a object for the `en` locale.
 
@@ -124,10 +151,10 @@ For an example please see containerElement usage [here](https://github.com/block
 
 ```typescript
 type ContainerElements = {
-  // When attaching the Connect Modal to a container el be aware that the modal was styled to be 
+  // When attaching the Connect Modal to a container el be aware that the modal was styled to be
   // mounted through the app to the html body and will respond to screen width rather than container width
   // This is specifically apparent on mobile so please test thoroughly
-  // Also consider that other DOM elements(specifically Notifications and Account Center) will also 
+  // Also consider that other DOM elements(specifically Notifications and Account Center) will also
   // append to this DOM el if enabled and their own containerEl are not defined
   connectModal?: string
   // when using the accountCenter with a container el the accountCenter position properties are ignored
