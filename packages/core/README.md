@@ -6,22 +6,6 @@
 
 This is the core package that contains all of the UI and logic to be able to seamlessly connect user's wallets to your app and track the state of those wallets. Onboard no longer contains any wallet specific code, so wallets need to be passed in upon initialization.
 
-## Installation
-
-Install the core module:
-
-`npm i @web3-onboard/core`
-
-If you would like to support all wallets, then you can install all of the wallet modules:
-
-```npm i @web3-onboard/coinbase @web3-onboard/fortmatic @web3-onboard/gnosis @web3-onboard/injected-wallets @web3-onboard/keepkey @web3-onboard/keystone @web3-onboard/ledger @web3-onboard/magic @web3-onboard/portis @web3-onboard/react @web3-onboard/torus @web3-onboard/trezor @web3-onboard/walletconnect @web3-onboard/web3auth @web3-onboard/gas @web3-onboard/dcent @web3-onboard/sequence @web3-onboard/enkrypt @web3-onboard/mew-wallet @web3-onboard/uauth @web3-onboard/zeal @web3-onboard/frontier```
-
-Note:
-
-- All wallet modules (except for `injected-wallets`) require extra dependencies and may require polyfilling the node built in modules for the browser. See the [Build Environments](#build-environments) section for more info
-- **If using React** you may be interested in checking out the React Hooks package here - https://www.npmjs.com/package/@web3-onboard/react
-- **If using Vue** you may be interested in checking out the Vue package here - https://www.npmjs.com/package/@web3-onboard/vue
-
 ## Quick start
 Checkout our full library of quick start examples for connecting and interacting with EVM based wallets
 
@@ -32,6 +16,24 @@ Checkout our full library of quick start examples for connecting and interacting
 - **[Vite/React](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard-develop/examples/with-vite-react)**
 - **[Vue](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard-develop/examples/with-vuejs)**
 - **[Vue2](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard-develop/examples/with-vuejs-v2)**
+
+## Installation
+
+Install the core module:
+
+`npm i @web3-onboard/core`
+
+If you would like to support all wallets, then you can install all of the wallet modules:
+
+```bash 
+npm i @web3-onboard/coinbase @web3-onboard/fortmatic @web3-onboard/gnosis @web3-onboard/injected-wallets @web3-onboard/keepkey @web3-onboard/keystone @web3-onboard/ledger @web3-onboard/magic @web3-onboard/portis @web3-onboard/react @web3-onboard/torus @web3-onboard/trezor @web3-onboard/walletconnect @web3-onboard/web3auth @web3-onboard/dcent @web3-onboard/sequence @web3-onboard/enkrypt @web3-onboard/mew-wallet @web3-onboard/uauth @web3-onboard/zeal @web3-onboard/frontier
+```
+
+Note:
+
+- All wallet modules (except for `injected-wallets`) require extra dependencies and may require polyfilling the node built in modules for the browser. See the [Build Environments](#build-environments) section for more info
+- **If using React** you may be interested in checking out the React Hooks package here - https://www.npmjs.com/package/@web3-onboard/react
+- **If using Vue** you may be interested in checking out the Vue package here - https://www.npmjs.com/package/@web3-onboard/vue
 
 ## Initialization
 

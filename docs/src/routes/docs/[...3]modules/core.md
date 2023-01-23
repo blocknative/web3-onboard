@@ -29,14 +29,14 @@ If you would like to support all wallets, then you can install all of the wallet
 <TabPanel value="yarn">
 
 ```sh copy
-yarn add @web3-onboard/injected-wallets @web3-onboard/coinbase @web3-onboard/ledger @web3-onboard/trezor @web3-onboard/keepkey @web3-onboard/walletconnect @web3-onboard/web3auth @web3-onboard/torus @web3-onboard/portis @web3-onboard/mew @web3-onboard/gnosis @web3-onboard/magic @web3-onboard/fortmatic @web3-onboard/dcent
+yarn add @web3-onboard/coinbase @web3-onboard/fortmatic @web3-onboard/gnosis @web3-onboard/injected-wallets @web3-onboard/keepkey @web3-onboard/keystone @web3-onboard/ledger @web3-onboard/magic @web3-onboard/portis @web3-onboard/react @web3-onboard/torus @web3-onboard/trezor @web3-onboard/walletconnect @web3-onboard/web3auth @web3-onboard/dcent @web3-onboard/sequence @web3-onboard/enkrypt @web3-onboard/mew-wallet @web3-onboard/uauth @web3-onboard/zeal @web3-onboard/frontier
 ```
 
   </TabPanel>
   <TabPanel value="npm">
 
 ```sh copy
-npm install @web3-onboard/injected-wallets @web3-onboard/coinbase @web3-onboard/ledger @web3-onboard/trezor @web3-onboard/keepkey @web3-onboard/walletconnect @web3-onboard/web3auth @web3-onboard/torus @web3-onboard/portis @web3-onboard/mew @web3-onboard/gnosis @web3-onboard/magic @web3-onboard/fortmatic @web3-onboard/dcent
+npm install @web3-onboard/coinbase @web3-onboard/fortmatic @web3-onboard/gnosis @web3-onboard/injected-wallets @web3-onboard/keepkey @web3-onboard/keystone @web3-onboard/ledger @web3-onboard/magic @web3-onboard/portis @web3-onboard/react @web3-onboard/torus @web3-onboard/trezor @web3-onboard/walletconnect @web3-onboard/web3auth @web3-onboard/dcent @web3-onboard/sequence @web3-onboard/enkrypt @web3-onboard/mew-wallet @web3-onboard/uauth @web3-onboard/zeal @web3-onboard/frontier
 ```
 
   </TabPanel>
