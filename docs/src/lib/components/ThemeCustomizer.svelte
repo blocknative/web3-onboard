@@ -56,7 +56,6 @@
     ],
     appMetadata: {
       name: 'Documentation',
-      // icon: '<svg></svg>',
       description: 'Example showcasing how to connect a wallet.',
       recommendedInjectedWallets: [
         { name: 'MetaMask', url: 'https://metamask.io' },
