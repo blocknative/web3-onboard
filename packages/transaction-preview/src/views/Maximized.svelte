@@ -58,7 +58,6 @@
     /* backdrop-filter: blur(5px); */
     width: 100%;
     min-height: 3.5rem;
-    /* background: inherit; */
     display: flex;
     flex-direction: column;
     position: relative;
