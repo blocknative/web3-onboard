@@ -129,7 +129,6 @@
     border-radius: 24px;
     transition: color 150ms ease-in-out, background-color 150ms ease-in-out;
     background-color: transparent;
-
     opacity: 0.4;
   }
 
