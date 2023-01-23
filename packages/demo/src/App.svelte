@@ -35,9 +35,6 @@
   import VConsole from 'vconsole'
   import blocknativeIcon from './blocknative-icon'
   import blocknativeLogo from './blocknative-logo'
-  import { onMount } from 'svelte'
-
-  let windowWidth
 
   if (window.innerWidth < 700) {
     new VConsole()
@@ -298,7 +295,7 @@
     // },
     // Sign up for your free api key at www.Blocknative.com
     apiKey,
-    theme: 'dark'
+    theme: 'system'
   })
 
   // Subscribe to wallet updates
@@ -457,159 +454,14 @@
     console.log(verifyTypedData(domain, types, message, signature))
   }
 
-  let selectedTheme = 'default'
-  const themes = {
-    default: {
-      '--w3o-background-color': 'unset',
-      '--w3o-text-color': 'unset',
-      '--w3o-border-color': 'unset',
-      '--w3o-accent-background-color': 'unset',
-      '--w3o-accent-text-color': 'unset',
-      '--w3o-secondary-text-color': 'unset',
-      '--w3o-border-radius': 'unset'
-    },
-    light: {
-      '--w3o-background-color': '#ffffff',
-      '--w3o-text-color': '#1a1d26',
-      '--w3o-border-color': '#d0d4f7',
-      '--w3o-accent-background-color': '#EFF1FC',
-      '--w3o-accent-text-color': '#929bed',
-      '--w3o-secondary-text-color': '#707481',
-      '--w3o-border-radius': '24px'
-    },
-    dark: {
-      '--w3o-background-color': '#1A1D26',
-      '--w3o-text-color': '#EFF1FC',
-      '--w3o-border-color': '#33394B',
-      '--w3o-accent-background-color': '#242835',
-      '--w3o-accent-text-color': '#929bed',
-      '--w3o-secondary-text-color': '#999CA5',
-      '--w3o-border-radius': '24px'
-    },
-    system: 'system'
+  const themes = ['system', 'default', 'light', 'dark']
+  let selectedTheme = 'system'
+  const updateTheme = () => {
+    onboard.state.actions.updateTheme(selectedTheme)
   }
-
-  const baseStyling = ``
-
-  const styleToString = style => {
-    return Object.keys(style).reduce(
-      (acc, key) => acc + key + ': ' + style[key] + '; \n  ',
-      ''
-    )
-  }
-
-  async function copyStylingConfig() {
-    try {
-      const copy = await navigator.clipboard.writeText(copyableStyles)
-      return copy
-    } catch (err) {
-      console.error('Failed to copy: ', err)
-    }
-  }
-
-  let copyableStyles = `{\n  ${styleToString(
-    themes[selectedTheme]
-  )}${baseStyling}\n}`
-
-  const updateThemeEl = (targetStyle, value) => {
-    const iframe = document.getElementById('inlineFrameExample')
-    iframe.contentWindow.document.documentElement.style.setProperty(
-      targetStyle,
-      value
-    )
-
-    copyableStyles = `{\n  ${styleToString(
-      themes[selectedTheme]
-    )}${baseStyling}\n}`
-  }
-
-  const updateTheme = theme => {
-    if (theme === 'system') {
-      onboard.state.actions.updateTheme('system')
-    } else {
-      Object.keys(themes[theme]).forEach(setting => {
-        updateThemeEl(setting, themes[theme][setting])
-      })
-    }
-  }
-
-  let checked = false
-
-  const handleBackdrop = () => {
-    const iframe = document.getElementById('inlineFrameExample')
-
-    if (!checked) {
-      iframe.contentWindow.document.documentElement.style.setProperty(
-        '--onboard-modal-backdrop',
-        'rgba(0, 0, 0, 0)'
-      )
-    } else {
-      iframe.contentWindow.document.documentElement.style.setProperty(
-        '--onboard-modal-backdrop',
-        'rgba(0, 0, 0, 0.6)'
-      )
-    }
-  }
-
-  // Converts the image into a data URI
-  const readImage = file => {
-    const reader = new FileReader()
-    reader.addEventListener('load', event => {
-      uploaded_image = event.target.result
-      document.querySelector(
-        '#image_drop_area'
-      ).style.backgroundImage = `url(${uploaded_image})`
-    })
-    reader.readAsDataURL(file)
-  }
-
-  let hideForIframe = false
-  let uploaded_image
-  const handleImageDrop = () => {
-    if (window.location !== window.parent.location) {
-      if (image_drop_area) {
-        // Event listener for dragging the image over the div
-        const connectButton = window.document.getElementById('connectBtn')
-        connectButton.style.visibility = 'hidden'
-        image_drop_area.addEventListener('dragover', event => {
-          event.stopPropagation()
-          event.preventDefault()
-          // Style the drag-and-drop as a "copy file" operation.
-          event.dataTransfer.dropEffect = 'copy'
-        })
-
-        // Event listener for dropping the image inside the div
-        image_drop_area.addEventListener('drop', event => {
-          const image_drop_area_direction = document.querySelector(
-            '#image_drop_area_direction'
-          )
-          document.body.style.padding = 0
-          image_drop_area_direction.style.display = 'none'
-          connectButton.click()
-          connectButton.style.display = 'none'
-          event.stopPropagation()
-          event.preventDefault()
-          let fileList = event.dataTransfer.files
-
-          readImage(fileList[0])
-        })
-      }
-    }
-  }
-  const initIFrame = async () => {
-    if (window.location !== window.parent.location) {
-      return (hideForIframe = true)
-    }
-  }
-
-  onMount(async () => {
-    await initIFrame()
-    handleImageDrop()
-  })
 </script>
 
 <style>
-
   main {
     height: 100%;
   }
@@ -644,18 +496,6 @@
     align-items: end;
   }
 
-  .copy-styles-container {
-    display: flex;
-    flex-direction: row;
-    align-items: end;
-  }
-
-  .copy-styles-textarea {
-    width: 30rem;
-    height: 16rem;
-    margin: 0 0 8px;
-  }
-
   .sign-transaction-textarea {
     width: 24rem;
     height: 12rem;
@@ -671,223 +511,21 @@
     flex-direction: column;
     width: 15rem;
   }
-
-  .themes {
-    padding: 1rem;
-    border-radius: 4px;
-    margin: 0.5rem;
-    border: 1px solid gray;
-    width: fit-content;
-  }
-
-  .themes-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .theming-container {
-    height: 20rem;
-    display: flex;
-    flex-direction: column;
-    overflow: auto;
-    width: 54rem;
-    flex-wrap: wrap;
-    justify-content: space-around;
-  }
-
-  .theming-inputs-wrapper {
-    display: flex;
-    align-items: center;
-    width: 25rem;
-  }
-  .theming-inputs {
-    display: inline-flex;
-    overflow: hidden;
-    width: 2em;
-    height: 2em;
-    border-radius: 50%;
-    box-shadow: 1px 1px 3px 0px grey;
-    margin: 1em;
-  }
-  .theming-inputs-number {
-    display: inline-flex;
-    width: 2em;
-    height: 2em;
-    margin: 1em;
-  }
-  input[type='number'] {
-    width: 3.5rem;
-    height: 150%;
-    margin: -25%;
-  }
-  input[type='color'] {
-    padding: 0;
-    width: 150%;
-    height: 150%;
-    margin: -25%;
-  }
-  iframe {
-    height: 850px;
-    width: 1000px;
-    resize: both;
-    overflow: auto;
-    margin: 8px 8px 16px;
-  }
-  #image_drop_area {
-    width: 100%;
-    height: 100%;
-    background-position: center;
-    background-size: cover;
-    box-sizing: border-box;
-  }
-
-  .switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-  }
-
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
-    border-radius: 34px;
-  }
-
-  .slider:before {
-    position: absolute;
-    content: '';
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
-    border-radius: 50%;
-  }
-
-  input:checked + .slider {
-    background-color: #929bed;
-  }
-
-  input:checked + .slider {
-    box-shadow: 0 0 1px #929bed;
-  }
-
-  input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-  }
-
-  .backdrop-toggle {
-    display: flex;
-    align-items: center;
-    margin: 8px 8px 16px 4px;
-  }
-
-  .backdrop-toggle > label {
-    margin-right: 8px;
-  }
 </style>
 
-<svelte:window bind:innerWidth={windowWidth} />
-
 <main>
-  {#if hideForIframe}
-    <div id="image_drop_area">
-      <p id="image_drop_area_direction">
-        Drag and drop a screen shot of your site to customize styling.
-        <br />
-        Click color circles above to change the theme.
-      </p>
-      {#if uploaded_image}
-        <button on:click={() => onboard.connectWallet()}>Connect Wallet</button>
-        {#if $wallets$}
-          <div class="notify-chain-container">
-            <div class="notify-action-container">
-              <button
-                on:click={() =>
-                  onboard.state.actions.customNotification({
-                    type: 'hint',
-                    message: 'This is a custom DApp hint',
-                    autoDismiss: 0
-                  })}>Send Hint Notification</button
-              >
-              <button
-                on:click={() => {
-                  const { update, dismiss } =
-                    onboard.state.actions.customNotification({
-                      type: 'pending',
-                      message:
-                        'This is a custom DApp pending notification to use however you want',
-                      autoDismiss: 0
-                    })
-                  setTimeout(
-                    () =>
-                      update({
-                        eventCode: 'dbUpdateSuccess',
-                        message: 'Updated status for custom notification',
-                        type: 'success',
-                        autoDismiss: 0
-                      }),
-                    4000
-                  )
-                }}>Send Success Notification</button
-              >
-              <button
-                on:click={() =>
-                  onboard.state.actions.customNotification({
-                    message:
-                      'This is a custom DApp success notification to use however you want',
-                    autoDismiss: 0,
-                    type: 'pending'
-                  })}>Send Pending Notification</button
-              >
-              <button
-                on:click={() =>
-                  onboard.state.actions.customNotification({
-                    type: 'error',
-                    message:
-                      'This is a custom DApp Error notification to use however you want',
-                    autoDismiss: 0
-                  })}>Send Error Notification</button
-              >
-              <button
-                on:click={() =>
-                  onboard.state.actions.customNotification({
-                    message:
-                      'This is a custom non-descript DApp notification to use however you want',
-                    autoDismiss: 0
-                  })}>Send DApp Notification</button
-              >
-            </div>
-          </div>
-        {/if}
-      {/if}
-    </div>
-  {/if}
   <div class="cta">
     <button on:click={() => onboard.connectWallet()} id="connectBtn"
       >Connect Wallet</button
     >
-
-    {#if $wallets$ && !hideForIframe}
+    <select bind:value={selectedTheme} on:change={() => updateTheme()}>
+      {#each themes as theme}
+        <option value={theme}>
+          {theme}
+        </option>
+      {/each}
+    </select>
+    {#if $wallets$}
       <button
         class="updateBalanceBtn"
         on:click={() => {
@@ -967,7 +605,7 @@
       </div>
     {/if}
   </div>
-  {#if $wallets$ && !hideForIframe}
+  {#if $wallets$}
     {#each $wallets$ as { icon, label, accounts, chains, provider, instance }}
       <div class="connected-wallet">
         <div class="flex-centered" style="width: 10rem;">
@@ -1073,84 +711,5 @@
         </button>
       </div>
     {/each}
-  {/if}
-  {#if !hideForIframe && windowWidth > 1040}
-    <div class="themes">
-      <div class="themes-header">
-        <label for="Theme"
-          >Click Colored Circles to Customize the Theme:
-        </label>
-        <select
-          bind:value={selectedTheme}
-          on:change={() => updateTheme(selectedTheme)}
-        >
-          {#each Object.keys(themes) as theme}
-            <option value={theme}>
-              {theme}
-            </option>
-          {/each}
-        </select>
-      </div>
-      <div class="theming-container">
-        {#each Object.keys(themes[selectedTheme]) as target}
-          <div class="theming-inputs-wrapper">
-            {#if !target.includes('border-radius') && selectedTheme !== 'default'}
-              <div class="theming-inputs">
-                <input
-                  type="color"
-                  name="Theme"
-                  bind:value={themes[selectedTheme][target]}
-                  on:input={e => updateThemeEl(target, e.target.value)}
-                />
-              </div>
-              <span class="text" id="current-theme"
-                >{target} : {themes[selectedTheme][target]}</span
-              >
-            {:else if target.includes('border-radius')}
-              <div class="theming-inputs-number">
-                <input
-                  type="number"
-                  name="Theme"
-                  on:input={e => {
-                    themes[selectedTheme][target] = `${e.target.value}px`
-                    updateThemeEl(target, `${e.target.value}px`)
-                  }}
-                />
-              </div>
-              <span class="text" id="current-theme"
-                >{target} : {themes[selectedTheme][target]}</span
-              >
-            {/if}
-          </div>
-        {/each}
-      </div>
-      <div class="backdrop-toggle">
-        <label class="switch">
-          <input
-            type="checkbox"
-            on:change={() => handleBackdrop()}
-            bind:checked
-          />
-          <span class="slider" />
-        </label>
-        Disabled Backdrop for Styling
-      </div>
-      <div class="copy-styles-container">
-        <textarea
-          readonly
-          bind:value={copyableStyles}
-          class="copy-styles-textarea"
-        />
-        <button on:click={async () => await copyStylingConfig()}>
-          Copy Styling Config
-        </button>
-      </div>
-    </div>
-    <iframe
-      id="inlineFrameExample"
-      name="inlineFrameExample"
-      title="Inline Frame Example"
-      src={window.location.href}
-    />
   {/if}
 </main>
