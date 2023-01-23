@@ -21,10 +21,8 @@
   }
 
   table thead {
-    position: sticky;
-    inset-block-start: 0; /* "top" */
     box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1);
-    background: var(--account-select-background-color, var(--onboard-white, var(--white)));
+    background: var(--account-select-background-color, var(--foreground-color));
   }
 
   th,
@@ -34,12 +32,6 @@
   }
 
   td {
-    font-family: var(
-      --account-select-font-family-normal,
-      var(--font-family-normal)
-    );
-    font-style: normal;
-    font-weight: normal;
     font-size: var(
       --account-select-font-size-5,
       var(--onboard-font-size-5, var(--font-size-5))

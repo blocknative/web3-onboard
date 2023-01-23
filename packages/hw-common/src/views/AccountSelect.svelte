@@ -123,14 +123,8 @@
       --account-select-font-size-5,
       var(--onboard-font-size-5, var(--font-size-5))
     );
-    line-height: var(
-      --account-select-font-line-height-1,
-      var(--onboard-font-line-height-1, var(--font-line-height-1))
-    );
-    color: var(--onboard-gray-700, var(--gray-700));
     transition: all 200ms ease-in-out;
-    border: 2px solid
-      var(--account-select-gray-200, var(--onboard-gray-200, var(--gray-200)));
+    border: 2px solid var(--account-select-gray-200, var(--border-color));
     box-sizing: border-box;
     height: 3rem;
     -ms-overflow-style: none;
@@ -267,7 +261,7 @@
 
   .container {
     font-family: var(--onboard-font-family-normal, var(--font-family-normal));
-    color: var(--account-select-text-color, var(--onboard-black, var(--black)));
+    color: var(--account-select-text-color, var(--text-color));
     position: fixed;
     top: 0;
     right: 0;
@@ -286,11 +280,10 @@
 
   .hardware-connect-modal {
     width: 50rem;
-    max-height: 51.75rem;
-    display: table;
+    max-height: 50rem;
     background: var(
       --account-select-background-color,
-      var(--onboard-white, var(--white))
+      var(--background-color)
     );
     box-shadow: var(
       --account-select-shadow,
@@ -321,11 +314,7 @@
 
   .connect-wallet-header {
     position: relative;
-    background: var(
-      --account-select-background-color,
-      var(--onboard-gray-100, var(--gray-100))
-    );
-    border-bottom: 1px solid var(--w3o-border-color, transparent);
+    border-bottom: 1px solid var(--border-color, transparent);
     border-radius: 1.5rem 1.5rem 0 0;
     display: flex;
     justify-content: space-between;
@@ -360,10 +349,7 @@
       --account-select-margin-5,
       var(--onboard-margin-5, var(--margin-5))
     );
-    color: var(
-      --account-select-gray-700,
-      var(--onboard-gray-700, var(--gray-700))
-    );
+    color: var(--account-select-gray-700, inherit);
   }
 
   .base-path-select {
@@ -413,22 +399,13 @@
   }
 
   .table-container {
-    background: var(
-      --account-select-background-color,
-      var(--onboard-white, var(--white))
-    );
-    border: 2px solid
-      var(--account-select-gray-200, var(--onboard-gray-200, var(--gray-200)));
+    border: 2px solid var(--account-select-gray-200, var(--border-color));
     box-sizing: border-box;
     border-radius: 0.5rem;
   }
 
   .address-found-count {
-    padding: 1rem;
-    color: var(
-      --account-select-gray-500,
-      var(--onboard-gray-500, var(--gray-500))
-    );
+    padding: 0 2rem;
   }
 </style>
 

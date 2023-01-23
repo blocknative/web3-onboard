@@ -31,18 +31,8 @@
   }
 
   .scan-accounts-btn {
-    line-height: var(
-      --account-select-font-line-height-1,
-      var(--onboard-line-height-1, var(--line-height-1))
-    );
-    background: var(
-      --account-select-gray-500,
-      var(--onboard-gray-500, var(--gray-500))
-    );
-    color: var(
-      --account-select-primary-100,
-      var(--onboard-primary-100, var(--primary-100))
-    );
+    background: var(--account-select-gray-500, var(--action-color));
+    color: var(--account-select-primary-100, inherit);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -137,10 +127,6 @@
       --account-select-danger-500,
       var(--onboard-danger-500, var(--danger-500))
     );
-    font-family: var(
-      --account-select-font-family-light,
-      var(--font-family-light)
-    );
     font-size: var(--account-select-font-size-7, var(--font-size-7));
     max-width: 15rem;
     line-height: 1;
@@ -154,12 +140,7 @@
     align-items: center;
     padding: 0.5rem;
     border-radius: 0.4rem 0.4rem 0 0;
-    background: var(
-      --account-select-accent-background-color,
-      var(--onboard-gray-100, var(--gray-100))
-    );
-    border-bottom: 1px solid
-      var(--account-select-gray-200, var(--onboard-gray-200, var(--gray-200)));
+    background: var(--account-select-accent-background-color, var(--border-color));
   }
 
   .cursor-pointer {
