@@ -389,7 +389,6 @@
       var(--onboard-white, var(--white))
     );
     line-height: 24px;
-    margin-bottom: 2rem;
     overflow: hidden;
     position: relative;
     display: flex;
