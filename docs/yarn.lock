@@ -3084,10 +3084,10 @@
     ethers "5.5.4"
     joi "^17.6.1"
 
-"@web3-onboard/core@^2.13.1-alpha.2":
-  version "2.13.1-alpha.2"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.13.1-alpha.2.tgz#2fd77663fb94d8b48f3bd876d6cd44290ac1c8f7"
-  integrity sha512-YdOygFdbivwk+VqTRWXgcum7Kb1LHYMkAUi+uXKoXkTV3ow4gpiQ/7NQwax1pzsferyXL/0roSWHELGmo4FvDg==
+"@web3-onboard/core@^2.13.1":
+  version "2.13.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.13.1.tgz#c9d953751b239798ba1792c480babbd5b03ba015"
+  integrity sha512-1NL7Eev7Pjy/KxE9LaeoAhaNT+/UVoezXiW/GGFCe7Qx2efb74doCRQjjCf82KInyQAvfr8a/0lOQie4xFZ6ig==
   dependencies:
     "@unstoppabledomains/resolution" "^8.0"
     "@web3-onboard/common" "^2.2.3"

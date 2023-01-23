@@ -65,11 +65,12 @@
     accountCenter: {
       desktop: { enabled: true },
       mobile: { enabled: true }
-    }
+    },
+    theme: 'system'
   })
 
   const themes = ['system', 'default', 'light', 'dark', 'custom']
-  let selectedTheme = 'custom'
+  let selectedTheme = 'system'
 
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
@@ -169,9 +170,9 @@
     selectedTheme !== 'custom' ? '' : `{\n ${styleToString(themingObjects[selectedTheme])}}`
 
   const updateTheme = () => {
-    if (selectedTheme !== 'custom') {
-      onboard.state.actions.updateTheme(selectedTheme)
-    }
+    selectedTheme !== 'custom'
+      ? onboard.state.actions.updateTheme(selectedTheme)
+      : onboard.state.actions.updateTheme('default')
     copyableStyles =
       selectedTheme !== 'custom' ? '' : `{\n ${styleToString(themingObjects[selectedTheme])}}`
   }
