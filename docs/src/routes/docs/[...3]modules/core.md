@@ -44,11 +44,21 @@ npm install @web3-onboard/injected-wallets @web3-onboard/coinbase @web3-onboard/
 
 :::admonition type=note
 
-- MEW wallet currently fails to install on M1 macs
 - All wallet modules (except for `injected-wallets`) require extra dependencies and may require polyfilling the node built in modules for the browser. See the [Build Environments](#build-environments) section for more info
 - **If using React** you may be interested in checking out the React Hooks package here - https://www.npmjs.com/package/@web3-onboard/react
 - **If using Vue** you may be interested in checking out the Vue package here - https://www.npmjs.com/package/@web3-onboard/vue
   :::
+
+## Quick start
+Checkout our full library of quick start examples for connecting and interacting with EVM based wallets
+
+- **[React](https://github.com/blocknative/react-demo)**
+- **[Nextjs 13](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard-develop/examples/with-nextjs-13)**
+- **[Nextjs](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard-develop/examples/with-nextjs)**
+- **[SvelteKit](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard-develop/examples/with-sveltekit)**
+- **[Vite/React](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard-develop/examples/with-vite-react)**
+- **[Vue](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard-develop/examples/with-vuejs)**
+- **[Vue2](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard-develop/examples/with-vuejs-v2)**
 
 ## Initialization
 
