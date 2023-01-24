@@ -29,10 +29,6 @@
     gap: 1rem;
     padding: 1rem;
     align-items: center;
-    color: var(
-      --onboard-connect-sidebar-color,
-      var(--onboard-gray-700, var(--gray-700))
-    );
   }
 
   .inner-container {
