@@ -279,8 +279,10 @@
   }
 
   .hardware-connect-modal {
-    width: 50rem;
-    max-height: 50rem;
+    width: 100%;
+    flex-flow: column;
+    display: flex;
+    max-height: 51.75rem;
     background: var(
       --account-select-background-color,
       var(--background-color)
@@ -310,6 +312,8 @@
       --onboard-account-select-modal-right,
       var(--account-select-modal-right)
     );
+    max-height: 100vh;
+    overflow: scroll;
   }
 
   .connect-wallet-header {
@@ -324,6 +328,7 @@
 
   .modal-controls {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
@@ -350,10 +355,6 @@
       var(--onboard-margin-5, var(--margin-5))
     );
     color: var(--account-select-gray-700, inherit);
-  }
-
-  .base-path-select {
-    min-width: 20rem;
   }
 
   .asset-select {
@@ -396,6 +397,7 @@
   .table-section {
     max-height: 31.8rem;
     padding: 1rem;
+    margin-top: 2rem;
   }
 
   .table-container {
@@ -406,6 +408,29 @@
 
   .address-found-count {
     padding: 0 2rem;
+  }
+  @media all and (min-width: 768px) {
+    .hardware-connect-modal {
+      width: 50rem;
+      display: table;
+      flex-flow: unset;
+    }
+    .modal-controls {
+      flex-wrap: nowrap;
+    }
+
+    .base-path-select {
+      min-width: 20rem;
+    }
+
+    .table-section {
+      margin-top: unset;
+    }
+    
+    .account-select-modal-position {
+      max-height: unset;
+      overflow: unset;
+    }
   }
 </style>
 

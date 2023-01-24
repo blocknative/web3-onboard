@@ -32,6 +32,7 @@ import {
 } from './store/actions.js'
 import type { PatchedEIP1193Provider } from '@web3-onboard/transaction-preview'
 import { getBlocknativeSdk } from './services.js'
+import { defaultBnIcon } from './icons/index.js'
 
 const API = {
   connectWallet,
