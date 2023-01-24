@@ -2901,28 +2901,6 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.0"
 
-"@web3-onboard/dcent@^2.2.2":
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/dcent/-/dcent-2.2.2.tgz#9fe6bfde73538ade078c9b83359def3918780f3d"
-  integrity sha512-ID5obCBWVofiRvkZnPyYhiLkmBglPVRd0C128tfwcHos6GQH5sGL9Ie5pcT7WZAjJEhBDrlJlsgOyDGwKCYLNA==
-  dependencies:
-    "@ethereumjs/tx" "^3.4.0"
-    "@ethersproject/providers" "^5.5.0"
-    "@web3-onboard/common" "^2.2.3"
-    "@web3-onboard/hw-common" "^2.0.4"
-    eth-dcent-keyring "^0.2.2"
-
-"@web3-onboard/hw-common@^2.0.4":
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/hw-common/-/hw-common-2.0.4.tgz#2767ecf5726a67e604f472675b310892dd3b642e"
-  integrity sha512-2q3hpaY4jlFDQjs+IVVW58/GrhmA50tnRZ4Uyy4ceUReyYJ9dtB3//E21GTJmOLCuirM6jsJa43wvSLMwyPHng==
-  dependencies:
-    "@ethereumjs/common" "2.6.2"
-    "@web3-onboard/common" "^2.2.3"
-    ethers "5.5.4"
-    joi "^17.6.1"
-    rxjs "^7.5.2"
-
 "@web3auth/base-evm-adapter@^3.3.0":
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/@web3auth/base-evm-adapter/-/base-evm-adapter-3.3.0.tgz#ab8575ac5d05dfe055e52500b61691cefdd6268f"
