@@ -22,6 +22,7 @@ import dcentModule from '@web3-onboard/dcent'
 import sequenceModule from '@web3-onboard/sequence'
 import tallyHoModule from '@web3-onboard/tallyho'
 import trustModule from '@web3-onboard/trust'
+import frontierModule from '@web3-onboard/frontier'
 
 const INFURA_KEY = ''
 
@@ -45,6 +46,7 @@ const gnosis = gnosisModule()
 const sequence = sequenceModule()
 const tally = tallyModule()
 const trust = trustModule()
+const frontier = frontierModule()
 
 const trezorOptions = {
   email: 'test@test.com',
@@ -69,6 +71,7 @@ const wallets = [
   coinbase,
   dcent,
   trust,
+  frontier,
   trezor,
   walletConnect,
   enkrypt,

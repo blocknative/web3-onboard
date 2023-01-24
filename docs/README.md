@@ -22,4 +22,4 @@ Run `yarn build` and confirm no errors present from the proposed changes.
 
 Confirm vercel build within PR builds without error and check instance deployment for accuracy.
 
-PR should target branch [docs-develop](https://github.com/blocknative/web3-onboard/tree/docs-develop).
+PR should target branch the main develop branch - [v2-web3-onboard-develop](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard-develop).

@@ -24,6 +24,7 @@
   import uauthModule from '@web3-onboard/uauth'
   import phantomModule from '@web3-onboard/phantom'
   import trustModule from '@web3-onboard/trust'
+  import frontierModule from '@web3-onboard/frontier'
   import {
     recoverAddress,
     arrayify,
@@ -129,6 +130,7 @@
   const zeal = zealModule()
   const phantom = phantomModule()
   const trust = trustModule()
+  const frontier = frontierModule()
 
   const trezorOptions = {
     email: 'test@test.com',
@@ -160,8 +162,6 @@
   const onboard = Onboard({
     wallets: [
       injected,
-      zeal,
-      web3auth,
       ledger,
       trezor,
       walletConnect,
@@ -180,6 +180,9 @@
       sequence,
       tallyho,
       uauth,
+      web3auth,
+      zeal,
+      frontier,
       phantom
     ],
     transactionPreview,

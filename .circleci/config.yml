@@ -247,6 +247,10 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/trust
+  build-frontier:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/frontier
     steps:
       - node-build-steps
   build-walletconnect:
@@ -435,6 +439,10 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/trust
+  build-staging-frontier:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/frontier
     steps:
       - node-staging-build-steps
   build-staging-walletconnect:
@@ -626,6 +634,12 @@ workflows:
       - build-trust:
           <<: *deploy_production_filters
       - build-staging-trust:
+          <<: *deploy_staging_filters
+  frontier:
+    jobs:
+      - build-frontier:
+          <<: *deploy_production_filters
+      - build-staging-frontier:
           <<: *deploy_staging_filters
   walletconnect:
     jobs:
