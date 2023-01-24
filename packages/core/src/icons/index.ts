@@ -1,5 +1,5 @@
 // bn branding
-export { default as defaultBnIcon } from './bn-icon.js'
+export { default as defaultBnIcon } from './blocknative-icon.js'
 export { default as poweredByBlocknative } from './poweredByBlocknative.js'
 // other
 export { default as hourglass } from './hourglass.js'

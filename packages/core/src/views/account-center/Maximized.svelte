@@ -15,8 +15,8 @@
   import caretLightIcon from '../../icons/caret-light.js'
   import warningIcon from '../../icons/warning.js'
   import questionIcon from '../../icons/question.js'
+  import { poweredByBlocknative } from '../../icons/index.js'
   import { updateAccountCenter } from '../../store/actions.js'
-  import blocknative from '../../icons/blocknative.js'
   import DisconnectAllConfirm from './DisconnectAllConfirm.svelte'
   import { configuration } from '../../configuration.js'
 
@@ -218,6 +218,7 @@
 
   .powered-by-container {
     margin-top: 12px;
+    color: var(--text-color);
   }
 
   .powered-by {
@@ -446,14 +447,7 @@
           rel="noopener noreferrer"
           class="flex justify-center items-center powered-by-container"
         >
-          <span class="powered-by"
-            >{$_('accountCenter.poweredBy', {
-              default: en.accountCenter.poweredBy
-            })}</span
-          >
-          <div class="flex items-center" style="width: 83px; margin-left: 4px;">
-            {@html blocknative}
-          </div>
+          {@html poweredByBlocknative}
         </a>
       </div>
     </div>

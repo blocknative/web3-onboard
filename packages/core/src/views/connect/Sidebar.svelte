@@ -43,6 +43,7 @@
     border-radius: 12px;
     border-color: var(--border-color);
     background-color: var(--background-color);
+    color: var(--text-color);
   }
 
   .icon-container {
