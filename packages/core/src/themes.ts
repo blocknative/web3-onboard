@@ -1,5 +1,7 @@
+import { BehaviorSubject, fromEvent, takeUntil } from 'rxjs'
+import { reset$ } from './streams'
 import type { BuiltInThemes, Theme, ThemingMap } from './types'
-
+let behaviorSubject$: BehaviorSubject <string>;
 export const themes = {
   default: {
     '--w3o-background-color': 'unset',
@@ -29,6 +31,7 @@ export const themes = {
 
 export const returnTheme = (theme: Theme): void | ThemingMap => {
   if (typeof theme === 'string' && theme === 'system') {
+    behaviorSubject$.next(theme)
     return watchForSystemThemeChange()
   }
   return returnThemeMap(theme)
@@ -36,6 +39,7 @@ export const returnTheme = (theme: Theme): void | ThemingMap => {
 
 export const returnThemeMap = (theme: Theme): void | ThemingMap => {
   if (typeof theme === 'string' && theme in themes) {
+    behaviorSubject$.next(theme)
     return themes[theme as BuiltInThemes]
   }
   if (typeof theme === 'object') {
@@ -57,9 +61,13 @@ export const watchForSystemThemeChange = (): void => {
   systemThemeDark.matches
     ? handleThemeChange(themes['dark'])
     : handleThemeChange(themes['light'])
-  systemThemeDark.addEventListener('change', ({ matches }) => {
-    return matches
-      ? handleThemeChange(themes['dark'])
-      : handleThemeChange(themes['light'])
-  })
+
+  fromEvent(systemThemeDark, 'change')
+    .pipe(takeUntil(reset$))
+    .subscribe((changes: Event) => {
+      const themeChange = changes as MediaQueryListEvent
+      themeChange.matches
+        ? handleThemeChange(themes['dark'])
+        : handleThemeChange(themes['light'])
+    })
 }
