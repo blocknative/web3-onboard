@@ -31,7 +31,7 @@
     takeUntil
   } from 'rxjs'
 
-  import { blocknative } from '../../icons/index.js'
+  import { defaultBnIcon } from '../../icons/index.js'
 
   import {
     getChainId,
@@ -389,7 +389,6 @@
       var(--onboard-white, var(--white))
     );
     line-height: 24px;
-    margin-bottom: 2rem;
     overflow: hidden;
     position: relative;
     display: flex;
@@ -467,6 +466,13 @@
     width: 2.5rem;
     min-width: 2.5rem;
     justify-content: center;
+    overflow: hidden;
+  }
+
+  :global(.icon-container svg) {
+    display: block;
+    height: 100%;
+    width: auto;
   }
 
   .w-full {
@@ -511,7 +517,7 @@
                   <img src={icon} alt="logo" />
                 {/if}
               {:else}
-                {@html blocknative}
+                {@html defaultBnIcon}
               {/if}
             </div>
             <div class="flex flex-column justify-center w-full">

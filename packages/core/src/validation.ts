@@ -108,7 +108,7 @@ const agreement = Joi.object({
 const appMetadata = Joi.object({
   name: Joi.string().required(),
   description: Joi.string().required(),
-  icon: Joi.string().required(),
+  icon: Joi.string(),
   logo: Joi.string(),
   gettingStartedGuide: Joi.string(),
   email: Joi.string(),

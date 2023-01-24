@@ -3,7 +3,7 @@ import type { WalletInit } from '@web3-onboard/common'
 import { ProviderLabel } from './types.js'
 import standardWallets from './wallets.js'
 import { validateWalletOptions } from './validation.js'
-import { defaultWalletUnavailableMsg, isWalletAvailable } from './helpers'
+import { defaultWalletUnavailableMsg, isWalletAvailable } from './helpers.js'
 
 import type {
   InjectedWalletOptions,
@@ -40,8 +40,6 @@ function injected(options?: InjectedWalletOptions): WalletInit {
       [...custom, ...standardWallets],
       ({ label }) => label
     )
-
-    let removeMetaMask = false
 
     const wallets = allWallets.reduce((acc, wallet) => {
       const { label, platforms, injectedNamespace, checkProviderIdentity } =
@@ -104,19 +102,6 @@ function injected(options?: InjectedWalletOptions): WalletInit {
         )
       }
 
-      // check to see if we need to remove MetaMask
-      // in the case that the provider gave us a false positive
-      // for MM wallet
-      if (
-        walletAvailable &&
-        provider.isMetaMask &&
-        !provider.overrideIsMetaMask &&
-        label !== ProviderLabel.MetaMask &&
-        label !== 'Detected Wallet'
-      ) {
-        removeMetaMask = true
-      }
-
       return acc
     }, [] as InjectedWalletModule[])
 
@@ -127,12 +112,7 @@ function injected(options?: InjectedWalletOptions): WalletInit {
       const formattedWallets = wallets
         .filter(wallet => {
           const { label } = wallet
-          return !(
-            (label === ProviderLabel.Detected && moreThanOneWallet) ||
-            (label === ProviderLabel.MetaMask &&
-              moreThanOneWallet &&
-              removeMetaMask)
-          )
+          return !(label === ProviderLabel.Detected && moreThanOneWallet)
         })
         // then map to the WalletModule interface
         .map(({ label, getIcon, getInterface }: InjectedWalletModule) => ({

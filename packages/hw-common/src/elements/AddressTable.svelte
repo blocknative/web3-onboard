@@ -30,7 +30,7 @@
   th,
   td {
     text-align: left;
-    padding: 0.5rem 0.5rem;
+    padding: 0.4rem 0.5rem;
   }
 
   td {
@@ -41,8 +41,8 @@
     font-style: normal;
     font-weight: normal;
     font-size: var(
-      --account-select-font-size-5,
-      var(--onboard-font-size-5, var(--font-size-5))
+      --account-select-font-size-6,
+      var(--onboard-font-size-6, var(--font-size-6))
     );
     line-height: var(
       --account-select-font-line-height-1,
@@ -64,7 +64,7 @@
 
   .address-table {
     min-height: 4.5rem;
-    max-height: 27rem;
+    max-height: 14rem;
     overflow: auto;
   }
 
@@ -89,6 +89,24 @@
 
   .pointer {
     cursor: pointer;
+  }
+
+  @media all and (min-width: 768px) {
+    .address-table {
+      max-height: 27rem;
+    }
+
+    td {
+      font-size: var(
+        --account-select-font-size-5,
+        var(--onboard-font-size-5, var(--font-size-5))
+      );
+    }
+
+    th,
+    td {
+      padding: 0.5rem 0.5rem;
+    }
   }
 </style>
 

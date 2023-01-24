@@ -1,3 +1,7 @@
+<a href="https://onboard.blocknative.com/">
+  <img alt="Web3-Onboard UI Components" src="https://github.com/blocknative/web3-onboard/blob/v2-web3-onboard-develop/assets/core.svg?raw=true" />
+</a>
+
 # @web3-onboard/core
 
 This is the core package that contains all of the UI and logic to be able to seamlessly connect user's wallets to your app and track the state of those wallets. Onboard no longer contains any wallet specific code, so wallets need to be passed in upon initialization.
@@ -72,8 +76,11 @@ type AppMetadata = {
   name: string
   // SVG icon string, with height or width (whichever is larger) set to 100% or a valid image URL
   // note: if using an emoji make sure to send base64 string
+  // Note: `icon` is displayed on both mobile AND desktop. If `logo`
+  // below is provided then `icon` displays on mobile and `logo` on desktop
   icon: string
   // Optional wide format logo (ie icon and text) to be displayed in the sidebar of connect modal. Defaults to icon if not provided
+  // Note: This will ONLY display on desktop. It is best used with wide format logos. Use `icon` for standard 40x40 icons.
   logo?: string
   // description of app
   description?: string
@@ -120,10 +127,10 @@ For an example please see containerElement usage [here](https://github.com/block
 
 ```typescript
 type ContainerElements = {
-  // When attaching the Connect Modal to a container el be aware that the modal was styled to be 
+  // When attaching the Connect Modal to a container el be aware that the modal was styled to be
   // mounted through the app to the html body and will respond to screen width rather than container width
   // This is specifically apparent on mobile so please test thoroughly
-  // Also consider that other DOM elements(specifically Notifications and Account Center) will also 
+  // Also consider that other DOM elements(specifically Notifications and Account Center) will also
   // append to this DOM el if enabled and their own containerEl are not defined
   connectModal?: string
   // when using the accountCenter with a container el the accountCenter position properties are ignored
