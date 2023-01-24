@@ -1,6 +1,6 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
-  import { blocknative, poweredByBlocknativeIcon } from '../../icons/index.js'
+  import { defaultBnIcon, poweredByBlocknativeIcon } from '../../icons/index.js'
   import en from '../../i18n/en.json'
   import type { i18n } from '../../types.js'
   import { isSVG } from '../../utils.js'
@@ -25,7 +25,6 @@
     gap: 1rem;
     padding: 1rem;
     align-items: center;
-
     color: var(
       --onboard-connect-sidebar-color,
       var(--onboard-gray-700, var(--gray-700))
@@ -40,15 +39,12 @@
     gap: 0.5rem;
     padding: 1.5rem;
     text-align: center;
-
     border: 1px solid;
     border-radius: 12px;
-
     border-color: var(
       --onboard-connect-sidebar-border-color,
       var(--onboard-primary-200, var(--primary-200))
     );
-
     background: var(
       --onboard-connect-sidebar-background,
       var(--onboard-primary-100, var(--primary-100))
@@ -57,6 +53,10 @@
 
   .icon-container {
     display: flex;
+    height: 3.5rem;
+    width: auto;
+    min-width: 3.5rem;
+    max-width: 100%;
   }
 
   .subheading {
@@ -152,12 +152,12 @@
       <div class="icon-container">
         {#if logo || icon}
           {#if isSVG(logo || icon)}
-            {@html logo || icon}
+            {@html logo || icon}​
           {:else}
             <img src={logo || icon} alt="logo" />
           {/if}
         {:else}
-          {@html blocknative}
+          {@html defaultBnIcon}
         {/if}
       </div>
     {/if}
