@@ -3,7 +3,7 @@ import type { WalletInit } from '@web3-onboard/common'
 import { ProviderLabel } from './types.js'
 import standardWallets from './wallets.js'
 import { validateWalletOptions } from './validation.js'
-import { defaultWalletUnavailableMsg, isWalletAvailable } from './helpers'
+import { defaultWalletUnavailableMsg, isWalletAvailable } from './helpers.js'
 
 import type {
   InjectedWalletOptions,
