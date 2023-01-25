@@ -242,8 +242,8 @@
     // },
     appMetadata: {
       name: 'Blocknative',
-      icon: blocknativeIcon,
-      logo: blocknativeLogo,
+      // icon: blocknativeIcon,
+      // logo: blocknativeLogo,
       description: 'Demo app for Onboard V2',
       recommendedInjectedWallets: [
         { name: 'MetaMask', url: 'https://metamask.io' },

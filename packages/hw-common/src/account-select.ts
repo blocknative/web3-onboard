@@ -79,6 +79,7 @@ const mountAccountSelect = (
         --font-family-normal: Sofia Pro;
         --font-family-light: Sofia Pro Light;
         --font-size-5: 1rem;
+        --font-size-6: .875rem;
         --font-size-7: .75rem;
         --font-line-height-1: 24px;
 
