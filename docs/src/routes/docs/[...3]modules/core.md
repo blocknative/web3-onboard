@@ -137,7 +137,7 @@ type AppMetadata = {
 }
 
 type TermsOfServiceAgreementOptions = {
-  // user aggrees with exact version of terms and privacy policy
+  // user agrees with exact version of terms and privacy policy
   version: string
   // url that points to the Terms & Conditions of the dapp
   termsUrl?: string
@@ -152,7 +152,7 @@ type RecommendedInjectedWallets = {
 ```
 
 **`i18n`**
-An object that defines the display text for different locales. Can also be used to override the default text. To override the default text, pass in a object for the `en` locale.
+An object that defines the display text for different locales. Can also be used to override the default text. To override the default text, pass in an object for the `en` locale.
 
 ```typescript
 type Locale = string // eg 'en', 'es'
@@ -193,7 +193,7 @@ It will allow you to customize the look and feel of web3-onboard, try different 
 :::
 
 **`accountCenter`**
-An object that defines whether the account center UI (default and minimal) is enabled and it's position on the screen. Currently the account center is enabled for both desktop and mobile devices.
+An object that defines whether the account center UI (default and minimal) is enabled and its position on the screen. Currently the account center is enabled for both desktop and mobile devices.
 
 ```ts
 export type AccountCenter = {
@@ -232,7 +232,7 @@ type ContainerElements = {
 ```
 
 **`notify`**
-Notify provides by default transaction notifications for all connected wallets on the current blockchain. When switching chains the previous chain listeners remain active for 60 seconds to allow capture and report of an remaining transactions that may be in flight.
+Notify provides by default transaction notifications for all connected wallets on the current blockchain. When switching chains the previous chain listeners remain active for 60 seconds to allow capture and report of remaining transactions that may be in flight.
 By default transaction notifications are captured if a DAppID is provided in the Onboard config along with the Account Center being enabled.
 An object that defines whether transaction notifications will display (defaults to true if an API key is provided). This object contains an `enabled` flag prop and an optional `transactionHandler` which is a callback that can disable or allow customizations of notifications.
 Currently notifications are positioned in the same location as the account center (either below, if the Account Center is positioned along the top, or above if positioned on the bottom of the view).
@@ -735,7 +735,7 @@ setTimeout(
 ```
 
 **`preflightNotifications`**
-Notify can be used to deliver standard notifications along with preflight information by passing a `PreflightNotificationsOptions` object to the `preflightNotifications` action. This will return a a promise that resolves to the transaction hash (if `sendTransaction` resolves the transaction hash and is successful), the internal notification id (if no `sendTransaction` function is provided) or return nothing if an error occurs or `sendTransaction` is not provided or doesn't resolve to a string.
+Notify can be used to deliver standard notifications along with preflight information by passing a `PreflightNotificationsOptions` object to the `preflightNotifications` action. This will return a promise that resolves to the transaction hash (if `sendTransaction` resolves the transaction hash and is successful), the internal notification id (if no `sendTransaction` function is provided) or return nothing if an error occurs or `sendTransaction` is not provided or doesn't resolve to a string.
 
 Preflight event types include
 
@@ -833,11 +833,11 @@ The `setChain` methods takes an options object with a `chainId` property hex enc
 
 ## Custom Styling
 
-The Onboard styles can customized via [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties). The following properties and their default properties can be customized by adding these variables to the `:root` in your CSS file:
+The Onboard styles can be customized via [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties). The following properties and their default properties can be customized by adding these variables to the `:root` in your CSS file:
 
 ```css
 :root {
-  /* CUSTOMIZE THE COLOR  PALLETTE */
+  /* CUSTOMIZE THE COLOR  PALETTE */
   --onboard-white: white;
   --onboard-black: black;
   --onboard-primary-1: #2f80ed;
@@ -1038,7 +1038,7 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
 
 ## Build Environments
 
-Many of the wallet modules require dependencies that are not normally included in browser builds (namely the node builtin modules such as `crypto`, `buffer`, `util` etc). If you are having build issues you can try the following bundler configs to resolve these dependency issues:
+Many of the wallet modules require dependencies that are not normally included in browser builds (namely the node built-in modules such as `crypto`, `buffer`, `util` etc). If you are having build issues you can try the following bundler configs to resolve these dependency issues:
 
 ### Webpack 4
 
@@ -1119,7 +1119,7 @@ module.exports = {
 
 #### If using create-react-app
 
-[CRACO](https://www.npmjs.com/package/@craco/craco) provides an similar way to override webpack config which is obfuscated in Create React App built applications.
+[CRACO](https://www.npmjs.com/package/@craco/craco) provides a similar way to override webpack config which is obfuscated in Create React App built applications.
 
 The above webpack 5 example can be used in the `craco.config.js` file at the root level in this case.
 
