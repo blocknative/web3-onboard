@@ -21,10 +21,8 @@
   }
 
   table thead {
-    position: sticky;
-    inset-block-start: 0; /* "top" */
     box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1);
-    background: var(--account-select-white, var(--onboard-white, var(--white)));
+    background: var(--account-select-background-color, var(--foreground-color));
   }
 
   th,
@@ -34,12 +32,6 @@
   }
 
   td {
-    font-family: var(
-      --account-select-font-family-normal,
-      var(--font-family-normal)
-    );
-    font-style: normal;
-    font-weight: normal;
     font-size: var(
       --account-select-font-size-6,
       var(--onboard-font-size-6, var(--font-size-6))
@@ -59,7 +51,7 @@
       --account-select-primary-100,
       var(--onboard-primary-100, var(--primary-100))
     );
-    color: var(--account-select-black, var(--onboard-black, var(--black)));
+    color: var(--account-select-text-color, var(--onboard-black, var(--black)));
   }
 
   .address-table {
