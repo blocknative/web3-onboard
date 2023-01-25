@@ -1,8 +1,11 @@
+// bn branding
+export { default as defaultBnIcon } from './blocknative-icon.js'
+export { default as poweredByBlocknative } from './poweredByBlocknative.js'
+// other
 export { default as hourglass } from './hourglass.js'
-export { default as blocknative } from './blocknative.js'
+export { default as questionIcon } from './question.js'
 export { default as ethereumIcon } from './ethereum.js'
 export { default as polygonIcon } from './polygon.js'
-export { default as questionIcon } from './question.js'
 export { default as binanceIcon } from './binance.js'
 export { default as fantomIcon } from './fantom.js'
 export { default as optimismIcon } from './optimism.js'
@@ -18,4 +21,3 @@ export { default as caretIcon } from './caret.js'
 export { default as warningIcon } from './warning.js'
 export { default as successIcon } from './success.js'
 export { default as pendingIcon } from './pending.js'
-export { default as poweredByBlocknativeIcon } from './poweredByBlocknative.js'

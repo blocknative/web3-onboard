@@ -54,12 +54,9 @@
 
 <style>
   .maximized {
-    font-family: var(--onboard-font-family-normal, var(--font-family-normal));
     pointer-events: all;
-    backdrop-filter: blur(5px);
     width: 100%;
     min-height: 3.5rem;
-    background: var(--onboard-gray-600, var(--gray-600));
     display: flex;
     flex-direction: column;
     position: relative;
@@ -67,7 +64,7 @@
   }
 
   .radius {
-    border-radius: var(--onboard-border-radius-4, var(--border-radius-4));
+    border-radius: inherit;
   }
 
   div.tp-close-btn {
@@ -103,48 +100,47 @@
     margin: auto;
   }
 
-  .tp-close-btn > .close-icon {
-    color: var(--onboard-gray-300, var(--gray-300));
+  .tp-close-btn .close-icon {
+    color: currentColor;
   }
 
-  .tp-close-btn:hover > .close-icon {
-    color: var(--onboard-gray-100, var(--gray-100));
+  .tp-close-btn:hover .close-icon {
+    color: currentColor;
   }
 
   .table-radius {
-    border-radius: var(--onboard-border-radius-5, var(--border-radius-5));
+    border-radius: var(--border-radius-5);
   }
 
   .bn-notify-notification-inner {
     padding: 0.75rem;
+    background: var(--foreground-color);
   }
   .details {
-    background: var(--onboard-gray-700, var(--gray-700));
     display: flex;
     flex-direction: column;
     padding: 0.75rem;
     gap: 0.5rem;
+    border-top: 1px solid var(--border-color);
   }
   .address-info {
     font-size: 0.75rem;
     font-weight: 400;
     line-height: 1rem;
     display: inline-flex;
-    color: var(--onboard-gray-200, var(--gray-200));
   }
   .details-cta {
-    color: var(--onboard-primary-400, var(--primary-400));
+    color: inherit;
     font-weight: 700;
     font-size: 0.875rem;
     display: flex;
     justify-content: flex-end;
-    background: var(--onboard-gray-700, var(--gray-700));
     flex-direction: row;
     align-items: center;
     padding: 0.5rem;
     gap: 0.5rem;
     height: 3rem;
-    border: 1px solid var(--onboard-gray-600, var(--gray-600));
+    border-top: 1px solid var(--border-color);
     flex: none;
     order: 2;
     align-self: stretch;
@@ -153,11 +149,11 @@
 
   table.balance-change-table {
     width: 100%;
-    background: var(--onboard-gray-600, var(--gray-600));
-    border: 1px solid var(--onboard-gray-500, var(--gray-500));
-    color: var(--onboard-gray-100, var(--gray-100));
     overflow: hidden;
     border-spacing: 0;
+    border: 1px solid transparent;
+    border-color:var(--border-color);
+    color: var(--text-color);
   }
 
   table.balance-change-table td,
@@ -166,6 +162,7 @@
     text-align: start;
     line-height: 1rem;
   }
+
   table.balance-change-table th {
     font-size: 0.75rem;
   }
@@ -178,12 +175,12 @@
   }
 
   tbody > tr:not(:first-child) {
-    box-shadow: inset 0px 1px 0px var(--onboard-gray-500, var(--gray-500));
+    box-shadow: inset 0px 1px 0px
+      var(--border-color);
   }
 
   table.balance-change-table thead {
-    background: var(--onboard-gray-500, var(--gray-500));
-    color: var(--onboard-gray-100, var(--gray-100));
+    background: var(--border-color);
   }
 
   .negative {

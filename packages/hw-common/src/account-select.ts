@@ -59,7 +59,7 @@ const mountAccountSelect = (
 
   target.innerHTML = `
     <style>
-      :host {  
+      :host {
         /* COLORS */
         --white: white;
         --black: black;
@@ -79,6 +79,7 @@ const mountAccountSelect = (
         --font-family-normal: Sofia Pro;
         --font-family-light: Sofia Pro Light;
         --font-size-5: 1rem;
+        --font-size-6: .875rem;
         --font-size-7: .75rem;
         --font-line-height-1: 24px;
 
@@ -95,8 +96,14 @@ const mountAccountSelect = (
 
         /* SHADOWS */
         --shadow-1: 0px 4px 12px rgba(0, 0, 0, 0.1);
-      }
 
+        /* THEMING */
+        --background-color: var(--w3o-background-color, #FFF);
+        --foreground-color: var(--w3o-foreground-color);
+        --text-color: var(--w3o-text-color, inherit);
+        --border-color: var(--w3o-border-color, var(--gray-200));
+        --action-color: var(--w3o-action-color, var(--primary-500));
+      }
     </style>
   `
   const containerElementQuery = selectAccountOptions.containerElement || 'body'

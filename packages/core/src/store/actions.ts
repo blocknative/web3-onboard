@@ -2,6 +2,7 @@ import type { Chain, WalletInit, WalletModule } from '@web3-onboard/common'
 import { nanoid } from 'nanoid'
 import { dispatch } from './index.js'
 import { configuration } from '../configuration.js'
+import { handleThemeChange, returnTheme } from '../themes.js'
 
 import type {
   Account,
@@ -26,7 +27,8 @@ import type {
   CustomNotificationUpdate,
   Notify,
   ConnectModalOptions,
-  UpdateConnectModalAction
+  UpdateConnectModalAction,
+  Theme
 } from '../types.js'
 
 import {
@@ -40,7 +42,8 @@ import {
   validateWalletInit,
   validateUpdateBalances,
   validateNotify,
-  validateConnectModalUpdate
+  validateConnectModalUpdate,
+  validateUpdateTheme
 } from '../validation.js'
 
 import {
@@ -399,4 +402,14 @@ export function uniqueWalletsByLabel(
           innerWallet && innerWallet.label === wallet.label
       ) === i
   )
+}
+
+export function updateTheme(theme: Theme): void {
+  const error = validateUpdateTheme(theme)
+  if (error) {
+    throw error
+  }
+
+  const themingObj = returnTheme(theme)
+  themingObj && handleThemeChange(themingObj)
 }

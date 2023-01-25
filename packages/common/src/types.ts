@@ -79,10 +79,17 @@ export interface AppMetadata {
   /* App name */
   name: string
 
-  /* SVG icon string or image url, with height set to 100% */
-  icon: string
+  /* An SVG icon string or image url, with height set to 100% 
+    Note: `icon` is displayed on both mobile AND desktop. If `logo`
+    below is provided then `icon` displays on mobile and `logo` on
+    desktop.
+  */
+  icon?: string
 
-  /* SVG logo (icon and text) string or image url, with width set to 100% */
+  /* SVG logo (icon and text) string or image url, with width set to 100% 
+     Note: This will ONLY display on desktop. It is best used with wide
+     format logos. Use `icon` for standard 40x40 icons.
+  */
   logo?: string
 
   /* Description of app*/
