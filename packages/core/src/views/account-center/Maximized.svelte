@@ -15,8 +15,8 @@
   import caretLightIcon from '../../icons/caret-light.js'
   import warningIcon from '../../icons/warning.js'
   import questionIcon from '../../icons/question.js'
+  import { poweredByBlocknative } from '../../icons/index.js'
   import { updateAccountCenter } from '../../store/actions.js'
-  import blocknative from '../../icons/blocknative.js'
   import DisconnectAllConfirm from './DisconnectAllConfirm.svelte'
   import { configuration } from '../../configuration.js'
 
@@ -48,26 +48,27 @@
 
 <style>
   .outer-container {
-    background: var(
-      --account-center-maximized-upper-background,
-      var(--onboard-gray-600, var(--gray-600))
-    );
-    border-radius: var(
-      --account-center-border-radius,
-      var(--onboard-border-radius-3, var(--border-radius-3))
-    );
+    --background-color: var(--w3o-background-color);
+    --text-color: var(--w3o-text-color);
+    --border-color: var(--w3o-border-color, var(--gray-500));
+    --action-color: var(--w3o-action-color, var(--primary-500));
+    --border-radius: var(--w3o-border-radius, 1rem);
+
+    --account-center-network-selector-color: var(--text-color, white);
+
     width: 100%;
-    filter: drop-shadow(0px 4px 16px rgba(178, 178, 178, 0.2));
-    padding: 0 1px 1px 1px;
+    overflow: hidden;
     pointer-events: auto;
+    border: 1px solid transparent;
+    background: var(--account-center-maximized-upper-background, var(--background-color));
+    border-color: var(--border-color);
+    border-radius: var(--account-center-border-radius, var(--border-radius));
   }
 
   .wallets-section {
     width: 100%;
-    border-radius: var(
-      --account-center-border-radius,
-      var(--onboard-border-radius-3, var(--border-radius-3))
-    );
+    color: var(--text-color, var(--gray-100));
+    background: var(--background-color, var(--gray-700));
   }
 
   .p5 {
@@ -80,10 +81,7 @@
   }
 
   .actions {
-    color: var(
-      --account-center-maximized-upper-action-color,
-      var(--onboard-primary-400, var(--primary-400))
-    );
+    color: var(--account-center-maximized-upper-action-color, var(--action-color));
     padding-left: 2px;
   }
 
@@ -134,16 +132,17 @@
   }
 
   .network-container {
+    background: var(--backround-color);
+    border-top: 1px solid var(--border-color);
+
     border-radius: var(
       --account-center-border-radius,
       var(--onboard-border-radius-3, var(--border-radius-3))
     );
+
     color: var(
       --account-center-maximized-network-text-color,
-      var(
-        --account-center-maximized-network-section,
-        var(--onboard-gray-500, var(--gray-500))
-      )
+      var(--account-center-maximized-network-section, inherit)
     );
   }
 
@@ -162,58 +161,40 @@
   }
 
   .app-info-container {
-    background: var(
-      --account-center-maximized-info-section-background-color,
-      var(
-        --account-center-maximized-info-section,
-        var(--onboard-white, var(--white))
-      )
+    color: var(--text-color, var(--gray-700));
+    background: var(--account-center-maximized-info-section-background-color,
+      var(--account-center-maximized-info-section, var(--background-color, #FFF))
     );
-    border-radius: var(
-      --account-center-border-radius,
-      var(--onboard-border-radius-3, var(--border-radius-3))
-    );
+    border-top: 1px solid var(--border-color);
+    border-radius: var(--account-center-border-radius, inherit);
     padding: 12px;
   }
 
   .app-name {
+    font-size: 1rem;
     font-weight: 700;
-    font-size: var(--onboard-font-size-5, var(--font-size-5));
-    line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
-    color: var(
-      --account-center-maximized-app-name-color,
-      var(--onboard-gray-600, var(--gray-600))
-    );
-    margin-bottom: var(--onboard-spacing-5, var(--spacing-5));
-    margin-top: 0;
+    line-height: 1rem;
+    margin-bottom: 0.25rem;
+    color: var(--account-center-maximized-app-name-color, inherit);
   }
 
   .app-description {
+    margin: 0;
     font-size: var(--onboard-font-size-7, var(--font-size-7));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
-    color: var(
-      --account-center-maximized-app-info-color,
-      var(--onboard-gray-500, var(--gray-500))
-    );
-    margin: 0;
+    color: var(--account-center-maximized-app-info-color, inherit);
   }
 
   .app-info {
     font-size: var(--onboard-font-size-7, var(--font-size-7));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
-    color: var(
-      --account-center-maximized-app-info-color,
-      var(--onboard-gray-500, var(--gray-500))
-    );
+    color: var(--account-center-maximized-app-info-color, inherit);
   }
   .app-info-heading {
-    color: var(
-      --account-center-maximized-app-info-color,
-      var(--onboard-gray-600, var(--gray-600))
-    );
     font-weight: 700;
     margin-top: var(--onboard-spacing-5, var(--spacing-5));
     margin-bottom: var(--onboard-spacing-7, var(--spacing-7));
+    color: var(--account-center-maximized-app-info-color, inherit);
   }
 
   a {
@@ -229,20 +210,15 @@
   }
 
   .app-button {
-    margin-top: var(--onboard-spacing-5, var(--spacing-5));
-    color: var(
-      --account-center-app-btn-text-color,
-      var(--onboard-white, var(--white))
-    );
-    background: var(
-      --account-center-app-btn-background,
-      var(--onboard-gray-500, var(--gray-500))
-    );
     font-family: var(--account-center-app-btn-font-family, inherit);
+    margin-top: var(--onboard-spacing-5, var(--spacing-5));
+    color: var(--account-center-app-btn-text-color, var(--background-color, #FFF));
+    background: var(--account-center-app-btn-background, var(--action-color));
   }
 
   .powered-by-container {
     margin-top: 12px;
+    color: var(--text-color);
   }
 
   .powered-by {
@@ -391,28 +367,21 @@
             <WalletAppBadge
               size={32}
               padding={4}
-              background="transparent"
+              background="white"
               border="black"
               radius={8}
               icon={(appMetadata && appMetadata.icon) || questionIcon}
             />
-
-            <div
-              style="right: -5px; bottom: -5px;"
-              class="drop-shadow absolute"
-            >
-              <SuccessStatusIcon size={14} color="blue" />
-            </div>
           </div>
 
           <div class="ml4">
-            <h4 class="app-name">
+            <div class="app-name">
               {(appMetadata && appMetadata.name) || 'App Name'}
-            </h4>
-            <p class="app-description">
+            </div>
+            <div class="app-description">
               {(appMetadata && appMetadata.description) ||
                 'This app has not added a description.'}
-            </p>
+            </div>
           </div>
         </div>
 
@@ -478,14 +447,7 @@
           rel="noopener noreferrer"
           class="flex justify-center items-center powered-by-container"
         >
-          <span class="powered-by"
-            >{$_('accountCenter.poweredBy', {
-              default: en.accountCenter.poweredBy
-            })}</span
-          >
-          <div class="flex items-center" style="width: 83px; margin-left: 4px;">
-            {@html blocknative}
-          </div>
+          {@html poweredByBlocknative}
         </a>
       </div>
     </div>

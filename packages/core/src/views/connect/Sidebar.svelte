@@ -1,6 +1,6 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
-  import { defaultBnIcon, poweredByBlocknativeIcon } from '../../icons/index.js'
+  import { defaultBnIcon, poweredByBlocknative } from '../../icons/index.js'
   import en from '../../i18n/en.json'
   import type { i18n } from '../../types.js'
   import { isSVG } from '../../utils.js'
@@ -20,15 +20,15 @@
 
 <style>
   .sidebar {
+    --background-color: var(--onboard-connect-sidebar-background, var(--w3o-foreground-color, none));
+    --text-color: var(--onboard-connect-sidebar-color, inherit);
+    --border-color: var(--onboard-connect-sidebar-border-color, inherit);
+
     display: flex;
     flex-flow: column;
     gap: 1rem;
     padding: 1rem;
     align-items: center;
-    color: var(
-      --onboard-connect-sidebar-color,
-      var(--onboard-gray-700, var(--gray-700))
-    );
   }
 
   .inner-container {
@@ -39,16 +39,11 @@
     gap: 0.5rem;
     padding: 1.5rem;
     text-align: center;
-    border: 1px solid;
+    border: 1px solid transparent;
     border-radius: 12px;
-    border-color: var(
-      --onboard-connect-sidebar-border-color,
-      var(--onboard-primary-200, var(--primary-200))
-    );
-    background: var(
-      --onboard-connect-sidebar-background,
-      var(--onboard-primary-100, var(--primary-100))
-    );
+    border-color: var(--border-color);
+    background-color: var(--background-color);
+    color: var(--text-color);
   }
 
   .icon-container {
@@ -92,7 +87,7 @@
   .indicator.on {
     background: var(
       --onboard-connect-sidebar-progress-color,
-      var(--onboard-primary-600, var(--primary-600))
+      var(--action-color)
     );
     border: 2px solid
       var(
@@ -116,7 +111,7 @@
   .join.active {
     background: var(
       --onboard-connect-sidebar-progress-color,
-      var(--onboard-primary-600, var(--primary-600))
+      var(--action-color)
     );
   }
 
@@ -124,14 +119,9 @@
     .sidebar {
       max-width: 280px;
       border-right: 1px solid;
-      border-color: var(
-        --onboard-connect-sidebar-border-color,
-        var(--onboard-primary-200, var(--primary-200))
-      );
-      background: var(
-        --onboard-connect-sidebar-background,
-        var(--onboard-primary-100, var(--primary-100))
-      );
+
+      border-color: var(--border-color);
+      background-color: var(--background-color);
     }
     .inner-container {
       border: none;
@@ -206,8 +196,9 @@
         class:on={step === 'connectedWallet'}
       />
     </div>
+
   </div>
   <div>
-    {@html poweredByBlocknativeIcon}
+    {@html poweredByBlocknative}
   </div>
 </div>

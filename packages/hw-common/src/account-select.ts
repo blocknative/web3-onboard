@@ -59,7 +59,7 @@ const mountAccountSelect = (
 
   target.innerHTML = `
     <style>
-      :host {  
+      :host {
         /* COLORS */
         --white: white;
         --black: black;
@@ -96,8 +96,14 @@ const mountAccountSelect = (
 
         /* SHADOWS */
         --shadow-1: 0px 4px 12px rgba(0, 0, 0, 0.1);
-      }
 
+        /* THEMING */
+        --background-color: var(--w3o-background-color, #FFF);
+        --foreground-color: var(--w3o-foreground-color);
+        --text-color: var(--w3o-text-color, inherit);
+        --border-color: var(--w3o-border-color, var(--gray-200));
+        --action-color: var(--w3o-action-color, var(--primary-500));
+      }
     </style>
   `
 

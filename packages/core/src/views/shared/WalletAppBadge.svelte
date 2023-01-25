@@ -13,6 +13,7 @@
   export let color = 'black'
 
   export let border:
+    | 'custom'
     | 'yellow'
     | 'gray'
     | 'green'
@@ -41,6 +42,10 @@
 <style>
   .icon {
     height: 100%;
+  }
+
+  .border-custom {
+    border: 1px solid var(--border-color);
   }
 
   .border-yellow {
@@ -168,6 +173,7 @@
 <svelte:window bind:innerWidth={windowWidth} />
 
 <div
+  class:border-custom={border === 'custom'}
   class:border-yellow={border === 'yellow'}
   class:border-gray={border === 'gray'}
   class:border-green={border === 'green'}

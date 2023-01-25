@@ -71,8 +71,10 @@
   }
 
   .modal-styling {
-    border-radius: var(--onboard-modal-border-radius, var(--border-radius-1))
-      var(--onboard-modal-border-radius, var(--border-radius-1)) 0 0;
+    --border-radius: var(--onboard-modal-border-radius,
+      var(--w3o-border-radius, 1rem)
+    );
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
     box-shadow: var(--onboard-modal-box-shadow, var(--box-shadow-0));
     max-width: 100vw;
   }
@@ -93,7 +95,7 @@
 
   @media all and (min-width: 768px) {
     .modal-styling {
-      border-radius: var(--onboard-modal-border-radius, var(--border-radius-1));
+      border-radius: var(--border-radius);
     }
     .modal-container-mobile {
       bottom: unset;

@@ -27,7 +27,8 @@ import {
   setLocale,
   setPrimaryWallet,
   setWalletModules,
-  updateConnectModal
+  updateConnectModal,
+  updateTheme
 } from './store/actions.js'
 import type { PatchedEIP1193Provider } from '@web3-onboard/transaction-preview'
 import { getBlocknativeSdk } from './services.js'
@@ -48,7 +49,8 @@ const API = {
       preflightNotifications,
       updateBalances,
       updateAccountCenter,
-      setPrimaryWallet
+      setPrimaryWallet,
+      updateTheme
     }
   }
 }
@@ -67,7 +69,8 @@ export type {
   Notification,
   Notify,
   UpdateNotification,
-  PreflightNotificationsOptions
+  PreflightNotificationsOptions,
+  Theme
 } from './types.js'
 
 export type { EIP1193Provider } from '@web3-onboard/common'
@@ -94,7 +97,8 @@ function init(options: InitOptions): OnboardAPI {
     gas,
     connect,
     containerElements,
-    transactionPreview
+    transactionPreview,
+    theme
   } = options
 
   if (containerElements) updateConfiguration({ containerElements })
@@ -205,7 +209,7 @@ function init(options: InitOptions): OnboardAPI {
     transactionPreview
   })
 
-  if (transactionPreview) {
+  if (apiKey && transactionPreview) {
     const getBnSDK = async () => {
       transactionPreview.init({
         containerElement: '#transaction-preview-container',
@@ -220,6 +224,8 @@ function init(options: InitOptions): OnboardAPI {
     }
     getBnSDK()
   }
+
+  theme && updateTheme(theme)
 
   return API
 }
@@ -329,7 +335,7 @@ function mountApp() {
           --shadow-0: none;
           --shadow-1: 0px 4px 12px rgba(0, 0, 0, 0.1);
           --shadow-2: inset 0px -1px 0px rgba(0, 0, 0, 0.1);
-          --shadow-3: 0px 4px 16px rgba(179, 179, 179, 0.2);
+          --shadow-3: 0px 4px 16px rgba(0, 0, 0, 0.2);
 
           /* MODAL POSITIONING */
           --modal-z-index: 10;
@@ -340,6 +346,7 @@ function mountApp() {
 
           /* MODAL STYLES */
           --modal-backdrop: rgba(0, 0, 0, 0.6);
+
         }
       </style>
     `
