@@ -1,6 +1,6 @@
 # React
 
-A collection of React hooks for implementing web3-onboard in to a React project
+A collection of React hooks for implementing web3-onboard into a React project
 
 ## Quickstart with Injected Wallets and Ethers Provider
 
@@ -395,7 +395,7 @@ updateLocale('es')
 
 ## Build Environments
 
-Many of the wallet modules require dependencies that are not normally included in browser builds (namely the node builtin modules such as `crypto`, `buffer`, `util` etc). If you are having build issues you can try the following bundler configs to resolve these dependency issues:
+Many of the wallet modules require dependencies that are not normally included in browser builds (namely the node built-in modules such as `crypto`, `buffer`, `util` etc). If you are having build issues you can try the following bundler configs to resolve these dependency issues:
 
 ### Webpack 4
 
@@ -476,7 +476,7 @@ module.exports = {
 
 #### If using create-react-app
 
-[CRACO](https://www.npmjs.com/package/@craco/craco) provides an similar way to override webpack config which is obfuscated in Create React App built applications.
+[CRACO](https://www.npmjs.com/package/@craco/craco) provides a similar way to override webpack config which is obfuscated in Create React App built applications.
 
 The above webpack 5 example can be used in the `craco.config.js` file at the root level in this case.
 
