@@ -175,6 +175,12 @@ export type i18n = typeof en
 
 export type ConnectModalOptions = {
   showSidebar?: boolean
+  /**
+   * Disabled close of the connect modal with background click and
+   * hides the close button forcing an action from the connect modal
+   * Defaults to false
+   */
+  disableClose?: boolean
 }
 
 export type CommonPositions =

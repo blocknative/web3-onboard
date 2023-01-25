@@ -128,6 +128,12 @@ An object that allows for customization of the Connect Modal and accepts the typ
 ```typescript
 type ConnectModalOptions = {
   showSidebar?: boolean
+  showSidebar?: boolean
+  /**
+   * Disabled close of the connect modal with background click and
+   * hides the close button forcing an action from the connect modal
+   */
+  disableClose?: boolean // defaults to false
 }
 ```
 

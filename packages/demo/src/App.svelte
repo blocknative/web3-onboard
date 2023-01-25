@@ -129,7 +129,8 @@
 
   const trezorOptions = {
     email: 'test@test.com',
-    appUrl: 'https://www.blocknative.com'
+    appUrl: 'https://www.blocknative.com',
+    // containerElement: '#sample-container-el'
   }
   const trezor = trezorModule(trezorOptions)
 
@@ -228,7 +229,7 @@
       }
     ],
     // connect: {
-    //   showSidebar: false
+    //   disableClose: true
     // },
     appMetadata: {
       name: 'Blocknative',

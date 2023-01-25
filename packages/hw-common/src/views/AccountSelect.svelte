@@ -21,7 +21,8 @@
     assets,
     chains,
     scanAccounts,
-    supportsCustomPath = true
+    supportsCustomPath = true,
+    containerElement
   } = selectAccountOptions
 
   let accountsListObject: AccountsList | undefined
@@ -270,12 +271,19 @@
       var(--account-select-modal-z-index)
     );
     display: flex;
-    width: 100vw;
-    height: 100vh;
     align-items: center;
     justify-content: center;
     backdrop-filter: blur(4px);
-    background-color: rgba(0, 0, 0, 0.2);
+    background: var(--account-select-background-color, rgba(0, 0, 0, 0.2));
+  }
+
+  .fixed {
+    position: fixed;
+  }
+
+  .h-w-100 {
+    width: 100vw;
+    height: 100vh;
   }
 
   .hardware-connect-modal {
@@ -434,9 +442,14 @@
   }
 </style>
 
-<div class="container">
+<div
+  class="container"
+  class:h-w-100={!containerElement}
+  class:fixed={!containerElement}
+>
   <div
-    class="hardware-connect-modal account-select-modal-position"
+    class="hardware-connect-modal"
+    class:account-select-modal-position={!containerElement}
     transition:fade
   >
     <header class="connect-wallet-header">

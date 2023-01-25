@@ -76,6 +76,10 @@ type InitOptions {
   notify?: Partial<NotifyOptions>
   gas?: typeof gas
   /**
+   * Customize the connect modal
+   */
+  connect?: ConnectModalOptions
+  /**
    * Object mapping for W3O components with the key being the component and the value the DOM element to mount the component to. This element must be available at time of package script execution.
    */
   containerElements?: Partial<ContainerElements>
@@ -148,6 +152,21 @@ type TermsOfServiceAgreementOptions = {
 type RecommendedInjectedWallets = {
   name: string // display name
   url: string // link to download wallet
+}
+```
+
+**`connectModal`**
+An object that allows for customizing the connect modal layout and behavior
+
+```typescript
+type ConnectModalOptions = {
+  showSidebar?: boolean
+  /**
+   * Disabled close of the connect modal with background click and
+   * hides the close button forcing an action from the connect modal
+   * Defaults to false
+   */
+  disableClose?: boolean
 }
 ```
 
