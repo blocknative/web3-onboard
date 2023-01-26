@@ -75,7 +75,7 @@ If you're coming from v1, we've created a [migration guide for you](https://onbo
 
 ## Documentation
 
-For full documentation, check out the README.md for each package:
+For full documentation, check out the README.md for each package or the [docs page here](https://onboard.blocknative.com/docs/overview/introduction#features):
 
 **Core Repo**
 
@@ -99,6 +99,7 @@ For full documentation, check out the README.md for each package:
 - [TallyHo](packages/tallyho/README.md)
 - [Enkrypt](packages/enkrypt/README.md)
 - [Unstoppable Domains](packages/uauth/README.md)
+- [Frontier](packages/frontier/README.md)
 
 **Hardware Wallets**
 
@@ -122,4 +123,4 @@ If you would like to test out the current functionality of V2 in a small browser
 - Checkout the V2 feature branch: `git checkout v2-web3-onboard`
 - Install the dependencies: `yarn` (if running a M1 mac - `yarn install-m1-mac`)
 - Run all packages in dev mode: `yarn dev`
-- [View demo app in the browser](http://localhost:8080)
+- To view the demo app in the browser after running the above steps navigate to [http://localhost:8080](http://localhost:8080)

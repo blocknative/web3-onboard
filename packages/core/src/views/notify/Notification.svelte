@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onDestroy, onMount } from 'svelte'
+  import { onDestroy } from 'svelte'
   import { _ } from 'svelte-i18n'
   import StatusIconBadge from './StatusIconBadge.svelte'
   import NotificationContent from './NotificationContent.svelte'
@@ -45,14 +45,12 @@
         )
     )
 
-  onMount(() => {
-    if (notification.autoDismiss) {
-      timeoutId = setTimeout(() => {
-        removeNotification(notification.id)
-        removeTransaction(notification.id)
-      }, notification.autoDismiss)
-    }
-  })
+  $: if (notification.autoDismiss) {
+    timeoutId = setTimeout(() => {
+      removeNotification(notification.id)
+      removeTransaction(notification.id)
+    }, notification.autoDismiss)
+  }
 
   onDestroy(() => {
     clearTimeout(timeoutId)
@@ -61,24 +59,29 @@
 
 <style>
   .bn-notify-notification {
+    --backround-color: var(--notify-onboard-background, var(--w3o-backround-color, var(--gray-700)));
+    --foreground-color: var(--w3o-foreground-color, var(--gray-600));
+    --text-color: var(--w3o-text-color, #FFF);
+    --border-color: var(--w3o-border-color);
+
     font-family: inherit;
     transition: background 300ms ease-in-out, color 300ms ease-in-out;
     pointer-events: all;
     backdrop-filter: blur(5px);
     width: 100%;
     min-height: 56px;
-    background: var(
-      --notify-onboard-background,
-      var(--onboard-gray-600, var(--gray-600))
-    );
-    border-radius: var(
-      --notify-onboard-border-radius,
-      var(--onboard-border-radius-4, var(--border-radius-4))
-    );
     display: flex;
     flex-direction: column;
     position: relative;
     overflow: hidden;
+    border: 1px solid transparent;
+    border-color: var(--border-color);
+    border-radius: var(
+      --notify-onboard-border-radius,
+      var(--onboard-border-radius-4, var(--border-radius-4))
+    );
+    background: var(--foreground-color);
+    color: var(--text-color);
   }
 
   .bn-notify-notification-inner {
@@ -113,20 +116,15 @@
   .notify-close-btn .close-icon {
     width: 20px;
     margin: auto;
+    color: var(--text-color);
   }
 
   .notify-close-btn > .close-icon {
-    color: var(
-      --notify-onboard-close-icon-color,
-      var(--onboard-gray-300, var(--gray-300))
-    );
+    color: var(--notify-onboard-close-icon-color);
   }
 
   .notify-close-btn:hover > .close-icon {
-    color: var(
-      --notify-onboard-close-icon-hover,
-      var(--onboard-gray-100, var(--gray-100))
-    );
+    color: var(--notify-onboard-close-icon-hover);
   }
 
   .transaction-status {
@@ -149,7 +147,7 @@
 
   .dropdown-buttons {
     background-color: var(
-      --notify-onboard-gray-700,
+      --notify-onboard-dropdown-background,
       var(--onboard-gray-700, var(--gray-700))
     );
     width: 100%;
@@ -159,16 +157,16 @@
   .dropdown-button {
     padding: 4px 12px;
     border-radius: var(
-      --notify-onboard-border-radius-5,
+      --notify-onboard-dropdown-border-radius,
       var(--onboard-border-radius-5, var(--border-radius-5))
     );
     background-color: transparent;
     font-size: var(
-      --notify-onboard-font-size-6,
+      --notify-onboard-dropdown-font-size,
       var(--onboard-font-size-6, var(--font-size-6))
     );
     color: var(
-      --notify-onboard-primary-400,
+      --notify-onboard-dropdown-text-color,
       var(--onboard-primary-400, var(--primary-400))
     );
     transition: all 150ms ease-in-out;
@@ -176,7 +174,10 @@
   }
 
   .dropdown-button:hover {
-    background-color: rgba(146, 155, 237, 0.2);
+    background: var(
+      --notify-onboard-dropdown-btn-hover-background,
+      rgba(146, 155, 237, 0.2)
+    );
   }
 </style>
 

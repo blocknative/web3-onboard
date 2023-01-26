@@ -63,7 +63,7 @@
     display: flex;
     flex-flow: column nowrap;
     font-size: var(
-      --notify-onboard-font-size-5,
+      --notify-onboard-font-size,
       var(--onboard-font-size-5, var(--font-size-5))
     );
     list-style-type: none;
@@ -72,8 +72,8 @@
     box-sizing: border-box;
     z-index: var(--notify-onboard-z-index, 300);
     font-family: var(
-      --notify-onboard-font-family-normal,
-      var(--onboard-font-family-normal, var(--font-family-normal))
+      --notify-onboard-font-family,
+      var(--onboard-font-family-normal, inherit)
     );
     margin: 8px 0;
     pointer-events: all;

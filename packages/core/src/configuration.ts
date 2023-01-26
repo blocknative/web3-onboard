@@ -8,7 +8,7 @@ export let configuration: Configuration = {
   device: getDevice(),
   initialWalletInit: [],
   gas: null,
-  containerElements: { accountCenter: null },
+  containerElements: { accountCenter: null, connectModal: null },
   transactionPreview: null
 }
 

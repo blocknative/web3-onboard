@@ -11,6 +11,8 @@
 ```typescript
 type KeystoneOptions = {
   customNetwork?: CustomNetwork
+  filter?: Platform[]
+  containerElement?: string
 }
 
 interface CustomNetwork {

@@ -24,14 +24,8 @@
     gap: 0.5rem;
     overflow-x: scroll;
     overflow-y: hidden;
-
     padding: 0.75rem 0.5rem;
-
-    border-bottom: 1px solid
-      var(
-        --onboard-wallet-button-border-color,
-        var(--onboard-primary-200, var(--primary-200))
-      );
+    border-bottom: 1px solid var(--border-color);
 
     /* Hide scrollbar for IE, Edge and Firefox */
     -ms-overflow-style: none; /* IE and Edge */
@@ -52,6 +46,7 @@
       display: grid;
       grid-template-columns: repeat(var(--onboard-wallet-columns, 2), 1fr);
       padding: 1rem;
+      border: none;
     }
   }
 </style>

@@ -74,6 +74,20 @@ const exodus: InjectedWalletModule = {
   platforms: ['all']
 }
 
+const frontier: InjectedWalletModule = {
+  label: ProviderLabel.Frontier,
+  injectedNamespace: InjectedNameSpace.Frontier,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider &&
+    !!provider['ethereum'] &&
+    !!provider['ethereum'][ProviderIdentityFlag.Frontier],
+  getIcon: async () => (await import('./icons/frontier.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.frontier.ethereum)
+  }),
+  platforms: ['all']
+}
+
 const brave: InjectedWalletModule = {
   label: ProviderLabel.Brave,
   injectedNamespace: InjectedNameSpace.Ethereum,
@@ -408,26 +422,7 @@ const tokenpocket: InjectedWalletModule = {
     !!provider[ProviderIdentityFlag.TokenPocket] &&
     !provider[ProviderIdentityFlag.TP],
   getIcon: async () => (await import('./icons/tokenpocket.js')).default,
-  getInterface: async ({ EventEmitter }) => {
-    const emitter = new EventEmitter()
-
-    const provider = createEIP1193Provider(window.ethereum, {
-      wallet_switchEthereumChain: ({ baseRequest, params }) => {
-        emitter.emit('chainChanged', params[0].chainId)
-        return baseRequest({
-          method: 'wallet_switchEthereumChain',
-          params
-        })
-      },
-      eth_selectAccounts: UNSUPPORTED_METHOD
-    })
-
-    provider.on = emitter.on.bind(emitter)
-
-    return {
-      provider
-    }
-  },
+  getInterface: getInjectedInterface(ProviderIdentityFlag.TokenPocket),
   platforms: ['all']
 }
 
@@ -492,6 +487,18 @@ const tally: InjectedWalletModule = {
   getIcon: async () => (await import('./icons/tallywallet.js')).default,
   getInterface: async () => ({
     provider: createEIP1193Provider(window.tally)
+  }),
+  platforms: ['desktop']
+}
+
+const zeal: InjectedWalletModule = {
+  label: ProviderLabel.Zeal,
+  injectedNamespace: InjectedNameSpace.Zeal,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Zeal],
+  getIcon: async () => (await import('./icons/zeal.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.zeal)
   }),
   platforms: ['desktop']
 }
@@ -587,6 +594,18 @@ const bitski: InjectedWalletModule = {
   platforms: ['all']
 }
 
+const zerion: InjectedWalletModule = {
+  label: ProviderLabel.Zerion,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Zerion],
+  getIcon: async () => (await import('./icons/zerion.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.ethereum)
+  }),
+  platforms: ['all']
+}
+
 const enkrypt: InjectedWalletModule = {
   label: ProviderLabel.Enkrypt,
   injectedNamespace: InjectedNameSpace.Enkrypt,
@@ -653,8 +672,20 @@ const safepal: InjectedWalletModule = {
   platforms: ['desktop']
 }
 
+const rainbow: InjectedWalletModule = {
+  label: ProviderLabel.Rainbow,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Rainbow],
+  getIcon: async () => (await import('./icons/rainbow.js')).default,
+  getInterface: getInjectedInterface(ProviderIdentityFlag.Rainbow),
+  platforms: ['all']
+}
+
 const wallets = [
+  zeal,
   exodus,
+  frontier,
   metamask,
   binance,
   coinbase,
@@ -690,6 +721,8 @@ const wallets = [
   bitski,
   enkrypt,
   phantom,
+  zerion,
+  rainbow,
   safepal
 ]
 

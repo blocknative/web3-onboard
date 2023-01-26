@@ -48,9 +48,20 @@ const connectedWallets = await onboard.connectWallet()
 console.log(connectedWallets)
 ```
 
+Initialization options:
+```typescript
+type dcentInitOptions = {
+  customNetwork?: CustomNetwork
+  filter?: Platform[]
+  containerElement?: string
+}
+```
+
 The following is a list of the platforms that can be filtered:
 
 ```typescript
+type Platform = DeviceOSName | DeviceBrowserName | DeviceType | 'all';
+
 type Platform =
   | 'Windows Phone'
   | 'Windows'

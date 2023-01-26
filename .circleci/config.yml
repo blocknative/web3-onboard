@@ -243,6 +243,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/trezor
     steps:
       - node-build-steps
+  build-frontier:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/frontier
+    steps:
+      - node-build-steps
   build-walletconnect:
     docker:
       - image: cimg/node:16.13.1
@@ -333,6 +339,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/transaction-preview
     steps:
       - node-build-steps
+  build-zeal:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/zeal
+    steps:
+      - node-build-steps
   build-phantom:
     docker:
       - image: cimg/node:16.13.1
@@ -417,6 +429,12 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/trezor
+    steps:
+      - node-staging-build-steps
+  build-staging-frontier:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/frontier
     steps:
       - node-staging-build-steps
   build-staging-walletconnect:
@@ -509,6 +527,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/transaction-preview
     steps:
       - node-staging-build-steps
+  build-staging-zeal:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/zeal
+    steps:
+      - node-staging-build-steps
   build-staging-phantom:
     docker:
       - image: cimg/node:16.13.1
@@ -596,6 +620,12 @@ workflows:
       - build-trezor:
           <<: *deploy_production_filters
       - build-staging-trezor:
+          <<: *deploy_staging_filters
+  frontier:
+    jobs:
+      - build-frontier:
+          <<: *deploy_production_filters
+      - build-staging-frontier:
           <<: *deploy_staging_filters
   walletconnect:
     jobs:
@@ -686,6 +716,12 @@ workflows:
       - build-transaction-preview:
           <<: *deploy_production_filters
       - build-staging-transaction-preview:
+          <<: *deploy_staging_filters
+  zeal:
+    jobs:
+      - build-zeal:
+          <<: *deploy_production_filters
+      - build-staging-zeal:
           <<: *deploy_staging_filters
   phantom:
     jobs:
