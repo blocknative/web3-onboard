@@ -669,7 +669,7 @@ const safepal: InjectedWalletModule = {
   getInterface: async () => ({
     provider: createEIP1193Provider(window.ethereum)
   }),
-  platforms: ['desktop']
+  platforms: ['all']
 }
 
 const rainbow: InjectedWalletModule = {
