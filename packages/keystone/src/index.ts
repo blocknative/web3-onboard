@@ -65,10 +65,12 @@ const generateAccounts = async (
 
 function keystone({
   customNetwork,
-  filter
+  filter,
+  containerElement
 }: {
   customNetwork?: CustomNetwork
   filter?: Platform[]
+  containerElement?: string
 } = {}): WalletInit {
   const getIcon = async () => (await import('./icon.js')).default
 
@@ -95,6 +97,7 @@ function keystone({
 
         // Super weird esm issue where the default export is an object with a property default on it
         // if that is the case then we just grab the default value
+        // @ts-ignore
         AirGappedKeyring =
           'default' in AirGappedKeyring
             ? // @ts-ignore
@@ -142,7 +145,8 @@ function keystone({
             assets,
             chains,
             scanAccounts,
-            supportsCustomPath: false
+            supportsCustomPath: false,
+            containerElement
           })
 
           if (accounts.length) {

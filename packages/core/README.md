@@ -6,6 +6,18 @@
 
 This is the core package that contains all of the UI and logic to be able to seamlessly connect user's wallets to your app and track the state of those wallets. Onboard no longer contains any wallet specific code, so wallets need to be passed in upon initialization.
 
+## Quick start
+Checkout our full library of quick start examples for connecting and interacting with EVM based wallets
+
+- **[React](https://github.com/blocknative/react-demo)**
+- **[Nextjs 13](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-nextjs-13)**
+- **[Nextjs](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-nextjs)**
+- **[Svelte](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/packages/demo)**
+- **[SvelteKit](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-sveltekit)**
+- **[Vite/React](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-vite-react)**
+- **[Vue](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-vuejs)**
+- **[Vue2](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-vuejs-v2)**
+
 ## Installation
 
 Install the core module:
@@ -14,11 +26,17 @@ Install the core module:
 
 If you would like to support all wallets, then you can install all of the wallet modules:
 
-`npm i @web3-onboard/injected-wallets @web3-onboard/coinbase @web3-onboard/ledger @web3-onboard/trezor @web3-onboard/keepkey @web3-onboard/walletconnect @web3-onboard/web3auth @web3-onboard/torus @web3-onboard/portis @web3-onboard/mew @web3-onboard/gnosis @web3-onboard/magic @web3-onboard/fortmatic @web3-onboard/dcent`
+```bash 
+npm i @web3-onboard/coinbase @web3-onboard/fortmatic @web3-onboard/gnosis 
+@web3-onboard/injected-wallets @web3-onboard/keepkey @web3-onboard/keystone 
+@web3-onboard/ledger @web3-onboard/magic @web3-onboard/portis @web3-onboard/torus 
+@web3-onboard/trezor @web3-onboard/walletconnect @web3-onboard/web3auth 
+@web3-onboard/dcent @web3-onboard/sequence @web3-onboard/enkrypt 
+@web3-onboard/mew-wallet @web3-onboard/uauth @web3-onboard/zeal @web3-onboard/frontier
+```
 
 Note:
 
-- MEW wallet currently fails to install on M1 macs
 - All wallet modules (except for `injected-wallets`) require extra dependencies and may require polyfilling the node built in modules for the browser. See the [Build Environments](#build-environments) section for more info
 - **If using React** you may be interested in checking out the React Hooks package here - https://www.npmjs.com/package/@web3-onboard/react
 - **If using Vue** you may be interested in checking out the Vue package here - https://www.npmjs.com/package/@web3-onboard/vue
@@ -28,7 +46,7 @@ Note:
 Onboard needs to be initialized with an options object before the API can be used:
 
 ```typescript
-type InitOptions {
+type InitOptions = {
   wallets: WalletInit[]
   chains: Chain[]
   appMetadata?: AppMetadata
@@ -42,6 +60,12 @@ type InitOptions {
    * Object mapping for W3O components with the key being the component and the value the DOM element to mount the component to. This element must be available at time of package script execution.
    */
   containerElements?: Partial<ContainerElements>
+  /**
+   * Custom or predefined theme for Web3Onboard
+   * BuiltInThemes: ['default', 'dark', 'light', 'system']
+   * or customize with a ThemingMap object.
+   */
+  theme?: Theme
 }
 ```
 
@@ -76,8 +100,11 @@ type AppMetadata = {
   name: string
   // SVG icon string, with height or width (whichever is larger) set to 100% or a valid image URL
   // note: if using an emoji make sure to send base64 string
+  // Note: `icon` is displayed on both mobile AND desktop. If `logo`
+  // below is provided then `icon` displays on mobile and `logo` on desktop
   icon: string
   // Optional wide format logo (ie icon and text) to be displayed in the sidebar of connect modal. Defaults to icon if not provided
+  // Note: This will ONLY display on desktop. It is best used with wide format logos. Use `icon` for standard 40x40 icons.
   logo?: string
   // description of app
   description?: string
@@ -101,6 +128,33 @@ An object that allows for customization of the Connect Modal and accepts the typ
 ```typescript
 type ConnectModalOptions = {
   showSidebar?: boolean
+  showSidebar?: boolean
+  /**
+   * Disabled close of the connect modal with background click and
+   * hides the close button forcing an action from the connect modal
+   */
+  disableClose?: boolean // defaults to false
+}
+```
+
+**`theme`**
+A string or an object that defines the color theme web3-onboard will render the components.
+Define a custom or predefined theme for Web3Onboard using either: 
+  * BuiltInThemes: ['default', 'dark', 'light', 'system']
+  * ThemingMap object to create a totally custom theme
+
+Note: `system` will default to the theme set by the users system.
+
+```typescript
+export type Theme = ThemingMap | BuiltInThemes | 'system'
+export type BuiltInThemes = 'default' | 'dark' | 'light'
+export type ThemingMap = {
+  '--w3o-background-color'?: string
+  '--w3o-foreground-color'?: string
+  '--w3o-text-color'?: string
+  '--w3o-border-color'?: string
+  '--w3o-action-color'?: string
+  '--w3o-border-radius'?: string
 }
 ```
 
@@ -124,10 +178,10 @@ For an example please see containerElement usage [here](https://github.com/block
 
 ```typescript
 type ContainerElements = {
-  // When attaching the Connect Modal to a container el be aware that the modal was styled to be 
+  // When attaching the Connect Modal to a container el be aware that the modal was styled to be
   // mounted through the app to the html body and will respond to screen width rather than container width
   // This is specifically apparent on mobile so please test thoroughly
-  // Also consider that other DOM elements(specifically Notifications and Account Center) will also 
+  // Also consider that other DOM elements(specifically Notifications and Account Center) will also
   // append to this DOM el if enabled and their own containerEl are not defined
   connectModal?: string
   // when using the accountCenter with a container el the accountCenter position properties are ignored

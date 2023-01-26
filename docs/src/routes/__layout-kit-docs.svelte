@@ -99,7 +99,6 @@
 <style>
   :global(:root) {
     --kd-color-brand-rgb: 99, 112, 229;
-    /* --kd-font-family-sans: 'Sofia Pro'; */
     --account-center-position-top: 5rem;
   }
 </style>

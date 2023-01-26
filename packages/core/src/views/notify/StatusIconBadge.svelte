@@ -99,7 +99,7 @@
           icon={chainStyles.icon}
           size={16}
           background={chainStyles.color}
-          borderColorVar={'--onboard-gray-600, var(--gray-600)'}
+          borderColorVar={`--notify-onboard-background, var(--onboard-gray-600, var(--gray-600))`}
           padding={3}
         />
       </div>

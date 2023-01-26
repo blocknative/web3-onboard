@@ -660,6 +660,16 @@ const phantom: InjectedWalletModule = {
   platforms: ['all']
 }
 
+const rainbow: InjectedWalletModule = {
+  label: ProviderLabel.Rainbow,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Rainbow],
+  getIcon: async () => (await import('./icons/rainbow.js')).default,
+  getInterface: getInjectedInterface(ProviderIdentityFlag.Rainbow),
+  platforms: ['all']
+}
+
 const wallets = [
   zeal,
   exodus,
@@ -699,7 +709,8 @@ const wallets = [
   bitski,
   enkrypt,
   phantom,
-  zerion
+  zerion,
+  rainbow
 ]
 
 export default wallets

@@ -71,7 +71,7 @@ export const patchProvider = (
 ): PatchedEIP1193Provider => {
   if (!walletProvider) {
     throw new Error(
-      `An EIP 1193 wallet provider is required to preform patching and 
+      `An EIP 1193 wallet provider is required to preform patching and
       watch for transactions e.g. an injected wallet using window.ethereum`
     )
   }
@@ -130,7 +130,7 @@ export const patchProvider = (
     patchedProvider.simPatched = true
   } catch (err) {
     console.error(
-      `There was an error patching the passed in wallet provider. 
+      `There was an error patching the passed in wallet provider.
       The provider may be read only and may be incompatible with Transaction Preview`
     )
   }
@@ -197,10 +197,6 @@ const mountTransactionPreview = (simResponse: MultiSimOutput) => {
 
   transactionPreviewDomElement.style.all = 'initial'
 
-  target.innerHTML = `
-    <style>
-    </style>
-  `
   const getW3OEl = document.querySelector('onboard-v2')
 
   const containerElementQuery = options.containerElement || 'body'

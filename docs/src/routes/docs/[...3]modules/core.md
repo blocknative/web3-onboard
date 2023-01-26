@@ -29,14 +29,14 @@ If you would like to support all wallets, then you can install all of the wallet
 <TabPanel value="yarn">
 
 ```sh copy
-yarn add @web3-onboard/injected-wallets @web3-onboard/coinbase @web3-onboard/ledger @web3-onboard/trezor @web3-onboard/keepkey @web3-onboard/walletconnect @web3-onboard/web3auth @web3-onboard/torus @web3-onboard/portis @web3-onboard/mew @web3-onboard/gnosis @web3-onboard/magic @web3-onboard/fortmatic @web3-onboard/dcent
+yarn add @web3-onboard/coinbase @web3-onboard/fortmatic @web3-onboard/gnosis @web3-onboard/injected-wallets @web3-onboard/keepkey @web3-onboard/keystone @web3-onboard/ledger @web3-onboard/magic @web3-onboard/portis @web3-onboard/react @web3-onboard/torus @web3-onboard/trezor @web3-onboard/walletconnect @web3-onboard/web3auth @web3-onboard/dcent @web3-onboard/sequence @web3-onboard/enkrypt @web3-onboard/mew-wallet @web3-onboard/uauth @web3-onboard/zeal @web3-onboard/frontier
 ```
 
   </TabPanel>
   <TabPanel value="npm">
 
 ```sh copy
-npm install @web3-onboard/injected-wallets @web3-onboard/coinbase @web3-onboard/ledger @web3-onboard/trezor @web3-onboard/keepkey @web3-onboard/walletconnect @web3-onboard/web3auth @web3-onboard/torus @web3-onboard/portis @web3-onboard/mew @web3-onboard/gnosis @web3-onboard/magic @web3-onboard/fortmatic @web3-onboard/dcent
+npm install @web3-onboard/coinbase @web3-onboard/fortmatic @web3-onboard/gnosis @web3-onboard/injected-wallets @web3-onboard/keepkey @web3-onboard/keystone @web3-onboard/ledger @web3-onboard/magic @web3-onboard/portis @web3-onboard/react @web3-onboard/torus @web3-onboard/trezor @web3-onboard/walletconnect @web3-onboard/web3auth @web3-onboard/dcent @web3-onboard/sequence @web3-onboard/enkrypt @web3-onboard/mew-wallet @web3-onboard/uauth @web3-onboard/zeal @web3-onboard/frontier
 ```
 
   </TabPanel>
@@ -44,11 +44,22 @@ npm install @web3-onboard/injected-wallets @web3-onboard/coinbase @web3-onboard/
 
 :::admonition type=note
 
-- MEW wallet currently fails to install on M1 macs
 - All wallet modules (except for `injected-wallets`) require extra dependencies and may require polyfilling the node built in modules for the browser. See the [Build Environments](#build-environments) section for more info
 - **If using React** you may be interested in checking out the React Hooks package here - https://www.npmjs.com/package/@web3-onboard/react
 - **If using Vue** you may be interested in checking out the Vue package here - https://www.npmjs.com/package/@web3-onboard/vue
   :::
+
+## Quick start
+Checkout our full library of quick start examples for connecting and interacting with EVM based wallets
+
+- **[React](https://github.com/blocknative/react-demo)**
+- **[Nextjs 13](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-nextjs-13)**
+- **[Nextjs](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-nextjs)**
+- **[Svelte](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/packages/demo)**
+- **[SvelteKit](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-sveltekit)**
+- **[Vite/React](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-vite-react)**
+- **[Vue](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-vuejs)**
+- **[Vue2](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-vuejs-v2)**
 
 ## Initialization
 
@@ -65,10 +76,19 @@ type InitOptions {
   notify?: Partial<NotifyOptions>
   gas?: typeof gas
   /**
+   * Customize the connect modal
+   */
+  connect?: ConnectModalOptions
+  /**
    * Object mapping for W3O components with the key being the component and the value the DOM element to mount the component to. This element must be available at time of package script execution.
    */
   containerElements?: Partial<ContainerElements>
+    /**
+   * Custom or predefined theme for Web3Onboard i.e. default, dark, Custom, etc.
+   */
+  theme?: Theme
 }
+
 ```
 
 ### Options
@@ -102,8 +122,11 @@ type AppMetadata = {
   name: string
   // SVG icon string, with height or width (whichever is larger) set to 100% or a valid image URL
   // note: if using an emoji make sure to send base64 string
+  // Note: `icon` is displayed on both mobile AND desktop. If `logo`
+  // below is provided then `icon` displays on mobile and `logo` on desktop
   icon: string
   // Optional wide format logo (ie icon and text) to be displayed in the sidebar of connect modal. Defaults to icon if not provided
+  // Note: This will ONLY display on desktop. It is best used with wide format logos. Use `icon` for standard 40x40 icons.
   logo?: string
   // description of app
   description?: string
@@ -118,7 +141,7 @@ type AppMetadata = {
 }
 
 type TermsOfServiceAgreementOptions = {
-  // user aggrees with exact version of terms and privacy policy
+  // user agrees with exact version of terms and privacy policy
   version: string
   // url that points to the Terms & Conditions of the dapp
   termsUrl?: string
@@ -132,8 +155,23 @@ type RecommendedInjectedWallets = {
 }
 ```
 
+**`connectModal`**
+An object that allows for customizing the connect modal layout and behavior
+
+```typescript
+type ConnectModalOptions = {
+  showSidebar?: boolean
+  /**
+   * Disabled close of the connect modal with background click and
+   * hides the close button forcing an action from the connect modal
+   * Defaults to false
+   */
+  disableClose?: boolean
+}
+```
+
 **`i18n`**
-An object that defines the display text for different locales. Can also be used to override the default text. To override the default text, pass in a object for the `en` locale.
+An object that defines the display text for different locales. Can also be used to override the default text. To override the default text, pass in an object for the `en` locale.
 
 ```typescript
 type Locale = string // eg 'en', 'es'
@@ -143,8 +181,38 @@ type i18nOptions = Record<Locale, i18n>
 To see a list of all of the text values that can be internationalized or replaced, check out the [default en file](https://github.com/blocknative/web3-onboard/blob/v2-web3-onboard-develop/packages/core/src/i18n/en.json).
 Onboard is using the [ICU syntax](https://formatjs.io/docs/core-concepts/icu-syntax/) for formatting under the hood.
 
+**`theme`**
+A string or an object that defines the color theme web3-onboard will render the components.
+Define a custom or predefined theme for Web3Onboard using either: 
+  * BuiltInThemes: ['default', 'dark', 'light', 'system']
+  * ThemingMap object to create a totally custom theme
+
+Note: `system` will default to the theme set by the users system.
+
+```typescript
+export type Theme = ThemingMap | BuiltInThemes | 'system'
+
+export type BuiltInThemes = 'default' | 'dark' | 'light'
+
+export type ThemingMap = {
+  '--w3o-background-color'?: string
+  '--w3o-foreground-color'?: string
+  '--w3o-text-color'?: string
+  '--w3o-border-color'?: string
+  '--w3o-action-color'?: string
+  '--w3o-border-radius'?: string
+}
+```
+:::admonition type="experimental"
+Interested in seeing how web3-onboard will look on your site?
+
+[Try out our theming tool](/theming-tool)
+
+It will allow you to customize the look and feel of web3-onboard, try different themes or create your own, and preview how web3-onboard will look on your site by entering a URL or adding a screenshot.
+:::
+
 **`accountCenter`**
-An object that defines whether the account center UI (default and minimal) is enabled and it's position on the screen. Currently the account center is enabled for both desktop and mobile devices.
+An object that defines whether the account center UI (default and minimal) is enabled and its position on the screen. Currently the account center is enabled for both desktop and mobile devices.
 
 ```ts
 export type AccountCenter = {
@@ -183,7 +251,7 @@ type ContainerElements = {
 ```
 
 **`notify`**
-Notify provides by default transaction notifications for all connected wallets on the current blockchain. When switching chains the previous chain listeners remain active for 60 seconds to allow capture and report of an remaining transactions that may be in flight.
+Notify provides by default transaction notifications for all connected wallets on the current blockchain. When switching chains the previous chain listeners remain active for 60 seconds to allow capture and report of remaining transactions that may be in flight.
 By default transaction notifications are captured if a DAppID is provided in the Onboard config along with the Account Center being enabled.
 An object that defines whether transaction notifications will display (defaults to true if an API key is provided). This object contains an `enabled` flag prop and an optional `transactionHandler` which is a callback that can disable or allow customizations of notifications.
 Currently notifications are positioned in the same location as the account center (either below, if the Account Center is positioned along the top, or above if positioned on the bottom of the view).
@@ -686,7 +754,7 @@ setTimeout(
 ```
 
 **`preflightNotifications`**
-Notify can be used to deliver standard notifications along with preflight information by passing a `PreflightNotificationsOptions` object to the `preflightNotifications` action. This will return a a promise that resolves to the transaction hash (if `sendTransaction` resolves the transaction hash and is successful), the internal notification id (if no `sendTransaction` function is provided) or return nothing if an error occurs or `sendTransaction` is not provided or doesn't resolve to a string.
+Notify can be used to deliver standard notifications along with preflight information by passing a `PreflightNotificationsOptions` object to the `preflightNotifications` action. This will return a promise that resolves to the transaction hash (if `sendTransaction` resolves the transaction hash and is successful), the internal notification id (if no `sendTransaction` function is provided) or return nothing if an error occurs or `sendTransaction` is not provided or doesn't resolve to a string.
 
 Preflight event types include
 
@@ -784,11 +852,11 @@ The `setChain` methods takes an options object with a `chainId` property hex enc
 
 ## Custom Styling
 
-The Onboard styles can customized via [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties). The following properties and their default properties can be customized by adding these variables to the `:root` in your CSS file:
+The Onboard styles can be customized via [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties). The following properties and their default properties can be customized by adding these variables to the `:root` in your CSS file:
 
 ```css
 :root {
-  /* CUSTOMIZE THE COLOR  PALLETTE */
+  /* CUSTOMIZE THE COLOR  PALETTE */
   --onboard-white: white;
   --onboard-black: black;
   --onboard-primary-1: #2f80ed;
@@ -989,7 +1057,7 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
 
 ## Build Environments
 
-Many of the wallet modules require dependencies that are not normally included in browser builds (namely the node builtin modules such as `crypto`, `buffer`, `util` etc). If you are having build issues you can try the following bundler configs to resolve these dependency issues:
+Many of the wallet modules require dependencies that are not normally included in browser builds (namely the node built-in modules such as `crypto`, `buffer`, `util` etc). If you are having build issues you can try the following bundler configs to resolve these dependency issues:
 
 ### Webpack 4
 
@@ -1070,7 +1138,7 @@ module.exports = {
 
 #### If using create-react-app
 
-[CRACO](https://www.npmjs.com/package/@craco/craco) provides an similar way to override webpack config which is obfuscated in Create React App built applications.
+[CRACO](https://www.npmjs.com/package/@craco/craco) provides a similar way to override webpack config which is obfuscated in Create React App built applications.
 
 The above webpack 5 example can be used in the `craco.config.js` file at the root level in this case.
 
