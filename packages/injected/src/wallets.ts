@@ -659,6 +659,18 @@ const phantom: InjectedWalletModule = {
   }),
   platforms: ['all']
 }
+ 
+const safepal: InjectedWalletModule = {
+  label: ProviderLabel.SafePal,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.SafePal],
+  getIcon: async () => (await import('./icons/safepal.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.ethereum)
+  }),
+  platforms: ['all']
+}
 
 const rainbow: InjectedWalletModule = {
   label: ProviderLabel.Rainbow,
@@ -710,7 +722,8 @@ const wallets = [
   enkrypt,
   phantom,
   zerion,
-  rainbow
+  rainbow,
+  safepal
 ]
 
 export default wallets
