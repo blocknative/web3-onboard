@@ -10,7 +10,7 @@
 <style>
   button {
     align-items: center;
-    padding: 0.75rem 1.5rem;
+    padding: 0.5rem 0.5rem;
     color: var(--account-select-white, var(--onboard-white, var(--white)));
     border-radius: 1.5rem;
     font-family: var(
@@ -20,29 +20,21 @@
     font-style: normal;
     font-weight: bold;
     font-size: var(
-      --account-select-font-size-5,
-      var(--onboard-font-size-5, var(--font-size-5))
+      --account-select-font-size-6,
+      var(--onboard-font-size-6, var(--font-size-6))
     );
     line-height: var(
       --account-select-font-line-height-1,
       var(--onboard-line-height-1, var(--line-height-1))
     );
     border: none;
+
+    width: 8rem;
   }
 
   .scan-accounts-btn {
-    line-height: var(
-      --account-select-font-line-height-1,
-      var(--onboard-line-height-1, var(--line-height-1))
-    );
-    background: var(
-      --account-select-gray-500,
-      var(--onboard-gray-500, var(--gray-500))
-    );
-    color: var(
-      --account-select-primary-100,
-      var(--onboard-primary-100, var(--primary-100))
-    );
+    background: var(--account-select-gray-500, var(--action-color));
+    color: var(--account-select-primary-100, inherit);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -72,7 +64,7 @@
 
   input:disabled {
     background: var(
-      --account-select-gray-100,
+      --account-select-accent-background-color,
       var(--onboard-gray-100, var(--gray-100))
     );
   }
@@ -80,7 +72,7 @@
   input[type='checkbox'] {
     -webkit-appearance: none;
     width: auto;
-    background: var(--account-select-white, var(--onboard-white, var(--white)));
+    background: var(--account-select-background-color, var(--onboard-white, var(--white)));
     border: 1px solid
       var(--account-select-gray-300, var(--onboard-gray-300, var(--gray-300)));
     padding: 0.5em;
@@ -90,8 +82,8 @@
     align-items: center;
     position: relative;
     cursor: pointer;
-    height: 1.5rem;
-    width: 1.5rem;
+    height: 0.5rem;
+    width: 0.5rem;
   }
 
   input[type='checkbox']:hover {
@@ -126,10 +118,14 @@
   .checkbox-container {
     display: flex;
     align-items: center;
+    position: absolute;
+    top: 238px;
+    left: 14px;
+    font-size: 14px;
   }
 
   .checkbox-input {
-    margin-right: 0.75rem;
+    margin-right: 0.5rem;
   }
 
   .error-msg {
@@ -137,33 +133,75 @@
       --account-select-danger-500,
       var(--onboard-danger-500, var(--danger-500))
     );
-    font-family: var(
-      --account-select-font-family-light,
-      var(--font-family-light)
-    );
     font-size: var(--account-select-font-size-7, var(--font-size-7));
     max-width: 15rem;
     line-height: 1;
+    position: absolute;
+    top: 260px;
+    left: 18px;
   }
 
   .table-controls {
-    height: 3.5rem;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 0.5rem;
     border-radius: 0.4rem 0.4rem 0 0;
-    background: var(
-      --account-select-gray-100,
-      var(--onboard-gray-100, var(--gray-100))
-    );
-    border-bottom: 1px solid
-      var(--account-select-gray-200, var(--onboard-gray-200, var(--gray-200)));
+    background: var(--account-select-accent-background-color, var(--border-color));
   }
 
   .cursor-pointer {
     cursor: pointer;
+  }
+
+  @media all and (min-width: 768px) {
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      position: unset;
+      top: unset;
+      left: unset;
+      font-size: unset;
+    }
+
+    .checkbox-input {
+      margin-right: 0.75rem;
+    }
+
+    .error-msg {
+      position: unset;
+      top: unset;
+      left: unset;
+    }
+
+    .table-controls {
+      height: 3.5rem;
+      justify-content: space-between;
+    }
+
+    input[type='checkbox'] {
+      height: 1.5rem;
+      width: 1.5rem;
+    }
+
+    button {
+      padding: 0.75rem 1.5rem;
+      font-size: var(
+        --account-select-font-size-5,
+        var(--onboard-font-size-5, var(--font-size-5))
+      );
+      width: unset;
+    }
+  }
+
+  @media all and (max-width: 326px) {
+    .checkbox-container {
+      top: 328px;
+    }
+    .error-msg {
+      top: 350px;
+    }
   }
 </style>
 

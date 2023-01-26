@@ -18,15 +18,44 @@
         rpcUrl: `https://mainnet.infura.io/v3/${INFURA_ID}`
       },
       {
-        id: '0x3',
-        token: 'tROP',
-        label: 'Ethereum Ropsten Testnet',
-        rpcUrl: `https://ropsten.infura.io/v3/${INFURA_ID}`
+        id: '0x5',
+        token: 'ETH',
+        label: 'Ethereum Goerli Testnet',
+        rpcUrl: `https://goerli.infura.io/v3/${INFURA_ID}`
+      },
+      {
+        id: '0x13881',
+        token: 'MATIC',
+        label: 'Polygon - Mumbai',
+        rpcUrl: 'https://matic-mumbai.chainstacklabs.com	'
+      },
+      {
+        id: '0x38',
+        token: 'BNB',
+        label: 'Binance',
+        rpcUrl: 'https://bsc-dataseed.binance.org/'
+      },
+      {
+        id: 137,
+        token: 'MATIC',
+        label: 'Polygon',
+        rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+      },
+      {
+        id: 10,
+        token: 'OETH',
+        label: 'Optimism',
+        rpcUrl: 'https://mainnet.optimism.io'
+      },
+      {
+        id: 42161,
+        token: 'ARB-ETH',
+        label: 'Arbitrum',
+        rpcUrl: 'https://rpc.ankr.com/arbitrum'
       }
     ],
     appMetadata: {
       name: 'Documentation',
-      icon: '<svg></svg>',
       description: 'Example showcasing how to connect a wallet.',
       recommendedInjectedWallets: [
         { name: 'MetaMask', url: 'https://metamask.io' },
@@ -34,10 +63,14 @@
       ]
     },
     accountCenter: {
-      desktop: { enabled: false },
-      mobile: { enabled: false }
-    }
+      desktop: { enabled: true },
+      mobile: { enabled: true }
+    },
+    theme: 'system'
   })
+
+  const themes = ['system', 'default', 'light', 'dark', 'custom']
+  let selectedTheme = 'system'
 
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
@@ -73,8 +106,9 @@
     uploaded_image = undefined
     webURL = ''
     resetTheme()
-    const onboardCloseBtnVisible =
-      document?.querySelector('body > onboard-v2')?.shadowRoot?.querySelector('.close-button')
+    const onboardCloseBtnVisible = document
+      ?.querySelector('body > onboard-v2')
+      ?.shadowRoot?.querySelector('.close-button')
     if (onboardCloseBtnVisible) onboardCloseBtnVisible?.click()
   }
 
@@ -84,34 +118,43 @@
       : onboard.connectWallet()
   }
 
-  const baseStyles = {
-    '--background-color': '#ffffff',
-    '--text-color': '#1a1d26',
-    '--border-color': '#ebebed',
-    '--accent-background': '#ebebed',
-    '--accent-color': '#929bed',
-    '--accent-color-hover': '#eff1fc',
-    '--secondary-text-color': '#707481'
+  const themingObjects = {
+    default: {
+      '--w3o-background-color': 'unset',
+      '--w3o-foreground-color': 'unset',
+      '--w3o-text-color': 'unset',
+      '--w3o-border-color': 'unset',
+      '--w3o-action-color': 'unset',
+      '--w3o-border-radius': 'unset'
+    },
+    custom: {
+      '--w3o-background-color': 'unset',
+      '--w3o-foreground-color': 'unset',
+      '--w3o-text-color': 'unset',
+      '--w3o-border-color': 'unset',
+      '--w3o-action-color': 'unset',
+      '--w3o-border-radius': 'unset'
+    },
+    light: {
+      '--w3o-background-color': '#ffffff',
+      '--w3o-foreground-color': '#EFF1FC',
+      '--w3o-text-color': '#1a1d26',
+      '--w3o-border-color': '#d0d4f7',
+      '--w3o-action-color': '#6370E5',
+      '--w3o-border-radius': '16px'
+    },
+    dark: {
+      '--w3o-background-color': '#1A1D26',
+      '--w3o-foreground-color': '#242835',
+      '--w3o-text-color': '#EFF1FC',
+      '--w3o-border-color': '#33394B',
+      '--w3o-action-color': '#929bed',
+      '--w3o-border-radius': '16px'
+    }
   }
 
-  let defaultStyling = {...baseStyles}
-
-  const baseStyling = `--onboard-connect-sidebar-background: var(--accent-background);
-  --onboard-close-button-background: var(--accent-background);
-  --onboard-connect-sidebar-color: var(--text-color);
-  --onboard-connect-sidebar-progress-background: var(--secondary-text-color);
-  --onboard-connect-sidebar-progress-color: var(--accent-color);
-  --onboard-connect-header-background: var(--background-color);
-  --onboard-connect-header-color: var(--text-color);
-  --onboard-main-scroll-container-background: var(--background-color);
-  --onboard-link-color: var(--accent-color);
-  --onboard-wallet-button-background: var(--background-color);
-  --onboard-wallet-button-background-hover: var(--accent-color-hover);
-  --onboard-wallet-button-border-color: var(--border-color);
-  --onboard-wallet-app-icon-border-color: var(--border-color);`
-
   const styleToString = (style) => {
-    return Object.keys(style).reduce((acc, key) => acc + key + ': ' + style[key] + '; \n  ', '')
+    return Object.keys(style).reduce((acc, key) => acc + `"${key}": "${style[key]}", \n`, '')
   }
 
   async function copyStylingConfig() {
@@ -123,18 +166,28 @@
     }
   }
 
-  let copyableStyles = `:root {\n  ${styleToString(defaultStyling)}${baseStyling}\n}`
+  let copyableStyles =
+    selectedTheme !== 'custom' ? '' : `{\n ${styleToString(themingObjects[selectedTheme])}}`
 
-  const updateTheme = (e, targetStyle) => {
+  const updateTheme = () => {
+    selectedTheme !== 'custom'
+      ? onboard.state.actions.updateTheme(selectedTheme)
+      : onboard.state.actions.updateTheme('default')
+    copyableStyles =
+      selectedTheme !== 'custom' ? '' : `{\n ${styleToString(themingObjects[selectedTheme])}}`
+  }
+
+  const updateThemeEl = (e, targetStyle) => {
+    if (selectedTheme !== 'custom') return
     document.documentElement.style.setProperty(targetStyle, e.target.value)
 
-    copyableStyles = `:root {\n  ${styleToString(defaultStyling)}${baseStyling}\n}`
+    copyableStyles = `{\n ${styleToString(themingObjects[selectedTheme])}}`
   }
 
   const resetTheme = () => {
-    defaultStyling = {...baseStyles}
-    Object.keys(defaultStyling).forEach(style => {
-      document.documentElement.style.setProperty(style, defaultStyling[style])
+    selectedTheme = 'custom'
+    Object.keys(themingObjects['custom']).forEach((style) => {
+      document.documentElement.style.setProperty(style, themingObjects['custom'][style])
     })
   }
 
@@ -187,28 +240,66 @@
 
 <section>
   <div class="control-panel">
-    <label for="Theme">Click Color Circles to Set Theme: </label>
-    <hr />
-    <div class="theming-container">
-      {#each Object.keys(defaultStyling) as target}
-        <div class="theming-inputs-wrapper">
-          <div class="theming-inputs">
-            <input
-              type="color"
-              name="Theme"
-              bind:value={defaultStyling[target]}
-              on:input={(e) => updateTheme(e, target)}
-            />
-          </div>
-          <span class="text" id="current-theme">{target} : {defaultStyling[target]}</span>
-        </div>
+    <label>Select a theme:</label>
+    <select bind:value={selectedTheme} on:change={() => updateTheme()}>
+      {#each themes as theme}
+        <option value={theme}>
+          {theme}
+        </option>
       {/each}
-    </div>
-    <div class="copy-styles-container">
-      <textarea readonly bind:value={copyableStyles} rows="10" class="copy-styles-textarea" />
-      <button on:click={async () => await copyStylingConfig()}> Copy Styling Config </button>
-    </div>
-    <hr />
+    </select>
+    {#if selectedTheme === 'custom'}
+      <label for="Theme"
+        >Click Color Circles to Customize Theme, Copy Config and Paste as `theme` property value in
+        Onboard config:
+      </label>
+      <hr />
+      <div class="theming-container">
+        {#each Object.keys(themingObjects[selectedTheme]) as target}
+          {#if !target.includes('border-radius')}
+            <div class="theming-inputs-wrapper">
+              <div class="theming-inputs">
+                <input
+                  type="color"
+                  name="Theme"
+                  bind:value={themingObjects[selectedTheme][target]}
+                  on:input={(e) => updateThemeEl(e, target)}
+                />
+              </div>
+              <span class="text" id="current-theme"
+                >{target} : {themingObjects[selectedTheme][target]}</span
+              >
+            </div>
+          {:else}
+            <div class="theming-inputs-wrapper">
+              <div class="theming-inputs-text">
+                <input
+                  class="br-text-input"
+                  type="text"
+                  bind:value={themingObjects[selectedTheme][target]}
+                  on:input={(e) => updateThemeEl(e, target)}
+                />
+              </div>
+              <span class="text" id="current-theme"
+                >{target} : {themingObjects[selectedTheme][target]}</span
+              >
+            </div>
+          {/if}
+        {/each}
+      </div>
+      <div class="copy-styles-container">
+        <textarea readonly bind:value={copyableStyles} rows="8" class="copy-styles-textarea" />
+        <button on:click={async () => await copyStylingConfig()}> Copy Theming Config </button>
+      </div>
+      <hr />
+    {:else}
+      <label for="Theme">
+        The system theme will align the theme with the users system preferences
+      </label>
+      <hr />
+      <div class="theming-container" />
+    {/if}
+
     <div class="backdrop-toggle">
       <label class="switch">
         <input type="checkbox" on:change={() => handleBackdrop()} bind:checked />
@@ -255,40 +346,6 @@
 </section>
 
 <style>
-  /* iframe { width: 100%; height: 62.5rem;} */
-  :root {
-    --background-color: #ffffff; /* --white */
-    --text-color: #1a1d26; /* --gray-700 */
-    --border-color: #ebebed; /* --gray-100 taken from future mock */
-
-    --accent-background: #ebebed; /* --gray-100 (currently gray-100 in connect modal) */
-    --accent-color: #929bed; /* --primary-400 */
-    --accent-color-hover: #eff1fc; /* --primary-200 */
-
-    /* Account Center & Notify */
-    --secondary-text-color: #707481; /* --gray-400 (balance and token name) */
-    /* --secondary-accent-background: #242835; --gray-600 (Upper background in maximized) */
-
-    /* --onboard-font-family-normal: System,monospace; */
-    --onboard-connect-sidebar-background: var(--accent-background);
-    --onboard-close-button-background: var(--accent-background);
-    --onboard-connect-sidebar-color: var(--text-color);
-    --onboard-connect-sidebar-progress-background: var(
-      --secondary-text-color
-    ); /* defaults to gray-200 */
-    --onboard-connect-sidebar-progress-color: var(--accent-color); /* defaults to  primary-600 */
-    --onboard-connect-header-background: var(--background-color);
-    --onboard-connect-header-color: var(--text-color);
-    --onboard-main-scroll-container-background: var(--background-color);
-    --onboard-link-color: var(--accent-color);
-    --onboard-wallet-button-background: var(--background-color);
-    --onboard-wallet-button-background-hover: var(--accent-color-hover);
-    --onboard-wallet-button-color-hover: var(--text-color);
-    --onboard-wallet-button-color: var(--text-color);
-    --onboard-wallet-button-border-color: var(--border-color);
-    --onboard-wallet-app-icon-border-color: var(--border-color);
-  }
-
   section {
     position: relative;
     height: 100%;
@@ -315,9 +372,9 @@
   }
 
   .control-panel {
-    z-index: 9999;
-    left: auto;
-    right: 0;
+    z-index: 25;
+    left: 0;
+    right: auto;
     bottom: 0;
     position: fixed;
     overflow: hidden;
@@ -367,6 +424,18 @@
     width: 2em;
     height: 2em;
     margin: 0.5em;
+  }
+  .theming-inputs-text {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 2em;
+    margin: 0.25em;
+  }
+  .br-text-input {
+    width: 3rem;
+    padding: 0.25rem;
+    text-align: center;
   }
   .iframe-input {
     flex: 1;
@@ -501,6 +570,11 @@
     -webkit-transform: translateX(26px);
     -ms-transform: translateX(26px);
     transform: translateX(26px);
+  }
+
+  select {
+    width: 100%;
+    padding: 1rem;
   }
 
   .backdrop-toggle {

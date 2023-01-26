@@ -59,10 +59,12 @@ const generateAccounts = async (
 
 function dcent({
   customNetwork,
-  filter
+  filter,
+  containerElement
 }: {
   customNetwork?: CustomNetwork
   filter?: Platform[]
+  containerElement?: string
 } = {}): WalletInit {
   const getIcon = async () => (await import('./icon.js')).default
 
@@ -135,7 +137,8 @@ function dcent({
             assets,
             chains,
             scanAccounts,
-            supportsCustomPath: false
+            supportsCustomPath: false,
+            containerElement
           })
           if (accounts.length) {
             eventEmitter.emit('accountsChanged', [accounts[0].address])

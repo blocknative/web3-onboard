@@ -21,28 +21,20 @@
   }
 
   table thead {
-    position: sticky;
-    inset-block-start: 0; /* "top" */
     box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1);
-    background: var(--account-select-white, var(--onboard-white, var(--white)));
+    background: var(--account-select-background-color, var(--foreground-color));
   }
 
   th,
   td {
     text-align: left;
-    padding: 0.5rem 0.5rem;
+    padding: 0.4rem 0.5rem;
   }
 
   td {
-    font-family: var(
-      --account-select-font-family-normal,
-      var(--font-family-normal)
-    );
-    font-style: normal;
-    font-weight: normal;
     font-size: var(
-      --account-select-font-size-5,
-      var(--onboard-font-size-5, var(--font-size-5))
+      --account-select-font-size-6,
+      var(--onboard-font-size-6, var(--font-size-6))
     );
     line-height: var(
       --account-select-font-line-height-1,
@@ -59,12 +51,12 @@
       --account-select-primary-100,
       var(--onboard-primary-100, var(--primary-100))
     );
-    color: var(--account-select-black, var(--onboard-black, var(--black)));
+    color: var(--account-select-text-color, var(--onboard-black, var(--black)));
   }
 
   .address-table {
     min-height: 4.5rem;
-    max-height: 27rem;
+    max-height: 14rem;
     overflow: auto;
   }
 
@@ -89,6 +81,24 @@
 
   .pointer {
     cursor: pointer;
+  }
+
+  @media all and (min-width: 768px) {
+    .address-table {
+      max-height: 27rem;
+    }
+
+    td {
+      font-size: var(
+        --account-select-font-size-5,
+        var(--onboard-font-size-5, var(--font-size-5))
+      );
+    }
+
+    th,
+    td {
+      padding: 0.5rem 0.5rem;
+    }
   }
 </style>
 
