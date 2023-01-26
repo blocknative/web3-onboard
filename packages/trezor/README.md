@@ -14,6 +14,7 @@ type TrezorOptions = {
   appUrl: string
   customNetwork?: CustomNetwork
   filter?: Platform[]
+  containerElement?: string
 }
 
 interface CustomNetwork {
@@ -47,6 +48,8 @@ interface BootstrapNode {
   location: string
   comment: string
 }
+
+type Platform = DeviceOSName | DeviceBrowserName | DeviceType | 'all';
 ```
 
 ### Usage

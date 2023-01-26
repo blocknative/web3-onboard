@@ -48,7 +48,7 @@
   }
 
   .time {
-    color: var(--onboard-gray-300, var(--gray-300))
+    color: inherit;
   }
 
   .stale {

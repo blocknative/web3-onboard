@@ -24,6 +24,7 @@ interface TrezorOptions {
   appUrl: string
   customNetwork?: CustomNetwork
   filter?: Platform[]
+  containerElement?: string
 }
 
 const TREZOR_DEFAULT_PATH = "m/44'/60'/0'/0"
@@ -117,7 +118,8 @@ function trezor(options: TrezorOptions): WalletInit {
   const getIcon = async () => (await import('./icon.js')).default
 
   return ({ device }) => {
-    const { email, appUrl, customNetwork, filter } = options || {}
+    const { email, appUrl, customNetwork, filter, containerElement } =
+      options || {}
 
     if (!email || !appUrl) {
       throw new Error(
@@ -219,7 +221,8 @@ function trezor(options: TrezorOptions): WalletInit {
             basePaths: DEFAULT_BASE_PATHS,
             assets,
             chains,
-            scanAccounts
+            scanAccounts,
+            containerElement
           })
 
           if (

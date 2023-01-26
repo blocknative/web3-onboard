@@ -63,8 +63,26 @@ export interface InitOptions {
    * Transaction Preview module
    */
   transactionPreview?: TransactionPreviewAPI
+  /**
+   * Custom or predefined theme for Web3Onboard 
+   * BuiltInThemes: ['default', 'dark', 'light', 'system']
+   * or customize with a ThemingMap object.
+   */
+  theme?: Theme
 }
 
+export type Theme = ThemingMap | BuiltInThemes | 'system'
+
+export type BuiltInThemes = 'default' | 'dark' | 'light'
+
+export type ThemingMap = {
+  '--w3o-background-color'?: string
+  '--w3o-foreground-color'?: string
+  '--w3o-text-color'?: string
+  '--w3o-border-color'?: string
+  '--w3o-action-color'?: string
+  '--w3o-border-radius'?: string
+}
 export interface ConnectOptions {
   autoSelect?: { label: string; disableModals: boolean }
 }
@@ -157,6 +175,12 @@ export type i18n = typeof en
 
 export type ConnectModalOptions = {
   showSidebar?: boolean
+  /**
+   * Disabled close of the connect modal with background click and
+   * hides the close button forcing an action from the connect modal
+   * Defaults to false
+   */
+  disableClose?: boolean
 }
 
 export type CommonPositions =

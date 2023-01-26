@@ -28,7 +28,8 @@ const selectAccountOptions = Joi.object({
   assets: assets,
   chains: chains,
   scanAccounts: Joi.function().arity(1).required(),
-  supportsCustomPath: Joi.bool()
+  supportsCustomPath: Joi.bool(),
+  containerElement: Joi.string()
 })
 
 export const validateSelectAccountOptions = (

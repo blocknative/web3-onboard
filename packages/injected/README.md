@@ -33,6 +33,48 @@ const connectedWallets = await onboard.connectWallet()
 
 console.log(connectedWallets)
 ```
+### Injected Wallets Supported Natively
+
+- Metamask - _Desktop & Mobile_
+- Binance - _Desktop_
+- Coinbase - _Desktop & Mobile_
+- Phantom - _Desktop & Mobile_
+- Zerion - _Desktop & Mobile_
+- Tally - _Desktop_
+- Trust - _Mobile_
+- Opera - _Desktop & Mobile_
+- Status - _Mobile_
+- Alphawallet - _Mobile_
+- Atoken - _Mobile_
+- Bitpie - _Mobile_
+- Blockwallet - _Desktop_
+- Brave - _Desktop & Mobile_
+- D'Cent - _Mobile_
+- Frame - _Desktop_
+- Huobiwallet - _Mobile_
+- Hyperpay - _Mobile_
+- IMtoken - _Mobile_
+- Liquality - _Desktop_
+- Meetone - _Mobile_
+- Mykey - _Mobile_
+- Ownbit - _Mobile_
+- Tokenpocket - _Desktop & Mobile_
+- TP - _Mobile_
+- xDefi - _Desktop & Mobile_
+- 1inch - _Mobile_
+- Tokenary - _Mobile_
+- GameStop - _Desktop_
+- Rabby - _Desktop_
+- MathWallet - _Desktop & Mobile_
+- Gamestop - _Desktop_
+- Bitkeep - _Desktop & Mobile_
+- Sequence - _Desktop & Mobile_
+- Core - _Desktop_
+- Bitski - _Desktop & Mobile_
+- Enkrypt - _Desktop & Mobile_
+- Zeal - _Desktop_
+- Exodus - _Desktop & Mobile_
+- Frontier - _Desktop & Mobile_
 
 ## Filtering Wallets
 

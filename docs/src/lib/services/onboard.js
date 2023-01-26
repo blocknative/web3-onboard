@@ -2,12 +2,34 @@ import bnIcon from '$lib/components/icons/bnWhiteBackground.js'
 let onboard
 const getOnboard = async () => {
   if (!onboard) {
-    onboard = await intiOnboard()
+    const key = 'svelteness::color-scheme'
+    const scheme = localStorage[key]
+    let theme = scheme || 'system'
+    onboard = await intiOnboard(theme)
+    classMutationListener()
   }
   return onboard
 }
 
-const intiOnboard = async () => {
+const classMutationsCheck = (mutationsList) => {
+  mutationsList.forEach((mutation) => {
+    if (onboard && mutation.attributeName === 'class') {
+      if (mutation.target.className.includes('dark')) {
+        onboard.state.actions.updateTheme('dark')
+      } else {
+        onboard.state.actions.updateTheme('light')
+      }
+    }
+  })
+}
+
+const classMutationListener = () => {
+  // Listens for class changes on HTML element
+  const mutationObserver = new MutationObserver(classMutationsCheck)
+  mutationObserver.observe(document.querySelector('html'), { attributes: true })
+}
+
+const intiOnboard = async (theme) => {
   const { default: Onboard } = await import('@web3-onboard/core')
   const { default: injectedModule } = await import('@web3-onboard/injected-wallets')
   const { default: trezorModule } = await import('@web3-onboard/trezor')
@@ -158,7 +180,8 @@ const intiOnboard = async () => {
         { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
       ]
     },
-    accountCenter: { desktop: { enabled: true }, mobile: { enabled: true } }
+    accountCenter: { desktop: { enabled: true }, mobile: { enabled: true } },
+    theme: theme || 'system'
   })
 }
 
