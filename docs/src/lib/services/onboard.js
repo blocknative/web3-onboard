@@ -2,12 +2,34 @@ import bnIcon from '$lib/components/icons/bnWhiteBackground.js'
 let onboard
 const getOnboard = async () => {
   if (!onboard) {
-    onboard = await intiOnboard()
+    const key = 'svelteness::color-scheme'
+    const scheme = localStorage[key]
+    let theme = scheme || 'system'
+    onboard = await intiOnboard(theme)
+    classMutationListener()
   }
   return onboard
 }
 
-const intiOnboard = async () => {
+const classMutationsCheck = (mutationsList) => {
+  mutationsList.forEach((mutation) => {
+    if (onboard && mutation.attributeName === 'class') {
+      if (mutation.target.className.includes('dark')) {
+        onboard.state.actions.updateTheme('dark')
+      } else {
+        onboard.state.actions.updateTheme('light')
+      }
+    }
+  })
+}
+
+const classMutationListener = () => {
+  // Listens for class changes on HTML element
+  const mutationObserver = new MutationObserver(classMutationsCheck)
+  mutationObserver.observe(document.querySelector('html'), { attributes: true })
+}
+
+const intiOnboard = async (theme) => {
   const { default: Onboard } = await import('@web3-onboard/core')
   const { default: injectedModule } = await import('@web3-onboard/injected-wallets')
   const { default: trezorModule } = await import('@web3-onboard/trezor')
@@ -28,6 +50,7 @@ const intiOnboard = async () => {
   const { default: torusModule } = await import('@web3-onboard/torus')
   const { default: web3authModule } = await import('@web3-onboard/web3auth')
   const { default: uauthModule } = await import('@web3-onboard/uauth')
+  const { default: trustModule } = await import('@web3-onboard/trust')
   const INFURA_ID = '8b60d52405694345a99bcb82e722e0af'
 
   const injected = injectedModule()
@@ -43,6 +66,7 @@ const intiOnboard = async () => {
   const mewWallet = mewWalletModule()
   const tally = tallyModule()
   const torus = torusModule()
+  const trust = trustModule()
 
   const portis = portisModule({
     apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
@@ -66,10 +90,10 @@ const intiOnboard = async () => {
   const uauthOptions = {
     clientID: 'a25c3a65-a1f2-46cc-a515-a46fe7acb78c',
     redirectUri: 'http://localhost:8080/',
-    scope:
-      'openid wallet email:optional humanity_check:optional profile:optional social:optional'
+    scope: 'openid wallet email:optional humanity_check:optional profile:optional social:optional'
   }
   const uauth = uauthModule(uauthOptions)
+
   const magic = magicModule({
     apiKey: 'pk_live_02207D744E81C2BA'
   })
@@ -81,6 +105,7 @@ const intiOnboard = async () => {
       coinbase,
       ledger,
       trezor,
+      trust,
       gnosis,
       uauth,
       tally,
@@ -155,7 +180,8 @@ const intiOnboard = async () => {
         { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
       ]
     },
-    accountCenter: { desktop: { enabled: true }, mobile: { enabled: true } }
+    accountCenter: { desktop: { enabled: true }, mobile: { enabled: true } },
+    theme: theme || 'system'
   })
 }
 

@@ -446,7 +446,7 @@
     "@ethersproject/properties" "^5.5.0"
     "@ethersproject/strings" "^5.5.0"
 
-"@ethersproject/abi@5.7.0", "@ethersproject/abi@^5.5.0", "@ethersproject/abi@^5.6.3", "@ethersproject/abi@^5.7.0":
+"@ethersproject/abi@5.7.0", "@ethersproject/abi@^5.0.1", "@ethersproject/abi@^5.5.0", "@ethersproject/abi@^5.6.3", "@ethersproject/abi@^5.7.0":
   version "5.7.0"
   resolved "https://registry.npmjs.org/@ethersproject/abi/-/abi-5.7.0.tgz#b3f3e045bbbeed1af3947335c247ad625a44e449"
   integrity sha512-351ktp42TiRcYB3H1OP8yajPeAQstMW/yCFokj/AthP9bLHzQFPlOrxOcwYEDkUAICmOHljvN4K39OMTMUa9RA==
@@ -1907,6 +1907,17 @@
   dependencies:
     "@types/node" "*"
 
+"@unstoppabledomains/resolution@^8.0":
+  version "8.4.0"
+  resolved "https://registry.yarnpkg.com/@unstoppabledomains/resolution/-/resolution-8.4.0.tgz#bcfba87898c5acd65bf15556a9737728daad7a89"
+  integrity sha512-bjJPF5YGwyd3p3pJuWOiz5YegVsmKDiwjJNWxhibnVYgzIWhaTt8dv6runxLTs761Rlwz37TLQvvBqJ8/KnzvA==
+  dependencies:
+    "@ethersproject/abi" "^5.0.1"
+    bn.js "^4.4.0"
+    cross-fetch "^3.1.4"
+    crypto-js "^4.1.1"
+    elliptic "^6.5.4"
+
 "@walletconnect/browser-utils@^1.8.0":
   version "1.8.0"
   resolved "https://registry.npmjs.org/@walletconnect/browser-utils/-/browser-utils-1.8.0.tgz#33c10e777aa6be86c713095b5206d63d32df0951"
@@ -2086,11 +2097,12 @@
     ethers "5.5.4"
     joi "^17.6.1"
 
-"@web3-onboard/core@^2.10.1":
-  version "2.11.0"
-  resolved "https://registry.npmjs.org/@web3-onboard/core/-/core-2.11.0.tgz#267db444fa39cc9059850bc462286646f4531ed0"
-  integrity sha512-bNQEVgZKiKiddI/+wDS4KzmNUsqAiNL9xpPyBWSjtGC7/S/N9602quqDQzQxle8ZC/BnrQhaIpNexHvydaVaEQ==
+"@web3-onboard/core@^2.14.0":
+  version "2.14.0"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.14.0.tgz#0c52fa9dfb126f26107ba9b71fc4eb5c24522b46"
+  integrity sha512-/n/l7L163gzGc8+OrjO3uy5RKG7jmrapSO1a/k8qT7uIIsYsYl+BsMXinQezZwlWqv2aaB8WIQHOy/pfepFj3Q==
   dependencies:
+    "@unstoppabledomains/resolution" "^8.0"
     "@web3-onboard/common" "^2.2.3"
     bignumber.js "^9.0.0"
     bnc-sdk "^4.6.2"
@@ -2144,10 +2156,10 @@
     joi "^17.6.1"
     rxjs "^7.5.2"
 
-"@web3-onboard/injected-wallets@^2.2.4":
-  version "2.4.0"
-  resolved "https://registry.npmjs.org/@web3-onboard/injected-wallets/-/injected-wallets-2.4.0.tgz#84e48830605f899601aadc3bc7c79d1ed5787534"
-  integrity sha512-v27NdfD5vemPTNhqk+7gpMYXuTDsHTSPWWdJt6ybJoks6GlRSgF1fnCkmERNzo3+9S97fEKrzHrlSkpsFgn2Mw==
+"@web3-onboard/injected-wallets@^2.6.1":
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.6.1.tgz#ca926e669593d32a68385c4e77ca3534b1d632e3"
+  integrity sha512-GuK0nr7eS3VIJNCOkdZrmhnoH0YiUrIopRFPFJENBH3HwRa6Wscl2ZkPdgq1kv9f1/4fKpXSmrAYqjteZGhHWg==
   dependencies:
     "@web3-onboard/common" "^2.2.3"
     joi "^17.6.1"
@@ -2218,18 +2230,18 @@
     "@portis/web3" "^4.0.6"
     "@web3-onboard/common" "^2.2.3"
 
-"@web3-onboard/react@^2.3.5":
-  version "2.4.1"
-  resolved "https://registry.npmjs.org/@web3-onboard/react/-/react-2.4.1.tgz#6580c208ee4dec30238867607dbf604495091846"
-  integrity sha512-Qvpb5ezvwBVPhwIHVhW65jG+WIlNHM6O1jgLdNWvP9a0kSkmdfHyNP+gb4yjZ9w23xc+keIK21UVfQk2tBw0MA==
+"@web3-onboard/react@^2.6.0":
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/react/-/react-2.6.0.tgz#0587cc0e6a5e312bdcaed260714014f25c8ae4e4"
+  integrity sha512-wlWzJoKrYCX0kFIN9/v4HZqhb4neTnOIY69ZMdgnZiGAVe2Z7vJPMpGegRJZ8u52/NnvhvIBpI2pOqwB8T7aIw==
   dependencies:
     "@web3-onboard/common" "^2.2.3"
-    "@web3-onboard/core" "^2.10.1"
+    "@web3-onboard/core" "^2.14.0"
     use-sync-external-store "1.0.0"
 
-"@web3-onboard/sequence@^2.0.3-alpha.1":
+"@web3-onboard/sequence@^2.0.3":
   version "2.0.4"
-  resolved "https://registry.npmjs.org/@web3-onboard/sequence/-/sequence-2.0.4.tgz#424e120e78578a9655f8168ae2cad45372a41c8a"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/sequence/-/sequence-2.0.4.tgz#424e120e78578a9655f8168ae2cad45372a41c8a"
   integrity sha512-qz6qblHusoyj12A6NnIlqDl6kmeACFrA03gmEufmiPUCH3AX5fVBMK2f0xiM30sWoeYjTYGrUrgDmAmfjKytTg==
   dependencies:
     "0xsequence" "^0.43.1"
@@ -2613,7 +2625,7 @@ bn.js@4.11.8:
   resolved "https://registry.npmjs.org/bn.js/-/bn.js-4.11.8.tgz#2cde09eb5ee341f484746bb0309b3253b1b1442f"
   integrity sha512-ItfYfPLkWHUjckQCk8xC+LwxgK8NYcXywGigJgSwOP8Y2iyWT4f2vsZnoOXTTbo+o5yXmIUJ4gn5538SO5S3gA==
 
-bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.11.0, bn.js@^4.11.6, bn.js@^4.11.8, bn.js@^4.11.9:
+bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.11.0, bn.js@^4.11.6, bn.js@^4.11.8, bn.js@^4.11.9, bn.js@^4.4.0:
   version "4.12.0"
   resolved "https://registry.npmjs.org/bn.js/-/bn.js-4.12.0.tgz#775b3f278efbb9718eec7361f483fb36fbbfea88"
   integrity sha512-c98Bf3tPniI+scsdk237ku1Dc3ujXQTSgyiPUDEOe7tRkhrqridvh8klBv0HCEso1OLOYcHuCv/cS6DNxKH+ZA==
@@ -2947,9 +2959,9 @@ commander@^2.20.3:
   integrity sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==
 
 cookiejar@^2.1.1:
-  version "2.1.3"
-  resolved "https://registry.npmjs.org/cookiejar/-/cookiejar-2.1.3.tgz#fc7a6216e408e74414b90230050842dacda75acc"
-  integrity sha512-JxbCBUdrfr6AQjOXrxoTvAMJO4HBTUIlBzslcJPAz+/KT8yk53fXun51u+RenNYvad/+Vc2DIz5o9UxlCDymFQ==
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/cookiejar/-/cookiejar-2.1.4.tgz#ee669c1fea2cf42dc31585469d193fef0d65771b"
+  integrity sha512-LDx6oHrK+PhzLKJU9j5S7/Y3jM/mUHvD/DeI1WQmJn652iPC5Y4TBzC9l+5OMOXlyTTA+SmVUPm0HQUwpD5Jqw==
 
 copy-to-clipboard@^3.3.1:
   version "3.3.3"

@@ -5,6 +5,7 @@ export {
   useNotifications,
   useSetChain,
   useSetLocale,
+  useUpdateTheme,
   useWallets
 } from './hooks/index.js'
 

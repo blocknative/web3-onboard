@@ -243,6 +243,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/trezor
     steps:
       - node-build-steps
+  build-trust:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/trust
+    steps:
+      - node-build-steps
   build-frontier:
     docker:
       - image: cimg/node:16.13.1
@@ -429,6 +435,12 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/trezor
+    steps:
+      - node-staging-build-steps
+  build-staging-trust:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/trust
     steps:
       - node-staging-build-steps
   build-staging-frontier:
@@ -620,6 +632,12 @@ workflows:
       - build-trezor:
           <<: *deploy_production_filters
       - build-staging-trezor:
+          <<: *deploy_staging_filters
+  trust:
+    jobs:
+      - build-trust:
+          <<: *deploy_production_filters
+      - build-staging-trust:
           <<: *deploy_staging_filters
   frontier:
     jobs:

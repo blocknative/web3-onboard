@@ -36,7 +36,10 @@ const errorMessages = {
 
 type ErrorCode = 'busy' | 'pairing'
 
-function keepkey({ filter }: { filter?: Platform[] } = {}): WalletInit {
+function keepkey({
+  filter,
+  containerElement
+}: { filter?: Platform[]; containerElement?: string } = {}): WalletInit {
   const getIcon = async () => (await import('./icon.js')).default
 
   return ({ device }) => {
@@ -254,7 +257,8 @@ function keepkey({ filter }: { filter?: Platform[] } = {}): WalletInit {
             basePaths: DEFAULT_BASE_PATHS,
             assets,
             chains,
-            scanAccounts
+            scanAccounts,
+            containerElement
           })
           if (!accounts) throw new Error('No accounts were found')
           if (accounts.length) {

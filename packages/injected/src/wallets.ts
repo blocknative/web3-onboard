@@ -190,21 +190,30 @@ const detected: InjectedWalletModule = {
 
 const trust: InjectedWalletModule = {
   label: ProviderLabel.Trust,
-  injectedNamespace: InjectedNameSpace.Ethereum,
+  injectedNamespace: InjectedNameSpace.Trust,
   checkProviderIdentity: ({ provider }) =>
-    !!provider &&
-    !!provider[ProviderIdentityFlag.Trust] &&
-    !!provider &&
-    !provider[ProviderIdentityFlag.TokenPocket],
-
+    !!provider && !!provider[ProviderIdentityFlag.Trust],
   getIcon: async () => (await import('./icons/trust.js')).default,
-  getInterface: async () => ({
-    provider: createEIP1193Provider(window.ethereum, {
-      wallet_switchEthereumChain: UNSUPPORTED_METHOD,
-      eth_selectAccounts: UNSUPPORTED_METHOD
-    })
-  }),
-  platforms: ['mobile']
+  getInterface: async () => {
+    const ethereumInjectionExists = window.hasOwnProperty(
+      InjectedNameSpace.Ethereum
+    )
+
+    let provider: EIP1193Provider
+
+    // check if trust is injected into window.ethereum
+    if (ethereumInjectionExists && window[InjectedNameSpace.Ethereum].isTrust) {
+      provider = window[InjectedNameSpace.Ethereum]
+    } else {
+      // directly use the window.trustwallet injection
+      provider = window[InjectedNameSpace.Trust]
+    }
+
+    return {
+      provider
+    }
+  },
+  platforms: ['all']
 }
 
 const opera: InjectedWalletModule = {
@@ -660,12 +669,33 @@ const phantom: InjectedWalletModule = {
   platforms: ['all']
 }
 
+const safepal: InjectedWalletModule = {
+  label: ProviderLabel.SafePal,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.SafePal],
+  getIcon: async () => (await import('./icons/safepal.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.ethereum)
+  }),
+  platforms: ['all']
+}
+
+const rainbow: InjectedWalletModule = {
+  label: ProviderLabel.Rainbow,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Rainbow],
+  getIcon: async () => (await import('./icons/rainbow.js')).default,
+  getInterface: getInjectedInterface(ProviderIdentityFlag.Rainbow),
+  platforms: ['all']
+}
+
 const okxwallet: InjectedWalletModule = {
   label: ProviderLabel.OKXWallet,
   injectedNamespace: InjectedNameSpace.OKXWallet,
   checkProviderIdentity: ({ provider }) =>
-    !!provider &&
-    !!provider[ProviderIdentityFlag.OKXWallet],
+    !!provider && !!provider[ProviderIdentityFlag.OKXWallet],
   getIcon: async () => (await import('./icons/okxwallet.js')).default,
   getInterface: async () => ({
     provider: createEIP1193Provider(window.okxwallet)
@@ -713,7 +743,9 @@ const wallets = [
   enkrypt,
   phantom,
   okxwallet,
-  zerion
+  zerion,
+  rainbow,
+  safepal
 ]
 
 export default wallets

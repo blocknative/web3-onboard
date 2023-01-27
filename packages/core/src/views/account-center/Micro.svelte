@@ -16,24 +16,22 @@
 
 <style>
   .minimized {
-    background: var(
-      --account-center-micro-background,
-      var(--onboard-white, var(--white))
-    );
-    border: 1px solid
-      var(--account-center-border, var(--onboard-gray-100, var(--gray-100)));
+    --background-color: var(--account-center-micro-background, var(--w3o-background-color, white));
+    --text-color: var(--w3o-text-color);
+    --border-color: var(--account-center-border, var(--w3o-border-color, var(--onboard-gray-200, var(--gray-200))));
+    --border-radius: var(--account-center-border-radius, var(--w3o-border-radius, 1rem));
+
+    cursor: pointer;
+    pointer-events: auto;
+    border: 1px solid transparent;
+
+    background: var(--background-color);
+    color: var(--text-color);
+    border-color: var(--border-color);
+    border-radius: var(--border-radius);
     box-shadow: var(
       --account-center-box-shadow,
       var(--onboard-shadow-3, var(--shadow-3))
-    );
-    width: 80px;
-    pointer-events: auto;
-  }
-
-  .radius {
-    border-radius: var(
-      --account-center-border-radius,
-      var(--onboard-border-radius-3, var(--border-radius-3))
     );
   }
 
@@ -41,10 +39,11 @@
     filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.2));
   }
 
-  .inner-box-wrapper {
+  .inner-row {
     display: flex;
     flex-flow: row nowrap;
-    padding: 12px;
+    width: 80px;
+    padding: 0.75rem;
   }
 
   .wallet-square-wrapper {
@@ -59,8 +58,8 @@
   }
 </style>
 
-<div class="minimized pointer radius" on:click|stopPropagation={maximize}>
-  <div class="inner-box-wrapper">
+<div class="minimized" on:click|stopPropagation={maximize}>
+  <div class="inner-row">
     <!-- app and wallet icon badge -->
     <div class="drop-shadow">
       <WalletAppBadge

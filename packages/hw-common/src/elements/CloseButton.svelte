@@ -3,33 +3,48 @@
 </script>
 
 <style>
-  .close-button-container {
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
   .close-button {
-    width: 2rem;
-    height: 2rem;
-    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
     display: flex;
+    align-items: center;
     justify-content: center;
-    align-items: center;
-    padding: 0.4rem;
-    border-radius: 40px;
-    color: var(--onboard-gray-400, var(--gray-400));
-    background: var(--onboard-white, var(--white));
+    height: 2rem;
+    width: 2rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    color: var(--onboard-close-button-color, inherit);
   }
-  .close-icon {
-    width: 14px;
+
+  .close-button:hover::before {
+    opacity: 0.2;
+  }
+  .close-button:hover .svg-box {
+    opacity: 1;
+  }
+
+  .close-button::before {
+    content: '';
+    position: absolute;
+    height: inherit;
+    width: inherit;
+    opacity: 0.1;
+    background: currentColor;
+    transition: 300ms ease-in-out opacity;
+  }
+
+  .svg-box {
     display: flex;
-    align-items: center;
+    position: absolute;
+    height: 14px;
+    width: 14px;
+    opacity: 0.6;
+    transition: 300ms ease-in-out opacity;
   }
 </style>
 
 <div class="close-button-container">
   <div class="close-button">
-    <div class="close-icon">{@html closeIcon}</div>
+    <div class="svg-box">{@html closeIcon}</div>
   </div>
 </div>

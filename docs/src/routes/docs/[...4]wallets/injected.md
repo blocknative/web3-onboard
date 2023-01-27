@@ -267,11 +267,14 @@ const injected = injectedModule({
 
 ### Injected Wallets Supported Natively
 
-- Metamask - _Desktop & Mobile_ (Mobile relies on Wallet Connect and is detected inside MetaMask app browser)
+- Metamask - _Desktop & Mobile_
 - Binance - _Desktop_
 - Coinbase - _Desktop & Mobile_
+- Phantom - _Desktop & Mobile_
+- SafePal - _Desktop & Mobile_
+- Zerion - _Desktop & Mobile_
+- OKX Wallet - _Desktop_
 - Tally - _Desktop_
-- Exodus - _Desktop & Mobile_
 - Trust - _Mobile_
 - Opera - _Desktop & Mobile_
 - Status - _Mobile_
@@ -303,6 +306,10 @@ const injected = injectedModule({
 - Core - _Desktop_
 - Bitski - _Desktop & Mobile_
 - Enkrypt - _Desktop & Mobile_
+- Zeal - _Desktop_
+- Exodus - _Desktop & Mobile_
+- Frontier - _Desktop & Mobile_
+- Rainbow - _Desktop & Mobile_
 
 ## Build Environments
 

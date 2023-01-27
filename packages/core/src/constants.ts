@@ -25,7 +25,8 @@ export const APP_INITIAL_STATE: AppState = {
   notifications: [],
   locale: '',
   connect: {
-    showSidebar: true
+    showSidebar: true,
+    disableClose: false
   }
 }
 
