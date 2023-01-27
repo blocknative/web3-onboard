@@ -81,7 +81,6 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
           public removeListener: typeof EventEmitter['removeListener']
 
           private disconnected$: InstanceType<typeof Subject>
-          private providers: Record<string, StaticJsonRpcProviderType>
 
           constructor({
             connector,
@@ -97,7 +96,6 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
             this.connector = connector
             this.chains = chains
             this.disconnected$ = new Subject()
-            this.providers = {}
 
             // listen for accountsChanged
             fromEvent(this.connector, 'accountsChanged', payload => payload)
