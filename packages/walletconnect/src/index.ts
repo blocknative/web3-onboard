@@ -1,5 +1,3 @@
-import type { StaticJsonRpcProvider as StaticJsonRpcProviderType } from '@ethersproject/providers'
-
 import type {
   Chain,
   ProviderAccounts,
@@ -26,7 +24,6 @@ const methods = [
   'personal_sign',
   'eth_sign',
   'eth_signTypedData',
-  'eth_accounts',
   'eth_signTypedData_v4'
 ]
 
