@@ -32,8 +32,8 @@ export const isWalletAvailable = (
     return true
   }
 
-  // For multiple injected providers, check providers array 
-  // example coinbase inj wallet pushes over-ridden wallets 
+  // For multiple injected providers, check providers array
+  // example coinbase inj wallet pushes over-ridden wallets
   // into a providers array at window.ethereum
   return !!provider.providers?.some(provider =>
     checkProviderIdentity({ provider, device })

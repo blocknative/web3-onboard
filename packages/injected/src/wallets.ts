@@ -668,7 +668,7 @@ const phantom: InjectedWalletModule = {
   }),
   platforms: ['all']
 }
- 
+
 const safepal: InjectedWalletModule = {
   label: ProviderLabel.SafePal,
   injectedNamespace: InjectedNameSpace.Ethereum,
@@ -689,6 +689,18 @@ const rainbow: InjectedWalletModule = {
   getIcon: async () => (await import('./icons/rainbow.js')).default,
   getInterface: getInjectedInterface(ProviderIdentityFlag.Rainbow),
   platforms: ['all']
+}
+
+const okxwallet: InjectedWalletModule = {
+  label: ProviderLabel.OKXWallet,
+  injectedNamespace: InjectedNameSpace.OKXWallet,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.OKXWallet],
+  getIcon: async () => (await import('./icons/okxwallet.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.okxwallet)
+  }),
+  platforms: ['desktop']
 }
 
 const wallets = [
@@ -730,6 +742,7 @@ const wallets = [
   bitski,
   enkrypt,
   phantom,
+  okxwallet,
   zerion,
   rainbow,
   safepal
