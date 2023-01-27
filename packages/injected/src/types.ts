@@ -51,10 +51,11 @@ export enum ProviderIdentityFlag {
   Opera = 'isOpera',
   Bitski = 'isBitski',
   Enkrypt = 'isEnkrypt',
-  Zeal = 'isZeal',
   Phantom = 'isPhantom',
+  Zeal = 'isZeal',
   Zerion = 'isZerion',
-  Rainbow = 'isRainbow'
+  Rainbow = 'isRainbow',
+  SafePal = 'isSafePal'
 }
 
 export enum ProviderLabel {
@@ -99,7 +100,8 @@ export enum ProviderLabel {
   Zeal = 'Zeal',
   Phantom = 'Phantom',
   Zerion = 'Zerion',
-  Rainbow = 'Rainbow'
+  Rainbow = 'Rainbow',
+  SafePal = 'SafePal'
 }
 
 export interface MeetOneProvider extends ExternalProvider {
