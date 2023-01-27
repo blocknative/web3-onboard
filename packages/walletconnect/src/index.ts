@@ -242,41 +242,10 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                 })
               }
 
-              switch (method) {
-                case 'eth_sendTransaction':
-                case 'eth_signTransaction':
-                case 'personal_sign':
-                case 'eth_sign':
-                case 'eth_signTypedData':
-                case 'eth_accounts':
-                case 'eth_signTypedData_v4':
-                  return this.connector.request({
-                    method,
-                    params
-                  })
-              }
-
-              const chainId = await this.request({ method: 'eth_chainId' })
-              if (!this.providers[chainId]) {
-                const currentChain = chains.find(({ id }) => id === chainId)
-
-                if (!currentChain) {
-                  throw new ProviderRpcError({
-                    code: ProviderRpcErrorCode.CHAIN_NOT_ADDED,
-                    message: `The Provider does not have a rpcUrl to make a request for the requested method: ${method}`
-                  })
-                }
-
-                this.providers[chainId] = new StaticJsonRpcProvider(
-                  currentChain.rpcUrl
-                )
-              }
-
-              return this.providers[chainId].send(
+              return this.connector.request<Promise<any>>({
                 method,
-                // @ts-ignore
                 params
-              )
+              })
             }
           }
         }
