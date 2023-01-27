@@ -127,8 +127,9 @@ export enum InjectedNameSpace {
   Bitski = 'Bitski',
   Enkrypt = 'enkrypt',
   Zeal = 'zeal',
-  Frontier = 'frontier',
-  Phantom = 'phantom'
+  Phantom = 'phantom',
+  Trust = 'trustwallet',
+  Frontier = 'frontier'
 }
 
 export interface CustomWindow extends Window {
@@ -160,6 +161,7 @@ export interface CustomWindow extends Window {
   phantom: {
     ethereum: InjectedProvider
   }
+  trustwallet: InjectedProvider
 }
 
 export type InjectedProvider = ExternalProvider &
