@@ -7,6 +7,7 @@
 This is the core package that contains all of the UI and logic to be able to seamlessly connect user's wallets to your app and track the state of those wallets. Onboard no longer contains any wallet specific code, so wallets need to be passed in upon initialization.
 
 ## Quick start
+
 Checkout our full library of quick start examples for connecting and interacting with EVM based wallets
 
 - **[React](https://github.com/blocknative/react-demo)**
@@ -26,12 +27,12 @@ Install the core module:
 
 If you would like to support all wallets, then you can install all of the wallet modules:
 
-```bash 
-npm i @web3-onboard/coinbase @web3-onboard/fortmatic @web3-onboard/gnosis 
-@web3-onboard/injected-wallets @web3-onboard/keepkey @web3-onboard/keystone 
-@web3-onboard/ledger @web3-onboard/magic @web3-onboard/portis @web3-onboard/torus 
-@web3-onboard/trezor @web3-onboard/walletconnect @web3-onboard/web3auth 
-@web3-onboard/dcent @web3-onboard/sequence @web3-onboard/enkrypt 
+```bash
+npm i @web3-onboard/coinbase @web3-onboard/fortmatic @web3-onboard/gnosis  @web3-onboard/trust
+@web3-onboard/injected-wallets @web3-onboard/keepkey @web3-onboard/keystone
+@web3-onboard/ledger @web3-onboard/magic @web3-onboard/portis @web3-onboard/torus
+@web3-onboard/trezor @web3-onboard/walletconnect @web3-onboard/web3auth
+@web3-onboard/dcent @web3-onboard/sequence @web3-onboard/enkrypt
 @web3-onboard/mew-wallet @web3-onboard/uauth @web3-onboard/zeal @web3-onboard/frontier
 ```
 
@@ -139,9 +140,10 @@ type ConnectModalOptions = {
 
 **`theme`**
 A string or an object that defines the color theme web3-onboard will render the components.
-Define a custom or predefined theme for Web3Onboard using either: 
-  * BuiltInThemes: ['default', 'dark', 'light', 'system']
-  * ThemingMap object to create a totally custom theme
+Define a custom or predefined theme for Web3Onboard using either:
+
+- BuiltInThemes: ['default', 'dark', 'light', 'system']
+- ThemingMap object to create a totally custom theme
 
 Note: `system` will default to the theme set by the users system.
 

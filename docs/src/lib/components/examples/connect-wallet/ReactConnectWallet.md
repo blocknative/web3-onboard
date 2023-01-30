@@ -1,4 +1,3 @@
-
 ## Step 1: Import + Configure
 
 Import the libraries and any wallets you would like to use. For this example, we are going to use the injected wallets module. You can easily add more wallet support to your dapp via our other wallet modules. Additionally, we'll setup web3-onboard to support 2 chains: Ethereum mainnet and Polygon mainnet.
@@ -22,6 +21,7 @@ import web3authModule from '@web3-onboard/web3auth'
 import dcentModule from '@web3-onboard/dcent'
 import sequenceModule from '@web3-onboard/sequence'
 import tallyHoModule from '@web3-onboard/tallyho'
+import trustModule from '@web3-onboard/trust'
 import frontierModule from '@web3-onboard/frontier'
 
 const INFURA_KEY = ''
@@ -45,6 +45,7 @@ const keepkey = keepkeyModule()
 const gnosis = gnosisModule()
 const sequence = sequenceModule()
 const tally = tallyModule()
+const trust = trustModule()
 const frontier = frontierModule()
 
 const trezorOptions = {
@@ -65,6 +66,7 @@ const wallets = [
   keepkey,
   sequence,
   injected,
+  trust,
   frontier,
   tally,
   ledger,
@@ -233,4 +235,3 @@ export default function ConnectWallet() {
   )
 }
 ```
-

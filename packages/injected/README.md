@@ -39,7 +39,9 @@ console.log(connectedWallets)
 - Binance - _Desktop_
 - Coinbase - _Desktop & Mobile_
 - Phantom - _Desktop & Mobile_
+- SafePal - _Desktop & Mobile_
 - Zerion - _Desktop & Mobile_
+- OKX Wallet - _Desktop_
 - Tally - _Desktop_
 - Trust - _Mobile_
 - Opera - _Desktop & Mobile_
@@ -75,6 +77,7 @@ console.log(connectedWallets)
 - Zeal - _Desktop_
 - Exodus - _Desktop & Mobile_
 - Frontier - _Desktop & Mobile_
+- Rainbow - _Desktop & Mobile_
 
 ## Filtering Wallets
 

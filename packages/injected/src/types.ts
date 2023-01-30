@@ -52,6 +52,7 @@ export enum ProviderIdentityFlag {
   Bitski = 'isBitski',
   Enkrypt = 'isEnkrypt',
   Phantom = 'isPhantom',
+  OKXWallet = 'isOkxWallet',
   Zeal = 'isZeal',
   Zerion = 'isZerion',
   Rainbow = 'isRainbow',
@@ -99,6 +100,7 @@ export enum ProviderLabel {
   Enkrypt = 'Enkrypt',
   Zeal = 'Zeal',
   Phantom = 'Phantom',
+  OKXWallet = 'OKX Wallet',
   Zerion = 'Zerion',
   Rainbow = 'Rainbow',
   SafePal = 'SafePal'
@@ -127,8 +129,10 @@ export enum InjectedNameSpace {
   Bitski = 'Bitski',
   Enkrypt = 'enkrypt',
   Zeal = 'zeal',
-  Frontier = 'frontier',
-  Phantom = 'phantom'
+  Phantom = 'phantom',
+  OKXWallet = 'okxwallet',
+  Trust = 'trustwallet',
+  Frontier = 'frontier'
 }
 
 export interface CustomWindow extends Window {
@@ -160,6 +164,8 @@ export interface CustomWindow extends Window {
   phantom: {
     ethereum: InjectedProvider
   }
+  okxwallet: InjectedProvider
+  trustwallet: InjectedProvider
 }
 
 export type InjectedProvider = ExternalProvider &
