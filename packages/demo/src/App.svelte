@@ -313,29 +313,15 @@
 
   const signTransactionMessage = async provider => {
     const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
-    ethersProvider.send('wallet_switchEthereumChain',
-    [
-      {
-        chainId: '0x5',
-      chainName: "Goerli",
-      nativeCurrency: {
-        name: "Goerli ETH",
-        symbol: "gorETH"
-      },
-        rpcUrls: ['https://goerli.infura.io/v3/406405f9c65348f99d0d5c27104b2213'],
-        blockExplorerUrls: ["https://goerli.etherscan.io"]
-      }
-    ]
-  )
 
-    // const signer = ethersProvider.getSigner()
+    const signer = ethersProvider.getSigner()
 
-    // const signature = await signer.signTransaction({
-    //   to: '',
-    //   value: 100000000000000
-    // })
+    const signature = await signer.signTransaction({
+      to: '',
+      value: 100000000000000
+    })
 
-    // console.log(signature)
+    console.log(signature)
   }
 
   let toAddress
