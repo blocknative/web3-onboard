@@ -4,7 +4,7 @@ name: Deploy documentation to Pages
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ["docs-main"]
+    branches: ["main"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -51,6 +51,12 @@ jobs:
           NODE_OPTIONS: "--max_old_space_size=8192"
         run: yarn build
 
+      - name: Generate the sitemap
+        uses: cicirello/generate-sitemap@v1
+        with:
+          path-to-root: docs
+          base-url-path: https://www.onboard.blocknative.com/
+        
       - name: Peak at folder contents
         run: ls -al
         
