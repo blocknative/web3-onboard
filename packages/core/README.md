@@ -1,5 +1,5 @@
 <a href="https://onboard.blocknative.com/">
-  <img alt="Web3-Onboard UI Components" src="https://github.com/blocknative/web3-onboard/blob/v2-web3-onboard-develop/assets/core.svg?raw=true" />
+  <img alt="Web3-Onboard UI Components" src="https://github.com/blocknative/web3-onboard/blob/develop/assets/core.svg?raw=true" />
 </a>
 
 # @web3-onboard/core
@@ -11,13 +11,13 @@ This is the core package that contains all of the UI and logic to be able to sea
 Checkout our full library of quick start examples for connecting and interacting with EVM based wallets
 
 - **[React](https://github.com/blocknative/react-demo)**
-- **[Nextjs 13](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-nextjs-13)**
-- **[Nextjs](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-nextjs)**
-- **[Svelte](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/packages/demo)**
-- **[SvelteKit](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-sveltekit)**
-- **[Vite/React](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-vite-react)**
-- **[Vue](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-vuejs)**
-- **[Vue2](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-vuejs-v2)**
+- **[Nextjs 13](https://github.com/blocknative/web3-onboard/tree/main/examples/with-nextjs-13)**
+- **[Nextjs](https://github.com/blocknative/web3-onboard/tree/main/examples/with-nextjs)**
+- **[Svelte](https://github.com/blocknative/web3-onboard/tree/main/packages/demo)**
+- **[SvelteKit](https://github.com/blocknative/web3-onboard/tree/main/examples/with-sveltekit)**
+- **[Vite/React](https://github.com/blocknative/web3-onboard/tree/main/examples/with-vite-react)**
+- **[Vue](https://github.com/blocknative/web3-onboard/tree/main/examples/with-vuejs)**
+- **[Vue2](https://github.com/blocknative/web3-onboard/tree/main/examples/with-vuejs-v2)**
 
 ## Installation
 
