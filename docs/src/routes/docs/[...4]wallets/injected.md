@@ -310,6 +310,7 @@ const injected = injectedModule({
 - Exodus - _Desktop & Mobile_
 - Frontier - _Desktop & Mobile_
 - Rainbow - _Desktop & Mobile_
+- DeFiWallet - _Desktop & Mobile_
 
 ## Build Environments
 
