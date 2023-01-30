@@ -2970,14 +2970,14 @@
     joi "^17.6.1"
 
 "@web3-onboard/core@^2.14.0":
-  version "2.14.0"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.14.0.tgz#0c52fa9dfb126f26107ba9b71fc4eb5c24522b46"
-  integrity sha512-/n/l7L163gzGc8+OrjO3uy5RKG7jmrapSO1a/k8qT7uIIsYsYl+BsMXinQezZwlWqv2aaB8WIQHOy/pfepFj3Q==
+  version "2.14.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.14.1.tgz#20d5f8196cdd4455a6e2daa69319fb697733934c"
+  integrity sha512-d5rG4wg2gOUsgiNAaAucJOzDdIM2WTxLPBN/sXR1V6eWatn6YcXyduW7Nr0n1Hl/2d8eRnlHTeSeb9YA50niVw==
   dependencies:
     "@unstoppabledomains/resolution" "^8.0"
     "@web3-onboard/common" "^2.2.3"
     bignumber.js "^9.0.0"
-    bnc-sdk "^4.6.2"
+    bnc-sdk "^4.6.5"
     bowser "^2.11.0"
     ethers "5.5.3"
     eventemitter3 "^4.0.7"
@@ -3044,10 +3044,10 @@
     joi "^17.6.1"
     rxjs "^7.5.2"
 
-"@web3-onboard/injected-wallets@^2.6.1":
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.6.1.tgz#ca926e669593d32a68385c4e77ca3534b1d632e3"
-  integrity sha512-GuK0nr7eS3VIJNCOkdZrmhnoH0YiUrIopRFPFJENBH3HwRa6Wscl2ZkPdgq1kv9f1/4fKpXSmrAYqjteZGhHWg==
+"@web3-onboard/injected-wallets@^2.6.2":
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.6.2.tgz#d6bebd623098c06868ad5c4efdaceb90082732e3"
+  integrity sha512-vOUWluIiYSrsC1TyFNFA0GXzcAFcfgy4mG6iXGJSjbNx9/54VilM6UtSaVhXb4diqQZyinuZj18UexdSxDAcfQ==
   dependencies:
     "@web3-onboard/common" "^2.2.3"
     joi "^17.6.1"
@@ -3152,6 +3152,13 @@
     ethereumjs-util "^7.1.3"
     hdkey "^2.0.1"
     trezor-connect "^8.2.11"
+
+"@web3-onboard/trust@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/trust/-/trust-2.0.0.tgz#17adea65003d8651c562565024e1edd0487aa473"
+  integrity sha512-BDnmTqfnMujDAwwtMzMBVpneHaRbYogDGy4Ok+XLqKsX9LxwFONMQ50BIVQV+RD/J0BFvbaIpE7TJICh+XqpYw==
+  dependencies:
+    "@web3-onboard/common" "^2.2.3"
 
 "@web3-onboard/uauth@^2.0.1":
   version "2.0.1"
@@ -3911,10 +3918,10 @@ bnb-javascript-sdk-nobroadcast@^2.16.14:
     uuid "^3.3.2"
     websocket-stream "^5.5.0"
 
-bnc-sdk@^4.6.2:
-  version "4.6.3"
-  resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-4.6.3.tgz#c852f091a5e84bb77864543b0775b35ebdbb1724"
-  integrity sha512-rva+LyJuAm+U6xwZYqlsDxKaMy3EpHBqkOL93UDih7iwXDYnUr87n27pnGCw3B8xRBeRhCBC/VZMuzRFeea/Hw==
+bnc-sdk@^4.6.5:
+  version "4.6.5"
+  resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-4.6.5.tgz#9f91eb2f213c0c4abf8b5f134f673a3f9a981ea2"
+  integrity sha512-W++M1kY5SensQUpig+EXqKEOfRgKrrobd8l3r9oOa06xJmxmMH4DPUm28IcESVX6NWj4I+bhgghOVDh/SFdE8Q==
   dependencies:
     crypto-es "^1.2.2"
     nanoid "^3.3.1"
@@ -4328,9 +4335,9 @@ console-control-strings@^1.0.0, console-control-strings@^1.1.0:
   integrity sha512-ty/fTekppD2fIwRvnZAVdeOiGd1c7YXEixbgJTNzqcxJWKQnjJ/V1bNEEE6hygpM3WjwHFUVK6HTjWSzV4a8sQ==
 
 cookiejar@^2.1.1:
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/cookiejar/-/cookiejar-2.1.3.tgz#fc7a6216e408e74414b90230050842dacda75acc"
-  integrity sha512-JxbCBUdrfr6AQjOXrxoTvAMJO4HBTUIlBzslcJPAz+/KT8yk53fXun51u+RenNYvad/+Vc2DIz5o9UxlCDymFQ==
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/cookiejar/-/cookiejar-2.1.4.tgz#ee669c1fea2cf42dc31585469d193fef0d65771b"
+  integrity sha512-LDx6oHrK+PhzLKJU9j5S7/Y3jM/mUHvD/DeI1WQmJn652iPC5Y4TBzC9l+5OMOXlyTTA+SmVUPm0HQUwpD5Jqw==
 
 copy-to-clipboard@^3.3.1:
   version "3.3.3"

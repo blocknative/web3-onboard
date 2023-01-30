@@ -7,7 +7,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "@web3-onboard/injected-wallets": "^2.6.1-alpha.1",
+    "@web3-onboard/injected-wallets": "^2.6.2",
     "@web3-onboard/vue": "^2.3.1",
     "vue": "^2.6.12",
     "vue-template-compiler": "^2.7.10"

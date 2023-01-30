@@ -220,12 +220,6 @@
     margin-top: 12px;
     color: var(--text-color);
   }
-
-  .powered-by {
-    color: var(--onboard-gray-400, var(--gray-400));
-    font-size: var(--onboard-font-size-7, var(--font-size-7));
-    line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
-  }
 </style>
 
 {#if disconnectConfirmModal}

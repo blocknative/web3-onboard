@@ -22,11 +22,20 @@ export const isWalletAvailable = (
   checkProviderIdentity: InjectedWalletModule['checkProviderIdentity'],
   device: Device
 ): boolean => {
-  if (provider && provider.providers && Array.isArray(provider.providers)) {
-    return !!provider.providers.filter(provider =>
-      checkProviderIdentity({ provider, device })
-    ).length
-  } else {
-    return checkProviderIdentity({ provider, device })
+  // No injected providers exist.
+  if (!provider) {
+    return false
   }
+
+  // Many injected providers add their own object into window.
+  if (checkProviderIdentity({ provider, device })) {
+    return true
+  }
+
+  // For multiple injected providers, check providers array
+  // example coinbase inj wallet pushes over-ridden wallets
+  // into a providers array at window.ethereum
+  return !!provider.providers?.some(provider =>
+    checkProviderIdentity({ provider, device })
+  )
 }
