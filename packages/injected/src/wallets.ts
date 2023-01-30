@@ -703,6 +703,18 @@ const okxwallet: InjectedWalletModule = {
   platforms: ['desktop']
 }
 
+const defiwallet: InjectedWalletModule = {
+  label: ProviderLabel.DeFiWallet,
+  injectedNamespace: InjectedNameSpace.DeFiConnectProvider,
+  checkProviderIdentity: ({ provider }) =>
+        !!provider && !!provider[ProviderIdentityFlag.DeFiWallet],
+  getIcon: async () => (await import('./icons/defiwallet.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.deficonnectProvider)
+  }),
+  platforms: ['all'],
+}
+
 const wallets = [
   zeal,
   exodus,
@@ -745,7 +757,8 @@ const wallets = [
   okxwallet,
   zerion,
   rainbow,
-  safepal
+  safepal,
+  defiwallet
 ]
 
 export default wallets
