@@ -1,29 +1,15 @@
 import type { StaticJsonRpcProvider as StaticJsonRpcProviderType } from '@ethersproject/providers'
-
 import type {
   Chain,
   ProviderAccounts,
   WalletInit,
   EIP1193Provider
 } from '@web3-onboard/common'
+import { isHexString, WalletConnectOptions } from './index.js'
 
-interface WalletConnectOptions {
-  bridge?: string
-  qrcodeModalOptions?: {
-    mobileLinks: string[]
-  }
-  connectFirstChainId?: boolean
-}
-
-const isHexString = (value: string | number) => {
-  if (typeof value !== 'string' || !value.match(/^0x[0-9A-Fa-f]*$/)) {
-    return false
-  }
-
-  return true
-}
-
-function walletConnect(options?: WalletConnectOptions): WalletInit {
+function walletConnect(
+  options: WalletConnectOptions = { version: '1' }
+): WalletInit {
   const {
     bridge = 'https://bridge.walletconnect.org',
     qrcodeModalOptions,
@@ -69,9 +55,9 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
           public connector: InstanceType<typeof WalletConnect>
           public chains: Chain[]
           public disconnect: EIP1193Provider['disconnect']
-          public emit: typeof EventEmitter['emit']
-          public on: typeof EventEmitter['on']
-          public removeListener: typeof EventEmitter['removeListener']
+          public emit: (typeof EventEmitter)['emit']
+          public on: (typeof EventEmitter)['on']
+          public removeListener: (typeof EventEmitter)['removeListener']
 
           private disconnected$: InstanceType<typeof Subject>
           private providers: Record<string, StaticJsonRpcProviderType>

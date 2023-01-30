@@ -60,6 +60,8 @@
   "dependencies": {
     "@ethersproject/providers": "^5.5.0",
     "@walletconnect/ethereum-provider": "2.3.2-5",
+    "@walletconnect/client": "^1.7.1",
+    "@walletconnect/qrcode-modal": "^1.7.1",
     "@web3-onboard/common": "^2.2.3",
     "rxjs": "^7.5.2"
   }
