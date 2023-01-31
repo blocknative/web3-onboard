@@ -1,12 +1,13 @@
-import bnIcon from '$lib/components/icons/bnWhiteBackground.js'
 let onboard
-const getOnboard = async () => {
+const getOnboard = async (passedTheme) => {
   if (!onboard) {
     const key = 'svelteness::color-scheme'
     const scheme = localStorage[key]
-    let theme = scheme || 'system'
+    let theme = passedTheme || scheme || 'system'
     onboard = await intiOnboard(theme)
     classMutationListener()
+  } else {
+    await onboard.state.actions.updateTheme(passedTheme)
   }
   return onboard
 }
@@ -173,7 +174,6 @@ const intiOnboard = async (theme) => {
     ],
     appMetadata: {
       name: 'Documentation',
-      icon: bnIcon,
       description: 'Example showcasing how to connect a wallet.',
       recommendedInjectedWallets: [
         { name: 'MetaMask', url: 'https://metamask.io' },

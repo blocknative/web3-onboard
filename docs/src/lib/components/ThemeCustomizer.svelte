@@ -1,83 +1,24 @@
 <script>
-  import Onboard from '@web3-onboard/core'
-  import injectedModule from '@web3-onboard/injected-wallets'
+  import getOnboard from '$lib/services/onboard'
 
   import { share } from 'rxjs/operators'
   import { onMount } from 'svelte'
 
-  const INFURA_ID = '8b60d52405694345a99bcb82e722e0af'
-  const injected = injectedModule()
-
-  const onboard = Onboard({
-    wallets: [injected],
-    chains: [
-      {
-        id: '0x1',
-        token: 'ETH',
-        label: 'Ethereum Mainnet',
-        rpcUrl: `https://mainnet.infura.io/v3/${INFURA_ID}`
-      },
-      {
-        id: '0x5',
-        token: 'ETH',
-        label: 'Ethereum Goerli Testnet',
-        rpcUrl: `https://goerli.infura.io/v3/${INFURA_ID}`
-      },
-      {
-        id: '0x13881',
-        token: 'MATIC',
-        label: 'Polygon - Mumbai',
-        rpcUrl: 'https://matic-mumbai.chainstacklabs.com	'
-      },
-      {
-        id: '0x38',
-        token: 'BNB',
-        label: 'Binance',
-        rpcUrl: 'https://bsc-dataseed.binance.org/'
-      },
-      {
-        id: 137,
-        token: 'MATIC',
-        label: 'Polygon',
-        rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
-      },
-      {
-        id: 10,
-        token: 'OETH',
-        label: 'Optimism',
-        rpcUrl: 'https://mainnet.optimism.io'
-      },
-      {
-        id: 42161,
-        token: 'ARB-ETH',
-        label: 'Arbitrum',
-        rpcUrl: 'https://rpc.ankr.com/arbitrum'
-      }
-    ],
-    appMetadata: {
-      name: 'Documentation',
-      description: 'Example showcasing how to connect a wallet.',
-      recommendedInjectedWallets: [
-        { name: 'MetaMask', url: 'https://metamask.io' },
-        { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
-      ]
-    },
-    accountCenter: {
-      desktop: { enabled: true },
-      mobile: { enabled: true }
-    },
-    theme: 'system'
-  })
+  let onboard
+  let wallets$
 
   const themes = ['system', 'default', 'light', 'dark', 'custom']
-  let selectedTheme = 'system'
-
-  // Subscribe to wallet updates
-  const wallets$ = onboard.state.select('wallets').pipe(share())
+  let selectedTheme = 'custom'
 
   let webURL = ''
   let iframeUsed = false
   let hideDirections = false
+
+  const loadOnboard = async () => {
+    onboard = await getOnboard('default')
+    onboard.state.actions.updateTheme('default')
+    wallets$ = onboard.state.select('wallets').pipe(share())
+  }
 
   const isValidUrl = (urlString) => {
     try {
@@ -112,7 +53,8 @@
     if (onboardCloseBtnVisible) onboardCloseBtnVisible?.click()
   }
 
-  const handleConnectWalletBtn = () => {
+  const handleConnectWalletBtn = async () => {
+    if (!onboard) await loadOnboard()
     !!$wallets$ && $wallets$.length
       ? onboard.disconnectWallet({ label: $wallets$[0].label })
       : onboard.connectWallet()
@@ -234,6 +176,8 @@
   }
 
   onMount(async () => {
+    await loadOnboard()
+    await onboard.state.actions.updateTheme('default')
     handleImageDrop()
   })
 </script>
