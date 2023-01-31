@@ -20,5 +20,6 @@ export const WALLET_NAMES: { [key: string]: string } = {
   trust: 'Trust Wallet',
   frontier: 'Frontier',
   zerion: 'Zerion',
-  rainbow: 'Rainbow'
+  rainbow: 'Rainbow',
+  defiwallet: 'DeFi Wallet'
 }

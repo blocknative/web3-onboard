@@ -11,7 +11,7 @@
 
   let text = {
     license: 'Released under the MIT License.',
-    copyright: '© 2022 Blocknative. All Rights Reserved.'
+    copyright: '© 2023 Blocknative. All Rights Reserved.'
   }
 </script>
 

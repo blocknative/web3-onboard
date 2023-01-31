@@ -3367,18 +3367,16 @@
     "@walletconnect/window-getters" "^1.0.1"
     tslib "1.14.1"
 
-"@web3-onboard/transaction-preview@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/transaction-preview/-/transaction-preview-2.0.0.tgz#8c610e414bca9c600d4b02761b596793616ad217"
-  integrity sha512-Gom08bUYpVGElZ5Rz63ToYGVCE3/aq/jdD8aXNoPwVO/+iZ6iwnoaMCg/J3WN6+186oIYSm+e9g4Sn4GadtvNg==
+"@web3-onboard/walletconnect@^2.2.2":
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/walletconnect/-/walletconnect-2.2.2.tgz#202b700ee606d0a9055d4a716dba7b04e18da0f0"
+  integrity sha512-JIxjlUy3C0bbY76JQ50uwBLMtWRKXaxMDoeEcJQAnYcHMb+ba6B40qSv2BlJpAAEI7NGW52GHSdwUT0QOrM7Ng==
   dependencies:
+    "@ethersproject/providers" "^5.5.0"
+    "@walletconnect/client" "^1.7.1"
+    "@walletconnect/qrcode-modal" "^1.7.1"
     "@web3-onboard/common" "^2.2.3"
-    bnc-sdk "^4.6.2"
-    bowser "^2.11.0"
-    joi "^17.6.1"
     rxjs "^7.5.2"
-    svelte "^3.49.0"
-    svelte-i18n "^3.3.13"
 
 "@web3auth/base-evm-adapter@^3.3.0":
   version "3.3.0"
@@ -4343,7 +4341,7 @@ bnb-javascript-sdk-nobroadcast@^2.16.14:
     uuid "^3.3.2"
     websocket-stream "^5.5.0"
 
-bnc-sdk@^4.6.2, bnc-sdk@^4.6.5:
+bnc-sdk@^4.6.5:
   version "4.6.5"
   resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-4.6.5.tgz#9f91eb2f213c0c4abf8b5f134f673a3f9a981ea2"
   integrity sha512-W++M1kY5SensQUpig+EXqKEOfRgKrrobd8l3r9oOa06xJmxmMH4DPUm28IcESVX6NWj4I+bhgghOVDh/SFdE8Q==
