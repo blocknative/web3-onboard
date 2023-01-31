@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
   pull_request:
     branches:
-      - v2-web3-onboard-develop
+      - develop
 
 jobs:
   checks:

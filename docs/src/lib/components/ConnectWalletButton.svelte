@@ -19,9 +19,13 @@
 
   onMount(async () => {
     if (!onboard) {
-      onboard = await getOnboard()
+      if (document.location.href.includes('theming-tool')) {
+        onboard = await getOnboard('default')
+      } else {
+        onboard = await getOnboard('system')
+      }
     }
-    const sub = onboard.state.select('wallets').subscribe((wallets) => {
+    onboard.state.select('wallets').subscribe((wallets) => {
       connectedWallets = wallets
       buttonText = wallets.length ? 'Disconnect' : (buttonText = 'Connect')
     })
