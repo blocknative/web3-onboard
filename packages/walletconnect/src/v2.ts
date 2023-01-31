@@ -57,9 +57,9 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
           public connector: InstanceType<typeof EthereumProvider>
           public chains: Chain[]
           public disconnect: EIP1193Provider['disconnect']
-          public emit: (typeof EventEmitter)['emit']
-          public on: (typeof EventEmitter)['on']
-          public removeListener: (typeof EventEmitter)['removeListener']
+          public emit: typeof EventEmitter['emit']
+          public on: typeof EventEmitter['on']
+          public removeListener: typeof EventEmitter['removeListener']
 
           private disconnected$: InstanceType<typeof Subject>
 
