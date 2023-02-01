@@ -31,7 +31,8 @@ export const APP_INITIAL_STATE: AppState = {
 }
 
 export const STORAGE_KEYS = {
-  TERMS_AGREEMENT: 'onboard.js:agreement'
+  TERMS_AGREEMENT: 'onboard.js:agreement',
+  LAST_CONNECTED_WALLET: 'onboard.js:last_connected_wallet'
 }
 
 export const MOBILE_WINDOW_WIDTH = 768
