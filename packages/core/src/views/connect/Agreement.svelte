@@ -2,13 +2,15 @@
   import { _ } from 'svelte-i18n'
   import { STORAGE_KEYS } from '../../constants.js'
   import { configuration } from '../../configuration.js'
+  import { delLocalStore, getLocalStore, setLocalStore } from '../../utils'
+
   export let agreed: boolean
 
   const {
     terms: termsAgreed,
     privacy: privacyAgreed,
     version: versionAgreed
-  } = JSON.parse(localStorage.getItem(STORAGE_KEYS.TERMS_AGREEMENT) || '{}')
+  } = JSON.parse(getLocalStore(STORAGE_KEYS.TERMS_AGREEMENT) || '{}')
 
   const blankAgreement = { termsUrl: '', privacyUrl: '', version: '' }
   const { appMetadata } = configuration
@@ -25,7 +27,7 @@
   agreed = !showTermsOfService
 
   $: if (agreed) {
-    localStorage.setItem(
+    setLocalStore(
       STORAGE_KEYS.TERMS_AGREEMENT,
       JSON.stringify({
         version,
@@ -34,7 +36,7 @@
       })
     )
   } else if (agreed === false) {
-    localStorage.removeItem(STORAGE_KEYS.TERMS_AGREEMENT)
+    delLocalStore(STORAGE_KEYS.TERMS_AGREEMENT)
   }
 </script>
 
