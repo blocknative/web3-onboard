@@ -30,23 +30,45 @@
 
   const addURLToIFrame = () => {
     if (!webURL || !isValidUrl(webURL)) {
-      alert('Invaled URL entered')
+      alert('Invalid URL entered')
       return
     }
-    iframeUsed = true
-    document.querySelector('#iframe_underlay').setAttribute('src', webURL)
-    hideDirections = true
-    onboard.connectWallet()
+    let iframeErr = false
+    let img = new Image()
+    img.onerror = () => {
+      alert(
+        'The website entered cannot be displayed within an iframe. Please try a different URL. See the browser console for more information.'
+      )
+      hideDirections = false
+      iframeErr = true
+      document.querySelector('#iframe_underlay').setAttribute('src', '')
+      closeOnboard()
+      return
+    }
+    img.src = webURL
+    setTimeout(() => {
+      if (!iframeErr) {
+        iframeUsed = true
+        document.querySelector('#iframe_underlay').setAttribute('src', webURL)
+        hideDirections = true
+        !onboard && getOnboard()
+        onboard.connectWallet()
+      }
+    }, 250)
   }
 
-  const resetPage = () => {
+  const resetPage = (resetTheme) => {
     iframeUsed = false
     document.querySelector('#iframe_underlay').setAttribute('src', '')
     hideDirections = false
     document.querySelector('#image_drop_area').style.backgroundImage = ''
     uploaded_image = undefined
     webURL = ''
-    resetTheme()
+    resetTheme && resetTheme()
+    closeOnboard()
+  }
+
+  const closeOnboard = () => {
     const onboardCloseBtnVisible = document
       ?.querySelector('body > onboard-v2')
       ?.shadowRoot?.querySelector('.close-button')
@@ -266,9 +288,9 @@
             placeholder="Enter your Website URL"
             bind:value={webURL}
           />
-          <button on:click={addURLToIFrame}>Preview On Your Website</button>
+          <button type='submit'>Preview On Your Website</button>
           <button
-            on:click={resetPage}
+            on:click={() => resetPage(true)}
             type="button"
             disabled={iframeUsed || !!uploaded_image ? false : true}>Reset</button
           >
