@@ -167,6 +167,11 @@ type ConnectModalOptions = {
    * Defaults to false
    */
   disableClose?: boolean
+  /**If set to true, the last connected wallet will store in local storage.
+   * Then on init, onboard will try to reconnect to that wallet with
+   * no modals displayed
+   */
+  autoConnectLastWallet?: boolean // defaults to false
 }
 ```
 
@@ -482,40 +487,16 @@ connectWallet()
 
 ### Auto Selecting a Wallet
 
-A common UX pattern is to remember the wallet(s) that a user has previously connected by storing them in localStorage and then automatically selecting them for the user next time they visit your app.
-You could enable this in your app by first syncing the `wallets` array to localStorage:
+A common UX pattern is to remember the last wallet that a user has previously connected by storing it in localStorage and then automatically selecting them for the user next time they visit your app.
+You can enable this in your app by using the `autoConnectLastWallet` parameter when initializing and Onboard will take care of it:
 
 ```javascript
-const walletsSub = onboard.state.select('wallets')
-const { unsubscribe } = walletsSub.subscribe((wallets) => {
-  const connectedWallets = wallets.map(({ label }) => label)
-  window.localStorage.setItem('connectedWallets', JSON.stringify(connectedWallets))
+const onboard = Onboard({
+  // ... other options
+  connect: {
+    autoConnectLastWallet: true
+  }
 })
-
-// Don't forget to unsubscribe when your app or component un mounts to prevent memory leaks
-// unsubscribe()
-```
-
-Now that you have the most recent wallets connected saved in local storage, you can auto select those wallet(s) when your app loads:
-
-```javascript
-const previouslyConnectedWallets = JSON.parse(window.localStorage.getItem('connectedWallets'))
-
-if (previouslyConnectedWallets) {
-  // Connect the most recently connected wallet (first in the array)
-  await onboard.connectWallet({ autoSelect: previouslyConnectedWallets[0] })
-
-  // You can also auto connect "silently" and disable all onboard modals to avoid them flashing on page load
-  await onboard.connectWallet({
-    autoSelect: { label: previouslyConnectedWallets[0], disableModals: true }
-  })
-
-  // OR - loop through and initiate connection for all previously connected wallets
-  // note: This UX might not be great as the user may need to login to each wallet one after the other
-  // for (walletLabel in previouslyConnectedWallets) {
-  //   await onboard.connectWallet({ autoSelect: walletLabel })
-  // }
-}
 ```
 
 ## Disconnecting a Wallet
