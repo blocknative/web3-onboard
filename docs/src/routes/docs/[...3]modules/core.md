@@ -1299,3 +1299,11 @@ build: {
   standalone: true,
 }
 ```
+
+### Next.js
+
+:::admonition type=note
+
+If you are seeing an error during builds when dynamically importing Web3Onboard in a NextJS v13 project, try upgrading to to the Canary beta release of NextJS where this issue is fixed.
+
+  :::
