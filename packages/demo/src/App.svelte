@@ -41,7 +41,7 @@
     new VConsole()
   }
 
-  const apiKey = '0fcf74ed-b95b-4b8d-a8d8-4d655ae479d9'
+  const apiKey = '7ed5f4aa-fb90-4124-8ef9-f69e3e8e666d'
   const infura_key = '80633e48116943128cbab25e402764ab'
 
   let defaultTransactionObject = JSON.stringify(
@@ -103,7 +103,12 @@
   const coinbaseWallet = coinbaseModule()
 
   const walletConnect = walletConnectModule({
-    connectFirstChainId: true
+    connectFirstChainId: true,
+    version: 2,
+    projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
+    qrcodeModalOptions: {
+    mobileLinks: ['rainbow', 'metamask', 'argent', 'trust', 'imtoken', 'pillar']
+    }
   })
   const portis = portisModule({
     apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
@@ -131,7 +136,7 @@
 
   const trezorOptions = {
     email: 'test@test.com',
-    appUrl: 'https://www.blocknative.com',
+    appUrl: 'https://www.blocknative.com'
     // containerElement: '#sample-container-el'
   }
   const trezor = trezorModule(trezorOptions)

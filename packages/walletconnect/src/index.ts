@@ -7,17 +7,18 @@ export type WalletConnectOptions = {
   bridge?: string
   qrcodeModalOptions?: {
     mobileLinks: string[]
-  }
+  },
+
 } & (
   | {
-      version?: '1'
+      version?: 1
     }
   | {
       /**
        * Project ID associated with [WalletConnect account](https://cloud.walletconnect.com)
        */
       projectId: string
-      version: '2'
+      version: 2
     }
 )
 
@@ -30,8 +31,8 @@ export const isHexString = (value: string | number) => {
 }
 
 function walletConnect(options?: WalletConnectOptions): WalletInit {
-  const version = options?.version || '1'
-  return version === '1' ? v1(options) : v2(options)
+  const version = options?.version || 1
+  return version === 1 ? v1(options) : v2(options)
 }
 
 export default walletConnect

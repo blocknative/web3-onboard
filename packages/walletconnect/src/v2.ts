@@ -17,7 +17,7 @@ const methods = [
 ]
 
 function walletConnect(options?: WalletConnectOptions): WalletInit {
-  const projectId = options?.version == '2' ? options.projectId : undefined
+  const projectId = options?.version == 2 ? options.projectId : undefined
   if (!projectId) {
     throw new Error(
       'WalletConnect requires a projectId. Please visit https://cloud.walletconnect.com to get one.'

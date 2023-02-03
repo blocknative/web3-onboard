@@ -15,7 +15,18 @@ type WalletConnectOptions = {
     mobileLinks: string[] // set the order and list of mobile linking wallets
   }
   connectFirstChainId?: boolean // if true, connects to the first network chain provided
-}
+} & (
+  | {
+      version?: 1
+    }
+  | {
+      /**
+       * Project ID associated with [WalletConnect account](https://cloud.walletconnect.com)
+       */
+      projectId: string
+      version: 2
+    }
+)
 ```
 
 ## Usage

@@ -8,7 +8,7 @@ import type {
 import { isHexString, WalletConnectOptions } from './index.js'
 
 function walletConnect(
-  options: WalletConnectOptions = { version: '1' }
+  options: WalletConnectOptions = { version: 1 }
 ): WalletInit {
   const {
     bridge = 'https://bridge.walletconnect.org',
