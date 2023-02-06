@@ -33,28 +33,20 @@
       alert('Invalid URL entered')
       return
     }
-    let iframeErr = false
-    let img = new Image()
-    img.onerror = () => {
-      alert(
-        'The website entered cannot be displayed within an iframe. Please try a different URL. See the browser console for more information.'
-      )
-      hideDirections = false
-      iframeErr = true
-      document.querySelector('#iframe_underlay').setAttribute('src', '')
-      closeOnboard()
-      return
-    }
-    img.src = webURL
-    setTimeout(() => {
-      if (!iframeErr) {
+
+    fetch(webURL)
+      .then(() => {
         iframeUsed = true
         document.querySelector('#iframe_underlay').setAttribute('src', webURL)
         hideDirections = true
         !onboard && getOnboard()
         onboard.connectWallet()
-      }
-    }, 250)
+      })
+      .catch(() => {
+        alert(
+          'The website entered cannot be displayed within an iframe. Please try a different URL. See the browser console for more information.'
+        )
+      })
   }
 
   const resetPage = () => {
@@ -288,7 +280,7 @@
             placeholder="Enter your Website URL"
             bind:value={webURL}
           />
-          <button type='submit'>Preview On Your Website</button>
+          <button type="submit">Preview On Your Website</button>
           <button
             on:click={() => resetPage()}
             type="button"
