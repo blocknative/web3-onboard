@@ -8,7 +8,7 @@
   let wallets$
 
   const themes = ['system', 'default', 'light', 'dark', 'custom']
-  let selectedTheme = 'system'
+  let selectedTheme = 'custom'
 
   let webURL = ''
   let iframeUsed = false
