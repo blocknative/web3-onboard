@@ -8,7 +8,7 @@
   let wallets$
 
   const themes = ['system', 'default', 'light', 'dark', 'custom']
-  let selectedTheme = 'custom'
+  let selectedTheme = 'system'
 
   let webURL = ''
   let iframeUsed = false
@@ -57,14 +57,14 @@
     }, 250)
   }
 
-  const resetPage = (resetTheme) => {
+  const resetPage = () => {
     iframeUsed = false
     document.querySelector('#iframe_underlay').setAttribute('src', '')
     hideDirections = false
     document.querySelector('#image_drop_area').style.backgroundImage = ''
     uploaded_image = undefined
     webURL = ''
-    resetTheme && resetTheme()
+    resetTheme()
     closeOnboard()
   }
 
@@ -290,7 +290,7 @@
           />
           <button type='submit'>Preview On Your Website</button>
           <button
-            on:click={() => resetPage(true)}
+            on:click={() => resetPage()}
             type="button"
             disabled={iframeUsed || !!uploaded_image ? false : true}>Reset</button
           >
