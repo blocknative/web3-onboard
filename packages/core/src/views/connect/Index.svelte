@@ -1,13 +1,14 @@
 <script lang="ts">
   import { ProviderRpcErrorCode, WalletModule } from '@web3-onboard/common'
   import EventEmitter from 'eventemitter3'
+  import { BigNumber } from 'ethers'
   import { _ } from 'svelte-i18n'
   import en from '../../i18n/en.json'
   import { listenAccountsChanged, selectAccounts } from '../../provider.js'
   import { state } from '../../store/index.js'
   import { connectWallet$, onDestroy$ } from '../../streams.js'
   import { addWallet, updateAccount } from '../../store/actions.js'
-  import { validEnsChain, isSVG } from '../../utils.js'
+  import { validEnsChain, isSVG, setLocalStore } from '../../utils.js'
   import CloseButton from '../shared/CloseButton.svelte'
   import Modal from '../shared/Modal.svelte'
   import Agreement from './Agreement.svelte'
@@ -18,8 +19,9 @@
   import Sidebar from './Sidebar.svelte'
   import { configuration } from '../../configuration.js'
   import { getBNMulitChainSdk } from '../../services.js'
+  import { MOBILE_WINDOW_WIDTH, STORAGE_KEYS } from '../../constants.js'
+  import { defaultBnIcon } from '../../icons/index.js'
 
-  import { BigNumber } from 'ethers'
   import {
     BehaviorSubject,
     distinctUntilChanged,
@@ -30,8 +32,6 @@
     take,
     takeUntil
   } from 'rxjs'
-
-  import { defaultBnIcon } from '../../icons/index.js'
 
   import {
     getChainId,
@@ -48,7 +48,6 @@
     WalletState,
     WalletWithLoadingIcon
   } from '../../types.js'
-  import { MOBILE_WINDOW_WIDTH } from '../../constants.js'
 
   export let autoSelect: ConnectOptions['autoSelect']
 
@@ -224,6 +223,11 @@
         return
       }
 
+      // store last connected wallet
+      if (state.get().connect.autoConnectLastWallet) {
+        setLocalStore(STORAGE_KEYS.LAST_CONNECTED_WALLET, label)
+      }
+
       const chain = await getChainId(provider)
 
       if (state.get().notify.enabled) {
@@ -382,7 +386,10 @@
 <style>
   .container {
     /* component values */
-    --background-color: var(--onboard-main-scroll-container-background, var(--w3o-background-color));
+    --background-color: var(
+      --onboard-main-scroll-container-background,
+      var(--w3o-background-color)
+    );
     --foreground-color: var(--w3o-foreground-color);
     --text-color: var(--onboard-connect-text-color, var(--w3o-text-color));
     --border-color: var(--w3o-border-color, var(--gray-200));

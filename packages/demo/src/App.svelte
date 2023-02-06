@@ -236,9 +236,10 @@
         rpcUrl: 'https://rpc.ankr.com/arbitrum'
       }
     ],
-    // connect: {
-    //   disableClose: true
-    // },
+    connect: {
+      // disableClose: true,
+      autoConnectLastWallet: true
+    },
     appMetadata: {
       name: 'Blocknative',
       // icon: blocknativeIcon,
