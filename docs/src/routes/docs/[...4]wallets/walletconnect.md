@@ -1,6 +1,6 @@
 # Walletconnect
 
-Wallet module for connecting Ledger hardware wallets to web3-onboard
+Wallet module for connecting Wallet Connect to web3-onboard
 
 ## Install
 
@@ -30,7 +30,25 @@ type WalletConnectOptions = {
     mobileLinks: string[] // set the order and list of mobile linking wallets
   }
   connectFirstChainId?: boolean // if true, connects to the first network chain provided
-}
+} & (
+  | {
+      /**
+       * Defaults to version: 1 - this behavior will be deprecated after the WalletConnect v1 sunset
+       */
+      version?: 1
+    }
+  | {
+      /**
+       * Project ID associated with [WalletConnect account](https://cloud.walletconnect.com)
+       */
+      projectId: string
+
+      /**
+       * Defaults to version: 1 - this behavior will be deprecated after the WalletConnect v1 sunset
+       */
+      version: 2
+    }
+)
 ```
 
 ## Usage
@@ -39,16 +57,28 @@ type WalletConnectOptions = {
 import Onboard from '@web3-onboard/core'
 import walletConnectModule from '@web3-onboard/walletconnect'
 
-// initialize the module with options
-const walletConnect = walletConnectModule({
+const wcV1InitOptions = {
   bridge: 'YOUR_CUSTOM_BRIDGE_SERVER',
   qrcodeModalOptions: {
-    mobileLinks: ['rainbow', 'metamask', 'argent', 'trust', 'imtoken', 'pillar']
+    mobileLinks: ['metamask', 'argent', 'trust']
   },
   connectFirstChainId: true
-})
+}
+
+const wcV2InitOptions = {
+  version: 2,
+  /**
+   * Project ID associated with [WalletConnect account](https://cloud.walletconnect.com)
+   */
+  projectId: 'abc123...'
+}
+
+// initialize the module with options
+// If version isn't set it will default to V1 until V1 sunset
+const walletConnect = walletConnectModule(wcV2InitOptions || wcV1InitOptions)
 
 // can also initialize with no options...
+// Defaults to V1 until V1 sunset
 // const walletConnect = walletConnectModule()
 
 const onboard = Onboard({
