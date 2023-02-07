@@ -11,6 +11,9 @@ export type WalletConnectOptions = {
 
 } & (
   | {
+      /**
+       * Defaults to version: 1 - this behavior will be deprecated after the WalletConnect v1 sunset
+       */
       version?: 1
     }
   | {
@@ -18,6 +21,9 @@ export type WalletConnectOptions = {
        * Project ID associated with [WalletConnect account](https://cloud.walletconnect.com)
        */
       projectId: string
+      /**
+       * Defaults to version: 1 - this behavior will be deprecated after the WalletConnect v1 sunset
+       */
       version: 2
     }
 )

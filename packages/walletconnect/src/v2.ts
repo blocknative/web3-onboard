@@ -1,3 +1,4 @@
+import type { CoreTypes } from '@walletconnect/types'
 import type {
   Chain,
   ProviderAccounts,
@@ -28,7 +29,7 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
     return {
       label: 'WalletConnect',
       getIcon: async () => (await import('./icon.js')).default,
-      getInterface: async ({ chains, EventEmitter }) => {
+      getInterface: async ({ chains, EventEmitter, appMetadata }) => {
         const { ProviderRpcError, ProviderRpcErrorCode } = await import(
           '@web3-onboard/common'
         )
@@ -39,9 +40,32 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
 
         const { Subject, fromEvent } = await import('rxjs')
         const { takeUntil, take } = await import('rxjs/operators')
+        
+        const getMetaData = (): CoreTypes.Metadata | undefined => {
+          if (!appMetadata) return undefined
+          const wcMetaData: CoreTypes.Metadata = {
+            name: appMetadata.name,
+            description: appMetadata.description || '',
+            url: appMetadata.explore || appMetadata.gettingStartedGuide || '',
+            icons: []
+          }
+
+          if (appMetadata.icon !== undefined && appMetadata.icon.length) {
+            wcMetaData.icons = [appMetadata.icon]
+          }
+          if (appMetadata.logo !== undefined && appMetadata.logo.length) {
+            wcMetaData.icons = wcMetaData.icons.length
+              ? [...wcMetaData.icons, appMetadata.logo]
+              : [appMetadata.logo]
+          }
+
+          return wcMetaData
+        }
+
         const connector = await EthereumProvider.init({
           projectId,
           methods,
+          metadata: getMetaData(),
           chains: chains.map(({ id }) => parseInt(id, 16)),
           rpcMap: chains
             .map(({ id, rpcUrl }) => ({ id, rpcUrl }))
