@@ -42,7 +42,14 @@
 
   const cleanBalance = (dirtyBalance: string): string => {
     const gweiToEther = ethers.utils.formatEther(dirtyBalance)
-    const roundTo4Decimal = parseFloat(gweiToEther).toFixed(4)
+    const roundTo4Decimal = parseFloat(gweiToEther).toFixed(6)
+    const removeEmptyDecimalPlaces = Number(roundTo4Decimal)
+    return addCommasToNumber(removeEmptyDecimalPlaces)
+  }
+
+  const cleanGas = () => {
+    const gweiToEther = ethers.utils.formatUnits(simResponse.gasUsed[0], 'gwei')
+    const roundTo4Decimal = parseFloat(gweiToEther).toFixed(6)
     const removeEmptyDecimalPlaces = Number(roundTo4Decimal)
     return addCommasToNumber(removeEmptyDecimalPlaces)
   }
@@ -152,7 +159,7 @@
     overflow: hidden;
     border-spacing: 0;
     border: 1px solid transparent;
-    border-color:var(--border-color);
+    border-color: var(--border-color);
     color: var(--text-color);
   }
 
@@ -175,8 +182,7 @@
   }
 
   tbody > tr:not(:first-child) {
-    box-shadow: inset 0px 1px 0px
-      var(--border-color);
+    box-shadow: inset 0px 1px 0px var(--border-color);
   }
 
   table.balance-change-table thead {
@@ -210,8 +216,8 @@
   </div>
   <div class="details">
     <div class="address-info">
-      {$_('maximized.sectionHeading', {
-        default: en.maximized.sectionHeading
+      {$_('maximized.balanceChangeHeading', {
+        default: en.maximized.balanceChangeHeading
       })}
       {shortenAddress(transactionOriginator)}
     </div>
@@ -248,6 +254,39 @@
               </tr>
             {/each}
           {/each}
+        {/if}
+      </tbody>
+    </table>
+    <div class="address-info">
+      {$_('maximized.gasHeading', {
+        default: en.maximized.gasHeading
+      })}
+    </div>
+    <table class="balance-change-table table-radius">
+      <colgroup>
+        <col span="1" style="width: 20%;" />
+        <col span="1" style="width: 80%;" />
+      </colgroup>
+      <thead>
+        <tr>
+          <th>
+            {$_('maximized.tokenColumnHeader', {
+              default: en.maximized.tokenColumnHeader
+            })}</th
+          >
+          <th>
+            {$_('maximized.balanceColumnHeader', {
+              default: en.maximized.balanceColumnHeader
+            })}</th
+          >
+        </tr>
+      </thead>
+      <tbody>
+        {#if balanceChanges.length}
+          <tr>
+            <td class="token-text">ETH</td>
+            <td class="negative">-{cleanGas()}</td>
+          </tr>
         {/if}
       </tbody>
     </table>

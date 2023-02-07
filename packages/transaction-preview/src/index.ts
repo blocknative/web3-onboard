@@ -14,7 +14,7 @@ import type {
   TransactionForSim
 } from './types.js'
 import type { EIP1193Provider } from '@web3-onboard/common'
-import type { MultiSimOutput } from 'bnc-sdk'
+import type { InternalTransaction, MultiSimOutput } from 'bnc-sdk'
 
 import initI18N from './i18n/index.js'
 import { validateTPInit, validateTPOptions } from './validation'
@@ -93,11 +93,7 @@ export const patchProvider = (
         const preview = await simulateTransactions(options, transactionParams)
         if (preview.error.length) {
           fullProviderRequest(req)
-          throw new Error(
-            `An error occurred during transaction simulation: ${preview.error.join(
-              ' - '
-            )}`
-          )
+          handleTPErrors(preview)
         }
         if (
           preview.status !== 'simulated' ||
@@ -135,6 +131,26 @@ export const patchProvider = (
     )
   }
   return patchedProvider
+}
+
+const handleTPErrors = (preview: MultiSimOutput) => {
+  let internalErrs = preview.internalTransactions.reduce(
+    (acc: string[], tx: InternalTransaction[]) => {
+      if (tx.length) {
+        tx.forEach((t: InternalTransaction) => {
+          if (t.errorReason) acc.push(t.errorReason)
+        })
+      }
+      return acc
+    },
+    []
+  )
+  internalErrs = [...preview.error, ...internalErrs]
+  throw new Error(
+    `An error occurred during transaction simulation: ${internalErrs.join(
+      ' - '
+    )}`
+  )
 }
 
 const transactionPreview: TransactionPreviewModule = (

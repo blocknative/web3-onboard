@@ -32,7 +32,7 @@ const simulateTransactions = async (
       return cleanedTrans
     }
   )
-
+console.log(await sdk.multiSim(cleanedTransactions))
   return sdk.multiSim(cleanedTransactions) as Promise<MultiSimOutput>
 }
 
