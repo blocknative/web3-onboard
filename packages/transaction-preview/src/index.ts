@@ -94,7 +94,7 @@ export const patchProvider = (
       req.params.length
     ) {
       const transactionParams = req.params as TransactionForSim[]
-      await previewTransaction(transactionParams, fullProviderRequest, req)
+      await handlePreview(transactionParams, fullProviderRequest, req)
     } else {
       return fullProviderRequest(req)
     }
@@ -111,7 +111,7 @@ export const patchProvider = (
   return patchedProvider
 }
 
-export const previewTransaction = async (
+const handlePreview = async (
   transaction: TransactionForSim[],
   fullProviderRequest?: PatchedEIP1193Provider['request'],
   req?: {
@@ -147,6 +147,34 @@ export const previewTransaction = async (
           .catch(() => app.$destroy())
   } catch (e) {
     fullProviderRequest(req)
+    if (app) app.$destroy()
+    throw new Error(`${e}`)
+  }
+}
+
+export const previewTransaction = async (
+  transaction: TransactionForSim[]
+): Promise<MultiSimOutput> => {
+  try {
+    if (!options) {
+      throw new Error(
+        `Please initialize Transaction Preview package prior to previewing a transaction.
+         You can do this by calling the init function with the appropriate params`
+      )
+    }
+    const preview = await simulateTransactions(options, transaction)
+    if (preview.error.length) {
+      handleTPErrors(preview)
+    }
+    if (preview.status !== 'simulated' || !netBalanceChangesExist(preview)) {
+      // If transaction simulation was unsuccessful or balanceChanges do
+      // not exist do not create DOM el
+      console.error('No net balance changes ocurred from this simulation')
+    }
+    if (app) app.$destroy()
+    app = mountTransactionPreview(preview)
+    return preview
+  } catch (e) {
     if (app) app.$destroy()
     throw new Error(`${e}`)
   }

@@ -170,7 +170,11 @@ const simulate = async provider => {
   await previewTransaction(transactions)
 }
 
-simulate(ethereumProvider)
+  return await previewTransaction(transactions)
+}
+
+const simData = simulate(ethereumProvider)
+console.log(simData)
 ```
 
 ### Options & Types
@@ -200,13 +204,14 @@ export type TransactionPreviewAPI = {
   /**
    * This method accepts a transaction meant for a wallet provider
    * (created using libraries like Ethers or Web3),
-   * simulates the transaction and generates a corresponding UI.
+   * simulates the transaction and generates a corresponding UI and
+   * return a response from the Blocknative Transaction Preview API.
    * Note: the package will need to initialized with the `init`
    * function prior to usage
    */
   previewTransaction: (
     transaction: TransactionForSim[]
-  ) => Promise<void | unknown>
+  ) => Promise<MultiSimOutput>
 }
 
 export type PatchedEIP1193Provider = EIP1193Provider & { simPatched: boolean }
