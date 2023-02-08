@@ -11,10 +11,15 @@ import type {
   TransactionPreviewModule,
   TransactionPreviewAPI,
   TransactionPreviewOptions,
-  TransactionForSim
+  TransactionForSim,
+  FullPreviewOptions
 } from './types.js'
 import type { EIP1193Provider } from '@web3-onboard/common'
-import type { InternalTransaction, MultiSimOutput } from 'bnc-sdk'
+import type {
+  InternalTransaction,
+  MultiSimOutput,
+  NetBalanceChange
+} from 'bnc-sdk'
 
 import initI18N from './i18n/index.js'
 import { validateTPInit, validateTPOptions } from './validation'
@@ -26,7 +31,7 @@ import TransactionPreview from './views/Index.svelte'
 export * from './types.js'
 
 const approved$ = new Subject<boolean>()
-let options: TransactionPreviewOptions & TransactionPreviewInitOptions
+let options: FullPreviewOptions
 let optionalSettings: TransactionPreviewOptions
 let app: TransactionPreview
 
@@ -59,7 +64,7 @@ const netBalanceChangesExist = (simResp: MultiSimOutput): boolean => {
     simResp.netBalanceChanges &&
     simResp.netBalanceChanges.length
   ) {
-    return simResp.netBalanceChanges.some(balChange => {
+    return simResp.netBalanceChanges.some((balChange: NetBalanceChange[]) => {
       return balChange.length && balChange.length > 0
     })
   }
@@ -89,34 +94,11 @@ export const patchProvider = (
       req.params.length
     ) {
       const transactionParams = req.params as TransactionForSim[]
-      try {
-        const preview = await simulateTransactions(options, transactionParams)
-        if (preview.error.length) {
-          fullProviderRequest(req)
-          handleTPErrors(preview)
-        }
-        if (
-          preview.status !== 'simulated' ||
-          !netBalanceChangesExist(preview)
-        ) {
-          // If transaction simulation was unsuccessful or balanceChanges do
-          // not exist do not create DOM el
-          return fullProviderRequest(req)
-        }
-        if (app) app.$destroy()
-        app = mountTransactionPreview(preview)
-        options.requireTransactionApproval
-          ? handleRequireApproval(app, fullProviderRequest, req)
-          : fullProviderRequest(req)
-              .then(() => {
-                app.$destroy()
-              })
-              .catch(() => app.$destroy())
-      } catch (e) {
-        fullProviderRequest(req)
-        if (app) app.$destroy()
-        throw new Error(`${e}`)
-      }
+      await previewTransaction(
+        transactionParams,
+        fullProviderRequest,
+        req
+      )
     } else {
       return fullProviderRequest(req)
     }
@@ -131,6 +113,41 @@ export const patchProvider = (
     )
   }
   return patchedProvider
+}
+
+export const previewTransaction = async (
+  transaction: TransactionForSim[],
+  fullProviderRequest?: PatchedEIP1193Provider['request'],
+  req?: {
+    method: string
+    params?: Array<unknown>
+  }
+): Promise<void | unknown> => {
+  try {
+    const preview = await simulateTransactions(options, transaction)
+    if (preview.error.length) {
+      fullProviderRequest(req)
+      handleTPErrors(preview)
+    }
+    if (preview.status !== 'simulated' || !netBalanceChangesExist(preview)) {
+      // If transaction simulation was unsuccessful or balanceChanges do
+      // not exist do not create DOM el
+      return fullProviderRequest(req)
+    }
+    if (app) app.$destroy()
+    app = mountTransactionPreview(preview)
+    options.requireTransactionApproval
+      ? handleRequireApproval(app, fullProviderRequest, req)
+      : fullProviderRequest(req)
+          .then(() => {
+            app.$destroy()
+          })
+          .catch(() => app.$destroy())
+  } catch (e) {
+    fullProviderRequest(req)
+    if (app) app.$destroy()
+    throw new Error(`${e}`)
+  }
 }
 
 const handleTPErrors = (preview: MultiSimOutput) => {
@@ -170,7 +187,8 @@ const transactionPreview: TransactionPreviewModule = (
 
   return {
     patchProvider,
-    init
+    init,
+    previewTransaction
   }
 }
 

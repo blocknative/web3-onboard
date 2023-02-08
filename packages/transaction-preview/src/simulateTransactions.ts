@@ -6,7 +6,7 @@ import type {
 import type { MultiSimOutput } from 'bnc-sdk'
 
 const simulateTransactions = async (
-  options: Omit<TransactionPreviewInitOptions, 'provider'>,
+  options: Omit<TransactionPreviewInitOptions, 'provider' | 'containerElement'>,
   transactions: TransactionForSim[]
 ): Promise<MultiSimOutput> => {
   const { sdk } = options
@@ -32,7 +32,7 @@ const simulateTransactions = async (
       return cleanedTrans
     }
   )
-console.log(await sdk.multiSim(cleanedTransactions))
+
   return sdk.multiSim(cleanedTransactions) as Promise<MultiSimOutput>
 }
 
