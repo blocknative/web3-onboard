@@ -18,6 +18,8 @@ Full Simulation Platform API documentation can be found [here](https://docs.bloc
 
 ### Usage with Web3-Onboard Core package
 
+![Transaction Preview Image with Account Center](https://github.com/blocknative/web3-onboard/blob/develop/assets/transaction-preview?raw=true 'Transaction Preview Image with Account Center')
+
 To use the Transaction Preview package with web3-onboard all a developer needs to do is initialize web3-onboard with their [Blocknative API key](https://onboard.blocknative.com/docs/overview/introduction#optional-use-an-api-key-to-fetch-real-time-transaction-data-balances-gas) and pass in the module as shown below.
 
 ```typescript
