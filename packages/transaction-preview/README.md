@@ -1,7 +1,8 @@
 # @web3-onboard/transaction-preview
 
 ## A modular UI for previewing a single or set of unsigned Ethereum transactions.
-![Transaction Preview Flow](https://github.com/blocknative/web3-onboard/blob/develop/assets/transaction-preview.gif?raw=true "Transaction Preview Flow")
+
+![Transaction Preview Flow](https://github.com/blocknative/web3-onboard/blob/develop/assets/transaction-preview.gif?raw=true 'Transaction Preview Flow')
 
 #### Full Transaction Preview package documentation available [here](https://onboard.blocknative.com/docs/packages/transaction-preview)
 
@@ -29,7 +30,7 @@ const transactionPreview = transactionPreviewModule({
   // Optional: Require balance change approval prior to sending transaction to wallet
   // Defaults to true
   // requireTransactionApproval?: false
-  
+
   //  i18n?: i18nOptions - Internationalization options
 })
 
@@ -52,6 +53,28 @@ const onboard = Onboard({
 // The transaction will automatically be picked up and simulated with a UI displaying in the upper right corner
 ```
 
+### Standalone Usage
+
+To use the Transaction Preview package with web3-onboard all a developer needs to do is initialize web3-onboard with their [Blocknative API key](https://onboard.blocknative.com/docs/overview/introduction#optional-use-an-api-key-to-fetch-real-time-transaction-data-balances-gas) and pass in the module as shown below.
+
+```typescript
+import transactionPreviewModule from '@web3-onboard/transaction-preview'
+
+const {init, previewTransaction} = transactionPreviewModule({
+  // Optional: Require balance change approval prior to sending transaction to wallet
+  // Defaults to true
+  // requireTransactionApproval?: false
+
+  //  i18n?: i18nOptions - Internationalization options
+})
+
+
+
+// Transaction code here using Ether.js or Web3.js or custom
+// The transaction will automatically be picked up and simulated with a UI displaying in the upper right corner
+```
+
+
 ### Options & Types
 
 ```typescript
@@ -72,6 +95,15 @@ export type TransactionPreviewAPI = {
    * and it will be patched to allow for transaction previewing
    */
   init: (initializationOptions: TransactionPreviewInitOptions) => void
+    /**
+   * Pass this method a transaction that would be passed to a wallet provider
+   * (such as transaction built using a lib like Ethers or Web3)
+   * and the transaction will be simulated and a UI generated
+   * Note: the package will need to initialized with the `init`
+   * function prior to usage
+   */
+  previewTransaction: (
+    transaction: TransactionForSim[]
 }
 
 export type PatchedEIP1193Provider = EIP1193Provider & { simPatched: boolean }
