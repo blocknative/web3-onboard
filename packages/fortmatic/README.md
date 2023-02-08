@@ -1,6 +1,6 @@
 # @web3-onboard/fortmatic
 
-## Wallet module for connecting Ledger hardware wallets to web3-onboard
+## Wallet module for connecting Fortmatic to web3-onboard
 
 ### Install
 
