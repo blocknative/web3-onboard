@@ -30,13 +30,23 @@
 
   const addURLToIFrame = () => {
     if (!webURL || !isValidUrl(webURL)) {
-      alert('Invaled URL entered')
+      alert('Invalid URL entered')
       return
     }
-    iframeUsed = true
-    document.querySelector('#iframe_underlay').setAttribute('src', webURL)
-    hideDirections = true
-    onboard.connectWallet()
+
+    fetch(webURL)
+      .then(() => {
+        iframeUsed = true
+        document.querySelector('#iframe_underlay').setAttribute('src', webURL)
+        hideDirections = true
+        !onboard && getOnboard()
+        onboard.connectWallet()
+      })
+      .catch(() => {
+        alert(
+          'The website entered cannot be displayed within an iframe. Please try a different URL. See the browser console for more information.'
+        )
+      })
   }
 
   const resetPage = () => {
@@ -47,6 +57,10 @@
     uploaded_image = undefined
     webURL = ''
     resetTheme()
+    closeOnboard()
+  }
+
+  const closeOnboard = () => {
     const onboardCloseBtnVisible = document
       ?.querySelector('body > onboard-v2')
       ?.shadowRoot?.querySelector('.close-button')
@@ -266,9 +280,9 @@
             placeholder="Enter your Website URL"
             bind:value={webURL}
           />
-          <button on:click={addURLToIFrame}>Preview On Your Website</button>
+          <button type="submit">Preview On Your Website</button>
           <button
-            on:click={resetPage}
+            on:click={() => resetPage()}
             type="button"
             disabled={iframeUsed || !!uploaded_image ? false : true}>Reset</button
           >
