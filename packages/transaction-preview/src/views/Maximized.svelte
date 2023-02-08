@@ -42,7 +42,7 @@
 
   const cleanBalance = (dirtyBalance: string): string => {
     const gweiToEther = ethers.utils.formatEther(dirtyBalance)
-    const roundTo4Decimal = parseFloat(gweiToEther).toFixed(6)
+    const roundedGwei = parseFloat(gweiToEther).toFixed(6)
     const removeEmptyDecimalPlaces = Number(roundTo4Decimal)
     return addCommasToNumber(removeEmptyDecimalPlaces)
   }
