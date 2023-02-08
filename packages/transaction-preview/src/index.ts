@@ -94,11 +94,7 @@ export const patchProvider = (
       req.params.length
     ) {
       const transactionParams = req.params as TransactionForSim[]
-      await previewTransaction(
-        transactionParams,
-        fullProviderRequest,
-        req
-      )
+      await previewTransaction(transactionParams, fullProviderRequest, req)
     } else {
       return fullProviderRequest(req)
     }
@@ -124,6 +120,12 @@ export const previewTransaction = async (
   }
 ): Promise<void | unknown> => {
   try {
+    if (!options) {
+      throw new Error(
+        `Please initialize Transaction Preview package prior to previewing a transaction.
+         You can do this by calling the init function with the appropriate params`
+      )
+    }
     const preview = await simulateTransactions(options, transaction)
     if (preview.error.length) {
       fullProviderRequest(req)
