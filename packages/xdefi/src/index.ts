@@ -27,7 +27,7 @@ function XDEFIWallet(): WalletInit {
           if (newWindow) newWindow.opener = null
           throw new Error('Please install XDEFI Wallet to use this wallet')
         } else {
-          return { provider: createEIP1193Provider(window.xfi) }
+          return { provider: createEIP1193Provider(window.xfi.ethereum) }
         }
       },
       platforms: ['desktop']
