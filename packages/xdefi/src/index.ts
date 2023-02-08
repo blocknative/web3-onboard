@@ -14,7 +14,10 @@ function XDEFIWallet(): WalletInit {
       },
       getIcon: async () => (await import('./icon.js')).default,
       getInterface: async () => {
-        const provider = window.xfi?.ethereum
+       let provider
+        if (window.xfi && window.xfi.ethereum) {
+          provider = window.xfi.ethereum
+        }
         if (!provider) {
           const newWindow = window.open(
             'https://install.xdefi.io/?utm_source=web3Onboard&utm_medium=organic&utm_campaign=xdefi.io&utm_id=xdefi.io',
