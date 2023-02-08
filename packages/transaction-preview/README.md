@@ -55,7 +55,12 @@ const onboard = Onboard({
 
 ### Standalone Usage
 
-To use the Transaction Preview package with web3-onboard all a developer needs to do is initialize web3-onboard with their [Blocknative API key](https://onboard.blocknative.com/docs/overview/introduction#optional-use-an-api-key-to-fetch-real-time-transaction-data-balances-gas) and pass in the module as shown below.
+To use the Transaction Preview package without web3-onboard all a developer needs to do is: 
+- Execute the entry function from the `@web3-onboard/transaction-preview` package and optional params
+- Run the returned `init` function with their [Blocknative API key](https://onboard.blocknative.com/docs/overview/introduction#optional-use-an-api-key-to-fetch-real-time-transaction-data-balances-gas), an initialized instance of their [Blocknative SDK](https://www.npmjs.com/package/bnc-sdk) and a containerElement string with the html ID of the target element to append the visualization to
+- Finally pass a transaction meant for a wallet provider (created using libraries like Ethers or Web3)
+
+With the above steps a UI will be rendered with the balance changes and gas used.
 
 ```typescript
 import transactionPreviewModule from '@web3-onboard/transaction-preview'
@@ -156,6 +161,9 @@ export type TransactionPreviewModule = (
   options: TransactionPreviewOptions
 ) => TransactionPreviewAPI
 
+export type FullPreviewOptions = TransactionPreviewOptions &
+  TransactionPreviewInitOptions
+
 export type TransactionPreviewAPI = {
   /**
    * This Method accepts a standard EIP1193 provider
@@ -166,7 +174,7 @@ export type TransactionPreviewAPI = {
 
   /**
    * This Method accepts:
-   * apiKey: string - Blocknative API key (https://explorer.blocknative.com/) 
+   * apiKey: string - Blocknative API key (https://explorer.blocknative.com/)
    * sdk: instance of an initialized bnc-sdk (www.npmjs.com/package/bnc-sdk)
    * containerElement: string of an html id selector (e.g. "#my-html-el")
    */
@@ -174,8 +182,8 @@ export type TransactionPreviewAPI = {
 
   /**
    * This method accepts a transaction meant for a wallet provider
-   * (created using libraries like Ethers or Web3), simulates the transaction
-   * and generates a corresponding UI.
+   * (created using libraries like Ethers or Web3),
+   * simulates the transaction and generates a corresponding UI.
    * Note: the package will need to initialized with the `init`
    * function prior to usage
    */
@@ -199,7 +207,7 @@ export type TransactionPreviewInitOptions = {
    */
   apiKey: string
   /**
-   * Your Blocknative SDK instance
+   * Your Blocknative SDK instance (https://www.npmjs.com/package/bnc-sdk)
    * */
   sdk: SDK
   /**
