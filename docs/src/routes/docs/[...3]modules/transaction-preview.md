@@ -73,6 +73,102 @@ const onboard = Onboard({
 // The transaction will automatically be picked up and simulated with a UI displaying in the upper right corner
 ```
 
+### Standalone Usage
+
+To use the Transaction Preview package with web3-onboard all a developer needs to do is initialize web3-onboard with their [Blocknative API key](https://onboard.blocknative.com/docs/overview/introduction#optional-use-an-api-key-to-fetch-real-time-transaction-data-balances-gas) and pass in the module as shown below.
+
+```typescript
+import transactionPreviewModule from '@web3-onboard/transaction-preview'
+
+const {init, previewTransaction} = transactionPreviewModule({
+  // Optional: Require balance change approval prior to sending transaction to wallet
+  // Defaults to true
+  // requireTransactionApproval?: false
+
+  //  i18n?: i18nOptions - Internationalization options
+})
+await init({
+/**
+ * Blocknative API key (https://explorer.blocknative.com/account)
+ */
+apiKey: string
+/**
+ * Your Blocknative SDK instance
+ * */
+sdk: SDK
+/**
+ * Optional dom query string to mount UI to
+ * */
+containerElement: string})
+
+// Transaction code here using Ether.js or Web3.js or construct your own transactions
+const simulate = async provider => {
+  const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
+
+  const signer = ethersProvider.getSigner()
+  const addressFrom = '0xcxxxxxx11111999991111'
+
+  // Uniswap V2
+  const CONTRACT_ADDRESS = '0x7a250d5630b4cf539739df2c5dacb4c659f2488d'
+  const erc20_interface = [
+    'function approve(address _spender, uint256 _value) public returns (bool success)',
+    'function transferFrom(address sender, address recipient, uint256 amount) external returns (bool)',
+    'function balanceOf(address owner) view returns (uint256)'
+  ]
+
+  const uniswapV2router_interface = [
+    'function swapExactTokensForETH(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline) external returns (uint[] memory amounts)'
+  ]
+
+  const weth = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  const oneInch = '0x111111111117dc0aa78b770fa6a738034120c302'
+  let swapTxData
+  let approveTxData
+  const swapContract = new ethers.Contract(
+    CONTRACT_ADDRESS,
+    uniswapV2router_interface
+  )
+  const erc20_contract = new ethers.Contract(oneInch, erc20_interface)
+  const oneEther = ethers.BigNumber.from('9000000000000000000')
+  approveTxData = await erc20_contract.populateTransaction.approve(
+    CONTRACT_ADDRESS,
+    oneEther
+  )
+
+  const amountOutMin = 0
+  const amountOutMinHex = ethers.BigNumber.from(amountOutMin.toString())._hex
+
+  const path = [oneInch, weth]
+  const deadline = Math.floor(Date.now() / 1000) + 60 * 1 // 1 minutes from the current Unix time
+
+  const inputAmountHex = oneEther.toHexString()
+
+  swapTxData = await swapContract.populateTransaction.swapExactTokensForETH(
+    inputAmountHex,
+    amountOutMinHex,
+    path,
+    addressFrom,
+    deadline
+  )
+  const uniswapV2Router = '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D'
+
+  const popApproveTransaction = await signer.populateTransaction(approveTxData)
+  const popTransaction = await signer.populateTransaction(swapTxData)
+  const transactions = [
+    { ...popApprovedTransaction, value: 0 },
+    {
+      ...popTransaction,
+      from: addressFrom,
+      to: uniswapV2Router,
+      value: 0
+    }
+  ]
+  await previewTransaction(transactions)
+}
+
+simulate(ethereumProvider)
+```
+
 ### Options & Types
 
 ```typescript
@@ -85,12 +181,24 @@ export type TransactionPreviewAPI = {
    * and it will be patched to allow for transaction previewing
    */
   patchProvider: (provider: PatchedEIP1193Provider) => PatchedEIP1193Provider
+  
   /**
    * Pass this method a standard EIP1193 provider
    * (such as an injected wallet from window.ethereum)
    * and it will be patched to allow for transaction previewing
    */
   init: (initializationOptions: TransactionPreviewInitOptions) => void
+  
+  /**
+   * Pass this method a transaction that would be passed to a wallet provider
+   * (such as transaction built using a lib like Ethers or Web3)
+   * and the transaction will be simulated and a UI generated
+   * Note: the package will need to initialized with the `init`
+   * function prior to usage
+   */
+  previewTransaction: (
+    transaction: TransactionForSim[]
+  ) => Promise<void | unknown>
 }
 
 export type PatchedEIP1193Provider = EIP1193Provider & { simPatched: boolean }
@@ -178,6 +286,7 @@ export type MultiSimOutput = {
 export interface ContractCall {
   contractType?: string
   contractAddress?: string
+  contractAlias?: string
   methodName: string
   params: Record<string, unknown>
   contractName?: string
@@ -194,6 +303,8 @@ export interface InternalTransaction {
   gasUsed: number
   value: string
   contractCall: ContractCall
+  error?: string
+  errorReason?: string
 }
 
 export interface NetBalanceChange {

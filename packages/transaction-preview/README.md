@@ -163,13 +163,15 @@ export type TransactionPreviewAPI = {
    * and it will be patched to allow for transaction previewing
    */
   patchProvider: (provider: PatchedEIP1193Provider) => PatchedEIP1193Provider
+  
   /**
    * Pass this method a standard EIP1193 provider
    * (such as an injected wallet from window.ethereum)
    * and it will be patched to allow for transaction previewing
    */
   init: (initializationOptions: TransactionPreviewInitOptions) => void
-    /**
+
+  /**
    * Pass this method a transaction that would be passed to a wallet provider
    * (such as transaction built using a lib like Ethers or Web3)
    * and the transaction will be simulated and a UI generated
@@ -178,6 +180,7 @@ export type TransactionPreviewAPI = {
    */
   previewTransaction: (
     transaction: TransactionForSim[]
+  ) => Promise<void | unknown>
 }
 
 export type PatchedEIP1193Provider = EIP1193Provider & { simPatched: boolean }
@@ -265,6 +268,7 @@ export type MultiSimOutput = {
 export interface ContractCall {
   contractType?: string
   contractAddress?: string
+  contractAlias?: string
   methodName: string
   params: Record<string, unknown>
   contractName?: string
@@ -281,6 +285,8 @@ export interface InternalTransaction {
   gasUsed: number
   value: string
   contractCall: ContractCall
+  error?: string
+  errorReason?: string
 }
 
 export interface NetBalanceChange {
