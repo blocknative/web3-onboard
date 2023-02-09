@@ -23,9 +23,9 @@
     "webpack-dev-server": "4.7.4"
   },
   "dependencies": {
-    "@web3-onboard/core": "^2.15.0-alpha.2",
+    "@web3-onboard/core": "^2.15.0",
     "@web3-onboard/coinbase": "^2.1.4",
-    "@web3-onboard/transaction-preview": "^2.0.2-alpha.1",
+    "@web3-onboard/transaction-preview": "^2.0.2",
     "@web3-onboard/dcent": "^2.2.3",
     "@web3-onboard/frontier": "^2.0.0",
     "@web3-onboard/fortmatic": "^2.0.14",
@@ -47,7 +47,7 @@
     "@web3-onboard/walletconnect": "^2.2.2",
     "@web3-onboard/enkrypt": "^2.0.0",
     "@web3-onboard/mew-wallet": "^2.0.0",
-    "@web3-onboard/xdefi": "^2.0.0-alpha.1",
+    "@web3-onboard/xdefi": "^2.0.0",
     "@web3-onboard/uauth": "^2.0.0",
     "@web3-onboard/zeal": "^2.0.0",
     "vconsole": "^3.9.5"
