@@ -140,7 +140,7 @@ const simulate = async provider => {
   )
 
   const amountOutMin = 0
-  const amountOutMinHex = ethers.BigNumber.from(amountOutMin.toString())._hex
+  const amountOutMinHex = ethers.BigNumber.from(amountOutMin).toHexString()
 
   const path = [oneInch, weth]
   const deadline = Math.floor(Date.now() / 1000) + 60 * 1 // 1 minutes from the current Unix time

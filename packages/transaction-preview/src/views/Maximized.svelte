@@ -41,16 +41,18 @@
   }
 
   const cleanBalance = (dirtyBalance: string): string => {
-    const gweiToEther = ethers.utils.formatEther(dirtyBalance)
-    const roundedGwei = parseFloat(gweiToEther).toFixed(6)
-    const removeEmptyDecimalPlaces = Number(roundTo4Decimal)
-    return addCommasToNumber(removeEmptyDecimalPlaces)
+    const formattedEth = ethers.utils.formatEther(dirtyBalance)
+    return roundAndCleanDecimals(formattedEth)
   }
 
-  const cleanGas = () => {
+  const cleanGas = (): string => {
     const gweiToEther = ethers.utils.formatUnits(simResponse.gasUsed[0], 'gwei')
-    const roundTo4Decimal = parseFloat(gweiToEther).toFixed(6)
-    const removeEmptyDecimalPlaces = Number(roundTo4Decimal)
+    return roundAndCleanDecimals(gweiToEther)
+  }
+
+  const roundAndCleanDecimals = (formattedValue: string): string => {
+    const roundedGwei = parseFloat(formattedValue).toFixed(6)
+    const removeEmptyDecimalPlaces = Number(roundedGwei)
     return addCommasToNumber(removeEmptyDecimalPlaces)
   }
 

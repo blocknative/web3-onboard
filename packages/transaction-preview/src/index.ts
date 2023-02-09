@@ -127,6 +127,10 @@ const handlePreview = async (
       )
     }
     const preview = await simulateTransactions(options, transaction)
+    if (!preview) {
+      throw new Error(`An error ocurred while simulating the transaction, please 
+      see the console for more details`)
+    }
     if (preview.error.length) {
       fullProviderRequest(req)
       handleTPErrors(preview)
@@ -163,6 +167,10 @@ export const previewTransaction = async (
       )
     }
     const preview = await simulateTransactions(options, transaction)
+    if (!preview) {
+      throw new Error(`An error ocurred while simulating the transaction, please 
+      see the console for more details`)
+    }
     if (preview.error.length) {
       handleTPErrors(preview)
     }
