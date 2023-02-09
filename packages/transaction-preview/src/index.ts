@@ -11,10 +11,15 @@ import type {
   TransactionPreviewModule,
   TransactionPreviewAPI,
   TransactionPreviewOptions,
-  TransactionForSim
+  TransactionForSim,
+  FullPreviewOptions
 } from './types.js'
 import type { EIP1193Provider } from '@web3-onboard/common'
-import type { MultiSimOutput } from 'bnc-sdk'
+import type {
+  InternalTransaction,
+  MultiSimOutput,
+  NetBalanceChange
+} from 'bnc-sdk'
 
 import initI18N from './i18n/index.js'
 import { validateTPInit, validateTPOptions } from './validation'
@@ -26,7 +31,7 @@ import TransactionPreview from './views/Index.svelte'
 export * from './types.js'
 
 const approved$ = new Subject<boolean>()
-let options: TransactionPreviewOptions & TransactionPreviewInitOptions
+let options: FullPreviewOptions
 let optionalSettings: TransactionPreviewOptions
 let app: TransactionPreview
 
@@ -59,7 +64,7 @@ const netBalanceChangesExist = (simResp: MultiSimOutput): boolean => {
     simResp.netBalanceChanges &&
     simResp.netBalanceChanges.length
   ) {
-    return simResp.netBalanceChanges.some(balChange => {
+    return simResp.netBalanceChanges.some((balChange: NetBalanceChange[]) => {
       return balChange.length && balChange.length > 0
     })
   }
@@ -89,38 +94,7 @@ export const patchProvider = (
       req.params.length
     ) {
       const transactionParams = req.params as TransactionForSim[]
-      try {
-        const preview = await simulateTransactions(options, transactionParams)
-        if (preview.error.length) {
-          fullProviderRequest(req)
-          throw new Error(
-            `An error occurred during transaction simulation: ${preview.error.join(
-              ' - '
-            )}`
-          )
-        }
-        if (
-          preview.status !== 'simulated' ||
-          !netBalanceChangesExist(preview)
-        ) {
-          // If transaction simulation was unsuccessful or balanceChanges do
-          // not exist do not create DOM el
-          return fullProviderRequest(req)
-        }
-        if (app) app.$destroy()
-        app = mountTransactionPreview(preview)
-        options.requireTransactionApproval
-          ? handleRequireApproval(app, fullProviderRequest, req)
-          : fullProviderRequest(req)
-              .then(() => {
-                app.$destroy()
-              })
-              .catch(() => app.$destroy())
-      } catch (e) {
-        fullProviderRequest(req)
-        if (app) app.$destroy()
-        throw new Error(`${e}`)
-      }
+      await handlePreview(transactionParams, fullProviderRequest, req)
     } else {
       return fullProviderRequest(req)
     }
@@ -135,6 +109,103 @@ export const patchProvider = (
     )
   }
   return patchedProvider
+}
+
+const handlePreview = async (
+  transaction: TransactionForSim[],
+  fullProviderRequest?: PatchedEIP1193Provider['request'],
+  req?: {
+    method: string
+    params?: Array<unknown>
+  }
+): Promise<void | unknown> => {
+  try {
+    if (!options) {
+      throw new Error(
+        `Please initialize Transaction Preview package prior to previewing a transaction.
+         You can do this by calling the init function with the appropriate params`
+      )
+    }
+    const preview = await simulateTransactions(options, transaction)
+    if (!preview) {
+      throw new Error(`An error ocurred while simulating the transaction, please 
+      see the console for more details`)
+    }
+    if (preview.error.length) {
+      fullProviderRequest(req)
+      handleTPErrors(preview)
+    }
+    if (preview.status !== 'simulated' || !netBalanceChangesExist(preview)) {
+      // If transaction simulation was unsuccessful or balanceChanges do
+      // not exist do not create DOM el
+      return fullProviderRequest(req)
+    }
+    if (app) app.$destroy()
+    app = mountTransactionPreview(preview)
+    options.requireTransactionApproval
+      ? handleRequireApproval(app, fullProviderRequest, req)
+      : fullProviderRequest(req)
+          .then(() => {
+            app.$destroy()
+          })
+          .catch(() => app.$destroy())
+  } catch (e) {
+    fullProviderRequest(req)
+    if (app) app.$destroy()
+    throw new Error(`${e}`)
+  }
+}
+
+export const previewTransaction = async (
+  transaction: TransactionForSim[]
+): Promise<MultiSimOutput> => {
+  try {
+    if (!options) {
+      throw new Error(
+        `Please initialize Transaction Preview package prior to previewing a transaction.
+         You can do this by calling the init function with the appropriate params`
+      )
+    }
+    const preview = await simulateTransactions(options, transaction)
+    if (!preview) {
+      throw new Error(`An error ocurred while simulating the transaction, please 
+      see the console for more details`)
+    }
+    if (preview.error.length) {
+      handleTPErrors(preview)
+    }
+    if (preview.status !== 'simulated' || !netBalanceChangesExist(preview)) {
+      // If transaction simulation was unsuccessful or balanceChanges do
+      // not exist do not create DOM el
+      console.error('No net balance changes ocurred from this simulation')
+    }
+    if (app) app.$destroy()
+    app = mountTransactionPreview(preview)
+    return preview
+  } catch (e) {
+    if (app) app.$destroy()
+    throw new Error(`${e}`)
+  }
+}
+
+const handleTPErrors = (preview: MultiSimOutput) => {
+  let internalErrs = preview.internalTransactions.reduce(
+    (acc: string[], tx: InternalTransaction[]) => {
+      if (tx.length) {
+        tx.forEach((t: InternalTransaction) => {
+          if (t.errorReason) acc.push(t.errorReason)
+        })
+      }
+      return acc
+    },
+    []
+  )
+  internalErrs = [...preview.error, ...internalErrs]
+  throw new Error(
+    `An error occurred during transaction simulation: ${internalErrs.join(
+      ' - '
+    )}`
+  )
 }
 
 const transactionPreview: TransactionPreviewModule = (
@@ -154,7 +225,8 @@ const transactionPreview: TransactionPreviewModule = (
 
   return {
     patchProvider,
-    init
+    init,
+    previewTransaction
   }
 }
 

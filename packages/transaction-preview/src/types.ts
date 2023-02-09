@@ -1,25 +1,42 @@
 import type { EIP1193Provider } from '@web3-onboard/common'
 import type en from './i18n/en.json'
 import type SDK from 'bnc-sdk'
-import type { SimulationTransaction } from 'bnc-sdk'
+import type { MultiSimOutput, SimulationTransaction } from 'bnc-sdk'
 
 export type TransactionPreviewModule = (
   options: TransactionPreviewOptions
 ) => TransactionPreviewAPI
 
+export type FullPreviewOptions = TransactionPreviewOptions &
+  TransactionPreviewInitOptions
+
 export type TransactionPreviewAPI = {
   /**
-   * Pass this method a standard EIP1193 provider
+   * This Method accepts a standard EIP1193 provider
    * (such as an injected wallet from window.ethereum)
    * and it will be patched to allow for transaction previewing
    */
   patchProvider: (provider: PatchedEIP1193Provider) => PatchedEIP1193Provider
+
   /**
-   * Pass this method a standard EIP1193 provider
-   * (such as an injected wallet from window.ethereum)
-   * and it will be patched to allow for transaction previewing
+   * This Method accepts:
+   * apiKey: string - Blocknative API key (https://explorer.blocknative.com/)
+   * sdk: instance of an initialized bnc-sdk (www.npmjs.com/package/bnc-sdk)
+   * containerElement: string of an html id selector (e.g. "#my-html-el")
    */
   init: (initializationOptions: TransactionPreviewInitOptions) => void
+
+  /**
+   * This method accepts a transaction meant for a wallet provider
+   * (created using libraries like Ethers or Web3),
+   * simulates the transaction and generates a corresponding UI and
+   * return a response from the Blocknative Transaction Preview API.
+   * Note: the package will need to initialized with the `init`
+   * function prior to usage
+   */
+  previewTransaction: (
+    transaction: TransactionForSim[]
+  ) => Promise<MultiSimOutput>
 }
 
 export type PatchedEIP1193Provider = EIP1193Provider & { simPatched: boolean }
@@ -37,7 +54,7 @@ export type TransactionPreviewInitOptions = {
    */
   apiKey: string
   /**
-   * Your Blocknative SDK instance
+   * Your Blocknative SDK instance (https://www.npmjs.com/package/bnc-sdk)
    * */
   sdk: SDK
   /**
