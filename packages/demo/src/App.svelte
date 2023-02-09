@@ -42,7 +42,7 @@
     new VConsole()
   }
 
-  const apiKey = '0e5f8cec-4729-457a-8d76-d6d15692657b'
+  const apiKey = '0fcf74ed-b95b-4b8d-a8d8-4d655ae479d9'
   const infura_key = '80633e48116943128cbab25e402764ab'
 
   let defaultTransactionObject = JSON.stringify(
@@ -334,88 +334,15 @@
 
     const signer = ethersProvider.getSigner()
 
-    // const popTransaction = await signer.populateTransaction({
-    //   to: toAddress,
-    //   value: 100000000000000
-    // })
+    const popTransaction = await signer.populateTransaction({
+      to: toAddress,
+      value: 100000000000000
+    })
 
-    // const txn = await signer.sendTransaction(popTransaction)
+    const txn = await signer.sendTransaction(popTransaction)
 
-    // const receipt = await txn.wait()
-    // console.log(receipt)
-
-    const addressFrom = '0xc572779D7839B998DF24fc316c89BeD3D450ED13'
-
-    const CONTRACT_ADDRESS = '0x7a250d5630b4cf539739df2c5dacb4c659f2488d'
-    const erc20_interface = [
-      'function approve(address _spender, uint256 _value) public returns (bool success)',
-      'function transferFrom(address sender, address recipient, uint256 amount) external returns (bool)',
-      'function balanceOf(address owner) view returns (uint256)'
-    ]
-
-    const uniswapV2router_interface = [
-      'function swapExactTokensForETH(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline) external returns (uint[] memory amounts)'
-    ]
-
-    const weth = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
-    const oneInch = '0x111111111117dc0aa78b770fa6a738034120c302'
-    const dai = '0x6B175474E89094C44Da98b954EedeAC495271d0F'
-    let swapTxData
-    let approveTxData
-    const swapContract = new ethers.Contract(
-      CONTRACT_ADDRESS,
-      uniswapV2router_interface
-    )
-    const erc20_contract = new ethers.Contract(oneInch, erc20_interface)
-    const oneEther = ethers.BigNumber.from('9000000000000000000')
-    approveTxData = await erc20_contract.populateTransaction.approve(
-      CONTRACT_ADDRESS,
-      oneEther
-    )
-
-    const amountOutMin = 0
-    const amountOutMinHex = ethers.BigNumber.from(amountOutMin.toString())._hex
-    
-    const path = [oneInch, weth]
-    const deadline = Math.floor(Date.now() / 1000) + 60 * 1 // 1 minutes from the current Unix time
-
-    const inputAmountHex = oneEther.toHexString()
-
-    swapTxData = await swapContract.populateTransaction.swapExactTokensForETH(
-      inputAmountHex,
-      amountOutMinHex,
-      path,
-      addressFrom,
-      deadline
-    )
-    const uniswapV2Router = '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D'
-
-    const popTransaction = await signer.populateTransaction(swapTxData)
-    // const popTransaction = await signer.populateTransaction(approveTxData)
-    // console.log(popTransaction)
-    // await signer.sendUncheckedTransaction(
-    //   { ...popTransaction, value: 0 }
-    //   // {
-    //   //   from: addressFrom,
-    //   //   to: oneInch,
-    //   //   data: approveTxData.data,
-    //   //   gasLimit: 10000,
-    //   //   gasPrice: 48000000000,
-    //   //   value: 0
-    //   // },
-    // )
-    // console.log(swapTxData)
-    await signer.sendTransaction(
-            {
-              ...popTransaction,
-        from: addressFrom,
-        to: uniswapV2Router,
-        value: 0
-      }
-    )
-
-    // const receipt = await txn.wait()
-    // console.log(receipt)
+    const receipt = await txn.wait()
+    console.log(receipt)
   }
 
   const sendTransactionWithPreFlight = async (provider, balance) => {
