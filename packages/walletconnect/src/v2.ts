@@ -40,7 +40,7 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
 
         const { Subject, fromEvent } = await import('rxjs')
         const { takeUntil, take } = await import('rxjs/operators')
-        
+
         const getMetaData = (): CoreTypes.Metadata | undefined => {
           if (!appMetadata) return undefined
           const wcMetaData: CoreTypes.Metadata = {
@@ -64,9 +64,10 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
 
         const connector = await EthereumProvider.init({
           projectId,
-          methods,
           metadata: getMetaData(),
-          chains: chains.map(({ id }) => parseInt(id, 16)),
+          chains: [1], // default to mainnet
+          optionalChains: chains.map(({ id }) => parseInt(id, 16)),
+          optionalMethods: methods,
           rpcMap: chains
             .map(({ id, rpcUrl }) => ({ id, rpcUrl }))
             .reduce((rpcMap: Record<number, string>, { id, rpcUrl }) => {
@@ -81,9 +82,9 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
           public connector: InstanceType<typeof EthereumProvider>
           public chains: Chain[]
           public disconnect: EIP1193Provider['disconnect']
-          public emit: typeof EventEmitter['emit']
-          public on: typeof EventEmitter['on']
-          public removeListener: typeof EventEmitter['removeListener']
+          public emit: (typeof EventEmitter)['emit']
+          public on: (typeof EventEmitter)['on']
+          public removeListener: (typeof EventEmitter)['removeListener']
 
           private disconnected$: InstanceType<typeof Subject>
 
@@ -168,18 +169,17 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                 return new Promise<ProviderAccounts>((resolve, reject) => {
                   // Check if connection is already established
                   if (!this.connector.session) {
+                    console.log('no session')
                     // create new session
-                    this.connector.modal?.subscribeModal(state => {
-                      // the modal was closed so reject the promise
-                      if (!state.open && !this.connector.session)
-                        reject(
-                          new ProviderRpcError({
-                            code: 4001,
-                            message: 'User rejected the request.'
-                          })
-                        )
+                    this.connector.connect().catch(err => {
+                      console.log('err', err)
+                      reject(
+                        new ProviderRpcError({
+                          code: 4001,
+                          message: 'User rejected the request.'
+                        })
+                      )
                     })
-                    this.connector.connect()
                   } else {
                     // update ethereum provider to load accounts & chainId
                     const accounts = this.connector.accounts
