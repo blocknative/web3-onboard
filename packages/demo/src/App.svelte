@@ -17,6 +17,7 @@
   import dcentModule from '@web3-onboard/dcent'
   import sequenceModule from '@web3-onboard/sequence'
   import tallyHoModule from '@web3-onboard/tallyho'
+  import xdefiWalletModule from '@web3-onboard/xdefi'
   import zealModule from '@web3-onboard/zeal'
   import transactionPreviewModule from '@web3-onboard/transaction-preview'
   import enkryptModule from '@web3-onboard/enkrypt'
@@ -129,6 +130,7 @@
   const keystone = keystoneModule()
   const gnosis = gnosisModule()
   const tallyho = tallyHoModule()
+  const xdefi = xdefiWalletModule()
   const zeal = zealModule()
   const phantom = phantomModule()
   const trust = trustModule()
@@ -188,7 +190,8 @@
       web3auth,
       zeal,
       frontier,
-      phantom
+      phantom,
+      xdefi
     ],
     transactionPreview,
     gas,

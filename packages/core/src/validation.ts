@@ -213,7 +213,8 @@ const initOptions = Joi.object({
   containerElements: containerElements,
   transactionPreview: Joi.object({
     patchProvider: Joi.function().required(),
-    init: Joi.function().required()
+    init: Joi.function().required(),
+    previewTransaction: Joi.function()
   }),
   theme: theme
 })
