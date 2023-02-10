@@ -2,6 +2,10 @@
 
 Wallet module for connecting Wallet Connect to web3-onboard
 
+:::admonition type=warning
+_Not all Wallets support WalletConnect V2 currently. For an up to date list please see the [WalletConnect Explorer](https://explorer.walletconnect.com/?version=2)_
+:::
+
 ## Install
 
 <Tabs values={['yarn', 'npm']}>

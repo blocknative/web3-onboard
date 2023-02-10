@@ -6,6 +6,9 @@
 
 `npm i @web3-onboard/core @web3-onboard/walletconnect`
 
+## Not all Wallets support WalletConnect V2 currently
+_For an up to date list please see the [WalletConnect Explorer](https://explorer.walletconnect.com/?version=2)_
+
 ## Options
 
 ```typescript
