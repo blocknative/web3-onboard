@@ -150,7 +150,7 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
             }
 
             // load the session if it exists
-            ;(() => {
+            (() => {
               const session = this.connector.session
               if (session) {
                 this.emit('accountsChanged', this.connector.accounts)
@@ -169,10 +169,9 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                 return new Promise<ProviderAccounts>((resolve, reject) => {
                   // Check if connection is already established
                   if (!this.connector.session) {
-                    console.log('no session')
                     // create new session
                     this.connector.connect().catch(err => {
-                      console.log('err', err)
+                      console.error('err: ', err)
                       reject(
                         new ProviderRpcError({
                           code: 4001,
@@ -234,7 +233,6 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                     message: `The Provider requires a chainId to be passed in as an argument`
                   })
                 }
-
                 return this.connector.request({
                   method: 'wallet_switchEthereumChain',
                   params: [
