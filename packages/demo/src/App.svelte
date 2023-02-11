@@ -17,6 +17,7 @@
   import dcentModule from '@web3-onboard/dcent'
   import sequenceModule from '@web3-onboard/sequence'
   import tallyHoModule from '@web3-onboard/tallyho'
+  import xdefiWalletModule from '@web3-onboard/xdefi'
   import zealModule from '@web3-onboard/zeal'
   import transactionPreviewModule from '@web3-onboard/transaction-preview'
   import enkryptModule from '@web3-onboard/enkrypt'
@@ -103,7 +104,12 @@
   const coinbaseWallet = coinbaseModule()
 
   const walletConnect = walletConnectModule({
-    connectFirstChainId: true
+    connectFirstChainId: true,
+    version: 2,
+    projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
+    qrcodeModalOptions: {
+    mobileLinks: ['rainbow', 'metamask', 'argent', 'trust', 'imtoken', 'pillar']
+    }
   })
   const portis = portisModule({
     apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
@@ -124,6 +130,7 @@
   const keystone = keystoneModule()
   const gnosis = gnosisModule()
   const tallyho = tallyHoModule()
+  const xdefi = xdefiWalletModule()
   const zeal = zealModule()
   const phantom = phantomModule()
   const trust = trustModule()
@@ -131,7 +138,7 @@
 
   const trezorOptions = {
     email: 'test@test.com',
-    appUrl: 'https://www.blocknative.com',
+    appUrl: 'https://www.blocknative.com'
     // containerElement: '#sample-container-el'
   }
   const trezor = trezorModule(trezorOptions)
@@ -183,7 +190,8 @@
       web3auth,
       zeal,
       frontier,
-      phantom
+      phantom,
+      xdefi
     ],
     transactionPreview,
     gas,
@@ -231,9 +239,10 @@
         rpcUrl: 'https://rpc.ankr.com/arbitrum'
       }
     ],
-    // connect: {
-    //   disableClose: true
-    // },
+    connect: {
+      // disableClose: true,
+      autoConnectLastWallet: true
+    },
     appMetadata: {
       name: 'Blocknative',
       // icon: blocknativeIcon,

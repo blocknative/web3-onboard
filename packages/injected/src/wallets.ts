@@ -263,6 +263,18 @@ const alphawallet: InjectedWalletModule = {
   platforms: ['mobile']
 }
 
+const apexwallet: InjectedWalletModule = {
+  label: ProviderLabel.ApexWallet,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.ApexWallet],
+  getIcon: async () => (await import('./icons/apexwallet.js')).default,
+  getInterface: async () => ({
+    provider: window.ethereum
+  }),
+  platforms: ['desktop', 'Chrome', 'Chromium', 'Microsoft Edge']
+}
+
 const atoken: InjectedWalletModule = {
   label: ProviderLabel.AToken,
   injectedNamespace: InjectedNameSpace.Ethereum,
@@ -707,12 +719,12 @@ const defiwallet: InjectedWalletModule = {
   label: ProviderLabel.DeFiWallet,
   injectedNamespace: InjectedNameSpace.DeFiConnectProvider,
   checkProviderIdentity: ({ provider }) =>
-        !!provider && !!provider[ProviderIdentityFlag.DeFiWallet],
+    !!provider && !!provider[ProviderIdentityFlag.DeFiWallet],
   getIcon: async () => (await import('./icons/defiwallet.js')).default,
   getInterface: async () => ({
     provider: createEIP1193Provider(window.deficonnectProvider)
   }),
-  platforms: ['all'],
+  platforms: ['all']
 }
 
 const wallets = [
@@ -727,6 +739,7 @@ const wallets = [
   opera,
   status,
   alphawallet,
+  apexwallet,
   atoken,
   bitpie,
   blockwallet,
