@@ -7,10 +7,10 @@ import { reset$, wallets$ } from './streams.js'
 import initI18N from './i18n/index.js'
 import App from './views/Index.svelte'
 import type { InitOptions, Notify } from './types.js'
-import { APP_INITIAL_STATE } from './constants.js'
+import { APP_INITIAL_STATE, STORAGE_KEYS } from './constants.js'
 import { configuration, updateConfiguration } from './configuration.js'
 import updateBalances from './update-balances.js'
-import { chainIdToHex } from './utils.js'
+import { chainIdToHex, getLocalStore } from './utils.js'
 import { preflightNotifications } from './preflight-notifications.js'
 
 import {
@@ -225,6 +225,18 @@ function init(options: InitOptions): OnboardAPI {
   }
 
   theme && updateTheme(theme)
+
+  // handle auto connection of last wallet
+  if (connect && connect.autoConnectLastWallet) {
+    const lastConnectedWallet = getLocalStore(
+      STORAGE_KEYS.LAST_CONNECTED_WALLET
+    )
+
+    lastConnectedWallet &&
+      API.connectWallet({
+        autoSelect: { label: lastConnectedWallet, disableModals: true }
+      })
+  }
 
   return API
 }
