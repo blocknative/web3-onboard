@@ -64,7 +64,7 @@ export interface InitOptions {
    */
   transactionPreview?: TransactionPreviewAPI
   /**
-   * Custom or predefined theme for Web3Onboard 
+   * Custom or predefined theme for Web3Onboard
    * BuiltInThemes: ['default', 'dark', 'light', 'system']
    * or customize with a ThemingMap object.
    */
@@ -181,6 +181,11 @@ export type ConnectModalOptions = {
    * Defaults to false
    */
   disableClose?: boolean
+  /**If set to true, the last connected wallet will store in local storage.
+   * Then on init, onboard will try to reconnect to that wallet with
+   * no modals displayed
+   */
+  autoConnectLastWallet?: boolean
 }
 
 export type CommonPositions =

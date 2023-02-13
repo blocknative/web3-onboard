@@ -1,4 +1,3 @@
-
 <script>
   import previewGif from '$lib/assets/transaction-preview.gif'
   import previewImg from '$lib/assets/transaction-preview.png'
@@ -73,24 +72,146 @@ const onboard = Onboard({
 // The transaction will automatically be picked up and simulated with a UI displaying in the upper right corner
 ```
 
+### Standalone Usage
+
+
+To use the Transaction Preview package without web3-onboard all a developer needs to do is: 
+- Execute the entry function from the `@web3-onboard/transaction-preview` package and optional params
+- Run the returned `init` function with their [Blocknative API key](https://onboard.blocknative.com/docs/overview/introduction#optional-use-an-api-key-to-fetch-real-time-transaction-data-balances-gas), an initialized instance of their [Blocknative SDK](https://www.npmjs.com/package/bnc-sdk) and a containerElement string with the html ID of the target element to append the visualization to
+- Finally pass a transaction meant for a wallet provider (created using libraries like Ethers or Web3)
+
+With the above steps a UI will be rendered with the balance changes and gas used.
+```typescript
+import transactionPreviewModule from '@web3-onboard/transaction-preview'
+
+const {init, previewTransaction} = transactionPreviewModule({
+  // Optional: Require balance change approval prior to sending transaction to wallet
+  // Defaults to true
+  // requireTransactionApproval?: false
+
+  //  i18n?: i18nOptions - Internationalization options
+})
+await init({
+/**
+ * Blocknative API key (https://explorer.blocknative.com/account)
+ */
+apiKey: string
+/**
+ * Your Blocknative SDK instance
+ * */
+sdk: SDK
+/**
+ * Optional dom query string to mount UI to
+ * */
+containerElement: string})
+
+// Transaction code here using Ether.js or Web3.js or construct your own transactions
+const simulate = async provider => {
+  const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
+
+  const signer = ethersProvider.getSigner()
+  const addressFrom = '0xcxxxxxx11111999991111'
+
+  // Uniswap V2
+  const CONTRACT_ADDRESS = '0x7a250d5630b4cf539739df2c5dacb4c659f2488d'
+  const erc20_interface = [
+    'function approve(address _spender, uint256 _value) public returns (bool success)',
+    'function transferFrom(address sender, address recipient, uint256 amount) external returns (bool)',
+    'function balanceOf(address owner) view returns (uint256)'
+  ]
+
+  const uniswapV2router_interface = [
+    'function swapExactTokensForETH(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline) external returns (uint[] memory amounts)'
+  ]
+
+  const weth = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+  const oneInch = '0x111111111117dc0aa78b770fa6a738034120c302'
+  let swapTxData
+  let approveTxData
+  const swapContract = new ethers.Contract(
+    CONTRACT_ADDRESS,
+    uniswapV2router_interface
+  )
+  const erc20_contract = new ethers.Contract(oneInch, erc20_interface)
+  const oneEther = ethers.BigNumber.from('9000000000000000000')
+  approveTxData = await erc20_contract.populateTransaction.approve(
+    CONTRACT_ADDRESS,
+    oneEther
+  )
+
+  const amountOutMin = 0
+  const amountOutMinHex = ethers.BigNumber.from(amountOutMin).toHexString()
+
+  const path = [oneInch, weth]
+  const deadline = Math.floor(Date.now() / 1000) + 60 * 1 // 1 minutes from the current Unix time
+
+  const inputAmountHex = oneEther.toHexString()
+
+  swapTxData = await swapContract.populateTransaction.swapExactTokensForETH(
+    inputAmountHex,
+    amountOutMinHex,
+    path,
+    addressFrom,
+    deadline
+  )
+  const uniswapV2Router = '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D'
+
+  const popApproveTransaction = await signer.populateTransaction(approveTxData)
+  const popTransaction = await signer.populateTransaction(swapTxData)
+  const transactions = [
+    { ...popApprovedTransaction, value: 0 },
+    {
+      ...popTransaction,
+      from: addressFrom,
+      to: uniswapV2Router,
+      value: 0
+    }
+  ]
+  await previewTransaction(transactions)
+}
+
+  return await previewTransaction(transactions)
+}
+
+const simData = simulate(ethereumProvider)
+console.log(simData)
+```
+
 ### Options & Types
 
 ```typescript
 export type TransactionPreviewModule = (options: TransactionPreviewOptions) => TransactionPreviewAPI
 
+export type FullPreviewOptions = TransactionPreviewOptions &
+  TransactionPreviewInitOptions
+
 export type TransactionPreviewAPI = {
   /**
-   * Pass this method a standard EIP1193 provider
+   * This Method accepts a standard EIP1193 provider
    * (such as an injected wallet from window.ethereum)
    * and it will be patched to allow for transaction previewing
    */
   patchProvider: (provider: PatchedEIP1193Provider) => PatchedEIP1193Provider
+
   /**
-   * Pass this method a standard EIP1193 provider
-   * (such as an injected wallet from window.ethereum)
-   * and it will be patched to allow for transaction previewing
+   * This Method accepts:
+   * apiKey: string - Blocknative API key (https://explorer.blocknative.com/)
+   * sdk: instance of an initialized bnc-sdk (www.npmjs.com/package/bnc-sdk)
+   * containerElement: string of an html id selector (e.g. "#my-html-el")
    */
   init: (initializationOptions: TransactionPreviewInitOptions) => void
+
+  /**
+   * This method accepts a transaction meant for a wallet provider
+   * (created using libraries like Ethers or Web3),
+   * simulates the transaction and generates a corresponding UI and
+   * return a response from the Blocknative Transaction Preview API.
+   * Note: the package will need to initialized with the `init`
+   * function prior to usage
+   */
+  previewTransaction: (
+    transaction: TransactionForSim[]
+  ) => Promise<MultiSimOutput>
 }
 
 export type PatchedEIP1193Provider = EIP1193Provider & { simPatched: boolean }
@@ -108,7 +229,7 @@ export type TransactionPreviewInitOptions = {
    */
   apiKey: string
   /**
-   * Your Blocknative SDK instance
+   * Your Blocknative SDK instance (https://www.npmjs.com/package/bnc-sdk)
    * */
   sdk: SDK
   /**
@@ -178,6 +299,7 @@ export type MultiSimOutput = {
 export interface ContractCall {
   contractType?: string
   contractAddress?: string
+  contractAlias?: string
   methodName: string
   params: Record<string, unknown>
   contractName?: string
@@ -194,6 +316,8 @@ export interface InternalTransaction {
   gasUsed: number
   value: string
   contractCall: ContractCall
+  error?: string
+  errorReason?: string
 }
 
 export interface NetBalanceChange {
@@ -261,4 +385,5 @@ export interface SimDetails {
 ```
 
 ## Build Environments
+
 For build env configurations and setups please see the Build Env section [here](/docs/modules/core#build-environments)

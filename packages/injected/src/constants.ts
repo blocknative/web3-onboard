@@ -3,6 +3,7 @@
 // Example: provider.isCoinbaseWallet -> coinbasewallet
 export const WALLET_NAMES: { [key: string]: string } = {
   alphawallet: 'AlphaWallet',
+  apexwallet: 'Apex Wallet',
   atoken: 'AToken',
   binance: 'Binance Chain Wallet',
   bitpie: 'Bitpie',

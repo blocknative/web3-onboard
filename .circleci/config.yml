@@ -18,12 +18,12 @@ aliases:
   - &deploy_production_filters
     filters:
       branches:
-        only: v2-web3-onboard
+        only: main
 
   - &deploy_staging_filters
     filters:
       branches:
-        only: v2-web3-onboard-develop
+        only: develop
 
   - &test_package_version_for_alpha_tag_break_false
     run:
@@ -357,6 +357,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/phantom
     steps:
       - node-build-steps
+  build-xdefi:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/xdefi
+    steps:
+      - node-build-steps
 
   # Build staging/Alpha releases
   build-staging-core:
@@ -549,6 +555,12 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/phantom
+    steps:
+      - node-staging-build-steps
+  build-staging-xdefi:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/xdefi
     steps:
       - node-staging-build-steps
 
@@ -746,4 +758,10 @@ workflows:
       - build-phantom:
           <<: *deploy_production_filters
       - build-staging-phantom:
+          <<: *deploy_staging_filters
+  xdefi:
+    jobs:
+      - build-xdefi:
+          <<: *deploy_production_filters
+      - build-staging-xdefi:
           <<: *deploy_staging_filters

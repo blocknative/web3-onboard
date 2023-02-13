@@ -1,5 +1,5 @@
 <a href="https://onboard.blocknative.com/">
-  <img alt="Web3-Onboard UI Components" src="https://github.com/blocknative/web3-onboard/blob/v2-web3-onboard-develop/assets/core.svg?raw=true" />
+  <img alt="Web3-Onboard UI Components" src="https://github.com/blocknative/web3-onboard/blob/develop/assets/core.svg?raw=true" />
 </a>
 
 # @web3-onboard/core
@@ -11,13 +11,13 @@ This is the core package that contains all of the UI and logic to be able to sea
 Checkout our full library of quick start examples for connecting and interacting with EVM based wallets
 
 - **[React](https://github.com/blocknative/react-demo)**
-- **[Nextjs 13](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-nextjs-13)**
-- **[Nextjs](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-nextjs)**
-- **[Svelte](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/packages/demo)**
-- **[SvelteKit](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-sveltekit)**
-- **[Vite/React](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-vite-react)**
-- **[Vue](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-vuejs)**
-- **[Vue2](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-vuejs-v2)**
+- **[Nextjs 13](https://github.com/blocknative/web3-onboard/tree/main/examples/with-nextjs-13)**
+- **[Nextjs](https://github.com/blocknative/web3-onboard/tree/main/examples/with-nextjs)**
+- **[Svelte](https://github.com/blocknative/web3-onboard/tree/main/packages/demo)**
+- **[SvelteKit](https://github.com/blocknative/web3-onboard/tree/main/examples/with-sveltekit)**
+- **[Vite/React](https://github.com/blocknative/web3-onboard/tree/main/examples/with-vite-react)**
+- **[Vue](https://github.com/blocknative/web3-onboard/tree/main/examples/with-vuejs)**
+- **[Vue2](https://github.com/blocknative/web3-onboard/tree/main/examples/with-vuejs-v2)**
 
 ## Installation
 
@@ -129,12 +129,16 @@ An object that allows for customization of the Connect Modal and accepts the typ
 ```typescript
 type ConnectModalOptions = {
   showSidebar?: boolean
-  showSidebar?: boolean
   /**
    * Disabled close of the connect modal with background click and
    * hides the close button forcing an action from the connect modal
    */
   disableClose?: boolean // defaults to false
+  /**If set to true, the last connected wallet will store in local storage.
+   * Then on init, onboard will try to reconnect to that wallet with
+   * no modals displayed
+   */
+  autoConnectLastWallet?: boolean // defaults to false
 }
 ```
 
@@ -476,45 +480,16 @@ connectWallet()
 
 ### Auto Selecting a Wallet
 
-A common UX pattern is to remember the wallet(s) that a user has previously connected by storing them in localStorage and then automatically selecting them for the user next time they visit your app.
-You could enable this in your app by first syncing the `wallets` array to localStorage:
+A common UX pattern is to remember the last wallet that a user has previously connected by storing it in localStorage and then automatically selecting them for the user next time they visit your app.
+You can enable this in your app by using the `autoConnectLastWallet` parameter when initializing and Onboard will take care of it:
 
 ```javascript
-const walletsSub = onboard.state.select('wallets')
-const { unsubscribe } = walletsSub.subscribe(wallets => {
-  const connectedWallets = wallets.map(({ label }) => label)
-  window.localStorage.setItem(
-    'connectedWallets',
-    JSON.stringify(connectedWallets)
-  )
+const onboard = Onboard({
+  // ... other options
+  connect: {
+    autoConnectLastWallet: true
+  }
 })
-
-// Don't forget to unsubscribe when your app or component un mounts to prevent memory leaks
-// unsubscribe()
-```
-
-Now that you have the most recent wallets connected saved in local storage, you can auto select those wallet(s) when your app loads:
-
-```javascript
-const previouslyConnectedWallets = JSON.parse(
-  window.localStorage.getItem('connectedWallets')
-)
-
-if (previouslyConnectedWallets) {
-  // Connect the most recently connected wallet (first in the array)
-  await onboard.connectWallet({ autoSelect: previouslyConnectedWallets[0] })
-
-  // You can also auto connect "silently" and disable all onboard modals to avoid them flashing on page load
-  await onboard.connectWallet({
-    autoSelect: { label: previouslyConnectedWallets[0], disableModals: true }
-  })
-
-  // OR - loop through and initiate connection for all previously connected wallets
-  // note: This UX might not be great as the user may need to login to each wallet one after the other
-  // for (walletLabel in previouslyConnectedWallets) {
-  //   await onboard.connectWallet({ autoSelect: walletLabel })
-  // }
-}
 ```
 
 ## Disconnecting a Wallet

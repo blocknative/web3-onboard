@@ -53,13 +53,13 @@ npm install @web3-onboard/coinbase @web3-onboard/fortmatic @web3-onboard/gnosis 
 Checkout our full library of quick start examples for connecting and interacting with EVM based wallets
 
 - **[React](https://github.com/blocknative/react-demo)**
-- **[Nextjs 13](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-nextjs-13)**
-- **[Nextjs](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-nextjs)**
-- **[Svelte](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/packages/demo)**
-- **[SvelteKit](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-sveltekit)**
-- **[Vite/React](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-vite-react)**
-- **[Vue](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-vuejs)**
-- **[Vue2](https://github.com/blocknative/web3-onboard/tree/v2-web3-onboard/examples/with-vuejs-v2)**
+- **[Nextjs 13](https://github.com/blocknative/web3-onboard/tree/main/examples/with-nextjs-13)**
+- **[Nextjs](https://github.com/blocknative/web3-onboard/tree/main/examples/with-nextjs)**
+- **[Svelte](https://github.com/blocknative/web3-onboard/tree/main/packages/demo)**
+- **[SvelteKit](https://github.com/blocknative/web3-onboard/tree/main/examples/with-sveltekit)**
+- **[Vite/React](https://github.com/blocknative/web3-onboard/tree/main/examples/with-vite-react)**
+- **[Vue](https://github.com/blocknative/web3-onboard/tree/main/examples/with-vuejs)**
+- **[Vue2](https://github.com/blocknative/web3-onboard/tree/main/examples/with-vuejs-v2)**
 
 ## Initialization
 
@@ -167,6 +167,11 @@ type ConnectModalOptions = {
    * Defaults to false
    */
   disableClose?: boolean
+  /**If set to true, the last connected wallet will store in local storage.
+   * Then on init, onboard will try to reconnect to that wallet with
+   * no modals displayed
+   */
+  autoConnectLastWallet?: boolean // defaults to false
 }
 ```
 
@@ -178,7 +183,7 @@ type Locale = string // eg 'en', 'es'
 type i18nOptions = Record<Locale, i18n>
 ```
 
-To see a list of all of the text values that can be internationalized or replaced, check out the [default en file](https://github.com/blocknative/web3-onboard/blob/v2-web3-onboard-develop/packages/core/src/i18n/en.json).
+To see a list of all of the text values that can be internationalized or replaced, check out the [default en file](https://github.com/blocknative/web3-onboard/blob/develop/packages/core/src/i18n/en.json).
 Onboard is using the [ICU syntax](https://formatjs.io/docs/core-concepts/icu-syntax/) for formatting under the hood.
 
 **`theme`**
@@ -258,7 +263,7 @@ Currently notifications are positioned in the same location as the account cente
 The `transactionHandler` can react off any property of the Ethereum TransactionData returned to the callback from the event (see console.log in example init). In turn, it can return a Custom `Notification` object to define the verbiage, styling, or add functionality:
 
 - `Notification.message` - to completely customize the message shown
-- `Notification.eventCode` - handle codes in your own way - see codes here under the notify prop [default en file here](https://github.com/blocknative/web3-onboard/blob/v2-web3-onboard-develop/packages/core/src/i18n/en.json)
+- `Notification.eventCode` - handle codes in your own way - see codes here under the notify prop [default en file here](https://github.com/blocknative/web3-onboard/blob/develop/packages/core/src/i18n/en.json)
 - `Notification.type` - icon type displayed (see `NotificationType` below for options)
 - `Notification.autoDismiss` - time (in ms) after which the notification will be dismissed. If set to `0` the notification will remain on screen until the user dismisses the notification, refreshes the page or navigates away from the site with the notifications
 - `Notification.link` - add link to the transaction hash. For instance, a link to the transaction on etherscan
@@ -482,40 +487,16 @@ connectWallet()
 
 ### Auto Selecting a Wallet
 
-A common UX pattern is to remember the wallet(s) that a user has previously connected by storing them in localStorage and then automatically selecting them for the user next time they visit your app.
-You could enable this in your app by first syncing the `wallets` array to localStorage:
+A common UX pattern is to remember the last wallet that a user has previously connected by storing it in localStorage and then automatically selecting them for the user next time they visit your app.
+You can enable this in your app by using the `autoConnectLastWallet` parameter when initializing and Onboard will take care of it:
 
 ```javascript
-const walletsSub = onboard.state.select('wallets')
-const { unsubscribe } = walletsSub.subscribe((wallets) => {
-  const connectedWallets = wallets.map(({ label }) => label)
-  window.localStorage.setItem('connectedWallets', JSON.stringify(connectedWallets))
+const onboard = Onboard({
+  // ... other options
+  connect: {
+    autoConnectLastWallet: true
+  }
 })
-
-// Don't forget to unsubscribe when your app or component un mounts to prevent memory leaks
-// unsubscribe()
-```
-
-Now that you have the most recent wallets connected saved in local storage, you can auto select those wallet(s) when your app loads:
-
-```javascript
-const previouslyConnectedWallets = JSON.parse(window.localStorage.getItem('connectedWallets'))
-
-if (previouslyConnectedWallets) {
-  // Connect the most recently connected wallet (first in the array)
-  await onboard.connectWallet({ autoSelect: previouslyConnectedWallets[0] })
-
-  // You can also auto connect "silently" and disable all onboard modals to avoid them flashing on page load
-  await onboard.connectWallet({
-    autoSelect: { label: previouslyConnectedWallets[0], disableModals: true }
-  })
-
-  // OR - loop through and initiate connection for all previously connected wallets
-  // note: This UX might not be great as the user may need to login to each wallet one after the other
-  // for (walletLabel in previouslyConnectedWallets) {
-  //   await onboard.connectWallet({ autoSelect: walletLabel })
-  // }
-}
 ```
 
 ## Disconnecting a Wallet
@@ -1318,3 +1299,11 @@ build: {
   standalone: true,
 }
 ```
+
+### Next.js
+
+:::admonition type=note
+
+If you are seeing an error during builds when dynamically importing Web3Onboard in a NextJS v13 project, try upgrading to to the Canary beta release of NextJS where this issue is fixed.
+
+  :::

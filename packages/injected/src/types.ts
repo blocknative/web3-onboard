@@ -13,6 +13,7 @@ import {
  */
 export enum ProviderIdentityFlag {
   AlphaWallet = 'isAlphaWallet',
+  ApexWallet = 'isApexWallet',
   AToken = 'isAToken',
   Binance = 'bbcSignTx',
   Bitpie = 'isBitpie',
@@ -62,6 +63,7 @@ export enum ProviderIdentityFlag {
 
 export enum ProviderLabel {
   AlphaWallet = 'AlphaWallet',
+  ApexWallet = 'Apex Wallet',
   AToken = 'AToken',
   Binance = 'Binance Smart Wallet',
   Bitpie = 'Bitpie',

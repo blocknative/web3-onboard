@@ -311,6 +311,7 @@ const injected = injectedModule({
 - Frontier - _Desktop & Mobile_
 - Rainbow - _Desktop & Mobile_
 - DeFiWallet - _Desktop & Mobile_
+- ApexWallet - _Desktop_
 
 ## Build Environments
 
