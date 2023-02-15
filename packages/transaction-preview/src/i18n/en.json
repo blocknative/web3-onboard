@@ -13,7 +13,6 @@
   },
   "maximized": {
     "balanceChangeHeading": "Simulated balance changes for",
-    "gasHeading": "Gas Required for Transaction",
     "tokenColumnHeader": "Token",
     "balanceColumnHeader": "Balance",
     "gasUsed": "Gas Used",
