@@ -7,10 +7,7 @@
   import Button from './components/Button.svelte'
   import closeIcon from '../icons/close-circle.js'
   import SimulationHeader from './components/SimulationHeader.svelte'
-  import type {
-    MultiSimOutput,
-    NetBalanceChange
-  } from 'bnc-sdk'
+  import type { MultiSimOutput, NetBalanceChange } from 'bnc-sdk'
 
   export let requireTransactionApproval: boolean
   export let transactionApproved: (approved: boolean) => void
@@ -298,7 +295,12 @@
             <td class="token-text">ETH</td>
             <td class="negative"
               >-{totalGasInEth}
-              <div class="gas-used-value">({totalGasUsed} Gas Used)</div></td
+              <div class="gas-used-value">
+                ({totalGasUsed}
+                {$_('maximized.gasUsed', {
+                  default: en.maximized.gasUsed
+                })})
+              </div></td
             >
           </tr>
         {/if}
