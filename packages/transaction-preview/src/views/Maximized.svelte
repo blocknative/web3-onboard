@@ -230,7 +230,7 @@
   .gas-used-value {
     color: var(--text-color);
     display: inline-block;
-    margin: 0 4px;
+    margin: 0 4px 0 0;
   }
 </style>
 
