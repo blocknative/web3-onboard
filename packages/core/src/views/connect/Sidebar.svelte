@@ -60,6 +60,11 @@
     max-width: 100%;
   }
 
+  .heading {
+    font-size: var(--onboard-font-size-3, var(--font-size-3));
+    margin: 0 0 var(--onboard-spacing-5, var(--spacing-5)) 0;
+  }
+
   .subheading {
     line-height: 1rem;
   }
@@ -157,11 +162,11 @@
         {/if}
       </div>
       {#if $_(`connect.${step}.sidebar.heading`, { default: '' })}
-        <h2 class="heading">
+        <div class="heading">
           {$_(`connect.${step}.sidebar.heading`, {
             default: heading
           })}
-        </h2>
+        </div>
       {/if}
     {/if}
 
