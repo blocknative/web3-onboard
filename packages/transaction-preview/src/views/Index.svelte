@@ -27,6 +27,22 @@
 </script>
 
 <style>
+  :host {
+    /* Component Variables */
+    --font-family-normal: Sofia Pro;
+    --font-size-4: 1.25rem;
+    --font-size-5: 1rem;
+    --font-size-6: 0.875rem;
+    --font-size-7: 0.75rem;
+    --font-line-height-4: 12px;
+    --success-500: #5aec99;
+    --danger-400: #ff8080;
+    --spacing-4: 1rem;
+    --border-radius-5: 8px;
+    --shadow-1: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    --tp-z-index: 10;
+  }
+
   :global(.flex) {
     display: flex;
   }
@@ -85,7 +101,7 @@
     background: var(--foreground-color, var(--background-color));
     color: var(--text-color);
     border-radius: var(--border-radius);
-    z-index: var(--tp-z-index, inherit)
+    z-index: var(--tp-z-index, inherit);
   }
 </style>
 

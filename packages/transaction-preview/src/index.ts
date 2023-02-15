@@ -269,64 +269,13 @@ const mountTransactionPreview = (simResponse: MultiSimOutput) => {
 
   transactionPreviewDomElement.style.all = 'initial'
 
-  target.innerHTML = `
-    <style>
-      :host {
-        /* FONTS */
-        --font-family-normal: Sofia Pro;
-
-        --font-size-4: 1.25rem;
-        --font-size-5: 1rem;
-        --font-size-6: .875rem;
-        --font-size-7: .75rem;
-
-        --font-line-height-4: 12px;
-
-        --success-500: #5aec99;
-        --danger-400: #ff8080;
-
-        /* SPACING */
-        --spacing-4: 1rem;
-
-        /* BORDER RADIUS */
-        --border-radius-5: 8px;
-
-        /* SHADOWS */
-        --shadow-1: 0px 4px 12px rgba(0, 0, 0, 0.1);
-
-        /* MODAL POSITIONING */
-        --tp-z-index: 10;
-
-      }
-    </style>
-  `
-
   const getW3OEl = document.querySelector('onboard-v2')
 
   const containerElementQuery = options.containerElement || 'body'
 
   let containerEl: Element | null
-  // If Onboard present copy stylesheets over to TransactionPreview shadow DOM
-  if (
-    getW3OEl &&
-    getW3OEl.shadowRoot
-  ) {
-    const w3OStyleSheets = getW3OEl.shadowRoot.styleSheets
-    const transactionPreviewStyleSheet = new CSSStyleSheet()
 
-    Object.values(w3OStyleSheets).forEach(sheet => {
-      const styleRules = Object.values(sheet.cssRules)
-      styleRules.forEach(rule =>
-        transactionPreviewStyleSheet.insertRule(rule.cssText)
-      )
-    })
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //@ts-ignore
-    target.adoptedStyleSheets = [transactionPreviewStyleSheet]
-  }
-
-  // #transaction-preview-container is the container ID used by Onboard
+  // #w3o-transaction-preview-container is the container ID used by Onboard
   if (containerElementQuery !== '#w3o-transaction-preview-container') {
     containerEl = document.querySelector(containerElementQuery)
   } else {
