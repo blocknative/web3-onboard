@@ -54,6 +54,7 @@
   },
   "type": "module",
   "dependencies": {
+    "bnc-sdk": "^4.6.6",
     "@web3-onboard/coinbase": "^2.1.4",
     "@web3-onboard/core": "^2.14.0",
     "@web3-onboard/dcent": "^2.2.3",

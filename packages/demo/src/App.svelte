@@ -42,7 +42,7 @@
     new VConsole()
   }
 
-  const apiKey = '0fcf74ed-b95b-4b8d-a8d8-4d655ae479d9'
+  const apiKey = '7ed5f4aa-fb90-4124-8ef9-f69e3e8e666d'
   const infura_key = '80633e48116943128cbab25e402764ab'
 
   let defaultTransactionObject = JSON.stringify(
@@ -341,7 +341,7 @@
 
     const popTransaction = await signer.populateTransaction({
       to: toAddress,
-      value: 100000000000000
+      value: 10000000000000
     })
 
     const txn = await signer.sendTransaction(popTransaction)

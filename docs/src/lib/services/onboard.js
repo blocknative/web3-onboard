@@ -181,7 +181,8 @@ const intiOnboard = async (theme) => {
       ]
     },
     accountCenter: { desktop: { enabled: true }, mobile: { enabled: true } },
-    theme: theme || 'system'
+    theme: theme || 'system',
+    apiKey: 'da1b962d-314d-4903-bfe1-426821d14a35'
   })
 }
 

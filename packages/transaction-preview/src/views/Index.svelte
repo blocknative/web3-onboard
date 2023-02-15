@@ -27,6 +27,50 @@
 </script>
 
 <style>
+  :global(.flex) {
+    display: flex;
+  }
+
+  :global(.flex-column) {
+    flex-direction: column;
+  }
+
+  :global(.items-center) {
+    align-items: center;
+  }
+
+  :global(.justify-center) {
+    justify-content: center;
+  }
+
+  :global(.relative) {
+    position: relative;
+  }
+
+  :global(.pointer) {
+    cursor: pointer;
+  }
+
+  :global(.shadow-1) {
+    box-shadow: var(--onboard-shadow-1, var(--shadow-1));
+  }
+
+  :global(*) {
+    box-sizing: border-box;
+  }
+
+  :global(button) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: calc(var(--onboard-spacing-4, var(--spacing-4)) - 1px);
+    border-radius: 24px;
+    cursor: pointer;
+    font: inherit;
+    border: none;
+    transition: background-color 150ms ease-in-out, color 150ms ease-in-out;
+  }
+
   .tp-main {
     --text-color: var(--w3o-text-color, white);
     --action-color: var(--w3o-action-color, var(--primary-400));
@@ -41,6 +85,7 @@
     background: var(--foreground-color, var(--background-color));
     color: var(--text-color);
     border-radius: var(--border-radius);
+    z-index: var(--tp-z-index, inherit)
   }
 </style>
 

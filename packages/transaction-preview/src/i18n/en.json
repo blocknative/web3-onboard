@@ -13,9 +13,12 @@
   },
   "maximized": {
     "balanceChangeHeading": "Simulated balance changes for",
-    "gasHeading": "Gas Used",
+    "gasHeading": "Gas Required for Transaction",
     "tokenColumnHeader": "Token",
     "balanceColumnHeader": "Balance",
+    "typeColumnHeader": "Type",
+    "gasEthColumnHeader": "Tx Fee (Eth)",
+    "gasColumnHeader": "Gas Used",
     "hide": "Hide details",
     "cancel": "Cancel",
     "confirm": "Confirm"

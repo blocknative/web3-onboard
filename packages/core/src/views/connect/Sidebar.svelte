@@ -15,12 +15,18 @@
   const defaultContent = en.connect[step].sidebar
   const { subheading, paragraph } = defaultContent
 
+  const { heading } =
+    defaultContent as i18n['connect']['selectingWallet']['sidebar']
+
   let windowWidth: number
 </script>
 
 <style>
   .sidebar {
-    --background-color: var(--onboard-connect-sidebar-background, var(--w3o-foreground-color, none));
+    --background-color: var(
+      --onboard-connect-sidebar-background,
+      var(--w3o-foreground-color, none)
+    );
     --text-color: var(--onboard-connect-sidebar-color, inherit);
     --border-color: var(--onboard-connect-sidebar-border-color, inherit);
 
@@ -42,7 +48,7 @@
     border: 1px solid transparent;
     border-radius: 12px;
     border-color: var(--border-color);
-    background-color: var(--background-color);
+    background: var(--background-color);
     color: var(--text-color);
   }
 
@@ -121,7 +127,7 @@
       border-right: 1px solid;
 
       border-color: var(--border-color);
-      background-color: var(--background-color);
+      background: var(--background-color);
     }
     .inner-container {
       border: none;
@@ -150,6 +156,13 @@
           {@html defaultBnIcon}
         {/if}
       </div>
+      {#if $_(`connect.${step}.sidebar.heading`, { default: '' })}
+        <h2 class="heading">
+          {$_(`connect.${step}.sidebar.heading`, {
+            default: heading
+          })}
+        </h2>
+      {/if}
     {/if}
 
     <div class="subheading">
@@ -196,7 +209,6 @@
         class:on={step === 'connectedWallet'}
       />
     </div>
-
   </div>
   <div>
     {@html poweredByBlocknative}
