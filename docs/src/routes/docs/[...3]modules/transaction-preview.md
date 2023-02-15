@@ -10,13 +10,12 @@ A modular UI for previewing a single or set of unsigned Ethereum transactions.
 
 <img src="{previewImg}" alt="Transaction Preview Flow image"/>
 
-Full Simulation Platform API documentation can be found [here](https://docs.blocknative.com/transaction-preview-api)
-
 ### Try Transaction Preview
 
-Preview Vitalik swapping 100 UNI tokens for ETH
+Preview Vitalik swapping 100 UNI tokens for ETH using Transaction Preview
 <TransactionPreviewButton/>
 
+Full Simulation Platform API documentation can be found [here](https://docs.blocknative.com/transaction-preview-api)
 ### Install
 
 <Tabs values={['yarn', 'npm']}>
