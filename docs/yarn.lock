@@ -3138,6 +3138,19 @@
     "@toruslabs/torus-embed" "1.38.2"
     "@web3-onboard/common" "^2.2.3"
 
+"@web3-onboard/transaction-preview@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/transaction-preview/-/transaction-preview-2.0.2.tgz#5c96587b70def019eb699b4369230f365e06a96e"
+  integrity sha512-0Oe1Wioo1rpfKI6BACQUKWGY64vUtiLZ1fb54Umd91shm4PNTBhRKD03DSXhGbq5JsHROLE3VoFfRvTKClx+cw==
+  dependencies:
+    "@web3-onboard/common" "^2.2.3"
+    bnc-sdk "^4.6.6"
+    bowser "^2.11.0"
+    joi "^17.6.1"
+    rxjs "^7.5.2"
+    svelte "^3.49.0"
+    svelte-i18n "^3.3.13"
+
 "@web3-onboard/trezor@^2.3.3":
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/@web3-onboard/trezor/-/trezor-2.3.3.tgz#0a9f2296e4e3365637a798eacfb3d2c0696e0b40"
@@ -3922,6 +3935,16 @@ bnc-sdk@^4.6.5:
   version "4.6.5"
   resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-4.6.5.tgz#9f91eb2f213c0c4abf8b5f134f673a3f9a981ea2"
   integrity sha512-W++M1kY5SensQUpig+EXqKEOfRgKrrobd8l3r9oOa06xJmxmMH4DPUm28IcESVX6NWj4I+bhgghOVDh/SFdE8Q==
+  dependencies:
+    crypto-es "^1.2.2"
+    nanoid "^3.3.1"
+    rxjs "^6.6.3"
+    sturdy-websocket "^0.1.12"
+
+bnc-sdk@^4.6.6:
+  version "4.6.6"
+  resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-4.6.6.tgz#ef5501a0c68014efae24d00d2e3fb706318fa00d"
+  integrity sha512-cpavy/WBQrkw5PZpnuUAvxzj/RjmP1vSldOEG+nonf7n/4sykScDO6KrJN2oVhEMaxHOqOVf2rOugSL5t515eA==
   dependencies:
     crypto-es "^1.2.2"
     nanoid "^3.3.1"

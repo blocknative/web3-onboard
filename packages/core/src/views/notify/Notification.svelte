@@ -75,7 +75,6 @@
     position: relative;
     overflow: hidden;
     border: 1px solid transparent;
-    border-color: var(--border-color);
     border-radius: var(
       --notify-onboard-border-radius,
       var(--onboard-border-radius-4, var(--border-radius-4))

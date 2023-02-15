@@ -28,7 +28,7 @@ function getInjectedInterface(
 ): () => Promise<{ provider: EIP1193Provider }> {
   return async () => ({
     provider: (window.ethereum.providers &&
-      Array.isArray(window.ethereum.providers)
+    Array.isArray(window.ethereum.providers)
       ? getInterfaceFromProvidersArray(identity, checkOtherProviderFlags)
       : window.ethereum) as EIP1193Provider
   })
@@ -137,7 +137,7 @@ const binance: InjectedWalletModule = {
       wallet_switchEthereumChain: UNSUPPORTED_METHOD
     })
 
-    provider.removeListener = (event, func) => { }
+    provider.removeListener = (event, func) => {}
 
     return {
       provider
@@ -392,7 +392,7 @@ const liquality: InjectedWalletModule = {
       eth_selectAccounts: UNSUPPORTED_METHOD
     })
 
-    provider.removeListener = (event, func) => { }
+    provider.removeListener = (event, func) => {}
 
     return { provider }
   },
@@ -438,8 +438,8 @@ const ownbit: InjectedWalletModule = {
       wallet_switchEthereumChain: UNSUPPORTED_METHOD,
       eth_selectAccounts: UNSUPPORTED_METHOD
     })
-    provider.removeListener = (event, listener) => { }
-    provider.on = (event, listener) => { }
+    provider.removeListener = (event, listener) => {}
+    provider.on = (event, listener) => {}
     return { provider }
   },
   platforms: ['mobile']
@@ -570,8 +570,8 @@ const gamestop: InjectedWalletModule = {
         ),
       wallet_switchEthereumChain: UNSUPPORTED_METHOD
     })
-    provider.removeListener = (event, listener) => { }
-    provider.on = (event, listener) => { }
+    provider.removeListener = (event, listener) => {}
+    provider.on = (event, listener) => {}
     return { provider }
   },
   platforms: ['desktop']
@@ -668,7 +668,7 @@ const enkrypt: InjectedWalletModule = {
         )
     })
 
-    provider.removeListener = (event, func) => { }
+    provider.removeListener = (event, func) => {}
 
     return {
       provider

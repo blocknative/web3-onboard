@@ -13,9 +13,9 @@
   },
   "maximized": {
     "balanceChangeHeading": "Simulated balance changes for",
-    "gasHeading": "Gas Used",
     "tokenColumnHeader": "Token",
     "balanceColumnHeader": "Balance",
+    "gasUsed": "Gas Used",
     "hide": "Hide details",
     "cancel": "Cancel",
     "confirm": "Confirm"
