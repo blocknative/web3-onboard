@@ -87,7 +87,7 @@
   }
 
   .indicators {
-    margin-top: 1rem;
+    margin-top: auto;
   }
 
   .indicator {
@@ -162,6 +162,9 @@
       align-items: flex-start;
       gap: 1rem;
     }
+    .indicators {
+      margin-bottom: .25rem;
+    }
   }
 </style>
 
@@ -211,6 +214,41 @@
       class="no-link"
       >I don't have a wallet <div class="info-icon">{@html infoIcon}</div></a
     >
+    {#if windowWidth < MOBILE_WINDOW_WIDTH}
+      <div class="indicators flex items-center">
+        <div class="indicator relative" class:on={true} />
+        <div
+          class:active={step !== 'selectingWallet'}
+          class="join relative"
+          style={`${
+            step !== 'selectingWallet'
+              ? 'right: 4px; width: 52px;'
+              : 'right: 2px; width: 54px;'
+          }`}
+        />
+        <div
+          class="indicator relative"
+          style={`right: 8px;`}
+          class:on={step !== 'selectingWallet'}
+        />
+        <div
+          class:active={step === 'connectedWallet'}
+          class="join relative"
+          style={`${
+            step === 'connectedWallet'
+              ? 'right: 12px; width: 52px;'
+              : 'right: 10px; width: 54px;'
+          }`}
+        />
+        <div
+          style={`right: 16px;`}
+          class="indicator relative"
+          class:on={step === 'connectedWallet'}
+        />
+      </div>
+    {/if}
+  </div>
+  {#if windowWidth >= MOBILE_WINDOW_WIDTH}
     <div class="indicators flex items-center">
       <div class="indicator relative" class:on={true} />
       <div
@@ -218,13 +256,13 @@
         class="join relative"
         style={`${
           step !== 'selectingWallet'
-            ? 'right: 4px; width: 52px;'
-            : 'right: 2px; width: 54px;'
+            ? 'right: 2px; width: 78px;'
+            : 'right: 2px; width: 82px;'
         }`}
       />
       <div
         class="indicator relative"
-        style={`right: 8px;`}
+        style={`right: 4px;`}
         class:on={step !== 'selectingWallet'}
       />
       <div
@@ -232,17 +270,17 @@
         class="join relative"
         style={`${
           step === 'connectedWallet'
-            ? 'right: 12px; width: 52px;'
-            : 'right: 10px; width: 54px;'
+            ? 'right: 6px; width: 74px;'
+            : 'right: 6px; width: 81px;'
         }`}
       />
       <div
-        style={`right: 16px;`}
+        style={`right: 8px;`}
         class="indicator relative"
         class:on={step === 'connectedWallet'}
       />
     </div>
-  </div>
+  {/if}
   <div>
     {@html poweredByBlocknative}
   </div>
