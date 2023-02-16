@@ -174,6 +174,9 @@ export type i18nOptions = Record<Locale, i18n>
 export type i18n = typeof en
 
 export type ConnectModalOptions = {
+  /**
+   * Display the connect modal sidebar - only applies to desktop views
+   */
   showSidebar?: boolean
   /**
    * Disabled close of the connect modal with background click and
@@ -186,6 +189,12 @@ export type ConnectModalOptions = {
    * no modals displayed
    */
   autoConnectLastWallet?: boolean
+  /**
+   * Customize the link for the `I don't have a wallet` flow shown on the
+   * select wallet modal.
+   * Defaults to `https://ethereum.org/en/wallets/find-wallet/#main-content`
+   */
+  noWalletLink?: string
 }
 
 export type CommonPositions =
