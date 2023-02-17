@@ -3,7 +3,7 @@
     "selectingWallet": {
       "header": "Available Wallets",
       "sidebar": {
-        "heading": "Get Started",
+        "heading": "",
         "subheading": "Connect your wallet",
         "paragraph": "Connecting your wallet is like “logging in” to Web3. Select your wallet from the options to get started."
       },
