@@ -2969,15 +2969,15 @@
     ethers "5.5.4"
     joi "^17.6.1"
 
-"@web3-onboard/core@^2.14.0":
-  version "2.14.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.14.1.tgz#20d5f8196cdd4455a6e2daa69319fb697733934c"
-  integrity sha512-d5rG4wg2gOUsgiNAaAucJOzDdIM2WTxLPBN/sXR1V6eWatn6YcXyduW7Nr0n1Hl/2d8eRnlHTeSeb9YA50niVw==
+"@web3-onboard/core@^2.15.1-alpha.1":
+  version "2.15.1-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.15.1-alpha.1.tgz#a6c241ba7eb84f40547e57b8192ecd46759ec5ad"
+  integrity sha512-CrAj0WkBxO52j2JUs5YFIbvfwyrUoWXO7B3QOG6VrQ9w4HRXO5lVBsD2RYMSA5fTbAbRZ7VwPiHCdmQ/ztKYLg==
   dependencies:
     "@unstoppabledomains/resolution" "^8.0"
     "@web3-onboard/common" "^2.2.3"
     bignumber.js "^9.0.0"
-    bnc-sdk "^4.6.5"
+    bnc-sdk "^4.6.7"
     bowser "^2.11.0"
     ethers "5.5.3"
     eventemitter3 "^4.0.7"
@@ -3044,10 +3044,10 @@
     joi "^17.6.1"
     rxjs "^7.5.2"
 
-"@web3-onboard/injected-wallets@^2.6.2":
-  version "2.6.2"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.6.2.tgz#d6bebd623098c06868ad5c4efdaceb90082732e3"
-  integrity sha512-vOUWluIiYSrsC1TyFNFA0GXzcAFcfgy4mG6iXGJSjbNx9/54VilM6UtSaVhXb4diqQZyinuZj18UexdSxDAcfQ==
+"@web3-onboard/injected-wallets@^2.8.0-alpha.1":
+  version "2.8.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.8.0-alpha.1.tgz#eb3b8337c527348f1513bf14a25263a89446b95d"
+  integrity sha512-WjnoMv0kAeuJLRyhA0wqTVYwfRMmkir3igO1LxInbBADeHxbVVX+HcxO1zWpJaGkkDJOWvPSPHjlQJoNUZJFvg==
   dependencies:
     "@web3-onboard/common" "^2.2.3"
     joi "^17.6.1"
@@ -3138,13 +3138,13 @@
     "@toruslabs/torus-embed" "1.38.2"
     "@web3-onboard/common" "^2.2.3"
 
-"@web3-onboard/transaction-preview@^2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/transaction-preview/-/transaction-preview-2.0.2.tgz#5c96587b70def019eb699b4369230f365e06a96e"
-  integrity sha512-0Oe1Wioo1rpfKI6BACQUKWGY64vUtiLZ1fb54Umd91shm4PNTBhRKD03DSXhGbq5JsHROLE3VoFfRvTKClx+cw==
+"@web3-onboard/transaction-preview@^2.0.3-alpha.1":
+  version "2.0.3-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/transaction-preview/-/transaction-preview-2.0.3-alpha.1.tgz#b8945c3b785dc1e0281709c01b464fe45aea1570"
+  integrity sha512-iJZtvGcYh3ZbmTzaNRAUWKmX4VwgbgaKbmlYCdmeOvNjB7fZykzqr9CXbGwwVmfI3xA7zT17hP5M0WjGFyuDFA==
   dependencies:
     "@web3-onboard/common" "^2.2.3"
-    bnc-sdk "^4.6.6"
+    bnc-sdk "^4.6.7"
     bowser "^2.11.0"
     joi "^17.6.1"
     rxjs "^7.5.2"
@@ -3931,20 +3931,20 @@ bnb-javascript-sdk-nobroadcast@^2.16.14:
     uuid "^3.3.2"
     websocket-stream "^5.5.0"
 
-bnc-sdk@^4.6.5:
-  version "4.6.5"
-  resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-4.6.5.tgz#9f91eb2f213c0c4abf8b5f134f673a3f9a981ea2"
-  integrity sha512-W++M1kY5SensQUpig+EXqKEOfRgKrrobd8l3r9oOa06xJmxmMH4DPUm28IcESVX6NWj4I+bhgghOVDh/SFdE8Q==
+bnc-sdk@^4.6.6:
+  version "4.6.6"
+  resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-4.6.6.tgz#ef5501a0c68014efae24d00d2e3fb706318fa00d"
+  integrity sha512-cpavy/WBQrkw5PZpnuUAvxzj/RjmP1vSldOEG+nonf7n/4sykScDO6KrJN2oVhEMaxHOqOVf2rOugSL5t515eA==
   dependencies:
     crypto-es "^1.2.2"
     nanoid "^3.3.1"
     rxjs "^6.6.3"
     sturdy-websocket "^0.1.12"
 
-bnc-sdk@^4.6.6:
-  version "4.6.6"
-  resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-4.6.6.tgz#ef5501a0c68014efae24d00d2e3fb706318fa00d"
-  integrity sha512-cpavy/WBQrkw5PZpnuUAvxzj/RjmP1vSldOEG+nonf7n/4sykScDO6KrJN2oVhEMaxHOqOVf2rOugSL5t515eA==
+bnc-sdk@^4.6.7:
+  version "4.6.7"
+  resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-4.6.7.tgz#138a22e04c95c2c697fb836092358d21957e2114"
+  integrity sha512-jIQ6cmeRBgvH/YDLuYRr2+kxDGcAAi0SOvjlO5nQ5cWdbslw+ASWftd1HmxiVLNCiwEH5bSc/t8a0agZ5njTUQ==
   dependencies:
     crypto-es "^1.2.2"
     nanoid "^3.3.1"
