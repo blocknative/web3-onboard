@@ -42,7 +42,7 @@
     new VConsole()
   }
 
-  const apiKey = '0fcf74ed-b95b-4b8d-a8d8-4d655ae479d9'
+  const apiKey = '9eacfc73-dcf6-46aa-b5c7-dbff57ff96bb'
   const infura_key = '80633e48116943128cbab25e402764ab'
 
   let defaultTransactionObject = JSON.stringify(
@@ -221,7 +221,7 @@
         rpcUrl: 'https://bsc-dataseed.binance.org/'
       },
       {
-        id: 137,
+        id: '0x89',
         token: 'MATIC',
         label: 'Polygon',
         rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
@@ -314,10 +314,15 @@
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
   wallets$.subscribe(wallet => {
+    console.log(wallet)
     const unstoppableUser = wallet.find(
       provider => provider.label === 'Unstoppable'
     )
     if (unstoppableUser) console.log(unstoppableUser.instance.user)
+    const wc = wallet.find(
+      provider => provider.label === 'WalletConnect'
+    )
+    if(wc) console.log(wc)
   })
 
   const signTransactionMessage = async provider => {
@@ -341,7 +346,7 @@
 
     const popTransaction = await signer.populateTransaction({
       to: toAddress,
-      value: 100000000000000
+      value: 10000000000000
     })
 
     const txn = await signer.sendTransaction(popTransaction)

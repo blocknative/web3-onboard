@@ -139,6 +139,12 @@ type ConnectModalOptions = {
    * no modals displayed
    */
   autoConnectLastWallet?: boolean // defaults to false
+  /**
+   * Customize the link for the `I don't have a wallet` flow shown on the
+   * select wallet modal.
+   * Defaults to `https://ethereum.org/en/wallets/find-wallet/#main-content`
+   */
+  iDontHaveAWalletLink?: string
 }
 ```
 

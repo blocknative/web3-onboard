@@ -207,7 +207,7 @@
       })}
     </div>
     <a
-      href={connect.noWalletLink ||
+      href={connect.iDontHaveAWalletLink ||
         'https://ethereum.org/en/wallets/find-wallet/#main-content'}
       target="_blank"
       rel="noreferrer noopener"

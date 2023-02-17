@@ -194,7 +194,7 @@ export type ConnectModalOptions = {
    * select wallet modal.
    * Defaults to `https://ethereum.org/en/wallets/find-wallet/#main-content`
    */
-  noWalletLink?: string
+  iDontHaveAWalletLink?: string
 }
 
 export type CommonPositions =

@@ -174,7 +174,7 @@ const connectModalOptions = Joi.object({
   showSidebar: Joi.boolean(),
   disableClose: Joi.boolean(),
   autoConnectLastWallet: Joi.boolean(),
-  noWalletLink: Joi.string()
+  iDontHaveAWalletLink: Joi.string()
 })
 
 const containerElements = Joi.object({
