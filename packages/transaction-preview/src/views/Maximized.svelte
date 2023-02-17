@@ -15,7 +15,6 @@
   export let destroyApp: () => void
   export let simResponse: MultiSimOutput
   export let startTime: number
-
   let totalGasInEth = 0
   let totalGasUsed = 0
 
@@ -46,7 +45,7 @@
     return `${address.slice(0, 6)}...${address.slice(-4)}`
   }
 
-  const cleanGas = (gasComputed: number): number => {
+  const cleanGas = (gasComputed: ethers.BigNumberish): number => {
     const gweiToEther = ethers.utils.formatEther(gasComputed)
     return roundAndCleanGas(gweiToEther)
   }
@@ -54,14 +53,18 @@
   const getCumulativeGasInEth = (index: number) => {
     if (simResponse.transactions[index].type === 0) {
       totalGasInEth += cleanGas(
-        simResponse.gasUsed[index] * simResponse.transactions[index].gasPrice
+        (
+          simResponse.gasUsed[index] * simResponse.transactions[index].gasPrice
+        ).toString()
       )
     }
     if (simResponse.transactions[index].type === 2) {
       totalGasInEth += cleanGas(
-        simResponse.gasUsed[index] *
-          (simResponse.transactions[index].baseFeePerGasGwei +
-            simResponse.transactions[index].maxPriorityFeePerGasGwei)
+        (
+          simResponse.gasUsed[index] *
+          (simResponse.transactions[index].gas +
+            simResponse.transactions[index].maxFeePerGas)
+        ).toString()
       )
     }
   }
@@ -82,8 +85,11 @@
           }
         })
       }
+      console.log(1, index)
       getCumulativeGasInEth(index)
+      console.log(2)
       gasUsed(index)
+      console.log(3)
       return arr
     },
     []
