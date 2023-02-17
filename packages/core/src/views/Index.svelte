@@ -412,7 +412,7 @@
     style="top: 0; right: 0; {device.type === 'mobile'
       ? 'padding-bottom: 0;'
       : ''} "
-    id="transaction-preview-container"
+    id="w3o-transaction-preview-container"
   />
 {/if}
 

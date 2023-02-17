@@ -274,24 +274,12 @@ const mountTransactionPreview = (simResponse: MultiSimOutput) => {
   const containerElementQuery = options.containerElement || 'body'
 
   let containerEl: Element | null
-  // If Onboard present copy stylesheets over to TransactionPreview shadow DOM
-  if (getW3OEl && getW3OEl.shadowRoot) {
-    const w3OStyleSheets = getW3OEl.shadowRoot.styleSheets
-    const transactionPreviewStyleSheet = new CSSStyleSheet()
 
-    Object.values(w3OStyleSheets).forEach(sheet => {
-      const styleRules = Object.values(sheet.cssRules)
-      styleRules.forEach(rule =>
-        transactionPreviewStyleSheet.insertRule(rule.cssText)
-      )
-    })
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //@ts-ignore
-    target.adoptedStyleSheets = [transactionPreviewStyleSheet]
-    containerEl = getW3OEl.shadowRoot.querySelector(containerElementQuery)
-  } else {
+  // #w3o-transaction-preview-container is the container ID used by Onboard
+  if (containerElementQuery !== '#w3o-transaction-preview-container') {
     containerEl = document.querySelector(containerElementQuery)
+  } else {
+    containerEl = getW3OEl.shadowRoot.querySelector(containerElementQuery)
   }
 
   if (!containerEl) {

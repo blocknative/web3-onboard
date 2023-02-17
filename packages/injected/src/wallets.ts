@@ -287,6 +287,16 @@ const atoken: InjectedWalletModule = {
   platforms: ['mobile']
 }
 
+const bifrostwallet: InjectedWalletModule = {
+  label: ProviderLabel.BifrostWallet,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.BifrostWallet],
+  getIcon: async () => (await import('./icons/bifrostwallet.js')).default,
+  getInterface: getInjectedInterface(ProviderIdentityFlag.BifrostWallet),
+  platforms: ['all']
+}
+
 const bitpie: InjectedWalletModule = {
   label: ProviderLabel.Bitpie,
   injectedNamespace: InjectedNameSpace.Ethereum,
@@ -732,6 +742,7 @@ const wallets = [
   exodus,
   frontier,
   metamask,
+  bifrostwallet,
   binance,
   coinbase,
   detected,

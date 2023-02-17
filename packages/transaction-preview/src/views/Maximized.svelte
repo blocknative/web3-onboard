@@ -15,26 +15,12 @@
   export let destroyApp: () => void
   export let simResponse: MultiSimOutput
   export let startTime: number
+
+  let totalGasInEth = 0
+  let totalGasUsed = 0
+
   const device = getDevice()
-
-  const transactionOriginator = simResponse.transactions[0].from
-  const balanceChanges = simResponse.netBalanceChanges.reduce(
-    (arr: NetBalanceChange[], changes: NetBalanceChange[]) => {
-      if (changes.length) {
-        changes.forEach(change => {
-          if (
-            change.address.toLowerCase() === transactionOriginator.toLowerCase()
-          ) {
-            arr.push(change)
-          }
-        })
-      }
-      return arr
-    },
-    []
-  )
-
-  function addCommasToNumber(x: number): string {
+  const addCommasToNumber = (x: number): string => {
     const parts = x.toString().split('.')
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     return parts.join('.')
@@ -45,9 +31,9 @@
     return roundAndCleanDecimals(formattedEth)
   }
 
-  const cleanGas = (): string => {
-    const gweiToEther = ethers.utils.formatUnits(simResponse.gasUsed[0], 'gwei')
-    return roundAndCleanDecimals(gweiToEther)
+  const roundAndCleanGas = (formattedValue: string): number => {
+    const roundedGwei = parseFloat(formattedValue).toFixed(7)
+    return Number(roundedGwei)
   }
 
   const roundAndCleanDecimals = (formattedValue: string): string => {
@@ -56,9 +42,52 @@
     return addCommasToNumber(removeEmptyDecimalPlaces)
   }
 
-  const shortenAddress = (address: string) => {
+  const shortenAddress = (address: string): string => {
     return `${address.slice(0, 6)}...${address.slice(-4)}`
   }
+
+  const cleanGas = (gasComputed: number): number => {
+    const gweiToEther = ethers.utils.formatEther(gasComputed)
+    return roundAndCleanGas(gweiToEther)
+  }
+
+  const getCumulativeGasInEth = (index: number) => {
+    if (simResponse.transactions[index].type === 0) {
+      totalGasInEth += cleanGas(
+        simResponse.gasUsed[index] * simResponse.transactions[index].gasPrice
+      )
+    }
+    if (simResponse.transactions[index].type === 2) {
+      totalGasInEth += cleanGas(
+        simResponse.gasUsed[index] *
+          (simResponse.transactions[index].baseFeePerGasGwei +
+            simResponse.transactions[index].maxPriorityFeePerGasGwei)
+      )
+    }
+  }
+
+  const gasUsed = (index: number) => {
+    totalGasUsed += simResponse.gasUsed[index]
+  }
+
+  const transactionOriginator = simResponse.transactions[0].from
+  const balanceChanges = simResponse.netBalanceChanges.reduce(
+    (arr: NetBalanceChange[], changes: NetBalanceChange[], index: number) => {
+      if (changes.length) {
+        changes.forEach(change => {
+          if (
+            change.address.toLowerCase() === transactionOriginator.toLowerCase()
+          ) {
+            arr.push(change)
+          }
+        })
+      }
+      getCumulativeGasInEth(index)
+      gasUsed(index)
+      return arr
+    },
+    []
+  )
 </script>
 
 <style>
@@ -197,6 +226,12 @@
   .positive {
     color: var(--onboard-success-500, var(--success-500));
   }
+
+  .gas-used-value {
+    color: var(--text-color);
+    display: inline-block;
+    margin: 0 4px 0 0;
+  }
 </style>
 
 <div class="maximized radius padding-5">
@@ -256,38 +291,17 @@
               </tr>
             {/each}
           {/each}
-        {/if}
-      </tbody>
-    </table>
-    <div class="address-info">
-      {$_('maximized.gasHeading', {
-        default: en.maximized.gasHeading
-      })}
-    </div>
-    <table class="balance-change-table table-radius">
-      <colgroup>
-        <col span="1" style="width: 20%;" />
-        <col span="1" style="width: 80%;" />
-      </colgroup>
-      <thead>
-        <tr>
-          <th>
-            {$_('maximized.tokenColumnHeader', {
-              default: en.maximized.tokenColumnHeader
-            })}</th
-          >
-          <th>
-            {$_('maximized.balanceColumnHeader', {
-              default: en.maximized.balanceColumnHeader
-            })}</th
-          >
-        </tr>
-      </thead>
-      <tbody>
-        {#if balanceChanges.length}
           <tr>
             <td class="token-text">ETH</td>
-            <td class="negative">-{cleanGas()}</td>
+            <td class="negative"
+              >-{totalGasInEth}
+              <div class="gas-used-value">
+                ({totalGasUsed}
+                {$_('maximized.gasUsed', {
+                  default: en.maximized.gasUsed
+                })})
+              </div></td
+            >
           </tr>
         {/if}
       </tbody>

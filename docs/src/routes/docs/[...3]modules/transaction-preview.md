@@ -1,6 +1,7 @@
 <script>
   import previewGif from '$lib/assets/transaction-preview.gif'
   import previewImg from '$lib/assets/transaction-preview.png'
+  import { TransactionPreviewButton } from '$lib/components'
 </script>
 
 # Transaction Preview
@@ -9,8 +10,12 @@ A modular UI for previewing a single or set of unsigned Ethereum transactions.
 
 <img src="{previewImg}" alt="Transaction Preview Flow image"/>
 
-Full Simulation Platform API documentation can be found [here](https://docs.blocknative.com/transaction-preview-api)
+### Try Transaction Preview
 
+Preview Vitalik swapping 100 UNI tokens for ETH using Transaction Preview
+<TransactionPreviewButton/>
+
+Full Simulation Platform API documentation can be found [here](https://docs.blocknative.com/transaction-preview-api)
 ### Install
 
 <Tabs values={['yarn', 'npm']}>
@@ -74,13 +79,14 @@ const onboard = Onboard({
 
 ### Standalone Usage
 
+To use the Transaction Preview package without web3-onboard all a developer needs to do is:
 
-To use the Transaction Preview package without web3-onboard all a developer needs to do is: 
 - Execute the entry function from the `@web3-onboard/transaction-preview` package and optional params
 - Run the returned `init` function with their [Blocknative API key](https://onboard.blocknative.com/docs/overview/introduction#optional-use-an-api-key-to-fetch-real-time-transaction-data-balances-gas), an initialized instance of their [Blocknative SDK](https://www.npmjs.com/package/bnc-sdk) and a containerElement string with the html ID of the target element to append the visualization to
 - Finally pass a transaction meant for a wallet provider (created using libraries like Ethers or Web3)
 
 With the above steps a UI will be rendered with the balance changes and gas used.
+
 ```typescript
 import transactionPreviewModule from '@web3-onboard/transaction-preview'
 
@@ -182,8 +188,7 @@ console.log(simData)
 ```typescript
 export type TransactionPreviewModule = (options: TransactionPreviewOptions) => TransactionPreviewAPI
 
-export type FullPreviewOptions = TransactionPreviewOptions &
-  TransactionPreviewInitOptions
+export type FullPreviewOptions = TransactionPreviewOptions & TransactionPreviewInitOptions
 
 export type TransactionPreviewAPI = {
   /**
@@ -209,9 +214,7 @@ export type TransactionPreviewAPI = {
    * Note: the package will need to initialized with the `init`
    * function prior to usage
    */
-  previewTransaction: (
-    transaction: TransactionForSim[]
-  ) => Promise<MultiSimOutput>
+  previewTransaction: (transaction: TransactionForSim[]) => Promise<MultiSimOutput>
 }
 
 export type PatchedEIP1193Provider = EIP1193Provider & { simPatched: boolean }

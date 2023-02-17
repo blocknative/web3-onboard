@@ -80,6 +80,7 @@ console.log(connectedWallets)
 - Rainbow - _Desktop & Mobile_
 - DeFiWallet - _Desktop & Mobile_
 - ApexWallet - _Desktop_
+- BifrostWallet - _Desktop & Mobile_
 
 ## Filtering Wallets
 
