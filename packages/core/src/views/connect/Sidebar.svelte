@@ -254,10 +254,10 @@
       <div
         class:active={step !== 'selectingWallet'}
         class="join relative"
-        style={`${
+        style={`'right: 2px; ${
           step !== 'selectingWallet'
-            ? 'right: 2px; width: 78px;'
-            : 'right: 2px; width: 82px;'
+            ? 'width: 78px;'
+            : 'width: 82px;'
         }`}
       />
       <div
@@ -268,10 +268,10 @@
       <div
         class:active={step === 'connectedWallet'}
         class="join relative"
-        style={`${
+        style={`right: 6px; ${
           step === 'connectedWallet'
-            ? 'right: 6px; width: 74px;'
-            : 'right: 6px; width: 81px;'
+            ? 'width: 74px;'
+            : 'width: 81px;'
         }`}
       />
       <div
