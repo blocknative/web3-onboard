@@ -82,8 +82,8 @@
           }
         })
       }
-      getCumulativeGasInEth(index)
-      gasUsed(index)
+      // getCumulativeGasInEth(index)
+      // gasUsed(index)
       return arr
     },
     []
@@ -291,7 +291,7 @@
               </tr>
             {/each}
           {/each}
-          <tr>
+          <!-- <tr>
             <td class="token-text">ETH</td>
             <td class="negative"
               >-{totalGasInEth}
@@ -302,7 +302,7 @@
                 })})
               </div></td
             >
-          </tr>
+          </tr> -->
         {/if}
       </tbody>
     </table>
