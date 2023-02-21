@@ -152,8 +152,8 @@ type ConnectModalOptions = {
 A string or an object that defines the color theme web3-onboard will render the components.
 Define a custom or predefined theme for Web3Onboard using either:
 
-- BuiltInThemes: ['default', 'dark', 'light', 'system']
-- ThemingMap object to create a totally custom theme
+- Native themes available: 'default', 'dark', 'light', 'system'
+- `ThemingMap` object to create a totally custom theme - see below for the typing
 
 Note: `system` will default to the theme set by the users system.
 
