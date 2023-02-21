@@ -9,7 +9,7 @@ function tallyHoWallet(): WalletInit {
   if (typeof window === 'undefined') return () => null
   return () => {
     return {
-      label: 'Tally Ho Wallet',
+      label: 'Taho',
       injectedNamespace: 'tally',
       checkProviderIdentity: ({ provider }: { provider: any }) => {
         !!provider && !!provider['isTally']
@@ -20,7 +20,7 @@ function tallyHoWallet(): WalletInit {
         if (!provider) {
           const onboarding = new TallyHoOnboarding()
           onboarding.startOnboarding()
-          throw new Error('Please install Tally Ho to use this wallet')
+          throw new Error('Please install Taho to use this wallet')
         } else {
           return { provider: createEIP1193Provider(window.tally) }
         }

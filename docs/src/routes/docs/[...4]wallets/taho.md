@@ -1,11 +1,28 @@
-# @web3-onboard/tallyho (Taho previously named Tally Ho wallet)
 
-## Wallet module for connecting Taho (Previously named Tally Ho wallet) Wallet to web3-onboard
+# Taho (previously Tally Ho)
+
+## Wallet module for connecting Taho (wallet previously named Tally Ho)
 See [Taho Developer Docs](https://docs.tally.cash/tally/developers/integrating-dapps)
 
-### Install
 
-`npm i @web3-onboard/tallyho`
+## Install
+
+<Tabs values={['yarn', 'npm']}>
+<TabPanel value="yarn">
+
+```sh copy
+yarn add @web3-onboard/core @web3-onboard/tallyho
+```
+
+  </TabPanel>
+  <TabPanel value="npm">
+
+```sh copy
+npm install @web3-onboard/core @web3-onboard/tallyho
+```
+
+  </TabPanel>
+</Tabs>
 
 
 ## Usage
@@ -13,9 +30,6 @@ See [Taho Developer Docs](https://docs.tally.cash/tally/developers/integrating-d
 ```typescript
 import Onboard from '@web3-onboard/core'
 import tahoWalletModule from '@web3-onboard/tallyho'
-
-// initialize the module with options
-const tahoWalletSdk = tahoWalletModule()
 
 const onboard = Onboard({
   // ... other Onboard options

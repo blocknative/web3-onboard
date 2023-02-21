@@ -20,7 +20,7 @@ import magicModule from '@web3-onboard/magic'
 import web3authModule from '@web3-onboard/web3auth'
 import dcentModule from '@web3-onboard/dcent'
 import sequenceModule from '@web3-onboard/sequence'
-import tallyHoModule from '@web3-onboard/tallyho'
+import tahoModule from '@web3-onboard/tallyho'
 import trustModule from '@web3-onboard/trust'
 import frontierModule from '@web3-onboard/frontier'
 
@@ -44,7 +44,7 @@ const keystone = keystoneModule()
 const keepkey = keepkeyModule()
 const gnosis = gnosisModule()
 const sequence = sequenceModule()
-const tally = tallyModule()
+const taho = tahoModule() // Previously named Tally Ho wallet
 const trust = trustModule()
 const frontier = frontierModule()
 
@@ -66,7 +66,7 @@ const wallets = [
   keepkey,
   sequence,
   injected,
-  tally,
+  taho,
   ledger,
   coinbase,
   dcent,

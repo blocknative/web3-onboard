@@ -2969,10 +2969,10 @@
     ethers "5.5.4"
     joi "^17.6.1"
 
-"@web3-onboard/core@^2.15.1-alpha.1":
-  version "2.15.1-alpha.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.15.1-alpha.1.tgz#a6c241ba7eb84f40547e57b8192ecd46759ec5ad"
-  integrity sha512-CrAj0WkBxO52j2JUs5YFIbvfwyrUoWXO7B3QOG6VrQ9w4HRXO5lVBsD2RYMSA5fTbAbRZ7VwPiHCdmQ/ztKYLg==
+"@web3-onboard/core@^2.15.2-alpha.1":
+  version "2.15.2"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.15.2.tgz#9156f3c0a39dfb9aa8963a8ef4d8cf11bd8b5695"
+  integrity sha512-5p7rW6xNpljAq85kCcU5O/MKSR7uDG4V3EixwfwvNSITHejtjpfGmcUPFW7pYI/J+PQ3Z/u1ThMRDoD2tfjevA==
   dependencies:
     "@unstoppabledomains/resolution" "^8.0"
     "@web3-onboard/common" "^2.2.3"
@@ -3138,10 +3138,10 @@
     "@toruslabs/torus-embed" "1.38.2"
     "@web3-onboard/common" "^2.2.3"
 
-"@web3-onboard/transaction-preview@^2.0.3-alpha.1":
-  version "2.0.3-alpha.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/transaction-preview/-/transaction-preview-2.0.3-alpha.1.tgz#b8945c3b785dc1e0281709c01b464fe45aea1570"
-  integrity sha512-iJZtvGcYh3ZbmTzaNRAUWKmX4VwgbgaKbmlYCdmeOvNjB7fZykzqr9CXbGwwVmfI3xA7zT17hP5M0WjGFyuDFA==
+"@web3-onboard/transaction-preview@^2.0.4-alpha.1":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/transaction-preview/-/transaction-preview-2.0.4.tgz#c2d5dc55cf1602e9150c70238fc38a573ae580c7"
+  integrity sha512-GWnyPzQh0/7qVE8TDiehILqAlSsoodlUGq6FCuyIU2abaBDhssODxX+s9MLrSF0SlV8jniJ+KoG3ir1Q1chQTQ==
   dependencies:
     "@web3-onboard/common" "^2.2.3"
     bnc-sdk "^4.6.7"
