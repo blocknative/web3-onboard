@@ -254,7 +254,7 @@
       <div
         class:active={step !== 'selectingWallet'}
         class="join relative"
-        style={`'right: 2px; ${
+        style={`right: 2px; ${
           step !== 'selectingWallet'
             ? 'width: 78px;'
             : 'width: 82px;'
