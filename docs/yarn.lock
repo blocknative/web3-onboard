@@ -3206,6 +3206,13 @@
     "@web3auth/base" "^3.3.0"
     "@web3auth/modal" "^3.3.0"
 
+"@web3-onboard/xdefi@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/xdefi/-/xdefi-2.0.0.tgz#1adff4d798688d18616cfc8d78150fbe47f1757a"
+  integrity sha512-sgqhXUSO6dIvAmzKwD/ygCLtpkDgeLZ3Th8JkmV5t8wsYWj26FPuJFT0LNy4yVXSg4psFzsYcWb23BLdlTLvog==
+  dependencies:
+    "@web3-onboard/common" "^2.2.3"
+
 "@web3auth/base-evm-adapter@^3.3.0":
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/@web3auth/base-evm-adapter/-/base-evm-adapter-3.3.0.tgz#ab8575ac5d05dfe055e52500b61691cefdd6268f"
@@ -3931,17 +3938,7 @@ bnb-javascript-sdk-nobroadcast@^2.16.14:
     uuid "^3.3.2"
     websocket-stream "^5.5.0"
 
-bnc-sdk@^4.6.6:
-  version "4.6.6"
-  resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-4.6.6.tgz#ef5501a0c68014efae24d00d2e3fb706318fa00d"
-  integrity sha512-cpavy/WBQrkw5PZpnuUAvxzj/RjmP1vSldOEG+nonf7n/4sykScDO6KrJN2oVhEMaxHOqOVf2rOugSL5t515eA==
-  dependencies:
-    crypto-es "^1.2.2"
-    nanoid "^3.3.1"
-    rxjs "^6.6.3"
-    sturdy-websocket "^0.1.12"
-
-bnc-sdk@^4.6.7:
+bnc-sdk@^4.6.6, bnc-sdk@^4.6.7:
   version "4.6.7"
   resolved "https://registry.yarnpkg.com/bnc-sdk/-/bnc-sdk-4.6.7.tgz#138a22e04c95c2c697fb836092358d21957e2114"
   integrity sha512-jIQ6cmeRBgvH/YDLuYRr2+kxDGcAAi0SOvjlO5nQ5cWdbslw+ASWftd1HmxiVLNCiwEH5bSc/t8a0agZ5njTUQ==

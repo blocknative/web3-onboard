@@ -78,6 +78,7 @@
     "@web3-onboard/uauth": "^2.0.1",
     "@web3-onboard/walletconnect": "^2.2.1",
     "@web3-onboard/web3auth": "^2.1.4",
+    "@web3-onboard/xdefi": "^2.0.0",
     "animejs": "^3.2.1",
     "ethers": "^5.7.0"
   }
