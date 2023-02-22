@@ -4,7 +4,7 @@
 
 ![Transaction Preview Flow](https://github.com/blocknative/web3-onboard/blob/develop/assets/transaction-preview.gif?raw=true 'Transaction Preview Flow')
 
-#### Full Transaction Preview package documentation available [here](https://onboard.blocknative.com/docs/packages/transaction-preview)
+#### Give Transaction Preview a test run by previewing Vitalik swapping tokens and find full package documentation [here](https://onboard.blocknative.com/docs/packages/transaction-preview)
 
 Full Simulation Platform API documentation can be found [here](https://docs.blocknative.com/transaction-preview-api)
 

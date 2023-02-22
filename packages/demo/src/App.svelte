@@ -221,7 +221,7 @@
         rpcUrl: 'https://bsc-dataseed.binance.org/'
       },
       {
-        id: 137,
+        id: '0x89',
         token: 'MATIC',
         label: 'Polygon',
         rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
@@ -314,10 +314,15 @@
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
   wallets$.subscribe(wallet => {
+    console.log(wallet)
     const unstoppableUser = wallet.find(
       provider => provider.label === 'Unstoppable'
     )
     if (unstoppableUser) console.log(unstoppableUser.instance.user)
+    const wc = wallet.find(
+      provider => provider.label === 'WalletConnect'
+    )
+    if(wc) console.log(wc)
   })
 
   const signTransactionMessage = async provider => {
@@ -341,7 +346,7 @@
 
     const popTransaction = await signer.populateTransaction({
       to: toAddress,
-      value: 100000000000000
+      value: 10000000000000
     })
 
     const txn = await signer.sendTransaction(popTransaction)
@@ -383,56 +388,6 @@
 
     console.log(transactionHash)
   }
-
-
-  const swapTokens = async (provider) => {
-    const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
-
-const signer = ethersProvider.getSigner()
-
-const addressFrom = '0xc572779D7839B998DF24fc316c89BeD3D450ED13'
-
-const CONTRACT_ADDRESS = '0x7a250d5630b4cf539739df2c5dacb4c659f2488d'
-
-const uniswapV2router_interface = [
-  'function swapExactTokensForETH(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline) external returns (uint[] memory amounts)'
-]
-
-const weth = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
-const oneInch = '0x111111111117dc0aa78b770fa6a738034120c302'
-let swapTxData
-const swapContract = new ethers.Contract(
-  CONTRACT_ADDRESS,
-  uniswapV2router_interface
-)
-const tokenAmount = ethers.BigNumber.from(`1000000000000000000`)
-
-const amountOutMin = 0
-const amountOutMinHex = ethers.BigNumber.from(amountOutMin.toString())._hex
-
-const path = [oneInch, weth]
-const deadline = Math.floor(Date.now() / 1000) + 60 * 1 // 1 minutes from the current Unix time
-
-const inputAmountHex = tokenAmount.toHexString()
-
-swapTxData = await swapContract.populateTransaction.swapExactTokensForETH(
-  inputAmountHex,
-  amountOutMinHex,
-  path,
-  addressFrom,
-  deadline
-)
-const uniswapV2Router = '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D'
-
-const popTransaction = await signer.populateTransaction(swapTxData)
-
-await signer.sendTransaction({
-  ...popTransaction,
-  from: addressFrom,
-  to: uniswapV2Router,
-  value: 0
-})
-}
 
   const signMessage = async (provider, address) => {
     const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
@@ -658,8 +613,8 @@ await signer.sendTransaction({
           <button on:click={() => onboard.setChain({ chainId: '0x1' })}
             >Set Chain to Mainnet</button
           >
-          <button on:click={() => onboard.setChain({ chainId: '0x4' })}
-            >Set Chain to Rinkeby</button
+          <button on:click={() => onboard.setChain({ chainId: '0x5' })}
+            >Set Chain to Goerli</button
           >
           <button on:click={() => onboard.setChain({ chainId: '0x89' })}
             >Set Chain to Matic</button
@@ -714,7 +669,7 @@ await signer.sendTransaction({
               placeholder="0x..."
               bind:value={toAddress}
             />
-            <button on:click={() => swapTokens(provider)}>
+            <button on:click={sendTransaction(provider)}>
               Send Transaction
             </button>
           </div>
