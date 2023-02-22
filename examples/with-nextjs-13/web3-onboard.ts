@@ -74,7 +74,7 @@ const magic = magicModule({
 export default init({
   // An array of wallet modules that you would like to be presented to the user to select from when connecting a wallet.
   wallets: [
-    // injected,
+    injected,
     gnosis,
     fortmatic,
     portis,
