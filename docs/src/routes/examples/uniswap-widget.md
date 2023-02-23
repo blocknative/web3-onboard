@@ -100,6 +100,8 @@ export default function App() {
   // This provider will then be passed to the Uniswap component in the next step.
   useEffect(() => {
     if (wallet?.provider) {
+     // if using ethers v6 this is:
+     // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
       setProvider(new ethers.providers.Web3Provider(wallet.provider, 'any'))
     } else {
       // Reset the provider back to 'undefined' such that the 
@@ -158,6 +160,8 @@ export default function App() {
   // This provider will then be passed to the Uniswap component below.
   useEffect(() => {
     if (wallet?.provider) {
+      // if using ethers v6 this is:
+      // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
       setProvider(new ethers.providers.Web3Provider(wallet.provider, 'any'))
     } else {
       // Reset the provider back to 'undefined' such that the 

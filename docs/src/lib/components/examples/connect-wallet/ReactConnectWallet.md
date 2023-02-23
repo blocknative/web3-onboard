@@ -166,6 +166,8 @@ export default function ConnectWallet() {
     // If the wallet has a provider than the wallet is connected
     if (wallet?.provider) {
       setProvider(new ethers.providers.Web3Provider(wallet.provider, 'any'))
+          // if using ethers v6 this is:
+    // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
     }
   }, [wallet])
 
@@ -210,6 +212,8 @@ export default function ConnectWallet() {
     // If the wallet has a provider than the wallet is connected
     if (wallet?.provider) {
       setProvider(new ethers.providers.Web3Provider(wallet.provider, 'any'))
+      // if using ethers v6 this is:
+      // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
     }
   }, [wallet])
 

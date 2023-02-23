@@ -838,6 +838,8 @@ interface PreflightNotificationsOptions {
 ```typescript
 const balanceValue = Object.values(balance)[0]
 const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
+// if using ethers v6 this is:
+// ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
 
 const signer = ethersProvider.getSigner()
 const txDetails = {

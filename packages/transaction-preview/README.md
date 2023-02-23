@@ -90,6 +90,8 @@ containerElement: string})
 
 // Transaction code here using Ether.js or Web3.js or construct your own transactions
 const simulate = async provider => {
+  // if using ethers v6 this is:
+  // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
   const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 
   const signer = ethersProvider.getSigner()
