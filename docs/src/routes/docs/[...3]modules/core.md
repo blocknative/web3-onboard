@@ -380,7 +380,7 @@ export interface UpdateNotification {
 
 Putting it all together, here is an example initialization with the injected wallet modules:
 
-```ts
+```ts copy
 import Onboard from '@web3-onboard/core'
 import injectedModule from '@web3-onboard/injected-wallets'
 
@@ -1274,7 +1274,7 @@ Add the following dev dependencies:
 
 Then add the following to your `svelte.config.js` file:
 
-```javascript copy
+```javascript
 import adapter from '@sveltejs/adapter-auto'
 import preprocess from 'svelte-preprocess'
 import nodePolyfills from 'rollup-plugin-polyfill-node'
@@ -1337,7 +1337,7 @@ Add the following dev dependencies:
 
 Then add the following to your `vite.config.js` file:
 
-```javascript copy
+```javascript
 import nodePolyfills from 'rollup-plugin-polyfill-node'
 
 const MODE = process.env.NODE_ENV
