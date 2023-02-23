@@ -9,7 +9,7 @@
   import FrameworksGraphic from './svg/frameworks-group.svelte'
   import NetworksGraphic from './svg/networks-group.svelte'
   import NotifyGraphic from './svg/notify-group.svelte'
-  import AccountCenterGraphic from './svg/account-center-group.svelte'
+  import AccountCenterGraphic from './svg/account-center-graphic.svg'
   import WalletsGraphic from './svg/wallet-row.svg'
   import TransactionPreviewGraphic from './svg/transaction-preview-graphic.svg'
 
@@ -106,7 +106,7 @@
   </Container>
   <Container>
     <div class="flexbox">
-      <div><AccountCenterGraphic /></div>
+      <div><img src={AccountCenterGraphic} alt="" /></div>
       <div>
         <TextBlock
           title={'Account Center'}
