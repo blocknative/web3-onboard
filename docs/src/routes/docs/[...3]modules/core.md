@@ -124,7 +124,7 @@ type Chain = {
 
 An object that defines your app:
 
-```ts
+```ts copy
 type AppMetadata = {
   // app name
   name: string
@@ -169,7 +169,7 @@ An object that allows for customizing the connect modal layout and behavior
 
 <img src="{walletModal}" alt="Web3-Onboard connect wallet modal"/>
 
-```typescript
+```typescript copy
 type ConnectModalOptions = {
   showSidebar?: boolean
   /**
@@ -207,6 +207,7 @@ Onboard is using the [ICU syntax](https://formatjs.io/docs/core-concepts/icu-syn
 #### **theme**
 
 A string or an object that defines the color theme web3-onboard will render the components.
+
 Define a custom or predefined theme for Web3Onboard using either:
 
 - Native themes available: 'default', 'dark', 'light', 'system'
@@ -231,7 +232,7 @@ export type ThemingMap = {
 
 Interested in seeing how web3-onboard will look on your site?
 
-[Try out our theming tool](/theming-tool)
+[Try out our theming tool](/theming-tool) or our in depth theming walkthrough [here](/docs/getting-started/theming)
 
 It will allow you to customize the look and feel of web3-onboard, try different themes or create your own, and preview how web3-onboard will look on your site by entering a URL or adding a screenshot.
 
@@ -693,6 +694,54 @@ const onboard = Onboard({
 onboard.state.actions.setWalletModules([ledger, trezor])
 ```
 
+#### **updateTheme**
+An exposed method for updating the theme of web3-onboard. The function accepts `Theme` types (see below) 
+
+Available native themes include:
+|  |  |
+| --- | ----------- |
+| 'default'      | a mix of light and dark elements found throughout the web3-onboard components |
+| 'dark'      | modern look - easy on the eyes in low-light settings |
+| 'light'      | bright and clean look - easier to read in bright environments |
+| 'system'      | automatically switch between 'dark' & 'light' based on the user's system settings |
+
+
+The function also accepts a custom built `ThemingMap` object that contains all or some of the theming variables
+
+Example:
+
+```typescript copy
+import Onboard from '@web3-onboard/core'
+import injectedModule from '@web3-onboard/injected-wallets'
+
+const injected = injectedModule()
+
+const onboard = Onboard({
+  theme: 'dark',
+  wallets: [injected],
+  chains: [
+    {
+      id: '0x1',
+      token: 'ETH',
+      label: 'Ethereum Mainnet',
+      rpcUrl: `https://mainnet.infura.io/v3/${INFURA_KEY}`
+    }
+  ]
+})
+
+// after initialization you may want to change the theme based on a theme switch within the dapp
+onboard.state.actions.updateTheme('light')
+// or
+const customTheme: ThemingMap = {
+  '--w3o-background-color': '#f0f0f0',
+  '--w3o-foreground-color': '#333',
+  '--w3o-text-color': '#fff',
+  '--w3o-border-color': '#ccc',
+  '--w3o-action-color': '#007bff'
+}
+onboard.state.actions.updateTheme(customTheme)
+```
+
 #### **updateBalances**
 You may decide to get updated balances for connected wallets after a user action by calling the `updatedBalances` function, which expects a conditional array of addresses:
 
@@ -1084,7 +1133,7 @@ Node built-ins are automatically bundled in v4 so that portion is handled automa
 
 **babel.config.js**
 
-```javascript
+```javascript copy
 module.exports = (api) => {
   api.cache(true)
   const plugins = [
@@ -1117,7 +1166,7 @@ You'll need to add some dev dependencies with the following command:
 
 Then add the following to your `webpack.config.js` file:
 
-```javascript
+```javascript copy
 const webpack = require('webpack')
 
 module.exports = {
@@ -1164,7 +1213,7 @@ Add the following dev dependencies:
 
 `yarn add rollup-plugin-polyfill-node webpack-bundle-analyzer assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify -D`
 
-```javascript
+```javascript copy
 const webpack = require('webpack')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const path = require('path')
@@ -1225,7 +1274,7 @@ Add the following dev dependencies:
 
 Then add the following to your `svelte.config.js` file:
 
-```javascript
+```javascript copy
 import adapter from '@sveltejs/adapter-auto'
 import preprocess from 'svelte-preprocess'
 import nodePolyfills from 'rollup-plugin-polyfill-node'
@@ -1288,7 +1337,7 @@ Add the following dev dependencies:
 
 Then add the following to your `vite.config.js` file:
 
-```javascript
+```javascript copy
 import nodePolyfills from 'rollup-plugin-polyfill-node'
 
 const MODE = process.env.NODE_ENV

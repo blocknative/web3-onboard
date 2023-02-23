@@ -671,10 +671,14 @@ onboard.state.actions.setWalletModules([ledger, trezor])
 An exposed method for updating the theme of web3-onboard. The function accepts `Theme` types (see below) 
 
 Available native themes include:
-- **'default'**: a mix of light and dark elements found throughout the web3-onboard components
-- **'dark'**: dark background with lighter text and elements with a modern look - easy on the eyes in low-light settings
-- **'light'**: light colors for background and dark text and elements and a bright and clean look - easier to read in bright environments
-- **'system'**: reactive theme that will automatically switch between the native 'dark' & 'light' theme based on the users system settings
+|  |  |
+| --- | ----------- |
+| 'default'      | a mix of light and dark elements found throughout the web3-onboard components |
+| 'dark'      | modern look - easy on the eyes in low-light settings |
+| 'light'      | bright and clean look - easier to read in bright environments |
+| 'system'      | automatically switch between 'dark' & 'light' based on the user's system settings |
+
+
 
 The function also accepts a custom built `ThemingMap` object that contains all or some of the theming variables
 
