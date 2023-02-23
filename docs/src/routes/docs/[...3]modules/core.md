@@ -229,13 +229,11 @@ export type ThemingMap = {
 }
 ```
 
-:::admonition type="experimental"
 Interested in seeing how web3-onboard will look on your site?
 
 [Try out our theming tool](/theming-tool)
 
 It will allow you to customize the look and feel of web3-onboard, try different themes or create your own, and preview how web3-onboard will look on your site by entering a URL or adding a screenshot.
-:::
 
 #### **accountCenter**
 
@@ -659,7 +657,7 @@ unsubscribe()
 
 A limited subset of internal actions are exposed to update the Onboard state.
 
-**`setWalletModules`**
+#### **setWalletModules**
 For updating the wallets that are displayed in the wallet selection modal. This can be used if the wallets you want to support is conditional on another user action within your app. The `setWalletModules` action is called with an updated array of wallets (the same wallets that are passed in on initialization)
 
 ```typescript
@@ -695,7 +693,7 @@ const onboard = Onboard({
 onboard.state.actions.setWalletModules([ledger, trezor])
 ```
 
-**`updateBalances`**
+#### **updateBalances**
 You may decide to get updated balances for connected wallets after a user action by calling the `updatedBalances` function, which expects a conditional array of addresses:
 
 ```javascript
@@ -704,14 +702,14 @@ onboard.state.actions.updateBalances(['0xfdadfadsadsadsadasdsa']) // update bala
 onboard.state.actions.updateBalances(['0xfdadfadsadsadsadasdsa', '0xfdsafdsfdsfdsfds']) // update balance for two addresses
 ```
 
-**`setLocale`**
+#### **setLocale**
 Onboard will automatically detect the browser locale at runtime, but if you would like to update it manually you can call the `setLocale` function:
 
 ```javascript
 onboard.state.actions.setLocal('fr_FR')
 ```
 
-**`updateNotify`**
+#### **updateNotify**
 If you need to update your notify configuration after initialization, you can do that by calling the `updateNotify` function:
 
 ```javascript
@@ -745,7 +743,7 @@ onboard.state.actions.updateNotify({
 })
 ```
 
-**`customNotification`**
+#### **customNotification**
 Notify can be used to deliver custom DApp notifications by passing a `CustomNotification` object to the `customNotification` action. This will return an `UpdateNotification` type.
 This `UpdateNotification` will return an `update` function that can be passed a new `CustomNotification` to update the existing notification.
 The `customNotification` method also returns a `dismiss` method that is called without any parameters to dismiss the notification.
@@ -768,7 +766,7 @@ setTimeout(
 )
 ```
 
-**`preflightNotifications`**
+#### **preflightNotifications**
 Notify can be used to deliver standard notifications along with preflight information by passing a `PreflightNotificationsOptions` object to the `preflightNotifications` action. This will return a promise that resolves to the transaction hash (if `sendTransaction` resolves the transaction hash and is successful), the internal notification id (if no `sendTransaction` function is provided) or return nothing if an error occurs or `sendTransaction` is not provided or doesn't resolve to a string.
 
 Preflight event types include
@@ -825,7 +823,7 @@ const transactionHash = await onboard.state.actions.preflightNotifications({
 console.log(transactionHash)
 ```
 
-**`updateAccountCenter`**
+#### **updateAccountCenter**
 If you need to update your Account Center configuration after initialization, you can call the `updateAccountCenter` function with the new configuration
 
 ```typescript
@@ -836,7 +834,7 @@ onboard.state.actions.updateAccountCenter({
 })
 ```
 
-**`setPrimaryWallet`**
+#### **setPrimaryWallet**
 The primary wallet (first in the list of connected wallets) and primary account (first in the list of connected accounts for a wallet) can be set by using the `setPrimaryWallet` function. The wallet that is set needs to be passed in for the first parameter and if you would like to set the primary account, the address of that account also needs to be passed in:
 
 ```typescript
