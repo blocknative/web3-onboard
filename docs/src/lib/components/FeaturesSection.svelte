@@ -11,8 +11,10 @@
   import NotifyGraphic from './svg/notify-group.svelte'
   import AccountCenterGraphic from './svg/account-center-group.svelte'
   import WalletsGraphic from './svg/wallet-row.svg'
+  import TransactionPreviewGraphic from './svg/transaction-preview-graphic.svg'
 
-  import InstallCode from './install-code.md'
+  import InstallCode from './code-snippet/install-code.md'
+  import InstallCodeTp from './code-snippet/install-code-tp.md'
 </script>
 
 <section class="features-a">
@@ -81,7 +83,11 @@
     </div>
   </Container>
   <ScrollContainer>
-    <img src={WalletsGraphic} alt="onboard connect wallets" style="margin: 0 auto; max-width: none;">
+    <img
+      src={WalletsGraphic}
+      alt="onboard connect wallets"
+      style="margin: 0 auto; max-width: none;"
+    />
   </ScrollContainer>
   <Container>
     <div class="flexbox">
@@ -112,6 +118,28 @@
             <Button href="/examples/connect-wallet" buttonStyle={'link'}>{'View Demo'}</Button>
           </Flexbox>
         </TextBlock>
+      </div>
+    </div>
+  </Container>
+  <Container>
+    <div class="flexbox">
+      <div>
+        <TextBlock
+          title={'Transaction Preview'}
+          subtitle={'Preview transactions to see net-balance changes and gas spent'}
+          text={'Reduce transaction anxiety by allowing users to easily preview expected net-balance changes for their connected wallets before authorizing transactions.'}
+        >
+          <Flexbox --wrap="wrap">
+            <Button href="/docs" buttonStyle={'link'}>{'Learn More'}</Button>
+            <Button href="/examples/connect-wallet" buttonStyle={'link'}>{'View Demo'}</Button>
+          </Flexbox>
+          <div class="prose">
+            <InstallCodeTp />
+          </div>
+        </TextBlock>
+      </div>
+      <div>
+        <img src={TransactionPreviewGraphic} alt="" />
       </div>
     </div>
   </Container>
