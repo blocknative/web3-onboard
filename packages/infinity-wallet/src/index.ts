@@ -22,7 +22,6 @@ function infinityWallet(options?: InfinityWalletOptions): WalletInit {
         // check if Infinity Wallet is injected into window.ethereum
         if(ethereumInjectionExists && window['ethereum'].isInfinityWallet){
           provider = window['ethereum'];
-          console.log('Infinity Wallet is connected and can be used with the DApp');
         } else {
           openInfinityWallet(window.location.href, options?.chainId);
           throw new Error('Opening Infinity Wallet! If not installed first download to use Infinity Wallet')
