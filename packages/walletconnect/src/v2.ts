@@ -5,6 +5,7 @@ import type {
   WalletInit,
   EIP1193Provider
 } from '@web3-onboard/common'
+import { JQueryStyleEventEmitter } from 'rxjs/internal/observable/fromEvent'
 import { isHexString, WalletConnectOptions } from './index.js'
 
 // methods that require user interaction
@@ -116,7 +117,7 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
 
             // listen for chainChanged
             fromEvent(
-              this.connector,
+              this.connector as JQueryStyleEventEmitter<any, number>,
               'chainChanged',
               (payload: number) => payload
             )
@@ -131,7 +132,7 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
 
             // listen for disconnect event
             fromEvent(
-              this.connector,
+              this.connector as JQueryStyleEventEmitter<any, string>,
               'session_delete',
               (payload: string) => payload
             )
@@ -153,7 +154,7 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
             if (options && options.handleUri) {
               // listen for uri event
               fromEvent(
-                this.connector,
+                this.connector as JQueryStyleEventEmitter<any, string>,
                 'display_uri',
                 (payload: string) => payload
               )
@@ -167,7 +168,7 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                 })
             }
 
-            (() => {
+            ;(() => {
               const session = this.connector.session
               if (session) {
                 this.emit('accountsChanged', this.connector.accounts)
@@ -206,7 +207,10 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                   }
                   // Subscribe to connection events
                   fromEvent(
-                    this.connector,
+                    this.connector as JQueryStyleEventEmitter<
+                      any,
+                      { accounts: string[]; chainId: number }
+                    >,
                     'connect',
                     (payload: { accounts: string[]; chainId: number }) =>
                       payload
