@@ -43,7 +43,7 @@
     new VConsole()
   }
 
-  const apiKey = '0fcf74ed-b95b-4b8d-a8d8-4d655ae479d9'
+  const apiKey = '7ed5f4aa-fb90-4124-8ef9-f69e3e8e666d'
   const infura_key = '80633e48116943128cbab25e402764ab'
 
   let defaultTransactionObject = JSON.stringify(
@@ -224,7 +224,7 @@
         rpcUrl: 'https://bsc-dataseed.binance.org/'
       },
       {
-        id: 137,
+        id: '0x89',
         token: 'MATIC',
         label: 'Polygon',
         rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
@@ -317,13 +317,20 @@
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
   wallets$.subscribe(wallet => {
+    console.log(wallet)
     const unstoppableUser = wallet.find(
       provider => provider.label === 'Unstoppable'
     )
     if (unstoppableUser) console.log(unstoppableUser.instance.user)
+    const wc = wallet.find(
+      provider => provider.label === 'WalletConnect'
+    )
+    if(wc) console.log(wc)
   })
 
   const signTransactionMessage = async provider => {
+    // if using ethers v6 this is:
+    // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
     const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 
     const signer = ethersProvider.getSigner()
@@ -338,13 +345,15 @@
 
   let toAddress
   const sendTransaction = async provider => {
+    // if using ethers v6 this is:
+    // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
     const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 
     const signer = ethersProvider.getSigner()
 
     const popTransaction = await signer.populateTransaction({
       to: toAddress,
-      value: 100000000000000
+      value: 10000000000000
     })
 
     const txn = await signer.sendTransaction(popTransaction)
@@ -357,6 +366,8 @@
     await onboard.setChain({ chainId: '0x5' })
 
     const balanceValue = Object.values(balance)[0]
+    // if using ethers v6 this is:
+    // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
     const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 
     const signer = ethersProvider.getSigner()
@@ -388,6 +399,8 @@
   }
 
   const signMessage = async (provider, address) => {
+    // if using ethers v6 this is:
+    // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
     const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 
     const signer = ethersProvider?.getSigner()
@@ -611,8 +624,8 @@
           <button on:click={() => onboard.setChain({ chainId: '0x1' })}
             >Set Chain to Mainnet</button
           >
-          <button on:click={() => onboard.setChain({ chainId: '0x4' })}
-            >Set Chain to Rinkeby</button
+          <button on:click={() => onboard.setChain({ chainId: '0x5' })}
+            >Set Chain to Goerli</button
           >
           <button on:click={() => onboard.setChain({ chainId: '0x89' })}
             >Set Chain to Matic</button

@@ -22,7 +22,7 @@
       if (document.location.href.includes('theming-tool')) {
         onboard = await getOnboard('default')
       } else {
-        onboard = await getOnboard('system')
+        onboard = await getOnboard()
       }
     }
     onboard.state.select('wallets').subscribe((wallets) => {

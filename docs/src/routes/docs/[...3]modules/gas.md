@@ -1,6 +1,7 @@
 <script>
     import {Gas} from '$lib/components'
 </script>
+
 # Gas
 
 A module for requesting streams or single requests of gas price estimates from the [Blocknative Gas Platform API](https://docs.blocknative.com/gas-platform).
@@ -75,21 +76,23 @@ const gasBlockPrices = await gas.get({
 })
 ```
 
-
 ## Usage with Web3-Onboard wallet Connect and Ethers.js
 
-This example assumes you have already setup web3-onboard to connect wallets to your dapp. 
+This example assumes you have already setup web3-onboard to connect wallets to your dapp.
 For more information see [web3-onboard docs](/docs/modules/core#install).
-```ts
+
+```ts copy
 import gas from '@web3-onboard/gas'
 import { ethers } from 'ethers'
 
 // Set provider using the Web3-Onboard wallet.provider instance from the connected wallet
+// if using ethers v6 this is:
+// ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
 let provider = new ethers.providers.Web3Provider(wallet.provider, 'any')
 let bnGasPrices
 
 const ethMainnetGasBlockPrices = gas.stream({
-  chains: ['0x1'], // '0x89' can also be added/replaced here for Polygon gas data 
+  chains: ['0x1'], // '0x89' can also be added/replaced here for Polygon gas data
   apiKey: '<OPTIONAL_API_KEY>', // for faster refresh rates
   endpoint: 'blockPrices'
 })
@@ -111,7 +114,7 @@ const sendTransaction = async () => {
   }
 
   const signer = provider.getUncheckedSigner()
-  
+
   // define desired confidence for transaction inclusion in block and set in transaction
   // block inclusion confidence options: 70, 80, 90, 95, 99
   const bnGasForTransaction = bnGasPrices.find(gas => gas.confidence === 90)
@@ -131,4 +134,5 @@ const sendTransaction = async () => {
 ```
 
 ## Build Environments
+
 For build env configurations and setups please see the Build Env section [here](/docs/modules/core#build-environments)
