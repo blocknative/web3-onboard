@@ -1,4 +1,4 @@
-```css
+```css copy
 :root {
   --w3o-background-color: #1a1d26;
   --w3o-foreground-color: #242835;
