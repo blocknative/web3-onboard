@@ -18,6 +18,10 @@ type WalletConnectOptions = {
     mobileLinks: string[] // set the order and list of mobile linking wallets
   }
   connectFirstChainId?: boolean // if true, connects to the first network chain provided
+  /**
+   * Optional function to handle WalletConnect URI when it becomes available
+   */
+  uriHandler?: (uri: string) => Promise<unknown>
 } & (
   | {
       /**

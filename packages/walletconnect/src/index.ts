@@ -3,6 +3,9 @@ import v1 from './v1'
 import v2 from './v2'
 
 export type WalletConnectOptions = {
+  /**
+   * Optional function to handle WalletConnect URI when it becomes available
+   */
   uriHandler?: (uri: string) => Promise<unknown>
   connectFirstChainId?: boolean
   bridge?: string
