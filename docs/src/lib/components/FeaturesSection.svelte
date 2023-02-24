@@ -104,8 +104,13 @@
           text={'Reduce transaction anxiety by allowing users to easily preview expected net-balance changes for their connected wallets before authorizing transactions.'}
         >
           <Flexbox --wrap="wrap">
-            <Button href="/docs" buttonStyle={'link'}>{'Learn More'}</Button>
-            <Button href="/examples/connect-wallet" buttonStyle={'link'}>{'View Demo'}</Button>
+            <Button href="/docs/modules/transaction-preview" buttonStyle={'link'}
+              >{'Learn More'}</Button
+            >
+            <Button
+              href="/docs/modules/transaction-preview#try-transaction-preview"
+              buttonStyle={'link'}>{'View Demo'}</Button
+            >
           </Flexbox>
           <div class="prose">
             <InstallCodeTp />
