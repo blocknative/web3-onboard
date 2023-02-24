@@ -1,4 +1,5 @@
-# @web3-onboard/infinity-wallet
+
+# infinity-wallet
 
 ## Wallet module for connecting Infinity Wallet through web3-onboard
 
@@ -6,26 +7,39 @@ Infinity Wallet SDK wallet module for connecting to Web3-Onboard. Web3-Onboard m
 
 Checkout the official [Infinity Wallet page](https://infinitywallet.io/) for details.
 
-### Install
+## Install
 
-**NPM**
-`npm i @web3-onboard/core @web3-onboard/infinity-wallet`
+<Tabs values={['yarn', 'npm']}>
+<TabPanel value="yarn">
 
-**Yarn**
-`yarn add @web3-onboard/core @web3-onboard/infinity-wallet`
+```sh copy
+yarn add @web3-onboard/core @web3-onboard/infinity-wallet
+```
+
+  </TabPanel>
+  <TabPanel value="npm">
+
+```sh copy
+npm install @web3-onboard/core @web3-onboard/infinity-wallet
+```
+
+  </TabPanel>
+</Tabs>
+
 
 ## Usage
 
 ```typescript
 import Onboard from '@web3-onboard/core'
-import infinityWalletModule from '@web3-onboard/infinity-wallet'
+import infinityWalletWalletModule from '@web3-onboard/infinity-wallet'
 
-const infinityWallet = infinityWalletModule()
+// initialize the module with options
+const infinityWalletSDK = infinityWalletWalletModule()
 
 const onboard = Onboard({
   // ... other Onboard options
   wallets: [
-    infinityWallet
+    infinityWalletSDK()
     //... other wallets
   ]
 })

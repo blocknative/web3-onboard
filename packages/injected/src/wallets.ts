@@ -749,7 +749,6 @@ const defiwallet: InjectedWalletModule = {
 
 const wallets = [
   zeal,
-  infinitywallet,
   exodus,
   frontier,
   metamask,
@@ -793,7 +792,8 @@ const wallets = [
   zerion,
   rainbow,
   safepal,
-  defiwallet
+  defiwallet,
+  infinitywallet
 ]
 
 export default wallets

@@ -90,7 +90,6 @@ For full documentation, check out the README.md for each package or the [docs pa
 - [Coinbase](packages/coinbase/README.md)
 - [Trust](packages/trust/README.md)
 - [WalletConnect](packages/walletconnect/README.md)
-- [Infinity Wallet](packages/infinity-wallet/README.md)
 - [Gnosis](packages/gnosis/README.md)
 - [Magic](packages/magic/README.md)
 - [Fortmatic](packages/fortmatic/README.md)
@@ -103,6 +102,7 @@ For full documentation, check out the README.md for each package or the [docs pa
 - [Unstoppable Domains](packages/uauth/README.md)
 - [Frontier](packages/frontier/README.md)
 - [XDEFI](packages/xdefi/README.md)
+- [Infinity Wallet](packages/infinity-wallet/README.md)
 
 **Hardware Wallets**
 
