@@ -1,14 +1,10 @@
 let onboard
 const getOnboard = async (passedTheme) => {
-  if (!onboard) {
-    const key = 'svelteness::color-scheme'
-    const scheme = localStorage[key]
-    let theme = passedTheme || scheme || 'system'
-    onboard = await intiOnboard(theme)
-    classMutationListener()
-  } else {
-    await onboard.state.actions.updateTheme(passedTheme)
-  }
+  const key = 'svelteness::color-scheme'
+  const scheme = localStorage[key]
+  let theme = passedTheme || scheme
+  classMutationListener()
+  onboard = await intiOnboard(theme)
   return onboard
 }
 
