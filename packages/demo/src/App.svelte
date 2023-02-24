@@ -104,7 +104,7 @@
   const walletConnect = walletConnectModule({
     connectFirstChainId: true,
     version: 2,
-    uriHandler: (uri) => console.log(uri),
+    handleUri: (uri) => console.log(uri),
     projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
     qrcodeModalOptions: {
     mobileLinks: ['rainbow', 'metamask', 'argent', 'trust', 'imtoken', 'pillar']

@@ -6,7 +6,7 @@ export type WalletConnectOptions = {
   /**
    * Optional function to handle WalletConnect URI when it becomes available
    */
-  uriHandler?: (uri: string) => Promise<unknown>
+  handleUri?: (uri: string) => Promise<unknown>
   connectFirstChainId?: boolean
   bridge?: string
   qrcodeModalOptions?: {

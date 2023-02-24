@@ -150,7 +150,7 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
               if (this.connector.session) this.connector.disconnect()
             }
 
-            if (options && options.uriHandler) {
+            if (options && options.handleUri) {
               // listen for uri event
               fromEvent(
                 this.connector,
@@ -160,14 +160,14 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                 .pipe(takeUntil(this.disconnected$))
                 .subscribe(async uri => {
                   try {
-                    options.uriHandler && (await options.uriHandler(uri))
+                    options.handleUri && (await options.handleUri(uri))
                   } catch (error) {
                     throw `An error occurred when handling the URI. Error: ${error}`
                   }
                 })
             }
 
-            ;(() => {
+            (() => {
               const session = this.connector.session
               if (session) {
                 this.emit('accountsChanged', this.connector.accounts)
