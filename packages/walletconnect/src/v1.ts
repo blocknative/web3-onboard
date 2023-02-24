@@ -13,7 +13,8 @@ function walletConnect(
   const {
     bridge = 'https://bridge.walletconnect.org',
     qrcodeModalOptions,
-    connectFirstChainId
+    connectFirstChainId,
+    uriHandler
   } = options || {}
 
   return () => {
@@ -47,6 +48,14 @@ function walletConnect(
         const connector = new WalletConnect({
           bridge
         })
+
+        if (uriHandler) {
+          try {
+            await uriHandler(connector.uri || '')
+          } catch (error) {
+            throw `An error occurred when handling the URI. Error: ${error}`
+          }
+        }
 
         const emitter = new EventEmitter()
 

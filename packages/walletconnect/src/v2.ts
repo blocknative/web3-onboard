@@ -18,7 +18,8 @@ const methods = [
 ]
 
 function walletConnect(options?: WalletConnectOptions): WalletInit {
-  const projectId = options?.version == 2 ? options.projectId : undefined
+  const projectId =
+    options && options.version == 2 ? options.projectId : undefined
   if (!projectId) {
     throw new Error(
       'WalletConnect requires a projectId. Please visit https://cloud.walletconnect.com to get one.'
@@ -82,9 +83,9 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
           public connector: InstanceType<typeof EthereumProvider>
           public chains: Chain[]
           public disconnect: EIP1193Provider['disconnect']
-          public emit: (typeof EventEmitter)['emit']
-          public on: (typeof EventEmitter)['on']
-          public removeListener: (typeof EventEmitter)['removeListener']
+          public emit: typeof EventEmitter['emit']
+          public on: typeof EventEmitter['on']
+          public removeListener: typeof EventEmitter['removeListener']
 
           private disconnected$: InstanceType<typeof Subject>
 
@@ -149,8 +150,24 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
               if (this.connector.session) this.connector.disconnect()
             }
 
-            // load the session if it exists
-            (() => {
+            if (options && options.uriHandler) {
+              // listen for uri event
+              fromEvent(
+                this.connector,
+                'display_uri',
+                (payload: string) => payload
+              )
+                .pipe(takeUntil(this.disconnected$))
+                .subscribe(async uri => {
+                  try {
+                    options.uriHandler && (await options.uriHandler(uri))
+                  } catch (error) {
+                    throw `An error occurred when handling the URI. Error: ${error}`
+                  }
+                })
+            }
+
+            ;(() => {
               const session = this.connector.session
               if (session) {
                 this.emit('accountsChanged', this.connector.accounts)
