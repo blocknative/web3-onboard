@@ -37,7 +37,7 @@ type WalletConnectOptions = {
   /**
    * Optional function to handle WalletConnect URI when it becomes available
    */
-  uriHandler?: (uri: string) => Promise<unknown>
+  handleUri?: (uri: string) => Promise<unknown>
 } & (
   | {
       /**
@@ -82,7 +82,7 @@ const wcV2InitOptions = {
   /**
    * Optional function to handle WalletConnect URI when it becomes available
    */
-  uriHandler: (uri) => console.log(uri)
+  handleUri: (uri) => console.log(uri)
 }
 
 // initialize the module with options
