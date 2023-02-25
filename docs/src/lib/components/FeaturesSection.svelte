@@ -9,10 +9,12 @@
   import FrameworksGraphic from './svg/frameworks-group.svelte'
   import NetworksGraphic from './svg/networks-group.svelte'
   import NotifyGraphic from './svg/notify-group.svelte'
-  import AccountCenterGraphic from './svg/account-center-group.svelte'
+  import AccountCenterGraphic from './svg/account-center-graphic.svg'
   import WalletsGraphic from './svg/wallet-row.svg'
+  import TransactionPreviewGraphic from './svg/transaction-preview-graphic.svg'
 
-  import InstallCode from './install-code.md'
+  import InstallCode from './code-snippet/install-code.md'
+  import InstallCodeTp from './code-snippet/install-code-tp.md'
 </script>
 
 <section class="features-a">
@@ -63,7 +65,6 @@
   </Container>
 </section>
 
-<!-- Features Section -->
 <section class="features-c">
   <Container>
     <div class="flexbox" style:padding={'4rem 1rem'}>
@@ -81,8 +82,43 @@
     </div>
   </Container>
   <ScrollContainer>
-    <img src={WalletsGraphic} alt="onboard connect wallets" style="margin: 0 auto; max-width: none;">
+    <img
+      src={WalletsGraphic}
+      alt="onboard connect wallets"
+      style="margin: 0 auto; max-width: none;"
+    />
   </ScrollContainer>
+  <Container>
+    <div class="flexbox">
+      <div>
+        <img
+          src={TransactionPreviewGraphic}
+          alt="Transaction Preview"
+          style="margin: 0 auto; max-width: none;"
+        />
+      </div>
+      <div>
+        <TextBlock
+          title={'Transaction Preview'}
+          subtitle={'Preview transactions to see net-balance changes and gas spent'}
+          text={'Reduce transaction anxiety by allowing users to easily preview expected net-balance changes for their connected wallets before authorizing transactions.'}
+        >
+          <Flexbox --wrap="wrap">
+            <Button href="/docs/modules/transaction-preview" buttonStyle={'link'}
+              >{'Learn More'}</Button
+            >
+            <Button
+              href="/docs/modules/transaction-preview#try-transaction-preview"
+              buttonStyle={'link'}>{'View Demo'}</Button
+            >
+          </Flexbox>
+          <div class="prose">
+            <InstallCodeTp />
+          </div>
+        </TextBlock>
+      </div>
+    </div>
+  </Container>
   <Container>
     <div class="flexbox">
       <TextBlock
@@ -100,7 +136,7 @@
   </Container>
   <Container>
     <div class="flexbox">
-      <div><AccountCenterGraphic /></div>
+      <div><img src={AccountCenterGraphic} alt="" /></div>
       <div>
         <TextBlock
           title={'Account Center'}
