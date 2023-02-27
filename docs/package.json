@@ -62,6 +62,7 @@
     "@web3-onboard/fortmatic": "^2.0.14",
     "@web3-onboard/gas": "^2.1.4",
     "@web3-onboard/gnosis": "^2.1.6",
+    "@web3-onboard/infinity-wallet": "^2.0.0-alpha.1",
     "@web3-onboard/injected-wallets": "^2.8.0-alpha.1",
     "@web3-onboard/keepkey": "^2.3.3",
     "@web3-onboard/keystone": "^2.3.3",
