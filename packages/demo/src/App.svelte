@@ -36,8 +36,6 @@
   import { ethers } from 'ethers'
   import { share } from 'rxjs/operators'
   import VConsole from 'vconsole'
-  import blocknativeIcon from './blocknative-icon'
-  import blocknativeLogo from './blocknative-logo'
 
   if (window.innerWidth < 700) {
     new VConsole()
@@ -107,6 +105,7 @@
   const walletConnect = walletConnectModule({
     connectFirstChainId: true,
     version: 2,
+    handleUri: (uri) => console.log(uri),
     projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
     qrcodeModalOptions: {
     mobileLinks: ['rainbow', 'metamask', 'argent', 'trust', 'imtoken', 'pillar']
