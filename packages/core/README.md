@@ -28,7 +28,7 @@ Install the core module:
 If you would like to support all wallets, then you can install all of the wallet modules:
 
 ```bash
-npm i @web3-onboard/coinbase @web3-onboard/fortmatic @web3-onboard/gnosis  @web3-onboard/trust
+npm i @web3-onboard/coinbase @web3-onboard/fortmatic @web3-onboard/gnosis @web3-onboard/infinity-wallet @web3-onboard/trust
 @web3-onboard/injected-wallets @web3-onboard/keepkey @web3-onboard/keystone
 @web3-onboard/ledger @web3-onboard/magic @web3-onboard/portis @web3-onboard/torus
 @web3-onboard/trezor @web3-onboard/walletconnect @web3-onboard/web3auth
@@ -139,6 +139,12 @@ type ConnectModalOptions = {
    * no modals displayed
    */
   autoConnectLastWallet?: boolean // defaults to false
+  /**
+   * Customize the link for the `I don't have a wallet` flow shown on the
+   * select wallet modal.
+   * Defaults to `https://ethereum.org/en/wallets/find-wallet/#main-content`
+   */
+  iDontHaveAWalletLink?: string
 }
 ```
 
@@ -146,8 +152,8 @@ type ConnectModalOptions = {
 A string or an object that defines the color theme web3-onboard will render the components.
 Define a custom or predefined theme for Web3Onboard using either:
 
-- BuiltInThemes: ['default', 'dark', 'light', 'system']
-- ThemingMap object to create a totally custom theme
+- Native themes available: 'default', 'dark', 'light', 'system'
+- `ThemingMap` object to create a totally custom theme - see below for the typing
 
 Note: `system` will default to the theme set by the users system.
 
@@ -661,6 +667,70 @@ const onboard = Onboard({
 onboard.state.actions.setWalletModules([ledger, trezor])
 ```
 
+**`updateTheme`**
+An exposed method for updating the theme of web3-onboard. The function accepts `Theme` types (see below) 
+
+Available native themes include:
+|  |  |
+| --- | ----------- |
+| 'default'      | a mix of light and dark elements found throughout the web3-onboard components |
+| 'dark'      | modern look - easy on the eyes in low-light settings |
+| 'light'      | bright and clean look - easier to read in bright environments |
+| 'system'      | automatically switch between 'dark' & 'light' based on the user's system settings |
+
+
+
+The function also accepts a custom built `ThemingMap` object that contains all or some of the theming variables
+
+Example:
+
+```typescript
+import Onboard from '@web3-onboard/core'
+import injectedModule from '@web3-onboard/injected-wallets'
+
+const injected = injectedModule()
+
+const onboard = Onboard({
+  theme: 'dark',
+  wallets: [injected],
+  chains: [
+    {
+      id: '0x1',
+      token: 'ETH',
+      label: 'Ethereum Mainnet',
+      rpcUrl: `https://mainnet.infura.io/v3/${INFURA_KEY}`
+    }
+  ]
+})
+
+// after initialization you may want to change the theme based on a theme switch within the dapp
+onboard.state.actions.updateTheme('light')
+// or
+const customTheme: ThemingMap = {
+  '--w3o-background-color': '#f0f0f0',
+  '--w3o-foreground-color': '#333',
+  '--w3o-text-color': '#fff',
+  '--w3o-border-color': '#ccc',
+  '--w3o-action-color': '#007bff'
+}
+onboard.state.actions.updateTheme(customTheme)
+```
+
+```typescript
+export type Theme = ThemingMap | BuiltInThemes | 'system'
+
+export type BuiltInThemes = 'default' | 'dark' | 'light'
+
+export type ThemingMap = {
+  '--w3o-background-color'?: string
+  '--w3o-foreground-color'?: string
+  '--w3o-text-color'?: string
+  '--w3o-border-color'?: string
+  '--w3o-action-color'?: string
+  '--w3o-border-radius'?: string
+}
+```
+
 **`updateBalances`**
 You may decide to get updated balances for connected wallets after a user action by calling the `updatedBalances` function, which expects a conditional array of addresses:
 
@@ -768,6 +838,8 @@ interface PreflightNotificationsOptions {
 ```typescript
 const balanceValue = Object.values(balance)[0]
 const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
+// if using ethers v6 this is:
+// ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
 
 const signer = ethersProvider.getSigner()
 const txDetails = {

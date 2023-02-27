@@ -64,6 +64,16 @@ const metamask: InjectedWalletModule = {
   platforms: ['all']
 }
 
+const infinitywallet: InjectedWalletModule = {
+  label: ProviderLabel.InfinityWallet,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.InfinityWallet],
+  getIcon: async () => (await import('./icons/infinitywallet.js')).default,
+  getInterface: getInjectedInterface(ProviderIdentityFlag.InfinityWallet),
+  platforms: ['desktop']
+}
+
 const exodus: InjectedWalletModule = {
   label: ProviderLabel.Exodus,
   injectedNamespace: InjectedNameSpace.Ethereum,
@@ -782,7 +792,8 @@ const wallets = [
   zerion,
   rainbow,
   safepal,
-  defiwallet
+  defiwallet,
+  infinitywallet
 ]
 
 export default wallets

@@ -173,7 +173,8 @@ const accountCenter = Joi.object({
 const connectModalOptions = Joi.object({
   showSidebar: Joi.boolean(),
   disableClose: Joi.boolean(),
-  autoConnectLastWallet: Joi.boolean()
+  autoConnectLastWallet: Joi.boolean(),
+  iDontHaveAWalletLink: Joi.string()
 })
 
 const containerElements = Joi.object({

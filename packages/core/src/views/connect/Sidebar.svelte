@@ -1,16 +1,23 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
-  import { defaultBnIcon, poweredByBlocknative } from '../../icons/index.js'
+  import {
+    defaultBnIcon,
+    poweredByBlocknative,
+    infoIcon
+  } from '../../icons/index.js'
   import en from '../../i18n/en.json'
   import type { i18n } from '../../types.js'
   import { isSVG } from '../../utils.js'
   import { configuration } from '../../configuration.js'
   import { MOBILE_WINDOW_WIDTH } from '../../constants.js'
+  import { state } from '../../store'
 
   export let step: keyof i18n['connect']
 
   const { appMetadata } = configuration
   const { icon, logo, name = 'This app' } = appMetadata || {}
+
+  const { connect } = state.get()
 
   const defaultContent = en.connect[step].sidebar
   const { subheading, paragraph } = defaultContent
@@ -80,7 +87,7 @@
   }
 
   .indicators {
-    margin-top: 1rem;
+    margin-top: auto;
   }
 
   .indicator {
@@ -125,6 +132,20 @@
       var(--action-color)
     );
   }
+  .no-link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0.25rem 0.5rem 0.25rem 0.75rem;
+    gap: 0.25rem;
+    font-size: var(--onboard-font-size-6, var(--font-size-6));
+  }
+
+  .info-icon {
+    width: 1.25rem;
+    display: flex;
+    align-items: center;
+  }
 
   @media all and (min-width: 768px) {
     .sidebar {
@@ -140,6 +161,9 @@
       flex: 1;
       align-items: flex-start;
       gap: 1rem;
+    }
+    .indicators {
+      margin-bottom: .25rem;
     }
   }
 </style>
@@ -182,39 +206,81 @@
         default: paragraph
       })}
     </div>
-
+    <a
+      href={connect.iDontHaveAWalletLink ||
+        'https://ethereum.org/en/wallets/find-wallet/#main-content'}
+      target="_blank"
+      rel="noreferrer noopener"
+      class="no-link"
+      >I don't have a wallet <div class="info-icon">{@html infoIcon}</div></a
+    >
+    {#if windowWidth < MOBILE_WINDOW_WIDTH}
+      <div class="indicators flex items-center">
+        <div class="indicator relative" class:on={true} />
+        <div
+          class:active={step !== 'selectingWallet'}
+          class="join relative"
+          style={`${
+            step !== 'selectingWallet'
+              ? 'right: 4px; width: 52px;'
+              : 'right: 2px; width: 54px;'
+          }`}
+        />
+        <div
+          class="indicator relative"
+          style={`right: 8px;`}
+          class:on={step !== 'selectingWallet'}
+        />
+        <div
+          class:active={step === 'connectedWallet'}
+          class="join relative"
+          style={`${
+            step === 'connectedWallet'
+              ? 'right: 12px; width: 52px;'
+              : 'right: 10px; width: 54px;'
+          }`}
+        />
+        <div
+          style={`right: 16px;`}
+          class="indicator relative"
+          class:on={step === 'connectedWallet'}
+        />
+      </div>
+    {/if}
+  </div>
+  {#if windowWidth >= MOBILE_WINDOW_WIDTH}
     <div class="indicators flex items-center">
       <div class="indicator relative" class:on={true} />
       <div
         class:active={step !== 'selectingWallet'}
         class="join relative"
-        style={`${
+        style={`right: 2px; ${
           step !== 'selectingWallet'
-            ? 'right: 4px; width: 52px;'
-            : 'right: 2px; width: 54px;'
+            ? 'width: 78px;'
+            : 'width: 82px;'
         }`}
       />
       <div
         class="indicator relative"
-        style={`right: 8px;`}
+        style={`right: 4px;`}
         class:on={step !== 'selectingWallet'}
       />
       <div
         class:active={step === 'connectedWallet'}
         class="join relative"
-        style={`${
+        style={`right: 6px; ${
           step === 'connectedWallet'
-            ? 'right: 12px; width: 52px;'
-            : 'right: 10px; width: 54px;'
+            ? 'width: 74px;'
+            : 'width: 81px;'
         }`}
       />
       <div
-        style={`right: 16px;`}
+        style={`right: 8px;`}
         class="indicator relative"
         class:on={step === 'connectedWallet'}
       />
     </div>
-  </div>
+  {/if}
   <div>
     {@html poweredByBlocknative}
   </div>

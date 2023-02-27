@@ -59,6 +59,8 @@ function App() {
   let ethersProvider
 
   if (wallet) {
+    // if using ethers v6 this is:
+    // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
     ethersProvider = new ethers.providers.Web3Provider(wallet.provider, 'any')
   }
 
