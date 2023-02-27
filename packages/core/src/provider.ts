@@ -9,7 +9,6 @@ import { validEnsChain } from './utils.js'
 import disconnect from './disconnect.js'
 import { state } from './store/index.js'
 import { getBNMulitChainSdk } from './services.js'
-import { Resolution } from '@unstoppabledomains/resolution'
 
 import type {
   ChainId,
@@ -388,11 +387,14 @@ export async function getUns(
   // chain we don't recognize and don't have a rpcUrl for requests
   if (!utils.isAddress(address) || !chain) return null
 
-  const resolutionInstance = new Resolution()
-
   try {
-    const name = await resolutionInstance.reverse(address)
     let uns = null
+    const { default: Resolution } = await import(
+      '@unstoppabledomains/resolution'
+    )
+
+    const resolutionInstance = new Resolution()
+    const name = await resolutionInstance.reverse(address)
 
     if (name) {
       uns = {
