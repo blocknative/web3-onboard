@@ -168,7 +168,7 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                 })
             }
 
-            ;(() => {
+            (() => {
               const session = this.connector.session
               if (session) {
                 this.emit('accountsChanged', this.connector.accounts)
