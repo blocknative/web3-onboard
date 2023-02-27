@@ -10,6 +10,7 @@ export const WALLET_NAMES: { [key: string]: string } = {
   bitpie: 'Bitpie',
   bitski: 'Bitski',
   coinbasewallet: 'Coinbase Wallet',
+  infinitywallet: 'Infinity Wallet',
   dcentwallet: "D'CENT",
   metamask: 'MetaMask',
   detected: 'Detected Wallet',

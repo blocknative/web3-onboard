@@ -2,6 +2,7 @@
   import Onboard from '@web3-onboard/core'
   import fortmaticModule from '@web3-onboard/fortmatic'
   import gnosisModule from '@web3-onboard/gnosis'
+  import infinityWalletModule from '@web3-onboard/infinity-wallet'
   import injectedModule, { ProviderLabel } from '@web3-onboard/injected-wallets'
   import keepkeyModule from '@web3-onboard/keepkey'
   import keystoneModule from '@web3-onboard/keystone'
@@ -35,8 +36,6 @@
   import { ethers } from 'ethers'
   import { share } from 'rxjs/operators'
   import VConsole from 'vconsole'
-  import blocknativeIcon from './blocknative-icon'
-  import blocknativeLogo from './blocknative-logo'
 
   if (window.innerWidth < 700) {
     new VConsole()
@@ -106,6 +105,7 @@
   const walletConnect = walletConnectModule({
     connectFirstChainId: true,
     version: 2,
+    handleUri: (uri) => console.log(uri),
     projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
     qrcodeModalOptions: {
     mobileLinks: ['rainbow', 'metamask', 'argent', 'trust', 'imtoken', 'pillar']
@@ -125,6 +125,7 @@
   })
 
   const torus = torusModule()
+  const infinityWallet = infinityWalletModule()
   const ledger = ledgerModule()
   const keepkey = keepkeyModule()
   const keystone = keystoneModule()
@@ -172,6 +173,7 @@
       ledger,
       trezor,
       walletConnect,
+      infinityWallet,
       trust,
       enkrypt,
       mewWallet,
