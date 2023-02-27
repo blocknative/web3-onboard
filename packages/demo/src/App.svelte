@@ -2,6 +2,7 @@
   import Onboard from '@web3-onboard/core'
   import fortmaticModule from '@web3-onboard/fortmatic'
   import gnosisModule from '@web3-onboard/gnosis'
+  import infinityWalletModule from '@web3-onboard/infinity-wallet'
   import injectedModule, { ProviderLabel } from '@web3-onboard/injected-wallets'
   import keepkeyModule from '@web3-onboard/keepkey'
   import keystoneModule from '@web3-onboard/keystone'
@@ -124,6 +125,7 @@
   })
 
   const torus = torusModule()
+  const infinityWallet = infinityWalletModule()
   const ledger = ledgerModule()
   const keepkey = keepkeyModule()
   const keystone = keystoneModule()
@@ -171,6 +173,7 @@
       ledger,
       trezor,
       walletConnect,
+      infinityWallet,
       trust,
       enkrypt,
       mewWallet,
