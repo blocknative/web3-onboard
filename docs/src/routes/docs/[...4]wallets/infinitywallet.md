@@ -1,5 +1,5 @@
 
-# infinity-wallet
+# Infinity Wallet
 
 ## Wallet module for connecting Infinity Wallet through web3-onboard
 
