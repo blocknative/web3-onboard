@@ -302,7 +302,7 @@
   // ==== CONNECTED WALLET ==== //
   async function updateAccountDetails() {
     const { accounts, chains: selectedWalletChains } = selectedWallet
-    const { chains: appChains, connect } = state.get()
+    const appChains = state.get().chains
     const [connectedWalletChain] = selectedWalletChains
 
     const appChain = appChains.find(
@@ -330,7 +330,7 @@
       })
     }
 
-    if (uns === null && !connect.disableUDResolution) {
+    if (uns === null) {
       getUns(address, appChain).then(uns => {
         updateAccount(selectedWallet.label, address, {
           uns
