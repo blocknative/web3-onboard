@@ -383,15 +383,16 @@ export async function getUns(
   address: Address,
   chain: Chain
 ): Promise<Uns | null> {
+  const { connect } = state.get()
+
   // check if address is valid ETH address before attempting to resolve
   // chain we don't recognize and don't have a rpcUrl for requests
-  if (!utils.isAddress(address) || !chain) return null
+  if (connect.disableUDResolution || !utils.isAddress(address) || !chain)
+    return null
 
   try {
     let uns = null
-    const { Resolution } = await import(
-      '@unstoppabledomains/resolution'
-    )
+    const { Resolution } = await import('@unstoppabledomains/resolution')
 
     const resolutionInstance = new Resolution()
     const name = await resolutionInstance.reverse(address)
