@@ -200,7 +200,7 @@ type ConnectModalOptions = {
    * after a user connects. Similar to ens, uns can be used for users who
    * have minted an Unstoppable Domain and associated it with their wallet.
    * ENS resolution takes precedent over UNS
-   * Defaults to true
+   * Defaults to false
    */
     disableUDResolution?: boolean
 }
