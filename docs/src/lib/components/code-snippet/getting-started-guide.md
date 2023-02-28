@@ -40,6 +40,8 @@ console.log(wallets)
 if (wallets[0]) {
   // create an ethers provider with the last connected wallet provider
   const ethersProvider = new ethers.providers.Web3Provider(wallets[0].provider, 'any')
+    // if using ethers v6 this is:
+    // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
 
   const signer = ethersProvider.getSigner()
 

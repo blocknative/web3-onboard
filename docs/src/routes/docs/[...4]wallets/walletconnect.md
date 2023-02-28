@@ -34,6 +34,10 @@ type WalletConnectOptions = {
     mobileLinks: string[] // set the order and list of mobile linking wallets
   }
   connectFirstChainId?: boolean // if true, connects to the first network chain provided
+  /**
+   * Optional function to handle WalletConnect URI when it becomes available
+   */
+  handleUri?: (uri: string) => Promise<unknown>
 } & (
   | {
       /**
@@ -74,7 +78,11 @@ const wcV2InitOptions = {
   /**
    * Project ID associated with [WalletConnect account](https://cloud.walletconnect.com)
    */
-  projectId: 'abc123...'
+  projectId: 'abc123...',
+  /**
+   * Optional function to handle WalletConnect URI when it becomes available
+   */
+  handleUri: (uri) => console.log(uri)
 }
 
 // initialize the module with options

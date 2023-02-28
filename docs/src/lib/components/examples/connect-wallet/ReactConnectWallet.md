@@ -5,9 +5,9 @@ Import the libraries and any wallets you would like to use. For this example, we
 ```js title="App.tsx"|copy
 import { Web3OnboardProvider, init } from '@web3-onboard/react'
 import injectedModule from '@web3-onboard/injected-wallets'
+import infinityWalletModule from '@web3-onboard/infinity-wallet'
 import fortmaticModule from '@web3-onboard/fortmatic'
 import gnosisModule from '@web3-onboard/gnosis'
-import injectedModule from '@web3-onboard/injected-wallets'
 import keepkeyModule from '@web3-onboard/keepkey'
 import keystoneModule from '@web3-onboard/keystone'
 import ledgerModule from '@web3-onboard/ledger'
@@ -39,6 +39,7 @@ const fortmatic = fortmaticModule({
   apiKey: 'apiKey'
 })
 
+const infinityWallet = infinityWalletModule()
 const ledger = ledgerModule()
 const keystone = keystoneModule()
 const keepkey = keepkeyModule()
@@ -63,6 +64,7 @@ const enkrypt = enkryptModule()
 const mewWallet = mewWalletModule()
 
 const wallets = [
+  infinityWallet,
   keepkey,
   sequence,
   injected,
@@ -166,6 +168,8 @@ export default function ConnectWallet() {
     // If the wallet has a provider than the wallet is connected
     if (wallet?.provider) {
       setProvider(new ethers.providers.Web3Provider(wallet.provider, 'any'))
+    // if using ethers v6 this is:
+    // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
     }
   }, [wallet])
 
@@ -210,6 +214,8 @@ export default function ConnectWallet() {
     // If the wallet has a provider than the wallet is connected
     if (wallet?.provider) {
       setProvider(new ethers.providers.Web3Provider(wallet.provider, 'any'))
+      // if using ethers v6 this is:
+      // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
     }
   }, [wallet])
 
