@@ -195,6 +195,14 @@ export type ConnectModalOptions = {
    * Defaults to `https://ethereum.org/en/wallets/find-wallet/#main-content`
    */
   iDontHaveAWalletLink?: string
+  /**
+   * Define support for Unstoppable Domains resolutions
+   * after a user connects. Similar to ens, uns can be used for users who
+   * have minted an Unstoppable Domain and associated it with their wallet.
+   * ENS resolution takes precedent over UNS
+   * Defaults to false
+   */
+  disableUDResolution?: boolean
 }
 
 export type CommonPositions =

@@ -243,6 +243,7 @@
     ],
     connect: {
       // disableClose: true,
+      // disableUDResolution: true,
       autoConnectLastWallet: true
     },
     appMetadata: {
