@@ -42,6 +42,8 @@ const { wallets, connectWallet, disconnectConnectedWallet, connectedWallet } =
   useOnboard()
 
 if (connectedWallet) {
+  // if using ethers v6 this is:
+  // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
   const ethersProvider = new ethers.providers.Web3Provider(
     connectedWallet.provider,
     'any'

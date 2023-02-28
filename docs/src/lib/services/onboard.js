@@ -1,14 +1,10 @@
 let onboard
 const getOnboard = async (passedTheme) => {
-  if (!onboard) {
-    const key = 'svelteness::color-scheme'
-    const scheme = localStorage[key]
-    let theme = passedTheme || scheme || 'system'
-    onboard = await intiOnboard(theme)
-    classMutationListener()
-  } else {
-    await onboard.state.actions.updateTheme(passedTheme)
-  }
+  const key = 'svelteness::color-scheme'
+  const scheme = localStorage[key]
+  let theme = passedTheme || scheme
+  classMutationListener()
+  onboard = await intiOnboard(theme)
   return onboard
 }
 
@@ -36,6 +32,7 @@ const intiOnboard = async (theme) => {
   const { default: trezorModule } = await import('@web3-onboard/trezor')
   const { default: ledgerModule } = await import('@web3-onboard/ledger')
   const { default: walletConnectModule } = await import('@web3-onboard/walletconnect')
+  const { default: infinityWalletModule } = await import('@web3-onboard/infinity-wallet')
   const { default: coinbaseModule } = await import('@web3-onboard/coinbase')
   const { default: dcentModule } = await import('@web3-onboard/dcent')
   const { default: portisModule } = await import('@web3-onboard/portis')
@@ -52,9 +49,11 @@ const intiOnboard = async (theme) => {
   const { default: web3authModule } = await import('@web3-onboard/web3auth')
   const { default: uauthModule } = await import('@web3-onboard/uauth')
   const { default: trustModule } = await import('@web3-onboard/trust')
+  const { default: xdefiModule } = await import('@web3-onboard/xdefi')
   const INFURA_ID = '8b60d52405694345a99bcb82e722e0af'
 
   const injected = injectedModule()
+  const infinityWallet = infinityWalletModule()
   const coinbase = coinbaseModule()
   const dcent = dcentModule()
   const walletConnect = walletConnectModule()
@@ -68,6 +67,7 @@ const intiOnboard = async (theme) => {
   const tally = tallyModule()
   const torus = torusModule()
   const trust = trustModule()
+  const xdefi = xdefiModule()
 
   const portis = portisModule({
     apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
@@ -110,9 +110,11 @@ const intiOnboard = async (theme) => {
       gnosis,
       uauth,
       tally,
+      xdefi,
       torus,
       sequence,
       web3auth,
+      infinityWallet,
       dcent,
       enkrypt,
       mewWallet,
