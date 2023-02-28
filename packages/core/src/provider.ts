@@ -389,7 +389,7 @@ export async function getUns(
 
   try {
     let uns = null
-    const { default: Resolution } = await import(
+    const { Resolution } = await import(
       '@unstoppabledomains/resolution'
     )
 
