@@ -302,7 +302,6 @@
   // ==== CONNECTED WALLET ==== //
   async function updateAccountDetails() {
     const { accounts, chains: selectedWalletChains } = selectedWallet
-    // const appChains = state.get().chains
     const { chains: appChains, connect } = state.get()
     const [connectedWalletChain] = selectedWalletChains
 

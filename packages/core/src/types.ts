@@ -202,7 +202,7 @@ export type ConnectModalOptions = {
    * ENS resolution takes precedent over UNS
    * Defaults to false
    */
-    disableUDResolution?: boolean
+  disableUDResolution?: boolean
 }
 
 export type CommonPositions =
