@@ -20,7 +20,7 @@ import magicModule from '@web3-onboard/magic'
 import web3authModule from '@web3-onboard/web3auth'
 import dcentModule from '@web3-onboard/dcent'
 import sequenceModule from '@web3-onboard/sequence'
-import tahoModule from '@web3-onboard/tallyho'
+import tahoModule from '@web3-onboard/taho'
 import trustModule from '@web3-onboard/trust'
 import frontierModule from '@web3-onboard/frontier'
 
