@@ -33,7 +33,7 @@ aliases:
         | grep version \
         | head -1 \
         | awk -F: '{ print $2 }' \
-        | sed 's/[",]//g'); 
+        | sed 's/[",]//g');
         if [[ $PACKAGE_VERSION =~ "-alpha" ]];
         then
           echo true
@@ -50,7 +50,7 @@ aliases:
         | grep version \
         | head -1 \
         | awk -F: '{ print $2 }' \
-        | sed 's/[",]//g'); 
+        | sed 's/[",]//g');
         if [[ $PACKAGE_VERSION =~ "-alpha" ]];
         then
           echo true
@@ -363,6 +363,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/xdefi
     steps:
       - node-build-steps
+  build-infinity-wallet:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/infinity-wallet
+    steps:
+      - node-build-steps
 
   # Build staging/Alpha releases
   build-staging-core:
@@ -561,6 +567,12 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/xdefi
+    steps:
+      - node-staging-build-steps
+  build-staging-infinity-wallet:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/infinity-wallet
     steps:
       - node-staging-build-steps
 
@@ -764,4 +776,10 @@ workflows:
       - build-xdefi:
           <<: *deploy_production_filters
       - build-staging-xdefi:
+          <<: *deploy_staging_filters
+  infinity-wallet:
+    jobs:
+      - build-infinity-wallet:
+          <<: *deploy_production_filters
+      - build-staging-infinity-wallet:
           <<: *deploy_staging_filters

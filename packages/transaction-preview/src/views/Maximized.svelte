@@ -57,13 +57,13 @@
         simResponse.gasUsed[index] * simResponse.transactions[index].gasPrice
       )
     }
-    if (simResponse.transactions[index].type === 2) {
-      totalGasInEth += cleanGas(
-        simResponse.gasUsed[index] *
-          (simResponse.transactions[index].baseFeePerGasGwei +
-            simResponse.transactions[index].maxPriorityFeePerGasGwei)
-      )
-    }
+    // if (simResponse.transactions[index].type === 2) {
+    //   totalGasInEth += cleanGas(
+    //     simResponse.gasUsed[index] *
+    //       (simResponse.transactions[index].baseFeePerGasGwei +
+    //         simResponse.transactions[index].maxPriorityFeePerGasGwei)
+    //   )
+    // }
   }
 
   const gasUsed = (index: number) => {
@@ -291,6 +291,7 @@
               </tr>
             {/each}
           {/each}
+          {#if totalGasInEth && totalGasUsed}
           <tr>
             <td class="token-text">ETH</td>
             <td class="negative"
@@ -303,6 +304,7 @@
               </div></td
             >
           </tr>
+          {/if}
         {/if}
       </tbody>
     </table>
