@@ -797,7 +797,7 @@ workflows:
           <<: *deploy_staging_filters
   taho:
     jobs:
-      - build-taho-wallet:
+      - build-taho:
           <<: *deploy_production_filters
-      - build-staging-taho-wallet:
+      - build-staging-taho:
           <<: *deploy_staging_filters
