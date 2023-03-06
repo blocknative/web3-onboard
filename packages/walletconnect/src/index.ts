@@ -1,8 +1,12 @@
 import type { WalletInit } from '@web3-onboard/common'
-import v1 from './v1'
-import v2 from './v2'
+import v1 from './v1.js'
+import v2 from './v2.js'
 
 export type WalletConnectOptions = {
+  /**
+   * Optional function to handle WalletConnect URI when it becomes available
+   */
+  handleUri?: (uri: string) => Promise<unknown>
   connectFirstChainId?: boolean
   bridge?: string
   qrcodeModalOptions?: {

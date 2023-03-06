@@ -41,7 +41,7 @@ npm i @web3-onboard/core @web3-onboard/injected @web3-onboard/transaction-previe
 
 To use the Transaction Preview package with web3-onboard all a developer needs to do is initialize web3-onboard with their [Blocknative API key](https://onboard.blocknative.com/docs/overview/introduction#optional-use-an-api-key-to-fetch-real-time-transaction-data-balances-gas) and pass in the module as shown below.
 
-```typescript
+```typescript copy
 import Onboard from '@web3-onboard/core'
 import injectedModule from '@web3-onboard/injected'
 import transactionPreviewModule from '@web3-onboard/transaction-preview'
@@ -87,7 +87,7 @@ To use the Transaction Preview package without web3-onboard all a developer need
 
 With the above steps a UI will be rendered with the balance changes and gas used.
 
-```typescript
+```typescript copy
 import transactionPreviewModule from '@web3-onboard/transaction-preview'
 
 const {init, previewTransaction} = transactionPreviewModule({
@@ -113,6 +113,8 @@ containerElement: string})
 
 // Transaction code here using Ether.js or Web3.js or construct your own transactions
 const simulate = async provider => {
+  // if using ethers v6 this is:
+  // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
   const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 
   const signer = ethersProvider.getSigner()

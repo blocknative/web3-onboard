@@ -292,9 +292,9 @@ const injected = injectedModule({
 - Meetone - _Mobile_
 - Mykey - _Mobile_
 - Ownbit - _Mobile_
+- xDefi - _Desktop & Mobile_
 - Tokenpocket - _Desktop & Mobile_
 - TP - _Mobile_
-- xDefi - _Desktop & Mobile_
 - 1inch - _Mobile_
 - Tokenary - _Mobile_
 - GameStop - _Desktop_

@@ -1,6 +1,8 @@
 # @web3-onboard/tallyho (Taho previously named Tally Ho wallet)
 
-## Wallet module for connecting Taho (Previously named Tally Ho wallet) Wallet to web3-onboard
+## (Deprecated) Wallet module for connecting Taho (Previously named Tally Ho wallet) Wallet to web3-onboard
+_Use [@web3-onboard/taho](../taho/README.md)_
+
 See [Taho Developer Docs](https://docs.tally.cash/tally/developers/integrating-dapps)
 
 ### Install

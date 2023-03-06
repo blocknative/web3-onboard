@@ -101,6 +101,8 @@ For full documentation, check out the README.md for each package or the [docs pa
 - [Enkrypt](packages/enkrypt/README.md)
 - [Unstoppable Domains](packages/uauth/README.md)
 - [Frontier](packages/frontier/README.md)
+- [XDEFI](packages/xdefi/README.md)
+- [Infinity Wallet](packages/infinity-wallet/README.md)
 
 **Hardware Wallets**
 

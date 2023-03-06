@@ -1,9 +1,9 @@
 
-# Taho (previously Tally Ho)
+# XDEFI
 
-## Wallet module for connecting Taho (wallet previously named Tally Ho)
-See [Taho Developer Docs](https://docs.tally.cash/tally/developers/integrating-dapps)
+## Wallet module for connecting XDEFI to web3-onboard
 
+See [XDEFI Wallet Developer Docs](https://sdk.xdefi.io/)
 
 ## Install
 
@@ -11,14 +11,14 @@ See [Taho Developer Docs](https://docs.tally.cash/tally/developers/integrating-d
 <TabPanel value="yarn">
 
 ```sh copy
-yarn add @web3-onboard/core @web3-onboard/taho
+yarn add @web3-onboard/core @web3-onboard/xdefi
 ```
 
   </TabPanel>
   <TabPanel value="npm">
 
 ```sh copy
-npm install @web3-onboard/core @web3-onboard/taho
+npm install @web3-onboard/core @web3-onboard/xdefi
 ```
 
   </TabPanel>
@@ -29,12 +29,15 @@ npm install @web3-onboard/core @web3-onboard/taho
 
 ```typescript
 import Onboard from '@web3-onboard/core'
-import tahoWalletModule from '@web3-onboard/taho'
+import xdefiWalletModule from '@web3-onboard/xdefi'
+
+// initialize the module with options
+const xdefiWalletSdk = xdefiWalletModule()
 
 const onboard = Onboard({
   // ... other Onboard options
   wallets: [
-    tahoWalletModule()
+    xdefiWalletSdk()
     //... other wallets
   ]
 })
