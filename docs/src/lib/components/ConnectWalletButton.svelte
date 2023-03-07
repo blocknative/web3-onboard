@@ -7,6 +7,7 @@
   let buttonText = 'Connect'
 
   async function connectWallet() {
+    if (!onboard) await initOnboard()
     if (onboard && onboard.state.get().wallets.length) {
       onboard.disconnectWallet({ label: onboard.state.get().wallets[0].label })
       buttonText = 'Connect'
@@ -17,13 +18,17 @@
     }
   }
 
-  onMount(async () => {
-    if (!onboard) {
-      if (document.location.href.includes('theming-tool')) {
+  const initOnboard = async () => {
+    if (document.location.href.includes('theming-tool')) {
         onboard = await getOnboard('default')
       } else {
         onboard = await getOnboard()
       }
+  }
+
+  onMount(async () => {
+    if (!onboard) {
+      await initOnboard()
     }
     onboard.state.select('wallets').subscribe((wallets) => {
       connectedWallets = wallets

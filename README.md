@@ -97,7 +97,7 @@ For full documentation, check out the README.md for each package or the [docs pa
 - [MEW-Wallet](packages/mew-wallet/README.md)
 - [Web3Auth](packages/web3auth/README.md)
 - [Sequence](packages/sequence/README.md)
-- [TallyHo](packages/tallyho/README.md)
+- [Taho (previously Tally Ho)](packages/tallyho/README.md)
 - [Enkrypt](packages/enkrypt/README.md)
 - [Unstoppable Domains](packages/uauth/README.md)
 - [Frontier](packages/frontier/README.md)

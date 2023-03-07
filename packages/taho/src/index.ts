@@ -5,7 +5,7 @@ import detectEthereumProvider from 'tallyho-detect-provider'
 import TallyHoOnboarding from 'tallyho-onboarding'
 declare const window: CustomWindow
 
-function tallyHoWallet(): WalletInit {
+function tahoWallet(): WalletInit {
   if (typeof window === 'undefined') return () => null
   return () => {
     return {
@@ -30,4 +30,4 @@ function tallyHoWallet(): WalletInit {
   }
 }
 
-export default tallyHoWallet
+export default tahoWallet
