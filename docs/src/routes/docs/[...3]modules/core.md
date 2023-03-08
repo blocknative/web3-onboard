@@ -1385,6 +1385,8 @@ export default config
 
 ### SvelteKit + Vite
 
+Checkout a boilerplate example (here)[https://github.com/blocknative/web3-onboard/tree/develop/examples/with-sveltekit]
+
 Add the following dev dependencies:
 
 `yarn add rollup-plugin-polyfill-node -D`
@@ -1476,6 +1478,8 @@ export default config
 
 ### Vite
 
+Checkout a boilerplate example for Vite-React (here)[https://github.com/blocknative/web3-onboard/tree/develop/examples/with-vite-react]
+
 Add the following dev dependencies:
 
 `npm i --save-dev rollup-plugin-polyfill-node`
@@ -1548,6 +1552,11 @@ build: {
 ```
 
 ### Next.js
+
+Checkout a boilerplate example for NextJS v13 (here)[https://github.com/blocknative/web3-onboard/tree/develop/examples/with-nextjs-13]
+
+Checkout a boilerplate example for NextJS (here)[https://github.com/blocknative/web3-onboard/tree/develop/examples/with-nextjs]
+
 
 :::admonition type=note
 
