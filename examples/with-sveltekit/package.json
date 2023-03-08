@@ -11,7 +11,6 @@
     "format": "prettier --write ."
   },
   "devDependencies": {
-    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
     "@types/cookie": "^0.5.1",
@@ -32,7 +31,9 @@
   "type": "module",
   "dependencies": {
     "@fontsource/fira-mono": "^4.5.10",
-    "@web3-onboard/walletconnect": "^2.2.2",
+    "@web3-onboard/core": "^2.15.4",
+    "@web3-onboard/injected-wallets": "^2.8.1",
+    "@web3-onboard/walletconnect": "^2.3.1",
     "buffer": "^6.0.3"
   }
 }
