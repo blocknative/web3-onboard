@@ -56,12 +56,14 @@ const intiOnboard = async (theme) => {
   const infinityWallet = infinityWalletModule()
   const coinbase = coinbaseModule()
   const dcent = dcentModule()
-  const walletConnect = walletConnectModule({    connectFirstChainId: true,
+  const walletConnect = walletConnectModule({
+    connectFirstChainId: true,
     version: 2,
     projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
     qrcodeModalOptions: {
-    mobileLinks: ['rainbow', 'metamask', 'argent', 'trust', 'imtoken', 'pillar']
-    }})
+      mobileLinks: ['rainbow', 'metamask', 'argent', 'trust', 'imtoken', 'pillar']
+    }
+  })
   const ledger = ledgerModule()
   const keystone = keystoneModule()
   const keepkey = keepkeyModule()
