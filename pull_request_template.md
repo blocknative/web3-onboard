@@ -12,7 +12,7 @@
 ### Docs Checklist
 - [ ] Include a screenshot of any changes ([see docs README on running locally](https://github.com/blocknative/web3-onboard/blob/develop/docs/README.md))
 - [ ] Add/update the appropriate package README
-- [ ] Add/update the related module in the docs demo () (if applicable)
+- [ ] Add/update the related module in the [docs demo](https://github.com/blocknative/web3-onboard/blob/develop/docs/src/lib/services/onboard.js) (if applicable)
 - [ ] Add/update the related package in the `docs/package.json` file (if applicable)
 
 ### If this PR includes changes to add an injected wallet or SDK wallet module: 
