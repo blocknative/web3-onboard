@@ -202,7 +202,7 @@ type ConnectModalOptions = {
    * ENS resolution takes precedent over UNS
    * Defaults to false
    */
-    disableUDResolution?: boolean
+  disableUDResolution?: boolean
 }
 ```
 
@@ -1383,7 +1383,120 @@ const config = {
 export default config
 ```
 
+### SvelteKit + Vite
+
+Checkout a boilerplate example (here)[https://github.com/blocknative/web3-onboard/tree/develop/examples/with-sveltekit]
+
+Add the following dev dependencies:
+
+`yarn add rollup-plugin-polyfill-node -D`
+
+Then add the following to your `svelte.config.js` file:
+
+```javascript
+import adapter from '@sveltejs/adapter-auto'
+import preprocess from 'svelte-preprocess'
+
+/** @type {import('@sveltejs/kit').Config} */
+const config = {
+  // Consult https://github.com/sveltejs/svelte-preprocess
+  // for more information about preprocessors
+  preprocess: preprocess(),
+
+  kit: {
+    adapter: adapter()
+  }
+}
+
+export default config
+```
+
+Then add the following to your `vite.config.js` file:
+
+```javascript
+import { sveltekit } from '@sveltejs/kit/vite'
+import inject from '@rollup/plugin-inject'
+
+import type { UserConfig } from 'vite'
+import nodePolyfills from 'rollup-plugin-polyfill-node'
+
+const MODE = process.env.NODE_ENV
+const development = MODE === 'development'
+
+/** @type {import('@sveltejs/kit').Config} */
+
+const config: UserConfig = {
+  plugins: [
+    sveltekit(),
+    development &&
+      nodePolyfills({
+        include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js'), 'http', 'crypto']
+      })
+  ],
+  resolve: {
+    alias: {
+      crypto: 'crypto-browserify',
+      stream: 'stream-browserify',
+      assert: 'assert'
+    }
+  },
+  build: {
+    rollupOptions: {
+      external: ['@web3-onboard/*'],
+      plugins: [
+        nodePolyfills({ include: ['crypto', 'http'] }),
+        inject({ Buffer: ['Buffer', 'Buffer'] })
+      ]
+    },
+    commonjsOptions: {
+      transformMixedEsModules: true
+    }
+  },
+  optimizeDeps: {
+    exclude: ['@ethersproject/hash', 'wrtc', 'http'],
+    include: [
+      '@web3-onboard/core',
+      '@web3-onboard/gas',
+      '@web3-onboard/sequence',
+      'js-sha3',
+      '@ethersproject/bignumber'
+    ],
+    esbuildOptions: {
+      // Node.js global to browser globalThis
+      define: {
+        global: 'globalThis'
+      }
+    }
+  },
+  define: {
+    global: 'window'
+  }
+}
+
+export default config
+```
+
+If an error presents around `window` being undefined remove the `define.global` block.
+Add this to your `app.html`
+```html
+<script>
+      var global = global || window
+</script>
+```
+
+##### Buffer polyfill
+It seems some component or dependency requires Node's Buffer. To polyfill this, the simplest way I could find was to install the buffer package and include the following in web3-onboard.ts:
+
+```javascript
+import { Buffer } from 'buffer'
+globalThis.Buffer = Buffer
+```
+See [this github issue](https://github.com/blocknative/web3-onboard/issues/1568#issuecomment-1463963462) for further troubleshooting
+
+
 ### Vite
+
+Checkout a boilerplate example for Vite-React (here)[https://github.com/blocknative/web3-onboard/tree/develop/examples/with-vite-react]
 
 Add the following dev dependencies:
 
@@ -1402,9 +1515,7 @@ export default {
   plugins: [
     development &&
       nodePolyfills({
-        include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js')],
-        http: true,
-        crypto: true
+        include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js'), 'http', 'crypto']
       })
   ],
   resolve: {
@@ -1416,11 +1527,34 @@ export default {
   },
   build: {
     rollupOptions: {
-      plugins: [nodePolyfills({ crypto: true, http: true })]
+      external: ['@web3-onboard/*'],
+      plugins: [
+        nodePolyfills({ include: ['crypto', 'http'] }),
+        inject({ Buffer: ['Buffer', 'Buffer'] })
+      ]
     },
     commonjsOptions: {
       transformMixedEsModules: true
     }
+  },
+  optimizeDeps: {
+    exclude: ['@ethersproject/hash', 'wrtc', 'http'],
+    include: [
+      '@web3-onboard/core',
+      '@web3-onboard/gas',
+      '@web3-onboard/sequence',
+      'js-sha3',
+      '@ethersproject/bignumber'
+    ],
+    esbuildOptions: {
+      // Node.js global to browser globalThis
+      define: {
+        global: 'globalThis'
+      }
+    }
+  },
+  define: {
+    global: 'window'
   }
 }
 ```
@@ -1437,8 +1571,24 @@ build: {
 
 ### Next.js
 
+Checkout a boilerplate example for NextJS v13 (here)[https://github.com/blocknative/web3-onboard/tree/develop/examples/with-nextjs-13]
+
+Checkout a boilerplate example for NextJS (here)[https://github.com/blocknative/web3-onboard/tree/develop/examples/with-nextjs]
+
+
 :::admonition type=note
 
 If you are seeing an error during builds when dynamically importing Web3Onboard in a NextJS v13 project, try upgrading to to the Canary beta release of NextJS where this issue is fixed.
 
 :::
+
+
+## Package Managers
+
+### npm and yarn
+
+Web3-Onboard will work out of the box with `npm` and `yarn` support.
+
+### pnpm
+We have had issues reported when using `pnpm` as the package manager when working with web3-onboard.
+As we work to understand this new manager more and the issues around it we recommend using `npm` or `yarn` for now.
