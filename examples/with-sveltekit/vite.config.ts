@@ -4,6 +4,9 @@ import inject from '@rollup/plugin-inject'
 import type { UserConfig } from 'vite'
 import nodePolyfills from 'rollup-plugin-polyfill-node'
 
+// For further build env configs and troubleshooting 
+// checkout our official docs [here](https://onboard.blocknative.com/docs/modules/core#sveltekit-vite)
+
 const MODE = process.env.NODE_ENV
 const development = MODE === 'development'
 
