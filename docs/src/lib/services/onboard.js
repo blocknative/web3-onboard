@@ -42,7 +42,7 @@ const intiOnboard = async (theme) => {
   const { default: keepkeyModule } = await import('@web3-onboard/keepkey')
   const { default: gnosisModule } = await import('@web3-onboard/gnosis')
   const { default: sequenceModule } = await import('@web3-onboard/sequence')
-  const { default: tallyModule } = await import('@web3-onboard/tallyho')
+  const { default: tahoModule } = await import('@web3-onboard/taho')
   const { default: enkryptModule } = await import('@web3-onboard/enkrypt')
   const { default: mewWalletModule } = await import('@web3-onboard/mew-wallet')
   const { default: torusModule } = await import('@web3-onboard/torus')
@@ -71,7 +71,7 @@ const intiOnboard = async (theme) => {
   const sequence = sequenceModule()
   const enkrypt = enkryptModule()
   const mewWallet = mewWalletModule()
-  const tally = tallyModule()
+  const taho = tahoModule()
   const torus = torusModule()
   const trust = trustModule()
   const xdefi = xdefiModule()
@@ -116,7 +116,7 @@ const intiOnboard = async (theme) => {
       trust,
       gnosis,
       uauth,
-      tally,
+      taho,
       xdefi,
       torus,
       sequence,
