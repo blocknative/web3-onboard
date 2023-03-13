@@ -69,8 +69,11 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
           options &&
           options.version === 2 &&
           Array.isArray(options.requiredChains) &&
-          options.requiredChains.length
-            ? options.requiredChains
+          options.requiredChains.length &&
+          options.requiredChains.every(num => !isNaN(num) )
+              // @ts-ignore
+              // Required as WC package does not support hex numbers
+            ? options.requiredChains.map(chainID => parseInt(chainID))
             : [1]
 
         const connector = await EthereumProvider.init({
