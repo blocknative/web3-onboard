@@ -32,7 +32,7 @@ const intiOnboard = async (theme) => {
   const { default: trezorModule } = await import('@web3-onboard/trezor')
   const { default: ledgerModule } = await import('@web3-onboard/ledger')
   const { default: walletConnectModule } = await import('@web3-onboard/walletconnect')
-  const { default: infinityWalletModule } = await import('@web3-onboard/infinity-wallet')
+  // const { default: infinityWalletModule } = await import('@web3-onboard/infinity-wallet')
   const { default: coinbaseModule } = await import('@web3-onboard/coinbase')
   const { default: dcentModule } = await import('@web3-onboard/dcent')
   const { default: portisModule } = await import('@web3-onboard/portis')
@@ -53,7 +53,7 @@ const intiOnboard = async (theme) => {
   const INFURA_ID = '8b60d52405694345a99bcb82e722e0af'
 
   const injected = injectedModule()
-  const infinityWallet = infinityWalletModule()
+  // const infinityWallet = infinityWalletModule()
   const coinbase = coinbaseModule()
   const dcent = dcentModule()
   const walletConnect = walletConnectModule({
@@ -121,7 +121,7 @@ const intiOnboard = async (theme) => {
       torus,
       sequence,
       web3auth,
-      infinityWallet,
+      // infinityWallet,
       dcent,
       enkrypt,
       mewWallet,
