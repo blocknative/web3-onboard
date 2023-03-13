@@ -386,9 +386,9 @@ export enum ProviderRpcErrorCode {
 export interface Chain {
   namespace?: 'evm'
   id: ChainId
-  rpcUrl: string
-  label: string
-  token: TokenSymbol // eg ETH, BNB, MATIC
+  rpcUrl?: string
+  label?: string
+  token?: TokenSymbol // eg ETH, BNB, MATIC
   color?: string
   icon?: string // svg string
   providerConnectionInfo?: ConnectionInfo

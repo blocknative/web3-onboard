@@ -210,11 +210,14 @@
         label: 'Goerli',
         rpcUrl: `https://goerli.infura.io/v3/${infura_key}`
       },
+      // {
+      //   id: '0x13881',
+      //   token: 'MATIC',
+      //   label: 'Polygon - Mumbai',
+      //   rpcUrl: 'https://matic-mumbai.chainstacklabs.com	'
+      // },
       {
         id: '0x13881',
-        token: 'MATIC',
-        label: 'Polygon - Mumbai',
-        rpcUrl: 'https://matic-mumbai.chainstacklabs.com	'
       },
       {
         id: '0x38',
@@ -228,11 +231,14 @@
         label: 'Polygon',
         rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
       },
+      // {
+      //   id: 10,
+      //   token: 'OETH',
+      //   label: 'Optimism',
+      //   rpcUrl: 'https://mainnet.optimism.io'
+      // },
       {
         id: 10,
-        token: 'OETH',
-        label: 'Optimism',
-        rpcUrl: 'https://mainnet.optimism.io'
       },
       {
         id: 42161,
@@ -629,6 +635,9 @@
           >
           <button on:click={() => onboard.setChain({ chainId: '0x89' })}
             >Set Chain to Matic</button
+          >
+          <button on:click={() => onboard.setChain({ chainId: 10 })}
+            >Set Chain to Optimism</button
           >
         </div>
       </div>

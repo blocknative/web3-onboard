@@ -71,7 +71,7 @@ export function addChains(chains: Chain[]): void {
       ...rest,
       namespace,
       id: id.toLowerCase(),
-      rpcUrl: rpcUrl.trim()
+      rpcUrl: rpcUrl ? rpcUrl.trim() : null
     }))
   }
 
