@@ -20,7 +20,7 @@ const methods = [
 
 function walletConnect(options?: WalletConnectOptions): WalletInit {
   const projectId =
-    options && options.version == 2 ? options.projectId : undefined
+    options && options.version === 2 ? options.projectId : undefined
   if (!projectId) {
     throw new Error(
       'WalletConnect requires a projectId. Please visit https://cloud.walletconnect.com to get one.'
@@ -64,10 +64,22 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
           return wcMetaData
         }
 
+        // default to mainnet
+        const requiredChains =
+          options &&
+          options.version === 2 &&
+          Array.isArray(options.requiredChains) &&
+          options.requiredChains.length &&
+          options.requiredChains.every(num => !isNaN(num) )
+              // @ts-ignore
+              // Required as WC package does not support hex numbers
+            ? options.requiredChains.map(chainID => parseInt(chainID))
+            : [1]
+
         const connector = await EthereumProvider.init({
           projectId,
           metadata: getMetaData(),
-          chains: [1], // default to mainnet
+          chains: requiredChains, // default to mainnet
           optionalChains: chains.map(({ id }) => parseInt(id, 16)),
           optionalMethods: methods,
           rpcMap: chains
@@ -168,7 +180,7 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                 })
             }
 
-            (() => {
+            ;(() => {
               const session = this.connector.session
               if (session) {
                 this.emit('accountsChanged', this.connector.accounts)
