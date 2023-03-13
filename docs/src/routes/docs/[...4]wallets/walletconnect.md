@@ -55,6 +55,13 @@ type WalletConnectOptions = {
        * Defaults to version: 1 - this behavior will be deprecated after the WalletConnect v1 sunset
        */
       version: 2
+      /**
+       * List of Required Chain(s) ID for wallets to support in number format
+       * Defaults to [1] - Ethereum
+       * The chains defined within the web3-onboard config will define the 
+       * optional chains for the WalletConnect module
+       */
+      requiredChains?: number[] | undefined
     }
 )
 ```
@@ -106,4 +113,5 @@ console.log(connectedWallets)
 ```
 
 ## Build Environments
+
 For build env configurations and setups please see the Build Env section [here](/docs/modules/core#build-environments)

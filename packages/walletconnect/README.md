@@ -7,6 +7,7 @@
 `npm i @web3-onboard/core @web3-onboard/walletconnect`
 
 ## Not all Wallets support WalletConnect V2 currently
+
 _For an up to date list please see the [WalletConnect Explorer](https://explorer.walletconnect.com/?version=2)_
 
 ## Options
@@ -39,6 +40,13 @@ type WalletConnectOptions = {
        * Defaults to version: 1 - this behavior will be deprecated after the WalletConnect v1 sunset
        */
       version: 2
+      /**
+       * List of Required Chain(s) ID for wallets to support in number format
+       * Defaults to [1] - Ethereum
+       * The chains defined within the web3-onboard config will define the
+       * optional chains for the WalletConnect module
+       */
+      requiredChains?: number[] | undefined
     }
 )
 ```
@@ -52,7 +60,7 @@ import walletConnectModule from '@web3-onboard/walletconnect'
 const wcV1InitOptions = {
   bridge: 'YOUR_CUSTOM_BRIDGE_SERVER',
   qrcodeModalOptions: {
-    mobileLinks: ['metamask', 'argent', 'trust',]
+    mobileLinks: ['metamask', 'argent', 'trust']
   },
   connectFirstChainId: true
 }
