@@ -41,8 +41,7 @@ type WalletConnectOptions = {
        */
       version: 2
       /**
-       * List of Required Chain(s) ID for wallets to support in number format 
-       * Hex is NOT CURRENTLY SUPPORTED for this property
+       * List of Required Chain(s) ID for wallets to support in number format (integer or hex)
        * Defaults to [1] - Ethereum
        * The chains defined within the web3-onboard config will define the
        * optional chains for the WalletConnect module
