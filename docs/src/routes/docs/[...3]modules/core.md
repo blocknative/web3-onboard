@@ -111,10 +111,10 @@ An array of Chains that your app supports:
 ```ts
 type Chain = {
   id: ChainId // hex encoded string, eg '0x1' for Ethereum Mainnet
-  namespace?: 'evm' // string indicating chain namespace. Defaults to 'evm' but will allow other chain namespaces in the future
-  rpcUrl: string // used for network requests
-  label: string // used for display, eg Ethereum Mainnet
-  token: TokenSymbol // the native token symbol, eg ETH, BNB, MATIC
+  namespace?: 'evm' // string indicating chain namespace. Defaults to 'evm' but will allow other chain namespaces in the future 
+  rpcUrl?: string // Recommended to include. Used for network requests. 
+  label?: string // Recommended to include. Used for display, eg Ethereum Mainnet. 
+  token?: TokenSymbol // Recommended to include. The native token symbol, eg ETH, BNB, MATIC.
   color?: string // the color used to represent the chain and will be used as a background for the icon
   icon?: string // the icon to represent the chain
   publicRpcUrl?: string // an optional public RPC used when adding a new chain config to the wallet

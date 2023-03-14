@@ -204,20 +204,20 @@
         label: 'Ethereum',
         rpcUrl: `https://mainnet.infura.io/v3/${infura_key}`
       },
-      {
-        id: '0x5',
-        token: 'ETH',
-        label: 'Goerli',
-        rpcUrl: `https://goerli.infura.io/v3/${infura_key}`
-      },
       // {
-      //   id: '0x13881',
-      //   token: 'MATIC',
-      //   label: 'Polygon - Mumbai',
-      //   rpcUrl: 'https://matic-mumbai.chainstacklabs.com	'
+      //   id: '0x5',
+      //   token: 'ETH',
+      //   label: 'Goerli',
+      //   rpcUrl: `https://goerli.infura.io/v3/${infura_key}`
       // },
       {
+        id: '0x5'
+      },
+      {
         id: '0x13881',
+        token: 'MATIC',
+        label: 'Polygon - Mumbai',
+        rpcUrl: 'https://matic-mumbai.chainstacklabs.com	'
       },
       {
         id: '0x38',

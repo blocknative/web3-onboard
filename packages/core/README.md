@@ -82,9 +82,9 @@ An array of Chains that your app supports:
 type Chain = {
   id: ChainId // hex encoded string, eg '0x1' for Ethereum Mainnet
   namespace?: 'evm' // string indicating chain namespace. Defaults to 'evm' but will allow other chain namespaces in the future
-  rpcUrl?: string // used for network requests (eg Alchemy or Infura end point). PLEASE NOTE- if not included, users may have to manually add networks that do not already exist in their wallet. Recommended to include for best user experience.  
-  label?: string // used for display, eg Ethereum Mainnet. Recommended to include for best user experience. 
-  token?: TokenSymbol // the native token symbol, eg ETH, BNB, MATIC. Recommended to include for best user experience. 
+  rpcUrl?: string // Recommended to include. Used for network requests (eg Alchemy or Infura end point). 
+  label?: string // Recommended to include. Used for display, eg Ethereum Mainnet.  
+  token?: TokenSymbol // Recommended to include. The native token symbol, eg ETH, BNB, MATIC. 
   color?: string // the color used to represent the chain and will be used as a background for the icon
   icon?: string // the icon to represent the chain
   publicRpcUrl?: string // an optional public RPC used when adding a new chain config to the wallet
