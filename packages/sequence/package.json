@@ -56,7 +56,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.2.3",
+    "@web3-onboard/common": "^2.2.4-alpha.1",
     "0xsequence": "^0.43.1"
   },
   "peerDependencies": {

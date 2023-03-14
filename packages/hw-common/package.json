@@ -81,7 +81,7 @@
   },
   "dependencies": {
     "@ethereumjs/common": "2.6.2",
-    "@web3-onboard/common": "^2.2.3",
+    "@web3-onboard/common": "^2.2.4-alpha.1",
     "ethers": "5.5.4",
     "joi": "^17.6.1",
     "rxjs": "^7.5.2"

@@ -54,6 +54,6 @@
     "window": "^4.2.7"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.2.3"
+    "@web3-onboard/common": "^2.2.4-alpha.1"
   }
 }

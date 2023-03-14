@@ -63,7 +63,7 @@
     "@walletconnect/ethereum-provider": "2.4.10",
     "@walletconnect/client": "^1.8.0",
     "@walletconnect/qrcode-modal": "^1.8.0",
-    "@web3-onboard/common": "^2.2.3",
+    "@web3-onboard/common": "^2.2.4-alpha.1",
     "rxjs": "^7.5.2"
   }
 }
