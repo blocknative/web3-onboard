@@ -206,14 +206,11 @@
         label: 'Ethereum',
         rpcUrl: `https://mainnet.infura.io/v3/${infura_key}`
       },
-      // {
-      //   id: '0x5',
-      //   token: 'ETH',
-      //   label: 'Goerli',
-      //   rpcUrl: `https://goerli.infura.io/v3/${infura_key}`
-      // },
       {
-        id: '0x5'
+        id: '0x5',
+        token: 'ETH',
+        label: 'Goerli',
+        rpcUrl: `https://goerli.infura.io/v3/${infura_key}`
       },
       {
         id: '0x13881',
@@ -233,14 +230,11 @@
         label: 'Polygon',
         rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
       },
-      // {
-      //   id: 10,
-      //   token: 'OETH',
-      //   label: 'Optimism',
-      //   rpcUrl: 'https://mainnet.optimism.io'
-      // },
       {
         id: 10,
+        token: 'OETH',
+        label: 'Optimism',
+        rpcUrl: 'https://mainnet.optimism.io'
       },
       {
         id: 42161,

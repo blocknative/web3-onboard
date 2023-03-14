@@ -59,7 +59,7 @@
     "@myetherwallet/mewconnect-web-client": "^2.2.0-beta.14"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.2.4-alpha.1",
+    "@web3-onboard/common": "^2.2.3",
     "rxjs": "^7.5.2"
   }
 }

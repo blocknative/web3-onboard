@@ -135,7 +135,7 @@
         >
       {/if}
       {#each chains as chain (chain.id)}
-        <option value={chain.id}>{chain.label || chainIdToLabel[chain.id]}</option>
+        <option value={chain.id}>{chain.label || chainIdToLabel[chain.id] || chain.id}</option>
       {/each}
     </select>
   {/if}
