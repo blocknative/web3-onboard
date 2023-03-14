@@ -27,6 +27,7 @@ npm install @web3-onboard/core
   </TabPanel>
 </Tabs>
 
+#### All Wallet Modules
 If you would like to support all wallets, then you can install all of the wallet modules:
 
 <Tabs values={['yarn', 'npm']}>
@@ -95,12 +96,13 @@ type InitOptions {
 }
 
 ```
-
-### Options
+---
 
 #### wallets
 
-An array of wallet modules that you would like to be presented to the user to select from when connecting a wallet. A wallet module is an abstraction that allows for easy interaction without needing to know the specifics of how that wallet works and are separate packages that can be included.
+An array of wallet modules that you would like to be presented to the user to select from when connecting a wallet. A wallet module is an abstraction that allows for easy interaction without needing to know the specifics of how that wallet works and are separate packages that can be included. 
+These modules are separate @web3-onboard packages such as `@web3-onboard/injected-wallets` or `@web3-onboard/ledger`. 
+For a full list click [here](#all-wallet-modules).
 
 ---
 
