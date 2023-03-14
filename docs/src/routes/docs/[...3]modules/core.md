@@ -27,6 +27,7 @@ npm install @web3-onboard/core
   </TabPanel>
 </Tabs>
 
+#### All Wallet Modules
 If you would like to support all wallets, then you can install all of the wallet modules:
 
 <Tabs values={['yarn', 'npm']}>
@@ -95,16 +96,17 @@ type InitOptions {
 }
 
 ```
+---
 
-### Options
+#### wallets
 
-#### **wallets**
-
-An array of wallet modules that you would like to be presented to the user to select from when connecting a wallet. A wallet module is an abstraction that allows for easy interaction without needing to know the specifics of how that wallet works and are separate packages that can be included.
+An array of wallet modules that you would like to be presented to the user to select from when connecting a wallet. A wallet module is an abstraction that allows for easy interaction without needing to know the specifics of how that wallet works and are separate packages that can be included. 
+These modules are separate @web3-onboard packages such as `@web3-onboard/injected-wallets` or `@web3-onboard/ledger`. 
+For a full list click [here](#all-wallet-modules).
 
 ---
 
-#### **chains**
+#### chains
 
 An array of Chains that your app supports:
 
@@ -124,7 +126,7 @@ type Chain = {
 
 ---
 
-#### **appMetadata**
+#### appMetadata
 
 An object that defines your app:
 
@@ -169,7 +171,7 @@ type RecommendedInjectedWallets = {
 
 ---
 
-#### **connectModal**
+#### connectModal
 
 An object that allows for customizing the connect modal layout and behavior
 
@@ -202,13 +204,13 @@ type ConnectModalOptions = {
    * ENS resolution takes precedent over UNS
    * Defaults to false
    */
-    disableUDResolution?: boolean
+  disableUDResolution?: boolean
 }
 ```
 
 ---
 
-#### **i18n**
+#### i18n
 
 An object that defines the display text for different locales. Can also be used to override the default text. To override the default text, pass in an object for the `en` locale.
 
@@ -222,7 +224,7 @@ Onboard is using the [ICU syntax](https://formatjs.io/docs/core-concepts/icu-syn
 
 ---
 
-#### **theme**
+#### theme
 
 A string or an object that defines the color theme web3-onboard will render the components.
 
@@ -266,7 +268,7 @@ It will allow you to customize the look and feel of web3-onboard, try different 
 
 ---
 
-#### **accountCenter**
+#### accountCenter
 
 An object that defines whether the account center UI (default and minimal) is enabled and its position on the screen. Currently the account center is enabled for both desktop and mobile devices.
 
@@ -294,7 +296,7 @@ type AccountCenterPosition = 'topRight' | 'bottomRight' | 'bottomLeft' | 'topLef
 
 ---
 
-#### **containerElements**
+#### containerElements
 
 An object mapping for W3O components with the key being the DOM element to mount the specified component to.
 This defines the DOM container element for svelte to attach the component.
@@ -321,7 +323,7 @@ type ContainerElements = {
 
 ---
 
-#### **`notify`**
+#### notify
 
 Notify provides by default transaction notifications for all connected wallets on the current blockchain. When switching chains the previous chain listeners remain active for 60 seconds to allow capture and report of remaining transactions that may be in flight.
 By default transaction notifications are captured if a DAppID is provided in the Onboard config along with the Account Center being enabled.
@@ -458,6 +460,12 @@ const onboard = Onboard({
       token: 'ARB-ETH',
       label: 'Arbitrum',
       rpcUrl: 'https://rpc.ankr.com/arbitrum'
+    },
+    {
+      id: 84531,
+      token: 'ETH',
+      label: 'Base Goerli',
+      rpcUrl: 'https://goerli.base.org'
     }
   ],
   appMetadata: {
@@ -1383,7 +1391,122 @@ const config = {
 export default config
 ```
 
+### SvelteKit + Vite
+
+Checkout a boilerplate example (here)[https://github.com/blocknative/web3-onboard/tree/develop/examples/with-sveltekit]
+
+Add the following dev dependencies:
+
+`yarn add rollup-plugin-polyfill-node -D`
+
+Then add the following to your `svelte.config.js` file:
+
+```javascript
+import adapter from '@sveltejs/adapter-auto'
+import preprocess from 'svelte-preprocess'
+
+/** @type {import('@sveltejs/kit').Config} */
+const config = {
+  // Consult https://github.com/sveltejs/svelte-preprocess
+  // for more information about preprocessors
+  preprocess: preprocess(),
+
+  kit: {
+    adapter: adapter()
+  }
+}
+
+export default config
+```
+
+Then add the following to your `vite.config.js` file:
+
+```javascript
+import { sveltekit } from '@sveltejs/kit/vite'
+import inject from '@rollup/plugin-inject'
+
+import type { UserConfig } from 'vite'
+import nodePolyfills from 'rollup-plugin-polyfill-node'
+
+const MODE = process.env.NODE_ENV
+const development = MODE === 'development'
+
+/** @type {import('@sveltejs/kit').Config} */
+
+const config: UserConfig = {
+  plugins: [
+    sveltekit(),
+    development &&
+      nodePolyfills({
+        include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js'), 'http', 'crypto']
+      })
+  ],
+  resolve: {
+    alias: {
+      crypto: 'crypto-browserify',
+      stream: 'stream-browserify',
+      assert: 'assert'
+    }
+  },
+  build: {
+    rollupOptions: {
+      external: ['@web3-onboard/*'],
+      plugins: [
+        nodePolyfills({ include: ['crypto', 'http'] }),
+        inject({ Buffer: ['Buffer', 'Buffer'] })
+      ]
+    },
+    commonjsOptions: {
+      transformMixedEsModules: true
+    }
+  },
+  optimizeDeps: {
+    exclude: ['@ethersproject/hash', 'wrtc', 'http'],
+    include: [
+      '@web3-onboard/core',
+      '@web3-onboard/gas',
+      '@web3-onboard/sequence',
+      'js-sha3',
+      '@ethersproject/bignumber'
+    ],
+    esbuildOptions: {
+      // Node.js global to browser globalThis
+      define: {
+        global: 'globalThis'
+      }
+    }
+  },
+  define: {
+    global: 'window'
+  }
+}
+
+export default config
+```
+
+If an error presents around `window` being undefined remove the `define.global` block.
+Add this to your `app.html`
+
+```html
+<script>
+  var global = global || window
+</script>
+```
+
+##### Buffer polyfill
+
+It seems some component or dependency requires Node's Buffer. To polyfill this, the simplest way I could find was to install the buffer package and include the following in web3-onboard.ts:
+
+```javascript
+import { Buffer } from 'buffer'
+globalThis.Buffer = Buffer
+```
+
+See [this github issue](https://github.com/blocknative/web3-onboard/issues/1568#issuecomment-1463963462) for further troubleshooting
+
 ### Vite
+
+Checkout a boilerplate example for Vite-React (here)[https://github.com/blocknative/web3-onboard/tree/develop/examples/with-vite-react]
 
 Add the following dev dependencies:
 
@@ -1402,9 +1525,7 @@ export default {
   plugins: [
     development &&
       nodePolyfills({
-        include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js')],
-        http: true,
-        crypto: true
+        include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js'), 'http', 'crypto']
       })
   ],
   resolve: {
@@ -1416,11 +1537,34 @@ export default {
   },
   build: {
     rollupOptions: {
-      plugins: [nodePolyfills({ crypto: true, http: true })]
+      external: ['@web3-onboard/*'],
+      plugins: [
+        nodePolyfills({ include: ['crypto', 'http'] }),
+        inject({ Buffer: ['Buffer', 'Buffer'] })
+      ]
     },
     commonjsOptions: {
       transformMixedEsModules: true
     }
+  },
+  optimizeDeps: {
+    exclude: ['@ethersproject/hash', 'wrtc', 'http'],
+    include: [
+      '@web3-onboard/core',
+      '@web3-onboard/gas',
+      '@web3-onboard/sequence',
+      'js-sha3',
+      '@ethersproject/bignumber'
+    ],
+    esbuildOptions: {
+      // Node.js global to browser globalThis
+      define: {
+        global: 'globalThis'
+      }
+    }
+  },
+  define: {
+    global: 'window'
   }
 }
 ```
@@ -1437,8 +1581,23 @@ build: {
 
 ### Next.js
 
+Checkout a boilerplate example for NextJS v13 (here)[https://github.com/blocknative/web3-onboard/tree/develop/examples/with-nextjs-13]
+
+Checkout a boilerplate example for NextJS (here)[https://github.com/blocknative/web3-onboard/tree/develop/examples/with-nextjs]
+
 :::admonition type=note
 
 If you are seeing an error during builds when dynamically importing Web3Onboard in a NextJS v13 project, try upgrading to to the Canary beta release of NextJS where this issue is fixed.
 
 :::
+
+## Package Managers
+
+### npm and yarn
+
+Web3-Onboard will work out of the box with `npm` and `yarn` support.
+
+### pnpm
+
+We have had issues reported when using `pnpm` as the package manager when working with web3-onboard.
+As we work to understand this new manager more and the issues around it we recommend using `npm` or `yarn` for now.

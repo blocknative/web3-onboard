@@ -42,7 +42,7 @@ console.log(connectedWallets)
 - SafePal - _Desktop & Mobile_
 - Zerion - _Desktop & Mobile_
 - OKX Wallet - _Desktop_
-- Tally - _Desktop_
+- Taho (Previously named Tally Ho wallet) - _Desktop_
 - Trust - _Mobile_
 - Opera - _Desktop & Mobile_
 - Status - _Mobile_
