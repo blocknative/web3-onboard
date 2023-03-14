@@ -179,6 +179,12 @@ const intiOnboard = async (theme) => {
         token: 'ARB-ETH',
         label: 'Arbitrum',
         rpcUrl: 'https://rpc.ankr.com/arbitrum'
+      },
+      {
+        id: 84531,
+        token: 'ETH',
+        label: 'Base Goerli',
+        rpcUrl: 'https://goerli.base.org'
       }
     ],
     appMetadata: {
