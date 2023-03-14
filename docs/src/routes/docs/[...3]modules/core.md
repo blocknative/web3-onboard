@@ -458,6 +458,12 @@ const onboard = Onboard({
       token: 'ARB-ETH',
       label: 'Arbitrum',
       rpcUrl: 'https://rpc.ankr.com/arbitrum'
+    },
+    {
+      id: 84531,
+      token: 'ETH',
+      label: 'Base Goerli',
+      rpcUrl: 'https://goerli.base.org'
     }
   ],
   appMetadata: {
@@ -1478,21 +1484,23 @@ export default config
 
 If an error presents around `window` being undefined remove the `define.global` block.
 Add this to your `app.html`
+
 ```html
 <script>
-      var global = global || window
+  var global = global || window
 </script>
 ```
 
 ##### Buffer polyfill
+
 It seems some component or dependency requires Node's Buffer. To polyfill this, the simplest way I could find was to install the buffer package and include the following in web3-onboard.ts:
 
 ```javascript
 import { Buffer } from 'buffer'
 globalThis.Buffer = Buffer
 ```
-See [this github issue](https://github.com/blocknative/web3-onboard/issues/1568#issuecomment-1463963462) for further troubleshooting
 
+See [this github issue](https://github.com/blocknative/web3-onboard/issues/1568#issuecomment-1463963462) for further troubleshooting
 
 ### Vite
 
@@ -1575,13 +1583,11 @@ Checkout a boilerplate example for NextJS v13 (here)[https://github.com/blocknat
 
 Checkout a boilerplate example for NextJS (here)[https://github.com/blocknative/web3-onboard/tree/develop/examples/with-nextjs]
 
-
 :::admonition type=note
 
 If you are seeing an error during builds when dynamically importing Web3Onboard in a NextJS v13 project, try upgrading to to the Canary beta release of NextJS where this issue is fixed.
 
 :::
-
 
 ## Package Managers
 
@@ -1590,5 +1596,6 @@ If you are seeing an error during builds when dynamically importing Web3Onboard 
 Web3-Onboard will work out of the box with `npm` and `yarn` support.
 
 ### pnpm
+
 We have had issues reported when using `pnpm` as the package manager when working with web3-onboard.
 As we work to understand this new manager more and the issues around it we recommend using `npm` or `yarn` for now.
