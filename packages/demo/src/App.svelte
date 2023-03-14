@@ -27,6 +27,7 @@
   import phantomModule from '@web3-onboard/phantom'
   import trustModule from '@web3-onboard/trust'
   import frontierModule from '@web3-onboard/frontier'
+  import blocknativeIcon from './blocknative-icon.js'
   import {
     recoverAddress,
     arrayify,
@@ -240,6 +241,12 @@
         token: 'ARB-ETH',
         label: 'Arbitrum',
         rpcUrl: 'https://rpc.ankr.com/arbitrum'
+      },
+      {
+        id: 84531,
+        token: 'ETH',
+        label: 'Base Goerli',
+        rpcUrl: 'https://goerli.base.org'
       }
     ],
     connect: {
@@ -249,7 +256,7 @@
     },
     appMetadata: {
       name: 'Blocknative',
-      // icon: blocknativeIcon,
+      icon: blocknativeIcon,
       // logo: blocknativeLogo,
       description: 'Demo app for Onboard V2',
       recommendedInjectedWallets: [
