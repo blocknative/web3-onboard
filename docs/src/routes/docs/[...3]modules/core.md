@@ -321,7 +321,7 @@ type ContainerElements = {
 
 ---
 
-#### **`notify`**
+#### **notify**
 
 Notify provides by default transaction notifications for all connected wallets on the current blockchain. When switching chains the previous chain listeners remain active for 60 seconds to allow capture and report of remaining transactions that may be in flight.
 By default transaction notifications are captured if a DAppID is provided in the Onboard config along with the Account Center being enabled.
