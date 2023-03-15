@@ -13,7 +13,7 @@ import magicModule from '@web3-onboard/magic'
 import dcentModule from '@web3-onboard/dcent'
 import mewModule from '@web3-onboard/mew-wallet'
 import sequenceModule from '@web3-onboard/sequence'
-import tallyHoWalletModule from '@web3-onboard/tallyho'
+import tahoWalletModule from '@web3-onboard/taho'
 import web3authModule from '@web3-onboard/web3auth'
 
 import { init } from '@web3-onboard/react'
@@ -50,7 +50,7 @@ const keystone = keystoneModule()
 const gnosis = gnosisModule()
 const dcent = dcentModule()
 const mew = mewModule()
-const talltHoWalletSdk = tallyHoWalletModule()
+const tahoWalletSdk = tahoWalletModule() // Previously named Tally Ho wallet
 const web3auth = web3authModule({
   clientId:
     'DJuUOKvmNnlzy6ruVgeWYWIMKLRyYtjYa9Y10VCeJzWZcygDlrYLyXsBQjpJ2hxlBO9dnl8t9GmAC2qOP5vnIGo'
@@ -88,7 +88,7 @@ export default init({
     keystone,
     dcent,
     mew,
-    talltHoWalletSdk,
+    tahoWalletSdk,
     web3auth,
     sequence
   ],

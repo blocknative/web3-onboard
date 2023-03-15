@@ -42,7 +42,7 @@ const intiOnboard = async (theme) => {
   const { default: keepkeyModule } = await import('@web3-onboard/keepkey')
   const { default: gnosisModule } = await import('@web3-onboard/gnosis')
   const { default: sequenceModule } = await import('@web3-onboard/sequence')
-  const { default: tallyModule } = await import('@web3-onboard/tallyho')
+  const { default: tahoModule } = await import('@web3-onboard/taho')
   const { default: enkryptModule } = await import('@web3-onboard/enkrypt')
   const { default: mewWalletModule } = await import('@web3-onboard/mew-wallet')
   const { default: torusModule } = await import('@web3-onboard/torus')
@@ -56,7 +56,14 @@ const intiOnboard = async (theme) => {
   // const infinityWallet = infinityWalletModule()
   const coinbase = coinbaseModule()
   const dcent = dcentModule()
-  const walletConnect = walletConnectModule()
+  const walletConnect = walletConnectModule({
+    connectFirstChainId: true,
+    version: 2,
+    projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
+    qrcodeModalOptions: {
+      mobileLinks: ['rainbow', 'metamask', 'argent', 'trust', 'imtoken', 'pillar']
+    }
+  })
   const ledger = ledgerModule()
   const keystone = keystoneModule()
   const keepkey = keepkeyModule()
@@ -64,7 +71,7 @@ const intiOnboard = async (theme) => {
   const sequence = sequenceModule()
   const enkrypt = enkryptModule()
   const mewWallet = mewWalletModule()
-  const tally = tallyModule()
+  const taho = tahoModule()
   const torus = torusModule()
   const trust = trustModule()
   const xdefi = xdefiModule()
@@ -109,7 +116,7 @@ const intiOnboard = async (theme) => {
       trust,
       gnosis,
       uauth,
-      tally,
+      taho,
       xdefi,
       torus,
       sequence,
@@ -172,6 +179,12 @@ const intiOnboard = async (theme) => {
         token: 'ARB-ETH',
         label: 'Arbitrum',
         rpcUrl: 'https://rpc.ankr.com/arbitrum'
+      },
+      {
+        id: 84531,
+        token: 'ETH',
+        label: 'Base Goerli',
+        rpcUrl: 'https://goerli.base.org'
       }
     ],
     appMetadata: {

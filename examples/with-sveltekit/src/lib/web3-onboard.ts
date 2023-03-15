@@ -4,7 +4,12 @@ import injectedWalletsModule from '@web3-onboard/injected-wallets'
 import walletConnectModule from '@web3-onboard/walletconnect'
 
 const injected = injectedWalletsModule()
-const walletConnect = walletConnectModule()
+const walletConnect = walletConnectModule({
+  connectFirstChainId: true,
+  qrcodeModalOptions: {
+  mobileLinks: ['rainbow', 'metamask', 'argent', 'trust', 'imtoken', 'pillar']
+  }
+})
 
 const wallets = [injected, walletConnect]
 
