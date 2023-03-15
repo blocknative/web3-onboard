@@ -56,7 +56,7 @@
   "dependencies": {
     "bnc-sdk": "^4.6.6",
     "@web3-onboard/coinbase": "^2.1.4",
-    "@web3-onboard/core": "^2.15.5",
+    "@web3-onboard/core": "^2.15.6-alpha.2",
     "@web3-onboard/dcent": "^2.2.3",
     "@web3-onboard/enkrypt": "^2.0.0",
     "@web3-onboard/fortmatic": "^2.0.14",
