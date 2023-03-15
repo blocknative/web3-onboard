@@ -17,7 +17,7 @@
     "@web3-onboard/fortmatic": "^2.0.16-alpha.1",
     "@web3-onboard/gnosis": "^2.1.7-alpha.1",
     "@web3-onboard/injected-wallets": "^2.8.3-alpha.1",
-    "@web3-onboard/keepkey": "^2.3.1",
+    "@web3-onboard/keepkey": "^2.3.4-alpha.1",
     "@web3-onboard/keystone": "^2.3.4-alpha.1",
     "@web3-onboard/ledger": "^2.4.3-alpha.1",
     "@web3-onboard/magic": "^2.1.4-alpha.1",
