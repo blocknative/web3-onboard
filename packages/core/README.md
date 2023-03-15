@@ -910,12 +910,15 @@ type SetChainOptions = {
   chainId: string // hex encoded string
   chainNamespace?: 'evm' // defaults to 'evm' (currently the only valid value, but will add more in future updates)
   wallet?: string // the wallet.label of the wallet to set chain
+  rpcUrl?: string // if chain was instantiated without rpcUrl, include here. Used for network requests
+  token?: string // if chain was instantiated without token, include here. Used for display, eg Ethereum Mainnet
+  label?: string // if chain was instantiated without label, include here. The native token symbol, eg ETH, BNB, MATIC
 }
 
 const success = await onboard.setChain({ chainId: '0x89' })
 ```
 
-The `setChain` methods takes an options object with a `chainId` property hex encoded string for the chain id to switch to. The chain id must be one of the chains that Onboard was initialized with. If the wallet supports programatically adding and switching the chain, then the user will be prompted to do so, if not, then a modal will be displayed indicating to the user that they need to switch chains to continue. The `setChain` method returns a promise that resolves when either the user has confirmed the chain switch, or has dismissed the modal and resolves with a boolean indicating if the switch network was successful or not. The `setChain` method will by default switch the first wallet (the most recently connected) in the `wallets` array. A specific wallet can be targeted by passing in the `wallet.label` in the options object as the `wallet` parameter.
+The `setChain` methods takes an options object with a `chainId` property hex encoded string for the chain id to switch to. The chain id must be one of the chains that Onboard was initialized with. If the wallet supports programatically adding and switching the chain, then the user will be prompted to do so, if not, then a modal will be displayed indicating to the user that they need to switch chains to continue. The `setChain` method returns a promise that resolves when either the user has confirmed the chain switch, or has dismissed the modal and resolves with a boolean indicating if the switch network was successful or not. The `setChain` method will by default switch the first wallet (the most recently connected) in the `wallets` array. A specific wallet can be targeted by passing in the `wallet.label` in the options object as the `wallet` parameter. If a chain was instantiated without an rpcUrl, token, or label, you can add these options for wallets that require this information for adding a new chain.
 
 ## Custom Styling
 

@@ -6,7 +6,6 @@
   import { wallets$ } from '../../streams.js'
   import { distinctUntilChanged, debounceTime, skip } from 'rxjs/operators'
   import caretIcon from '../../icons/caret.js'
-  import { id } from 'ethers/lib/utils.js'
 
   export let selectIcon: string = caretIcon
   export let colorVar: string

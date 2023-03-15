@@ -196,7 +196,10 @@ type UseSetChain = (
 type SetChainOptions = {
   chainId: string
   chainNamespace?: string
-  wallet?: WalletState['label']
+  wallet?: WalletState['label'],
+  rpcUrl?: string,
+  label?: string,
+  token?: string,
 }
 
 const [

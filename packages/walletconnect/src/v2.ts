@@ -85,7 +85,7 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
           rpcMap: chains
             .map(({ id, rpcUrl }) => ({ id, rpcUrl }))
             .reduce((rpcMap: Record<number, string>, { id, rpcUrl }) => {
-              rpcMap[parseInt(id, 16)] = rpcUrl
+              rpcMap[parseInt(id, 16)] = rpcUrl || ''
               return rpcMap
             }, {})
         })

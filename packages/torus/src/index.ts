@@ -42,7 +42,7 @@ function torus(options?: TorusOptions): WalletInit {
           buildEnv,
           enableLogging,
           network: {
-            host: chain.rpcUrl,
+            host: chain.rpcUrl || '',
             chainId: parseInt(chain.id),
             networkName: chain.label
           },
@@ -73,7 +73,7 @@ function torus(options?: TorusOptions): WalletInit {
             if (!chain) throw new Error('chain must be set before switching')
 
             await instance.setProvider({
-              host: chain.rpcUrl,
+              host: chain.rpcUrl || '',
               chainId: parseInt(chain.id),
               networkName: chain.label
             })

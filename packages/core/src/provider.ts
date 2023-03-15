@@ -445,20 +445,23 @@ export function switchChain(
 
 export function addNewChain(
   provider: EIP1193Provider,
-  chain: Chain
+  chain: Chain,
+  rpcUrl?: string,
+  label?: string,
+  token?: string,
 ): Promise<unknown> {
   return provider.request({
     method: 'wallet_addEthereumChain',
     params: [
       {
         chainId: chain.id,
-        chainName: chain.label,
+        chainName: chain.label || label,
         nativeCurrency: {
-          name: chain.label,
-          symbol: chain.token,
+          name: chain.label || label,
+          symbol: chain.token || token,
           decimals: 18
         },
-        rpcUrls: [chain.publicRpcUrl || chain.rpcUrl],
+        rpcUrls: [chain.publicRpcUrl || chain.rpcUrl || rpcUrl],
         blockExplorerUrls: chain.blockExplorerUrl
           ? [chain.blockExplorerUrl]
           : undefined
