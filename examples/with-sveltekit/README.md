@@ -36,3 +36,8 @@ npm run build
 You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+
+
+## Build env configurations and troubleshooting
+
+For further build env configs and troubleshooting checkout our official docs [here](https://onboard.blocknative.com/docs/modules/core#sveltekit-vite)

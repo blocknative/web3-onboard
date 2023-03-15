@@ -369,6 +369,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/infinity-wallet
     steps:
       - node-build-steps
+  build-taho:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/taho
+    steps:
+      - node-build-steps
 
   # Build staging/Alpha releases
   build-staging-core:
@@ -573,6 +579,12 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/infinity-wallet
+    steps:
+      - node-staging-build-steps
+  build-staging-taho:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/taho
     steps:
       - node-staging-build-steps
 
@@ -782,4 +794,10 @@ workflows:
       - build-infinity-wallet:
           <<: *deploy_production_filters
       - build-staging-infinity-wallet:
+          <<: *deploy_staging_filters
+  taho:
+    jobs:
+      - build-taho:
+          <<: *deploy_production_filters
+      - build-staging-taho:
           <<: *deploy_staging_filters
