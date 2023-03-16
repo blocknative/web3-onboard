@@ -1404,7 +1404,7 @@ const config: UserConfig = {
       external: ['@web3-onboard/*'],
       plugins: [
         nodePolyfills({ include: ['crypto', 'http'] }),
-        inject({ Buffer: ['Buffer', 'Buffer'] })
+        inject({ Buffer: ['buffer', 'Buffer'] })
       ]
     },
     commonjsOptions: {
@@ -1463,6 +1463,8 @@ Add the following dev dependencies:
 Then add the following to your `vite.config.js` file:
 
 ```javascript
+import inject from '@rollup/plugin-inject'
+
 import nodePolyfills from 'rollup-plugin-polyfill-node'
 
 const MODE = process.env.NODE_ENV
@@ -1494,7 +1496,7 @@ export default {
       external: ['@web3-onboard/*'],
       plugins: [
         nodePolyfills({ include: ['crypto', 'http'] }),
-        inject({ Buffer: ['Buffer', 'Buffer'] })
+        inject({ Buffer: ['buffer', 'Buffer'] })
       ]
     },
     commonjsOptions: {
