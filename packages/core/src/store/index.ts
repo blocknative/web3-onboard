@@ -18,7 +18,8 @@ import type {
   AddNotificationAction,
   RemoveNotificationAction,
   UpdateAllWalletsAction,
-  UpdateConnectModalAction
+  UpdateConnectModalAction,
+  UpdateChainsAction
 } from '../types.js'
 
 import {
@@ -35,7 +36,8 @@ import {
   SET_LOCALE,
   ADD_NOTIFICATION,
   REMOVE_NOTIFICATION,
-  UPDATE_ALL_WALLETS
+  UPDATE_ALL_WALLETS,
+  UPDATE_CHAINS
 } from './constants.js'
 
 function reducer(state: AppState, action: Action): AppState {
@@ -47,6 +49,17 @@ function reducer(state: AppState, action: Action): AppState {
         ...state,
         chains: [...state.chains, ...(payload as Chain[])]
       }
+    
+    case UPDATE_CHAINS: {
+      const updatedChain = payload as UpdateChainsAction['payload']
+      const chains = state.chains
+      const index = chains.findIndex((chain) => chain.id === updatedChain.id)
+      chains[index] = updatedChain
+      return {
+        ...state,
+        chains
+      }
+    }
 
     case ADD_WALLET: {
       const wallet = payload as AddWalletAction['payload']

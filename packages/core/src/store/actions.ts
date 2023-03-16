@@ -28,7 +28,8 @@ import type {
   Notify,
   ConnectModalOptions,
   UpdateConnectModalAction,
-  Theme
+  Theme,
+  UpdateChainsAction
 } from '../types.js'
 
 import {
@@ -60,7 +61,8 @@ import {
   ADD_NOTIFICATION,
   REMOVE_NOTIFICATION,
   UPDATE_ALL_WALLETS,
-  UPDATE_CONNECT_MODAL
+  UPDATE_CONNECT_MODAL,
+  UPDATE_CHAINS
 } from './constants.js'
 
 export function addChains(chains: Chain[]): void {
@@ -76,6 +78,15 @@ export function addChains(chains: Chain[]): void {
   }
 
   dispatch(action as AddChainsAction)
+}
+
+export function updateChain(updatedChain: Chain): void {
+  // KAT TODO validate chain
+  const action = {
+    type: UPDATE_CHAINS,
+    payload: updatedChain
+  }
+  dispatch(action as UpdateChainsAction)
 }
 
 export function addWallet(wallet: WalletState): void {

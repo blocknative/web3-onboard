@@ -7,6 +7,7 @@ import { switchChainModal$ } from './streams.js'
 import { validateSetChainOptions } from './validation.js'
 import type { WalletState } from './types.js'
 import { toHexString } from './utils.js'
+import { updateChain } from './store/actions.js'
 
 async function setChain(options: {
   chainId: string | number,
@@ -74,14 +75,19 @@ async function setChain(options: {
       code === ProviderRpcErrorCode.UNRECOGNIZED_CHAIN_ID
     ) {
       // chain has not been added to wallet
+      if (rpcUrl || label || token) {
+        // If values passed, update chain in state
+        chain.rpcUrl = rpcUrl
+        chain.label = label
+        chain.token = token
+        updateChain(chain)
+      }
+      // add chain to wallet
       return chainNotInWallet(
         wallet,
         chain,
         switchChainModalClosed$,
         chainIdHex,
-        rpcUrl,
-        label,
-        token,
       )
     }
 
@@ -100,12 +106,9 @@ const chainNotInWallet = async (
   chain: Chain,
   switchChainModalClosed$: Observable<boolean>,
   chainIdHex: string,
-  rpcUrl?: string,
-  label?: string,
-  token?: string,
 ): Promise<boolean> => {
   try {
-    await addNewChain(wallet.provider, chain, rpcUrl, label, token)
+    await addNewChain(wallet.provider, chain)
     await switchChain(wallet.provider, chainIdHex)
     return true
   } catch (error) {
