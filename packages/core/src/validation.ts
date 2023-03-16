@@ -185,6 +185,7 @@ const containerElements = Joi.object({
 
 const themeMap = Joi.object({
   '--w3o-background-color': Joi.string(),
+  '--w3o-font-family': Joi.string(),
   '--w3o-foreground-color': Joi.string(),
   '--w3o-text-color': Joi.string(),
   '--w3o-border-color': Joi.string(),

@@ -170,6 +170,7 @@ export type Theme = ThemingMap | BuiltInThemes | 'system'
 export type BuiltInThemes = 'default' | 'dark' | 'light'
 export type ThemingMap = {
   '--w3o-background-color'?: string
+  '--w3o-font-family'?: string
   '--w3o-foreground-color'?: string
   '--w3o-text-color'?: string
   '--w3o-border-color'?: string
