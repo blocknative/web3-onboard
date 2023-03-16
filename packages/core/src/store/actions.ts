@@ -44,7 +44,8 @@ import {
   validateUpdateBalances,
   validateNotify,
   validateConnectModalUpdate,
-  validateUpdateTheme
+  validateUpdateTheme,
+  validateSetChainOptions
 } from '../validation.js'
 
 import {
@@ -81,7 +82,20 @@ export function addChains(chains: Chain[]): void {
 }
 
 export function updateChain(updatedChain: Chain): void {
-  // KAT TODO validate chain
+  const {
+    label, 
+    token, 
+    rpcUrl, 
+    id: chainId, 
+    namespace: chainNamespace
+  } = updatedChain
+  const error = validateSetChainOptions(
+    { label, token, rpcUrl, chainId, chainNamespace }
+  )
+
+  if (error) {
+    throw error
+  }
   const action = {
     type: UPDATE_CHAINS,
     payload: updatedChain
