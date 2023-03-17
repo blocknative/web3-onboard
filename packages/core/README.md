@@ -1043,9 +1043,8 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-action-required-btn-text-color
 
   /* FONTS */
-  --onboard-font-family-normal: Sofia Pro;
-  --onboard-font-family-semibold: Sofia Pro Semibold;
-  --onboard-font-family-light: Sofia Pro Light;
+  --onboard-font-family-normal: Inter;
+  --onboard-font-family-light: Inter Light;
 
   --onboard-font-size-1: 3rem;
   --onboard-font-size-2: 2.25rem;

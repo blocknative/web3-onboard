@@ -6,7 +6,7 @@ import { state } from './store/index.js'
 import { reset$, wallets$ } from './streams.js'
 import initI18N from './i18n/index.js'
 import App from './views/Index.svelte'
-import type { InitOptions, Notify } from './types.js'
+import type { InitOptions, Notify, Theme } from './types.js'
 import { APP_INITIAL_STATE, STORAGE_KEYS } from './constants.js'
 import { configuration, updateConfiguration } from './configuration.js'
 import updateBalances from './update-balances.js'
@@ -197,7 +197,7 @@ function init(options: InitOptions): OnboardAPI {
     updateNotify(notifyUpdate)
   }
 
-  const app = svelteInstance || mountApp()
+  const app = svelteInstance || mountApp(theme)
 
   updateConfiguration({
     appMetadata,
@@ -241,7 +241,20 @@ function init(options: InitOptions): OnboardAPI {
   return API
 }
 
-function mountApp() {
+const fontFamilyExternallyDefined = (theme: Theme): boolean => {
+  if (!theme) return false
+  if (typeof theme === 'object' && theme['--w3o-font-family']) return true
+  if (
+    document.body &&
+    getComputedStyle(document.body).getPropertyValue(
+      '--onboard-font-family-normal'
+    )
+  )
+    return true
+  return false
+}
+
+function mountApp(theme: Theme) {
   class Onboard extends HTMLElement {
     constructor() {
       super()
@@ -251,15 +264,28 @@ function mountApp() {
   if (!customElements.get('onboard-v2')) {
     customElements.define('onboard-v2', Onboard)
   }
+  console.log('theme check', theme)
+  if (!fontFamilyExternallyDefined(theme)) {
+    console.log('here')
+    // const myFont = new FontFace(
+    //   'Inter',
+    //   'url(https://fonts.gstatic.com/s/pacifico/v21/FwZY7-Qmy14u9lezJ-6H6MmBp0u-.woff2)'
+    // )
+    // myFont.load().then(() => {
 
-  // Add Fonts to main page
-  const styleEl = document.createElement('style')
+    //   document.fonts.add(myFont);
+    // });
 
-  styleEl.innerHTML = `
-    ${SofiaProRegular}
-  `
-
-  document.body.appendChild(styleEl)
+    const link = document.createElement('link')
+    link.rel = 'preconnect'
+    link.href = 'https://rsms.me/'
+    const link2 = document.createElement('link')
+    link2.rel = 'stylesheet'
+    link2.href = 'https://rsms.me/inter/inter.css'
+    // Add Fonts to main page
+    document.head.appendChild(link)
+    document.head.appendChild(link2)
+  }
 
   // add to DOM
   const onboard = document.createElement('onboard-v2')
@@ -268,8 +294,10 @@ function mountApp() {
   onboard.style.all = 'initial'
 
   target.innerHTML = `
-      <style>
-        :host {
+
+  <style>
+
+    :host {
           /* COLORS */
           --white: white;
           --black: black;
@@ -311,7 +339,7 @@ function mountApp() {
           --warning-700: #664600;
 
           /* FONTS */
-          --font-family-normal: Sofia Pro;
+          --font-family-normal: Inter;
 
           --font-size-1: 3rem;
           --font-size-2: 2.25rem;
