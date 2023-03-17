@@ -75,19 +75,22 @@ async function setChain(options: {
       code === ProviderRpcErrorCode.UNRECOGNIZED_CHAIN_ID
     ) {
       // chain has not been added to wallet
-      if (rpcUrl) {
-        chain.rpcUrl = rpcUrl
+      if (rpcUrl || label || token) {
+        if (rpcUrl) {
+          chain.rpcUrl = rpcUrl
+        }
+  
+        if (label) {
+          chain.label = label
+        }
+        
+        if (token) {
+          chain.token = token
+        }
+              
+        updateChain(chain)
       }
 
-      if (label) {
-        chain.label = label
-      }
-      
-      if (token) {
-        chain.token = token
-      }
-            
-      updateChain(chain)
       // add chain to wallet
       return chainNotInWallet(
         wallet,
