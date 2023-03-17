@@ -196,6 +196,13 @@ export type ConnectModalOptions = {
    */
   iDontHaveAWalletLink?: string
   /**
+   * Customize the link for the `Where's My Wallet` info pop up shown on the
+   * select wallet modal.
+   * KAT TODO- update link
+   * Defaults to `https://ethereum.org/en/wallets/find-wallet/#main-content`
+   */
+  wheresMyWalletLink?: string
+  /**
    * Define support for Unstoppable Domains resolutions
    * after a user connects. Similar to ens, uns can be used for users who
    * have minted an Unstoppable Domain and associated it with their wallet.

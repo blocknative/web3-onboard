@@ -252,7 +252,8 @@
     connect: {
       // disableClose: true,
       // disableUDResolution: true,
-      autoConnectLastWallet: true
+      autoConnectLastWallet: true,
+      wheresMyWalletLink: 'https://explore.org/livecams/brown-bears/brown-bear-salmon-cam-brooks-falls'
     },
     appMetadata: {
       name: 'Blocknative',

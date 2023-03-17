@@ -9,13 +9,18 @@
   export let selectWallet: (wallet: WalletWithLoadingIcon) => Promise<void>
   export let connectingWalletLabel: string
   export let connectingErrorMessage: string
+  export let dontSeeMyWalletMessage: boolean
 
   let windowWidth: number
+  const { connect } = state.get()
 
   function checkConnected(label: string) {
     const { wallets } = state.get()
     return !!wallets.find(wallet => wallet.label === label)
   }
+
+  // KAT TODO- update with blog link
+  const wheresMyWalletDefault = 'https://cuberule.com/'
 </script>
 
 <style>
@@ -57,6 +62,20 @@
   {#if connectingErrorMessage}
     <div class="warning-container">
       <Warning>{@html connectingErrorMessage}</Warning>
+    </div>
+  {/if}
+
+  {#if dontSeeMyWalletMessage}
+    <div class="warning-container">
+      <Warning>
+        <div>
+          <div>Why don't I see my Wallet?</div>
+          <a class="link pointer"
+          href={connect.wheresMyWalletLink || wheresMyWalletDefault}
+          target="_blank"
+          rel="noreferrer noopener">Click here to learn more</a>
+        </div>
+      </Warning>
     </div>
   {/if}
 
