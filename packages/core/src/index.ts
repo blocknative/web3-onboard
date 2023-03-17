@@ -1,4 +1,4 @@
-import { SofiaProRegular } from '@web3-onboard/common'
+import { InterRegular, InterSemiBold } from '@web3-onboard/common'
 import connectWallet from './connect.js'
 import disconnectWallet from './disconnect.js'
 import setChain from './chain.js'
@@ -264,27 +264,17 @@ function mountApp(theme: Theme) {
   if (!customElements.get('onboard-v2')) {
     customElements.define('onboard-v2', Onboard)
   }
-  console.log('theme check', theme)
+
   if (!fontFamilyExternallyDefined(theme)) {
-    console.log('here')
-    // const myFont = new FontFace(
-    //   'Inter',
-    //   'url(https://fonts.gstatic.com/s/pacifico/v21/FwZY7-Qmy14u9lezJ-6H6MmBp0u-.woff2)'
-    // )
-    // myFont.load().then(() => {
-
-    //   document.fonts.add(myFont);
-    // });
-
-    const link = document.createElement('link')
-    link.rel = 'preconnect'
-    link.href = 'https://rsms.me/'
-    const link2 = document.createElement('link')
-    link2.rel = 'stylesheet'
-    link2.href = 'https://rsms.me/inter/inter.css'
     // Add Fonts to main page
-    document.head.appendChild(link)
-    document.head.appendChild(link2)
+    const styleEl = document.createElement('style')
+
+    styleEl.innerHTML = `
+    ${InterRegular}
+    ${InterSemiBold}
+  `
+
+    document.body.appendChild(styleEl)
   }
 
   // add to DOM
@@ -296,7 +286,6 @@ function mountApp(theme: Theme) {
   target.innerHTML = `
 
   <style>
-
     :host {
           /* COLORS */
           --white: white;
@@ -339,7 +328,7 @@ function mountApp(theme: Theme) {
           --warning-700: #664600;
 
           /* FONTS */
-          --font-family-normal: Inter;
+          --font-family-normal: Inter, sans-serif;
 
           --font-size-1: 3rem;
           --font-size-2: 2.25rem;

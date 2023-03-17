@@ -203,10 +203,6 @@
       --login-modal-danger-500,
       var(--onboard-danger-500, var(--danger-500))
     );
-    font-family: var(
-      --login-modal-font-family-light,
-      var(--onboard-font-family-light, var(--font-family-light))
-    );
   }
 
   @media all and (max-width: 520px) {

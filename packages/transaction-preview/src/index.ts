@@ -2,8 +2,8 @@ import { firstValueFrom, Subject } from 'rxjs'
 import {
   ProviderRpcError,
   ProviderRpcErrorCode,
-  SofiaProLight,
-  SofiaProRegular
+  InterRegular,
+  InterSemiBold
 } from '@web3-onboard/common'
 import type {
   PatchedEIP1193Provider,
@@ -241,6 +241,18 @@ const init = (initOptions: TransactionPreviewInitOptions): void => {
   options = { ...initOptions, ...optionalSettings }
 }
 
+const fontFamilyExternallyDefined = (): boolean => {
+  if (
+    document.body &&
+    (getComputedStyle(document.body).getPropertyValue('--w3o-font-family') ||
+      getComputedStyle(document.body).getPropertyValue(
+        '--onboard-font-family-normal'
+      ))
+  )
+    return true
+  return false
+}
+
 const mountTransactionPreview = (simResponse: MultiSimOutput) => {
   class TransactionPreviewEl extends HTMLElement {
     constructor() {
@@ -252,14 +264,17 @@ const mountTransactionPreview = (simResponse: MultiSimOutput) => {
     customElements.define('transaction-preview', TransactionPreviewEl)
   }
 
-  // Add Fonts to main page
-  const styleEl = document.createElement('style')
+  if (!fontFamilyExternallyDefined()) {
+    // Add Fonts to main page
+    const styleEl = document.createElement('style')
 
-  styleEl.innerHTML = `
-    ${SofiaProRegular}
-    ${SofiaProLight}
+    styleEl.innerHTML = `
+    ${InterRegular}
+    ${InterSemiBold}
   `
-  document.body.appendChild(styleEl)
+
+    document.body.appendChild(styleEl)
+  }
 
   // add to DOM
   const transactionPreviewDomElement = document.createElement(

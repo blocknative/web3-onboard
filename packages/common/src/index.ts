@@ -1,6 +1,6 @@
 export { ProviderRpcError } from './errors.js'
 export { createEIP1193Provider } from './eip-1193.js'
-export { SofiaProLight, SofiaProRegular } from './fonts.js'
+export { InterSemiBold, InterRegular } from './fonts.js'
 export { weiToEth } from './utils.js'
 
 export * from './types.js'

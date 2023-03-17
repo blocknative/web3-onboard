@@ -1,5 +1,5 @@
 import { firstValueFrom, Subject, take } from 'rxjs'
-import { SofiaProRegular, SofiaProLight } from '@web3-onboard/common'
+import { InterRegular, InterSemiBold } from '@web3-onboard/common'
 import AccountSelect from './views/AccountSelect.svelte'
 import { accounts$ } from './streams.js'
 import { validateSelectAccountOptions } from './validation.js'
@@ -27,6 +27,18 @@ const accountSelect = async (
   return firstValueFrom(accounts$)
 }
 
+const fontFamilyExternallyDefined = (): boolean => {
+  if (
+    document.body &&
+    (getComputedStyle(document.body).getPropertyValue('--w3o-font-family') ||
+      getComputedStyle(document.body).getPropertyValue(
+        '--onboard-font-family-normal'
+      ))
+  )
+    return true
+  return false
+}
+
 // eslint-disable-next-line max-len
 const mountAccountSelect = (
   selectAccountOptions: SelectAccountOptions,
@@ -41,15 +53,17 @@ const mountAccountSelect = (
   if (!customElements.get('account-select')) {
     customElements.define('account-select', AccountSelectEl)
   }
+  if (!fontFamilyExternallyDefined()) {
+    // Add Fonts to main page
+    const styleEl = document.createElement('style')
 
-  // Add Fonts to main page
-  const styleEl = document.createElement('style')
-
-  styleEl.innerHTML = `
-    ${SofiaProRegular}
-    ${SofiaProLight}
+    styleEl.innerHTML = `
+    ${InterRegular}
+    ${InterSemiBold}
   `
-  document.body.appendChild(styleEl)
+
+    document.body.appendChild(styleEl)
+  }
 
   // add to DOM
   const accountSelectDomElement = document.createElement('account-select')
@@ -76,8 +90,7 @@ const mountAccountSelect = (
         --danger-500: #ff4f4f;
 
         /* FONTS */
-        --font-family-normal: Sofia Pro;
-        --font-family-light: Sofia Pro Light;
+        --font-family-normal: Inter, sans-serif;
         --font-size-5: 1rem;
         --font-size-6: .875rem;
         --font-size-7: .75rem;

@@ -1,7 +1,7 @@
 import { firstValueFrom, Subject, take } from 'rxjs'
 import LoginModal from './view/LoginModal.svelte'
 import { loggedIn$ } from './streams.js'
-import { SofiaProRegular, SofiaProLight } from '@web3-onboard/common'
+import { InterRegular, InterSemiBold } from '@web3-onboard/common'
 import type { LoginOptions } from './types.js'
 
 // eslint-disable-next-line max-len
@@ -25,6 +25,18 @@ const loginModal = async (options: LoginOptions): Promise<boolean> => {
   return firstValueFrom(loggedIn$)
 }
 
+const fontFamilyExternallyDefined = (): boolean => {
+  if (
+    document.body &&
+    (getComputedStyle(document.body).getPropertyValue('--w3o-font-family') ||
+      getComputedStyle(document.body).getPropertyValue(
+        '--onboard-font-family-normal'
+      ))
+  )
+    return true
+  return false
+}
+
 // eslint-disable-next-line max-len
 const mountLoginModal = (
   loginOptions: LoginOptions,
@@ -40,14 +52,17 @@ const mountLoginModal = (
     customElements.define('onboard-magic-login-modal', loginModalEl)
   }
 
-  // Add Fonts to main page
-  const styleEl = document.createElement('style')
+  if (!fontFamilyExternallyDefined()) {
+    // Add Fonts to main page
+    const styleEl = document.createElement('style')
 
-  styleEl.innerHTML = `
-    ${SofiaProRegular}
-    ${SofiaProLight}
+    styleEl.innerHTML = `
+    ${InterRegular}
+    ${InterSemiBold}
   `
-  document.body.appendChild(styleEl)
+
+    document.body.appendChild(styleEl)
+  }
 
   // add to DOM
   const loginModalDomElement = document.createElement(
@@ -70,8 +85,8 @@ const mountLoginModal = (
         --danger-500: #ff4f4f;
 
         /* FONTS */
-        --font-family-normal: Sofia Pro;
-        --font-family-light: Sofia Pro Light;
+        --font-family-normal: Inter, sans-serif;
+
         --font-size-5: 1rem;
         --font-line-height-1: 24px;
 

@@ -1044,7 +1044,6 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
 
   /* FONTS */
   --onboard-font-family-normal: Inter;
-  --onboard-font-family-light: Inter Light;
 
   --onboard-font-size-1: 3rem;
   --onboard-font-size-2: 2.25rem;
@@ -1113,8 +1112,7 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --account-select-modal-danger-500: #ff4f4f;
 
   /* FONTS */
-  --account-select-modal-font-family-normal: Sofia Pro;
-  --account-select-modal-font-family-light: Sofia Pro Light;
+  --account-select-modal-font-family-normal: Inter, sans-serif;
   --account-select-modal-font-size-5: 1rem;
   --account-select-modal-font-size-7: .75rem;
   --account-select-modal-font-line-height-1: 24px;
