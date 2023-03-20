@@ -4,7 +4,7 @@
   import { BigNumber } from 'ethers'
   import { _ } from 'svelte-i18n'
   import en from '../../i18n/en.json'
-  import { listenAccountsChanged, selectAccounts } from '../../provider.js'
+  import { listenAccountsChanged } from '../../provider.js'
   import { state } from '../../store/index.js'
   import { connectWallet$, onDestroy$ } from '../../streams.js'
   import { addWallet, updateAccount } from '../../store/actions.js'
@@ -118,24 +118,7 @@
       if (existingWallet) {
         // set as first wallet
         addWallet(existingWallet)
-
-        try {
-          await selectAccounts(existingWallet.provider)
-          // change step on next event loop
-          setTimeout(() => setStep('connectedWallet'), 1)
-        } catch (error) {
-          const { code } = error as { code: number }
-
-          if (
-            code === ProviderRpcErrorCode.UNSUPPORTED_METHOD ||
-            code === ProviderRpcErrorCode.DOES_NOT_EXIST
-          ) {
-            connectWallet$.next({
-              inProgress: false,
-              actionRequired: existingWallet.label
-            })
-          }
-        }
+        setTimeout(() => setStep('connectedWallet'), 1)
 
         selectedWallet = existingWallet
 
