@@ -3458,26 +3458,6 @@
     ethers "5.5.4"
     joi "^17.6.1"
 
-"@web3-onboard/core@^2.15.5":
-  version "2.15.5"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.15.5.tgz#c28af0c0b3e6ea10c6c1c1698949423ad0ebf4a2"
-  integrity sha512-Fxtc/hSgPYasJ3Uvjd1qxeRWMIkHWup8B5r+v2PzRE5EdNy81F5EtbcyY8t7MmaIwDx4ol4UpkReX+IKBPVmwA==
-  dependencies:
-    "@unstoppabledomains/resolution" "^8.0"
-    "@web3-onboard/common" "^2.2.3"
-    bignumber.js "^9.0.0"
-    bnc-sdk "^4.6.7"
-    bowser "^2.11.0"
-    ethers "5.5.3"
-    eventemitter3 "^4.0.7"
-    joi "^17.6.1"
-    lodash.merge "^4.6.2"
-    lodash.partition "^4.6.0"
-    nanoid "^4.0.0"
-    rxjs "^7.5.5"
-    svelte "^3.49.0"
-    svelte-i18n "^3.3.13"
-
 "@web3-onboard/dcent@^2.2.3":
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/@web3-onboard/dcent/-/dcent-2.2.3.tgz#fddccfab31c8d89c13aca640e6d15017c7ea0a4f"

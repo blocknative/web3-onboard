@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@web3-onboard/injected-wallets": "^2.6.2",
-    "@web3-onboard/vue": "^2.5.1",
+    "@web3-onboard/vue": "^2.5.7-alpha.2",
     "pinia": "^2.0.29",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6"
