@@ -31,9 +31,9 @@ export const providerConnectionInfoValidation = Joi.object({
 export const chainValidation = Joi.object({
   namespace: chainNamespaceValidation,
   id: chainIdValidation.required(),
-  rpcUrl: Joi.string().required(),
-  label: Joi.string().required(),
-  token: Joi.string().required(),
+  rpcUrl: Joi.string(),
+  label: Joi.string(),
+  token: Joi.string(),
   icon: Joi.string(),
   color: Joi.string(),
   publicRpcUrl: Joi.string(),

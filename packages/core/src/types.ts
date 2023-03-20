@@ -332,6 +332,7 @@ export interface TxDetails {
 // ==== ACTIONS ==== //
 export type Action =
   | AddChainsAction
+  | UpdateChainsAction
   | AddWalletAction
   | UpdateWalletAction
   | RemoveWalletAction
@@ -347,6 +348,7 @@ export type Action =
   | UpdateConnectModalAction
 
 export type AddChainsAction = { type: 'add_chains'; payload: Chain[] }
+export type UpdateChainsAction = { type: 'update_chains'; payload: Chain}
 export type AddWalletAction = { type: 'add_wallet'; payload: WalletState }
 
 export type UpdateWalletAction = {

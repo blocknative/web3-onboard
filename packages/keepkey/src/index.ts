@@ -300,7 +300,7 @@ function keepkey({
         }
 
         const keepKeyProvider = getHardwareWalletProvider(
-          () => currentChain.rpcUrl
+          () => currentChain.rpcUrl || ''
         )
 
         const provider = createEIP1193Provider(keepKeyProvider, {
