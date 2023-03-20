@@ -242,8 +242,6 @@ function init(options: InitOptions): OnboardAPI {
 }
 
 const fontFamilyExternallyDefined = (theme: Theme): boolean => {
-  if (!theme) return false
-  if (typeof theme === 'object' && theme['--w3o-font-family']) return true
   if (
     document.body &&
     getComputedStyle(document.body).getPropertyValue(
@@ -251,6 +249,8 @@ const fontFamilyExternallyDefined = (theme: Theme): boolean => {
     )
   )
     return true
+  if (!theme) return false
+  if (typeof theme === 'object' && theme['--w3o-font-family']) return true
   return false
 }
 
