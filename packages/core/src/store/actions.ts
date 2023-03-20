@@ -28,7 +28,8 @@ import type {
   Notify,
   ConnectModalOptions,
   UpdateConnectModalAction,
-  Theme
+  Theme,
+  UpdateChainsAction
 } from '../types.js'
 
 import {
@@ -43,7 +44,8 @@ import {
   validateUpdateBalances,
   validateNotify,
   validateConnectModalUpdate,
-  validateUpdateTheme
+  validateUpdateTheme,
+  validateSetChainOptions
 } from '../validation.js'
 
 import {
@@ -60,7 +62,8 @@ import {
   ADD_NOTIFICATION,
   REMOVE_NOTIFICATION,
   UPDATE_ALL_WALLETS,
-  UPDATE_CONNECT_MODAL
+  UPDATE_CONNECT_MODAL,
+  UPDATE_CHAINS
 } from './constants.js'
 
 export function addChains(chains: Chain[]): void {
@@ -71,11 +74,33 @@ export function addChains(chains: Chain[]): void {
       ...rest,
       namespace,
       id: id.toLowerCase(),
-      rpcUrl: rpcUrl.trim()
+      rpcUrl: rpcUrl ? rpcUrl.trim() : null
     }))
   }
 
   dispatch(action as AddChainsAction)
+}
+
+export function updateChain(updatedChain: Chain): void {
+  const {
+    label, 
+    token, 
+    rpcUrl, 
+    id: chainId, 
+    namespace: chainNamespace
+  } = updatedChain
+  const error = validateSetChainOptions(
+    { label, token, rpcUrl, chainId, chainNamespace }
+  )
+
+  if (error) {
+    throw error
+  }
+  const action = {
+    type: UPDATE_CHAINS,
+    payload: updatedChain
+  }
+  dispatch(action as UpdateChainsAction)
 }
 
 export function addWallet(wallet: WalletState): void {

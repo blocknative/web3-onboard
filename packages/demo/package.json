@@ -48,9 +48,9 @@
     "@web3-onboard/walletconnect": "^2.3.2",
     "@web3-onboard/enkrypt": "^2.0.0",
     "@web3-onboard/mew-wallet": "^2.0.0",
-    "@web3-onboard/xdefi": "^2.0.0",
-    "@web3-onboard/uauth": "^2.0.0",
-    "@web3-onboard/zeal": "^2.0.0",
+    "@web3-onboard/xdefi": "^2.0.1-alpha.1",
+    "@web3-onboard/uauth": "^2.0.2-alpha.1",
+    "@web3-onboard/zeal": "^2.0.1-alpha.1",
     "vconsole": "^3.9.5"
   },
   "license": "MIT",

@@ -12,7 +12,10 @@ type ReadonlyRef<T> = Readonly<Ref<T>>
 type SetChainOptions = {
   chainId: string
   chainNamespace?: string
-  wallet: string
+  wallet: string,
+  rpcUrl?: string,
+  label?: string,
+  token?: string
 }
 
 interface OnboardComposable {

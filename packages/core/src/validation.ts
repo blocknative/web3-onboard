@@ -241,7 +241,10 @@ const disconnectOptions = Joi.object({
 const setChainOptions = Joi.object({
   chainId: chainIdValidation.required(),
   chainNamespace: chainNamespaceValidation,
-  wallet: Joi.string()
+  wallet: Joi.string(),
+  rpcUrl: Joi.string(),
+  label: Joi.string(),
+  token: Joi.string()
 })
 
 const customNotificationUpdate = Joi.object({
@@ -336,6 +339,9 @@ export function validateSetChainOptions(data: {
   chainId: ChainId | DecimalChainId
   chainNamespace?: string
   wallet?: WalletState['label']
+  rpcUrl?: string
+  label?: string
+  token?: string
 }): ValidateReturn {
   return validate(setChainOptions, data)
 }
