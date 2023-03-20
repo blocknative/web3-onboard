@@ -182,7 +182,7 @@ setPrimaryWallet(
 
 ## `useSetChain`
 
-This hook allows you to set the chain of a user's connected wallet, keep track of the current chain the user is connected to and the status of setting the chain. Passing in a wallet label will operate on that connected wallet, otherwise it will default to the last connected wallet.
+This hook allows you to set the chain of a user's connected wallet, keep track of the current chain the user is connected to and the status of setting the chain. Passing in a wallet label will operate on that connected wallet, otherwise it will default to the last connected wallet. If a chain was instantiated without an rpcUrl, token, or label, add these options for wallets that require this information for adding a new chain.
 
 ```typescript
 import { useSetChain } from '@web3-onboard/react'
@@ -202,8 +202,11 @@ type SetChainOptions = {
   chainId: string
   chainNamespace?: string
   wallet?: WalletState['label'],
-  rpcUrl?: string,
+  // if chain was instantiated without rpcUrl, include here. Used for network requests
+  rpcUrl?: string, 
+  // if chain was instantiated without token, include here. Used for display, eg Ethereum Mainnet
   label?: string,
+  // if chain was instantiated without label, include here. The native token symbol, eg ETH, BNB, MATIC
   token?: string,
 }
 
