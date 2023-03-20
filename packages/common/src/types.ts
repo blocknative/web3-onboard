@@ -395,8 +395,10 @@ export interface Chain {
    * and token for full functionality.
    */
   rpcUrl?: string
+  /* Recommended to include. Used for display, eg Ethereum Mainnet */
   label?: string
-  token?: TokenSymbol // eg ETH, BNB, MATIC
+  /* Recommended to include. The native token symbol, eg ETH, BNB, MATIC */
+  token?: TokenSymbol
   color?: string
   icon?: string // svg string
   providerConnectionInfo?: ConnectionInfo
