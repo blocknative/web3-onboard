@@ -19,8 +19,7 @@
     return !!wallets.find(wallet => wallet.label === label)
   }
 
-  // KAT TODO- update with blog link
-  const wheresMyWalletDefault = 'https://cuberule.com/'
+  const wheresMyWalletDefault = 'https://www.blocknative.com/blog/metamask-wont-connect-web3-wallet-troubleshooting'
 </script>
 
 <style>

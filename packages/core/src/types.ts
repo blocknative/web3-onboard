@@ -198,8 +198,8 @@ export type ConnectModalOptions = {
   /**
    * Customize the link for the `Where's My Wallet` info pop up shown on the
    * select wallet modal.
-   * KAT TODO- update link
-   * Defaults to `https://ethereum.org/en/wallets/find-wallet/#main-content`
+   * Defaults to `https://www.blocknative.com/blog/
+   * metamask-wont-connect-web3-wallet-troubleshooting`
    */
   wheresMyWalletLink?: string
   /**
