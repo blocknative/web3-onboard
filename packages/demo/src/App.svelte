@@ -638,7 +638,7 @@
           <button on:click={() => onboard.setChain({ chainId: '0x89' })}
             >Set Chain to Matic</button
           >
-          <button on:click={() => onboard.setChain({ chainId: 10 })}
+          <button on:click={() => onboard.updateChain({ chainId: 10 })}
             >Set Chain to Optimism</button
           >
         </div>

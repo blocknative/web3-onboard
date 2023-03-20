@@ -386,6 +386,14 @@ export enum ProviderRpcErrorCode {
 export interface Chain {
   namespace?: 'evm'
   id: ChainId
+  /**
+   * Recommended to include. Used for network requests
+   * (eg Alchemy or Infura end point).
+   * PLEASE NOTE: Some wallets require an rpcUrl, label,
+   * and token for actions such as adding a new chain.
+   * It is recommended to include rpcUrl, label,
+   * and token for full functionality.
+   */
   rpcUrl?: string
   label?: string
   token?: TokenSymbol // eg ETH, BNB, MATIC

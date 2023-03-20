@@ -10,11 +10,11 @@ import { toHexString } from './utils.js'
 import { updateChain } from './store/actions.js'
 
 async function setChain(options: {
-  chainId: string | number,
-  chainNamespace?: string,
-  wallet?: WalletState['label'],
-  rpcUrl?: string,
-  label?: string,
+  chainId: string | number
+  chainNamespace?: string
+  wallet?: WalletState['label']
+  rpcUrl?: string
+  label?: string
   token?: string
 }): Promise<boolean> {
   const error = validateSetChainOptions(options)
@@ -24,7 +24,14 @@ async function setChain(options: {
   }
 
   const { wallets, chains } = state.get()
-  const { chainId, chainNamespace = 'evm', wallet: walletToSet, rpcUrl, label, token } = options
+  const {
+    chainId,
+    chainNamespace = 'evm',
+    wallet: walletToSet,
+    rpcUrl,
+    label,
+    token
+  } = options
   const chainIdHex = toHexString(chainId)
 
   // validate that chainId has been added to chains
@@ -79,15 +86,15 @@ async function setChain(options: {
         if (rpcUrl) {
           chain.rpcUrl = rpcUrl
         }
-  
+
         if (label) {
           chain.label = label
         }
-        
+
         if (token) {
           chain.token = token
         }
-              
+
         updateChain(chain)
       }
 
@@ -96,7 +103,7 @@ async function setChain(options: {
         wallet,
         chain,
         switchChainModalClosed$,
-        chainIdHex,
+        chainIdHex
       )
     }
 
@@ -114,7 +121,7 @@ const chainNotInWallet = async (
   wallet: WalletState,
   chain: Chain,
   switchChainModalClosed$: Observable<boolean>,
-  chainIdHex: string,
+  chainIdHex: string
 ): Promise<boolean> => {
   try {
     await addNewChain(wallet.provider, chain)

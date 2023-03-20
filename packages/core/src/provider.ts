@@ -445,7 +445,7 @@ export function switchChain(
 
 export function addNewChain(
   provider: EIP1193Provider,
-  chain: Chain,
+  chain: Chain
 ): Promise<unknown> {
   return provider.request({
     method: 'wallet_addEthereumChain',
