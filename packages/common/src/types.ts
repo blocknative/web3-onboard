@@ -384,7 +384,12 @@ export enum ProviderRpcErrorCode {
 }
 
 export interface Chain {
+  /**
+   * String indicating chain namespace.
+   * Defaults to 'evm' but will allow other chain namespaces in the future
+   */
   namespace?: 'evm'
+  /* Hex encoded string, eg '0x1' for Ethereum Mainnet */
   id: ChainId
   /**
    * Recommended to include. Used for network requests
@@ -399,10 +404,18 @@ export interface Chain {
   label?: string
   /* Recommended to include. The native token symbol, eg ETH, BNB, MATIC */
   token?: TokenSymbol
+  /**
+   * The color used to represent the chain and
+   * will be used as a background for the icon
+   */
   color?: string
-  icon?: string // svg string
+  /* Svg string. The icon to represent the chain */
+  icon?: string
+  /* Related to ConnectionInfo from 'ethers/lib/utils' */
   providerConnectionInfo?: ConnectionInfo
+  /* An optional public RPC used when adding a new chain config to the wallet */
   publicRpcUrl?: string
+  /* Also used when adding a new config to the wallet */
   blockExplorerUrl?: string
 }
 
