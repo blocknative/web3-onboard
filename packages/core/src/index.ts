@@ -266,6 +266,7 @@ function mountApp(theme: Theme) {
   }
 
   if (!fontFamilyExternallyDefined(theme)) {
+    console.log('download font')
     // Add Fonts to main page
     const styleEl = document.createElement('style')
 
@@ -328,7 +329,7 @@ function mountApp(theme: Theme) {
           --warning-700: #664600;
 
           /* FONTS */
-          --font-family-normal: Inter, sans-serif;
+          --font-family-normal: var(--w3o-font-family, Inter, sans-serif);
 
           --font-size-1: 3rem;
           --font-size-2: 2.25rem;
