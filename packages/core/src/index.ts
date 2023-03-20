@@ -266,7 +266,6 @@ function mountApp(theme: Theme) {
   }
 
   if (!fontFamilyExternallyDefined(theme)) {
-    console.log('download font')
     // Add Fonts to main page
     const styleEl = document.createElement('style')
 
