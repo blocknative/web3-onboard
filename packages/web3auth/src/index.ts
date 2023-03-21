@@ -5,15 +5,17 @@ import type {
   WalletInit
 } from '@web3-onboard/common'
 
-import type {} from '@web3auth/base'
-import type { Web3AuthOptions, ModalConfig, Web3Auth } from '@web3auth/modal'
+import type { Web3AuthOptions, ModalConfig } from '@web3auth/modal'
 import type { CustomChainConfig } from '@web3auth/base'
-import { LOGIN_MODAL_EVENTS } from '@web3auth/ui'
 
 type Web3AuthModuleOptions = Omit<Web3AuthOptions, 'chainConfig'> & {
   chainConfig?: Partial<CustomChainConfig> &
     Pick<CustomChainConfig, 'chainNamespace'>
   modalConfig?: Record<string, ModalConfig> | undefined
+  /**
+   * @deprecated use web3Auth native Z-Index config through
+   * uiConfig.modalZIndex
+   */
   loginModalZIndex?: string
 }
 
