@@ -66,7 +66,7 @@ type Web3AuthModuleOptions = Omit<Web3AuthOptions, 'chainConfig'> & {
 
 interface Web3AuthOptions extends Web3AuthNoModalOptions {
     /**
-     * web3auth instance provides different adapters for different type of usages. If you are dapp and want to
+     * web3auth instance provides different adapters for different type of usages. If you are a dapp and want to
      * use external wallets like metamask, then you can use the `DAPP` authMode.
      * If you are a wallet and only want to use you own wallet implementations along with openlogin,
      * then you should use `WALLET` authMode.
