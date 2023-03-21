@@ -396,7 +396,7 @@
     setTimeout(() => {
       dontSeeMyWalletMessage = true
       scrollToTop()
-    }, 20000)
+    }, 5000)
   })
 </script>
 
