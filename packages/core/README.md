@@ -48,25 +48,65 @@ Onboard needs to be initialized with an options object before the API can be use
 
 ```typescript
 type InitOptions = {
+  /**
+   * Wallet modules to be initialized and added to wallet selection modal
+   */
   wallets: WalletInit[]
-  chains: Chain[]
+  /**
+   * The chains that your app works with
+   */
+  chains: (Chain | ChainWithDecimalId)[]
+  /**
+   * Additional metadata about your app to be displayed in the Onboard UI
+   */
   appMetadata?: AppMetadata
+  /**
+   * Define custom copy for the 'en' locale or add locales to i18n your app
+   */
   i18n?: i18nOptions
+  /**
+   * Customize the connect modal
+   */
+  connect?: ConnectModalOptions
+  /**
+   * Customize the account center UI
+   */
   accountCenter?: AccountCenterOptions
+  /**
+   * Opt in to Blocknative value add services (transaction updates) by providing
+   * your Blocknative API key, head to https://explorer.blocknative.com/account
+   */
   apiKey?: string
-  notify?: Partial<NotifyOptions>
-  connect?: Partial<ConnectModalOptions>
+  /**
+   * Transaction notification options
+   */
+  notify?: Partial<NotifyOptions> | Partial<Notify>
+  /** Gas module */
   gas?: typeof gas
   /**
-   * Object mapping for W3O components with the key being the component and the value the DOM element to mount the component to. This element must be available at time of package script execution.
+   * Object mapping for W3O components with the key being the DOM
+   * element to mount the component to, this defines the DOM container
+   *  element for svelte to attach the component
    */
   containerElements?: Partial<ContainerElements>
+  /**
+   * Transaction Preview module
+   */
+  transactionPreview?: TransactionPreviewAPI
   /**
    * Custom or predefined theme for Web3Onboard
    * BuiltInThemes: ['default', 'dark', 'light', 'system']
    * or customize with a ThemingMap object.
    */
   theme?: Theme
+  /**
+   * Defaults to False
+   * If set to true the Inter font will not be imported and
+   * instead the default 'sans-serif' font will be used
+   * To define the font used see `--w3o-font-family` prop within
+   * the Theme initialization object or set as css variable
+   */
+  useWebFont?: boolean
 }
 ```
 
@@ -82,11 +122,11 @@ An array of Chains that your app supports:
 type Chain = {
   id: ChainId // hex encoded string, eg '0x1' for Ethereum Mainnet
   namespace?: 'evm' // string indicating chain namespace. Defaults to 'evm' but will allow other chain namespaces in the future
-  // PLEASE NOTE: Some wallets require an rpcUrl, label, and token for actions such as adding a new chain. 
-  // It is recommended to include rpcUrl, label, and token for full functionality. 
+  // PLEASE NOTE: Some wallets require an rpcUrl, label, and token for actions such as adding a new chain.
+  // It is recommended to include rpcUrl, label, and token for full functionality.
   rpcUrl?: string // Recommended to include. Used for network requests (eg Alchemy or Infura end point).
-  label?: string // Recommended to include. Used for display, eg Ethereum Mainnet.  
-  token?: TokenSymbol // Recommended to include. The native token symbol, eg ETH, BNB, MATIC. 
+  label?: string // Recommended to include. Used for display, eg Ethereum Mainnet.
+  token?: TokenSymbol // Recommended to include. The native token symbol, eg ETH, BNB, MATIC.
   color?: string // the color used to represent the chain and will be used as a background for the icon
   icon?: string // the icon to represent the chain
   publicRpcUrl?: string // an optional public RPC used when adding a new chain config to the wallet
@@ -179,6 +219,14 @@ export type ThemingMap = {
   '--w3o-action-color'?: string
   '--w3o-border-radius'?: string
 }
+```
+
+**`useWebFont`**
+If set to `true` the default `Inter` font will not be imported and instead the web based `sans-serif` font will be used if a font is not defined through the `Theme` or exposed css variable.
+To define the font use `--w3o-font-family` prop within the `Theme` initialization object or set as a css variable.
+
+```typescript
+type useWebFont = boolean // defaults to false
 ```
 
 **`i18n`**
@@ -1343,7 +1391,6 @@ export default config
 
 Checkout a boilerplate example (here)[https://github.com/blocknative/web3-onboard/tree/develop/examples/with-sveltekit]
 
-
 Add the following dev dependencies:
 
 `yarn add rollup-plugin-polyfill-node -D`
@@ -1440,19 +1487,22 @@ export default config
 
 If an error presents around `window` being undefined remove the `define.global` block.
 Add this to your `app.html`
+
 ```html
 <script>
-      var global = global || window
+  var global = global || window
 </script>
 ```
 
 ##### Buffer polyfill
+
 It seems some component or dependency requires Node's Buffer. To polyfill this, the simplest way I could find was to install the buffer package and include the following in web3-onboard.ts:
 
 ```javascript
 import { Buffer } from 'buffer'
 globalThis.Buffer = Buffer
 ```
+
 See [this github issue](https://github.com/blocknative/web3-onboard/issues/1568#issuecomment-1463963462) for further troubleshooting
 
 ### Vite
@@ -1544,7 +1594,6 @@ Checkout a boilerplate example for NextJS v13 (here)[https://github.com/blocknat
 
 Checkout a boilerplate example for NextJS (here)[https://github.com/blocknative/web3-onboard/tree/develop/examples/with-nextjs]
 
-
 ## Package Managers
 
 ### npm and yarn
@@ -1552,5 +1601,6 @@ Checkout a boilerplate example for NextJS (here)[https://github.com/blocknative/
 Web3-Onboard will work out of the box with `npm` and `yarn` support.
 
 ### pnpm
+
 We have had issues reported when using `pnpm` as the package manager when working with web3-onboard.
 As we work to understand this new manager more and the issues around it we recommend using `npm` or `yarn` for now.

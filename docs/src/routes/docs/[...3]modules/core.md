@@ -28,6 +28,7 @@ npm install @web3-onboard/core
 </Tabs>
 
 #### All Wallet Modules
+
 If you would like to support all wallets, then you can install all of the wallet modules:
 
 <Tabs values={['yarn', 'npm']}>
@@ -89,19 +90,28 @@ type InitOptions {
    * Object mapping for W3O components with the key being the component and the value the DOM element to mount the component to. This element must be available at time of package script execution.
    */
   containerElements?: Partial<ContainerElements>
-    /**
+  /**
    * Custom or predefined theme for Web3Onboard i.e. default, dark, Custom, etc.
    */
   theme?: Theme
+  /**
+   * Defaults to False
+   * If set to true the Inter font will not be imported and
+   * instead the default 'sans-serif' font will be used
+   * To define the font used see `--w3o-font-family` prop within
+   * the Theme initialization object or set as css variable
+   */
+  useWebFont?: boolean
 }
 
 ```
+
 ---
 
 #### wallets
 
-An array of wallet modules that you would like to be presented to the user to select from when connecting a wallet. A wallet module is an abstraction that allows for easy interaction without needing to know the specifics of how that wallet works and are separate packages that can be included. 
-These modules are separate @web3-onboard packages such as `@web3-onboard/injected-wallets` or `@web3-onboard/ledger`. 
+An array of wallet modules that you would like to be presented to the user to select from when connecting a wallet. A wallet module is an abstraction that allows for easy interaction without needing to know the specifics of how that wallet works and are separate packages that can be included.
+These modules are separate @web3-onboard packages such as `@web3-onboard/injected-wallets` or `@web3-onboard/ledger`.
 For a full list click [here](#all-wallet-modules).
 
 ---
@@ -113,11 +123,11 @@ An array of Chains that your app supports:
 ```ts
 type Chain = {
   id: ChainId // hex encoded string, eg '0x1' for Ethereum Mainnet
-  namespace?: 'evm' // string indicating chain namespace. Defaults to 'evm' but will allow other chain namespaces in the future 
-  // PLEASE NOTE: Some wallets require an rpcUrl, label, and token for actions such as adding a new chain. 
-  // It is recommended to include rpcUrl, label, and token for full functionality. 
-  rpcUrl?: string // Recommended to include. Used for network requests. 
-  label?: string // Recommended to include. Used for display, eg Ethereum Mainnet. 
+  namespace?: 'evm' // string indicating chain namespace. Defaults to 'evm' but will allow other chain namespaces in the future
+  // PLEASE NOTE: Some wallets require an rpcUrl, label, and token for actions such as adding a new chain.
+  // It is recommended to include rpcUrl, label, and token for full functionality.
+  rpcUrl?: string // Recommended to include. Used for network requests.
+  label?: string // Recommended to include. Used for display, eg Ethereum Mainnet.
   token?: TokenSymbol // Recommended to include. The native token symbol, eg ETH, BNB, MATIC.
   color?: string // the color used to represent the chain and will be used as a background for the icon
   icon?: string // the icon to represent the chain
@@ -268,6 +278,17 @@ Interested in seeing how web3-onboard will look on your site?
 
 It will allow you to customize the look and feel of web3-onboard, try different themes or create your own, and preview how web3-onboard will look on your site by entering a URL or adding a screenshot.
 :::
+
+---
+
+#### useWebFont
+
+If set to `true` the default `Inter` font will not be imported and instead the web based `sans-serif` font will be used if a font is not defined through the `Theme` or exposed css variable.
+To define the font use `--w3o-font-family` prop within the `Theme` initialization object or set as a css variable.
+
+```typescript
+type useWebFont = boolean // defaults to false
+```
 
 ---
 
