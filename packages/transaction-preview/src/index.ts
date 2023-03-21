@@ -1,9 +1,7 @@
 import { firstValueFrom, Subject } from 'rxjs'
 import {
   ProviderRpcError,
-  ProviderRpcErrorCode,
-  InterRegular,
-  InterSemiBold
+  ProviderRpcErrorCode
 } from '@web3-onboard/common'
 import type {
   PatchedEIP1193Provider,
@@ -253,6 +251,18 @@ const fontFamilyExternallyDefined = (): boolean => {
   return false
 }
 
+const importFontsToDoc = async (): Promise<void> => {
+  const { InterVar } = await import('@web3-onboard/common')
+  // Add Fonts to main page
+  const styleEl = document.createElement('style')
+
+  styleEl.innerHTML = `
+    ${InterVar}
+  `
+
+  document.body.appendChild(styleEl)
+}
+
 const mountTransactionPreview = (simResponse: MultiSimOutput) => {
   class TransactionPreviewEl extends HTMLElement {
     constructor() {
@@ -265,15 +275,7 @@ const mountTransactionPreview = (simResponse: MultiSimOutput) => {
   }
 
   if (!fontFamilyExternallyDefined()) {
-    // Add Fonts to main page
-    const styleEl = document.createElement('style')
-
-    styleEl.innerHTML = `
-    ${InterRegular}
-    ${InterSemiBold}
-  `
-
-    document.body.appendChild(styleEl)
+    importFontsToDoc()
   }
 
   // add to DOM

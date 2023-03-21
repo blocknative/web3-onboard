@@ -96,7 +96,8 @@ function init(options: InitOptions): OnboardAPI {
     connect,
     containerElements,
     transactionPreview,
-    theme
+    theme,
+    useWebFont
   } = options
 
   if (containerElements) updateConfiguration({ containerElements })
@@ -196,7 +197,7 @@ function init(options: InitOptions): OnboardAPI {
     updateNotify(notifyUpdate)
   }
 
-  const app = svelteInstance || mountApp(theme)
+  const app = svelteInstance || mountApp(theme, useWebFont)
 
   updateConfiguration({
     appMetadata,
@@ -240,12 +241,17 @@ function init(options: InitOptions): OnboardAPI {
   return API
 }
 
-const fontFamilyExternallyDefined = (theme: Theme): boolean => {
+const fontFamilyExternallyDefined = (
+  theme: Theme,
+  useWebFont: boolean
+): boolean => {
+  if (useWebFont) return true
   if (
     document.body &&
-    getComputedStyle(document.body).getPropertyValue(
+    (getComputedStyle(document.body).getPropertyValue(
       '--onboard-font-family-normal'
-    )
+    ) ||
+      getComputedStyle(document.body).getPropertyValue('--w3o-font-family'))
   )
     return true
   if (!theme) return false
@@ -253,20 +259,19 @@ const fontFamilyExternallyDefined = (theme: Theme): boolean => {
   return false
 }
 
-const importFontsToDoc = async (): Promise<void> => {
-  const { InterRegular, InterSemiBold } = await import('@web3-onboard/common')
+const importInterFont = async (): Promise<void> => {
+  const { InterVar } = await import('@web3-onboard/common')
   // Add Fonts to main page
   const styleEl = document.createElement('style')
 
   styleEl.innerHTML = `
-    ${InterRegular}
-    ${InterSemiBold}
+    ${InterVar}
   `
 
   document.body.appendChild(styleEl)
 }
 
-function mountApp(theme: Theme) {
+function mountApp(theme: Theme, useWebFont: boolean) {
   class Onboard extends HTMLElement {
     constructor() {
       super()
@@ -277,8 +282,8 @@ function mountApp(theme: Theme) {
     customElements.define('onboard-v2', Onboard)
   }
 
-  if (!fontFamilyExternallyDefined(theme)) {
-    importFontsToDoc()
+  if (!fontFamilyExternallyDefined(theme, useWebFont)) {
+    importInterFont()
   }
 
   // add to DOM

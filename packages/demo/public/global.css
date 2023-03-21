@@ -1,3 +1,6 @@
+:root {
+  --onboard-font-family-normal: cursive;
+}
 html,
 body {
   position: relative;

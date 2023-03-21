@@ -1,7 +1,6 @@
 import { firstValueFrom, Subject, take } from 'rxjs'
 import LoginModal from './view/LoginModal.svelte'
 import { loggedIn$ } from './streams.js'
-import { InterRegular, InterSemiBold } from '@web3-onboard/common'
 import type { LoginOptions } from './types.js'
 
 // eslint-disable-next-line max-len
@@ -37,6 +36,18 @@ const fontFamilyExternallyDefined = (): boolean => {
   return false
 }
 
+const importInterFont = async (): Promise<void> => {
+  const { InterVar } = await import('@web3-onboard/common')
+  // Add Fonts to main page
+  const styleEl = document.createElement('style')
+
+  styleEl.innerHTML = `
+    ${InterVar}
+  `
+
+  document.body.appendChild(styleEl)
+}
+
 // eslint-disable-next-line max-len
 const mountLoginModal = (
   loginOptions: LoginOptions,
@@ -53,15 +64,7 @@ const mountLoginModal = (
   }
 
   if (!fontFamilyExternallyDefined()) {
-    // Add Fonts to main page
-    const styleEl = document.createElement('style')
-
-    styleEl.innerHTML = `
-    ${InterRegular}
-    ${InterSemiBold}
-  `
-
-    document.body.appendChild(styleEl)
+    importInterFont()
   }
 
   // add to DOM
@@ -85,7 +88,7 @@ const mountLoginModal = (
         --danger-500: #ff4f4f;
 
         /* FONTS */
-        --font-family-normal: Inter, sans-serif;
+        --font-family-normal: var(--w3o-font-family, Inter, sans-serif);
 
         --font-size-5: 1rem;
         --font-line-height-1: 24px;

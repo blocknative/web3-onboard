@@ -1,5 +1,4 @@
 import { firstValueFrom, Subject, take } from 'rxjs'
-import { InterRegular, InterSemiBold } from '@web3-onboard/common'
 import AccountSelect from './views/AccountSelect.svelte'
 import { accounts$ } from './streams.js'
 import { validateSelectAccountOptions } from './validation.js'
@@ -39,6 +38,18 @@ const fontFamilyExternallyDefined = (): boolean => {
   return false
 }
 
+const importInterFont = async (): Promise<void> => {
+  const { InterVar } = await import('@web3-onboard/common')
+  // Add Fonts to main page
+  const styleEl = document.createElement('style')
+
+  styleEl.innerHTML = `
+    ${InterVar}
+  `
+
+  document.body.appendChild(styleEl)
+}
+
 // eslint-disable-next-line max-len
 const mountAccountSelect = (
   selectAccountOptions: SelectAccountOptions,
@@ -54,15 +65,7 @@ const mountAccountSelect = (
     customElements.define('account-select', AccountSelectEl)
   }
   if (!fontFamilyExternallyDefined()) {
-    // Add Fonts to main page
-    const styleEl = document.createElement('style')
-
-    styleEl.innerHTML = `
-    ${InterRegular}
-    ${InterSemiBold}
-  `
-
-    document.body.appendChild(styleEl)
+    importInterFont()
   }
 
   // add to DOM
@@ -90,7 +93,7 @@ const mountAccountSelect = (
         --danger-500: #ff4f4f;
 
         /* FONTS */
-        --font-family-normal: Inter, sans-serif;
+        --font-family-normal: var(--w3o-font-family, Inter, sans-serif);
         --font-size-5: 1rem;
         --font-size-6: .875rem;
         --font-size-7: .75rem;

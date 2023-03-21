@@ -219,7 +219,8 @@ const initOptions = Joi.object({
     init: Joi.function().required(),
     previewTransaction: Joi.function()
   }),
-  theme: theme
+  theme: theme,
+  useWebFont: Joi.boolean()
 })
 
 const connectOptions = Joi.object({
