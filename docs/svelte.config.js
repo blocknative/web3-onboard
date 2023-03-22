@@ -39,7 +39,6 @@ const config = {
             '@web3-react/metamask',
             '@web3-react/network',
             '@web3-react/walletconnect',
-            '@web3-react/types',
             '@web3-react/url',
             '@web3-onboard/*'
           ],
