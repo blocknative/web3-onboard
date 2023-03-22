@@ -30,7 +30,7 @@ const config: UserConfig = {
   build: {
     rollupOptions: {
       external: ['@web3-onboard/*'],
-      plugins: [nodePolyfills({ include: ['crypto', 'http'] }), inject({ Buffer: ['Buffer', 'Buffer'] })]
+      plugins: [nodePolyfills({ include: ['crypto', 'http'] }), inject({ Buffer: ['buffer', 'Buffer'] })]
     },
     commonjsOptions: {
       transformMixedEsModules: true

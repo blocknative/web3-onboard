@@ -386,18 +386,18 @@
     case "^1.6.3"
 
 "@coinbase/wallet-sdk@^3.6.0":
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/@coinbase/wallet-sdk/-/wallet-sdk-3.6.0.tgz#52cc01d6721b171b69f8c4a83ef5029e52d997d4"
-  integrity sha512-p7RHnbhWiwVr9viX9Z5KLxKgzGoJRKcAN/BYRTsodnesgA7y+omangXncsxY+5eyQSflEL7Dqs0dv/yeDsomow==
+  version "3.6.5"
+  resolved "https://registry.yarnpkg.com/@coinbase/wallet-sdk/-/wallet-sdk-3.6.5.tgz#5ca894771b4eb9cbfaf754c1422f0287329e6868"
+  integrity sha512-8F91dvvC/+CTpaNTr+FgpLMa2YxjpXpE9pdnGewMoYi41ISbiXZado5VjYo9QSZlS+myzfKvDGpTzLFFUXPfDg==
   dependencies:
     "@metamask/safe-event-emitter" "2.0.0"
-    "@solana/web3.js" "1.52.0"
+    "@solana/web3.js" "^1.70.1"
     bind-decorator "^1.0.11"
     bn.js "^5.1.1"
     buffer "^6.0.3"
     clsx "^1.1.0"
     eth-block-tracker "4.4.3"
-    eth-json-rpc-filters "4.2.2"
+    eth-json-rpc-filters "5.1.0"
     eth-rpc-errors "4.0.2"
     json-rpc-engine "6.1.0"
     keccak "^3.0.1"
@@ -1898,30 +1898,7 @@
   dependencies:
     buffer "~6.0.3"
 
-"@solana/web3.js@1.52.0":
-  version "1.52.0"
-  resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.52.0.tgz#71bd5c322a31e3e2fa8cda2261c594846810b8ea"
-  integrity sha512-oG1+BX4nVYZ0OBzmk6DRrY8oBYMsbXVQEf9N9JOfKm+wXSmjxVEEo8v3IPV8mKwR0JvUWuE8lOn3IUDiMlRLgg==
-  dependencies:
-    "@babel/runtime" "^7.12.5"
-    "@ethersproject/sha2" "^5.5.0"
-    "@solana/buffer-layout" "^4.0.0"
-    bigint-buffer "^1.1.5"
-    bn.js "^5.0.0"
-    borsh "^0.7.0"
-    bs58 "^4.0.1"
-    buffer "6.0.1"
-    fast-stable-stringify "^1.0.0"
-    jayson "^3.4.4"
-    js-sha3 "^0.8.0"
-    node-fetch "2"
-    react-native-url-polyfill "^1.3.0"
-    rpc-websockets "^7.5.0"
-    secp256k1 "^4.0.2"
-    superstruct "^0.14.2"
-    tweetnacl "^1.0.3"
-
-"@solana/web3.js@^1.63.1", "@solana/web3.js@^1.73.0":
+"@solana/web3.js@^1.63.1", "@solana/web3.js@^1.70.1", "@solana/web3.js@^1.73.0":
   version "1.74.0"
   resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.74.0.tgz#dbcbeabb830dd7cbbcf5e31404ca79c9785cbf2d"
   integrity sha512-RKZyPqizPCxmpMGfpu4fuplNZEWCrhRBjjVstv5QnAJvgln1jgOfgui+rjl1ExnqDnWKg9uaZ5jtGROH/cwabg==
@@ -6176,6 +6153,17 @@ eth-json-rpc-filters@4.2.2, eth-json-rpc-filters@^4.2.1:
     json-rpc-engine "^6.1.0"
     pify "^5.0.0"
 
+eth-json-rpc-filters@5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/eth-json-rpc-filters/-/eth-json-rpc-filters-5.1.0.tgz#f0c2aeaec2a45e2dc6ca1b9843d8e85447821427"
+  integrity sha512-fos+9xmoa1A2Ytsc9eYof17r81BjdJOUcGcgZn4K/tKdCCTb+a8ytEtwlu1op5qsXFDlgGmstTELFrDEc89qEQ==
+  dependencies:
+    "@metamask/safe-event-emitter" "^2.0.0"
+    async-mutex "^0.2.6"
+    eth-query "^2.1.2"
+    json-rpc-engine "^6.1.0"
+    pify "^5.0.0"
+
 eth-json-rpc-infura@^5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/eth-json-rpc-infura/-/eth-json-rpc-infura-5.1.0.tgz#e6da7dc47402ce64c54e7018170d89433c4e8fb6"
@@ -8894,7 +8882,7 @@ node-addon-api@^2.0.0:
   resolved "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-2.0.2.tgz#432cfa82962ce494b132e9d72a15b29f71ff5d32"
   integrity sha512-Ntyt4AIXyaLIuMHF6IOoTakB3K+RWxwtsHNRxllEoA6vPwP9o4866g6YWDLUdnucilZhmkxiHwHr11gAENw+QA==
 
-node-fetch@2, node-fetch@2.6.7, node-fetch@^2.6.0, node-fetch@^2.6.1, node-fetch@^2.6.7:
+node-fetch@2.6.7, node-fetch@^2.6.0, node-fetch@^2.6.1, node-fetch@^2.6.7:
   version "2.6.7"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
   integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
@@ -9885,13 +9873,6 @@ react-modal@^3.12.1:
     react-lifecycles-compat "^3.0.0"
     warning "^4.0.3"
 
-react-native-url-polyfill@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/react-native-url-polyfill/-/react-native-url-polyfill-1.3.0.tgz#c1763de0f2a8c22cc3e959b654c8790622b6ef6a"
-  integrity sha512-w9JfSkvpqqlix9UjDvJjm1EjSt652zVQ6iwCIj1cVVkwXf4jQhQgTNXY6EVTwuAmUjg6BC6k9RHCBynoLFo3IQ==
-  dependencies:
-    whatwg-url-without-unicode "8.0.0-3"
-
 react-qr-reader@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/react-qr-reader/-/react-qr-reader-2.2.1.tgz#dc89046d1c1a1da837a683dd970de5926817d55b"
@@ -10191,19 +10172,6 @@ rollup@^2.3.4:
   optionalDependencies:
     fsevents "~2.3.2"
 
-rpc-websockets@^7.5.0:
-  version "7.5.0"
-  resolved "https://registry.yarnpkg.com/rpc-websockets/-/rpc-websockets-7.5.0.tgz#bbeb87572e66703ff151e50af1658f98098e2748"
-  integrity sha512-9tIRi1uZGy7YmDjErf1Ax3wtqdSSLIlnmL5OtOzgd5eqPKbsPpwDP5whUDO2LQay3Xp0CcHlcNSGzacNRluBaQ==
-  dependencies:
-    "@babel/runtime" "^7.17.2"
-    eventemitter3 "^4.0.7"
-    uuid "^8.3.2"
-    ws "^8.5.0"
-  optionalDependencies:
-    bufferutil "^4.0.1"
-    utf-8-validate "^5.0.2"
-
 rpc-websockets@^7.5.1:
   version "7.5.1"
   resolved "https://registry.yarnpkg.com/rpc-websockets/-/rpc-websockets-7.5.1.tgz#e0a05d525a97e7efc31a0617f093a13a2e10c401"
@@ -10376,7 +10344,7 @@ secp256k1@3.7.1:
     nan "^2.14.0"
     safe-buffer "^5.1.2"
 
-secp256k1@4.0.3, secp256k1@^4.0.0, secp256k1@^4.0.1, secp256k1@^4.0.2:
+secp256k1@4.0.3, secp256k1@^4.0.0, secp256k1@^4.0.1:
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/secp256k1/-/secp256k1-4.0.3.tgz#c4559ecd1b8d3c1827ed2d1b94190d69ce267303"
   integrity sha512-NLZVf+ROMxwtEj3Xa562qgv2BK5e2WNmXPiOdVIPLgs6lyTzMvBq0aWTYMI5XCP9jZMVKOcqZLw/Wc4vDkuxhA==
@@ -12128,11 +12096,6 @@ webidl-conversions@^4.0.2:
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-4.0.2.tgz#a855980b1f0b6b359ba1d5d9fb39ae941faa63ad"
   integrity sha512-YQ+BmxuTgd6UXZW3+ICGfyqRyHXVlD5GtQr5+qjiNW7bF0cqrzX500HVXPBOvgXb5YnzDd+h0zqyv61KUD7+Sg==
 
-webidl-conversions@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-5.0.0.tgz#ae59c8a00b121543a2acc65c0434f57b0fc11aff"
-  integrity sha512-VlZwKPCkYKxQgeSbH5EyngOmRp7Ww7I9rQLERETtf5ofd9pGeswWiOtogpEO850jziPRarreGxn5QIiTqpb2wA==
-
 webpack-cli@^4.4.0:
   version "4.9.2"
   resolved "https://registry.yarnpkg.com/webpack-cli/-/webpack-cli-4.9.2.tgz#77c1adaea020c3f9e2db8aad8ea78d235c83659d"
@@ -12319,15 +12282,6 @@ whatwg-mimetype@^2.2.0, whatwg-mimetype@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/whatwg-mimetype/-/whatwg-mimetype-2.3.0.tgz#3d4b1e0312d2079879f826aff18dbeeca5960fbf"
   integrity sha512-M4yMwr6mAnQz76TbJm914+gPpB/nCwvZbJU28cUD6dR004SAxDLOOSUaB1JDRqLtaOV/vi0IC5lEAGFgrjGv/g==
-
-whatwg-url-without-unicode@8.0.0-3:
-  version "8.0.0-3"
-  resolved "https://registry.yarnpkg.com/whatwg-url-without-unicode/-/whatwg-url-without-unicode-8.0.0-3.tgz#ab6df4bf6caaa6c85a59f6e82c026151d4bb376b"
-  integrity sha512-HoKuzZrUlgpz35YO27XgD28uh/WJH4B0+3ttFqRo//lmq+9T/mIOJ6kqmINI9HpUpz1imRC/nR/lxKpJiv0uig==
-  dependencies:
-    buffer "^5.4.3"
-    punycode "^2.1.1"
-    webidl-conversions "^5.0.0"
 
 whatwg-url@^5.0.0:
   version "5.0.0"
