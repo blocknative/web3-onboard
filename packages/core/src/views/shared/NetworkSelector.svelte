@@ -125,7 +125,7 @@
         color: var(${colorVar},
         var(--account-center-network-selector-color, var(--gray-500)));
         background-image: url('data:image/svg+xml;utf8,${selectIcon}'); ${
-        bold ? 'font-weight: 700;' : ''
+        bold ? 'font-weight: 600;' : ''
       }`}
     >
       {#if !connectedToValidAppChain(wallet.chains[0], chains)}

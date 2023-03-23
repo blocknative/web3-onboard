@@ -220,7 +220,7 @@ const initOptions = Joi.object({
     previewTransaction: Joi.function()
   }),
   theme: theme,
-  useWebFont: Joi.boolean()
+  disableFontDownload: Joi.boolean()
 })
 
 const connectOptions = Joi.object({

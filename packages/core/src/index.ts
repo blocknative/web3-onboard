@@ -97,7 +97,7 @@ function init(options: InitOptions): OnboardAPI {
     containerElements,
     transactionPreview,
     theme,
-    useWebFont
+    disableFontDownload
   } = options
 
   if (containerElements) updateConfiguration({ containerElements })
@@ -197,7 +197,7 @@ function init(options: InitOptions): OnboardAPI {
     updateNotify(notifyUpdate)
   }
 
-  const app = svelteInstance || mountApp(theme, useWebFont)
+  const app = svelteInstance || mountApp(theme, disableFontDownload)
 
   updateConfiguration({
     appMetadata,
@@ -243,9 +243,9 @@ function init(options: InitOptions): OnboardAPI {
 
 const fontFamilyExternallyDefined = (
   theme: Theme,
-  useWebFont: boolean
+  disableFontDownload: boolean
 ): boolean => {
-  if (useWebFont) return true
+  if (disableFontDownload) return true
   if (
     document.body &&
     (getComputedStyle(document.body).getPropertyValue(
@@ -271,7 +271,7 @@ const importInterFont = async (): Promise<void> => {
   document.body.appendChild(styleEl)
 }
 
-function mountApp(theme: Theme, useWebFont: boolean) {
+function mountApp(theme: Theme, disableFontDownload: boolean) {
   class Onboard extends HTMLElement {
     constructor() {
       super()
@@ -282,7 +282,7 @@ function mountApp(theme: Theme, useWebFont: boolean) {
     customElements.define('onboard-v2', Onboard)
   }
 
-  if (!fontFamilyExternallyDefined(theme, useWebFont)) {
+  if (!fontFamilyExternallyDefined(theme, disableFontDownload)) {
     importInterFont()
   }
 

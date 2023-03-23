@@ -76,7 +76,7 @@ export interface InitOptions {
    * To define the font used see `--w3o-font-family` prop within
    * the Theme initialization object or set as css variable
    */
-  useWebFont?: boolean
+  disableFontDownload?: boolean
 }
 
 export type Theme = ThemingMap | BuiltInThemes | 'system'

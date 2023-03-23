@@ -106,7 +106,7 @@ type InitOptions = {
    * To define the font used see `--w3o-font-family` prop within
    * the Theme initialization object or set as css variable
    */
-  useWebFont?: boolean
+  disableFontDownload?: boolean
 }
 ```
 
@@ -221,12 +221,12 @@ export type ThemingMap = {
 }
 ```
 
-**`useWebFont`**
+**`disableFontDownload`**
 If set to `true` the default `Inter` font will not be imported and instead the web based `sans-serif` font will be used if a font is not defined through the `Theme` or exposed css variable.
 To define the font use `--w3o-font-family` prop within the `Theme` initialization object or set as a css variable.
 
 ```typescript
-type useWebFont = boolean // defaults to false
+type disableFontDownload = boolean // defaults to false
 ```
 
 **`i18n`**

@@ -108,7 +108,7 @@
 
   .address-domain {
     margin-left: 0.5rem;
-    font-weight: 700;
+    font-weight: 600;
     color: var(--account-center-maximized-address-color, inherit);
   }
 

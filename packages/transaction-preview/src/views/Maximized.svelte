@@ -169,7 +169,7 @@
   }
   .details-cta {
     color: inherit;
-    font-weight: 700;
+    font-weight: 600;
     font-size: 0.875rem;
     display: flex;
     justify-content: flex-end;
@@ -209,7 +209,7 @@
   }
 
   table.balance-change-table td.token-text {
-    font-weight: 700;
+    font-weight: 600;
   }
 
   tbody > tr:not(:first-child) {

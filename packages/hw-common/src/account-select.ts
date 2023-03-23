@@ -26,30 +26,6 @@ const accountSelect = async (
   return firstValueFrom(accounts$)
 }
 
-const fontFamilyExternallyDefined = (): boolean => {
-  if (
-    document.body &&
-    (getComputedStyle(document.body).getPropertyValue('--w3o-font-family') ||
-      getComputedStyle(document.body).getPropertyValue(
-        '--onboard-font-family-normal'
-      ))
-  )
-    return true
-  return false
-}
-
-const importInterFont = async (): Promise<void> => {
-  const { InterVar } = await import('@web3-onboard/common')
-  // Add Fonts to main page
-  const styleEl = document.createElement('style')
-
-  styleEl.innerHTML = `
-    ${InterVar}
-  `
-
-  document.body.appendChild(styleEl)
-}
-
 // eslint-disable-next-line max-len
 const mountAccountSelect = (
   selectAccountOptions: SelectAccountOptions,
@@ -63,9 +39,6 @@ const mountAccountSelect = (
 
   if (!customElements.get('account-select')) {
     customElements.define('account-select', AccountSelectEl)
-  }
-  if (!fontFamilyExternallyDefined()) {
-    importInterFont()
   }
 
   // add to DOM
