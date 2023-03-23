@@ -103,7 +103,6 @@ export const toHexString = (val: number | string): string =>
 export function chainIdToHex(chains: (Chain | ChainWithDecimalId)[]): Chain[] {
   return chains.map(({ id, ...rest }) => {
     const hexId = toHexString(id)
-    console.log(hexId)
     return { id: hexId, ...rest }
   })
 }
