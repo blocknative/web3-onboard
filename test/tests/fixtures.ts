@@ -35,8 +35,7 @@ export const test = base.extend<{
     // setup metamask
     await initialSetup(chromium, {
       secretWordsOrPrivateKey:
-        // 'test test test test test test test test test test test junk',
-        'nerve neglect wish exchange head swallow afraid rain rent swift guilt swift',
+        'work gas empower again shy learn copper spread music mansion depend strategy',
       network: 'goerli',
       password: 'Tester@1234',
       enableAdvancedSettings: true

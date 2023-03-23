@@ -34,7 +34,7 @@ test('metamask sign message', async ({ page }) => {
 })
 
 test('send Transaction', async ({ page }) => {
-  const address = '0xBB7050947E6a523A2dd42566dE928554BE4eD604'
+  const address = '0x0A2A0c1044818DF54C70E03c288F9eA5Ef5ef105'
   await connectMetamask(page)
   const input = page.getByTestId('sendTransaction')
   await input.fill(address)
