@@ -695,6 +695,7 @@
               class="text-input"
               placeholder="0x..."
               bind:value={toAddress}
+              data-testid="sendTransaction"
             />
             <button on:click={sendTransaction(provider)}>
               Send Transaction
@@ -706,6 +707,7 @@
               class="text-input"
               placeholder="0x..."
               bind:value={toAddress}
+              data-testid="sendWithPreflight"
             />
             <button on:click={sendTransactionWithPreFlight(provider, balance)}>
               Send with Preflight Notifications

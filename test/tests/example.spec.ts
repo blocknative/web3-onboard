@@ -1,4 +1,4 @@
-import { test, expect, setUpMetmask, METAMASK_WALLET_PW } from './fixtures'
+import { test, expect } from './fixtures'
 
 test('has title', async ({ page }) => {
   await page.goto('http://localhost:8080')
