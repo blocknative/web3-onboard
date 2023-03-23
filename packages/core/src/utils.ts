@@ -79,12 +79,12 @@ export function isSVG(str: string): boolean {
 }
 
 export function shortenAddress(add: string): string {
-  return `${add.slice(0, 6)}...${add.slice(-4)}`
+  return `${add.slice(0, 6)}…${add.slice(-4)}`
 }
 
 export function shortenDomain(domain: string): string {
   return domain.length > 11
-    ? `${domain.slice(0, 4)}...${domain.slice(-6)}`
+    ? `${domain.slice(0, 4)}…${domain.slice(-6)}`
     : domain
 }
 
@@ -207,8 +207,7 @@ export const chainStyles: Record<string, ChainStyle> = {
   '0x14a33': {
     icon: baseIcon,
     color: '#0259F9'
-  },
-
+  }
 }
 
 export const unrecognizedChainStyle = { icon: questionIcon, color: '#33394B' }

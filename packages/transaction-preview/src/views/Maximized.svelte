@@ -43,7 +43,7 @@
   }
 
   const shortenAddress = (address: string): string => {
-    return `${address.slice(0, 6)}...${address.slice(-4)}`
+    return `${address.slice(0, 6)}…${address.slice(-4)}`
   }
 
   const cleanGas = (gasComputed: number): number => {
@@ -292,18 +292,18 @@
             {/each}
           {/each}
           {#if totalGasInEth && totalGasUsed}
-          <tr>
-            <td class="token-text">ETH</td>
-            <td class="negative"
-              >-{totalGasInEth}
-              <div class="gas-used-value">
-                ({totalGasUsed}
-                {$_('maximized.gasUsed', {
-                  default: en.maximized.gasUsed
-                })})
-              </div></td
-            >
-          </tr>
+            <tr>
+              <td class="token-text">ETH</td>
+              <td class="negative"
+                >-{totalGasInEth}
+                <div class="gas-used-value">
+                  ({totalGasUsed}
+                  {$_('maximized.gasUsed', {
+                    default: en.maximized.gasUsed
+                  })})
+                </div></td
+              >
+            </tr>
           {/if}
         {/if}
       </tbody>
