@@ -440,6 +440,12 @@ const onboard = Onboard({
       rpcUrl: `https://goerli.infura.io/v3/${INFURA_ID}`
     },
     {
+      id: 11155111,
+      token: 'ETH',
+      label: 'Sepolia',
+      rpcUrl: 'https://rpc.sepolia.org/'
+    },
+    {
       id: '0x38',
       token: 'BNB',
       label: 'Binance Smart Chain',
