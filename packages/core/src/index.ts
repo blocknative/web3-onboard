@@ -241,7 +241,11 @@ function init(options: InitOptions): OnboardAPI {
         autoSelect: { label: lastConnectedWallets, disableModals: true }
       })
     }
-    if (lastConnectedWallets && Array.isArray(lastConnectedWallets)) {
+    if (
+      lastConnectedWallets &&
+      Array.isArray(lastConnectedWallets) &&
+      lastConnectedWallets.length
+    ) {
       connectAllPreviousWallets(lastConnectedWallets, connect)
     }
   }
