@@ -8,7 +8,12 @@
   import { state } from '../../store/index.js'
   import { connectWallet$, onDestroy$ } from '../../streams.js'
   import { addWallet, updateAccount } from '../../store/actions.js'
-  import { validEnsChain, isSVG, setLocalStore } from '../../utils.js'
+  import {
+    validEnsChain,
+    isSVG,
+    setLocalStore,
+    getLocalStore
+  } from '../../utils.js'
   import CloseButton from '../shared/CloseButton.svelte'
   import Modal from '../shared/Modal.svelte'
   import Agreement from './Agreement.svelte'
@@ -207,8 +212,30 @@
       }
 
       // store last connected wallet
-      if (state.get().connect.autoConnectLastWallet) {
-        setLocalStore(STORAGE_KEYS.LAST_CONNECTED_WALLET, label)
+      if (
+        state.get().connect.autoConnectLastWallet ||
+        state.get().connect.autoConnectAllPreviousWallet
+      ) {
+        let labelsList: string | Array<String> = JSON.parse(
+          getLocalStore(STORAGE_KEYS.LAST_CONNECTED_WALLET)
+        )
+
+        if (labelsList && Array.isArray(labelsList)) {
+          const tempLabels = labelsList
+          labelsList = [...new Set([label, ...tempLabels])]
+        }
+
+        if (labelsList && typeof labelsList === 'string') {
+          const tempLabel = labelsList
+          labelsList = [tempLabel]
+        }
+
+        if (!labelsList) labelsList = [label]
+
+        setLocalStore(
+          STORAGE_KEYS.LAST_CONNECTED_WALLET,
+          JSON.stringify(labelsList)
+        )
       }
 
       const chain = await getChainId(provider)

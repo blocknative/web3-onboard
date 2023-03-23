@@ -6,11 +6,11 @@ import { state } from './store/index.js'
 import { reset$, wallets$ } from './streams.js'
 import initI18N from './i18n/index.js'
 import App from './views/Index.svelte'
-import type { InitOptions, Notify } from './types.js'
+import type { ConnectModalOptions, InitOptions, Notify } from './types.js'
 import { APP_INITIAL_STATE, STORAGE_KEYS } from './constants.js'
 import { configuration, updateConfiguration } from './configuration.js'
 import updateBalances from './update-balances.js'
-import { chainIdToHex, getLocalStore } from './utils.js'
+import { chainIdToHex, getLocalStore, setLocalStore } from './utils.js'
 import { preflightNotifications } from './preflight-notifications.js'
 
 import {
@@ -227,18 +227,57 @@ function init(options: InitOptions): OnboardAPI {
   theme && updateTheme(theme)
 
   // handle auto connection of last wallet
-  if (connect && connect.autoConnectLastWallet) {
-    const lastConnectedWallet = getLocalStore(
-      STORAGE_KEYS.LAST_CONNECTED_WALLET
+  if (
+    connect &&
+    (connect.autoConnectLastWallet || connect.autoConnectAllPreviousWallet)
+  ) {
+    const lastConnectedWallets = JSON.parse(
+      getLocalStore(STORAGE_KEYS.LAST_CONNECTED_WALLET)
     )
 
-    lastConnectedWallet &&
+    // Handle for legacy single wallet approach
+    if (lastConnectedWallets && typeof lastConnectedWallets === 'string') {
       API.connectWallet({
-        autoSelect: { label: lastConnectedWallet, disableModals: true }
+        autoSelect: { label: lastConnectedWallets, disableModals: true }
       })
+    }
+    if (lastConnectedWallets && Array.isArray(lastConnectedWallets)) {
+      connectAllPreviousWallets(lastConnectedWallets, connect)
+    }
   }
 
   return API
+}
+
+const connectAllPreviousWallets = async (
+  lastConnectedWallets: Array<string>,
+  connect: ConnectModalOptions
+): Promise<void> => {
+  const activeWalletsList = []
+  const parsedWalletList = lastConnectedWallets
+
+  if (!connect.autoConnectAllPreviousWallet) {
+    API.connectWallet({
+      autoSelect: { label: parsedWalletList[0], disableModals: true }
+    })
+    activeWalletsList.push(parsedWalletList[0])
+  } else {
+    // Loop in reverse to maintain wallet order
+    for (let i = parsedWalletList.length; i--; ) {
+      const walletConnectionPromise = await API.connectWallet({
+        autoSelect: { label: parsedWalletList[i], disableModals: true }
+      })
+
+      // Update localStorage list for available wallets
+      if (walletConnectionPromise.some(r => r.label === parsedWalletList[i])) {
+        activeWalletsList.unshift(parsedWalletList[i])
+      }
+    }
+  }
+  setLocalStore(
+    STORAGE_KEYS.LAST_CONNECTED_WALLET,
+    JSON.stringify(activeWalletsList)
+  )
 }
 
 function mountApp() {
