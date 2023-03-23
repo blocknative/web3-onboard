@@ -82,11 +82,11 @@ An array of Chains that your app supports:
 type Chain = {
   id: ChainId // hex encoded string, eg '0x1' for Ethereum Mainnet
   namespace?: 'evm' // string indicating chain namespace. Defaults to 'evm' but will allow other chain namespaces in the future
-  // PLEASE NOTE: Some wallets require an rpcUrl, label, and token for actions such as adding a new chain. 
-  // It is recommended to include rpcUrl, label, and token for full functionality. 
+  // PLEASE NOTE: Some wallets require an rpcUrl, label, and token for actions such as adding a new chain.
+  // It is recommended to include rpcUrl, label, and token for full functionality.
   rpcUrl?: string // Recommended to include. Used for network requests (eg Alchemy or Infura end point).
-  label?: string // Recommended to include. Used for display, eg Ethereum Mainnet.  
-  token?: TokenSymbol // Recommended to include. The native token symbol, eg ETH, BNB, MATIC. 
+  label?: string // Recommended to include. Used for display, eg Ethereum Mainnet.
+  token?: TokenSymbol // Recommended to include. The native token symbol, eg ETH, BNB, MATIC.
   color?: string // the color used to represent the chain and will be used as a background for the icon
   icon?: string // the icon to represent the chain
   publicRpcUrl?: string // an optional public RPC used when adding a new chain config to the wallet
@@ -130,17 +130,28 @@ An object that allows for customization of the Connect Modal and accepts the typ
 
 ```typescript
 type ConnectModalOptions = {
+  /**
+   * Display the connect modal sidebar - only applies to desktop views
+   */
   showSidebar?: boolean
   /**
    * Disabled close of the connect modal with background click and
    * hides the close button forcing an action from the connect modal
+   * Defaults to false
    */
-  disableClose?: boolean // defaults to false
-  /**If set to true, the last connected wallet will store in local storage.
-   * Then on init, onboard will try to reconnect to that wallet with
-   * no modals displayed
+  disableClose?: boolean
+  /**
+   * If set to true, the most recently connected wallet will store in
+   * local storage. Then on init, onboard will try to reconnect to
+   * that wallet with no modals displayed
    */
-  autoConnectLastWallet?: boolean // defaults to false
+  autoConnectLastWallet?: boolean
+  /**
+   * If set to true, all previously connected wallets will store in
+   * local storage. Then on init, onboard will try to reconnect to
+   * each wallet with no modals displayed
+   */
+  autoConnectAllPreviousWallet?: boolean
   /**
    * Customize the link for the `I don't have a wallet` flow shown on the
    * select wallet modal.
@@ -1345,7 +1356,6 @@ export default config
 
 Checkout a boilerplate example (here)[https://github.com/blocknative/web3-onboard/tree/develop/examples/with-sveltekit]
 
-
 Add the following dev dependencies:
 
 `yarn add rollup-plugin-polyfill-node -D`
@@ -1442,19 +1452,22 @@ export default config
 
 If an error presents around `window` being undefined remove the `define.global` block.
 Add this to your `app.html`
+
 ```html
 <script>
-      var global = global || window
+  var global = global || window
 </script>
 ```
 
 ##### Buffer polyfill
+
 It seems some component or dependency requires Node's Buffer. To polyfill this, the simplest way I could find was to install the buffer package and include the following in web3-onboard.ts:
 
 ```javascript
 import { Buffer } from 'buffer'
 globalThis.Buffer = Buffer
 ```
+
 See [this github issue](https://github.com/blocknative/web3-onboard/issues/1568#issuecomment-1463963462) for further troubleshooting
 
 ### Vite
@@ -1546,7 +1559,6 @@ Checkout a boilerplate example for NextJS v13 (here)[https://github.com/blocknat
 
 Checkout a boilerplate example for NextJS (here)[https://github.com/blocknative/web3-onboard/tree/develop/examples/with-nextjs]
 
-
 ## Package Managers
 
 ### npm and yarn
@@ -1554,5 +1566,6 @@ Checkout a boilerplate example for NextJS (here)[https://github.com/blocknative/
 Web3-Onboard will work out of the box with `npm` and `yarn` support.
 
 ### pnpm
+
 We have had issues reported when using `pnpm` as the package manager when working with web3-onboard.
 As we work to understand this new manager more and the issues around it we recommend using `npm` or `yarn` for now.
