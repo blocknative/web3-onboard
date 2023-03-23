@@ -205,6 +205,12 @@
         rpcUrl: `https://mainnet.infura.io/v3/${infura_key}`
       },
       {
+        id: 11155111,
+        token: 'ETH',
+        label: 'Sepolia',
+        rpcUrl: 'https://rpc.sepolia.org/'
+      },
+      {
         id: '0x5',
         token: 'ETH',
         label: 'Goerli',
@@ -296,7 +302,7 @@
           //     type: 'hint',
           //     message: 'Your in the pool, hope you brought a towel!',
           //     autoDismiss: 0,
-          //     link: `https://ropsten.etherscan.io/tx/${transaction.hash}`
+          //     link: `https://goerli.etherscan.io/tx/${transaction.hash}`
           //   }
           // }
         },
