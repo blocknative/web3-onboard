@@ -33,15 +33,6 @@ const config = {
     vite: {
       build: {
         rollupOptions: {
-          external: [
-            '@web3-react/core',
-            '@web3-react/eip1193',
-            '@web3-react/metamask',
-            '@web3-react/network',
-            '@web3-react/walletconnect',
-            '@web3-react/url',
-            '@web3-onboard/*'
-          ],
           plugins: [nodePolyfills({ crypto: true, http: true })]
         },
         commonjsOptions: {
