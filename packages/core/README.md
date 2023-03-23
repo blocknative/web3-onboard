@@ -370,8 +370,7 @@ const injected = injectedModule()
 
 // Only one RPC endpoint required per chain
 const ETH_MAINNET_RPC = `https://mainnet.infura.io/v3/${INFURA_KEY}` || `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
-const ETH_ROPSTEN_RPC = `https://ropsten.infura.io/v3/${INFURA_ID}` || `https://eth-ropsten.g.alchemy.com/v2/${ALCHEMY_KEY}`
-const ETH_RINKEBY_RPC = `https://rinkeby.infura.io/v3/${INFURA_KEY}` || `https://eth-rinkeby.g.alchemy.com/v2/${ALCHEMY_KEY}`
+const ETH_GOERLI_RPC = `https://goerli.infura.io/v3/${INFURA_ID}` || `https://eth-goerli.g.alchemy.com/v2/${ALCHEMY_KEY}`
 
 const onboard = Onboard({
   wallets: [injected],
@@ -383,16 +382,16 @@ const onboard = Onboard({
       rpcUrl: ETH_MAINNET_RPC
     },
     {
-      id: '0x3',
-      token: 'tROP',
-      label: 'Ethereum Ropsten Testnet',
-      rpcUrl: ETH_ROPSTEN_RPC
+      id: 11155111,
+      token: 'ETH',
+      label: 'Sepolia',
+      rpcUrl: 'https://rpc.sepolia.org/'
     },
     {
-      id: '0x4',
-      token: 'rETH',
-      label: 'Ethereum Rinkeby Testnet',
-      rpcUrl: ETH_RINKEBY_RPC
+      id: '0x5',
+      token: 'ETH',
+      label: 'Goerli',
+      rpcUrl: ETH_GOERLI_RPC
     },
     {
       id: '0x38',

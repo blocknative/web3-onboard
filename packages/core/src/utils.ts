@@ -116,6 +116,7 @@ export const chainIdToLabel: Record<string, string> = {
   '0x3': 'Ropsten',
   '0x4': 'Rinkeby',
   '0x5': 'Goerli',
+  '0xaa36a7': 'Sepolia',
   '0x2a': 'Kovan',
   '0x38': 'Binance',
   '0x89': 'Polygon',
@@ -161,6 +162,10 @@ export const chainStyles: Record<string, ChainStyle> = {
     color: '#627EEA'
   },
   '0x2a': {
+    icon: ethereumIcon,
+    color: '#627EEA'
+  },
+  '0xaa36a7': {
     icon: ethereumIcon,
     color: '#627EEA'
   },
