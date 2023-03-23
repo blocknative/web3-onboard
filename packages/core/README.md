@@ -82,11 +82,11 @@ An array of Chains that your app supports:
 type Chain = {
   id: ChainId // hex encoded string, eg '0x1' for Ethereum Mainnet
   namespace?: 'evm' // string indicating chain namespace. Defaults to 'evm' but will allow other chain namespaces in the future
-  // PLEASE NOTE: Some wallets require an rpcUrl, label, and token for actions such as adding a new chain. 
-  // It is recommended to include rpcUrl, label, and token for full functionality. 
+  // PLEASE NOTE: Some wallets require an rpcUrl, label, and token for actions such as adding a new chain.
+  // It is recommended to include rpcUrl, label, and token for full functionality.
   rpcUrl?: string // Recommended to include. Used for network requests (eg Alchemy or Infura end point).
-  label?: string // Recommended to include. Used for display, eg Ethereum Mainnet.  
-  token?: TokenSymbol // Recommended to include. The native token symbol, eg ETH, BNB, MATIC. 
+  label?: string // Recommended to include. Used for display, eg Ethereum Mainnet.
+  token?: TokenSymbol // Recommended to include. The native token symbol, eg ETH, BNB, MATIC.
   color?: string // the color used to represent the chain and will be used as a background for the icon
   icon?: string // the icon to represent the chain
   publicRpcUrl?: string // an optional public RPC used when adding a new chain config to the wallet
@@ -359,8 +359,7 @@ const injected = injectedModule()
 
 // Only one RPC endpoint required per chain
 const ETH_MAINNET_RPC = `https://mainnet.infura.io/v3/${INFURA_KEY}` || `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
-const ETH_ROPSTEN_RPC = `https://ropsten.infura.io/v3/${INFURA_ID}` || `https://eth-ropsten.g.alchemy.com/v2/${ALCHEMY_KEY}`
-const ETH_RINKEBY_RPC = `https://rinkeby.infura.io/v3/${INFURA_KEY}` || `https://eth-rinkeby.g.alchemy.com/v2/${ALCHEMY_KEY}`
+const ETH_GOERLI_RPC = `https://goerli.infura.io/v3/${INFURA_ID}` || `https://eth-goerli.g.alchemy.com/v2/${ALCHEMY_KEY}`
 
 const onboard = Onboard({
   wallets: [injected],
@@ -372,16 +371,16 @@ const onboard = Onboard({
       rpcUrl: ETH_MAINNET_RPC
     },
     {
-      id: '0x3',
-      token: 'tROP',
-      label: 'Ethereum Ropsten Testnet',
-      rpcUrl: ETH_ROPSTEN_RPC
+      id: 11155111,
+      token: 'ETH',
+      label: 'Sepolia',
+      rpcUrl: 'https://rpc.sepolia.org/'
     },
     {
-      id: '0x4',
-      token: 'rETH',
-      label: 'Ethereum Rinkeby Testnet',
-      rpcUrl: ETH_RINKEBY_RPC
+      id: '0x5',
+      token: 'ETH',
+      label: 'Goerli',
+      rpcUrl: ETH_GOERLI_RPC
     },
     {
       id: '0x38',
@@ -1345,7 +1344,6 @@ export default config
 
 Checkout a boilerplate example (here)[https://github.com/blocknative/web3-onboard/tree/develop/examples/with-sveltekit]
 
-
 Add the following dev dependencies:
 
 `yarn add rollup-plugin-polyfill-node -D`
@@ -1442,19 +1440,22 @@ export default config
 
 If an error presents around `window` being undefined remove the `define.global` block.
 Add this to your `app.html`
+
 ```html
 <script>
-      var global = global || window
+  var global = global || window
 </script>
 ```
 
 ##### Buffer polyfill
+
 It seems some component or dependency requires Node's Buffer. To polyfill this, the simplest way I could find was to install the buffer package and include the following in web3-onboard.ts:
 
 ```javascript
 import { Buffer } from 'buffer'
 globalThis.Buffer = Buffer
 ```
+
 See [this github issue](https://github.com/blocknative/web3-onboard/issues/1568#issuecomment-1463963462) for further troubleshooting
 
 ### Vite
@@ -1546,7 +1547,6 @@ Checkout a boilerplate example for NextJS v13 (here)[https://github.com/blocknat
 
 Checkout a boilerplate example for NextJS (here)[https://github.com/blocknative/web3-onboard/tree/develop/examples/with-nextjs]
 
-
 ## Package Managers
 
 ### npm and yarn
@@ -1554,5 +1554,6 @@ Checkout a boilerplate example for NextJS (here)[https://github.com/blocknative/
 Web3-Onboard will work out of the box with `npm` and `yarn` support.
 
 ### pnpm
+
 We have had issues reported when using `pnpm` as the package manager when working with web3-onboard.
 As we work to understand this new manager more and the issues around it we recommend using `npm` or `yarn` for now.
