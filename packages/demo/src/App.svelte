@@ -106,10 +106,17 @@
   const walletConnect = walletConnectModule({
     connectFirstChainId: true,
     version: 2,
-    handleUri: (uri) => console.log(uri),
+    handleUri: uri => console.log(uri),
     projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
     qrcodeModalOptions: {
-    mobileLinks: ['rainbow', 'metamask', 'argent', 'trust', 'imtoken', 'pillar']
+      mobileLinks: [
+        'rainbow',
+        'metamask',
+        'argent',
+        'trust',
+        'imtoken',
+        'pillar'
+      ]
     },
     requiredChains: [1]
   })
@@ -330,10 +337,8 @@
       provider => provider.label === 'Unstoppable'
     )
     if (unstoppableUser) console.log(unstoppableUser.instance.user)
-    const wc = wallet.find(
-      provider => provider.label === 'WalletConnect'
-    )
-    if(wc) console.log(wc)
+    const wc = wallet.find(provider => provider.label === 'WalletConnect')
+    if (wc) console.log(wc)
   })
 
   const signTransactionMessage = async provider => {
@@ -638,7 +643,7 @@
           <button on:click={() => onboard.setChain({ chainId: '0x89' })}
             >Set Chain to Matic</button
           >
-          <button on:click={() => onboard.updateChain({ chainId: 10 })}
+          <button on:click={() => onboard.setChain({ chainId: 10 })}
             >Set Chain to Optimism</button
           >
         </div>
@@ -650,7 +655,7 @@
       <div class="connected-wallet">
         <div class="flex-centered" style="width: 10rem;">
           <div style="width: 2rem; height: 2rem">{@html icon}</div>
-          <span>{label}</span>
+          <span data-testid={label}>{label}</span>
         </div>
 
         <div>Chains: {JSON.stringify(chains, null, 2)}</div>
