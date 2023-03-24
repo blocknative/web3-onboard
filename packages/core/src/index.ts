@@ -320,7 +320,7 @@ const connectAllPreviousWallets = async (
   )
 }
 
-function mountApp() {
+function mountApp(theme: Theme, disableFontDownload: boolean) {
   class Onboard extends HTMLElement {
     constructor() {
       super()
