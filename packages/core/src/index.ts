@@ -231,22 +231,28 @@ function init(options: InitOptions): OnboardAPI {
     connect &&
     (connect.autoConnectLastWallet || connect.autoConnectAllPreviousWallet)
   ) {
-    const lastConnectedWallets = JSON.parse(
-      getLocalStore(STORAGE_KEYS.LAST_CONNECTED_WALLET)
+    const lastConnectedWallets = getLocalStore(
+      STORAGE_KEYS.LAST_CONNECTED_WALLET
     )
-
-    // Handle for legacy single wallet approach
-    if (lastConnectedWallets && typeof lastConnectedWallets === 'string') {
-      API.connectWallet({
-        autoSelect: { label: lastConnectedWallets, disableModals: true }
-      })
-    }
-    if (
-      lastConnectedWallets &&
-      Array.isArray(lastConnectedWallets) &&
-      lastConnectedWallets.length
-    ) {
-      connectAllPreviousWallets(lastConnectedWallets, connect)
+    try {
+      const lastConnectedWalletsParsed = JSON.parse(lastConnectedWallets)
+      if (
+        lastConnectedWalletsParsed &&
+        Array.isArray(lastConnectedWalletsParsed) &&
+        lastConnectedWalletsParsed.length
+      ) {
+        connectAllPreviousWallets(lastConnectedWalletsParsed, connect)
+      }
+    } catch (err) {
+      // Handle for legacy single wallet approach
+      if (lastConnectedWallets && typeof lastConnectedWallets === 'string') {
+        API.connectWallet({
+          autoSelect: {
+            label: lastConnectedWallets,
+            disableModals: true
+          }
+        })
+      }
     }
   }
 
