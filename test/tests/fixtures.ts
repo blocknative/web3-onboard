@@ -3,6 +3,8 @@ import { prepareMetamask } from '@synthetixio/synpress/helpers'
 import { initialSetup } from '@synthetixio/synpress/commands/metamask'
 const path = require('path')
 
+let metamaskCount = 0
+
 export const test = base.extend<{
   context: BrowserContext
 }>({
@@ -42,7 +44,9 @@ export const test = base.extend<{
       enableAdvancedSettings: true
     })
     await use(context)
-    await context.close()
+    if (!process.env.SERIAL_MODE) {
+      await context.close()
+    }
   }
 })
 export const expect = test.expect

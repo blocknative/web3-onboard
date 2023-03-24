@@ -2,6 +2,11 @@ import { test, expect } from './fixtures'
 import * as metamask from '@synthetixio/synpress/commands/metamask'
 import * as playwright from '@synthetixio/synpress/commands/playwright'
 
+let sharedPage
+let sharedContext
+
+test.describe.configure({ mode: 'serial' })
+
 const connectMetamask = async page => {
   await page.getByRole('button', { name: 'Connect Wallet' }).click()
   await page.getByRole('checkbox').click()
@@ -9,58 +14,59 @@ const connectMetamask = async page => {
   await metamask.acceptAccess()
 }
 
-test.beforeEach(async ({ page }) => {
-  await page.goto('http://localhost:8080')
+test.beforeAll(async ({ page, context }) => {
+  sharedPage = page
+  sharedContext = context
+  await sharedPage.goto('http://localhost:8080')
+  await connectMetamask(sharedPage)
 })
 
-test('metamask connected', async ({ page }) => {
-  await connectMetamask(page)
-  await expect(page.getByTestId('MetaMask')).toHaveText('MetaMask')
+test('metamask connected', async () => {
+  await expect(sharedPage.getByTestId('MetaMask')).toHaveText('MetaMask')
   // Check to make sure connected to goerli
-  await expect(page.getByTestId('chains')).toHaveText(
+  await expect(sharedPage.getByTestId('chains')).toHaveText(
     'Chains: [ { "namespace": "evm", "id": "0x5" } ]'
   )
 })
 
-test('metamask sign message', async ({ page }) => {
+test('metamask sign message', async () => {
   const messageText = 'a new message'
-  await connectMetamask(page)
-  const message = page.getByPlaceholder('Message...')
+  const message = sharedPage.getByPlaceholder('Message...')
   await message.fill(messageText)
-  await page.getByRole('button', { name: 'Sign Message' }).click()
+  await sharedPage.getByRole('button', { name: 'Sign Message' }).click()
   const notificationPage = await playwright.switchToMetamaskNotification()
   await expect(notificationPage.getByText(messageText)).toBeDefined()
   await notificationPage.getByTestId('page-container-footer-next').click()
 })
 
-test('send Transaction', async ({ page }) => {
+test('send Transaction', async () => {
   // KAT TODO parameterize this
   const address = '0x0A2A0c1044818DF54C70E03c288F9eA5Ef5ef105'
-  await connectMetamask(page)
-  const input = page.getByTestId('sendTransaction')
+  const input = sharedPage.getByTestId('sendTransaction')
   await input.fill(address)
-  await page.getByRole('button', { name: 'Send Transaction' }).click()
+  await sharedPage.getByRole('button', { name: 'Send Transaction' }).click()
   const notificationPage = await playwright.switchToMetamaskNotification()
   await notificationPage.getByTestId('page-container-footer-next').click()
-  await setTimeout(() => {}, 3000)
+  await sharedPage.waitForTimeout(3000)
   await expect(
-    page.getByText('Your account successfully received 0.00001 ETH from')
+    sharedPage.getByText('Your account successfully received 0.00001 ETH from')
   ).toBeDefined()
 })
 
-test('switch chains', async ({ page }) => {
-  await connectMetamask(page)
-  await page.getByRole('button', { name: 'Set Chain to Matic' }).click()
+test('switch chains', async () => {
+  await sharedPage.getByRole('button', { name: 'Set Chain to Matic' }).click()
   const notificationPage = await playwright.switchToMetamaskNotification()
   await notificationPage.getByRole('button', { name: 'Approve' }).click()
   await notificationPage.getByRole('button', { name: 'Switch network' }).click()
-  await expect(page.getByTestId('chains')).toHaveText(
+  await sharedPage.waitForTimeout(3000)
+  await expect(sharedPage.getByTestId('chains')).toHaveText(
     'Chains: [ { "namespace": "evm", "id": "0x89" } ]'
   )
 })
 
-test('disconnect metamask', async ({ page }) => {
-  await connectMetamask(page)
-  await page.getByRole('button', { name: 'Disconnect Wallet' }).click()
-  await expect(page.getByTestId('connected-wallet')).toHaveCount(0)
+test('disconnect metamask', async () => {
+  await sharedPage.getByRole('button', { name: 'Disconnect Wallet' }).click()
+  await sharedPage.waitForTimeout(3000)
+  await expect(sharedPage.getByTestId('connected-wallet')).toHaveCount(0)
+  sharedContext.close()
 })
