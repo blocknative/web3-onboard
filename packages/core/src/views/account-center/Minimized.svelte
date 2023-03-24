@@ -99,7 +99,7 @@
   }
 
   .address {
-    font-weight: 700;
+    font-weight: 600;
     line-height: 1.25rem;
     overflow: hidden;
     white-space: nowrap;

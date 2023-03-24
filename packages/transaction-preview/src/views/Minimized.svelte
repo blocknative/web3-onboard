@@ -80,7 +80,7 @@
   }
 
   .details-cta {
-    font-weight: 700;
+    font-weight: 600;
     font-size: 0.875rem;
     display: flex;
     justify-content: flex-end;

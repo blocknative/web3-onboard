@@ -43,7 +43,7 @@
   }
 
   const shortenAddress = (address: string): string => {
-    return `${address.slice(0, 6)}...${address.slice(-4)}`
+    return `${address.slice(0, 6)}…${address.slice(-4)}`
   }
 
   const cleanGas = (gasComputed: number): number => {
@@ -169,7 +169,7 @@
   }
   .details-cta {
     color: inherit;
-    font-weight: 700;
+    font-weight: 600;
     font-size: 0.875rem;
     display: flex;
     justify-content: flex-end;
@@ -209,7 +209,7 @@
   }
 
   table.balance-change-table td.token-text {
-    font-weight: 700;
+    font-weight: 600;
   }
 
   tbody > tr:not(:first-child) {
@@ -292,18 +292,18 @@
             {/each}
           {/each}
           {#if totalGasInEth && totalGasUsed}
-          <tr>
-            <td class="token-text">ETH</td>
-            <td class="negative"
-              >-{totalGasInEth}
-              <div class="gas-used-value">
-                ({totalGasUsed}
-                {$_('maximized.gasUsed', {
-                  default: en.maximized.gasUsed
-                })})
-              </div></td
-            >
-          </tr>
+            <tr>
+              <td class="token-text">ETH</td>
+              <td class="negative"
+                >-{totalGasInEth}
+                <div class="gas-used-value">
+                  ({totalGasUsed}
+                  {$_('maximized.gasUsed', {
+                    default: en.maximized.gasUsed
+                  })})
+                </div></td
+              >
+            </tr>
           {/if}
         {/if}
       </tbody>

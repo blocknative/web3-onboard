@@ -1,7 +1,6 @@
 import { firstValueFrom, Subject, take } from 'rxjs'
 import LoginModal from './view/LoginModal.svelte'
 import { loggedIn$ } from './streams.js'
-import { SofiaProRegular, SofiaProLight } from '@web3-onboard/common'
 import type { LoginOptions } from './types.js'
 
 // eslint-disable-next-line max-len
@@ -40,15 +39,6 @@ const mountLoginModal = (
     customElements.define('onboard-magic-login-modal', loginModalEl)
   }
 
-  // Add Fonts to main page
-  const styleEl = document.createElement('style')
-
-  styleEl.innerHTML = `
-    ${SofiaProRegular}
-    ${SofiaProLight}
-  `
-  document.body.appendChild(styleEl)
-
   // add to DOM
   const loginModalDomElement = document.createElement(
     'onboard-magic-login-modal'
@@ -70,8 +60,8 @@ const mountLoginModal = (
         --danger-500: #ff4f4f;
 
         /* FONTS */
-        --font-family-normal: Sofia Pro;
-        --font-family-light: Sofia Pro Light;
+        --font-family-normal: var(--w3o-font-family, Inter, sans-serif);
+
         --font-size-5: 1rem;
         --font-line-height-1: 24px;
 

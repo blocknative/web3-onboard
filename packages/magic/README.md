@@ -85,8 +85,7 @@ The Magic Wallet Login styles can customized via [CSS variables](https://develop
   --login-modal-danger-500: #ff4f4f;
 
   /* FONTS */
-  --login-modal-font-family-normal: Sofia Pro;
-  --login-modal-font-family-light: Sofia Pro Light;
+  --login-modal-font-family-normal: Inter, sans-serif;
   --login-modal-font-size-5: 1rem;
   --login-modal-font-line-height-1: 24px;
 

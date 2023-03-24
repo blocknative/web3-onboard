@@ -33,7 +33,7 @@
 
   h4 {
     margin: 1.5rem 0 0.5rem 0;
-    font-weight: 700;
+    font-weight: 600;
   }
 
   .action-required-heading,
@@ -57,12 +57,12 @@
   }
 
   a {
-    font-weight: 700;
+    font-weight: 600;
   }
 
   button {
     margin-top: 1.5rem;
-    font-weight: 700;
+    font-weight: 600;
   }
 </style>
 
