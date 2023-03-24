@@ -90,10 +90,18 @@ type InitOptions {
    * Object mapping for W3O components with the key being the component and the value the DOM element to mount the component to. This element must be available at time of package script execution.
    */
   containerElements?: Partial<ContainerElements>
-    /**
+  /**
    * Custom or predefined theme for Web3Onboard i.e. default, dark, Custom, etc.
    */
   theme?: Theme
+  /**
+   * Defaults to False
+   * If set to true the Inter font will not be imported and
+   * instead the default 'sans-serif' font will be used
+   * To define the font used see `--w3o-font-family` prop within
+   * the Theme initialization object or set as css variable
+   */
+  disableFontDownload?: boolean
 }
 
 ```
@@ -264,6 +272,7 @@ export type BuiltInThemes = 'default' | 'dark' | 'light'
 
 export type ThemingMap = {
   '--w3o-background-color'?: string
+  '--w3o-font-family'?: string
   '--w3o-foreground-color'?: string
   '--w3o-text-color'?: string
   '--w3o-border-color'?: string
@@ -279,6 +288,17 @@ Interested in seeing how web3-onboard will look on your site?
 
 It will allow you to customize the look and feel of web3-onboard, try different themes or create your own, and preview how web3-onboard will look on your site by entering a URL or adding a screenshot.
 :::
+
+---
+
+#### disableFontDownload
+
+If set to `true` the default `Inter` font will not be imported and instead the web based `sans-serif` font will be used if a font is not defined through the `Theme` or exposed css variable.
+To define the font use `--w3o-font-family` prop within the `Theme` initialization object or set as a css variable.
+
+```typescript
+type disableFontDownload = boolean // defaults to false
+```
 
 ---
 
@@ -1102,9 +1122,7 @@ The Onboard styles can be customized via [CSS variables](https://developer.mozil
   --onboard-action-required-modal-background
 
   /* FONTS */
-  --onboard-font-family-normal: Sofia Pro;
-  --onboard-font-family-semibold: Sofia Pro Semibold;
-  --onboard-font-family-light: Sofia Pro Light;
+  --onboard-font-family-normal:  Inter, sans-serif;
 
   --onboard-font-size-1: 3rem;
   --onboard-font-size-2: 2.25rem;
@@ -1172,8 +1190,7 @@ The Onboard styles can be customized via [CSS variables](https://developer.mozil
   --account-select-modal-danger-500: #ff4f4f;
 
   /* FONTS */
-  --account-select-modal-font-family-normal: Sofia Pro;
-  --account-select-modal-font-family-light: Sofia Pro Light;
+  --account-select-modal-font-family-normal:  Inter, sans-serif;
   --account-select-modal-font-size-5: 1rem;
   --account-select-modal-font-size-7: .75rem;
   --account-select-modal-font-line-height-1: 24px;

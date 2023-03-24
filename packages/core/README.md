@@ -48,25 +48,65 @@ Onboard needs to be initialized with an options object before the API can be use
 
 ```typescript
 type InitOptions = {
+  /**
+   * Wallet modules to be initialized and added to wallet selection modal
+   */
   wallets: WalletInit[]
-  chains: Chain[]
+  /**
+   * The chains that your app works with
+   */
+  chains: (Chain | ChainWithDecimalId)[]
+  /**
+   * Additional metadata about your app to be displayed in the Onboard UI
+   */
   appMetadata?: AppMetadata
+  /**
+   * Define custom copy for the 'en' locale or add locales to i18n your app
+   */
   i18n?: i18nOptions
+  /**
+   * Customize the connect modal
+   */
+  connect?: ConnectModalOptions
+  /**
+   * Customize the account center UI
+   */
   accountCenter?: AccountCenterOptions
+  /**
+   * Opt in to Blocknative value add services (transaction updates) by providing
+   * your Blocknative API key, head to https://explorer.blocknative.com/account
+   */
   apiKey?: string
-  notify?: Partial<NotifyOptions>
-  connect?: Partial<ConnectModalOptions>
+  /**
+   * Transaction notification options
+   */
+  notify?: Partial<NotifyOptions> | Partial<Notify>
+  /** Gas module */
   gas?: typeof gas
   /**
-   * Object mapping for W3O components with the key being the component and the value the DOM element to mount the component to. This element must be available at time of package script execution.
+   * Object mapping for W3O components with the key being the DOM
+   * element to mount the component to, this defines the DOM container
+   *  element for svelte to attach the component
    */
   containerElements?: Partial<ContainerElements>
+  /**
+   * Transaction Preview module
+   */
+  transactionPreview?: TransactionPreviewAPI
   /**
    * Custom or predefined theme for Web3Onboard
    * BuiltInThemes: ['default', 'dark', 'light', 'system']
    * or customize with a ThemingMap object.
    */
   theme?: Theme
+  /**
+   * Defaults to False
+   * If set to true the Inter font will not be imported and
+   * instead the default 'sans-serif' font will be used
+   * To define the font used see `--w3o-font-family` prop within
+   * the Theme initialization object or set as css variable
+   */
+  disableFontDownload?: boolean
 }
 ```
 
@@ -183,12 +223,21 @@ export type Theme = ThemingMap | BuiltInThemes | 'system'
 export type BuiltInThemes = 'default' | 'dark' | 'light'
 export type ThemingMap = {
   '--w3o-background-color'?: string
+  '--w3o-font-family'?: string
   '--w3o-foreground-color'?: string
   '--w3o-text-color'?: string
   '--w3o-border-color'?: string
   '--w3o-action-color'?: string
   '--w3o-border-radius'?: string
 }
+```
+
+**`disableFontDownload`**
+If set to `true` the default `Inter` font will not be imported and instead the web based `sans-serif` font will be used if a font is not defined through the `Theme` or exposed css variable.
+To define the font use `--w3o-font-family` prop within the `Theme` initialization object or set as a css variable.
+
+```typescript
+type disableFontDownload = boolean // defaults to false
 ```
 
 **`i18n`**
@@ -1057,9 +1106,7 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-action-required-btn-text-color
 
   /* FONTS */
-  --onboard-font-family-normal: Sofia Pro;
-  --onboard-font-family-semibold: Sofia Pro Semibold;
-  --onboard-font-family-light: Sofia Pro Light;
+  --onboard-font-family-normal: Inter;
 
   --onboard-font-size-1: 3rem;
   --onboard-font-size-2: 2.25rem;
@@ -1128,8 +1175,7 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --account-select-modal-danger-500: #ff4f4f;
 
   /* FONTS */
-  --account-select-modal-font-family-normal: Sofia Pro;
-  --account-select-modal-font-family-light: Sofia Pro Light;
+  --account-select-modal-font-family-normal: Inter, sans-serif;
   --account-select-modal-font-size-5: 1rem;
   --account-select-modal-font-size-7: .75rem;
   --account-select-modal-font-line-height-1: 24px;

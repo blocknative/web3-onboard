@@ -69,6 +69,14 @@ export interface InitOptions {
    * or customize with a ThemingMap object.
    */
   theme?: Theme
+  /**
+   * Defaults to False - use to reduce load time
+   * If set to true the Inter font will not be imported and
+   * instead the default 'sans-serif' font will be used
+   * To define the font used see `--w3o-font-family` prop within
+   * the Theme initialization object or set as css variable
+   */
+  disableFontDownload?: boolean
 }
 
 export type Theme = ThemingMap | BuiltInThemes | 'system'
@@ -77,6 +85,7 @@ export type BuiltInThemes = 'default' | 'dark' | 'light'
 
 export type ThemingMap = {
   '--w3o-background-color'?: string
+  '--w3o-font-family'?: string
   '--w3o-foreground-color'?: string
   '--w3o-text-color'?: string
   '--w3o-border-color'?: string
