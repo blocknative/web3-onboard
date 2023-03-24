@@ -245,7 +245,8 @@ function init(options: InitOptions): OnboardAPI {
       }
     } catch (err) {
       // Handle for legacy single wallet approach
-      if (lastConnectedWallets && typeof lastConnectedWallets === 'string') {
+      // Above try will throw syntax error is local storage is not json
+      if (err instanceof SyntaxError && lastConnectedWallets) {
         API.connectWallet({
           autoSelect: {
             label: lastConnectedWallets,
@@ -277,7 +278,6 @@ const connectAllPreviousWallets = async (
       const walletConnectionPromise = await API.connectWallet({
         autoSelect: { label: parsedWalletList[i], disableModals: true }
       })
-
       // Update localStorage list for available wallets
       if (walletConnectionPromise.some(r => r.label === parsedWalletList[i])) {
         activeWalletsList.unshift(parsedWalletList[i])
