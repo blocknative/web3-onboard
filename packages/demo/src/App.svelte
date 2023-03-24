@@ -250,7 +250,8 @@
     connect: {
       // disableClose: true,
       // disableUDResolution: true,
-      autoConnectLastWallet: true
+      autoConnectLastWallet: true,
+      autoConnectAllPreviousWallet: true
     },
     appMetadata: {
       name: 'Blocknative',

@@ -193,11 +193,18 @@ export type ConnectModalOptions = {
    * Defaults to false
    */
   disableClose?: boolean
-  /**If set to true, the last connected wallet will store in local storage.
-   * Then on init, onboard will try to reconnect to that wallet with
-   * no modals displayed
+  /** 
+   * If set to true, the most recently connected wallet will store in 
+   * local storage. Then on init, onboard will try to reconnect to 
+   * that wallet with no modals displayed
    */
   autoConnectLastWallet?: boolean
+  /** 
+   * If set to true, all previously connected wallets will store in 
+   * local storage. Then on init, onboard will try to reconnect to 
+   * each wallet with no modals displayed
+   */
+  autoConnectAllPreviousWallet?: boolean
   /**
    * Customize the link for the `I don't have a wallet` flow shown on the
    * select wallet modal.

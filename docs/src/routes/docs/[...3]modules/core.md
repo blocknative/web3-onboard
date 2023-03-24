@@ -191,6 +191,9 @@ An object that allows for customizing the connect modal layout and behavior
 
 ```typescript copy
 type ConnectModalOptions = {
+  /**
+   * Display the connect modal sidebar - only applies to desktop views
+   */
   showSidebar?: boolean
   /**
    * Disabled close of the connect modal with background click and
@@ -198,11 +201,18 @@ type ConnectModalOptions = {
    * Defaults to false
    */
   disableClose?: boolean
-  /**If set to true, the last connected wallet will store in local storage.
-   * Then on init, onboard will try to reconnect to that wallet with
-   * no modals displayed
+  /**
+   * If set to true, the most recently connected wallet will store in
+   * local storage. Then on init, onboard will try to reconnect to
+   * that wallet with no modals displayed
    */
-  autoConnectLastWallet?: boolean // defaults to false
+  autoConnectLastWallet?: boolean
+  /**
+   * If set to true, all previously connected wallets will store in
+   * local storage. Then on init, onboard will try to reconnect to
+   * each wallet with no modals displayed
+   */
+  autoConnectAllPreviousWallet?: boolean
   /**
    * Customize the link for the `I don't have a wallet` flow shown on the
    * select wallet modal.
