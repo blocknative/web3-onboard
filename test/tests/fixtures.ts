@@ -35,6 +35,7 @@ export const test = base.extend<{
     // setup metamask
     await initialSetup(chromium, {
       secretWordsOrPrivateKey:
+        // KAT TODO parameterize this
         'work gas empower again shy learn copper spread music mansion depend strategy',
       network: 'goerli',
       password: 'Tester@1234',

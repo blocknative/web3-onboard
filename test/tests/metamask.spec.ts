@@ -34,6 +34,7 @@ test('metamask sign message', async ({ page }) => {
 })
 
 test('send Transaction', async ({ page }) => {
+  // KAT TODO parameterize this
   const address = '0x0A2A0c1044818DF54C70E03c288F9eA5Ef5ef105'
   await connectMetamask(page)
   const input = page.getByTestId('sendTransaction')
