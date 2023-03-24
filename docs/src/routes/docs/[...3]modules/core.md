@@ -28,6 +28,7 @@ npm install @web3-onboard/core
 </Tabs>
 
 #### All Wallet Modules
+
 If you would like to support all wallets, then you can install all of the wallet modules:
 
 <Tabs values={['yarn', 'npm']}>
@@ -96,12 +97,13 @@ type InitOptions {
 }
 
 ```
+
 ---
 
 #### wallets
 
-An array of wallet modules that you would like to be presented to the user to select from when connecting a wallet. A wallet module is an abstraction that allows for easy interaction without needing to know the specifics of how that wallet works and are separate packages that can be included. 
-These modules are separate @web3-onboard packages such as `@web3-onboard/injected-wallets` or `@web3-onboard/ledger`. 
+An array of wallet modules that you would like to be presented to the user to select from when connecting a wallet. A wallet module is an abstraction that allows for easy interaction without needing to know the specifics of how that wallet works and are separate packages that can be included.
+These modules are separate @web3-onboard packages such as `@web3-onboard/injected-wallets` or `@web3-onboard/ledger`.
 For a full list click [here](#all-wallet-modules).
 
 ---
@@ -113,11 +115,11 @@ An array of Chains that your app supports:
 ```ts
 type Chain = {
   id: ChainId // hex encoded string, eg '0x1' for Ethereum Mainnet
-  namespace?: 'evm' // string indicating chain namespace. Defaults to 'evm' but will allow other chain namespaces in the future 
-  // PLEASE NOTE: Some wallets require an rpcUrl, label, and token for actions such as adding a new chain. 
-  // It is recommended to include rpcUrl, label, and token for full functionality. 
-  rpcUrl?: string // Recommended to include. Used for network requests. 
-  label?: string // Recommended to include. Used for display, eg Ethereum Mainnet. 
+  namespace?: 'evm' // string indicating chain namespace. Defaults to 'evm' but will allow other chain namespaces in the future
+  // PLEASE NOTE: Some wallets require an rpcUrl, label, and token for actions such as adding a new chain.
+  // It is recommended to include rpcUrl, label, and token for full functionality.
+  rpcUrl?: string // Recommended to include. Used for network requests.
+  label?: string // Recommended to include. Used for display, eg Ethereum Mainnet.
   token?: TokenSymbol // Recommended to include. The native token symbol, eg ETH, BNB, MATIC.
   color?: string // the color used to represent the chain and will be used as a background for the icon
   icon?: string // the icon to represent the chain
@@ -181,6 +183,9 @@ An object that allows for customizing the connect modal layout and behavior
 
 ```typescript copy
 type ConnectModalOptions = {
+  /**
+   * Display the connect modal sidebar - only applies to desktop views
+   */
   showSidebar?: boolean
   /**
    * Disabled close of the connect modal with background click and
@@ -188,11 +193,18 @@ type ConnectModalOptions = {
    * Defaults to false
    */
   disableClose?: boolean
-  /**If set to true, the last connected wallet will store in local storage.
-   * Then on init, onboard will try to reconnect to that wallet with
-   * no modals displayed
+  /**
+   * If set to true, the most recently connected wallet will store in
+   * local storage. Then on init, onboard will try to reconnect to
+   * that wallet with no modals displayed
    */
-  autoConnectLastWallet?: boolean // defaults to false
+  autoConnectLastWallet?: boolean
+  /**
+   * If set to true, all previously connected wallets will store in
+   * local storage. Then on init, onboard will try to reconnect to
+   * each wallet with no modals displayed
+   */
+  autoConnectAllPreviousWallet?: boolean
   /**
    * Customize the link for the `I don't have a wallet` flow shown on the
    * select wallet modal.
