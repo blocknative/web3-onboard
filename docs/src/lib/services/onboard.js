@@ -86,7 +86,7 @@ const intiOnboard = async (theme) => {
 
   const web3auth = web3authModule({
     clientId:
-      'BLWG0JGx3W-gcoT8YD75ZNue-TZpfP4REAIJF690Mg1KZfhEVWN_78auymc9j5yWeUz7tZRuheF0drsk_aUI5-A'
+      'BN6qfOOBrhYXhtN85fu5nWuaSiXSXHHK197ipmvBVFBWEG-xQmKTmQ9657BNLKBmjb73rDOA_1qnRgaZ5cTzOWI'
   })
 
   const trezorOptions = {
