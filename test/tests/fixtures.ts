@@ -1,10 +1,8 @@
 import { test as base, chromium, BrowserContext } from '@playwright/test'
 import { prepareMetamask } from '@synthetixio/synpress/helpers'
 import { initialSetup } from '@synthetixio/synpress/commands/metamask'
-import * as dotenv from 'dotenv'
 
 const path = require('path')
-dotenv.config({ path: __dirname + '../.env' })
 
 export const metamaskTest = base.extend<{
   context: BrowserContext
@@ -36,7 +34,6 @@ export const metamaskTest = base.extend<{
     // wait for metamask
     await context.pages()[0].waitForTimeout(3000)
     // setup metamask
-    console.log(process.env.TEST_WALLET_PHRASE)
     await initialSetup(chromium, {
       secretWordsOrPrivateKey: process.env.TEST_WALLET_PHRASE,
       network: 'goerli',
