@@ -172,7 +172,7 @@
 
   .app-name {
     font-size: 1rem;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 1rem;
     margin-bottom: 0.25rem;
     color: var(--account-center-maximized-app-name-color, inherit);
@@ -191,14 +191,14 @@
     color: var(--account-center-maximized-app-info-color, inherit);
   }
   .app-info-heading {
-    font-weight: 700;
+    font-weight: 600;
     margin-top: var(--onboard-spacing-5, var(--spacing-5));
     margin-bottom: var(--onboard-spacing-7, var(--spacing-7));
     color: var(--account-center-maximized-app-info-color, inherit);
   }
 
   a {
-    font-weight: 700;
+    font-weight: 600;
   }
 
   .mt7 {

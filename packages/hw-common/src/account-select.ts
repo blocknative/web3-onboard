@@ -1,5 +1,4 @@
 import { firstValueFrom, Subject, take } from 'rxjs'
-import { SofiaProRegular, SofiaProLight } from '@web3-onboard/common'
 import AccountSelect from './views/AccountSelect.svelte'
 import { accounts$ } from './streams.js'
 import { validateSelectAccountOptions } from './validation.js'
@@ -42,15 +41,6 @@ const mountAccountSelect = (
     customElements.define('account-select', AccountSelectEl)
   }
 
-  // Add Fonts to main page
-  const styleEl = document.createElement('style')
-
-  styleEl.innerHTML = `
-    ${SofiaProRegular}
-    ${SofiaProLight}
-  `
-  document.body.appendChild(styleEl)
-
   // add to DOM
   const accountSelectDomElement = document.createElement('account-select')
   const target = accountSelectDomElement.attachShadow({ mode: 'open' })
@@ -76,8 +66,7 @@ const mountAccountSelect = (
         --danger-500: #ff4f4f;
 
         /* FONTS */
-        --font-family-normal: Sofia Pro;
-        --font-family-light: Sofia Pro Light;
+        --font-family-normal: var(--w3o-font-family, Inter, sans-serif);
         --font-size-5: 1rem;
         --font-size-6: .875rem;
         --font-size-7: .75rem;

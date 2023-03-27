@@ -28,7 +28,7 @@
 
   h4 {
     margin: 1.5rem 0 0.5rem 0;
-    font-weight: 700;
+    font-weight: 600;
   }
 
   p {
@@ -39,7 +39,7 @@
   button {
     margin-top: 1.5rem;
     width: 50%;
-    font-weight: 700;
+    font-weight: 600;
   }
 
   .right {

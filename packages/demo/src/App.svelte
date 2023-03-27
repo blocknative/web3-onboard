@@ -27,7 +27,6 @@
   import phantomModule from '@web3-onboard/phantom'
   import trustModule from '@web3-onboard/trust'
   import frontierModule from '@web3-onboard/frontier'
-  import blocknativeIcon from './blocknative-icon.js'
   import {
     recoverAddress,
     arrayify,
@@ -109,16 +108,8 @@
     handleUri: uri => console.log(uri),
     projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
     qrcodeModalOptions: {
-      mobileLinks: [
-        'rainbow',
-        'metamask',
-        'argent',
-        'trust',
-        'imtoken',
-        'pillar'
-      ]
-    },
-    requiredChains: [1]
+    mobileLinks: ['rainbow', 'metamask', 'argent', 'trust', 'imtoken', 'pillar']
+    }
   })
   const portis = portisModule({
     apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
@@ -214,6 +205,12 @@
         rpcUrl: `https://mainnet.infura.io/v3/${infura_key}`
       },
       {
+        id: 11155111,
+        token: 'ETH',
+        label: 'Sepolia',
+        rpcUrl: 'https://rpc.sepolia.org/'
+      },
+      {
         id: '0x5',
         token: 'ETH',
         label: 'Goerli',
@@ -248,22 +245,17 @@
         token: 'ARB-ETH',
         label: 'Arbitrum',
         rpcUrl: 'https://rpc.ankr.com/arbitrum'
-      },
-      {
-        id: 84531,
-        token: 'ETH',
-        label: 'Base Goerli',
-        rpcUrl: 'https://goerli.base.org'
       }
     ],
     connect: {
       // disableClose: true,
       // disableUDResolution: true,
-      autoConnectLastWallet: true
+      autoConnectLastWallet: true,
+      autoConnectAllPreviousWallet: true
     },
     appMetadata: {
       name: 'Blocknative',
-      icon: blocknativeIcon,
+      // icon: blocknativeIcon,
       // logo: blocknativeLogo,
       description: 'Demo app for Onboard V2',
       recommendedInjectedWallets: [
@@ -311,7 +303,7 @@
           //     type: 'hint',
           //     message: 'Your in the pool, hope you brought a towel!',
           //     autoDismiss: 0,
-          //     link: `https://ropsten.etherscan.io/tx/${transaction.hash}`
+          //     link: `https://goerli.etherscan.io/tx/${transaction.hash}`
           //   }
           // }
         },
