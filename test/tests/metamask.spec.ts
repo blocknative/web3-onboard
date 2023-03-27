@@ -1,11 +1,11 @@
-import { test, expect } from './fixtures'
+import { metamaskTest, expect } from './fixtures'
 import * as metamask from '@synthetixio/synpress/commands/metamask'
 import * as playwright from '@synthetixio/synpress/commands/playwright'
 
 let sharedPage
 let sharedContext
 
-test.describe.configure({ mode: 'serial' })
+metamaskTest.describe.configure({ mode: 'serial' })
 
 const connectMetamask = async page => {
   await page.getByRole('button', { name: 'Connect Wallet' }).click()
@@ -14,14 +14,14 @@ const connectMetamask = async page => {
   await metamask.acceptAccess()
 }
 
-test.beforeAll(async ({ page, context }) => {
+metamaskTest.beforeAll(async ({ page, context }) => {
   sharedPage = page
   sharedContext = context
   await sharedPage.goto('http://localhost:8080')
   await connectMetamask(sharedPage)
 })
 
-test('metamask connected', async () => {
+metamaskTest('metamask connected', async () => {
   await expect(sharedPage.getByTestId('MetaMask')).toHaveText('MetaMask')
   // Check to make sure connected to goerli
   await expect(sharedPage.getByTestId('chains')).toHaveText(
@@ -29,7 +29,7 @@ test('metamask connected', async () => {
   )
 })
 
-test('metamask sign message', async () => {
+metamaskTest('metamask sign message', async () => {
   const messageText = 'a new message'
   const message = sharedPage.getByPlaceholder('Message...')
   await message.fill(messageText)
@@ -39,9 +39,8 @@ test('metamask sign message', async () => {
   await notificationPage.getByTestId('page-container-footer-next').click()
 })
 
-test('send Transaction', async () => {
-  // KAT TODO parameterize this
-  const address = '0x0A2A0c1044818DF54C70E03c288F9eA5Ef5ef105'
+metamaskTest('send Transaction', async () => {
+  const address = process.env.TEST_WALLET_ADDRESS
   const input = sharedPage.getByTestId('sendTransaction')
   await input.fill(address)
   await sharedPage.getByRole('button', { name: 'Send Transaction' }).click()
@@ -53,7 +52,7 @@ test('send Transaction', async () => {
   ).toBeDefined()
 })
 
-test('switch chains', async () => {
+metamaskTest('switch chains', async () => {
   await sharedPage.getByRole('button', { name: 'Set Chain to Matic' }).click()
   const notificationPage = await playwright.switchToMetamaskNotification()
   await notificationPage.getByRole('button', { name: 'Approve' }).click()
@@ -64,7 +63,7 @@ test('switch chains', async () => {
   )
 })
 
-test('disconnect metamask', async () => {
+metamaskTest('disconnect metamask', async () => {
   await sharedPage.getByRole('button', { name: 'Disconnect Wallet' }).click()
   await sharedPage.waitForTimeout(3000)
   await expect(sharedPage.getByTestId('connected-wallet')).toHaveCount(0)

@@ -1,11 +1,12 @@
 import { test as base, chromium, BrowserContext } from '@playwright/test'
 import { prepareMetamask } from '@synthetixio/synpress/helpers'
 import { initialSetup } from '@synthetixio/synpress/commands/metamask'
+import * as dotenv from 'dotenv'
+
 const path = require('path')
+dotenv.config({ path: __dirname + '../.env' })
 
-let metamaskCount = 0
-
-export const test = base.extend<{
+export const metamaskTest = base.extend<{
   context: BrowserContext
 }>({
   context: async ({}, use) => {
@@ -35,10 +36,9 @@ export const test = base.extend<{
     // wait for metamask
     await context.pages()[0].waitForTimeout(3000)
     // setup metamask
+    console.log(process.env.TEST_WALLET_PHRASE)
     await initialSetup(chromium, {
-      secretWordsOrPrivateKey:
-        // KAT TODO parameterize this
-        'work gas empower again shy learn copper spread music mansion depend strategy',
+      secretWordsOrPrivateKey: process.env.TEST_WALLET_PHRASE,
       network: 'goerli',
       password: 'Tester@1234',
       enableAdvancedSettings: true
@@ -49,4 +49,4 @@ export const test = base.extend<{
     }
   }
 })
-export const expect = test.expect
+export const expect = metamaskTest.expect
