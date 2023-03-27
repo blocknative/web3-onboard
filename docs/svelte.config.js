@@ -5,6 +5,8 @@ import Icons from 'unplugin-icons/vite'
 import preprocess from 'svelte-preprocess'
 import { resolve } from 'path'
 import nodePolyfills from 'rollup-plugin-polyfill-node'
+import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill'
+
 const MODE = process.env.NODE_ENV
 
 const development = MODE === 'development'
@@ -33,18 +35,22 @@ const config = {
     vite: {
       build: {
         rollupOptions: {
-          external: [
-            '@web3-react/core',
-            '@web3-react/eip1193',
-            '@web3-react/metamask',
-            '@web3-react/network',
-            '@web3-react/walletconnect',
-            '@web3-react/types',
-            '@web3-react/url',
-            '@web3-onboard/*'
-          ],
-          plugins: [nodePolyfills({ crypto: true, http: true })]
+          external: ['@web3-onboard/*'],
+          plugins: [
+            nodePolyfills({
+              assert: true,
+              buffer: true,
+              crypto: true,
+              http: true,
+              https: true,
+              os: true,
+              process: true,
+              stream: true,
+              util: true
+            })
+          ]
         },
+        target: 'es2020',
         commonjsOptions: {
           transformMixedEsModules: true
         }
@@ -52,9 +58,15 @@ const config = {
       resolve: {
         alias: {
           $fonts: resolve(process.cwd(), 'src/lib/fonts'),
+          assert: 'assert',
+          buffer: 'buffer',
           crypto: 'crypto-browserify',
+          http: 'stream-http',
+          https: 'https-browserify',
+          os: 'os-browserify/browser',
+          process: 'process/browser',
           stream: 'stream-browserify',
-          assert: 'assert'
+          util: 'util'
         }
       },
       plugins: [
@@ -82,7 +94,12 @@ const config = {
           '@web3-onboard/sequence',
           'js-sha3',
           '@ethersproject/bignumber'
-        ]
+        ],
+        esbuildOptions: {
+          target: 'es2020',
+          supported: { bigint: true },
+          plugins: [NodeModulesPolyfillPlugin()]
+        }
       }
     }
   }
