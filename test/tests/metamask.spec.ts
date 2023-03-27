@@ -39,6 +39,14 @@ metamaskTest('metamask sign message', async () => {
   await notificationPage.getByTestId('page-container-footer-next').click()
 })
 
+metamaskTest('metamask sign typed message', async () => {
+  await sharedPage.getByRole('button', { name: 'Sign Typed Message' }).click()
+  const notificationPage = await playwright.switchToMetamaskNotification()
+  await expect(notificationPage.getByText('Hello, Bob!')).toBeDefined()
+  await notificationPage.getByTestId('signature-request-scroll-button').click()
+  await notificationPage.getByTestId('page-container-footer-next').click()
+})
+
 metamaskTest('send Transaction', async () => {
   const address = process.env.TEST_WALLET_ADDRESS
   const input = sharedPage.getByTestId('sendTransaction')

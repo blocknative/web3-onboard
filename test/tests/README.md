@@ -11,6 +11,6 @@ To run tests:
     c. SERIAL_MODE=true
 4. yarn playwright test metamask
 
-There are 4 existing tests for metamask: metamask connects, signs a message, sends a transaction, switches chains, disconnects. 
+There are 4 existing tests for metamask: connect metamask, sign a message, sign a typed message, send a transaction, switche chains, and disconnect. 
 
 Please note: your test metamask wallet must have a balance of GoerliETH and the polygon chain already set up for all tests to pass. 
