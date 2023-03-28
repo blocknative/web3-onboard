@@ -359,24 +359,56 @@ type ContainerElements = {
 
 #### notify
 
-Notify provides by default transaction notifications for all connected wallets on the current blockchain. When switching chains the previous chain listeners remain active for 60 seconds to allow capture and report of remaining transactions that may be in flight.
-By default transaction notifications are captured if a DAppID is provided in the Onboard config along with the Account Center being enabled.
-An object that defines whether transaction notifications will display (defaults to true if an API key is provided). This object contains an `enabled` flag prop and an optional `transactionHandler` which is a callback that can disable or allow customizations of notifications.
-Currently notifications are positioned in the same location as the account center (either below, if the Account Center is positioned along the top, or above if positioned on the bottom of the view).
-The `transactionHandler` can react off any property of the Ethereum TransactionData returned to the callback from the event (see console.log in example init). In turn, it can return a Custom `Notification` object to define the verbiage, styling, or add functionality:
+Notify is a feature that provides transaction notifications for all connected wallets on the current blockchain. This document will provide you with an overview of Notify and guide you through the process of integrating it into your decentralized application (DApp).
 
-- `Notification.message` - to completely customize the message shown
-- `Notification.eventCode` - handle codes in your own way - see codes here under the notify prop [default en file here](https://github.com/blocknative/web3-onboard/blob/develop/packages/core/src/i18n/en.json)
-- `Notification.type` - icon type displayed (see `NotificationType` below for options)
-- `Notification.autoDismiss` - time (in ms) after which the notification will be dismissed. If set to `0` the notification will remain on screen until the user dismisses the notification, refreshes the page or navigates away from the site with the notifications
-- `Notification.link` - add link to the transaction hash. For instance, a link to the transaction on etherscan
-- `Notification.onClick()` - onClick handler for when user clicks the notification element
+##### Overview
 
-Notify can also be styled by using the CSS variables found below. These are setup to allow maximum customization with base styling variables setting the global theme (i.e. `--onboard-grey-600`) along with more precise component level styling variables available (`--notify-onboard-grey-600`) with the latter taking precedent if defined
+To enable transaction notifications and updates simply add your Blocknative `apiKey`((sign up for free)[https://explorer.blocknative.com/account]) to the web3-onboard configurations as the value to the `apiKey` prop and thats it!
+Transaction notifications will be shown for all transactions occurring on supported chains for all of the users connected wallets.
+When switching chains, the previous chain listeners remain active for 60 seconds to allow the capture and report of any remaining transactions that may be in flight.
 
-If notifications are enabled the notifications can be handled through onboard app state as seen below.
+Notifications are by default positioned in the same location as the Account Center (if enabled) or can be positioned separately using the `position` property.
 
-```js
+##### Notify Configuration
+
+| Property            | Type              | Description                                                   |
+| ------------------- | ----------------- | ------------------------------------------------------------- |
+| `enabled`           | boolean           | Indicates whether transaction notifications will be displayed |
+| `transactionHandler`| function          | Optional callback for customizations of notifications         |
+| `position`          | CommonPositions   | Position of the notification on the screen                    |
+
+##### Position Options
+
+| Property  | Type   | Description                              |
+| --------- | ------ | ---------------------------------------- |
+| `desktop` | Notify | Configuration for desktop notifications. |
+| `mobile`  | Notify | Configuration for mobile notifications.  |
+
+Both `desktop` and `mobile` configurations are of type `Notify`.
+###### Transaction Handler
+
+The `transactionHandler` is a callback that receives an object of type `EthereumTransactionData`. Based on the data received, the handler can return a custom `Notification` object or a boolean value (false to disable the notification for the current event or undefined for a default notification).
+
+##### Custom Notification
+
+| Property       | Type       | Description                                              |
+| -------------- | ---------- | -------------------------------------------------------- |
+| `message`      | string     | Customizes the message shown                             |
+| `eventCode`    | string     | Allows handling codes in a custom way                    |
+| `type`         | string     | Represents the icon type displayed                       |
+| `autoDismiss`  | number     | Time (in ms) after which the notification will be dismissed |
+| `link`         | string     | Adds a link to the transaction hash                      |
+| `onClick`      | function   | onClick handler for the notification element             |
+
+##### Styling Notify
+
+Notify automatically will match the [`theme`](#theme) defined in the web3-onboard config. It can also be styled using the [exposed css variables provided below](#custom-styling). These variables allow for maximum customization with base styling variables setting the global theme (e.g., `--onboard-grey-600`) and more precise component-level styling variables available (`--notify-onboard-grey-600`). The latter takes precedence if defined.
+
+##### Handling Notifications
+
+If notifications are enabled, they can be fielded and handled through the onboard app state as seen in the example below - although this is not required for notifications to display:
+
+```javascript
 const wallets = onboard.state.select('notifications')
 const { unsubscribe } = wallets.subscribe((update) =>
   console.log('transaction notifications: ', update)
@@ -412,13 +444,31 @@ export type CustomNotification = Partial<Omit<Notification, 'id' | 'startTime'>>
 export type Notification = {
   id: string
   key: string
-  type: NotificationType
   network: Network
   startTime?: number
-  eventCode: string
+  /**
+   * to completely customize the message shown
+   */
   message: string
+  /**
+   * handle codes in your own way - see codes here under the notify prop [default en file here](https://github.com/blocknative/web3-onboard/blob/develop/packages/core/src/i18n/en.json)
+   */
+  eventCode: string
+  /**
+   * icon type displayed (see `NotificationType` below for options)
+   */
+  type: NotificationType
+  /**
+   * time (in ms) after which the notification will be dismissed. If set to `0` the notification will remain on screen until the user dismisses the notification, refreshes the page or navigates away from the site with the notifications
+   */
   autoDismiss: number
+  /**
+   * add link to the transaction hash. For instance, a link to the transaction on etherscan
+   */
   link?: string
+  /**
+   * onClick handler for when user clicks the notification element
+   */
   onClick?: (event: Event) => void
 }
 
@@ -426,15 +476,8 @@ export type NotificationType = 'pending' | 'success' | 'error' | 'hint'
 
 export declare type Network =
   | 'main'
-  | 'testnet'
-  | 'ropsten'
-  | 'rinkeby'
   | 'goerli'
-  | 'kovan'
-  | 'xdai'
-  | 'bsc-main'
   | 'matic-main'
-  | 'fantom-main'
   | 'matic-mumbai'
   | 'local'
 
@@ -457,6 +500,8 @@ import injectedModule from '@web3-onboard/injected-wallets'
 const injected = injectedModule()
 
 const onboard = Onboard({
+  // head to https://explorer.blocknative.com/account to sign up for free
+  apiKey: 'xxx387fb-bxx1-4xxc-a0x3-9d37e426xxxx'
   wallets: [injected],
   chains: [
     {
@@ -518,7 +563,6 @@ const onboard = Onboard({
       { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
     ]
   },
-  apiKey: 'xxx387fb-bxx1-4xxc-a0x3-9d37e426xxxx'
   notify: {
     desktop: {
       enabled: true,
