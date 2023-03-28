@@ -1,9 +1,7 @@
 import { firstValueFrom, Subject } from 'rxjs'
 import {
   ProviderRpcError,
-  ProviderRpcErrorCode,
-  SofiaProLight,
-  SofiaProRegular
+  ProviderRpcErrorCode
 } from '@web3-onboard/common'
 import type {
   PatchedEIP1193Provider,
@@ -241,6 +239,30 @@ const init = (initOptions: TransactionPreviewInitOptions): void => {
   options = { ...initOptions, ...optionalSettings }
 }
 
+const fontFamilyExternallyDefined = (): boolean => {
+  if (
+    document.body &&
+    (getComputedStyle(document.body).getPropertyValue('--w3o-font-family') ||
+      getComputedStyle(document.body).getPropertyValue(
+        '--onboard-font-family-normal'
+      ))
+  )
+    return true
+  return false
+}
+
+const importFontsToDoc = async (): Promise<void> => {
+  const { InterVar } = await import('@web3-onboard/common')
+  // Add Fonts to main page
+  const styleEl = document.createElement('style')
+
+  styleEl.innerHTML = `
+    ${InterVar}
+  `
+
+  document.body.appendChild(styleEl)
+}
+
 const mountTransactionPreview = (simResponse: MultiSimOutput) => {
   class TransactionPreviewEl extends HTMLElement {
     constructor() {
@@ -252,14 +274,9 @@ const mountTransactionPreview = (simResponse: MultiSimOutput) => {
     customElements.define('transaction-preview', TransactionPreviewEl)
   }
 
-  // Add Fonts to main page
-  const styleEl = document.createElement('style')
-
-  styleEl.innerHTML = `
-    ${SofiaProRegular}
-    ${SofiaProLight}
-  `
-  document.body.appendChild(styleEl)
+  if (!fontFamilyExternallyDefined()) {
+    importFontsToDoc()
+  }
 
   // add to DOM
   const transactionPreviewDomElement = document.createElement(
