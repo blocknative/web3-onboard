@@ -4,13 +4,14 @@
 
 To run tests:
 1. Create .env file in test/ with the following variables:
-    a. TEST_WALLET_PHRASE
-    b. TEST_WALLET_ADDRESS
-    c. SERIAL_MODE=true
+    TEST_WALLET_PHRASE
+    TEST_WALLET_ADDRESS
+    SERIAL_MODE=true
+    HEADLESS_MODE=true
 2. yarn test
 
 There are 4 existing tests for metamask: connect metamask, sign a message, sign a typed message, send a transaction, switche chains, and disconnect. 
 
-Please note: your test metamask wallet must have a balance of GoerliETH and the polygon chain already set up for all tests to pass. 
+Please note: your test metamask wallet must have a balance of GoerliETH for all tests to pass. 
 
 To view report after running tests: npx playwright show-report

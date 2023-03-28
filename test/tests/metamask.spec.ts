@@ -61,13 +61,12 @@ metamaskTest('send Transaction', async () => {
 })
 
 metamaskTest('switch chains', async () => {
-  await sharedPage.getByRole('button', { name: 'Set Chain to Matic' }).click()
+  await sharedPage.getByRole('button', { name: 'Set Chain to Mainnet' }).click()
   const notificationPage = await playwright.switchToMetamaskNotification()
-  await notificationPage.getByRole('button', { name: 'Approve' }).click()
   await notificationPage.getByRole('button', { name: 'Switch network' }).click()
   await sharedPage.waitForTimeout(3000)
   await expect(sharedPage.getByTestId('chains')).toHaveText(
-    'Chains: [ { "namespace": "evm", "id": "0x89" } ]'
+    'Chains: [ { "namespace": "evm", "id": "0x1" } ]'
   )
 })
 
