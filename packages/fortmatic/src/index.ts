@@ -19,7 +19,7 @@ function fortmatic(options: APIKey): WalletInit {
 
         let instance = new Fortmatic(apiKey, {
           chainId: parseInt(chains[0].id),
-          rpcUrl: chains[0].rpcUrl
+          rpcUrl: chains[0].rpcUrl || ''
         })
 
         let fortmaticProvider = instance.getProvider()
@@ -59,7 +59,7 @@ function fortmatic(options: APIKey): WalletInit {
               // re-instantiate instance with new network
               instance = new Fortmatic(apiKey, {
                 chainId: parseInt(chain.id),
-                rpcUrl: chain.rpcUrl
+                rpcUrl: chain.rpcUrl || ''
               })
 
               // get the provider again

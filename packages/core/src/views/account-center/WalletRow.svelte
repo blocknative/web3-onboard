@@ -64,6 +64,10 @@
 
 <style>
   .container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
     position: relative;
     z-index: 0;
     width: 100%;
@@ -85,7 +89,7 @@
     width: 100%;
     background: var(--action-color);
     border-radius: 12px;
-    z-index: 0;
+    z-index: -1;
     opacity: 0;
   }
 
@@ -103,45 +107,56 @@
   }
 
   .container.primary:hover {
-    background-color: var(--account-center-maximized-account-section-background-hover);
+    background-color: var(
+      --account-center-maximized-account-section-background-hover
+    );
+  }
+
+  .account-details {
+    flex: 1 1;
+    display: flex;
+    gap: inherit;
+    overflow: hidden;
   }
 
   .address-domain {
-    margin-left: 0.5rem;
-    font-weight: 700;
+    flex: 1 0 auto;
+    max-width: 70%;
+    overflow: scroll;
+    white-space: nowrap;
+    font-weight: 600;
     color: var(--account-center-maximized-address-color, inherit);
   }
 
   .balance {
-    margin-left: 0.5rem;
-    transition: color 150ms ease-in-out, background-color 150ms ease-in-out;
-    overflow: hidden;
+    flex: 1 1 auto;
+    max-width: 70%;
+    overflow: scroll;
     white-space: nowrap;
-    text-overflow: ellipsis;
-    width: 7.25rem;
     text-align: end;
     opacity: 0.4;
+    transition: color 150ms ease-in-out, background-color 150ms ease-in-out;
   }
 
   .elipsis-container {
+    flex: 0;
     padding: 0.25rem;
-    margin-left: 0.25rem;
     border-radius: 24px;
     transition: color 150ms ease-in-out, background-color 150ms ease-in-out;
     background-color: transparent;
     opacity: 0.4;
   }
 
-  .elipsis {
-    width: 24px;
-  }
-
   .elipsis-container:hover {
-    color: var(--text-color)
+    color: var(--text-color);
   }
 
   .elipsis-container.active {
-    color: var(--text-color)
+    color: var(--text-color);
+  }
+
+  .elipsis {
+    width: 24px;
   }
 
   .menu {
@@ -177,58 +192,55 @@
     <div
       on:click={() => setPrimaryWallet(wallet, address)}
       class:primary={primary && i === 0}
-      class="container flex items-center justify-between pointer"
+      class="container"
     >
-      <div class="flex items-center">
-        <div class="flex items-center relative">
-          <!-- WALLET ICON -->
-          <WalletAppBadge
-            size={32}
-            padding={4}
-            background="custom"
-            color="#EFF1FC"
-            customBackgroundColor={primary && i === 0
-              ? 'rgba(24, 206, 102, 0.2)'
-              : 'rgba(235, 235, 237, 0.1)'}
-            border={primary && i === 0 ? 'green' : 'gray'}
-            radius={8}
-            icon={wallet.icon}
-          />
-          {#if primary && i === 0}
-            <div
-              style="right: -5px; bottom: -5px;"
-              class="drop-shadow absolute"
-            >
-              <SuccessStatusIcon size={14} />
-            </div>
-          {/if}
-        </div>
+      <div class="flex items-center relative">
+        <!-- WALLET ICON -->
+        <WalletAppBadge
+          size={32}
+          padding={4}
+          background="custom"
+          color="#EFF1FC"
+          customBackgroundColor={primary && i === 0
+            ? 'rgba(24, 206, 102, 0.2)'
+            : 'rgba(235, 235, 237, 0.1)'}
+          border={primary && i === 0 ? 'green' : 'gray'}
+          radius={8}
+          icon={wallet.icon}
+        />
+        {#if primary && i === 0}
+          <div style="right: -5px; bottom: -5px;" class="drop-shadow absolute">
+            <SuccessStatusIcon size={14} />
+          </div>
+        {/if}
+      </div>
 
+      <div class="account-details">
         <!-- ADDRESS / DOMAIN -->
-        <span class="address-domain"
-          >{ens
+        <div class="address-domain">
+          {ens
             ? shortenDomain(ens.name)
             : uns
             ? shortenDomain(uns.name)
-            : shortenAddress(address)}</span
-        >
-      </div>
+            : shortenAddress(address)}
+        </div>
 
-      <div class="flex items-center">
         <!-- BALANCE -->
         {#if balance}
-          <span in:fade class="balance">{formatBalance(balance)}</span>
-        {/if}
-
-        <!-- ELIPSIS -->
-        <div class="elipsis-container" class:active={showMenu === address}>
-          <div
-            on:click|stopPropagation={() =>
-              (showMenu = showMenu === address ? '' : address)}
-            class="elipsis pointer flex items-center justify-center relative"
-          >
-            {@html elipsisIcon}
+          <div in:fade class="balance">
+            {formatBalance(balance)}
           </div>
+        {/if}
+      </div>
+
+      <!-- ELIPSIS -->
+      <div class="elipsis-container" class:active={showMenu === address}>
+        <div
+          on:click|stopPropagation={() =>
+            (showMenu = showMenu === address ? '' : address)}
+          class="elipsis pointer flex items-center justify-center relative"
+        >
+          {@html elipsisIcon}
         </div>
       </div>
     </div>

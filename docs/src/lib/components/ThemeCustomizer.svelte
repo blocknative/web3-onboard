@@ -81,7 +81,8 @@
       '--w3o-text-color': 'unset',
       '--w3o-border-color': 'unset',
       '--w3o-action-color': 'unset',
-      '--w3o-border-radius': 'unset'
+      '--w3o-border-radius': 'unset',
+      '--w3o-font-family': 'unset'
     },
     custom: {
       '--w3o-background-color': 'unset',
@@ -89,7 +90,8 @@
       '--w3o-text-color': 'unset',
       '--w3o-border-color': 'unset',
       '--w3o-action-color': 'unset',
-      '--w3o-border-radius': 'unset'
+      '--w3o-border-radius': 'unset',
+      '--w3o-font-family': 'unset'
     },
     light: {
       '--w3o-background-color': '#ffffff',
@@ -97,7 +99,8 @@
       '--w3o-text-color': '#1a1d26',
       '--w3o-border-color': '#d0d4f7',
       '--w3o-action-color': '#6370E5',
-      '--w3o-border-radius': '16px'
+      '--w3o-border-radius': '16px',
+      '--w3o-font-family': 'unset'
     },
     dark: {
       '--w3o-background-color': '#1A1D26',
@@ -105,7 +108,8 @@
       '--w3o-text-color': '#EFF1FC',
       '--w3o-border-color': '#33394B',
       '--w3o-action-color': '#929bed',
-      '--w3o-border-radius': '16px'
+      '--w3o-border-radius': '16px',
+      '--w3o-font-family': 'unset'
     }
   }
 
