@@ -183,7 +183,7 @@ type RecommendedInjectedWallets = {
 
 ---
 
-#### connectModal
+#### connect
 
 An object that allows for customizing the connect modal layout and behavior
 
