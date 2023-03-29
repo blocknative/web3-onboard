@@ -361,23 +361,21 @@ type ContainerElements = {
 
 Notify is a feature that provides transaction notifications for all connected wallets on the current blockchain. This document will provide you with an overview of Notify and guide you through the process of integrating it into your decentralized application (DApp).
 
-##### Overview
-
 To enable transaction notifications and updates simply add your Blocknative `apiKey`((sign up for free)[https://explorer.blocknative.com/account]) to the web3-onboard configurations as the value to the `apiKey` prop and thats it!
 Transaction notifications will be shown for all transactions occurring on supported chains for all of the users connected wallets.
 When switching chains, the previous chain listeners remain active for 60 seconds to allow the capture and report of any remaining transactions that may be in flight.
 
 Notifications are by default positioned in the same location as the Account Center (if enabled) or can be positioned separately using the `position` property.
 
-##### Notify Configuration
+##### **Notify Configuration**
 
-| Property            | Type              | Description                                                   |
-| ------------------- | ----------------- | ------------------------------------------------------------- |
-| `enabled`           | boolean           | Indicates whether transaction notifications will be displayed |
-| `transactionHandler`| function          | Optional callback for customizations of notifications         |
-| `position`          | CommonPositions   | Position of the notification on the screen                    |
+| Property             | Type            | Description                                                   |
+| -------------------- | --------------- | ------------------------------------------------------------- |
+| `enabled`            | boolean         | Indicates whether transaction notifications will be displayed |
+| `transactionHandler` | function        | Optional callback for customizations of notifications         |
+| `position`           | CommonPositions | Position of the notification on the screen                    |
 
-##### Position Options
+##### **Position Options**
 
 | Property  | Type   | Description                              |
 | --------- | ------ | ---------------------------------------- |
@@ -385,26 +383,27 @@ Notifications are by default positioned in the same location as the Account Cent
 | `mobile`  | Notify | Configuration for mobile notifications.  |
 
 Both `desktop` and `mobile` configurations are of type `Notify`.
-###### Transaction Handler
+
+###### **Transaction Handler**
 
 The `transactionHandler` is a callback that receives an object of type `EthereumTransactionData`. Based on the data received, the handler can return a custom `Notification` object or a boolean value (false to disable the notification for the current event or undefined for a default notification).
 
-##### Custom Notification
+##### **Customizing Notification**
 
-| Property       | Type       | Description                                              |
-| -------------- | ---------- | -------------------------------------------------------- |
-| `message`      | string     | Customizes the message shown                             |
-| `eventCode`    | string     | Allows handling codes in a custom way                    |
-| `type`         | string     | Represents the icon type displayed                       |
-| `autoDismiss`  | number     | Time (in ms) after which the notification will be dismissed |
-| `link`         | string     | Adds a link to the transaction hash                      |
-| `onClick`      | function   | onClick handler for the notification element             |
+| Property      | Type     | Description                                                 |
+| ------------- | -------- | ----------------------------------------------------------- |
+| `message`     | string   | Customizes the message shown                                |
+| `eventCode`   | string   | Allows handling codes in a custom way                       |
+| `type`        | string   | Represents the icon type displayed                          |
+| `autoDismiss` | number   | Time (in ms) after which the notification will be dismissed |
+| `link`        | string   | Adds a link to the transaction hash                         |
+| `onClick`     | function | onClick handler for the notification element                |
 
-##### Styling Notify
+##### **Styling Notify**
 
 Notify automatically will match the [`theme`](#theme) defined in the web3-onboard config. It can also be styled using the [exposed css variables provided below](#custom-styling). These variables allow for maximum customization with base styling variables setting the global theme (e.g., `--onboard-grey-600`) and more precise component-level styling variables available (`--notify-onboard-grey-600`). The latter takes precedence if defined.
 
-##### Handling Notifications
+##### **Handling Notifications**
 
 If notifications are enabled, they can be fielded and handled through the onboard app state as seen in the example below - although this is not required for notifications to display:
 
@@ -417,6 +416,9 @@ const { unsubscribe } = wallets.subscribe((update) =>
 // unsubscribe when updates are no longer needed
 unsubscribe()
 ```
+
+##### **Notifications as DApp Toast Messages**
+The Notifications messages can also be used to send fully customized Dapp toast messages and updated. Check out the [customNotifications API docs for examples and code snippets](#customnotification) 
 
 ```ts
 export type NotifyOptions = {
@@ -474,12 +476,7 @@ export type Notification = {
 
 export type NotificationType = 'pending' | 'success' | 'error' | 'hint'
 
-export declare type Network =
-  | 'main'
-  | 'goerli'
-  | 'matic-main'
-  | 'matic-mumbai'
-  | 'local'
+export declare type Network = 'main' | 'goerli' | 'matic-main' | 'matic-mumbai' | 'local'
 
 export interface UpdateNotification {
   (notificationObject: CustomNotification): {
@@ -932,22 +929,71 @@ Notify can be used to deliver custom DApp notifications by passing a `CustomNoti
 This `UpdateNotification` will return an `update` function that can be passed a new `CustomNotification` to update the existing notification.
 The `customNotification` method also returns a `dismiss` method that is called without any parameters to dismiss the notification.
 
-```typescript copy
-const { update, dismiss } = onboard.state.actions.customNotification({
-  type: 'pending',
-  message: 'This is a custom DApp pending notification to use however you want',
-  autoDismiss: 0
-})
-setTimeout(
-  () =>
-    update({
-      eventCode: 'dbUpdateSuccess',
-      message: 'Updated status for custom notification',
-      type: 'success',
-      autoDismiss: 8000
-    }),
-  4000
-)
+| Property      | Type     | Description                                                 |
+| ------------- | -------- | ----------------------------------------------------------- |
+| `message`     | string   | Customizes the message shown                                |
+| `eventCode`   | string   | Allows handling codes in a custom way                       |
+| `type`        | string   | Represents the icon type displayed                          |
+| `autoDismiss` | number   | Time (in ms) after which the notification will be dismissed |
+| `link`        | string   | Adds a link to the transaction hash                         |
+| `onClick`     | function | onClick handler for the notification element                |
+
+```javascript copy
+<button
+  on:click={() =>
+    onboard.state.actions.customNotification({
+      type: 'hint',
+      message: 'This is a custom DApp hint',
+      autoDismiss: 0
+    })}>Send Hint Notification</button
+>
+<button
+  on:click={() => {
+    const { update, dismiss } =
+      onboard.state.actions.customNotification({
+        type: 'pending',
+        message:
+          'This is a custom DApp pending notification to use however you want',
+        autoDismiss: 0
+      })
+    setTimeout(
+      () =>
+        update({
+          eventCode: 'dbUpdateSuccess',
+          message: 'Updated status for custom notification',
+          type: 'success',
+          autoDismiss: 0
+        }),
+      4000
+    )
+  }}>Send Success Notification</button
+>
+<button
+  on:click={() =>
+    onboard.state.actions.customNotification({
+      message:
+        'This is a custom DApp success notification to use however you want',
+      autoDismiss: 0,
+      type: 'pending'
+    })}>Send Pending Notification</button
+>
+<button
+  on:click={() =>
+    onboard.state.actions.customNotification({
+      type: 'error',
+      message:
+        'This is a custom DApp Error notification to use however you want',
+      autoDismiss: 0
+    })}>Send Error Notification</button
+>
+<button
+  on:click={() =>
+    onboard.state.actions.customNotification({
+      message:
+        'This is a custom non-descript DApp notification to use however you want',
+      autoDismiss: 0
+    })}>Send DApp Notification</button
+>
 ```
 
 ---
