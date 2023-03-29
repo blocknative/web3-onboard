@@ -1,5 +1,8 @@
 <script>
   import walletModal from '$lib/assets/connect-modal.svg'
+  import notifyCustomImg from '$lib/assets/notify-custom-example.png'
+  import notifyImg from '$lib/assets/notify-example.png'
+  import notifyPreflightImg from '$lib/assets/notify-preflight-example.png'
 </script>
 
 # Core
@@ -361,6 +364,8 @@ type ContainerElements = {
 
 Notify is a feature that provides transaction notifications for all connected wallets on the current blockchain. This document will provide you with an overview of Notify and guide you through the process of integrating it into your decentralized application (DApp).
 
+<img src="{notifyImg}" alt="Transaction notifications image"/>
+
 To enable transaction notifications and updates simply add your Blocknative `apiKey`((sign up for free)[https://explorer.blocknative.com/account]) to the web3-onboard configurations as the value to the `apiKey` prop and thats it!
 Transaction notifications will be shown for all transactions occurring on supported chains for all of the users connected wallets.
 When switching chains, the previous chain listeners remain active for 60 seconds to allow the capture and report of any remaining transactions that may be in flight.
@@ -486,7 +491,9 @@ export interface UpdateNotification {
 }
 ```
 
-### Initialization Example
+---
+
+## Initialization Example
 
 Putting it all together, here is an example initialization with the injected wallet modules:
 
@@ -626,6 +633,7 @@ const onboard = Onboard({
 })
 ```
 
+---
 ## Connecting a Wallet
 
 To initiate a user to select and connect a wallet you can call the `connectWallet` function on an initialized Onboard instance. It will return a `Promise` that will resolve when the user either successfully connects a wallet, or when they dismiss the UI. The resolved value from the promise will be the latest state of the `wallets` array. The order of the wallets array is last to first, so the most recently selected wallet will be the first item in the array and can be thought of as the "primary wallet". If no wallet was selected, then the `wallets` array will have the same state as it had before calling `connectWallet`.
@@ -925,6 +933,8 @@ onboard.state.actions.updateNotify({
 
 #### **customNotification**
 
+<img src="{notifyCustomImg}" alt="Custom notifications image"/>
+
 Notify can be used to deliver custom DApp notifications by passing a `CustomNotification` object to the `customNotification` action. This will return an `UpdateNotification` type.
 This `UpdateNotification` will return an `update` function that can be passed a new `CustomNotification` to update the existing notification.
 The `customNotification` method also returns a `dismiss` method that is called without any parameters to dismiss the notification.
@@ -1000,9 +1010,11 @@ The `customNotification` method also returns a `dismiss` method that is called w
 
 #### **preflightNotifications**
 
-Notify can be used to deliver standard notifications along with preflight information by passing a `PreflightNotificationsOptions` object to the `preflightNotifications` action. This will return a promise that resolves to the transaction hash (if `sendTransaction` resolves the transaction hash and is successful), the internal notification id (if no `sendTransaction` function is provided) or return nothing if an error occurs or `sendTransaction` is not provided or doesn't resolve to a string.
+Notify can be used to deliver standard notifications along with preflight updates by passing a `PreflightNotificationsOptions` object to the `preflightNotifications` API action. 
 
-Preflight event types include
+<img src="{notifyPreflightImg}" alt="Preflight notifications image"/>
+
+Preflight event types include:
 
 - `txRequest` : Alert user there is a transaction request awaiting confirmation by their wallet
 - `txAwaitingApproval` : A previous transaction is awaiting confirmation
@@ -1012,21 +1024,9 @@ Preflight event types include
 - `txSendFail` : The user rejected the transaction (requires `sendTransaction`)
 - `txUnderpriced` : The gas price for the transaction is too low (requires `sendTransaction`)
 
-```typescript
-interface PreflightNotificationsOptions {
-  sendTransaction?: () => Promise<string | void>
-  estimateGas?: () => Promise<string>
-  gasPrice?: () => Promise<string>
-  balance?: string | number
-  txDetails?: {
-    value: string | number
-    to?: string
-    from?: string
-  }
-  txApproveReminderTimeout?: number // defaults to 15 seconds if not specified
-}
-```
+This API call will return a promise that resolves to the transaction hash (if `sendTransaction` resolves the transaction hash and is successful), the internal notification id (if no `sendTransaction` function is provided) or return nothing if an error occurs or `sendTransaction` is not provided or doesn't resolve to a string.
 
+Example:
 ```typescript copy
 const balanceValue = Object.values(balance)[0]
 // if using ethers v6 this is:
@@ -1056,6 +1056,21 @@ const transactionHash = await onboard.state.actions.preflightNotifications({
   txDetails: txDetails
 })
 console.log(transactionHash)
+```
+
+```typescript
+interface PreflightNotificationsOptions {
+  sendTransaction?: () => Promise<string | void>
+  estimateGas?: () => Promise<string>
+  gasPrice?: () => Promise<string>
+  balance?: string | number
+  txDetails?: {
+    value: string | number
+    to?: string
+    from?: string
+  }
+  txApproveReminderTimeout?: number // defaults to 15 seconds if not specified
+}
 ```
 
 ---
