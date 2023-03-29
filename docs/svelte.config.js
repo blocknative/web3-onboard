@@ -30,9 +30,6 @@ const config = {
       default: true,
       entries: ['*']
     },
-    files: {
-      assets: 'src/static'
-    },
     vite: {
       build: {
         rollupOptions: {
