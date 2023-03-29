@@ -220,9 +220,9 @@ Define a custom or predefined theme for Web3Onboard using either:
 Note: `system` will default to the theme set by the users system.
 
 ```typescript
-export type Theme = ThemingMap | BuiltInThemes | 'system'
-export type BuiltInThemes = 'default' | 'dark' | 'light'
-export type ThemingMap = {
+type Theme = ThemingMap | BuiltInThemes | 'system'
+type BuiltInThemes = 'default' | 'dark' | 'light'
+type ThemingMap = {
   '--w3o-background-color'?: string
   '--w3o-font-family'?: string
   '--w3o-foreground-color'?: string
@@ -378,11 +378,11 @@ unsubscribe()
 ```
 
 ```ts
-export type NotifyOptions = {
+type NotifyOptions = {
   desktop: Notify
   mobile: Notify
 }
-export type Notify = {
+type Notify = {
   enabled: boolean // default: true
   /**
    * Callback that receives all transaction events
@@ -394,13 +394,13 @@ export type Notify = {
   position: CommonPositions
 }
 
-export type CommonPositions = 'topRight' | 'bottomRight' | 'bottomLeft' | 'topLeft'
+type CommonPositions = 'topRight' | 'bottomRight' | 'bottomLeft' | 'topLeft'
 
-export type TransactionHandlerReturn = CustomNotification | boolean | void
+type TransactionHandlerReturn = CustomNotification | boolean | void
 
-export type CustomNotification = Partial<Omit<Notification, 'id' | 'startTime'>>
+type CustomNotification = Partial<Omit<Notification, 'id' | 'startTime'>>
 
-export type Notification = {
+type Notification = {
   id: string
   key: string
   network: Network
@@ -431,16 +431,16 @@ export type Notification = {
   onClick?: (event: Event) => void
 }
 
-export type NotificationType = 'pending' | 'success' | 'error' | 'hint'
+type NotificationType = 'pending' | 'success' | 'error' | 'hint'
 
-export declare type Network =
+declare type Network =
   | 'main'
   | 'goerli'
   | 'matic-main'
   | 'matic-mumbai'
   | 'local'
 
-export interface UpdateNotification {
+interface UpdateNotification {
   (notificationObject: CustomNotification): {
     dismiss: () => void
     update: UpdateNotification
@@ -829,11 +829,11 @@ onboard.state.actions.updateTheme(customTheme)
 ```
 
 ```typescript
-export type Theme = ThemingMap | BuiltInThemes | 'system'
+type Theme = ThemingMap | BuiltInThemes | 'system'
 
-export type BuiltInThemes = 'default' | 'dark' | 'light'
+type BuiltInThemes = 'default' | 'dark' | 'light'
 
-export type ThemingMap = {
+type ThemingMap = {
   '--w3o-background-color'?: string
   '--w3o-foreground-color'?: string
   '--w3o-text-color'?: string
