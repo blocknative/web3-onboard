@@ -45,7 +45,8 @@ const config = {
           $fonts: resolve(process.cwd(), 'src/lib/fonts'),
           crypto: 'crypto-browserify',
           stream: 'stream-browserify',
-          assert: 'assert'
+          assert: 'assert',
+          assets: '/docs/static'
         }
       },
       plugins: [
