@@ -12,6 +12,6 @@
     "jsx": "react-jsx",
     "outDir": "build"
   },
-  "include": ["src/**/*", "static/*"],
+  "include": ["src/**/*"],
   "exclude": ["./.svelte-kit"]
 }
