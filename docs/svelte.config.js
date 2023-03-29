@@ -30,6 +30,9 @@ const config = {
       default: true,
       entries: ['*']
     },
+    files: {
+      assets: 'src/static'
+    },
     vite: {
       build: {
         rollupOptions: {
@@ -45,8 +48,7 @@ const config = {
           $fonts: resolve(process.cwd(), 'src/lib/fonts'),
           crypto: 'crypto-browserify',
           stream: 'stream-browserify',
-          assert: 'assert',
-          $assets: resolve(process.cwd(), 'static')
+          assert: 'assert'
         }
       },
       plugins: [
