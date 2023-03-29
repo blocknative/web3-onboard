@@ -366,7 +366,7 @@ Notify is a feature that provides transaction notifications for all connected wa
 
 <img src="{notifyImg}" alt="Transaction notifications image"/>
 
-To enable transaction notifications and updates simply add your Blocknative `apiKey`((sign up for free)[https://explorer.blocknative.com/account]) to the web3-onboard configurations as the value to the `apiKey` prop and thats it!
+To enable transaction notifications and updates simply add your Blocknative `apiKey`([sign up for free](https://explorer.blocknative.com/account)) to the web3-onboard configurations as the value to the `apiKey` prop and thats it!
 Transaction notifications will be shown for all transactions occurring on supported chains for all of the users connected wallets.
 When switching chains, the previous chain listeners remain active for 60 seconds to allow the capture and report of any remaining transactions that may be in flight.
 
@@ -422,7 +422,7 @@ const { unsubscribe } = wallets.subscribe((update) =>
 unsubscribe()
 ```
 
-##### **Notifications as DApp Toast Messages**
+##### **Notifications as Toast Messages**
 The Notifications messages can also be used to send fully customized Dapp toast messages and updated. Check out the [customNotifications API docs for examples and code snippets](#customnotification) 
 
 ```ts
