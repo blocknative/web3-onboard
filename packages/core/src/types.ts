@@ -301,13 +301,36 @@ export type NotifyOptions = {
 export type Notification = {
   id: string
   key: string
-  type: NotificationType
   network: Network
   startTime?: number
-  eventCode: string
+  /**
+   * to completely customize the message shown
+   */
   message: string
+  /**
+   * handle codes in your own way - see codes here under the notify 
+   * prop default en file at ./packages/core/src/i18n/en.json
+   */
+  eventCode: string
+  /**
+   * icon type displayed (see `NotificationType` below for options)
+   */
+  type: NotificationType
+  /**
+   * time (in ms) after which the notification will be dismissed. If set 
+   * to `0` the notification will remain on screen until the user dismisses the 
+   * notification, refreshes the page or navigates away from the site 
+   * with the notifications
+   */
   autoDismiss: number
+  /**
+   * add link to the transaction hash. For instance, a link to the 
+   * transaction on etherscan
+   */
   link?: string
+  /**
+   * onClick handler for when user clicks the notification element
+   */
   onClick?: (event: Event) => void
 }
 
