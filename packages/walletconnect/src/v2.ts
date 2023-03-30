@@ -180,7 +180,7 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                 })
             }
 
-            ;(() => {
+            (() => {
               const session = this.connector.session
               if (session) {
                 this.emit('accountsChanged', this.connector.accounts)
@@ -198,6 +198,7 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
               if (method === 'eth_requestAccounts') {
                 return new Promise<ProviderAccounts>((resolve, reject) => {
                   // Check if connection is already established
+                  console.log(201, this.connector)
                   if (!this.connector.session) {
                     // create new session
                     this.connector.connect().catch(err => {
@@ -215,6 +216,7 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                     const chainId = this.connector.chainId
                     const hexChainId = `0x${chainId.toString(16)}`
                     this.emit('chainChanged', hexChainId)
+                    console.log(219, accounts, resolve(accounts))
                     return resolve(accounts)
                   }
                   // Subscribe to connection events
@@ -229,13 +231,14 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                   )
                     .pipe(take(1))
                     .subscribe({
-                      next: ({ accounts, chainId }) => {
-                        this.emit('accountsChanged', accounts)
-                        const hexChainId = isHexString(chainId)
-                          ? chainId
-                          : `0x${chainId.toString(16)}`
+                      next: (t) => {
+                        console.log(t)
+                        this.emit('accountsChanged', t.accounts)
+                        const hexChainId = isHexString(t.chainId)
+                          ? t.chainId
+                          : `0x${t.chainId.toString(16)}`
                         this.emit('chainChanged', hexChainId)
-                        resolve(accounts)
+                        resolve(t.accounts)
                       },
                       error: reject
                     })
