@@ -46,8 +46,8 @@
   }
 
   .notice-container {
-    margin: 1rem 0;
     flex: 0 0 100%;
+    margin-top: 1rem;
   }
 
   @media all and (min-width: 768px) {
@@ -59,12 +59,9 @@
     }
     .notice-container {
       grid-column: span 2;
+      margin-bottom: 1rem;
       margin-top: 0;
     }
-  }
-  .notice-container {
-    grid-column: span 2;
-    margin-top: 1rem;
   }
 </style>
 
