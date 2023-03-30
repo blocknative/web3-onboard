@@ -48,7 +48,6 @@
     WalletState,
     WalletWithLoadingIcon
   } from '../../types.js'
-  import { onMount } from 'svelte'
 
   export let autoSelect: ConnectOptions['autoSelect']
 
@@ -382,22 +381,6 @@
   function scrollToTop() {
     scrollContainer && scrollContainer.scrollTo(0, 0)
   }
-
-  let dontSeeMyWalletMessage = false
-
-  function handleScroll() {
-    const isAtBottom = scrollContainer.scrollTop === scrollContainer.scrollHeight - scrollContainer.clientHeight
-    if (isAtBottom) {
-      dontSeeMyWalletMessage = true
-    }
-  }
-
-  onMount(() => {
-    setTimeout(() => {
-      dontSeeMyWalletMessage = true
-      scrollToTop()
-    }, 5000)
-  })
 </script>
 
 <style>
@@ -589,7 +572,7 @@
             <CloseButton />
           </div>
         {/if}
-        <div class="scroll-container" bind:this={scrollContainer} on:scroll={handleScroll}>
+        <div class="scroll-container" bind:this={scrollContainer}>
           {#if $modalStep$ === 'selectingWallet' || windowWidth <= MOBILE_WINDOW_WIDTH}
             {#if wallets.length}
               <Agreement bind:agreed />
@@ -600,7 +583,6 @@
                   {wallets}
                   {connectingWalletLabel}
                   {connectingErrorMessage}
-                  {dontSeeMyWalletMessage}
                 />
               </div>
             {:else}
