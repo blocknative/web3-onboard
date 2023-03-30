@@ -57,6 +57,10 @@
       padding: 1rem 1rem 0 1rem;
       border: none;
     }
+    .notice-container {
+      grid-column: span 2;
+      margin-top: 0;
+    }
   }
   .notice-container {
     grid-column: span 2;
