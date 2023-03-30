@@ -79,12 +79,12 @@ export function isSVG(str: string): boolean {
 }
 
 export function shortenAddress(add: string): string {
-  return `${add.slice(0, 6)}...${add.slice(-4)}`
+  return `${add.slice(0, 6)}…${add.slice(-4)}`
 }
 
 export function shortenDomain(domain: string): string {
   return domain.length > 11
-    ? `${domain.slice(0, 4)}...${domain.slice(-6)}`
+    ? `${domain.slice(0, 4)}…${domain.slice(-6)}`
     : domain
 }
 
@@ -116,6 +116,7 @@ export const chainIdToLabel: Record<string, string> = {
   '0x3': 'Ropsten',
   '0x4': 'Rinkeby',
   '0x5': 'Goerli',
+  '0xaa36a7': 'Sepolia',
   '0x2a': 'Kovan',
   '0x38': 'Binance',
   '0x89': 'Polygon',
@@ -164,6 +165,10 @@ export const chainStyles: Record<string, ChainStyle> = {
     icon: ethereumIcon,
     color: '#627EEA'
   },
+  '0xaa36a7': {
+    icon: ethereumIcon,
+    color: '#627EEA'
+  },
   '0x38': {
     icon: binanceIcon,
     color: '#F3BA2F'
@@ -207,8 +212,7 @@ export const chainStyles: Record<string, ChainStyle> = {
   '0x14a33': {
     icon: baseIcon,
     color: '#0259F9'
-  },
-
+  }
 }
 
 export const unrecognizedChainStyle = { icon: questionIcon, color: '#33394B' }

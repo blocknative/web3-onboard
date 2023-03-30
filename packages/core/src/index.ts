@@ -1,4 +1,3 @@
-import { SofiaProRegular } from '@web3-onboard/common'
 import connectWallet from './connect.js'
 import disconnectWallet from './disconnect.js'
 import setChain from './chain.js'
@@ -6,11 +5,11 @@ import { state } from './store/index.js'
 import { reset$, wallets$ } from './streams.js'
 import initI18N from './i18n/index.js'
 import App from './views/Index.svelte'
-import type { InitOptions, Notify } from './types.js'
+import type { ConnectModalOptions, InitOptions, Notify, Theme } from './types.js'
 import { APP_INITIAL_STATE, STORAGE_KEYS } from './constants.js'
 import { configuration, updateConfiguration } from './configuration.js'
 import updateBalances from './update-balances.js'
-import { chainIdToHex, getLocalStore } from './utils.js'
+import { chainIdToHex, getLocalStore, setLocalStore } from './utils.js'
 import { preflightNotifications } from './preflight-notifications.js'
 
 import {
@@ -97,7 +96,8 @@ function init(options: InitOptions): OnboardAPI {
     connect,
     containerElements,
     transactionPreview,
-    theme
+    theme,
+    disableFontDownload
   } = options
 
   if (containerElements) updateConfiguration({ containerElements })
@@ -197,7 +197,7 @@ function init(options: InitOptions): OnboardAPI {
     updateNotify(notifyUpdate)
   }
 
-  const app = svelteInstance || mountApp()
+  const app = svelteInstance || mountApp(theme, disableFontDownload)
 
   updateConfiguration({
     appMetadata,
@@ -227,21 +227,100 @@ function init(options: InitOptions): OnboardAPI {
   theme && updateTheme(theme)
 
   // handle auto connection of last wallet
-  if (connect && connect.autoConnectLastWallet) {
-    const lastConnectedWallet = getLocalStore(
+  if (
+    connect &&
+    (connect.autoConnectLastWallet || connect.autoConnectAllPreviousWallet)
+  ) {
+    const lastConnectedWallets = getLocalStore(
       STORAGE_KEYS.LAST_CONNECTED_WALLET
     )
-
-    lastConnectedWallet &&
-      API.connectWallet({
-        autoSelect: { label: lastConnectedWallet, disableModals: true }
-      })
+    try {
+      const lastConnectedWalletsParsed = JSON.parse(lastConnectedWallets)
+      if (
+        lastConnectedWalletsParsed &&
+        Array.isArray(lastConnectedWalletsParsed) &&
+        lastConnectedWalletsParsed.length
+      ) {
+        connectAllPreviousWallets(lastConnectedWalletsParsed, connect)
+      }
+    } catch (err) {
+      // Handle for legacy single wallet approach
+      // Above try will throw syntax error is local storage is not json
+      if (err instanceof SyntaxError && lastConnectedWallets) {
+        API.connectWallet({
+          autoSelect: {
+            label: lastConnectedWallets,
+            disableModals: true
+          }
+        })
+      }
+    }
   }
 
   return API
 }
 
-function mountApp() {
+const fontFamilyExternallyDefined = (
+  theme: Theme,
+  disableFontDownload: boolean
+): boolean => {
+  if (disableFontDownload) return true
+  if (
+    document.body &&
+    (getComputedStyle(document.body).getPropertyValue(
+      '--onboard-font-family-normal'
+    ) ||
+      getComputedStyle(document.body).getPropertyValue('--w3o-font-family'))
+  )
+    return true
+  if (!theme) return false
+  if (typeof theme === 'object' && theme['--w3o-font-family']) return true
+  return false
+}
+
+const importInterFont = async (): Promise<void> => {
+  const { InterVar } = await import('@web3-onboard/common')
+  // Add Fonts to main page
+  const styleEl = document.createElement('style')
+
+  styleEl.innerHTML = `
+    ${InterVar}
+  `
+
+  document.body.appendChild(styleEl)
+}
+
+const connectAllPreviousWallets = async (
+  lastConnectedWallets: Array<string>,
+  connect: ConnectModalOptions
+): Promise<void> => {
+  const activeWalletsList = []
+  const parsedWalletList = lastConnectedWallets
+
+  if (!connect.autoConnectAllPreviousWallet) {
+    API.connectWallet({
+      autoSelect: { label: parsedWalletList[0], disableModals: true }
+    })
+    activeWalletsList.push(parsedWalletList[0])
+  } else {
+    // Loop in reverse to maintain wallet order
+    for (let i = parsedWalletList.length; i--; ) {
+      const walletConnectionPromise = await API.connectWallet({
+        autoSelect: { label: parsedWalletList[i], disableModals: true }
+      })
+      // Update localStorage list for available wallets
+      if (walletConnectionPromise.some(r => r.label === parsedWalletList[i])) {
+        activeWalletsList.unshift(parsedWalletList[i])
+      }
+    }
+  }
+  setLocalStore(
+    STORAGE_KEYS.LAST_CONNECTED_WALLET,
+    JSON.stringify(activeWalletsList)
+  )
+}
+
+function mountApp(theme: Theme, disableFontDownload: boolean) {
   class Onboard extends HTMLElement {
     constructor() {
       super()
@@ -252,14 +331,9 @@ function mountApp() {
     customElements.define('onboard-v2', Onboard)
   }
 
-  // Add Fonts to main page
-  const styleEl = document.createElement('style')
-
-  styleEl.innerHTML = `
-    ${SofiaProRegular}
-  `
-
-  document.body.appendChild(styleEl)
+  if (!fontFamilyExternallyDefined(theme, disableFontDownload)) {
+    importInterFont()
+  }
 
   // add to DOM
   const onboard = document.createElement('onboard-v2')
@@ -268,8 +342,9 @@ function mountApp() {
   onboard.style.all = 'initial'
 
   target.innerHTML = `
-      <style>
-        :host {
+
+  <style>
+    :host {
           /* COLORS */
           --white: white;
           --black: black;
@@ -311,7 +386,7 @@ function mountApp() {
           --warning-700: #664600;
 
           /* FONTS */
-          --font-family-normal: Sofia Pro;
+          --font-family-normal: var(--w3o-font-family, Inter, sans-serif);
 
           --font-size-1: 3rem;
           --font-size-2: 2.25rem;

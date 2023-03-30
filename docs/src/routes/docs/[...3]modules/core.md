@@ -1,5 +1,8 @@
 <script>
   import walletModal from '$lib/assets/connect-modal.svg'
+  import notifyCustomImg from '$lib/assets/notify-custom-example.png'
+  import notifyImg from '$lib/assets/notify-example.png'
+  import notifyPreflightImg from '$lib/assets/notify-preflight-example.png'
 </script>
 
 # Core
@@ -28,6 +31,7 @@ npm install @web3-onboard/core
 </Tabs>
 
 #### All Wallet Modules
+
 If you would like to support all wallets, then you can install all of the wallet modules:
 
 <Tabs values={['yarn', 'npm']}>
@@ -89,19 +93,28 @@ type InitOptions {
    * Object mapping for W3O components with the key being the component and the value the DOM element to mount the component to. This element must be available at time of package script execution.
    */
   containerElements?: Partial<ContainerElements>
-    /**
+  /**
    * Custom or predefined theme for Web3Onboard i.e. default, dark, Custom, etc.
    */
   theme?: Theme
+  /**
+   * Defaults to False
+   * If set to true the Inter font will not be imported and
+   * instead the default 'sans-serif' font will be used
+   * To define the font used see `--w3o-font-family` prop within
+   * the Theme initialization object or set as css variable
+   */
+  disableFontDownload?: boolean
 }
 
 ```
+
 ---
 
 #### wallets
 
-An array of wallet modules that you would like to be presented to the user to select from when connecting a wallet. A wallet module is an abstraction that allows for easy interaction without needing to know the specifics of how that wallet works and are separate packages that can be included. 
-These modules are separate @web3-onboard packages such as `@web3-onboard/injected-wallets` or `@web3-onboard/ledger`. 
+An array of wallet modules that you would like to be presented to the user to select from when connecting a wallet. A wallet module is an abstraction that allows for easy interaction without needing to know the specifics of how that wallet works and are separate packages that can be included.
+These modules are separate @web3-onboard packages such as `@web3-onboard/injected-wallets` or `@web3-onboard/ledger`.
 For a full list click [here](#all-wallet-modules).
 
 ---
@@ -114,9 +127,11 @@ An array of Chains that your app supports:
 type Chain = {
   id: ChainId // hex encoded string, eg '0x1' for Ethereum Mainnet
   namespace?: 'evm' // string indicating chain namespace. Defaults to 'evm' but will allow other chain namespaces in the future
-  rpcUrl: string // used for network requests
-  label: string // used for display, eg Ethereum Mainnet
-  token: TokenSymbol // the native token symbol, eg ETH, BNB, MATIC
+  // PLEASE NOTE: Some wallets require an rpcUrl, label, and token for actions such as adding a new chain.
+  // It is recommended to include rpcUrl, label, and token for full functionality.
+  rpcUrl?: string // Recommended to include. Used for network requests.
+  label?: string // Recommended to include. Used for display, eg Ethereum Mainnet.
+  token?: TokenSymbol // Recommended to include. The native token symbol, eg ETH, BNB, MATIC.
   color?: string // the color used to represent the chain and will be used as a background for the icon
   icon?: string // the icon to represent the chain
   publicRpcUrl?: string // an optional public RPC used when adding a new chain config to the wallet
@@ -171,7 +186,7 @@ type RecommendedInjectedWallets = {
 
 ---
 
-#### connectModal
+#### connect
 
 An object that allows for customizing the connect modal layout and behavior
 
@@ -179,6 +194,9 @@ An object that allows for customizing the connect modal layout and behavior
 
 ```typescript copy
 type ConnectModalOptions = {
+  /**
+   * Display the connect modal sidebar - only applies to desktop views
+   */
   showSidebar?: boolean
   /**
    * Disabled close of the connect modal with background click and
@@ -186,11 +204,18 @@ type ConnectModalOptions = {
    * Defaults to false
    */
   disableClose?: boolean
-  /**If set to true, the last connected wallet will store in local storage.
-   * Then on init, onboard will try to reconnect to that wallet with
-   * no modals displayed
+  /**
+   * If set to true, the most recently connected wallet will store in
+   * local storage. Then on init, onboard will try to reconnect to
+   * that wallet with no modals displayed
    */
-  autoConnectLastWallet?: boolean // defaults to false
+  autoConnectLastWallet?: boolean
+  /**
+   * If set to true, all previously connected wallets will store in
+   * local storage. Then on init, onboard will try to reconnect to
+   * each wallet with no modals displayed
+   */
+  autoConnectAllPreviousWallet?: boolean
   /**
    * Customize the link for the `I don't have a wallet` flow shown on the
    * select wallet modal.
@@ -250,12 +275,13 @@ Define a custom or predefined theme for Web3Onboard using either:
 For a complete walkthrough on customizing your theme checkout our [theming documentation](/docs/getting-started/theming)
 
 ```typescript
-export type Theme = ThemingMap | BuiltInThemes | 'system'
+type Theme = ThemingMap | BuiltInThemes | 'system'
 
-export type BuiltInThemes = 'default' | 'dark' | 'light'
+type BuiltInThemes = 'default' | 'dark' | 'light'
 
-export type ThemingMap = {
+type ThemingMap = {
   '--w3o-background-color'?: string
+  '--w3o-font-family'?: string
   '--w3o-foreground-color'?: string
   '--w3o-text-color'?: string
   '--w3o-border-color'?: string
@@ -274,12 +300,23 @@ It will allow you to customize the look and feel of web3-onboard, try different 
 
 ---
 
+#### disableFontDownload
+
+If set to `true` the default `Inter` font will not be imported and instead the web based `sans-serif` font will be used if a font is not defined through the `Theme` or exposed css variable.
+To define the font use `--w3o-font-family` prop within the `Theme` initialization object or set as a css variable.
+
+```typescript
+type disableFontDownload = boolean // defaults to false
+```
+
+---
+
 #### accountCenter
 
 An object that defines whether the account center UI (default and minimal) is enabled and its position on the screen. Currently the account center is enabled for both desktop and mobile devices.
 
 ```ts
-export type AccountCenter = {
+type AccountCenter = {
   enabled: boolean
   position?: AccountCenterPosition // default: 'topRight'
   expanded?: boolean // default: true
@@ -292,7 +329,7 @@ export type AccountCenter = {
   containerElement?: string // defines the DOM container element for svelte to attach
 }
 
-export type AccountCenterOptions = {
+type AccountCenterOptions = {
   desktop: Omit<AccountCenter, 'expanded'>
   mobile: Omit<AccountCenter, 'expanded'>
 }
@@ -331,24 +368,57 @@ type ContainerElements = {
 
 #### notify
 
-Notify provides by default transaction notifications for all connected wallets on the current blockchain. When switching chains the previous chain listeners remain active for 60 seconds to allow capture and report of remaining transactions that may be in flight.
-By default transaction notifications are captured if a DAppID is provided in the Onboard config along with the Account Center being enabled.
-An object that defines whether transaction notifications will display (defaults to true if an API key is provided). This object contains an `enabled` flag prop and an optional `transactionHandler` which is a callback that can disable or allow customizations of notifications.
-Currently notifications are positioned in the same location as the account center (either below, if the Account Center is positioned along the top, or above if positioned on the bottom of the view).
-The `transactionHandler` can react off any property of the Ethereum TransactionData returned to the callback from the event (see console.log in example init). In turn, it can return a Custom `Notification` object to define the verbiage, styling, or add functionality:
+Notify is a feature that provides transaction notifications for all connected wallets on the current blockchain. This document will provide you with an overview of Notify and guide you through the process of integrating it into your decentralized application (DApp).
 
-- `Notification.message` - to completely customize the message shown
-- `Notification.eventCode` - handle codes in your own way - see codes here under the notify prop [default en file here](https://github.com/blocknative/web3-onboard/blob/develop/packages/core/src/i18n/en.json)
-- `Notification.type` - icon type displayed (see `NotificationType` below for options)
-- `Notification.autoDismiss` - time (in ms) after which the notification will be dismissed. If set to `0` the notification will remain on screen until the user dismisses the notification, refreshes the page or navigates away from the site with the notifications
-- `Notification.link` - add link to the transaction hash. For instance, a link to the transaction on etherscan
-- `Notification.onClick()` - onClick handler for when user clicks the notification element
+<img src="{notifyImg}" alt="Transaction notifications image"/>
 
-Notify can also be styled by using the CSS variables found below. These are setup to allow maximum customization with base styling variables setting the global theme (i.e. `--onboard-grey-600`) along with more precise component level styling variables available (`--notify-onboard-grey-600`) with the latter taking precedent if defined
+To enable transaction notifications and updates simply add your Blocknative `apiKey`([sign up for free](https://explorer.blocknative.com/account)) to the web3-onboard configurations as the value to the `apiKey` prop and thats it!
+Transaction notifications will be shown for all transactions occurring on supported chains for all of the users connected wallets.
+When switching chains, the previous chain listeners remain active for 60 seconds to allow the capture and report of any remaining transactions that may be in flight.
 
-If notifications are enabled the notifications can be handled through onboard app state as seen below.
+Notifications are by default positioned in the same location as the Account Center (if enabled) or can be positioned separately using the `position` property.
 
-```js
+##### **Notify Configuration**
+
+| Property             | Type            | Description                                                   |
+| -------------------- | --------------- | ------------------------------------------------------------- |
+| `enabled`            | boolean         | Indicates whether transaction notifications will be displayed |
+| `transactionHandler` | function        | Optional callback for customizations of notifications         |
+| `position`           | CommonPositions | Position of the notification on the screen                    |
+
+##### **Position Options**
+
+| Property  | Type   | Description                              |
+| --------- | ------ | ---------------------------------------- |
+| `desktop` | Notify | Configuration for desktop notifications. |
+| `mobile`  | Notify | Configuration for mobile notifications.  |
+
+Both `desktop` and `mobile` configurations are of type `Notify`.
+
+###### **Transaction Handler**
+
+The `transactionHandler` is a callback that receives an object of type `EthereumTransactionData`. Based on the data received, the handler can return a custom `Notification` object or a boolean value (false to disable the notification for the current event or undefined for a default notification).
+
+##### **Customizing Notification**
+
+| Property      | Type     | Description                                                 |
+| ------------- | -------- | ----------------------------------------------------------- |
+| `message`     | string   | Customizes the message shown                                |
+| `eventCode`   | string   | Allows handling codes in a custom way                       |
+| `type`        | string   | Represents the icon type displayed                          |
+| `autoDismiss` | number   | Time (in ms) after which the notification will be dismissed |
+| `link`        | string   | Adds a link to the transaction hash                         |
+| `onClick`     | function | onClick handler for the notification element                |
+
+##### **Styling Notify**
+
+Notify automatically will match the [`theme`](#theme) defined in the web3-onboard config. It can also be styled using the [exposed css variables provided below](#custom-styling). These variables allow for maximum customization with base styling variables setting the global theme (e.g., `--onboard-grey-600`) and more precise component-level styling variables available (`--notify-onboard-grey-600`). The latter takes precedence if defined.
+
+##### **Handling Notifications**
+
+If notifications are enabled, they can be fielded and handled through the onboard app state as seen in the example below - although this is not required for notifications to display:
+
+```javascript
 const wallets = onboard.state.select('notifications')
 const { unsubscribe } = wallets.subscribe((update) =>
   console.log('transaction notifications: ', update)
@@ -358,12 +428,15 @@ const { unsubscribe } = wallets.subscribe((update) =>
 unsubscribe()
 ```
 
+##### **Notifications as Toast Messages**
+The Notifications messages can also be used to send fully customized Dapp toast messages and updated. Check out the [customNotifications API docs for examples and code snippets](#customnotification) 
+
 ```ts
-export type NotifyOptions = {
+type NotifyOptions = {
   desktop: Notify
   mobile: Notify
 }
-export type Notify = {
+type Notify = {
   enabled: boolean // default: true
   /**
    * Callback that receives all transaction events
@@ -375,40 +448,46 @@ export type Notify = {
   position: CommonPositions
 }
 
-export type CommonPositions = 'topRight' | 'bottomRight' | 'bottomLeft' | 'topLeft'
+type CommonPositions = 'topRight' | 'bottomRight' | 'bottomLeft' | 'topLeft'
 
-export type TransactionHandlerReturn = CustomNotification | boolean | void
+type TransactionHandlerReturn = CustomNotification | boolean | void
 
-export type CustomNotification = Partial<Omit<Notification, 'id' | 'startTime'>>
+type CustomNotification = Partial<Omit<Notification, 'id' | 'startTime'>>
 
-export type Notification = {
+type Notification = {
   id: string
   key: string
-  type: NotificationType
   network: Network
   startTime?: number
-  eventCode: string
+  /**
+   * to completely customize the message shown
+   */
   message: string
+  /**
+   * handle codes in your own way - see codes here under the notify prop [default en file here](https://github.com/blocknative/web3-onboard/blob/develop/packages/core/src/i18n/en.json)
+   */
+  eventCode: string
+  /**
+   * icon type displayed (see `NotificationType` below for options)
+   */
+  type: NotificationType
+  /**
+   * time (in ms) after which the notification will be dismissed. If set to `0` the notification will remain on screen until the user dismisses the notification, refreshes the page or navigates away from the site with the notifications
+   */
   autoDismiss: number
+  /**
+   * add link to the transaction hash. For instance, a link to the transaction on etherscan
+   */
   link?: string
+  /**
+   * onClick handler for when user clicks the notification element
+   */
   onClick?: (event: Event) => void
 }
 
-export type NotificationType = 'pending' | 'success' | 'error' | 'hint'
+type NotificationType = 'pending' | 'success' | 'error' | 'hint'
 
-export declare type Network =
-  | 'main'
-  | 'testnet'
-  | 'ropsten'
-  | 'rinkeby'
-  | 'goerli'
-  | 'kovan'
-  | 'xdai'
-  | 'bsc-main'
-  | 'matic-main'
-  | 'fantom-main'
-  | 'matic-mumbai'
-  | 'local'
+export declare type Network = 'main' | 'goerli' | 'matic-main' | 'matic-mumbai' | 'local'
 
 export interface UpdateNotification {
   (notificationObject: CustomNotification): {
@@ -418,7 +497,9 @@ export interface UpdateNotification {
 }
 ```
 
-### Initialization Example
+---
+
+## Initialization Example
 
 Putting it all together, here is an example initialization with the injected wallet modules:
 
@@ -429,6 +510,8 @@ import injectedModule from '@web3-onboard/injected-wallets'
 const injected = injectedModule()
 
 const onboard = Onboard({
+  // head to https://explorer.blocknative.com/account to sign up for free
+  apiKey: 'xxx387fb-bxx1-4xxc-a0x3-9d37e426xxxx'
   wallets: [injected],
   chains: [
     {
@@ -442,6 +525,12 @@ const onboard = Onboard({
       token: 'ETH',
       label: 'Goerli',
       rpcUrl: `https://goerli.infura.io/v3/${INFURA_ID}`
+    },
+    {
+      id: 11155111,
+      token: 'ETH',
+      label: 'Sepolia',
+      rpcUrl: 'https://rpc.sepolia.org/'
     },
     {
       id: '0x38',
@@ -484,7 +573,6 @@ const onboard = Onboard({
       { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
     ]
   },
-  apiKey: 'xxx387fb-bxx1-4xxc-a0x3-9d37e426xxxx'
   notify: {
     desktop: {
       enabled: true,
@@ -551,6 +639,7 @@ const onboard = Onboard({
 })
 ```
 
+---
 ## Connecting a Wallet
 
 To initiate a user to select and connect a wallet you can call the `connectWallet` function on an initialized Onboard instance. It will return a `Promise` that will resolve when the user either successfully connects a wallet, or when they dismiss the UI. The resolved value from the promise will be the latest state of the `wallets` array. The order of the wallets array is last to first, so the most recently selected wallet will be the first item in the array and can be thought of as the "primary wallet". If no wallet was selected, then the `wallets` array will have the same state as it had before calling `connectWallet`.
@@ -850,35 +939,88 @@ onboard.state.actions.updateNotify({
 
 #### **customNotification**
 
+<img src="{notifyCustomImg}" alt="Custom notifications image"/>
+
 Notify can be used to deliver custom DApp notifications by passing a `CustomNotification` object to the `customNotification` action. This will return an `UpdateNotification` type.
 This `UpdateNotification` will return an `update` function that can be passed a new `CustomNotification` to update the existing notification.
 The `customNotification` method also returns a `dismiss` method that is called without any parameters to dismiss the notification.
 
-```typescript copy
-const { update, dismiss } = onboard.state.actions.customNotification({
-  type: 'pending',
-  message: 'This is a custom DApp pending notification to use however you want',
-  autoDismiss: 0
-})
-setTimeout(
-  () =>
-    update({
-      eventCode: 'dbUpdateSuccess',
-      message: 'Updated status for custom notification',
-      type: 'success',
-      autoDismiss: 8000
-    }),
-  4000
-)
+| Property      | Type     | Description                                                 |
+| ------------- | -------- | ----------------------------------------------------------- |
+| `message`     | string   | Customizes the message shown                                |
+| `eventCode`   | string   | Allows handling codes in a custom way                       |
+| `type`        | string   | Represents the icon type displayed                          |
+| `autoDismiss` | number   | Time (in ms) after which the notification will be dismissed |
+| `link`        | string   | Adds a link to the transaction hash                         |
+| `onClick`     | function | onClick handler for the notification element                |
+
+```javascript copy
+<button
+  on:click={() =>
+    onboard.state.actions.customNotification({
+      type: 'hint',
+      message: 'This is a custom DApp hint',
+      autoDismiss: 0
+    })}>Send Hint Notification</button
+>
+<button
+  on:click={() => {
+    const { update, dismiss } =
+      onboard.state.actions.customNotification({
+        type: 'pending',
+        message:
+          'This is a custom DApp pending notification to use however you want',
+        autoDismiss: 0
+      })
+    setTimeout(
+      () =>
+        update({
+          eventCode: 'dbUpdateSuccess',
+          message: 'Updated status for custom notification',
+          type: 'success',
+          autoDismiss: 0
+        }),
+      4000
+    )
+  }}>Send Success Notification</button
+>
+<button
+  on:click={() =>
+    onboard.state.actions.customNotification({
+      message:
+        'This is a custom DApp success notification to use however you want',
+      autoDismiss: 0,
+      type: 'pending'
+    })}>Send Pending Notification</button
+>
+<button
+  on:click={() =>
+    onboard.state.actions.customNotification({
+      type: 'error',
+      message:
+        'This is a custom DApp Error notification to use however you want',
+      autoDismiss: 0
+    })}>Send Error Notification</button
+>
+<button
+  on:click={() =>
+    onboard.state.actions.customNotification({
+      message:
+        'This is a custom non-descript DApp notification to use however you want',
+      autoDismiss: 0
+    })}>Send DApp Notification</button
+>
 ```
 
 ---
 
 #### **preflightNotifications**
 
-Notify can be used to deliver standard notifications along with preflight information by passing a `PreflightNotificationsOptions` object to the `preflightNotifications` action. This will return a promise that resolves to the transaction hash (if `sendTransaction` resolves the transaction hash and is successful), the internal notification id (if no `sendTransaction` function is provided) or return nothing if an error occurs or `sendTransaction` is not provided or doesn't resolve to a string.
+Notify can be used to deliver standard notifications along with preflight updates by passing a `PreflightNotificationsOptions` object to the `preflightNotifications` API action. 
 
-Preflight event types include
+<img src="{notifyPreflightImg}" alt="Preflight notifications image"/>
+
+Preflight event types include:
 
 - `txRequest` : Alert user there is a transaction request awaiting confirmation by their wallet
 - `txAwaitingApproval` : A previous transaction is awaiting confirmation
@@ -888,21 +1030,9 @@ Preflight event types include
 - `txSendFail` : The user rejected the transaction (requires `sendTransaction`)
 - `txUnderpriced` : The gas price for the transaction is too low (requires `sendTransaction`)
 
-```typescript
-interface PreflightNotificationsOptions {
-  sendTransaction?: () => Promise<string | void>
-  estimateGas?: () => Promise<string>
-  gasPrice?: () => Promise<string>
-  balance?: string | number
-  txDetails?: {
-    value: string | number
-    to?: string
-    from?: string
-  }
-  txApproveReminderTimeout?: number // defaults to 15 seconds if not specified
-}
-```
+This API call will return a promise that resolves to the transaction hash (if `sendTransaction` resolves the transaction hash and is successful), the internal notification id (if no `sendTransaction` function is provided) or return nothing if an error occurs or `sendTransaction` is not provided or doesn't resolve to a string.
 
+Example:
 ```typescript copy
 const balanceValue = Object.values(balance)[0]
 // if using ethers v6 this is:
@@ -932,6 +1062,21 @@ const transactionHash = await onboard.state.actions.preflightNotifications({
   txDetails: txDetails
 })
 console.log(transactionHash)
+```
+
+```typescript
+interface PreflightNotificationsOptions {
+  sendTransaction?: () => Promise<string | void>
+  estimateGas?: () => Promise<string>
+  gasPrice?: () => Promise<string>
+  balance?: string | number
+  txDetails?: {
+    value: string | number
+    to?: string
+    from?: string
+  }
+  txApproveReminderTimeout?: number // defaults to 15 seconds if not specified
+}
 ```
 
 ---
@@ -973,12 +1118,15 @@ type SetChainOptions = {
   chainId: string // hex encoded string
   chainNamespace?: 'evm' // defaults to 'evm' (currently the only valid value, but will add more in future updates)
   wallet?: string // the wallet.label of the wallet to set chain
+  rpcUrl?: string // if chain was instantiated without rpcUrl, include here. Used for network requests
+  token?: string // if chain was instantiated without token, include here. Used for display, eg Ethereum Mainnet
+  label?: string // if chain was instantiated without label, include here. The native token symbol, eg ETH, BNB, MATIC
 }
 
 const success = await onboard.setChain({ chainId: '0x89' })
 ```
 
-The `setChain` methods takes an options object with a `chainId` property hex encoded string for the chain id to switch to. The chain id must be one of the chains that Onboard was initialized with. If the wallet supports programatically adding and switching the chain, then the user will be prompted to do so, if not, then a modal will be displayed indicating to the user that they need to switch chains to continue. The `setChain` method returns a promise that resolves when either the user has confirmed the chain switch, or has dismissed the modal and resolves with a boolean indicating if the switch network was successful or not. The `setChain` method will by default switch the first wallet (the most recently connected) in the `wallets` array. A specific wallet can be targeted by passing in the `wallet.label` in the options object as the `wallet` parameter.
+The `setChain` methods takes an options object with a `chainId` property hex encoded string for the chain id to switch to. The chain id must be one of the chains that Onboard was initialized with. If the wallet supports programatically adding and switching the chain, then the user will be prompted to do so, if not, then a modal will be displayed indicating to the user that they need to switch chains to continue. The `setChain` method returns a promise that resolves when either the user has confirmed the chain switch, or has dismissed the modal and resolves with a boolean indicating if the switch network was successful or not. The `setChain` method will by default switch the first wallet (the most recently connected) in the `wallets` array. A specific wallet can be targeted by passing in the `wallet.label` in the options object as the `wallet` parameter. If a chain was instantiated without an rpcUrl, token, or label, add these options for wallets that require this information for adding a new chain.
 
 ## Custom Styling
 
@@ -1085,9 +1233,7 @@ The Onboard styles can be customized via [CSS variables](https://developer.mozil
   --onboard-action-required-modal-background
 
   /* FONTS */
-  --onboard-font-family-normal: Sofia Pro;
-  --onboard-font-family-semibold: Sofia Pro Semibold;
-  --onboard-font-family-light: Sofia Pro Light;
+  --onboard-font-family-normal:  Inter, sans-serif;
 
   --onboard-font-size-1: 3rem;
   --onboard-font-size-2: 2.25rem;
@@ -1155,8 +1301,7 @@ The Onboard styles can be customized via [CSS variables](https://developer.mozil
   --account-select-modal-danger-500: #ff4f4f;
 
   /* FONTS */
-  --account-select-modal-font-family-normal: Sofia Pro;
-  --account-select-modal-font-family-light: Sofia Pro Light;
+  --account-select-modal-font-family-normal:  Inter, sans-serif;
   --account-select-modal-font-size-5: 1rem;
   --account-select-modal-font-size-7: .75rem;
   --account-select-modal-font-line-height-1: 24px;

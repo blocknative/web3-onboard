@@ -174,6 +174,7 @@ const connectModalOptions = Joi.object({
   showSidebar: Joi.boolean(),
   disableClose: Joi.boolean(),
   autoConnectLastWallet: Joi.boolean(),
+  autoConnectAllPreviousWallet: Joi.boolean(),
   iDontHaveAWalletLink: Joi.string(),
   wheresMyWalletLink: Joi.string(),
   disableUDResolution: Joi.boolean()
@@ -186,6 +187,7 @@ const containerElements = Joi.object({
 
 const themeMap = Joi.object({
   '--w3o-background-color': Joi.string(),
+  '--w3o-font-family': Joi.string(),
   '--w3o-foreground-color': Joi.string(),
   '--w3o-text-color': Joi.string(),
   '--w3o-border-color': Joi.string(),
@@ -219,7 +221,8 @@ const initOptions = Joi.object({
     init: Joi.function().required(),
     previewTransaction: Joi.function()
   }),
-  theme: theme
+  theme: theme,
+  disableFontDownload: Joi.boolean()
 })
 
 const connectOptions = Joi.object({
@@ -241,7 +244,10 @@ const disconnectOptions = Joi.object({
 const setChainOptions = Joi.object({
   chainId: chainIdValidation.required(),
   chainNamespace: chainNamespaceValidation,
-  wallet: Joi.string()
+  wallet: Joi.string(),
+  rpcUrl: Joi.string(),
+  label: Joi.string(),
+  token: Joi.string()
 })
 
 const customNotificationUpdate = Joi.object({
@@ -336,6 +342,9 @@ export function validateSetChainOptions(data: {
   chainId: ChainId | DecimalChainId
   chainNamespace?: string
   wallet?: WalletState['label']
+  rpcUrl?: string
+  label?: string
+  token?: string
 }): ValidateReturn {
   return validate(setChainOptions, data)
 }

@@ -4,7 +4,7 @@ import { removeWallet } from './store/actions.js'
 import { disconnectWallet$ } from './streams.js'
 import type { DisconnectOptions, WalletState } from './types.js'
 import { validateDisconnectOptions } from './validation.js'
-import { delLocalStore, getLocalStore } from './utils'
+import { delLocalStore, getLocalStore, setLocalStore } from './utils'
 import { STORAGE_KEYS } from './constants'
 
 async function disconnect(options: DisconnectOptions): Promise<WalletState[]> {
@@ -35,7 +35,15 @@ async function disconnect(options: DisconnectOptions): Promise<WalletState[]> {
   disconnectWallet$.next(label)
   removeWallet(label)
 
-  if (getLocalStore(STORAGE_KEYS.LAST_CONNECTED_WALLET) === label) {
+  const labels = JSON.parse(getLocalStore(STORAGE_KEYS.LAST_CONNECTED_WALLET))
+
+  if (Array.isArray(labels) && labels.indexOf(label) >= 0) {
+    setLocalStore(
+      STORAGE_KEYS.LAST_CONNECTED_WALLET,
+      JSON.stringify(labels.filter(walletLabel => walletLabel !== label))
+    )
+  }
+  if (typeof labels === 'string' && labels === label) {
     delLocalStore(STORAGE_KEYS.LAST_CONNECTED_WALLET)
   }
 

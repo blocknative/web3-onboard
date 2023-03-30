@@ -69,6 +69,14 @@ export interface InitOptions {
    * or customize with a ThemingMap object.
    */
   theme?: Theme
+  /**
+   * Defaults to False - use to reduce load time
+   * If set to true the Inter font will not be imported and
+   * instead the default 'sans-serif' font will be used
+   * To define the font used see `--w3o-font-family` prop within
+   * the Theme initialization object or set as css variable
+   */
+  disableFontDownload?: boolean
 }
 
 export type Theme = ThemingMap | BuiltInThemes | 'system'
@@ -77,6 +85,7 @@ export type BuiltInThemes = 'default' | 'dark' | 'light'
 
 export type ThemingMap = {
   '--w3o-background-color'?: string
+  '--w3o-font-family'?: string
   '--w3o-foreground-color'?: string
   '--w3o-text-color'?: string
   '--w3o-border-color'?: string
@@ -184,11 +193,18 @@ export type ConnectModalOptions = {
    * Defaults to false
    */
   disableClose?: boolean
-  /**If set to true, the last connected wallet will store in local storage.
-   * Then on init, onboard will try to reconnect to that wallet with
-   * no modals displayed
+  /** 
+   * If set to true, the most recently connected wallet will store in 
+   * local storage. Then on init, onboard will try to reconnect to 
+   * that wallet with no modals displayed
    */
   autoConnectLastWallet?: boolean
+  /** 
+   * If set to true, all previously connected wallets will store in 
+   * local storage. Then on init, onboard will try to reconnect to 
+   * each wallet with no modals displayed
+   */
+  autoConnectAllPreviousWallet?: boolean
   /**
    * Customize the link for the `I don't have a wallet` flow shown on the
    * select wallet modal.
@@ -292,13 +308,36 @@ export type NotifyOptions = {
 export type Notification = {
   id: string
   key: string
-  type: NotificationType
   network: Network
   startTime?: number
-  eventCode: string
+  /**
+   * to completely customize the message shown
+   */
   message: string
+  /**
+   * handle codes in your own way - see codes here under the notify 
+   * prop default en file at ./packages/core/src/i18n/en.json
+   */
+  eventCode: string
+  /**
+   * icon type displayed (see `NotificationType` below for options)
+   */
+  type: NotificationType
+  /**
+   * time (in ms) after which the notification will be dismissed. If set 
+   * to `0` the notification will remain on screen until the user dismisses the 
+   * notification, refreshes the page or navigates away from the site 
+   * with the notifications
+   */
   autoDismiss: number
+  /**
+   * add link to the transaction hash. For instance, a link to the 
+   * transaction on etherscan
+   */
   link?: string
+  /**
+   * onClick handler for when user clicks the notification element
+   */
   onClick?: (event: Event) => void
 }
 
@@ -339,6 +378,7 @@ export interface TxDetails {
 // ==== ACTIONS ==== //
 export type Action =
   | AddChainsAction
+  | UpdateChainsAction
   | AddWalletAction
   | UpdateWalletAction
   | RemoveWalletAction
@@ -354,6 +394,7 @@ export type Action =
   | UpdateConnectModalAction
 
 export type AddChainsAction = { type: 'add_chains'; payload: Chain[] }
+export type UpdateChainsAction = { type: 'update_chains'; payload: Chain}
 export type AddWalletAction = { type: 'add_wallet'; payload: WalletState }
 
 export type UpdateWalletAction = {

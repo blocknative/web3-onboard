@@ -337,7 +337,7 @@
     font-size: var(--onboard-font-size-6, var(--font-size-6));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
     border: 1px solid var(--onboard-gray-500, var(--gray-500));
-    font-weight: 700;
+    font-weight: 600;
   }
 
   :global(.button-neutral-solid) {
