@@ -65,7 +65,6 @@ export type TransactionPreviewInitOptions = {
 
 export type TransactionForSim = SimulationTransaction & {
   data?: string
-  gasLimit?: number
 }
 
 export type TransactionPreviewOptions = {

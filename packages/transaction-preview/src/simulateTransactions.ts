@@ -18,7 +18,7 @@ const simulateTransactions = async (
       const cleanedTrans = {
         from: convertedTransaction.from,
         to: convertedTransaction.to,
-        gas: convertedTransaction.gas || convertedTransaction.gasLimit || 0,
+        gas: convertedTransaction.gas,
         gasPrice: convertedTransaction.gasPrice,
         maxFeePerGas: convertedTransaction.maxFeePerGas,
         maxPriorityFeePerGas: convertedTransaction.maxPriorityFeePerGas,
@@ -27,7 +27,7 @@ const simulateTransactions = async (
           transaction.input ||
           transaction.data ||
           '0x',
-        value: convertedTransaction.value || 0
+        value: convertedTransaction.value
       }
       return cleanedTrans
     }
