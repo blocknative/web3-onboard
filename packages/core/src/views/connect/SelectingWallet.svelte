@@ -47,7 +47,7 @@
 
   .notice-container {
     flex: 0 0 100%;
-    margin-top: 1rem;
+    margin-top: 0.75rem;
   }
 
   @media all and (min-width: 768px) {
