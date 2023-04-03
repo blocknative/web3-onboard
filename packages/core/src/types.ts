@@ -212,6 +212,13 @@ export type ConnectModalOptions = {
    */
   iDontHaveAWalletLink?: string
   /**
+   * Customize the link for the `Where's My Wallet` info pop up shown on the
+   * select wallet modal.
+   * Defaults to `https://www.blocknative.com/blog/
+   * metamask-wont-connect-web3-wallet-troubleshooting`
+   */
+  wheresMyWalletLink?: string
+  /**
    * Define support for Unstoppable Domains resolutions
    * after a user connects. Similar to ens, uns can be used for users who
    * have minted an Unstoppable Domain and associated it with their wallet.
