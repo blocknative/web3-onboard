@@ -62,6 +62,10 @@ type WalletConnectOptions = {
        * optional chains for the WalletConnect module
        */
       requiredChains?: number[] | undefined
+      /**
+       * `undefined` by default, see https://docs.walletconnect.com/2.0/web3modal/options
+       */
+      qrModalOptions?: Web3ModalConfig
     }
 )
 ```

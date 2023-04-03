@@ -1,4 +1,5 @@
 import type { WalletInit } from '@web3-onboard/common'
+import type { Web3ModalConfig } from '@web3modal/standalone'
 import v1 from './v1.js'
 import v2 from './v2.js'
 
@@ -11,8 +12,7 @@ export type WalletConnectOptions = {
   bridge?: string
   qrcodeModalOptions?: {
     mobileLinks: string[]
-  },
-
+  }
 } & (
   | {
       /**
@@ -36,6 +36,10 @@ export type WalletConnectOptions = {
        * optional chains for the WalletConnect module
        */
       requiredChains?: number[] | undefined
+      /**
+       * `undefined` by default, see https://docs.walletconnect.com/2.0/web3modal/options
+       */
+      qrModalOptions?: Web3ModalConfig
     }
 )
 
@@ -48,7 +52,7 @@ export const isHexString = (value: string | number) => {
 }
 
 function walletConnect(options?: WalletConnectOptions): WalletInit {
-  const version = options && options.version || 1
+  const version = (options && options.version) || 1
   return version === 1 ? v1(options) : v2(options)
 }
 
