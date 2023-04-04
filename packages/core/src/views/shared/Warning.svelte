@@ -5,7 +5,7 @@
 
 <style>
   .container {
-  	gap: 1rem;
+    gap: 1rem;
     padding: 0.75rem;
     color: var(--onboard-warning-700, var(--warning-700));
     font-size: var(--onboard-font-size-7, var(--font-size-7));
