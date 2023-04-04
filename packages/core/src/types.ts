@@ -2,6 +2,7 @@ import type { SvelteComponent } from 'svelte'
 
 import type {
   AppMetadata,
+  Address,
   Device,
   WalletInit,
   EIP1193Provider,
@@ -153,8 +154,6 @@ export type Avatar = {
   url: string
   linkage: Array<{ type: string; content: string }>
 }
-
-export type Address = string
 
 export interface AppState {
   chains: Chain[]
@@ -414,7 +413,7 @@ export type ResetStoreAction = {
 
 export type UpdateAccountAction = {
   type: 'update_account'
-  payload: { id: string; address: string } & Partial<Account>
+  payload: { id: string; address: Address } & Partial<Account>
 }
 
 export type UpdateAccountCenterAction = {

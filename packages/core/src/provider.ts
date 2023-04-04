@@ -1,7 +1,8 @@
 import { fromEventPattern, Observable } from 'rxjs'
 import { filter, takeUntil, take, share, switchMap } from 'rxjs/operators'
 import partition from 'lodash.partition'
-import { providers, utils } from 'ethers'
+import { providers } from 'ethers'
+import { isAddress } from '@web3-onboard/common'
 import { weiToEth } from '@web3-onboard/common'
 import { disconnectWallet$ } from './streams.js'
 import { updateAccount, updateWallet } from './store/actions.js'
@@ -11,6 +12,7 @@ import { state } from './store/index.js'
 import { getBNMulitChainSdk } from './services.js'
 
 import type {
+  Address,
   ChainId,
   EIP1102Request,
   EIP1193Provider,
@@ -23,7 +25,6 @@ import type {
 
 import type {
   Account,
-  Address,
   Balances,
   Ens,
   Uns,
@@ -151,7 +152,7 @@ export function trackWallet(
     updateWallet(label, {
       accounts: [
         existingAccount || {
-          address: address,
+          address: address as Address,
           ens: null,
           uns: null,
           balance: null
@@ -387,7 +388,7 @@ export async function getUns(
 
   // check if address is valid ETH address before attempting to resolve
   // chain we don't recognize and don't have a rpcUrl for requests
-  if (connect.disableUDResolution || !utils.isAddress(address) || !chain)
+  if (connect.disableUDResolution || !isAddress(address) || !chain)
     return null
 
   try {
@@ -411,7 +412,7 @@ export async function getUns(
 }
 
 export async function getBalance(
-  address: string,
+  address: Address,
   chain: Chain
 ): Promise<Balances | null> {
   // chain we don't recognize and don't have a rpcUrl for requests

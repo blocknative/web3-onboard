@@ -219,7 +219,7 @@ export interface ProviderInfo {
   chainId: ChainId
 }
 
-export type AccountAddress = string
+export type AccountAddress = Address
 
 /**
  * An array of addresses
@@ -296,7 +296,7 @@ export interface EthSignTransactionRequest {
   params: [TransactionObject]
 }
 
-type Address = string
+export type Address = `0x${string}`
 type Message = string
 export interface EthSignMessageRequest {
   method: 'eth_sign'

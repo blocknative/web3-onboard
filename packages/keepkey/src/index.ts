@@ -198,9 +198,9 @@ function keepkey({
                 acc.balance.value.isZero()
               ) {
                 zeroBalanceAccounts++
-                accounts.push(acc)
+                accounts.push(acc as Account)
               } else {
-                accounts.push(acc)
+                accounts.push(acc as Account)
                 // Reset the number of 0 balance accounts
                 zeroBalanceAccounts = 0
               }
@@ -239,7 +239,7 @@ function keepkey({
                 asset
               })
 
-              return [account]
+              return [account as Account]
             } catch (error) {
               throw new Error('Invalid derivation path')
             }

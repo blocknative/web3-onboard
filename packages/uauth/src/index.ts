@@ -233,7 +233,7 @@ function uauth(options: UauthInitOptions): WalletInit {
                         ? chainId
                         : `0x${chainId.toString(16)}`
                       this.emit('chainChanged', hexChainId)
-                      return resolve(accounts)
+                      return resolve(accounts as ProviderAccounts)
                     }
 
                     // @ts-ignore Subscribe to connection events

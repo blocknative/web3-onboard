@@ -1,4 +1,4 @@
-import type { WalletInit } from '@web3-onboard/common'
+import type { ProviderAccounts, WalletInit } from '@web3-onboard/common'
 import type { TorusCtorArgs, TorusParams } from '@toruslabs/torus-embed'
 
 type TorusOptions = TorusCtorArgs & TorusParams
@@ -59,7 +59,7 @@ function torus(options?: TorusOptions): WalletInit {
           eth_requestAccounts: async () => {
             try {
               const accounts = await instance.login()
-              return accounts
+              return accounts as ProviderAccounts
             } catch (error) {
               throw new ProviderRpcError({
                 code: ProviderRpcErrorCode.ACCOUNT_ACCESS_REJECTED,

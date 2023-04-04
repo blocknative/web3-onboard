@@ -64,7 +64,7 @@
     "window": "^4.2.7"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.3.0",
+    "@web3-onboard/common": "^2.4.0-alpha.1",
     "tallyho-detect-provider": "^1.0.0",
     "tallyho-onboarding": "^1.0.2"
   }

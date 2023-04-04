@@ -59,6 +59,6 @@
   },
   "dependencies": {
     "@coinbase/wallet-sdk": "^3.6.0",
-    "@web3-onboard/common": "^2.3.0"
+    "@web3-onboard/common": "^2.4.0-alpha.1"
   }
 }

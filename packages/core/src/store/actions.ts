@@ -65,6 +65,7 @@ import {
   UPDATE_CONNECT_MODAL,
   UPDATE_CHAINS
 } from './constants.js'
+import type { Address } from 'bnc-sdk'
 
 export function addChains(chains: Chain[]): void {
   // chains are validated on init
@@ -181,7 +182,7 @@ export function setPrimaryWallet(wallet: WalletState, address?: string): void {
 
 export function updateAccount(
   id: string,
-  address: string,
+  address: Address,
   update: Partial<Account>
 ): void {
   const action = {

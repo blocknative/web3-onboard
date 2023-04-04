@@ -166,7 +166,7 @@ function walletConnect(
                       ? chainId
                       : `0x${chainId.toString(16)}`
                     this.emit('chainChanged', hexChainId)
-                    return resolve(accounts)
+                    return resolve(accounts as ProviderAccounts)
                   }
 
                   // Subscribe to connection events

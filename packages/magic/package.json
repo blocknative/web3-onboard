@@ -80,7 +80,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.3.0",
+    "@web3-onboard/common": "^2.4.0-alpha.1",
     "joi": "17.8.1",
     "magic-sdk": "^8.1.0",
     "rxjs": "^7.5.2"

@@ -1,4 +1,10 @@
-import type { WalletInit, APIKey, EIP1193Provider } from '@web3-onboard/common'
+import type {
+  WalletInit,
+  APIKey,
+  EIP1193Provider,
+  Address,
+  ProviderAccounts
+} from '@web3-onboard/common'
 
 function fortmatic(options: APIKey): WalletInit {
   const { apiKey } = options
@@ -29,7 +35,8 @@ function fortmatic(options: APIKey): WalletInit {
           const patchedProvider = createEIP1193Provider(fortmaticProvider, {
             eth_requestAccounts: async () => {
               try {
-                const accounts = await instance.user.login()
+                const accounts =
+                  (await instance.user.login()) as ProviderAccounts
                 return accounts
               } catch (error) {
                 const { code } = error as { code: number }
