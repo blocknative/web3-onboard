@@ -54,13 +54,12 @@
     .wallets-container {
       display: grid;
       grid-template-columns: repeat(var(--onboard-wallet-columns, 2), 1fr);
-      padding: 1rem 1rem 0 1rem;
+      padding: 1rem;
       border: none;
     }
     .notice-container {
       grid-column: span 2;
-      margin-bottom: 1rem;
-      margin-top: 0;
+      margin: 0;
     }
   }
 </style>
@@ -89,15 +88,13 @@
     {/each}
     <div class="notice-container">
       <Warning>
-        <div>
-          <div>Why don't I see my Wallet?</div>
-          <a
-            class="link pointer"
-            href={connect.wheresMyWalletLink || wheresMyWalletDefault}
-            target="_blank"
-            rel="noreferrer noopener">Click here to learn more</a
-          >
-        </div>
+        <div>Why don't I see my Wallet?</div>
+        <a
+          class="link pointer"
+          href={connect.wheresMyWalletLink || wheresMyWalletDefault}
+          target="_blank"
+          rel="noreferrer noopener">Click here to learn more</a
+        >
       </Warning>
     </div>
   </div>
