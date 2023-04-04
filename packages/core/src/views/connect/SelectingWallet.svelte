@@ -11,11 +11,15 @@
   export let connectingErrorMessage: string
 
   let windowWidth: number
+  const { connect } = state.get()
 
   function checkConnected(label: string) {
     const { wallets } = state.get()
     return !!wallets.find(wallet => wallet.label === label)
   }
+
+  const wheresMyWalletDefault =
+    'https://www.blocknative.com/blog/metamask-wont-connect-web3-wallet-troubleshooting'
 </script>
 
 <style>
@@ -41,12 +45,21 @@
     margin: 1rem 1rem 0;
   }
 
+  .notice-container {
+    flex: 0 0 100%;
+    margin-top: 0.75rem;
+  }
+
   @media all and (min-width: 768px) {
     .wallets-container {
       display: grid;
       grid-template-columns: repeat(var(--onboard-wallet-columns, 2), 1fr);
       padding: 1rem;
       border: none;
+    }
+    .notice-container {
+      grid-column: span 2;
+      margin: 0;
     }
   }
 </style>
@@ -73,5 +86,16 @@
           connectingWalletLabel !== wallet.label}
       />
     {/each}
+    <div class="notice-container">
+      <Warning>
+        <div>Why don't I see my Wallet?</div>
+        <a
+          class="link pointer"
+          href={connect.wheresMyWalletLink || wheresMyWalletDefault}
+          target="_blank"
+          rel="noreferrer noopener">Click here to learn more</a
+        >
+      </Warning>
+    </div>
   </div>
 </div>

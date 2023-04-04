@@ -1,4 +1,5 @@
 import type { CoreTypes } from '@walletconnect/types'
+import type { EthereumProvider } from '@walletconnect/ethereum-provider'
 import type {
   Chain,
   ProviderAccounts,
@@ -19,13 +20,12 @@ const methods = [
 ]
 
 function walletConnect(options?: WalletConnectOptions): WalletInit {
-  const projectId =
-    options && options.version === 2 ? options.projectId : undefined
-  if (!projectId) {
+  if (!options || options.version !== 2) {
     throw new Error(
       'WalletConnect requires a projectId. Please visit https://cloud.walletconnect.com to get one.'
     )
   }
+  const { projectId, handleUri, requiredChains, qrModalOptions } = options
 
   return () => {
     return {
@@ -65,21 +65,20 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
         }
 
         // default to mainnet
-        const requiredChains =
-          options &&
-          options.version === 2 &&
-          Array.isArray(options.requiredChains) &&
-          options.requiredChains.length &&
-          options.requiredChains.every(num => !isNaN(num) )
-              // @ts-ignore
+        const requiredChainsParsed =
+          Array.isArray(requiredChains) &&
+          requiredChains.length &&
+          requiredChains.every(num => !isNaN(num))
+            ? // @ts-ignore
               // Required as WC package does not support hex numbers
-            ? options.requiredChains.map(chainID => parseInt(chainID))
+              requiredChains.map(chainID => parseInt(chainID))
             : [1]
 
         const connector = await EthereumProvider.init({
           projectId,
+          chains: requiredChainsParsed, // default to mainnet
           metadata: getMetaData(),
-          chains: requiredChains, // default to mainnet
+          showQrModal: true,
           optionalChains: chains.map(({ id }) => parseInt(id, 16)),
           optionalMethods: methods,
           rpcMap: chains
@@ -87,7 +86,8 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
             .reduce((rpcMap: Record<number, string>, { id, rpcUrl }) => {
               rpcMap[parseInt(id, 16)] = rpcUrl || ''
               return rpcMap
-            }, {})
+            }, {}),
+          qrModalOptions: qrModalOptions
         })
 
         const emitter = new EventEmitter()
@@ -163,7 +163,7 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
               if (this.connector.session) this.connector.disconnect()
             }
 
-            if (options && options.handleUri) {
+            if (options && handleUri) {
               // listen for uri event
               fromEvent(
                 this.connector as JQueryStyleEventEmitter<any, string>,
@@ -173,20 +173,21 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
                 .pipe(takeUntil(this.disconnected$))
                 .subscribe(async uri => {
                   try {
-                    options.handleUri && (await options.handleUri(uri))
+                    handleUri && (await handleUri(uri))
                   } catch (error) {
                     throw `An error occurred when handling the URI. Error: ${error}`
                   }
                 })
             }
 
-            ;(() => {
+            const checkForSession = () => {
               const session = this.connector.session
               if (session) {
                 this.emit('accountsChanged', this.connector.accounts)
                 this.emit('chainChanged', this.connector.chainId)
               }
-            })()
+            }
+            checkForSession()
 
             this.request = async ({ method, params }) => {
               if (method === 'eth_chainId') {
@@ -196,50 +197,52 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
               }
 
               if (method === 'eth_requestAccounts') {
-                return new Promise<ProviderAccounts>((resolve, reject) => {
-                  // Check if connection is already established
-                  if (!this.connector.session) {
-                    // create new session
-                    this.connector.connect().catch(err => {
-                      console.error('err: ', err)
-                      reject(
-                        new ProviderRpcError({
-                          code: 4001,
-                          message: 'User rejected the request.'
-                        })
-                      )
-                    })
-                  } else {
-                    // update ethereum provider to load accounts & chainId
-                    const accounts = this.connector.accounts
-                    const chainId = this.connector.chainId
-                    const hexChainId = `0x${chainId.toString(16)}`
-                    this.emit('chainChanged', hexChainId)
-                    return resolve(accounts)
+                return new Promise<ProviderAccounts>(
+                  async (resolve, reject) => {
+                    // Subscribe to connection events
+                    fromEvent(
+                      this.connector as JQueryStyleEventEmitter<
+                        any,
+                        { chainId: number }
+                      >,
+                      'connect',
+                      (payload: { chainId: number | string }) => payload
+                    )
+                      .pipe(take(1))
+                      .subscribe({
+                        next: ({ chainId }) => {
+                          this.emit('accountsChanged', this.connector.accounts)
+                          const hexChainId = isHexString(chainId)
+                            ? chainId
+                            : `0x${chainId.toString(16)}`
+                          this.emit('chainChanged', hexChainId)
+                          resolve(this.connector.accounts)
+                        },
+                        error: reject
+                      })
+
+                    // Check if connection is already established
+                    if (!this.connector.session) {
+                      // create new session
+                      await this.connector.connect().catch(err => {
+                        console.error('err creating new session: ', err)
+                        reject(
+                          new ProviderRpcError({
+                            code: 4001,
+                            message: 'User rejected the request.'
+                          })
+                        )
+                      })
+                    } else {
+                      // update ethereum provider to load accounts & chainId
+                      const accounts = this.connector.accounts
+                      const chainId = this.connector.chainId
+                      const hexChainId = `0x${chainId.toString(16)}`
+                      this.emit('chainChanged', hexChainId)
+                      return resolve(accounts)
+                    }
                   }
-                  // Subscribe to connection events
-                  fromEvent(
-                    this.connector as JQueryStyleEventEmitter<
-                      any,
-                      { accounts: string[]; chainId: number }
-                    >,
-                    'connect',
-                    (payload: { accounts: string[]; chainId: number }) =>
-                      payload
-                  )
-                    .pipe(take(1))
-                    .subscribe({
-                      next: ({ accounts, chainId }) => {
-                        this.emit('accountsChanged', accounts)
-                        const hexChainId = isHexString(chainId)
-                          ? chainId
-                          : `0x${chainId.toString(16)}`
-                        this.emit('chainChanged', hexChainId)
-                        resolve(accounts)
-                      },
-                      error: reject
-                    })
-                })
+                )
               }
 
               if (method === 'eth_selectAccounts') {
