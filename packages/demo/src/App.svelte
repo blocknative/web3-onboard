@@ -105,7 +105,7 @@
   const walletConnect = walletConnectModule({
     connectFirstChainId: true,
     version: 2,
-    handleUri: (uri) => console.log(uri),
+    handleUri: uri => console.log(uri),
     projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
     qrcodeModalOptions: {
     mobileLinks: ['rainbow', 'metamask', 'argent', 'trust', 'imtoken', 'pillar']
@@ -318,7 +318,7 @@
     // },
     // Sign up for your free api key at www.Blocknative.com
     apiKey,
-    // theme: 'system'
+    theme: 'system'
   })
 
   // Subscribe to wallet updates
@@ -329,10 +329,8 @@
       provider => provider.label === 'Unstoppable'
     )
     if (unstoppableUser) console.log(unstoppableUser.instance.user)
-    const wc = wallet.find(
-      provider => provider.label === 'WalletConnect'
-    )
-    if(wc) console.log(wc)
+    const wc = wallet.find(provider => provider.label === 'WalletConnect')
+    if (wc) console.log(wc)
   })
 
   const signTransactionMessage = async provider => {
