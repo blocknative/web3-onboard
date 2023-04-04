@@ -74,7 +74,6 @@
   },
   "dependencies": {
     "bignumber.js": "^9.1.0",
-    "ethers": "5.5.4",
     "joi": "17.8.1"
   }
 }
