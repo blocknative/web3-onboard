@@ -1,7 +1,6 @@
 <script lang="ts">
   import { ProviderRpcErrorCode, WalletModule } from '@web3-onboard/common'
   import EventEmitter from 'eventemitter3'
-  import { BigNumber } from 'ethers'
   import { _ } from 'svelte-i18n'
   import en from '../../i18n/en.json'
   import { listenAccountsChanged } from '../../provider.js'
@@ -134,7 +133,6 @@
 
       const { provider, instance } = await getInterface({
         chains,
-        BigNumber,
         EventEmitter,
         appMetadata
       })

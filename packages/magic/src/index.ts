@@ -17,7 +17,7 @@ function magic(options: MagicInitOptions): WalletInit {
     return {
       label: walletName,
       getIcon: async () => (await import('./icon.js')).default,
-      getInterface: async ({ EventEmitter, BigNumber, chains }) => {
+      getInterface: async ({ EventEmitter, chains }) => {
         const { Magic, RPCErrorCode } = await import('magic-sdk')
         const loginModal = (await import('./login-modal.js')).default
         const brandingHTML = (await import('./branding.js')).default
@@ -98,7 +98,7 @@ function magic(options: MagicInitOptions): WalletInit {
                 params: [activeAddress, 'latest']
               })
               return balance
-                ? BigNumber.from(balance).mul('1000000000000000000').toString()
+                ? (BigInt(balance) * BigInt('1000000000000000000')).toString()
                 : '0'
             },
             wallet_switchEthereumChain: async ({ params }) => {

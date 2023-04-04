@@ -1,5 +1,4 @@
 import type { EthereumTransactionData, Network } from 'bnc-sdk'
-import { BigNumber } from 'ethers'
 import { configuration } from './configuration.js'
 import { state } from './store/index.js'
 import type { WalletState } from './types.js'
@@ -71,7 +70,7 @@ export async function replaceTransaction({
         from,
         to: type === 'cancel' ? from : to,
         chainId: parseInt(chainId),
-        value: `${BigNumber.from(value).toHexString()}`,
+        value: `0x${BigInt(value).toString(16)}`,
         nonce: toHexString(nonce),
         gasLimit: toHexString(gasLimit),
         maxFeePerGas: maxFeePerGasWeiHex,

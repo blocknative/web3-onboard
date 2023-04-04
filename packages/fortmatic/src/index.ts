@@ -2,7 +2,6 @@ import type {
   WalletInit,
   APIKey,
   EIP1193Provider,
-  Address,
   ProviderAccounts
 } from '@web3-onboard/common'
 
@@ -13,7 +12,7 @@ function fortmatic(options: APIKey): WalletInit {
     return {
       label: 'Fortmatic',
       getIcon: async () => (await import('./icon.js')).default,
-      getInterface: async ({ EventEmitter, BigNumber, chains }) => {
+      getInterface: async ({ EventEmitter, chains }) => {
         const { default: Fortmatic } = await import('fortmatic')
         const {
           createEIP1193Provider,
@@ -54,9 +53,10 @@ function fortmatic(options: APIKey): WalletInit {
             eth_getBalance: async () => {
               const [balance] = await instance.user.getBalances()
               return balance
-                ? BigNumber.from(balance.crypto_amount)
-                    .mul('1000000000000000000')
-                    .toString()
+                ? (
+                    BigInt(balance.crypto_amount) *
+                    BigInt('1000000000000000000')
+                  ).toString()
                 : '0'
             },
             wallet_switchEthereumChain: async ({ params }) => {
