@@ -19,7 +19,7 @@
     color: var(--onboard-warning-700, var(--warning-700));
     width: 1rem;
     height: 1rem;
-	flex: 0 0 auto;
+    flex: 0 0 auto;
   }
 	
   
