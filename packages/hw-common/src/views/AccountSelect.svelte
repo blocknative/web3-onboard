@@ -291,10 +291,7 @@
     flex-flow: column;
     display: flex;
     max-height: 51.75rem;
-    background: var(
-      --account-select-background-color,
-      var(--background-color)
-    );
+    background: var(--account-select-background-color, var(--background-color));
     box-shadow: var(
       --account-select-shadow,
       var(--onboard-shadow-1, var(--shadow-1))
@@ -322,6 +319,11 @@
     );
     max-height: 100vh;
     overflow: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .account-select-modal-position::-webkit-scrollbar {
+    display: none;
   }
 
   .connect-wallet-header {
@@ -434,7 +436,7 @@
     .table-section {
       margin-top: unset;
     }
-    
+
     .account-select-modal-position {
       max-height: unset;
       overflow: unset;
