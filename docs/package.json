@@ -11,7 +11,8 @@
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
     "lint": "prettier --check --plugin-search-dir=. . && eslint .",
-    "format": "prettier --write --plugin-search-dir=. ."
+    "format": "prettier --write --plugin-search-dir=. .",
+    "update-w3o-to-prod": "yarn add '@web3-onboard/coinbase@next' '@web3-onboard/core@next' '@web3-onboard/dcent@next' '@web3-onboard/enkrypt@next' '@web3-onboard/fortmatic@next' '@web3-onboard/gas@next' '@web3-onboard/gnosis@next' '@web3-onboard/infinity-wallet@next' '@web3-onboard/injected-wallets@next' '@web3-onboard/keepkey@next' '@web3-onboard/keystone@next' '@web3-onboard/ledger@next' '@web3-onboard/magic@next' '@web3-onboard/mew-wallet@next' '@web3-onboard/portis@next' '@web3-onboard/sequence@next' '@web3-onboard/taho@next' '@web3-onboard/torus@next' '@web3-onboard/transaction-preview@next' '@web3-onboard/trezor@next' '@web3-onboard/trust@next' '@web3-onboard/uauth@next' '@web3-onboard/walletconnect@next' '@web3-onboard/web3auth@next' '@web3-onboard/xdefi@next'"
   },
   "devDependencies": {
     "@algolia/client-search": "^4.14.2",

@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/transaction-preview",
-  "version": "2.0.6-alpha.1",
+  "version": "2.0.6",
   "description": "In app preview of Ethereum transactions",
   "keywords": [
     "Ethereum",
@@ -80,7 +80,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.3.1-alpha.1",
+    "@web3-onboard/common": "^2.3.1",
     "bnc-sdk": "^4.6.7",
     "bowser": "^2.11.0",
     "joi": "17.9.1",
