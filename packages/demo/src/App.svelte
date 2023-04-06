@@ -195,7 +195,7 @@
       // phantom,
       // xdefi
     ],
-    transactionPreview,
+    // transactionPreview,
     gas,
     chains: [
       {
@@ -360,7 +360,7 @@
       to: toAddress,
       value: 10000000000000
     })
-
+console.log(popTransaction)
     const txn = await signer.sendTransaction(popTransaction)
 
     const receipt = await txn.wait()

@@ -16,7 +16,8 @@ export default {
   input: 'src/index.ts',
   output: {
     format: 'es',
-    dir: 'dist/'
+    dir: 'dist/',
+    sourcemap: true
   },
   plugins: [
     json(),
@@ -58,12 +59,9 @@ export default {
     'lodash.merge',
     'lodash.partition',
     'eventemitter3',
-    'bignumber.js',
     'bnc-sdk',
     'nanoid',
     '@unstoppabledomains/resolution',
-    'viem',
-    'abitype',
-    'idna-uts46-hx'
+    'viem'
   ]
 }

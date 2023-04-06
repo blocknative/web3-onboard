@@ -1,4 +1,3 @@
-import BigNumber from 'bignumber.js'
 import { get } from 'svelte/store'
 import { _ } from 'svelte-i18n'
 import defaultCopy from './i18n/en.json'
@@ -63,11 +62,12 @@ export function transactionEventToNotification(
     counterparty.substring(0, 4) +
       '...' +
       counterparty.substring(counterparty.length - 4)
-
-  const formattedValue = new BigNumber(value || 0)
-    .div(new BigNumber('1000000000000000000'))
-    .toString(10)
-
+console.log(value)
+  const valueBigInt = BigInt(value || 0)
+  const divisor = 1000000000000000000n
+  console.log(valueBigInt, divisor, valueBigInt / divisor)
+  const formattedValue = (Number(valueBigInt) / Number(divisor)).toString(10)
+console.log(formattedValue)
   const formatterOptions =
     counterparty && value
       ? {
