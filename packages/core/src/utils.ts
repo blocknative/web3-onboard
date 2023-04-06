@@ -66,13 +66,8 @@ export function validEnsChain(chainId: ChainId): boolean {
   switch (chainId) {
     case '0x1':
     case '0x5':
-    // case '0xa':
-    // case '0xa4b1':
-    // case '0xaa36a7':
-    // case '0x89':
-    // case '0x14a33':
-    // case '0x144':
-    // case '0x38':
+    case '0xaa36a7':
+    case '0x14a33':
       return true
     default:
       return false
@@ -149,34 +144,16 @@ export const chainIdToViemImport = async (
       const { goerli } = await import('viem/chains')
       return goerli
     }
-    case '0xa': {
-      const { optimism } = await import('viem/chains')
-      return optimism
-    }
-    case '0xa4b1': {
-      const { arbitrum } = await import('viem/chains')
-      return arbitrum
-    }
     case '0xaa36a7': {
       const { sepolia } = await import('viem/chains')
       return sepolia
-    }
-    case '0x89': {
-      const { polygon } = await import('viem/chains')
-      return polygon
     }
     case '0x14a33': {
       const { baseGoerli } = await import('viem/chains')
       return baseGoerli
     }
-    case '0x144': {
-      const { zkSync } = await import('viem/chains')
-      return zkSync
-    }
-    case '0x38': {
-      const { bsc } = await import('viem/chains')
-      return bsc
-    }
+    default:
+      return undefined
   }
 }
 
