@@ -249,7 +249,7 @@
     ],
     connect: {
       // disableClose: true,
-      // disableUDResolution: true,
+      disableUDResolution: true,
       autoConnectLastWallet: true,
       autoConnectAllPreviousWallet: true
     },
