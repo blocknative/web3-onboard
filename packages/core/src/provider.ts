@@ -32,6 +32,7 @@ import type {
 } from './types.js'
 
 import type { PublicClient } from 'viem'
+
 export const viemProviders: {
   [key: string]: PublicClient
 } = {}
@@ -365,7 +366,7 @@ export async function getEns(
     if (name) {
       const { labelhash, normalize } = await import('viem/ens')
       const normalizedName = normalize(name)
-      const resolver = await provider.getEnsResolver({
+      const ensResolver = await provider.getEnsResolver({
         name: normalizedName
       })
       const avatar = await provider.getEnsAvatar({
@@ -378,7 +379,7 @@ export async function getEns(
         name,
         avatar,
         contentHash,
-        ensResolver: resolver
+        ensResolver
       }
     }
 
