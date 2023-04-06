@@ -90,7 +90,6 @@
     "bignumber.js": "^9.0.0",
     "bnc-sdk": "^4.6.7",
     "bowser": "^2.11.0",
-    "ethers": "5.5.3",
     "eventemitter3": "^4.0.7",
     "joi": "17.8.1",
     "lodash.merge": "^4.6.2",

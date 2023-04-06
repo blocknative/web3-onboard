@@ -1,32 +1,32 @@
 <script>
   import Onboard from '@web3-onboard/core'
-  import fortmaticModule from '@web3-onboard/fortmatic'
-  import gnosisModule from '@web3-onboard/gnosis'
-  import infinityWalletModule from '@web3-onboard/infinity-wallet'
+  // import fortmaticModule from '@web3-onboard/fortmatic'
+  // import gnosisModule from '@web3-onboard/gnosis'
+  // import infinityWalletModule from '@web3-onboard/infinity-wallet'
   import injectedModule, { ProviderLabel } from '@web3-onboard/injected-wallets'
-  import keepkeyModule from '@web3-onboard/keepkey'
-  import keystoneModule from '@web3-onboard/keystone'
-  import ledgerModule from '@web3-onboard/ledger'
-  import portisModule from '@web3-onboard/portis'
-  import torusModule from '@web3-onboard/torus'
-  import trezorModule from '@web3-onboard/trezor'
-  import walletConnectModule from '@web3-onboard/walletconnect'
-  import coinbaseModule from '@web3-onboard/coinbase'
-  import magicModule from '@web3-onboard/magic'
-  import web3authModule from '@web3-onboard/web3auth'
+  // import keepkeyModule from '@web3-onboard/keepkey'
+  // import keystoneModule from '@web3-onboard/keystone'
+  // import ledgerModule from '@web3-onboard/ledger'
+  // import portisModule from '@web3-onboard/portis'
+  // import torusModule from '@web3-onboard/torus'
+  // import trezorModule from '@web3-onboard/trezor'
+  // import walletConnectModule from '@web3-onboard/walletconnect'
+  // import coinbaseModule from '@web3-onboard/coinbase'
+  // import magicModule from '@web3-onboard/magic'
+  // import web3authModule from '@web3-onboard/web3auth'
+  // import dcentModule from '@web3-onboard/dcent'
+  // import sequenceModule from '@web3-onboard/sequence'
+  // import tallyHoModule from '@web3-onboard/tallyho'
+  // import xdefiWalletModule from '@web3-onboard/xdefi'
+  // import zealModule from '@web3-onboard/zeal'
   import gas from '@web3-onboard/gas'
-  import dcentModule from '@web3-onboard/dcent'
-  import sequenceModule from '@web3-onboard/sequence'
-  import tallyHoModule from '@web3-onboard/tallyho'
-  import xdefiWalletModule from '@web3-onboard/xdefi'
-  import zealModule from '@web3-onboard/zeal'
   import transactionPreviewModule from '@web3-onboard/transaction-preview'
-  import enkryptModule from '@web3-onboard/enkrypt'
-  import mewWalletModule from '@web3-onboard/mew-wallet'
-  import uauthModule from '@web3-onboard/uauth'
-  import phantomModule from '@web3-onboard/phantom'
-  import trustModule from '@web3-onboard/trust'
-  import frontierModule from '@web3-onboard/frontier'
+  // import enkryptModule from '@web3-onboard/enkrypt'
+  // import mewWalletModule from '@web3-onboard/mew-wallet'
+  // import uauthModule from '@web3-onboard/uauth'
+  // import phantomModule from '@web3-onboard/phantom'
+  // import trustModule from '@web3-onboard/trust'
+  // import frontierModule from '@web3-onboard/frontier'
   import {
     recoverAddress,
     arrayify,
@@ -100,69 +100,69 @@
     // walletUnavailableMessage: wallet => `Oops ${wallet.label} is unavailable!`
   })
 
-  const coinbaseWallet = coinbaseModule()
+  // const coinbaseWallet = coinbaseModule()
 
-  const walletConnect = walletConnectModule({
-    connectFirstChainId: true,
-    version: 2,
-    handleUri: uri => console.log(uri),
-    projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
-    qrcodeModalOptions: {
-    mobileLinks: ['rainbow', 'metamask', 'argent', 'trust', 'imtoken', 'pillar']
-    }
-  })
-  const portis = portisModule({
-    apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
-  })
+  // const walletConnect = walletConnectModule({
+  //   connectFirstChainId: true,
+  //   version: 2,
+  //   handleUri: uri => console.log(uri),
+  //   projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
+  //   qrcodeModalOptions: {
+  //   mobileLinks: ['rainbow', 'metamask', 'argent', 'trust', 'imtoken', 'pillar']
+  //   }
+  // })
+  // const portis = portisModule({
+  //   apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
+  // })
 
-  const fortmatic = fortmaticModule({
-    apiKey: 'pk_test_886ADCAB855632AA'
-  })
+  // const fortmatic = fortmaticModule({
+  //   apiKey: 'pk_test_886ADCAB855632AA'
+  // })
 
-  const web3auth = web3authModule({
-    clientId:
-      'DJuUOKvmNnlzy6ruVgeWYWIMKLRyYtjYa9Y10VCeJzWZcygDlrYLyXsBQjpJ2hxlBO9dnl8t9GmAC2qOP5vnIGo'
-  })
+  // const web3auth = web3authModule({
+  //   clientId:
+  //     'DJuUOKvmNnlzy6ruVgeWYWIMKLRyYtjYa9Y10VCeJzWZcygDlrYLyXsBQjpJ2hxlBO9dnl8t9GmAC2qOP5vnIGo'
+  // })
 
-  const torus = torusModule()
-  const infinityWallet = infinityWalletModule()
-  const ledger = ledgerModule()
-  const keepkey = keepkeyModule()
-  const keystone = keystoneModule()
-  const gnosis = gnosisModule()
-  const tallyho = tallyHoModule()
-  const xdefi = xdefiWalletModule()
-  const zeal = zealModule()
-  const phantom = phantomModule()
-  const trust = trustModule()
-  const frontier = frontierModule()
+  // const torus = torusModule()
+  // const infinityWallet = infinityWalletModule()
+  // const ledger = ledgerModule()
+  // const keepkey = keepkeyModule()
+  // const keystone = keystoneModule()
+  // const gnosis = gnosisModule()
+  // const tallyho = tallyHoModule()
+  // const xdefi = xdefiWalletModule()
+  // const zeal = zealModule()
+  // const phantom = phantomModule()
+  // const trust = trustModule()
+  // const frontier = frontierModule()
 
-  const trezorOptions = {
-    email: 'test@test.com',
-    appUrl: 'https://www.blocknative.com'
-    // containerElement: '#sample-container-el'
-  }
-  const trezor = trezorModule(trezorOptions)
+  // const trezorOptions = {
+  //   email: 'test@test.com',
+  //   appUrl: 'https://www.blocknative.com'
+  //   // containerElement: '#sample-container-el'
+  // }
+  // const trezor = trezorModule(trezorOptions)
 
-  const uauthOptions = {
-    clientID: 'a25c3a65-a1f2-46cc-a515-a46fe7acb78c',
-    redirectUri: 'http://localhost:8080/',
-    scope:
-      'openid wallet email:optional humanity_check:optional profile:optional social:optional'
-  }
-  const uauth = uauthModule(uauthOptions)
+  // const uauthOptions = {
+  //   clientID: 'a25c3a65-a1f2-46cc-a515-a46fe7acb78c',
+  //   redirectUri: 'http://localhost:8080/',
+  //   scope:
+  //     'openid wallet email:optional humanity_check:optional profile:optional social:optional'
+  // }
+  // const uauth = uauthModule(uauthOptions)
 
-  const magic = magicModule({
-    apiKey: 'pk_live_02207D744E81C2BA'
-    // userEmail: 'test@test.com'
-    // userEmail is optional - if user has already logged in and/or session is still active a login modal will not appear
-    // for more info see the @web3-onboard/magic docs
-  })
+  // const magic = magicModule({
+  //   apiKey: 'pk_live_02207D744E81C2BA'
+  //   // userEmail: 'test@test.com'
+  //   // userEmail is optional - if user has already logged in and/or session is still active a login modal will not appear
+  //   // for more info see the @web3-onboard/magic docs
+  // })
 
-  const dcent = dcentModule()
-  const sequence = sequenceModule()
-  const enkrypt = enkryptModule()
-  const mewWallet = mewWalletModule()
+  // const dcent = dcentModule()
+  // const sequence = sequenceModule()
+  // const enkrypt = enkryptModule()
+  // const mewWallet = mewWalletModule()
   const transactionPreview = transactionPreviewModule({
     requireTransactionApproval: true
   })
@@ -170,30 +170,30 @@
   const onboard = Onboard({
     wallets: [
       injected,
-      ledger,
-      trezor,
-      walletConnect,
-      infinityWallet,
-      trust,
-      enkrypt,
-      mewWallet,
-      keepkey,
-      keystone,
-      coinbaseWallet,
-      magic,
-      fortmatic,
-      portis,
-      torus,
-      gnosis,
-      dcent,
-      sequence,
-      tallyho,
-      uauth,
-      web3auth,
-      zeal,
-      frontier,
-      phantom,
-      xdefi
+      // ledger,
+      // trezor,
+      // walletConnect,
+      // infinityWallet,
+      // trust,
+      // enkrypt,
+      // mewWallet,
+      // keepkey,
+      // keystone,
+      // coinbaseWallet,
+      // magic,
+      // fortmatic,
+      // portis,
+      // torus,
+      // gnosis,
+      // dcent,
+      // sequence,
+      // tallyho,
+      // uauth,
+      // web3auth,
+      // zeal,
+      // frontier,
+      // phantom,
+      // xdefi
     ],
     transactionPreview,
     gas,
