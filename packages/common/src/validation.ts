@@ -2,7 +2,10 @@ import Joi from 'joi'
 
 export type ValidateReturn = Joi.ValidationResult | null
 
-export function validate(validator: Joi.Schema, data: unknown): ValidateReturn {
+export function validate(
+  validator: Joi.AnySchema<any>,
+  data: unknown
+): ValidateReturn {
   const result = validator.validate(data)
   return result.error ? result : null
 }
