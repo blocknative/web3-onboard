@@ -141,18 +141,13 @@ export type Balances = Record<TokenSymbol, string> | null
 
 export interface Ens {
   name: string
-  avatar: Avatar | null
-  contentHash: string | null
-  getText: (key: string) => Promise<string | undefined>
+  avatar: string | null
+  contentHash: Address | null
+  ensResolver: Address | null
 }
 
 export interface Uns {
   name: string
-}
-
-export type Avatar = {
-  url: string
-  linkage: Array<{ type: string; content: string }>
 }
 
 export interface AppState {

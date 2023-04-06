@@ -3,7 +3,7 @@ version: 2.1
 aliases:
   - &docker-image
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
 
   - &install_typescript_globally
     run:
@@ -167,211 +167,211 @@ commands:
 jobs:
   build-core:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/core
     steps:
       - node-build-steps
   build-common:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/common
     steps:
       - node-build-steps
   build-fortmatic:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/fortmatic
     steps:
       - node-build-steps
   build-gnosis:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/gnosis
     steps:
       - node-build-steps
   build-injected:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/injected
     steps:
       - node-build-steps
   build-keepkey:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/keepkey
     steps:
       - node-build-steps
   build-keystone:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/keystone
     steps:
       - node-build-steps
   build-ledger:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/ledger
     steps:
       - node-build-steps
   build-mew:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/mew
     steps:
       - node-build-steps
   build-mew-wallet:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/mew-wallet
     steps:
       - node-build-steps
   build-portis:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/portis
     steps:
       - node-build-steps
   build-torus:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/torus
     steps:
       - node-build-steps
   build-trezor:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/trezor
     steps:
       - node-build-steps
   build-trust:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/trust
     steps:
       - node-build-steps
   build-frontier:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/frontier
     steps:
       - node-build-steps
   build-walletconnect:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/walletconnect
     steps:
       - node-build-steps
   build-walletlink:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/walletlink
     steps:
       - node-build-steps
   build-react:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/react
     steps:
       - node-build-steps
   build-magic:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/magic
     steps:
       - node-build-steps
   build-coinbase:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/coinbase
     steps:
       - node-build-steps
   build-web3auth:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/web3auth
     steps:
       - node-build-steps
   build-dcent:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/dcent
     steps:
       - node-build-steps
   build-vue:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/vue
     steps:
       - node-build-steps
   build-gas:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/gas
     steps:
       - node-build-steps
   build-hw-common:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/hw-common
     steps:
       - node-build-steps
   build-sequence:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/sequence
     steps:
       - node-build-steps
   build-tallyho:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/tallyho
     steps:
       - node-build-steps
   build-enkrypt:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/enkrypt
     steps:
       - node-build-steps
   build-uauth:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/uauth
     steps:
       - node-build-steps
   build-transaction-preview:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/transaction-preview
     steps:
       - node-build-steps
   build-zeal:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/zeal
     steps:
       - node-build-steps
   build-phantom:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/phantom
     steps:
       - node-build-steps
   build-xdefi:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/xdefi
     steps:
       - node-build-steps
   build-infinity-wallet:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/infinity-wallet
     steps:
       - node-build-steps
   build-taho:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/taho
     steps:
       - node-build-steps
@@ -379,211 +379,211 @@ jobs:
   # Build staging/Alpha releases
   build-staging-core:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/core
     steps:
       - node-staging-build-steps
   build-staging-common:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/common
     steps:
       - node-staging-build-steps
   build-staging-fortmatic:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/fortmatic
     steps:
       - node-staging-build-steps
   build-staging-gnosis:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/gnosis
     steps:
       - node-staging-build-steps
   build-staging-injected:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/injected
     steps:
       - node-staging-build-steps
   build-staging-keepkey:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/keepkey
     steps:
       - node-staging-build-steps
   build-staging-keystone:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/keystone
     steps:
       - node-staging-build-steps
   build-staging-ledger:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/ledger
     steps:
       - node-staging-build-steps
   build-staging-mew:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/mew
     steps:
       - node-staging-build-steps
   build-staging-mew-wallet:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/mew-wallet
     steps:
       - node-staging-build-steps
   build-staging-portis:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/portis
     steps:
       - node-staging-build-steps
   build-staging-torus:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/torus
     steps:
       - node-staging-build-steps
   build-staging-trezor:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/trezor
     steps:
       - node-staging-build-steps
   build-staging-trust:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/trust
     steps:
       - node-staging-build-steps
   build-staging-frontier:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/frontier
     steps:
       - node-staging-build-steps
   build-staging-walletconnect:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/walletconnect
     steps:
       - node-staging-build-steps
   build-staging-walletlink:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/walletlink
     steps:
       - node-staging-build-steps
   build-staging-react:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/react
     steps:
       - node-staging-build-steps
   build-staging-magic:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/magic
     steps:
       - node-staging-build-steps
   build-staging-coinbase:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/coinbase
     steps:
       - node-staging-build-steps
   build-staging-web3auth:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/web3auth
     steps:
       - node-staging-build-steps
   build-staging-dcent:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/dcent
     steps:
       - node-staging-build-steps
   build-staging-vue:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/vue
     steps:
       - node-staging-build-steps
   build-staging-gas:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/gas
     steps:
       - node-staging-build-steps
   build-staging-hw-common:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/hw-common
     steps:
       - node-staging-build-steps
   build-staging-sequence:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/sequence
     steps:
       - node-staging-build-steps
   build-staging-tallyho:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/tallyho
     steps:
       - node-staging-build-steps
   build-staging-enkrypt:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/enkrypt
     steps:
       - node-staging-build-steps
   build-staging-uauth:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/uauth
     steps:
       - node-staging-build-steps
   build-staging-transaction-preview:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/transaction-preview
     steps:
       - node-staging-build-steps
   build-staging-zeal:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/zeal
     steps:
       - node-staging-build-steps
   build-staging-phantom:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/phantom
     steps:
       - node-staging-build-steps
   build-staging-xdefi:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/xdefi
     steps:
       - node-staging-build-steps
   build-staging-infinity-wallet:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/infinity-wallet
     steps:
       - node-staging-build-steps
   build-staging-taho:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/taho
     steps:
       - node-staging-build-steps

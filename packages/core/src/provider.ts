@@ -1,12 +1,11 @@
 import { fromEventPattern, Observable } from 'rxjs'
 import { filter, takeUntil, take, share, switchMap } from 'rxjs/operators'
 import partition from 'lodash.partition'
-import { providers } from 'ethers'
 import { isAddress } from '@web3-onboard/common'
 import { weiToEth } from '@web3-onboard/common'
 import { disconnectWallet$ } from './streams.js'
 import { updateAccount, updateWallet } from './store/actions.js'
-import { validEnsChain } from './utils.js'
+import { chainIdToViemImport, validEnsChain } from './utils.js'
 import disconnect from './disconnect.js'
 import { state } from './store/index.js'
 import { getBNMulitChainSdk } from './services.js'
@@ -32,22 +31,30 @@ import type {
   WalletState
 } from './types.js'
 
-export const ethersProviders: {
-  [key: string]: providers.StaticJsonRpcProvider
+import type { PublicClient } from 'viem'
+export const viemProviders: {
+  [key: string]: PublicClient
 } = {}
 
-export function getProvider(chain: Chain): providers.StaticJsonRpcProvider {
+export async function getProvider(chain: Chain): Promise<PublicClient> {
   if (!chain) return null
 
-  if (!ethersProviders[chain.rpcUrl]) {
-    ethersProviders[chain.rpcUrl] = new providers.StaticJsonRpcProvider(
-      chain.providerConnectionInfo && chain.providerConnectionInfo.url
-        ? chain.providerConnectionInfo
-        : chain.rpcUrl
-    )
+  if (!viemProviders[chain.rpcUrl]) {
+    const viemChain = await chainIdToViemImport(chain.id)
+    if (!viemChain) return
+
+    const { createPublicClient, http } = await import('viem')
+    viemProviders[chain.rpcUrl] = createPublicClient({
+      chain: viemChain,
+      transport: http(
+        chain.providerConnectionInfo && chain.providerConnectionInfo.url
+          ? chain.providerConnectionInfo.url
+          : (chain.rpcUrl as string)
+      )
+    })
   }
 
-  return ethersProviders[chain.rpcUrl]
+  return viemProviders[chain.rpcUrl]
 }
 
 export function requestAccounts(
@@ -347,29 +354,31 @@ export async function getEns(
   // chain we don't recognize and don't have a rpcUrl for requests
   if (!chain) return null
 
-  const provider = getProvider(chain)
+  const provider = await getProvider(chain)
 
   try {
-    const name = await provider.lookupAddress(address)
+    const name = await provider.getEnsName({
+      address
+    })
     let ens = null
 
     if (name) {
-      const resolver = await provider.getResolver(name)
+      const { labelhash, normalize } = await import('viem/ens')
+      const normalizedName = normalize(name)
+      const resolver = await provider.getEnsResolver({
+        name: normalizedName
+      })
+      const avatar = await provider.getEnsAvatar({
+        name: normalizedName
+      })
 
-      if (resolver) {
-        const [contentHash, avatar] = await Promise.all([
-          resolver.getContentHash(),
-          resolver.getAvatar()
-        ])
+      const contentHash = labelhash(normalizedName)
 
-        const getText = resolver.getText.bind(resolver)
-
-        ens = {
-          name,
-          avatar,
-          contentHash,
-          getText
-        }
+      ens = {
+        name,
+        avatar,
+        contentHash,
+        ensResolver: resolver
       }
     }
 
@@ -388,8 +397,7 @@ export async function getUns(
 
   // check if address is valid ETH address before attempting to resolve
   // chain we don't recognize and don't have a rpcUrl for requests
-  if (connect.disableUDResolution || !isAddress(address) || !chain)
-    return null
+  if (connect.disableUDResolution || !isAddress(address) || !chain) return null
 
   try {
     let uns = null

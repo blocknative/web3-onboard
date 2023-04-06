@@ -5,8 +5,12 @@ import json from '@rollup/plugin-json'
 import sveltePreprocess from 'svelte-preprocess'
 import typescript from '@rollup/plugin-typescript'
 import copy from '@rollup-extras/plugin-copy'
+import commonjs from '@rollup/plugin-commonjs';
 
 const production = !process.env.ROLLUP_WATCH
+const specificPackages = ['idna-uts46-hx']; // Replace with the package names you want to target
+const includePackages = specificPackages.map(pkg => `node_modules/${pkg}/**`);
+
 
 export default {
   input: 'src/index.ts',
@@ -38,6 +42,9 @@ export default {
     copy({
       src: 'src/i18n/en.json',
       dest: 'i18n'
+    }),
+    commonjs({
+      include: includePackages,
     })
   ],
   external: [
@@ -55,6 +62,9 @@ export default {
     'bignumber.js',
     'bnc-sdk',
     'nanoid',
-    '@unstoppabledomains/resolution'
+    '@unstoppabledomains/resolution',
+    'viem',
+    'abitype',
+    'idna-uts46-hx'
   ]
 }
