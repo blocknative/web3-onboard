@@ -169,7 +169,7 @@
 
   const onboard = Onboard({
     wallets: [
-      injected,
+      injected
       // ledger,
       // trezor,
       // walletConnect,
@@ -360,7 +360,7 @@
       to: toAddress,
       value: 10000000000000
     })
-console.log(popTransaction)
+    console.log(popTransaction)
     const txn = await signer.sendTransaction(popTransaction)
 
     const receipt = await txn.wait()
@@ -545,6 +545,11 @@ console.log(popTransaction)
     flex-direction: column;
     width: 15rem;
   }
+  .user-avatar {
+    height: 58px;
+    border-radius: 100%;
+    border: 1px solid black;
+  }
 </style>
 
 <main>
@@ -666,6 +671,7 @@ console.log(popTransaction)
             {/if}
 
             {#if ens}
+              <img class="user-avatar" src={ens?.avatar} alt="avatar" />
               <div>ENS Name: {(ens && ens.name) || ''}</div>
             {/if}
 
