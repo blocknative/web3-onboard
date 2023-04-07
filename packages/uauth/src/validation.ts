@@ -15,7 +15,10 @@ const uauthOptions = Joi.object({
 
 type ValidateReturn = Joi.ValidationResult | null
 
-const validate = (validator: Joi.Schema, data: unknown): ValidateReturn => {
+const validate = (
+  validator: Joi.AnySchema<any>,
+  data: unknown
+): ValidateReturn => {
   const result = validator.validate(data)
   return result.error ? result : null
 }
