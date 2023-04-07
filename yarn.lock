@@ -3468,56 +3468,6 @@
     "@walletconnect/window-getters" "^1.0.1"
     tslib "1.14.1"
 
-"@web3-onboard/common@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/common/-/common-2.3.0.tgz#22a2314e9e6d58494629c4e6ca35d9ba37f3dac3"
-  integrity sha512-wFVJ1Sw2dRSRbAwJLmHs9eloRBTfC2N7V2IdKEf8dN1oRhsVgkSYeMYR3Vv27YzjXmzyZUdlEux7Fy2JJqbQCg==
-  dependencies:
-    bignumber.js "^9.1.0"
-    ethers "5.5.4"
-    joi "17.8.1"
-
-"@web3-onboard/gas@^2.1.5":
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/gas/-/gas-2.1.5.tgz#bf7fa4cd5a168c78e36dfd39a6113dac5657aa1a"
-  integrity sha512-sB4a94eYUKr9fI4GmgtqGdAKgAGQqB4i6dDufBq4iBmhUmWfAd1xRK5dY4t2O0ccPbamjzHQM5WRz5Ez/WKzmA==
-  dependencies:
-    "@web3-onboard/common" "^2.3.0"
-    joi "17.8.1"
-    rxjs "^7.5.2"
-
-"@web3-onboard/hw-common@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/hw-common/-/hw-common-2.2.0.tgz#3e4b22c6b536c1964d44201781eb57a9aafa9cf2"
-  integrity sha512-sI6XfOSiej7j7eIuUnvTMGuIaAGDvPQ3oXDfrctB4dM+otAR0ceXISol1g+U1yhqgCIFnqyW2hpE7sF1VZ+99A==
-  dependencies:
-    "@ethereumjs/common" "2.6.2"
-    "@web3-onboard/common" "^2.3.0"
-    ethers "5.5.4"
-    joi "17.8.1"
-    rxjs "^7.5.2"
-
-"@web3-onboard/mew-wallet@^2.0.1-alpha.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/mew-wallet/-/mew-wallet-2.0.1.tgz#9cfdde35ceec42c4acb06511d47cb05eadc9109d"
-  integrity sha512-SnpWEkCgYbuhHniJF6SqU5G/UySLZuZopLxRraC+WPnrdJKdZK2XgM/Z1DBk0AQPJcOdaZbsvv97eHDe0u32Ng==
-  dependencies:
-    "@web3-onboard/common" "^2.3.0"
-    lodash.uniqby "^4.7.0"
-
-"@web3-onboard/transaction-preview@^2.0.5":
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/transaction-preview/-/transaction-preview-2.0.5.tgz#12c7e0b813524a1f2b56a3ef6e1467cc3184a05e"
-  integrity sha512-pQkR5Afg0SuxGzznmb7A/NQ/cZqEGfhAmNrrqLTF/Iw8v97OLPzELUnjuTj93bpiSTjzxPY+b1LP083QCe6Byw==
-  dependencies:
-    "@web3-onboard/common" "^2.3.0"
-    bnc-sdk "^4.6.7"
-    bowser "^2.11.0"
-    joi "17.8.1"
-    rxjs "^7.5.2"
-    svelte "^3.49.0"
-    svelte-i18n "^3.3.13"
-
 "@web3-react/abstract-connector@^6.0.7":
   version "6.0.7"
   resolved "https://registry.yarnpkg.com/@web3-react/abstract-connector/-/abstract-connector-6.0.7.tgz#401b3c045f1e0fab04256311be49d5144e9badc6"
