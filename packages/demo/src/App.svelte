@@ -9,7 +9,7 @@
   // import ledgerModule from '@web3-onboard/ledger'
   // import portisModule from '@web3-onboard/portis'
   // import torusModule from '@web3-onboard/torus'
-  // import trezorModule from '@web3-onboard/trezor'
+  import trezorModule from '@web3-onboard/trezor'
   // import walletConnectModule from '@web3-onboard/walletconnect'
   // import coinbaseModule from '@web3-onboard/coinbase'
   // import magicModule from '@web3-onboard/magic'
@@ -137,12 +137,12 @@
   // const trust = trustModule()
   // const frontier = frontierModule()
 
-  // const trezorOptions = {
-  //   email: 'test@test.com',
-  //   appUrl: 'https://www.blocknative.com'
-  //   // containerElement: '#sample-container-el'
-  // }
-  // const trezor = trezorModule(trezorOptions)
+  const trezorOptions = {
+    email: 'test@test.com',
+    appUrl: 'https://www.blocknative.com'
+    // containerElement: '#sample-container-el'
+  }
+  const trezor = trezorModule(trezorOptions)
 
   // const uauthOptions = {
   //   clientID: 'a25c3a65-a1f2-46cc-a515-a46fe7acb78c',
@@ -169,9 +169,9 @@
 
   const onboard = Onboard({
     wallets: [
+      trezor,
       injected
       // ledger,
-      // trezor,
       // walletConnect,
       // infinityWallet,
       // trust,
