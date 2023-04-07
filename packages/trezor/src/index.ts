@@ -61,7 +61,7 @@ const getAccount = async (
   const ethUtil = await import('ethereumjs-util')
 
   // @ts-ignore - Commonjs importing weirdness
-  const { publicToAddress, toChecksumAddress } = ethUtil.default || ethUtil
+  const { publicToAddress } = ethUtil.default || ethUtil
 
   const { getAddress } = await import('viem')
 
@@ -71,7 +71,6 @@ const getAccount = async (
   hdk.chainCode = Buffer.from(chainCode, 'hex')
 
   const dkey = hdk.deriveChild(index)
-
   const address = getAddress(
     `0x${publicToAddress(dkey.publicKey, true).toString('hex')}`
   )
@@ -103,7 +102,7 @@ const getAddresses = async (
       acc &&
       acc.hasOwnProperty('balance') &&
       acc.balance.hasOwnProperty('value') &&
-      !!acc.balance.value
+      !acc.balance.value
     ) {
       zeroBalanceAccounts++
       accounts.push(acc)
