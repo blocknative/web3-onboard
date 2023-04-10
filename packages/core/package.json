@@ -90,7 +90,7 @@
     "bnc-sdk": "^4.6.7",
     "bowser": "^2.11.0",
     "eventemitter3": "^4.0.7",
-    "joi": "17.8.1",
+    "joi": "17.9.1",
     "lodash.merge": "^4.6.2",
     "lodash.partition": "^4.6.0",
     "nanoid": "^4.0.0",

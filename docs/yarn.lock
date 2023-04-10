@@ -1751,6 +1751,11 @@
   resolved "https://registry.yarnpkg.com/@hapi/hoek/-/hoek-11.0.2.tgz#cb3ea547daac7de5c9cf1d960c3f35c34f065427"
   integrity sha512-aKmlCO57XFZ26wso4rJsW4oTUnrgTFw2jh3io7CAtO9w4UltBNwRXvXIVzzyfkaaLRo3nluP/19msA8vDUUuKw==
 
+"@hapi/hoek@^9.0.0":
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/@hapi/hoek/-/hoek-9.3.0.tgz#8368869dcb735be2e7f5cb7647de78e167a251fb"
+  integrity sha512-/c6rf4UJlmHlC9b5BaNvzAcFv7HZ2QHaV0D4/HNlBdvFnvQq8RI4kYdhyPCl7Xj+oWvTWQ8ujhqS53LIgAe6KQ==
+
 "@hapi/pinpoint@^2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@hapi/pinpoint/-/pinpoint-2.0.1.tgz#32077e715655fc00ab8df74b6b416114287d6513"
@@ -1760,6 +1765,13 @@
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@hapi/tlds/-/tlds-1.0.1.tgz#4bf9336918a3a254317eff246898f70600afb666"
   integrity sha512-OXs5OliWsLTmvzQKZtb3KhfEz30WuuaizwAn95GLfeK+JpGnBxR55lALv3kA4T1RRb3wlrNjnboBg6ur1Czvig==
+
+"@hapi/topo@^5.0.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@hapi/topo/-/topo-5.1.0.tgz#dc448e332c6c6e37a4dc02fd84ba8d44b9afb012"
+  integrity sha512-foQZKJig7Ob0BMAYBfcJk8d77QtOe7Wo4ox7ff1lQYoNNAb6jwcY1ncdoy2e9wQZzvNy7ODZCYJkK8kzmcAnAg==
+  dependencies:
+    "@hapi/hoek" "^9.0.0"
 
 "@hapi/topo@^6.0.1":
   version "6.0.2"
@@ -2350,6 +2362,23 @@
     cosmjs-types "^0.5.1"
     google-protobuf "^3.17.0"
     long "^4.0.0"
+
+"@sideway/address@^4.1.3":
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/@sideway/address/-/address-4.1.4.tgz#03dccebc6ea47fdc226f7d3d1ad512955d4783f0"
+  integrity sha512-7vwq+rOHVWjyXxVlR76Agnvhy8I9rpzjosTESvmhNeXOXdZZB15Fl+TI9x1SiHZH5Jv2wTGduSxFDIaq0m3DUw==
+  dependencies:
+    "@hapi/hoek" "^9.0.0"
+
+"@sideway/formula@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@sideway/formula/-/formula-3.0.1.tgz#80fcbcbaf7ce031e0ef2dd29b1bfc7c3f583611f"
+  integrity sha512-/poHZJJVjx3L+zVD6g9KgHfYnb443oi7wLu/XKojDviHy6HOEOA6z1Trk5aR1dGcmPenJEgb2sK2I80LeS3MIg==
+
+"@sideway/pinpoint@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@sideway/pinpoint/-/pinpoint-2.0.0.tgz#cff8ffadc372ad29fd3f78277aeb29e632cc70df"
+  integrity sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==
 
 "@socket.io/component-emitter@~3.1.0":
   version "3.1.0"
@@ -3575,13 +3604,13 @@
     "@walletconnect/window-getters" "^1.0.1"
     tslib "1.14.1"
 
-"@web3-onboard/coinbase@^2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/coinbase/-/coinbase-2.2.1.tgz#019492fe4ad565602e0708967bd0a7364b616eed"
-  integrity sha512-6vlzSAavZ8Xqv6B6wKlgcj86TfrRtGgn5THb3BiFH47IcBrPbtqKpmyAl2jpwjv6mW85gBd7e8wSfP29kK192Q==
+"@web3-onboard/coinbase@^2.2.2-alpha.1":
+  version "2.2.2-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/coinbase/-/coinbase-2.2.2-alpha.1.tgz#c682275a8b4de141359ce0f829d2ab233444a588"
+  integrity sha512-C1e9fC6Qp2PfDzOpx3jqXwMJb1EQpgh1FNekIKYd5zRK+VG7cM7UKPGC9X/2YH25TPGbvgw/626q2Mhej3Eetw==
   dependencies:
     "@coinbase/wallet-sdk" "^3.6.0"
-    "@web3-onboard/common" "^2.3.0"
+    "@web3-onboard/common" "^2.3.1-alpha.1"
 
 "@web3-onboard/common@^2.3.0":
   version "2.3.0"
@@ -3592,19 +3621,35 @@
     ethers "5.5.4"
     joi "17.8.1"
 
+<<<<<<< HEAD
 "@web3-onboard/core@^2.16.1":
   version "2.16.1"
   resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.16.1.tgz#76dd4ba93c78343590790058c9e48aeda1344a19"
   integrity sha512-eOstiHQEKIeoV4KGVBiGnOQHyME+kUyJf15E5vY12X9Mz8eZJy2acvBwstTj5FmZNCboP17RFhUwa4UjIhAnpg==
+=======
+"@web3-onboard/common@^2.3.1-alpha.1":
+  version "2.3.1-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/common/-/common-2.3.1-alpha.1.tgz#d82eb842575938af3e23de2016c49d20cf0444c0"
+  integrity sha512-NQfRLSJ31aS0lNmOFRmku+Fm+1+UjeHobWD3MgHnt2ALrz6nHAQQZtc/7OgDoQ5ZHgRklNoYt+pXl3wJiS/tKQ==
+  dependencies:
+    bignumber.js "^9.1.0"
+    ethers "5.5.4"
+    joi "17.9.1"
+
+"@web3-onboard/core@^2.16.2-alpha.2":
+  version "2.16.2-alpha.2"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.16.2-alpha.2.tgz#a58b0f8b108823b5d5d38bb4ea18bb717b8b41fb"
+  integrity sha512-k8zsAqK+BvkhfVajNTXr+cq9LgmZMc67jajnvGzqJzT6sxkqbp9q/RpcumE5pM9B12uaLJByzwsrunIbeNdrbw==
+>>>>>>> develop
   dependencies:
     "@unstoppabledomains/resolution" "^8.0"
-    "@web3-onboard/common" "^2.3.0"
+    "@web3-onboard/common" "^2.3.1-alpha.1"
     bignumber.js "^9.0.0"
     bnc-sdk "^4.6.7"
     bowser "^2.11.0"
     ethers "5.5.3"
     eventemitter3 "^4.0.7"
-    joi "17.8.1"
+    joi "17.9.1"
     lodash.merge "^4.6.2"
     lodash.partition "^4.6.0"
     nanoid "^4.0.0"
@@ -3612,49 +3657,49 @@
     svelte "^3.49.0"
     svelte-i18n "^3.3.13"
 
-"@web3-onboard/dcent@^2.2.4":
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/dcent/-/dcent-2.2.4.tgz#9c8e2956f3051ea896fef7125af770e668234781"
-  integrity sha512-ZP9eqlS2LeL4q/Z4Cm3+DW1Gye/p3dGbx7skqhFja7sMmz0mXuBS+7lTpkSGqddgyiG03C7UM+nzHeK5vFnAvg==
+"@web3-onboard/dcent@^2.2.5-alpha.1":
+  version "2.2.5-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/dcent/-/dcent-2.2.5-alpha.1.tgz#df2f4bd1c10a5d19a64401c87b3d31c7cdc566df"
+  integrity sha512-Sh2IiHiCFGQwfhgYuAu6h0DjyBAqvx43CzlEE0d2SkfuSkV8cJ/zD5mNHaTgHawSBEBX4WOIirwI0A5J3Gub8A==
   dependencies:
     "@ethereumjs/tx" "^3.4.0"
     "@ethersproject/providers" "^5.5.0"
-    "@web3-onboard/common" "^2.3.0"
-    "@web3-onboard/hw-common" "^2.2.0"
+    "@web3-onboard/common" "^2.3.1-alpha.1"
+    "@web3-onboard/hw-common" "^2.2.1-alpha.1"
     eth-dcent-keyring "^0.2.2"
 
-"@web3-onboard/enkrypt@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/enkrypt/-/enkrypt-2.0.1.tgz#d3cc71aa81b56e1ffc770b25cdad4858e3d8d4bd"
-  integrity sha512-i3OK7+geZTbHspOqbyPstH39DiqE+Kd8hxB5CCk0yppcmuk3Nnr0rzDRBtBWuEDy6cm20bIQIgOluhRtQ7IcjQ==
+"@web3-onboard/enkrypt@^2.0.2-alpha.1":
+  version "2.0.2-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/enkrypt/-/enkrypt-2.0.2-alpha.1.tgz#9be000bae35258fc8d6a1dbdd2db3bdabfa9d716"
+  integrity sha512-XMMvyJBHv4sX81viVtauAz7J+q3J4VXZsCuDzXAarq6M6cOk3qz/vg/PoqPHyjsT6GjLCxclC6ZN+NCYeigiAA==
   dependencies:
-    "@web3-onboard/common" "^2.3.0"
+    "@web3-onboard/common" "^2.3.1-alpha.1"
 
-"@web3-onboard/fortmatic@^2.0.16":
-  version "2.0.16"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/fortmatic/-/fortmatic-2.0.16.tgz#a445438cfb582ff27c69ef95ed80a55b3ebee920"
-  integrity sha512-dvJjqtDoyao8nMy9yxiFN30XXXRqrm+UeBQyBrpm8dlmrMv2NXgY/o4hOME52QkSz/BlzWFyFVEw1GoTkbpCsw==
+"@web3-onboard/fortmatic@^2.0.17-alpha.1":
+  version "2.0.17-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/fortmatic/-/fortmatic-2.0.17-alpha.1.tgz#98ed8b6e15fbb4619df79d3b7c44099d44551205"
+  integrity sha512-49LyXcQEgTgLnysE1ccQgIwg05r+V15a+zUO4RSFT7IT0mCnFsTN+xNeouVbCHGCnrGEgBikCluQ9q0Zgqb1tw==
   dependencies:
-    "@web3-onboard/common" "^2.3.0"
+    "@web3-onboard/common" "^2.3.1-alpha.1"
     fortmatic "^2.2.1"
 
-"@web3-onboard/gas@^2.1.5":
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/gas/-/gas-2.1.5.tgz#bf7fa4cd5a168c78e36dfd39a6113dac5657aa1a"
-  integrity sha512-sB4a94eYUKr9fI4GmgtqGdAKgAGQqB4i6dDufBq4iBmhUmWfAd1xRK5dY4t2O0ccPbamjzHQM5WRz5Ez/WKzmA==
+"@web3-onboard/gas@^2.1.6-alpha.1":
+  version "2.1.6-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/gas/-/gas-2.1.6-alpha.1.tgz#3d8b3a5b2e032519a4384b2449488d5abf2b80ed"
+  integrity sha512-wPU9F8IEl6buRpf4pynKL3sVcVMlIqiKMH8sY8edCLE4n1XwJhuLXwQSfnRSvo2tu9LC9UB/1F2kgkZBfYjKRA==
   dependencies:
-    "@web3-onboard/common" "^2.3.0"
+    "@web3-onboard/common" "^2.3.1-alpha.1"
     joi "17.8.1"
     rxjs "^7.5.2"
 
-"@web3-onboard/gnosis@^2.1.7":
-  version "2.1.7"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/gnosis/-/gnosis-2.1.7.tgz#06fb01959afe6f366e0c7dff8012ac1584e97bf0"
-  integrity sha512-6VZtKA8BB3ce0eNP5hKWvaUSBohPTCtCmCG6c1BIhD4l2iHKPDRcuPlShljT52qwGS/Lt2vy8kPxsKwDuXonnA==
+"@web3-onboard/gnosis@^2.1.8-alpha.1":
+  version "2.1.8-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/gnosis/-/gnosis-2.1.8-alpha.1.tgz#f7e751be39ffdc71baf265cb23dda617e645b24b"
+  integrity sha512-9Qw7rEZ2+sW6jP4GE4pGncheSuuzpy0X2U7oek4e9pZrywVMjf3zRKhWFN8l3a9apDLeQseWXcQ8ZWyF/DD49g==
   dependencies:
     "@gnosis.pm/safe-apps-provider" "^0.9.2"
     "@gnosis.pm/safe-apps-sdk" "^6.1.1"
-    "@web3-onboard/common" "^2.3.0"
+    "@web3-onboard/common" "^2.3.1-alpha.1"
 
 "@web3-onboard/hw-common@^2.2.0":
   version "2.2.0"
@@ -3667,185 +3712,203 @@
     joi "17.8.1"
     rxjs "^7.5.2"
 
-"@web3-onboard/infinity-wallet@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/infinity-wallet/-/infinity-wallet-2.0.1.tgz#401b7847d1423d62f387e1cbaa0cef9a29897f1e"
-  integrity sha512-IALtHW3DB5SRdA4f3BaF9QzgpIPrG4h/8M2kCT8XdXY6ZJxjmq/mkJkfQzJ90dbXq28Dm8sIyEUKmwhQg1xMOw==
+"@web3-onboard/hw-common@^2.2.1-alpha.1":
+  version "2.2.1-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/hw-common/-/hw-common-2.2.1-alpha.1.tgz#0661fcac3dd534ba1e98b7165cd20b65194e0024"
+  integrity sha512-6Qrm2omVe84K57JN3gASsnjOagg+gOIasa+Owfz/aGEr8qYSgHnKUReWfoGHxeXxrPC8yz+dmKWgqhrP9lMfLw==
+  dependencies:
+    "@ethereumjs/common" "2.6.2"
+    "@web3-onboard/common" "^2.3.1-alpha.1"
+    ethers "5.5.4"
+    joi "17.9.1"
+    rxjs "^7.5.2"
+
+"@web3-onboard/infinity-wallet@^2.0.2-alpha.1":
+  version "2.0.2-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/infinity-wallet/-/infinity-wallet-2.0.2-alpha.1.tgz#754ad325b8600c793445bed4b7e93fab51574aa1"
+  integrity sha512-fKbhyUeAXgVY5McAOeZIBiIaag4iuiTNa4CljLgrB11bAYndwynfma97hefY+cZh7ITRmFWs9L9h2BV0VRlYDA==
   dependencies:
     "@infinitywallet/infinity-connector" "^1.0.6"
 
-"@web3-onboard/injected-wallets@^2.8.3":
-  version "2.8.3"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.8.3.tgz#6614fcebc1c128ccbfb4c4b6cee96ac654fbb402"
-  integrity sha512-0pi6b4TxKAjJ9edwAF56nl8Bz16c3FvVw2sElBs/lx8+yZIzoc2XMjPlOFFFOTkR8mWNg5vKzDqKN6Xu8lxWTQ==
+"@web3-onboard/injected-wallets@^2.8.4-alpha.1":
+  version "2.8.4-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.8.4-alpha.1.tgz#7bdb232438c5edf662733a068aa0a769d47e94e8"
+  integrity sha512-u297ovHTOQahuO8zBxtKnHtjp0ctT3YoM4dZSQcSkuVZd/FN6vSJvl6Cz3tQPYoasOxfJghQ9zcOy/mLoXel+Q==
   dependencies:
-    "@web3-onboard/common" "^2.3.0"
-    joi "17.8.1"
+    "@web3-onboard/common" "^2.3.1-alpha.1"
+    joi "17.9.1"
     lodash.uniqby "^4.7.0"
 
-"@web3-onboard/keepkey@^2.3.4":
-  version "2.3.4"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/keepkey/-/keepkey-2.3.4.tgz#50a098159398ab886c15cdde3b6fc5defd21eaf3"
-  integrity sha512-JDPXUYupc/3US2VGXhSYwm8u+66/TF8gaDD72+KP03RmqHesdT5W07A3AXc0bIMs8pbtfx5w5VbB8i4dMfvfmg==
+"@web3-onboard/keepkey@^2.3.5-alpha.1":
+  version "2.3.5-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/keepkey/-/keepkey-2.3.5-alpha.1.tgz#0e4c5c68ea55ae186a81589e1afdcbe92be0ff6c"
+  integrity sha512-MbauBG18f35hF0Z/6Q6d8sN58PgDY0jbUYB9ymbRvX6BZ9EnfV3Ufe1fK48bCA2/fXPY51wUUtUj0D7Fc4VSJg==
   dependencies:
     "@ethersproject/providers" "^5.5.0"
     "@shapeshiftoss/hdwallet-core" "^1.15.2"
     "@shapeshiftoss/hdwallet-keepkey-webusb" "^1.15.2"
-    "@web3-onboard/common" "^2.3.0"
-    "@web3-onboard/hw-common" "^2.2.0"
+    "@web3-onboard/common" "^2.3.1-alpha.1"
+    "@web3-onboard/hw-common" "^2.2.1-alpha.1"
     ethereumjs-util "^7.1.3"
 
-"@web3-onboard/keystone@^2.3.4":
-  version "2.3.4"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/keystone/-/keystone-2.3.4.tgz#2436d1916d2134b04495967d8ad46fafd4f4f0fa"
-  integrity sha512-4wn1q343XJEwBnERHRRyLDlWQX+1dQ1cEKAcub7vR6pjcqyIEOxvHwUD23gUW+glO1YQt06zzhXEM2bE1lH52A==
+"@web3-onboard/keystone@^2.3.5-alpha.1":
+  version "2.3.5-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/keystone/-/keystone-2.3.5-alpha.1.tgz#64b3419a160a57f997db3f5a8cf18cb2039ca220"
+  integrity sha512-OepXx3ngbkWS9X0s9PiVTvxDg3KtjnBbMIeKrmMyObTNjU8SfEpn2qR0EItsz3AYyFfVXTVYVtLs8s/rsUE8LQ==
   dependencies:
     "@ethereumjs/tx" "^3.4.0"
     "@ethersproject/providers" "^5.5.0"
     "@keystonehq/eth-keyring" "^0.14.00.3"
-    "@web3-onboard/common" "^2.3.0"
+    "@web3-onboard/common" "^2.3.1-alpha.1"
     "@web3-onboard/hw-common" "^2.2.0"
 
-"@web3-onboard/ledger@^2.4.3":
-  version "2.4.3"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/ledger/-/ledger-2.4.3.tgz#f76203731e10f74ef393a57a101a981b0579a295"
-  integrity sha512-rRMpggy1KvGOBe2ZczlQ0+3THiSnoE/voTK2nGiree+vyEGWF/oYI+tltlNgMbwot8kYCZqsI7CPgJ1vZg48/Q==
+"@web3-onboard/ledger@^2.4.4-alpha.1":
+  version "2.4.4-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/ledger/-/ledger-2.4.4-alpha.1.tgz#9f35631a2db85c871fff057f0b0f787a8cec38b0"
+  integrity sha512-xPFwHHCtxRhlBwGhXCHIypDmF9HfOWnuIU5MSpSJ3W0uMnM1DvdzTOsfZuPwmoCBTK5php72QouZZjUjsEEnxA==
   dependencies:
     "@ethersproject/providers" "^5.5.0"
     "@ledgerhq/connect-kit-loader" "^1.0.2"
     "@walletconnect/client" "^1.7.1"
-    "@web3-onboard/common" "^2.3.0"
+    "@web3-onboard/common" "^2.3.1-alpha.1"
     rxjs "^7.5.2"
 
-"@web3-onboard/magic@^2.1.4":
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/magic/-/magic-2.1.4.tgz#0e7bcce8252f32b490395f35678d7e9bb7b0e440"
-  integrity sha512-i6buxo8A5Ov5B0ZJi8+NpxfkRgmbuJnRvB9e+iXrR89RfCJU5Xjh5nxfuwsF479qwRShIDSRjP5JLW5dpmCzAA==
+"@web3-onboard/magic@^2.1.5-alpha.1":
+  version "2.1.5-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/magic/-/magic-2.1.5-alpha.1.tgz#85c4ba30da7c1b8c328f8e7d2e9ce654706794a3"
+  integrity sha512-hmZw1+kuzuuKmN+02w9E12xEtEqEz1TJVMqeq7OgP1xicVo6SrHvZsmQY7RdSOR3A+MxmeKFAlB6rFwVfh/NhA==
   dependencies:
-    "@web3-onboard/common" "^2.3.0"
-    joi "17.8.1"
+    "@web3-onboard/common" "^2.3.1-alpha.1"
+    joi "17.9.1"
     magic-sdk "^8.1.0"
     rxjs "^7.5.2"
 
-"@web3-onboard/mew-wallet@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/mew-wallet/-/mew-wallet-2.0.1.tgz#9cfdde35ceec42c4acb06511d47cb05eadc9109d"
-  integrity sha512-SnpWEkCgYbuhHniJF6SqU5G/UySLZuZopLxRraC+WPnrdJKdZK2XgM/Z1DBk0AQPJcOdaZbsvv97eHDe0u32Ng==
+"@web3-onboard/mew-wallet@^2.0.2-alpha.1":
+  version "2.0.2-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/mew-wallet/-/mew-wallet-2.0.2-alpha.1.tgz#c646149760e130691d6d9f9e05ceecf81b6f4f8e"
+  integrity sha512-oLEWLQa/xkHoD6Ks1xNf1/FwQRA4x+MEYtYN4pMGKXbR62MVDKuvtle0A/pkLBSf4pcxsITXwsETpJ7QCOvmGA==
   dependencies:
-    "@web3-onboard/common" "^2.3.0"
+    "@web3-onboard/common" "^2.3.1-alpha.1"
     lodash.uniqby "^4.7.0"
 
-"@web3-onboard/portis@^2.1.4":
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/portis/-/portis-2.1.4.tgz#1ce626c18e41430246229f504597af2b166e0d1e"
-  integrity sha512-IAB3B98RSgTOFR/fhhGBlJNlxR1xYXLE/sXfFuSKkSqAoORBfoKA8GIRWjuqxbD3hmrUa1PdHsYBt+vX4dDOQA==
+"@web3-onboard/portis@^2.1.5-alpha.1":
+  version "2.1.5-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/portis/-/portis-2.1.5-alpha.1.tgz#bae903928bf7ff52213faa101aee31baf10c7115"
+  integrity sha512-f0F9U9RzdDCCdasyb5hE/21pOL4y+lI5gNBU7uT6T8fmCFpdAtXiA3K8TwYFaEeIeK4EL3b/fCiCPGz92KcErg==
   dependencies:
     "@portis/web3" "^4.0.6"
-    "@web3-onboard/common" "^2.3.0"
+    "@web3-onboard/common" "^2.3.1-alpha.1"
 
-"@web3-onboard/sequence@^2.0.5":
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/sequence/-/sequence-2.0.5.tgz#9cee995035e0f750206a2c402e11446df45243a7"
-  integrity sha512-F+KApsSZKJRMluGd0+v5uJuM2DoYN0aNY6Y5CbIft2j/nbbNs+JiKYTVl549EoAMb4oHCErV3yw1gI+Yhj9tpA==
+"@web3-onboard/sequence@^2.0.6-alpha.1":
+  version "2.0.6-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/sequence/-/sequence-2.0.6-alpha.1.tgz#28b99e0048c3630288d84a0e49a8f65d7cba163d"
+  integrity sha512-+cxDCtcDCYmMj6kvg+qQgqD+zKS8ajrltc8jMg/43iqIQe2PggmJMDeNImXjEAqK5sdllBpL5aLIERRaSKyEyg==
   dependencies:
     "0xsequence" "^0.43.1"
-    "@web3-onboard/common" "^2.3.0"
+    "@web3-onboard/common" "^2.3.1-alpha.1"
 
-"@web3-onboard/taho@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/taho/-/taho-2.0.1.tgz#96d38e850d860e7800573155b226647e61c1bfce"
-  integrity sha512-rEetTMuwZ/XJJQnOo48ihlmDUcSUGNYMDxrRlwpPegy6pTALc1Zhf3pHSdG5t7dUGE5OhntKSg8nwIL1AqpHpQ==
+"@web3-onboard/taho@^2.0.2-alpha.1":
+  version "2.0.2-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/taho/-/taho-2.0.2-alpha.1.tgz#1a63688a6e054e95a65dfdb4794c0263ae65fcfd"
+  integrity sha512-/5xOlerNA5WKwubjglUb6WmwVBmLOu4oJ2IHJnyw+xjr36RbJqo0bAOdRZuexiK+cW+0hsr4Ru9vGscyvC9zCQ==
   dependencies:
-    "@web3-onboard/common" "^2.3.0"
+    "@web3-onboard/common" "^2.3.1-alpha.1"
     tallyho-detect-provider "^1.0.0"
     tallyho-onboarding "^1.0.2"
 
-"@web3-onboard/torus@^2.2.2":
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/torus/-/torus-2.2.2.tgz#7e77b43ce2fc16d5ed5f561383d10bd2d826445d"
-  integrity sha512-WBrE73W6Jw+EqAAcM4r9hfqxiMQ1X+I5Cp67ikApY+ArpN5s0+93rocn9frcyR7ol39kmigGgXsRtKmPS2Q/rw==
+"@web3-onboard/torus@^2.2.3-alpha.1":
+  version "2.2.3-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/torus/-/torus-2.2.3-alpha.1.tgz#2e0f5cc4f2aeaf977c4e0ae1992ce1ee7409783b"
+  integrity sha512-yfZw3BWIeD4vG92/oq5LvMZofMfHUnWZCIjnL1Ooqihutq2vWtM+7fu58WtN/k43ctDsAueyc18bOLtBqwX+3Q==
   dependencies:
     "@toruslabs/torus-embed" "1.38.2"
-    "@web3-onboard/common" "^2.3.0"
+    "@web3-onboard/common" "^2.3.1-alpha.1"
 
-"@web3-onboard/transaction-preview@^2.0.5":
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/transaction-preview/-/transaction-preview-2.0.5.tgz#12c7e0b813524a1f2b56a3ef6e1467cc3184a05e"
-  integrity sha512-pQkR5Afg0SuxGzznmb7A/NQ/cZqEGfhAmNrrqLTF/Iw8v97OLPzELUnjuTj93bpiSTjzxPY+b1LP083QCe6Byw==
+"@web3-onboard/transaction-preview@^2.0.6-alpha.1":
+  version "2.0.6-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/transaction-preview/-/transaction-preview-2.0.6-alpha.1.tgz#f002b2a2af2600b729443e97e18eb21985549068"
+  integrity sha512-xyCyGlTdp34QkuIiCj1IRkLkC9YMmh69wMuvVsXxLvD7c6r6bUlAej6Nr8D95tNqsNmo8qhNn9gGHxiujIUKYA==
   dependencies:
-    "@web3-onboard/common" "^2.3.0"
+    "@web3-onboard/common" "^2.3.1-alpha.1"
     bnc-sdk "^4.6.7"
     bowser "^2.11.0"
-    joi "17.8.1"
+    joi "17.9.1"
     rxjs "^7.5.2"
     svelte "^3.49.0"
     svelte-i18n "^3.3.13"
 
-"@web3-onboard/trezor@^2.3.4":
-  version "2.3.4"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/trezor/-/trezor-2.3.4.tgz#6495ed7444ebc30c6705aa2695a9f531a4af1039"
-  integrity sha512-MsQE+4jQ3rNDO+qYrkwR0AxDoNbRDLBssCuumrbFinfg/ZrzxmmtRwP9OZKKmV/7ggjBgh+N0TcVi/cbmcOqkw==
+"@web3-onboard/trezor@^2.3.5-alpha.1":
+  version "2.3.5-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/trezor/-/trezor-2.3.5-alpha.1.tgz#075459a1b0626825e66cd3c7d581e662aae9f6b1"
+  integrity sha512-SSTI0rhNc0uw7+r0zYyaq9i5aeu8sMcP4Yj3ANvoh19BtL3Binqj3VLfA0+w9+WhOg9vpWedO+oX+dKfFDua5Q==
   dependencies:
     "@ethereumjs/tx" "^3.4.0"
     "@ethersproject/providers" "^5.5.0"
-    "@web3-onboard/common" "^2.3.0"
-    "@web3-onboard/hw-common" "^2.2.0"
+    "@web3-onboard/common" "^2.3.1-alpha.1"
+    "@web3-onboard/hw-common" "^2.2.1-alpha.1"
     buffer "^6.0.3"
     eth-crypto "^2.1.0"
     ethereumjs-util "^7.1.3"
     hdkey "^2.0.1"
     trezor-connect "^8.2.11"
 
-"@web3-onboard/trust@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/trust/-/trust-2.0.1.tgz#627d486b27a3bde2f0d732a3a1be046bbaf81ef7"
-  integrity sha512-kTnvg6mr1+H7OjddbFXmh+fyidne8+xUwo0zfEZ959xFL1l8L1vf5out/q8Lc8ohAc2A51x5im/JNj/EcCoP5w==
+"@web3-onboard/trust@^2.0.2-alpha.1":
+  version "2.0.2-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/trust/-/trust-2.0.2-alpha.1.tgz#b809755ab1da2462b3356bd1e33389d20ebd43e3"
+  integrity sha512-QodPcXvaSPCqroK0Q3rET36yg6BgaalUbBzr8OwZXqT2m1Nw3fd75uDV4X9cKMeIdXIlwo5UFB2BRs5DyKnOFg==
   dependencies:
-    "@web3-onboard/common" "^2.3.0"
+    "@web3-onboard/common" "^2.3.1-alpha.1"
 
-"@web3-onboard/uauth@^2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/uauth/-/uauth-2.0.2.tgz#955408a827b2ae09fc4b3b6591c870fb307c1d5c"
-  integrity sha512-h24CeCJSk/bZNzrs/xTTxd0lxZoZaa2gkVMlCCeq4R6DpYgdUpW4vVYV0toDXtbeiTUOMY5RvhZwsiYrXI2hZw==
+"@web3-onboard/uauth@^2.0.3-alpha.1":
+  version "2.0.3-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/uauth/-/uauth-2.0.3-alpha.1.tgz#17a6749f9c0c358ad87d0858beca8efeecf5daac"
+  integrity sha512-uNOnJ4it6CAYPtOQe3qe3h4y5Ku3wGtuxGzzKcKAO4E30IRjVYd6uER4Gkr5BRmSglflEDFX0I5FALwJZYtnHA==
   dependencies:
     "@ethersproject/providers" "^5.5.0"
     "@uauth/js" "^2.4.0"
     "@walletconnect/client" "^1.7.1"
     "@walletconnect/qrcode-modal" "^1.7.1"
-    "@web3-onboard/common" "^2.3.0"
-    joi "17.8.1"
+    "@web3-onboard/common" "^2.3.1-alpha.1"
+    joi "17.9.1"
     rxjs "^7.5.2"
 
+<<<<<<< HEAD
 "@web3-onboard/walletconnect@^2.3.4":
   version "2.3.4"
   resolved "https://registry.yarnpkg.com/@web3-onboard/walletconnect/-/walletconnect-2.3.4.tgz#e9f607bec86fdcc69acb2c193cb951153ac3d839"
   integrity sha512-0whjL8ZXZHu4eyfVbOhyilCnQ8nhntcU+QdKbFl3e6c8WtwnvuPYKh72iz9O0/iJQL0+By66wl+3jQJsd3t0oQ==
+=======
+"@web3-onboard/walletconnect@^2.3.5-alpha.1":
+  version "2.3.5-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/walletconnect/-/walletconnect-2.3.5-alpha.1.tgz#c1ba793ec3d0b9a9c7f2efd9e6480e00fbb75857"
+  integrity sha512-2WjRY+Y/6ouZDpjh2ebyICoqtw2YD4aAR8L9IJX+zAogjakpi7gGgwyFs57sPDpAxe/e/iKgeFinCp7JAd3jWw==
+>>>>>>> develop
   dependencies:
     "@ethersproject/providers" "^5.5.0"
     "@walletconnect/client" "^1.8.0"
     "@walletconnect/ethereum-provider" "2.5.2"
     "@walletconnect/qrcode-modal" "^1.8.0"
-    "@web3-onboard/common" "^2.3.0"
+    "@web3-onboard/common" "^2.3.1-alpha.1"
     "@web3modal/standalone" "^2.2.2"
     rxjs "^7.5.2"
 
-"@web3-onboard/web3auth@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/web3auth/-/web3auth-2.2.0.tgz#78f64fb99c1e1c0bea623c4a12751e69eea56332"
-  integrity sha512-m7YT3uGys9Z/KycAlZzaoPAxQVMcIdei93PknsmAxHYQHwmQdjF3j1LmYaXeMxv1putxSUY6SSZOmHFWY4mdJw==
+"@web3-onboard/web3auth@^2.2.1-alpha.1":
+  version "2.2.1-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/web3auth/-/web3auth-2.2.1-alpha.1.tgz#e4f2f7692bfb22fb63d7d05ca57f0e3f11589a4e"
+  integrity sha512-ZhF7r0nkpIPCEST3EAUPd8rkddJmSpIUwnlOOjCvUq1TkQjaRQNHzKvEJAiRKUqdEKzRoL79uEi7qrqRZi69MA==
   dependencies:
     "@solana/web3.js" "^1.73.0"
-    "@web3-onboard/common" "^2.3.0"
+    "@web3-onboard/common" "^2.3.1-alpha.1"
     "@web3auth/base" "^5.0.1"
     "@web3auth/modal" "^5.0.1"
     react-dom "^18.2.0"
 
-"@web3-onboard/xdefi@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/xdefi/-/xdefi-2.0.1.tgz#1fc1e873c93f214c4f261ef9378645338abbdd07"
-  integrity sha512-C0z5sLu8rIids5euSZHDZCPNCbNuYzdXkm8NrECTmmCIbe8/2DuLBY9QjPDVr5fQHoZM1k6CthmjXfnnE0kA6g==
+"@web3-onboard/xdefi@^2.0.2-alpha.1":
+  version "2.0.2-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/xdefi/-/xdefi-2.0.2-alpha.1.tgz#c76b02ab637e2f6c65cd0f2faa8ea0af595cbeb7"
+  integrity sha512-KRcVouDRJ/13iRZMvgrYMy1yWGXgo1/82naS0LxtU7Ss3FSMVvFKCeAQcez0kXAnNvu1Q7kG95ZLXXkGLRGlqg==
   dependencies:
-    "@web3-onboard/common" "^2.3.0"
+    "@web3-onboard/common" "^2.3.1-alpha.1"
 
 "@web3-react/abstract-connector@^6.0.7":
   version "6.0.7"
@@ -7416,6 +7479,17 @@ joi@17.8.1:
     "@hapi/pinpoint" "^2.0.1"
     "@hapi/tlds" "^1.0.1"
     "@hapi/topo" "^6.0.1"
+
+joi@17.9.1:
+  version "17.9.1"
+  resolved "https://registry.yarnpkg.com/joi/-/joi-17.9.1.tgz#74899b9fa3646904afa984a11df648eca66c9018"
+  integrity sha512-FariIi9j6QODKATGBrEX7HZcja8Bsh3rfdGYy/Sb65sGlZWK/QWesU1ghk7aJWDj95knjXlQfSmzFSPPkLVsfw==
+  dependencies:
+    "@hapi/hoek" "^9.0.0"
+    "@hapi/topo" "^5.0.0"
+    "@sideway/address" "^4.1.3"
+    "@sideway/formula" "^3.0.1"
+    "@sideway/pinpoint" "^2.0.0"
 
 jose@^4.5.0:
   version "4.11.1"
