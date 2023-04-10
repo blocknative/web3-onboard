@@ -62,12 +62,9 @@ export function transactionEventToNotification(
     counterparty.substring(0, 4) +
       '...' +
       counterparty.substring(counterparty.length - 4)
-console.log(value)
   const valueBigInt = BigInt(value || 0)
   const divisor = 1000000000000000000n
-  console.log(valueBigInt, divisor, valueBigInt / divisor)
   const formattedValue = (Number(valueBigInt) / Number(divisor)).toString(10)
-console.log(formattedValue)
   const formatterOptions =
     counterparty && value
       ? {
