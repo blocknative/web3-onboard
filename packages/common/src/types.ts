@@ -294,7 +294,7 @@ export interface EthSignTransactionRequest {
   params: [TransactionObject]
 }
 
-export type Address = string
+export type Address = `0x${string}`
 type Message = string
 export interface EthSignMessageRequest {
   method: 'eth_sign'
