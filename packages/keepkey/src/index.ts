@@ -1,4 +1,4 @@
-import type { Chain, Platform, WalletInit } from '@web3-onboard/common'
+import type { AccountAddress, Chain, Platform, WalletInit } from '@web3-onboard/common'
 import type { StaticJsonRpcProvider } from '@ethersproject/providers'
 import type { ETHAccountPath } from '@shapeshiftoss/hdwallet-core'
 import type { KeepKeyHDWallet } from '@shapeshiftoss/hdwallet-keepkey'
@@ -349,18 +349,18 @@ function keepkey({
               )
             }
 
-            return [accounts[0].address]
+            return [accounts[0].address as AccountAddress]
           },
           eth_selectAccounts: async () => {
             const accounts = await getAccounts()
-            return accounts.map(({ address }) => address)
+            return accounts.map(({ address }) => address as AccountAddress)
           },
           eth_accounts: async () => {
             if (!accounts || !Array.isArray(accounts)) {
               throw new Error('No accounts were returned from Keepkey device')
             }
             return accounts[0].hasOwnProperty('address')
-              ? [accounts[0].address]
+              ? [accounts[0].address as AccountAddress]
               : []
           },
           eth_chainId: async () => {

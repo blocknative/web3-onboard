@@ -12,6 +12,7 @@ import type {
 import { Buffer } from 'buffer'
 
 import type {
+  AccountAddress,
   Chain,
   CustomNetwork,
   Platform,
@@ -499,17 +500,17 @@ function trezor(options: TrezorOptions): WalletInit {
               throw new Error(
                 'No address property associated with the selected account'
               )
-            return [accounts[0].address]
+            return [accounts[0].address as AccountAddress]
           },
           eth_selectAccounts: async () => {
             const accounts = await getAccountFromAccountSelect()
-            return accounts.map(({ address }) => address)
+            return accounts.map(({ address }) => address as AccountAddress)
           },
           eth_accounts: async () =>
             Array.isArray(accounts) &&
             accounts.length &&
             accounts[0].hasOwnProperty('address')
-              ? [accounts[0].address]
+              ? [accounts[0].address as AccountAddress]
               : [],
           eth_chainId: async () =>
             currentChain.hasOwnProperty('id') ? currentChain.id : '',
