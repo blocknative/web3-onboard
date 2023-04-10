@@ -3621,12 +3621,6 @@
     ethers "5.5.4"
     joi "17.8.1"
 
-<<<<<<< HEAD
-"@web3-onboard/core@^2.16.1":
-  version "2.16.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.16.1.tgz#76dd4ba93c78343590790058c9e48aeda1344a19"
-  integrity sha512-eOstiHQEKIeoV4KGVBiGnOQHyME+kUyJf15E5vY12X9Mz8eZJy2acvBwstTj5FmZNCboP17RFhUwa4UjIhAnpg==
-=======
 "@web3-onboard/common@^2.3.1-alpha.1":
   version "2.3.1-alpha.1"
   resolved "https://registry.yarnpkg.com/@web3-onboard/common/-/common-2.3.1-alpha.1.tgz#d82eb842575938af3e23de2016c49d20cf0444c0"
@@ -3640,7 +3634,6 @@
   version "2.16.2-alpha.2"
   resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.16.2-alpha.2.tgz#a58b0f8b108823b5d5d38bb4ea18bb717b8b41fb"
   integrity sha512-k8zsAqK+BvkhfVajNTXr+cq9LgmZMc67jajnvGzqJzT6sxkqbp9q/RpcumE5pM9B12uaLJByzwsrunIbeNdrbw==
->>>>>>> develop
   dependencies:
     "@unstoppabledomains/resolution" "^8.0"
     "@web3-onboard/common" "^2.3.1-alpha.1"
@@ -3872,17 +3865,10 @@
     joi "17.9.1"
     rxjs "^7.5.2"
 
-<<<<<<< HEAD
-"@web3-onboard/walletconnect@^2.3.4":
-  version "2.3.4"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/walletconnect/-/walletconnect-2.3.4.tgz#e9f607bec86fdcc69acb2c193cb951153ac3d839"
-  integrity sha512-0whjL8ZXZHu4eyfVbOhyilCnQ8nhntcU+QdKbFl3e6c8WtwnvuPYKh72iz9O0/iJQL0+By66wl+3jQJsd3t0oQ==
-=======
 "@web3-onboard/walletconnect@^2.3.5-alpha.1":
   version "2.3.5-alpha.1"
   resolved "https://registry.yarnpkg.com/@web3-onboard/walletconnect/-/walletconnect-2.3.5-alpha.1.tgz#c1ba793ec3d0b9a9c7f2efd9e6480e00fbb75857"
   integrity sha512-2WjRY+Y/6ouZDpjh2ebyICoqtw2YD4aAR8L9IJX+zAogjakpi7gGgwyFs57sPDpAxe/e/iKgeFinCp7JAd3jWw==
->>>>>>> develop
   dependencies:
     "@ethersproject/providers" "^5.5.0"
     "@walletconnect/client" "^1.8.0"
