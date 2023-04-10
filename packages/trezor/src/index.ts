@@ -19,8 +19,6 @@ import type {
   WalletInit
 } from '@web3-onboard/common'
 
-import type { Chain as ViemChain, PublicClient } from 'viem'
-
 interface TrezorOptions {
   email: string
   appUrl: string
@@ -54,16 +52,14 @@ const getAccount = async (
   { publicKey, chainCode, path }: AccountData,
   asset: Asset,
   index: number,
-  provider: PublicClient
+  provider: StaticJsonRpcProvider
 ): Promise<Account> => {
   //@ts-ignore
   const { default: HDKey } = await import('hdkey')
   const ethUtil = await import('ethereumjs-util')
 
   // @ts-ignore - Commonjs importing weirdness
-  const { publicToAddress } = ethUtil.default || ethUtil
-
-  const { getAddress } = await import('viem')
+  const { publicToAddress, toChecksumAddress } = ethUtil.default || ethUtil
 
   const hdk = new HDKey()
 
@@ -71,7 +67,8 @@ const getAccount = async (
   hdk.chainCode = Buffer.from(chainCode, 'hex')
 
   const dkey = hdk.deriveChild(index)
-  const address = getAddress(
+
+  const address = toChecksumAddress(
     `0x${publicToAddress(dkey.publicKey, true).toString('hex')}`
   )
 
@@ -80,7 +77,7 @@ const getAccount = async (
     address,
     balance: {
       asset: asset.label,
-      value: BigInt(await provider.getBalance({ address }))
+      value: await provider.getBalance(address)
     }
   }
 }
@@ -88,7 +85,7 @@ const getAccount = async (
 const getAddresses = async (
   account: AccountData,
   asset: Asset,
-  provider: PublicClient
+  provider: StaticJsonRpcProvider
 ): Promise<Account[]> => {
   const accounts = []
   let index = 0
@@ -102,7 +99,7 @@ const getAddresses = async (
       acc &&
       acc.hasOwnProperty('balance') &&
       acc.balance.hasOwnProperty('value') &&
-      !acc.balance.value
+      acc.balance.value.isZero()
     ) {
       zeroBalanceAccounts++
       accounts.push(acc)
@@ -147,14 +144,16 @@ function trezor(options: TrezorOptions): WalletInit {
           '@ethereumjs/tx'
         )
 
-        const { createEIP1193Provider, ProviderRpcError, viemChainIdToImport } =
-          await import('@web3-onboard/common')
+        const { createEIP1193Provider, ProviderRpcError } = await import(
+          '@web3-onboard/common'
+        )
+
+        const { accountSelect } = await import('@web3-onboard/hw-common')
 
         const {
           getCommon,
           bigNumberFieldsToStrings,
-          getHardwareWalletProvider,
-          accountSelect
+          getHardwareWalletProvider
         } = await import('@web3-onboard/hw-common')
 
         const ethUtil = await import('ethereumjs-util')
@@ -163,8 +162,6 @@ function trezor(options: TrezorOptions): WalletInit {
         const { StaticJsonRpcProvider } = await import(
           '@ethersproject/providers'
         )
-
-        const { createPublicClient, http } = await import('viem')
 
         // @ts-ignore
         const TrezorConnect = Trezor.default || Trezor
@@ -188,21 +185,7 @@ function trezor(options: TrezorOptions): WalletInit {
           asset
         }: ScanAccountsOptions): Promise<Account[]> => {
           currentChain = chains.find(({ id }) => id === chainId) || currentChain
-
-          const viemChainData = (await viemChainIdToImport(
-            parseInt(currentChain.id, 16)
-          )) as ViemChain
-
-          const viemProvider = createPublicClient({
-            chain: viemChainData,
-            transport: http(
-              currentChain.providerConnectionInfo &&
-                currentChain.providerConnectionInfo.url
-                ? currentChain.providerConnectionInfo.url
-                : (currentChain.rpcUrl as string)
-            )
-          })
-          // ethersProvider = new StaticJsonRpcProvider(currentChain.rpcUrl)
+          ethersProvider = new StaticJsonRpcProvider(currentChain.rpcUrl)
 
           const { publicKey, chainCode, path } = await getPublicKey(
             derivationPath
@@ -216,7 +199,7 @@ function trezor(options: TrezorOptions): WalletInit {
                 address,
                 balance: {
                   asset: asset.label,
-                  value: await viemProvider.getBalance(address.toLowerCase())
+                  value: await ethersProvider.getBalance(address.toLowerCase())
                 }
               }
             ]
@@ -229,7 +212,7 @@ function trezor(options: TrezorOptions): WalletInit {
               path: derivationPath
             },
             asset,
-            viemProvider
+            ethersProvider
           )
         }
 
