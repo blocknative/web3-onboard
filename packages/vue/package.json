@@ -74,5 +74,8 @@
     "@vue/composition-api": {
       "optional": true
     }
+  },
+  "engines": {
+    "node": ">=16.15.1"
   }
 }
