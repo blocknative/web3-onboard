@@ -2,7 +2,7 @@ import { fromEventPattern, Observable } from 'rxjs'
 import { filter, takeUntil, take, share, switchMap } from 'rxjs/operators'
 import partition from 'lodash.partition'
 import { isAddress } from '@web3-onboard/common'
-import { weiToEth } from '@web3-onboard/common'
+import { weiHexToEth } from '@web3-onboard/common'
 import { disconnectWallet$ } from './streams.js'
 import { updateAccount, updateWallet } from './store/actions.js'
 import { chainIdToViemImport, validEnsChain } from './utils.js'
@@ -213,17 +213,20 @@ export function trackWallet(
         const balanceProm = getBalance(address, chain)
         const account = accounts.find(account => account.address === address)
 
+        const ensChain = chains.find(
+          ({ id }) => id === validEnsChain(connectedWalletChain.id)
+        )
         const ensProm =
           account && account.ens
             ? Promise.resolve(account.ens)
-            : validEnsChain(connectedWalletChain.id)
-            ? getEns(address, chain)
+            : ensChain
+            ? getEns(address, ensChain)
             : Promise.resolve(null)
 
         const unsProm =
           account && account.uns
             ? Promise.resolve(account.uns)
-            : getUns(address, chain)
+            : getUns(address, ensChain)
 
         return Promise.all([
           Promise.resolve(address),
@@ -315,12 +318,16 @@ export function trackWallet(
           accounts.map(async ({ address }) => {
             const balanceProm = getBalance(address, chain)
 
-            const ensProm = validEnsChain(chainId)
-              ? getEns(address, chain)
+            const ensChain = chains.find(
+              ({ id }) => id === validEnsChain(chainId)
+            )
+
+            const ensProm = ensChain
+              ? getEns(address, ensChain)
               : Promise.resolve(null)
 
-            const unsProm = validEnsChain(chainId)
-              ? getUns(address, chain)
+            const unsProm = ensChain
+              ? getUns(address, ensChain)
               : Promise.resolve(null)
 
             const [balance, ens, uns] = await Promise.all([
@@ -436,7 +443,7 @@ export async function getBalance(
       method: 'eth_getBalance',
       params: [address, 'latest']
     })
-    return balanceHex ? { [chain.token || 'eth']: weiToEth(balanceHex) } : null
+    return balanceHex ? { [chain.token || 'eth']: weiHexToEth(balanceHex) } : null
   } catch (error) {
     console.error(error)
     return null

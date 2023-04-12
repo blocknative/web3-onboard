@@ -47,8 +47,8 @@
   }
 
   const cleanGas = (gasComputed: number): number => {
-    const gweiToEther = ethers.utils.formatEther(gasComputed)
-    return roundAndCleanGas(gweiToEther)
+    const gweiHexToEther = ethers.utils.formatEther(gasComputed)
+    return roundAndCleanGas(gweiHexToEther)
   }
 
   const getCumulativeGasInEth = (index: number) => {

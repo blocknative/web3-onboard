@@ -13,6 +13,7 @@ import { validateTransactionHandlerReturn } from './validation.js'
 import { state } from './store/index.js'
 import { addNotification } from './store/actions.js'
 import updateBalances from './update-balances.js'
+import { weiToEth } from '@web3-onboard/common'
 import { updateTransaction } from './streams.js'
 
 export function handleTransactionUpdates(
@@ -62,9 +63,7 @@ export function transactionEventToNotification(
     counterparty.substring(0, 4) +
       '...' +
       counterparty.substring(counterparty.length - 4)
-  const valueBigInt = BigInt(value || 0)
-  const divisor = 1000000000000000000n
-  const formattedValue = (Number(valueBigInt) / Number(divisor)).toString(10)
+  const formattedValue = weiToEth(value)
   const formatterOptions =
     counterparty && value
       ? {
@@ -163,3 +162,5 @@ export function typeToDismissTimeout(type: string): number {
       return 0
   }
 }
+
+

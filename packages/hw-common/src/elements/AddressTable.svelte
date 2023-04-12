@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { weiToEth } from '@web3-onboard/common'
+  import { weiHexToEth } from '@web3-onboard/common'
   import type { Account, AccountsList } from '../types.js'
 
   export let accountsListObject: AccountsList | undefined
@@ -130,7 +130,7 @@
             >
             <td>{account.derivationPath}</td>
             <td class="asset-td"
-              >{weiToEth(account.balance.value.toString())}
+              >{weiHexToEth(account.balance.value.toString())}
               {account.balance.asset}</td
             >
           </tr>
