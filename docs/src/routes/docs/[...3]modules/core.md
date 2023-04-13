@@ -1546,7 +1546,7 @@ export default config
 
 ### SvelteKit + Vite
 
-Checkout a boilerplate example (here)[https://github.com/blocknative/web3-onboard/tree/develop/examples/with-sveltekit]
+Checkout a boilerplate example [here](https://github.com/blocknative/web3-onboard/tree/develop/examples/with-sveltekit)
 
 Add the following dev dependencies:
 
@@ -1659,7 +1659,7 @@ See [this github issue](https://github.com/blocknative/web3-onboard/issues/1568#
 
 ### Vite
 
-Checkout a boilerplate example for Vite-React (here)[https://github.com/blocknative/web3-onboard/tree/develop/examples/with-vite-react]
+Checkout a boilerplate example for Vite-React [here](https://github.com/blocknative/web3-onboard/tree/develop/examples/with-vite-react)
 
 Add the following dev dependencies:
 
@@ -1734,9 +1734,9 @@ build: {
 
 ### Next.js
 
-Checkout a boilerplate example for NextJS v13 (here)[https://github.com/blocknative/web3-onboard/tree/develop/examples/with-nextjs-13]
+Checkout a boilerplate example for NextJS v13 [here](https://github.com/blocknative/web3-onboard/tree/develop/examples/with-nextjs-13)
 
-Checkout a boilerplate example for NextJS (here)[https://github.com/blocknative/web3-onboard/tree/develop/examples/with-nextjs]
+Checkout a boilerplate example for NextJS [here](https://github.com/blocknative/web3-onboard/tree/develop/examples/with-nextjs)
 
 :::admonition type=note
 
