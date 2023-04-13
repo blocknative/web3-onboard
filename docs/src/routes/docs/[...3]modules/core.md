@@ -229,11 +229,10 @@ type ConnectModalOptions = {
    */
   wheresMyWalletLink?: string
   /**
-   * Define support for Unstoppable Domains resolutions
-   * after a user connects. Similar to ens, uns can be used for users who
-   * have minted an Unstoppable Domain and associated it with their wallet.
-   * ENS resolution takes precedent over UNS
-   * Defaults to false
+   * @deprecated Has no effect unless `@web3-onboard/unstoppable-resolution`
+   * package has been added and passed into the web3-onboard initialization
+   * In this case remove the `@web3-onboard/unstoppable-resolution` package
+   * to remove unstoppableDomain resolution support
    */
   disableUDResolution?: boolean
 }
@@ -429,7 +428,8 @@ unsubscribe()
 ```
 
 ##### **Notifications as Toast Messages**
-The Notifications messages can also be used to send fully customized Dapp toast messages and updated. Check out the [customNotifications API docs for examples and code snippets](#customnotification) 
+
+The Notifications messages can also be used to send fully customized Dapp toast messages and updated. Check out the [customNotifications API docs for examples and code snippets](#customnotification)
 
 ```ts
 type NotifyOptions = {
@@ -640,6 +640,7 @@ const onboard = Onboard({
 ```
 
 ---
+
 ## Connecting a Wallet
 
 To initiate a user to select and connect a wallet you can call the `connectWallet` function on an initialized Onboard instance. It will return a `Promise` that will resolve when the user either successfully connects a wallet, or when they dismiss the UI. The resolved value from the promise will be the latest state of the `wallets` array. The order of the wallets array is last to first, so the most recently selected wallet will be the first item in the array and can be thought of as the "primary wallet". If no wallet was selected, then the `wallets` array will have the same state as it had before calling `connectWallet`.
@@ -1016,7 +1017,7 @@ The `customNotification` method also returns a `dismiss` method that is called w
 
 #### **preflightNotifications**
 
-Notify can be used to deliver standard notifications along with preflight updates by passing a `PreflightNotificationsOptions` object to the `preflightNotifications` API action. 
+Notify can be used to deliver standard notifications along with preflight updates by passing a `PreflightNotificationsOptions` object to the `preflightNotifications` API action.
 
 <img src="{notifyPreflightImg}" alt="Preflight notifications image"/>
 
@@ -1033,6 +1034,7 @@ Preflight event types include:
 This API call will return a promise that resolves to the transaction hash (if `sendTransaction` resolves the transaction hash and is successful), the internal notification id (if no `sendTransaction` function is provided) or return nothing if an error occurs or `sendTransaction` is not provided or doesn't resolve to a string.
 
 Example:
+
 ```typescript copy
 const balanceValue = Object.values(balance)[0]
 // if using ethers v6 this is:
