@@ -1,0 +1,12 @@
+main {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-items: center;
+  text-align: center;
+  height: 100vh;
+}
+
+.hidden {
+  display: none;
+}

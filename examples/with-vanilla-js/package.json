@@ -1,0 +1,24 @@
+{
+  "name": "web3-onboard-with-vanilla-js",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "clean": "rm dist/bundle.js",
+    "dev": "webpack --mode=development --watch",
+    "build": "webpack --mode=production"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^6.7.3",
+    "style-loader": "^3.3.2",
+    "webpack": "^5.79.0",
+    "webpack-cli": "^5.0.1"
+  },
+  "dependencies": {
+    "@web3-onboard/coinbase": "^2.2.2",
+    "@web3-onboard/core": "^2.16.2",
+    "@web3-onboard/injected-wallets": "^2.8.4",
+    "@web3-onboard/walletconnect": "^2.3.5"
+  }
+}
