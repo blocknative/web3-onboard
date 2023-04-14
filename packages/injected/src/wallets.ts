@@ -747,6 +747,17 @@ const defiwallet: InjectedWalletModule = {
   platforms: ['all']
 }
 
+const safeheron: InjectedWalletModule = {
+  label: ProviderLabel.Safeheron,
+  injectedNamespace: InjectedNameSpace.Safeheron,
+  checkProviderIdentity: ({ provider }) => !!provider && !!provider[ProviderIdentityFlag.Safeheron],
+  getIcon: async () => (await import('./icons/safeheron.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.safeheron)
+  }),
+  platforms: ['desktop', 'Chrome', 'Chromium', 'Microsoft Edge']
+}
+
 const wallets = [
   zeal,
   exodus,
@@ -793,7 +804,8 @@ const wallets = [
   rainbow,
   safepal,
   defiwallet,
-  infinitywallet
+  infinitywallet,
+  safeheron,
 ]
 
 export default wallets
