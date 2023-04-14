@@ -5,8 +5,25 @@ main {
   justify-items: center;
   text-align: center;
   height: 100vh;
+  background: #111;
+  color: #eaeaea;
+  font-size: 3rem;
 }
 
 .hidden {
   display: none;
+}
+
+button {
+  background-color:  #0070f3;
+  color:  #eaeaea;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  font-size: 2rem;
+  border: none;
+  margin-top: 2rem;
+}
+
+span {
+  color: #0070f3
 }
