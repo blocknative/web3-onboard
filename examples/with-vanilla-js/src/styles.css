@@ -15,8 +15,8 @@ main {
 }
 
 button {
-  background-color:  #0070f3;
-  color:  #eaeaea;
+  background-color: #0070f3;
+  color: #eaeaea;
   padding: 2rem;
   border-radius: 0.5rem;
   font-size: 2rem;
@@ -25,5 +25,5 @@ button {
 }
 
 span {
-  color: #0070f3
+  color: #0070f3;
 }

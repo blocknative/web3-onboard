@@ -31,7 +31,6 @@ $connect.addEventListener('click', async _ => {
   const connectedAccount = wallets[0].accounts[0]
   label = wallets[0].label
   if (wallets[0]) {
-    console.log('in here')
     addConnectedInfo(connectedAccount)
     $wallet.classList.remove('hidden')
     $disconnected.classList.add('hidden')

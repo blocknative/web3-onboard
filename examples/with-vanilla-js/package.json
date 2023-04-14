@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "clean": "rm dist/bundle.js",
-    "dev": "webpack --mode=development --watch",
+    "dev": "webpack serve --open --mode=development",
     "build": "webpack --mode=production"
   },
   "author": "",

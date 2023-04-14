@@ -1,21 +1,17 @@
-const webpack = require('webpack')
 const path = require('path')
 
 module.exports = {
   entry: './src/index.js',
   output: {
-    filename: 'bundle.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
-    clean: true,
+    clean: true
   },
   module: {
     rules: [
       {
         test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader'
-        ]
+        use: ['style-loader', 'css-loader']
       },
       {
         test: /\.m?js/,
@@ -26,6 +22,11 @@ module.exports = {
     ]
   },
   devServer: {
-    historyApiFallback: true
+    historyApiFallback: true,
+    static: { directory: path.join(__dirname, '/') },
+    port: 9000
+  },
+  optimization: {
+    runtimeChunk: 'single'
   }
 }

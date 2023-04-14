@@ -26,8 +26,8 @@ Run the development server:
 npm run dev
 ```
 
-Use a local development server (like [Live Server Plugin](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) for vscode) to open the index.html page with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Learn More
 
-To learn more about other web3Onboard integrations, take a look at our documentation: [Web3Onboard Documentation](https://onboard.blocknative.com/docs/overview/introduction#features) for more details.
+To learn more about other web3Onboard integraions, take a look at our documentation: [Web3Onboard Documentation](https://onboard.blocknative.com/docs/overview/introduction#features) for more details.
