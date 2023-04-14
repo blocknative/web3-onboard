@@ -81,7 +81,7 @@ function reducer(state: AppState, action: Action): AppState {
     case UPDATE_WALLET: {
       const update = payload as UpdateWalletAction['payload']
       const { id, ...walletUpdate } = update
-console.log(id, walletUpdate, update )
+
       const updatedWallets = state.wallets.map(wallet =>
         wallet.label === id ? { ...wallet, ...walletUpdate } : wallet
       )

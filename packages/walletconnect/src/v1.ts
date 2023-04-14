@@ -4,7 +4,8 @@ import type {
   ProviderAccounts,
   WalletInit,
   EIP1193Provider,
-  ChainId
+  ChainId,
+  AccountAddress
 } from '@web3-onboard/common'
 import { isHexString, WalletConnectOptions } from './index.js'
 
@@ -94,15 +95,17 @@ function walletConnect(
               if (error) {
                 throw error
               }
-              console.log(payload)
               return payload
             })
               .pipe(takeUntil(this.disconnected$))
               .subscribe({
                 next: ({ params }) => {
                   const [{ accounts, chainId }] = params
-                  this.emit('accountsChanged', accounts)
-
+                  const lowerCaseAccounts = accounts.map(
+                    (accountAddress: AccountAddress) =>
+                      accountAddress.toLowerCase()
+                  )
+                  this.emit('accountsChanged', lowerCaseAccounts)
                   const hexChainId = isHexString(chainId)
                     ? chainId
                     : `0x${chainId.toString(16)}`
@@ -156,15 +159,18 @@ function walletConnect(
                     .subscribe({
                       next: ({ params }) => {
                         const [{ accounts, chainId }] = params
-                        this.emit('accountsChanged', accounts)
+                        const lowerCaseAccounts = accounts.map(
+                          (accountAddress: AccountAddress) =>
+                            accountAddress.toLowerCase()
+                        )
+                        this.emit('accountsChanged', lowerCaseAccounts)
                         const hexChainId = isHexString(chainId)
                           ? chainId
                           : `0x${chainId.toString(16)}`
-                        console.log('requestAccounts')
                         if (!activeChain) activeChain = hexChainId
                         this.emit('chainChanged', hexChainId)
                         QRCodeModal.close()
-                        resolve(accounts)
+                        resolve(lowerCaseAccounts)
                       },
                       error: reject
                     })
@@ -199,7 +205,11 @@ function walletConnect(
 
                     this.emit('chainChanged', hexChainId)
                     if (!activeChain) activeChain = hexChainId as ChainId
-                    return resolve(accounts)
+                    const lowerCaseAccounts = accounts.map(
+                      (accountAddress: AccountAddress) =>
+                        accountAddress.toLowerCase()
+                    )
+                    return resolve(lowerCaseAccounts)
                   }
                 })
               }
