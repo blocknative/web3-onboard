@@ -3,7 +3,8 @@ import type {
   Chain,
   ProviderAccounts,
   WalletInit,
-  EIP1193Provider
+  EIP1193Provider,
+  ChainId
 } from '@web3-onboard/common'
 import { isHexString, WalletConnectOptions } from './index.js'
 
@@ -86,13 +87,14 @@ function walletConnect(
             this.chains = chains
             this.disconnected$ = new Subject()
             this.providers = {}
+            let activeChain: ChainId
 
             // listen for session updates
             fromEvent(this.connector, 'session_update', (error, payload) => {
               if (error) {
                 throw error
               }
-
+              console.log(payload)
               return payload
             })
               .pipe(takeUntil(this.disconnected$))
@@ -100,10 +102,14 @@ function walletConnect(
                 next: ({ params }) => {
                   const [{ accounts, chainId }] = params
                   this.emit('accountsChanged', accounts)
+
                   const hexChainId = isHexString(chainId)
                     ? chainId
                     : `0x${chainId.toString(16)}`
-                  this.emit('chainChanged', hexChainId)
+                  if (!activeChain || activeChain !== hexChainId) {
+                    this.emit('chainChanged', hexChainId)
+                    activeChain = hexChainId
+                  }
                 },
                 error: console.warn
               })
@@ -138,6 +144,31 @@ function walletConnect(
 
               if (method === 'eth_requestAccounts') {
                 return new Promise<ProviderAccounts>((resolve, reject) => {
+                  // Subscribe to connection events
+                  fromEvent(this.connector, 'connect', (error, payload) => {
+                    if (error) {
+                      throw error
+                    }
+
+                    return payload
+                  })
+                    .pipe(take(1))
+                    .subscribe({
+                      next: ({ params }) => {
+                        const [{ accounts, chainId }] = params
+                        this.emit('accountsChanged', accounts)
+                        const hexChainId = isHexString(chainId)
+                          ? chainId
+                          : `0x${chainId.toString(16)}`
+                        console.log('requestAccounts')
+                        if (!activeChain) activeChain = hexChainId
+                        this.emit('chainChanged', hexChainId)
+                        QRCodeModal.close()
+                        resolve(accounts)
+                      },
+                      error: reject
+                    })
+
                   // Check if connection is already established
                   if (!this.connector.connected) {
                     // create new session
@@ -165,32 +196,11 @@ function walletConnect(
                     const hexChainId = isHexString(chainId)
                       ? chainId
                       : `0x${chainId.toString(16)}`
+
                     this.emit('chainChanged', hexChainId)
+                    if (!activeChain) activeChain = hexChainId as ChainId
                     return resolve(accounts)
                   }
-
-                  // Subscribe to connection events
-                  fromEvent(this.connector, 'connect', (error, payload) => {
-                    if (error) {
-                      throw error
-                    }
-
-                    return payload
-                  })
-                    .pipe(take(1))
-                    .subscribe({
-                      next: ({ params }) => {
-                        const [{ accounts, chainId }] = params
-                        this.emit('accountsChanged', accounts)
-                        const hexChainId = isHexString(chainId)
-                          ? chainId
-                          : `0x${chainId.toString(16)}`
-                        this.emit('chainChanged', hexChainId)
-                        QRCodeModal.close()
-                        resolve(accounts)
-                      },
-                      error: reject
-                    })
                 })
               }
 
@@ -283,7 +293,6 @@ function walletConnect(
                   currentChain.rpcUrl
                 )
               }
-
               return this.providers[chainId].send(
                 method,
                 // @ts-ignore

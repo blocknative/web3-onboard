@@ -102,15 +102,7 @@
 
   const coinbaseWallet = coinbaseModule()
 
-  const walletConnect = walletConnectModule({
-    connectFirstChainId: true,
-    version: 2,
-    handleUri: uri => console.log(uri),
-    projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
-    qrcodeModalOptions: {
-    mobileLinks: ['rainbow', 'metamask', 'argent', 'trust', 'imtoken', 'pillar']
-    }
-  })
+  const walletConnect = walletConnectModule()
   const portis = portisModule({
     apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
   })
@@ -328,9 +320,9 @@
     const unstoppableUser = wallet.find(
       provider => provider.label === 'Unstoppable'
     )
-    if (unstoppableUser) console.log(unstoppableUser.instance.user)
+    // if (unstoppableUser) console.log(unstoppableUser.instance.user)
     const wc = wallet.find(provider => provider.label === 'WalletConnect')
-    if (wc) console.log(wc)
+    // if (wc) console.log(wc)
   })
 
   const signTransactionMessage = async provider => {
