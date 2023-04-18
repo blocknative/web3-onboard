@@ -1485,7 +1485,7 @@ module.exports = function override(config) {
 
 Add the following dev dependencies:
 
-`yarn add rollup-plugin-polyfill-node -D`
+`yarn add rollup-plugin-polyfill-node crypto-browserify stream-browserify assert -D`
 
 Then add the following to your `svelte.config.js` file:
 
@@ -1550,7 +1550,7 @@ Checkout a boilerplate example [here](https://github.com/blocknative/web3-onboar
 
 Add the following dev dependencies:
 
-`yarn add rollup-plugin-polyfill-node -D`
+`yarn add rollup-plugin-polyfill-node crypto-browserify stream-browserify assert -D`
 
 Then add the following to your `svelte.config.js` file:
 
@@ -1663,7 +1663,7 @@ Checkout a boilerplate example for Vite-React [here](https://github.com/blocknat
 
 Add the following dev dependencies:
 
-`npm i --save-dev rollup-plugin-polyfill-node`
+`npm i --save-dev rollup-plugin-polyfill-node crypto-browserify stream-browserify assert`
 
 Then add the following to your `vite.config.js` file:
 
