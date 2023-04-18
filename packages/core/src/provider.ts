@@ -382,12 +382,20 @@ export async function getEns(
       })
 
       const contentHash = labelhash(normalizedName)
+      const getText = async (key: string): Promise<string> => {
+        const result = await provider.getEnsText({
+          name,
+          key
+        })
+        return result
+      }
 
       ens = {
         name,
         avatar,
         contentHash,
-        ensResolver
+        ensResolver,
+        getText
       }
     }
 
@@ -432,7 +440,9 @@ export async function getBalance(
       method: 'eth_getBalance',
       params: [address, 'latest']
     })
-    return balanceHex ? { [chain.token || 'eth']: weiHexToEth(balanceHex) } : null
+    return balanceHex
+      ? { [chain.token || 'eth']: weiHexToEth(balanceHex) }
+      : null
   } catch (error) {
     console.error(error)
     return null

@@ -152,6 +152,7 @@ export interface Ens {
   avatar: string | null
   contentHash: Address | null
   ensResolver: Address | null
+  getText: (key: string) => Promise<string | undefined>
 }
 
 export interface Uns {

@@ -42,7 +42,7 @@ const ens = Joi.any().allow(
     name: Joi.string().required(),
     avatar: Joi.string(),
     contentHash: Joi.any().allow(Joi.string(), null),
-    getText: Joi.string()
+    getText: Joi.function().arity(1).required()
   }),
   null
 )
