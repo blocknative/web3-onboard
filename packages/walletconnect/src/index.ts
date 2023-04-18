@@ -39,7 +39,7 @@ export type WalletConnectOptions = {
       /**
        * `undefined` by default, see https://docs.walletconnect.com/2.0/web3modal/options
        */
-      qrModalOptions?: Web3ModalConfig
+      qrModalOptions?: Pick<Web3ModalConfig, "themeMode" | "themeVariables" | "chainImages" | "desktopWallets" | "enableExplorer" | "explorerAllowList" | "explorerDenyList" | "mobileWallets" | "privacyPolicyUrl" | "termsOfServiceUrl" | "tokenImages" | "walletImages">;
     }
 )
 
