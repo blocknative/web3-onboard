@@ -15,6 +15,7 @@
   import magicModule from '@web3-onboard/magic'
   import web3authModule from '@web3-onboard/web3auth'
   import gas from '@web3-onboard/gas'
+  import unstoppableResolution from '@web3-onboard/unstoppable-resolution'
   import dcentModule from '@web3-onboard/dcent'
   import sequenceModule from '@web3-onboard/sequence'
   import tallyHoModule from '@web3-onboard/tallyho'
@@ -197,6 +198,7 @@
     ],
     transactionPreview,
     gas,
+    unstoppableResolution,
     chains: [
       {
         id: '0x1',
@@ -249,7 +251,6 @@
     ],
     connect: {
       // disableClose: true,
-      // disableUDResolution: true,
       autoConnectLastWallet: true,
       autoConnectAllPreviousWallet: true
     },

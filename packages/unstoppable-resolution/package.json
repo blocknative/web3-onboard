@@ -1,0 +1,38 @@
+{
+  "name": "@web3-onboard/unstoppable-resolution",
+  "version": "2.0.0-alpha.1",
+  "description": "Adds Unstoppable Domain resolution for a wallet address, similar to ENS resolution",
+  "keywords": [
+    "Unstoppable Domain",
+    "Ethereum",
+    "Polygon"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blocknative/web3-onboard.git",
+    "directory": "packages/unstoppable-resolution"
+  },
+  "homepage": "https://onboard.blocknative.com",
+  "bugs": "https://github.com/blocknative/web3-onboard/issues",
+  "module": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "browser": "dist/index.js",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w",
+    "type-check": "tsc --noEmit"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@web3-onboard/common": "^2.3.1",
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "@unstoppabledomains/resolution": "^8.0"
+  }
+}
