@@ -87,7 +87,6 @@
   },
   "dependencies": {
     "@web3-onboard/common": "^2.4.0-alpha.2",
-    "bignumber.js": "^9.1.1",
     "bnc-sdk": "^4.6.7",
     "bowser": "^2.11.0",
     "eventemitter3": "^4.0.7",

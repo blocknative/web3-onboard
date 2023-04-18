@@ -58,7 +58,6 @@ export default {
     'svelte/store',
     'lodash.merge',
     'lodash.partition',
-    'bignumber.js',
     'eventemitter3',
     'bnc-sdk',
     'nanoid',
