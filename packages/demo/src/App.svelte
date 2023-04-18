@@ -20,6 +20,7 @@
   // import xdefiWalletModule from '@web3-onboard/xdefi'
   // import zealModule from '@web3-onboard/zeal'
   import gas from '@web3-onboard/gas'
+  // import unstoppableResolution from '@web3-onboard/unstoppable-resolution'
   import transactionPreviewModule from '@web3-onboard/transaction-preview'
   // import enkryptModule from '@web3-onboard/enkrypt'
   // import mewWalletModule from '@web3-onboard/mew-wallet'
@@ -197,6 +198,7 @@
     ],
     // transactionPreview,
     gas,
+    unstoppableResolution,
     chains: [
       {
         id: '0x1',
@@ -249,7 +251,6 @@
     ],
     connect: {
       // disableClose: true,
-      disableUDResolution: true,
       autoConnectLastWallet: true,
       autoConnectAllPreviousWallet: true
     },

@@ -56,16 +56,16 @@
   "license": "MIT",
   "devDependencies": {
     "typescript": "^4.9.4",
-    "@walletconnect/types": "^2.5.2",
-    "@web3modal/standalone": "^2.2.2"
+    "@walletconnect/types": "^2.7.0",
+    "@web3modal/standalone": "2.2.2"
   },
   "dependencies": {
-    "@ethersproject/providers": "^5.5.0",
-    "@walletconnect/ethereum-provider": "2.5.2",
+    "@ethersproject/providers": "5.5.0",
+    "@walletconnect/ethereum-provider": "2.7.0",
     "@walletconnect/client": "^1.8.0",
     "@walletconnect/qrcode-modal": "^1.8.0",
-    "@web3modal/standalone":"^2.2.2",
     "@web3-onboard/common": "^2.4.0-alpha.1",
+    "@web3modal/standalone":"2.2.2",
     "rxjs": "^7.5.2"
   }
 }

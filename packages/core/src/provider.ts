@@ -9,6 +9,7 @@ import { chainIdToViemImport, validEnsChain } from './utils.js'
 import disconnect from './disconnect.js'
 import { state } from './store/index.js'
 import { getBNMulitChainSdk } from './services.js'
+import { configuration } from './configuration.js'
 
 import type {
   Address,
@@ -26,10 +27,10 @@ import type {
   Account,
   Balances,
   Ens,
-  Uns,
   WalletPermission,
   WalletState
 } from './types.js'
+import type { Uns } from '@web3-onboard/unstoppable-resolution'
 
 import type { PublicClient } from 'viem'
 
@@ -401,26 +402,14 @@ export async function getUns(
   address: Address,
   chain: Chain
 ): Promise<Uns | null> {
-  const { connect } = state.get()
+  const { unstoppableResolution } = configuration
 
   // check if address is valid ETH address before attempting to resolve
   // chain we don't recognize and don't have a rpcUrl for requests
-  if (connect.disableUDResolution || !isAddress(address) || !chain) return null
+  if (unstoppableResolution || !isAddress(address) || !chain) return null
 
   try {
-    let uns = null
-    const { Resolution } = await import('@unstoppabledomains/resolution')
-
-    const resolutionInstance = new Resolution()
-    const name = await resolutionInstance.reverse(address)
-
-    if (name) {
-      uns = {
-        name
-      }
-    }
-
-    return uns
+    return await unstoppableResolution(address)
   } catch (error) {
     console.error(error)
     return null
