@@ -57,14 +57,14 @@
   "devDependencies": {
     "typescript": "^4.5.5",
     "@walletconnect/types": "^2.7.0",
-    "@web3modal/standalone": "^2.2.2"
+    "@web3modal/standalone": "2.2.2"
   },
   "dependencies": {
-    "@ethersproject/providers": "^5.5.0",
+    "@ethersproject/providers": "5.5.0",
     "@walletconnect/ethereum-provider": "2.7.0",
     "@walletconnect/client": "^1.8.0",
     "@walletconnect/qrcode-modal": "^1.8.0",
-    "@web3modal/standalone":"^2.2.2",
+    "@web3modal/standalone":"2.2.2",
     "@web3-onboard/common": "^2.3.1",
     "rxjs": "^7.5.2"
   }
