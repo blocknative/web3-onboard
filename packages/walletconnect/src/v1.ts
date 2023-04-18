@@ -206,7 +206,7 @@ function walletConnect(
                     this.emit('chainChanged', hexChainId)
                     if (!activeChain) activeChain = hexChainId as ChainId
                     const lowerCaseAccounts = accounts.map(
-                      (accountAddress: AccountAddress) =>
+                      (accountAddress: string) =>
                         accountAddress.toLowerCase()
                     )
                     return resolve(lowerCaseAccounts as ProviderAccounts)

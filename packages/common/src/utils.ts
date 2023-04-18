@@ -74,50 +74,54 @@ function divideBigIntWithDecimalResolution(
   return parseFloat(result)
 }
 
-const handleBitIntChecks = value => {
-  let tempValue
-  // check if number is larger than safe
-  if (typeof value === 'number' && value > Number.MAX_SAFE_INTEGER) {
-    return BigInt(value)
-  } else {
-    console.log('The number is within the safe integer range.')
-  }
+// const handleBitIntChecks = value => {
+//   let tempValue
+//   // check if number is larger than safe
+//   if (typeof value === 'number' && value > Number.MAX_SAFE_INTEGER) {
+//     return BigInt(value)
+//   } else {
+//     console.log('The number is within the safe integer range.')
+//   }
 
-  if (BigInt(value) > BigInt(Number.MAX_SAFE_INTEGER)) {
-    console.log(
-      'The string value is greater than the maximum safe integer value.'
-    )
-  } else {
-    console.log('The string value is within the safe integer range.')
-  }
-}
+//   if (BigInt(value) > BigInt(Number.MAX_SAFE_INTEGER)) {
+//     console.log(
+//       'The string value is greater than the maximum safe integer value.'
+//     )
+//   } else {
+//     console.log('The string value is within the safe integer range.')
+//   }
+// }
 
-function isNumericString(str) {
-  // Check if the string only contains digits and an optional decimal point
-  return /^-?\d+(\.\d+)?$/.test(str)
-}
+// function isNumericString(str) {
+//   // Check if the string only contains digits and an optional decimal point
+//   return /^-?\d+(\.\d+)?$/.test(str)
+// }
 
-function checkStringValue(value) {
-  // Validate the string
-  if (!isNumericString(value)) {
-    console.error('The string is not a valid numeric value.')
-    return
-  }
+// function checkStringValue(value) {
+//   // Validate the string
+//   if (!isNumericString(value)) {
+//     console.error('The string is not a valid numeric value.')
+//     return
+//   }
 
-  // Parse the string value to a number or BigInt
-  const parsedValue = value.includes('.') ? parseFloat(value) : BigInt(value)
+//   // Parse the string value to a number or BigInt
+//   const parsedValue = value.includes('.') ? parseFloat(value) : BigInt(value)
 
-  // Check if the parsed value is greater than the maximum safe integer value
-  if (
-    typeof parsedValue === 'bigint' ||
-    parsedValue > Number.MAX_SAFE_INTEGER
-  ) {
-    console.log(
-      'The string value is greater than the maximum safe integer value.'
-    )
-  } else {
-    console.log('The string value is within the safe integer range.')
-  }
+//   // Check if the parsed value is greater than the maximum safe integer value
+//   if (
+//     typeof parsedValue === 'bigint' ||
+//     parsedValue > Number.MAX_SAFE_INTEGER
+//   ) {
+//     console.log(
+//       'The string value is greater than the maximum safe integer value.'
+//     )
+//   } else {
+//     console.log('The string value is within the safe integer range.')
+//   }
+// }
+
+export const bigIntToHex = (value: bigint): string => {
+  return `0x${value.toString(16)}`
 }
 
 export const bigIntToString = (

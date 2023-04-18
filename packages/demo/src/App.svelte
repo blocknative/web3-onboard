@@ -198,7 +198,6 @@
     ],
     // transactionPreview,
     gas,
-    unstoppableResolution,
     chains: [
       {
         id: '0x1',
