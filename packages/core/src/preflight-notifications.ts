@@ -1,4 +1,3 @@
-import BigNumber from 'bignumber.js'
 import { nanoid } from 'nanoid'
 import defaultCopy from './i18n/en.json'
 import type { Network } from 'bnc-sdk'
@@ -9,6 +8,7 @@ import { state } from './store/index.js'
 import { eventToType } from './notify.js'
 import { networkToChainId } from './utils.js'
 import { validatePreflightNotifications } from './validation.js'
+import { bigIntToHex, ethToWeiBigInt } from '@web3-onboard/common'
 
 let notificationsArr: Notification[]
 state.select('notifications').subscribe(notifications => {
@@ -51,14 +51,17 @@ export async function preflightNotifications(
 
   const [gas, price] = await gasEstimates(estimateGas, gasPrice)
   const id = createId(nanoid())
-  const value = new BigNumber((txDetails && txDetails.value) || 0)
-
+  const value = BigInt((txDetails && txDetails.value) || 0)
+  
   // check sufficient balance if required parameters are available
   if (balance && gas && price) {
-    const transactionCost = gas.times(price).plus(value)
+    const transactionCost = BigInt(gas) * BigInt(price) + value
 
     // if transaction cost is greater than the current balance
-    if (transactionCost.gt(new BigNumber(balance))) {
+    if (
+      bigIntToHex(transactionCost) >
+      bigIntToHex(ethToWeiBigInt(balance))
+    ) {
       const eventCode = 'nsfFail'
 
       addNotification(buildNotification(eventCode, id))
@@ -219,8 +222,8 @@ const gasEstimates = async (
           `The Promise returned from calling 'gasPrice' must resolve with a value of type 'string'. Received a value of: ${gasPriceResult} with a type: ${typeof gasPriceResult}`
         )
       }
-
-      return [new BigNumber(gasResult), new BigNumber(gasPriceResult)]
+      
+      return [BigInt(gasResult), BigInt(gasPriceResult)]
     })
     .catch(error => {
       throw new Error(`There was an error getting gas estimates: ${error}`)

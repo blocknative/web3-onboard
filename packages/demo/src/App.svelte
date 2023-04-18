@@ -378,7 +378,7 @@
     const signer = ethersProvider.getSigner()
     const txDetails = {
       to: toAddress,
-      value: 100000000000000
+      value: 1000000000000000
     }
 
     const sendTransaction = () => {

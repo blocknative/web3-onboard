@@ -10,8 +10,7 @@ export const weiHexToEth = (wei: string): string => {
   const weiBigInt = BigInt(parseInt(wei, 16))
   const ethBalance = divideBigIntWithDecimalResolution(
     weiBigInt,
-    BigInt('1000000000000000000'),
-    6
+    BigInt('1000000000000000000')
   )
 
   return ethBalance.toString()
@@ -20,36 +19,17 @@ export const weiToEth = (wei: string): string => {
   const weiBigInt = BigInt(parseInt(wei))
   const ethBalance = divideBigIntWithDecimalResolution(
     weiBigInt,
-    BigInt('1000000000000000000'),
-    6
+    BigInt('1000000000000000000')
   )
 
   return ethBalance.toString()
 }
 
-import type { Chain as ViemChain } from 'viem'
-export const viemChainIdToImport = async (
-  chainIdnumber: number
-): Promise<ViemChain | null> => {
-  switch (chainIdnumber) {
-    case 5: {
-      const { goerli } = await import('viem/chains')
-      return goerli
-    }
-    case 1: {
-      const { mainnet } = await import('viem/chains')
-      return mainnet
-    }
-    default:
-      return null
-  }
-}
-
-function divideBigIntWithDecimalResolution(
+const divideBigIntWithDecimalResolution = (
   dividend: bigint,
   divisor: bigint,
-  decimalPlaces = 6
-): number {
+  decimalPlaces = 8
+): number => {
   if (typeof dividend !== 'bigint' || typeof divisor !== 'bigint') {
     throw new Error('dividend and divisor must be BigInt values')
   }
@@ -74,84 +54,27 @@ function divideBigIntWithDecimalResolution(
   return parseFloat(result)
 }
 
-// const handleBitIntChecks = value => {
-//   let tempValue
-//   // check if number is larger than safe
-//   if (typeof value === 'number' && value > Number.MAX_SAFE_INTEGER) {
-//     return BigInt(value)
-//   } else {
-//     console.log('The number is within the safe integer range.')
-//   }
+export const ethToWeiBigInt = (eth: string | number): bigint => {
+  if (typeof eth !== 'string' && typeof eth !== 'number') {
+    throw new Error('eth must be a string or number value')
+  }
 
-//   if (BigInt(value) > BigInt(Number.MAX_SAFE_INTEGER)) {
-//     console.log(
-//       'The string value is greater than the maximum safe integer value.'
-//     )
-//   } else {
-//     console.log('The string value is within the safe integer range.')
-//   }
-// }
+  const ethString = typeof eth === 'number' ? eth.toString() : eth
 
-// function isNumericString(str) {
-//   // Check if the string only contains digits and an optional decimal point
-//   return /^-?\d+(\.\d+)?$/.test(str)
-// }
+  const decimalSplit = ethString.split('.')
+  const integerPart = BigInt(decimalSplit[0])
+  const decimalPart =
+    decimalSplit.length > 1 ? BigInt(decimalSplit[1]) : BigInt(0)
 
-// function checkStringValue(value) {
-//   // Validate the string
-//   if (!isNumericString(value)) {
-//     console.error('The string is not a valid numeric value.')
-//     return
-//   }
+  const decimalLength = decimalSplit.length > 1 ? decimalSplit[1].length : 0
+  const weiFactor = BigInt(10 ** (18 - decimalLength))
 
-//   // Parse the string value to a number or BigInt
-//   const parsedValue = value.includes('.') ? parseFloat(value) : BigInt(value)
+  // Perform the conversion from Eth to Wei
+  const weiValue = integerPart * BigInt(10 ** 18) + decimalPart * weiFactor
 
-//   // Check if the parsed value is greater than the maximum safe integer value
-//   if (
-//     typeof parsedValue === 'bigint' ||
-//     parsedValue > Number.MAX_SAFE_INTEGER
-//   ) {
-//     console.log(
-//       'The string value is greater than the maximum safe integer value.'
-//     )
-//   } else {
-//     console.log('The string value is within the safe integer range.')
-//   }
-// }
+  return weiValue
+}
 
 export const bigIntToHex = (value: bigint): string => {
   return `0x${value.toString(16)}`
-}
-
-export const bigIntToString = (
-  value: bigint | number | string,
-  decimals = 0,
-  hexString = false
-): string => {
-  let tempDec = decimals
-  if (!decimals && typeof value !== 'bigint') {
-    tempDec = countDecimalPlaces(value)
-  }
-  const scaleFactor = BigInt(10 ** tempDec)
-  const bigIntValue = BigInt(value) * scaleFactor
-  return hexString ? `0x${bigIntValue.toString(16)}` : bigIntValue.toString()
-}
-
-const countDecimalPlaces = (value: number | string): number => {
-  let decimalPlaces = 0
-
-  if (typeof value === 'number') {
-    const match = value.toString().match(/(?:\.(\d+))?$/)
-    if (match) {
-      decimalPlaces = match[1] ? match[1].length : 0
-    }
-  } else if (typeof value === 'string') {
-    const match = value.match(/(?:\.(\d+))?$/)
-    if (match) {
-      decimalPlaces = match[1] ? match[1].length : 0
-    }
-  }
-
-  return decimalPlaces
 }
