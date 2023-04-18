@@ -406,7 +406,7 @@ export async function getUns(
 
   // check if address is valid ETH address before attempting to resolve
   // chain we don't recognize and don't have a rpcUrl for requests
-  if (unstoppableResolution || !isAddress(address) || !chain) return null
+  if (!unstoppableResolution || !isAddress(address) || !chain) return null
 
   try {
     return await unstoppableResolution(address)
