@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { ethers } from 'ethers'
   import { _ } from 'svelte-i18n'
   import en from '../i18n/en.json'
   import { getDevice } from '../utils'
@@ -8,6 +7,7 @@
   import closeIcon from '../icons/close-circle.js'
   import SimulationHeader from './components/SimulationHeader.svelte'
   import type { MultiSimOutput, NetBalanceChange } from 'bnc-sdk'
+  import { weiHexToEth, weiToEth } from '@web3-onboard/common'
 
   export let requireTransactionApproval: boolean
   export let transactionApproved: (approved: boolean) => void
@@ -27,8 +27,7 @@
   }
 
   const cleanBalance = (dirtyBalance: string): string => {
-    // TODO: Use new weiToEth function in common
-    const formattedEth = ethers.utils.formatEther(dirtyBalance)
+    const formattedEth = weiToEth(dirtyBalance)
     return roundAndCleanDecimals(formattedEth)
   }
 
@@ -48,8 +47,7 @@
   }
 
   const cleanGas = (gasComputed: number): number => {
-    // TODO: Use new weiToEth function in common
-    const gweiHexToEther = ethers.utils.formatEther(gasComputed)
+    const gweiHexToEther = weiHexToEth(gasComputed.toString())
     return roundAndCleanGas(gweiHexToEther)
   }
 
