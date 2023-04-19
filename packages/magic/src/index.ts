@@ -1,4 +1,4 @@
-import type { WalletInit, EIP1193Provider } from '@web3-onboard/common'
+import { WalletInit, EIP1193Provider, weiToEth } from '@web3-onboard/common'
 import type { MagicInitOptions } from './types.js'
 import { validateMagicInitOptions } from './validation.js'
 
@@ -97,9 +97,7 @@ function magic(options: MagicInitOptions): WalletInit {
                 method: 'eth_getBalance',
                 params: [activeAddress, 'latest']
               })
-              return balance
-                ? (BigInt(balance) * BigInt('1000000000000000000')).toString()
-                : '0'
+              return balance ? weiToEth(balance) : '0'
             },
             wallet_switchEthereumChain: async ({ params }) => {
               const chain = chains.find(({ id }) => id === params[0].chainId)

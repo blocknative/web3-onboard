@@ -1,6 +1,7 @@
 import { get } from 'svelte/store'
 import { _ } from 'svelte-i18n'
 import defaultCopy from './i18n/en.json'
+import { weiToEth } from '@web3-onboard/common'
 import type { EthereumTransactionData } from 'bnc-sdk'
 
 import type {
@@ -13,7 +14,6 @@ import { validateTransactionHandlerReturn } from './validation.js'
 import { state } from './store/index.js'
 import { addNotification } from './store/actions.js'
 import updateBalances from './update-balances.js'
-import { weiToEth } from '@web3-onboard/common'
 import { updateTransaction } from './streams.js'
 
 export function handleTransactionUpdates(
@@ -162,5 +162,3 @@ export function typeToDismissTimeout(type: string): number {
       return 0
   }
 }
-
-

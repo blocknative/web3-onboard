@@ -62,24 +62,6 @@ export function getDevice(): Device | DeviceNotBrowser {
 export const notNullish = <T>(value: T | null | undefined): value is T =>
   value != null
 
-export function validEnsChain(chainId: ChainId): string {
-  // return L2s as Eth for ens resolution
-  switch (chainId) {
-    case '0x1':
-    case '0x89': // Polygon
-    case '0xa': //Optimism
-    case '0xa4b1': // Arb
-    case '0x144': // zksync
-      return '0x1'
-    case '0x5': // Goerli
-      return chainId
-    case '0xaa36a7': // Sepolia
-      return chainId
-    default:
-      return null
-  }
-}
-
 export function isSVG(str: string): boolean {
   return str.includes('<svg')
 }
@@ -137,6 +119,25 @@ export const chainIdToLabel: Record<string, string> = {
   '0xa4b1': 'Arbitrum'
 }
 
+
+export function validEnsChain(chainId: ChainId): string {
+  // return L2s as Eth for ens resolution
+  switch (chainId) {
+    case '0x1':
+    case '0x89': // Polygon
+    case '0xa': //Optimism
+    case '0xa4b1': // Arb
+    case '0x144': // zksync
+      return '0x1'
+    case '0x5': // Goerli
+      return chainId
+    case '0xaa36a7': // Sepolia
+      return chainId
+    default:
+      return null
+  }
+}
+
 import type { Chain as ViemChain } from 'viem'
 export const chainIdToViemImport = async (
   chainId: string
@@ -163,7 +164,7 @@ export const chainIdToViemImport = async (
       return baseGoerli
     }
     default:
-      return undefined
+      return null
   }
 }
 

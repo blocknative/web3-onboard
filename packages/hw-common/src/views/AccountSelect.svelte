@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Subject } from 'rxjs'
-  import { weiHexToEth } from '@web3-onboard/common'
+  import { weiToEth } from '@web3-onboard/common'
   import { fade } from 'svelte/transition'
   import CloseButton from '../elements/CloseButton.svelte'
   import AddressTable from '../elements/AddressTable.svelte'
@@ -62,7 +62,7 @@
       accountsListObject = {
         all: allAccounts,
         filtered: allAccounts.filter(account => {
-          return parseFloat(weiHexToEth(account.balance.value.toString())) > 0
+          return parseFloat(weiToEth(account.balance.value.toString())) > 0
         })
       }
       loadingAccounts = false

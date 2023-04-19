@@ -27,6 +27,7 @@
   }
 
   const cleanBalance = (dirtyBalance: string): string => {
+    // TODO: Use new weiToEth function in common
     const formattedEth = ethers.utils.formatEther(dirtyBalance)
     return roundAndCleanDecimals(formattedEth)
   }
@@ -47,6 +48,7 @@
   }
 
   const cleanGas = (gasComputed: number): number => {
+    // TODO: Use new weiToEth function in common
     const gweiHexToEther = ethers.utils.formatEther(gasComputed)
     return roundAndCleanGas(gweiHexToEther)
   }

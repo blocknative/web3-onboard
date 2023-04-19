@@ -1,8 +1,7 @@
 import { fromEventPattern, Observable } from 'rxjs'
 import { filter, takeUntil, take, share, switchMap } from 'rxjs/operators'
 import partition from 'lodash.partition'
-import { isAddress } from '@web3-onboard/common'
-import { weiHexToEth } from '@web3-onboard/common'
+import { isAddress, weiHexToEth } from '@web3-onboard/common'
 import { disconnectWallet$ } from './streams.js'
 import { updateAccount, updateWallet } from './store/actions.js'
 import { chainIdToViemImport, validEnsChain } from './utils.js'
@@ -38,7 +37,7 @@ export const viemProviders: {
   [key: string]: PublicClient
 } = {}
 
-export async function getProvider(chain: Chain): Promise<PublicClient> {
+async function getProvider(chain: Chain): Promise<PublicClient> {
   if (!chain) return null
 
   if (!viemProviders[chain.rpcUrl]) {
@@ -383,11 +382,10 @@ export async function getEns(
 
       const contentHash = labelhash(normalizedName)
       const getText = async (key: string): Promise<string> => {
-        const result = await provider.getEnsText({
+        return await provider.getEnsText({
           name,
           key
         })
-        return result
       }
 
       ens = {

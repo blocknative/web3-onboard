@@ -1,8 +1,9 @@
-import type {
+import {
   WalletInit,
   APIKey,
   EIP1193Provider,
-  ProviderAccounts
+  ProviderAccounts,
+  weiToEth
 } from '@web3-onboard/common'
 
 function fortmatic(options: APIKey): WalletInit {
@@ -52,12 +53,7 @@ function fortmatic(options: APIKey): WalletInit {
             eth_selectAccounts: null,
             eth_getBalance: async () => {
               const [balance] = await instance.user.getBalances()
-              return balance
-                ? (
-                    BigInt(balance.crypto_amount) *
-                    BigInt('1000000000000000000')
-                  ).toString()
-                : '0'
+              return balance ? weiToEth(balance.crypto_amount) : '0'
             },
             wallet_switchEthereumChain: async ({ params }) => {
               const chain = chains.find(({ id }) => id === params[0].chainId)
