@@ -331,18 +331,6 @@ const blockwallet: InjectedWalletModule = {
   platforms: ['desktop']
 }
 
-const frame: InjectedWalletModule = {
-  label: ProviderLabel.Frame,
-  injectedNamespace: InjectedNameSpace.Ethereum,
-  checkProviderIdentity: ({ provider }) =>
-    !!provider && !!provider[ProviderIdentityFlag.Frame],
-  getIcon: async () => (await import('./icons/frame.js')).default,
-  getInterface: async () => ({
-    provider: window.ethereum
-  }),
-  platforms: ['desktop']
-}
-
 const huobiwallet: InjectedWalletModule = {
   label: ProviderLabel.HuobiWallet,
   injectedNamespace: InjectedNameSpace.Ethereum,
@@ -750,7 +738,8 @@ const defiwallet: InjectedWalletModule = {
 const safeheron: InjectedWalletModule = {
   label: ProviderLabel.Safeheron,
   injectedNamespace: InjectedNameSpace.Safeheron,
-  checkProviderIdentity: ({ provider }) => !!provider && !!provider[ProviderIdentityFlag.Safeheron],
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Safeheron],
   getIcon: async () => (await import('./icons/safeheron.js')).default,
   getInterface: async () => ({
     provider: createEIP1193Provider(window.safeheron)
@@ -776,7 +765,6 @@ const wallets = [
   bitpie,
   blockwallet,
   brave,
-  frame,
   huobiwallet,
   hyperpay,
   imtoken,
@@ -805,7 +793,7 @@ const wallets = [
   safepal,
   defiwallet,
   infinitywallet,
-  safeheron,
+  safeheron
 ]
 
 export default wallets
