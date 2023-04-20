@@ -3,7 +3,7 @@ import { WalletInit } from '@web3-onboard/common'
 async function getProvider() {
   const injected = (window as any).ethereum
 
-  if (injected && (injected as any).isFrame) {
+  if (injected?.isFrame) {
     return injected
   }
 
