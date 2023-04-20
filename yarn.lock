@@ -2439,7 +2439,16 @@
   resolved "https://registry.yarnpkg.com/@trezor/connect-common/-/connect-common-0.0.13.tgz#4219f8cee406a6e0b4f7070f90cc41d47b6d3b36"
   integrity sha512-rR3vQSueSkQ3jfDrQl9PBdOz4Fo5tqQeAl7YI26UaCH16LrYqIkxQq4a3hFBt487Po45QR82xGFki1RiKxMpiw==
 
-"@trezor/connect@^9.0.8":
+"@trezor/connect-web@^9.0.8":
+  version "9.0.8"
+  resolved "https://registry.yarnpkg.com/@trezor/connect-web/-/connect-web-9.0.8.tgz#ccfcf6d424875495792c52c170c522e4c8253e4b"
+  integrity sha512-iVZYi02LhSSFxLJcrK32mA96vJ6tBR1WNgYl9Evq5s5LpE/3uSzGEeh5CcE28EbZw0PVIiN57XN1VFCxuVT4FQ==
+  dependencies:
+    "@trezor/connect" "9.0.8"
+    "@trezor/utils" "9.0.7"
+    events "^3.3.0"
+
+"@trezor/connect@9.0.8":
   version "9.0.8"
   resolved "https://registry.yarnpkg.com/@trezor/connect/-/connect-9.0.8.tgz#807c0f4212ff21f9e592410eaa221da61377e420"
   integrity sha512-L1cs4iNiWbwCpHMB8uZOFOkeY8S8J0kqKza1I1y2+GB+cwhJXGEmS60nCufbLqlh7oj9rASjnzNN4Hewt7XtEw==
