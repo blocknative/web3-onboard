@@ -4,5 +4,6 @@ dist/
 package-lock.json
 .rpt2_cache
 .vscode
+.yarn
 yarn-error.log
 .env
