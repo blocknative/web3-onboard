@@ -1,6 +1,7 @@
 <script>
   import Onboard from '@web3-onboard/core'
   import fortmaticModule from '@web3-onboard/fortmatic'
+  import frameModule from '@web3-onboard/frame'
   import gnosisModule from '@web3-onboard/gnosis'
   import infinityWalletModule from '@web3-onboard/infinity-wallet'
   import injectedModule, { ProviderLabel } from '@web3-onboard/injected-wallets'
@@ -109,7 +110,14 @@
     handleUri: uri => console.log(uri),
     projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
     qrcodeModalOptions: {
-    mobileLinks: ['rainbow', 'metamask', 'argent', 'trust', 'imtoken', 'pillar']
+      mobileLinks: [
+        'rainbow',
+        'metamask',
+        'argent',
+        'trust',
+        'imtoken',
+        'pillar'
+      ]
     }
   })
   const portis = portisModule({
@@ -161,6 +169,7 @@
   })
 
   const dcent = dcentModule()
+  const frameWallet = frameModule()
   const sequence = sequenceModule()
   const enkrypt = enkryptModule()
   const mewWallet = mewWalletModule()
@@ -171,6 +180,7 @@
   const onboard = Onboard({
     wallets: [
       injected,
+      frameWallet,
       ledger,
       trezor,
       walletConnect,
