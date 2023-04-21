@@ -589,7 +589,7 @@ module.exports = function override(config) {
 
 Add the following dev dependencies:
 
-`npm i --save-dev rollup-plugin-polyfill-node`
+`npm i --save-dev rollup-plugin-polyfill-node crypto-browserify stream-browserify assert`
 
 Then add the following to your `vite.config.js` file:
 

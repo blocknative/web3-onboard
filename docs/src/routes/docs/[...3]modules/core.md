@@ -3,6 +3,9 @@
   import notifyCustomImg from '$lib/assets/notify-custom-example.png'
   import notifyImg from '$lib/assets/notify-example.png'
   import notifyPreflightImg from '$lib/assets/notify-preflight-example.png'
+  import customConnect1 from '$lib/assets/custom-connect-1.png'
+  import customConnect2 from '$lib/assets/custom-connect-2.png'
+  import customConnectDefault from '$lib/assets/custom-connect-default.png'
 </script>
 
 # Core
@@ -229,11 +232,10 @@ type ConnectModalOptions = {
    */
   wheresMyWalletLink?: string
   /**
-   * Define support for Unstoppable Domains resolutions
-   * after a user connects. Similar to ens, uns can be used for users who
-   * have minted an Unstoppable Domain and associated it with their wallet.
-   * ENS resolution takes precedent over UNS
-   * Defaults to false
+   * @deprecated Has no effect unless `@web3-onboard/unstoppable-resolution`
+   * package has been added and passed into the web3-onboard initialization
+   * In this case remove the `@web3-onboard/unstoppable-resolution` package
+   * to remove unstoppableDomain resolution support
    */
   disableUDResolution?: boolean
 }
@@ -252,6 +254,29 @@ type i18nOptions = Record<Locale, i18n>
 
 To see a list of all of the text values that can be internationalized or replaced, check out the [default en file](https://github.com/blocknative/web3-onboard/blob/develop/packages/core/src/i18n/en.json).
 Onboard is using the [ICU syntax](https://formatjs.io/docs/core-concepts/icu-syntax/) for formatting under the hood.
+
+For example, to update the connect interface language for Metamask, while giving a different message for other wallets, you can include the following: 
+
+```typescript
+i18n: {
+      en: {
+        connect: {
+          connectingWallet: {
+            paragraph: "{wallet, select, MetaMask {{wallet} can only present one account, so connect just the one account you want.} other {Please connect to all of your accounts in {wallet}.}}"
+          }
+        }
+      }
+    }
+```
+
+MetaMask message:
+<img src="{customConnect2}" alt="Web3-Onboard connect wallet modal with custom message"/>
+
+All other wallets:
+<img src="{customConnect1}" alt="Web3-Onboard connect wallet modal with custom message"/>
+
+Default Message- with no i18n override: 
+<img src="{customConnectDefault}" alt="Web3-Onboard connect wallet modal with default message"/>
 
 ---
 
@@ -429,7 +454,8 @@ unsubscribe()
 ```
 
 ##### **Notifications as Toast Messages**
-The Notifications messages can also be used to send fully customized Dapp toast messages and updated. Check out the [customNotifications API docs for examples and code snippets](#customnotification) 
+
+The Notifications messages can also be used to send fully customized Dapp toast messages and updated. Check out the [customNotifications API docs for examples and code snippets](#customnotification)
 
 ```ts
 type NotifyOptions = {
@@ -640,6 +666,7 @@ const onboard = Onboard({
 ```
 
 ---
+
 ## Connecting a Wallet
 
 To initiate a user to select and connect a wallet you can call the `connectWallet` function on an initialized Onboard instance. It will return a `Promise` that will resolve when the user either successfully connects a wallet, or when they dismiss the UI. The resolved value from the promise will be the latest state of the `wallets` array. The order of the wallets array is last to first, so the most recently selected wallet will be the first item in the array and can be thought of as the "primary wallet". If no wallet was selected, then the `wallets` array will have the same state as it had before calling `connectWallet`.
@@ -1016,7 +1043,7 @@ The `customNotification` method also returns a `dismiss` method that is called w
 
 #### **preflightNotifications**
 
-Notify can be used to deliver standard notifications along with preflight updates by passing a `PreflightNotificationsOptions` object to the `preflightNotifications` API action. 
+Notify can be used to deliver standard notifications along with preflight updates by passing a `PreflightNotificationsOptions` object to the `preflightNotifications` API action.
 
 <img src="{notifyPreflightImg}" alt="Preflight notifications image"/>
 
@@ -1033,6 +1060,7 @@ Preflight event types include:
 This API call will return a promise that resolves to the transaction hash (if `sendTransaction` resolves the transaction hash and is successful), the internal notification id (if no `sendTransaction` function is provided) or return nothing if an error occurs or `sendTransaction` is not provided or doesn't resolve to a string.
 
 Example:
+
 ```typescript copy
 const balanceValue = Object.values(balance)[0]
 // if using ethers v6 this is:
@@ -1483,7 +1511,7 @@ module.exports = function override(config) {
 
 Add the following dev dependencies:
 
-`yarn add rollup-plugin-polyfill-node -D`
+`yarn add rollup-plugin-polyfill-node crypto-browserify stream-browserify assert -D`
 
 Then add the following to your `svelte.config.js` file:
 
@@ -1544,11 +1572,11 @@ export default config
 
 ### SvelteKit + Vite
 
-Checkout a boilerplate example (here)[https://github.com/blocknative/web3-onboard/tree/develop/examples/with-sveltekit]
+Checkout a boilerplate example [here](https://github.com/blocknative/web3-onboard/tree/develop/examples/with-sveltekit)
 
 Add the following dev dependencies:
 
-`yarn add rollup-plugin-polyfill-node -D`
+`yarn add rollup-plugin-polyfill-node crypto-browserify stream-browserify assert -D`
 
 Then add the following to your `svelte.config.js` file:
 
@@ -1657,11 +1685,11 @@ See [this github issue](https://github.com/blocknative/web3-onboard/issues/1568#
 
 ### Vite
 
-Checkout a boilerplate example for Vite-React (here)[https://github.com/blocknative/web3-onboard/tree/develop/examples/with-vite-react]
+Checkout a boilerplate example for Vite-React [here](https://github.com/blocknative/web3-onboard/tree/develop/examples/with-vite-react)
 
 Add the following dev dependencies:
 
-`npm i --save-dev rollup-plugin-polyfill-node`
+`npm i --save-dev rollup-plugin-polyfill-node crypto-browserify stream-browserify assert`
 
 Then add the following to your `vite.config.js` file:
 
@@ -1732,9 +1760,9 @@ build: {
 
 ### Next.js
 
-Checkout a boilerplate example for NextJS v13 (here)[https://github.com/blocknative/web3-onboard/tree/develop/examples/with-nextjs-13]
+Checkout a boilerplate example for NextJS v13 [here](https://github.com/blocknative/web3-onboard/tree/develop/examples/with-nextjs-13)
 
-Checkout a boilerplate example for NextJS (here)[https://github.com/blocknative/web3-onboard/tree/develop/examples/with-nextjs]
+Checkout a boilerplate example for NextJS [here](https://github.com/blocknative/web3-onboard/tree/develop/examples/with-nextjs)
 
 :::admonition type=note
 

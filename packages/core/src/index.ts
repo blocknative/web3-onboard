@@ -97,7 +97,8 @@ function init(options: InitOptions): OnboardAPI {
     containerElements,
     transactionPreview,
     theme,
-    disableFontDownload
+    disableFontDownload,
+    unstoppableResolution
   } = options
 
   if (containerElements) updateConfiguration({ containerElements })
@@ -205,7 +206,8 @@ function init(options: InitOptions): OnboardAPI {
     apiKey,
     initialWalletInit: wallets,
     gas,
-    transactionPreview
+    transactionPreview,
+    unstoppableResolution
   })
 
   if (apiKey && transactionPreview) {
