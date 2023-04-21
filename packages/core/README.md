@@ -206,11 +206,10 @@ type ConnectModalOptions = {
    */
   wheresMyWalletLink?: string
   /**
-   * Define support for Unstoppable Domains resolutions
-   * after a user connects. Similar to ens, uns can be used for users who
-   * have minted an Unstoppable Domain and associated it with their wallet.
-   * ENS resolution takes precedent over UNS
-   * Defaults to false
+   * @deprecated Has no effect unless `@web3-onboard/unstoppable-resolution`
+   * package has been added and passed into the web3-onboard initialization
+   * In this case remove the `@web3-onboard/unstoppable-resolution` package
+   * to remove unstoppableDomain resolution support
    */
   disableUDResolution?: boolean
 }
@@ -257,6 +256,30 @@ type i18nOptions = Record<Locale, i18n>
 
 To see a list of all of the text values that can be internationalized or replaced, check out the [default en file](src/i18n/en.json).
 Onboard is using the [ICU syntax](https://formatjs.io/docs/core-concepts/icu-syntax/) for formatting under the hood.
+
+For example, to update the connect interface language for Metamask, while giving a different message for other wallets, you can include the following: 
+
+```typescript
+i18n: {
+      en: {
+        connect: {
+          connectingWallet: {
+            paragraph: "{wallet, select, MetaMask {{wallet} can only present one account, so connect just the one account you want.} other {Please connect to all of your accounts in {wallet}.}}"
+          }
+        }
+      }
+    }
+```
+
+MetaMask message:
+<img src="https://github.com/blocknative/web3-onboard/blob/develop/assets/custom-connect-1.png?raw=true" />
+
+All other wallets:
+<img src="https://github.com/blocknative/web3-onboard/blob/develop/assets/custom-connect-2.png?raw=true" />
+
+Default Message- with no i18n override: 
+<img src="https://github.com/blocknative/web3-onboard/blob/develop/assets/custom-connect-default.png?raw=true" />
+
 
 **`containerElements`**
 An object mapping for W3O components with the key being the DOM element to mount the specified component to.
@@ -1387,7 +1410,7 @@ module.exports = function override(config) {
 
 Add the following dev dependencies:
 
-`npm i --save-dev rollup-plugin-polyfill-node`
+`npm i --save-dev rollup-plugin-polyfill-node crypto-browserify stream-browserify assert`
 
 Then add the following to your `svelte.config.js` file:
 
@@ -1455,7 +1478,7 @@ Checkout a boilerplate example (here)[https://github.com/blocknative/web3-onboar
 
 Add the following dev dependencies:
 
-`yarn add rollup-plugin-polyfill-node -D`
+`yarn add rollup-plugin-polyfill-node crypto-browserify stream-browserify assert -D`
 
 Then add the following to your `svelte.config.js` file:
 
@@ -1573,7 +1596,7 @@ Checkout a boilerplate example for Vite-React (here)[https://github.com/blocknat
 
 Add the following dev dependencies:
 
-`npm i --save-dev rollup-plugin-polyfill-node`
+`npm i --save-dev rollup-plugin-polyfill-node crypto-browserify stream-browserify assert`
 
 Then add the following to your `vite.config.js` file:
 
