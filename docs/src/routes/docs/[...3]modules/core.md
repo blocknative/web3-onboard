@@ -3,6 +3,9 @@
   import notifyCustomImg from '$lib/assets/notify-custom-example.png'
   import notifyImg from '$lib/assets/notify-example.png'
   import notifyPreflightImg from '$lib/assets/notify-preflight-example.png'
+  import customConnect1 from '$lib/assets/custom-connect-1.png'
+  import customConnect2 from '$lib/assets/custom-connect-2.png'
+  import customConnectDefault from '$lib/assets/custom-connect-default.png'
 </script>
 
 # Core
@@ -265,6 +268,15 @@ i18n: {
       }
     }
 ```
+
+MetaMask message:
+<img src="{customConnect2}" alt="Web3-Onboard connect wallet modal with custom message"/>
+
+All other wallets:
+<img src="{customConnect1}" alt="Web3-Onboard connect wallet modal with custom message"/>
+
+Default Message- with no override: 
+<img src="{customConnectDefault}" alt="Web3-Onboard connect wallet modal with default message"/>
 
 ---
 
