@@ -277,7 +277,7 @@ MetaMask message:
 All other wallets:
 <img src="https://github.com/blocknative/web3-onboard/blob/develop/assets/custom-connect-2.png?raw=true" />
 
-Default Message- with no override: 
+Default Message- with no i18n override: 
 <img src="https://github.com/blocknative/web3-onboard/blob/develop/assets/custom-connect-default.png?raw=true" />
 
 

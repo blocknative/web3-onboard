@@ -275,7 +275,7 @@ MetaMask message:
 All other wallets:
 <img src="{customConnect1}" alt="Web3-Onboard connect wallet modal with custom message"/>
 
-Default Message- with no override: 
+Default Message- with no i18n override: 
 <img src="{customConnectDefault}" alt="Web3-Onboard connect wallet modal with default message"/>
 
 ---
