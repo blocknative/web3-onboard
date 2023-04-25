@@ -189,7 +189,11 @@ export type Configuration = {
 
 export type Locale = string
 export type i18nOptions = Record<Locale, i18n>
-export type i18n = typeof en
+    
+type RecursivePartial<T> = { //https://stackoverflow.com/a/47914631
+    [P in keyof T]?: RecursivePartial<T[P]>;
+};
+export type i18n = RecursivePartial<typeof en>;
 
 export type ConnectModalOptions = {
   /**
