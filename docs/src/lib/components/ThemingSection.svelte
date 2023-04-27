@@ -4,8 +4,6 @@
   import ScrollContainer from './base/ScrollContainer.svelte'
   import TextBlock from './TextBlock.svelte'
   import Container from './Container.svelte'
-
-  import ThemingCode from './code-snippet/theming-code.md'
   import ThemingGraphic from './svg/themes-example-carousel.svg'
 </script>
 
@@ -23,7 +21,7 @@
         </Flexbox>
       </TextBlock>
       <div class="prose">
-        <ThemingCode />
+        <slot name="themingCode"></slot>
       </div>
     </div>
   </Container>

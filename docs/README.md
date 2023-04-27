@@ -1,25 +1,38 @@
-# Docs
+# create-svelte
 
-## Prereqs
+Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
 
-Install [yarn](https://classic.yarnpkg.com/en/docs/install)
+## Creating a project
 
-## Running docs server locally
+If you're seeing this, you've probably already done this step. Congrats!
 
-Run the following command within the `docs/` folder
+```bash
+# create a new project in the current directory
+npm create svelte@latest
 
-```sh
-yarn && yarn dev
+# create a new project in my-app
+npm create svelte@latest my-app
 ```
 
-The server should start on [localhost:3000](http://localhost:3000/).
+## Developing
 
-## Contributing
+Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
 
-Confirm changes look as expected on local instance.
+```bash
+npm run dev
 
-Run `yarn build` and confirm no errors present from the proposed changes.
+# or start the server and open the app in a new browser tab
+npm run dev -- --open
+```
 
-Confirm vercel build within PR builds without error and check instance deployment for accuracy.
+## Building
 
-PR should target branch the main develop branch - [develop](https://github.com/blocknative/web3-onboard/tree/develop).
+To create a production version of your app:
+
+```bash
+npm run build
+```
+
+You can preview the production build with `npm run preview`.
+
+> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.

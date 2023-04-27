@@ -12,6 +12,6 @@
     "jsx": "react-jsx",
     "outDir": "build"
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "postcss.config.cjs"],
   "exclude": ["./.svelte-kit"]
 }

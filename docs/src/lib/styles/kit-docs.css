@@ -9,6 +9,8 @@
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'; */
   --kd-font-family-sans: 'Sofia Pro';
 
+  --kd-color-brand: rgb(var(--kd-color-brand-rgb));
+
   --kd-font-family-mono: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation, Mono,
     Fira Code VF, monospace;
 
@@ -59,7 +61,6 @@
   --kd-color-gray-hover: rgb(54, 54, 54);
   --kd-color-gray-hover-inverse: rgb(245, 245, 245);
   --kd-color-gray-elevate: rgb(45, 45, 45);
-  /* --kd-color-gray-body: rgb(26, 26, 26); */
   --kd-color-gray-body: rgb(26, 29, 38);
 }
 
@@ -92,4 +93,39 @@
     --kd-navbar-padding: 1.25rem 0;
     --kd-sidebar-padding: 0 0 2rem 0.25rem;
   }
+}
+
+:root,
+.prefers-light-scheme {
+  --kd-color-brand: 99 112 229;
+  --kd-color-focus: 79 70 229;
+  --kd-color-soft: 68 78 94;
+  --kd-color-body: 250 250 250;
+  --kd-color-elevate: 243 244 246;
+  --kd-color-inverse: 5 11 23;
+  --kd-color-border: 209 213 219;
+}
+
+:root.dark,
+.prefers-dark-scheme {
+  color-scheme: dark;
+  --kd-color-brand: 99 112 229;
+  --kd-color-soft: 150 155 166;
+  --kd-color-inverse: 245 245 245;
+  --kd-color-border: 38 48 64;
+  --kd-color-elevate: 10 19 33;
+  --kd-color-body: 26 29 38;
+  --kd-color-focus: 129 140 248;
+}
+
+.socialIcon {
+  color: var(--kd-color-gray-soft);
+}
+
+.socialIcon:hover {
+  color:rgb(0, 0, 0)
+}
+
+.socialIcon:hover, .prefers-dark-scheme {
+  color:rgb(99 112 229)
 }

@@ -1,10 +1,6 @@
-<script>
-  import GettingStartedGuide from './code-snippet/getting-started-guide.md'
-</script>
-
 <section id="get-started">
   <article class="prose">
-    <GettingStartedGuide />
+    <slot name="gettingStarted"></slot>
   </article>
 </section>
 

@@ -12,9 +12,6 @@
   import AccountCenterGraphic from './svg/account-center-graphic.svg'
   import WalletsGraphic from './svg/wallet-row.svg'
   import TransactionPreviewGraphic from './svg/transaction-preview-graphic.svg'
-
-  import InstallCode from './code-snippet/install-code.md'
-  import InstallCodeTp from './code-snippet/install-code-tp.md'
 </script>
 
 <section class="features-a">
@@ -31,8 +28,8 @@
         </Flexbox>
       </TextBlock>
       <div>
-        <div class="prose">
-          <InstallCode />
+        <div class="prose fixed-width">
+          <slot name="install"></slot>
         </div>
         <div style={'padding: 1rem'}>
           <FrameworksGraphic />
@@ -113,7 +110,8 @@
             >
           </Flexbox>
           <div class="prose">
-            <InstallCodeTp />
+            <slot name="installTp"></slot>
+            <!-- <InstallCodeTp /> -->
           </div>
         </TextBlock>
       </div>
@@ -209,6 +207,10 @@
   .flexbox > div {
     width: 100%;
     flex: 50%;
+  }
+
+  .fixed-width {
+    max-width: 800px;
   }
 
   @media screen and (min-width: 640px) {
