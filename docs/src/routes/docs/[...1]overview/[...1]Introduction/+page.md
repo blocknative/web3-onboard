@@ -33,7 +33,7 @@ Web3-Onboard is the quickest and easiest way to add multi-wallet and multi-chain
 
 ### Supported Networks
 
-web3-onboard supports all EVM networks. Supporting a new network is simply a matter of adding its details in the Chains section upon initialization. For more information see [initialization options](../../docs/modules/core.md#options).
+web3-onboard supports all EVM networks. Supporting a new network is simply a matter of adding its details in the Chains section upon initialization. For more information see [initialization options](../../modules/core.md#options).
 
 - Ethereum 
 - Arbitrum
@@ -141,35 +141,35 @@ if (wallets[0]) {
 
 Add other wallet modules such as Wallet Connect or Ledger to increase the support and functionality of your web3-onboard implementation. All modules are listed below and can be accessed through the subpages of web3-onboard docs on the left.
 
-We recommend you add the [Core Repo](../../docs/modules/core.md#install) and consider adding the [Injected Wallets](../../docs/wallets/injected.md#install) module to get connected with wallets like Metamask, Trust, Coinbase Wallet & more right away.
+We recommend you add the [Core Repo](../..modules/core.md#install) and consider adding the [Injected Wallets](../../wallets/injected.md#install) module to get connected with wallets like Metamask, Trust, Coinbase Wallet & more right away.
 
-[**Core Repo**](../../docs/modules/core.md#install)
+[**Core Repo**](../../modules/core.md#install)
 
-[**Injected Wallets**](../../docs/wallets/injected.md#install)
+[**Injected Wallets**](../../wallets/injected.md#install)
 
 **SDK Wallets**
 
-- [Coinbase](../../docs/wallets/coinbase.md#install)
-- [WalletConnect](../../docs/wallets/walletconnect.md#install)
-- [Gnosis](../../docs/wallets/gnosis.md#install)
-- [Magic](../../docs/wallets/magic.md#login-options)
-- [Fortmatic](../../docs/wallets/formatic.md#install)
-- [MEW](../../docs/wallets/mewwallet.md#install)
-- [Portis](../../docs/wallets/portis.md#install)
-- [Web3Auth](../../docs/wallets/web3auth.md#install)
+- [Coinbase](../../wallets/coinbase.md#install)
+- [WalletConnect](../../wallets/walletconnect.md#install)
+- [Gnosis](../../wallets/gnosis.md#install)
+- [Magic](../../wallets/magic.md#login-options)
+- [Fortmatic](../../wallets/formatic.md#install)
+- [MEW](../../wallets/mewwallet.md#install)
+- [Portis](../../wallets/portis.md#install)
+- [Web3Auth](../../wallets/web3auth.md#install)
 
 **Hardware Wallets**
 
-- [Ledger](../../docs/wallets/ledger.md#install)
-- [Trezor](../../docs/wallets/trezor.md#install)
-- [Keystone](../../docs/wallets/keystone.md#install)
-- [KeepKey](../../docs/wallets/keepkey.md#install)
-- [D'cent](../../docs/wallets/dcent.md#install)
+- [Ledger](../../wallets/ledger.md#install)
+- [Trezor](../../wallets/trezor.md#install)
+- [Keystone](../../wallets/keystone.md#install)
+- [KeepKey](../../wallets/keepkey.md#install)
+- [D'cent](../../wallets/dcent.md#install)
 
 **Frameworks**
 
-- [React](../../docs/modules/react.md#quickstart-with-injected-wallets-and-ethers-provider)
-- [Vue](../../docs/modules/vue.md#install)
+- [React](../../modules/react.md#quickstart-with-injected-wallets-and-ethers-provider)
+- [Vue](../../modules/vue.md#install)
 
 ## Test out the demo app
 
