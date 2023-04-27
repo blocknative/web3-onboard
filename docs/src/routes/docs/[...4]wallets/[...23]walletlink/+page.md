@@ -5,7 +5,7 @@ title: Walletlink
 # {$frontmatter.title}
 
 :::admonition type=warning
-_Wallet module for connecting WalletLink to web3-onboard is now deprecated. Please use [@web3-onboard/coinbase](./coinbase.md)_
+_Wallet module for connecting WalletLink to web3-onboard is now deprecated. Please use [@web3-onboard/coinbase](../../wallets/coinbase.md)_
 :::
 
 ### Install

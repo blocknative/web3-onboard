@@ -74,6 +74,7 @@ Checkout our full library of quick start examples for connecting and interacting
 - **[Vite/React](https://github.com/blocknative/web3-onboard/tree/main/examples/with-vite-react)**
 - **[Vue](https://github.com/blocknative/web3-onboard/tree/main/examples/with-vuejs)**
 - **[Vue2](https://github.com/blocknative/web3-onboard/tree/main/examples/with-vuejs-v2)**
+- **[Vanilla-JS](https://github.com/blocknative/web3-onboard/tree/main/examples/with-vanilla-js)**
 
 ## Initialization
 

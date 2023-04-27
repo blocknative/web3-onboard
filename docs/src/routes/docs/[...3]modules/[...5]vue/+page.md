@@ -61,7 +61,7 @@ if (connectedWallet) {
 
 ## `init`
 
-The `init` function initializes `web3-onboard` and makes it available to the `useOnboard()` composable. For references check out the [initialization docs for `@web3-onboard/core`](./core.md#initialization)
+The `init` function initializes `web3-onboard` and makes it available to the `useOnboard()` composable. For references check out the [initialization docs for `@web3-onboard/core`](../../modules/core.md#initialization)
 
 ### Example usage
 
@@ -103,7 +103,7 @@ const { wallets, connectWallet, disconnectConnectedWallet, connectedWallet } = u
 
 ### `connectWallet`
 
-Function to open the onboard modal and connect to a wallet provider. For reference check out the [connecting a wallet for `@web3-onboard/core`](./core.md#connecting-a-wallet)
+Function to open the onboard modal and connect to a wallet provider. For reference check out the [connecting a wallet for `@web3-onboard/core`](../../modules/core.md#connecting-a-wallet)
 
 ### Example usage
 

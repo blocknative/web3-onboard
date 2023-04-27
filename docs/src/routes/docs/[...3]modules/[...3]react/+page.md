@@ -115,7 +115,7 @@ export default MyApp
 
 ## `init`
 
-The `init` function must be called before any hooks can be used. The `init` function just initializes `web3-onboard` and makes it available for all hooks to use. For reference check out the [initialization docs for `@web3-onboard/core`](./core.md#initialization)
+The `init` function must be called before any hooks can be used. The `init` function just initializes `web3-onboard` and makes it available for all hooks to use. For reference check out the [initialization docs for `@web3-onboard/core`](../../modules/core.md#initialization)
 
 ## `useConnectWallet`
 
@@ -223,7 +223,7 @@ const [
 
 This hook allows the dev to access all notifications if enabled, send custom notifications and update notify <enable/disable & update transactionHandler function>
 **note** requires an API key be added to the initialization, enabled by default if API key exists
-For full Notification documentation please see [Notify section within the `@web3-onboard/core` docs](./core.md#options)
+For full Notification documentation please see [Notify section within the `@web3-onboard/core` docs](../../modules/core.md#options)
 
 ```typescript
 type UseNotifications = (): [

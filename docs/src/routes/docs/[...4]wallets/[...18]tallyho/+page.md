@@ -5,7 +5,7 @@ title: Tally Ho
 # {$frontmatter.title}
 
 :::admonition type=warning
-_Wallet module for connecting TallyHo to web3-onboard is now deprecated. Please use [@web3-onboard/taho](./taho.md)_
+_Wallet module for connecting TallyHo to web3-onboard is now deprecated. Please use [@web3-onboard/taho](../../wallets/taho.md)_
 :::
 
 ## Wallet module for connecting TallyHo
