@@ -1,7 +1,7 @@
 # @web3-onboard/venly
 
 ## Wallet module for connecting Venly SDK to web3-onboard
-See [Venly SDK Docs](https://docs.venly.io/widget/)
+See [Venly SDK Docs](https://docs.venly.io/widget/) for complete documentation of Venly usage
 
 ### Install
 
