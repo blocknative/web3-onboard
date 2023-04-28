@@ -67,7 +67,8 @@
       </div>
       <div class="text relative">
         {$_('connect.connectedWallet.mainText', {
-          default: en.connect.connectedWallet.mainText
+          default: en.connect.connectedWallet.mainText,
+          values: { wallet: selectedWallet.label } 
         })}
       </div>
     </div>

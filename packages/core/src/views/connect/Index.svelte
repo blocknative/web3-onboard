@@ -56,7 +56,7 @@
 
   export let autoSelect: ConnectOptions['autoSelect']
 
-  const { appMetadata } = configuration
+  const { appMetadata, unstoppableResolution } = configuration
   const { icon } = appMetadata || {}
 
   const { walletModules, connect } = state.get()
@@ -348,7 +348,7 @@
       })
     }
 
-    if (uns === null) {
+    if (uns === null && unstoppableResolution) {
       getUns(address, appChain).then(uns => {
         updateAccount(selectedWallet.label, address, {
           uns

@@ -375,6 +375,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/taho
     steps:
       - node-build-steps
+  build-unstoppable-resolution:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/unstoppable-resolution
+    steps:
+      - node-build-steps
 
   # Build staging/Alpha releases
   build-staging-core:
@@ -585,6 +591,12 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/taho
+    steps:
+      - node-staging-build-steps
+  build-staging-unstoppable-resolution:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/unstoppable-resolution
     steps:
       - node-staging-build-steps
 
@@ -800,4 +812,10 @@ workflows:
       - build-taho:
           <<: *deploy_production_filters
       - build-staging-taho:
+          <<: *deploy_staging_filters
+  unstoppable-resolution:
+    jobs:
+      - build-unstoppable-resolution:
+          <<: *deploy_production_filters
+      - build-staging-unstoppable-resolution:
           <<: *deploy_staging_filters

@@ -28,6 +28,6 @@ export const useAppState: {
     return stateKey ? snapshot[stateKey] : snapshot
   }, [stateKey])
 
-  const getServerSnapshot = () => get() || getSnapshot
+  const getServerSnapshot = () => getSnapshot()
   return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 }

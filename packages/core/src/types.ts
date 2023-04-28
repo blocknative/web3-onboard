@@ -12,6 +12,7 @@ import type {
 } from '@web3-onboard/common'
 
 import type gas from '@web3-onboard/gas'
+import type unstoppableResolution from '@web3-onboard/unstoppable-resolution'
 import type { TransactionPreviewAPI } from '@web3-onboard/transaction-preview'
 
 import type en from './i18n/en.json'
@@ -77,6 +78,13 @@ export interface InitOptions {
    * the Theme initialization object or set as css variable
    */
   disableFontDownload?: boolean
+  /**
+   * Type of unstoppableResolution module
+   * A small module that can bee added to allow Unstoppable Domain
+   * address resolution similar to that of ens (Ethereum Name Service)
+   * ENS resolution will take president if available
+   */
+  unstoppableResolution?: typeof unstoppableResolution
 }
 
 export type Theme = ThemingMap | BuiltInThemes | 'system'
@@ -176,6 +184,7 @@ export type Configuration = {
   gas?: typeof gas
   containerElements?: ContainerElements
   transactionPreview?: TransactionPreviewAPI
+  unstoppableResolution?: typeof unstoppableResolution
 }
 
 export type Locale = string
@@ -193,15 +202,15 @@ export type ConnectModalOptions = {
    * Defaults to false
    */
   disableClose?: boolean
-  /** 
-   * If set to true, the most recently connected wallet will store in 
-   * local storage. Then on init, onboard will try to reconnect to 
+  /**
+   * If set to true, the most recently connected wallet will store in
+   * local storage. Then on init, onboard will try to reconnect to
    * that wallet with no modals displayed
    */
   autoConnectLastWallet?: boolean
-  /** 
-   * If set to true, all previously connected wallets will store in 
-   * local storage. Then on init, onboard will try to reconnect to 
+  /**
+   * If set to true, all previously connected wallets will store in
+   * local storage. Then on init, onboard will try to reconnect to
    * each wallet with no modals displayed
    */
   autoConnectAllPreviousWallet?: boolean
@@ -219,11 +228,10 @@ export type ConnectModalOptions = {
    */
   wheresMyWalletLink?: string
   /**
-   * Define support for Unstoppable Domains resolutions
-   * after a user connects. Similar to ens, uns can be used for users who
-   * have minted an Unstoppable Domain and associated it with their wallet.
-   * ENS resolution takes precedent over UNS
-   * Defaults to false
+   * @deprecated Has no effect unless `@web3-onboard/unstoppable-resolution`
+   * package has been added and passed into the web3-onboard initialization
+   * In this case remove the `@web3-onboard/unstoppable-resolution` package
+   * to remove unstoppableDomain resolution support
    */
   disableUDResolution?: boolean
 }
@@ -315,7 +323,7 @@ export type Notification = {
    */
   message: string
   /**
-   * handle codes in your own way - see codes here under the notify 
+   * handle codes in your own way - see codes here under the notify
    * prop default en file at ./packages/core/src/i18n/en.json
    */
   eventCode: string
@@ -324,14 +332,14 @@ export type Notification = {
    */
   type: NotificationType
   /**
-   * time (in ms) after which the notification will be dismissed. If set 
-   * to `0` the notification will remain on screen until the user dismisses the 
-   * notification, refreshes the page or navigates away from the site 
+   * time (in ms) after which the notification will be dismissed. If set
+   * to `0` the notification will remain on screen until the user dismisses the
+   * notification, refreshes the page or navigates away from the site
    * with the notifications
    */
   autoDismiss: number
   /**
-   * add link to the transaction hash. For instance, a link to the 
+   * add link to the transaction hash. For instance, a link to the
    * transaction on etherscan
    */
   link?: string
@@ -394,7 +402,7 @@ export type Action =
   | UpdateConnectModalAction
 
 export type AddChainsAction = { type: 'add_chains'; payload: Chain[] }
-export type UpdateChainsAction = { type: 'update_chains'; payload: Chain}
+export type UpdateChainsAction = { type: 'update_chains'; payload: Chain }
 export type AddWalletAction = { type: 'add_wallet'; payload: WalletState }
 
 export type UpdateWalletAction = {
