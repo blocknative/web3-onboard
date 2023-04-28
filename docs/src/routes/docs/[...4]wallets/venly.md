@@ -25,7 +25,7 @@ npm install @web3-onboard/venly
 ```typescript
 type VenlyProviderOptions = {
   clientId: string
-  environment: string
+  environment?: string
 }
 ```
 
