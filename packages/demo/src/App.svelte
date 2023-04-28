@@ -203,6 +203,7 @@
       {
         id: '0x1',
         token: 'ETH',
+        tokens:[{address:'0x111111111117dc0aa78b770fa6a738034120c302', name:'1inch', icon:'123'}],
         label: 'Ethereum',
         rpcUrl: `https://mainnet.infura.io/v3/${infura_key}`
       },

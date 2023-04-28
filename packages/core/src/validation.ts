@@ -242,13 +242,21 @@ const disconnectOptions = Joi.object({
   label: Joi.string().required()
 }).required()
 
+const tokenValidation = Joi.object({
+  name: Joi.string().required(),
+  address: Joi.string().required(),
+  icon: Joi.string().optional()
+})
+
 const setChainOptions = Joi.object({
   chainId: chainIdValidation.required(),
   chainNamespace: chainNamespaceValidation,
   wallet: Joi.string(),
   rpcUrl: Joi.string(),
   label: Joi.string(),
-  token: Joi.string()
+  token: Joi.string(),
+  tokens: Joi.array()
+  .items(tokenValidation).optional()
 })
 
 const customNotificationUpdate = Joi.object({

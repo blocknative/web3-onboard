@@ -9,7 +9,7 @@
   import arrowForwardIcon from '../../icons/arrow-forward.js'
   import connect from '../../connect.js'
   import disconnect from '../../disconnect.js'
-  import { state } from '../../store/index.js'
+  import { state, state } from '../../store/index.js'
   import { getDefaultChainStyles, unrecognizedChainStyle } from '../../utils.js'
   import { NetworkSelector, SuccessStatusIcon, WalletAppBadge } from '../shared/index.js'
   import caretLightIcon from '../../icons/caret-light.js'
@@ -19,6 +19,8 @@
   import { updateAccountCenter } from '../../store/actions.js'
   import DisconnectAllConfirm from './DisconnectAllConfirm.svelte'
   import { configuration } from '../../configuration.js'
+  import { addNewChain1 } from '../../provider'
+
 
   function disconnectAllWallets() {
     $wallets$.forEach(({ label }) => disconnect({ label }))
@@ -44,6 +46,13 @@
 
   const { position } = state.get().accountCenter
   const { device } = configuration
+
+  const updateRPC = () => {
+    const { wallets, chains } = state.get()
+    const chain = chains.find(({ id }) => id === wallets[0].chains[0].id)
+
+    addNewChain1(wallets[0].provider, chain)
+  }
 </script>
 
 <style>
@@ -60,7 +69,10 @@
     overflow: hidden;
     pointer-events: auto;
     border: 1px solid transparent;
-    background: var(--account-center-maximized-upper-background, var(--background-color));
+    background: var(
+      --account-center-maximized-upper-background,
+      var(--background-color)
+    );
     border-color: var(--border-color);
     border-radius: var(--account-center-border-radius, var(--border-radius));
   }
@@ -81,7 +93,10 @@
   }
 
   .actions {
-    color: var(--account-center-maximized-upper-action-color, var(--action-color));
+    color: var(
+      --account-center-maximized-upper-action-color,
+      var(--action-color)
+    );
     padding-left: 2px;
   }
 
@@ -162,8 +177,12 @@
 
   .app-info-container {
     color: var(--text-color, var(--gray-700));
-    background: var(--account-center-maximized-info-section-background-color,
-      var(--account-center-maximized-info-section, var(--background-color, #FFF))
+    background: var(
+      --account-center-maximized-info-section-background-color,
+      var(
+        --account-center-maximized-info-section,
+        var(--background-color, #fff)
+      )
     );
     border-top: 1px solid var(--border-color);
     border-radius: var(--account-center-border-radius, inherit);
@@ -212,7 +231,10 @@
   .app-button {
     font-family: var(--account-center-app-btn-font-family, inherit);
     margin-top: var(--onboard-spacing-5, var(--spacing-5));
-    color: var(--account-center-app-btn-text-color, var(--background-color, #FFF));
+    color: var(
+      --account-center-app-btn-text-color,
+      var(--background-color, #fff)
+    );
     background: var(--account-center-app-btn-background, var(--action-color));
   }
 
@@ -430,7 +452,7 @@
 
         <button
           class="app-button button-neutral-solid"
-          on:click={() => updateAccountCenter({ expanded: false })}
+          on:click={() => updateRPC()}
           >{$_('accountCenter.backToApp', {
             default: en.accountCenter.backToApp
           })}</button

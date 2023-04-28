@@ -405,6 +405,10 @@ export interface Chain {
   /* Recommended to include. The native token symbol, eg ETH, BNB, MATIC */
   token?: TokenSymbol
   /**
+   * Tokens to be displayed in Account Center and available in the app state
+   */
+  tokens?: Token[]
+  /**
    * The color used to represent the chain and
    * will be used as a background for the icon
    */
@@ -417,6 +421,12 @@ export interface Chain {
   publicRpcUrl?: string
   /* Also used when adding a new config to the wallet */
   blockExplorerUrl?: string
+}
+
+export interface Token {
+  address: string
+  name: string
+  icon?: string
 }
 
 export type ChainWithDecimalId = Omit<Chain, 'id'> & { id: DecimalChainId }
