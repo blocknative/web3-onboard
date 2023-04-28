@@ -32,6 +32,7 @@ import type {
 } from './types.js'
 
 import type { Uns } from '@web3-onboard/unstoppable-resolution'
+import { updateSecondaryTokens } from './update-balances'
 
 export const ethersProviders: {
   [key: string]: providers.StaticJsonRpcProvider
@@ -192,9 +193,8 @@ export function trackWallet(
 
         const { wallets, chains } = state.get()
 
-        const { chains: walletChains, accounts } = wallets.find(
-          wallet => wallet.label === label
-        )
+        const primaryWallet = wallets.find(wallet => wallet.label === label)
+        const { chains: walletChains, accounts } = primaryWallet
 
         const [connectedWalletChain] = walletChains
 
@@ -204,6 +204,11 @@ export function trackWallet(
         )
 
         const balanceProm = getBalance(address, chain)
+        const secondaryTokenBal = updateSecondaryTokens(
+          primaryWallet,
+          address,
+          chains
+        )
         const account = accounts.find(account => account.address === address)
 
         const ensProm =
@@ -222,14 +227,16 @@ export function trackWallet(
           Promise.resolve(address),
           balanceProm,
           ensProm,
-          unsProm
+          unsProm,
+          secondaryTokenBal
         ])
       })
     )
     .subscribe(res => {
       if (!res) return
-      const [address, balance, ens, uns] = res
-      updateAccount(label, address, { balance, ens, uns })
+      const [address, balance, ens, uns, secondaryTokens] = res
+      console.log(238, secondaryTokens)
+      updateAccount(label, address, { balance, ens, uns, secondaryTokens })
     })
 
   const chainChanged$ = listenChainChanged({ provider, disconnected$ }).pipe(
@@ -298,7 +305,8 @@ export function trackWallet(
     .pipe(
       switchMap(async chainId => {
         const { wallets, chains } = state.get()
-        const { accounts } = wallets.find(wallet => wallet.label === label)
+        const primaryWallet = wallets.find(wallet => wallet.label === label)
+        const { accounts } = primaryWallet
 
         const chain = chains.find(
           ({ namespace, id }) => namespace === 'evm' && id === chainId
@@ -308,6 +316,12 @@ export function trackWallet(
           accounts.map(async ({ address }) => {
             const balanceProm = getBalance(address, chain)
 
+            const secondaryTokenBal = updateSecondaryTokens(
+              primaryWallet,
+              address,
+              chains
+            )
+
             const ensProm = validEnsChain(chainId)
               ? getEns(address, chain)
               : Promise.resolve(null)
@@ -316,23 +330,26 @@ export function trackWallet(
               ? getUns(address, chain)
               : Promise.resolve(null)
 
-            const [balance, ens, uns] = await Promise.all([
+            const [balance, ens, uns, secondaryTokens] = await Promise.all([
               balanceProm,
               ensProm,
-              unsProm
+              unsProm,
+              secondaryTokenBal
             ])
 
             return {
               address,
               balance,
               ens,
-              uns
+              uns,
+              secondaryTokens
             }
           })
         )
       })
     )
     .subscribe(updatedAccounts => {
+      console.log('updatedAccounts', updatedAccounts)
       updatedAccounts && updateWallet(label, { accounts: updatedAccounts })
     })
 
@@ -448,30 +465,6 @@ export function addNewChain(
           decimals: 18
         },
         rpcUrls: [chain.publicRpcUrl || chain.rpcUrl],
-        blockExplorerUrls: chain.blockExplorerUrl
-          ? [chain.blockExplorerUrl]
-          : undefined
-      }
-    ]
-  })
-}
-
-export function addNewChain1(
-  provider: EIP1193Provider,
-  chain: Chain
-): Promise<unknown> {
-  return provider.request({
-    method: 'wallet_addEthereumChain',
-    params: [
-      {
-        chainId: chain.id,
-        chainName: chain.label,
-        nativeCurrency: {
-          name: chain.label,
-          symbol: chain.token,
-          decimals: 18
-        },
-        rpcUrls: ['https://www.supersweetNewBLOCKNATIVERPC.com'],
         blockExplorerUrls: chain.blockExplorerUrl
           ? [chain.blockExplorerUrl]
           : undefined

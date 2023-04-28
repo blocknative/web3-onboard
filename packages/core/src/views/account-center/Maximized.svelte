@@ -9,7 +9,7 @@
   import arrowForwardIcon from '../../icons/arrow-forward.js'
   import connect from '../../connect.js'
   import disconnect from '../../disconnect.js'
-  import { state, state } from '../../store/index.js'
+  import { state } from '../../store/index.js'
   import { getDefaultChainStyles, unrecognizedChainStyle } from '../../utils.js'
   import { NetworkSelector, SuccessStatusIcon, WalletAppBadge } from '../shared/index.js'
   import caretLightIcon from '../../icons/caret-light.js'
@@ -19,8 +19,6 @@
   import { updateAccountCenter } from '../../store/actions.js'
   import DisconnectAllConfirm from './DisconnectAllConfirm.svelte'
   import { configuration } from '../../configuration.js'
-  import { addNewChain1 } from '../../provider'
-
 
   function disconnectAllWallets() {
     $wallets$.forEach(({ label }) => disconnect({ label }))
@@ -47,12 +45,6 @@
   const { position } = state.get().accountCenter
   const { device } = configuration
 
-  const updateRPC = () => {
-    const { wallets, chains } = state.get()
-    const chain = chains.find(({ id }) => id === wallets[0].chains[0].id)
-
-    addNewChain1(wallets[0].provider, chain)
-  }
 </script>
 
 <style>
@@ -452,7 +444,7 @@
 
         <button
           class="app-button button-neutral-solid"
-          on:click={() => updateRPC()}
+          on:click={() => updateAccountCenter({ expanded: false })}
           >{$_('accountCenter.backToApp', {
             default: en.accountCenter.backToApp
           })}</button

@@ -425,7 +425,7 @@ export interface Chain {
 
 export interface Token {
   address: string
-  name: string
+  name: TokenSymbol
   icon?: string
 }
 

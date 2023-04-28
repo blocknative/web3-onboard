@@ -15,7 +15,6 @@
   import magicModule from '@web3-onboard/magic'
   import web3authModule from '@web3-onboard/web3auth'
   import gas from '@web3-onboard/gas'
-  import unstoppableResolution from '@web3-onboard/unstoppable-resolution'
   import dcentModule from '@web3-onboard/dcent'
   import sequenceModule from '@web3-onboard/sequence'
   import tallyHoModule from '@web3-onboard/tallyho'
@@ -198,12 +197,11 @@
     ],
     transactionPreview,
     gas,
-    unstoppableResolution,
     chains: [
       {
         id: '0x1',
         token: 'ETH',
-        tokens:[{address:'0x111111111117dc0aa78b770fa6a738034120c302', name:'1inch', icon:'123'}],
+        tokens:[{address:'0x111111111117dc0aa78b770fa6a738034120c302', name:'1inch', icon:'123'}, {address: '0x1d37986f252d0e349522ea6c3b98cb935495e63e', name:'chart', icon: '321'}],
         label: 'Ethereum',
         rpcUrl: `https://mainnet.infura.io/v3/${infura_key}`
       },

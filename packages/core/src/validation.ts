@@ -61,11 +61,21 @@ const balance = Joi.any().allow(
   null
 )
 
+const secondaryTokens = Joi.any().allow(
+  Joi.object({
+    name: Joi.string().required(),
+    balance: Joi.string().required(),
+    icon: Joi.string()
+  }),
+  null
+)
+
 const account = Joi.object({
   address: Joi.string().required(),
   ens,
   uns,
-  balance
+  balance,
+  secondaryTokens
 })
 
 const chains = Joi.array()
@@ -255,8 +265,7 @@ const setChainOptions = Joi.object({
   rpcUrl: Joi.string(),
   label: Joi.string(),
   token: Joi.string(),
-  tokens: Joi.array()
-  .items(tokenValidation).optional()
+  tokens: Joi.array().items(tokenValidation).optional()
 })
 
 const customNotificationUpdate = Joi.object({

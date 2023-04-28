@@ -44,7 +44,6 @@
     "@web3-onboard/trust": "^2.0.2",
     "@web3-onboard/torus": "^2.2.3",
     "@web3-onboard/taho": "^2.0.2",
-    "@web3-onboard/unstoppable-resolution": "^2.0.0",
     "@web3-onboard/web3auth": "^2.2.1",
     "@web3-onboard/walletconnect": "^2.3.6",
     "@web3-onboard/enkrypt": "^2.0.2",
