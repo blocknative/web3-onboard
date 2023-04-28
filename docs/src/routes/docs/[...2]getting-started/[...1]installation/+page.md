@@ -30,8 +30,8 @@ npm install @web3-onboard/core @web3-onboard/injected-wallets
 ### Import
 
 ```js
-import Onboard, { chains } from '@web3-onboard/core'
-import injectedModule from '@web3-onboard/injected-wallets'
+import Onboard, { chains } from '@web3-onboard/core';
+import injectedModule from '@web3-onboard/injected-wallets';
 ```
 
 ### Configure
@@ -39,12 +39,12 @@ import injectedModule from '@web3-onboard/injected-wallets'
 #### Wallets
 
 ```ts {4-6}
-import Onboard, { chains } from '@web3-onboard/core'
-import injectedModule from '@web3-onboard/injected-wallets'
+import Onboard, { chains } from '@web3-onboard/core';
+import injectedModule from '@web3-onboard/injected-wallets';
 
-const injected = injectedModule()
+const injected = injectedModule();
 
-const wallets = [injected]
+const wallets = [injected];
 ```
 
 #### Chains
@@ -52,22 +52,22 @@ const wallets = [injected]
 Select the chains that you'd like your dapp to support:
 
 ```ts
-const INFURA_ID = '...'
+const INFURA_ID = '...';
 
 const chains = [
-  {
-    id: 1,
-    token: 'ETH',
-    label: 'Ethereum Mainnet',
-    rpcUrl: 'https://mainnet.infura.io/v3/${INFURA_ID}'
-  },
-  {
-    id: 137,
-    token: 'MATIC',
-    label: 'Matic Mainnet',
-    rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
-  }
-]
+	{
+		id: 1,
+		token: 'ETH',
+		label: 'Ethereum Mainnet',
+		rpcUrl: 'https://mainnet.infura.io/v3/${INFURA_ID}'
+	},
+	{
+		id: 137,
+		token: 'MATIC',
+		label: 'Matic Mainnet',
+		rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+	}
+];
 ```
 
 #### App Metadata (Optional)
@@ -77,23 +77,23 @@ A full definition of `appMetaData` options can be found [here](/docs/modules/cor
 
 ```ts
 const appMetadata = {
-  name: 'My App',
-  icon: '<SVG_ICON_STRING>',
-  logo: '<SVG_LOGO_STRING>',
-  description: 'My app using Onboard',
-  recommendedInjectedWallets: [
-    { name: 'Coinbase', url: 'https://wallet.coinbase.com/' },
-    { name: 'MetaMask', url: 'https://metamask.io' }
-  ]
-}
+	name: 'My App',
+	icon: '<SVG_ICON_STRING>',
+	logo: '<SVG_LOGO_STRING>',
+	description: 'My app using Onboard',
+	recommendedInjectedWallets: [
+		{ name: 'Coinbase', url: 'https://wallet.coinbase.com/' },
+		{ name: 'MetaMask', url: 'https://metamask.io' }
+	]
+};
 ```
 
 #### Initialize Onboard
 
 ```ts
 const onboard = Onboard({
-  wallets,
-  chains,
-  appMetadata
-})
+	wallets,
+	chains,
+	appMetadata
+});
 ```

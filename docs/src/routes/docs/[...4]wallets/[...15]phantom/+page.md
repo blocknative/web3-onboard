@@ -32,20 +32,20 @@ npm install @web3-onboard/core @web3-onboard/phantom
 ## Usage
 
 ```typescript
-import Onboard from '@web3-onboard/core'
-import phantomModule from '@web3-onboard/phantom'
+import Onboard from '@web3-onboard/core';
+import phantomModule from '@web3-onboard/phantom';
 
 // initialize the module
-const phantom = phantomModule()
+const phantom = phantomModule();
 
 const onboard = Onboard({
-  // ... other Onboard options
-  wallets: [
-    phantom
-    //... other wallets
-  ]
-})
+	// ... other Onboard options
+	wallets: [
+		phantom
+		//... other wallets
+	]
+});
 
-const connectedWallets = await onboard.connectWallet()
-console.log(connectedWallets)
+const connectedWallets = await onboard.connectWallet();
+console.log(connectedWallets);
 ```

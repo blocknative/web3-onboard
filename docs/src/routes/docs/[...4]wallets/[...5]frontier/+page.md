@@ -22,20 +22,20 @@ npm install @web3-onboard/core @web3-onboard/frontier
 ## Usage
 
 ```typescript
-import Onboard from '@web3-onboard/core'
-import frontierModule from '@web3-onboard/frontier'
+import Onboard from '@web3-onboard/core';
+import frontierModule from '@web3-onboard/frontier';
 
 // initialize the module
-const frontier = frontierModule()
+const frontier = frontierModule();
 
 const onboard = Onboard({
-  // ... other Onboard options
-  wallets: [
-    frontier
-    //... other wallets
-  ]
-})
+	// ... other Onboard options
+	wallets: [
+		frontier
+		//... other wallets
+	]
+});
 
-const connectedWallets = await onboard.connectWallet()
-console.log(connectedWallets)
+const connectedWallets = await onboard.connectWallet();
+console.log(connectedWallets);
 ```

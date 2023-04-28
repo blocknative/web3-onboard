@@ -20,6 +20,7 @@ Preview Vitalik swapping 100 UNI tokens for ETH using Transaction Preview
 <TransactionPreviewButton/>
 
 Full Simulation Platform API documentation can be found [here](https://docs.blocknative.com/transaction-preview-api)
+
 ### Install
 
 <Tabs values={['yarn', 'npm']}>
@@ -192,204 +193,206 @@ console.log(simData)
 ### Options & Types
 
 ```typescript
-export type TransactionPreviewModule = (options: TransactionPreviewOptions) => TransactionPreviewAPI
+export type TransactionPreviewModule = (
+	options: TransactionPreviewOptions
+) => TransactionPreviewAPI;
 
-export type FullPreviewOptions = TransactionPreviewOptions & TransactionPreviewInitOptions
+export type FullPreviewOptions = TransactionPreviewOptions & TransactionPreviewInitOptions;
 
 export type TransactionPreviewAPI = {
-  /**
-   * This Method accepts a standard EIP1193 provider
-   * (such as an injected wallet from window.ethereum)
-   * and it will be patched to allow for transaction previewing
-   */
-  patchProvider: (provider: PatchedEIP1193Provider) => PatchedEIP1193Provider
+	/**
+	 * This Method accepts a standard EIP1193 provider
+	 * (such as an injected wallet from window.ethereum)
+	 * and it will be patched to allow for transaction previewing
+	 */
+	patchProvider: (provider: PatchedEIP1193Provider) => PatchedEIP1193Provider;
 
-  /**
-   * This Method accepts:
-   * apiKey: string - Blocknative API key (https://explorer.blocknative.com/)
-   * sdk: instance of an initialized bnc-sdk (www.npmjs.com/package/bnc-sdk)
-   * containerElement: string of an html id selector (e.g. "#my-html-el")
-   */
-  init: (initializationOptions: TransactionPreviewInitOptions) => void
+	/**
+	 * This Method accepts:
+	 * apiKey: string - Blocknative API key (https://explorer.blocknative.com/)
+	 * sdk: instance of an initialized bnc-sdk (www.npmjs.com/package/bnc-sdk)
+	 * containerElement: string of an html id selector (e.g. "#my-html-el")
+	 */
+	init: (initializationOptions: TransactionPreviewInitOptions) => void;
 
-  /**
-   * This method accepts a transaction meant for a wallet provider
-   * (created using libraries like Ethers or Web3),
-   * simulates the transaction and generates a corresponding UI and
-   * return a response from the Blocknative Transaction Preview API.
-   * Note: the package will need to initialized with the `init`
-   * function prior to usage
-   */
-  previewTransaction: (transaction: TransactionForSim[]) => Promise<MultiSimOutput>
-}
+	/**
+	 * This method accepts a transaction meant for a wallet provider
+	 * (created using libraries like Ethers or Web3),
+	 * simulates the transaction and generates a corresponding UI and
+	 * return a response from the Blocknative Transaction Preview API.
+	 * Note: the package will need to initialized with the `init`
+	 * function prior to usage
+	 */
+	previewTransaction: (transaction: TransactionForSim[]) => Promise<MultiSimOutput>;
+};
 
-export type PatchedEIP1193Provider = EIP1193Provider & { simPatched: boolean }
+export type PatchedEIP1193Provider = EIP1193Provider & { simPatched: boolean };
 
 export interface ProviderReq {
-  method: string
-  params?: Array<unknown>
+	method: string;
+	params?: Array<unknown>;
 }
 
-export type RequestOptions = Pick<TransactionPreviewInitOptions, 'apiKey'>
+export type RequestOptions = Pick<TransactionPreviewInitOptions, 'apiKey'>;
 
 export type TransactionPreviewInitOptions = {
-  /**
-   * Blocknative API key (https://explorer.blocknative.com/account)
-   */
-  apiKey: string
-  /**
-   * Your Blocknative SDK instance (https://www.npmjs.com/package/bnc-sdk)
-   * */
-  sdk: SDK
-  /**
-   * Optional dom query string to mount UI to
-   * */
-  containerElement: string
-}
+	/**
+	 * Blocknative API key (https://explorer.blocknative.com/account)
+	 */
+	apiKey: string;
+	/**
+	 * Your Blocknative SDK instance (https://www.npmjs.com/package/bnc-sdk)
+	 * */
+	sdk: SDK;
+	/**
+	 * Optional dom query string to mount UI to
+	 * */
+	containerElement: string;
+};
 
 export type TransactionPreviewOptions = {
-  /**
-   * Optional requirement for user to accept transaction balance changes
-   * prior to sending the transaction to the wallet
-   * Defaults to true
-   * */
-  requireTransactionApproval?: boolean
-  /**
-   * An optional internationalization object that defines the display
-   * text for different locales. Can also be used to override the default text.
-   * To override the default text, pass in a object for the en locale
-   */
-  i18n?: i18nOptions
-}
+	/**
+	 * Optional requirement for user to accept transaction balance changes
+	 * prior to sending the transaction to the wallet
+	 * Defaults to true
+	 * */
+	requireTransactionApproval?: boolean;
+	/**
+	 * An optional internationalization object that defines the display
+	 * text for different locales. Can also be used to override the default text.
+	 * To override the default text, pass in a object for the en locale
+	 */
+	i18n?: i18nOptions;
+};
 
-export type Locale = string
-export type i18nOptions = Record<Locale, i18n>
-export type i18n = typeof en
+export type Locale = string;
+export type i18nOptions = Record<Locale, i18n>;
+export type i18n = typeof en;
 
 export type DeviceNotBrowser = {
-  type: null
-  os: null
-  browser: null
-}
+	type: null;
+	os: null;
+	browser: null;
+};
 
 export type TransactionForSim = SimulationTransaction & {
-  data?: string
-}
+	data?: string;
+};
 
 export interface SimulationTransaction {
-  from: string
-  to: string
-  value: number
-  gas: number
-  input: string
-  // Either Type 1 Gas (gasPrice) or Type 2 Gas (maxPriorityFeePerGas & maxFeePerGas)
-  // must be included in the payload
-  gasPrice?: number
-  maxPriorityFeePerGas?: number
-  maxFeePerGas?: number
+	from: string;
+	to: string;
+	value: number;
+	gas: number;
+	input: string;
+	// Either Type 1 Gas (gasPrice) or Type 2 Gas (maxPriorityFeePerGas & maxFeePerGas)
+	// must be included in the payload
+	gasPrice?: number;
+	maxPriorityFeePerGas?: number;
+	maxFeePerGas?: number;
 }
 
 export type MultiSimOutput = {
-  id?: string
-  contractCall: ContractCall[]
-  error?: any
-  gasUsed: number[]
-  internalTransactions: InternalTransaction[][]
-  netBalanceChanges: NetBalanceChange[][]
-  network: Network
-  simDetails: SimDetails
-  serverVersion: string
-  system: System
-  status: Status
-  simulatedBlockNumber: number
-  transactions: InternalTransaction[]
-}
+	id?: string;
+	contractCall: ContractCall[];
+	error?: any;
+	gasUsed: number[];
+	internalTransactions: InternalTransaction[][];
+	netBalanceChanges: NetBalanceChange[][];
+	network: Network;
+	simDetails: SimDetails;
+	serverVersion: string;
+	system: System;
+	status: Status;
+	simulatedBlockNumber: number;
+	transactions: InternalTransaction[];
+};
 
 export interface ContractCall {
-  contractType?: string
-  contractAddress?: string
-  contractAlias?: string
-  methodName: string
-  params: Record<string, unknown>
-  contractName?: string
-  contractDecimals?: number
-  decimalValue?: string
+	contractType?: string;
+	contractAddress?: string;
+	contractAlias?: string;
+	methodName: string;
+	params: Record<string, unknown>;
+	contractName?: string;
+	contractDecimals?: number;
+	decimalValue?: string;
 }
 
 export interface InternalTransaction {
-  type: string
-  from: string
-  to: string
-  input: string
-  gas: number
-  gasUsed: number
-  value: string
-  contractCall: ContractCall
-  error?: string
-  errorReason?: string
+	type: string;
+	from: string;
+	to: string;
+	input: string;
+	gas: number;
+	gasUsed: number;
+	value: string;
+	contractCall: ContractCall;
+	error?: string;
+	errorReason?: string;
 }
 
 export interface NetBalanceChange {
-  address: string
-  balanceChanges: BalanceChange[]
+	address: string;
+	balanceChanges: BalanceChange[];
 }
 
 export interface BalanceChange {
-  delta: string
-  asset: Asset
-  breakdown: BreakDown[]
+	delta: string;
+	asset: Asset;
+	breakdown: BreakDown[];
 }
 
 export interface Asset {
-  type: string
-  symbol: string
-  contractAddress: string
+	type: string;
+	symbol: string;
+	contractAddress: string;
 }
 
 export interface BreakDown {
-  counterparty: string
-  amount: string
+	counterparty: string;
+	amount: string;
 }
 
 export interface InternalTransaction {
-  type: string
-  from: string
-  to: string
-  input: string
-  gas: number
-  gasUsed: number
-  value: string
-  contractCall: ContractCall
+	type: string;
+	from: string;
+	to: string;
+	input: string;
+	gas: number;
+	gasUsed: number;
+	value: string;
+	contractCall: ContractCall;
 }
 
-export type System = 'bitcoin' | 'ethereum'
+export type System = 'bitcoin' | 'ethereum';
 export type Network =
-  | 'main'
-  | 'testnet'
-  | 'ropsten'
-  | 'rinkeby'
-  | 'goerli'
-  | 'kovan'
-  | 'xdai'
-  | 'bsc-main'
-  | 'matic-main'
-  | 'fantom-main'
-  | 'matic-mumbai'
-  | 'local'
+	| 'main'
+	| 'testnet'
+	| 'ropsten'
+	| 'rinkeby'
+	| 'goerli'
+	| 'kovan'
+	| 'xdai'
+	| 'bsc-main'
+	| 'matic-main'
+	| 'fantom-main'
+	| 'matic-mumbai'
+	| 'local';
 
 export type Status =
-  | 'pending'
-  | 'confirmed'
-  | 'speedup'
-  | 'cancel'
-  | 'failed'
-  | 'dropped'
-  | 'simulated'
+	| 'pending'
+	| 'confirmed'
+	| 'speedup'
+	| 'cancel'
+	| 'failed'
+	| 'dropped'
+	| 'simulated';
 
 export interface SimDetails {
-  blockNumber: number
-  e2eMs: number
-  performanceProfile: any
+	blockNumber: number;
+	e2eMs: number;
+	performanceProfile: any;
 }
 ```
 

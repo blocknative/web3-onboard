@@ -29,24 +29,23 @@ npm install @web3-onboard/core @web3-onboard/infinity-wallet
   </TabPanel>
 </Tabs>
 
-
 ## Usage
 
 ```typescript
-import Onboard from '@web3-onboard/core'
-import infinityWalletWalletModule from '@web3-onboard/infinity-wallet'
+import Onboard from '@web3-onboard/core';
+import infinityWalletWalletModule from '@web3-onboard/infinity-wallet';
 
 // initialize the module with options
-const infinityWalletSDK = infinityWalletWalletModule()
+const infinityWalletSDK = infinityWalletWalletModule();
 
 const onboard = Onboard({
-  // ... other Onboard options
-  wallets: [
-    infinityWalletSDK()
-    //... other wallets
-  ]
-})
+	// ... other Onboard options
+	wallets: [
+		infinityWalletSDK()
+		//... other wallets
+	]
+});
 
-const connectedWallets = await onboard.connectWallet()
-console.log(connectedWallets)
+const connectedWallets = await onboard.connectWallet();
+console.log(connectedWallets);
 ```

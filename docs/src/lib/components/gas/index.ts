@@ -1,1 +1,1 @@
-export { default as Gas } from './Gas.svelte'
+export { default as Gas } from './Gas.svelte';

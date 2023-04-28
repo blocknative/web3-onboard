@@ -1,5 +1,5 @@
 ---
-title: "Migration Guide from v1"
+title: 'Migration Guide from v1'
 ---
 
 # Migration Guide from onboard.js to web3-onboard

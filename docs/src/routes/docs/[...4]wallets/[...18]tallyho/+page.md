@@ -9,8 +9,8 @@ _Wallet module for connecting TallyHo to web3-onboard is now deprecated. Please 
 :::
 
 ## Wallet module for connecting TallyHo
-See [Taho Developer Docs](https://docs.tally.cash/tally/developers/integrating-dapps)
 
+See [Taho Developer Docs](https://docs.tally.cash/tally/developers/integrating-dapps)
 
 ## Install
 
@@ -31,21 +31,20 @@ npm install @web3-onboard/core @web3-onboard/tallyho
   </TabPanel>
 </Tabs>
 
-
 ## Usage
 
 ```typescript
-import Onboard from '@web3-onboard/core'
-import tallyWalletModule from '@web3-onboard/tallyho'
+import Onboard from '@web3-onboard/core';
+import tallyWalletModule from '@web3-onboard/tallyho';
 
 const onboard = Onboard({
-  // ... other Onboard options
-  wallets: [
-    tallyWalletModule()
-    //... other wallets
-  ]
-})
+	// ... other Onboard options
+	wallets: [
+		tallyWalletModule()
+		//... other wallets
+	]
+});
 
-const connectedWallets = await onboard.connectWallet()
-console.log(connectedWallets)
+const connectedWallets = await onboard.connectWallet();
+console.log(connectedWallets);
 ```

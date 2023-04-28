@@ -5,11 +5,7 @@ import nodePolyfills from 'rollup-plugin-polyfill-node';
 
 /** @type {import('vite').UserConfig} */
 const config = {
-	plugins: [
-		icons({ compiler: 'svelte' }),
-		kitDocs(),
-		sveltekit()
-	],
+	plugins: [icons({ compiler: 'svelte' }), kitDocs(), sveltekit()],
 	resolve: {
 		alias: {
 			crypto: 'crypto-browserify',

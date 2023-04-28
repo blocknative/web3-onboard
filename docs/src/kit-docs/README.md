@@ -21,15 +21,11 @@ Now, inside your markdown files you can use the `<Button>` component like so:
 <Button />
 
 <!-- Or, use a markdown container. -->
-:::button propA="valueA"|propB=10
-Default slot content here.
-:::
+:::button propA="valueA"|propB=10 Default slot content here. :::
 
 <!-- You can pass in dynamic slot elements! -->
 <!-- If you omit `tag`, it'll default to `<p>`. -->
-:::button (tag=h1&slot=title)=Title
-Default slot content here.
-:::
+:::button (tag=h1&slot=title)=Title Default slot content here. :::
 ```
 
 ### Configuration
@@ -39,19 +35,19 @@ them in your plugin like so:
 
 ```js title=svelte.config.js
 kitDocsPlugin({
-  markdown: {
-    components: [
-      // Override inline rule.
-      // `Image.svelte` must be a global component.
-      { name: 'Image', type: 'inline', rule: 'image' },
-      // Override block rule.
-      // `Blockquote.svelte` must be a global component.
-      { name: 'Blockquote', type: 'block', rule: 'blockquote' },
-      // Create custom container.
-      // `Button.svelte` must be a global component.
-      { name: 'Button', type: 'custom', container: { marker: '!' } },
-    ],
-  },
+	markdown: {
+		components: [
+			// Override inline rule.
+			// `Image.svelte` must be a global component.
+			{ name: 'Image', type: 'inline', rule: 'image' },
+			// Override block rule.
+			// `Blockquote.svelte` must be a global component.
+			{ name: 'Blockquote', type: 'block', rule: 'blockquote' },
+			// Create custom container.
+			// `Button.svelte` must be a global component.
+			{ name: 'Button', type: 'custom', container: { marker: '!' } }
+		]
+	}
 });
 ```
 
@@ -70,13 +66,9 @@ The configuration above will transform the following Markdown like so:
 ```svelte
 <Image href="https://..." alt="alt text" />
 
-<Blockquote>
-  This is a blockquote.
-</Blockquote>
+<Blockquote>This is a blockquote.</Blockquote>
 
-<Button>
-  ...
-</Button>
+<Button>...</Button>
 ```
 
 ## Default Components
@@ -102,19 +94,19 @@ Finally, you can use the following minimal boilerplate and style the component a
 
 ```svelte title=CodeFence.svelte|copy
 <script>
-  /** @type {string} */
-  export let lang;
-  /** @type {string} */
-  export let ext;
-  /** @type {string} */
-  export let code;
-  /** @type {number} */
-  export let linesCount;
-  /** @type {[number, number][]} */
-  export let highlightLines = [];
+	/** @type {string} */
+	export let lang;
+	/** @type {string} */
+	export let ext;
+	/** @type {string} */
+	export let code;
+	/** @type {number} */
+	export let linesCount;
+	/** @type {[number, number][]} */
+	export let highlightLines = [];
 </script>
 
 <div class={`lang-${lang} ext-${ext}`}>
-  {@html code}
+	{@html code}
 </div>
 ```

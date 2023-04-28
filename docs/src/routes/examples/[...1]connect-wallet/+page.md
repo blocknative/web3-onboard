@@ -269,144 +269,144 @@ export default function ConnectWallet() {
 Import the libraries and any wallets you would like to use. For this example, we are going to use the injected wallets module. You can easily add more wallet support to your dapp via our other wallet modules. Additionally, we'll setup web3-onboard to support 2 chains: Ethereum mainnet and Polygon mainnet.
 
 ```js title="onboard.js"|copy
-import Onboard from '@web3-onboard/core'
-import injectedModule from '@web3-onboard/injected-wallets'
-import infinityWalletModule from '@web3-onboard/infinity-wallet'
-import fortmaticModule from '@web3-onboard/fortmatic'
-import gnosisModule from '@web3-onboard/gnosis'
-import keepkeyModule from '@web3-onboard/keepkey'
-import keystoneModule from '@web3-onboard/keystone'
-import ledgerModule from '@web3-onboard/ledger'
-import portisModule from '@web3-onboard/portis'
-import torusModule from '@web3-onboard/torus'
-import trezorModule from '@web3-onboard/trezor'
-import walletConnectModule from '@web3-onboard/walletconnect'
-import coinbaseModule from '@web3-onboard/coinbase'
-import magicModule from '@web3-onboard/magic'
-import web3authModule from '@web3-onboard/web3auth'
-import dcentModule from '@web3-onboard/dcent'
-import sequenceModule from '@web3-onboard/sequence'
-import tahoModule from '@web3-onboard/taho'
-import trustModule from '@web3-onboard/trust'
-import frontierModule from '@web3-onboard/frontier'
+import Onboard from '@web3-onboard/core';
+import injectedModule from '@web3-onboard/injected-wallets';
+import infinityWalletModule from '@web3-onboard/infinity-wallet';
+import fortmaticModule from '@web3-onboard/fortmatic';
+import gnosisModule from '@web3-onboard/gnosis';
+import keepkeyModule from '@web3-onboard/keepkey';
+import keystoneModule from '@web3-onboard/keystone';
+import ledgerModule from '@web3-onboard/ledger';
+import portisModule from '@web3-onboard/portis';
+import torusModule from '@web3-onboard/torus';
+import trezorModule from '@web3-onboard/trezor';
+import walletConnectModule from '@web3-onboard/walletconnect';
+import coinbaseModule from '@web3-onboard/coinbase';
+import magicModule from '@web3-onboard/magic';
+import web3authModule from '@web3-onboard/web3auth';
+import dcentModule from '@web3-onboard/dcent';
+import sequenceModule from '@web3-onboard/sequence';
+import tahoModule from '@web3-onboard/taho';
+import trustModule from '@web3-onboard/trust';
+import frontierModule from '@web3-onboard/frontier';
 
-const INFURA_KEY = ''
+const INFURA_KEY = '';
 
-const injected = injectedModule()
-const coinbase = coinbaseModule()
-const dcent = dcentModule()
-const walletConnect = walletConnectModule()
+const injected = injectedModule();
+const coinbase = coinbaseModule();
+const dcent = dcentModule();
+const walletConnect = walletConnectModule();
 
 const portis = portisModule({
-  apiKey: 'apiKey'
-})
+	apiKey: 'apiKey'
+});
 
 const fortmatic = fortmaticModule({
-  apiKey: 'apiKey'
-})
+	apiKey: 'apiKey'
+});
 
-const infinityWallet = infinityWalletModule()
-const ledger = ledgerModule()
-const keystone = keystoneModule()
-const keepkey = keepkeyModule()
-const gnosis = gnosisModule()
-const sequence = sequenceModule()
-const taho = tahoModule() // Previously named Tally Ho wallet
-const trust = trustModule()
-const frontier = frontierModule()
+const infinityWallet = infinityWalletModule();
+const ledger = ledgerModule();
+const keystone = keystoneModule();
+const keepkey = keepkeyModule();
+const gnosis = gnosisModule();
+const sequence = sequenceModule();
+const taho = tahoModule(); // Previously named Tally Ho wallet
+const trust = trustModule();
+const frontier = frontierModule();
 
 const trezorOptions = {
-  email: 'test@test.com',
-  appUrl: 'https://www.blocknative.com'
-}
+	email: 'test@test.com',
+	appUrl: 'https://www.blocknative.com'
+};
 
-const trezor = trezorModule(trezorOptions)
+const trezor = trezorModule(trezorOptions);
 
 const magic = magicModule({
-  apiKey: 'apiKey'
-})
+	apiKey: 'apiKey'
+});
 
-const enkrypt = enkryptModule()
-const mewWallet = mewWalletModule()
+const enkrypt = enkryptModule();
+const mewWallet = mewWalletModule();
 
 const wallets = [
-  infinityWallet,
-  keepkey,
-  sequence,
-  injected,
-  taho,
-  ledger,
-  coinbase,
-  dcent,
-  trust,
-  frontier,
-  trezor,
-  walletConnect,
-  enkrypt,
-  mewWallet,
-  gnosis,
-  magic,
-  fortmatic,
-  keystone,
-  portis
-]
+	infinityWallet,
+	keepkey,
+	sequence,
+	injected,
+	taho,
+	ledger,
+	coinbase,
+	dcent,
+	trust,
+	frontier,
+	trezor,
+	walletConnect,
+	enkrypt,
+	mewWallet,
+	gnosis,
+	magic,
+	fortmatic,
+	keystone,
+	portis
+];
 
 const chains = [
-  {
-    id: '0x1',
-    token: 'ETH',
-    label: 'Ethereum Mainnet',
-    rpcUrl: `https://mainnet.infura.io/v3/${INFURA_ID}`
-  },
-  {
-    id: '0x5',
-    token: 'ETH',
-    label: 'Goerli',
-    rpcUrl: `https://goerli.infura.io/v3/${INFURA_ID}`
-  },
-  {
-    id: '0x13881',
-    token: 'MATIC',
-    label: 'Polygon - Mumbai',
-    rpcUrl: 'https://matic-mumbai.chainstacklabs.com'
-  },
-  {
-    id: '0x38',
-    token: 'BNB',
-    label: 'Binance',
-    rpcUrl: 'https://bsc-dataseed.binance.org/'
-  },
-  {
-    id: '0xA',
-    token: 'OETH',
-    label: 'Optimism',
-    rpcUrl: 'https://mainnet.optimism.io'
-  },
-  {
-    id: '0xA4B1',
-    token: 'ARB-ETH',
-    label: 'Arbitrum',
-    rpcUrl: 'https://rpc.ankr.com/arbitrum'
-  }
-]
+	{
+		id: '0x1',
+		token: 'ETH',
+		label: 'Ethereum Mainnet',
+		rpcUrl: `https://mainnet.infura.io/v3/${INFURA_ID}`
+	},
+	{
+		id: '0x5',
+		token: 'ETH',
+		label: 'Goerli',
+		rpcUrl: `https://goerli.infura.io/v3/${INFURA_ID}`
+	},
+	{
+		id: '0x13881',
+		token: 'MATIC',
+		label: 'Polygon - Mumbai',
+		rpcUrl: 'https://matic-mumbai.chainstacklabs.com'
+	},
+	{
+		id: '0x38',
+		token: 'BNB',
+		label: 'Binance',
+		rpcUrl: 'https://bsc-dataseed.binance.org/'
+	},
+	{
+		id: '0xA',
+		token: 'OETH',
+		label: 'Optimism',
+		rpcUrl: 'https://mainnet.optimism.io'
+	},
+	{
+		id: '0xA4B1',
+		token: 'ARB-ETH',
+		label: 'Arbitrum',
+		rpcUrl: 'https://rpc.ankr.com/arbitrum'
+	}
+];
 
 const appMetadata = {
-  name: 'Connect Wallet Example',
-  icon: '<svg>My App Icon</svg>',
-  description: 'Example showcasing how to connect a wallet.',
-  recommendedInjectedWallets: [
-    { name: 'MetaMask', url: 'https://metamask.io' },
-    { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
-  ]
-}
+	name: 'Connect Wallet Example',
+	icon: '<svg>My App Icon</svg>',
+	description: 'Example showcasing how to connect a wallet.',
+	recommendedInjectedWallets: [
+		{ name: 'MetaMask', url: 'https://metamask.io' },
+		{ name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
+	]
+};
 
 const onboard = Onboard({
-  wallets,
-  chains,
-  appMetadata
-})
+	wallets,
+	chains,
+	appMetadata
+});
 
-export default onboard
+export default onboard;
 ```
 
 ## Step 2: Display the connect wallet button
@@ -415,11 +415,11 @@ In main `App.svelte` file we'll import our previously initialized web3-onboard i
 
 ```svelte title="App.svelte"|copy
 <script lang="js">
-  import onboard from './onboard.js'
+	import onboard from './onboard.js';
 </script>
 
 <div>
-  <button disabled={connecting} onClick={connect}> Connect </button>
+	<button disabled={connecting} onClick={connect}> Connect </button>
 </div>
 ```
 

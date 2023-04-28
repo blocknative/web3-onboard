@@ -1,131 +1,132 @@
 :root {
-  font-size: 16px;
-  scroll-padding-top: 12rem;
+	font-size: 16px;
+	scroll-padding-top: 12rem;
 }
 
 :root {
-  /* --kd-font-family-sans: Inter VF, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+	/* --kd-font-family-sans: Inter VF, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'; */
-  --kd-font-family-sans: 'Sofia Pro';
+	--kd-font-family-sans: 'Sofia Pro';
 
-  --kd-color-brand: rgb(var(--kd-color-brand-rgb));
+	--kd-color-brand: rgb(var(--kd-color-brand-rgb));
 
-  --kd-font-family-mono: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation, Mono,
-    Fira Code VF, monospace;
+	--kd-font-family-mono: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation, Mono,
+		Fira Code VF, monospace;
 
-  --kd-color-brand: rgb(var(--kd-color-brand-rgb));
+	--kd-color-brand: rgb(var(--kd-color-brand-rgb));
 
-  --kd-color-gray-soft: rgb(112, 112, 112);
-  --kd-color-gray-inverse: rgb(0, 0, 0);
-  --kd-color-gray-current: rgb(255, 255, 255);
-  --kd-color-gray-divider: rgb(234, 234, 234);
-  --kd-color-gray-hover: rgb(245, 245, 245);
-  --kd-color-gray-hover-inverse: rgb(53, 53, 53);
-  --kd-color-gray-elevate: rgb(255, 255, 255);
-  --kd-color-gray-body: rgb(255, 255, 255);
+	--kd-color-gray-soft: rgb(112, 112, 112);
+	--kd-color-gray-inverse: rgb(0, 0, 0);
+	--kd-color-gray-current: rgb(255, 255, 255);
+	--kd-color-gray-divider: rgb(234, 234, 234);
+	--kd-color-gray-hover: rgb(245, 245, 245);
+	--kd-color-gray-hover-inverse: rgb(53, 53, 53);
+	--kd-color-gray-elevate: rgb(255, 255, 255);
+	--kd-color-gray-body: rgb(255, 255, 255);
 
-  --kd-color-focus: rgba(var(--kd-color-brand-rgb), 0.7);
+	--kd-color-focus: rgba(var(--kd-color-brand-rgb), 0.7);
 
-  --kd-code-fence-bg: var(--kd-prose-pre-bg, rgb(31, 41, 55));
-  --kd-code-fence-top-bar-bg: rgba(31, 41, 55, 0.3);
-  --kd-code-copied-bg-color: rgba(var(--kd-color-brand-rgb), 0.8);
-  --kd-terminal-line-pointer: var(--kd-color-brand);
-  --kd-code-highlight-border: var(--kd-color-brand);
-  --kd-code-highlight-color: rgba(var(--kd-color-brand-rgb), 0.05);
-  /* Deprecated => --kd-prose-pre-bg: rgb(31, 41, 55); */
+	--kd-code-fence-bg: var(--kd-prose-pre-bg, rgb(31, 41, 55));
+	--kd-code-fence-top-bar-bg: rgba(31, 41, 55, 0.3);
+	--kd-code-copied-bg-color: rgba(var(--kd-color-brand-rgb), 0.8);
+	--kd-terminal-line-pointer: var(--kd-color-brand);
+	--kd-code-highlight-border: var(--kd-color-brand);
+	--kd-code-highlight-color: rgba(var(--kd-color-brand-rgb), 0.05);
+	/* Deprecated => --kd-prose-pre-bg: rgb(31, 41, 55); */
 
-  --kd-navbar-height: 5rem;
-  --kd-navbar-padding: 1rem 1.25rem;
-  --kd-navbar-max-width: 1440px;
-  --kd-navbar-border-bottom: 1px solid var(--kd-color-gray-divider);
-  --kd-breadcrumbs-height: 5rem;
+	--kd-navbar-height: 5rem;
+	--kd-navbar-padding: 1rem 1.25rem;
+	--kd-navbar-max-width: 1440px;
+	--kd-navbar-border-bottom: 1px solid var(--kd-color-gray-divider);
+	--kd-breadcrumbs-height: 5rem;
 
-  --kd-sidebar-min-width: 90vw;
-  --kd-sidebar-max-width: screen;
-  --kd-sidebar-padding: 0 1.75rem 2rem;
-  --kd-sidebar-border-active: var(--kd-color-brand);
+	--kd-sidebar-min-width: 90vw;
+	--kd-sidebar-max-width: screen;
+	--kd-sidebar-padding: 0 1.75rem 2rem;
+	--kd-sidebar-border-active: var(--kd-color-brand);
 
-  --kd-content-max-width: 1440px;
-  /* --kd-main-max-width: unset; */
-  --kd-article-max-width: 85ch;
+	--kd-content-max-width: 1440px;
+	/* --kd-main-max-width: unset; */
+	--kd-article-max-width: 85ch;
 }
 
 :root.dark {
-  color-scheme: dark;
+	color-scheme: dark;
 
-  --kd-color-gray-soft: rgb(140, 140, 140);
-  --kd-color-gray-inverse: rgb(255, 255, 255);
-  --kd-color-gray-current: rgb(0, 0, 0);
-  --kd-color-gray-divider: rgb(49, 49, 49);
-  --kd-color-gray-hover: rgb(54, 54, 54);
-  --kd-color-gray-hover-inverse: rgb(245, 245, 245);
-  --kd-color-gray-elevate: rgb(45, 45, 45);
-  --kd-color-gray-body: rgb(26, 29, 38);
+	--kd-color-gray-soft: rgb(140, 140, 140);
+	--kd-color-gray-inverse: rgb(255, 255, 255);
+	--kd-color-gray-current: rgb(0, 0, 0);
+	--kd-color-gray-divider: rgb(49, 49, 49);
+	--kd-color-gray-hover: rgb(54, 54, 54);
+	--kd-color-gray-hover-inverse: rgb(245, 245, 245);
+	--kd-color-gray-elevate: rgb(45, 45, 45);
+	--kd-color-gray-body: rgb(26, 29, 38);
 }
 
 @media screen and (min-width: 768px) {
-  :root {
-    --kd-sidebar-min-width: 70vw;
-  }
+	:root {
+		--kd-sidebar-min-width: 70vw;
+	}
 }
 
 @media screen and (min-width: 992px) {
-  :root {
-    scroll-padding-top: 8rem;
+	:root {
+		scroll-padding-top: 8rem;
 
-    --kd-breadcrumbs-height: 0px;
+		--kd-breadcrumbs-height: 0px;
 
-    --kd-sidebar-min-width: 17rem;
-    --kd-sidebar-max-width: 17rem;
-    --kd-sidebar-padding: 0 0.5rem 2rem 1.5rem;
-  }
+		--kd-sidebar-min-width: 17rem;
+		--kd-sidebar-max-width: 17rem;
+		--kd-sidebar-padding: 0 0.5rem 2rem 1.5rem;
+	}
 }
 
 @media screen and (min-width: 1200px) {
-  :root {
-    --kd-navbar-padding: 1.25rem 1.25rem;
-  }
+	:root {
+		--kd-navbar-padding: 1.25rem 1.25rem;
+	}
 }
 
 @media screen and (min-width: 1460px) {
-  :root {
-    --kd-navbar-padding: 1.25rem 0;
-    --kd-sidebar-padding: 0 0 2rem 0.25rem;
-  }
+	:root {
+		--kd-navbar-padding: 1.25rem 0;
+		--kd-sidebar-padding: 0 0 2rem 0.25rem;
+	}
 }
 
 :root,
 .prefers-light-scheme {
-  --kd-color-brand: 99 112 229;
-  --kd-color-focus: 79 70 229;
-  --kd-color-soft: 112 112 112;
-  --kd-color-body: 250 250 250;
-  --kd-color-elevate: 243 244 246;
-  --kd-color-inverse: 5 11 23;
-  --kd-color-border: 209 213 219;
+	--kd-color-brand: 99 112 229;
+	--kd-color-focus: 79 70 229;
+	--kd-color-soft: 112 112 112;
+	--kd-color-body: 250 250 250;
+	--kd-color-elevate: 243 244 246;
+	--kd-color-inverse: 5 11 23;
+	--kd-color-border: 209 213 219;
 }
 
 :root.dark,
 .prefers-dark-scheme {
-  color-scheme: dark;
-  --kd-color-brand: 99 112 229;
-  --kd-color-soft: 140 140 140;
-  --kd-color-inverse: 245 245 245;
-  --kd-color-border: 38 48 64;
-  --kd-color-elevate: 10 19 33;
-  --kd-color-body: 26 29 38;
-  --kd-color-focus: 129 140 248;
+	color-scheme: dark;
+	--kd-color-brand: 99 112 229;
+	--kd-color-soft: 140 140 140;
+	--kd-color-inverse: 245 245 245;
+	--kd-color-border: 38 48 64;
+	--kd-color-elevate: 10 19 33;
+	--kd-color-body: 26 29 38;
+	--kd-color-focus: 129 140 248;
 }
 
 .socialIcon {
-  color: var(--kd-color-gray-soft);
+	color: var(--kd-color-gray-soft);
 }
 
 .socialIcon:hover {
-  color:rgb(0, 0, 0)
+	color: rgb(0, 0, 0);
 }
 
-.socialIcon:hover, .prefers-dark-scheme {
-  color:rgb(99 112 229)
+.socialIcon:hover,
+.prefers-dark-scheme {
+	color: rgb(99 112 229);
 }

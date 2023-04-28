@@ -23,13 +23,13 @@ Once an issue is created, a Web3 Onboard maintainer will review and respond typi
 
 To create a new feature or change in Web3 Onboard, fork the repo and make a pull request on the [develop branch](https://github.com/blocknative/web3-onboard/tree/develop) to have your changes merged in and released as part of the official packages.
 
-Once a PR is created, a Web3 Onboard maintainer will acknowledge it and add to sprint planning for review as soon as possible. 
+Once a PR is created, a Web3 Onboard maintainer will acknowledge it and add to sprint planning for review as soon as possible.
 
 **Important Note: The PR template checklist must be complete before review can take place.**
 
 ### Package Versioning 📦
 
-We use both semantic and `alpha` versioning for publishing and testing packages prior to official release.  If you do not see an `-alpha.x` tag on the version of the package you made changes in, you will need to bump the version AND add an alpha flag followed by an alpha version number starting at 1 (ex. `-alpha.1`).
+We use both semantic and `alpha` versioning for publishing and testing packages prior to official release. If you do not see an `-alpha.x` tag on the version of the package you made changes in, you will need to bump the version AND add an alpha flag followed by an alpha version number starting at 1 (ex. `-alpha.1`).
 
 After making changes within a web3-onboard package, bump the version of the specific package:
 
@@ -41,14 +41,16 @@ Example 2 : Bug fix within the `core` package -
 
 ## [How can I add a new wallet? 💳](#new-wallet)
 
-To add a new wallet to the official Web3 Onboard packages and repo, create a [pull request](#pull-requests-🗂️). Web3 Onboard does not require a wallet to be a part of the main code, so a separate wallet module can be created without any changes to the Web3Onboard codebase. Your PR must include a detailed README for the package, keeping in mind that this README is the the first point of contact for dapp devs looking to implement your wallet. 
+To add a new wallet to the official Web3 Onboard packages and repo, create a [pull request](#pull-requests-🗂️). Web3 Onboard does not require a wallet to be a part of the main code, so a separate wallet module can be created without any changes to the Web3Onboard codebase. Your PR must include a detailed README for the package, keeping in mind that this README is the the first point of contact for dapp devs looking to implement your wallet.
 
 Please also include updates to documentation in your PR. Refer to the [docs contributions section](#documentation-contributions-📄) and the PR template docs checklist.
 
 ### Adding Injected Wallets
+
 If the wallet you are adding is an “injected” wallet (browser extension, mobile dapp browser wallet), add a wallet to the injected wallets module. [See here for an example of an injected wallets pull request.](https://github.com/blocknative/web3-onboard/pull/1177/files) You should also add the wallet to the [natively supported injected wallets list](../../wallets/injected.md#injected-wallets-supported-natively).
 
 ### Adding Wallet Modules
+
 Otherwise, if the wallet you are adding requires dependencies and initialization (SDK), then you will need to create a new package in the Web3 Onboard monorepo. [See here for an example of a pull request.](https://github.com/blocknative/web3-onboard/pull/1238/files)
 <br />
 <br />
@@ -57,9 +59,9 @@ If you cannot write the code yourself to add a new wallet, create a new feature 
 
 ## [Documentation Contributions 📄](#docs)
 
-If you contribute to the code, you should definitely document appropriately. 
+If you contribute to the code, you should definitely document appropriately.
 
-In order to contribute to the docs, create a PR on the [develop branch](https://github.com/blocknative/web3-onboard/tree/develop). The PR description should include a screenshot of any changes. 
+In order to contribute to the docs, create a PR on the [develop branch](https://github.com/blocknative/web3-onboard/tree/develop). The PR description should include a screenshot of any changes.
 
 **Important note: The PR template docs checklist must be complete before review can take place.**
 

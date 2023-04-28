@@ -29,43 +29,43 @@ npm install @web3-onboard/trezor
 
 ```typescript
 type TrezorOptions = {
-  email: string
-  appUrl: string
-  customNetwork?: CustomNetwork
-  filter?: Platform[]
-  containerElement?: string
-}
+	email: string;
+	appUrl: string;
+	customNetwork?: CustomNetwork;
+	filter?: Platform[];
+	containerElement?: string;
+};
 
 interface CustomNetwork {
-  networkId: number
-  genesis: GenesisBlock
-  hardforks: Hardfork[]
-  bootstrapNodes: BootstrapNode[]
+	networkId: number;
+	genesis: GenesisBlock;
+	hardforks: Hardfork[];
+	bootstrapNodes: BootstrapNode[];
 }
 
 interface GenesisBlock {
-  hash: string
-  timestamp: string | null
-  gasLimit: number
-  difficulty: number
-  nonce: string
-  extraData: string
-  stateRoot: string
+	hash: string;
+	timestamp: string | null;
+	gasLimit: number;
+	difficulty: number;
+	nonce: string;
+	extraData: string;
+	stateRoot: string;
 }
 
 interface Hardfork {
-  name: string
-  block: number | null
+	name: string;
+	block: number | null;
 }
 
 interface BootstrapNode {
-  ip: string
-  port: number | string
-  network?: string
-  chainId?: number
-  id: string
-  location: string
-  comment: string
+	ip: string;
+	port: number | string;
+	network?: string;
+	chainId?: number;
+	id: string;
+	location: string;
+	comment: string;
 }
 
 type Platform = DeviceOSName | DeviceBrowserName | DeviceType | 'all';
@@ -74,25 +74,26 @@ type Platform = DeviceOSName | DeviceBrowserName | DeviceType | 'all';
 ### Usage
 
 ```typescript
-import Onboard from '@web3-onboard/core'
-import trezorModule from '@web3-onboard/trezor'
+import Onboard from '@web3-onboard/core';
+import trezorModule from '@web3-onboard/trezor';
 
 const trezor = trezorModule({
-  email: '<EMAIL_CONTACT>',
-  appUrl: '<APP_URL>'
-})
+	email: '<EMAIL_CONTACT>',
+	appUrl: '<APP_URL>'
+});
 
 const onboard = Onboard({
-  // ... other Onboard options
-  wallets: [
-    trezor
-    //... other wallets
-  ]
-})
+	// ... other Onboard options
+	wallets: [
+		trezor
+		//... other wallets
+	]
+});
 
-const connectedWallets = await onboard.connectWallet()
-console.log(connectedWallets)
+const connectedWallets = await onboard.connectWallet();
+console.log(connectedWallets);
 ```
 
 ## Build Environments
+
 For build env configurations and setups please see the Build Env section [here](/docs/modules/core#build-environments)

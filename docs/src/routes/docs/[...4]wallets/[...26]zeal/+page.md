@@ -29,24 +29,23 @@ npm install @web3-onboard/core @web3-onboard/zeal
   </TabPanel>
 </Tabs>
 
-
 ## Usage
 
 ```typescript
-import Onboard from '@web3-onboard/core'
-import zealWalletModule from '@web3-onboard/zeal'
+import Onboard from '@web3-onboard/core';
+import zealWalletModule from '@web3-onboard/zeal';
 
 // initialize the module with options
-const zealWalletSdk = zealWalletModule()
+const zealWalletSdk = zealWalletModule();
 
 const onboard = Onboard({
-  // ... other Onboard options
-  wallets: [
-    zealWalletModule()
-    //... other wallets
-  ]
-})
+	// ... other Onboard options
+	wallets: [
+		zealWalletModule()
+		//... other wallets
+	]
+});
 
-const connectedWallets = await onboard.connectWallet()
-console.log(connectedWallets)
+const connectedWallets = await onboard.connectWallet();
+console.log(connectedWallets);
 ```

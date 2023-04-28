@@ -28,29 +28,30 @@ npm install @web3-onboard/keepkey
 ## Usage
 
 ```typescript
-import Onboard from '@web3-onboard/core'
-import keepkeyModule from '@web3-onboard/keepkey'
+import Onboard from '@web3-onboard/core';
+import keepkeyModule from '@web3-onboard/keepkey';
 
-const keepkey = keepkeyModule()
+const keepkey = keepkeyModule();
 
 const onboard = Onboard({
-  // ... other Onboard options
-  wallets: [
-    keepkey
-    //... other wallets
-  ]
-})
+	// ... other Onboard options
+	wallets: [
+		keepkey
+		//... other wallets
+	]
+});
 
-const connectedWallets = await onboard.connectWallet()
-console.log(connectedWallets)
+const connectedWallets = await onboard.connectWallet();
+console.log(connectedWallets);
 ```
 
 Initialization options:
+
 ```typescript
 type keepkeyInitOptions = {
-  containerElement?: string
-  filter?: Platform
-}
+	containerElement?: string;
+	filter?: Platform;
+};
 ```
 
 The following is a list of the platforms that can be filtered:
@@ -59,24 +60,25 @@ The following is a list of the platforms that can be filtered:
 type Platform = DeviceOSName | DeviceBrowserName | DeviceType | 'all';
 
 type Platform =
-  | 'Windows Phone'
-  | 'Windows'
-  | 'macOS'
-  | 'iOS'
-  | 'Android'
-  | 'Linux'
-  | 'Chrome OS'
-  | 'Android Browser'
-  | 'Chrome'
-  | 'Chromium'
-  | 'Firefox'
-  | 'Microsoft Edge'
-  | 'Opera'
-  | 'Safari'
-  | 'desktop'
-  | 'mobile'
-  | 'tablet'
+	| 'Windows Phone'
+	| 'Windows'
+	| 'macOS'
+	| 'iOS'
+	| 'Android'
+	| 'Linux'
+	| 'Chrome OS'
+	| 'Android Browser'
+	| 'Chrome'
+	| 'Chromium'
+	| 'Firefox'
+	| 'Microsoft Edge'
+	| 'Opera'
+	| 'Safari'
+	| 'desktop'
+	| 'mobile'
+	| 'tablet';
 ```
 
 ## Build Environments
+
 For build env configurations and setups please see the Build Env section [here](/docs/modules/core#build-environments)

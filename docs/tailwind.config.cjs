@@ -2,7 +2,10 @@
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-	content: ['./src/lib/**/*.svelte', './node_modules/@svelteness/kit-docs/client/kit-docs/**/*.svelte',],
+	content: [
+		'./src/lib/**/*.svelte',
+		'./node_modules/@svelteness/kit-docs/client/kit-docs/**/*.svelte'
+	],
 	darkMode: 'class',
 	corePlugins: {
 		preflight: false

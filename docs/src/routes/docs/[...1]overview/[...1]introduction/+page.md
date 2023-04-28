@@ -35,7 +35,7 @@ Web3-Onboard is the quickest and easiest way to add multi-wallet and multi-chain
 
 web3-onboard supports all EVM networks. Supporting a new network is simply a matter of adding its details in the Chains section upon initialization. For more information see [initialization options](../../modules/core.md#options).
 
-- Ethereum 
+- Ethereum
 - Arbitrum
 - Optimism
 - Avalanche
@@ -90,46 +90,46 @@ You can find a link to web3-onboard's official NPM Documentation here: [@web3-on
 Then initialize in your app:
 
 ```ts copy
-import Onboard from '@web3-onboard/core'
-import injectedModule from '@web3-onboard/injected-wallets'
-import { ethers } from 'ethers'
+import Onboard from '@web3-onboard/core';
+import injectedModule from '@web3-onboard/injected-wallets';
+import { ethers } from 'ethers';
 
-const MAINNET_RPC_URL = 'https://mainnet.infura.io/v3/<INFURA_KEY>'
+const MAINNET_RPC_URL = 'https://mainnet.infura.io/v3/<INFURA_KEY>';
 
-const injected = injectedModule()
+const injected = injectedModule();
 
 const onboard = Onboard({
-  wallets: [injected],
-  chains: [
-    {
-      id: '0x1',
-      token: 'ETH',
-      label: 'Ethereum Mainnet',
-      rpcUrl: MAINNET_RPC_URL
-    }
-  ]
-})
+	wallets: [injected],
+	chains: [
+		{
+			id: '0x1',
+			token: 'ETH',
+			label: 'Ethereum Mainnet',
+			rpcUrl: MAINNET_RPC_URL
+		}
+	]
+});
 
-const wallets = await onboard.connectWallet()
+const wallets = await onboard.connectWallet();
 
-console.log(wallets)
+console.log(wallets);
 
 if (wallets[0]) {
-  // create an ethers provider with the last connected wallet provider
-  // if using ethers v6 this is:
-  // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
-  const ethersProvider = new ethers.providers.Web3Provider(wallets[0].provider, 'any')
+	// create an ethers provider with the last connected wallet provider
+	// if using ethers v6 this is:
+	// ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
+	const ethersProvider = new ethers.providers.Web3Provider(wallets[0].provider, 'any');
 
-  const signer = ethersProvider.getSigner()
+	const signer = ethersProvider.getSigner();
 
-  // send a transaction with the ethers provider
-  const txn = await signer.sendTransaction({
-    to: '0x',
-    value: 100000000000000
-  })
+	// send a transaction with the ethers provider
+	const txn = await signer.sendTransaction({
+		to: '0x',
+		value: 100000000000000
+	});
 
-  const receipt = await txn.wait()
-  console.log(receipt)
+	const receipt = await txn.wait();
+	console.log(receipt);
 }
 ```
 
@@ -193,4 +193,3 @@ The demo is open source so you can see a sample implementation of web3-onboard: 
 You can find starter examples from the web3 community here using web3-onboard:
 
 - [eth-scaffold](https://github.com/scaffold-eth/scaffold-eth-examples/tree/bnc-onboard)
-

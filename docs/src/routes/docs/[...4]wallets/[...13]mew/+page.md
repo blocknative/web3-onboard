@@ -32,21 +32,21 @@ npm install @web3-onboard/mew
 ## Usage
 
 ```typescript
-import Onboard from '@web3-onboard/core'
-import mewModule from '@web3-onboard/mew'
+import Onboard from '@web3-onboard/core';
+import mewModule from '@web3-onboard/mew';
 
-const mew = mewModule()
+const mew = mewModule();
 
 const onboard = Onboard({
-  // ... other Onboard options
-  wallets: [
-    mew
-    //... other wallets
-  ]
-})
+	// ... other Onboard options
+	wallets: [
+		mew
+		//... other wallets
+	]
+});
 
-const connectedWallets = await onboard.connectWallet()
-console.log(connectedWallets)
+const connectedWallets = await onboard.connectWallet();
+console.log(connectedWallets);
 ```
 
 :::admonition type=warning
