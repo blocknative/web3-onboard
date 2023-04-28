@@ -1,5 +1,10 @@
 import { WalletInit } from '@web3-onboard/common';
-import { VenlyProvider, VenlyProviderOptions, SECRET_TYPES } from '@venly/web3-provider';
+
+interface VenlyProviderOptions {
+  clientId: string
+  secretType?: any
+  environment?: string
+}
 
 function venly(options: VenlyProviderOptions): WalletInit {
   return () => {
@@ -7,6 +12,7 @@ function venly(options: VenlyProviderOptions): WalletInit {
       label: 'Venly',
       getIcon: async () => (await import('./icon.js')).default,
       getInterface: async ({ chains }) => {
+        const { VenlyProvider, SECRET_TYPES } = await import('@venly/web3-provider');
         if (!options.secretType) {
           const chainId = +chains[0].id;
           const chain = SECRET_TYPES[chainId];
