@@ -99,7 +99,7 @@
 .prefers-light-scheme {
   --kd-color-brand: 99 112 229;
   --kd-color-focus: 79 70 229;
-  --kd-color-soft: 68 78 94;
+  --kd-color-soft: 112 112 112;
   --kd-color-body: 250 250 250;
   --kd-color-elevate: 243 244 246;
   --kd-color-inverse: 5 11 23;
@@ -110,7 +110,7 @@
 .prefers-dark-scheme {
   color-scheme: dark;
   --kd-color-brand: 99 112 229;
-  --kd-color-soft: 150 155 166;
+  --kd-color-soft: 140 140 140;
   --kd-color-inverse: 245 245 245;
   --kd-color-border: 38 48 64;
   --kd-color-elevate: 10 19 33;
