@@ -70,6 +70,10 @@
   },
   "dependencies": {
     "@cedelabs/providers": "^0.0.7",
+<<<<<<< HEAD
     "@web3-onboard/common": "^2.3.2"
+=======
+    "@web3-onboard/common": "^2.3.0-alpha.1"
+>>>>>>> cef5e8a0 (FEATURE: Add cede.store wallet package)
   }
 }

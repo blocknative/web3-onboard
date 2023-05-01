@@ -28,6 +28,7 @@ const onboard = Onboard({
 const connectedWallets = await onboard.connectWallet()
 console.log(connectedWallets)
 ```
+<<<<<<< HEAD
 
 ## Vault management
 
@@ -79,3 +80,5 @@ await provider.request({
   }
 })
 ```
+=======
+>>>>>>> cef5e8a0 (FEATURE: Add cede.store wallet package)
