@@ -257,6 +257,30 @@ type i18nOptions = Record<Locale, i18n>
 To see a list of all of the text values that can be internationalized or replaced, check out the [default en file](src/i18n/en.json).
 Onboard is using the [ICU syntax](https://formatjs.io/docs/core-concepts/icu-syntax/) for formatting under the hood.
 
+For example, to update the connect interface language for Metamask, while giving a different message for other wallets, you can include the following: 
+
+```typescript
+i18n: {
+      en: {
+        connect: {
+          connectingWallet: {
+            paragraph: "{wallet, select, MetaMask {{wallet} can only present one account, so connect just the one account you want.} other {Please connect to all of your accounts in {wallet}.}}"
+          }
+        }
+      }
+    }
+```
+
+MetaMask message:
+<img src="https://github.com/blocknative/web3-onboard/blob/develop/assets/custom-connect-1.png?raw=true" />
+
+All other wallets:
+<img src="https://github.com/blocknative/web3-onboard/blob/develop/assets/custom-connect-2.png?raw=true" />
+
+Default Message- with no i18n override: 
+<img src="https://github.com/blocknative/web3-onboard/blob/develop/assets/custom-connect-default.png?raw=true" />
+
+
 **`containerElements`**
 An object mapping for W3O components with the key being the DOM element to mount the specified component to.
 This defines the DOM container element for svelte to attach the component.

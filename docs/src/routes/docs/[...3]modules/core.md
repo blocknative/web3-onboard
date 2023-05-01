@@ -3,6 +3,9 @@
   import notifyCustomImg from '$lib/assets/notify-custom-example.png'
   import notifyImg from '$lib/assets/notify-example.png'
   import notifyPreflightImg from '$lib/assets/notify-preflight-example.png'
+  import customConnect1 from '$lib/assets/custom-connect-1.png'
+  import customConnect2 from '$lib/assets/custom-connect-2.png'
+  import customConnectDefault from '$lib/assets/custom-connect-default.png'
 </script>
 
 # Core
@@ -251,6 +254,29 @@ type i18nOptions = Record<Locale, i18n>
 
 To see a list of all of the text values that can be internationalized or replaced, check out the [default en file](https://github.com/blocknative/web3-onboard/blob/develop/packages/core/src/i18n/en.json).
 Onboard is using the [ICU syntax](https://formatjs.io/docs/core-concepts/icu-syntax/) for formatting under the hood.
+
+For example, to update the connect interface language for Metamask, while giving a different message for other wallets, you can include the following: 
+
+```typescript
+i18n: {
+      en: {
+        connect: {
+          connectingWallet: {
+            paragraph: "{wallet, select, MetaMask {{wallet} can only present one account, so connect just the one account you want.} other {Please connect to all of your accounts in {wallet}.}}"
+          }
+        }
+      }
+    }
+```
+
+MetaMask message:
+<img src="{customConnect2}" alt="Web3-Onboard connect wallet modal with custom message"/>
+
+All other wallets:
+<img src="{customConnect1}" alt="Web3-Onboard connect wallet modal with custom message"/>
+
+Default Message- with no i18n override: 
+<img src="{customConnectDefault}" alt="Web3-Onboard connect wallet modal with default message"/>
 
 ---
 

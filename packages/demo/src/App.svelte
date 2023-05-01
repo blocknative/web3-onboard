@@ -292,9 +292,9 @@
     // example customizing copy
     i18n: {
       en: {
-        notify: {
-          watched: {
-            // "txConfirmed": "you paid a foo {formattedValue} {asset}!"
+        connect: {
+          connectingWallet: {
+            paragraph: "{wallet, select, MetaMask {{wallet} can only present one account, so connect just the one account you want.} other {Please connect to all of your accounts in {wallet}.}}"
           }
         }
       }

@@ -479,7 +479,7 @@ function trezor(options: TrezorOptions): WalletInit {
         }
 
         const trezorProvider = getHardwareWalletProvider(
-          () => currentChain?.rpcUrl || ''
+          () => currentChain.rpcUrl || ''
         )
 
         const provider = createEIP1193Provider(trezorProvider, {
