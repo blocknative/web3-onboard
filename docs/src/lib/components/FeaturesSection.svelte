@@ -111,7 +111,6 @@
           </Flexbox>
           <div class="prose">
             <slot name="installTp" />
-            <!-- <InstallCodeTp /> -->
           </div>
         </TextBlock>
       </div>
