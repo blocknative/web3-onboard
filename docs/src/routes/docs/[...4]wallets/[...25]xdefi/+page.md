@@ -30,20 +30,20 @@ npm install @web3-onboard/core @web3-onboard/xdefi
 ## Usage
 
 ```typescript
-import Onboard from '@web3-onboard/core';
-import xdefiWalletModule from '@web3-onboard/xdefi';
+import Onboard from '@web3-onboard/core'
+import xdefiWalletModule from '@web3-onboard/xdefi'
 
 // initialize the module with options
-const xdefiWalletSdk = xdefiWalletModule();
+const xdefiWalletSdk = xdefiWalletModule()
 
 const onboard = Onboard({
-	// ... other Onboard options
-	wallets: [
-		xdefiWalletSdk()
-		//... other wallets
-	]
-});
+  // ... other Onboard options
+  wallets: [
+    xdefiWalletSdk()
+    //... other wallets
+  ]
+})
 
-const connectedWallets = await onboard.connectWallet();
-console.log(connectedWallets);
+const connectedWallets = await onboard.connectWallet()
+console.log(connectedWallets)
 ```

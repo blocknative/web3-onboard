@@ -29,32 +29,32 @@ npm install @web3-onboard/coinbase
 
 ```typescript
 type CoinbaseWalletOptions = {
-	darkMode: boolean; // default = false
-};
+  darkMode: boolean // default = false
+}
 ```
 
 ## Usage
 
 ```typescript
-import Onboard from '@web3-onboard/core';
-import coinbaseWalletModule from '@web3-onboard/coinbase';
+import Onboard from '@web3-onboard/core'
+import coinbaseWalletModule from '@web3-onboard/coinbase'
 
 // initialize the module with options
-const coinbaseWalletSdk = coinbaseWalletModule({ darkMode: true });
+const coinbaseWalletSdk = coinbaseWalletModule({ darkMode: true })
 
 // can also initialize with no options...
 // const coinbaseWalletSdk = coinbaseWalletSdk()
 
 const onboard = Onboard({
-	// ... other Onboard options
-	wallets: [
-		coinbaseWalletSdk
-		//... other wallets
-	]
-});
+  // ... other Onboard options
+  wallets: [
+    coinbaseWalletSdk
+    //... other wallets
+  ]
+})
 
-const connectedWallets = await onboard.connectWallet();
-console.log(connectedWallets);
+const connectedWallets = await onboard.connectWallet()
+console.log(connectedWallets)
 ```
 
 ## Build Environments

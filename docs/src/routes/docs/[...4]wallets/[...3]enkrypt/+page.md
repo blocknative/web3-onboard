@@ -28,21 +28,21 @@ npm install @web3-onboard/enkrypt
 ## Usage
 
 ```typescript
-import Onboard from '@web3-onboard/core';
-import enrkypt from '@web3-onboard/enkrypt';
+import Onboard from '@web3-onboard/core'
+import enrkypt from '@web3-onboard/enkrypt'
 
-const enrkyptModule = enrkypt();
+const enrkyptModule = enrkypt()
 
 const onboard = Onboard({
-	// ... other Onboard options
-	wallets: [
-		enrkyptModule
-		//... other wallets
-	]
-});
+  // ... other Onboard options
+  wallets: [
+    enrkyptModule
+    //... other wallets
+  ]
+})
 
-const connectedWallets = await onboard.connectWallet();
-console.log(connectedWallets);
+const connectedWallets = await onboard.connectWallet()
+console.log(connectedWallets)
 ```
 
 ## Build Environments

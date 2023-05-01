@@ -30,17 +30,17 @@ npm install @web3-onboard/core @web3-onboard/taho
 ## Usage
 
 ```typescript
-import Onboard from '@web3-onboard/core';
-import tahoWalletModule from '@web3-onboard/taho';
+import Onboard from '@web3-onboard/core'
+import tahoWalletModule from '@web3-onboard/taho'
 
 const onboard = Onboard({
-	// ... other Onboard options
-	wallets: [
-		tahoWalletModule()
-		//... other wallets
-	]
-});
+  // ... other Onboard options
+  wallets: [
+    tahoWalletModule()
+    //... other wallets
+  ]
+})
 
-const connectedWallets = await onboard.connectWallet();
-console.log(connectedWallets);
+const connectedWallets = await onboard.connectWallet()
+console.log(connectedWallets)
 ```

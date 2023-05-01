@@ -34,17 +34,17 @@ npm install @web3-onboard/core @web3-onboard/tallyho
 ## Usage
 
 ```typescript
-import Onboard from '@web3-onboard/core';
-import tallyWalletModule from '@web3-onboard/tallyho';
+import Onboard from '@web3-onboard/core'
+import tallyWalletModule from '@web3-onboard/tallyho'
 
 const onboard = Onboard({
-	// ... other Onboard options
-	wallets: [
-		tallyWalletModule()
-		//... other wallets
-	]
-});
+  // ... other Onboard options
+  wallets: [
+    tallyWalletModule()
+    //... other wallets
+  ]
+})
 
-const connectedWallets = await onboard.connectWallet();
-console.log(connectedWallets);
+const connectedWallets = await onboard.connectWallet()
+console.log(connectedWallets)
 ```

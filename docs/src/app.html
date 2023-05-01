@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" href="%sveltekit.assets%/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%sveltekit.assets%/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
 
-		<script>
-			const key = 'svelteness::color-scheme';
-			const scheme = localStorage[key];
-			const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-			if (scheme === 'dark' || (scheme !== 'light' && prefersDark)) {
-				document.documentElement.classList.add('dark');
-			} else {
-				document.documentElement.classList.remove('dark');
-			}
-		</script>
+    <script>
+      const key = 'svelteness::color-scheme'
+      const scheme = localStorage[key]
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+      if (scheme === 'dark' || (scheme !== 'light' && prefersDark)) {
+        document.documentElement.classList.add('dark')
+      } else {
+        document.documentElement.classList.remove('dark')
+      }
+    </script>
 
-		%sveltekit.head%
-	</head>
-	<body data-sveltekit-preload-data="hover">
-		<div style="display: contents">%sveltekit.body%</div>
-	</body>
+    %sveltekit.head%
+  </head>
+  <body data-sveltekit-preload-data="hover">
+    <div style="display: contents">%sveltekit.body%</div>
+  </body>
 </html>

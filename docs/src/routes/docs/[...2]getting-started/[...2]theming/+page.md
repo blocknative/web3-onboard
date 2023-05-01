@@ -20,12 +20,12 @@ To set the color theme of web3-onboard to one of the available native themes, im
 Example:
 
 ```typescript
-import Onboard from '@web3-onboard/core';
+import Onboard from '@web3-onboard/core'
 
 const onboard = Onboard({
-	theme: 'dark'
-	// other options like wallets, chains, appMetaData, etc.
-});
+  theme: 'dark'
+  // other options like wallets, chains, appMetaData, etc.
+})
 ```
 
 ---
@@ -50,21 +50,21 @@ In the table below, you'll find a list of css variables that you can use to them
 To create a custom theme, you can define a `ThemingMap` object with CSS variables for different components of web3-onboard. Pass this object as the theme option.
 
 ```typescript copy
-import Onboard, { ThemingMap } from '@web3-onboard/core';
+import Onboard, { ThemingMap } from '@web3-onboard/core'
 
 const customTheme: ThemingMap = {
-	'--w3o-background-color': '#f0f0f0',
-	'--w3o-foreground-color': '#333',
-	'--w3o-text-color': '#fff',
-	'--w3o-border-color': '#ccc',
-	'--w3o-action-color': '#007bff',
-	'--w3o-border-radius': '5px'
-};
+  '--w3o-background-color': '#f0f0f0',
+  '--w3o-foreground-color': '#333',
+  '--w3o-text-color': '#fff',
+  '--w3o-border-color': '#ccc',
+  '--w3o-action-color': '#007bff',
+  '--w3o-border-radius': '5px'
+}
 
 const onboard = Onboard({
-	theme: customTheme
-	// other options like wallets, chains, appMetaData, etc.
-});
+  theme: customTheme
+  // other options like wallets, chains, appMetaData, etc.
+})
 ```
 
 ---
@@ -79,43 +79,43 @@ The function also accepts a custom built `ThemingMap` object that contains all o
 Example:
 
 ```typescript copy
-import Onboard from '@web3-onboard/core';
+import Onboard from '@web3-onboard/core'
 
 const onboard = Onboard({
-	theme: 'dark'
-	// other options like wallets, chains, appMetaData, etc.
-});
+  theme: 'dark'
+  // other options like wallets, chains, appMetaData, etc.
+})
 
 // after initialization you may want to change the theme based on UI state
-onboard.state.actions.updateTheme('light');
+onboard.state.actions.updateTheme('light')
 
 // or
 
 const customTheme: ThemingMap = {
-	'--w3o-background-color': '#f0f0f0',
-	'--w3o-foreground-color': '#333',
-	'--w3o-text-color': '#fff',
-	'--w3o-border-color': '#ccc',
-	'--w3o-action-color': '#007bff'
-};
-onboard.state.actions.updateTheme(customTheme);
+  '--w3o-background-color': '#f0f0f0',
+  '--w3o-foreground-color': '#333',
+  '--w3o-text-color': '#fff',
+  '--w3o-border-color': '#ccc',
+  '--w3o-action-color': '#007bff'
+}
+onboard.state.actions.updateTheme(customTheme)
 ```
 
 #### Theme Types
 
 ```typescript
-export type Theme = ThemingMap | BuiltInThemes | 'system';
+export type Theme = ThemingMap | BuiltInThemes | 'system'
 
-export type BuiltInThemes = 'default' | 'dark' | 'light';
+export type BuiltInThemes = 'default' | 'dark' | 'light'
 
 export type ThemingMap = {
-	'--w3o-background-color'?: string;
-	'--w3o-foreground-color'?: string;
-	'--w3o-text-color'?: string;
-	'--w3o-border-color'?: string;
-	'--w3o-action-color'?: string;
-	'--w3o-border-radius'?: string;
-};
+  '--w3o-background-color'?: string
+  '--w3o-foreground-color'?: string
+  '--w3o-text-color'?: string
+  '--w3o-border-color'?: string
+  '--w3o-action-color'?: string
+  '--w3o-border-radius'?: string
+}
 ```
 
 ---

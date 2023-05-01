@@ -30,51 +30,51 @@ npm install @web3-onboard/react
 ### Add Code
 
 ```javascript
-import React from 'react';
-import { init, useConnectWallet } from '@web3-onboard/react';
-import injectedModule from '@web3-onboard/injected-wallets';
-import { ethers } from 'ethers';
+import React from 'react'
+import { init, useConnectWallet } from '@web3-onboard/react'
+import injectedModule from '@web3-onboard/injected-wallets'
+import { ethers } from 'ethers'
 
 // Sign up to get your free API key at https://explorer.blocknative.com/?signup=true
-const dappId = '1730eff0-9d50-4382-a3fe-89f0d34a2070';
+const dappId = '1730eff0-9d50-4382-a3fe-89f0d34a2070'
 
-const injected = injectedModule();
+const injected = injectedModule()
 
-const infuraKey = '<INFURA_KEY>';
-const rpcUrl = `https://mainnet.infura.io/v3/${infuraKey}`;
+const infuraKey = '<INFURA_KEY>'
+const rpcUrl = `https://mainnet.infura.io/v3/${infuraKey}`
 
 // initialize Onboard
 init({
-	wallets: [injected],
-	chains: [
-		{
-			id: '0x1',
-			token: 'ETH',
-			label: 'Ethereum Mainnet',
-			rpcUrl
-		}
-	]
-});
+  wallets: [injected],
+  chains: [
+    {
+      id: '0x1',
+      token: 'ETH',
+      label: 'Ethereum Mainnet',
+      rpcUrl
+    }
+  ]
+})
 
 function App() {
-	const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
+  const [{ wallet, connecting }, connect, disconnect] = useConnectWallet()
 
-	// create an ethers provider
-	let ethersProvider;
+  // create an ethers provider
+  let ethersProvider
 
-	if (wallet) {
-		// if using ethers v6 this is:
-		// ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
-		ethersProvider = new ethers.providers.Web3Provider(wallet.provider, 'any');
-	}
+  if (wallet) {
+    // if using ethers v6 this is:
+    // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
+    ethersProvider = new ethers.providers.Web3Provider(wallet.provider, 'any')
+  }
 
-	return (
-		<div>
-			<button disabled={connecting} onClick={() => (wallet ? disconnect(wallet) : connect())}>
-				{connecting ? 'connecting' : wallet ? 'disconnect' : 'connect'}
-			</button>
-		</div>
-	);
+  return (
+    <div>
+      <button disabled={connecting} onClick={() => (wallet ? disconnect(wallet) : connect())}>
+        {connecting ? 'connecting' : wallet ? 'disconnect' : 'connect'}
+      </button>
+    </div>
+  )
 }
 ```
 
@@ -84,34 +84,34 @@ You can use the context provider `Web3OnboardProvider` to better manage global s
 the initialized web3Onboard instance will be available in all children components. See example below.
 
 ```ts
-import { Web3OnboardProvider, init } from '@web3-onboard/react';
-import injectedModule from '@web3-onboard/injected-wallets';
-const INFURA_KEY = '';
+import { Web3OnboardProvider, init } from '@web3-onboard/react'
+import injectedModule from '@web3-onboard/injected-wallets'
+const INFURA_KEY = ''
 const ethereumRopsten = {
-	id: '0x3',
-	token: 'rETH',
-	label: 'Ethereum Ropsten',
-	rpcUrl: `https://ropsten.infura.io/v3/${INFURA_KEY}`
-};
-const chains = [ethereumRopsten];
-const wallets = [injectedModule()];
-const web3Onboard = init({
-	wallets,
-	chains,
-	appMetadata: {
-		name: 'Web3-Onboard Demo',
-		icon: '<svg>App Icon</svg>',
-		description: 'A demo of Web3-Onboard.'
-	}
-});
-function MyApp({ Component, pageProps }) {
-	return (
-		<Web3OnboardProvider web3Onboard={web3Onboard}>
-			<Component {...pageProps} />
-		</Web3OnboardProvider>
-	);
+  id: '0x3',
+  token: 'rETH',
+  label: 'Ethereum Ropsten',
+  rpcUrl: `https://ropsten.infura.io/v3/${INFURA_KEY}`
 }
-export default MyApp;
+const chains = [ethereumRopsten]
+const wallets = [injectedModule()]
+const web3Onboard = init({
+  wallets,
+  chains,
+  appMetadata: {
+    name: 'Web3-Onboard Demo',
+    icon: '<svg>App Icon</svg>',
+    description: 'A demo of Web3-Onboard.'
+  }
+})
+function MyApp({ Component, pageProps }) {
+  return (
+    <Web3OnboardProvider web3Onboard={web3Onboard}>
+      <Component {...pageProps} />
+    </Web3OnboardProvider>
+  )
+}
+export default MyApp
 ```
 
 ## `init`
@@ -173,11 +173,11 @@ The primary wallet (first in the list of connected wallets) and primary account 
 
 ```typescript
 // set the second wallet in the wallets array as the primary
-setPrimaryWallet(wallets[1]);
+setPrimaryWallet(wallets[1])
 
 // set the second wallet in the wallets array as the primary wallet
 // as well as setting the third account in that wallet as the primary account
-setPrimaryWallet(wallets[1], wallets[1].accounts[2].address);
+setPrimaryWallet(wallets[1], wallets[1].accounts[2].address)
 ```
 
 ## `useSetChain`
@@ -458,27 +458,27 @@ Node built-ins are automatically bundled in v4 so that portion is handled automa
 
 ```javascript
 module.exports = (api) => {
-	api.cache(true);
-	const plugins = [
-		'@babel/plugin-proposal-optional-chaining',
-		'@babel/plugin-proposal-nullish-coalescing-operator',
-		'@babel/plugin-syntax-bigint'
-	];
-	return { plugins };
-};
+  api.cache(true)
+  const plugins = [
+    '@babel/plugin-proposal-optional-chaining',
+    '@babel/plugin-proposal-nullish-coalescing-operator',
+    '@babel/plugin-syntax-bigint'
+  ]
+  return { plugins }
+}
 ```
 
 **webpack.config.js**
 
 ```javascript
 config.module.rules = [
-	...otherModuleRules,
-	{
-		test: /\.js$/,
-		exclude: (_) => !/node_modules\/(@web3auth|@ethereumjs)/.test(_),
-		loader: 'babel-loader'
-	}
-];
+  ...otherModuleRules,
+  {
+    test: /\.js$/,
+    exclude: (_) => !/node_modules\/(@web3auth|@ethereumjs)/.test(_),
+    loader: 'babel-loader'
+  }
+]
 ```
 
 ### Webpack 5
@@ -490,35 +490,35 @@ You'll need to add some dev dependencies with the following command:
 Then add the following to your `webpack.config.js` file:
 
 ```javascript
-const webpack = require('webpack');
+const webpack = require('webpack')
 
 module.exports = {
-	resolve: {
-		fallback: {
-			path: require.resolve('path-browserify')
-		},
-		alias: {
-			assert: 'assert',
-			buffer: 'buffer',
-			crypto: 'crypto-browserify',
-			http: 'stream-http',
-			https: 'https-browserify',
-			os: 'os-browserify/browser',
-			process: 'process/browser',
-			stream: 'stream-browserify',
-			util: 'util'
-		}
-	},
-	experiments: {
-		asyncWebAssembly: true
-	},
-	plugins: [
-		new webpack.ProvidePlugin({
-			process: 'process/browser',
-			Buffer: ['buffer', 'Buffer']
-		})
-	]
-};
+  resolve: {
+    fallback: {
+      path: require.resolve('path-browserify')
+    },
+    alias: {
+      assert: 'assert',
+      buffer: 'buffer',
+      crypto: 'crypto-browserify',
+      http: 'stream-http',
+      https: 'https-browserify',
+      os: 'os-browserify/browser',
+      process: 'process/browser',
+      stream: 'stream-browserify',
+      util: 'util'
+    }
+  },
+  experiments: {
+    asyncWebAssembly: true
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+      Buffer: ['buffer', 'Buffer']
+    })
+  ]
+}
 ```
 
 #### If using create-react-app
@@ -537,56 +537,56 @@ Add the following dev dependencies:
 `yarn add rollup-plugin-polyfill-node webpack-bundle-analyzer assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify -D`
 
 ```javascript
-const webpack = require('webpack');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const path = require('path');
+const webpack = require('webpack')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const path = require('path')
 
 module.exports = function override(config) {
-	const fallback = config.resolve.fallback || {};
-	Object.assign(fallback, {
-		assert: require.resolve('assert'),
-		buffer: require.resolve('buffer'),
-		crypto: require.resolve('crypto-browserify'),
-		http: require.resolve('stream-http'),
-		https: require.resolve('https-browserify'),
-		os: require.resolve('os-browserify/browser'),
-		path: require.resolve('path-browserify'),
-		process: require.resolve('process/browser'),
-		stream: require.resolve('stream-browserify'),
-		url: require.resolve('url'),
-		util: require.resolve('util')
-	});
-	config.resolve.fallback = fallback;
-	config.resolve.alias = {
-		...config.resolve.alias,
-		'bn.js': path.resolve(__dirname, 'node_modules/bn.js'),
-		lodash: path.resolve(__dirname, 'node_modules/lodash'),
-		'magic-sdk': path.resolve(__dirname, 'node_modules/magic-sdk/dist/cjs/index.js')
-	};
-	config.plugins = (config.plugins || []).concat([
-		new webpack.ProvidePlugin({
-			process: 'process/browser',
-			Buffer: ['buffer', 'Buffer']
-		}),
-		new webpack.IgnorePlugin({
-			resourceRegExp: /genesisStates\/[a-z]*\.json$/,
-			contextRegExp: /@ethereumjs\/common/
-		}),
-		new BundleAnalyzerPlugin({
-			analyzerMode: 'disabled'
-		})
-	]);
-	config.ignoreWarnings = [/Failed to parse source map/];
-	config.module.rules.push({
-		test: /\.(js|mjs|jsx)$/,
-		enforce: 'pre',
-		loader: require.resolve('source-map-loader'),
-		resolve: {
-			fullySpecified: false
-		}
-	});
-	return config;
-};
+  const fallback = config.resolve.fallback || {}
+  Object.assign(fallback, {
+    assert: require.resolve('assert'),
+    buffer: require.resolve('buffer'),
+    crypto: require.resolve('crypto-browserify'),
+    http: require.resolve('stream-http'),
+    https: require.resolve('https-browserify'),
+    os: require.resolve('os-browserify/browser'),
+    path: require.resolve('path-browserify'),
+    process: require.resolve('process/browser'),
+    stream: require.resolve('stream-browserify'),
+    url: require.resolve('url'),
+    util: require.resolve('util')
+  })
+  config.resolve.fallback = fallback
+  config.resolve.alias = {
+    ...config.resolve.alias,
+    'bn.js': path.resolve(__dirname, 'node_modules/bn.js'),
+    lodash: path.resolve(__dirname, 'node_modules/lodash'),
+    'magic-sdk': path.resolve(__dirname, 'node_modules/magic-sdk/dist/cjs/index.js')
+  }
+  config.plugins = (config.plugins || []).concat([
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+      Buffer: ['buffer', 'Buffer']
+    }),
+    new webpack.IgnorePlugin({
+      resourceRegExp: /genesisStates\/[a-z]*\.json$/,
+      contextRegExp: /@ethereumjs\/common/
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'disabled'
+    })
+  ])
+  config.ignoreWarnings = [/Failed to parse source map/]
+  config.module.rules.push({
+    test: /\.(js|mjs|jsx)$/,
+    enforce: 'pre',
+    loader: require.resolve('source-map-loader'),
+    resolve: {
+      fullySpecified: false
+    }
+  })
+  return config
+}
 ```
 
 ### Vite
@@ -598,35 +598,35 @@ Add the following dev dependencies:
 Then add the following to your `vite.config.js` file:
 
 ```javascript
-import nodePolyfills from 'rollup-plugin-polyfill-node';
+import nodePolyfills from 'rollup-plugin-polyfill-node'
 
-const MODE = process.env.NODE_ENV;
-const development = MODE === 'development';
+const MODE = process.env.NODE_ENV
+const development = MODE === 'development'
 
 export default {
-	// other config options
-	plugins: [
-		development &&
-			nodePolyfills({
-				include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js')],
-				http: true,
-				crypto: true
-			})
-	],
-	resolve: {
-		alias: {
-			crypto: 'crypto-browserify',
-			stream: 'stream-browserify',
-			assert: 'assert'
-		}
-	},
-	build: {
-		rollupOptions: {
-			plugins: [nodePolyfills({ crypto: true, http: true })]
-		},
-		commonjsOptions: {
-			transformMixedEsModules: true
-		}
-	}
-};
+  // other config options
+  plugins: [
+    development &&
+      nodePolyfills({
+        include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js')],
+        http: true,
+        crypto: true
+      })
+  ],
+  resolve: {
+    alias: {
+      crypto: 'crypto-browserify',
+      stream: 'stream-browserify',
+      assert: 'assert'
+    }
+  },
+  build: {
+    rollupOptions: {
+      plugins: [nodePolyfills({ crypto: true, http: true })]
+    },
+    commonjsOptions: {
+      transformMixedEsModules: true
+    }
+  }
+}
 ```

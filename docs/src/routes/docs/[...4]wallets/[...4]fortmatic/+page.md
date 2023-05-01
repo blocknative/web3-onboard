@@ -29,28 +29,28 @@ npm install @web3-onboard/fortmatic
 
 ```typescript
 type FortmaticOptions = {
-	apiKey: string;
-};
+  apiKey: string
+}
 ```
 
 ## Usage
 
 ```typescript
-import Onboard from '@web3-onboard/core';
-import fortmaticModule from '@web3-onboard/fortmatic';
+import Onboard from '@web3-onboard/core'
+import fortmaticModule from '@web3-onboard/fortmatic'
 
-const fortmatic = fortmaticModule({ apiKey: 'API_KEY' });
+const fortmatic = fortmaticModule({ apiKey: 'API_KEY' })
 
 const onboard = Onboard({
-	// ... other Onboard options
-	wallets: [
-		fortmatic
-		//... other wallets
-	]
-});
+  // ... other Onboard options
+  wallets: [
+    fortmatic
+    //... other wallets
+  ]
+})
 
-const connectedWallets = await onboard.connectWallet();
-console.log(connectedWallets);
+const connectedWallets = await onboard.connectWallet()
+console.log(connectedWallets)
 ```
 
 ## Build Environments

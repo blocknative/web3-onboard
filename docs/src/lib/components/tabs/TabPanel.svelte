@@ -1,14 +1,14 @@
 <script>
-	import { useTabsRegistry } from './tabsRegistry';
+  import { useTabsRegistry } from './tabsRegistry'
 
-	/** @type {string} */
-	export let value;
+  /** @type {string} */
+  export let value
 
-	const { currentValue } = useTabsRegistry();
+  const { currentValue } = useTabsRegistry()
 
-	$: selected = $currentValue === value;
+  $: selected = $currentValue === value
 </script>
 
 <div role="tabpanel" hidden={!selected}>
-	<slot />
+  <slot />
 </div>

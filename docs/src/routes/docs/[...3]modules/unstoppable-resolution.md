@@ -24,13 +24,13 @@ npm install @web3-onboard/unstoppable-resolution
 ### Standalone Setup
 
 ```typescript
-import Onboard from '@web3-onboard/core';
-import unstoppableResolution from '@web3-onboard/unstoppable-resolution';
+import Onboard from '@web3-onboard/core'
+import unstoppableResolution from '@web3-onboard/unstoppable-resolution'
 
 const onboard = Onboard({
-	// ... other Onboard options
-	unstoppableResolution
-});
+  // ... other Onboard options
+  unstoppableResolution
+})
 ```
 
 ## Build Environments

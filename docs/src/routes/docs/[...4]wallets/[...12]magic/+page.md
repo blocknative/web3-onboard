@@ -40,32 +40,32 @@ npm install @web3-onboard/magic
 
 ```typescript
 type MagicInitOptions = {
-	apiKey: string;
-	userEmail?: string; // optional - if user has already logged in and/or session is still active a login modal will not appear
-};
+  apiKey: string
+  userEmail?: string // optional - if user has already logged in and/or session is still active a login modal will not appear
+}
 ```
 
 ## Usage
 
 ```typescript
-import Onboard from '@web3-onboard/core';
-import magicModule from '@web3-onboard/magic';
+import Onboard from '@web3-onboard/core'
+import magicModule from '@web3-onboard/magic'
 
 const magic = magicModule({
-	apiKey: 'API_KEY',
-	userEmail: localStorage.getItem('magicUserEmail')
-});
+  apiKey: 'API_KEY',
+  userEmail: localStorage.getItem('magicUserEmail')
+})
 
 const onboard = Onboard({
-	// ... other Onboard options
-	wallets: [
-		magic
-		//... other wallets
-	]
-});
+  // ... other Onboard options
+  wallets: [
+    magic
+    //... other wallets
+  ]
+})
 
-const connectedWallets = await onboard.connectWallet();
-console.log(connectedWallets);
+const connectedWallets = await onboard.connectWallet()
+console.log(connectedWallets)
 ```
 
 ### Accessing the Magic Wallet configuration
@@ -76,14 +76,14 @@ The user's email can be set in local storage and passed through the `MagicInitOp
 Magic has a default time of 7 days and this can be configured through your Magic API Key settings.
 
 ```typescript
-const [magicWallet] = await onboard.connectWallet();
+const [magicWallet] = await onboard.connectWallet()
 
 try {
-	const { email, publicAddress } = await magicWallet.instance.user.getMetadata();
-	localStorage.setItem('magicUserEmail', email);
-	// This email can then be passed through the MagicInitOptions to continue the users session and avoid having to login again
+  const { email, publicAddress } = await magicWallet.instance.user.getMetadata()
+  localStorage.setItem('magicUserEmail', email)
+  // This email can then be passed through the MagicInitOptions to continue the users session and avoid having to login again
 } catch {
-	// Handle errors if required!
+  // Handle errors if required!
 }
 ```
 

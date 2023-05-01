@@ -28,21 +28,21 @@ npm install @web3-onboard/dcent
 ### Usage
 
 ```typescript
-import Onboard from '@web3-onboard/core';
-import dcentModule from '@web3-onboard/dcent';
+import Onboard from '@web3-onboard/core'
+import dcentModule from '@web3-onboard/dcent'
 
-const dcent = dcentModule();
+const dcent = dcentModule()
 
 const onboard = Onboard({
-	// ... other Onboard options
-	wallets: [
-		dcent
-		//... other wallets
-	]
-});
+  // ... other Onboard options
+  wallets: [
+    dcent
+    //... other wallets
+  ]
+})
 
-const connectedWallets = await onboard.connectWallet();
-console.log(connectedWallets);
+const connectedWallets = await onboard.connectWallet()
+console.log(connectedWallets)
 ```
 
 ## Build Environments

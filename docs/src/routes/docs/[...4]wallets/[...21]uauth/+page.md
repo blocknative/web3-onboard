@@ -32,16 +32,16 @@ Follow the [Login Client Congifuration Docs](https://docs.unstoppabledomains.com
 
 ```typescript
 type UauthInitOptions = {
-	clientID: string; // required and will throw an error if not included: links dapp to Unstoppable Domains for customization
-	redirectUri: string; // required and will throw an error if not included: used for pop-up and callback redirection
-	scope?: string; // default = 'openid wallet'
-	shouldLoginWithRedirect?: boolean; // if true, redirects to your callback page
-	bridge?: string; // default = 'https://bridge.walletconnect.org'
-	qrcodeModalOptions?: {
-		mobileLinks: string[]; // set the order and list of mobile linking wallets
-	};
-	connectFirstChainId?: boolean; // if true, connects to the first network chain provided
-};
+  clientID: string // required and will throw an error if not included: links dapp to Unstoppable Domains for customization
+  redirectUri: string // required and will throw an error if not included: used for pop-up and callback redirection
+  scope?: string // default = 'openid wallet'
+  shouldLoginWithRedirect?: boolean // if true, redirects to your callback page
+  bridge?: string // default = 'https://bridge.walletconnect.org'
+  qrcodeModalOptions?: {
+    mobileLinks: string[] // set the order and list of mobile linking wallets
+  }
+  connectFirstChainId?: boolean // if true, connects to the first network chain provided
+}
 ```
 
 ## Usage
@@ -87,14 +87,14 @@ When Unstoppable Domains is connected the UAuth user instance is exposed.
 This can be used to get information related to the user scopes requested through the `UauthInitOptions`.
 
 ```typescript
-const wallets$ = onboard.state.select('wallets').pipe(share());
+const wallets$ = onboard.state.select('wallets').pipe(share())
 wallets$.subscribe((wallet) => {
-	const unstoppableUser = wallet.find((provider) => provider.label === 'Unstoppable');
-	if (unstoppableUser) {
-		// This will allow insight into the approved user details
-		console.log(unstoppableUser.instance.user);
-	}
-});
+  const unstoppableUser = wallet.find((provider) => provider.label === 'Unstoppable')
+  if (unstoppableUser) {
+    // This will allow insight into the approved user details
+    console.log(unstoppableUser.instance.user)
+  }
+})
 ```
 
 ## Build Environments

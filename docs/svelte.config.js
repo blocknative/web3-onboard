@@ -1,25 +1,25 @@
-import adapter from '@sveltejs/adapter-auto';
-import preprocess from 'svelte-preprocess';
+import adapter from '@sveltejs/adapter-auto'
+import preprocess from 'svelte-preprocess'
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	extensions: ['.svelte', '.md'],
+  extensions: ['.svelte', '.md'],
 
-	kit: {
-		adapter: adapter(),
+  kit: {
+    adapter: adapter(),
 
-		prerender: {
-			entries: ['*'],
-			handleHttpError: 'warn',
-			handleMissingId: 'warn'
-		}
-	},
+    prerender: {
+      entries: ['*'],
+      handleHttpError: 'warn',
+      handleMissingId: 'warn'
+    }
+  },
 
-	package: {
-		dir: 'client',
-		emitTypes: true
-	},
-	preprocess: [preprocess()]
-};
+  package: {
+    dir: 'client',
+    emitTypes: true
+  },
+  preprocess: [preprocess()]
+}
 
-export default config;
+export default config

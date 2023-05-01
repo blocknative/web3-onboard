@@ -28,32 +28,32 @@ npm install @web3-onboard/vue
 ## Quickstart
 
 ```typescript
-import { init } from '@web3-onboard/vue';
-import injectedModule from '@web3-onboard/injected-wallets';
+import { init } from '@web3-onboard/vue'
+import injectedModule from '@web3-onboard/injected-wallets'
 
-const injected = injectedModule();
-const infuraKey = '<INFURA_KEY>';
-const rpcUrl = `https://mainnet.infura.io/v3/${infuraKey}`;
+const injected = injectedModule()
+const infuraKey = '<INFURA_KEY>'
+const rpcUrl = `https://mainnet.infura.io/v3/${infuraKey}`
 
 const web3Onboard = init({
-	wallets: [injected],
-	chains: [
-		{
-			id: '0x1',
-			token: 'ETH',
-			label: 'Ethereum Mainnet',
-			rpcUrl
-		}
-	]
-});
+  wallets: [injected],
+  chains: [
+    {
+      id: '0x1',
+      token: 'ETH',
+      label: 'Ethereum Mainnet',
+      rpcUrl
+    }
+  ]
+})
 
-const { wallets, connectWallet, disconnectConnectedWallet, connectedWallet } = useOnboard();
+const { wallets, connectWallet, disconnectConnectedWallet, connectedWallet } = useOnboard()
 
 if (connectedWallet) {
-	// if using ethers v6 this is:
-	// ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
-	const ethersProvider = new ethers.providers.Web3Provider(connectedWallet.provider, 'any');
-	// ..... do stuff with the provider
+  // if using ethers v6 this is:
+  // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
+  const ethersProvider = new ethers.providers.Web3Provider(connectedWallet.provider, 'any')
+  // ..... do stuff with the provider
 }
 ```
 
@@ -66,24 +66,24 @@ The `init` function initializes `web3-onboard` and makes it available to the `us
 ### Example usage
 
 ```typescript
-import { init } from '@web3-onboard/vue';
-import injectedModule from '@web3-onboard/injected-wallets';
+import { init } from '@web3-onboard/vue'
+import injectedModule from '@web3-onboard/injected-wallets'
 
-const injected = injectedModule();
-const infuraKey = '<INFURA_KEY>';
-const rpcUrl = `https://mainnet.infura.io/v3/${infuraKey}`;
+const injected = injectedModule()
+const infuraKey = '<INFURA_KEY>'
+const rpcUrl = `https://mainnet.infura.io/v3/${infuraKey}`
 
 const web3Onboard = init({
-	wallets: [injected],
-	chains: [
-		{
-			id: '0x1',
-			token: 'ETH',
-			label: 'Ethereum Mainnet',
-			rpcUrl
-		}
-	]
-});
+  wallets: [injected],
+  chains: [
+    {
+      id: '0x1',
+      token: 'ETH',
+      label: 'Ethereum Mainnet',
+      rpcUrl
+    }
+  ]
+})
 ```
 
 ## `useOnboard`
@@ -93,11 +93,11 @@ const web3Onboard = init({
 ### Example usage
 
 ```typescript
-import { useOnboard } from '@web3-onboard/vue';
+import { useOnboard } from '@web3-onboard/vue'
 // Use the composable
-const onboard = useOnboard();
+const onboard = useOnboard()
 // Or destructure it
-const { wallets, connectWallet, disconnectConnectedWallet, connectedWallet } = useOnboard();
+const { wallets, connectWallet, disconnectConnectedWallet, connectedWallet } = useOnboard()
 // do stuff
 ```
 
@@ -109,18 +109,18 @@ Function to open the onboard modal and connect to a wallet provider. For referen
 
 ```html
 <script>
-	import { useOnboard } from '@web3-onboard/vue';
-	export default {
-		setup() {
-			const { connectWallet } = useOnboard();
-			const connect = async () => connectWallet();
-			return { connect };
-		}
-	};
+  import { useOnboard } from '@web3-onboard/vue'
+  export default {
+    setup() {
+      const { connectWallet } = useOnboard()
+      const connect = async () => connectWallet()
+      return { connect }
+    }
+  }
 </script>
 
 <template>
-	<button type="button" @click="connect">Connect to a Wallet</button>
+  <button type="button" @click="connect">Connect to a Wallet</button>
 </template>
 ```
 
@@ -132,17 +132,17 @@ Computed property that contains the current chain to which `connectedWallet` is 
 
 ```html
 <script>
-	import { useOnboard } from '@web3-onboard/vue';
-	export default {
-		setup() {
-			const { connectedChain } = useOnboard();
-			return { connectedChain };
-		}
-	};
+  import { useOnboard } from '@web3-onboard/vue'
+  export default {
+    setup() {
+      const { connectedChain } = useOnboard()
+      return { connectedChain }
+    }
+  }
 </script>
 
 <template>
-	<span>Connected Chain: {{ connectedChain.id }}</span>
+  <span>Connected Chain: {{ connectedChain.id }}</span>
 </template>
 ```
 
@@ -154,17 +154,17 @@ Computed property that contains the latest connected wallet
 
 ```html
 <script>
-	import { useOnboard } from '@web3-onboard/vue';
-	export default {
-		setup() {
-			const { connectedWallet } = useOnboard();
-			return { connectedWallet };
-		}
-	};
+  import { useOnboard } from '@web3-onboard/vue'
+  export default {
+    setup() {
+      const { connectedWallet } = useOnboard()
+      return { connectedWallet }
+    }
+  }
 </script>
 
 <template>
-	<span>Connected Wallet: {{ connectedWallet.label }}</span>
+  <span>Connected Wallet: {{ connectedWallet.label }}</span>
 </template>
 ```
 
@@ -176,17 +176,17 @@ Readonly boolean ref that tracks the state of the wallet connection status
 
 ```html
 <script>
-	import { useOnboard } from '@web3-onboard/vue';
-	export default {
-		setup() {
-			const { connectingWallet } = useOnboard();
-			return { connectingWallet };
-		}
-	};
+  import { useOnboard } from '@web3-onboard/vue'
+  export default {
+    setup() {
+      const { connectingWallet } = useOnboard()
+      return { connectingWallet }
+    }
+  }
 </script>
 
 <template>
-	<span v-if="connectingWallet">Connecting...</span>
+  <span v-if="connectingWallet">Connecting...</span>
 </template>
 ```
 
@@ -198,18 +198,18 @@ Function to disconnect a specific wallet
 
 ```html
 <script>
-	import { useOnboard } from '@web3-onboard/vue';
-	export default {
-		setup() {
-			const { disconnectWallet } = useOnboard();
-			const disconnect = async () => disconnectWallet('MetaMask');
-			return { disconnect };
-		}
-	};
+  import { useOnboard } from '@web3-onboard/vue'
+  export default {
+    setup() {
+      const { disconnectWallet } = useOnboard()
+      const disconnect = async () => disconnectWallet('MetaMask')
+      return { disconnect }
+    }
+  }
 </script>
 
 <template>
-	<button type="button" @click="disconnect">Disconnect MetaMask</button>
+  <button type="button" @click="disconnect">Disconnect MetaMask</button>
 </template>
 ```
 
@@ -221,17 +221,17 @@ Function to disconnect the `connectedWallet`
 
 ```html
 <script>
-	import { useOnboard } from '@web3-onboard/vue';
-	export default {
-		setup() {
-			const { disconnectConnectedWallet } = useOnboard();
-			return { disconnectConnectedWallet };
-		}
-	};
+  import { useOnboard } from '@web3-onboard/vue'
+  export default {
+    setup() {
+      const { disconnectConnectedWallet } = useOnboard()
+      return { disconnectConnectedWallet }
+    }
+  }
 </script>
 
 <template>
-	<button type="button" @click="disconnectConnectedWallet">Disconnect connectedWallet</button>
+  <button type="button" @click="disconnectConnectedWallet">Disconnect connectedWallet</button>
 </template>
 ```
 
@@ -243,17 +243,17 @@ Function that returns the current chain a wallet is connected to
 
 ```html
 <script>
-	import { useOnboard } from '@web3-onboard/vue';
-	export default {
-		setup() {
-			const { getChain } = useOnboard();
-			return { getChain };
-		}
-	};
+  import { useOnboard } from '@web3-onboard/vue'
+  export default {
+    setup() {
+      const { getChain } = useOnboard()
+      return { getChain }
+    }
+  }
 </script>
 
 <template>
-	<span>MetaMask is connected to: {{ getChain('MetaMask') }}</span>
+  <span>MetaMask is connected to: {{ getChain('MetaMask') }}</span>
 </template>
 ```
 
@@ -265,18 +265,18 @@ Function to set the chain of a wallet
 
 ```html
 <script>
-	import { useOnboard } from '@web3-onboard/vue';
-	export default {
-		setup() {
-			const { setChain } = useOnboard();
-			const set = () => setChain({ wallet: 'MetaMask', chainId: '0x1' });
-			return { set };
-		}
-	};
+  import { useOnboard } from '@web3-onboard/vue'
+  export default {
+    setup() {
+      const { setChain } = useOnboard()
+      const set = () => setChain({ wallet: 'MetaMask', chainId: '0x1' })
+      return { set }
+    }
+  }
 </script>
 
 <template>
-	<button type="button" @click="set">Set MetaMask chain to mainnet</button>
+  <button type="button" @click="set">Set MetaMask chain to mainnet</button>
 </template>
 ```
 
@@ -288,17 +288,17 @@ Readonly boolean ref that tracks the status of setting the chain
 
 ```html
 <script>
-	import { useOnboard } from '@web3-onboard/vue';
-	export default {
-		setup() {
-			const { settingChain } = useOnboard();
-			return { settingChain };
-		}
-	};
+  import { useOnboard } from '@web3-onboard/vue'
+  export default {
+    setup() {
+      const { settingChain } = useOnboard()
+      return { settingChain }
+    }
+  }
 </script>
 
 <template>
-	<span v-if="settingChain">Setting chain...</span>
+  <span v-if="settingChain">Setting chain...</span>
 </template>
 ```
 
@@ -327,19 +327,19 @@ Readonly ref that contains every wallet that user connected to in the past; usef
 
 ```html
 <script>
-	import { useOnboard } from '@web3-onboard/vue';
-	export default {
-		setup() {
-			const { alreadyConnectedWallets } = useOnboard();
-			return { alreadyConnectedWallets };
-		}
-	};
+  import { useOnboard } from '@web3-onboard/vue'
+  export default {
+    setup() {
+      const { alreadyConnectedWallets } = useOnboard()
+      return { alreadyConnectedWallets }
+    }
+  }
 </script>
 
 <template>
-	<div v-for="wallet in wallets">
-		<span>Label: {{wallet.label}}</span>
-	</div>
+  <div v-for="wallet in wallets">
+    <span>Label: {{wallet.label}}</span>
+  </div>
 </template>
 ```
 
@@ -351,17 +351,17 @@ Readonly ref that contains the last time that the user connected a wallet in mil
 
 ```html
 <script>
-	import { useOnboard } from '@web3-onboard/vue';
-	export default {
-		setup() {
-			const { lastConnectedTimestamp } = useOnboard();
-			return { lastConnectedTimestamp };
-		}
-	};
+  import { useOnboard } from '@web3-onboard/vue'
+  export default {
+    setup() {
+      const { lastConnectedTimestamp } = useOnboard()
+      return { lastConnectedTimestamp }
+    }
+  }
 </script>
 
 <template>
-	<span>Your last connection timestamp was: {{ lastConnectedTimestamp }}</span>
+  <span>Your last connection timestamp was: {{ lastConnectedTimestamp }}</span>
 </template>
 ```
 
@@ -383,27 +383,27 @@ Node built-ins are automatically bundled in v4 so that portion is handled automa
 
 ```javascript
 module.exports = (api) => {
-	api.cache(true);
-	const plugins = [
-		'@babel/plugin-proposal-optional-chaining',
-		'@babel/plugin-proposal-nullish-coalescing-operator',
-		'@babel/plugin-syntax-bigint'
-	];
-	return { plugins };
-};
+  api.cache(true)
+  const plugins = [
+    '@babel/plugin-proposal-optional-chaining',
+    '@babel/plugin-proposal-nullish-coalescing-operator',
+    '@babel/plugin-syntax-bigint'
+  ]
+  return { plugins }
+}
 ```
 
 **webpack.config.js**
 
 ```javascript
 config.module.rules = [
-	...otherModuleRules,
-	{
-		test: /\.js$/,
-		exclude: (_) => !/node_modules\/(@web3auth|@ethereumjs)/.test(_),
-		loader: 'babel-loader'
-	}
-];
+  ...otherModuleRules,
+  {
+    test: /\.js$/,
+    exclude: (_) => !/node_modules\/(@web3auth|@ethereumjs)/.test(_),
+    loader: 'babel-loader'
+  }
+]
 ```
 
 ### Webpack 5
@@ -415,35 +415,35 @@ You'll need to add some dev dependencies with the following command:
 Then add the following to your `webpack.config.js` file:
 
 ```javascript
-const webpack = require('webpack');
+const webpack = require('webpack')
 
 module.exports = {
-	resolve: {
-		fallback: {
-			path: require.resolve('path-browserify')
-		},
-		alias: {
-			assert: 'assert',
-			buffer: 'buffer',
-			crypto: 'crypto-browserify',
-			http: 'stream-http',
-			https: 'https-browserify',
-			os: 'os-browserify/browser',
-			process: 'process/browser',
-			stream: 'stream-browserify',
-			util: 'util'
-		}
-	},
-	experiments: {
-		asyncWebAssembly: true
-	},
-	plugins: [
-		new webpack.ProvidePlugin({
-			process: 'process/browser',
-			Buffer: ['buffer', 'Buffer']
-		})
-	]
-};
+  resolve: {
+    fallback: {
+      path: require.resolve('path-browserify')
+    },
+    alias: {
+      assert: 'assert',
+      buffer: 'buffer',
+      crypto: 'crypto-browserify',
+      http: 'stream-http',
+      https: 'https-browserify',
+      os: 'os-browserify/browser',
+      process: 'process/browser',
+      stream: 'stream-browserify',
+      util: 'util'
+    }
+  },
+  experiments: {
+    asyncWebAssembly: true
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+      Buffer: ['buffer', 'Buffer']
+    })
+  ]
+}
 ```
 
 ### Vite
@@ -455,37 +455,37 @@ Add the following dev dependencies:
 Then add the following to your `vite.config.js` file:
 
 ```javascript
-import nodePolyfills from 'rollup-plugin-polyfill-node';
+import nodePolyfills from 'rollup-plugin-polyfill-node'
 
-const MODE = process.env.NODE_ENV;
-const development = MODE === 'development';
+const MODE = process.env.NODE_ENV
+const development = MODE === 'development'
 
 export default {
-	// other config options
-	plugins: [
-		development &&
-			nodePolyfills({
-				include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js')],
-				http: true,
-				crypto: true
-			})
-	],
-	resolve: {
-		alias: {
-			crypto: 'crypto-browserify',
-			stream: 'stream-browserify',
-			assert: 'assert'
-		}
-	},
-	build: {
-		rollupOptions: {
-			plugins: [nodePolyfills({ crypto: true, http: true })]
-		},
-		commonjsOptions: {
-			transformMixedEsModules: true
-		}
-	}
-};
+  // other config options
+  plugins: [
+    development &&
+      nodePolyfills({
+        include: ['node_modules/**/*.js', new RegExp('node_modules/.vite/.*js')],
+        http: true,
+        crypto: true
+      })
+  ],
+  resolve: {
+    alias: {
+      crypto: 'crypto-browserify',
+      stream: 'stream-browserify',
+      assert: 'assert'
+    }
+  },
+  build: {
+    rollupOptions: {
+      plugins: [nodePolyfills({ crypto: true, http: true })]
+    },
+    commonjsOptions: {
+      transformMixedEsModules: true
+    }
+  }
+}
 ```
 
 ### Nuxt.js

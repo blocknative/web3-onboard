@@ -1,290 +1,290 @@
 :root {
-	--docsearch-primary-color: var(--kd-color-brand);
-	--docsearch-highlight-color: var(--docsearch-primary-color);
-	--docsearch-text-color: var(--kd-color-gray-inverse);
-	--docsearch-searchbox-shadow: none;
-	--docsearch-searchbox-focus-background: transparent;
-	--docsearch-key-gradient: transparent;
-	--docsearch-key-shadow: none;
-	--docsearch-modal-background: #fafafa;
-	--docsearch-footer-background: #ededed;
-	--docsearch-muted-color: #606060;
-	--docsearch-logo-color: #606060;
-	--docsearch-hit-color: #606060;
-	--docsearch-hit-active-color: var(--kd-color-gray-inverse);
-	--docsearch-hit-background: none;
+  --docsearch-primary-color: var(--kd-color-brand);
+  --docsearch-highlight-color: var(--docsearch-primary-color);
+  --docsearch-text-color: var(--kd-color-gray-inverse);
+  --docsearch-searchbox-shadow: none;
+  --docsearch-searchbox-focus-background: transparent;
+  --docsearch-key-gradient: transparent;
+  --docsearch-key-shadow: none;
+  --docsearch-modal-background: #fafafa;
+  --docsearch-footer-background: #ededed;
+  --docsearch-muted-color: #606060;
+  --docsearch-logo-color: #606060;
+  --docsearch-hit-color: #606060;
+  --docsearch-hit-active-color: var(--kd-color-gray-inverse);
+  --docsearch-hit-background: none;
 }
 
 :root.dark {
-	--docsearch-modal-shadow: none;
-	--docsearch-footer-shadow: none;
-	--docsearch-hit-background: #292929;
-	--docsearch-hit-color: #b4b4b4;
-	--docsearch-modal-background: #2d2d2d;
-	--docsearch-hit-shadow: none;
-	--docsearch-footer-background: #242424;
-	--docsearch-muted-color: #b4b4b4;
-	--docsearch-logo-color: #b4b4b4;
+  --docsearch-modal-shadow: none;
+  --docsearch-footer-shadow: none;
+  --docsearch-hit-background: #292929;
+  --docsearch-hit-color: #b4b4b4;
+  --docsearch-modal-background: #2d2d2d;
+  --docsearch-hit-shadow: none;
+  --docsearch-footer-background: #242424;
+  --docsearch-muted-color: #b4b4b4;
+  --docsearch-logo-color: #b4b4b4;
 }
 
 .DocSearch-Container {
-	background-color: rgb(0 0 0 / 0.7);
-	font-family: var(--kd-font-family-sans);
-	--tw-backdrop-blur: blur(4px);
-	-webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness)
-		var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate)
-		var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate)
-		var(--tw-backdrop-sepia);
-	backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast)
-		var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert)
-		var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+  background-color: rgb(0 0 0 / 0.7);
+  font-family: var(--kd-font-family-sans);
+  --tw-backdrop-blur: blur(4px);
+  -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness)
+    var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate)
+    var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate)
+    var(--tw-backdrop-sepia);
+  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast)
+    var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert)
+    var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
 }
 
 .dark .DocSearch-Container {
-	background-color: rgb(34 34 34 / 0.8);
+  background-color: rgb(34 34 34 / 0.8);
 }
 
 .DocSearch-Button {
-	display: flex;
-	height: auto;
-	width: 100%;
-	align-items: center;
-	border-radius: 0.125rem;
-	background-color: var(--kd-color-gray-elevate);
-	padding-top: 0.625rem;
-	padding-bottom: 0.625rem;
-	padding-left: 0.75rem;
-	padding-right: 0.75rem;
-	--tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-	--tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
-	box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000),
-		var(--tw-shadow);
+  display: flex;
+  height: auto;
+  width: 100%;
+  align-items: center;
+  border-radius: 0.125rem;
+  background-color: var(--kd-color-gray-elevate);
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000),
+    var(--tw-shadow);
 }
 
 .DocSearch-Button:hover {
-	background-color: var(--kd-color-gray-hover);
+  background-color: var(--kd-color-gray-hover);
 }
 
 .DocSearch-Button {
-	margin: 0px;
-	font-size: 15px;
-	border: 1px solid var(--kd-color-gray-divider);
+  margin: 0px;
+  font-size: 15px;
+  border: 1px solid var(--kd-color-gray-divider);
 }
 
 .DocSearch-Button:focus-visible,
 .DocSearch-Button.focus-visible {
-	outline-offset: 2px;
-	--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width)
-		var(--tw-ring-offset-color) !important;
-	--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width))
-		var(--tw-ring-color) !important;
-	box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000) !important;
-	--tw-ring-color: var(--kd-color-focus);
-	outline: 2px solid transparent !important;
+  outline-offset: 2px;
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width)
+    var(--tw-ring-offset-color) !important;
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width))
+    var(--tw-ring-color) !important;
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000) !important;
+  --tw-ring-color: var(--kd-color-focus);
+  outline: 2px solid transparent !important;
 }
 
 .DocSearch-Button-Container {
-	display: flex;
-	width: 100%;
-	align-items: center;
+  display: flex;
+  width: 100%;
+  align-items: center;
 }
 
 .DocSearch-SearchBar {
-	padding-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .DocSearch-Search-Icon {
-	margin-top: -0.25rem;
-	margin-right: 0.5rem;
+  margin-top: -0.25rem;
+  margin-right: 0.5rem;
 }
 
 .DocSearch-Button-Placeholder {
-	margin: 0px;
-	height: auto;
-	padding: 0px;
-	font-size: 15px;
-	font-weight: 400;
-	color: var(--kd-color-gray-inverse);
+  margin: 0px;
+  height: auto;
+  padding: 0px;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--kd-color-gray-inverse);
 }
 
 .DocSearch-Button-Keys {
-	display: flex;
+  display: flex;
 }
 
 .DocSearch-Button-Keys > :not([hidden]) ~ :not([hidden]) {
-	--tw-space-x-reverse: 0;
-	margin-right: calc(0.125rem * var(--tw-space-x-reverse));
-	margin-left: calc(0.125rem * calc(1 - var(--tw-space-x-reverse)));
+  --tw-space-x-reverse: 0;
+  margin-right: calc(0.125rem * var(--tw-space-x-reverse));
+  margin-left: calc(0.125rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .DocSearch-Button-Keys {
-	padding: 0px;
-	min-width: unset;
+  padding: 0px;
+  min-width: unset;
 }
 
 .DocSearch-Button-Key {
-	top: 0px;
-	margin: 0px;
-	display: flex;
-	height: auto;
-	width: auto;
+  top: 0px;
+  margin: 0px;
+  display: flex;
+  height: auto;
+  width: auto;
 }
 
 .DocSearch-Button-Key > :not([hidden]) ~ :not([hidden]) {
-	--tw-space-x-reverse: 0;
-	margin-right: calc(0.125rem * var(--tw-space-x-reverse));
-	margin-left: calc(0.125rem * calc(1 - var(--tw-space-x-reverse)));
+  --tw-space-x-reverse: 0;
+  margin-right: calc(0.125rem * var(--tw-space-x-reverse));
+  margin-left: calc(0.125rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .DocSearch-Button-Key {
-	background-image: none;
-	padding: 0px;
-	font-size: 15px;
-	font-weight: 600;
-	color: var(--kd-color-gray-inverse);
-	--tw-shadow: 0 0 #0000;
-	--tw-shadow-colored: 0 0 #0000;
-	box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000),
-		var(--tw-shadow);
+  background-image: none;
+  padding: 0px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--kd-color-gray-inverse);
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000),
+    var(--tw-shadow);
 }
 
 .DocSearch-Input {
-	margin-left: 0.25rem;
-	margin-right: 0.5rem;
-	padding: 0px;
-	padding-left: 0px;
-	--tw-text-opacity: 1;
-	color: rgb(0 0 0 / var(--tw-text-opacity));
+  margin-left: 0.25rem;
+  margin-right: 0.5rem;
+  padding: 0px;
+  padding-left: 0px;
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
 .DocSearch-Form:focus-within {
-	outline: 2px solid transparent;
-	outline-offset: 2px;
-	--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width)
-		var(--tw-ring-offset-color);
-	--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width))
-		var(--tw-ring-color);
-	box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-	--tw-ring-color: var(--kd-color-focus);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width)
+    var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width))
+    var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  --tw-ring-color: var(--kd-color-focus);
 }
 
 .DocSearch-Input:focus,
 .DocSearch-Input:focus-visible {
-	outline: 0;
-	box-shadow: none;
+  outline: 0;
+  box-shadow: none;
 }
 
 .DocSearch-Hit {
-	padding: 0.25rem;
+  padding: 0.25rem;
 }
 
 .DocSearch-Hit-source {
-	color: var(--docsearch-hit-text-color);
+  color: var(--docsearch-hit-text-color);
 }
 
 .DocSearch-Hit[aria-selected='true'] a {
-	color: var(--docsearch-text-color);
-	background: var(--docsearch-hit-background);
+  color: var(--docsearch-text-color);
+  background: var(--docsearch-hit-background);
 }
 
 .DocSearch-Hit[aria-selected='true'] mark {
-	color: var(--docsearch-highlight-color) !important;
+  color: var(--docsearch-highlight-color) !important;
 }
 
 :root.dark .DocSearch-Input {
-	--tw-text-opacity: 1;
-	color: rgb(255 255 255 / var(--tw-text-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .DocSearch-Cancel {
-	display: none;
+  display: none;
 }
 
 .DocSearch-Screen-Icon {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 1.5rem;
 }
 
 .DocSearch-NoResults-Prefill-List {
-	padding-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 
 .DocSearch-Form:focus-within .DocSearch-MagnifierLabel {
-	color: var(--kd-color-focus);
+  color: var(--kd-color-focus);
 }
 
 .DocSearch-MagnifierLabel {
-	color: var(--docsearch-text-color);
+  color: var(--docsearch-text-color);
 }
 
 @media screen and (max-width: 750px) {
-	.DocSearch-Modal {
-		top: 1rem;
-		left: 0px;
-		right: 0px;
-		margin-left: auto;
-		margin-right: auto;
-		max-height: 75vh;
-		max-width: 90vw;
-		overflow: hidden !important;
-		--docsearch-vh: 0.75vh !important;
-	}
+  .DocSearch-Modal {
+    top: 1rem;
+    left: 0px;
+    right: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 75vh;
+    max-width: 90vw;
+    overflow: hidden !important;
+    --docsearch-vh: 0.75vh !important;
+  }
 }
 
 @media only screen and (max-width: 991px) {
-	.DocSearch-Button {
-		--docsearch-text-color: var(--kd-color-gray-soft);
-		margin: 0px;
-		display: flex;
-		height: 3rem;
-		width: 3rem;
-		align-items: center;
-		justify-content: center;
-		border-width: 0px;
-		background-color: transparent;
-		padding: 0px;
-	}
+  .DocSearch-Button {
+    --docsearch-text-color: var(--kd-color-gray-soft);
+    margin: 0px;
+    display: flex;
+    height: 3rem;
+    width: 3rem;
+    align-items: center;
+    justify-content: center;
+    border-width: 0px;
+    background-color: transparent;
+    padding: 0px;
+  }
 
-	.DocSearch-Button:hover {
-		background-color: transparent;
-	}
+  .DocSearch-Button:hover {
+    background-color: transparent;
+  }
 
-	.DocSearch-Button-Container {
-		width: auto;
-	}
+  .DocSearch-Button-Container {
+    width: auto;
+  }
 
-	.DocSearch-Button-Placeholder {
-		display: none;
-	}
+  .DocSearch-Button-Placeholder {
+    display: none;
+  }
 
-	.DocSearch-Search-Icon {
-		display: inline-block;
-		height: 1.5rem;
-		width: 1.5rem;
-	}
+  .DocSearch-Search-Icon {
+    display: inline-block;
+    height: 1.5rem;
+    width: 1.5rem;
+  }
 
-	.DocSearch-Search-Icon:hover {
-		color: var(--kd-color-gray-inverse);
-	}
+  .DocSearch-Search-Icon:hover {
+    color: var(--kd-color-gray-inverse);
+  }
 
-	.DocSearch-Button {
-		--tw-shadow: 0 0 #0000;
-		--tw-shadow-colored: 0 0 #0000;
-		box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000),
-			var(--tw-shadow);
-	}
+  .DocSearch-Button {
+    --tw-shadow: 0 0 #0000;
+    --tw-shadow-colored: 0 0 #0000;
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000),
+      var(--tw-shadow);
+  }
 
-	.DocSearch-Button-Keys {
-		display: none;
-	}
+  .DocSearch-Button-Keys {
+    display: none;
+  }
 
-	.DocSearch-Button-Key {
-		--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width)
-			var(--tw-ring-offset-color) !important;
-		--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width))
-			var(--tw-ring-color) !important;
-		box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000) !important;
-	}
+  .DocSearch-Button-Key {
+    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width)
+      var(--tw-ring-offset-color) !important;
+    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width))
+      var(--tw-ring-color) !important;
+    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000) !important;
+  }
 }
