@@ -1,4 +1,8 @@
-# Unstoppable Domains Resolution
+---
+title: Unstoppable Domains Resolution
+---
+
+# {$frontmatter.title}
 
 A module to add Unstoppable Domain resolution to web3-onboard.
 
