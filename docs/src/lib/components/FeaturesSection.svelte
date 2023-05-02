@@ -7,8 +7,8 @@
   import FeatureCard from './FeatureCard.svelte'
 
   import FrameworksGraphic from './svg/frameworks-group.svelte'
-  import NetworksGraphic from './svg/networks-group.svelte'
   import NotifyGraphic from './svg/notify-group.svelte'
+  import NetworksGraphic from './svg/networks-graphic.svg'
   import AccountCenterGraphic from './svg/account-center-graphic.svg'
   import WalletsGraphic from './svg/wallet-row.svg'
   import TransactionPreviewGraphic from './svg/transaction-preview-graphic.svg'
@@ -78,7 +78,11 @@
           <Button href="/examples/connect-wallet" buttonStyle={'link'}>{'View Demo'}</Button>
         </Flexbox>
       </TextBlock>
-      <NetworksGraphic />
+        <img
+          src={NetworksGraphic}
+          alt="Onboard Supported Chains"
+          style="margin: auto; max-width: 80%;"
+        />
     </div>
   </Container>
   <ScrollContainer>
