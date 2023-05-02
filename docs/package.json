@@ -47,6 +47,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@web3-onboard/cede-store": "^2.0.0-alpha.1",
     "@web3-onboard/coinbase": "^2.2.2",
     "@web3-onboard/core": "^2.17.0-alpha.1",
     "@web3-onboard/dcent": "^2.2.5",
