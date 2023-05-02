@@ -1,6 +1,6 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
-  import { fly } from 'svelte/transition'
+  import { fade, fly } from 'svelte/transition'
   import { quartOut } from 'svelte/easing'
   import { wallets$ } from '../../streams.js'
   import en from '../../i18n/en.json'
@@ -10,13 +10,16 @@
   import connect from '../../connect.js'
   import disconnect from '../../disconnect.js'
   import { state } from '../../store/index.js'
-  import { getDefaultChainStyles, unrecognizedChainStyle } from '../../utils.js'
-  import { NetworkSelector, SuccessStatusIcon, WalletAppBadge } from '../shared/index.js'
+  import { getDefaultChainStyles, isSVG, unrecognizedChainStyle } from '../../utils.js'
+  import {
+    NetworkSelector,
+    SuccessStatusIcon,
+    WalletAppBadge
+  } from '../shared/index.js'
   import caretLightIcon from '../../icons/caret-light.js'
   import warningIcon from '../../icons/warning.js'
   import questionIcon from '../../icons/question.js'
   import { poweredByBlocknative } from '../../icons/index.js'
-  import { updateAccountCenter } from '../../store/actions.js'
   import DisconnectAllConfirm from './DisconnectAllConfirm.svelte'
   import { configuration } from '../../configuration.js'
 
@@ -31,6 +34,10 @@
 
   $: [primaryWallet] = $wallets$
   $: [connectedChain] = primaryWallet ? primaryWallet.chains : []
+  $: secondaryTokens =
+    primaryWallet &&
+    primaryWallet.accounts.length &&
+    primaryWallet.accounts[0].secondaryTokens
 
   $: validAppChain = appChains.find(({ id, namespace }) =>
     connectedChain
@@ -44,7 +51,6 @@
 
   const { position } = state.get().accountCenter
   const { device } = configuration
-
 </script>
 
 <style>
@@ -442,13 +448,26 @@
           </div>
         {/if}
 
-        <button
-          class="app-button button-neutral-solid"
-          on:click={() => updateAccountCenter({ expanded: false })}
-          >{$_('accountCenter.backToApp', {
-            default: en.accountCenter.backToApp
-          })}</button
-        >
+        {#if secondaryTokens.length}
+          {#each secondaryTokens as token}
+            <div>
+              {#await token.icon}
+                <div class="placeholder-icon" />
+              {:then iconLoaded}
+                <div in:fade class="icon flex justify-center items-center">
+                  {#if isSVG(iconLoaded)}
+                    <!-- render svg string -->
+                    {@html iconLoaded}
+                  {:else}
+                    <!-- load img url -->
+                    <img src={iconLoaded} alt="logo" />
+                  {/if}
+                </div>
+              {/await}
+              {token.name}: {token.balance}
+            </div>
+          {/each}
+        {/if}
         <a
           href="https://blocknative.com"
           target="_blank"
