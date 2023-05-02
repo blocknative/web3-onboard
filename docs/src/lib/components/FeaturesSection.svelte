@@ -78,11 +78,11 @@
           <Button href="/examples/connect-wallet" buttonStyle={'link'}>{'View Demo'}</Button>
         </Flexbox>
       </TextBlock>
-        <img
-          src={NetworksGraphic}
-          alt="Onboard Supported Chains"
-          style="margin: auto; max-width: 80%;"
-        />
+      <img
+        src={NetworksGraphic}
+        alt="Onboard Supported Chains"
+        style="margin: auto; max-width: 80%;"
+      />
     </div>
   </Container>
   <ScrollContainer>
