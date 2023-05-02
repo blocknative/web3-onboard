@@ -6,6 +6,8 @@ cede.store is a non-custodial browser extension designed to store CEX (centraliz
 
 Any dApp can integrate cede.store in order to track and/or manage a user's CEX assets. In this way, we offer the dApp a way to monitor and manage a user's CEX assets while remaining non-custodial and maintaining the same user experience as any DeFi browser wallet.
 
+As cede.store is not a traditional 1193 wallet behavior is a little different from other wallets that connect through web3-onboard in that there is no on-chain user address to interact with and there isn't a specific chain associated. With this behavior dapp devs will need to handle accordingly and differently from traditional 1193 wallets. The dapp dev can expect the connect account to not be shown as a hex value (or at all) and the chain to always be `0x0` when a user connects with cede.store for that specific wallet account.
+
 See [cede.store Wallet Developer Docs](https://docs.cede.store)
 
 ### Install
