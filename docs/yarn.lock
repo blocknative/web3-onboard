@@ -386,6 +386,11 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
+"@cedelabs/providers@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@cedelabs/providers/-/providers-0.0.7.tgz#859070c5cf0a86841ce98d32c1599cc8de9b7869"
+  integrity sha512-rjOcEff5dnuKif+dJmEygCC/mp05oztkFYAmGEcGa1HW9EcVP3id1PTjBEYZLieVBNwJdg4kcl8Jh1dboG8pCA==
+
 "@chainsafe/as-sha256@^0.3.1":
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/@chainsafe/as-sha256/-/as-sha256-0.3.1.tgz#3639df0e1435cab03f4d9870cc3ac079e57a6fc9"
@@ -3806,6 +3811,14 @@
     "@walletconnect/window-getters" "^1.0.1"
     tslib "1.14.1"
 
+"@web3-onboard/cede-store@^2.0.0-alpha.1":
+  version "2.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/cede-store/-/cede-store-2.0.0-alpha.1.tgz#4ab31464b883b8e39969f95c8cc546ad319efb95"
+  integrity sha512-3/K4zYac95AdZQjrD0SH+tHdjbaenwUZ5T08Mu9MuuOjxhJysx+wX2aoXil3dawZpcJvtIcX6XD042kFgI6keQ==
+  dependencies:
+    "@cedelabs/providers" "^0.0.7"
+    "@web3-onboard/common" "^2.3.0-alpha.1"
+
 "@web3-onboard/coinbase@^2.2.2":
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/@web3-onboard/coinbase/-/coinbase-2.2.2.tgz#a08bfc5c946fb2a3b57a3487a157e102881860ee"
@@ -3823,7 +3836,7 @@
     ethers "5.5.4"
     joi "17.8.1"
 
-"@web3-onboard/common@^2.3.1":
+"@web3-onboard/common@^2.3.0-alpha.1", "@web3-onboard/common@^2.3.1":
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/@web3-onboard/common/-/common-2.3.1.tgz#69ad0d5167e5103086c34a4f7e8af90681d71be4"
   integrity sha512-VRIsJLW92Q+bu6w9WSlTrPIk0vGmFvVwnoAKy1ubKuBvSKKhMUmrnv8N5tusr0mk+gcUuUdDF6gLDCABqrfC7g==

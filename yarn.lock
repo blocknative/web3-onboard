@@ -364,6 +364,11 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
 
+"@cedelabs/providers@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@cedelabs/providers/-/providers-0.0.7.tgz#859070c5cf0a86841ce98d32c1599cc8de9b7869"
+  integrity sha512-rjOcEff5dnuKif+dJmEygCC/mp05oztkFYAmGEcGa1HW9EcVP3id1PTjBEYZLieVBNwJdg4kcl8Jh1dboG8pCA==
+
 "@chainsafe/as-sha256@^0.3.1":
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/@chainsafe/as-sha256/-/as-sha256-0.3.1.tgz#3639df0e1435cab03f4d9870cc3ac079e57a6fc9"
