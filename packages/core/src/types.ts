@@ -189,7 +189,7 @@ export type Configuration = {
 
 export type Locale = string
 export type i18nOptions = Record<Locale, i18n>
-    // allows partial i18n override in typescript
+// allows partial i18n override in TypeScript:
 type RecursivePartial<T> = { //https://stackoverflow.com/a/47914631
     [P in keyof T]?: RecursivePartial<T[P]>;
 };
