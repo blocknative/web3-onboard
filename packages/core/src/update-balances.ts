@@ -16,7 +16,7 @@ async function updateBalances(addresses?: string[]): Promise<void> {
           const secondaryTokens = await updateSecondaryTokens(
             wallet,
             account.address,
-            chains
+            chain
           )
           // if no provided addresses, we want to update all balances
           // otherwise check if address is in addresses array
