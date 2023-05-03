@@ -340,15 +340,13 @@
         })
       })
     }
-    
     if (
       !secondaryTokens &&
-      Array.isArray(appChain.tokens) &&
-      appChain.tokens.length
+      Array.isArray(appChain.secondaryTokens) &&
+      appChain.secondaryTokens.length
     ) {
-      updateSecondaryTokens(selectedWallet, address, appChains).then(
+      updateSecondaryTokens(selectedWallet, address, appChain).then(
         secondaryTokens => {
-          console.log(secondaryTokens)
           updateAccount(selectedWallet.label, address, {
             secondaryTokens
           })

@@ -207,7 +207,7 @@ export function trackWallet(
         const secondaryTokenBal = updateSecondaryTokens(
           primaryWallet,
           address,
-          chains
+          chain
         )
         const account = accounts.find(account => account.address === address)
 
@@ -235,7 +235,6 @@ export function trackWallet(
     .subscribe(res => {
       if (!res) return
       const [address, balance, ens, uns, secondaryTokens] = res
-      console.log(238, secondaryTokens)
       updateAccount(label, address, { balance, ens, uns, secondaryTokens })
     })
 
@@ -319,7 +318,7 @@ export function trackWallet(
             const secondaryTokenBal = updateSecondaryTokens(
               primaryWallet,
               address,
-              chains
+              chain
             )
 
             const ensProm = validEnsChain(chainId)
@@ -349,7 +348,6 @@ export function trackWallet(
       })
     )
     .subscribe(updatedAccounts => {
-      console.log('updatedAccounts', updatedAccounts)
       updatedAccounts && updateWallet(label, { accounts: updatedAccounts })
     })
 

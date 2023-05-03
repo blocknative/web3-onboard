@@ -41,11 +41,11 @@ async function updateBalances(addresses?: string[]): Promise<void> {
 export const updateSecondaryTokens = async (
   wallet: WalletState,
   account: AccountAddress,
-  chains: Chain[]
+  chain: Chain
 ): Promise<SecondaryTokenBalances[]> => {
-  const chain = chains.find(({ id }) => id === wallet.chains[0].id)
   const chainRPC = chain.rpcUrl
-  if (!chain.tokens || !chain.tokens.length || !chainRPC) return
+  if (!chain.secondaryTokens || !chain.secondaryTokens.length || !chainRPC)
+    return
   const ethersProvider = new ethers.providers.Web3Provider(
     wallet.provider,
     'any'
@@ -55,7 +55,7 @@ export const updateSecondaryTokens = async (
     'function balanceOf(address owner) view returns (uint256)'
   ]
   const updatedBalances = await Promise.all(
-    chain.tokens.map(async token => {
+    chain.secondaryTokens.map(async token => {
       try {
         const swapContract = new ethers.Contract(
           token.address,

@@ -407,7 +407,7 @@ export interface Chain {
   /**
    * Tokens to be displayed in Account Center and available in the app state
    */
-  tokens?: Token[]
+  secondaryTokens?: SecondaryTokens[]
   /**
    * The color used to represent the chain and
    * will be used as a background for the icon
@@ -423,7 +423,7 @@ export interface Chain {
   blockExplorerUrl?: string
 }
 
-export interface Token {
+export interface SecondaryTokens {
   address: string
   name: TokenSymbol
   icon?: string

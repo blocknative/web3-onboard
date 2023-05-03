@@ -1,6 +1,6 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
-  import { fade, fly } from 'svelte/transition'
+  import { fly } from 'svelte/transition'
   import { quartOut } from 'svelte/easing'
   import { wallets$ } from '../../streams.js'
   import en from '../../i18n/en.json'
@@ -10,7 +10,7 @@
   import connect from '../../connect.js'
   import disconnect from '../../disconnect.js'
   import { state } from '../../store/index.js'
-  import { getDefaultChainStyles, isSVG, unrecognizedChainStyle } from '../../utils.js'
+  import { getDefaultChainStyles, unrecognizedChainStyle } from '../../utils.js'
   import {
     NetworkSelector,
     SuccessStatusIcon,
@@ -22,6 +22,7 @@
   import { poweredByBlocknative } from '../../icons/index.js'
   import DisconnectAllConfirm from './DisconnectAllConfirm.svelte'
   import { configuration } from '../../configuration.js'
+  import SecondaryTokenTable from './SecondaryTokenTable.svelte'
 
   function disconnectAllWallets() {
     $wallets$.forEach(({ label }) => disconnect({ label }))
@@ -99,8 +100,8 @@
   }
 
   .action-container {
-    padding: 4px 12px 4px 8px;
-    border-radius: 8px;
+    padding: 0.25rem 12px 0.25rem 0.5rem;
+    border-radius: 0.5rem;
     transition: background-color 150ms ease-in-out;
   }
 
@@ -184,7 +185,25 @@
     );
     border-top: 1px solid var(--border-color);
     border-radius: var(--account-center-border-radius, inherit);
-    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+  }
+
+  .app-info-header {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.75rem;
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+  .app-icon-name {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 0.75rem;
   }
 
   .app-name {
@@ -200,45 +219,41 @@
     font-size: var(--onboard-font-size-7, var(--font-size-7));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
     color: var(--account-center-maximized-app-info-color, inherit);
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0px 0.25rem;
+    gap: 1rem;
   }
 
   .app-info {
+    width: 100%;
     font-size: var(--onboard-font-size-7, var(--font-size-7));
     line-height: var(--onboard-font-line-height-3, var(--font-line-height-3));
     color: var(--account-center-maximized-app-info-color, inherit);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.5rem 1rem;
+    gap: 0.25rem;
   }
   .app-info-heading {
-    font-weight: 600;
-    margin-top: var(--onboard-spacing-5, var(--spacing-5));
-    margin-bottom: var(--onboard-spacing-7, var(--spacing-7));
+    font-weight: 700;
     color: var(--account-center-maximized-app-info-color, inherit);
   }
 
+  .w100 {
+    width: 100%;
+  }
+
   a {
-    font-weight: 600;
-  }
-
-  .mt7 {
-    margin-top: var(--onboard-spacing-7, var(--spacing-7));
-  }
-
-  .ml4 {
-    margin-left: var(--onboard-spacing-4, var(--spacing-4));
-  }
-
-  .app-button {
-    font-family: var(--account-center-app-btn-font-family, inherit);
-    margin-top: var(--onboard-spacing-5, var(--spacing-5));
-    color: var(
-      --account-center-app-btn-text-color,
-      var(--background-color, #fff)
-    );
-    background: var(--account-center-app-btn-background, var(--action-color));
+    font-weight: 700;
   }
 
   .powered-by-container {
-    margin-top: 12px;
     color: var(--text-color);
+    padding: 0.75rem;
   }
 </style>
 
@@ -375,107 +390,91 @@
 
       <!-- app info section -->
       <div class="app-info-container">
-        <div class="flex items-start">
-          <!-- app icon -->
-          <div class="relative flex">
-            <WalletAppBadge
-              size={32}
-              padding={4}
-              background="white"
-              border="black"
-              radius={8}
-              icon={(appMetadata && appMetadata.icon) || questionIcon}
-            />
-          </div>
-
-          <div class="ml4">
-            <div class="app-name">
-              {(appMetadata && appMetadata.name) || 'App Name'}
+        {#if appMetadata}
+          <div class="flex items-start app-info-header">
+            <!-- app icon -->
+            <div class="relative flex app-icon-name">
+              <WalletAppBadge
+                size={32}
+                padding={4}
+                background="white"
+                border="black"
+                radius={8}
+                icon={(appMetadata && appMetadata.icon) || questionIcon}
+              />
+              <div class="app-name">
+                {(appMetadata && appMetadata.name) || 'App Name'}
+              </div>
             </div>
+
             <div class="app-description">
               {(appMetadata && appMetadata.description) ||
                 'This app has not added a description.'}
             </div>
           </div>
-        </div>
 
-        <!-- app info -->
-        {#if appMetadata && (appMetadata.gettingStartedGuide || appMetadata.explore)}
-          <div class="app-info">
-            <h4 class="app-info-heading">
-              {$_('accountCenter.appInfo', {
-                default: en.accountCenter.appInfo
-              })}
-            </h4>
-
-            {#if appMetadata.gettingStartedGuide}
-              <div class="flex justify-between items-center mt7">
-                <div>
-                  {$_('accountCenter.learnMore', {
-                    default: en.accountCenter.learnMore
-                  })}
-                </div>
-                <a
-                  href={appMetadata.gettingStartedGuide}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                >
-                  {$_('accountCenter.gettingStartedGuide', {
-                    default: en.accountCenter.gettingStartedGuide
-                  })}
-                </a>
+          <!-- app info -->
+          {#if appMetadata.gettingStartedGuide || appMetadata.explore}
+            <div class="app-info">
+              <div class="app-info-heading">
+                {$_('accountCenter.appInfo', {
+                  default: en.accountCenter.appInfo
+                })}
               </div>
-            {/if}
 
-            {#if appMetadata.explore}
-              <div class="flex justify-between items-center mt7">
-                <div>
-                  {$_('accountCenter.smartContracts', {
-                    default: en.accountCenter.smartContracts
-                  })}
+              {#if appMetadata.gettingStartedGuide}
+                <div class="flex justify-between items-center w100">
+                  <div>
+                    {$_('accountCenter.learnMore', {
+                      default: en.accountCenter.learnMore
+                    })}
+                  </div>
+                  <a
+                    href={appMetadata.gettingStartedGuide}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    {$_('accountCenter.gettingStartedGuide', {
+                      default: en.accountCenter.gettingStartedGuide
+                    })}
+                  </a>
                 </div>
-                <a
-                  href={appMetadata.explore}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                >
-                  {$_('accountCenter.explore', {
-                    default: en.accountCenter.explore
-                  })}
-                </a>
-              </div>
-            {/if}
-          </div>
-        {/if}
+              {/if}
 
-        {#if secondaryTokens.length}
-          {#each secondaryTokens as token}
-            <div>
-              {#await token.icon}
-                <div class="placeholder-icon" />
-              {:then iconLoaded}
-                <div in:fade class="icon flex justify-center items-center">
-                  {#if isSVG(iconLoaded)}
-                    <!-- render svg string -->
-                    {@html iconLoaded}
-                  {:else}
-                    <!-- load img url -->
-                    <img src={iconLoaded} alt="logo" />
-                  {/if}
+              {#if appMetadata.explore}
+                <div class="flex justify-between items-center w100">
+                  <div>
+                    {$_('accountCenter.smartContracts', {
+                      default: en.accountCenter.smartContracts
+                    })}
+                  </div>
+                  <a
+                    href={appMetadata.explore}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    {$_('accountCenter.explore', {
+                      default: en.accountCenter.explore
+                    })}
+                  </a>
                 </div>
-              {/await}
-              {token.name}: {token.balance}
+              {/if}
             </div>
-          {/each}
+          {/if}
         {/if}
-        <a
-          href="https://blocknative.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="flex justify-center items-center powered-by-container"
-        >
-          {@html poweredByBlocknative}
-        </a>
+        {#if secondaryTokens && secondaryTokens.length}
+          <SecondaryTokenTable {secondaryTokens} />
+        {/if}
+        <div class="w100">
+          <a
+            href="https://blocknative.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex justify-center items-center powered-by-container"
+          >
+            {@html poweredByBlocknative}
+          </a>
+        </div>
       </div>
     </div>
   </div>

@@ -252,7 +252,7 @@ const disconnectOptions = Joi.object({
   label: Joi.string().required()
 }).required()
 
-const tokenValidation = Joi.object({
+const secondaryTokenValidation = Joi.object({
   name: Joi.string().required(),
   address: Joi.string().required(),
   icon: Joi.string().optional()
@@ -265,7 +265,7 @@ const setChainOptions = Joi.object({
   rpcUrl: Joi.string(),
   label: Joi.string(),
   token: Joi.string(),
-  tokens: Joi.array().items(tokenValidation).optional()
+  secondaryTokens: Joi.array().items(secondaryTokenValidation).optional()
 })
 
 const customNotificationUpdate = Joi.object({
