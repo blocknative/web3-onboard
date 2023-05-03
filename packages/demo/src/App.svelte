@@ -27,6 +27,7 @@
   import phantomModule from '@web3-onboard/phantom'
   import trustModule from '@web3-onboard/trust'
   import frontierModule from '@web3-onboard/frontier'
+  import cedeStoreModule from '@web3-onboard/cede-store'
   import {
     recoverAddress,
     arrayify,
@@ -143,6 +144,7 @@
   const phantom = phantomModule()
   const trust = trustModule()
   const frontier = frontierModule()
+  const cedeStore = cedeStoreModule()
 
   const trezorOptions = {
     email: 'test@test.com',
@@ -200,7 +202,8 @@
       zeal,
       frontier,
       phantom,
-      xdefi
+      xdefi,
+      cedeStore
     ],
     transactionPreview,
     gas,
