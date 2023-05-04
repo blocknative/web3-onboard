@@ -25,7 +25,8 @@ import injectedModule from '@web3-onboard/injected-wallets'
 import { ethers } from 'ethers'
 
 // Sign up to get your free API key at https://explorer.blocknative.com/?signup=true
-const dappId = '1730eff0-9d50-4382-a3fe-89f0d34a2070'
+// Required for Transaction Notifications and Transaction Preview
+const apiKey = '1730eff0-9d50-4382-a3fe-89f0d34a2070'
 
 const injected = injectedModule()
 
@@ -35,6 +36,7 @@ const rpcUrl = `https://eth-mainnet.g.alchemy.com/v2/${rpcAPIKey}` || `https://m
 
 // initialize Onboard
 init({
+  apiKey,
   wallets: [injected],
   chains: [
     {

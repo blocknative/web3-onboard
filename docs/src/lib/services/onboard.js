@@ -124,7 +124,6 @@ const intiOnboard = async (theme) => {
       torus,
       sequence,
       web3auth,
-      infinityWallet,
       dcent,
       enkrypt,
       mewWallet,
@@ -132,7 +131,8 @@ const intiOnboard = async (theme) => {
       fortmatic,
       keystone,
       keepkey,
-      portis
+      portis,
+      infinityWallet
     ],
     chains: [
       {
