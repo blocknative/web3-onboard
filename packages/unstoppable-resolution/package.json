@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/unstoppable-resolution",
-  "version": "2.0.0",
+  "version": "2.0.1-alpha.1",
   "description": "Adds Unstoppable Domain resolution for a wallet address, similar to ENS resolution",
   "keywords": [
     "Unstoppable Domain",
