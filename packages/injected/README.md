@@ -81,6 +81,7 @@ console.log(connectedWallets)
 - DeFiWallet - _Desktop & Mobile_
 - ApexWallet - _Desktop_
 - BifrostWallet - _Desktop & Mobile_
+- Safeheron - _Desktop_
 
 ## Filtering Wallets
 

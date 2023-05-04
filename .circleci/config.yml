@@ -381,6 +381,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/unstoppable-resolution
     steps:
       - node-build-steps
+  build-cede-store:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/cede-store
+    steps:
+      - node-build-steps
 
   # Build staging/Alpha releases
   build-staging-core:
@@ -597,6 +603,12 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/unstoppable-resolution
+    steps:
+      - node-staging-build-steps
+  build-staging-cede-store:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/cede-store
     steps:
       - node-staging-build-steps
 
@@ -819,3 +831,10 @@ workflows:
           <<: *deploy_production_filters
       - build-staging-unstoppable-resolution:
           <<: *deploy_staging_filters
+  cede-store:
+    jobs:
+      - build-cede-store:
+          <<: *deploy_production_filters
+      - build-staging-cede-store:
+          <<: *deploy_staging_filters
+
