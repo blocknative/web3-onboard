@@ -43,8 +43,7 @@ export const chainValidation = Joi.object({
   rpcUrl: Joi.string(),
   label: Joi.string(),
   token: Joi.string(),
-  secondaryTokens: Joi.array()
-  .items(secondaryTokenValidation).optional(),
+  secondaryTokens: Joi.array().items(secondaryTokenValidation).optional(),
   icon: Joi.string(),
   color: Joi.string(),
   publicRpcUrl: Joi.string(),
