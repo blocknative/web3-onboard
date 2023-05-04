@@ -4,7 +4,7 @@ title: Walletconnect
 
 # {$frontmatter.title}
 
-Wallet module for connecting Wallet Connect to web3-onboard
+Wallet module for connecting WalletConnect to web3-onboard, currently supporting both v1 and v2.
 
 :::admonition type=warning
 _Not all Wallets support WalletConnect V2 currently. For an up to date list please see the [WalletConnect Explorer](https://explorer.walletconnect.com/?version=2)_
