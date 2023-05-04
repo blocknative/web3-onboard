@@ -405,7 +405,9 @@ export interface Chain {
   /* Recommended to include. The native token symbol, eg ETH, BNB, MATIC */
   token?: TokenSymbol
   /**
-   * Tokens to be displayed in Account Center and available in the app state
+   * An optional array of tokens to be available to the dapp in the
+   * app state object per wallet within the wallet account and displayed
+   * in Account Center (if enabled)
    */
   secondaryTokens?: SecondaryTokens[]
   /**
@@ -424,8 +426,19 @@ export interface Chain {
 }
 
 export interface SecondaryTokens {
+  /**
+   * Required - The onchain address of the token associated
+   * with the chain it is entered under
+   */
   address: string
+  /**
+   * Required - The symbol of the token i.e. USDC, ETH, 1INCH
+   */
   name: TokenSymbol
+  /**
+   * An optional svg or url string for the icon of the token.
+   * If an svg is used ensure the height/width is set to 100%
+   */
   icon?: string
 }
 

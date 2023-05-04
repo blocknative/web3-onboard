@@ -37,6 +37,7 @@
   import { ethers } from 'ethers'
   import { share } from 'rxjs/operators'
   import VConsole from 'vconsole'
+  import blocknativeIcon from './blocknative-icon.js'
 
   if (window.innerWidth < 700) {
     new VConsole()
@@ -279,7 +280,7 @@
     },
     appMetadata: {
       name: 'Blocknative',
-      // icon: blocknativeIcon,
+      icon: blocknativeIcon,
       // logo: blocknativeLogo,
       description: 'Demo app for Onboard V2',
       recommendedInjectedWallets: [
