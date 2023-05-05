@@ -46,7 +46,7 @@
     "@web3-onboard/taho": "^2.0.2",
     "@web3-onboard/unstoppable-resolution": "^2.0.0",
     "@web3-onboard/web3auth": "^2.2.1",
-    "@web3-onboard/walletconnect": "^2.3.6",
+    "@web3-onboard/walletconnect": "^2.3.7-alpha.1",
     "@web3-onboard/enkrypt": "^2.0.2",
     "@web3-onboard/mew-wallet": "^2.0.1",
     "@web3-onboard/xdefi": "^2.0.2",
