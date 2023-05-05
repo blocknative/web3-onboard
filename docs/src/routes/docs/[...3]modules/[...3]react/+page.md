@@ -14,14 +14,14 @@ A collection of React hooks for implementing web3-onboard into a React project
 <TabPanel value="yarn">
 
 ```sh copy
-yarn add @web3-onboard/react
+yarn add @web3-onboard/react @web3-onboard/injected-wallets
 ```
 
   </TabPanel>
   <TabPanel value="npm">
 
 ```sh copy
-npm install @web3-onboard/react
+npm install @web3-onboard/react @web3-onboard/injected-wallets
 ```
 
   </TabPanel>
@@ -29,7 +29,7 @@ npm install @web3-onboard/react
 
 ### Add Code
 
-```javascript
+```javascript title="App.js"
 import React from 'react'
 import { init, useConnectWallet } from '@web3-onboard/react'
 import injectedModule from '@web3-onboard/injected-wallets'
@@ -78,6 +78,8 @@ function App() {
     </div>
   )
 }
+
+export default App;
 ```
 
 ## Using the `Web3OnboardProvider`
@@ -523,13 +525,23 @@ module.exports = {
 }
 ```
 
-#### If using create-react-app
+### If using create-react-app
+
+<!-- KAT TODO: UPDATE CRACO INSTRUCTIONS -->
 
 [CRACO](https://www.npmjs.com/package/@craco/craco) provides a similar way to override webpack config which is obfuscated in Create React App built applications.
 
 The above webpack 5 example can be used in the `craco.config.js` file at the root level in this case.
 
 [React App Rewired](https://www.npmjs.com/package/react-app-rewired) is another option for working with Create React App DApps
+
+Add React App Rewired:
+
+`npm i react-app-rewired`
+
+**OR** 
+
+`yarn add react-app-rewired`
 
 Add the following dev dependencies:
 `npm i --save-dev rollup-plugin-polyfill-node webpack-bundle-analyzer assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify`
@@ -538,7 +550,7 @@ Add the following dev dependencies:
 
 `yarn add rollup-plugin-polyfill-node webpack-bundle-analyzer assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify -D`
 
-```javascript
+```javascript title="config.overrides.js"
 const webpack = require('webpack')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const path = require('path')

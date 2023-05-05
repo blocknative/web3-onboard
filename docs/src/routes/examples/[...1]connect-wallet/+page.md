@@ -14,10 +14,32 @@ description: Learn how to connect a wallet to your dapp with Web3-Onboard. For t
 
 <div class="w-full  h-5"/>
 
+Remember- if you used create-react-app, please follow the [additional setup instructions](../../docs/modules/react.md#if-using-create-react-app)
+
 <Tabs values={frameworks}>
   <TabPanel value="react">
 
-## Step 1: Import + Configure
+## Step 1: Install Dependencies
+
+<Tabs values={['yarn', 'npm']}>
+<TabPanel value="yarn">
+
+```sh copy
+yarn add @web3-onboard/react @web3-onboard/injected-wallets @web3-onboard/infinity-wallet @web3-onboard/fortmatic @web3-onboard/gnosis @web3-onboard/keepkey @web3-onboard/keystone @web3-onboard/ledger @web3-onboard/portis @web3-onboard/trezor @web3-onboard/walletconnect @web3-onboard/coinbase @web3-onboard/magic @web3-onboard/dcent @web3-onboard/sequence @web3-onboard/taho @web3-onboard/trust @web3-onboard/frontier
+```
+
+  </TabPanel>
+  <TabPanel value="npm">
+
+```sh copy
+npm install @web3-onboard/react @web3-onboard/injected-wallets @web3-onboard/infinity-wallet @web3-onboard/fortmatic @web3-onboard/gnosis @web3-onboard/keepkey @web3-onboard/keystone @web3-onboard/ledger @web3-onboard/portis @web3-onboard/trezor @web3-onboard/walletconnect @web3-onboard/coinbase @web3-onboard/magic @web3-onboard/dcent @web3-onboard/sequence @web3-onboard/taho @web3-onboard/trust @web3-onboard/frontier
+```
+
+  </TabPanel>
+</Tabs>
+
+
+## Step 2: Import + Configure
 
 Import the libraries and any wallets you would like to use. For this example, we are going to use the injected wallets module. You can easily add more wallet support to your dapp via our other wallet modules. Additionally, we'll setup web3-onboard to support 2 chains: Ethereum mainnet and Polygon mainnet.
 
@@ -31,17 +53,16 @@ import keepkeyModule from '@web3-onboard/keepkey'
 import keystoneModule from '@web3-onboard/keystone'
 import ledgerModule from '@web3-onboard/ledger'
 import portisModule from '@web3-onboard/portis'
-import torusModule from '@web3-onboard/torus'
 import trezorModule from '@web3-onboard/trezor'
 import walletConnectModule from '@web3-onboard/walletconnect'
 import coinbaseModule from '@web3-onboard/coinbase'
 import magicModule from '@web3-onboard/magic'
-import web3authModule from '@web3-onboard/web3auth'
 import dcentModule from '@web3-onboard/dcent'
 import sequenceModule from '@web3-onboard/sequence'
 import tahoModule from '@web3-onboard/taho'
 import trustModule from '@web3-onboard/trust'
 import frontierModule from '@web3-onboard/frontier'
+import ConnectWallet from './ConnectWallet'
 
 const INFURA_KEY = ''
 
@@ -79,9 +100,6 @@ const magic = magicModule({
   apiKey: 'apiKey'
 })
 
-const enkrypt = enkryptModule()
-const mewWallet = mewWalletModule()
-
 const wallets = [
   infinityWallet,
   keepkey,
@@ -95,8 +113,6 @@ const wallets = [
   dcent,
   trezor,
   walletConnect,
-  enkrypt,
-  mewWallet,
   gnosis,
   magic,
   fortmatic,
@@ -109,13 +125,13 @@ const chains = [
     id: '0x1',
     token: 'ETH',
     label: 'Ethereum Mainnet',
-    rpcUrl: `https://mainnet.infura.io/v3/${INFURA_ID}`
+    rpcUrl: `https://mainnet.infura.io/v3/${INFURA_KEY}`
   },
   {
     id: '0x5',
     token: 'ETH',
     label: 'Goerli',
-    rpcUrl: `https://goerli.infura.io/v3/${INFURA_ID}`
+    rpcUrl: `https://goerli.infura.io/v3/${INFURA_KEY}`
   },
   {
     id: '0x13881',
@@ -167,7 +183,7 @@ function App() {
   )
 }
 
-export default MyApp
+export default App
 ```
 
 ## Step 2: Display the connect wallet button
@@ -175,7 +191,7 @@ export default MyApp
 In another file we'll create the component that will display our connect wallet button. We'll be using the `useConnectWallet` hook in order to achieve this.
 
 ```js title="ConnectWallet.tsx"|copy
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useConnectWallet } from '@web3-onboard/react'
 import { ethers } from 'ethers'
 
@@ -209,9 +225,18 @@ export default function ConnectWallet() {
 Now that we have our wallet connected, let's display some basic information, such as the connected wallet's address, ENS name, and avatar.
 
 ```js title="ConnectWallet.tsx"|copy{8,10-19,28-37}
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useConnectWallet } from '@web3-onboard/react'
 import { ethers } from 'ethers'
+import type {
+    TokenSymbol
+  } from '@web3-onboard/common'
+
+interface Account {
+    address: string,
+    balance: Record<TokenSymbol, string> | null,
+    ens: {name: string|undefined, avatar: string|undefined}
+}
 
 export default function ConnectWallet() {
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet()
@@ -238,13 +263,13 @@ export default function ConnectWallet() {
     }
   }, [wallet])
 
-  if(wallet?.provider) {
+  if(wallet?.provider && account) {
     return (
         <div>
-          <img src={ens?.avatar} alt="ENS Avatar" />
-          <div>{ ens?.name ? ens.name : address }</div>
+            {account.ens?.avatar ? (<img src={account.ens?.avatar} alt="ENS Avatar" />) : null}
+          <div>{ account.ens?.name ? account.ens.name : account.address }</div>
           <div>Connected to {wallet.label}</div>
-          <button onClick={() => { disconnect({ label: wallet.label }) }>Disconnect</button>
+          <button onClick={() => { disconnect({ label: wallet.label }) }}>Disconnect</button>
         </div>
     )
   }
@@ -253,7 +278,7 @@ export default function ConnectWallet() {
     <div>
       <button
         disabled={connecting}
-        onClick={connect}>
+        onClick={() => connect()}>
         Connect
       </button>
     </div>
