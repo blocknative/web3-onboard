@@ -31,7 +31,7 @@
   ): string {
     const [asset] = Object.keys(balance)
     return `${
-      balance[asset].length > 8 ? balance[asset].slice(0, 8) : balance[asset]
+      balance[asset].length > 7 ? balance[asset].slice(0, 7) : balance[asset]
     } ${asset}`
   }
 
@@ -122,20 +122,30 @@
   .address-domain {
     flex: 1 0 auto;
     max-width: 70%;
-    overflow: scroll;
     white-space: nowrap;
     font-weight: 600;
     color: var(--account-center-maximized-address-color, inherit);
+    overflow: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .address-domain::-webkit-scrollbar {
+    display: none;
   }
 
   .balance {
     flex: 1 1 auto;
     max-width: 70%;
-    overflow: scroll;
     white-space: nowrap;
     text-align: end;
     opacity: 0.4;
     transition: color 150ms ease-in-out, background-color 150ms ease-in-out;
+    overflow: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .balance::-webkit-scrollbar {
+    display: none;
   }
 
   .elipsis-container {
@@ -233,7 +243,7 @@
         {/if}
       </div>
 
-      <!-- ELIPSIS -->
+      <!-- ELLIPSIS -->
       <div class="elipsis-container" class:active={showMenu === address}>
         <div
           on:click|stopPropagation={() =>

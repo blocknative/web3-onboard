@@ -128,14 +128,16 @@
             {
               default: connectionRejected
                 ? en.connect.connectingWallet.rejectedText
-                : en.connect.connectingWallet.mainText
+                : en.connect.connectingWallet.mainText,
+              values: { wallet: selectedWallet.label }
             }
           )}
         </div>
         {#if connectionRejected}
           <div class="rejected-cta pointer subtext" on:click={connectWallet}>
             {$_('connect.connectingWallet.rejectedCTA', {
-              default: en.connect.connectingWallet.rejectedCTA
+              default: en.connect.connectingWallet.rejectedCTA,
+              values: { wallet: selectedWallet.label }
             })}
           </div>
         {:else}

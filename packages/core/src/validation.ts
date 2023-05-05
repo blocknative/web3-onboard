@@ -176,6 +176,7 @@ const connectModalOptions = Joi.object({
   autoConnectLastWallet: Joi.boolean(),
   autoConnectAllPreviousWallet: Joi.boolean(),
   iDontHaveAWalletLink: Joi.string(),
+  wheresMyWalletLink: Joi.string(),
   disableUDResolution: Joi.boolean()
 })
 
@@ -221,7 +222,8 @@ const initOptions = Joi.object({
     previewTransaction: Joi.function()
   }),
   theme: theme,
-  disableFontDownload: Joi.boolean()
+  disableFontDownload: Joi.boolean(),
+  unstoppableResolution: Joi.function()
 })
 
 const connectOptions = Joi.object({
