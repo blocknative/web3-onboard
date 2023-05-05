@@ -10,6 +10,7 @@ title: Core
   import customConnect1 from '$lib/assets/custom-connect-1.png'
   import customConnect2 from '$lib/assets/custom-connect-2.png'
   import customConnectDefault from '$lib/assets/custom-connect-default.png'
+  import accountCenter from '$lib/assets/account-center-example.png'
 </script>
 
 # {$frontmatter.title}
@@ -144,6 +145,7 @@ type Chain = {
   icon?: string // the icon to represent the chain
   publicRpcUrl?: string // an optional public RPC used when adding a new chain config to the wallet
   blockExplorerUrl?: string // also used when adding a new config to the wallet
+  secondaryTokens?: SecondaryTokens[] // An optional array of tokens to be available to the dapp in the app state object per wallet within the wallet account and displayed in Account Center (if enabled)
 }
 ```
 
@@ -344,6 +346,8 @@ type disableFontDownload = boolean // defaults to false
 #### accountCenter
 
 An object that defines whether the account center UI (default and minimal) is enabled and its position on the screen. Currently the account center is enabled for both desktop and mobile devices.
+
+<img src="{accountCenter}" alt="Web3-Onboard Account Center example"/>
 
 ```ts
 type AccountCenter = {
