@@ -61,7 +61,7 @@
     "type-check": "yarn wsrun type-check",
     "file-check": "yarn install --check-files",
     "check-all": "yarn build && yarn file-check && yarn type-check",
-    "test": "cd test && yarn && yarn playwright test"
+    "test-playwright": "cd test && yarn && yarn playwright test"
   },
   "devDependencies": {
     "prettier": "^2.4.1",
