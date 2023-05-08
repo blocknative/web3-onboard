@@ -2,13 +2,15 @@
   import { _ } from 'svelte-i18n'
   import { STORAGE_KEYS } from '../../constants.js'
   import { configuration } from '../../configuration.js'
+  import { delLocalStore, getLocalStore, setLocalStore } from '../../utils'
+
   export let agreed: boolean
 
   const {
     terms: termsAgreed,
     privacy: privacyAgreed,
     version: versionAgreed
-  } = JSON.parse(localStorage.getItem(STORAGE_KEYS.TERMS_AGREEMENT) || '{}')
+  } = JSON.parse(getLocalStore(STORAGE_KEYS.TERMS_AGREEMENT) || '{}')
 
   const blankAgreement = { termsUrl: '', privacyUrl: '', version: '' }
   const { appMetadata } = configuration
@@ -25,7 +27,7 @@
   agreed = !showTermsOfService
 
   $: if (agreed) {
-    localStorage.setItem(
+    setLocalStore(
       STORAGE_KEYS.TERMS_AGREEMENT,
       JSON.stringify({
         version,
@@ -34,7 +36,7 @@
       })
     )
   } else if (agreed === false) {
-    localStorage.removeItem(STORAGE_KEYS.TERMS_AGREEMENT)
+    delLocalStore(STORAGE_KEYS.TERMS_AGREEMENT)
   }
 </script>
 
@@ -50,15 +52,11 @@
     width: 1rem;
     margin-right: 0.5rem;
   }
-
-  .spacer {
-    padding-top: var(--onboard-spacing-4, var(--spacing-4));
-  }
 </style>
 
 {#if showTermsOfService}
   <div class="container flex items-center">
-    <label class="flex items-center">
+    <label class="flex">
       <input class="" type="checkbox" bind:checked={agreed} />
       <span>
         {$_('connect.selectingWallet.agreement.agree')}
@@ -75,6 +73,4 @@
       </span>
     </label>
   </div>
-{:else}
-  <div class="spacer" />
 {/if}

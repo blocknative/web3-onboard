@@ -1,5 +1,4 @@
 import { firstValueFrom, Subject, take } from 'rxjs'
-import { SofiaProRegular, SofiaProLight } from '@web3-onboard/common'
 import AccountSelect from './views/AccountSelect.svelte'
 import { accounts$ } from './streams.js'
 import { validateSelectAccountOptions } from './validation.js'
@@ -42,15 +41,6 @@ const mountAccountSelect = (
     customElements.define('account-select', AccountSelectEl)
   }
 
-  // Add Fonts to main page
-  const styleEl = document.createElement('style')
-
-  styleEl.innerHTML = `
-    ${SofiaProRegular}
-    ${SofiaProLight}
-  `
-  document.body.appendChild(styleEl)
-
   // add to DOM
   const accountSelectDomElement = document.createElement('account-select')
   const target = accountSelectDomElement.attachShadow({ mode: 'open' })
@@ -59,7 +49,7 @@ const mountAccountSelect = (
 
   target.innerHTML = `
     <style>
-      :host {  
+      :host {
         /* COLORS */
         --white: white;
         --black: black;
@@ -76,9 +66,9 @@ const mountAccountSelect = (
         --danger-500: #ff4f4f;
 
         /* FONTS */
-        --font-family-normal: Sofia Pro;
-        --font-family-light: Sofia Pro Light;
+        --font-family-normal: var(--w3o-font-family, Inter, sans-serif);
         --font-size-5: 1rem;
+        --font-size-6: .875rem;
         --font-size-7: .75rem;
         --font-line-height-1: 24px;
 
@@ -95,12 +85,27 @@ const mountAccountSelect = (
 
         /* SHADOWS */
         --shadow-1: 0px 4px 12px rgba(0, 0, 0, 0.1);
-      }
 
+        /* THEMING */
+        --background-color: var(--w3o-background-color, #FFF);
+        --foreground-color: var(--w3o-foreground-color);
+        --text-color: var(--w3o-text-color, inherit);
+        --border-color: var(--w3o-border-color, var(--gray-200));
+        --action-color: var(--w3o-action-color, var(--primary-500));
+      }
     </style>
   `
+  const containerElementQuery = selectAccountOptions.containerElement || 'body'
 
-  document.body.appendChild(accountSelectDomElement)
+  const containerElement = document.querySelector(containerElementQuery)
+
+  if (!containerElement) {
+    throw new Error(
+      `Element with query ${containerElementQuery} does not exist.`
+    )
+  }
+
+  containerElement.appendChild(accountSelectDomElement)
 
   const app = new AccountSelect({
     target: target,

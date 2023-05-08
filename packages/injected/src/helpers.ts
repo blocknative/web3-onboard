@@ -1,5 +1,5 @@
-import { ProviderRpcErrorCode, WalletModule } from '@web3-onboard/common'
-import { ProviderLabel } from './types.js'
+import type { Device, ProviderRpcErrorCode } from '@web3-onboard/common'
+import type { InjectedProvider, InjectedWalletModule } from './types.js'
 
 export class ProviderRpcError extends Error {
   message: string
@@ -14,10 +14,28 @@ export class ProviderRpcError extends Error {
   }
 }
 
-export const remove =
-  ({ detected, metamask }: { detected: boolean; metamask: boolean }) =>
-  ({ label }: Partial<WalletModule>) =>
-    !(
-      (label === ProviderLabel.Detected && detected) ||
-      (label === ProviderLabel.MetaMask && metamask)
-    )
+export const defaultWalletUnavailableMsg = ({ label }: InjectedWalletModule) =>
+  `Please install or enable ${label} to continue`
+
+export const isWalletAvailable = (
+  provider: InjectedProvider,
+  checkProviderIdentity: InjectedWalletModule['checkProviderIdentity'],
+  device: Device
+): boolean => {
+  // No injected providers exist.
+  if (!provider) {
+    return false
+  }
+
+  // Many injected providers add their own object into window.
+  if (checkProviderIdentity({ provider, device })) {
+    return true
+  }
+
+  // For multiple injected providers, check providers array
+  // example coinbase inj wallet pushes over-ridden wallets
+  // into a providers array at window.ethereum
+  return !!provider.providers?.some(provider =>
+    checkProviderIdentity({ provider, device })
+  )
+}

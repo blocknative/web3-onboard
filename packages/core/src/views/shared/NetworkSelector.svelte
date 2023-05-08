@@ -111,8 +111,8 @@
     <span
       class={`switching-placeholder ${parentCSSId}`}
       style={`
-        color: var(${colorVar}, 
-        var(--account-center-network-selector-color, var (--gray-500))); 
+        color: var(${colorVar},
+        var(--account-center-network-selector-color, var(--gray-500)));
       `}>switching...</span
     >
   {:else}
@@ -122,10 +122,10 @@
       value={wallet.chains[0].id}
       on:change={handleSelect}
       style={`
-        color: var(${colorVar}, 
-        var(--account-center-network-selector-color, var (--gray-500)));
+        color: var(${colorVar},
+        var(--account-center-network-selector-color, var(--gray-500)));
         background-image: url('data:image/svg+xml;utf8,${selectIcon}'); ${
-        bold ? 'font-weight: 700;' : ''
+        bold ? 'font-weight: 600;' : ''
       }`}
     >
       {#if !connectedToValidAppChain(wallet.chains[0], chains)}
@@ -134,7 +134,9 @@
         >
       {/if}
       {#each chains as chain (chain.id)}
-        <option value={chain.id}>{chain.label}</option>
+        <option value={chain.id}
+          >{chain.label || chainIdToLabel[chain.id] || chain.id}</option
+        >
       {/each}
     </select>
   {/if}

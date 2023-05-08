@@ -3,7 +3,11 @@
   import { fade } from 'svelte/transition'
   import { ProviderRpcErrorCode } from '@web3-onboard/common'
   import type { WalletState } from '../../types.js'
-  import { shortenAddress, shortenEns, copyWalletAddress } from '../../utils.js'
+  import {
+    shortenAddress,
+    shortenDomain,
+    copyWalletAddress
+  } from '../../utils.js'
   import en from '../../i18n/en.json'
   import SuccessStatusIcon from '../shared/SuccessStatusIcon.svelte'
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
@@ -27,7 +31,7 @@
   ): string {
     const [asset] = Object.keys(balance)
     return `${
-      balance[asset].length > 8 ? balance[asset].slice(0, 8) : balance[asset]
+      balance[asset].length > 7 ? balance[asset].slice(0, 7) : balance[asset]
     } ${asset}`
   }
 
@@ -60,71 +64,109 @@
 
 <style>
   .container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    width: 100%;
     padding: 0.25rem;
     margin-bottom: 0.25rem;
-    width: 100%;
-    font-size: var(--onboard-font-size-5, var(--font-size-5));
-    line-height: var(--onboard-font-line-height-2, var(--font-line-height-2));
     border-radius: 12px;
     transition: background-color 150ms ease-in-out;
   }
 
-  .container:hover {
-    background: var(--onboard-gray-500, var(--gray-500));
+  .container::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    background: var(--action-color);
+    border-radius: 12px;
+    z-index: -1;
+    opacity: 0;
   }
 
-  .container:hover > div > span.balance {
-    color: var(
-      --account-center-maximized-balance-color,
-      var(--onboard-gray-100, var(--gray-100))
-    );
+  .container:hover::before {
+    opacity: 0.2;
+  }
+
+  .container:hover .balance,
+  .container:hover .elipsis-container {
+    opacity: 1;
+  }
+
+  .container:hover .balance {
+    color: var(--account-center-maximized-balance-color, inherit);
   }
 
   .container.primary:hover {
-    background: var(
-      --account-center-maximized-account-section-background-hover,
-      var(--onboard-gray-700, var(--gray-700))
+    background-color: var(
+      --account-center-maximized-account-section-background-hover
     );
   }
 
-  .address-ens {
-    margin-left: 0.5rem;
-    font-weight: 700;
-    color: var(
-      --account-center-maximized-address-color,
-      var(--onboard-primary-100, var(--primary-100))
-    );
+  .account-details {
+    flex: 1 1;
+    display: flex;
+    gap: inherit;
+    overflow: hidden;
+  }
+
+  .address-domain {
+    flex: 1 0 auto;
+    max-width: 70%;
+    white-space: nowrap;
+    font-weight: 600;
+    color: var(--account-center-maximized-address-color, inherit);
+    overflow: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .address-domain::-webkit-scrollbar {
+    display: none;
   }
 
   .balance {
-    margin-left: 0.5rem;
-    color: var(--onboard-gray-300, var(--gray-300));
-    transition: color 150ms ease-in-out, background-color 150ms ease-in-out;
-    overflow: hidden;
+    flex: 1 1 auto;
+    max-width: 70%;
     white-space: nowrap;
-    text-overflow: ellipsis;
-    width: 7.25rem;
+    text-align: end;
+    opacity: 0.4;
+    transition: color 150ms ease-in-out, background-color 150ms ease-in-out;
+    overflow: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .balance::-webkit-scrollbar {
+    display: none;
   }
 
   .elipsis-container {
+    flex: 0;
     padding: 0.25rem;
-    margin-left: 0.25rem;
     border-radius: 24px;
     transition: color 150ms ease-in-out, background-color 150ms ease-in-out;
     background-color: transparent;
-    color: var(--onboard-gray-400, var(--gray-400));
+    opacity: 0.4;
+  }
+
+  .elipsis-container:hover {
+    color: var(--text-color);
+  }
+
+  .elipsis-container.active {
+    color: var(--text-color);
   }
 
   .elipsis {
     width: 24px;
-  }
-
-  .elipsis-container:hover {
-    color: var(--onboard-gray-100, var(--gray-100));
-  }
-
-  .elipsis-container.active {
-    background: var(--onboard-gray-700, var(--gray-700));
   }
 
   .menu {
@@ -155,59 +197,60 @@
   }
 </style>
 
-{#each wallet.accounts as { address, ens, balance }, i}
+{#each wallet.accounts as { address, ens, uns, balance }, i}
   <div class="relative">
     <div
       on:click={() => setPrimaryWallet(wallet, address)}
       class:primary={primary && i === 0}
-      class="container flex items-center justify-between pointer"
+      class="container"
     >
-      <div class="flex items-center">
-        <div class="flex items-center relative">
-          <!-- WALLET ICON -->
-          <WalletAppBadge
-            size={32}
-            padding={4}
-            background="custom"
-            color="#EFF1FC"
-            customBackgroundColor={primary && i === 0
-              ? 'rgba(24, 206, 102, 0.2)'
-              : 'rgba(235, 235, 237, 0.1)'}
-            border={primary && i === 0 ? 'green' : 'gray'}
-            radius={8}
-            icon={wallet.icon}
-          />
-          {#if primary && i === 0}
-            <div
-              style="right: -5px; bottom: -5px;"
-              class="drop-shadow absolute"
-            >
-              <SuccessStatusIcon size={14} />
-            </div>
-          {/if}
-        </div>
-
-        <!-- ADDRESS / ENS -->
-        <span class="address-ens"
-          >{ens ? shortenEns(ens.name) : shortenAddress(address)}</span
-        >
+      <div class="flex items-center relative">
+        <!-- WALLET ICON -->
+        <WalletAppBadge
+          size={32}
+          padding={4}
+          background="custom"
+          color="#EFF1FC"
+          customBackgroundColor={primary && i === 0
+            ? 'rgba(24, 206, 102, 0.2)'
+            : 'rgba(235, 235, 237, 0.1)'}
+          border={primary && i === 0 ? 'green' : 'gray'}
+          radius={8}
+          icon={wallet.icon}
+        />
+        {#if primary && i === 0}
+          <div style="right: -5px; bottom: -5px;" class="drop-shadow absolute">
+            <SuccessStatusIcon size={14} />
+          </div>
+        {/if}
       </div>
 
-      <div class="flex items-center">
+      <div class="account-details">
+        <!-- ADDRESS / DOMAIN -->
+        <div class="address-domain">
+          {ens
+            ? shortenDomain(ens.name)
+            : uns
+            ? shortenDomain(uns.name)
+            : shortenAddress(address)}
+        </div>
+
         <!-- BALANCE -->
         {#if balance}
-          <span in:fade class="balance">{formatBalance(balance)}</span>
-        {/if}
-
-        <!-- ELIPSIS -->
-        <div class="elipsis-container" class:active={showMenu === address}>
-          <div
-            on:click|stopPropagation={() =>
-              (showMenu = showMenu === address ? '' : address)}
-            class="elipsis pointer flex items-center justify-center relative"
-          >
-            {@html elipsisIcon}
+          <div in:fade class="balance">
+            {formatBalance(balance)}
           </div>
+        {/if}
+      </div>
+
+      <!-- ELLIPSIS -->
+      <div class="elipsis-container" class:active={showMenu === address}>
+        <div
+          on:click|stopPropagation={() =>
+            (showMenu = showMenu === address ? '' : address)}
+          class="elipsis pointer flex items-center justify-center relative"
+        >
+          {@html elipsisIcon}
         </div>
       </div>
     </div>
@@ -248,9 +291,11 @@
         </li>
         <li
           on:click|stopPropagation={() => {
-            copyWalletAddress(ens ? ens.name : address).then(() => {
-              changeText()
-            })
+            copyWalletAddress(ens ? ens.name : uns ? uns.name : address).then(
+              () => {
+                changeText()
+              }
+            )
           }}
         >
           {en.accountCenter.copyAddress}

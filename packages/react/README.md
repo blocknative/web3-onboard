@@ -1,3 +1,7 @@
+<a href="https://onboard.blocknative.com/">
+  <img alt="Web3-Onboard UI Components" src="https://github.com/blocknative/web3-onboard/blob/develop/assets/core.svg?raw=true" />
+</a>
+
 # @web3-onboard/react
 
 A collection of React hooks for implementing web3-onboard in to a React project
@@ -21,7 +25,8 @@ import injectedModule from '@web3-onboard/injected-wallets'
 import { ethers } from 'ethers'
 
 // Sign up to get your free API key at https://explorer.blocknative.com/?signup=true
-const dappId = '1730eff0-9d50-4382-a3fe-89f0d34a2070'
+// Required for Transaction Notifications and Transaction Preview
+const apiKey = '1730eff0-9d50-4382-a3fe-89f0d34a2070'
 
 const injected = injectedModule()
 
@@ -31,6 +36,7 @@ const rpcUrl = `https://eth-mainnet.g.alchemy.com/v2/${rpcAPIKey}` || `https://m
 
 // initialize Onboard
 init({
+  apiKey,
   wallets: [injected],
   chains: [
     {
@@ -50,13 +56,15 @@ function App() {
 
   if (wallet) {
     ethersProvider = new ethers.providers.Web3Provider(wallet.provider, 'any')
+    // if using ethers v6 this is:
+    // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
   }
 
   return (
     <div>
       <button
         disabled={connecting}
-        onClick={() => (wallet ? disconnect() : connect())}
+        onClick={() => (wallet ? disconnect(wallet) : connect())}
       >
         {connecting ? 'connecting' : wallet ? 'disconnect' : 'connect'}
       </button>
@@ -176,7 +184,7 @@ setPrimaryWallet(
 
 ## `useSetChain`
 
-This hook allows you to set the chain of a user's connected wallet, keep track of the current chain the user is connected to and the status of setting the chain. Passing in a wallet label will operate on that connected wallet, otherwise it will default to the last connected wallet.
+This hook allows you to set the chain of a user's connected wallet, keep track of the current chain the user is connected to and the status of setting the chain. Passing in a wallet label will operate on that connected wallet, otherwise it will default to the last connected wallet. If a chain was instantiated without an rpcUrl, token, or label, add these options for wallets that require this information for adding a new chain.
 
 ```typescript
 import { useSetChain } from '@web3-onboard/react'
@@ -195,7 +203,13 @@ type UseSetChain = (
 type SetChainOptions = {
   chainId: string
   chainNamespace?: string
-  wallet?: WalletState['label']
+  wallet?: WalletState['label'],
+  // if chain was instantiated without rpcUrl, include here. Used for network requests
+  rpcUrl?: string, 
+  // if chain was instantiated without token, include here. Used for display, eg Ethereum Mainnet
+  label?: string,
+  // if chain was instantiated without label, include here. The native token symbol, eg ETH, BNB, MATIC
+  token?: string,
 }
 
 const [

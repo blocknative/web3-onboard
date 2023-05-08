@@ -3,7 +3,7 @@
     "selectingWallet": {
       "header": "Available Wallets",
       "sidebar": {
-        "heading": "Get Started",
+        "heading": "",
         "subheading": "Connect your wallet",
         "paragraph": "Connecting your wallet is like “logging in” to Web3. Select your wallet from the options to get started."
       },
@@ -25,6 +25,7 @@
       },
       "mainText": "Connecting...",
       "paragraph": "Make sure to select all accounts that you want to grant access to.",
+      "previousConnection": "{wallet} already has a pending connection request, please open the {wallet} app to login and connect.",
       "rejectedText": "Connection Rejected!",
       "rejectedCTA": "Click here to try again",
       "primaryButton": "Back to wallets"
@@ -66,7 +67,6 @@
     "gettingStartedGuide": "Getting Started Guide",
     "smartContracts": "Smart Contract(s)",
     "explore": "Explore",
-    "backToApp": "Back to dapp",
     "poweredBy": "powered by",
     "addAccount": "Add Account",
     "setPrimaryAccount": "Set Primary Account",

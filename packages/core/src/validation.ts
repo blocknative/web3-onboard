@@ -26,7 +26,8 @@ import type {
   CustomNotificationUpdate,
   Notify,
   PreflightNotificationsOptions,
-  ConnectModalOptions
+  ConnectModalOptions,
+  Theme
 } from './types.js'
 
 const unknownObject = Joi.object().unknown()
@@ -46,6 +47,13 @@ const ens = Joi.any().allow(
   null
 )
 
+const uns = Joi.any().allow(
+  Joi.object({
+    name: Joi.string().required()
+  }),
+  null
+)
+
 const balance = Joi.any().allow(
   Joi.object({
     eth: Joi.number()
@@ -53,13 +61,35 @@ const balance = Joi.any().allow(
   null
 )
 
+const secondaryTokens = Joi.any().allow(
+  Joi.object({
+    name: Joi.string().required(),
+    balance: Joi.string().required(),
+    icon: Joi.string()
+  }),
+  null
+)
+
 const account = Joi.object({
   address: Joi.string().required(),
   ens,
-  balance
+  uns,
+  balance,
+  secondaryTokens
 })
 
-const chains = Joi.array().items(chainValidation)
+const chains = Joi.array()
+  .items(chainValidation)
+  .unique((a, b) => a.id === b.id)
+  .error(e => {
+    if (e[0].code === 'array.unique') {
+      return new Error(
+        `There is a duplicate Chain ID in your Onboard Chains array: ${e}`
+      )
+    }
+    return new Error(`${e}`)
+  })
+
 const accounts = Joi.array().items(account)
 
 const wallet = Joi.object({
@@ -89,7 +119,7 @@ const agreement = Joi.object({
 const appMetadata = Joi.object({
   name: Joi.string().required(),
   description: Joi.string().required(),
-  icon: Joi.string().required(),
+  icon: Joi.string(),
   logo: Joi.string(),
   gettingStartedGuide: Joi.string(),
   email: Joi.string(),
@@ -151,8 +181,33 @@ const accountCenter = Joi.object({
 })
 
 const connectModalOptions = Joi.object({
-  showSidebar: Joi.boolean()
+  showSidebar: Joi.boolean(),
+  disableClose: Joi.boolean(),
+  autoConnectLastWallet: Joi.boolean(),
+  autoConnectAllPreviousWallet: Joi.boolean(),
+  iDontHaveAWalletLink: Joi.string(),
+  wheresMyWalletLink: Joi.string(),
+  disableUDResolution: Joi.boolean()
 })
+
+const containerElements = Joi.object({
+  accountCenter: Joi.string(),
+  connectModal: Joi.string()
+})
+
+const themeMap = Joi.object({
+  '--w3o-background-color': Joi.string(),
+  '--w3o-font-family': Joi.string(),
+  '--w3o-foreground-color': Joi.string(),
+  '--w3o-text-color': Joi.string(),
+  '--w3o-border-color': Joi.string(),
+  '--w3o-action-color': Joi.string(),
+  '--w3o-border-radius': Joi.string()
+})
+
+const presetTheme = Joi.string().valid('default', 'dark', 'light', 'system')
+
+const theme = Joi.alternatives().try(themeMap, presetTheme)
 
 const initOptions = Joi.object({
   wallets: walletInit,
@@ -169,7 +224,16 @@ const initOptions = Joi.object({
     get: Joi.function().required(),
     stream: Joi.function().required()
   }),
-  connect: connectModalOptions
+  connect: connectModalOptions,
+  containerElements: containerElements,
+  transactionPreview: Joi.object({
+    patchProvider: Joi.function().required(),
+    init: Joi.function().required(),
+    previewTransaction: Joi.function()
+  }),
+  theme: theme,
+  disableFontDownload: Joi.boolean(),
+  unstoppableResolution: Joi.function()
 })
 
 const connectOptions = Joi.object({
@@ -188,10 +252,20 @@ const disconnectOptions = Joi.object({
   label: Joi.string().required()
 }).required()
 
+const secondaryTokenValidation = Joi.object({
+  name: Joi.string().required(),
+  address: Joi.string().required(),
+  icon: Joi.string().optional()
+})
+
 const setChainOptions = Joi.object({
   chainId: chainIdValidation.required(),
   chainNamespace: chainNamespaceValidation,
-  wallet: Joi.string()
+  wallet: Joi.string(),
+  rpcUrl: Joi.string(),
+  label: Joi.string(),
+  token: Joi.string(),
+  secondaryTokens: Joi.array().items(secondaryTokenValidation).optional()
 })
 
 const customNotificationUpdate = Joi.object({
@@ -286,6 +360,9 @@ export function validateSetChainOptions(data: {
   chainId: ChainId | DecimalChainId
   chainNamespace?: string
   wallet?: WalletState['label']
+  rpcUrl?: string
+  label?: string
+  token?: string
 }): ValidateReturn {
   return validate(setChainOptions, data)
 }
@@ -349,4 +426,8 @@ export function validateCustomNotification(
 
 export function validateUpdateBalances(data: WalletState[]): ValidateReturn {
   return validate(wallets, data)
+}
+
+export function validateUpdateTheme(data: Theme): ValidateReturn {
+  return validate(theme, data)
 }

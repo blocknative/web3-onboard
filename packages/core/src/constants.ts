@@ -9,7 +9,6 @@ export const APP_INITIAL_STATE: AppState = {
     enabled: true,
     position: 'topRight',
     expanded: false,
-    containerElement: 'body',
     minimal: configuration.device.type === 'mobile'
   },
   notify: {
@@ -26,10 +25,14 @@ export const APP_INITIAL_STATE: AppState = {
   notifications: [],
   locale: '',
   connect: {
-    showSidebar: true
+    showSidebar: true,
+    disableClose: false
   }
 }
 
 export const STORAGE_KEYS = {
-  TERMS_AGREEMENT: 'onboard.js:agreement'
+  TERMS_AGREEMENT: 'onboard.js:agreement',
+  LAST_CONNECTED_WALLET: 'onboard.js:last_connected_wallet'
 }
+
+export const MOBILE_WINDOW_WIDTH = 768

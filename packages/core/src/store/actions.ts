@@ -2,6 +2,7 @@ import type { Chain, WalletInit, WalletModule } from '@web3-onboard/common'
 import { nanoid } from 'nanoid'
 import { dispatch } from './index.js'
 import { configuration } from '../configuration.js'
+import { handleThemeChange, returnTheme } from '../themes.js'
 
 import type {
   Account,
@@ -26,7 +27,9 @@ import type {
   CustomNotificationUpdate,
   Notify,
   ConnectModalOptions,
-  UpdateConnectModalAction
+  UpdateConnectModalAction,
+  Theme,
+  UpdateChainsAction
 } from '../types.js'
 
 import {
@@ -40,7 +43,9 @@ import {
   validateWalletInit,
   validateUpdateBalances,
   validateNotify,
-  validateConnectModalUpdate
+  validateConnectModalUpdate,
+  validateUpdateTheme,
+  validateSetChainOptions
 } from '../validation.js'
 
 import {
@@ -57,7 +62,8 @@ import {
   ADD_NOTIFICATION,
   REMOVE_NOTIFICATION,
   UPDATE_ALL_WALLETS,
-  UPDATE_CONNECT_MODAL
+  UPDATE_CONNECT_MODAL,
+  UPDATE_CHAINS
 } from './constants.js'
 
 export function addChains(chains: Chain[]): void {
@@ -68,11 +74,33 @@ export function addChains(chains: Chain[]): void {
       ...rest,
       namespace,
       id: id.toLowerCase(),
-      rpcUrl: rpcUrl.trim()
+      rpcUrl: rpcUrl ? rpcUrl.trim() : null
     }))
   }
 
   dispatch(action as AddChainsAction)
+}
+
+export function updateChain(updatedChain: Chain): void {
+  const {
+    label, 
+    token, 
+    rpcUrl, 
+    id: chainId, 
+    namespace: chainNamespace
+  } = updatedChain
+  const error = validateSetChainOptions(
+    { label, token, rpcUrl, chainId, chainNamespace }
+  )
+
+  if (error) {
+    throw error
+  }
+  const action = {
+    type: UPDATE_CHAINS,
+    payload: updatedChain
+  }
+  dispatch(action as UpdateChainsAction)
 }
 
 export function addWallet(wallet: WalletState): void {
@@ -393,8 +421,20 @@ export function uniqueWalletsByLabel(
 ): WalletModule[] {
   return walletModuleList.filter(
     (wallet, i) =>
+      wallet &&
       walletModuleList.findIndex(
-        (innerWallet: WalletModule) => innerWallet.label === wallet.label
+        (innerWallet: WalletModule) =>
+          innerWallet && innerWallet.label === wallet.label
       ) === i
   )
+}
+
+export function updateTheme(theme: Theme): void {
+  const error = validateUpdateTheme(theme)
+  if (error) {
+    throw error
+  }
+
+  const themingObj = returnTheme(theme)
+  themingObj && handleThemeChange(themingObj)
 }

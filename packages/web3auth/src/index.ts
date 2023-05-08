@@ -5,13 +5,18 @@ import type {
   WalletInit
 } from '@web3-onboard/common'
 
-import type { ModalConfig, Web3AuthOptions } from '@web3auth/web3auth'
-import type { CustomChainConfig, CONNECTED_EVENT_DATA } from '@web3auth/base'
+import type { Web3AuthOptions, ModalConfig } from '@web3auth/modal'
+import type { CustomChainConfig } from '@web3auth/base'
 
 type Web3AuthModuleOptions = Omit<Web3AuthOptions, 'chainConfig'> & {
   chainConfig?: Partial<CustomChainConfig> &
     Pick<CustomChainConfig, 'chainNamespace'>
   modalConfig?: Record<string, ModalConfig> | undefined
+  /**
+   * @deprecated use web3Auth native Z-Index config through
+   * uiConfig.modalZIndex
+   */
+  loginModalZIndex?: string
 }
 
 function web3auth(options: Web3AuthModuleOptions): WalletInit {
@@ -19,7 +24,7 @@ function web3auth(options: Web3AuthModuleOptions): WalletInit {
     label: 'Web3Auth',
     getIcon: async () => (await import('./icon.js')).default,
     getInterface: async ({ EventEmitter, chains }) => {
-      const { Web3Auth } = await import('@web3auth/web3auth')
+      const { Web3Auth } = await import('@web3auth/modal')
       const { CHAIN_NAMESPACES, ADAPTER_EVENTS } = await import(
         '@web3auth/base'
       )
@@ -29,6 +34,8 @@ function web3auth(options: Web3AuthModuleOptions): WalletInit {
       const emitter = new EventEmitter()
 
       let [currentChain] = chains
+
+      const { loginModalZIndex, modalConfig } = options || {}
 
       const getChainConfig = ({
         rpcUrl,
@@ -49,14 +56,25 @@ function web3auth(options: Web3AuthModuleOptions): WalletInit {
         }
       })
 
-      const web3authOptions = {
+      const modalZIndex = loginModalZIndex
+        ? loginModalZIndex
+        : options.uiConfig && options.uiConfig.modalZIndex
+        ? options.uiConfig.modalZIndex
+        : '50'
+
+      const web3authCoreOptions: Web3AuthOptions = {
         ...options,
         ...getChainConfig(currentChain)
       }
 
-      let web3auth = new Web3Auth(web3authOptions)
+      if (modalZIndex) {
+        typeof web3authCoreOptions.uiConfig !== 'object'
+          ? (web3authCoreOptions.uiConfig = { modalZIndex: modalZIndex })
+          : (web3authCoreOptions.uiConfig.modalZIndex = modalZIndex)
+      }
 
-      const { modalConfig } = options || {}
+      let web3auth = new Web3Auth(web3authCoreOptions)
+
       await web3auth.initModal(modalConfig)
 
       let provider: EIP1193Provider
@@ -88,7 +106,7 @@ function web3auth(options: Web3AuthModuleOptions): WalletInit {
 
             // re-instantiate instance with new network
             web3auth = new Web3Auth({
-              ...web3authOptions,
+              ...web3authCoreOptions,
               ...getChainConfig(currentChain)
             })
 

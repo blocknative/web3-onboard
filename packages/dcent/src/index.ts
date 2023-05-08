@@ -12,6 +12,7 @@ import type {
   Account,
   ScanAccountsOptions
 } from '@web3-onboard/hw-common'
+import { StaticJsonRpcProvider } from '@ethersproject/providers'
 
 interface CustomWindow extends Window {
   ethereum: EIP1193Provider
@@ -36,7 +37,7 @@ const assets = [
 
 const generateAccounts = async (
   keyring: any,
-  provider: providers.StaticJsonRpcProvider
+  provider: StaticJsonRpcProvider
 ): Promise<Account[]> => {
   const accounts = []
 
@@ -58,10 +59,12 @@ const generateAccounts = async (
 
 function dcent({
   customNetwork,
-  filter
+  filter,
+  containerElement
 }: {
   customNetwork?: CustomNetwork
   filter?: Platform[]
+  containerElement?: string
 } = {}): WalletInit {
   const getIcon = async () => (await import('./icon.js')).default
 
@@ -123,9 +126,7 @@ function dcent({
           currentChain =
             chains.find(({ id }: Chain) => id === chainId) || currentChain
 
-          const provider = new StaticJsonRpcProvider(
-            currentChain.rpcUrl
-          ) as providers.StaticJsonRpcProvider
+          const provider = new StaticJsonRpcProvider(currentChain.rpcUrl)
 
           return generateAccounts(dcentKeyring, provider)
         }
@@ -136,7 +137,8 @@ function dcent({
             assets,
             chains,
             scanAccounts,
-            supportsCustomPath: false
+            supportsCustomPath: false,
+            containerElement
           })
           if (accounts.length) {
             eventEmitter.emit('accountsChanged', [accounts[0].address])

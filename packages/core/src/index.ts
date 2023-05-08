@@ -1,16 +1,15 @@
-import { SofiaProRegular } from '@web3-onboard/common'
 import connectWallet from './connect.js'
 import disconnectWallet from './disconnect.js'
 import setChain from './chain.js'
 import { state } from './store/index.js'
-import { reset$ } from './streams.js'
+import { reset$, wallets$ } from './streams.js'
 import initI18N from './i18n/index.js'
 import App from './views/Index.svelte'
-import type { InitOptions, Notify } from './types.js'
-import { APP_INITIAL_STATE } from './constants.js'
+import type { ConnectModalOptions, InitOptions, Notify, Theme } from './types.js'
+import { APP_INITIAL_STATE, STORAGE_KEYS } from './constants.js'
 import { configuration, updateConfiguration } from './configuration.js'
 import updateBalances from './update-balances.js'
-import { chainIdToHex } from './utils.js'
+import { chainIdToHex, getLocalStore, setLocalStore } from './utils.js'
 import { preflightNotifications } from './preflight-notifications.js'
 
 import {
@@ -27,8 +26,11 @@ import {
   setLocale,
   setPrimaryWallet,
   setWalletModules,
-  updateConnectModal
+  updateConnectModal,
+  updateTheme
 } from './store/actions.js'
+import type { PatchedEIP1193Provider } from '@web3-onboard/transaction-preview'
+import { getBlocknativeSdk } from './services.js'
 
 const API = {
   connectWallet,
@@ -45,7 +47,8 @@ const API = {
       preflightNotifications,
       updateBalances,
       updateAccountCenter,
-      setPrimaryWallet
+      setPrimaryWallet,
+      updateTheme
     }
   }
 }
@@ -64,7 +67,8 @@ export type {
   Notification,
   Notify,
   UpdateNotification,
-  PreflightNotificationsOptions
+  PreflightNotificationsOptions,
+  Theme
 } from './types.js'
 
 export type { EIP1193Provider } from '@web3-onboard/common'
@@ -89,8 +93,15 @@ function init(options: InitOptions): OnboardAPI {
     apiKey,
     notify,
     gas,
-    connect
+    connect,
+    containerElements,
+    transactionPreview,
+    theme,
+    disableFontDownload,
+    unstoppableResolution
   } = options
+
+  if (containerElements) updateConfiguration({ containerElements })
 
   const { device, svelteInstance } = configuration
 
@@ -111,10 +122,10 @@ function init(options: InitOptions): OnboardAPI {
   if (typeof accountCenter !== 'undefined') {
     let accountCenterUpdate
 
-    if (device.type === 'mobile' && accountCenter.mobile) {
+    if (device.type === 'mobile') {
       accountCenterUpdate = {
         ...APP_INITIAL_STATE.accountCenter,
-        ...accountCenter.mobile
+        ...(accountCenter.mobile ? accountCenter.mobile : {})
       }
     } else if (accountCenter.desktop) {
       accountCenterUpdate = {
@@ -122,7 +133,6 @@ function init(options: InitOptions): OnboardAPI {
         ...accountCenter.desktop
       }
     }
-
     updateAccountCenter(accountCenterUpdate)
   }
 
@@ -188,20 +198,131 @@ function init(options: InitOptions): OnboardAPI {
     updateNotify(notifyUpdate)
   }
 
-  const app = svelteInstance || mountApp()
+  const app = svelteInstance || mountApp(theme, disableFontDownload)
 
   updateConfiguration({
     appMetadata,
     svelteInstance: app,
     apiKey,
     initialWalletInit: wallets,
-    gas
+    gas,
+    transactionPreview,
+    unstoppableResolution
   })
+
+  if (apiKey && transactionPreview) {
+    const getBnSDK = async () => {
+      transactionPreview.init({
+        containerElement: '#w3o-transaction-preview-container',
+        sdk: await getBlocknativeSdk(),
+        apiKey
+      })
+      wallets$.subscribe(wallets => {
+        wallets.forEach(({ provider }) => {
+          transactionPreview.patchProvider(provider as PatchedEIP1193Provider)
+        })
+      })
+    }
+    getBnSDK()
+  }
+
+  theme && updateTheme(theme)
+
+  // handle auto connection of last wallet
+  if (
+    connect &&
+    (connect.autoConnectLastWallet || connect.autoConnectAllPreviousWallet)
+  ) {
+    const lastConnectedWallets = getLocalStore(
+      STORAGE_KEYS.LAST_CONNECTED_WALLET
+    )
+    try {
+      const lastConnectedWalletsParsed = JSON.parse(lastConnectedWallets)
+      if (
+        lastConnectedWalletsParsed &&
+        Array.isArray(lastConnectedWalletsParsed) &&
+        lastConnectedWalletsParsed.length
+      ) {
+        connectAllPreviousWallets(lastConnectedWalletsParsed, connect)
+      }
+    } catch (err) {
+      // Handle for legacy single wallet approach
+      // Above try will throw syntax error is local storage is not json
+      if (err instanceof SyntaxError && lastConnectedWallets) {
+        API.connectWallet({
+          autoSelect: {
+            label: lastConnectedWallets,
+            disableModals: true
+          }
+        })
+      }
+    }
+  }
 
   return API
 }
 
-function mountApp() {
+const fontFamilyExternallyDefined = (
+  theme: Theme,
+  disableFontDownload: boolean
+): boolean => {
+  if (disableFontDownload) return true
+  if (
+    document.body &&
+    (getComputedStyle(document.body).getPropertyValue(
+      '--onboard-font-family-normal'
+    ) ||
+      getComputedStyle(document.body).getPropertyValue('--w3o-font-family'))
+  )
+    return true
+  if (!theme) return false
+  if (typeof theme === 'object' && theme['--w3o-font-family']) return true
+  return false
+}
+
+const importInterFont = async (): Promise<void> => {
+  const { InterVar } = await import('@web3-onboard/common')
+  // Add Fonts to main page
+  const styleEl = document.createElement('style')
+
+  styleEl.innerHTML = `
+    ${InterVar}
+  `
+
+  document.body.appendChild(styleEl)
+}
+
+const connectAllPreviousWallets = async (
+  lastConnectedWallets: Array<string>,
+  connect: ConnectModalOptions
+): Promise<void> => {
+  const activeWalletsList = []
+  const parsedWalletList = lastConnectedWallets
+
+  if (!connect.autoConnectAllPreviousWallet) {
+    API.connectWallet({
+      autoSelect: { label: parsedWalletList[0], disableModals: true }
+    })
+    activeWalletsList.push(parsedWalletList[0])
+  } else {
+    // Loop in reverse to maintain wallet order
+    for (let i = parsedWalletList.length; i--; ) {
+      const walletConnectionPromise = await API.connectWallet({
+        autoSelect: { label: parsedWalletList[i], disableModals: true }
+      })
+      // Update localStorage list for available wallets
+      if (walletConnectionPromise.some(r => r.label === parsedWalletList[i])) {
+        activeWalletsList.unshift(parsedWalletList[i])
+      }
+    }
+  }
+  setLocalStore(
+    STORAGE_KEYS.LAST_CONNECTED_WALLET,
+    JSON.stringify(activeWalletsList)
+  )
+}
+
+function mountApp(theme: Theme, disableFontDownload: boolean) {
   class Onboard extends HTMLElement {
     constructor() {
       super()
@@ -212,14 +333,9 @@ function mountApp() {
     customElements.define('onboard-v2', Onboard)
   }
 
-  // Add Fonts to main page
-  const styleEl = document.createElement('style')
-
-  styleEl.innerHTML = `
-    ${SofiaProRegular}
-  `
-
-  document.body.appendChild(styleEl)
+  if (!fontFamilyExternallyDefined(theme, disableFontDownload)) {
+    importInterFont()
+  }
 
   // add to DOM
   const onboard = document.createElement('onboard-v2')
@@ -228,8 +344,9 @@ function mountApp() {
   onboard.style.all = 'initial'
 
   target.innerHTML = `
-      <style>
-        :host {  
+
+  <style>
+    :host {
           /* COLORS */
           --white: white;
           --black: black;
@@ -269,10 +386,10 @@ function mountApp() {
           --warning-500: #ffaf00;
           --warning-600: #cc8c00;
           --warning-700: #664600;
-  
+
           /* FONTS */
-          --font-family-normal: Sofia Pro;
-  
+          --font-family-normal: var(--w3o-font-family, Inter, sans-serif);
+
           --font-size-1: 3rem;
           --font-size-2: 2.25rem;
           --font-size-3: 1.5rem;
@@ -280,12 +397,12 @@ function mountApp() {
           --font-size-5: 1rem;
           --font-size-6: .875rem;
           --font-size-7: .75rem;
-  
+
           --font-line-height-1: 24px;
           --font-line-height-2: 20px;
           --font-line-height-3: 16px;
           --font-line-height-4: 12px;
-  
+
           /* SPACING */
           --spacing-1: 3rem;
           --spacing-2: 2rem;
@@ -294,19 +411,19 @@ function mountApp() {
           --spacing-5: 0.5rem;
           --spacing-6: 0.25rem;
           --spacing-7: 0.125rem;
-  
+
           /* BORDER RADIUS */
-          --border-radius-1: 24px;  
-          --border-radius-2: 20px;  
-          --border-radius-3: 16px;  
-          --border-radius-4: 12px;  
-          --border-radius-5: 8px;  
+          --border-radius-1: 24px;
+          --border-radius-2: 20px;
+          --border-radius-3: 16px;
+          --border-radius-4: 12px;
+          --border-radius-5: 8px;
 
           /* SHADOWS */
           --shadow-0: none;
           --shadow-1: 0px 4px 12px rgba(0, 0, 0, 0.1);
           --shadow-2: inset 0px -1px 0px rgba(0, 0, 0, 0.1);
-          --shadow-3: 0px 4px 16px rgba(179, 179, 179, 0.2);
+          --shadow-3: 0px 4px 16px rgba(0, 0, 0, 0.2);
 
           /* MODAL POSITIONING */
           --modal-z-index: 10;
@@ -314,15 +431,17 @@ function mountApp() {
           --modal-right: unset;
           --modal-bottom: unset;
           --modal-left: unset;
-          
+
           /* MODAL STYLES */
           --modal-backdrop: rgba(0, 0, 0, 0.6);
+
         }
       </style>
     `
+  const connectModalContEl = configuration.containerElements.connectModal
 
   const containerElementQuery =
-    state.get().accountCenter.containerElement || 'body'
+    connectModalContEl || state.get().accountCenter.containerElement || 'body'
 
   const containerElement = document.querySelector(containerElementQuery)
 

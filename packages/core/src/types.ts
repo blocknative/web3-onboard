@@ -12,6 +12,8 @@ import type {
 } from '@web3-onboard/common'
 
 import type gas from '@web3-onboard/gas'
+import type unstoppableResolution from '@web3-onboard/unstoppable-resolution'
+import type { TransactionPreviewAPI } from '@web3-onboard/transaction-preview'
 
 import type en from './i18n/en.json'
 import type { EthereumTransactionData, Network } from 'bnc-sdk'
@@ -24,7 +26,7 @@ export interface InitOptions {
   /**
    * The chains that your app works with
    */
-  chains: Chain[] | ChainWithDecimalId[]
+  chains: (Chain | ChainWithDecimalId)[]
   /**
    * Additional metadata about your app to be displayed in the Onboard UI
    */
@@ -50,10 +52,54 @@ export interface InitOptions {
    * Transaction notification options
    */
   notify?: Partial<NotifyOptions> | Partial<Notify>
-  /**Gas module */
+  /** Gas module */
   gas?: typeof gas
+  /**
+   * Object mapping for W3O components with the key being the DOM
+   * element to mount the component to, this defines the DOM container
+   *  element for svelte to attach the component
+   */
+  containerElements?: Partial<ContainerElements>
+  /**
+   * Transaction Preview module
+   */
+  transactionPreview?: TransactionPreviewAPI
+  /**
+   * Custom or predefined theme for Web3Onboard
+   * BuiltInThemes: ['default', 'dark', 'light', 'system']
+   * or customize with a ThemingMap object.
+   */
+  theme?: Theme
+  /**
+   * Defaults to False - use to reduce load time
+   * If set to true the Inter font will not be imported and
+   * instead the default 'sans-serif' font will be used
+   * To define the font used see `--w3o-font-family` prop within
+   * the Theme initialization object or set as css variable
+   */
+  disableFontDownload?: boolean
+  /**
+   * Type of unstoppableResolution module
+   * A small module that can bee added to allow Unstoppable Domain
+   * address resolution similar to that of ens (Ethereum Name Service)
+   * ENS resolution will take president if available
+   */
+  unstoppableResolution?: typeof unstoppableResolution
 }
 
+export type Theme = ThemingMap | BuiltInThemes | 'system'
+
+export type BuiltInThemes = 'default' | 'dark' | 'light'
+
+export type ThemingMap = {
+  '--w3o-background-color'?: string
+  '--w3o-font-family'?: string
+  '--w3o-foreground-color'?: string
+  '--w3o-text-color'?: string
+  '--w3o-border-color'?: string
+  '--w3o-action-color'?: string
+  '--w3o-border-radius'?: string
+}
 export interface ConnectOptions {
   autoSelect?: { label: string; disableModals: boolean }
 }
@@ -94,16 +140,28 @@ export interface WalletState {
 export type Account = {
   address: Address
   ens: Ens | null
+  uns: Uns | null
   balance: Balances | null
+  secondaryTokens?: SecondaryTokenBalances[] | null
 }
 
 export type Balances = Record<TokenSymbol, string> | null
+
+export interface SecondaryTokenBalances {
+  name: TokenSymbol
+  balance: string
+  icon?: string
+}
 
 export interface Ens {
   name: string
   avatar: Avatar | null
   contentHash: string | null
   getText: (key: string) => Promise<string | undefined>
+}
+
+export interface Uns {
+  name: string
 }
 
 export type Avatar = {
@@ -131,6 +189,9 @@ export type Configuration = {
   appMetadata?: AppMetadata | null
   apiKey?: string
   gas?: typeof gas
+  containerElements?: ContainerElements
+  transactionPreview?: TransactionPreviewAPI
+  unstoppableResolution?: typeof unstoppableResolution
 }
 
 export type Locale = string
@@ -138,7 +199,48 @@ export type i18nOptions = Record<Locale, i18n>
 export type i18n = typeof en
 
 export type ConnectModalOptions = {
+  /**
+   * Display the connect modal sidebar - only applies to desktop views
+   */
   showSidebar?: boolean
+  /**
+   * Disabled close of the connect modal with background click and
+   * hides the close button forcing an action from the connect modal
+   * Defaults to false
+   */
+  disableClose?: boolean
+  /**
+   * If set to true, the most recently connected wallet will store in
+   * local storage. Then on init, onboard will try to reconnect to
+   * that wallet with no modals displayed
+   */
+  autoConnectLastWallet?: boolean
+  /**
+   * If set to true, all previously connected wallets will store in
+   * local storage. Then on init, onboard will try to reconnect to
+   * each wallet with no modals displayed
+   */
+  autoConnectAllPreviousWallet?: boolean
+  /**
+   * Customize the link for the `I don't have a wallet` flow shown on the
+   * select wallet modal.
+   * Defaults to `https://ethereum.org/en/wallets/find-wallet/#main-content`
+   */
+  iDontHaveAWalletLink?: string
+  /**
+   * Customize the link for the `Where's My Wallet` info pop up shown on the
+   * select wallet modal.
+   * Defaults to `https://www.blocknative.com/blog/
+   * metamask-wont-connect-web3-wallet-troubleshooting`
+   */
+  wheresMyWalletLink?: string
+  /**
+   * @deprecated Has no effect unless `@web3-onboard/unstoppable-resolution`
+   * package has been added and passed into the web3-onboard initialization
+   * In this case remove the `@web3-onboard/unstoppable-resolution` package
+   * to remove unstoppableDomain resolution support
+   */
+  disableUDResolution?: boolean
 }
 
 export type CommonPositions =
@@ -156,12 +258,32 @@ export type AccountCenter = {
   position?: AccountCenterPosition
   expanded?: boolean
   minimal?: boolean
+  /**
+   * @deprecated Use top level containerElements property
+   * with the accountCenter prop set to the desired container El
+   */
   containerElement?: string
 }
 
 export type AccountCenterOptions = {
   desktop: Omit<AccountCenter, 'expanded'>
   mobile: Omit<AccountCenter, 'expanded'>
+}
+
+export type ContainerElements = {
+  /** When attaching the Connect Modal to a container el be aware that
+   * the modal was styled to be mounted through the app to the html body
+   * and will respond to screen width rather than container width
+   * This is specifically apparent on mobile so please test thoroughly
+   * Also consider that other DOM elements(specifically Notifications and
+   * Account Center) will also append to this DOM el if enabled and their
+   * own containerEl are not defined
+   */
+  connectModal?: string
+  /** when using the accountCenter with a container el the accountCenter
+   * position properties are ignored
+   */
+  accountCenter?: string
 }
 
 export type Notify = {
@@ -201,13 +323,36 @@ export type NotifyOptions = {
 export type Notification = {
   id: string
   key: string
-  type: NotificationType
   network: Network
   startTime?: number
-  eventCode: string
+  /**
+   * to completely customize the message shown
+   */
   message: string
+  /**
+   * handle codes in your own way - see codes here under the notify
+   * prop default en file at ./packages/core/src/i18n/en.json
+   */
+  eventCode: string
+  /**
+   * icon type displayed (see `NotificationType` below for options)
+   */
+  type: NotificationType
+  /**
+   * time (in ms) after which the notification will be dismissed. If set
+   * to `0` the notification will remain on screen until the user dismisses the
+   * notification, refreshes the page or navigates away from the site
+   * with the notifications
+   */
   autoDismiss: number
+  /**
+   * add link to the transaction hash. For instance, a link to the
+   * transaction on etherscan
+   */
   link?: string
+  /**
+   * onClick handler for when user clicks the notification element
+   */
   onClick?: (event: Event) => void
 }
 
@@ -248,6 +393,7 @@ export interface TxDetails {
 // ==== ACTIONS ==== //
 export type Action =
   | AddChainsAction
+  | UpdateChainsAction
   | AddWalletAction
   | UpdateWalletAction
   | RemoveWalletAction
@@ -263,6 +409,7 @@ export type Action =
   | UpdateConnectModalAction
 
 export type AddChainsAction = { type: 'add_chains'; payload: Chain[] }
+export type UpdateChainsAction = { type: 'update_chains'; payload: Chain }
 export type AddWalletAction = { type: 'add_wallet'; payload: WalletState }
 
 export type UpdateWalletAction = {
@@ -342,4 +489,16 @@ export type DeviceNotBrowser = {
   type: null
   os: null
   browser: null
+}
+
+export type WalletPermission = {
+  id: string
+  parentCapability: string
+  invoker: string
+  caveats: {
+    type: string
+    value: string[]
+  }[]
+
+  date: number
 }

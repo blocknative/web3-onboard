@@ -11,28 +11,30 @@
     "format": "prettier --write ."
   },
   "devDependencies": {
-    "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
     "@types/cookie": "^0.5.1",
-    "@typescript-eslint/eslint-plugin": "^5.27.0",
-    "@typescript-eslint/parser": "^5.27.0",
-    "eslint": "^8.16.0",
-    "eslint-config-prettier": "^8.3.0",
+    "@typescript-eslint/eslint-plugin": "^5.49.0",
+    "@typescript-eslint/parser": "^5.49.0",
+    "eslint": "^8.33.0",
+    "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-svelte3": "^4.0.0",
-    "prettier": "^2.6.2",
-    "prettier-plugin-svelte": "^2.7.0",
-    "svelte": "^3.46.0",
-    "svelte-check": "^2.7.1",
-    "svelte-preprocess": "^4.10.6",
-    "tslib": "^2.3.1",
-    "typescript": "^4.7.4",
-    "vite": "^3.1.0"
+    "prettier": "^2.8.3",
+    "prettier-plugin-svelte": "^2.9.0",
+    "rollup-plugin-polyfill-node": "^0.12.0",
+    "svelte": "^3.55.1",
+    "svelte-check": "^3.0.3",
+    "svelte-preprocess": "^5.0.1",
+    "tslib": "^2.5.0",
+    "typescript": "^4.9.5",
+    "vite": "^4.0.4"
   },
   "type": "module",
   "dependencies": {
-    "@fontsource/fira-mono": "^4.5.0",
-    "@web3-onboard/walletconnect": "^2.1.2",
+    "@fontsource/fira-mono": "^4.5.10",
+    "@web3-onboard/core": "^2.17.0",
+    "@web3-onboard/injected-wallets": "^2.8.5",
+    "@web3-onboard/walletconnect": "^2.3.6",
     "buffer": "^6.0.3"
   }
 }

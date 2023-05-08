@@ -33,7 +33,22 @@
 
   h4 {
     margin: 1.5rem 0 0.5rem 0;
-    font-weight: 700;
+    font-weight: 600;
+  }
+
+  .action-required-heading,
+  .action-required-info {
+    color: var(
+      --onboard-action-required-text-color,
+      var(--onboard-black, inherit)
+    );
+  }
+
+  .action-required-btn {
+    color: var(
+      --onboard-action-required-btn-text-color,
+      var(--onboard-black, inherit)
+    );
   }
 
   p {
@@ -42,12 +57,12 @@
   }
 
   a {
-    font-weight: 700;
+    font-weight: 600;
   }
 
   button {
     margin-top: 1.5rem;
-    font-weight: 700;
+    font-weight: 600;
   }
 </style>
 
@@ -57,22 +72,25 @@
       <InfoIcon />
     </div>
 
-    <h4>{$_('modals.actionRequired.heading', { values: { wallet } })}</h4>
+    <h4 class="action-required-heading">
+      {$_('modals.actionRequired.heading', { values: { wallet } })}
+    </h4>
 
-    <p>
-      {$_('modals.actionRequired.paragraph')}
+    <p class="action-required-info">
+      {$_('modals.actionRequired.paragraph', { values: { wallet } })}
 
       {#if wallet === 'MetaMask'}
         <a
           href="https://metamask.zendesk.com/hc/en-us/articles/360061346311-Switching-accounts-in-MetaMask"
           target="_blank"
-          rel="noreferrer noopener">{$_('modals.actionRequired.linkText')}</a
+          rel="noreferrer noopener">{$_('modals.actionRequired.linkText', { values: { wallet } })}</a
         >
       {/if}
     </p>
 
-    <button class="button-neutral-solid rounded" on:click={close}
-      >{$_('modals.actionRequired.buttonText')}</button
+    <button
+      class="button-neutral-solid rounded action-required-btn"
+      on:click={close}>{$_('modals.actionRequired.buttonText')}</button
     >
   </div>
 </Modal>

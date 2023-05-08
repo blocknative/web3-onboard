@@ -7,7 +7,10 @@ export let configuration: Configuration = {
   apiKey: null,
   device: getDevice(),
   initialWalletInit: [],
-  gas: null
+  gas: null,
+  containerElements: { accountCenter: null, connectModal: null },
+  transactionPreview: null,
+  unstoppableResolution: null
 }
 
 export function updateConfiguration(update: Partial<Configuration>): void {

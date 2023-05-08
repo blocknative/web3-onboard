@@ -12,22 +12,24 @@ import type {
   ChainWithDecimalId
 } from '@web3-onboard/common'
 
-import ethereumIcon from './icons/ethereum.js'
-import polygonIcon from './icons/polygon.js'
-import questionIcon from './icons/question.js'
-import binanceIcon from './icons/binance.js'
-import fantomIcon from './icons/fantom.js'
-import optimismIcon from './icons/optimism.js'
-import avalancheIcon from './icons/avalanche.js'
-import celoIcon from './icons/celo.js'
-import gnosisIcon from './icons/gnosis.js'
-import harmonyOneIcon from './icons/harmony-one.js'
-import arbitrumIcon from './icons/arbitrum.js'
-
-import hourglass from './icons/hourglass.js'
-import checkmark from './icons/checkmark.js'
-import error from './icons/error.js'
-import info from './icons/info.js'
+import {
+  hourglass,
+  gnosisIcon,
+  checkmark,
+  errorIcon,
+  infoIcon,
+  ethereumIcon,
+  polygonIcon,
+  binanceIcon,
+  questionIcon,
+  fantomIcon,
+  optimismIcon,
+  celoIcon,
+  avalancheIcon,
+  harmonyOneIcon,
+  arbitrumIcon,
+  baseIcon
+} from './icons/index.js'
 
 import type {
   ChainStyle,
@@ -77,11 +79,13 @@ export function isSVG(str: string): boolean {
 }
 
 export function shortenAddress(add: string): string {
-  return `${add.slice(0, 6)}...${add.slice(-4)}`
+  return `${add.slice(0, 6)}…${add.slice(-4)}`
 }
 
-export function shortenEns(ens: string): string {
-  return ens.length > 11 ? `${ens.slice(0, 4)}...${ens.slice(-6)}` : ens
+export function shortenDomain(domain: string): string {
+  return domain.length > 11
+    ? `${domain.slice(0, 4)}…${domain.slice(-6)}`
+    : domain
 }
 
 export async function copyWalletAddress(text: string): Promise<void> {
@@ -96,7 +100,7 @@ export async function copyWalletAddress(text: string): Promise<void> {
 export const toHexString = (val: number | string): string =>
   typeof val === 'number' ? `0x${val.toString(16)}` : val
 
-export function chainIdToHex(chains: Chain[] | ChainWithDecimalId[]): Chain[] {
+export function chainIdToHex(chains: (Chain | ChainWithDecimalId)[]): Chain[] {
   return chains.map(({ id, ...rest }) => {
     const hexId = toHexString(id)
     return { id: hexId, ...rest }
@@ -112,6 +116,7 @@ export const chainIdToLabel: Record<string, string> = {
   '0x3': 'Ropsten',
   '0x4': 'Rinkeby',
   '0x5': 'Goerli',
+  '0xaa36a7': 'Sepolia',
   '0x2a': 'Kovan',
   '0x38': 'Binance',
   '0x89': 'Polygon',
@@ -120,6 +125,7 @@ export const chainIdToLabel: Record<string, string> = {
   '0x45': 'Optimism Kovan',
   '0xa86a': 'Avalanche',
   '0xa4ec': 'Celo',
+  '0x14a33': 'Base Goerli',
   '0x64': 'Gnosis',
   '0x63564C40': 'Harmony One',
   '0xa4b1': 'Arbitrum'
@@ -156,6 +162,10 @@ export const chainStyles: Record<string, ChainStyle> = {
     color: '#627EEA'
   },
   '0x2a': {
+    icon: ethereumIcon,
+    color: '#627EEA'
+  },
+  '0xaa36a7': {
     icon: ethereumIcon,
     color: '#627EEA'
   },
@@ -198,6 +208,10 @@ export const chainStyles: Record<string, ChainStyle> = {
   '0xa4b1': {
     icon: arbitrumIcon,
     color: '#33394B'
+  },
+  '0x14a33': {
+    icon: baseIcon,
+    color: '#0259F9'
   }
 }
 
@@ -248,15 +262,40 @@ export const defaultNotifyEventStyles: Record<string, NotifyEventStyles> = {
   error: {
     backgroundColor: '#FDB1B11A',
     borderColor: 'var(--onboard-danger-300, var(--danger-300))',
-    eventIcon: error
+    eventIcon: errorIcon
   },
   hint: {
     backgroundColor: 'var(--onboard-gray-500, var(--gray-500))',
     borderColor: 'var(--onboard-gray-500, var(--gray-500))',
     iconColor: 'var(--onboard-gray-100, var(--gray-100))',
-    eventIcon: info
+    eventIcon: infoIcon
   }
 }
 
 export const wait = (time: number): Promise<void> =>
   new Promise(resolve => setTimeout(resolve, time))
+
+export function getLocalStore(key: string): string | null {
+  try {
+    const result = localStorage.getItem(key)
+    return result
+  } catch (error) {
+    return null
+  }
+}
+
+export function setLocalStore(key: string, value: string): void {
+  try {
+    localStorage.setItem(key, value)
+  } catch (error) {
+    return
+  }
+}
+
+export function delLocalStore(key: string): void {
+  try {
+    localStorage.removeItem(key)
+  } catch (error) {
+    return
+  }
+}

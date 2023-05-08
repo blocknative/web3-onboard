@@ -71,7 +71,7 @@ if (wallets[0]) {
 
 **Onboard v1 migration guide**
 
-If you're coming from v1, we've created a [migration guide for you](https://docs.blocknative.com/onboard/migration-guide).
+If you're coming from v1, we've created a [migration guide for you](https://onboard.blocknative.com/docs/overview/onboard.js-migration-guide#background).
 
 ## Documentation
 
@@ -88,15 +88,21 @@ For full documentation, check out the README.md for each package or the [docs pa
 **SDK Wallets**
 
 - [Coinbase](packages/coinbase/README.md)
+- [Trust](packages/trust/README.md)
 - [WalletConnect](packages/walletconnect/README.md)
 - [Gnosis](packages/gnosis/README.md)
 - [Magic](packages/magic/README.md)
 - [Fortmatic](packages/fortmatic/README.md)
 - [Portis](packages/portis/README.md)
-- [MEW](packages/mew/README.md)
+- [MEW-Wallet](packages/mew-wallet/README.md)
 - [Web3Auth](packages/web3auth/README.md)
 - [Sequence](packages/sequence/README.md)
-- [TallyHo](packages/tallyho/README.md)
+- [Taho (previously Tally Ho)](packages/tallyho/README.md)
+- [Enkrypt](packages/enkrypt/README.md)
+- [Unstoppable Domains](packages/uauth/README.md)
+- [Frontier](packages/frontier/README.md)
+- [XDEFI](packages/xdefi/README.md)
+- [Infinity Wallet](packages/infinity-wallet/README.md)
 
 **Hardware Wallets**
 
@@ -117,7 +123,7 @@ If you would like to test out the current functionality of V2 in a small browser
 
 - Clone the repo: `git clone git@github.com:blocknative/onboard.git`
 - Change in to the onboard directory: `cd onboard`
-- Checkout the V2 feature branch: `git checkout v2-web3-onboard`
+- Checkout the V2 feature branch: `git checkout main`
 - Install the dependencies: `yarn` (if running a M1 mac - `yarn install-m1-mac`)
 - Run all packages in dev mode: `yarn dev`
-- [View demo app in the browser](http://localhost:8080)
+- To view the demo app in the browser after running the above steps navigate to [http://localhost:8080](http://localhost:8080)

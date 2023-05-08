@@ -1,6 +1,6 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
-  import Modal from '../shared/Modal.svelte'
+  import { Modal } from '../shared'
   import en from '../../i18n/en.json'
   import warningIcon from '../../icons/warning.js'
 
@@ -28,7 +28,7 @@
 
   h4 {
     margin: 1.5rem 0 0.5rem 0;
-    font-weight: 700;
+    font-weight: 600;
   }
 
   p {
@@ -39,7 +39,7 @@
   button {
     margin-top: 1.5rem;
     width: 50%;
-    font-weight: 700;
+    font-weight: 600;
   }
 
   .right {

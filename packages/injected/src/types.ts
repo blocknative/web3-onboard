@@ -13,7 +13,9 @@ import {
  */
 export enum ProviderIdentityFlag {
   AlphaWallet = 'isAlphaWallet',
+  ApexWallet = 'isApexWallet',
   AToken = 'isAToken',
+  BifrostWallet = 'isBifrost',
   Binance = 'bbcSignTx',
   Bitpie = 'isBitpie',
   BlockWallet = 'isBlockWallet',
@@ -22,10 +24,12 @@ export enum ProviderIdentityFlag {
   Detected = 'request',
   Dcent = 'isDcentWallet',
   Exodus = 'isExodus',
+  Frontier = 'isFrontier',
   Frame = 'isFrame',
   HuobiWallet = 'isHbWallet',
   HyperPay = 'isHyperPay',
   ImToken = 'isImToken',
+  InfinityWallet = 'isInfinityWallet',
   Liquality = 'isLiquality',
   MeetOne = 'wallet',
   MetaMask = 'isMetaMask',
@@ -47,14 +51,27 @@ export enum ProviderIdentityFlag {
   BitKeep = 'isBitKeep',
   Sequence = 'isSequence',
   Core = 'isAvalanche',
-  Opera = 'isOpera'
+  Opera = 'isOpera',
+  Bitski = 'isBitski',
+  Enkrypt = 'isEnkrypt',
+  Phantom = 'isPhantom',
+  OKXWallet = 'isOkxWallet',
+  Zeal = 'isZeal',
+  Zerion = 'isZerion',
+  Rainbow = 'isRainbow',
+  SafePal = 'isSafePal',
+  DeFiWallet = 'isDeficonnectProvider', 
+  Safeheron = 'isSafeheron'
 }
 
 export enum ProviderLabel {
   AlphaWallet = 'AlphaWallet',
+  ApexWallet = 'Apex Wallet',
   AToken = 'AToken',
+  BifrostWallet = 'Bifrost Wallet',
   Binance = 'Binance Smart Wallet',
   Bitpie = 'Bitpie',
+  Bitski = 'Bitski',
   BlockWallet = 'BlockWallet',
   Brave = 'Brave Wallet',
   Coinbase = 'Coinbase Wallet',
@@ -62,9 +79,11 @@ export enum ProviderLabel {
   Detected = 'Detected Wallet',
   Exodus = 'Exodus',
   Frame = 'Frame',
+  Frontier = 'Frontier',
   HuobiWallet = 'Huobi Wallet',
   HyperPay = 'HyperPay',
   ImToken = 'imToken',
+  InfinityWallet = 'Infinity Wallet',
   Liquality = 'Liquality',
   MeetOne = 'MeetOne',
   MetaMask = 'MetaMask',
@@ -79,13 +98,22 @@ export enum ProviderLabel {
   XDEFI = 'XDEFI Wallet',
   OneInch = '1inch Wallet',
   Tokenary = 'Tokenary Wallet',
-  Tally = 'Tally Ho Wallet',
+  Tally = 'Taho',
   Rabby = 'Rabby',
   MathWallet = 'MathWallet',
   GameStop = 'GameStop Wallet',
   BitKeep = 'BitKeep',
   Sequence = 'Sequence',
-  Core = 'Core'
+  Core = 'Core',
+  Enkrypt = 'Enkrypt',
+  Zeal = 'Zeal',
+  Phantom = 'Phantom',
+  OKXWallet = 'OKX Wallet',
+  Zerion = 'Zerion',
+  Rainbow = 'Rainbow',
+  SafePal = 'SafePal',
+  DeFiWallet = 'DeFi Wallet',
+  Safeheron = 'Safeheron'
 }
 
 export interface MeetOneProvider extends ExternalProvider {
@@ -107,13 +135,23 @@ export enum InjectedNameSpace {
   XFI = 'xfi',
   GameStop = 'gamestop',
   BitKeep = 'bitkeep',
-  Avalanche = 'avalanche'
+  Avalanche = 'avalanche',
+  Bitski = 'Bitski',
+  Enkrypt = 'enkrypt',
+  Zeal = 'zeal',
+  Phantom = 'phantom',
+  OKXWallet = 'okxwallet',
+  Trust = 'trustwallet',
+  Frontier = 'frontier',
+  DeFiConnectProvider = 'deficonnectProvider',
+  Safeheron = 'safeheron'
 }
 
 export interface CustomWindow extends Window {
   BinanceChain: BinanceProvider
   ethereum: InjectedProvider
   tally: InjectedProvider
+  zeal: InjectedProvider
   web3: ExternalProvider | MeetOneProvider
   arbitrum: InjectedProvider
   xfi: {
@@ -124,6 +162,24 @@ export interface CustomWindow extends Window {
     ethereum: InjectedProvider
   }
   avalanche: InjectedProvider
+  Bitski: {
+    getProvider(): InjectedProvider
+  }
+  enkrypt: {
+    providers: {
+      ethereum: InjectedProvider
+    }
+  }
+  frontier: {
+    ethereum: InjectedProvider
+  }
+  phantom: {
+    ethereum: InjectedProvider
+  }
+  okxwallet: InjectedProvider
+  trustwallet: InjectedProvider
+  deficonnectProvider: InjectedProvider
+  safeheron: InjectedProvider
 }
 
 export type InjectedProvider = ExternalProvider &
@@ -133,20 +189,30 @@ export type InjectedProvider = ExternalProvider &
   Record<string, InjectedProvider[]>
 
 export type WalletFilters = {
-  // A provider label mapped to a list of excluded platforms
-  // or a boolean indicating if it should be included.
-  [key in ProviderLabel | string]?: Platform[] | boolean
+  /**A provider label mapped to a list of excluded platforms
+   * or a boolean indicating if it should be included. */
+  [key in ProviderLabel | string]?: Platform[] | boolean | 'unavailable'
 }
 
 export interface InjectedWalletOptions {
-  // A list of injected wallets to include that
-  // are not included by default here: ./packages/injected/
+  /**A list of injected wallets to include that
+   * are not included by default here: ./packages/injected/ */
   custom?: InjectedWalletModule[]
-  // A mapping of a provider label to a list of filtered platforms
-  // or a boolean indicating if it should be included or not.
-  // By default all wallets listed in ./packages/injected/
-  // are included add them to here to remove them.
+  /**A mapping of a provider label to a list of filtered platforms
+   * or a boolean indicating if it should be included or not.
+   * By default all wallets listed in ./packages/injected/
+   * are included add them to here to remove them. */
   filter?: WalletFilters
+  /**Will display wallets to be selected even if they
+   * are not currently available to the end user.
+   */
+  displayUnavailable?: boolean
+  /**A function that allows for customizing the message to be displayed if the wallet
+   * is unavailable
+   */
+  walletUnavailableMessage?: (wallet: WalletModule) => string
+  /**Function that can be used to sort the order of wallets that are displayed */
+  sort?: (wallets: WalletModule[]) => WalletModule[]
 }
 
 export interface InjectedWalletModule extends WalletModule {

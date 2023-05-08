@@ -1,3 +1,7 @@
+<a href="https://onboard.blocknative.com/">
+  <img alt="Web3-Onboard UI Components" src="https://github.com/blocknative/web3-onboard/blob/develop/assets/core.svg?raw=true" />
+</a>
+
 # @web3-onboard/vue
 
 A collection of composable functions for implementing web3-onboard in to a Vue project; compatible both with Vue 2 + composition-api and Vue 3
@@ -38,6 +42,8 @@ const { wallets, connectWallet, disconnectConnectedWallet, connectedWallet } =
   useOnboard()
 
 if (connectedWallet) {
+  // if using ethers v6 this is:
+  // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
   const ethersProvider = new ethers.providers.Web3Provider(
     connectedWallet.provider,
     'any'

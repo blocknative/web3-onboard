@@ -18,12 +18,12 @@ aliases:
   - &deploy_production_filters
     filters:
       branches:
-        only: v2-web3-onboard
+        only: main
 
   - &deploy_staging_filters
     filters:
       branches:
-        only: v2-web3-onboard-develop
+        only: develop
 
   - &test_package_version_for_alpha_tag_break_false
     run:
@@ -33,7 +33,7 @@ aliases:
         | grep version \
         | head -1 \
         | awk -F: '{ print $2 }' \
-        | sed 's/[",]//g'); 
+        | sed 's/[",]//g');
         if [[ $PACKAGE_VERSION =~ "-alpha" ]];
         then
           echo true
@@ -50,7 +50,7 @@ aliases:
         | grep version \
         | head -1 \
         | awk -F: '{ print $2 }' \
-        | sed 's/[",]//g'); 
+        | sed 's/[",]//g');
         if [[ $PACKAGE_VERSION =~ "-alpha" ]];
         then
           echo true
@@ -219,6 +219,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/mew
     steps:
       - node-build-steps
+  build-mew-wallet:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/mew-wallet
+    steps:
+      - node-build-steps
   build-portis:
     docker:
       - image: cimg/node:16.13.1
@@ -235,6 +241,18 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/trezor
+    steps:
+      - node-build-steps
+  build-trust:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/trust
+    steps:
+      - node-build-steps
+  build-frontier:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/frontier
     steps:
       - node-build-steps
   build-walletconnect:
@@ -269,7 +287,7 @@ jobs:
       - node-build-steps
   build-web3auth:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.18.1
     working_directory: ~/web3-onboard-monorepo/packages/web3auth
     steps:
       - node-build-steps
@@ -307,6 +325,66 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/tallyho
+    steps:
+      - node-build-steps
+  build-enkrypt:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/enkrypt
+    steps:
+      - node-build-steps
+  build-uauth:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/uauth
+    steps:
+      - node-build-steps
+  build-transaction-preview:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/transaction-preview
+    steps:
+      - node-build-steps
+  build-zeal:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/zeal
+    steps:
+      - node-build-steps
+  build-phantom:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/phantom
+    steps:
+      - node-build-steps
+  build-xdefi:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/xdefi
+    steps:
+      - node-build-steps
+  build-infinity-wallet:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/infinity-wallet
+    steps:
+      - node-build-steps
+  build-taho:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/taho
+    steps:
+      - node-build-steps
+  build-unstoppable-resolution:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/unstoppable-resolution
+    steps:
+      - node-build-steps
+  build-cede-store:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/cede-store
     steps:
       - node-build-steps
 
@@ -365,6 +443,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/mew
     steps:
       - node-staging-build-steps
+  build-staging-mew-wallet:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/mew-wallet
+    steps:
+      - node-staging-build-steps
   build-staging-portis:
     docker:
       - image: cimg/node:16.13.1
@@ -381,6 +465,18 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/trezor
+    steps:
+      - node-staging-build-steps
+  build-staging-trust:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/trust
+    steps:
+      - node-staging-build-steps
+  build-staging-frontier:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/frontier
     steps:
       - node-staging-build-steps
   build-staging-walletconnect:
@@ -415,7 +511,7 @@ jobs:
       - node-staging-build-steps
   build-staging-web3auth:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.18.1
     working_directory: ~/web3-onboard-monorepo/packages/web3auth
     steps:
       - node-staging-build-steps
@@ -453,6 +549,66 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/tallyho
+    steps:
+      - node-staging-build-steps
+  build-staging-enkrypt:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/enkrypt
+    steps:
+      - node-staging-build-steps
+  build-staging-uauth:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/uauth
+    steps:
+      - node-staging-build-steps
+  build-staging-transaction-preview:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/transaction-preview
+    steps:
+      - node-staging-build-steps
+  build-staging-zeal:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/zeal
+    steps:
+      - node-staging-build-steps
+  build-staging-phantom:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/phantom
+    steps:
+      - node-staging-build-steps
+  build-staging-xdefi:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/xdefi
+    steps:
+      - node-staging-build-steps
+  build-staging-infinity-wallet:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/infinity-wallet
+    steps:
+      - node-staging-build-steps
+  build-staging-taho:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/taho
+    steps:
+      - node-staging-build-steps
+  build-staging-unstoppable-resolution:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/unstoppable-resolution
+    steps:
+      - node-staging-build-steps
+  build-staging-cede-store:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/cede-store
     steps:
       - node-staging-build-steps
 
@@ -513,6 +669,12 @@ workflows:
           <<: *deploy_production_filters
       - build-staging-mew:
           <<: *deploy_staging_filters
+  mew-wallet:
+    jobs:
+      - build-mew-wallet:
+          <<: *deploy_production_filters
+      - build-staging-mew-wallet:
+          <<: *deploy_staging_filters
   portis:
     jobs:
       - build-portis:
@@ -530,6 +692,18 @@ workflows:
       - build-trezor:
           <<: *deploy_production_filters
       - build-staging-trezor:
+          <<: *deploy_staging_filters
+  trust:
+    jobs:
+      - build-trust:
+          <<: *deploy_production_filters
+      - build-staging-trust:
+          <<: *deploy_staging_filters
+  frontier:
+    jobs:
+      - build-frontier:
+          <<: *deploy_production_filters
+      - build-staging-frontier:
           <<: *deploy_staging_filters
   walletconnect:
     jobs:
@@ -603,3 +777,64 @@ workflows:
           <<: *deploy_production_filters
       - build-staging-tallyho:
           <<: *deploy_staging_filters
+  enkrypt:
+    jobs:
+      - build-enkrypt:
+          <<: *deploy_production_filters
+      - build-staging-enkrypt:
+          <<: *deploy_staging_filters
+  uauth:
+    jobs:
+      - build-uauth:
+          <<: *deploy_production_filters
+      - build-staging-uauth:
+          <<: *deploy_staging_filters
+  transaction-preview:
+    jobs:
+      - build-transaction-preview:
+          <<: *deploy_production_filters
+      - build-staging-transaction-preview:
+          <<: *deploy_staging_filters
+  zeal:
+    jobs:
+      - build-zeal:
+          <<: *deploy_production_filters
+      - build-staging-zeal:
+          <<: *deploy_staging_filters
+  phantom:
+    jobs:
+      - build-phantom:
+          <<: *deploy_production_filters
+      - build-staging-phantom:
+          <<: *deploy_staging_filters
+  xdefi:
+    jobs:
+      - build-xdefi:
+          <<: *deploy_production_filters
+      - build-staging-xdefi:
+          <<: *deploy_staging_filters
+  infinity-wallet:
+    jobs:
+      - build-infinity-wallet:
+          <<: *deploy_production_filters
+      - build-staging-infinity-wallet:
+          <<: *deploy_staging_filters
+  taho:
+    jobs:
+      - build-taho:
+          <<: *deploy_production_filters
+      - build-staging-taho:
+          <<: *deploy_staging_filters
+  unstoppable-resolution:
+    jobs:
+      - build-unstoppable-resolution:
+          <<: *deploy_production_filters
+      - build-staging-unstoppable-resolution:
+          <<: *deploy_staging_filters
+  cede-store:
+    jobs:
+      - build-cede-store:
+          <<: *deploy_production_filters
+      - build-staging-cede-store:
+          <<: *deploy_staging_filters
+

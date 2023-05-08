@@ -4,45 +4,16 @@
 
 ### Install
 
-`npm i @web3-onboard/ledger`
+`npm i @web3-onboard/core @web3-onboard/ledger`
 
 ### Options
 
 ```typescript
-type LedgerOptions = {
-  customNetwork?: CustomNetwork
-}
-
-interface CustomNetwork {
-  networkId: number
-  genesis: GenesisBlock
-  hardforks: Hardfork[]
-  bootstrapNodes: BootstrapNode[]
-}
-
-interface GenesisBlock {
-  hash: string
-  timestamp: string | null
-  gasLimit: number
-  difficulty: number
-  nonce: string
-  extraData: string
-  stateRoot: string
-}
-
-interface Hardfork {
-  name: string
-  block: number | null
-}
-
-interface BootstrapNode {
-  ip: string
-  port: number | string
-  network?: string
+interface LedgerOptions {
   chainId?: number
-  id: string
-  location: string
-  comment: string
+  bridge?: string
+  infuraId?: string
+  rpc?: { [chainId: number]: string }
 }
 ```
 
@@ -74,7 +45,7 @@ You may decide that on certain platforms you do not want to display this wallet 
 import Onboard from '@web3-onboard/core'
 import ledgerModule from '@web3-onboard/ledger'
 
-const ledger = ledgerModule({ filter: ['Safari'] })
+const ledger = ledgerModule()
 
 const onboard = Onboard({
   // ... other Onboard options

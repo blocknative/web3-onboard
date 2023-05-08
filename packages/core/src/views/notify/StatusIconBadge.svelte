@@ -1,6 +1,9 @@
 <script lang="ts">
   import ChainBadge from './ChainBadge.svelte'
-  import { defaultNotifyEventStyles, unrecognizedChainStyle } from '../../utils.js'
+  import {
+    defaultNotifyEventStyles,
+    unrecognizedChainStyle
+  } from '../../utils.js'
   import type { Notification, ChainStyle } from '../../types.js'
   export let chainStyles: ChainStyle = unrecognizedChainStyle
   export let notification: Notification
@@ -96,7 +99,7 @@
           icon={chainStyles.icon}
           size={16}
           background={chainStyles.color}
-          borderColorVar={'--onboard-gray-600, var(--gray-600)'}
+          borderColorVar={`--notify-onboard-background, var(--onboard-gray-600, var(--gray-600))`}
           padding={3}
         />
       </div>

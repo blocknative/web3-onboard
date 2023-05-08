@@ -5,7 +5,7 @@
   import TextBlock from './TextBlock.svelte'
   import Container from './Container.svelte'
 
-  import ThemingCode from './theming-code.md'
+  import ThemingCode from './code-snippet/theming-code.md'
   import ThemingGraphic from './svg/themes-example-carousel.svg'
 </script>
 
@@ -28,7 +28,7 @@
     </div>
   </Container>
   <ScrollContainer style={'padding: 0 2rem'}>
-    <img class="carousel-img" src={ThemingGraphic} alt="onboard connect wallet themes" >
+    <img class="carousel-img" src={ThemingGraphic} alt="onboard connect wallet themes" />
   </ScrollContainer>
 </section>
 
