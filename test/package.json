@@ -1,0 +1,13 @@
+{
+  "name": "-W",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.31.2",
+    "@synthetixio/synpress": "^3.5.1",
+    "dotenv": "^16.0.3"
+  },
+  "scripts": {},
+  "dependencies": {}
+}
