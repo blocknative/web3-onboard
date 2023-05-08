@@ -52,7 +52,8 @@ export const updateSecondaryTokens = async (
   )
   const signer = ethersProvider.getSigner()
   const tokenInterface = [
-    'function balanceOf(address owner) view returns (uint256)'
+    'function balanceOf(address owner) view returns (uint256)',
+    'function symbol() view return (string)'
   ]
   const updatedBalances = await Promise.all(
     chain.secondaryTokens.map(async token => {
@@ -63,6 +64,8 @@ export const updateSecondaryTokens = async (
           signer
         )
         const bigNumBalance = await swapContract.balanceOf(account)
+        const tokenName = await swapContract.token()
+        console.log(tokenName)
         return {
           name: token.name,
           balance: weiToEth(bigNumBalance.toHexString()),
