@@ -31,12 +31,19 @@ export const providerConnectionInfoValidation = Joi.object({
   timeout: Joi.number()
 })
 
+const secondaryTokenValidation = Joi.object({
+  name: Joi.string().required(),
+  address: Joi.string().required(),
+  icon: Joi.string().optional()
+})
+
 export const chainValidation = Joi.object({
   namespace: chainNamespaceValidation,
   id: chainIdValidation.required(),
   rpcUrl: Joi.string(),
   label: Joi.string(),
   token: Joi.string(),
+  secondaryTokens: Joi.array().items(secondaryTokenValidation).optional(),
   icon: Joi.string(),
   color: Joi.string(),
   publicRpcUrl: Joi.string(),

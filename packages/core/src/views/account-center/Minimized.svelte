@@ -197,8 +197,8 @@
       </div>
       {#if firstAddressBalance}
         <div in:fade class="balance">
-          {firstAddressBalance.length > 8
-            ? firstAddressBalance.slice(0, 8)
+          {firstAddressBalance.length > 7
+            ? firstAddressBalance.slice(0, 7)
             : firstAddressBalance}
           {firstAddressAsset}
         </div>
