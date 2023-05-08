@@ -32,7 +32,6 @@ export const providerConnectionInfoValidation = Joi.object({
 })
 
 const secondaryTokenValidation = Joi.object({
-  name: Joi.string().required(),
   address: Joi.string().required(),
   icon: Joi.string().optional()
 })

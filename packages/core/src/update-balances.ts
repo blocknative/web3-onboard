@@ -51,28 +51,39 @@ export const updateSecondaryTokens = async (
     'any'
   )
   const signer = ethersProvider.getSigner()
-  const tokenInterface = [
-    'function balanceOf(address owner) view returns (uint256)',
-    'function symbol() view return (string)'
+
+  const abi = [
+    {
+      inputs: [{ name: 'owner', type: 'address' }],
+      name: 'balanceOf',
+      outputs: [{ name: '', type: 'uint256' }],
+      stateMutability: 'view',
+      type: 'function'
+    },
+    {
+      inputs: [],
+      name: 'symbol',
+      outputs: [{ name: '', type: 'string' }],
+      stateMutability: 'view',
+      type: 'function'
+    }
   ]
   const updatedBalances = await Promise.all(
     chain.secondaryTokens.map(async token => {
       try {
-        const swapContract = new ethers.Contract(
-          token.address,
-          tokenInterface,
-          signer
-        )
+        const swapContract = new ethers.Contract(token.address, abi, signer)
         const bigNumBalance = await swapContract.balanceOf(account)
-        const tokenName = await swapContract.token()
-        console.log(tokenName)
+        const tokenName = await swapContract.symbol()
         return {
-          name: token.name,
+          name: tokenName,
           balance: weiToEth(bigNumBalance.toHexString()),
           icon: token.icon
         }
       } catch (error) {
-        console.error(error)
+        console.error(
+          `There was an error fetching balance and/or symbol 
+          for token contract: ${token.address} - ${error}`
+        )
       }
     })
   )

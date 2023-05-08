@@ -432,10 +432,6 @@ export interface SecondaryTokens {
    */
   address: string
   /**
-   * Required - The symbol of the token i.e. USDC, ETH, 1INCH
-   */
-  name: TokenSymbol
-  /**
    * An optional svg or url string for the icon of the token.
    * If an svg is used ensure the height/width is set to 100%
    */
