@@ -573,6 +573,16 @@ module.exports = {
 }
 ```
 
+Be sure to update the scripts in package.json:
+
+```
+"scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test"
+  }
+```
+
 [React App Rewired](https://www.npmjs.com/package/react-app-rewired) is another option for working with Create React App DApps
 
 Add React App Rewired:
@@ -641,6 +651,16 @@ module.exports = function override(config) {
   })
   return config
 }
+```
+
+Be sure to update the scripts in package.json:
+
+```
+"scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test"
+  }
 ```
 
 ### Vite
