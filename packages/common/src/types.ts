@@ -403,6 +403,12 @@ export interface Chain {
   /* Recommended to include. The native token symbol, eg ETH, BNB, MATIC */
   token?: TokenSymbol
   /**
+   * An optional array of tokens to be available to the dapp in the
+   * app state object per wallet within the wallet account and displayed
+   * in Account Center (if enabled)
+   */
+  secondaryTokens?: SecondaryTokens[]
+  /**
    * The color used to represent the chain and
    * will be used as a background for the icon
    */
@@ -415,6 +421,23 @@ export interface Chain {
   publicRpcUrl?: string
   /* Also used when adding a new config to the wallet */
   blockExplorerUrl?: string
+}
+
+export interface SecondaryTokens {
+  /**
+   * Required - The onchain address of the token associated
+   * with the chain it is entered under
+   */
+  address: string
+  /**
+   * Required - The symbol of the token i.e. USDC, ETH, 1INCH
+   */
+  name: TokenSymbol
+  /**
+   * An optional svg or url string for the icon of the token.
+   * If an svg is used ensure the height/width is set to 100%
+   */
+  icon?: string
 }
 
 export type ChainWithDecimalId = Omit<Chain, 'id'> & { id: DecimalChainId }

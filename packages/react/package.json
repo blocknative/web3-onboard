@@ -62,7 +62,7 @@
     "typescript": "^4.9.4"
   },
   "dependencies": {
-    "@web3-onboard/core": "^2.18.0-viemtest.1",
+    "@web3-onboard/core": "^2.19.0-viemtest.1",
     "@web3-onboard/common": "^2.4.0-viemtest.1",
     "use-sync-external-store": "1.0.0"
   },

@@ -143,9 +143,16 @@ export type Account = {
   ens: Ens | null
   uns: Uns | null
   balance: Balances | null
+  secondaryTokens?: SecondaryTokenBalances[] | null
 }
 
 export type Balances = Record<TokenSymbol, string> | null
+
+export interface SecondaryTokenBalances {
+  name: TokenSymbol
+  balance: string
+  icon?: string
+}
 
 export interface Ens {
   name: string

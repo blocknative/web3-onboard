@@ -16,6 +16,7 @@ export const weiHexToEth = (wei: string): string => {
   return ethBalance.toString()
 }
 export const weiToEth = (wei: string): string => {
+  if (!wei) return wei
   const weiBigInt = BigInt(parseInt(wei))
   const ethBalance = divideBigIntWithDecimalResolution(
     weiBigInt,
