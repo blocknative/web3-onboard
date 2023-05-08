@@ -287,7 +287,7 @@ jobs:
       - node-build-steps
   build-web3auth:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.18.1
     working_directory: ~/web3-onboard-monorepo/packages/web3auth
     steps:
       - node-build-steps
@@ -511,7 +511,7 @@ jobs:
       - node-staging-build-steps
   build-staging-web3auth:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.18.1
     working_directory: ~/web3-onboard-monorepo/packages/web3auth
     steps:
       - node-staging-build-steps
