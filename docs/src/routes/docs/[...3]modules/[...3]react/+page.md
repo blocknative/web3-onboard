@@ -79,7 +79,7 @@ function App() {
   )
 }
 
-export default App;
+export default App
 ```
 
 ## Using the `Web3OnboardProvider`
@@ -529,9 +529,51 @@ module.exports = {
 
 <!-- KAT TODO: UPDATE CRACO INSTRUCTIONS -->
 
-[CRACO](https://www.npmjs.com/package/@craco/craco) provides a similar way to override webpack config which is obfuscated in Create React App built applications.
+[CRACO](https://www.npmjs.com/package/@craco/craco) provides a way to override webpack config which is obfuscated in Create React App built applications.
 
-The above webpack 5 example can be used in the `craco.config.js` file at the root level in this case.
+`npm i @craco/craco`
+
+**OR**
+
+`yarn add @craco/craco`
+
+The above webpack 5 example can be used in the `craco.config.js` file at the root level.
+
+```javascript title="craco.config.js"
+const webpack = require('webpack')
+
+module.exports = {
+  webpack: {
+    configure: {
+      resolve: {
+        fallback: {
+          path: require.resolve('path-browserify')
+        },
+        alias: {
+          assert: 'assert',
+          buffer: 'buffer',
+          crypto: 'crypto-browserify',
+          http: 'stream-http',
+          https: 'https-browserify',
+          os: 'os-browserify/browser',
+          process: 'process/browser',
+          stream: 'stream-browserify',
+          util: 'util'
+        }
+      },
+      experiments: {
+        asyncWebAssembly: true
+      },
+      plugins: [
+        new webpack.ProvidePlugin({
+          process: 'process/browser',
+          Buffer: ['buffer', 'Buffer']
+        })
+      ]
+    }
+  }
+}
+```
 
 [React App Rewired](https://www.npmjs.com/package/react-app-rewired) is another option for working with Create React App DApps
 
@@ -539,7 +581,7 @@ Add React App Rewired:
 
 `npm i react-app-rewired`
 
-**OR** 
+**OR**
 
 `yarn add react-app-rewired`
 
