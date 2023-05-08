@@ -53,6 +53,7 @@
     WalletState,
     WalletWithLoadingIcon
   } from '../../types.js'
+  import { updateSecondaryTokens } from '../../update-balances'
 
   export let autoSelect: ConnectOptions['autoSelect']
 
@@ -330,7 +331,7 @@
     )
 
     const { address } = accounts[0]
-    let { balance, ens, uns } = accounts[0]
+    let { balance, ens, uns, secondaryTokens } = accounts[0]
 
     if (balance === null) {
       getBalance(address, appChain).then(balance => {
@@ -338,6 +339,19 @@
           balance
         })
       })
+    }
+    if (
+      !secondaryTokens &&
+      Array.isArray(appChain.secondaryTokens) &&
+      appChain.secondaryTokens.length
+    ) {
+      updateSecondaryTokens(selectedWallet, address, appChain).then(
+        secondaryTokens => {
+          updateAccount(selectedWallet.label, address, {
+            secondaryTokens
+          })
+        }
+      )
     }
 
     if (ens === null && validEnsChain(connectedWalletChain.id)) {
