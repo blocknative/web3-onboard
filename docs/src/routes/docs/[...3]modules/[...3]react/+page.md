@@ -527,8 +527,6 @@ module.exports = {
 
 ### If using create-react-app
 
-<!-- KAT TODO: UPDATE CRACO INSTRUCTIONS -->
-
 [CRACO](https://www.npmjs.com/package/@craco/craco) provides a way to override webpack config which is obfuscated in Create React App built applications.
 
 `npm i @craco/craco`
