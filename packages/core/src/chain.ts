@@ -36,7 +36,7 @@ async function setChain(options: {
 
   // validate that chainId has been added to chains
   const chain = chains.find(
-    ({ namespace, id }) => namespace === chainNamespace && id === chainIdHex
+    ({ namespace, id }) => namespace === chainNamespace && id.toLowerCase() === chainIdHex.toLowerCase()
   )
 
   if (!chain) {
