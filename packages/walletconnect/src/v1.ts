@@ -21,8 +21,8 @@ function walletConnect(
 
   return () => {
     return {
-      label: 'WalletConnect',
-      getIcon: async () => (await import('./icon.js')).default,
+      label: options.label || 'WalletConnect',
+      getIcon: options.getIcon || async () => (await import('./icon.js')).default,
       getInterface: async ({ chains, EventEmitter }) => {
         const { StaticJsonRpcProvider } = await import(
           '@ethersproject/providers'
