@@ -58,7 +58,7 @@
   "dependencies": {
     "@web3-onboard/cede-store": "^2.0.1-alpha.1",
     "@web3-onboard/coinbase": "^2.2.3-alpha.2",
-    "@web3-onboard/core": "^2.18.0-alpha.2",
+    "@web3-onboard/core": "^2.18.0-alpha.3",
     "@web3-onboard/dcent": "^2.2.6-alpha.2",
     "@web3-onboard/enkrypt": "^2.0.3-alpha.2",
     "@web3-onboard/fortmatic": "^2.0.18-alpha.2",

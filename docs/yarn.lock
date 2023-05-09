@@ -3836,7 +3836,7 @@
     ethers "5.5.4"
     joi "17.8.1"
 
-"@web3-onboard/common@^2.3.1":
+"@web3-onboard/common@^2.3.1-alpha.1":
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/@web3-onboard/common/-/common-2.3.1.tgz#69ad0d5167e5103086c34a4f7e8af90681d71be4"
   integrity sha512-VRIsJLW92Q+bu6w9WSlTrPIk0vGmFvVwnoAKy1ubKuBvSKKhMUmrnv8N5tusr0mk+gcUuUdDF6gLDCABqrfC7g==
@@ -3854,10 +3854,10 @@
     ethers "5.5.4"
     joi "17.9.1"
 
-"@web3-onboard/core@^2.18.0-alpha.2":
-  version "2.18.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.18.0-alpha.2.tgz#b96bba49530aa9d149265998717e8372682a4961"
-  integrity sha512-m4XyxdDy4qZHkSeFXsyS0dnrVeGHv2J4WkUokkbQCBKVdsUeMaJDHye8qLjdsXgUqX2hT8RDiJKwcvb/KYSg1Q==
+"@web3-onboard/core@^2.18.0-alpha.3":
+  version "2.18.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.18.0-alpha.3.tgz#2a5dea09c2eecf2c019df66812828e5acd543c8a"
+  integrity sha512-2m9E/ikLKfEq4A05SDlrevcSIEV3XS9IWSt4WbnaWLTEgqy+7hWPvs1Rz6GY9lQUm8+9nFMcNjt36Pn8JSlc6w==
   dependencies:
     "@web3-onboard/common" "^2.3.2-alpha.2"
     bignumber.js "^9.0.0"
@@ -4102,12 +4102,12 @@
     rxjs "^7.5.2"
 
 "@web3-onboard/web3auth@^2.2.1-alpha.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/web3auth/-/web3auth-2.2.1.tgz#c14fc62cb5ceab400751ce7c2a1888cfe7b346a6"
-  integrity sha512-JYfSr53kk6jybAxBU2DopU//KLXQoREfJ4PvZa0flcBRQb0uKa6MQxGy/ruLFaf2tCfEzjUAR3PKufPKWEVRbg==
+  version "2.2.1-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/web3auth/-/web3auth-2.2.1-alpha.1.tgz#e4f2f7692bfb22fb63d7d05ca57f0e3f11589a4e"
+  integrity sha512-ZhF7r0nkpIPCEST3EAUPd8rkddJmSpIUwnlOOjCvUq1TkQjaRQNHzKvEJAiRKUqdEKzRoL79uEi7qrqRZi69MA==
   dependencies:
     "@solana/web3.js" "^1.73.0"
-    "@web3-onboard/common" "^2.3.1"
+    "@web3-onboard/common" "^2.3.1-alpha.1"
     "@web3auth/base" "^5.0.1"
     "@web3auth/modal" "^5.0.1"
     react-dom "^18.2.0"
