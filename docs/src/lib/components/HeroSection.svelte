@@ -8,7 +8,7 @@
 
 <section style="background-image: url({heroBg});">
   <div class="textblock">
-    <div class="title">{"Web3 Onboard"}</div>
+    <div class="title">{'Web3 Onboard'}</div>
     <div class="text">
       {'Open-source, framework-agnostic JavaScript library to onboard users to web3 apps. Help your users transact with ease by enabling wallet connection, real-time transaction states, and more.'}
     </div>
