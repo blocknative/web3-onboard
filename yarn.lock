@@ -3723,7 +3723,7 @@
     joi "17.8.1"
     rxjs "^7.5.2"
 
-"@web3-onboard/hw-common@^2.2.0", "@web3-onboard/hw-common@^2.2.1":
+"@web3-onboard/hw-common@^2.2.0":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@web3-onboard/hw-common/-/hw-common-2.2.1.tgz#aae5b0323e6ee56b0cd6c23731955078ff69962d"
   integrity sha512-KdYXaa2OulL4ghGAsopN9A4lx28IBKIeBgFNZm7hmY7kwZWY5I7E3CxbXdyubySmQQcXTeEvOXBpC2z0CLZeiA==
@@ -3734,7 +3734,7 @@
     joi "17.9.1"
     rxjs "^7.5.2"
 
-"@web3-onboard/injected-wallets@^2.8.5-alpha.1":
+"@web3-onboard/injected-wallets@^2.8.5-alpha.2":
   version "2.8.5"
   resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.8.5.tgz#5a90452230031bf6a3b32921920f5692e515a865"
   integrity sha512-0+Rd4AVsQ40QICV8eh/VLgwJcKf24tjqA4BREENKl7C7Gw35L8ZJTsbwg3mBIrzy9jK0WC36jvNrX0OtBoQvVQ==
@@ -3743,7 +3743,7 @@
     joi "17.9.1"
     lodash.uniqby "^4.7.0"
 
-"@web3-onboard/mew-wallet@^2.0.2-alpha.1":
+"@web3-onboard/mew-wallet@^2.0.2-alpha.2":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@web3-onboard/mew-wallet/-/mew-wallet-2.0.2.tgz#956cffc586c893365e7ad3ab571a3c28ee4382ba"
   integrity sha512-SvdJ+lu5/IYoUSF7rQF74aOQlNPFRq/9i6T1kcSUSc6dY690nPLx1aXnhDupOvRonLMHfkG8g0uONj8vxL6vVQ==
