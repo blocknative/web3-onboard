@@ -29,8 +29,8 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
 
   return () => {
     return {
-      label: 'WalletConnect',
-      getIcon: async () => (await import('./icon.js')).default,
+      label: options.label || 'WalletConnect',
+      getIcon: options.getIcon || async () => (await import('./icon.js')).default,
       getInterface: async ({ chains, EventEmitter, appMetadata }) => {
         const { ProviderRpcError, ProviderRpcErrorCode } = await import(
           '@web3-onboard/common'
