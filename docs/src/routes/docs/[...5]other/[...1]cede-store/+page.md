@@ -1,5 +1,5 @@
 ---
-title: Cede.store
+title: cede.store
 ---
 
 # {$frontmatter.title}
