@@ -47,7 +47,7 @@
     <div class="flexbox">
       <FeatureCard
         title={'Minimal Dependencies'}
-        text={'All wallet dependencies are included in separate packages, so you only include the ones you want to use in your app.'}
+        text={'All wallet dependencies are included in separate packages, so you only include the ones you want to use in your app. Core package is only 815kb minified.'}
       />
       <FeatureCard
         title={'Dynamic Imports'}
