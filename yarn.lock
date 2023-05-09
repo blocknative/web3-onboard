@@ -2043,7 +2043,29 @@
     superstruct "^0.14.2"
     tweetnacl "^1.0.3"
 
-"@solana/web3.js@^1.63.1", "@solana/web3.js@^1.73.0":
+"@solana/web3.js@1.73.0":
+  version "1.73.0"
+  resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.73.0.tgz#c65f9f954ac80fca6952765c931dd72e57e1b572"
+  integrity sha512-YrgX3Py7ylh8NYkbanoINUPCj//bWUjYZ5/WPy9nQ9SK3Cl7QWCR+NmbDjmC/fTspZGR+VO9LTQslM++jr5PRw==
+  dependencies:
+    "@babel/runtime" "^7.12.5"
+    "@noble/ed25519" "^1.7.0"
+    "@noble/hashes" "^1.1.2"
+    "@noble/secp256k1" "^1.6.3"
+    "@solana/buffer-layout" "^4.0.0"
+    agentkeepalive "^4.2.1"
+    bigint-buffer "^1.1.5"
+    bn.js "^5.0.0"
+    borsh "^0.7.0"
+    bs58 "^4.0.1"
+    buffer "6.0.1"
+    fast-stable-stringify "^1.0.0"
+    jayson "^3.4.4"
+    node-fetch "2"
+    rpc-websockets "^7.5.0"
+    superstruct "^0.14.2"
+
+"@solana/web3.js@^1.63.1":
   version "1.74.0"
   resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.74.0.tgz#dbcbeabb830dd7cbbcf5e31404ca79c9785cbf2d"
   integrity sha512-RKZyPqizPCxmpMGfpu4fuplNZEWCrhRBjjVstv5QnAJvgln1jgOfgui+rjl1ExnqDnWKg9uaZ5jtGROH/cwabg==
@@ -3816,7 +3838,7 @@
     "@web3auth/base" "^5.0.1"
     bs58 "^4.0.1"
 
-"@web3auth/base@^5.0.1":
+"@web3auth/base@5.0.1", "@web3auth/base@^5.0.1":
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/@web3auth/base/-/base-5.0.1.tgz#59840d938f552d07738441ad525b8765fb16d93a"
   integrity sha512-++EDSmwucc83JwB9stnpapBQCwUJpUePi1B/W1e6/eRl9nMUVmpzRGcqJRBbkec4/sMtadkgoP+rWxiFpAYfxA==
@@ -3860,7 +3882,7 @@
     "@web3auth/base" "^5.0.1"
     "@web3auth/base-evm-adapter" "^5.0.1"
 
-"@web3auth/modal@^5.0.1":
+"@web3auth/modal@5.0.1":
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/@web3auth/modal/-/modal-5.0.1.tgz#8399bbcc31b6711b97bc5752a8a5b3f0e0b55eb8"
   integrity sha512-b9yvfX/lP7P5NbbhlvaQxTqwNiPXD0DgXfYEKZ6D0AHCerYHNV1wBF5WDWx74ys68eAeUXyw/sv7CraXP0amUg==
