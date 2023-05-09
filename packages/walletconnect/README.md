@@ -23,6 +23,8 @@ type WalletConnectOptions = {
    * Optional function to handle WalletConnect URI when it becomes available
    */
   handleUri?: (uri: string) => Promise<unknown>
+  label?: string // allows changing the display name, defaults to WalletConnect
+  getIcon?: () => Promise<string> // allows changing the display icon, should return an svg string
 } & (
   | {
       /**
