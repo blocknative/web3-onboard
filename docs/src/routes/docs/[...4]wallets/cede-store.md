@@ -1,13 +1,35 @@
-# @web3-onboard/cede-store
+# cede.store
 
-CEX module for connecting cede.store to web3-onboard. Check out the cede.store Developer Docs [here](https://docs.cede.store) for more information.
+## Wallet module for connecting cede.store Wallet SDK to web3-onboard
 
+cede.store is a non-custodial browser extension designed to store CEX (centralized exchange) API keys and to sign CEX requests from the client-side. It allows users to manage their cryptos in their CEX through a unified interface.
 
+Any dApp can integrate cede.store in order to track and/or manage a user's CEX assets. In this way, we offer the dApp a way to monitor and manage a user's CEX assets while remaining non-custodial and maintaining the same user experience as any DeFi browser wallet.
+
+See [cede.store Wallet Developer Docs](https://docs.cede.store)
+
+:::admonition type=warning
 As cede.store is not a traditional 1193 wallet behavior is a little different from other wallets that connect through web3-onboard in that there is no on-chain user address to interact with and there isn't a specific chain associated. With this behavior dapp devs will need to handle accordingly and differently from traditional 1193 wallets. The dapp dev can expect the connect account to not be shown as a hex value (or at all) and the chain to always be `0x0` when a user connects with cede.store for that specific wallet account.
+:::
 
 ### Install
 
-`npm i @web3-onboard/cede-store`
+<Tabs values={['yarn', 'npm']}>
+<TabPanel value="yarn">
+
+```sh copy
+yarn add @web3-onboard/cede-store
+```
+
+  </TabPanel>
+  <TabPanel value="npm">
+
+```sh copy
+npm install @web3-onboard/cede-store
+```
+
+  </TabPanel>
+</Tabs>
 
 ## Usage
 
@@ -47,8 +69,7 @@ All requests are divided into two categories:
 - private requests
 - public requests
 
-All public data, such as prices, volumes, historical data are collected from different exchanges and
-provided with our API.
+All public data, such as prices, volumes, historical data are collected from different exchanges and provided with our API.
 
 All private requests, such as user balances, trades, open positions are coming from cede.store (from the user's machine).
 
