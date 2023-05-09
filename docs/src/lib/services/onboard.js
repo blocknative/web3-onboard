@@ -1,3 +1,5 @@
+import blocknativeIcon from '../components/icons/blocknative-icon'
+
 let onboard
 const getOnboard = async (passedTheme) => {
   const key = 'svelteness::color-scheme'
@@ -197,7 +199,8 @@ const intiOnboard = async (theme) => {
       }
     ],
     appMetadata: {
-      name: 'Documentation',
+      name: 'Web3 Onboard Documentation',
+      icon: blocknativeIcon,
       description: 'Example showcasing how to connect a wallet.',
       recommendedInjectedWallets: [
         { name: 'MetaMask', url: 'https://metamask.io' },
