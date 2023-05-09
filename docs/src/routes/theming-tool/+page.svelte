@@ -274,7 +274,7 @@
     <div id="image_drop_area">
       <form class="drop-area-controls" on:submit|preventDefault={addURLToIFrame}>
         <div>
-          Enter your website url or drag and drop a screenshot to preview web3-onboard on your site
+          Enter your website url or drag and drop a screenshot to preview Web3 Onboard on your site
         </div>
         <!-- <div>Then click color circles above to change the theme.</div> -->
         <div class="website-input-row">

@@ -32,7 +32,6 @@ export const providerConnectionInfoValidation = Joi.object({
 })
 
 const secondaryTokenValidation = Joi.object({
-  name: Joi.string().required(),
   address: Joi.string().required(),
   icon: Joi.string().optional()
 })
@@ -43,7 +42,10 @@ export const chainValidation = Joi.object({
   rpcUrl: Joi.string(),
   label: Joi.string(),
   token: Joi.string(),
-  secondaryTokens: Joi.array().items(secondaryTokenValidation).optional(),
+  secondaryTokens: Joi.array()
+    .max(5)
+    .items(secondaryTokenValidation)
+    .optional(),
   icon: Joi.string(),
   color: Joi.string(),
   publicRpcUrl: Joi.string(),
