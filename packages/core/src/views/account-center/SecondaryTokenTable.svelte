@@ -60,38 +60,41 @@
   <table class="balance-change-table table-radius">
     <thead>
       <tr>
-        <th colspan="3" class="secondary-token-table-header">Token Balances:</th>
+        <th colspan="3" class="secondary-token-table-header">Token Balances:</th
+        >
       </tr>
     </thead>
     <tbody>
       {#each secondaryTokens as token}
-        <tr class="token-row">
-          <td class="token-icon">
-            <div class="icon-name-container">
-              {#if token.icon}
-                {#await token.icon then iconLoaded}
-                  <div in:fade class="icon">
-                    {#if isSVG(iconLoaded)}
-                      <!-- render svg string -->
-                      {@html iconLoaded}
-                    {:else}
-                      <!-- load img url -->
-                      <img src={iconLoaded} alt="logo" />
-                    {/if}
-                  </div>
-                {/await}
-              {:else}
-                <div class="icon"/>
-              {/if}
-              {token.name.toUpperCase()}
-            </div>
-          </td>
-          <td class="token-balance">
-            {token.balance.length > 7
-              ? token.balance.slice(0, 7)
-              : token.balance}
-          </td>
-        </tr>
+        {#if token && token.name && token.balance}
+          <tr class="token-row">
+            <td class="token-icon">
+              <div class="icon-name-container">
+                {#if token.icon}
+                  {#await token.icon then iconLoaded}
+                    <div in:fade class="icon">
+                      {#if isSVG(iconLoaded)}
+                        <!-- render svg string -->
+                        {@html iconLoaded}
+                      {:else}
+                        <!-- load img url -->
+                        <img src={iconLoaded} alt="logo" />
+                      {/if}
+                    </div>
+                  {/await}
+                {:else}
+                  <div class="icon" />
+                {/if}
+                {token.name.toUpperCase()}
+              </div>
+            </td>
+            <td class="token-balance">
+              {token.balance.length > 7
+                ? token.balance.slice(0, 7)
+                : token.balance}
+            </td>
+          </tr>
+        {/if}
       {/each}
     </tbody>
   </table>

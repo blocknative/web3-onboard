@@ -28,9 +28,9 @@ const addConnectedInfo = connectedAccount => {
 
 $connect.addEventListener('click', async _ => {
   const wallets = await connect()
-  const connectedAccount = wallets[0].accounts[0]
-  label = wallets[0].label
   if (wallets[0]) {
+    const connectedAccount = wallets[0].accounts[0]
+    label = wallets[0].label
     addConnectedInfo(connectedAccount)
     $wallet.classList.remove('hidden')
     $disconnected.classList.add('hidden')
