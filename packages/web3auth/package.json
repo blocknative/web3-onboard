@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/web3auth",
-  "version": "2.2.1",
+  "version": "2.2.2-alpha.2",
   "description": "Web3Auth SDK wallet module for connecting to Web3-Onboard. Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardised spec compliant web3 providers for all supported wallets, framework agnostic modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
   "keywords": [
     "Ethereum",
@@ -57,10 +57,10 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.3.1",
-    "@solana/web3.js": "^1.73.0",
-    "@web3auth/base": "^5.0.1",
-    "@web3auth/modal": "^5.0.1",
+    "@web3-onboard/common": "^2.3.2-alpha.2",
+    "@solana/web3.js": "1.73.0",
+    "@web3auth/base": "5.0.1",
+    "@web3auth/modal": "5.0.1",
     "react-dom": "^18.2.0"
   },
   "peerDependencies": {
