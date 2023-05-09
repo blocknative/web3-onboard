@@ -1,5 +1,5 @@
 <script>
-  import accountCenter from '$lib/assets/account-center-example'
+  import accountCenter from '$lib/assets/account-center-example.png'
   import walletModal from '$lib/assets/connect-modal.svg'
   import notifyCustomImg from '$lib/assets/notify-custom-example.png'
   import notifyImg from '$lib/assets/notify-example.png'
