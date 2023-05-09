@@ -13,6 +13,8 @@ export type WalletConnectOptions = {
   qrcodeModalOptions?: {
     mobileLinks: string[]
   }
+  label?: string
+  getIcon?: () => Promise<string>
 } & (
   | {
       /**
