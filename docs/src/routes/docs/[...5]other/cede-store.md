@@ -1,6 +1,6 @@
 # cede.store
 
-CEX Wallet module for connecting cede.store to web3-onboard. Check out the cede.store Wallet Developer Docs [cede.store Wallet Developer Docs](https://docs.cede.store) for more information.
+CEX Wallet module for connecting cede.store through web3-onboard. Check out the [cede.store Wallet Developer Docs](https://docs.cede.store) for more information.
 
 :::admonition type=warning
 Cede.store is not a traditional 1193 wallet, behavior is different in that there is no on-chain user address to interact with and there isn't a specific chain associated.
