@@ -140,7 +140,20 @@ type Chain = {
   icon?: string // the icon to represent the chain
   publicRpcUrl?: string // an optional public RPC used when adding a new chain config to the wallet
   blockExplorerUrl?: string // also used when adding a new config to the wallet
-  secondaryTokens?: SecondaryTokens[] // An optional array of tokens to be available to the dapp in the app state object per wallet within the wallet account and displayed in Account Center (if enabled)
+  secondaryTokens?: SecondaryTokens[] // An optional array of tokens (max of 5) to be available to the dapp in the app state object per wallet within the wallet account and displayed in Account Center (if enabled)
+}
+
+interface SecondaryTokens {
+  /**
+   * Required - The onchain address of the token associated
+   * with the chain it is entered under
+   */
+  address: string
+  /**
+   * An optional svg or url string for the icon of the token.
+   * If an svg is used ensure the height/width is set to 100%
+   */
+  icon?: string
 }
 ```
 
