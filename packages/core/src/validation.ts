@@ -263,7 +263,7 @@ const setChainOptions = Joi.object({
   rpcUrl: Joi.string(),
   label: Joi.string(),
   token: Joi.string(),
-  secondaryTokens: Joi.array().items(secondaryTokenValidation).optional()
+  secondaryTokens: Joi.array().max(5).items(secondaryTokenValidation).optional()
 })
 
 const customNotificationUpdate = Joi.object({

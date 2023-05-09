@@ -405,7 +405,7 @@ export interface Chain {
   /* Recommended to include. The native token symbol, eg ETH, BNB, MATIC */
   token?: TokenSymbol
   /**
-   * An optional array of tokens to be available to the dapp in the
+   * An optional array of tokens (max of 5) to be available to the dapp in the
    * app state object per wallet within the wallet account and displayed
    * in Account Center (if enabled)
    */
