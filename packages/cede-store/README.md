@@ -1,6 +1,6 @@
 # @web3-onboard/cede-store
 
-CEX Wallet module for connecting cede.store to web3-onboard. Check out the cede.store Wallet Developer Docs [cede.store Wallet Developer Docs](https://docs.cede.store) for more information.
+CEX module for connecting cede.store to web3-onboard. Check out the cede.store Developer Docs [here](https://docs.cede.store) for more information.
 
 
 As cede.store is not a traditional 1193 wallet behavior is a little different from other wallets that connect through web3-onboard in that there is no on-chain user address to interact with and there isn't a specific chain associated. With this behavior dapp devs will need to handle accordingly and differently from traditional 1193 wallets. The dapp dev can expect the connect account to not be shown as a hex value (or at all) and the chain to always be `0x0` when a user connects with cede.store for that specific wallet account.
