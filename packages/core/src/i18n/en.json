@@ -56,12 +56,19 @@
       "description": "Are you sure that you would like to disconnect all your wallets?",
       "confirm": "Confirm",
       "cancel": "Cancel"
+    },
+    "confirmTransactionProtection": {
+      "heading": "Enable Transaction Protection",
+      "description": "Protect RPC Endpoints hide your transactions from front-running and sandwich bots to reduce unfavorable transaction settlement from slippage. Learn more here",
+      "enable": "Enable",
+      "dismiss": "Dismiss"
     }
   },
   "accountCenter": {
     "connectAnotherWallet": "Connect another Wallet",
     "disconnectAllWallets": "Disconnect all Wallets",
     "currentNetwork": "Current Network",
+    "enableTransactionProtection": "Enable Transaction Protection",
     "appInfo": "App Info",
     "learnMore": "Learn More",
     "gettingStartedGuide": "Getting Started Guide",
