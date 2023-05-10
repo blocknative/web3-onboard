@@ -197,6 +197,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/injected
     steps:
       - node-build-steps
+  build-frame:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/frame
+    steps:
+      - node-build-steps
   build-keepkey:
     docker:
       - image: cimg/node:16.13.1
@@ -419,6 +425,12 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/injected
+    steps:
+      - node-staging-build-steps
+  build-staging-frame:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/frame
     steps:
       - node-staging-build-steps
   build-staging-keepkey:
@@ -647,6 +659,12 @@ workflows:
           <<: *deploy_production_filters
       - build-staging-injected:
           <<: *deploy_staging_filters
+  frame:
+    jobs:
+      - build-frame:
+          <<: *deploy_production_filters
+      - build-staging-frame:
+          <<: *deploy_staging_filters
   keepkey:
     jobs:
       - build-keepkey:
@@ -839,4 +857,3 @@ workflows:
           <<: *deploy_production_filters
       - build-staging-cede-store:
           <<: *deploy_staging_filters
-
