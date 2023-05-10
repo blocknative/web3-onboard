@@ -11,6 +11,7 @@ async function getProvider() {
   return ethProvider('frame')
 }
 
+
 function frame(): WalletInit {
   return () => {
     return {
@@ -18,8 +19,10 @@ function frame(): WalletInit {
       getIcon: async () => (await import('./icon.js')).default,
       getInterface: async () => {
         const provider = await getProvider()
-
-        if (!provider.isFrame && !provider.connected) {
+        
+        const wait = await new Promise(resolve => setTimeout(resolve, 100))
+        
+        if (!provider.connected) {
           throw new Error(
             'Frame App must be open with a hot wallet connected. If not installed first download the Frame wallet'
           )

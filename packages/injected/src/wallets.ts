@@ -337,9 +337,16 @@ const frame: InjectedWalletModule = {
   checkProviderIdentity: ({ provider }) =>
     !!provider && !!provider[ProviderIdentityFlag.Frame],
   getIcon: async () => (await import('./icons/frame.js')).default,
-  getInterface: async () => ({
-    provider: window.ethereum
-  }),
+  getInterface: async () => {
+    const provider = window.ethereum
+    if (provider && provider.isFrame && provider.connected){
+      return { provider }
+    } else {
+      throw new Error(
+        'Frame App must be open with a hot wallet connected. If not installed first download the Frame wallet'
+      )
+    }
+  },
   platforms: ['desktop']
 }
 
