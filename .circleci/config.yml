@@ -93,7 +93,7 @@ aliases:
   - &create-npm-config
     run:
       name: Create NPM rc file
-      command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
+      command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/.npmrc
 
   - &publish-npm
     run:
