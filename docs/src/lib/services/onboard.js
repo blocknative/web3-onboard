@@ -49,7 +49,6 @@ const intiOnboard = async (theme) => {
   const { default: enkryptModule } = await import('@web3-onboard/enkrypt')
   const { default: mewWalletModule } = await import('@web3-onboard/mew-wallet')
   const { default: torusModule } = await import('@web3-onboard/torus')
-  const { default: web3authModule } = await import('@web3-onboard/web3auth')
   const { default: uauthModule } = await import('@web3-onboard/uauth')
   const { default: trustModule } = await import('@web3-onboard/trust')
   const { default: xdefiModule } = await import('@web3-onboard/xdefi')
@@ -88,11 +87,6 @@ const intiOnboard = async (theme) => {
     apiKey: 'pk_test_886ADCAB855632AA'
   })
 
-  const web3auth = web3authModule({
-    clientId:
-      'DJuUOKvmNnlzy6ruVgeWYWIMKLRyYtjYa9Y10VCeJzWZcygDlrYLyXsBQjpJ2hxlBO9dnl8t9GmAC2qOP5vnIGo'
-  })
-
   const trezorOptions = {
     email: 'test@test.com',
     appUrl: 'https://www.blocknative.com'
@@ -125,7 +119,6 @@ const intiOnboard = async (theme) => {
       xdefi,
       torus,
       sequence,
-      web3auth,
       dcent,
       enkrypt,
       mewWallet,

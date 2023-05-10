@@ -483,7 +483,7 @@ config.module.rules = [
 
 You'll need to add some dev dependencies with the following command:
 
-`npm i --save-dev assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify`
+`npm i --save-dev assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify browserify-zlib`
 
 Then add the following to your `webpack.config.js` file:
 
@@ -493,7 +493,8 @@ const webpack = require('webpack')
 module.exports = {
   resolve: {
     fallback: {
-      path: require.resolve('path-browserify')
+      path: require.resolve('path-browserify'),
+      path: require.resolve('browserify-zlib')
     },
     alias: {
       assert: 'assert',
@@ -528,11 +529,11 @@ The above webpack 5 example can be used in the `craco.config.js` file at the roo
 [React App Rewired](https://www.npmjs.com/package/react-app-rewired) is another option for working with Create React App DApps
 
 Add the following dev dependencies:
-`npm i --save-dev rollup-plugin-polyfill-node webpack-bundle-analyzer assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify`
+`npm i --save-dev rollup-plugin-polyfill-node webpack-bundle-analyzer assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify browserify-zlib`
 
 **OR**
 
-`yarn add rollup-plugin-polyfill-node webpack-bundle-analyzer assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify -D`
+`yarn add rollup-plugin-polyfill-node webpack-bundle-analyzer assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify browserify-zlib -D`
 
 ```javascript
 const webpack = require('webpack')
@@ -549,6 +550,7 @@ module.exports = function override(config) {
     https: require.resolve('https-browserify'),
     os: require.resolve('os-browserify/browser'),
     path: require.resolve('path-browserify'),
+    path: require.resolve('browserify-zlib'),
     process: require.resolve('process/browser'),
     stream: require.resolve('stream-browserify'),
     url: require.resolve('url'),
