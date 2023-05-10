@@ -1,33 +1,78 @@
 import type { WalletInit } from '@web3-onboard/common'
-import { createEIP1193Provider } from '@web3-onboard/common'
-import { CustomWindow } from './types.js'
-import detectEthereumProvider from 'tallyho-detect-provider'
-import TallyHoOnboarding from 'tallyho-onboarding'
-declare const window: CustomWindow
 
-function tallyHoWallet(): WalletInit {
+function BloctoWallet(): WalletInit {
   if (typeof window === 'undefined') return () => null
   return () => {
     return {
       label: 'Blocto',
-      injectedNamespace: 'tally',
-      checkProviderIdentity: ({ provider }: { provider: any }) => {
-        !!provider && !!provider['isTally']
-      },
       getIcon: async () => (await import('./icon.js')).default,
-      getInterface: async () => {
-        const provider = await detectEthereumProvider({ mustBeTallyHo: true })
-        if (!provider) {
-          const onboarding = new TallyHoOnboarding()
-          onboarding.startOnboarding()
-          throw new Error('Please install Taho to use this wallet')
-        } else {
-          return { provider: createEIP1193Provider(window.tally) }
+      getInterface: async ({ chains }) => {
+        const { default: BloctoSDK } = await import('@blocto/sdk')
+
+        const { createEIP1193Provider } = await import('@web3-onboard/common')
+
+        const [defaultChain] = chains
+
+        const instance = new BloctoSDK({
+          ethereum: {
+            chainId: defaultChain.id,
+            rpc: defaultChain.rpcUrl
+          }
+        })
+        const bloctoProvider: any = instance.ethereum
+
+        const provider = createEIP1193Provider(bloctoProvider, {
+          eth_selectAccounts: null,
+          wallet_switchEthereumChain: async ({ params, baseRequest }) => {
+            const chain = chains.find(({ id }) => id === params[0].chainId)
+            if (!chain) throw new Error('chain must be set before switching')
+            const providerRpcurl = bloctoProvider.switchableNetwork[chain.id]?.rpc_url
+            const chainUrl = chain.rpcUrl;
+            if (
+              providerRpcurl !== chainUrl
+            ) {
+              await baseRequest({
+                method: 'wallet_addEthereumChain',
+                params: [
+                  {
+                    chainId: chain.id,
+                    rpcUrls: [chainUrl],
+                  },
+                ],
+              });
+            }
+            await baseRequest({
+              method: 'wallet_switchEthereumChain',
+              params: [{ chainId: chain.id }],
+            });
+            return null
+          },
+          eth_chainId: async ({ baseRequest }) => {
+            const chainId = await baseRequest({ method: 'eth_chainId' })
+            return `0x${parseInt(chainId).toString(16)}`
+          }
+        })
+
+        provider.disconnect = () => instance?.ethereum?.request({ method: 'wallet_disconnect' });
+        // patch the chainChanged event
+        const on = bloctoProvider.on.bind(bloctoProvider)
+        bloctoProvider.on = (event: string, listener: (arg0: string) => void) => {
+          on(event, (val: any) => {
+            if (event === 'chainChanged') {
+              listener(`0x${(val as number).toString(16)}`)
+              return
+            }
+            listener(val)
+          })
+          return bloctoProvider
         }
-      },
-      platforms: ['desktop']
+        return {
+          provider,
+          instance
+        }
+      }
     }
   }
 }
 
-export default tallyHoWallet
+export default BloctoWallet

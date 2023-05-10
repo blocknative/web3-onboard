@@ -1,27 +1,26 @@
-# @web3-onboard/tallyho (now named Taho wallet)
+# @web3-onboard/blocto
 
-## (Deprecated) Wallet module for connecting Tally Ho Wallet to web3-onboard
-_Use [@web3-onboard/taho](../taho/README.md)_
+## Wallet module for connecting Blocto Wallet SDK to web3-onboard
 
-See [Taho Developer Docs](https://docs.tally.cash/tally/developers/integrating-dapps)
+See [Blocto Developer Docs](https://docs.blocto.app/blocto-sdk/javascript-sdk/evm-sdk)
 
 ### Install
 
-`npm i @web3-onboard/tallyho`
+`npm i @web3-onboard/blocto`
 
 ## Usage
 
 ```typescript
 import Onboard from '@web3-onboard/core'
-import tallyHoWalletModule from '@web3-onboard/tallyho'
+import bloctoModule from '@web3-onboard/blocto'
 
 // initialize the module with options
-const tallyHoWalletSdk = tallyHoWalletModule()
+const blocto = bloctoModule()
 
 const onboard = Onboard({
   // ... other Onboard options
   wallets: [
-    tallyHoWalletModule()
+    blocto
     //... other wallets
   ]
 })

@@ -65,8 +65,6 @@
   },
   "dependencies": {
     "@web3-onboard/common": "^2.3.1",
-    "@blocto/sdk": "^0.4.4",
-    "tallyho-detect-provider": "^1.0.0",
-    "tallyho-onboarding": "^1.0.2"
+    "@blocto/sdk": "^0.4.4"
   }
 }

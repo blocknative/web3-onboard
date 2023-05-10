@@ -54,7 +54,8 @@
     "@web3-onboard/web3auth": "^2.2.2",
     "@web3-onboard/xdefi": "^2.0.3",
     "@web3-onboard/zeal": "^2.0.3",
-    "vconsole": "^3.9.5"
+    "vconsole": "^3.9.5",
+    "@dapperlabs/dappauth": "^2.0.5"
   },
   "license": "MIT",
   "scripts": {
