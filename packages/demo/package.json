@@ -30,6 +30,7 @@
     "@web3-onboard/dcent": "^2.2.6",
     "@web3-onboard/frontier": "^2.0.3",
     "@web3-onboard/fortmatic": "^2.0.18",
+    "@web3-onboard/frame": "2.21.2",
     "@web3-onboard/gas": "^2.1.7",
     "@web3-onboard/gnosis": "^2.1.9",
     "@web3-onboard/keepkey": "^2.3.6",

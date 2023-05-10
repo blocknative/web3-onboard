@@ -1,6 +1,7 @@
 <script>
   import Onboard from '@web3-onboard/core'
   import fortmaticModule from '@web3-onboard/fortmatic'
+  import frameModule from '@web3-onboard/frame'
   import gnosisModule from '@web3-onboard/gnosis'
   import infinityWalletModule from '@web3-onboard/infinity-wallet'
   import injectedModule, { ProviderLabel } from '@web3-onboard/injected-wallets'
@@ -170,6 +171,7 @@
   })
 
   const dcent = dcentModule()
+  const frameWallet = frameModule()
   const sequence = sequenceModule()
   const enkrypt = enkryptModule()
   const mewWallet = mewWalletModule()
@@ -180,6 +182,7 @@
   const onboard = Onboard({
     wallets: [
       injected,
+      frameWallet,
       ledger,
       trezor,
       walletConnect,
