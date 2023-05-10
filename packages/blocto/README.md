@@ -1,6 +1,6 @@
 # @web3-onboard/blocto
 
-## Wallet module for connecting Blocto Wallet SDK to web3-onboard
+## Wallet module for connecting Blocto SDK to web3-onboard
 
 See [Blocto Developer Docs](https://docs.blocto.app/blocto-sdk/javascript-sdk/evm-sdk)
 
