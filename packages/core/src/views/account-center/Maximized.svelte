@@ -386,7 +386,7 @@
 
     <!-- network section -->
     <div
-      class="network-container shadow-1"
+      class="network-container"
       class:background-blue={(validAppChain && validAppChain.icon) ||
         defaultChainStyles}
       class:background-yellow={!validAppChain}
