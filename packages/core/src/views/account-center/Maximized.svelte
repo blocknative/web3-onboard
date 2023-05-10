@@ -168,7 +168,7 @@
   }
 
   .network-container {
-    background: var(--backround-color);
+    background: var(--background-color);
     border-top: 1px solid var(--border-color);
     width: 100%;
     display: flex;
