@@ -53,6 +53,7 @@ const intiOnboard = async (theme) => {
   const { default: trustModule } = await import('@web3-onboard/trust')
   const { default: xdefiModule } = await import('@web3-onboard/xdefi')
   const { default: cedeModule } = await import('@web3-onboard/cede-store')
+  const { default: frameModule } = await import('@web3-onboard/frame')
   const INFURA_ID = '8b60d52405694345a99bcb82e722e0af'
 
   const injected = injectedModule()
@@ -110,6 +111,8 @@ const intiOnboard = async (theme) => {
     apiKey: 'pk_live_02207D744E81C2BA'
   })
 
+  const frame = frameModule()
+
   return Onboard({
     wallets: [
       injected,
@@ -134,7 +137,8 @@ const intiOnboard = async (theme) => {
       keystone,
       keepkey,
       portis,
-      infinityWallet
+      infinityWallet,
+      frame
     ],
     chains: [
       {

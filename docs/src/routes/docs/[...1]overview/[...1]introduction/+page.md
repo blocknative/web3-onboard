@@ -156,6 +156,7 @@ We recommend you add the [Core Repo](../..modules/core.md#install) and consider 
 - [MEW](../../wallets/mewwallet.md#install)
 - [Portis](../../wallets/portis.md#install)
 - [Web3Auth](../../wallets/web3auth.md#install)
+- [Frame](../../docs/wallets/frame.md#install)
 
 **Hardware Wallets**
 
