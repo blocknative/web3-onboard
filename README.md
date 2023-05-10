@@ -103,6 +103,7 @@ For full documentation, check out the README.md for each package or the [docs pa
 - [Frontier](packages/frontier/README.md)
 - [XDEFI](packages/xdefi/README.md)
 - [Infinity Wallet](packages/infinity-wallet/README.md)
+- [Frame](packages/frame/README.md)
 
 **Hardware Wallets**
 
