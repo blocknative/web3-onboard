@@ -2,6 +2,8 @@
 
 ## Wallet module for connecting Frame to web3-onboard
 
+[Frame](https://frame.sh/) is a privacy focused EVM desktop wallet, enabling a secure system-wide interface to your chains and web3 accounts.
+
 ### Install
 
 `npm i @web3-onboard/core @web3-onboard/frame`
