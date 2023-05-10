@@ -263,6 +263,7 @@ export type NotificationPosition = CommonPositions
 
 export type AccountCenter = {
   enabled: boolean
+  disableProtectedRpc?: boolean
   position?: AccountCenterPosition
   expanded?: boolean
   minimal?: boolean

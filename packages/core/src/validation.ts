@@ -176,6 +176,7 @@ const accountCenter = Joi.object({
   position: commonPositions,
   expanded: Joi.boolean(),
   minimal: Joi.boolean(),
+  disableProtectedRpc: Joi.boolean(),
   containerElement: Joi.string()
 })
 
@@ -263,6 +264,7 @@ const setChainOptions = Joi.object({
   rpcUrl: Joi.string(),
   label: Joi.string(),
   token: Joi.string(),
+  protectedRpcUrl: Joi.string(),
   secondaryTokens: Joi.array().max(5).items(secondaryTokenValidation).optional()
 })
 

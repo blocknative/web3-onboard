@@ -27,6 +27,10 @@
   import shieldIcon from '../../icons/shield-icon.js'
   import { BN_PROTECT_RPC_URL } from '../../constants.js'
   import { addProtectedRPC } from '../../provider.js'
+  import { shareReplay, startWith } from 'rxjs/operators'
+  const accountCenter$ = state
+    .select('accountCenter')
+    .pipe(startWith(state.get().accountCenter), shareReplay(1))
 
   function disconnectAllWallets() {
     $wallets$.forEach(({ label }) => disconnect({ label }))
@@ -34,7 +38,11 @@
 
   const enableProtectionRPC = async () => {
     try {
-      await addProtectedRPC(primaryWallet.provider, validAppChain, BN_PROTECT_RPC_URL)
+      await addProtectedRPC(
+        primaryWallet.provider,
+        validAppChain,
+        BN_PROTECT_RPC_URL
+      )
     } catch (error) {
       const { code } = error as { code: number }
       console.log(error, code)
@@ -166,7 +174,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 0.75rem 0.75rem 0.25rem 0.75rem;
+    padding: 0.75rem;
     gap: 0.5rem;
     border-radius: var(
       --account-center-border-radius,
@@ -190,7 +198,7 @@
   }
   .protect {
     flex-direction: row;
-    padding: 0.25rem 0.375rem;
+    padding: 0.25rem 0.375rem 0;
     gap: 0.375rem;
     width: 100%;
   }
@@ -438,19 +446,22 @@
           </div>
         </div>
       </div>
-      <div
-        on:click={() => (enableTransactionProtection = true)}
-        class="protect action-container flex items-center pointer"
-      >
-        <div class="shield">
-          {@html shieldIcon}
-        </div>
-        <span class="protect-text"
-          >{$_('accountCenter.enableTransactionProtection', {
-            default: en.accountCenter.enableTransactionProtection
-          })}</span
+      <!-- Only display on Eth Mainnet -->
+      {#if !$accountCenter$.disableProtectedRpc && connectedChain.id === '0x1'}
+        <div
+          on:click={() => (enableTransactionProtection = true)}
+          class="protect action-container flex items-center pointer"
         >
-      </div>
+          <div class="shield">
+            {@html shieldIcon}
+          </div>
+          <span class="protect-text"
+            >{$_('accountCenter.enableTransactionProtection', {
+              default: en.accountCenter.enableTransactionProtection
+            })}</span
+          >
+        </div>
+      {/if}
     </div>
 
     <!-- app info section -->

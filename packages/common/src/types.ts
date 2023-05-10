@@ -421,6 +421,11 @@ export interface Chain {
   providerConnectionInfo?: ConnectionInfo
   /* An optional public RPC used when adding a new chain config to the wallet */
   publicRpcUrl?: string
+  /** An optional protected RPC URL - Defaults to Blocknative's private and 
+   * protected RPCto allow users to update the chain RPC within their wallet, 
+   * specifically for private RPCs that protect user transactions
+   */
+  protectedRpcUrl?: string
   /* Also used when adding a new config to the wallet */
   blockExplorerUrl?: string
 }

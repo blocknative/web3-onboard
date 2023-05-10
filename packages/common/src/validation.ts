@@ -49,6 +49,7 @@ export const chainValidation = Joi.object({
   icon: Joi.string(),
   color: Joi.string(),
   publicRpcUrl: Joi.string(),
+  protectedRpcUrl: Joi.string(),
   blockExplorerUrl: Joi.string(),
   providerConnectionInfoValidation
 })
