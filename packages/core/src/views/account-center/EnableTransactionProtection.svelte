@@ -19,6 +19,7 @@
       --enable-protect-rpc-background,
       var(--w3o-background-color)
     );
+    color: var(--w3o-text-color);
   }
 
   .icon-container {
@@ -27,7 +28,7 @@
     background: var(--onboard-primary-100, var(--primary-100));
     border-radius: 24px;
     padding: 12px;
-    color: var(--onboard-primary-500, var(--primary-500));
+    color: var(--w3o-text-color);
   }
 
   h4 {
