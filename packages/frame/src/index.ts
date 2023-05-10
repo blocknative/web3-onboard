@@ -24,7 +24,7 @@ function frame(): WalletInit {
         
         if (!provider.connected) {
           throw new Error(
-            'Frame App must be open with a hot wallet connected. If not installed first download the Frame wallet'
+            'Frame App must be open with a hot wallet connected. If not installed first download the Frame App.'
           )
         }
         return {
