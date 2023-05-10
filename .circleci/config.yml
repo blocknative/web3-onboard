@@ -99,8 +99,8 @@ aliases:
     run:
       name: Publish package to NPM
       command: |
-      npm config set //registry.npmjs.org/:_authToken=${npm_TOKEN}
-      npm publish --access public
+        npm config set //registry.npmjs.org/:_authToken=${npm_TOKEN}
+        npm publish --access public
 
   - &publish-npm-tag-as-next
     run:
