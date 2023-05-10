@@ -59,7 +59,7 @@
     },
     "confirmTransactionProtection": {
       "heading": "Enable Transaction Protection",
-      "description": "Protect RPC Endpoints hide your transactions from front-running and sandwich bots to reduce unfavorable transaction settlement from slippage. Learn more here",
+      "description": "Protect RPC Endpoints hide your transactions from front-running and sandwich bots to reduce unfavorable transaction settlement from slippage.",
       "enable": "Enable",
       "dismiss": "Dismiss"
     }
