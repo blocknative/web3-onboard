@@ -157,6 +157,7 @@ We recommend you add the [Core Repo](../../modules/core.md#install) and consider
 - [Portis](../../wallets/portis.md#install)
 - [Web3Auth](../../wallets/web3auth.md#install)
 - [Frame](../../wallets/frame.md#install)
+- [Blocto](../../docs/wallets/blocto.md#install)
 
 **Hardware Wallets**
 
