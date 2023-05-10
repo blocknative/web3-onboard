@@ -27,6 +27,7 @@ const classMutationListener = () => {
 }
 
 const intiOnboard = async (theme) => {
+  const { default: cedeModule } = await import('@web3-onboard/cede-store')
   const { default: Onboard } = await import('@web3-onboard/core')
   const { default: injectedModule } = await import('@web3-onboard/injected-wallets')
   const { default: trezorModule } = await import('@web3-onboard/trezor')
@@ -77,6 +78,7 @@ const intiOnboard = async (theme) => {
   const trust = trustModule()
   const xdefi = xdefiModule()
   const frame = frameModule()
+  const cede = cedeModule()
 
   const portis = portisModule({
     apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
@@ -119,11 +121,11 @@ const intiOnboard = async (theme) => {
       gnosis,
       uauth,
       taho,
+      cede,
       xdefi,
       torus,
       sequence,
       web3auth,
-      infinityWallet,
       dcent,
       enkrypt,
       mewWallet,
@@ -132,7 +134,8 @@ const intiOnboard = async (theme) => {
       keystone,
       keepkey,
       portis,
-      frame
+      frame,
+      infinityWallet
     ],
     chains: [
       {

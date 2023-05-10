@@ -74,7 +74,7 @@ type InitOptions = {
   accountCenter?: AccountCenterOptions
   /**
    * Opt in to Blocknative value add services (transaction updates) by providing
-   * your Blocknative API key, head to https://explorer.blocknative.com/account to sign 
+   * your Blocknative API key, head to https://explorer.blocknative.com/account to sign
    * up for free
    */
   apiKey?: string
@@ -132,6 +132,19 @@ type Chain = {
   icon?: string // the icon to represent the chain
   publicRpcUrl?: string // an optional public RPC used when adding a new chain config to the wallet
   blockExplorerUrl?: string // also used when adding a new config to the wallet
+  secondaryTokens?: SecondaryTokens[] // An optional array of tokens (max of 5) to be available to the dapp in the app state object per wallet within the wallet account and displayed in Account Center (if enabled)
+}
+interface SecondaryTokens {
+  /**
+   * Required - The onchain address of the token associated
+   * with the chain it is entered under
+   */
+  address: string
+  /**
+   * An optional svg or url string for the icon of the token.
+   * If an svg is used ensure the height/width is set to 100%
+   */
+  icon?: string
 }
 ```
 
@@ -257,18 +270,18 @@ type i18nOptions = Record<Locale, i18n>
 To see a list of all of the text values that can be internationalized or replaced, check out the [default en file](src/i18n/en.json).
 Onboard is using the [ICU syntax](https://formatjs.io/docs/core-concepts/icu-syntax/) for formatting under the hood.
 
-For example, to update the connect interface language for Metamask, while giving a different message for other wallets, you can include the following: 
+For example, to update the connect interface language for Metamask, while giving a different message for other wallets, you can include the following:
 
 ```typescript
 i18n: {
-      en: {
-        connect: {
-          connectingWallet: {
-            paragraph: "{wallet, select, MetaMask {{wallet} can only present one account, so connect just the one account you want.} other {Please connect to all of your accounts in {wallet}.}}"
-          }
-        }
+  en: {
+    connect: {
+      connectingWallet: {
+        paragraph: '{wallet, select, MetaMask {{wallet} can only present one account, so connect just the one account you want.} other {Please connect to all of your accounts in {wallet}.}}'
       }
     }
+  }
+}
 ```
 
 MetaMask message:
@@ -277,9 +290,8 @@ MetaMask message:
 All other wallets:
 <img src="https://github.com/blocknative/web3-onboard/blob/develop/assets/custom-connect-2.png?raw=true" />
 
-Default Message- with no i18n override: 
+Default Message- with no i18n override:
 <img src="https://github.com/blocknative/web3-onboard/blob/develop/assets/custom-connect-default.png?raw=true" />
-
 
 **`containerElements`**
 An object mapping for W3O components with the key being the DOM element to mount the specified component to.
@@ -303,6 +315,8 @@ type ContainerElements = {
 
 **`accountCenter`**
 An object that defines whether the account center UI (default and minimal) is enabled and it's position on the screen. Currently the account center is enabled for both desktop and mobile devices.
+
+<img alt="Account Center UI Component" src="https://github.com/blocknative/web3-onboard/blob/develop/assets/account-center-example.png?raw=true" />
 
 ```typescript
 type AccountCenter = {
@@ -384,7 +398,7 @@ If notifications are enabled, they can be fielded and handled through the onboar
 
 ```javascript
 const wallets = onboard.state.select('notifications')
-const { unsubscribe } = wallets.subscribe((update) =>
+const { unsubscribe } = wallets.subscribe(update =>
   console.log('transaction notifications: ', update)
 )
 
@@ -393,12 +407,12 @@ unsubscribe()
 ```
 
 ##### **Notifications as Toast Messages**
-The Notifications messages can also be used to send fully customized Dapp toast messages and updated. Check out the [customNotifications API docs for examples and code snippets](#customnotification) 
 
+The Notifications messages can also be used to send fully customized Dapp toast messages and updated. Check out the [customNotifications API docs for examples and code snippets](#customnotification)
 
 ```javascript
 const wallets = onboard.state.select('notifications')
-const { unsubscribe } = wallets.subscribe((update) =>
+const { unsubscribe } = wallets.subscribe(update =>
   console.log('transaction notifications: ', update)
 )
 
@@ -419,7 +433,9 @@ type Notify = {
    * Or return false to disable notification for this event
    * Or return undefined for a default notification
    */
-  transactionHandler?: (event: EthereumTransactionData) => TransactionHandlerReturn
+  transactionHandler?: (
+    event: EthereumTransactionData
+  ) => TransactionHandlerReturn
   position: CommonPositions
 }
 
@@ -610,6 +626,7 @@ const onboard = Onboard({
   }
 })
 ```
+
 ---
 
 ## Connecting a Wallet
@@ -942,10 +959,9 @@ The `customNotification` method also returns a `dismiss` method that is called w
 | `link`        | string   | Adds a link to the transaction hash                         |
 | `onClick`     | function | onClick handler for the notification element                |
 
-
 **`preflightNotifications`**
 
-Notify can be used to deliver standard notifications along with preflight updates by passing a `PreflightNotificationsOptions` object to the `preflightNotifications` API action. 
+Notify can be used to deliver standard notifications along with preflight updates by passing a `PreflightNotificationsOptions` object to the `preflightNotifications` API action.
 
 <img alt="Web3-Onboard UI Components" src="https://github.com/blocknative/web3-onboard/blob/develop/assets/notify-preflight-example.png?raw=true" />
 
@@ -962,6 +978,7 @@ Preflight event types include:
 This API call will return a promise that resolves to the transaction hash (if `sendTransaction` resolves the transaction hash and is successful), the internal notification id (if no `sendTransaction` function is provided) or return nothing if an error occurs or `sendTransaction` is not provided or doesn't resolve to a string.
 
 Example:
+
 ```typescript copy
 const balanceValue = Object.values(balance)[0]
 // if using ethers v6 this is:
@@ -975,13 +992,13 @@ const txDetails = {
 }
 
 const sendTransaction = () => {
-  return signer.sendTransaction(txDetails).then((tx) => tx.hash)
+  return signer.sendTransaction(txDetails).then(tx => tx.hash)
 }
 
-const gasPrice = () => ethersProvider.getGasPrice().then((res) => res.toString())
+const gasPrice = () => ethersProvider.getGasPrice().then(res => res.toString())
 
 const estimateGas = () => {
-  return ethersProvider.estimateGas(txDetails).then((res) => res.toString())
+  return ethersProvider.estimateGas(txDetails).then(res => res.toString())
 }
 const transactionHash = await onboard.state.actions.preflightNotifications({
   sendTransaction,
