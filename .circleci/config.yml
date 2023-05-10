@@ -93,12 +93,14 @@ aliases:
   - &create-npm-config
     run:
       name: Create NPM rc file
-      command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
+      command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/.npmrc
 
   - &publish-npm
     run:
       name: Publish package to NPM
-      command: npm publish --access public
+      command: |
+        npm config set //registry.npmjs.org/:_authToken=${npm_TOKEN}
+        npm publish --access public
 
   - &publish-npm-tag-as-next
     run:
@@ -293,7 +295,7 @@ jobs:
       - node-build-steps
   build-web3auth:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.18.1
     working_directory: ~/web3-onboard-monorepo/packages/web3auth
     steps:
       - node-build-steps
@@ -523,7 +525,7 @@ jobs:
       - node-staging-build-steps
   build-staging-web3auth:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.18.1
     working_directory: ~/web3-onboard-monorepo/packages/web3auth
     steps:
       - node-staging-build-steps
