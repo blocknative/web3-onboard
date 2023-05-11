@@ -69,7 +69,7 @@ export const updateSecondaryTokens = async (
       type: 'function'
     }
   ]
-  
+
   const tokenBalances = await Promise.all(
     chain.secondaryTokens.map(async token => {
       try {
