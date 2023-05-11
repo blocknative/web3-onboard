@@ -14,6 +14,7 @@ description: Learn how to connect a wallet to your dapp with Web3-Onboard. For t
 
 <div class="w-full  h-5"/>
 
+<<<<<<< HEAD
 Remember- if you used create-react-app, please follow the [additional setup instructions](../../docs/modules/react.md#if-using-create-react-app)
 
 <Tabs values={frameworks}>
@@ -40,6 +41,12 @@ npm install @web3-onboard/react @web3-onboard/injected-wallets @web3-onboard/inf
 
 
 ## Step 2: Import + Configure
+=======
+<Tabs values={frameworks}>
+  <TabPanel value="react">
+
+## Step 1: Import + Configure
+>>>>>>> develop
 
 Import the libraries and any wallets you would like to use. For this example, we are going to use the injected wallets module. You can easily add more wallet support to your dapp via our other wallet modules. Additionally, we'll setup web3-onboard to support 2 chains: Ethereum mainnet and Polygon mainnet.
 
