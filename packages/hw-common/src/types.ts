@@ -44,6 +44,11 @@ export type SelectAccountOptions = {
   scanAccounts: ScanAccounts
   supportsCustomPath?: boolean
   containerElement?: string
+  /**
+   * A number that defines the amount of consecutive empty addresses displayed
+   * within the Account Select modal. Default is 5 
+   */
+  consecutiveEmptyAccountThreshold?: number
 }
 
 export type BasePath = {

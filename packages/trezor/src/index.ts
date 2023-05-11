@@ -25,6 +25,7 @@ interface TrezorOptions {
   customNetwork?: CustomNetwork
   filter?: Platform[]
   containerElement?: string
+  consecutiveEmptyAccountThreshold?: number
 }
 
 const TREZOR_DEFAULT_PATH = "m/44'/60'/0'/0"
@@ -85,7 +86,8 @@ const getAccount = async (
 const getAddresses = async (
   account: AccountData,
   asset: Asset,
-  provider: StaticJsonRpcProvider
+  provider: StaticJsonRpcProvider,
+  consecutiveEmptyAccounts: number
 ): Promise<Account[]> => {
   const accounts = []
   let index = 0
@@ -118,14 +120,21 @@ function trezor(options: TrezorOptions): WalletInit {
   const getIcon = async () => (await import('./icon.js')).default
 
   return ({ device }) => {
-    const { email, appUrl, customNetwork, filter, containerElement } =
-      options || {}
+    const {
+      email,
+      appUrl,
+      customNetwork,
+      filter,
+      containerElement,
+      consecutiveEmptyAccountThreshold
+    } = options || {}
 
     if (!email || !appUrl) {
       throw new Error(
         'Email and AppUrl required in Trezor options for Trezor Wallet Connection'
       )
     }
+    const consecutiveEmptyAccounts = consecutiveEmptyAccountThreshold || 5
 
     const filtered =
       Array.isArray(filter) &&
@@ -212,7 +221,8 @@ function trezor(options: TrezorOptions): WalletInit {
               path: derivationPath
             },
             asset,
-            ethersProvider
+            ethersProvider,
+            consecutiveEmptyAccounts
           )
         }
 
