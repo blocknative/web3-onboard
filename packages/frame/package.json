@@ -1,11 +1,12 @@
 {
-  "name": "@web3-onboard/portis",
-  "version": "2.1.6",
-  "description": "Portis SDK wallet module for connecting to Web3-Onboard. Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardised spec compliant web3 providers for all supported wallets, framework agnostic modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
+  "name": "@web3-onboard/frame",
+  "version": "2.0.0",
+  "description": "Frame wallet module for connecting to Web3-Onboard. Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardised spec compliant web3 providers for all supported wallets, framework agnostic modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
   "keywords": [
     "Ethereum",
     "Web3",
     "EVM",
+    "Frame",
     "dapp",
     "Multichain",
     "Wallet",
@@ -29,12 +30,14 @@
     "Mempool",
     "pending",
     "confirmed",
-    "Injected Wallet"
+    "Injected Wallet",
+    "Crypto",
+    "Crypto Wallet"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/blocknative/web3-onboard.git",
-    "directory": "packages/portis"
+    "directory": "packages/frame"
   },
   "homepage": "https://onboard.blocknative.com",
   "bugs": "https://github.com/blocknative/web3-onboard/issues",
@@ -56,7 +59,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@portis/web3": "^4.0.6",
-    "@web3-onboard/common": "^2.3.2"
+    "@web3-onboard/common": "^2.3.1",
+    "eth-provider": "^0.13.6"
   }
 }
