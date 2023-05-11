@@ -23,7 +23,7 @@
   }
 </script>
 
-<svelte:window on:click={minimize} />
+<!-- <svelte:window on:click={minimize} /> -->
 
 {#if mountInContainer}
   {#if $wallets$.length}
@@ -32,11 +32,13 @@
     </div>
   {/if}
 {:else if !$accountCenter$.minimal}
+  <div class="container flex flex-column items-end">
     {#if $accountCenter$.expanded}
       <Maximized />
     {/if}
     <!-- micro -->
     <Minimized />
+  </div>
 {:else if !$accountCenter$.expanded && $accountCenter$.minimal}
   <!-- micro -->
   <Micro />

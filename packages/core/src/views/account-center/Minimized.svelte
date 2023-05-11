@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { shareReplay, startWith } from 'rxjs/operators'
   import { fade } from 'svelte/transition'
   import { wallets$ } from '../../streams.js'
   import {
@@ -54,8 +55,12 @@
 
   $: defaultChainStyles = getDefaultChainStyles(primaryChain && primaryChain.id)
 
-  function maximize() {
-    updateAccountCenter({ expanded: true })
+  const accountCenter$ = state
+    .select('accountCenter')
+    .pipe(startWith(state.get().accountCenter), shareReplay(1))
+
+  function toggle() {
+    updateAccountCenter({ expanded: !$accountCenter$.expanded })
   }
 </script>
 
@@ -114,7 +119,7 @@
 
 <div
   class="minimized"
-  on:click|stopPropagation={maximize}
+  on:click|stopPropagation={toggle}
 >
   <div class="inner-row">
     <!-- app and wallet icon badge -->
