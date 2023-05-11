@@ -31,9 +31,12 @@
       <svelte:self />
     </div>
   {/if}
-{:else if !$accountCenter$.expanded && !$accountCenter$.minimal}
-  <!-- minimized -->
-  <Minimized />
+{:else if !$accountCenter$.minimal}
+    {#if $accountCenter$.expanded}
+      <Maximized />
+    {/if}
+    <!-- micro -->
+    <Minimized />
 {:else if !$accountCenter$.expanded && $accountCenter$.minimal}
   <!-- micro -->
   <Micro />
