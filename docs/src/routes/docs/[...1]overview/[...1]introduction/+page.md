@@ -35,7 +35,7 @@ Web3-Onboard is the quickest and easiest way to add multi-wallet and multi-chain
 
 web3-onboard supports all EVM networks. Supporting a new network is simply a matter of adding its details in the Chains section upon initialization. For more information see [initialization options](../../modules/core.md#options).
 
-- Ethereum 
+- Ethereum
 - Polygon
 - Base Goerli
 - Goerli
