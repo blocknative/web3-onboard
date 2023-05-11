@@ -42,6 +42,7 @@ type TransactionRequestWithNumberFields = TransactionForSim & {
   gas: number
   value: number
   gasPrice?: number
+  gasLimit?: number
   maxPriorityFeePerGas?: number
   maxFeePerGas?: number
 }
