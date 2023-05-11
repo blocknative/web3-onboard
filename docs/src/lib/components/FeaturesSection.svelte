@@ -23,7 +23,7 @@
       <TextBlock
         title={'Framework Agnostic'}
         subtitle={'Support all your favorite frameworks.'}
-        text={'Use web3-onboard with any of your favorite Javascript libraries.'}
+        text={'Use Web3 Onboard with any of your favorite Javascript libraries.'}
       >
         <Flexbox --wrap="wrap">
           <Button href="/docs" buttonStyle={'link'}>{'Learn More'}</Button>
@@ -47,7 +47,7 @@
     <div class="flexbox">
       <FeatureCard
         title={'Minimal Dependencies'}
-        text={'All wallet dependencies are included in separate packages, so you only include the ones you want to use in your app.'}
+        text={'All wallet dependencies are included in separate packages, so you only include the ones you want to use in your app. Core package is only 815kb minified.'}
       />
       <FeatureCard
         title={'Dynamic Imports'}
@@ -71,7 +71,7 @@
       <TextBlock
         title={'Enable Multi-Wallet and Multi-Chain functionality with one library '}
         subtitle={''}
-        text={'Web3-Onboard is the quickest and easiest way to add multi-wallet and multi-chain support to your project. With built-in modules for more than 35 unique hardware and software wallets, Web3-Onboard saves you time and headaches.'}
+        text={'Web3 Onboard is the quickest and easiest way to add multi-wallet and multi-chain support to your project. With built-in modules for more than 35 unique hardware and software wallets, Web3 Onboard saves you time and headaches.'}
       >
         <Flexbox --wrap="wrap">
           <Button href="/docs" buttonStyle={'link'}>{'Learn More'}</Button>

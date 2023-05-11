@@ -1,4 +1,5 @@
 <script>
+  import accountCenter from '$lib/assets/account-center-example.png'
   import walletModal from '$lib/assets/connect-modal.svg'
   import notifyCustomImg from '$lib/assets/notify-custom-example.png'
   import notifyImg from '$lib/assets/notify-example.png'
@@ -139,6 +140,20 @@ type Chain = {
   icon?: string // the icon to represent the chain
   publicRpcUrl?: string // an optional public RPC used when adding a new chain config to the wallet
   blockExplorerUrl?: string // also used when adding a new config to the wallet
+  secondaryTokens?: SecondaryTokens[] // An optional array of tokens (max of 5) to be available to the dapp in the app state object per wallet within the wallet account and displayed in Account Center (if enabled)
+}
+
+interface SecondaryTokens {
+  /**
+   * Required - The onchain address of the token associated
+   * with the chain it is entered under
+   */
+  address: string
+  /**
+   * An optional svg or url string for the icon of the token.
+   * If an svg is used ensure the height/width is set to 100%
+   */
+  icon?: string
 }
 ```
 
@@ -255,18 +270,18 @@ type i18nOptions = Record<Locale, i18n>
 To see a list of all of the text values that can be internationalized or replaced, check out the [default en file](https://github.com/blocknative/web3-onboard/blob/develop/packages/core/src/i18n/en.json).
 Onboard is using the [ICU syntax](https://formatjs.io/docs/core-concepts/icu-syntax/) for formatting under the hood.
 
-For example, to update the connect interface language for Metamask, while giving a different message for other wallets, you can include the following: 
+For example, to update the connect interface language for Metamask, while giving a different message for other wallets, you can include the following:
 
 ```typescript
 i18n: {
-      en: {
-        connect: {
-          connectingWallet: {
-            paragraph: "{wallet, select, MetaMask {{wallet} can only present one account, so connect just the one account you want.} other {Please connect to all of your accounts in {wallet}.}}"
-          }
-        }
+  en: {
+    connect: {
+      connectingWallet: {
+        paragraph: '{wallet, select, MetaMask {{wallet} can only present one account, so connect just the one account you want.} other {Please connect to all of your accounts in {wallet}.}}'
       }
     }
+  }
+}
 ```
 
 MetaMask message:
@@ -275,7 +290,7 @@ MetaMask message:
 All other wallets:
 <img src="{customConnect1}" alt="Web3-Onboard connect wallet modal with custom message"/>
 
-Default Message- with no i18n override: 
+Default Message- with no i18n override:
 <img src="{customConnectDefault}" alt="Web3-Onboard connect wallet modal with default message"/>
 
 ---
@@ -339,6 +354,8 @@ type disableFontDownload = boolean // defaults to false
 #### accountCenter
 
 An object that defines whether the account center UI (default and minimal) is enabled and its position on the screen. Currently the account center is enabled for both desktop and mobile devices.
+
+<img src="{accountCenter}" alt="Web3-Onboard Account Center example"/>
 
 ```ts
 type AccountCenter = {
@@ -1403,7 +1420,7 @@ config.module.rules = [
 
 You'll need to add some dev dependencies with the following command:
 
-`npm i --save-dev assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify`
+`npm i --save-dev assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify browserify-zlib`
 
 Then add the following to your `webpack.config.js` file:
 
@@ -1413,7 +1430,8 @@ const webpack = require('webpack')
 module.exports = {
   resolve: {
     fallback: {
-      path: require.resolve('path-browserify')
+      path: require.resolve('path-browserify'),
+      path: require.resolve('browserify-zlib')
     },
     alias: {
       assert: 'assert',
@@ -1448,11 +1466,11 @@ The above webpack 5 example can be used in the `craco.config.js` file at the roo
 [React App Rewired](https://www.npmjs.com/package/react-app-rewired) is another option for working with Create React App DApps
 
 Add the following dev dependencies:
-`npm i --save-dev rollup-plugin-polyfill-node webpack-bundle-analyzer assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify`
+`npm i --save-dev rollup-plugin-polyfill-node webpack-bundle-analyzer assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify browserify-zlib`
 
 **OR**
 
-`yarn add rollup-plugin-polyfill-node webpack-bundle-analyzer assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify -D`
+`yarn add rollup-plugin-polyfill-node webpack-bundle-analyzer assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify browserify-zlib -D`
 
 ```javascript copy
 const webpack = require('webpack')
@@ -1469,6 +1487,7 @@ module.exports = function override(config) {
     https: require.resolve('https-browserify'),
     os: require.resolve('os-browserify/browser'),
     path: require.resolve('path-browserify'),
+    path: require.resolve('browserify-zlib'),
     process: require.resolve('process/browser'),
     stream: require.resolve('stream-browserify'),
     url: require.resolve('url'),

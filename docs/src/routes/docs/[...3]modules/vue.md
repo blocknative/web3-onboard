@@ -409,7 +409,7 @@ config.module.rules = [
 
 You'll need to add some dev dependencies with the following command:
 
-`npm i --save-dev assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify`
+`npm i --save-dev assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify browserify-zlib`
 
 Then add the following to your `webpack.config.js` file:
 
@@ -419,7 +419,8 @@ const webpack = require('webpack')
 module.exports = {
   resolve: {
     fallback: {
-      path: require.resolve('path-browserify')
+      path: require.resolve('path-browserify'),
+      path: require.resolve('browserify-zlib')
     },
     alias: {
       assert: 'assert',

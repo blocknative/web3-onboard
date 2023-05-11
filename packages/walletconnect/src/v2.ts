@@ -72,7 +72,7 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
             ? // @ts-ignore
               // Required as WC package does not support hex numbers
               requiredChains.map(chainID => parseInt(chainID))
-            : [1]
+            : [...chains.map(({ id }) => parseInt(id, 16))]
 
         const connector = await EthereumProvider.init({
           projectId,
@@ -136,7 +136,9 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
               .pipe(takeUntil(this.disconnected$))
               .subscribe({
                 next: chainId => {
-                  const hexChainId = `0x${chainId.toString(16)}`
+                  const hexChainId = isHexString(chainId)
+                    ? chainId
+                    : `0x${chainId.toString(16)}`
                   this.emit('chainChanged', hexChainId)
                 },
                 error: console.warn
