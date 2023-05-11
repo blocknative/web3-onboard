@@ -49,7 +49,7 @@
     }
   }
 
-  const { chains: appChains } = state.get()
+  const { chains: appChains, accountCenter } = state.get()
   const { appMetadata } = configuration
   let disconnectConfirmModal = false
   let enableTransactionProtection = false
@@ -72,7 +72,7 @@
     connectedChain && connectedChain.id
   )
 
-  const { position } = state.get().accountCenter
+  const { position } = accountCenter
   const { device } = configuration
 </script>
 
