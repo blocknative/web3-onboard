@@ -1319,7 +1319,7 @@ Everything should just work since the node built-ins are automatically bundled i
 
 You'll need to add some dev dependencies with the following command:
 
-`npm i --save-dev assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util`
+`npm i --save-dev assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util browserify-zlib`
 
 Then add the following to your `webpack.config.js` file:
 
@@ -1328,7 +1328,8 @@ const webpack = require('webpack')
 
 module.exports = {
   fallback: {
-    path: require.resolve('path-browserify')
+    path: require.resolve('path-browserify'),
+    zlib: require.resolve('browserify-zlib')
   },
   resolve: {
     alias: {
@@ -1365,7 +1366,7 @@ The above webpack 5 example can be used in the `craco.config.js` file at the roo
 
 Add the following dev dependencies:
 
-`yarn add rollup-plugin-polyfill-node webpack-bundle-analyzer -D`
+`yarn add rollup-plugin-polyfill-node webpack-bundle-analyzer browserify-zlib -D`
 
 ```javascript
 const webpack = require('webpack')
@@ -1382,6 +1383,7 @@ module.exports = function override(config) {
     https: require.resolve('https-browserify'),
     os: require.resolve('os-browserify/browser'),
     path: require.resolve('path-browserify'),
+    zlib: require.resolve('browserify-zlib'),
     process: require.resolve('process/browser'),
     stream: require.resolve('stream-browserify'),
     url: require.resolve('url'),
