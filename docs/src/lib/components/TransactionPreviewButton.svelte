@@ -72,7 +72,6 @@
     ]
   }
 
-
   const handlePreview = async () => {
     await transactionPreview.init({
       apiKey: '133a026b-c7a0-419c-a00b-66255b3cd487',
@@ -82,7 +81,6 @@
 
     const stubTrans = await buildTransaction()
     await transactionPreview.previewTransaction(stubTrans)
-
   }
 
   onMount(async () => {

@@ -13,7 +13,7 @@ export type RPCGasPrice = {
 
 export interface GasData {
   estimatedPrices: GasPrice[]
-  baseFeePerGas: number| null
+  baseFeePerGas: number | null
   blockNumber: number | null
   maxPrice: number | null
   estimatedTransactionCount: number | null

@@ -22,5 +22,4 @@ export default `<svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmln
 </clipPath>
 </defs>
 </svg>
-
 `

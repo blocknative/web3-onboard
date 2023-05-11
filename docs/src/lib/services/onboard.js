@@ -29,7 +29,6 @@ const classMutationListener = () => {
 }
 
 const intiOnboard = async (theme) => {
-  const { default: cedeModule } = await import('@web3-onboard/cede-store')
   const { default: Onboard } = await import('@web3-onboard/core')
   const { default: injectedModule } = await import('@web3-onboard/injected-wallets')
   const { default: trezorModule } = await import('@web3-onboard/trezor')
@@ -52,6 +51,7 @@ const intiOnboard = async (theme) => {
   const { default: uauthModule } = await import('@web3-onboard/uauth')
   const { default: trustModule } = await import('@web3-onboard/trust')
   const { default: xdefiModule } = await import('@web3-onboard/xdefi')
+  const { default: cedeModule } = await import('@web3-onboard/cede-store')
   const { default: frameModule } = await import('@web3-onboard/frame')
   const INFURA_ID = '8b60d52405694345a99bcb82e722e0af'
 
@@ -78,7 +78,6 @@ const intiOnboard = async (theme) => {
   const torus = torusModule()
   const trust = trustModule()
   const xdefi = xdefiModule()
-  const frame = frameModule()
   const cede = cedeModule()
 
   const portis = portisModule({
@@ -105,6 +104,8 @@ const intiOnboard = async (theme) => {
   const magic = magicModule({
     apiKey: 'pk_live_02207D744E81C2BA'
   })
+
+  const frame = frameModule()
 
   return Onboard({
     wallets: [
