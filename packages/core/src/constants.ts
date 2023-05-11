@@ -7,14 +7,14 @@ export const APP_INITIAL_STATE: AppState = {
   chains: [],
   accountCenter: {
     enabled: true,
-    position: 'topRight',
+    position: 'bottomRight',
     expanded: false,
     minimal: configuration.device.type === 'mobile'
   },
   notify: {
     enabled: true,
     transactionHandler: () => {},
-    position: 'topRight',
+    position: 'bottomRight',
     replacement: {
       gasPriceProbability: {
         speedup: 80,
