@@ -46,13 +46,14 @@ export const updateSecondaryTokens = async (
   const chainRPC = chain.rpcUrl
   if (!chain.secondaryTokens || !chain.secondaryTokens.length || !chainRPC)
     return
+
   const ethersProvider = new ethers.providers.Web3Provider(
     wallet.provider,
     'any'
   )
   const signer = ethersProvider.getSigner()
 
-  const abi = [
+  const erc20ABISubset = [
     {
       inputs: [{ name: 'owner', type: 'address' }],
       name: 'balanceOf',
@@ -68,10 +69,15 @@ export const updateSecondaryTokens = async (
       type: 'function'
     }
   ]
-  const updatedBalances = await Promise.all(
+  
+  const tokenBalances = await Promise.all(
     chain.secondaryTokens.map(async token => {
       try {
-        const swapContract = new ethers.Contract(token.address, abi, signer)
+        const swapContract = new ethers.Contract(
+          token.address,
+          erc20ABISubset,
+          signer
+        )
         const bigNumBalance = await swapContract.balanceOf(account)
         const tokenName = await swapContract.symbol()
         return {
@@ -87,7 +93,7 @@ export const updateSecondaryTokens = async (
       }
     })
   )
-  return updatedBalances
+  return tokenBalances
 }
 
 export default updateBalances
