@@ -263,6 +263,11 @@ export type NotificationPosition = CommonPositions
 
 export type AccountCenter = {
   enabled: boolean
+  /**
+   * false by default - This allows removal of the 
+   * Enable Transaction Protection' button within the Account Center 
+   * expanded when set to true
+   */
   disableProtectedRpc?: boolean
   position?: AccountCenterPosition
   expanded?: boolean
