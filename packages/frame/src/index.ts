@@ -19,6 +19,13 @@ function frame(): WalletInit {
       getInterface: async () => {
         const provider = await getProvider()
 
+        await new Promise(resolve => setTimeout(resolve, 100))
+
+        if (!provider.connected) {
+          throw new Error(
+            'Frame App must be open with a hot wallet connected. If not installed first download the Frame App.'
+          )
+        }
         return {
           provider,
           interface: {
