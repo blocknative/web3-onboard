@@ -339,13 +339,12 @@ const frame: InjectedWalletModule = {
   getIcon: async () => (await import('./icons/frame.js')).default,
   getInterface: async () => {
     const provider = window.ethereum
-    if (provider && provider.isFrame && provider.connected){
-      return { provider }
-    } else {
+    if (!provider || !provider.connected) {
       throw new Error(
         'Frame App must be open with a hot wallet connected. If not installed first download the Frame App.'
       )
     }
+    return { provider }
   },
   platforms: ['desktop']
 }
@@ -757,7 +756,8 @@ const defiwallet: InjectedWalletModule = {
 const safeheron: InjectedWalletModule = {
   label: ProviderLabel.Safeheron,
   injectedNamespace: InjectedNameSpace.Safeheron,
-  checkProviderIdentity: ({ provider }) => !!provider && !!provider[ProviderIdentityFlag.Safeheron],
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Safeheron],
   getIcon: async () => (await import('./icons/safeheron.js')).default,
   getInterface: async () => ({
     provider: createEIP1193Provider(window.safeheron)
@@ -812,7 +812,7 @@ const wallets = [
   safepal,
   defiwallet,
   infinitywallet,
-  safeheron,
+  safeheron
 ]
 
 export default wallets
