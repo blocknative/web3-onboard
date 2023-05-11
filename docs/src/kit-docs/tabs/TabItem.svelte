@@ -47,7 +47,7 @@
   }
 
   .tab.selected {
-    color: var(--kd-color-brand);
+    color: rgb(var(--kd-color-brand));
     border-color: currentColor;
   }
 </style>

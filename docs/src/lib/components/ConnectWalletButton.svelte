@@ -2,6 +2,7 @@
   import { onMount } from 'svelte'
   import type { OnboardAPI, WalletState } from '@web3-onboard/core'
   import getOnboard from '$lib/services/onboard.js'
+  import { Button } from '@svelteness/kit-docs'
   let onboard: OnboardAPI
   let connectedWallets: WalletState[]
   let buttonText = 'Connect'
@@ -20,10 +21,10 @@
 
   const initOnboard = async () => {
     if (document.location.href.includes('theming-tool')) {
-        onboard = await getOnboard('default')
-      } else {
-        onboard = await getOnboard()
-      }
+      onboard = await getOnboard('default')
+    } else {
+      onboard = await getOnboard()
+    }
   }
 
   onMount(async () => {
@@ -38,9 +39,6 @@
   })
 </script>
 
-<button
-  class="rounded-lg bg-gray-inverse hover:bg-gray-hover hover:text-gray-inverse transition-all px-4 h-10 text-base text-gray-current"
-  on:click={() => connectWallet()}
->
-  {buttonText}
+<button on:click={() => connectWallet()}>
+  <Button primary type="raised" on:click={() => connectWallet()}>{buttonText}</Button>
 </button>
