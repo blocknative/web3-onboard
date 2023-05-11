@@ -150,7 +150,9 @@
 
   const trezorOptions = {
     email: 'test@test.com',
-    appUrl: 'https://www.blocknative.com'
+    appUrl: 'https://www.blocknative.com',
+
+     consecutiveEmptyAccountThreshold: 10
     // containerElement: '#sample-container-el'
   }
   const trezor = trezorModule(trezorOptions)

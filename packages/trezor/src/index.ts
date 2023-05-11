@@ -25,6 +25,10 @@ interface TrezorOptions {
   customNetwork?: CustomNetwork
   filter?: Platform[]
   containerElement?: string
+  /**
+   * A number that defines the amount of consecutive empty addresses displayed
+   * within the Account Select modal. Default is 5
+   */
   consecutiveEmptyAccountThreshold?: number
 }
 
@@ -94,8 +98,9 @@ const getAddresses = async (
   let zeroBalanceAccounts = 0
 
   // Iterates until a 0 balance account is found
-  // Then adds 4 more 0 balance accounts to the array
-  while (zeroBalanceAccounts < 5) {
+  // Then adds 4 (whatever consecutiveEmptyAccountThreshold is set to) more
+  // 0 balance accounts to the array
+  while (zeroBalanceAccounts < consecutiveEmptyAccounts) {
     const acc = await getAccount(account, asset, index, provider)
     if (
       acc &&
