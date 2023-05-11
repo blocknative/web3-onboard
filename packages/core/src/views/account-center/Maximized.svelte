@@ -26,7 +26,7 @@
   import SecondaryTokenTable from './SecondaryTokenTable.svelte'
   import shieldIcon from '../../icons/shield-icon.js'
   import { BN_PROTECT_RPC_URL } from '../../constants.js'
-  import { addProtectedRPC } from '../../provider.js'
+  import { updateChainRPC } from '../../provider.js'
   import { shareReplay, startWith } from 'rxjs/operators'
   const accountCenter$ = state
     .select('accountCenter')
@@ -38,7 +38,7 @@
 
   const enableProtectionRPC = async () => {
     try {
-      await addProtectedRPC(
+      await updateChainRPC(
         primaryWallet.provider,
         validAppChain,
         BN_PROTECT_RPC_URL

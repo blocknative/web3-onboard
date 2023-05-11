@@ -471,7 +471,7 @@ export function addNewChain(
   })
 }
 
-export function addProtectedRPC(
+export function updateChainRPC(
   provider: EIP1193Provider,
   chain: Chain,
   rpcUrl?: string
