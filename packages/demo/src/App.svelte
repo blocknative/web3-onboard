@@ -218,6 +218,12 @@
     gas,
     chains: [
       {
+        id: '0x13881',
+        token: 'MATIC',
+        label: 'Polygon - Mumbai',
+        rpcUrl: 'https://matic-mumbai.chainstacklabs.com	'
+      },
+      {
         id: '0x1',
         token: 'ETH',
         secondaryTokens: [
@@ -247,12 +253,6 @@
         token: 'ETH',
         label: 'Goerli',
         rpcUrl: `https://goerli.infura.io/v3/${infura_key}`
-      },
-      {
-        id: '0x13881',
-        token: 'MATIC',
-        label: 'Polygon - Mumbai',
-        rpcUrl: 'https://matic-mumbai.chainstacklabs.com	'
       },
       {
         id: '0x38',
@@ -480,7 +480,7 @@
   let typedMsg = JSON.stringify(
     {
       domain: {
-        chainId: '0x5',
+        chainId: '0x13881',
         name: 'Web3-Onboard Test App',
         verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
         version: '1'
@@ -528,7 +528,7 @@
     2
   )
   const signTypedMessage = async (provider, address) => {
-    await onboard.setChain({ chainId: '0x5' })
+    await onboard.setChain({ chainId: '0x13881' })
     const signature = await provider.request({
       method: 'eth_signTypedData_v4',
       params: [address, typedMsg]
