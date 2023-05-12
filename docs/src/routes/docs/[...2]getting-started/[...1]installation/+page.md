@@ -73,7 +73,7 @@ const chains = [
 #### App Metadata (Optional)
 
 You can add metadata about your dapp.
-A full definition of `appMetaData` options can be found [here](/docs/modules/core#options)
+A full definition of `appMetaData` options can be found [here](/docs/modules/core#initialization)
 
 ```ts
 const appMetadata = {
