@@ -38,7 +38,7 @@ function cedeStoreWallet(): WalletInit {
 
             return [activeVault?.name || accounts[0].name] as string[]
           },
-          eth_chainId: () => Promise.resolve('0x0'), // cede.store doesn't support chains, but we have to provide a value to complete the connection
+          eth_chainId: () => Promise.resolve('0x1'), // cede.store doesn't support chains, but we have to provide a value to complete the connection
           wallet_switchEthereumChain: null,
           wallet_addEthereumChain: null,
           eth_getBalance: null,
