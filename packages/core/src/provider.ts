@@ -474,7 +474,7 @@ export function addNewChain(
 export function updateChainRPC(
   provider: EIP1193Provider,
   chain: Chain,
-  rpcUrl?: string
+  rpcUrl: string
 ): Promise<unknown> {
   return provider.request({
     method: 'wallet_addEthereumChain',
