@@ -10,53 +10,64 @@
 
 <style>
   .content {
+    --background-color: var(--w3o-background-color);
+    --text-color: var(--w3o-text-color);
+    --action-color: var(--w3o-action-color, var(--primary-500));
+    
+    font-size: 1rem;
+    line-height: 1.5rem;
+
+    display: flex;
+    flex-flow: column;
+    gap: 1.5rem;
     padding: 1rem;
-    width: 300px;
-    font-family: var(--onboard-font-family-normal, var(--font-family-normal));
-    font-size: var(--onboard-font-size-5, var(--font-size-5));
-    line-height: 24px;
-    background: var(
-      --enable-protect-rpc-background,
-      var(--w3o-background-color)
-    );
-    color: var(--w3o-text-color);
+    max-width: 320px;
+
+    background: var(--background-color);
+    color: var(--text-color);
   }
 
   .icon-container {
+    position: relative;
+    overflow: hidden;
     width: 3rem;
     height: 3rem;
-    background: var(--onboard-primary-100, var(--primary-100));
     border-radius: 24px;
-    padding: 12px;
-    color: var(--w3o-text-color);
+    padding: .75rem;
+    background: none;
+  }
+  .icon-container::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: 0.2;
+    background: var(--action-color);
   }
 
-  h4 {
-    margin: 1.5rem 0 0.5rem 0;
+  .text-container {
+    display: flex;
+    flex-flow: column;
+    gap: 0.5rem;
+    padding: 0 0.5rem;
+  }
+
+  .actions-container {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 1rem;
+  }
+
+  .heading {
     font-weight: 600;
-  }
-
-  p {
-    margin: 0;
-    font-weight: 400;
   }
 
   button {
-    margin-top: 1.5rem;
-    width: 50%;
     font-weight: 600;
   }
 
-  .right {
-    margin-left: 0.5rem;
-    width: 60%;
-  }
-
-  .enable {
-    background: var(
-      --enable-protect-rpc-action-color,
-      var(--w3o-action-color, var(--primary-500))
-    );
+  button.primary {
+    background: var(--action-color);
   }
 </style>
 
@@ -66,29 +77,28 @@
       {@html shieldIcon}
     </div>
 
-    <h4>
-      {$_('modals.confirmTransactionProtection.heading', {
-        default: en.modals.confirmTransactionProtection.heading
-      })}
-    </h4>
+    <div class="text-container">
+      <div class="heading">
+        {$_('modals.confirmTransactionProtection.heading', {
+          default: en.modals.confirmTransactionProtection.heading
+        })}
+      </div>
+      <div>
+        {$_('modals.confirmTransactionProtection.description')}
+      </div>
+    </div>
 
-    <p>
-      {$_('modals.confirmTransactionProtection.description')}
-    </p>
-
-    <div class="flex justify-between items-center w-100">
-      <button class="button-neutral-solid-b rounded" on:click={onDismiss}
-        >{$_('modals.confirmTransactionProtection.dismiss', {
+    <div class="actions-container">
+      <button class="button-neutral-solid-b" on:click={onDismiss}>
+        {$_('modals.confirmTransactionProtection.dismiss', {
           default: en.modals.confirmTransactionProtection.dismiss
-        })}</button
-      >
-      <button
-        class="right button-neutral-solid rounded enable"
-        on:click={onEnable}
-        >{$_('modals.confirmTransactionProtection.enable', {
+        })}
+      </button>
+      <button class="button-neutral-solid rounded primary" on:click={onEnable}>
+        {$_('modals.confirmTransactionProtection.enable', {
           default: en.modals.confirmTransactionProtection.enable
-        })}</button
-      >
+        })}
+      </button>
     </div>
   </div>
 </Modal>
