@@ -321,7 +321,7 @@ An object that defines whether the account center UI (default and minimal) is en
 ```typescript
 type AccountCenter = {
   enabled: boolean
-  position?: AccountCenterPosition // default: 'topRight'
+  position?: AccountCenterPosition // default: 'bottomRight'
   expanded?: boolean // default: true
   minimal?: boolean // enabled by default for mobile
 

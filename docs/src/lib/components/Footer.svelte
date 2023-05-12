@@ -130,5 +130,4 @@
     white-space: nowrap;
     border-width: 0;
   }
-
 </style>

@@ -22,7 +22,8 @@
 
   const gasDiff = (bnGas: GasPrice) => {
     if (!rpcGasForDiff || !bnGas || !bnGas.maxPriorityFeePerGas || !bnGas.maxFeePerGas) return
-    const priFeeDiff = Number.parseInt(rpcGasForDiff.maxPriorityFeePerGas) - bnGas.maxPriorityFeePerGas
+    const priFeeDiff =
+      Number.parseInt(rpcGasForDiff.maxPriorityFeePerGas) - bnGas.maxPriorityFeePerGas
     const maxFeeDiff = Number.parseInt(rpcGasForDiff.maxFeePerGas) - bnGas.maxFeePerGas
     return priFeeDiff + maxFeeDiff
   }
@@ -56,7 +57,7 @@
 
   {#if gasPriceFrom === 'bn'}
     <div class="text-sm m-1 whitespace-nowrap" style={`color: ${cardColor}`}>
-      {(gasData && gasData?.confidence) ? `${gasData.confidence}% probability` : '...'}
+      {gasData && gasData?.confidence ? `${gasData.confidence}% probability` : '...'}
     </div>
     <div class="text-sm m-1 whitespace-nowrap" style={`color: ${cardColor}`}>
       {rpcGasForDiff ? `${gasDiff(gasData)?.toFixed(2)} gwei saved` : '...'}
