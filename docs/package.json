@@ -47,6 +47,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@sveltejs/adapter-static": "^2.0.2",
     "@web3-onboard/cede-store": "^2.0.1",
     "@web3-onboard/coinbase": "^2.2.3",
     "@web3-onboard/core": "^2.18.0",
