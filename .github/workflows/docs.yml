@@ -54,7 +54,7 @@ jobs:
       - name: Generate the sitemap
         uses: cicirello/generate-sitemap@v1
         with:
-          path-to-root: './docs/build'
+          path-to-root: './docs/.svelte-kit'
           drop-html-extension: true
           base-url-path: https://onboard.blocknative.com
         
@@ -65,7 +65,7 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload entire repository
-          path: './docs/build'
+          path: './docs/.svelte-kit'
           
       - name: Deploy to GitHub Pages
         id: deployment
