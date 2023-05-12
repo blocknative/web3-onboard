@@ -65,7 +65,7 @@ In order to contribute to the docs, create a PR on the [develop branch](https://
 
 **Important note: The PR template docs checklist must be complete before review can take place.**
 
-PRs for adding/updating a wallet should include a README (new or updated) for the package (located in `docs/src/routes/docs/[...4]wallets`), and adding/updating the module in [docs demo](https://github.com/blocknative/web3-onboard/blob/develop/docs/src/lib/services/onboard.js) and docs package (`docs/package.json`). New injected wallets should also add the wallet to the [natively supported injected wallets list](https://github.com/blocknative/web3-onboard/blob/develop/docs/src/routes/docs/%5B...4%5Dwallets/injected.md).
+PRs for adding/updating a wallet should include a README (new or updated) for the package (located in `docs/src/routes/docs/[...4]wallets`), and adding/updating the module in [docs demo](https://github.com/blocknative/web3-onboard/blob/develop/docs/src/lib/services/onboard.js) and docs package (`docs/package.json`). New injected wallets should also add the wallet to the [natively supported injected wallets list](https://github.com/blocknative/web3-onboard/blob/develop/docs/src/routes/docs/wallets/injected.md).
 
 [See here for an example of a docs pull request.](https://github.com/blocknative/web3-onboard/pull/1544/files)
 
