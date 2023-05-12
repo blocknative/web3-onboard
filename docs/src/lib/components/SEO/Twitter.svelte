@@ -1,8 +1,8 @@
 <script>
-  export let image;
-  export let metadescription;
-  export let pageTitle;
-  export let url;
+  export let image
+  export let metadescription
+  export let pageTitle
+  export let url
 </script>
 
 <svelte:head>

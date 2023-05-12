@@ -2,19 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/x-icon" href="https://www.blocknative.com/hubfs/Icons%20and%20Illustrations/blocknative%20favicon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    %sveltekit.head%
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121780722-2"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-121780722-2');
-      gtag('config', 'G-WQ8M55VX1Z');
-    </script>
+    <link rel="icon" href="%sveltekit.assets%/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
 
     <script>
       const key = 'svelteness::color-scheme'
@@ -26,8 +15,13 @@
         document.documentElement.classList.remove('dark')
       }
     </script>
+
+    %sveltekit.head%
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121780722-2"></script>
   </head>
-  <body>
-    <div>%sveltekit.body%</div>
+  <body data-sveltekit-preload-data="hover">
+    <div style="display: contents">%sveltekit.body%</div>
   </body>
 </html>
