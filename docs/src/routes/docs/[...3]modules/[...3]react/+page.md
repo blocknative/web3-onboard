@@ -14,14 +14,14 @@ A collection of React hooks for implementing web3-onboard into a React project
 <TabPanel value="yarn">
 
 ```sh copy
-yarn add @web3-onboard/react
+yarn add @web3-onboard/react @web3-onboard/injected-wallets
 ```
 
   </TabPanel>
   <TabPanel value="npm">
 
 ```sh copy
-npm install @web3-onboard/react
+npm install @web3-onboard/react @web3-onboard/injected-wallets
 ```
 
   </TabPanel>
@@ -29,7 +29,7 @@ npm install @web3-onboard/react
 
 ### Add Code
 
-```javascript
+```javascript title="App.js"
 import React from 'react'
 import { init, useConnectWallet } from '@web3-onboard/react'
 import injectedModule from '@web3-onboard/injected-wallets'
@@ -78,6 +78,8 @@ function App() {
     </div>
   )
 }
+
+export default App
 ```
 
 ## Using the `Web3OnboardProvider`
@@ -226,7 +228,7 @@ const [
 
 This hook allows the dev to access all notifications if enabled, send custom notifications and update notify <enable/disable & update transactionHandler function>
 **note** requires an API key be added to the initialization, enabled by default if API key exists
-For full Notification documentation please see [Notify section within the `@web3-onboard/core` docs](../../modules/core.md#options)
+For full Notification documentation please see [Notify section within the `@web3-onboard/core` docs](../../modules/core.md#initialization)
 
 ```typescript
 type UseNotifications = (): [
@@ -524,13 +526,73 @@ module.exports = {
 }
 ```
 
-#### If using create-react-app
+### If using create-react-app
 
-[CRACO](https://www.npmjs.com/package/@craco/craco) provides a similar way to override webpack config which is obfuscated in Create React App built applications.
+[CRACO](https://www.npmjs.com/package/@craco/craco) provides a way to override webpack config which is obfuscated in Create React App built applications.
 
-The above webpack 5 example can be used in the `craco.config.js` file at the root level in this case.
+`npm i @craco/craco`
+
+**OR**
+
+`yarn add @craco/craco`
+
+The above webpack 5 example can be used in the `craco.config.js` file at the root level.
+
+```javascript title="craco.config.js"
+const webpack = require('webpack')
+
+module.exports = {
+  webpack: {
+    configure: {
+      resolve: {
+        fallback: {
+          path: require.resolve('path-browserify')
+        },
+        alias: {
+          assert: 'assert',
+          buffer: 'buffer',
+          crypto: 'crypto-browserify',
+          http: 'stream-http',
+          https: 'https-browserify',
+          os: 'os-browserify/browser',
+          process: 'process/browser',
+          stream: 'stream-browserify',
+          util: 'util'
+        }
+      },
+      experiments: {
+        asyncWebAssembly: true
+      },
+      plugins: [
+        new webpack.ProvidePlugin({
+          process: 'process/browser',
+          Buffer: ['buffer', 'Buffer']
+        })
+      ]
+    }
+  }
+}
+```
+
+Be sure to update the scripts in package.json:
+
+```
+"scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test"
+  }
+```
 
 [React App Rewired](https://www.npmjs.com/package/react-app-rewired) is another option for working with Create React App DApps
+
+Add React App Rewired:
+
+`npm i react-app-rewired`
+
+**OR**
+
+`yarn add react-app-rewired`
 
 Add the following dev dependencies:
 `npm i --save-dev rollup-plugin-polyfill-node webpack-bundle-analyzer assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify browserify-zlib`
@@ -539,7 +601,7 @@ Add the following dev dependencies:
 
 `yarn add rollup-plugin-polyfill-node webpack-bundle-analyzer assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify browserify-zlib -D`
 
-```javascript
+```javascript title="config.overrides.js"
 const webpack = require('webpack')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const path = require('path')
@@ -591,6 +653,16 @@ module.exports = function override(config) {
   })
   return config
 }
+```
+
+Be sure to update the scripts in package.json:
+
+```
+"scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test"
+  }
 ```
 
 ### Vite

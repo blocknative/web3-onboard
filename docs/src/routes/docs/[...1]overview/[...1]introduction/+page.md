@@ -33,7 +33,7 @@ Web3-Onboard is the quickest and easiest way to add multi-wallet and multi-chain
 
 ### Supported Networks
 
-web3-onboard supports all EVM networks. Supporting a new network is simply a matter of adding its details in the Chains section upon initialization. For more information see [initialization options](../../modules/core.md#options).
+web3-onboard supports all EVM networks. Supporting a new network is simply a matter of adding its details in the Chains section upon initialization. For more information see [initialization options](../../modules/core.md#initialization).
 
 - Ethereum
 - Polygon
@@ -140,7 +140,7 @@ if (wallets[0]) {
 
 Add other wallet modules such as Wallet Connect or Ledger to increase the support and functionality of your web3-onboard implementation. All modules are listed below and can be accessed through the subpages of web3-onboard docs on the left.
 
-We recommend you add the [Core Repo](../..modules/core.md#install) and consider adding the [Injected Wallets](../../wallets/injected.md#install) module to get connected with wallets like Metamask, Trust, Coinbase Wallet & more right away.
+We recommend you add the [Core Repo](../../modules/core.md#install) and consider adding the [Injected Wallets](../../wallets/injected.md#install) module to get connected with wallets like Metamask, Trust, Coinbase Wallet & more right away.
 
 [**Core Repo**](../../modules/core.md#install)
 
@@ -152,11 +152,11 @@ We recommend you add the [Core Repo](../..modules/core.md#install) and consider 
 - [WalletConnect](../../wallets/walletconnect.md#install)
 - [Gnosis](../../wallets/gnosis.md#install)
 - [Magic](../../wallets/magic.md#login-options)
-- [Fortmatic](../../wallets/formatic.md#install)
+- [Fortmatic](../../wallets/fortmatic.md#install)
 - [MEW](../../wallets/mewwallet.md#install)
 - [Portis](../../wallets/portis.md#install)
 - [Web3Auth](../../wallets/web3auth.md#install)
-- [Frame](../../docs/wallets/frame.md#install)
+- [Frame](../../wallets/frame.md#install)
 
 **Hardware Wallets**
 

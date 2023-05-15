@@ -218,7 +218,7 @@
       <hr />
       <div class="theming-container">
         {#each Object.keys(themingObjects[selectedTheme]) as target}
-          {#if !target.includes('border-radius')}
+          {#if !target.includes('border-radius') && !target.includes('font-family')}
             <div class="theming-inputs-wrapper">
               <div class="theming-inputs">
                 <input

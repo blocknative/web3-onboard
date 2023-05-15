@@ -47,7 +47,7 @@ const onboard = Onboard({
 })
 ```
 
-You can find the full list of initialization options in our docs [here](/docs/modules/core#options).
+You can find the full list of initialization options in our docs [here](/docs/modules/core#initialization).
 
 ### API Upgrades
 
