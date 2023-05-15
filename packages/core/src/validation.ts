@@ -169,7 +169,7 @@ const accountCenterInitOptions = Joi.object({
   position: commonPositions,
   minimal: Joi.boolean(),
   containerElement: Joi.string(),
-  disableProtectedRpc: Joi.boolean()
+  hideTransactionProtectionBtn: Joi.boolean()
 })
 
 const accountCenter = Joi.object({
@@ -177,7 +177,7 @@ const accountCenter = Joi.object({
   position: commonPositions,
   expanded: Joi.boolean(),
   minimal: Joi.boolean(),
-  disableProtectedRpc: Joi.boolean(),
+  hideTransactionProtectionBtn: Joi.boolean(),
   containerElement: Joi.string()
 })
 
@@ -218,7 +218,8 @@ const initOptions = Joi.object({
   apiKey: Joi.string(),
   accountCenter: Joi.object({
     desktop: accountCenterInitOptions,
-    mobile: accountCenterInitOptions
+    mobile: accountCenterInitOptions,
+    hideTransactionProtectionBtn: Joi.boolean()
   }),
   notify: [notifyOptions, notify],
   gas: Joi.object({

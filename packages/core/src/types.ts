@@ -264,11 +264,12 @@ export type NotificationPosition = CommonPositions
 export type AccountCenter = {
   enabled: boolean
   /**
-   * false by default - This allows removal of the 
-   * Enable Transaction Protection' button within the Account Center 
+   * false by default - This allows removal of the
+   * Enable Transaction Protection' button within the Account Center
    * expanded when set to true
+   * Can be set as a global for Account Center or per interface (desktop/mobile)
    */
-  disableProtectedRpc?: boolean
+  hideTransactionProtectionBtn?: boolean
   position?: AccountCenterPosition
   expanded?: boolean
   minimal?: boolean
@@ -282,6 +283,13 @@ export type AccountCenter = {
 export type AccountCenterOptions = {
   desktop: Omit<AccountCenter, 'expanded'>
   mobile: Omit<AccountCenter, 'expanded'>
+  /**
+   * false by default - This allows removal of the
+   * Enable Transaction Protection' button within the Account Center
+   * expanded when set to true
+   * Can be set as a global for Account Center or per interface (desktop/mobile)
+   */
+  hideTransactionProtectionBtn?: boolean
 }
 
 export type ContainerElements = {

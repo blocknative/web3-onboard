@@ -447,7 +447,7 @@
         </div>
       </div>
       <!-- Only display on Eth Mainnet -->
-      {#if !$accountCenter$.disableProtectedRpc && connectedChain.id === '0x1'}
+      {#if !$accountCenter$.hideTransactionProtectionBtn && connectedChain.id === '0x1'}
         <div
           on:click={() => (enableTransactionProtection = true)}
           class="protect action-container flex items-center pointer"
