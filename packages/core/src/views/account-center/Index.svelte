@@ -23,7 +23,7 @@
 </script>
 
 {#if !$accountCenter$.minimal}
-  <div class="container flex flex-column items-end">
+  <div class="container flex flex-column items-end" style="width: 315px;">
     {#if $accountCenter$.position.includes('bottom')}
       <Maximized />
     {/if}
@@ -34,7 +34,7 @@
     {/if}
   </div>
 {:else if $accountCenter$.minimal}
-  <div class="container flex flex-column items-end">
+  <div class="container flex flex-column items-end" style="width: 315px;">
   <!-- micro -->
   {#if $accountCenter$.position.includes('bottom')}
     <Maximized />

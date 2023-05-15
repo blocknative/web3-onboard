@@ -24,7 +24,7 @@
     "webpack-dev-server": "4.7.4"
   },
   "dependencies": {
-    "@web3-onboard/core": "^2.18.1-alpha.2",
+    "@web3-onboard/core": "^2.18.1-alpha.3",
     "@web3-onboard/coinbase": "^2.2.3",
     "@web3-onboard/transaction-preview": "^2.0.7",
     "@web3-onboard/dcent": "^2.2.6",

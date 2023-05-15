@@ -274,7 +274,6 @@
 {#if $accountCenter$.expanded}
 <div
   transition:fly={{
-    delay: position.includes('bottom') ? 100 : 0,
     duration: 600,
     y: position.includes('bottom') ? 56 : -76,
     easing: quartOut,
