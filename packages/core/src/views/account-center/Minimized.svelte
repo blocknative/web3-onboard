@@ -61,10 +61,19 @@
 
 <style>
   .minimized {
-    --background-color: var(--account-center-minimized-background, var(--w3o-background-color, white));
+    --background-color: var(
+      --account-center-minimized-background,
+      var(--w3o-background-color, white)
+    );
     --text-color: var(--w3o-text-color, var(--gray-700));
-    --border-color: var(--account-center-border, var(--w3o-border-color, var(--onboard-gray-200, var(--gray-200))));
-    --border-radius: var(--account-center-border-radius, var(--w3o-border-radius, 1rem));
+    --border-color: var(
+      --account-center-border,
+      var(--w3o-border-color, var(--onboard-gray-200, var(--gray-200)))
+    );
+    --border-radius: var(
+      --account-center-border-radius,
+      var(--w3o-border-radius, 1rem)
+    );
 
     cursor: pointer;
     pointer-events: auto;
@@ -118,11 +127,7 @@
     color: var(--account-center-minimized-balance-color, inherit);
   }
 
-  .chain-icon {
-    width: 22px;
-    height: 22px;
-    padding: 4px;
-    border-radius: 25px;
+  .chain-icon-container {
     margin-right: 4px;
   }
 
@@ -221,23 +226,32 @@
         })`}
       >
         <div class="flex items-center">
-          <div
-            class:color-yellow={!validAppChain}
-            class:color-white={validAppChain && !validAppChain.icon}
-            class="chain-icon flex justify-center items-center"
-            style={`background-color: ${
-              validAppChain
+          <div class="chain-icon-container">
+            <WalletAppBadge
+              size={22}
+              padding={4}
+              background="custom"
+              color={!validAppChain
+                ? `var(
+                        --account-center-chain-warning,
+                        var(--onboard-warning-500, var(--warning-500))
+                      )`
+                : !validAppChain.icon
+                ? `var(--onboard-primary-100, var(--primary-100))`
+                : undefined}
+              customBackgroundColor={validAppChain
                 ? validAppChain.color ||
                   (defaultChainStyles && defaultChainStyles.color) ||
                   unrecognizedChainStyle.color
-                : 'var(--onboard-warning-200, var(--warning-200))'
-            };`}
-          >
-            {@html validAppChain
-              ? validAppChain.icon ||
-                (defaultChainStyles && defaultChainStyles.icon) ||
-                unrecognizedChainStyle.icon
-              : warningIcon}
+                : `var(--onboard-warning-200, var(--warning-200))`}
+              border="transparent"
+              radius={25}
+              icon={validAppChain
+                ? validAppChain.icon ||
+                  (defaultChainStyles && defaultChainStyles.icon) ||
+                  unrecognizedChainStyle.icon
+                : warningIcon}
+            />
           </div>
 
           <NetworkSelector
@@ -249,6 +263,5 @@
         </div>
       </div>
     </div>
-
   </div>
 </div>
