@@ -1,7 +1,7 @@
 <script lang="ts">
   import { shareReplay, startWith } from 'rxjs/operators'
   import { _ } from 'svelte-i18n'
-  import { fly } from 'svelte/transition'
+  import { fly, fade } from 'svelte/transition'
   import { quartOut } from 'svelte/easing'
   import { wallets$ } from '../../streams.js'
   import en from '../../i18n/en.json'
@@ -269,11 +269,14 @@
   />
 {/if}
 
+
+
+{#if $accountCenter$.expanded}
 <div
-  in:fly={{
-    delay: position.includes('top') ? 100 : 0,
+  transition:fly={{
+    delay: position.includes('bottom') ? 100 : 0,
     duration: 600,
-    y: position.includes('top') ? 56 : -76,
+    y: position.includes('bottom') ? 56 : -76,
     easing: quartOut,
     opacity: 0
   }}
@@ -485,3 +488,4 @@
     </div>
   </div>
 </div>
+{/if}

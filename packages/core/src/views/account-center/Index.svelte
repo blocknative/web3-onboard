@@ -1,48 +1,47 @@
 <script lang="ts">
   import { onDestroy } from 'svelte'
   import { updateAccountCenter } from '../../store/actions.js'
-  import { wallets$ } from '../../streams.js'
   import { state } from '../../store/index.js'
   import { shareReplay, startWith } from 'rxjs/operators'
   import Maximized from './Maximized.svelte'
   import Minimized from './Minimized.svelte'
   import Micro from './Micro.svelte'
 
-  export let mountInContainer = false
-
   const accountCenter$ = state
     .select('accountCenter')
     .pipe(startWith(state.get().accountCenter), shareReplay(1))
 
   onDestroy(minimize)
+  let visible = false
 
   function minimize() {
     if ($accountCenter$.expanded) {
       updateAccountCenter({ expanded: false })
+      visible=false
     }
   }
 </script>
 
-<!-- <svelte:window on:click={minimize} /> -->
-
-{#if mountInContainer}
-  {#if $wallets$.length}
-    <div class="container flex flex-column fixed z-indexed">
-      <svelte:self />
-    </div>
-  {/if}
-{:else if !$accountCenter$.minimal}
+{#if !$accountCenter$.minimal}
   <div class="container flex flex-column items-end">
-    {#if $accountCenter$.expanded}
+    {#if $accountCenter$.position.includes('bottom')}
       <Maximized />
     {/if}
     <!-- micro -->
     <Minimized />
+    {#if $accountCenter$.position.includes('top')}
+      <Maximized />
+    {/if}
   </div>
-{:else if !$accountCenter$.expanded && $accountCenter$.minimal}
+{:else if $accountCenter$.minimal}
+  <div class="container flex flex-column items-end">
   <!-- micro -->
+  {#if $accountCenter$.position.includes('bottom')}
+    <Maximized />
+  {/if}
   <Micro />
-{:else}
-  <!-- maximized -->
-  <Maximized />
+  {#if $accountCenter$.position.includes('top')}
+    <Maximized />
+  {/if}
+  </div>
 {/if}
