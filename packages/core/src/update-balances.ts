@@ -43,6 +43,7 @@ export const updateSecondaryTokens = async (
   account: AccountAddress,
   chain: Chain
 ): Promise<SecondaryTokenBalances[]> => {
+  if (!chain) return
   const chainRPC = chain.rpcUrl
   if (!chain.secondaryTokens || !chain.secondaryTokens.length || !chainRPC)
     return
