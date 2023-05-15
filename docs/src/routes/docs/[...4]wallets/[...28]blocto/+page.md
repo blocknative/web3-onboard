@@ -1,4 +1,8 @@
-# Blocto
+---
+title: Blocto
+---
+
+# {$frontmatter.title}
 
 Wallet module for connecting Blocto SDK to web3-onboard. Check out the [Blocto Developer Docs](https://docs.blocto.app/blocto-sdk/javascript-sdk/evm-sdk) for more information.
 
@@ -13,11 +17,9 @@ yarn add @web3-onboard/blocto
 
   </TabPanel>
   <TabPanel value="npm">
-
 ```sh copy
 npm install @web3-onboard/blocto
 ```
-
   </TabPanel>
 </Tabs>
 
