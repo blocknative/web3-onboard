@@ -765,6 +765,18 @@ const safeheron: InjectedWalletModule = {
   platforms: ['desktop', 'Chrome', 'Chromium', 'Microsoft Edge']
 }
 
+const talisman: InjectedWalletModule = {
+  label: ProviderLabel.Talisman,
+  injectedNamespace: InjectedNameSpace.Talisman,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Talisman],
+  getIcon: async () => (await import('./icons/talisman.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.talismanEth)
+  }),
+  platforms: ['desktop']
+}
+
 const wallets = [
   zeal,
   exodus,
@@ -812,7 +824,8 @@ const wallets = [
   safepal,
   defiwallet,
   infinitywallet,
-  safeheron
+  safeheron,
+  talisman
 ]
 
 export default wallets
