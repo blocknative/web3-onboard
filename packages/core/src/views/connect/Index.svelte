@@ -341,6 +341,7 @@
       })
     }
     if (
+      appChain &&
       !secondaryTokens &&
       Array.isArray(appChain.secondaryTokens) &&
       appChain.secondaryTokens.length
