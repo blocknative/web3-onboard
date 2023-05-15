@@ -222,9 +222,9 @@
               background="custom"
               color={!validAppChain
                 ? `var(
-                        --account-center-chain-warning,
-                        var(--onboard-warning-500, var(--warning-500))
-                      )`
+                    --account-center-chain-warning,
+                    var(--onboard-warning-500, var(--warning-500))
+                  )`
                 : !validAppChain.icon
                 ? `var(--onboard-primary-100, var(--primary-100))`
                 : undefined}
