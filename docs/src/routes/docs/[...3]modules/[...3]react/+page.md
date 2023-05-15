@@ -228,7 +228,7 @@ const [
 
 This hook allows the dev to access all notifications if enabled, send custom notifications and update notify <enable/disable & update transactionHandler function>
 **note** requires an API key be added to the initialization, enabled by default if API key exists
-For full Notification documentation please see [Notify section within the `@web3-onboard/core` docs](../../modules/core.md#options)
+For full Notification documentation please see [Notify section within the `@web3-onboard/core` docs](../../modules/core.md#initialization)
 
 ```typescript
 type UseNotifications = (): [
