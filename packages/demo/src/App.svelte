@@ -28,6 +28,7 @@
   import phantomModule from '@web3-onboard/phantom'
   import trustModule from '@web3-onboard/trust'
   import frontierModule from '@web3-onboard/frontier'
+  import venlyModule from '@web3-onboard/venly'
   import {
     recoverAddress,
     arrayify,
@@ -167,6 +168,10 @@
   const transactionPreview = transactionPreviewModule({
     requireTransactionApproval: true
   })
+  const venly = venlyModule({
+    clientId: 'Testaccount',
+    environment: 'staging'
+  })
 
   const onboard = Onboard({
     wallets: [
@@ -194,7 +199,8 @@
       zeal,
       frontier,
       phantom,
-      xdefi
+      xdefi,
+      venly
     ],
     transactionPreview,
     gas,

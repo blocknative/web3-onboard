@@ -1403,7 +1403,7 @@ config.module.rules = [
 
 You'll need to add some dev dependencies with the following command:
 
-`npm i --save-dev assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify`
+`npm i --save-dev assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify browserify-zlib`
 
 Then add the following to your `webpack.config.js` file:
 
@@ -1424,7 +1424,8 @@ module.exports = {
       os: 'os-browserify/browser',
       process: 'process/browser',
       stream: 'stream-browserify',
-      util: 'util'
+      util: 'util',
+      zlib: 'browserify-zlib'
     }
   },
   experiments: {
@@ -1448,11 +1449,11 @@ The above webpack 5 example can be used in the `craco.config.js` file at the roo
 [React App Rewired](https://www.npmjs.com/package/react-app-rewired) is another option for working with Create React App DApps
 
 Add the following dev dependencies:
-`npm i --save-dev rollup-plugin-polyfill-node webpack-bundle-analyzer assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify`
+`npm i --save-dev rollup-plugin-polyfill-node webpack-bundle-analyzer assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify browserify-zlib`
 
 **OR**
 
-`yarn add rollup-plugin-polyfill-node webpack-bundle-analyzer assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify -D`
+`yarn add rollup-plugin-polyfill-node webpack-bundle-analyzer assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util path-browserify browserify-zlib -D`
 
 ```javascript copy
 const webpack = require('webpack')
@@ -1472,7 +1473,8 @@ module.exports = function override(config) {
     process: require.resolve('process/browser'),
     stream: require.resolve('stream-browserify'),
     url: require.resolve('url'),
-    util: require.resolve('util')
+    util: require.resolve('util'),
+    zlib: require.resolve('browserify-zlib')
   })
   config.resolve.fallback = fallback
   config.resolve.alias = {
@@ -1511,7 +1513,7 @@ module.exports = function override(config) {
 
 Add the following dev dependencies:
 
-`yarn add rollup-plugin-polyfill-node crypto-browserify stream-browserify assert -D`
+`yarn add rollup-plugin-polyfill-node crypto-browserify stream-browserify assert browserify-zlib -D`
 
 Then add the following to your `svelte.config.js` file:
 
@@ -1541,7 +1543,8 @@ const config = {
         alias: {
           crypto: 'crypto-browserify',
           stream: 'stream-browserify',
-          assert: 'assert'
+          assert: 'assert',
+          zlib: 'browserify-zlib'
         }
       },
       build: {
@@ -1576,7 +1579,7 @@ Checkout a boilerplate example [here](https://github.com/blocknative/web3-onboar
 
 Add the following dev dependencies:
 
-`yarn add rollup-plugin-polyfill-node crypto-browserify stream-browserify assert -D`
+`yarn add rollup-plugin-polyfill-node crypto-browserify stream-browserify assert browserify-zlib -D`
 
 Then add the following to your `svelte.config.js` file:
 
@@ -1624,7 +1627,8 @@ const config: UserConfig = {
     alias: {
       crypto: 'crypto-browserify',
       stream: 'stream-browserify',
-      assert: 'assert'
+      assert: 'assert',
+      zlib: 'browserify-zlib'
     }
   },
   build: {
@@ -1689,7 +1693,7 @@ Checkout a boilerplate example for Vite-React [here](https://github.com/blocknat
 
 Add the following dev dependencies:
 
-`npm i --save-dev rollup-plugin-polyfill-node crypto-browserify stream-browserify assert`
+`npm i --save-dev rollup-plugin-polyfill-node crypto-browserify stream-browserify assert browserify-zlib`
 
 Then add the following to your `vite.config.js` file:
 
@@ -1711,7 +1715,8 @@ export default {
     alias: {
       crypto: 'crypto-browserify',
       stream: 'stream-browserify',
-      assert: 'assert'
+      assert: 'assert',
+      zlib: 'browserify-zlib'
     }
   },
   build: {
