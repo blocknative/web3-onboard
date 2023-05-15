@@ -3782,6 +3782,15 @@
     "@walletconnect/window-getters" "^1.0.1"
     tslib "1.14.1"
 
+"@web3-onboard/injected-wallets@^2.8.5":
+  version "2.8.6"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.8.6.tgz#946843a8595752b6bd80ee04cc7030c1717ba180"
+  integrity sha512-mdvhU7Zv3pD69oopjbmrT0yVzKboEGUQcE372HGT63xA7w0m0p9rDHjlSQuy4DyNop7Vx0k1cKrnvjFE7dyqZg==
+  dependencies:
+    "@web3-onboard/common" "^2.3.2"
+    joi "17.9.1"
+    lodash.uniqby "^4.7.0"
+
 "@web3-react/abstract-connector@^6.0.7":
   version "6.0.7"
   resolved "https://registry.yarnpkg.com/@web3-react/abstract-connector/-/abstract-connector-6.0.7.tgz#401b3c045f1e0fab04256311be49d5144e9badc6"

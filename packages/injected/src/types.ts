@@ -60,8 +60,9 @@ export enum ProviderIdentityFlag {
   Zerion = 'isZerion',
   Rainbow = 'isRainbow',
   SafePal = 'isSafePal',
-  DeFiWallet = 'isDeficonnectProvider', 
-  Safeheron = 'isSafeheron'
+  DeFiWallet = 'isDeficonnectProvider',
+  Safeheron = 'isSafeheron',
+  Talisman = 'isTalisman'
 }
 
 export enum ProviderLabel {
@@ -113,7 +114,8 @@ export enum ProviderLabel {
   Rainbow = 'Rainbow',
   SafePal = 'SafePal',
   DeFiWallet = 'DeFi Wallet',
-  Safeheron = 'Safeheron'
+  Safeheron = 'Safeheron',
+  Talisman = 'Talisman'
 }
 
 export interface MeetOneProvider extends ExternalProvider {
@@ -144,7 +146,8 @@ export enum InjectedNameSpace {
   Trust = 'trustwallet',
   Frontier = 'frontier',
   DeFiConnectProvider = 'deficonnectProvider',
-  Safeheron = 'safeheron'
+  Safeheron = 'safeheron',
+  Talisman = 'talismanEth'
 }
 
 export interface CustomWindow extends Window {
@@ -180,6 +183,7 @@ export interface CustomWindow extends Window {
   trustwallet: InjectedProvider
   deficonnectProvider: InjectedProvider
   safeheron: InjectedProvider
+  talismanEth: InjectedProvider
 }
 
 export type InjectedProvider = ExternalProvider &
