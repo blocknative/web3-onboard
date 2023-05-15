@@ -122,7 +122,6 @@ function init(options: InitOptions): OnboardAPI {
   if (typeof connect !== undefined) {
     updateConnectModal(connect)
   }
-  console.log(accountCenter)
   // update accountCenter
   if (typeof accountCenter !== 'undefined') {
     let accountCenterUpdate
