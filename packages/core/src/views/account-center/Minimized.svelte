@@ -143,17 +143,6 @@
   .drop-shadow {
     filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.2));
   }
-
-  .color-yellow {
-    color: var(
-      --account-center-chain-warning,
-      var(--onboard-warning-500, var(--warning-500))
-    );
-  }
-
-  .color-white {
-    color: var(--onboard-primary-100, var(--primary-100));
-  }
 </style>
 
 <div
