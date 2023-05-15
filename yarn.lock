@@ -3782,6 +3782,14 @@
     "@walletconnect/window-getters" "^1.0.1"
     tslib "1.14.1"
 
+"@web3-onboard/cede-store@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/cede-store/-/cede-store-2.0.1.tgz#0dec82e6f511e5b89885586c3229732c824f1fc0"
+  integrity sha512-ZgC/cgGdci+TuFJ2Yt2NK7BH84kCvSTj/Ko+VxWaAfiAw8m249SIsJeqmW7hEGM0ZJhJW0rmQHvDpSv0w4wF5g==
+  dependencies:
+    "@cedelabs/providers" "^0.0.7"
+    "@web3-onboard/common" "^2.3.2"
+
 "@web3-react/abstract-connector@^6.0.7":
   version "6.0.7"
   resolved "https://registry.yarnpkg.com/@web3-react/abstract-connector/-/abstract-connector-6.0.7.tgz#401b3c045f1e0fab04256311be49d5144e9badc6"
