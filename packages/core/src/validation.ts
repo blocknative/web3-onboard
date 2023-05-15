@@ -168,7 +168,8 @@ const accountCenterInitOptions = Joi.object({
   enabled: Joi.boolean(),
   position: commonPositions,
   minimal: Joi.boolean(),
-  containerElement: Joi.string()
+  containerElement: Joi.string(),
+  disableProtectedRpc: Joi.boolean()
 })
 
 const accountCenter = Joi.object({
