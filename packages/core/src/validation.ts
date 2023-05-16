@@ -61,11 +61,20 @@ const balance = Joi.any().allow(
   null
 )
 
+const secondaryTokens = Joi.any().allow(
+  Joi.object({
+    balance: Joi.string().required(),
+    icon: Joi.string()
+  }),
+  null
+)
+
 const account = Joi.object({
   address: Joi.string().required(),
   ens,
   uns,
-  balance
+  balance,
+  secondaryTokens
 })
 
 const chains = Joi.array()
@@ -242,13 +251,19 @@ const disconnectOptions = Joi.object({
   label: Joi.string().required()
 }).required()
 
+const secondaryTokenValidation = Joi.object({
+  address: Joi.string().required(),
+  icon: Joi.string().optional()
+})
+
 const setChainOptions = Joi.object({
   chainId: chainIdValidation.required(),
   chainNamespace: chainNamespaceValidation,
   wallet: Joi.string(),
   rpcUrl: Joi.string(),
   label: Joi.string(),
-  token: Joi.string()
+  token: Joi.string(),
+  secondaryTokens: Joi.array().max(5).items(secondaryTokenValidation).optional()
 })
 
 const customNotificationUpdate = Joi.object({

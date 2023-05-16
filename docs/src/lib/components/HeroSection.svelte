@@ -1,19 +1,18 @@
 <script>
   import Button from './base/Button.svelte'
   import Flexbox from './base/Flexbox.svelte'
-  import InstallCode from './code-snippet/install-code.md'
   import heroBg from './svg/hero-bg.svg'
   import heroImg from './svg/hero-img.svg'
 </script>
 
 <section style="background-image: url({heroBg});">
   <div class="textblock">
-    <div class="title">{'Web3-Onboard'}</div>
+    <div class="title">{'Web3 Onboard'}</div>
     <div class="text">
       {'Open-source, framework-agnostic JavaScript library to onboard users to web3 apps. Help your users transact with ease by enabling wallet connection, real-time transaction states, and more.'}
     </div>
     <div class="prose">
-      <InstallCode />
+      <slot name="code" />
     </div>
     <Flexbox --gap="1.5rem" --direction="row" --wrap="wrap">
       <Button href="#get-started" label={'Get Started'} />

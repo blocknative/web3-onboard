@@ -4,10 +4,10 @@
 
 <section>
   <h1 class="text">
-    {"Who's using web3-onboard?"}
+    {"Who's using Web3 Onboard?"}
   </h1>
   <div>
-    <img src={TestimonialsGraphic} alt="Web3-Onboard-users">
+    <img src={TestimonialsGraphic} alt="Web3-Onboard-users" />
   </div>
 </section>
 

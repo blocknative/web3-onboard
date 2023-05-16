@@ -13,5 +13,5 @@
 </script>
 
 <div class="flex items-center justify-center border-gray-divider border rounded-md h-40 p-4">
-    <ConnectWalletButton />
+  <ConnectWalletButton />
 </div>

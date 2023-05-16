@@ -18,23 +18,24 @@ A collection of React hooks for implementing web3-onboard in to a React project
 
 ### Add Code
 
-```javascript
+```javascript title="App.js"
 import React from 'react'
 import { init, useConnectWallet } from '@web3-onboard/react'
 import injectedModule from '@web3-onboard/injected-wallets'
 import { ethers } from 'ethers'
 
 // Sign up to get your free API key at https://explorer.blocknative.com/?signup=true
-const dappId = '1730eff0-9d50-4382-a3fe-89f0d34a2070'
+// Required for Transaction Notifications and Transaction Preview
+const apiKey = '1730eff0-9d50-4382-a3fe-89f0d34a2070'
 
 const injected = injectedModule()
 
-// Only one RPC endpoint required per chain
-const rpcAPIKey = '<INFURA_KEY>' || '<ALCHEMY_KEY>'
-const rpcUrl = `https://eth-mainnet.g.alchemy.com/v2/${rpcAPIKey}` || `https://mainnet.infura.io/v3/${rpcAPIKey}`
+const infuraKey = '<INFURA_KEY>'
+const rpcUrl = `https://mainnet.infura.io/v3/${infuraKey}`
 
 // initialize Onboard
 init({
+  apiKey,
   wallets: [injected],
   chains: [
     {
@@ -53,22 +54,21 @@ function App() {
   let ethersProvider
 
   if (wallet) {
-    ethersProvider = new ethers.providers.Web3Provider(wallet.provider, 'any')
     // if using ethers v6 this is:
     // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
+    ethersProvider = new ethers.providers.Web3Provider(wallet.provider, 'any')
   }
 
   return (
     <div>
-      <button
-        disabled={connecting}
-        onClick={() => (wallet ? disconnect(wallet) : connect())}
-      >
+      <button disabled={connecting} onClick={() => (wallet ? disconnect(wallet) : connect())}>
         {connecting ? 'connecting' : wallet ? 'disconnect' : 'connect'}
       </button>
     </div>
   )
 }
+
+export default App
 ```
 
 ### Using the `Web3OnboardProvider`

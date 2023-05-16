@@ -9,7 +9,8 @@ module.exports = {
   entry: './src/main.js',
   resolve: {
     fallback: {
-      path: require.resolve('path-browserify')
+      path: require.resolve('path-browserify'),
+      zlib: require.resolve('browserify-zlib')
     },
     alias: {
       svelte: path.dirname(require.resolve('svelte/package.json')),
