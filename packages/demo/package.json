@@ -47,7 +47,7 @@
     "@web3-onboard/torus": "^2.2.4",
     "@web3-onboard/taho": "^2.0.3",
     "@web3-onboard/web3auth": "^2.2.2",
-    "@web3-onboard/walletconnect": "^2.3.7",
+    "@web3-onboard/walletconnect": "^2.3.8-alpha.1",
     "@web3-onboard/enkrypt": "^2.0.3",
     "@web3-onboard/mew-wallet": "^2.0.2",
     "@web3-onboard/xdefi": "^2.0.3",
