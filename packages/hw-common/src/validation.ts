@@ -29,6 +29,7 @@ const selectAccountOptions = Joi.object({
   chains: chains,
   scanAccounts: Joi.function().arity(1).required(),
   supportsCustomPath: Joi.bool(),
+  consecutiveEmptyAccountThreshold: Joi.number(),
   containerElement: Joi.string()
 })
 
