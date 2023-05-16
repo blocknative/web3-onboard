@@ -1,7 +1,7 @@
 <script lang="ts">
   import { shareReplay, startWith } from 'rxjs/operators'
   import { _ } from 'svelte-i18n'
-  import { fly, fade } from 'svelte/transition'
+  import { fly } from 'svelte/transition'
   import { quartOut } from 'svelte/easing'
   import { wallets$ } from '../../streams.js'
   import en from '../../i18n/en.json'
