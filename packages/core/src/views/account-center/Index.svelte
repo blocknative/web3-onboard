@@ -12,12 +12,10 @@
     .pipe(startWith(state.get().accountCenter), shareReplay(1))
 
   onDestroy(minimize)
-  let visible = false
 
   function minimize() {
     if ($accountCenter$.expanded) {
       updateAccountCenter({ expanded: false })
-      visible = false
     }
   }
 </script>
