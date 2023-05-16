@@ -25,6 +25,29 @@ aliases:
       branches:
         only: develop
 
+  - &deploy_testing_filters
+    filters:
+      branches:
+        only: enhancement/replace_ethers
+
+
+  - &test_package_version_for_test_tag_break_false
+    run:
+      name: Tagged as viemtest version if True Continue Flow
+      command: |
+        PACKAGE_VERSION=$(cat package.json \
+        | grep version \
+        | head -1 \
+        | awk -F: '{ print $2 }' \
+        | sed 's/[",]//g');
+        if [[ $PACKAGE_VERSION =~ "-viemtest" ]];
+        then
+          echo true
+        else
+          echo false
+          circleci step halt
+        fi;
+
   - &test_package_version_for_alpha_tag_break_false
     run:
       name: Tagged as Alpha version if True Continue Flow
@@ -151,6 +174,31 @@ commands:
       - *restore-build-flag
       - *test-build-flag
       - *test_package_version_for_alpha_tag_break_false
+      # Services and packages in a Workspace don't get their own
+      # yarn.lock so we need to generate them manually.
+      - *generate-lock-file
+      - *restore-cache
+      - run:
+          name: Build
+          command: |
+            yarn
+            yarn type-check
+            yarn build
+      - *save-cache
+      - *create-npm-config
+      - *publish-npm-tag-as-next
+      - save-build-flag
+
+  node-testing-build-steps:
+    steps:
+      - checkout:
+          # Since our working_directory is deeper than the root,
+          # remind the job where it needs to checkout.
+          path: ~/web3-onboard-monorepo
+      - *restore-build-flag
+      - *test-build-flag
+      # Tag must be defined for testing publish outside of Alpha or standard prod publish
+      - *test_package_version_for_test_tag_break_false
       # Services and packages in a Workspace don't get their own
       # yarn.lock so we need to generate them manually.
       - *generate-lock-file
@@ -626,6 +674,26 @@ jobs:
     steps:
       - node-staging-build-steps
 
+  # Build testing releases - tag must be defined outside of Alpha tag flow
+  build-testing-common:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/common
+    steps:
+      - node-testing-build-steps
+  build-testing-core:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/core
+    steps:
+      - node-testing-build-steps
+  build-testing-injected:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/injected
+    steps:
+      - node-testing-build-steps
+
 workflows:
   version: 2
   common:
@@ -634,12 +702,16 @@ workflows:
           <<: *deploy_production_filters
       - build-staging-common:
           <<: *deploy_staging_filters
+      - build-testing-common:
+          <<: *deploy_testing_filters
   core:
     jobs:
       - build-core:
           <<: *deploy_production_filters
       - build-staging-core:
           <<: *deploy_staging_filters
+      - build-testing-core:
+          <<: *deploy_testing_filters
 
   fortmatic:
     jobs:
@@ -659,6 +731,8 @@ workflows:
           <<: *deploy_production_filters
       - build-staging-injected:
           <<: *deploy_staging_filters
+      - build-testing-injected:
+          <<: *deploy_testing_filters
   frame:
     jobs:
       - build-frame:

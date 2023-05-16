@@ -1,7 +1,6 @@
 import { state } from './store/index.js'
 import { getBalance } from './provider.js'
 import { updateAllWallets } from './store/actions.js'
-// import { ethers } from 'ethers'
 import { AccountAddress, Address, Chain, weiToEth } from '@web3-onboard/common'
 import type { SecondaryTokenBalances } from './types'
 import type { ReadContractParameters } from 'viem'
