@@ -3,10 +3,7 @@
   import { wallets$ } from '../../streams.js'
   import { updateAccountCenter } from '../../store/actions.js'
   import { questionIcon } from '../../icons/index.js'
-  import {
-    WalletAppBadge,
-    SuccessStatusIcon
-  } from '../shared/index.js'
+  import { WalletAppBadge, SuccessStatusIcon } from '../shared/index.js'
   import { state } from '../../store/index.js'
   import { configuration } from '../../configuration.js'
 
@@ -80,7 +77,9 @@
 <div
   class="minimized"
   on:click|stopPropagation={toggle}
-  style="{$accountCenter$.position.includes('Left') ? 'align-self: flex-start': null}"
+  style={$accountCenter$.position.includes('Left')
+    ? 'align-self: flex-start'
+    : null}
 >
   <div class="inner-row">
     <!-- app and wallet icon badge -->

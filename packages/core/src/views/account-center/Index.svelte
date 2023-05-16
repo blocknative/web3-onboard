@@ -3,9 +3,9 @@
   import { updateAccountCenter } from '../../store/actions.js'
   import { state } from '../../store/index.js'
   import { shareReplay, startWith } from 'rxjs/operators'
-  import Maximized from './Maximized.svelte'
-  import Minimized from './Minimized.svelte'
-  import Micro from './Micro.svelte'
+  import AccountCenterPanel from './AccountCenterPanel.svelte'
+  import TriggerLarge from './AcctCenterTriggerLarge.svelte'
+  import TriggerSmall from './AcctCenterTriggerSmall.svelte'
 
   const accountCenter$ = state
     .select('accountCenter')
@@ -17,31 +17,21 @@
   function minimize() {
     if ($accountCenter$.expanded) {
       updateAccountCenter({ expanded: false })
-      visible=false
+      visible = false
     }
   }
 </script>
 
-{#if !$accountCenter$.minimal}
-  <div class="container flex flex-column items-end" style="width: 315px;">
-    {#if $accountCenter$.position.includes('bottom')}
-      <Maximized />
-    {/if}
-    <!-- micro -->
-    <Minimized />
-    {#if $accountCenter$.position.includes('top')}
-      <Maximized />
-    {/if}
-  </div>
-{:else if $accountCenter$.minimal}
-  <div class="container flex flex-column items-end" style="width: 315px;">
-  <!-- micro -->
+<div class="container flex flex-column items-end" style="width: 315px;">
   {#if $accountCenter$.position.includes('bottom')}
-    <Maximized />
+    <AccountCenterPanel />
   {/if}
-  <Micro />
+  {#if $accountCenter$.minimal}
+    <TriggerSmall />
+  {:else}
+    <TriggerLarge />
+  {/if}
   {#if $accountCenter$.position.includes('top')}
-    <Maximized />
+    <AccountCenterPanel />
   {/if}
-  </div>
-{/if}
+</div>
