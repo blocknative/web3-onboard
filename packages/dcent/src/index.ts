@@ -5,8 +5,6 @@ import type {
   Platform
 } from '@web3-onboard/common'
 
-import type { providers } from 'ethers'
-
 import type {
   CustomNetwork,
   Account,
