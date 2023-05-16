@@ -33,6 +33,7 @@ const connectedWallets = await onboard.connectWallet()
 
 console.log(connectedWallets)
 ```
+
 ### Injected Wallets Supported Natively
 
 - Metamask - _Desktop & Mobile_
@@ -82,6 +83,7 @@ console.log(connectedWallets)
 - ApexWallet - _Desktop_
 - BifrostWallet - _Desktop & Mobile_
 - Safeheron - _Desktop_
+- Talisman - _Desktop_
 
 ## Filtering Wallets
 
