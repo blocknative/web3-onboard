@@ -38,8 +38,17 @@ type ErrorCode = 'busy' | 'pairing'
 
 function keepkey({
   filter,
-  containerElement
-}: { filter?: Platform[]; containerElement?: string } = {}): WalletInit {
+  containerElement,
+  consecutiveEmptyAccountThreshold
+}: {
+  filter?: Platform[]
+  containerElement?: string
+  /**
+   * A number that defines the amount of consecutive empty addresses displayed
+   * within the Account Select modal. Default is 5
+   */
+  consecutiveEmptyAccountThreshold?: number
+} = {}): WalletInit {
   const getIcon = async () => (await import('./icon.js')).default
 
   return ({ device }) => {
@@ -88,6 +97,7 @@ function keepkey({
         const keyring = new Keyring()
         const keepKeyAdapter = WebUSBKeepKeyAdapter.useKeyring(keyring)
         const eventEmitter = new EventEmitter()
+        const consecutiveEmptyAccounts = consecutiveEmptyAccountThreshold || 5
 
         let keepKeyWallet: KeepKeyHDWallet
         let currentChain: Chain = chains[0]
@@ -184,7 +194,7 @@ function keepkey({
 
             // Iterates until a 0 balance account is found
             // Then adds 4 more 0 balance accounts to the array
-            while (zeroBalanceAccounts < 5) {
+            while (zeroBalanceAccounts < consecutiveEmptyAccounts) {
               const acc = await getAccount({
                 accountIdx: index,
                 provider,

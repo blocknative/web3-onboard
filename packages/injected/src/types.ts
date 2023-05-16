@@ -100,7 +100,7 @@ export enum ProviderLabel {
   OneInch = '1inch Wallet',
   Tokenary = 'Tokenary Wallet',
   Tally = 'Taho',
-  Rabby = 'Rabby',
+  Rabby = 'Rabby Wallet',
   MathWallet = 'MathWallet',
   GameStop = 'GameStop Wallet',
   BitKeep = 'BitKeep',
