@@ -69,7 +69,7 @@
   })
 </script>
 
-<div class="Gas px-6  p-4">
+<div class="Gas px-6 p-4">
   <div class="flex whitespace-nowrap mb-3 text-sm select-none">
     <span class="flex items-center">MORE LIKELY</span>
     <span
@@ -78,7 +78,7 @@
     <span class="flex items-center">LESS LIKELY</span>
   </div>
   <div class="w-0 h-0 text-transparent selection:bg-none">.</div>
-  <div class="flex flex-nowrap justify-evenly ">
+  <div class="flex flex-nowrap justify-evenly">
     {#each ($ethMainnetGasBlockPrices && $ethMainnetGasBlockPrices[0]?.blockPrices[0]?.estimatedPrices) || GAS_DATA_DEFAULT.estimatedPrices as gasData}
       <GasCard bind:cardBg {gasData} rpcGasForDiff={rpcGasData} gasPriceFrom={'bn'} />
     {/each}

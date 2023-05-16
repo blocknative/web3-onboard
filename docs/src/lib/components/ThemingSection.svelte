@@ -4,8 +4,6 @@
   import ScrollContainer from './base/ScrollContainer.svelte'
   import TextBlock from './TextBlock.svelte'
   import Container from './Container.svelte'
-
-  import ThemingCode from './code-snippet/theming-code.md'
   import ThemingGraphic from './svg/themes-example-carousel.svg'
 </script>
 
@@ -14,8 +12,8 @@
     <div class="flexbox">
       <TextBlock
         title={'Themeable'}
-        subtitle={'Powerfull customization options for all your needs'}
-        text={'Style web3-onboard to fit into your existing designs, or pick from our pre-made themes.'}
+        subtitle={'Powerful customization options for all your needs'}
+        text={'Style Web3 Onboard to fit into your existing designs, or pick from our pre-made themes.'}
       >
         <Flexbox --wrap="wrap">
           <Button href="/docs" buttonStyle={'link'}>{'Learn More'}</Button>
@@ -23,7 +21,7 @@
         </Flexbox>
       </TextBlock>
       <div class="prose">
-        <ThemingCode />
+        <slot name="themingCode" />
       </div>
     </div>
   </Container>

@@ -26,6 +26,11 @@ interface TrezorOptions {
   customNetwork?: CustomNetwork
   filter?: Platform[]
   containerElement?: string
+  /**
+   * A number that defines the amount of consecutive empty addresses displayed
+   * within the Account Select modal. Default is 5
+   */
+  consecutiveEmptyAccountThreshold?: number
 }
 
 const TREZOR_DEFAULT_PATH = "m/44'/60'/0'/0"
@@ -86,15 +91,17 @@ const getAccount = async (
 const getAddresses = async (
   account: AccountData,
   asset: Asset,
-  provider: StaticJsonRpcProvider
+  provider: StaticJsonRpcProvider,
+  consecutiveEmptyAccounts: number
 ): Promise<Account[]> => {
   const accounts = []
   let index = 0
   let zeroBalanceAccounts = 0
 
   // Iterates until a 0 balance account is found
-  // Then adds 4 more 0 balance accounts to the array
-  while (zeroBalanceAccounts < 5) {
+  // Then adds 4 (whatever consecutiveEmptyAccountThreshold is set to) more
+  // 0 balance accounts to the array
+  while (zeroBalanceAccounts < consecutiveEmptyAccounts) {
     const acc = await getAccount(account, asset, index, provider)
     if (
       acc &&
@@ -119,14 +126,21 @@ function trezor(options: TrezorOptions): WalletInit {
   const getIcon = async () => (await import('./icon.js')).default
 
   return ({ device }) => {
-    const { email, appUrl, customNetwork, filter, containerElement } =
-      options || {}
+    const {
+      email,
+      appUrl,
+      customNetwork,
+      filter,
+      containerElement,
+      consecutiveEmptyAccountThreshold
+    } = options || {}
 
     if (!email || !appUrl) {
       throw new Error(
         'Email and AppUrl required in Trezor options for Trezor Wallet Connection'
       )
     }
+    const consecutiveEmptyAccounts = consecutiveEmptyAccountThreshold || 5
 
     const filtered =
       Array.isArray(filter) &&
@@ -213,7 +227,8 @@ function trezor(options: TrezorOptions): WalletInit {
               path: derivationPath
             },
             asset,
-            ethersProvider
+            ethersProvider,
+            consecutiveEmptyAccounts
           )
         }
 

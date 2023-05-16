@@ -12,9 +12,6 @@
   import AccountCenterGraphic from './svg/account-center-graphic.svg'
   import WalletsGraphic from './svg/wallet-row.svg'
   import TransactionPreviewGraphic from './svg/transaction-preview-graphic.svg'
-
-  import InstallCode from './code-snippet/install-code.md'
-  import InstallCodeTp from './code-snippet/install-code-tp.md'
 </script>
 
 <section class="features-a">
@@ -23,7 +20,7 @@
       <TextBlock
         title={'Framework Agnostic'}
         subtitle={'Support all your favorite frameworks.'}
-        text={'Use web3-onboard with any of your favorite Javascript libraries.'}
+        text={'Use Web3 Onboard with any of your favorite Javascript libraries.'}
       >
         <Flexbox --wrap="wrap">
           <Button href="/docs" buttonStyle={'link'}>{'Learn More'}</Button>
@@ -31,8 +28,8 @@
         </Flexbox>
       </TextBlock>
       <div>
-        <div class="prose">
-          <InstallCode />
+        <div class="prose fixed-width">
+          <slot name="install" />
         </div>
         <div style={'padding: 1rem'}>
           <FrameworksGraphic />
@@ -47,7 +44,7 @@
     <div class="flexbox">
       <FeatureCard
         title={'Minimal Dependencies'}
-        text={'All wallet dependencies are included in separate packages, so you only include the ones you want to use in your app.'}
+        text={'All wallet dependencies are included in separate packages, so you only include the ones you want to use in your app. Core package is only 815kb minified.'}
       />
       <FeatureCard
         title={'Dynamic Imports'}
@@ -71,7 +68,7 @@
       <TextBlock
         title={'Enable Multi-Wallet and Multi-Chain functionality with one library '}
         subtitle={''}
-        text={'Web3-Onboard is the quickest and easiest way to add multi-wallet and multi-chain support to your project. With built-in modules for more than 35 unique hardware and software wallets, Web3-Onboard saves you time and headaches.'}
+        text={'Web3 Onboard is the quickest and easiest way to add multi-wallet and multi-chain support to your project. With built-in modules for more than 35 unique hardware and software wallets, Web3 Onboard saves you time and headaches.'}
       >
         <Flexbox --wrap="wrap">
           <Button href="/docs" buttonStyle={'link'}>{'Learn More'}</Button>
@@ -117,7 +114,7 @@
             >
           </Flexbox>
           <div class="prose">
-            <InstallCodeTp />
+            <slot name="installTp" />
           </div>
         </TextBlock>
       </div>
@@ -213,6 +210,10 @@
   .flexbox > div {
     width: 100%;
     flex: 50%;
+  }
+
+  .fixed-width {
+    max-width: 800px;
   }
 
   @media screen and (min-width: 640px) {

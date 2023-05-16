@@ -191,7 +191,15 @@ export type Configuration = {
 
 export type Locale = string
 export type i18nOptions = Record<Locale, i18n>
-export type i18n = typeof en
+/**
+ * RecursivePartial is a utility type that allows one to define a partial
+ * version of a type that also includes all nested properties as partial.
+ * This allows partial i18n override in TypeScript:
+ */
+type RecursivePartial<T> = {
+  [P in keyof T]?: RecursivePartial<T[P]>
+}
+export type i18n = RecursivePartial<typeof en>
 
 export type ConnectModalOptions = {
   /**

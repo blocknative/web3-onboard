@@ -26,14 +26,19 @@ function cedeStoreWallet(): WalletInit {
       return Promise.resolve({
         provider: createEIP1193Provider(window.cede, {
           eth_requestAccounts: async ({ baseRequest }) => {
-            const vaults = (await baseRequest({
+            const accounts = (await baseRequest({
               method: 'connect'
-            })) as []
-            return vaults.length > 0
-              ? ['To access cede.store vaults and accounts, use cede provider']
-              : []
+            })) as any[]
+
+            if (!accounts.length) {
+              return []
+            }
+
+            const activeVault = accounts.find(account => account.isActive)
+
+            return [activeVault?.name || accounts[0].name] as string[]
           },
-          eth_chainId: () => Promise.resolve('0x0'), // cede.store doesn't support chains, but we have to provide a value to complete the connection
+          eth_chainId: () => Promise.resolve('0x1'), // cede.store doesn't support chains, but we have to provide a value to complete the connection
           wallet_switchEthereumChain: null,
           wallet_addEthereumChain: null,
           eth_getBalance: null,

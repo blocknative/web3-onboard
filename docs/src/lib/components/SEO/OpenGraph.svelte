@@ -1,10 +1,10 @@
 <script>
-  export let image;
-  export let metadescription;
-  export let pageTitle;
-  export let url;
-  export let siteTitle;
-  export let ogLanguage;
+  export let image
+  export let metadescription
+  export let pageTitle
+  export let url
+  export let siteTitle
+  export let ogLanguage
 </script>
 
 <svelte:head>

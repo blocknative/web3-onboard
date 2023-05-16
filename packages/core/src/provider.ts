@@ -212,7 +212,6 @@ export function trackWallet(
 
         const balanceProm = getBalance(address, chain)
         const secondaryTokenBal = updateSecondaryTokens(
-          primaryWallet,
           address,
           chain
         )
@@ -330,7 +329,6 @@ export function trackWallet(
             )
 
             const secondaryTokenBal = updateSecondaryTokens(
-              primaryWallet,
               address,
               chain
             )

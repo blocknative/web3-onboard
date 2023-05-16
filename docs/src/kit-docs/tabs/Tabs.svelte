@@ -23,7 +23,7 @@
 
 <div class="tabs w-full">
   <ul
-    class="flex items-center w-full list-none m-0 p-0 overflow-x-auto border-b border-gray-divider"
+    class="flex items-center w-full list-none m-0 p-0 overflow-x-auto border-b"
     role="tablist"
     aria-orientation="horizontal"
   >
@@ -38,3 +38,9 @@
     <slot />
   </div>
 </div>
+
+<style>
+  .tabs ul {
+    border-color: var(--kd-color-gray-divider);
+  }
+</style>

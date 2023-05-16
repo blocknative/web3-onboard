@@ -339,11 +339,12 @@
       })
     }
     if (
+      appChain &&
       !secondaryTokens &&
       Array.isArray(appChain.secondaryTokens) &&
       appChain.secondaryTokens.length
     ) {
-      updateSecondaryTokens(selectedWallet, address, appChain).then(
+      updateSecondaryTokens( address, appChain).then(
         secondaryTokens => {
           updateAccount(selectedWallet.label, address, {
             secondaryTokens

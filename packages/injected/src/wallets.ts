@@ -337,9 +337,15 @@ const frame: InjectedWalletModule = {
   checkProviderIdentity: ({ provider }) =>
     !!provider && !!provider[ProviderIdentityFlag.Frame],
   getIcon: async () => (await import('./icons/frame.js')).default,
-  getInterface: async () => ({
-    provider: window.ethereum
-  }),
+  getInterface: async () => {
+    const provider = window.ethereum
+    if (!provider || !provider.connected) {
+      throw new Error(
+        'Frame App must be open with a hot wallet connected. If not installed first download the Frame App.'
+      )
+    }
+    return { provider }
+  },
   platforms: ['desktop']
 }
 
@@ -750,12 +756,25 @@ const defiwallet: InjectedWalletModule = {
 const safeheron: InjectedWalletModule = {
   label: ProviderLabel.Safeheron,
   injectedNamespace: InjectedNameSpace.Safeheron,
-  checkProviderIdentity: ({ provider }) => !!provider && !!provider[ProviderIdentityFlag.Safeheron],
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Safeheron],
   getIcon: async () => (await import('./icons/safeheron.js')).default,
   getInterface: async () => ({
     provider: createEIP1193Provider(window.safeheron)
   }),
   platforms: ['desktop', 'Chrome', 'Chromium', 'Microsoft Edge']
+}
+
+const talisman: InjectedWalletModule = {
+  label: ProviderLabel.Talisman,
+  injectedNamespace: InjectedNameSpace.Talisman,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Talisman],
+  getIcon: async () => (await import('./icons/talisman.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.talismanEth)
+  }),
+  platforms: ['desktop']
 }
 
 const wallets = [
@@ -806,6 +825,7 @@ const wallets = [
   defiwallet,
   infinitywallet,
   safeheron,
+  talisman
 ]
 
 export default wallets

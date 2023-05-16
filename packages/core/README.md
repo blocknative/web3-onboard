@@ -132,7 +132,19 @@ type Chain = {
   icon?: string // the icon to represent the chain
   publicRpcUrl?: string // an optional public RPC used when adding a new chain config to the wallet
   blockExplorerUrl?: string // also used when adding a new config to the wallet
-  secondaryTokens?: SecondaryTokens[] // An optional array of tokens to be available to the dapp in the app state object per wallet within the wallet account and displayed in Account Center (if enabled)
+  secondaryTokens?: SecondaryTokens[] // An optional array of tokens (max of 5) to be available to the dapp in the app state object per wallet within the wallet account and displayed in Account Center (if enabled)
+}
+interface SecondaryTokens {
+  /**
+   * Required - The onchain address of the token associated
+   * with the chain it is entered under
+   */
+  address: string
+  /**
+   * An optional svg or url string for the icon of the token.
+   * If an svg is used ensure the height/width is set to 100%
+   */
+  icon?: string
 }
 ```
 
@@ -309,7 +321,7 @@ An object that defines whether the account center UI (default and minimal) is en
 ```typescript
 type AccountCenter = {
   enabled: boolean
-  position?: AccountCenterPosition // default: 'topRight'
+  position?: AccountCenterPosition // default: 'bottomRight'
   expanded?: boolean // default: true
   minimal?: boolean // enabled by default for mobile
 
@@ -1307,7 +1319,7 @@ Everything should just work since the node built-ins are automatically bundled i
 
 You'll need to add some dev dependencies with the following command:
 
-`npm i --save-dev assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util`
+`npm i --save-dev assert buffer crypto-browserify stream-http https-browserify os-browserify process stream-browserify util browserify-zlib`
 
 Then add the following to your `webpack.config.js` file:
 
@@ -1316,7 +1328,8 @@ const webpack = require('webpack')
 
 module.exports = {
   fallback: {
-    path: require.resolve('path-browserify')
+    path: require.resolve('path-browserify'),
+    zlib: require.resolve('browserify-zlib')
   },
   resolve: {
     alias: {
@@ -1353,7 +1366,7 @@ The above webpack 5 example can be used in the `craco.config.js` file at the roo
 
 Add the following dev dependencies:
 
-`yarn add rollup-plugin-polyfill-node webpack-bundle-analyzer -D`
+`yarn add rollup-plugin-polyfill-node webpack-bundle-analyzer browserify-zlib -D`
 
 ```javascript
 const webpack = require('webpack')
@@ -1370,6 +1383,7 @@ module.exports = function override(config) {
     https: require.resolve('https-browserify'),
     os: require.resolve('os-browserify/browser'),
     path: require.resolve('path-browserify'),
+    zlib: require.resolve('browserify-zlib'),
     process: require.resolve('process/browser'),
     stream: require.resolve('stream-browserify'),
     url: require.resolve('url'),

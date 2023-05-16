@@ -3,7 +3,8 @@ import { getBalance } from './provider.js'
 import { updateAllWallets } from './store/actions.js'
 // import { ethers } from 'ethers'
 import { AccountAddress, Address, Chain, weiToEth } from '@web3-onboard/common'
-import type { SecondaryTokenBalances, WalletState } from './types'
+import type { SecondaryTokenBalances } from './types'
+import type { ReadContractParameters } from 'viem'
 
 async function updateBalances(addresses?: string[]): Promise<void> {
   const { wallets, chains } = state.get()
@@ -14,7 +15,6 @@ async function updateBalances(addresses?: string[]): Promise<void> {
       const updatedAccounts = await Promise.all(
         wallet.accounts.map(async account => {
           const secondaryTokens = await updateSecondaryTokens(
-            wallet,
             account.address,
             chain
           )
@@ -39,21 +39,20 @@ async function updateBalances(addresses?: string[]): Promise<void> {
 }
 
 export const updateSecondaryTokens = async (
-  wallet: WalletState,
-  account: AccountAddress,
+  accountAddress: AccountAddress,
   chain: Chain
 ): Promise<SecondaryTokenBalances[]> => {
+  if (!chain) return
   const chainRPC = chain.rpcUrl
   if (!chain.secondaryTokens || !chain.secondaryTokens.length || !chainRPC)
     return
 
-  const updatedBalances = await Promise.all(
+  const tokenBalances = await Promise.all(
     chain.secondaryTokens.map(async token => {
       try {
         const { createPublicClient, http } = await import('viem')
-        const { mainnet } = await import('viem/chains')
         const client = createPublicClient({
-          chain: mainnet,
+          // chain: mainnet,
           transport: http(
             chain.providerConnectionInfo && chain.providerConnectionInfo.url
               ? chain.providerConnectionInfo.url
@@ -74,33 +73,45 @@ export const updateSecondaryTokens = async (
               name: 'symbol',
               outputs: [{ name: '', type: 'string' }],
               stateMutability: 'view',
-              type: 'function',
+              type: 'function'
             }
           ],
           address: token.address as Address
         }
 
-        const supply = await client.readContract({
-          ...viemTokenInterface,
-          functionName: 'balanceOf',
-          args: [account]
-        })
-        const tokenName = await client.readContract({
-          ...viemTokenInterface,
-          functionName: 'symbol'
-        }) || ''
+        const supplyProm =
+          client.readContract({
+            ...viemTokenInterface,
+            functionName: 'balanceOf',
+            args: [accountAddress] as unknown[]
+          } as ReadContractParameters) || ''
+
+        const tokenProm =
+          client.readContract({
+            ...viemTokenInterface,
+            functionName: 'symbol',
+            args: []
+          }) || ''
+
+        const [tokenSupply, tokenName] = await Promise.all([
+          supplyProm,
+          tokenProm
+        ])
 
         return {
           name: tokenName as string,
-          balance: weiToEth(supply.toString()),
+          balance: weiToEth(tokenSupply.toString()),
           icon: token.icon
         }
       } catch (error) {
-        console.error(error)
+        console.error(
+          `There was an error fetching balance and/or symbol 
+          for token contract: ${token.address} - ${error}`
+        )
       }
     })
   )
-  return updatedBalances
+  return tokenBalances
 }
 
 export default updateBalances
