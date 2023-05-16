@@ -42,13 +42,14 @@ const getAccount = async (
 
 const generateAccounts = async (
   keyring: any,
-  provider: StaticJsonRpcProvider
+  provider: StaticJsonRpcProvider,
+  consecutiveEmptyAccounts: number
 ): Promise<Account[]> => {
   const accounts = []
   let zeroBalanceAccounts = 0,
     index = 0
 
-  while (zeroBalanceAccounts < 5) {
+  while (zeroBalanceAccounts < consecutiveEmptyAccounts) {
     const account = await getAccount(keyring, provider, index)
     if (account.balance.value.isZero()) {
       zeroBalanceAccounts++
@@ -66,11 +67,17 @@ const generateAccounts = async (
 function keystone({
   customNetwork,
   filter,
-  containerElement
+  containerElement,
+  consecutiveEmptyAccountThreshold
 }: {
   customNetwork?: CustomNetwork
   filter?: Platform[]
   containerElement?: string
+  /**
+   * A number that defines the amount of consecutive empty addresses displayed
+   * within the Account Select modal. Default is 5
+   */
+  consecutiveEmptyAccountThreshold?: number
 } = {}): WalletInit {
   const getIcon = async () => (await import('./icon.js')).default
 
@@ -121,6 +128,7 @@ function keystone({
           getHardwareWalletProvider
         } = await import('@web3-onboard/hw-common')
 
+        const consecutiveEmptyAccounts = consecutiveEmptyAccountThreshold || 5
         const keyring = AirGappedKeyring.getEmptyKeyring()
         await keyring.readKeyring()
 
@@ -136,7 +144,11 @@ function keystone({
             chains.find(({ id }: Chain) => id === chainId) || currentChain
 
           ethersProvider = new StaticJsonRpcProvider(currentChain.rpcUrl)
-          return generateAccounts(keyring, ethersProvider)
+          return generateAccounts(
+            keyring,
+            ethersProvider,
+            consecutiveEmptyAccounts
+          )
         }
 
         const getAccounts = async () => {

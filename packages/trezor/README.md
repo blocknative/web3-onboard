@@ -15,6 +15,11 @@ type TrezorOptions = {
   customNetwork?: CustomNetwork
   filter?: Platform[]
   containerElement?: string
+  /**
+   * A number that defines the amount of consecutive empty addresses displayed
+   * within the Account Select modal. Default is 5
+   */
+  consecutiveEmptyAccountThreshold?: number
 }
 
 interface CustomNetwork {
@@ -49,7 +54,7 @@ interface BootstrapNode {
   comment: string
 }
 
-type Platform = DeviceOSName | DeviceBrowserName | DeviceType | 'all';
+type Platform = DeviceOSName | DeviceBrowserName | DeviceType | 'all'
 ```
 
 ### Usage
