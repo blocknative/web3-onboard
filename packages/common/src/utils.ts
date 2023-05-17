@@ -73,7 +73,7 @@ export const ethToWeiBigInt = (eth: string | number): bigint => {
   // Perform the conversion from Eth to Wei
   const weiValue = integerPart * BigInt(10 ** 18) + decimalPart * weiFactor
 
-  return weiValue
+  return BigInt(weiValue)
 }
 
 export const bigIntToHex = (value: bigint): string => {

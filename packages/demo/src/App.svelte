@@ -263,7 +263,13 @@
         id: '0x89',
         token: 'MATIC',
         label: 'Polygon',
-        rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+        rpcUrl: 'https://matic-mainnet.chainstacklabs.com',
+        secondaryTokens: [
+  {
+    address: '0xc3c7d422809852031b44ab29eec9f1eff2a58756',
+    icon: `https://avatars.githubusercontent.com/u/43341157`
+  }
+  ]
       },
       {
         id: 10,
@@ -275,7 +281,13 @@
         id: 42161,
         token: 'ARB-ETH',
         label: 'Arbitrum',
-        rpcUrl: 'https://rpc.ankr.com/arbitrum'
+        rpcUrl: 'https://rpc.ankr.com/arbitrum',
+        secondaryTokens: [
+          {
+            address: '0x539bde0d7dbd336b79148aa742883198bbf60342',
+            icon: `https://avatars.githubusercontent.com/u/43341157`
+          }
+        ]
       }
     ],
     connect: {
