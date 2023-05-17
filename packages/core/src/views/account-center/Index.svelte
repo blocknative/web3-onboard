@@ -20,7 +20,10 @@
   }
 </script>
 
-{#key $accountCenter$}
+<svelte:window on:click={minimize} />
+
+{#key $accountCenter$.position}
+{#key $accountCenter$.minimal}
 <div class="container flex flex-column items-end" style="width: 315px;">
   {#if $accountCenter$.position.includes('bottom')}
     <AccountCenterPanel />
@@ -34,4 +37,5 @@
     <AccountCenterPanel />
   {/if}
 </div>
+{/key}
 {/key}
