@@ -20,7 +20,7 @@
   }
 </script>
 
-{#key $accountCenter$.position}
+{#key $accountCenter$}
 <div class="container flex flex-column items-end" style="width: 315px;">
   {#if $accountCenter$.position.includes('bottom')}
     <AccountCenterPanel />
