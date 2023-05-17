@@ -37,4 +37,4 @@ export const STORAGE_KEYS = {
 
 export const MOBILE_WINDOW_WIDTH = 768
 
-export const BN_PROTECT_RPC_URL = 'https://www.rpc.blocknative.com'
+export const BN_PROTECT_RPC_URL = 'https://rpc.blocknative.com'
