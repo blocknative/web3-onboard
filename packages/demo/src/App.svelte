@@ -218,12 +218,6 @@
     gas,
     chains: [
       {
-        id: '0x13881',
-        token: 'MATIC',
-        label: 'Polygon - Mumbai',
-        rpcUrl: 'https://matic-mumbai.chainstacklabs.com	'
-      },
-      {
         id: '0x1',
         token: 'ETH',
         secondaryTokens: [
@@ -253,6 +247,12 @@
         token: 'ETH',
         label: 'Goerli',
         rpcUrl: `https://goerli.infura.io/v3/${infura_key}`
+      },
+      {
+        id: '0x13881',
+        token: 'MATIC',
+        label: 'Polygon - Mumbai',
+        rpcUrl: 'https://matic-mumbai.chainstacklabs.com	'
       },
       {
         id: '0x38',

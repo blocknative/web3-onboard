@@ -17,9 +17,11 @@ yarn add @web3-onboard/blocto
 
   </TabPanel>
   <TabPanel value="npm">
+
 ```sh copy
 npm install @web3-onboard/blocto
 ```
+
   </TabPanel>
 </Tabs>
 
