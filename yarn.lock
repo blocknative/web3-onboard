@@ -3983,19 +3983,6 @@
   dependencies:
     "@unstoppabledomains/resolution" "^8.0"
 
-"@web3-onboard/walletconnect@^2.3.7":
-  version "2.3.7"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/walletconnect/-/walletconnect-2.3.7.tgz#35c3b611a428097559907aeccfb64dee002f139a"
-  integrity sha512-9m8ZL03Gie1xZG0SFTNRw2Azn+zLev7bSbiAdgqhlSkvw0kazahWE0atHWTggI4TwLLe5jPrZriwm9vmbEM2ow==
-  dependencies:
-    "@ethersproject/providers" "5.5.0"
-    "@walletconnect/client" "^1.8.0"
-    "@walletconnect/ethereum-provider" "2.7.0"
-    "@walletconnect/qrcode-modal" "^1.8.0"
-    "@web3-onboard/common" "^2.3.2"
-    "@web3modal/standalone" "2.2.2"
-    rxjs "^7.5.2"
-
 "@web3-onboard/web3auth@^2.2.2":
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/@web3-onboard/web3auth/-/web3auth-2.2.2.tgz#e7ecb655f56a8ed263122e7191deec1763e7c8bc"
