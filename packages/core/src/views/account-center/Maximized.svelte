@@ -44,7 +44,7 @@
         validAppChain,
         BN_PROTECT_RPC_URL
       )
-      setLocalStore(STORAGE_KEYS.PROTECT_ENABLED, true)
+      setLocalStore(STORAGE_KEYS.PROTECT_ENABLED, 'true')
       enableTransactionProtection = false
     } catch (error) {
       const { code } = error as { code: number }
