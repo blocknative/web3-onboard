@@ -480,7 +480,7 @@
   let typedMsg = JSON.stringify(
     {
       domain: {
-        chainId: '0x13881',
+        chainId: '0x5',
         name: 'Web3-Onboard Test App',
         verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
         version: '1'
@@ -528,7 +528,7 @@
     2
   )
   const signTypedMessage = async (provider, address) => {
-    await onboard.setChain({ chainId: '0x13881' })
+    await onboard.setChain({ chainId: '0x5' })
     const signature = await provider.request({
       method: 'eth_signTypedData_v4',
       params: [address, typedMsg]
