@@ -683,7 +683,7 @@ jobs:
       - node-testing-build-steps
   build-testing-core:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.15.1
     working_directory: ~/web3-onboard-monorepo/packages/core
     steps:
       - node-testing-build-steps
