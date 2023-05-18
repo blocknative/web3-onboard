@@ -16,7 +16,6 @@
     SuccessStatusIcon,
     WalletAppBadge
   } from '../shared/index.js'
-  import { getLocalStore, setLocalStore } from '../../utils'
   import caretLightIcon from '../../icons/caret-light.js'
   import warningIcon from '../../icons/warning.js'
   import questionIcon from '../../icons/question.js'
@@ -26,7 +25,7 @@
   import { configuration } from '../../configuration.js'
   import SecondaryTokenTable from './SecondaryTokenTable.svelte'
   import shieldIcon from '../../icons/shield-icon.js'
-  import { BN_PROTECT_RPC_URL, STORAGE_KEYS } from '../../constants.js'
+  import { BN_PROTECT_RPC_URL } from '../../constants.js'
   import { updateChainRPC } from '../../provider.js'
   import { shareReplay, startWith } from 'rxjs/operators'
   const accountCenter$ = state
@@ -44,7 +43,6 @@
         validAppChain,
         BN_PROTECT_RPC_URL
       )
-      setLocalStore(STORAGE_KEYS.PROTECT_ENABLED, 'true')
       enableTransactionProtection = false
     } catch (error) {
       const { code } = error as { code: number }
@@ -54,7 +52,6 @@
 
   const { chains: appChains, accountCenter } = state.get()
   const { appMetadata } = configuration
-  const protectEnabled = getLocalStore(STORAGE_KEYS.PROTECT_ENABLED)
   let disconnectConfirmModal = false
   let enableTransactionProtection = false
   let hideWalletRowMenu: () => void
@@ -451,7 +448,7 @@
         </div>
       </div>
       <!-- Only display on Eth Mainnet -->
-      {#if !$accountCenter$.hideTransactionProtectionBtn && connectedChain.id === '0x1' && !protectEnabled}
+      {#if !$accountCenter$.hideTransactionProtectionBtn && connectedChain.id === '0x1' }
         <div
           on:click={() => (enableTransactionProtection = true)}
           class="protect action-container flex items-center pointer"
