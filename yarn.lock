@@ -3794,14 +3794,6 @@
     "@walletconnect/window-getters" "^1.0.1"
     tslib "1.14.1"
 
-"@web3-onboard/frame@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/frame/-/frame-2.0.0.tgz#b2840fc3ebb1c303b6f305f25e847512d8065810"
-  integrity sha512-FBbc9JCEVMX502wA5wqWpRBF2qAxnPvflCmCMK2bm2gVcS/HuT99eXV497yb6KJy9ryXxS/t7d8hVZtuRDwOYg==
-  dependencies:
-    "@web3-onboard/common" "^2.3.1"
-    eth-provider "^0.13.6"
-
 "@web3-react/abstract-connector@^6.0.7":
   version "6.0.7"
   resolved "https://registry.yarnpkg.com/@web3-react/abstract-connector/-/abstract-connector-6.0.7.tgz#401b3c045f1e0fab04256311be49d5144e9badc6"
