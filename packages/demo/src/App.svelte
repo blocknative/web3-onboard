@@ -310,9 +310,9 @@
     // // example customizing account center
     accountCenter: {
       desktop: {
-        position: 'topLeft',
+        position: 'topRight',
         enabled: true,
-        minimal: true
+        minimal: false
       }
     },
     // example customizing copy
