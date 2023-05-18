@@ -7,7 +7,7 @@ export const APP_INITIAL_STATE: AppState = {
   chains: [],
   accountCenter: {
     enabled: true,
-    position: 'bottomRight',
+    position: 'topRight',
     expanded: false,
     minimal: configuration.device.type === 'mobile'
   },
