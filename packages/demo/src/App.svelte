@@ -310,11 +310,10 @@
     // // example customizing account center
     accountCenter: {
       desktop: {
-        position: 'topLeft',
+        position: 'topRight',
         enabled: true,
-        minimal: false,
-      },
-      // hideTransactionProtectionBtn: true
+        minimal: false
+      }
     },
     // example customizing copy
     i18n: {
