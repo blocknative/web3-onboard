@@ -343,7 +343,6 @@
     if (
       appChain &&
       !secondaryTokens &&
-      appChain &&
       Array.isArray(appChain.secondaryTokens) &&
       appChain.secondaryTokens.length
     ) {
