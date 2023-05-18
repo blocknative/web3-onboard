@@ -310,7 +310,7 @@
     // // example customizing account center
     accountCenter: {
       desktop: {
-        position: 'topRight',
+        position: 'topLeft',
         enabled: true,
         minimal: false,
       },
