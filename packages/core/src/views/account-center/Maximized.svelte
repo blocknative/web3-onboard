@@ -21,16 +21,41 @@
   import questionIcon from '../../icons/question.js'
   import { poweredByBlocknative } from '../../icons/index.js'
   import DisconnectAllConfirm from './DisconnectAllConfirm.svelte'
+  import EnableTransactionProtection from './EnableTransactionProtection.svelte'
   import { configuration } from '../../configuration.js'
   import SecondaryTokenTable from './SecondaryTokenTable.svelte'
+  import shieldIcon from '../../icons/shield-icon.js'
+  import { BN_PROTECT_RPC_URL } from '../../constants.js'
+  import { updateChainRPC } from '../../provider.js'
+  import { shareReplay, startWith } from 'rxjs/operators'
+  const accountCenter$ = state
+    .select('accountCenter')
+    .pipe(startWith(state.get().accountCenter), shareReplay(1))
 
   function disconnectAllWallets() {
     $wallets$.forEach(({ label }) => disconnect({ label }))
   }
 
-  const { chains: appChains } = state.get()
+  const enableProtectionRPC = async () => {
+    try {
+      await updateChainRPC(
+        primaryWallet.provider,
+        validAppChain,
+        BN_PROTECT_RPC_URL
+      )
+      enableTransactionProtection = false
+    } catch (error) {
+      console.error(
+        `There was en error or the end user rejected updating the RPC in the wallet. Error: ${error}`
+      )
+      enableTransactionProtection = false
+    }
+  }
+
+  const { chains: appChains, accountCenter } = state.get()
   const { appMetadata } = configuration
   let disconnectConfirmModal = false
+  let enableTransactionProtection = false
   let hideWalletRowMenu: () => void
 
   $: [primaryWallet] = $wallets$
@@ -50,7 +75,7 @@
     connectedChain && connectedChain.id
   )
 
-  const { position } = state.get().accountCenter
+  const { position } = accountCenter
   const { device } = configuration
 </script>
 
@@ -146,27 +171,55 @@
   }
 
   .network-container {
-    background: var(--backround-color);
+    background: var(--background-color);
     border-top: 1px solid var(--border-color);
-
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.75rem;
+    gap: 0.5rem;
     border-radius: var(
       --account-center-border-radius,
       var(--onboard-border-radius-3, var(--border-radius-3))
     );
-
     color: var(
       --account-center-maximized-network-text-color,
       var(--account-center-maximized-network-section, inherit)
     );
   }
 
-  .p5-5 {
-    padding: 12px;
+  .network-section {
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 16px;
   }
 
   .network-selector-container {
-    margin-left: 1rem;
     width: 100%;
+  }
+  .protect {
+    flex-direction: row;
+    padding: 0.25rem 0.375rem 0;
+    gap: 0.375rem;
+    width: 100%;
+  }
+  .shield {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  .protect-text {
+    font-size: var(--onboard-font-size-6, var(--font-size-6));
+    color: var(
+      --account-center-maximized-upper-action-color,
+      var(--action-color)
+    );
+    line-height: 1.75rem;
+    display: flex;
+    align-items: center;
   }
 
   .network-selector-label {
@@ -184,7 +237,10 @@
       )
     );
     border-top: 1px solid var(--border-color);
-    border-radius: var(--account-center-border-radius, inherit);
+    border-radius: var(
+      --account-center-border-radius,
+      var(--onboard-border-radius-3, var(--border-radius-3))
+    );
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -263,6 +319,12 @@
     onConfirm={disconnectAllWallets}
   />
 {/if}
+{#if enableTransactionProtection}
+  <EnableTransactionProtection
+    onDismiss={() => (enableTransactionProtection = false)}
+    onEnable={() => enableProtectionRPC()}
+  />
+{/if}
 
 <div
   in:fly={{
@@ -327,13 +389,13 @@
 
     <!-- network section -->
     <div
-      class="network-container shadow-1"
+      class="network-container"
       class:background-blue={(validAppChain && validAppChain.icon) ||
         defaultChainStyles}
       class:background-yellow={!validAppChain}
       class:background-gray={validAppChain && !defaultChainStyles}
     >
-      <div class="flex items-center p5-5">
+      <div class="network-section flex items-center">
         <!-- network icon -->
         <div class="relative flex">
           <WalletAppBadge
@@ -387,94 +449,110 @@
           </div>
         </div>
       </div>
+      <!-- Only display on Eth Mainnet -->
+      {#if !$accountCenter$.hideTransactionProtectionBtn && connectedChain.id === '0x1'}
+        <div
+          on:click={() => (enableTransactionProtection = true)}
+          class="protect action-container flex items-center pointer"
+        >
+          <div class="shield">
+            {@html shieldIcon}
+          </div>
+          <span class="protect-text"
+            >{$_('accountCenter.enableTransactionProtection', {
+              default: en.accountCenter.enableTransactionProtection
+            })}</span
+          >
+        </div>
+      {/if}
+    </div>
 
-      <!-- app info section -->
-      <div class="app-info-container">
-        {#if appMetadata}
-          <div class="flex items-start app-info-header">
-            <!-- app icon -->
-            <div class="relative flex app-icon-name">
-              <WalletAppBadge
-                size={32}
-                padding={4}
-                background="white"
-                border="black"
-                radius={8}
-                icon={(appMetadata && appMetadata.icon) || questionIcon}
-              />
-              <div class="app-name">
-                {(appMetadata && appMetadata.name) || 'App Name'}
-              </div>
-            </div>
-
-            <div class="app-description">
-              {(appMetadata && appMetadata.description) ||
-                'This app has not added a description.'}
+    <!-- app info section -->
+    <div class="app-info-container">
+      {#if appMetadata}
+        <div class="flex items-start app-info-header">
+          <!-- app icon -->
+          <div class="relative flex app-icon-name">
+            <WalletAppBadge
+              size={32}
+              padding={4}
+              background="white"
+              border="black"
+              radius={8}
+              icon={(appMetadata && appMetadata.icon) || questionIcon}
+            />
+            <div class="app-name">
+              {(appMetadata && appMetadata.name) || 'App Name'}
             </div>
           </div>
 
-          <!-- app info -->
-          {#if appMetadata.gettingStartedGuide || appMetadata.explore}
-            <div class="app-info">
-              <div class="app-info-heading">
-                {$_('accountCenter.appInfo', {
-                  default: en.accountCenter.appInfo
-                })}
-              </div>
-
-              {#if appMetadata.gettingStartedGuide}
-                <div class="flex justify-between items-center w100">
-                  <div>
-                    {$_('accountCenter.learnMore', {
-                      default: en.accountCenter.learnMore
-                    })}
-                  </div>
-                  <a
-                    href={appMetadata.gettingStartedGuide}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    {$_('accountCenter.gettingStartedGuide', {
-                      default: en.accountCenter.gettingStartedGuide
-                    })}
-                  </a>
-                </div>
-              {/if}
-
-              {#if appMetadata.explore}
-                <div class="flex justify-between items-center w100">
-                  <div>
-                    {$_('accountCenter.smartContracts', {
-                      default: en.accountCenter.smartContracts
-                    })}
-                  </div>
-                  <a
-                    href={appMetadata.explore}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    {$_('accountCenter.explore', {
-                      default: en.accountCenter.explore
-                    })}
-                  </a>
-                </div>
-              {/if}
-            </div>
-          {/if}
-        {/if}
-        {#if secondaryTokens && secondaryTokens.length}
-          <SecondaryTokenTable {secondaryTokens} />
-        {/if}
-        <div class="w100">
-          <a
-            href="https://blocknative.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="flex justify-center items-center powered-by-container"
-          >
-            {@html poweredByBlocknative}
-          </a>
+          <div class="app-description">
+            {(appMetadata && appMetadata.description) ||
+              'This app has not added a description.'}
+          </div>
         </div>
+
+        <!-- app info -->
+        {#if appMetadata.gettingStartedGuide || appMetadata.explore}
+          <div class="app-info">
+            <div class="app-info-heading">
+              {$_('accountCenter.appInfo', {
+                default: en.accountCenter.appInfo
+              })}
+            </div>
+
+            {#if appMetadata.gettingStartedGuide}
+              <div class="flex justify-between items-center w100">
+                <div>
+                  {$_('accountCenter.learnMore', {
+                    default: en.accountCenter.learnMore
+                  })}
+                </div>
+                <a
+                  href={appMetadata.gettingStartedGuide}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  {$_('accountCenter.gettingStartedGuide', {
+                    default: en.accountCenter.gettingStartedGuide
+                  })}
+                </a>
+              </div>
+            {/if}
+
+            {#if appMetadata.explore}
+              <div class="flex justify-between items-center w100">
+                <div>
+                  {$_('accountCenter.smartContracts', {
+                    default: en.accountCenter.smartContracts
+                  })}
+                </div>
+                <a
+                  href={appMetadata.explore}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  {$_('accountCenter.explore', {
+                    default: en.accountCenter.explore
+                  })}
+                </a>
+              </div>
+            {/if}
+          </div>
+        {/if}
+      {/if}
+      {#if secondaryTokens && secondaryTokens.length}
+        <SecondaryTokenTable {secondaryTokens} />
+      {/if}
+      <div class="w100">
+        <a
+          href="https://blocknative.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex justify-center items-center powered-by-container"
+        >
+          {@html poweredByBlocknative}
+        </a>
       </div>
     </div>
   </div>
