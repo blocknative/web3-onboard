@@ -19,7 +19,7 @@ If an issue does not already exist, follow the template instructions to create a
 
 Once an issue is created, a Web3 Onboard maintainer will review and respond typically within a few days to share next steps.
 
-## [Pull Requests 🗂️]
+## Pull Requests 🗂️
 
 To create a new feature or change in Web3 Onboard, fork the repo and make a pull request on the [develop branch](https://github.com/blocknative/web3-onboard/tree/develop) to have your changes merged in and released as part of the official packages.
 
@@ -39,7 +39,7 @@ Example : Adding a new injected wallet to the `injected` package -
 Example 2 : Bug fix within the `core` package -
 [Core package.json](https://github.com/blocknative/web3-onboard/blob/8531a73d69365f7d584320f1c4b97a5d90f1c34e/packages/core/package.json#L3) changes: `"version": "2.9.1-alpha.1",` --> `"version": "2.9.1-alpha.2",`
 
-## [How can I add a new wallet? 💳]
+## How can I add a new wallet? 💳
 
 To add a new wallet to the official Web3 Onboard packages and repo, create a [pull request](#pull-requests-🗂️). Web3 Onboard does not require a wallet to be a part of the main code, so a separate wallet module can be created without any changes to the Web3Onboard codebase. Your PR must include a detailed README for the package, keeping in mind that this README is the the first point of contact for dapp devs looking to implement your wallet.
 
@@ -57,7 +57,7 @@ Otherwise, if the wallet you are adding requires dependencies and initialization
 
 If you cannot write the code yourself to add a new wallet, create a new feature request issue to be considered by the maintainers and other contributors in the community.
 
-## [Documentation Contributions 📄]
+## Documentation Contributions 📄
 
 If you contribute to the code, you should definitely document appropriately.
 
@@ -71,11 +71,11 @@ PRs for adding/updating a wallet should include a README (new or updated) for th
 
 We highly encourage the community to help us improve the web3-onboard docs! If you have any questions don't hesitate to reach out.
 
-## [Feedback 💬]
+## Feedback 💬
 
 Did you have trouble integrating? Could the docs be improved? Have a new Feature request?
 Jump in our [Discord](https://discord.com/invite/KZaBVME) and share your feedback.
 
-## [Support 🤓]
+## Support 🤓
 
 For general questions about how to use Web3 Onboard please first check out our [docs](../../overview/introduction.md#features), then head to our [Discord](https://discord.com/invite/KZaBVME) for support from the Blocknative team.

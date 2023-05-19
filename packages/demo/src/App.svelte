@@ -150,7 +150,8 @@
 
   const trezorOptions = {
     email: 'test@test.com',
-    appUrl: 'https://www.blocknative.com'
+    appUrl: 'https://www.blocknative.com',
+    consecutiveEmptyAccountThreshold: 10
     // containerElement: '#sample-container-el'
   }
   const trezor = trezorModule(trezorOptions)
@@ -182,31 +183,31 @@
   const onboard = Onboard({
     wallets: [
       injected,
-      frameWallet,
       ledger,
       trezor,
       walletConnect,
-      infinityWallet,
+      coinbaseWallet,
+      phantom,
+      gnosis,
       trust,
+      tallyho,
       enkrypt,
+      infinityWallet,
       mewWallet,
       keepkey,
       keystone,
-      coinbaseWallet,
       magic,
       fortmatic,
       portis,
       torus,
-      gnosis,
       dcent,
       sequence,
-      tallyho,
       uauth,
       web3auth,
       zeal,
       frontier,
-      phantom,
       xdefi,
+      frameWallet,
       cedeStore
     ],
     transactionPreview,
@@ -311,8 +312,9 @@
       desktop: {
         position: 'topRight',
         enabled: true,
-        minimal: false
-      }
+        minimal: false,
+      },
+      // hideTransactionProtectionBtn: true
     },
     // example customizing copy
     i18n: {
@@ -355,7 +357,7 @@
     // },
     // Sign up for your free api key at www.Blocknative.com
     apiKey,
-    theme: 'system'
+    theme: 'default'
   })
 
   // Subscribe to wallet updates

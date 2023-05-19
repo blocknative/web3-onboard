@@ -51,7 +51,7 @@ web3-onboard supports all EVM networks. Supporting a new network is simply a mat
 - Moonriver
 - All other EVM network
 
-### [Optional] Use an API key to fetch real time transaction data, balances & gas
+### Optional - Use an API key to fetch real time transaction data, balances & gas
 
 Using a Blocknative API key with web3-onboard on the free plan will allow you to gain the benefits of Blocknative balance & transaction services. Blocknative has a free forever plan you can always use.
 

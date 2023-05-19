@@ -471,6 +471,31 @@ export function addNewChain(
   })
 }
 
+export function updateChainRPC(
+  provider: EIP1193Provider,
+  chain: Chain,
+  rpcUrl: string
+): Promise<unknown> {
+  return provider.request({
+    method: 'wallet_addEthereumChain',
+    params: [
+      {
+        chainId: chain.id,
+        chainName: chain.label,
+        nativeCurrency: {
+          name: chain.label,
+          symbol: chain.token,
+          decimals: 18
+        },
+        rpcUrls: [rpcUrl],
+        blockExplorerUrls: chain.blockExplorerUrl
+          ? [chain.blockExplorerUrl]
+          : undefined
+      }
+    ]
+  })
+}
+
 export async function getPermissions(
   provider: EIP1193Provider
 ): Promise<WalletPermission[]> {

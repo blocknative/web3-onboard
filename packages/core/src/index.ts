@@ -5,7 +5,12 @@ import { state } from './store/index.js'
 import { reset$, wallets$ } from './streams.js'
 import initI18N from './i18n/index.js'
 import App from './views/Index.svelte'
-import type { ConnectModalOptions, InitOptions, Notify, Theme } from './types.js'
+import type {
+  ConnectModalOptions,
+  InitOptions,
+  Notify,
+  Theme
+} from './types.js'
 import { APP_INITIAL_STATE, STORAGE_KEYS } from './constants.js'
 import { configuration, updateConfiguration } from './configuration.js'
 import updateBalances from './update-balances.js'
@@ -117,19 +122,21 @@ function init(options: InitOptions): OnboardAPI {
   if (typeof connect !== undefined) {
     updateConnectModal(connect)
   }
-
   // update accountCenter
   if (typeof accountCenter !== 'undefined') {
     let accountCenterUpdate
+    const { hideTransactionProtectionBtn } = accountCenter
 
     if (device.type === 'mobile') {
       accountCenterUpdate = {
         ...APP_INITIAL_STATE.accountCenter,
+        hideTransactionProtectionBtn,
         ...(accountCenter.mobile ? accountCenter.mobile : {})
       }
     } else if (accountCenter.desktop) {
       accountCenterUpdate = {
         ...APP_INITIAL_STATE.accountCenter,
+        hideTransactionProtectionBtn,
         ...accountCenter.desktop
       }
     }
