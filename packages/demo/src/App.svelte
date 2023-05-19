@@ -312,8 +312,9 @@
       desktop: {
         position: 'topRight',
         enabled: true,
-        minimal: false
-      }
+        minimal: false,
+      },
+      // hideTransactionProtectionBtn: true
     },
     // example customizing copy
     i18n: {
@@ -356,7 +357,7 @@
     // },
     // Sign up for your free api key at www.Blocknative.com
     apiKey,
-    theme: 'system'
+    theme: 'default'
   })
 
   // Subscribe to wallet updates

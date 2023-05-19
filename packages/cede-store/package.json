@@ -70,6 +70,6 @@
   },
   "dependencies": {
     "@cedelabs/providers": "^0.0.7",
-    "@web3-onboard/common": "^2.3.2"
+    "@web3-onboard/common": "^2.3.3-alpha.1"
   }
 }
