@@ -312,8 +312,9 @@
       desktop: {
         position: 'topRight',
         enabled: true,
-        minimal: false
-      }
+        minimal: false,
+      },
+      // hideTransactionProtectionBtn: true
     },
     // example customizing copy
     i18n: {
