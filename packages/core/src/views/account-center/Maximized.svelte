@@ -45,8 +45,10 @@
       )
       enableTransactionProtection = false
     } catch (error) {
-      const { code } = error as { code: number }
-      console.log(error, code)
+      console.error(
+        `There was en error or the end user rejected updating the RPC in the wallet. Error: ${error}`
+      )
+      enableTransactionProtection = false
     }
   }
 
