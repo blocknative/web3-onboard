@@ -75,6 +75,8 @@
     connectedChain && connectedChain.id
   )
 
+  $: primaryWalletOnMainnet = connectedChain && connectedChain.id === '0x1'
+
   const { position } = accountCenter
   const { device } = configuration
 </script>
@@ -450,7 +452,7 @@
         </div>
       </div>
       <!-- Only display on Eth Mainnet -->
-      {#if !$accountCenter$.hideTransactionProtectionBtn && connectedChain.id === '0x1'}
+      {#if !$accountCenter$.hideTransactionProtectionBtn && primaryWalletOnMainnet}
         <div
           on:click={() => (enableTransactionProtection = true)}
           class="protect action-container flex items-center pointer"
