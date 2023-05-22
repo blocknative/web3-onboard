@@ -24,7 +24,7 @@
 
 {#key $accountCenter$.position}
 {#key $accountCenter$.minimal}
-<div class="container flex flex-column items-end" style="width: 315px;">
+<div class="container flex flex-column items-end">
   {#if $accountCenter$.position.includes('bottom')}
     <AccountCenterPanel />
   {/if}
