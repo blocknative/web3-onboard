@@ -335,6 +335,13 @@ type AccountCenter = {
 type AccountCenterOptions = {
   desktop: Omit<AccountCenter, 'expanded'>
   mobile: Omit<AccountCenter, 'expanded'>
+  /**
+   * false by default - This allows removal of the
+   * Enable Transaction Protection' button within the Account Center
+   * expanded when set to true
+   * Can be set as a global for Account Center or per interface (desktop/mobile)
+   */
+  hideTransactionProtectionBtn?: boolean
 }
 
 type AccountCenterPosition =
