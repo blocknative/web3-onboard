@@ -181,7 +181,7 @@
     requireTransactionApproval: true
   })
   const venly = venlyModule({
-    clientId: 'Testaccount',
+    clientId: 'blocknative',
     environment: 'staging'
   })
 
