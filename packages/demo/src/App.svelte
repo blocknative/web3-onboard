@@ -213,7 +213,7 @@
       frontier,
       xdefi,
       frameWallet,
-      cedeStore
+      cedeStore,
       venly
     ],
     transactionPreview,
