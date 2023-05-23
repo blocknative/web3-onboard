@@ -9,7 +9,7 @@ export const APP_INITIAL_STATE: AppState = {
     enabled: true,
     position: 'bottomRight',
     expanded: false,
-    minimal: configuration.device.type === 'mobile'
+    minimal: true
   },
   notify: {
     enabled: true,
