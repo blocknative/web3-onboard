@@ -24,10 +24,10 @@ function BloctoWallet(): WalletInit {
         const provider = createEIP1193Provider(bloctoProvider, {
           eth_selectAccounts: null,
           wallet_switchEthereumChain: async ({ params, baseRequest }) => {
-            const chain = chains.find(({ id }) => id === params?.[0]?.chainId)
+            const chain = chains.find(({ id }) => id === params[0].chainId)
             if (!chain) throw new Error('chain must be set before switching')
-            const providerRpcurl = bloctoProvider?.switchableNetwork?.[chain.id]?.rpc_url
-            const chainUrl = chain?.rpcUrl;
+            const providerRpcurl = bloctoProvider.switchableNetwork[chain.id].rpc_url
+            const chainUrl = chain.rpcUrl;
             if (
               providerRpcurl !== chainUrl
             ) {
@@ -53,7 +53,7 @@ function BloctoWallet(): WalletInit {
           }
         })
 
-        provider.disconnect = () => instance?.ethereum?.request({ method: 'wallet_disconnect' });
+        provider.disconnect = () => instance.ethereum ? instance.ethereum.request({ method: 'wallet_disconnect' }): null
         // patch the chainChanged event
         const on = bloctoProvider.on.bind(bloctoProvider)
         bloctoProvider.on = (event: string, listener: (arg0: string) => void) => {
