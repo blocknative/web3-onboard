@@ -65,7 +65,7 @@
 </script>
 
 <style>
-  .minimized {
+  .ac-trigger {
     --background-color: var(
       --account-center-minimized-background,
       var(--w3o-background-color, white)
@@ -154,7 +154,7 @@
 <div
   in:fade={{ duration: 250 }}
   out:fade={{ duration: 100 }}
-  class="minimized"
+  class="ac-trigger"
   on:click|stopPropagation={toggle}
 >
   <div class="inner-row">

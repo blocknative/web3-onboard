@@ -22,7 +22,7 @@
 </script>
 
 <style>
-  .minimized {
+  .ac-trigger {
     --background-color: var(
       --account-center-minimized-background,
       var(--w3o-background-color, white)
@@ -37,14 +37,14 @@
       var(--w3o-border-radius, 1rem)
     );
 
+    position: relative;
     cursor: pointer;
     pointer-events: auto;
-    width: 80px;
-    border: 1px solid;
+    min-width: 80px;
 
     background: var(--background-color);
     color: var(--text-color);
-    border-color: var(--border-color);
+    border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
     box-shadow: var(
       --account-center-box-shadow,
@@ -76,7 +76,7 @@
 </style>
 
 <div
-  class="minimized"
+  class="ac-trigger"
   on:click|stopPropagation={toggle}
   style={$accountCenter$.position.includes('Left')
     ? 'align-self: flex-start'
