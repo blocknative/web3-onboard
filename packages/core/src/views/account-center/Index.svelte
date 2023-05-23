@@ -20,11 +20,20 @@
   }
 </script>
 
+<style>
+.ac-container {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+</style>
+
 <svelte:window on:click={minimize} />
 
 {#key $accountCenter$.position}
 {#key $accountCenter$.minimal}
-<div class="container flex flex-column items-end">
+<div class="ac-container">
   {#if $accountCenter$.position.includes('bottom')}
     <AccountCenterPanel />
   {/if}

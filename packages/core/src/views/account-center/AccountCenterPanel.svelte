@@ -279,9 +279,7 @@
     }}
     on:click|stopPropagation={hideWalletRowMenu}
     class="outer-container"
-    style={$accountCenter$.position.includes('bottom')
-      ? 'margin-bottom: 10px;'
-      : 'margin-top: 10px;'}
+    
   >
     <!-- wallets section -->
     <div class="wallets-section">
