@@ -3004,7 +3004,7 @@
     "@web3-onboard/common" "^2.2.3"
     lodash.uniqby "^4.7.0"
 
-"@web3-onboard/phantom@^2.0.0-alpha.1":
+"@web3-onboard/phantom@^2.0.0":
   version "2.0.0-alpha.1"
   resolved "https://registry.yarnpkg.com/@web3-onboard/phantom/-/phantom-2.0.0-alpha.1.tgz#a6f01ef849b04dde23bef2d1920a46956dc7abbc"
   integrity sha512-iTBDfbSqYPCy4Sed5ZY/tpWpYOAlKxPFsrrXVLWUWCIOVflu6y7TStgh5BwN69M9wsXLDVkXDf0joNUhme8OAA==
