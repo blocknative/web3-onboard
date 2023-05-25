@@ -1,4 +1,4 @@
-# Mew Wallet
+# OKX Wallet
 
 Wallet module for connecting Okx wallet through web3-onboard
 
