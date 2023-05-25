@@ -357,6 +357,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/phantom
     steps:
       - node-build-steps
+  build-okxwallet:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/okxwallet
+    steps:
+      - node-build-steps
 
   # Build staging/Alpha releases
   build-staging-core:
@@ -549,6 +555,12 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/phantom
+    steps:
+      - node-staging-build-steps
+  build-staging-okxwallet:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/okxwallet
     steps:
       - node-staging-build-steps
 
@@ -746,4 +758,10 @@ workflows:
       - build-phantom:
           <<: *deploy_production_filters
       - build-staging-phantom:
+          <<: *deploy_staging_filters
+  okxwallet:
+    jobs:
+      - build-okxwallet:
+          <<: *deploy_production_filters
+      - build-staging-okxwallet:
           <<: *deploy_staging_filters
