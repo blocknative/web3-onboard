@@ -33,7 +33,7 @@ aliases:
         | grep version \
         | head -1 \
         | awk -F: '{ print $2 }' \
-        | sed 's/[",]//g'); 
+        | sed 's/[",]//g');
         if [[ $PACKAGE_VERSION =~ "-alpha" ]];
         then
           echo true
@@ -50,7 +50,7 @@ aliases:
         | grep version \
         | head -1 \
         | awk -F: '{ print $2 }' \
-        | sed 's/[",]//g'); 
+        | sed 's/[",]//g');
         if [[ $PACKAGE_VERSION =~ "-alpha" ]];
         then
           echo true
@@ -93,12 +93,14 @@ aliases:
   - &create-npm-config
     run:
       name: Create NPM rc file
-      command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
+      command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/.npmrc
 
   - &publish-npm
     run:
       name: Publish package to NPM
-      command: npm publish --access public
+      command: |
+        npm config set //registry.npmjs.org/:_authToken=${npm_TOKEN}
+        npm publish --access public
 
   - &publish-npm-tag-as-next
     run:
@@ -195,6 +197,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/injected
     steps:
       - node-build-steps
+  build-frame:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/frame
+    steps:
+      - node-build-steps
   build-keepkey:
     docker:
       - image: cimg/node:16.13.1
@@ -287,7 +295,7 @@ jobs:
       - node-build-steps
   build-web3auth:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.18.1
     working_directory: ~/web3-onboard-monorepo/packages/web3auth
     steps:
       - node-build-steps
@@ -357,6 +365,36 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/phantom
     steps:
       - node-build-steps
+  build-xdefi:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/xdefi
+    steps:
+      - node-build-steps
+  build-infinity-wallet:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/infinity-wallet
+    steps:
+      - node-build-steps
+  build-taho:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/taho
+    steps:
+      - node-build-steps
+  build-unstoppable-resolution:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/unstoppable-resolution
+    steps:
+      - node-build-steps
+  build-cede-store:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/cede-store
+    steps:
+      - node-build-steps
   build-okxwallet:
     docker:
       - image: cimg/node:16.13.1
@@ -393,6 +431,12 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/injected
+    steps:
+      - node-staging-build-steps
+  build-staging-frame:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/frame
     steps:
       - node-staging-build-steps
   build-staging-keepkey:
@@ -487,7 +531,7 @@ jobs:
       - node-staging-build-steps
   build-staging-web3auth:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.18.1
     working_directory: ~/web3-onboard-monorepo/packages/web3auth
     steps:
       - node-staging-build-steps
@@ -557,6 +601,36 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/phantom
     steps:
       - node-staging-build-steps
+  build-staging-xdefi:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/xdefi
+    steps:
+      - node-staging-build-steps
+  build-staging-infinity-wallet:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/infinity-wallet
+    steps:
+      - node-staging-build-steps
+  build-staging-taho:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/taho
+    steps:
+      - node-staging-build-steps
+  build-staging-unstoppable-resolution:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/unstoppable-resolution
+    steps:
+      - node-staging-build-steps
+  build-staging-cede-store:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/cede-store
+    steps:
+      - node-staging-build-steps
   build-staging-okxwallet:
     docker:
       - image: cimg/node:16.13.1
@@ -596,6 +670,12 @@ workflows:
       - build-injected:
           <<: *deploy_production_filters
       - build-staging-injected:
+          <<: *deploy_staging_filters
+  frame:
+    jobs:
+      - build-frame:
+          <<: *deploy_production_filters
+      - build-staging-frame:
           <<: *deploy_staging_filters
   keepkey:
     jobs:
@@ -758,6 +838,36 @@ workflows:
       - build-phantom:
           <<: *deploy_production_filters
       - build-staging-phantom:
+          <<: *deploy_staging_filters
+  xdefi:
+    jobs:
+      - build-xdefi:
+          <<: *deploy_production_filters
+      - build-staging-xdefi:
+          <<: *deploy_staging_filters
+  infinity-wallet:
+    jobs:
+      - build-infinity-wallet:
+          <<: *deploy_production_filters
+      - build-staging-infinity-wallet:
+          <<: *deploy_staging_filters
+  taho:
+    jobs:
+      - build-taho:
+          <<: *deploy_production_filters
+      - build-staging-taho:
+          <<: *deploy_staging_filters
+  unstoppable-resolution:
+    jobs:
+      - build-unstoppable-resolution:
+          <<: *deploy_production_filters
+      - build-staging-unstoppable-resolution:
+          <<: *deploy_staging_filters
+  cede-store:
+    jobs:
+      - build-cede-store:
+          <<: *deploy_production_filters
+      - build-staging-cede-store:
           <<: *deploy_staging_filters
   okxwallet:
     jobs:

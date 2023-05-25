@@ -1,6 +1,6 @@
 {
   "name": "web3-onboard-monorepo",
-  "version": "2.19.2",
+  "version": "2.23.2",
   "private": true,
   "workspaces": {
     "packages": [
@@ -61,7 +61,8 @@
     "build": "yarn wsrun --serial build",
     "type-check": "yarn wsrun type-check",
     "file-check": "yarn install --check-files",
-    "check-all": "yarn build && yarn file-check && yarn type-check"
+    "check-all": "yarn build && yarn file-check && yarn type-check",
+    "test-playwright": "cd test && yarn && yarn playwright test"
   },
   "devDependencies": {
     "prettier": "^2.4.1",
