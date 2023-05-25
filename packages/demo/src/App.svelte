@@ -662,6 +662,30 @@
                 autoDismiss: 0
               })}>Send DApp Notification</button
           >
+          <button
+            on:click={() =>
+              onboard.state.actions.updateAccountCenter({
+                position: 'bottomLeft'
+              })}>AC Bottom Left</button
+          >
+          <button
+            on:click={() =>
+              onboard.state.actions.updateAccountCenter({
+                position: 'topRight'
+              })}>AC Top Right</button
+          >
+          <button
+            on:click={() =>
+              onboard.state.actions.updateAccountCenter({
+                position: 'bottomRight'
+              })}>AC Bottom Right</button
+          >
+          <button
+            on:click={() =>
+              onboard.state.actions.updateAccountCenter({
+                position: 'topLeft'
+              })}>AC Top Left</button
+          >
         </div>
         <div class="switch-chain-container">
           <button on:click={() => onboard.setChain({ chainId: '0x1' })}
