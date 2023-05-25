@@ -7,6 +7,8 @@
   import { state } from '../../store/index.js'
   import { configuration } from '../../configuration.js'
 
+  export let toggle
+
   const { appMetadata } = configuration
   const appIcon = (appMetadata && appMetadata.icon) || questionIcon
 
@@ -16,9 +18,9 @@
     .select('accountCenter')
     .pipe(startWith(state.get().accountCenter), shareReplay(1))
 
-  function toggle() {
-    updateAccountCenter({ expanded: !$accountCenter$.expanded })
-  }
+  // function toggle() {
+  //   updateAccountCenter({ expanded: !$accountCenter$.expanded })
+  // }
 </script>
 
 <style>

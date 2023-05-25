@@ -24,6 +24,10 @@
   import DisconnectAllConfirm from './DisconnectAllConfirm.svelte'
   import { configuration } from '../../configuration.js'
   import SecondaryTokenTable from './SecondaryTokenTable.svelte'
+  import { onDestroy } from 'svelte'
+  import { updateAccountCenter } from '../../store/actions.js'
+
+  export let expanded: boolean
 
   function disconnectAllWallets() {
     $wallets$.forEach(({ label }) => disconnect({ label }))
@@ -269,7 +273,8 @@
   />
 {/if}
 
-{#if $accountCenter$.expanded}
+{#key expanded}
+{#if expanded}
   <div
     transition:fly={{
       duration: 600,
@@ -486,3 +491,4 @@
     </div>
   </div>
 {/if}
+{/key}

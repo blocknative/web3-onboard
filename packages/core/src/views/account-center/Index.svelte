@@ -7,6 +7,8 @@
   import TriggerLarge from './AcctCenterTriggerLarge.svelte'
   import TriggerSmall from './AcctCenterTriggerSmall.svelte'
 
+  let expanded = false
+
   const accountCenter$ = state
     .select('accountCenter')
     .pipe(startWith(state.get().accountCenter), shareReplay(1))
@@ -16,7 +18,13 @@
   function minimize() {
     if ($accountCenter$.expanded) {
       updateAccountCenter({ expanded: false })
+      expanded = false
     }
+  }
+
+  function toggle(){
+    updateAccountCenter({ expanded: !$accountCenter$.expanded })
+    expanded = !expanded
   }
 </script>
 
@@ -31,20 +39,16 @@
 
 <svelte:window on:click={minimize} />
 
-{#key $accountCenter$.position}
-{#key $accountCenter$.minimal}
 <div class="ac-container">
   {#if $accountCenter$.position.includes('bottom')}
-    <AccountCenterPanel />
+    <AccountCenterPanel expanded={expanded}/>
   {/if}
   {#if $accountCenter$.minimal}
-    <TriggerSmall />
+    <TriggerSmall toggle={toggle}/>
   {:else}
     <TriggerLarge />
   {/if}
   {#if $accountCenter$.position.includes('top')}
-    <AccountCenterPanel />
+    <AccountCenterPanel expanded={expanded}/>
   {/if}
 </div>
-{/key}
-{/key}

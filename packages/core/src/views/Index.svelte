@@ -484,7 +484,7 @@
       {#if $accountCenter$.enabled && $wallets$.length}
         {#await accountCenterComponent then AccountCenter}
           {#if AccountCenter}
-            <svelte:component this={AccountCenter} />
+          <svelte:component this={AccountCenter} />
           {/if}
         {/await}
       {/if}
