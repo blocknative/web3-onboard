@@ -26,7 +26,8 @@ function trust(): WalletInit {
         return {
           provider
         }
-      }
+      },
+      platforms: ['all']
     }
   }
 }
