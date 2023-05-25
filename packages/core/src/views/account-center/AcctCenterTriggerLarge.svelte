@@ -94,7 +94,7 @@
       --account-center-box-shadow,
       var(--onboard-shadow-3, var(--shadow-3))
     );
-    z-index: 1;
+    z-index: var(--account-center-z-index, 1);
   }
 
   .inner-row {
