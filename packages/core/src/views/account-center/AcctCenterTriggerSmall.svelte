@@ -7,7 +7,7 @@
   import { state } from '../../store/index.js'
   import { configuration } from '../../configuration.js'
 
-  export let toggle
+  export let toggle: () => void
 
   const { appMetadata } = configuration
   const appIcon = (appMetadata && appMetadata.icon) || questionIcon

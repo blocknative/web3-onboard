@@ -686,6 +686,18 @@
                 position: 'topLeft'
               })}>AC Top Left</button
           >
+          <button
+            on:click={() =>
+              onboard.state.actions.updateAccountCenter({
+                minimal: false
+              })}>Large Tigger</button
+          >
+          <button
+            on:click={() =>
+              onboard.state.actions.updateAccountCenter({
+                minimal: true
+              })}>Small Tigger</button
+          >
         </div>
         <div class="switch-chain-container">
           <button on:click={() => onboard.setChain({ chainId: '0x1' })}

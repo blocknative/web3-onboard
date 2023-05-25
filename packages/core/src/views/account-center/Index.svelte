@@ -46,7 +46,7 @@
   {#if $accountCenter$.minimal}
     <TriggerSmall toggle={toggle}/>
   {:else}
-    <TriggerLarge />
+    <TriggerLarge toggle={toggle}/>
   {/if}
   {#if $accountCenter$.position.includes('top')}
     <AccountCenterPanel expanded={expanded}/>
