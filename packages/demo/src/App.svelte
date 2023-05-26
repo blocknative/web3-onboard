@@ -711,13 +711,13 @@
           on:click={() =>
             onboard.state.actions.updateAccountCenter({
               minimal: false
-            })}>Large Tigger</button
+            })}>Large Trigger</button
         >
         <button
           on:click={() =>
             onboard.state.actions.updateAccountCenter({
               minimal: true
-            })}>Small Tigger</button
+            })}>Small Trigger</button
         >
       </div>
     {/if}
