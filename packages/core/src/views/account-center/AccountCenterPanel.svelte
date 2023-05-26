@@ -273,10 +273,9 @@
   />
 {/if}
 
-{#key expanded}
 {#if expanded}
   <div
-    transition:fly={{
+    transition:fly|local={{
       duration: 600,
       y: position.includes('bottom') ? 56 : -76,
       easing: quartOut,
@@ -491,4 +490,3 @@
     </div>
   </div>
 {/if}
-{/key}
