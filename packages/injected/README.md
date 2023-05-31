@@ -84,6 +84,7 @@ console.log(connectedWallets)
 - BifrostWallet - _Desktop & Mobile_
 - Safeheron - _Desktop_
 - Talisman - _Desktop_
+- Dawn - _Mobile_
 
 ## Filtering Wallets
 

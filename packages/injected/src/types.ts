@@ -186,6 +186,7 @@ export interface CustomWindow extends Window {
   deficonnectProvider: InjectedProvider
   safeheron: InjectedProvider
   talismanEth: InjectedProvider
+  dawn: InjectedProvider
 }
 
 export type InjectedProvider = ExternalProvider &

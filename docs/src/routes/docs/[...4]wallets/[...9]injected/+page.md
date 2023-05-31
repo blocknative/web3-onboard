@@ -319,6 +319,7 @@ const injected = injectedModule({
 - BifrostWallet - _Desktop & Mobile_
 - Safeheron - _Desktop_
 - Talisman - _Desktop_
+- Dawn - _Mobile_
 
 ## Build Environments
 
