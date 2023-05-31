@@ -605,6 +605,18 @@ const bitkeep: InjectedWalletModule = {
   platforms: ['all']
 }
 
+const dawn: InjectedWalletModule = {
+    label: ProviderLabel.Dawn,
+    injectedNamespace: InjectedNameSpace.Ethereum,
+    checkProviderIdentity: ({ provider }) =>
+      !!provider && !!provider[ProviderIdentityFlag.Dawn],
+    getIcon: async () => (await import('./icons/dawn.js')).default,
+    getInterface: async () => ({
+      provider: createEIP1193Provider(window.ethereum)
+    }),
+    platforms: ['mobile', 'Safari']
+}
+
 const sequence: InjectedWalletModule = {
   label: ProviderLabel.Sequence,
   injectedNamespace: InjectedNameSpace.Ethereum,
@@ -785,6 +797,7 @@ const wallets = [
   bifrostwallet,
   binance,
   coinbase,
+  dawn,
   detected,
   trust,
   opera,
