@@ -11,7 +11,8 @@ const config = {
       crypto: 'crypto-browserify',
       stream: 'stream-browserify',
       assert: 'assert',
-      zlib: 'browserify-zlib'
+      zlib: 'browserify-zlib',
+      http: 'stream-http'
     }
   },
   build: {

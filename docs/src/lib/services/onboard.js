@@ -138,7 +138,7 @@ const intiOnboard = async (theme) => {
       portis,
       frame,
       infinityWallet,
-      venly
+      // venly
     ],
     chains: [
       {
