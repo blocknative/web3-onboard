@@ -3202,10 +3202,10 @@
     es6-promise "^4.2.8"
     keycloak-js "11.0.2"
 
-"@venly/web3-provider@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@venly/web3-provider/-/web3-provider-3.1.0.tgz#862a31b172a3445713cc627396fea7c2724e0c47"
-  integrity sha512-yPZJPGDTiwEq1YnEU2gL1NxjteQPFRGWeCKuvYd7sy3EH9fUcohwhkJbVuKipL5eGpAW5j4AyABjpkb79XZcxQ==
+"@venly/web3-provider@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@venly/web3-provider/-/web3-provider-3.1.1.tgz#4abc990d73b7004f3b4b380ad8989a92113703e4"
+  integrity sha512-1yhJo9RVE98rA+8HfEllWHYaOar1izGh1SQ2umhdeW8f7E1u3btP8GUD+9aFy+ysOSPQJYvsLv75NaOaGW8PCg==
   dependencies:
     "@ethersproject/bignumber" "^5.7.0"
     "@metamask/eth-json-rpc-middleware" "^11.0.0"

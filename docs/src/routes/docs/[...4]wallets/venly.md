@@ -32,7 +32,7 @@ type VenlyOptions = {
 `clientId` - The Client ID used to connect with Venly. More information can be found [here](https://docs.venly.io/widget/deep-dive/authentication#client-id).
 `environment` - The environment to which you want to connect, possible values are 'staging' and 'production'. Defaults to 'production'.
 
-**NOTE**: Production environment handles main networks while Staging handles test networks. Switching between environments is currently not supported but will be added in a future release.
+**NOTE**: Production environment handles main networks while Staging handles test networks. List of supported networks can be found [here](https://docs.venly.io/api/deep-dive-1/environments-and-networks#blockchain-networks).
 
 ## Usage
 

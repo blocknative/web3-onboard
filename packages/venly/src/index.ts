@@ -1,5 +1,4 @@
 import { WalletInit } from '@web3-onboard/common'
-import { createEIP1193Provider } from '@web3-onboard/common'
 
 interface VenlyOptions {
   /**  @property {string} clientId - The Client ID used to connect with Venly. More information at https://docs.venly.io/widget/deep-dive/authentication#client-id */
@@ -19,32 +18,14 @@ function venly(options: VenlyOptions): WalletInit {
         const chainId = +chains[0].id
         const chain = SECRET_TYPES[chainId]
         if (!chain) 
-          throw Error('Chain not supported')
+          throw new Error('Chain not supported')
 
         const providerOptions = { ...options, secretType: chain.secretType }
         if (!options.environment) 
           providerOptions.environment = chain.env
         
         const instance = new VenlyProvider()
-
-        const provider = createEIP1193Provider(await instance.createProvider(providerOptions), {
-          wallet_switchEthereumChain: async ({ params }) => {
-            const switchChain = SECRET_TYPES[+params[0].chainId]
-            if (!switchChain) 
-              throw Error('Chain not supported')
-            else if(switchChain.env != providerOptions.environment)
-              throw Error('Switching environments not supported')
-            instance._provider.emit('chainChanged', params[0].chainId)
-            
-            const controller = instance.venlyController
-            controller.options.secretType = switchChain.secretType
-            controller.resetWallets()
-            const accounts = await controller.getAccounts()            
-            instance._provider.emit('accountsChanged', accounts)
-
-            return null
-          }
-        })
+        const provider = await instance.createProvider(providerOptions)
 
         return {
           provider,
