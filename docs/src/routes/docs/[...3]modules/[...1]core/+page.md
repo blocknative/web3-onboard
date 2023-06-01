@@ -1476,7 +1476,8 @@ module.exports = {
       os: 'os-browserify/browser',
       process: 'process/browser',
       stream: 'stream-browserify',
-      util: 'util'
+      util: 'util',
+      zlib: 'browserify-zlib'
     }
   },
   experiments: {
@@ -1525,7 +1526,8 @@ module.exports = function override(config) {
     process: require.resolve('process/browser'),
     stream: require.resolve('stream-browserify'),
     url: require.resolve('url'),
-    util: require.resolve('util')
+    util: require.resolve('util'),
+    zlib: require.resolve('browserify-zlib')
   })
   config.resolve.fallback = fallback
   config.resolve.alias = {
@@ -1564,7 +1566,7 @@ module.exports = function override(config) {
 
 Add the following dev dependencies:
 
-`yarn add rollup-plugin-polyfill-node crypto-browserify stream-browserify assert -D`
+`yarn add rollup-plugin-polyfill-node crypto-browserify stream-browserify assert browserify-zlib -D`
 
 Then add the following to your `svelte.config.js` file:
 
@@ -1594,7 +1596,8 @@ const config = {
         alias: {
           crypto: 'crypto-browserify',
           stream: 'stream-browserify',
-          assert: 'assert'
+          assert: 'assert',
+          zlib: 'browserify-zlib'
         }
       },
       build: {
@@ -1629,7 +1632,7 @@ Checkout a boilerplate example [here](https://github.com/blocknative/web3-onboar
 
 Add the following dev dependencies:
 
-`yarn add rollup-plugin-polyfill-node crypto-browserify stream-browserify assert -D`
+`yarn add rollup-plugin-polyfill-node crypto-browserify stream-browserify assert browserify-zlib -D`
 
 Then add the following to your `svelte.config.js` file:
 
@@ -1677,7 +1680,8 @@ const config: UserConfig = {
     alias: {
       crypto: 'crypto-browserify',
       stream: 'stream-browserify',
-      assert: 'assert'
+      assert: 'assert',
+      zlib: 'browserify-zlib'
     }
   },
   build: {
@@ -1742,7 +1746,7 @@ Checkout a boilerplate example for Vite-React [here](https://github.com/blocknat
 
 Add the following dev dependencies:
 
-`npm i --save-dev rollup-plugin-polyfill-node crypto-browserify stream-browserify assert`
+`npm i --save-dev rollup-plugin-polyfill-node crypto-browserify stream-browserify assert browserify-zlib`
 
 Then add the following to your `vite.config.js` file:
 
@@ -1764,7 +1768,8 @@ export default {
     alias: {
       crypto: 'crypto-browserify',
       stream: 'stream-browserify',
-      assert: 'assert'
+      assert: 'assert',
+      zlib: 'browserify-zlib'
     }
   },
   build: {
