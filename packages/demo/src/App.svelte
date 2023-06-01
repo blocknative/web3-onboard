@@ -29,6 +29,7 @@
   import trustModule from '@web3-onboard/trust'
   import frontierModule from '@web3-onboard/frontier'
   import cedeStoreModule from '@web3-onboard/cede-store'
+  import venlyModule from '@web3-onboard/venly'
   import {
     recoverAddress,
     arrayify,
@@ -179,6 +180,10 @@
   const transactionPreview = transactionPreviewModule({
     requireTransactionApproval: true
   })
+  const venly = venlyModule({
+    clientId: 'blocknative',
+    environment: 'staging'
+  })
 
   const onboard = Onboard({
     wallets: [
@@ -208,7 +213,8 @@
       frontier,
       xdefi,
       frameWallet,
-      cedeStore
+      cedeStore,
+      venly
     ],
     transactionPreview,
     gas,
@@ -310,9 +316,7 @@
     // // example customizing account center
     accountCenter: {
       desktop: {
-        position: 'topLeft',
-        enabled: true,
-        minimal: true
+        enabled: true
       }
     },
     // example customizing copy
@@ -585,7 +589,7 @@
   }
   .position-buttons {
     display: flex;
-    direction: row;
+    flex-direction: column;
   }
 </style>
 
@@ -640,24 +644,7 @@
               )
             }}>Send Success Notification</button
           >
-        </div>
-        <div class="switch-chain-container">
-          <button on:click={() => onboard.setChain({ chainId: '0x1' })}
-            >Set Chain to Mainnet</button
-          >
-          <button on:click={() => onboard.setChain({ chainId: '0x5' })}
-            >Set Chain to Goerli</button
-          >
-          <button on:click={() => onboard.setChain({ chainId: '0x89' })}
-            >Set Chain to Matic</button
-          >
-          <button on:click={() => onboard.setChain({ chainId: 10 })}
-            >Set Chain to Optimism</button
-          >
-        </div>
-      </div>
-      <div class="position-buttons">
-        <button
+          <button
           on:click={() =>
             onboard.state.actions.customNotification({
               message:
@@ -683,42 +670,60 @@
               autoDismiss: 0
             })}>Send DApp Notification</button
         >
-        <button
-          on:click={() =>
-            onboard.state.actions.updateAccountCenter({
-              position: 'bottomLeft'
-            })}>AC Bottom Left</button
-        >
-        <button
-          on:click={() =>
-            onboard.state.actions.updateAccountCenter({
-              position: 'topRight'
-            })}>AC Top Right</button
-        >
-        <button
-          on:click={() =>
-            onboard.state.actions.updateAccountCenter({
-              position: 'bottomRight'
-            })}>AC Bottom Right</button
-        >
-        <button
-          on:click={() =>
-            onboard.state.actions.updateAccountCenter({
-              position: 'topLeft'
-            })}>AC Top Left</button
-        >
-        <button
-          on:click={() =>
-            onboard.state.actions.updateAccountCenter({
-              minimal: false
-            })}>Large Trigger</button
-        >
-        <button
-          on:click={() =>
-            onboard.state.actions.updateAccountCenter({
-              minimal: true
-            })}>Small Trigger</button
-        >
+        </div>
+        <div class="switch-chain-container">
+          <button on:click={() => onboard.setChain({ chainId: '0x1' })}
+            >Set Chain to Mainnet</button
+          >
+          <button on:click={() => onboard.setChain({ chainId: '0x5' })}
+            >Set Chain to Goerli</button
+          >
+          <button on:click={() => onboard.setChain({ chainId: '0x89' })}
+            >Set Chain to Matic</button
+          >
+          <button on:click={() => onboard.setChain({ chainId: 10 })}
+            >Set Chain to Optimism</button
+          >
+        </div>
+        <div class="position-buttons">
+ 
+          <button
+            on:click={() =>
+              onboard.state.actions.updateAccountCenter({
+                position: 'bottomLeft'
+              })}>AC Bottom Left</button
+          >
+          <button
+            on:click={() =>
+              onboard.state.actions.updateAccountCenter({
+                position: 'topRight'
+              })}>AC Top Right</button
+          >
+          <button
+            on:click={() =>
+              onboard.state.actions.updateAccountCenter({
+                position: 'bottomRight'
+              })}>AC Bottom Right</button
+          >
+          <button
+            on:click={() =>
+              onboard.state.actions.updateAccountCenter({
+                position: 'topLeft'
+              })}>AC Top Left</button
+          >
+          <button
+            on:click={() =>
+              onboard.state.actions.updateAccountCenter({
+                minimal: false
+              })}>Large Trigger</button
+          >
+          <button
+            on:click={() =>
+              onboard.state.actions.updateAccountCenter({
+                minimal: true
+              })}>Small Trigger</button
+          >
+        </div>
       </div>
     {/if}
   </div>

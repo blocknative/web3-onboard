@@ -43,7 +43,8 @@
     "tslib": "^2.4.1",
     "typescript": "^5.0.4",
     "unplugin-icons": "^0.14.0",
-    "vite": "^4.2.2"
+    "vite": "^4.2.2",
+    "stream-http": "^3.2.0"
   },
   "type": "module",
   "dependencies": {
@@ -73,6 +74,7 @@
     "@web3-onboard/trezor": "^2.4.2",
     "@web3-onboard/trust": "^2.0.4",
     "@web3-onboard/uauth": "^2.0.5",
+    "@web3-onboard/venly": "^2.0.0-alpha.1",
     "@web3-onboard/walletconnect": "^2.3.8",
     "@web3-onboard/web3auth": "^2.2.3",
     "@web3-onboard/xdefi": "^2.0.4",
