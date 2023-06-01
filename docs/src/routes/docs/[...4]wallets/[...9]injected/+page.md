@@ -275,11 +275,11 @@ const injected = injectedModule({
 - Binance - _Desktop_
 - Coinbase - _Desktop & Mobile_
 - Phantom - _Desktop & Mobile_
+- Trust - _Desktop & Mobile_
 - SafePal - _Desktop & Mobile_
 - Zerion - _Desktop & Mobile_
 - OKX Wallet - _Desktop_
 - Taho (Previously named Tally Ho wallet) - _Desktop_
-- Trust - _Mobile_
 - Opera - _Desktop & Mobile_
 - Status - _Mobile_
 - Alphawallet - _Mobile_

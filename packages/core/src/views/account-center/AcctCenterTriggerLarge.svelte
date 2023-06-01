@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { shareReplay, startWith } from 'rxjs/operators'
   import { fade } from 'svelte/transition'
   import { wallets$ } from '../../streams.js'
   import {
@@ -17,6 +18,7 @@
   import { state } from '../../store/index.js'
   import { configuration } from '../../configuration.js'
 
+  export let toggle: () => void
   const { appMetadata } = configuration
   const appIcon = (appMetadata && appMetadata.icon) || questionIcon
   const chains = state.get().chains
@@ -54,13 +56,13 @@
 
   $: defaultChainStyles = getDefaultChainStyles(primaryChain && primaryChain.id)
 
-  function maximize() {
-    updateAccountCenter({ expanded: true })
-  }
+  const accountCenter$ = state
+    .select('accountCenter')
+    .pipe(startWith(state.get().accountCenter), shareReplay(1))
 </script>
 
 <style>
-  .minimized {
+  .ac-trigger {
     --background-color: var(
       --account-center-minimized-background,
       var(--w3o-background-color, white)
@@ -89,6 +91,7 @@
       --account-center-box-shadow,
       var(--onboard-shadow-3, var(--shadow-3))
     );
+    z-index: var(--account-center-z-index, 1);
   }
 
   .inner-row {
@@ -148,8 +151,8 @@
 <div
   in:fade={{ duration: 250 }}
   out:fade={{ duration: 100 }}
-  class="minimized"
-  on:click|stopPropagation={maximize}
+  class="ac-trigger"
+  on:click|stopPropagation={toggle}
 >
   <div class="inner-row">
     <div class="flex relative">
