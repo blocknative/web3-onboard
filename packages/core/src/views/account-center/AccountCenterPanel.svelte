@@ -24,8 +24,6 @@
   import DisconnectAllConfirm from './DisconnectAllConfirm.svelte'
   import { configuration } from '../../configuration.js'
   import SecondaryTokenTable from './SecondaryTokenTable.svelte'
-  import { onDestroy } from 'svelte'
-  import { updateAccountCenter } from '../../store/actions.js'
 
   export let expanded: boolean
 

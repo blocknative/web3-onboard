@@ -8,7 +8,6 @@
     shortenDomain,
     unrecognizedChainStyle
   } from '../../utils.js'
-  import { updateAccountCenter } from '../../store/actions.js'
   import { questionIcon, caretIcon, warningIcon } from '../../icons/index.js'
   import {
     NetworkSelector,
