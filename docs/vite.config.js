@@ -12,8 +12,7 @@ const config = {
       stream: 'stream-browserify',
       assert: 'assert',
       zlib: 'browserify-zlib',
-      http: 'stream-http',
-      zlib: 'browserify-zlib'
+      http: 'stream-http'
     }
   },
   build: {
