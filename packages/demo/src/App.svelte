@@ -29,6 +29,7 @@
   import trustModule from '@web3-onboard/trust'
   import frontierModule from '@web3-onboard/frontier'
   import cedeStoreModule from '@web3-onboard/cede-store'
+  import venlyModule from '@web3-onboard/venly'
   import {
     recoverAddress,
     arrayify,
@@ -179,6 +180,10 @@
   const transactionPreview = transactionPreviewModule({
     requireTransactionApproval: true
   })
+  const venly = venlyModule({
+    clientId: 'blocknative',
+    environment: 'staging'
+  })
 
   const onboard = Onboard({
     wallets: [
@@ -208,7 +213,8 @@
       frontier,
       xdefi,
       frameWallet,
-      cedeStore
+      cedeStore,
+      venly
     ],
     transactionPreview,
     gas,
