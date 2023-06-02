@@ -71,8 +71,11 @@
     custom: [
       // include custom (not natively supported) injected wallet modules here
     ],
-    // display all wallets even if they are unavailable
-    // displayUnavailable: true
+    // display all unavailable injected wallets
+    // displayUnavailable: true,
+    // ||
+    // display specific unavailable wallets
+    displayUnavailable: [ProviderLabel.MetaMask, ProviderLabel.Trust],
     // but only show Binance and Bitski wallet if they are available
     // filter: {
     //   [ProviderLabel.Binance]: 'unavailable',
@@ -101,34 +104,10 @@
     //       .filter(wallet => wallet)
     //   )
     // }
-    // display all wallets even if they are unavailable
-  displayUnavailable: [ProviderLabel.MetaMask, ProviderLabel.Trust],
-  // do a manual sort of injected wallets so that MetaMask and Coinbase are ordered first
-  // sort: wallets => {
-  //   const metaMask = wallets.find(
-  //     ({ label }) => label === ProviderLabel.MetaMask
-  //   )
-  //   const coinbase = wallets.find(
-  //     ({ label }) => label === ProviderLabel.Coinbase
-  //   )
-
-  //   return (
-  //     [
-  //       metaMask,
-  //       coinbase,
-  //       ...wallets.filter(
-  //         ({ label }) =>
-  //           label !== ProviderLabel.MetaMask && label !== ProviderLabel.Coinbase
-  //       )
-  //     ]
-  //       // remove undefined values
-  //       .filter(wallet => wallet)
-  //   )
-  // },
-  // walletUnavailableMessage: wallet =>
-  //   wallet.externalUrl
-  //     ? `Oops ${wallet.label} is unavailable! Please <a href="${wallet.externalUrl}" target="_blank">install</a>`
-  //     : `Oops ${wallet.label} is unavailable!`
+    // walletUnavailableMessage: wallet =>
+    //   wallet.externalUrl
+    //     ? `Oops ${wallet.label} is unavailable! Please <a href="${wallet.externalUrl}" target="_blank">install</a>`
+    //     : `Oops ${wallet.label} is unavailable!`
   })
 
   const coinbaseWallet = coinbaseModule()
@@ -672,31 +651,31 @@
             }}>Send Success Notification</button
           >
           <button
-          on:click={() =>
-            onboard.state.actions.customNotification({
-              message:
-                'This is a custom DApp success notification to use however you want',
-              autoDismiss: 0,
-              type: 'pending'
-            })}>Send Pending Notification</button
-        >
-        <button
-          on:click={() =>
-            onboard.state.actions.customNotification({
-              type: 'error',
-              message:
-                'This is a custom DApp Error notification to use however you want',
-              autoDismiss: 0
-            })}>Send Error Notification</button
-        >
-        <button
-          on:click={() =>
-            onboard.state.actions.customNotification({
-              message:
-                'This is a custom non-descript DApp notification to use however you want',
-              autoDismiss: 0
-            })}>Send DApp Notification</button
-        >
+            on:click={() =>
+              onboard.state.actions.customNotification({
+                message:
+                  'This is a custom DApp success notification to use however you want',
+                autoDismiss: 0,
+                type: 'pending'
+              })}>Send Pending Notification</button
+          >
+          <button
+            on:click={() =>
+              onboard.state.actions.customNotification({
+                type: 'error',
+                message:
+                  'This is a custom DApp Error notification to use however you want',
+                autoDismiss: 0
+              })}>Send Error Notification</button
+          >
+          <button
+            on:click={() =>
+              onboard.state.actions.customNotification({
+                message:
+                  'This is a custom non-descript DApp notification to use however you want',
+                autoDismiss: 0
+              })}>Send DApp Notification</button
+          >
         </div>
         <div class="switch-chain-container">
           <button on:click={() => onboard.setChain({ chainId: '0x1' })}
@@ -713,7 +692,6 @@
           >
         </div>
         <div class="position-buttons">
- 
           <button
             on:click={() =>
               onboard.state.actions.updateAccountCenter({
