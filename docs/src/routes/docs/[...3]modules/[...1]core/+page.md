@@ -17,6 +17,22 @@ title: Core
 
 This is the core package that contains all of the UI and logic to be able to seamlessly connect user's wallets to your app and track the state of those wallets. Onboard no longer contains any wallet specific code, so wallets need to be passed in upon initialization.
 
+:::admonition type="tip"
+_note: Release 2.24.0 moves the default position of the account center from topRight to bottomRight. To reset your application to topRight, include the following when initializing onboard:_
+```typescript
+  accountCenter: {
+      desktop: {
+        enabled: true,
+        position: 'topRight'
+      },
+      mobile: {
+        enabled: true,
+        position: 'topRight'
+      }
+    }
+```
+:::
+
 ## Install
 
 Install the core module:
@@ -1460,7 +1476,8 @@ module.exports = {
       os: 'os-browserify/browser',
       process: 'process/browser',
       stream: 'stream-browserify',
-      util: 'util'
+      util: 'util',
+      zlib: 'browserify-zlib'
     }
   },
   experiments: {
@@ -1509,7 +1526,8 @@ module.exports = function override(config) {
     process: require.resolve('process/browser'),
     stream: require.resolve('stream-browserify'),
     url: require.resolve('url'),
-    util: require.resolve('util')
+    util: require.resolve('util'),
+    zlib: require.resolve('browserify-zlib')
   })
   config.resolve.fallback = fallback
   config.resolve.alias = {
@@ -1548,7 +1566,7 @@ module.exports = function override(config) {
 
 Add the following dev dependencies:
 
-`yarn add rollup-plugin-polyfill-node crypto-browserify stream-browserify assert -D`
+`yarn add rollup-plugin-polyfill-node crypto-browserify stream-browserify assert browserify-zlib -D`
 
 Then add the following to your `svelte.config.js` file:
 
@@ -1578,7 +1596,8 @@ const config = {
         alias: {
           crypto: 'crypto-browserify',
           stream: 'stream-browserify',
-          assert: 'assert'
+          assert: 'assert',
+          zlib: 'browserify-zlib'
         }
       },
       build: {
@@ -1613,7 +1632,7 @@ Checkout a boilerplate example [here](https://github.com/blocknative/web3-onboar
 
 Add the following dev dependencies:
 
-`yarn add rollup-plugin-polyfill-node crypto-browserify stream-browserify assert -D`
+`yarn add rollup-plugin-polyfill-node crypto-browserify stream-browserify assert browserify-zlib -D`
 
 Then add the following to your `svelte.config.js` file:
 
@@ -1661,7 +1680,8 @@ const config: UserConfig = {
     alias: {
       crypto: 'crypto-browserify',
       stream: 'stream-browserify',
-      assert: 'assert'
+      assert: 'assert',
+      zlib: 'browserify-zlib'
     }
   },
   build: {
@@ -1726,7 +1746,7 @@ Checkout a boilerplate example for Vite-React [here](https://github.com/blocknat
 
 Add the following dev dependencies:
 
-`npm i --save-dev rollup-plugin-polyfill-node crypto-browserify stream-browserify assert`
+`npm i --save-dev rollup-plugin-polyfill-node crypto-browserify stream-browserify assert browserify-zlib`
 
 Then add the following to your `vite.config.js` file:
 
@@ -1748,7 +1768,8 @@ export default {
     alias: {
       crypto: 'crypto-browserify',
       stream: 'stream-browserify',
-      assert: 'assert'
+      assert: 'assert',
+      zlib: 'browserify-zlib'
     }
   },
   build: {

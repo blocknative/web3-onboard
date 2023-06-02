@@ -1,4 +1,3 @@
-import { configuration } from './configuration.js'
 import type { AppState } from './types.js'
 
 export const APP_INITIAL_STATE: AppState = {
@@ -7,9 +6,9 @@ export const APP_INITIAL_STATE: AppState = {
   chains: [],
   accountCenter: {
     enabled: true,
-    position: 'topRight',
+    position: 'bottomRight',
     expanded: false,
-    minimal: configuration.device.type === 'mobile'
+    minimal: true
   },
   notify: {
     enabled: true,

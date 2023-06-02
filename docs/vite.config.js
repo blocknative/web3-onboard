@@ -10,7 +10,9 @@ const config = {
     alias: {
       crypto: 'crypto-browserify',
       stream: 'stream-browserify',
-      assert: 'assert'
+      assert: 'assert',
+      zlib: 'browserify-zlib',
+      http: 'stream-http'
     }
   },
   build: {
