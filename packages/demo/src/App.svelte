@@ -30,6 +30,7 @@
   import frontierModule from '@web3-onboard/frontier'
   import bloctoModule from '@web3-onboard/blocto'
   import cedeStoreModule from '@web3-onboard/cede-store'
+  import venlyModule from '@web3-onboard/venly'
   import {
     recoverAddress,
     arrayify,
@@ -182,6 +183,10 @@
   const transactionPreview = transactionPreviewModule({
     requireTransactionApproval: true
   })
+  const venly = venlyModule({
+    clientId: 'blocknative',
+    environment: 'staging'
+  })
 
   const onboard = Onboard({
     wallets: [
@@ -212,7 +217,8 @@
       xdefi,
       frameWallet,
       cedeStore,
-      blocto
+      blocto,
+      venly
     ],
     transactionPreview,
     gas,
@@ -314,11 +320,8 @@
     // // example customizing account center
     accountCenter: {
       desktop: {
-        position: 'topRight',
-        enabled: true,
-        minimal: false,
-      },
-      // hideTransactionProtectionBtn: true
+        enabled: true
+      }
     },
     // example customizing copy
     i18n: {
@@ -596,6 +599,10 @@
     flex-direction: column;
     width: 15rem;
   }
+  .position-buttons {
+    display: flex;
+    flex-direction: column;
+  }
 </style>
 
 <main>
@@ -650,31 +657,31 @@
             }}>Send Success Notification</button
           >
           <button
-            on:click={() =>
-              onboard.state.actions.customNotification({
-                message:
-                  'This is a custom DApp success notification to use however you want',
-                autoDismiss: 0,
-                type: 'pending'
-              })}>Send Pending Notification</button
-          >
-          <button
-            on:click={() =>
-              onboard.state.actions.customNotification({
-                type: 'error',
-                message:
-                  'This is a custom DApp Error notification to use however you want',
-                autoDismiss: 0
-              })}>Send Error Notification</button
-          >
-          <button
-            on:click={() =>
-              onboard.state.actions.customNotification({
-                message:
-                  'This is a custom non-descript DApp notification to use however you want',
-                autoDismiss: 0
-              })}>Send DApp Notification</button
-          >
+          on:click={() =>
+            onboard.state.actions.customNotification({
+              message:
+                'This is a custom DApp success notification to use however you want',
+              autoDismiss: 0,
+              type: 'pending'
+            })}>Send Pending Notification</button
+        >
+        <button
+          on:click={() =>
+            onboard.state.actions.customNotification({
+              type: 'error',
+              message:
+                'This is a custom DApp Error notification to use however you want',
+              autoDismiss: 0
+            })}>Send Error Notification</button
+        >
+        <button
+          on:click={() =>
+            onboard.state.actions.customNotification({
+              message:
+                'This is a custom non-descript DApp notification to use however you want',
+              autoDismiss: 0
+            })}>Send DApp Notification</button
+        >
         </div>
         <div class="switch-chain-container">
           <button on:click={() => onboard.setChain({ chainId: '0x1' })}
@@ -688,6 +695,45 @@
           >
           <button on:click={() => onboard.setChain({ chainId: 10 })}
             >Set Chain to Optimism</button
+          >
+        </div>
+        <div class="position-buttons">
+ 
+          <button
+            on:click={() =>
+              onboard.state.actions.updateAccountCenter({
+                position: 'bottomLeft'
+              })}>AC Bottom Left</button
+          >
+          <button
+            on:click={() =>
+              onboard.state.actions.updateAccountCenter({
+                position: 'topRight'
+              })}>AC Top Right</button
+          >
+          <button
+            on:click={() =>
+              onboard.state.actions.updateAccountCenter({
+                position: 'bottomRight'
+              })}>AC Bottom Right</button
+          >
+          <button
+            on:click={() =>
+              onboard.state.actions.updateAccountCenter({
+                position: 'topLeft'
+              })}>AC Top Left</button
+          >
+          <button
+            on:click={() =>
+              onboard.state.actions.updateAccountCenter({
+                minimal: false
+              })}>Large Trigger</button
+          >
+          <button
+            on:click={() =>
+              onboard.state.actions.updateAccountCenter({
+                minimal: true
+              })}>Small Trigger</button
           >
         </div>
       </div>
