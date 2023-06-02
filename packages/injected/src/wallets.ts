@@ -6,10 +6,11 @@ import type {
 } from '@web3-onboard/common'
 
 import { createEIP1193Provider } from '@web3-onboard/common'
-import type {
+import {
   InjectedWalletModule,
   CustomWindow,
-  BinanceProvider
+  BinanceProvider,
+  ProviderExternalUrl
 } from './types.js'
 
 import {
@@ -61,7 +62,8 @@ const metamask: InjectedWalletModule = {
     !otherProviderFlagsExist(ProviderIdentityFlag.MetaMask, provider),
   getIcon: async () => (await import('./icons/metamask.js')).default,
   getInterface: getInjectedInterface(ProviderIdentityFlag.MetaMask, true),
-  platforms: ['all']
+  platforms: ['all'],
+  externalUrl: ProviderExternalUrl.MetaMask
 }
 
 const infinitywallet: InjectedWalletModule = {
