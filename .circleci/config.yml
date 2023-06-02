@@ -395,6 +395,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/cede-store
     steps:
       - node-build-steps
+  build-venly:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/venly
+    steps:
+      - node-build-steps
 
   # Build staging/Alpha releases
   build-staging-core:
@@ -623,6 +629,12 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/cede-store
+    steps:
+      - node-staging-build-steps
+  build-staging-venly:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/venly
     steps:
       - node-staging-build-steps
 
@@ -856,4 +868,10 @@ workflows:
       - build-cede-store:
           <<: *deploy_production_filters
       - build-staging-cede-store:
+          <<: *deploy_staging_filters
+  venly:
+    jobs:
+      - build-venly:
+          <<: *deploy_production_filters
+      - build-staging-venly:
           <<: *deploy_staging_filters

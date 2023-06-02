@@ -1,14 +1,13 @@
 <script lang="ts">
   import { onDestroy } from 'svelte'
   import { updateAccountCenter } from '../../store/actions.js'
-  import { wallets$ } from '../../streams.js'
   import { state } from '../../store/index.js'
   import { shareReplay, startWith } from 'rxjs/operators'
-  import Maximized from './Maximized.svelte'
-  import Minimized from './Minimized.svelte'
-  import Micro from './Micro.svelte'
+  import AccountCenterPanel from './AccountCenterPanel.svelte'
+  import TriggerLarge from './AcctCenterTriggerLarge.svelte'
+  import TriggerSmall from './AcctCenterTriggerSmall.svelte'
 
-  export let mountInContainer = false
+  let expanded = false
 
   const accountCenter$ = state
     .select('accountCenter')
@@ -19,25 +18,37 @@
   function minimize() {
     if ($accountCenter$.expanded) {
       updateAccountCenter({ expanded: false })
+      expanded = false
     }
+  }
+
+  function toggle(){
+    updateAccountCenter({ expanded: !$accountCenter$.expanded })
+    expanded = !expanded
   }
 </script>
 
+<style>
+.ac-container {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+</style>
+
 <svelte:window on:click={minimize} />
 
-{#if mountInContainer}
-  {#if $wallets$.length}
-    <div class="container flex flex-column fixed z-indexed">
-      <svelte:self />
-    </div>
+<div class="ac-container">
+  {#if $accountCenter$.position.includes('bottom')}
+    <AccountCenterPanel expanded={expanded}/>
   {/if}
-{:else if !$accountCenter$.expanded && !$accountCenter$.minimal}
-  <!-- minimized -->
-  <Minimized />
-{:else if !$accountCenter$.expanded && $accountCenter$.minimal}
-  <!-- micro -->
-  <Micro />
-{:else}
-  <!-- maximized -->
-  <Maximized />
-{/if}
+  {#if $accountCenter$.minimal}
+    <TriggerSmall toggle={toggle}/>
+  {:else}
+    <TriggerLarge toggle={toggle}/>
+  {/if}
+  {#if $accountCenter$.position.includes('top')}
+    <AccountCenterPanel expanded={expanded}/>
+  {/if}
+</div>

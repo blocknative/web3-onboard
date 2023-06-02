@@ -1,49 +1,54 @@
 <script lang="ts">
+  import { shareReplay, startWith } from 'rxjs/operators'
   import { wallets$ } from '../../streams.js'
-  import { updateAccountCenter } from '../../store/actions.js'
   import { questionIcon } from '../../icons/index.js'
   import { WalletAppBadge, SuccessStatusIcon } from '../shared/index.js'
+  import { state } from '../../store/index.js'
   import { configuration } from '../../configuration.js'
+
+  export let toggle: () => void
 
   const { appMetadata } = configuration
   const appIcon = (appMetadata && appMetadata.icon) || questionIcon
+
   $: [primaryWallet] = $wallets$
 
-  function maximize() {
-    updateAccountCenter({ expanded: true })
-  }
+  const accountCenter$ = state
+    .select('accountCenter')
+    .pipe(startWith(state.get().accountCenter), shareReplay(1))
+
 </script>
 
 <style>
-  .minimized {
-    --background-color: var(--account-center-micro-background, var(--w3o-background-color, white));
-    --text-color: var(--w3o-text-color);
-    --border-color: var(--account-center-border, var(--w3o-border-color, var(--onboard-gray-200, var(--gray-200))));
-    --border-radius: var(--account-center-border-radius, var(--w3o-border-radius, 1rem));
+  .ac-trigger {
+    --background-color: var(
+      --account-center-minimized-background,
+      var(--w3o-background-color, white)
+    );
+    --text-color: var(--w3o-text-color, var(--gray-700));
+    --border-color: var(
+      --account-center-border,
+      var(--w3o-border-color, var(--onboard-gray-200, var(--gray-200)))
+    );
+    --border-radius: var(
+      --account-center-border-radius,
+      var(--w3o-border-radius, 1rem)
+    );
 
+    position: relative;
     cursor: pointer;
     pointer-events: auto;
-    border: 1px solid transparent;
+    min-width: 80px;
 
     background: var(--background-color);
     color: var(--text-color);
-    border-color: var(--border-color);
+    border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
     box-shadow: var(
       --account-center-box-shadow,
       var(--onboard-shadow-3, var(--shadow-3))
     );
-  }
-
-  .drop-shadow {
-    filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.2));
-  }
-
-  .inner-row {
-    display: flex;
-    flex-flow: row nowrap;
-    width: 80px;
-    padding: 0.75rem;
+    z-index: var(--account-center-z-index, 1);
   }
 
   .wallet-square-wrapper {
@@ -56,9 +61,25 @@
     right: -4px;
     bottom: -4px;
   }
+
+  .inner-row {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 80px;
+    padding: 0.75rem;
+  }
+  .drop-shadow {
+    filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.2));
+  }
 </style>
 
-<div class="minimized" on:click|stopPropagation={maximize}>
+<div
+  class="ac-trigger"
+  on:click|stopPropagation={toggle}
+  style={$accountCenter$.position.includes('Left')
+    ? 'align-self: flex-start'
+    : null}
+>
   <div class="inner-row">
     <!-- app and wallet icon badge -->
     <div class="drop-shadow">
