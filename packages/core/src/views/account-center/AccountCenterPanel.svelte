@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { shareReplay, startWith } from 'rxjs/operators'
   import { _ } from 'svelte-i18n'
   import { fly } from 'svelte/transition'
   import { quartOut } from 'svelte/easing'
@@ -24,8 +23,6 @@
   import DisconnectAllConfirm from './DisconnectAllConfirm.svelte'
   import { configuration } from '../../configuration.js'
   import SecondaryTokenTable from './SecondaryTokenTable.svelte'
-  import { onDestroy } from 'svelte'
-  import { updateAccountCenter } from '../../store/actions.js'
 
   export let expanded: boolean
 
@@ -57,10 +54,6 @@
 
   const { position } = state.get().accountCenter
   const { device } = configuration
-
-  const accountCenter$ = state
-    .select('accountCenter')
-    .pipe(startWith(state.get().accountCenter), shareReplay(1))
 </script>
 
 <style>

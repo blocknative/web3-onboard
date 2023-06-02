@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { shareReplay, startWith } from 'rxjs/operators'
   import { fade } from 'svelte/transition'
   import { wallets$ } from '../../streams.js'
   import {
@@ -8,7 +7,6 @@
     shortenDomain,
     unrecognizedChainStyle
   } from '../../utils.js'
-  import { updateAccountCenter } from '../../store/actions.js'
   import { questionIcon, caretIcon, warningIcon } from '../../icons/index.js'
   import {
     NetworkSelector,
@@ -55,10 +53,6 @@
   )
 
   $: defaultChainStyles = getDefaultChainStyles(primaryChain && primaryChain.id)
-
-  const accountCenter$ = state
-    .select('accountCenter')
-    .pipe(startWith(state.get().accountCenter), shareReplay(1))
 </script>
 
 <style>
