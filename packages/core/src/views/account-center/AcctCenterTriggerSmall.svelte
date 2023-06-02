@@ -1,7 +1,6 @@
 <script lang="ts">
   import { shareReplay, startWith } from 'rxjs/operators'
   import { wallets$ } from '../../streams.js'
-  import { updateAccountCenter } from '../../store/actions.js'
   import { questionIcon } from '../../icons/index.js'
   import { WalletAppBadge, SuccessStatusIcon } from '../shared/index.js'
   import { state } from '../../store/index.js'
@@ -18,9 +17,6 @@
     .select('accountCenter')
     .pipe(startWith(state.get().accountCenter), shareReplay(1))
 
-  // function toggle() {
-  //   updateAccountCenter({ expanded: !$accountCenter$.expanded })
-  // }
 </script>
 
 <style>
