@@ -3,7 +3,7 @@ import type { WalletInit, EIP1193Provider } from '@web3-onboard/common'
 import { CustomWindow } from './types.js'
 declare const window: CustomWindow
 
-function trust(): WalletInit {
+function okxwallet(): WalletInit {
   if (typeof window === 'undefined') return () => null
 
   return () => {
@@ -32,4 +32,4 @@ function trust(): WalletInit {
   }
 }
 
-export default trust
+export default okxwallet
