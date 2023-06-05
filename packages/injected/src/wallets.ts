@@ -155,7 +155,8 @@ const binance: InjectedWalletModule = {
       provider
     }
   },
-  platforms: ['desktop']
+  platforms: ['desktop'],
+  externalUrl: ProviderExternalUrl.Binance
 }
 
 const coinbase: InjectedWalletModule = {
@@ -185,7 +186,8 @@ const coinbase: InjectedWalletModule = {
 
     return { provider }
   },
-  platforms: ['all']
+  platforms: ['all'],
+  externalUrl: ProviderExternalUrl.Coinbase
 }
 
 const detected: InjectedWalletModule = {
@@ -225,7 +227,8 @@ const trust: InjectedWalletModule = {
       provider
     }
   },
-  platforms: ['all']
+  platforms: ['all'],
+  externalUrl: ProviderExternalUrl.Trust
 }
 
 const opera: InjectedWalletModule = {
@@ -706,7 +709,8 @@ const phantom: InjectedWalletModule = {
   getInterface: async () => ({
     provider: createEIP1193Provider(window.phantom.ethereum)
   }),
-  platforms: ['all']
+  platforms: ['all'],
+  externalUrl: ProviderExternalUrl.Phantom
 }
 
 const safepal: InjectedWalletModule = {
@@ -776,7 +780,8 @@ const talisman: InjectedWalletModule = {
   getInterface: async () => ({
     provider: createEIP1193Provider(window.talismanEth)
   }),
-  platforms: ['desktop']
+  platforms: ['desktop'],
+  externalUrl: ProviderExternalUrl.Talisman
 }
 
 const wallets = [
