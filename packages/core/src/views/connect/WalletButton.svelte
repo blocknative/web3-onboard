@@ -109,7 +109,7 @@
     class="wallet-button-styling"
     class:connected
     {disabled}
-    in:fade
+    in:fade|local
     on:click={onClick}
   >
     <div class="wallet-button-container-inner">
