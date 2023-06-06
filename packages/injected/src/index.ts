@@ -41,76 +41,87 @@ function injected(options?: InjectedWalletOptions): WalletInit {
       ({ label }) => label
     )
 
-    const wallets = allWallets.reduce((acc, wallet) => {
-      const { label, platforms, injectedNamespace, checkProviderIdentity } =
-        wallet
+    const wallets = allWallets.reduce(
+      (acc: InjectedWalletModule[], wallet: InjectedWalletModule) => {
+        const { label, platforms, injectedNamespace, checkProviderIdentity } =
+          wallet
 
-      const walletFilters = filter[label]
-      const filteredWallet = walletFilters === false
-      const provider = window[injectedNamespace] as CustomWindow['ethereum']
+        const walletFilters = filter[label]
+        const filteredWallet = walletFilters === false
+        const provider = window[injectedNamespace] as CustomWindow['ethereum']
 
-      const walletAvailable = isWalletAvailable(
-        provider,
-        checkProviderIdentity,
-        device
-      )
-
-      let excludedDevice: boolean = false
-
-      // dev specified platform filters
-      if (
-        Array.isArray(walletFilters) &&
-        (walletFilters.includes(device.type) ||
-          walletFilters.includes(device.os.name))
-      ) {
-        excludedDevice = true
-      }
-
-      // unavailable filter
-      if (walletFilters === 'unavailable' && !walletAvailable) {
-        excludedDevice = true
-      }
-
-      // wallet specified platform filters
-      const invalidPlatform =
-        !platforms.includes('all') &&
-        !platforms.includes(device.type) &&
-        !platforms.includes(device.os.name)
-
-      const supportedWallet =
-        !filteredWallet &&
-        !excludedDevice &&
-        !invalidPlatform &&
-        (walletAvailable || displayUnavailable)
-
-      if (supportedWallet) {
-        acc.push(
-          // modify wallet to display error if unavailable but displayUnavailable is set
-          displayUnavailable && !walletAvailable
-            ? {
-                ...wallet,
-                getInterface: async () => {
-                  throw new Error(
-                    walletUnavailableMessage
-                      ? walletUnavailableMessage(wallet)
-                      : defaultWalletUnavailableMsg(wallet)
-                  )
-                }
-              }
-            : // otherwise add wallet to list as is
-              wallet
+        const walletAvailable = isWalletAvailable(
+          provider,
+          checkProviderIdentity,
+          device
         )
-      }
 
-      return acc
-    }, [] as InjectedWalletModule[])
+        let excludedDevice: boolean = false
+
+        // dev specified platform filters
+        if (
+          Array.isArray(walletFilters) &&
+          (walletFilters.includes(device.type) ||
+            walletFilters.includes(device.os.name))
+        ) {
+          excludedDevice = true
+        }
+
+        // unavailable filter
+        if (walletFilters === 'unavailable' && !walletAvailable) {
+          excludedDevice = true
+        }
+
+        // wallet specified platform filters
+        const invalidPlatform =
+          !platforms.includes('all') &&
+          !platforms.includes(device.type) &&
+          !platforms.includes(device.os.name)
+
+        const supportedWallet =
+          !filteredWallet &&
+          !excludedDevice &&
+          !invalidPlatform &&
+          (walletAvailable ||
+            displayUnavailable === true ||
+            (Array.isArray(displayUnavailable) &&
+              displayUnavailable.length &&
+              displayUnavailable.includes(wallet.label)))
+
+        if (supportedWallet) {
+          acc.push(
+            // modify wallet to display error if unavailable but displayUnavailable is set
+            (displayUnavailable === true ||
+              (Array.isArray(displayUnavailable) &&
+                displayUnavailable.length &&
+                displayUnavailable.includes(wallet.label))) &&
+              !walletAvailable
+              ? {
+                  ...wallet,
+                  getInterface: async () => {
+                    throw new Error(
+                      walletUnavailableMessage
+                        ? walletUnavailableMessage(wallet)
+                        : defaultWalletUnavailableMsg(wallet)
+                    )
+                  }
+                }
+              : // otherwise add wallet to list as is
+                wallet
+          )
+        }
+
+        return acc
+      },
+      [] as InjectedWalletModule[]
+    )
 
     if (wallets.length) {
       const moreThanOneWallet = wallets.length > 1
 
       // if more than one wallet, then remove detected wallet
       const formattedWallets = wallets
-        .filter(wallet => {
+        .filter((wallet: InjectedWalletModule) => {
           const { label } = wallet
           return !(label === ProviderLabel.Detected && moreThanOneWallet)
         })
@@ -121,7 +132,9 @@ function injected(options?: InjectedWalletOptions): WalletInit {
           getInterface
         }))
         // default sort by alphabetical
-        .sort((a, b) => (a.label < b.label ? -1 : a.label > b.label ? 1 : 0))
+        .sort((a, b) =>
+          a.label < b.label ? -1 : a.label > b.label ? 1 : 0
+        )
 
       return sort ? sort(formattedWallets) : formattedWallets
     }
