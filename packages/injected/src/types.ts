@@ -78,6 +78,7 @@ export enum ProviderExternalUrl {
   Binance = 'https://www.bnbchain.org/ru/blog/binance-extension-wallet/',
   Coinbase = 'https://www.coinbase.com/wallet/downloads',
   MetaMask = 'https://metamask.io/download/',
+  OKXWallet = 'https://okx.com/download',
   Phantom = 'https://phantom.app/download',
   Talisman = 'https://www.talisman.xyz/',
   Trust = 'https://trustwallet.com/download/',

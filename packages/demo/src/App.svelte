@@ -104,10 +104,10 @@
     //       .filter(wallet => wallet)
     //   )
     // }
-    // walletUnavailableMessage: wallet =>
-    //   wallet.externalUrl
-    //     ? `Oops ${wallet.label} is unavailable! Please <a href="${wallet.externalUrl}" target="_blank">install</a>`
-    //     : `Oops ${wallet.label} is unavailable!`
+    walletUnavailableMessage: wallet =>
+      wallet.externalUrl
+        ? `Oops ${wallet.label} is unavailable! Please <a href="${wallet.externalUrl}" target="_blank">install</a>`
+        : `Oops ${wallet.label} is unavailable!`
   })
 
   const coinbaseWallet = coinbaseModule()
