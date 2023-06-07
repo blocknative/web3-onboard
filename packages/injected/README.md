@@ -69,7 +69,6 @@ console.log(connectedWallets)
 - GameStop - _Desktop_
 - Rabby - _Desktop_
 - MathWallet - _Desktop & Mobile_
-- Gamestop - _Desktop_
 - Bitkeep - _Desktop & Mobile_
 - Sequence - _Desktop & Mobile_
 - Core - _Desktop_
