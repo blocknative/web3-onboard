@@ -1,7 +1,6 @@
 <script lang="ts">
   import { slide } from 'svelte/transition'
   import infoIcon from '../../icons/info.js'
-  import { bounceIn, circIn, quadIn } from 'svelte/easing'
 </script>
 
 <style>

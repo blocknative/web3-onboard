@@ -51,7 +51,7 @@
     "@web3-onboard/trust": "^2.0.3",
     "@web3-onboard/uauth": "^2.0.4",
     "@web3-onboard/venly": "^2.0.0",
-    "@web3-onboard/walletconnect": "^2.3.8",
+    "@web3-onboard/walletconnect": "^2.3.9-alpha.1",
     "@web3-onboard/web3auth": "^2.2.2",
     "@web3-onboard/xdefi": "^2.0.3",
     "@web3-onboard/zeal": "^2.0.3",
