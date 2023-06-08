@@ -785,6 +785,21 @@ const talisman: InjectedWalletModule = {
   externalUrl: ProviderExternalUrl.Talisman
 }
 
+const onekey: InjectedWalletModule = {
+  label: ProviderLabel.OneKey,
+  injectedNamespace: InjectedNameSpace.OneKey,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider &&
+    !!provider.ethereum &&
+    !!provider.ethereum[ProviderIdentityFlag.OneKey],
+  getIcon: async () => (await import('./icons/onekey.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.$onekey.ethereum)
+  }),
+  platforms: ['all'],
+  externalUrl: ProviderExternalUrl.OneKey
+}
+
 const wallets = [
   zeal,
   exodus,
@@ -833,7 +848,8 @@ const wallets = [
   defiwallet,
   infinitywallet,
   safeheron,
-  talisman
+  talisman,
+  onekey
 ]
 
 export default wallets
