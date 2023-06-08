@@ -212,7 +212,9 @@
       target="_blank"
       rel="noreferrer noopener"
       class="no-link"
-      >I don't have a wallet <div class="info-icon">{@html infoIcon}</div></a
+      >{$_('connect.selectingWallet.sidebar.IDontHaveAWallet', {
+        default: en.connect.selectingWallet.sidebar.IDontHaveAWallet
+      })} <div class="info-icon">{@html infoIcon}</div></a
     >
     {#if windowWidth < MOBILE_WINDOW_WIDTH}
       <div class="indicators flex items-center">
