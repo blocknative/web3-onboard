@@ -6,10 +6,11 @@ import type {
 } from '@web3-onboard/common'
 
 import { createEIP1193Provider } from '@web3-onboard/common'
-import type {
+import {
   InjectedWalletModule,
   CustomWindow,
-  BinanceProvider
+  BinanceProvider,
+  ProviderExternalUrl
 } from './types.js'
 
 import {
@@ -61,7 +62,8 @@ const metamask: InjectedWalletModule = {
     !otherProviderFlagsExist(ProviderIdentityFlag.MetaMask, provider),
   getIcon: async () => (await import('./icons/metamask.js')).default,
   getInterface: getInjectedInterface(ProviderIdentityFlag.MetaMask, true),
-  platforms: ['all']
+  platforms: ['all'],
+  externalUrl: ProviderExternalUrl.MetaMask
 }
 
 const infinitywallet: InjectedWalletModule = {
@@ -153,7 +155,8 @@ const binance: InjectedWalletModule = {
       provider
     }
   },
-  platforms: ['desktop']
+  platforms: ['desktop'],
+  externalUrl: ProviderExternalUrl.Binance
 }
 
 const coinbase: InjectedWalletModule = {
@@ -183,7 +186,8 @@ const coinbase: InjectedWalletModule = {
 
     return { provider }
   },
-  platforms: ['all']
+  platforms: ['all'],
+  externalUrl: ProviderExternalUrl.Coinbase
 }
 
 const detected: InjectedWalletModule = {
@@ -223,7 +227,8 @@ const trust: InjectedWalletModule = {
       provider
     }
   },
-  platforms: ['all']
+  platforms: ['all'],
+  externalUrl: ProviderExternalUrl.Trust
 }
 
 const opera: InjectedWalletModule = {
@@ -704,7 +709,8 @@ const phantom: InjectedWalletModule = {
   getInterface: async () => ({
     provider: createEIP1193Provider(window.phantom.ethereum)
   }),
-  platforms: ['all']
+  platforms: ['all'],
+  externalUrl: ProviderExternalUrl.Phantom
 }
 
 const safepal: InjectedWalletModule = {
@@ -738,7 +744,8 @@ const okxwallet: InjectedWalletModule = {
   getInterface: async () => ({
     provider: createEIP1193Provider(window.okxwallet)
   }),
-  platforms: ['desktop']
+  platforms: ['desktop'],
+  externalUrl: ProviderExternalUrl.OKXWallet
 }
 
 const defiwallet: InjectedWalletModule = {
@@ -774,7 +781,8 @@ const talisman: InjectedWalletModule = {
   getInterface: async () => ({
     provider: createEIP1193Provider(window.talismanEth)
   }),
-  platforms: ['desktop']
+  platforms: ['desktop'],
+  externalUrl: ProviderExternalUrl.Talisman
 }
 
 const wallets = [

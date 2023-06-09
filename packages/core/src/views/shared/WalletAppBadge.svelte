@@ -203,7 +203,7 @@
     {#await icon}
       <div class="placeholder-icon" />
     {:then iconLoaded}
-      <div in:fade class="icon flex justify-center items-center">
+      <div in:fade|local class="icon flex justify-center items-center">
         {#if isSVG(iconLoaded)}
           <!-- render svg string -->
           {@html iconLoaded}

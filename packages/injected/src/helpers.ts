@@ -14,8 +14,13 @@ export class ProviderRpcError extends Error {
   }
 }
 
-export const defaultWalletUnavailableMsg = ({ label }: InjectedWalletModule) =>
-  `Please install or enable ${label} to continue`
+export const defaultWalletUnavailableMsg = ({
+  label,
+  externalUrl
+}: InjectedWalletModule) =>
+  externalUrl
+    ? `Please <a href="${externalUrl}" target="_blank">install</a> or enable ${label} to continue`
+    : `Please install or enable ${label} to continue`
 
 export const isWalletAvailable = (
   provider: InjectedProvider,
