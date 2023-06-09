@@ -65,28 +65,28 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
         }
 
         // default to mainnet
-        const requiredChainsParsed =
+        const requiredChainsParsed: number[] =
           Array.isArray(requiredChains) &&
           requiredChains.length &&
           requiredChains.every(num => !isNaN(num))
             ? // @ts-ignore
               // Required as WC package does not support hex numbers
               requiredChains.map(chainID => parseInt(chainID))
-            : [...chains.map(({ id }) => parseInt(id, 16))]
+            : [1]
 
         const connector = await EthereumProvider.init({
           projectId,
           chains: requiredChainsParsed, // default to mainnet
-          metadata: getMetaData(),
-          showQrModal: true,
           optionalChains: chains.map(({ id }) => parseInt(id, 16)),
           optionalMethods: methods,
+          showQrModal: true,
           rpcMap: chains
             .map(({ id, rpcUrl }) => ({ id, rpcUrl }))
             .reduce((rpcMap: Record<number, string>, { id, rpcUrl }) => {
               rpcMap[parseInt(id, 16)] = rpcUrl || ''
               return rpcMap
             }, {}),
+          metadata: getMetaData(),
           qrModalOptions: qrModalOptions
         })
 

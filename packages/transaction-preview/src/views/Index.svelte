@@ -105,7 +105,7 @@
   }
 </style>
 
-<div in:fade={{ duration: 250, easing: cubicOut }} class="tp-main">
+<div in:fade|local={{ duration: 250, easing: cubicOut }} class="tp-main">
   {#if expanded || requireTransactionApproval}
     <Maximized
       {toggleExpanded}

@@ -143,7 +143,7 @@
 </style>
 
 <div
-  in:fade={{ duration: 250 }}
+  in:fade|local={{ duration: 250 }}
   out:fade={{ duration: 100 }}
   class="ac-trigger"
   on:click|stopPropagation={toggle}
@@ -187,7 +187,7 @@
           : shortenedFirstAddress}
       </div>
       {#if firstAddressBalance}
-        <div in:fade class="balance">
+        <div in:fade|local class="balance">
           {firstAddressBalance.length > 7
             ? firstAddressBalance.slice(0, 7)
             : firstAddressBalance}

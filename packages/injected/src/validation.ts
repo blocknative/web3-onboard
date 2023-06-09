@@ -8,7 +8,8 @@ const walletModule = Joi.object({
   getInterface: Joi.function().maxArity(1).required(),
   injectedNamespace: Joi.string().required(),
   checkProviderIdentity: Joi.function().arity(1).required(),
-  platforms: Joi.array().items(Joi.string())
+  platforms: Joi.array().items(Joi.string()),
+  externalUrl: Joi.string()
 })
 
 const wallets = Joi.array().items(walletModule)
@@ -21,9 +22,10 @@ const filter = Joi.object().pattern(
 const walletOptions = Joi.object({
   custom: wallets,
   filter,
-  displayUnavailable: Joi.boolean(),
+  displayUnavailable: [Joi.boolean(), Joi.array().items(Joi.string())],
   walletUnavailableMessage: Joi.function(),
-  sort: Joi.function()
+  sort: Joi.function(),
+  externalUrl: Joi.string()
 })
 
 export const validateWalletOptions = (
