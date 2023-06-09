@@ -5,7 +5,8 @@
       "sidebar": {
         "heading": "",
         "subheading": "Connect your wallet",
-        "paragraph": "Connecting your wallet is like “logging in” to Web3. Select your wallet from the options to get started."
+        "paragraph": "Connecting your wallet is like “logging in” to Web3. Select your wallet from the options to get started.",
+        "IDontHaveAWallet": "I don't have a wallet"
       },
       "recommendedWalletsPart1": "{app} only supports",
       "recommendedWalletsPart2": "on this platform. Please use or install one of the supported wallets to continue",
@@ -15,7 +16,9 @@
         "terms": "Terms & Conditions",
         "and": "and",
         "privacy": "Privacy Policy"
-      }
+      },
+      "whyDontISeeMyWallet": "Why don't I see my wallet?",
+      "learnMore": "Click here to learn more"
     },
     "connectingWallet": {
       "header": "{connectionRejected, select, false {Connecting to {wallet}...} other {Connection Rejected}}",

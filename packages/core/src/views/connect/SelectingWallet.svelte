@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { _ } from 'svelte-i18n'
+  import en from '../../i18n/en.json'
   import { MOBILE_WINDOW_WIDTH } from '../../constants.js'
   import { state } from '../../store/index.js'
   import type { WalletWithLoadingIcon } from '../../types.js'
@@ -88,12 +90,16 @@
     {/each}
     <div class="notice-container">
       <Warning>
-        <div>Why don't I see my Wallet?</div>
+        <div>{$_('connect.selectingWallet.whyDontISeeMyWallet', {
+          default: en.connect.selectingWallet.whyDontISeeMyWallet
+        })}</div>
         <a
           class="link pointer"
           href={connect.wheresMyWalletLink || wheresMyWalletDefault}
           target="_blank"
-          rel="noreferrer noopener">Click here to learn more</a
+          rel="noreferrer noopener">{$_('connect.selectingWallet.learnMore', {
+            default: en.connect.selectingWallet.learnMore
+          })}</a
         >
       </Warning>
     </div>
