@@ -126,7 +126,8 @@
         'imtoken',
         'pillar'
       ]
-    }
+    },
+    requiredChains:[1, 56]
   })
   const portis = portisModule({
     apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
@@ -651,31 +652,31 @@
             }}>Send Success Notification</button
           >
           <button
-            on:click={() =>
-              onboard.state.actions.customNotification({
-                message:
-                  'This is a custom DApp success notification to use however you want',
-                autoDismiss: 0,
-                type: 'pending'
-              })}>Send Pending Notification</button
-          >
-          <button
-            on:click={() =>
-              onboard.state.actions.customNotification({
-                type: 'error',
-                message:
-                  'This is a custom DApp Error notification to use however you want',
-                autoDismiss: 0
-              })}>Send Error Notification</button
-          >
-          <button
-            on:click={() =>
-              onboard.state.actions.customNotification({
-                message:
-                  'This is a custom non-descript DApp notification to use however you want',
-                autoDismiss: 0
-              })}>Send DApp Notification</button
-          >
+          on:click={() =>
+            onboard.state.actions.customNotification({
+              message:
+                'This is a custom DApp success notification to use however you want',
+              autoDismiss: 0,
+              type: 'pending'
+            })}>Send Pending Notification</button
+        >
+        <button
+          on:click={() =>
+            onboard.state.actions.customNotification({
+              type: 'error',
+              message:
+                'This is a custom DApp Error notification to use however you want',
+              autoDismiss: 0
+            })}>Send Error Notification</button
+        >
+        <button
+          on:click={() =>
+            onboard.state.actions.customNotification({
+              message:
+                'This is a custom non-descript DApp notification to use however you want',
+              autoDismiss: 0
+            })}>Send DApp Notification</button
+        >
         </div>
         <div class="switch-chain-container">
           <button on:click={() => onboard.setChain({ chainId: '0x1' })}
