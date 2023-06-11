@@ -1,5 +1,5 @@
 import type { WalletInit } from '@web3-onboard/common'
-import type { Web3ModalConfig } from '@web3modal/standalone'
+import { EthereumProviderOptions } from '@walletconnect/ethereum-provider/dist/types/EthereumProvider'
 import v1 from './v1.js'
 import v2 from './v2.js'
 
@@ -37,23 +37,9 @@ export type WalletConnectOptions = {
        */
       requiredChains?: number[] | undefined
       /**
-       * `undefined` by default, see https://docs.walletconnect.com/2.0/web3modal/options
+       * `undefined` by default, see https://docs.walletconnect.com/2.0/web/walletConnectModal/options
        */
-      qrModalOptions?: Pick<
-        Web3ModalConfig,
-        | 'themeMode'
-        | 'themeVariables'
-        | 'chainImages'
-        | 'desktopWallets'
-        | 'enableExplorer'
-        | 'explorerRecommendedWalletIds'
-        | 'explorerExcludedWalletIds'
-        | 'mobileWallets'
-        | 'privacyPolicyUrl'
-        | 'termsOfServiceUrl'
-        | 'tokenImages'
-        | 'walletImages'
-      >
+      qrModalOptions?: EthereumProviderOptions['qrModalOptions']
     }
 )
 
