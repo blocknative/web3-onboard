@@ -237,7 +237,7 @@
 
         <!-- BALANCE -->
         {#if balance}
-          <div in:fade class="balance">
+          <div in:fade|local class="balance">
             {formatBalance(balance)}
           </div>
         {/if}
@@ -256,7 +256,7 @@
     </div>
 
     {#if showMenu === address}
-      <ul in:fade class="menu absolute">
+      <ul in:fade|local class="menu absolute">
         <li
           on:click|stopPropagation={() => {
             showMenu = ''

@@ -72,7 +72,7 @@
               <div class="icon-name-container">
                 {#if token.icon}
                   {#await token.icon then iconLoaded}
-                    <div in:fade class="icon">
+                    <div in:fade|local class="icon">
                       {#if isSVG(iconLoaded)}
                         <!-- render svg string -->
                         {@html iconLoaded}

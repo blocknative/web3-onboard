@@ -72,9 +72,12 @@
   const injected = injectedModule({
     custom: [
       // include custom (not natively supported) injected wallet modules here
-    ]
-    // display all wallets even if they are unavailable
-    // displayUnavailable: true
+    ],
+    // display all unavailable injected wallets
+    // displayUnavailable: true,
+    // ||
+    // display specific unavailable wallets
+    displayUnavailable: [ProviderLabel.MetaMask, ProviderLabel.Trust],
     // but only show Binance and Bitski wallet if they are available
     // filter: {
     //   [ProviderLabel.Binance]: 'unavailable',
@@ -103,7 +106,10 @@
     //       .filter(wallet => wallet)
     //   )
     // }
-    // walletUnavailableMessage: wallet => `Oops ${wallet.label} is unavailable!`
+    // walletUnavailableMessage: wallet =>
+    //   wallet.externalUrl
+    //     ? `Oops ${wallet.label} is unavailable! Please <a href="${wallet.externalUrl}" target="_blank">install</a>`
+    //     : `Oops ${wallet.label} is unavailable!`
   })
 
   const coinbaseWallet = coinbaseModule()
@@ -122,7 +128,8 @@
         'imtoken',
         'pillar'
       ]
-    }
+    },
+    requiredChains:[1, 56]
   })
   const portis = portisModule({
     apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
@@ -698,7 +705,6 @@
           >
         </div>
         <div class="position-buttons">
- 
           <button
             on:click={() =>
               onboard.state.actions.updateAccountCenter({

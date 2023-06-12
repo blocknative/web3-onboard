@@ -178,7 +178,12 @@ const equal = {
     provider: window.ethereum
   }),
   // A list of platforms that this wallet supports
-  platforms: ['desktop']
+  platforms: ['desktop'],
+  /**
+   * A Url to link users to a download page for the wallet
+   * to be shown if not installed or available on the browser
+   */
+  externalUrl: 'http://www.CoolEqualWalletDownload.com'
 }
 
 const injected = injectedModule({
@@ -197,17 +202,22 @@ You may want to display injected wallets that are not currently available to the
 
 ```javascript
 const injected = injectedModule({
-  displayUnavailable: true
+  // display all unavailable injected wallets
+  displayUnavailable: true,
+  ||
+  // display specific unavailable wallets
+  displayUnavailable: [ProviderLabel.MetaMask, ProviderLabel.Trust]
 })
 ```
 
-This will render every injected wallet as regardless of whether it has been detected in the window, happy days.
-Then the issue of the order of wallets displayed becomes apparent when you have 21 injected wallets at the top of the wallets list. To solve this, all injected wallets are sorted alphabetically by default and there is an additional `sort` parameter which receives the final list of wallets and then returns the list to be rendered. This allows for example setting MetaMask and Coinbase first and then just the rest alphabetically:
+This can be set to an array top specify which unavailable injected wallets to show or set to true to display all unavailable injected wallets regardless of whether it has been detected in the window, happy days.
+Then the issue of the order of wallets displayed becomes apparent when you have 21 injected wallets at the top of the wallets list. To solve this, all injected wallets are sorted **alphabetically** by default and there is an additional `sort` parameter which receives the final list of wallets and then returns the list to be rendered. This allows for example setting MetaMask and Coinbase first and then just the rest alphabetically:
 
 ```javascript
 const injected = injectedModule({
-  // display all wallets even if they are unavailable
-  displayUnavailable: true,
+  // display specific injected wallets even if they are unavailable
+  // can also be set to `true` to display all unavailable injected wallets
+  displayUnavailable: [ProviderLabel.MetaMask, ProviderLabel.Trust],
   // do a manual sort of injected wallets so that MetaMask and Coinbase are ordered first
   sort: wallets => {
     const metaMask = wallets.find(
@@ -233,11 +243,12 @@ const injected = injectedModule({
 })
 ```
 
-You may want to display all wallets, but filter out specific wallets based on their availability. For example I may want to display all unavailable wallets except when Binance and Bitski wallet is unavailable, then don't show them, but if they are available, then do show them. To do this, the filters value has been extended to have a new value: `'unavailable'`, as in; remove this wallet if it is unavailable, even though `displayUnavailable` wallets is set:
+You may want to display all unavailable injected wallets, but filter out specific wallets based on their availability. For example I may want to display all unavailable wallets except when Binance and Bitski wallet is unavailable, then don't show them, but if they are available, then do show them. To do this, the filters value has been extended to have a new value: `'unavailable'`, as in; remove this wallet if it is unavailable, even though `displayUnavailable` wallets is set:
 
 ```javascript
 const injected = injectedModule({
-  // display all wallets even if they are unavailable
+  // display specific injected wallets even if they are unavailable
+  // can also be set to `true` to display all unavailable injected wallets
   displayUnavailable: true,
   // but only show Binance and Bitski wallet if they are available
   filter: {
@@ -269,15 +280,17 @@ const injected = injectedModule({
 })
 ```
 
-If a wallet is selected, but is not available the default error message is: `Please install or enable ${walletName} to continue`. You may want to customise that message, so there is the `walletUnavailableMessage` parameter which is a function that takes the wallet object that is unavailable and returns a string which is the message to display:
+If a wallet is selected, but is not available the default error message is: `Oops ${wallet.label} is unavailable! Please <a href="${wallet.externalUrl}" target="_blank">install</a>` if a download link is available for that wallet. If there isn't a download link for that wallet the default is: `Please install or enable ${walletName} to continue`. You may want to customize that message, so there is the `walletUnavailableMessage` parameter which is a function that takes the wallet object that is unavailable and returns a string which is the message to display:
 
 ```javascript
 const injected = injectedModule({
   custom: [
     // include custom (not natively supported) injected wallet modules here
   ],
-  // display all wallets even if they are unavailable
-  displayUnavailable: true,
+  // display specific injected wallets even if they are unavailable
+  // can also be set to `true` to display all unavailable injected wallets
+  displayUnavailable: [ProviderLabel.MetaMask, ProviderLabel.Trust],
+
   // but only show Binance and Bitski wallet if they are available
   filter: {
     [ProviderLabel.Binance]: 'unavailable',
@@ -305,6 +318,9 @@ const injected = injectedModule({
         .filter(wallet => wallet)
     )
   },
-  walletUnavailableMessage: wallet => `Oops ${wallet.label} is unavailable!`
+  walletUnavailableMessage: wallet =>
+    wallet.externalUrl
+      ? `Oops ${wallet.label} is unavailable! Please <a href="${wallet.externalUrl}" target="_blank">install</a>`
+      : `Oops ${wallet.label} is unavailable!`
 })
 ```
