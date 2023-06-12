@@ -24,29 +24,29 @@ function BloctoWallet(): WalletInit {
         const provider = createEIP1193Provider(bloctoProvider, {
           eth_selectAccounts: null,
           wallet_switchEthereumChain: async ({ params, baseRequest }) => {
-            const chain = chains.find(function(item) {
-              return item.id === (params && params[0] && params[0].chainId);
-            });
+            const chain = chains.find(function (item) {
+              return item.id === (params && params[0] && params[0].chainId)
+            })
             if (!chain) throw new Error('chain must be set before switching')
-            const providerRpcurl = bloctoProvider.switchableNetwork[chain.id] && bloctoProvider.switchableNetwork[chain.id].rpc_url;
-            const chainUrl = chain.rpcUrl;
-            if (
-              providerRpcurl !== chainUrl
-              ) {
+            const providerRpcurl =
+              bloctoProvider.switchableNetwork[chain.id] &&
+              bloctoProvider.switchableNetwork[chain.id].rpc_url
+            const chainUrl = chain.rpcUrl
+            if (providerRpcurl !== chainUrl) {
               await baseRequest({
                 method: 'wallet_addEthereumChain',
                 params: [
                   {
                     chainId: chain.id,
-                    rpcUrls: [chainUrl],
-                  },
-                ],
-              });
+                    rpcUrls: [chainUrl]
+                  }
+                ]
+              })
             }
             await baseRequest({
               method: 'wallet_switchEthereumChain',
-              params: [{ chainId: chain.id }],
-            });
+              params: [{ chainId: chain.id }]
+            })
             return null
           },
           eth_chainId: async ({ baseRequest }) => {
@@ -55,10 +55,16 @@ function BloctoWallet(): WalletInit {
           }
         })
 
-        provider.disconnect = () => instance.ethereum ? instance.ethereum.request({ method: 'wallet_disconnect' }): null
+        provider.disconnect = () =>
+          instance.ethereum
+            ? instance.ethereum.request({ method: 'wallet_disconnect' })
+            : null
         // patch the chainChanged event
         const on = bloctoProvider.on.bind(bloctoProvider)
-        bloctoProvider.on = (event: string, listener: (arg0: string) => void) => {
+        bloctoProvider.on = (
+          event: string,
+          listener: (arg0: string) => void
+        ) => {
           on(event, (val: any) => {
             if (event === 'chainChanged') {
               listener(`0x${(val as number).toString(16)}`)
