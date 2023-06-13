@@ -57,7 +57,7 @@
 
   export let autoSelect: ConnectOptions['autoSelect']
 
-  const { appMetadata, unstoppableResolution } = configuration
+  const { appMetadata, unstoppableResolution, device } = configuration
   const { icon } = appMetadata || {}
 
   const { walletModules, connect } = state.get()
@@ -414,6 +414,11 @@
   function scrollToTop() {
     scrollContainer && scrollContainer.scrollTo(0, 0)
   }
+
+  const isSafariMobile =
+    device.type === 'mobile' &&
+    device.browser.name &&
+    device.browser.name === 'Safari'
 </script>
 
 <style>
@@ -518,6 +523,11 @@
   .scroll-container::-webkit-scrollbar {
     display: none; /* Chrome, Safari and Opera */
   }
+  .mobile-safari {
+    /* Handles for Mobile Safari's floating Address Bar 
+    covering the bottom of the connect modal **/
+    padding-bottom: 80px;
+  }
 
   @media all and (min-width: 768px) {
     .container {
@@ -541,7 +551,7 @@
 
 {#if !autoSelect.disableModals}
   <Modal close={!connect.disableClose && close}>
-    <div class="container">
+    <div class="container" class:mobile-safari={isSafariMobile}>
       {#if connect.showSidebar}
         <Sidebar step={$modalStep$} />
       {/if}

@@ -354,6 +354,7 @@ function mountApp(theme: Theme, disableFontDownload: boolean) {
 
   <style>
     :host {
+      font-size: 16px;
           /* COLORS */
           --white: white;
           --black: black;
