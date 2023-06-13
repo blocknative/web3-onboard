@@ -1,4 +1,4 @@
-import type { Chain, WalletInit, WalletModule } from '@web3-onboard/common'
+import type { AppMetadata, Chain, WalletInit, WalletModule } from '@web3-onboard/common'
 import { nanoid } from 'nanoid'
 import { dispatch } from './index.js'
 import { configuration } from '../configuration.js'
@@ -29,7 +29,8 @@ import type {
   ConnectModalOptions,
   UpdateConnectModalAction,
   Theme,
-  UpdateChainsAction
+  UpdateChainsAction,
+  UpdateAppMetadataAction
 } from '../types.js'
 
 import {
@@ -45,7 +46,8 @@ import {
   validateNotify,
   validateConnectModalUpdate,
   validateUpdateTheme,
-  validateSetChainOptions
+  validateSetChainOptions,
+  validateAppMetadataUpdate
 } from '../validation.js'
 
 import {
@@ -63,7 +65,8 @@ import {
   REMOVE_NOTIFICATION,
   UPDATE_ALL_WALLETS,
   UPDATE_CONNECT_MODAL,
-  UPDATE_CHAINS
+  UPDATE_CHAINS,
+  UPDATE_APP_METADATA
 } from './constants.js'
 
 export function addChains(chains: Chain[]): void {
@@ -437,4 +440,21 @@ export function updateTheme(theme: Theme): void {
 
   const themingObj = returnTheme(theme)
   themingObj && handleThemeChange(themingObj)
+}
+
+export function updateAppMetadata(
+  update: AppMetadata| Partial<AppMetadata>
+): void {
+  const error = validateAppMetadataUpdate(update)
+
+  if (error) {
+    throw error
+  }
+
+  const action = {
+    type: UPDATE_APP_METADATA,
+    payload: update
+  }
+
+  dispatch(action as UpdateAppMetadataAction)
 }

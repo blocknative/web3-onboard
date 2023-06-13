@@ -9,7 +9,8 @@ import {
   chainNamespaceValidation,
   chainIdValidation,
   chainValidation,
-  validate
+  validate,
+  AppMetadata
 } from '@web3-onboard/common'
 
 import type {
@@ -118,6 +119,19 @@ const agreement = Joi.object({
 const appMetadata = Joi.object({
   name: Joi.string().required(),
   description: Joi.string().required(),
+  icon: Joi.string(),
+  logo: Joi.string(),
+  gettingStartedGuide: Joi.string(),
+  email: Joi.string(),
+  appUrl: Joi.string(),
+  explore: Joi.string(),
+  recommendedInjectedWallets: Joi.array().items(recommendedWallet),
+  agreement
+})
+
+const appMetadataUpdate = Joi.object({
+  name: Joi.string(),
+  description: Joi.string(),
   icon: Joi.string(),
   logo: Joi.string(),
   gettingStartedGuide: Joi.string(),
@@ -431,4 +445,10 @@ export function validateUpdateBalances(data: WalletState[]): ValidateReturn {
 
 export function validateUpdateTheme(data: Theme): ValidateReturn {
   return validate(theme, data)
+}
+
+export function validateAppMetadataUpdate(
+  data: AppMetadata | Partial<AppMetadata>
+): ValidateReturn {
+  return validate(appMetadataUpdate, data)
 }
