@@ -300,11 +300,12 @@
     ],
     connect: {
       // disableClose: true,
-      autoConnectLastWallet: false,
+      autoConnectLastWallet: true,
+      autoConnectAllPreviousWallet: true
     },
     appMetadata: {
       name: 'Blocknative',
-      // icon: blocknativeIcon,
+      icon: blocknativeIcon,
       // logo: blocknativeLogo,
       description: 'Demo app for Onboard V2',
       recommendedInjectedWallets: [
@@ -728,13 +729,6 @@
                 minimal: true
               })}>Small Trigger</button
           >
-          <button
-          on:click={() =>
-            onboard.state.actions.updateMetaData({
-              name: 'This thing work?',
-    icon: blocknativeIcon,
-    description: 'new ass description'})}>Update MD</button
-        >
         </div>
       </div>
     {/if}
