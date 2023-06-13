@@ -16,7 +16,7 @@ export type UauthInitOptions = {
    */
   shouldLoginWithRedirect?: boolean
   /**
-   * Optional url string: default = 'https://bridge.walletconnect.org'
+   * Optional url string: default = 'https://derelay.rabby.io'
    */
   bridge?: string
   qrcodeModalOptions?: {

@@ -36,7 +36,7 @@ type UauthInitOptions = {
   redirectUri: string // required and will throw an error if not included: used for pop-up and callback redirection
   scope?: string // default = 'openid wallet'
   shouldLoginWithRedirect?: boolean // if true, redirects to your callback page
-  bridge?: string // default = 'https://bridge.walletconnect.org'
+  bridge?: string // default = 'https://derelay.rabby.io'
   qrcodeModalOptions?: {
     mobileLinks: string[] // set the order and list of mobile linking wallets
   }

@@ -33,7 +33,7 @@ npm install @web3-onboard/walletconnect
 
 ```typescript
 type WalletConnectOptions = {
-  bridge?: string // default = 'https://bridge.walletconnect.org'
+  bridge?: string // default = 'https://derelay.rabby.io'
   qrcodeModalOptions?: {
     mobileLinks: string[] // set the order and list of mobile linking wallets
   }

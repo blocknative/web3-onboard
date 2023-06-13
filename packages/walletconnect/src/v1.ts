@@ -13,7 +13,7 @@ function walletConnect(
   options: WalletConnectOptions = { version: 1 }
 ): WalletInit {
   const {
-    bridge = 'https://bridge.walletconnect.org',
+    bridge = 'https://derelay.rabby.io',
     qrcodeModalOptions,
     connectFirstChainId,
     handleUri

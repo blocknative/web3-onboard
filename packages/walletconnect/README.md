@@ -14,7 +14,7 @@ _For an up to date list please see the [WalletConnect Explorer](https://explorer
 
 ```typescript
 type WalletConnectOptions = {
-  bridge?: string // default = 'https://bridge.walletconnect.org'
+  bridge?: string // default = 'https://derelay.rabby.io'
   qrcodeModalOptions?: {
     mobileLinks: string[] // set the order and list of mobile linking wallets
   }

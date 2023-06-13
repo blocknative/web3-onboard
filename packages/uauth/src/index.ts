@@ -34,7 +34,7 @@ function uauth(options: UauthInitOptions): WalletInit {
       redirectUri,
       scope = 'openid wallet',
       shouldLoginWithRedirect,
-      bridge = 'https://bridge.walletconnect.org',
+      bridge = 'https://derelay.rabby.io',
       qrcodeModalOptions,
       connectFirstChainId
     } = options || {}
