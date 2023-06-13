@@ -33,6 +33,8 @@
     filter,
     firstValueFrom,
     mapTo,
+    shareReplay,
+    startWith,
     Subject,
     take,
     takeUntil
@@ -57,8 +59,13 @@
 
   export let autoSelect: ConnectOptions['autoSelect']
 
-  const { appMetadata, unstoppableResolution, device } = configuration
-  const { icon } = appMetadata || {}
+  const configuration$ = state
+    .select('configuration')
+    .pipe(startWith(state.get().configuration), shareReplay(1))
+
+  console.log('$configuration$', $configuration$)
+
+  const { unstoppableResolution, device, appMetadata } = $configuration$
 
   const { walletModules, connect } = state.get()
   const cancelPreviousConnect$ = new Subject<void>()
@@ -559,17 +566,19 @@
       <div class="content flex flex-column">
         {#if windowWidth <= MOBILE_WINDOW_WIDTH}
           <div class="mobile-header">
+            {#key $configuration$.appMetadata.icon}
             <div class="icon-container">
-              {#if icon}
-                {#if isSVG(icon)}
-                  {@html icon}
+              {#if $configuration$.appMetadata.icon}
+                {#if isSVG($configuration$.appMetadata.icon)}
+                  {@html $configuration$.appMetadata.icon}
                 {:else}
-                  <img src={icon} alt="logo" />
+                  <img src={$configuration$.appMetadata.icon} alt="logo" />
                 {/if}
               {:else}
                 {@html defaultBnIcon}
               {/if}
             </div>
+            {/key}
             <div class="flex flex-column justify-center w-full">
               <div class="header-heading">
                 {$_(
