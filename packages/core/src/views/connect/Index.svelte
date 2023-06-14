@@ -59,13 +59,11 @@
 
   export let autoSelect: ConnectOptions['autoSelect']
 
-  const configuration$ = state
-    .select('configuration')
-    .pipe(startWith(state.get().configuration), shareReplay(1))
+  const appMetadata$ = state
+    .select('appMetadata')
+    .pipe(startWith(state.get().appMetadata), shareReplay(1))
 
-  console.log('$configuration$', $configuration$)
-
-  const { unstoppableResolution, device, appMetadata } = $configuration$
+  const { unstoppableResolution, device } = configuration
 
   const { walletModules, connect } = state.get()
   const cancelPreviousConnect$ = new Subject<void>()
@@ -144,7 +142,7 @@
         chains,
         BigNumber,
         EventEmitter,
-        appMetadata
+        appMetadata: $appMetadata$
       })
 
       const loadedIcon = await icon
@@ -566,13 +564,13 @@
       <div class="content flex flex-column">
         {#if windowWidth <= MOBILE_WINDOW_WIDTH}
           <div class="mobile-header">
-            {#key $configuration$.appMetadata.icon}
+            {#key $appMetadata$.icon}
             <div class="icon-container">
-              {#if $configuration$.appMetadata.icon}
-                {#if isSVG($configuration$.appMetadata.icon)}
-                  {@html $configuration$.appMetadata.icon}
+              {#if $appMetadata$.icon}
+                {#if isSVG($appMetadata$.icon)}
+                  {@html $appMetadata$.icon}
                 {:else}
-                  <img src={$configuration$.appMetadata.icon} alt="logo" />
+                  <img src={$appMetadata$.icon} alt="logo" />
                 {/if}
               {:else}
                 {@html defaultBnIcon}
