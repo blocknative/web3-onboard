@@ -225,12 +225,9 @@ function reducer(state: AppState, action: Action): AppState {
 
       return {
         ...state,
-        configuration: {
-          ...state.configuration,
-          appMetadata: {
-            ...state.configuration.appMetadata,
-            ...update
-          }
+        appMetadata: {
+          ...state.appMetadata,
+          ...update
         }
       }
     }

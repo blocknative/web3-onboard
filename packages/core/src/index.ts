@@ -210,7 +210,6 @@ function init(options: InitOptions): OnboardAPI {
   const app = svelteInstance || mountApp(theme, disableFontDownload)
 
   updateConfiguration({
-    appMetadata,
     svelteInstance: app,
     apiKey,
     initialWalletInit: wallets,

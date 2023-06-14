@@ -1,5 +1,4 @@
 import type { AppState } from './types.js'
-import { getDevice } from './utils'
 
 export const APP_INITIAL_STATE: AppState = {
   wallets: [],
@@ -28,17 +27,7 @@ export const APP_INITIAL_STATE: AppState = {
     showSidebar: true,
     disableClose: false
   },
-  configuration: {
-    svelteInstance: null,
-    appMetadata: null,
-    apiKey: null,
-    device: getDevice(),
-    initialWalletInit: [],
-    gas: null,
-    containerElements: { accountCenter: null, connectModal: null },
-    transactionPreview: null,
-    unstoppableResolution: null
-  }
+  appMetadata: null,
 }
 
 export const STORAGE_KEYS = {

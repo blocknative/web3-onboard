@@ -180,7 +180,7 @@ export interface AppState {
   notify: Notify
   notifications: Notification[]
   connect: ConnectModalOptions,
-  configuration: Configuration
+  appMetadata: AppMetadata
 }
 
 export type Configuration = {
