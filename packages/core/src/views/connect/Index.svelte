@@ -564,7 +564,6 @@
       <div class="content flex flex-column">
         {#if windowWidth <= MOBILE_WINDOW_WIDTH}
           <div class="mobile-header">
-            {#key $appMetadata$.icon}
             <div class="icon-container">
               {#if $appMetadata$.icon}
                 {#if isSVG($appMetadata$.icon)}
@@ -576,7 +575,6 @@
                 {@html defaultBnIcon}
               {/if}
             </div>
-            {/key}
             <div class="flex flex-column justify-center w-full">
               <div class="header-heading">
                 {$_(

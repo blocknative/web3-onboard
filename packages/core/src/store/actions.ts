@@ -445,7 +445,6 @@ export function updateTheme(theme: Theme): void {
 export function updateAppMetadata(
   update: AppMetadata| Partial<AppMetadata>
 ): void {
-  console.log('update', update)
   const error = validateAppMetadataUpdate(update)
 
   if (error) {

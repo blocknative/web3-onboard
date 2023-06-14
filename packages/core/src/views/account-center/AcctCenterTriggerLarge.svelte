@@ -14,11 +14,15 @@
     SuccessStatusIcon
   } from '../shared/index.js'
   import { state } from '../../store/index.js'
-  import { configuration } from '../../configuration.js'
+  import { shareReplay, startWith } from 'rxjs'
 
   export let toggle: () => void
-  const { appMetadata } = configuration
-  const appIcon = (appMetadata && appMetadata.icon) || questionIcon
+
+  const appMetadata$ = state
+    .select('appMetadata')
+    .pipe(startWith(state.get().appMetadata), shareReplay(1))
+
+  const appIcon = ($appMetadata$ && $appMetadata$.icon) || questionIcon
   const chains = state.get().chains
 
   $: [primaryWallet] = $wallets$
