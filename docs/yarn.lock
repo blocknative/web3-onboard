@@ -4437,7 +4437,7 @@
     "@walletconnect/window-getters" "^1.0.1"
     tslib "1.14.1"
 
-"@web3-onboard/blocto@^2.0.0-alpha.1":
+"@web3-onboard/blocto@^2.0.0":
   version "2.0.0-alpha.1"
   resolved "https://registry.yarnpkg.com/@web3-onboard/blocto/-/blocto-2.0.0-alpha.1.tgz#8781646d98520b80be090c622e218b9dfea12221"
   integrity sha512-YBhsjkVdL6Z/SXoQeFNt5Rjj1WxlXg1oKOBOZOqfioPuMwmi8RJOLcLi7evhVUdGs5T8sYCBWg+eDeA/K6XK7w==
@@ -4470,10 +4470,10 @@
     ethers "5.5.4"
     joi "17.9.1"
 
-"@web3-onboard/core@^2.20.1":
-  version "2.20.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.20.1.tgz#ad3a15aa6c1083d6da83fd9d06d5fe250e750b5a"
-  integrity sha512-OlNQUYBsbvy389AQD5VggqCRGvmiE7/w0LeLt6yyUwAksGnRPSpLjiPaOOjMAJFq0d3TnSX5yXbAoG1SRJM7ww==
+"@web3-onboard/core@^2.20.2-alpha.1":
+  version "2.20.2-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.20.2-alpha.1.tgz#da3618634c430ef6468e27067fc21244dac026db"
+  integrity sha512-9zLzGG2F9KxOBe/KTE7hGPON/kbjn2e8rDVAzP79rzn+AwO5kvPcLapBgJRbh2FlbKx2werotGTUtZNKRaFMPA==
   dependencies:
     "@web3-onboard/common" "^2.3.3"
     bignumber.js "^9.0.0"
@@ -4566,10 +4566,10 @@
   dependencies:
     "@infinitywallet/infinity-connector" "^1.0.6"
 
-"@web3-onboard/injected-wallets@^2.10.0":
-  version "2.10.0"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.10.0.tgz#c33ed40efd8bc615fb205bd537b23c0c17b84e7f"
-  integrity sha512-I/14Z511Oft1UTx/ZezT/UC2LqUBH3mMN1kABcxCy4t3zx4Yfh6LMEBmR2XWBoxSvz9iaLIQz4egH+u9mdz0sg==
+"@web3-onboard/injected-wallets@^2.10.1-alpha.1":
+  version "2.10.1-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.10.1-alpha.1.tgz#2f459f3dba4ecf3eca8131bd335cffcfcf9273fc"
+  integrity sha512-IeDWc5VvdkypktGa40Np1hvHCmDE+BCHc+r/TpUAhn2dg/XOQQfr1v6aI8PnST546ulEzE2PwFSXUZtsosLLGQ==
   dependencies:
     "@web3-onboard/common" "^2.3.3"
     joi "17.9.1"
@@ -4715,10 +4715,10 @@
     joi "17.9.1"
     rxjs "^7.5.2"
 
-"@web3-onboard/venly@^2.0.0-alpha.1":
-  version "2.0.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/venly/-/venly-2.0.0-alpha.1.tgz#b3a2c950909e2ca6a2b52fdec63356d9497a37da"
-  integrity sha512-RAQ2BaJL8PU4Xmyz6prlVaHHc+IwPy1PUmAAHx4v2LnAz1vQWUR7Hz+6Pag75vz07fGKi4fBAsxgNPmdDjMNTQ==
+"@web3-onboard/venly@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/venly/-/venly-2.0.0.tgz#99a72e6de95a962e684cc3ab681fd3fe95e17d53"
+  integrity sha512-OA9U4J3HMoSiByoR+NzUllp+tfh3O1wHOJRPB5hSsb8hOAWgrd3Dv6Fys36HpqWe9VkMIAMAbWT8/ufEbQ7ciw==
   dependencies:
     "@venly/web3-provider" "^3.1.1"
     "@web3-onboard/common" "^2.3.1"
