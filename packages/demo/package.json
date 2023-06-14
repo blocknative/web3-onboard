@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@web3-onboard/cede-store": "^2.0.2",
+    "@web3-onboard/blocto": "2.0.0-alpha.1",
     "@web3-onboard/coinbase": "^2.2.3",
     "@web3-onboard/core": "^2.20.2-alpha.1",
     "@web3-onboard/dcent": "^2.2.7",
@@ -55,7 +56,8 @@
     "@web3-onboard/web3auth": "^2.2.2",
     "@web3-onboard/xdefi": "^2.0.3",
     "@web3-onboard/zeal": "^2.0.3",
-    "vconsole": "^3.9.5"
+    "vconsole": "^3.9.5",
+    "@dapperlabs/dappauth": "^2.0.5"
   },
   "license": "MIT",
   "scripts": {

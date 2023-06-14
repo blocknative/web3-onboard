@@ -53,6 +53,7 @@ const intiOnboard = async (theme) => {
   const { default: xdefiModule } = await import('@web3-onboard/xdefi')
   const { default: cedeModule } = await import('@web3-onboard/cede-store')
   const { default: frameModule } = await import('@web3-onboard/frame')
+  const { default: bloctoModule } = await import('@web3-onboard/blocto')
   const { default: venlyModule } = await import('@web3-onboard/venly')
   const INFURA_ID = '8b60d52405694345a99bcb82e722e0af'
 
@@ -108,6 +109,7 @@ const intiOnboard = async (theme) => {
 
   const frame = frameModule()
 
+  const blocto = bloctoModule()
   const venly = venlyModule({
     clientId: 'blocknative',
     environment: 'staging'
@@ -138,6 +140,7 @@ const intiOnboard = async (theme) => {
       portis,
       frame,
       infinityWallet,
+      blocto
       // venly
     ],
     chains: [

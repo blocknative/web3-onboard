@@ -395,6 +395,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/cede-store
     steps:
       - node-build-steps
+  build-blocto:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/blocto
+    steps:
+      - node-build-steps
   build-venly:
     docker:
       - image: cimg/node:16.13.1
@@ -629,6 +635,12 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/cede-store
+    steps:
+      - node-staging-build-steps
+  build-staging-blocto:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/blocto
     steps:
       - node-staging-build-steps
   build-staging-venly:
@@ -869,6 +881,12 @@ workflows:
           <<: *deploy_production_filters
       - build-staging-cede-store:
           <<: *deploy_staging_filters
+  blocto:
+    jobs:
+      - build-blocto:
+          <<: *deploy_production_filters
+      - build-staging-blocto:
+        <<: *deploy_staging_filters
   venly:
     jobs:
       - build-venly:
