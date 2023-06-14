@@ -71,7 +71,8 @@
   }
 
   .modal-styling {
-    --border-radius: var(--onboard-modal-border-radius,
+    --border-radius: var(
+      --onboard-modal-border-radius,
       var(--w3o-border-radius, 1rem)
     );
     border-radius: var(--border-radius) var(--border-radius) 0 0;
