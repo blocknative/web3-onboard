@@ -28,6 +28,7 @@
   import phantomModule from '@web3-onboard/phantom'
   import trustModule from '@web3-onboard/trust'
   import frontierModule from '@web3-onboard/frontier'
+  import bloctoModule from '@web3-onboard/blocto'
   import cedeStoreModule from '@web3-onboard/cede-store'
   import venlyModule from '@web3-onboard/venly'
   import {
@@ -40,6 +41,7 @@
   import { share } from 'rxjs/operators'
   import VConsole from 'vconsole'
   import blocknativeIcon from './blocknative-icon.js'
+  import DappAuth from '@dapperlabs/dappauth';
 
   if (window.innerWidth < 700) {
     new VConsole()
@@ -155,6 +157,7 @@
   const trust = trustModule()
   const frontier = frontierModule()
   const cedeStore = cedeStoreModule()
+  const blocto = bloctoModule()
 
   const trezorOptions = {
     email: 'test@test.com',
@@ -221,6 +224,7 @@
       xdefi,
       frameWallet,
       cedeStore,
+      blocto,
       venly
     ],
     transactionPreview,
@@ -456,20 +460,28 @@
     // if using ethers v6 this is:
     // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
     const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
-
     const signer = ethersProvider?.getSigner()
     const addr = await signer?.getAddress()
     const signature = await signer?.signMessage(signMsg)
+    let verifySign = false;
+    let recoveredAddress = null;
 
-    const recoveredAddress = recoverAddress(
-      arrayify(hashMessage(signMsg)),
-      signature
-    )
-
-    if (recoveredAddress !== address) {
-      console.error(
-        "Signature failed. Recovered address doesn' match signing address."
+    try {
+      recoveredAddress = recoverAddress(
+        arrayify(hashMessage(signMsg)),
+        signature
       )
+      verifySign = recoveredAddress === addr
+    } catch (error) {
+      console.error('Error recovering addressL', error);
+      verifySign = false
+    }
+
+    // contract wallets verify EIP-1654
+    const verifySignBy1654 = new DappAuth(provider);
+    const isAuthorizedSigner = await verifySignBy1654.isAuthorizedSigner(signMsg, signature, address);
+    if (!verifySign && !isAuthorizedSigner) {
+      console.error("Signature failed. Recovered address doesn' match signing address.");
     }
 
     console.log({ signMsg, signature, recoveredAddress, addr })
