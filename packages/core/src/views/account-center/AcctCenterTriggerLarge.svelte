@@ -160,7 +160,7 @@
           background={'white'}
           border="darkGreen"
           radius={8}
-          icon={$appMetadata$ && $appMetadata$.icon ? $appMetadata$.icon : questionIcon}
+          icon={($appMetadata$ && $appMetadata$.icon) || questionIcon}
         />
       </div>
 
