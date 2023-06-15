@@ -565,7 +565,7 @@
         {#if windowWidth <= MOBILE_WINDOW_WIDTH}
           <div class="mobile-header">
             <div class="icon-container">
-              {#if $appMetadata$.icon}
+              {#if $appMetadata$ && $appMetadata$.icon}
                 {#if isSVG($appMetadata$.icon)}
                   {@html $appMetadata$.icon}
                 {:else}

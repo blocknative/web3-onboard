@@ -203,7 +203,7 @@
 
     <div class="description">
       {$_(`connect.${step}.sidebar.paragraph`, {
-        values: { app: $appMetadata$.name || 'This App' },
+        values: { app: ($appMetadata$ && $appMetadata$.name) || 'This App' },
         default: paragraph
       })}
     </div>
