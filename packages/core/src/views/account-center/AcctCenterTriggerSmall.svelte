@@ -11,8 +11,6 @@
     .select('appMetadata')
     .pipe(startWith(state.get().appMetadata), shareReplay(1))
 
-  const appIcon = ($appMetadata$ && $appMetadata$.icon) || questionIcon
-
   $: [primaryWallet] = $wallets$
 
   const accountCenter$ = state
@@ -91,7 +89,7 @@
         background={'white'}
         border="darkGreen"
         radius={8}
-        icon={appIcon}
+        icon={$appMetadata$ && $appMetadata$.icon ? $appMetadata$.icon : questionIcon}
       />
     </div>
     <div class="wallet-square-wrapper">

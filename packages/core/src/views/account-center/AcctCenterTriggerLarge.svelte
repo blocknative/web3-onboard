@@ -22,7 +22,6 @@
     .select('appMetadata')
     .pipe(startWith(state.get().appMetadata), shareReplay(1))
 
-  const appIcon = ($appMetadata$ && $appMetadata$.icon) || questionIcon
   const chains = state.get().chains
 
   $: [primaryWallet] = $wallets$
@@ -161,7 +160,7 @@
           background={'white'}
           border="darkGreen"
           radius={8}
-          icon={appIcon}
+          icon={$appMetadata$ && $appMetadata$.icon ? $appMetadata$.icon : questionIcon}
         />
       </div>
 
