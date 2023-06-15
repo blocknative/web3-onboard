@@ -12,8 +12,8 @@
     "format": "prettier --plugin-search-dir . --write .",
     "prepare": "svelte-kit sync",
     "test": "playwright test",
-    "w3o-latest-prod": "yarn add '@web3-onboard/core' '@web3-onboard/coinbase' '@web3-onboard/transaction-preview' '@web3-onboard/dcent' '@web3-onboard/frontier' '@web3-onboard/fortmatic' '@web3-onboard/frame' '@web3-onboard/gas' '@web3-onboard/gnosis' '@web3-onboard/keepkey' '@web3-onboard/keystone' '@web3-onboard/ledger' '@web3-onboard/infinity-wallet' '@web3-onboard/injected-wallets' '@web3-onboard/magic' '@web3-onboard/phantom' '@web3-onboard/portis' '@web3-onboard/sequence' '@web3-onboard/trezor' '@web3-onboard/trust' '@web3-onboard/torus' '@web3-onboard/taho' '@web3-onboard/web3auth' '@web3-onboard/walletconnect' '@web3-onboard/enkrypt' '@web3-onboard/mew-wallet' '@web3-onboard/xdefi' '@web3-onboard/uauth' '@web3-onboard/zeal' '@web3-onboard/cede-store'",
-    "w3o-latest-alpha": "yarn add '@web3-onboard/core@next' '@web3-onboard/coinbase@next' '@web3-onboard/transaction-preview@next' '@web3-onboard/dcent@next' '@web3-onboard/frontier@next' '@web3-onboard/fortmatic@next' '@web3-onboard/frame@next' '@web3-onboard/gas@next' '@web3-onboard/gnosis@next' '@web3-onboard/keepkey@next' '@web3-onboard/keystone@next' '@web3-onboard/ledger@next' '@web3-onboard/infinity-wallet@next' '@web3-onboard/injected-wallets@next' '@web3-onboard/magic@next' '@web3-onboard/phantom@next' '@web3-onboard/portis@next' '@web3-onboard/sequence@next' '@web3-onboard/trezor@next' '@web3-onboard/trust@next' '@web3-onboard/torus@next' '@web3-onboard/taho@next' '@web3-onboard/web3auth@next' '@web3-onboard/walletconnect@next' '@web3-onboard/enkrypt@next' '@web3-onboard/mew-wallet@next' '@web3-onboard/xdefi@next' '@web3-onboard/uauth@next' '@web3-onboard/zeal@next' '@web3-onboard/cede-store@next'"
+    "w3o-latest-prod": "yarn add '@web3-onboard/core' '@web3-onboard/coinbase' '@web3-onboard/transaction-preview' '@web3-onboard/dcent' '@web3-onboard/frontier' '@web3-onboard/fortmatic' '@web3-onboard/frame' '@web3-onboard/gas' '@web3-onboard/gnosis' '@web3-onboard/keepkey' '@web3-onboard/keystone' '@web3-onboard/ledger' '@web3-onboard/infinity-wallet' '@web3-onboard/injected-wallets' '@web3-onboard/magic' '@web3-onboard/phantom' '@web3-onboard/portis' '@web3-onboard/sequence' '@web3-onboard/trezor' '@web3-onboard/trust' '@web3-onboard/torus' '@web3-onboard/taho' '@web3-onboard/web3auth' '@web3-onboard/walletconnect' '@web3-onboard/enkrypt' '@web3-onboard/mew-wallet' '@web3-onboard/xdefi' '@web3-onboard/uauth' '@web3-onboard/zeal' '@web3-onboard/cede-store' '@web3-onboard/blocto'",
+    "w3o-latest-alpha": "yarn add '@web3-onboard/core@next' '@web3-onboard/coinbase@next' '@web3-onboard/transaction-preview@next' '@web3-onboard/dcent@next' '@web3-onboard/frontier@next' '@web3-onboard/fortmatic@next' '@web3-onboard/frame@next' '@web3-onboard/gas@next' '@web3-onboard/gnosis@next' '@web3-onboard/keepkey@next' '@web3-onboard/keystone@next' '@web3-onboard/ledger@next' '@web3-onboard/infinity-wallet@next' '@web3-onboard/injected-wallets@next' '@web3-onboard/magic@next' '@web3-onboard/phantom@next' '@web3-onboard/portis@next' '@web3-onboard/sequence@next' '@web3-onboard/trezor@next' '@web3-onboard/trust@next' '@web3-onboard/torus@next' '@web3-onboard/taho@next' '@web3-onboard/web3auth@next' '@web3-onboard/walletconnect@next' '@web3-onboard/enkrypt@next' '@web3-onboard/mew-wallet@next' '@web3-onboard/xdefi@next' '@web3-onboard/uauth@next' '@web3-onboard/zeal@next' '@web3-onboard/cede-store@next' '@web3-onboard/blocto@next'"
   },
   "devDependencies": {
     "@algolia/client-search": "^4.17.0",
@@ -49,9 +49,10 @@
   },
   "type": "module",
   "dependencies": {
+    "@web3-onboard/blocto": "^2.0.0-alpha.1",
     "@web3-onboard/cede-store": "^2.0.2",
     "@web3-onboard/coinbase": "^2.2.4",
-    "@web3-onboard/core": "^2.20.1",
+    "@web3-onboard/core": "^2.20.2-alpha.1",
     "@web3-onboard/dcent": "^2.2.7",
     "@web3-onboard/enkrypt": "^2.0.4",
     "@web3-onboard/fortmatic": "^2.0.19",
@@ -60,7 +61,7 @@
     "@web3-onboard/gas": "^2.1.8",
     "@web3-onboard/gnosis": "^2.1.10",
     "@web3-onboard/infinity-wallet": "^2.0.4",
-    "@web3-onboard/injected-wallets": "^2.10.0",
+    "@web3-onboard/injected-wallets": "^2.10.1-alpha.1",
     "@web3-onboard/keepkey": "^2.3.7",
     "@web3-onboard/keystone": "^2.3.7",
     "@web3-onboard/ledger": "^2.4.6",
@@ -75,7 +76,7 @@
     "@web3-onboard/trezor": "^2.4.2",
     "@web3-onboard/trust": "^2.0.4",
     "@web3-onboard/uauth": "^2.0.5",
-    "@web3-onboard/venly": "^2.0.0-alpha.1",
+    "@web3-onboard/venly": "^2.0.0",
     "@web3-onboard/walletconnect": "^2.3.9",
     "@web3-onboard/web3auth": "^2.2.3",
     "@web3-onboard/xdefi": "^2.0.4",

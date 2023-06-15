@@ -62,7 +62,8 @@ export enum ProviderIdentityFlag {
   SafePal = 'isSafePal',
   DeFiWallet = 'isDeficonnectProvider',
   Safeheron = 'isSafeheron',
-  Talisman = 'isTalisman'
+  Talisman = 'isTalisman',
+  OneKey = 'isOneKey'
 }
 
 
@@ -82,6 +83,7 @@ export enum ProviderExternalUrl {
   Phantom = 'https://phantom.app/download',
   Talisman = 'https://www.talisman.xyz/',
   Trust = 'https://trustwallet.com/download/',
+  OneKey = 'https://onekey.so/download/',
 }
 
 export enum ProviderLabel {
@@ -134,7 +136,8 @@ export enum ProviderLabel {
   SafePal = 'SafePal',
   DeFiWallet = 'DeFi Wallet',
   Safeheron = 'Safeheron',
-  Talisman = 'Talisman'
+  Talisman = 'Talisman',
+  OneKey = 'OneKey'
 }
 
 export interface MeetOneProvider extends ExternalProvider {
@@ -166,7 +169,8 @@ export enum InjectedNameSpace {
   Frontier = 'frontier',
   DeFiConnectProvider = 'deficonnectProvider',
   Safeheron = 'safeheron',
-  Talisman = 'talismanEth'
+  Talisman = 'talismanEth',
+  OneKey = '$onekey'
 }
 
 export interface CustomWindow extends Window {
@@ -203,6 +207,9 @@ export interface CustomWindow extends Window {
   deficonnectProvider: InjectedProvider
   safeheron: InjectedProvider
   talismanEth: InjectedProvider
+  $onekey: {
+    ethereum: InjectedProvider
+  }
 }
 
 export type InjectedProvider = ExternalProvider &
