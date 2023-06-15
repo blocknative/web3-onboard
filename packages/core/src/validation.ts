@@ -247,7 +247,6 @@ const connectOptions = Joi.object({
       }),
       Joi.string()
     )
-    .required()
 })
 
 const disconnectOptions = Joi.object({
