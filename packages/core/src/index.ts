@@ -94,7 +94,7 @@ function init(options: InitOptions): OnboardAPI {
   const {
     wallets,
     chains,
-    appMetadata = null,
+    appMetadata,
     i18n,
     accountCenter,
     apiKey,
@@ -218,7 +218,7 @@ function init(options: InitOptions): OnboardAPI {
     unstoppableResolution
   })
 
-  updateAppMetadata(appMetadata)
+  appMetadata ? updateAppMetadata(appMetadata) : null
 
   if (apiKey && transactionPreview) {
     const getBnSDK = async () => {
