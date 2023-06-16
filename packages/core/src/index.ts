@@ -218,7 +218,7 @@ function init(options: InitOptions): OnboardAPI {
     unstoppableResolution
   })
 
-  appMetadata ? updateAppMetadata(appMetadata) : null
+  appMetadata && updateAppMetadata(appMetadata)
 
   if (apiKey && transactionPreview) {
     const getBnSDK = async () => {
