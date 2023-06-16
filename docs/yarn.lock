@@ -1009,6 +1009,16 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
+"@blocto/sdk@^0.4.6":
+  version "0.4.8"
+  resolved "https://registry.yarnpkg.com/@blocto/sdk/-/sdk-0.4.8.tgz#73aa9791c5d6296ab0648b4aa157e2d065b37063"
+  integrity sha512-LVxzZ2FixbXOHe8vomEGW3IPV4EJ2bC+kvaPW+81j3FhZAObYWp10WfnDpCJ0UZjY6kjmeVr5Z2r4IW/fe3waQ==
+  dependencies:
+    bs58 "^5.0.0"
+    buffer "^6.0.3"
+    eip1193-provider "^1.0.1"
+    js-sha3 "^0.8.0"
+
 "@cedelabs/providers@^0.0.7":
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/@cedelabs/providers/-/providers-0.0.7.tgz#859070c5cf0a86841ce98d32c1599cc8de9b7869"
@@ -4427,6 +4437,14 @@
     "@walletconnect/window-getters" "^1.0.1"
     tslib "1.14.1"
 
+"@web3-onboard/blocto@^2.0.0-alpha.1":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/blocto/-/blocto-2.0.0.tgz#eb631e911b7c13ad11089bb3574e97b673f14463"
+  integrity sha512-99/YzRuE9VBXWVLI6tAKxwFvCXq7WV24a3rM76yY5yVEEeNfewh8PWQ/2Yfz71Vfi6YWVPKzGo3LHspz4caTzA==
+  dependencies:
+    "@blocto/sdk" "^0.4.6"
+    "@web3-onboard/common" "^2.3.1"
+
 "@web3-onboard/cede-store@^2.0.2":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@web3-onboard/cede-store/-/cede-store-2.0.2.tgz#6f8c9a62afbbb5a51affaa8076594125206f0c9e"
@@ -4452,10 +4470,10 @@
     ethers "5.5.4"
     joi "17.9.1"
 
-"@web3-onboard/core@^2.20.1":
-  version "2.20.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.20.1.tgz#ad3a15aa6c1083d6da83fd9d06d5fe250e750b5a"
-  integrity sha512-OlNQUYBsbvy389AQD5VggqCRGvmiE7/w0LeLt6yyUwAksGnRPSpLjiPaOOjMAJFq0d3TnSX5yXbAoG1SRJM7ww==
+"@web3-onboard/core@^2.20.2-alpha.1":
+  version "2.20.2-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.20.2-alpha.1.tgz#da3618634c430ef6468e27067fc21244dac026db"
+  integrity sha512-9zLzGG2F9KxOBe/KTE7hGPON/kbjn2e8rDVAzP79rzn+AwO5kvPcLapBgJRbh2FlbKx2werotGTUtZNKRaFMPA==
   dependencies:
     "@web3-onboard/common" "^2.3.3"
     bignumber.js "^9.0.0"
@@ -4548,10 +4566,10 @@
   dependencies:
     "@infinitywallet/infinity-connector" "^1.0.6"
 
-"@web3-onboard/injected-wallets@^2.10.0":
-  version "2.10.0"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.10.0.tgz#c33ed40efd8bc615fb205bd537b23c0c17b84e7f"
-  integrity sha512-I/14Z511Oft1UTx/ZezT/UC2LqUBH3mMN1kABcxCy4t3zx4Yfh6LMEBmR2XWBoxSvz9iaLIQz4egH+u9mdz0sg==
+"@web3-onboard/injected-wallets@^2.10.1-alpha.1":
+  version "2.10.1-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.10.1-alpha.1.tgz#2f459f3dba4ecf3eca8131bd335cffcfcf9273fc"
+  integrity sha512-IeDWc5VvdkypktGa40Np1hvHCmDE+BCHc+r/TpUAhn2dg/XOQQfr1v6aI8PnST546ulEzE2PwFSXUZtsosLLGQ==
   dependencies:
     "@web3-onboard/common" "^2.3.3"
     joi "17.9.1"
@@ -4697,10 +4715,10 @@
     joi "17.9.1"
     rxjs "^7.5.2"
 
-"@web3-onboard/venly@^2.0.0-alpha.1":
-  version "2.0.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/venly/-/venly-2.0.0-alpha.1.tgz#b3a2c950909e2ca6a2b52fdec63356d9497a37da"
-  integrity sha512-RAQ2BaJL8PU4Xmyz6prlVaHHc+IwPy1PUmAAHx4v2LnAz1vQWUR7Hz+6Pag75vz07fGKi4fBAsxgNPmdDjMNTQ==
+"@web3-onboard/venly@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/venly/-/venly-2.0.0.tgz#99a72e6de95a962e684cc3ab681fd3fe95e17d53"
+  integrity sha512-OA9U4J3HMoSiByoR+NzUllp+tfh3O1wHOJRPB5hSsb8hOAWgrd3Dv6Fys36HpqWe9VkMIAMAbWT8/ufEbQ7ciw==
   dependencies:
     "@venly/web3-provider" "^3.1.1"
     "@web3-onboard/common" "^2.3.1"
@@ -6719,7 +6737,7 @@ eip-712@^1.0.0:
     "@noble/hashes" "^1.0.0"
     superstruct "^0.15.3"
 
-eip1193-provider@1.0.1:
+eip1193-provider@1.0.1, eip1193-provider@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/eip1193-provider/-/eip1193-provider-1.0.1.tgz#420d29cf4f6c443e3f32e718fb16fafb250637c3"
   integrity sha512-kSuqwQ26d7CzuS/t3yRXo2Su2cVH0QfvyKbr2H7Be7O5YDyIq4hQGCNTo5wRdP07bt+E2R/8nPCzey4ojBHf7g==

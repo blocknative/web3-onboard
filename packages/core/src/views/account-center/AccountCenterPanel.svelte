@@ -421,7 +421,7 @@
             </div>
 
             <!-- app info -->
-            {#if $appMetadata$.gettingStartedGuide || $appMetadata$.explore}
+            {#if $appMetadata$ && ($appMetadata$.gettingStartedGuide || $appMetadata$.explore)}
               <div class="app-info">
                 <div class="app-info-heading">
                   {$_('accountCenter.appInfo', {

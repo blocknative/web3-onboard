@@ -176,7 +176,7 @@
     <!-- On Mobile we display the icon only & within the header rather than the sidebar -->
     {#if windowWidth >= MOBILE_WINDOW_WIDTH}
       <div class="icon-container">
-        {#if $appMetadata$.logo || $appMetadata$.icon}
+        {#if $appMetadata$ && ($appMetadata$.logo || $appMetadata$.icon)}
           {#if isSVG($appMetadata$.logo || $appMetadata$.icon)}
             {@html $appMetadata$.logo || $appMetadata$.icon}​
           {:else}
