@@ -179,7 +179,8 @@ export interface AppState {
   locale: Locale
   notify: Notify
   notifications: Notification[]
-  connect: ConnectModalOptions
+  connect: ConnectModalOptions,
+  appMetadata: AppMetadata
 }
 
 export type Configuration = {
@@ -428,7 +429,8 @@ export type Action =
   | AddNotificationAction
   | RemoveNotificationAction
   | UpdateAllWalletsAction
-  | UpdateConnectModalAction
+  | UpdateConnectModalAction 
+  | UpdateAppMetadataAction
 
 export type AddChainsAction = { type: 'add_chains'; payload: Chain[] }
 export type UpdateChainsAction = { type: 'update_chains'; payload: Chain }
@@ -492,6 +494,11 @@ export type RemoveNotificationAction = {
 export type UpdateAllWalletsAction = {
   type: 'update_balance'
   payload: WalletState[]
+}
+
+export type UpdateAppMetadataAction = {
+  type: 'update_app_metadata'
+  payload: AppMetadata | Partial<AppMetadata>
 }
 
 // ==== MISC ==== //

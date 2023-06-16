@@ -19,7 +19,8 @@ import type {
   RemoveNotificationAction,
   UpdateAllWalletsAction,
   UpdateConnectModalAction,
-  UpdateChainsAction
+  UpdateChainsAction,
+  UpdateAppMetadataAction
 } from '../types.js'
 
 import {
@@ -37,7 +38,8 @@ import {
   ADD_NOTIFICATION,
   REMOVE_NOTIFICATION,
   UPDATE_ALL_WALLETS,
-  UPDATE_CHAINS
+  UPDATE_CHAINS,
+  UPDATE_APP_METADATA
 } from './constants.js'
 
 function reducer(state: AppState, action: Action): AppState {
@@ -215,6 +217,18 @@ function reducer(state: AppState, action: Action): AppState {
       return {
         ...state,
         locale: payload as Locale
+      }
+    }
+
+    case UPDATE_APP_METADATA: {
+      const update = payload as UpdateAppMetadataAction['payload']
+
+      return {
+        ...state,
+        appMetadata: {
+          ...state.appMetadata,
+          ...update
+        }
       }
     }
 

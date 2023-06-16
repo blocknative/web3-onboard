@@ -1,11 +1,13 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
-  import { configuration } from '../../configuration.js'
   import en from '../../i18n/en.json'
-
   import { Warning } from '../shared/index.js'
+  import { state } from '../../store/index.js'
+  import { shareReplay, startWith } from 'rxjs'
 
-  const { recommendedInjectedWallets, name } = configuration.appMetadata || {}
+  const appMetadata$ = state
+    .select('appMetadata')
+    .pipe(startWith(state.get().appMetadata), shareReplay(1))
 </script>
 
 <style>
@@ -22,20 +24,20 @@
 
 <div class="outer-container">
   <Warning>
-    {#if recommendedInjectedWallets}
+    {#if $appMetadata$.recommendedInjectedWallets}
       {$_('connect.selectingWallet.recommendedWalletsPart1', {
         default: en.connect.selectingWallet.recommendedWalletsPart1,
         values: {
-          app: name || 'This app'
+          app: $appMetadata$.name || 'This app'
         }
       })}
-      {#each recommendedInjectedWallets as { name, url }, i}
+      {#each $appMetadata$.recommendedInjectedWallets as { name, url }, i}
         <a
           class="link pointer"
           href={url}
           target="_blank"
           rel="noreferrer noopener"
-          >{name}{i < recommendedInjectedWallets.length - 1 ? ', ' : ''}
+          >{name}{i < $appMetadata$.recommendedInjectedWallets.length - 1 ? ', ' : ''}
         </a>
       {/each}
       {$_('connect.selectingWallet.recommendedWalletsPart2', {
@@ -45,7 +47,7 @@
       {$_('connect.selectingWallet.installWallet', {
         default: en.connect.selectingWallet.installWallet,
         values: {
-          app: name || 'this app'
+          app: $appMetadata$.name || 'this app'
         }
       })}
     {/if}

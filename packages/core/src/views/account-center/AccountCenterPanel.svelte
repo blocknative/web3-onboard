@@ -23,6 +23,7 @@
   import DisconnectAllConfirm from './DisconnectAllConfirm.svelte'
   import { configuration } from '../../configuration.js'
   import SecondaryTokenTable from './SecondaryTokenTable.svelte'
+  import { shareReplay, startWith } from 'rxjs'
 
   export let expanded: boolean
 
@@ -31,7 +32,6 @@
   }
 
   const { chains: appChains } = state.get()
-  const { appMetadata } = configuration
   let disconnectConfirmModal = false
   let hideWalletRowMenu: () => void
 
@@ -51,6 +51,10 @@
   $: defaultChainStyles = getDefaultChainStyles(
     connectedChain && connectedChain.id
   )
+
+  const appMetadata$ = state
+    .select('appMetadata')
+    .pipe(startWith(state.get().appMetadata), shareReplay(1))
 
   const { position } = state.get().accountCenter
   const { device } = configuration
@@ -393,7 +397,7 @@
 
         <!-- app info section -->
         <div class="app-info-container">
-          {#if appMetadata}
+          {#if $appMetadata$}
             <div class="flex items-start app-info-header">
               <!-- app icon -->
               <div class="relative flex app-icon-name">
@@ -403,21 +407,21 @@
                   background="white"
                   border="black"
                   radius={8}
-                  icon={(appMetadata && appMetadata.icon) || questionIcon}
+                  icon={($appMetadata$ && $appMetadata$.icon) || questionIcon}
                 />
                 <div class="app-name">
-                  {(appMetadata && appMetadata.name) || 'App Name'}
+                  {($appMetadata$ && $appMetadata$.name) || 'App Name'}
                 </div>
               </div>
 
               <div class="app-description">
-                {(appMetadata && appMetadata.description) ||
+                {($appMetadata$ && $appMetadata$.description) ||
                   'This app has not added a description.'}
               </div>
             </div>
 
             <!-- app info -->
-            {#if appMetadata.gettingStartedGuide || appMetadata.explore}
+            {#if $appMetadata$ && ($appMetadata$.gettingStartedGuide || $appMetadata$.explore)}
               <div class="app-info">
                 <div class="app-info-heading">
                   {$_('accountCenter.appInfo', {
@@ -425,7 +429,7 @@
                   })}
                 </div>
 
-                {#if appMetadata.gettingStartedGuide}
+                {#if $appMetadata$.gettingStartedGuide}
                   <div class="flex justify-between items-center w100">
                     <div>
                       {$_('accountCenter.learnMore', {
@@ -433,7 +437,7 @@
                       })}
                     </div>
                     <a
-                      href={appMetadata.gettingStartedGuide}
+                      href={$appMetadata$.gettingStartedGuide}
                       target="_blank"
                       rel="noreferrer noopener"
                     >
@@ -444,7 +448,7 @@
                   </div>
                 {/if}
 
-                {#if appMetadata.explore}
+                {#if $appMetadata$.explore}
                   <div class="flex justify-between items-center w100">
                     <div>
                       {$_('accountCenter.smartContracts', {
@@ -452,7 +456,7 @@
                       })}
                     </div>
                     <a
-                      href={appMetadata.explore}
+                      href={$appMetadata$.explore}
                       target="_blank"
                       rel="noreferrer noopener"
                     >
