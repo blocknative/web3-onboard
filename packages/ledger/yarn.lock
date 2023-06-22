@@ -612,10 +612,10 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
-"@ledgerhq/connect-kit-loader@1.1.0-beta.1":
-  version "1.1.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@ledgerhq/connect-kit-loader/-/connect-kit-loader-1.1.0-beta.1.tgz#3371586065e4f229928b750d61bbb7d405954628"
-  integrity sha512-dk0XM8Z4YVkZfnfnOGXu/yCROY2KaFzularAfwdK36JtBb0BKSj6O6k2RJ5MAHH3os3JX69TNIIolM3yv6qAxA==
+"@ledgerhq/connect-kit-loader@1.1.0-beta.2":
+  version "1.1.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/connect-kit-loader/-/connect-kit-loader-1.1.0-beta.2.tgz#16d73763a08220d32a73455530dbfee5a7d4986b"
+  integrity sha512-PTz7+Ge+Q+fmyU62BAuJe036DNE2zCwF+s8Yo8UCxmE9X/dWUHv9nmZrUKXgc6TUx9e4jtTbCr0s8amepJHA8Q==
 
 "@sideway/address@^4.1.3":
   version "4.1.4"
@@ -787,7 +787,7 @@
   resolved "https://registry.yarnpkg.com/@walletconnect/types/-/types-1.8.0.tgz#3f5e85b2d6b149337f727ab8a71b8471d8d9a195"
   integrity sha512-Cn+3I0V0vT9ghMuzh1KzZvCkiAxTq+1TR2eSqw5E5AVWfmCtECFkVZBP6uUJZ8YjwLqXheI+rnjqPy7sVM4Fyg==
 
-"@walletconnect/types@^2.3.3":
+"@walletconnect/types@^2.7.0":
   version "2.8.1"
   resolved "https://registry.yarnpkg.com/@walletconnect/types/-/types-2.8.1.tgz#640eb6ad23866886fbe09a9b29832bf3f8647a09"
   integrity sha512-MLISp85b+27vVkm3Wkud+eYCwySXCdOrmn0yQCSN6DnRrrunrD05ksz4CXGP7h2oXUvvXPDt/6lXBf1B4AfqrA==

@@ -9,7 +9,7 @@ import type {
   EthereumProvider as LedgerEthereumProvider
 } from '@ledgerhq/connect-kit-loader'
 import { isHexString, LedgerOptionsWCv2 } from './index.js'
-import { JQueryStyleEventEmitter } from 'rxjs/internal/observable/fromEvent'
+import type { JQueryStyleEventEmitter } from 'rxjs/internal/observable/fromEvent'
 
 // methods that require user interaction
 const defaultOptionalMethods = [
@@ -22,8 +22,7 @@ const defaultOptionalMethods = [
 ]
 
 function ledger(options?: LedgerOptionsWCv2): WalletInit {
-  const projectId = options?.walletConnectVersion == 2 ? options.projectId : undefined
-  if (!projectId) {
+  if (!options?.projectId) {
     throw new Error(
       'WalletConnect requires a projectId. Please visit https://cloud.walletconnect.com to get one.'
     )
@@ -81,7 +80,7 @@ function ledger(options?: LedgerOptionsWCv2): WalletInit {
             SupportedProviderImplementations.LedgerConnect
         ) {
           return {
-            provider: createEIP1193Provider(instance)
+            provider: instance
           }
         }
 
