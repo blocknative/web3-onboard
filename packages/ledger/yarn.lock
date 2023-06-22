@@ -612,10 +612,10 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
-"@ledgerhq/connect-kit-loader@1.1.0-beta.2":
-  version "1.1.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@ledgerhq/connect-kit-loader/-/connect-kit-loader-1.1.0-beta.2.tgz#16d73763a08220d32a73455530dbfee5a7d4986b"
-  integrity sha512-PTz7+Ge+Q+fmyU62BAuJe036DNE2zCwF+s8Yo8UCxmE9X/dWUHv9nmZrUKXgc6TUx9e4jtTbCr0s8amepJHA8Q==
+"@ledgerhq/connect-kit-loader@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/connect-kit-loader/-/connect-kit-loader-1.1.0.tgz#10343b78ef13436818bf3453568a559c0eeb9d48"
+  integrity sha512-HUy12FEczoWY2FPubnsm1uOA8tkVWc0j90i47suThV3C9NL2xx69ZAIEU3Ytzs2bwLek9S1Q2S1VQJvA+3Ygkg==
 
 "@sideway/address@^4.1.3":
   version "4.1.4"

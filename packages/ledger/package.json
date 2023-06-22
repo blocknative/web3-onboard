@@ -59,7 +59,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@ledgerhq/connect-kit-loader": "1.1.0-beta.2",
+    "@ledgerhq/connect-kit-loader": "^1.1.0",
     "@walletconnect/client": "^1.8.0",
     "@web3-onboard/common": "^2.3.3",
     "rxjs": "^7.5.2"
