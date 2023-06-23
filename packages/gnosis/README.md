@@ -4,7 +4,7 @@
 
 ### Install
 
-`npm i @web3-onboard/gnosis`
+`npm i @web3-onboard/gnosis @safe-global/safe-apps-provider @safe-global/safe-apps-sdk`
 
 ### Options
 

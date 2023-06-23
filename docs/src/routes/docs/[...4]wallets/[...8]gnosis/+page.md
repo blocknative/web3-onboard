@@ -12,14 +12,14 @@ Wallet module for connecting Gnosis Safe to web3-onboard
 <TabPanel value="yarn">
 
 ```sh copy
-yarn add @web3-onboard/gnosis
+yarn add @web3-onboard/gnosis @safe-global/safe-apps-provider @safe-global/safe-apps-sdk
 ```
 
   </TabPanel>
   <TabPanel value="npm">
 
 ```sh copy
-npm install @web3-onboard/gnosis
+npm install @web3-onboard/gnosis @safe-global/safe-apps-provider @safe-global/safe-apps-sdk
 ```
 
   </TabPanel>
