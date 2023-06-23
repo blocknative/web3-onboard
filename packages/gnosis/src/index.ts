@@ -22,11 +22,11 @@ function gnosis(options?: GnosisOptions): WalletInit {
           getIcon: async () => (await import('./icon.js')).default,
           getInterface: async () => {
             const { default: SafeAppsSDK } = await import(
-              '@gnosis.pm/safe-apps-sdk'
+              '@safe-global/safe-apps-sdk'
             )
 
             const { SafeAppProvider } = await import(
-              '@gnosis.pm/safe-apps-provider'
+              '@safe-global/safe-apps-provider'
             )
 
             const { createEIP1193Provider } = await import(
