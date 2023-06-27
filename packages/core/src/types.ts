@@ -244,6 +244,10 @@ export type ConnectModalOptions = {
    */
   wheresMyWalletLink?: string
   /**
+   * Hide the where is my wallet notice
+   */
+  hideWhereIsMyWallet?: boolean
+  /**
    * @deprecated Has no effect unless `@web3-onboard/unstoppable-resolution`
    * package has been added and passed into the web3-onboard initialization
    * In this case remove the `@web3-onboard/unstoppable-resolution` package
