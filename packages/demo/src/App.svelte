@@ -741,6 +741,27 @@
                 minimal: true
               })}>Small Trigger</button
           >
+          <button
+            on:click={() =>
+              onboard.state.actions.updateAppMetadata(
+              {
+                // Checkmark
+                icon: `<svg width="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.59 8.59L12 13.17L7.41 8.59L6 10L12 16L18 10L16.59 8.59Z" fill="currentColor"/></svg>`,
+                // Hourglass
+                logo: `<svg width="100%" height="100%" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0 0L0.0100002 6L4 10L0.0100002 14.01L0 20H12V14L8 10L12 6.01V0H0ZM10 14.5V18H2V14.5L6 10.5L10 14.5Z" fill="#929BED"/>
+                  </svg>`,
+                description: 'Updated Description!',
+                agreement: {
+                  version: '2.0.0',
+                  termsUrl: 'https://onboard.blocknative.com/',
+                  privacyUrl: 'https://onboard.blocknative.com/'
+                },
+                gettingStartedGuide: 'https://onboard.blocknative.com/',
+                explore: 'https://onboard.blocknative.com/'
+              }
+              )}>Update appMetadata</button
+          >
         </div>
       </div>
     {/if}

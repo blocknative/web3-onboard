@@ -4,11 +4,14 @@
   import type { WalletState } from '../../types.js'
   import { questionIcon, successIcon } from '../../icons/index.js'
   import en from '../../i18n/en.json'
-  import { configuration } from '../../configuration.js'
+  import { shareReplay, startWith } from 'rxjs'
+  import { state } from '../../store/index.js'
 
   export let selectedWallet: WalletState
 
-  const { appMetadata } = configuration
+  const appMetadata$ = state
+    .select('appMetadata')
+    .pipe(startWith(state.get().appMetadata), shareReplay(1))
 </script>
 
 <style>
@@ -44,11 +47,11 @@
         <WalletAppBadge
           size={40}
           padding={8}
-          background={appMetadata && appMetadata.icon
+          background={$appMetadata$ && $appMetadata$.icon
             ? 'lightBlue'
             : 'lightGray'}
           border="darkGreen"
-          icon={(appMetadata && appMetadata.icon) || questionIcon}
+          icon={($appMetadata$ && $appMetadata$.icon) || questionIcon}
         />
 
         <div class="relative" style="right: 1rem; top: 4px; z-index: 1;">

@@ -8,14 +8,11 @@
   import en from '../../i18n/en.json'
   import type { i18n } from '../../types.js'
   import { isSVG } from '../../utils.js'
-  import { configuration } from '../../configuration.js'
   import { MOBILE_WINDOW_WIDTH } from '../../constants.js'
   import { state } from '../../store'
+  import { shareReplay, startWith } from 'rxjs'
 
   export let step: keyof i18n['connect']
-
-  const { appMetadata } = configuration
-  const { icon, logo, name = 'This app' } = appMetadata || {}
 
   const { connect } = state.get()
 
@@ -26,6 +23,10 @@
     defaultContent as i18n['connect']['selectingWallet']['sidebar']
 
   let windowWidth: number
+
+  const appMetadata$ = state
+    .select('appMetadata')
+    .pipe(startWith(state.get().appMetadata), shareReplay(1))
 </script>
 
 <style>
@@ -175,11 +176,11 @@
     <!-- On Mobile we display the icon only & within the header rather than the sidebar -->
     {#if windowWidth >= MOBILE_WINDOW_WIDTH}
       <div class="icon-container">
-        {#if logo || icon}
-          {#if isSVG(logo || icon)}
-            {@html logo || icon}​
+        {#if $appMetadata$ && ($appMetadata$.logo || $appMetadata$.icon)}
+          {#if isSVG($appMetadata$.logo || $appMetadata$.icon)}
+            {@html $appMetadata$.logo || $appMetadata$.icon}​
           {:else}
-            <img src={logo || icon} alt="logo" />
+            <img src={$appMetadata$.logo || $appMetadata$.icon} alt="logo" />
           {/if}
         {:else}
           {@html defaultBnIcon}
@@ -202,7 +203,7 @@
 
     <div class="description">
       {$_(`connect.${step}.sidebar.paragraph`, {
-        values: { app: name },
+        values: { app: ($appMetadata$ && $appMetadata$.name) || 'This App' },
         default: paragraph
       })}
     </div>

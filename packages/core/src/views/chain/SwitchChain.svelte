@@ -4,14 +4,15 @@
   import en from '../../i18n/en.json'
   import CloseButton from '../shared/CloseButton.svelte'
   import Modal from '../shared/Modal.svelte'
-  import { configuration } from '../../configuration.js'
 
-  const { appMetadata } = configuration
   const nextNetworkName = $switchChainModal$.chain.label
 
   function close() {
     switchChainModal$.next(null)
   }
+  const appMetadata$ = state
+    .select('appMetadata')
+    .pipe(startWith(state.get().appMetadata), shareReplay(1))
 </script>
 
 <style>
@@ -51,7 +52,7 @@
       {$_('modals.switchChain.paragraph1', {
         default: en.modals.switchChain.paragraph1,
         values: {
-          app: (appMetadata && appMetadata.name) || 'This app',
+          app: ($appMetadata$ && $appMetadata$.name) || 'This app',
           nextNetworkName
         }
       })}

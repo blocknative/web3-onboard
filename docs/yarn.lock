@@ -4437,10 +4437,10 @@
     "@walletconnect/window-getters" "^1.0.1"
     tslib "1.14.1"
 
-"@web3-onboard/blocto@^2.0.0":
-  version "2.0.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/blocto/-/blocto-2.0.0-alpha.1.tgz#8781646d98520b80be090c622e218b9dfea12221"
-  integrity sha512-YBhsjkVdL6Z/SXoQeFNt5Rjj1WxlXg1oKOBOZOqfioPuMwmi8RJOLcLi7evhVUdGs5T8sYCBWg+eDeA/K6XK7w==
+"@web3-onboard/blocto@^2.0.0-alpha.1":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/blocto/-/blocto-2.0.0.tgz#eb631e911b7c13ad11089bb3574e97b673f14463"
+  integrity sha512-99/YzRuE9VBXWVLI6tAKxwFvCXq7WV24a3rM76yY5yVEEeNfewh8PWQ/2Yfz71Vfi6YWVPKzGo3LHspz4caTzA==
   dependencies:
     "@blocto/sdk" "^0.4.6"
     "@web3-onboard/common" "^2.3.1"
@@ -4470,10 +4470,10 @@
     ethers "5.5.4"
     joi "17.9.1"
 
-"@web3-onboard/core@^2.20.2-alpha.1":
-  version "2.20.2-alpha.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.20.2-alpha.1.tgz#da3618634c430ef6468e27067fc21244dac026db"
-  integrity sha512-9zLzGG2F9KxOBe/KTE7hGPON/kbjn2e8rDVAzP79rzn+AwO5kvPcLapBgJRbh2FlbKx2werotGTUtZNKRaFMPA==
+"@web3-onboard/core@^2.20.3-alpha.1":
+  version "2.20.3-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.20.3-alpha.1.tgz#4ffd0eb7293c6fcd05860012be9b0af9b038f169"
+  integrity sha512-oqcNhEcgtmxeiwMF1BIxZQHEvZwHpUSUkCRwn3gheu28UWCB3bnSSiEuH2vzH8loQEqmj4LSi/bDzGHV3LdOWA==
   dependencies:
     "@web3-onboard/common" "^2.3.3"
     bignumber.js "^9.0.0"
@@ -4566,10 +4566,10 @@
   dependencies:
     "@infinitywallet/infinity-connector" "^1.0.6"
 
-"@web3-onboard/injected-wallets@^2.10.1-alpha.1":
-  version "2.10.1-alpha.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.10.1-alpha.1.tgz#2f459f3dba4ecf3eca8131bd335cffcfcf9273fc"
-  integrity sha512-IeDWc5VvdkypktGa40Np1hvHCmDE+BCHc+r/TpUAhn2dg/XOQQfr1v6aI8PnST546ulEzE2PwFSXUZtsosLLGQ==
+"@web3-onboard/injected-wallets@^2.10.1":
+  version "2.10.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.10.1.tgz#d4a45ba897c578819544805399761c61b8173166"
+  integrity sha512-PhmMI+RNeGowL2cfmp7/v3atrJ8KsjKXgXs6CofwMzDxQXfu1DwXdIh+Hd2Py/ZeRgOEeAehf63gftaVvfn/9g==
   dependencies:
     "@web3-onboard/common" "^2.3.3"
     joi "17.9.1"
