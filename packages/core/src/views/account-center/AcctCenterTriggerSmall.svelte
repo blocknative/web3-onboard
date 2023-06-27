@@ -4,12 +4,12 @@
   import { questionIcon } from '../../icons/index.js'
   import { WalletAppBadge, SuccessStatusIcon } from '../shared/index.js'
   import { state } from '../../store/index.js'
-  import { configuration } from '../../configuration.js'
 
   export let toggle: () => void
 
-  const { appMetadata } = configuration
-  const appIcon = (appMetadata && appMetadata.icon) || questionIcon
+  const appMetadata$ = state
+    .select('appMetadata')
+    .pipe(startWith(state.get().appMetadata), shareReplay(1))
 
   $: [primaryWallet] = $wallets$
 
@@ -89,7 +89,7 @@
         background={'white'}
         border="darkGreen"
         radius={8}
-        icon={appIcon}
+        icon={($appMetadata$ && $appMetadata$.icon) || questionIcon}
       />
     </div>
     <div class="wallet-square-wrapper">

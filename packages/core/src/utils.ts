@@ -212,6 +212,10 @@ export const chainStyles: Record<string, ChainStyle> = {
   '0x14a33': {
     icon: baseIcon,
     color: '#0259F9'
+  },
+  '0x80001': {
+    icon: polygonIcon,
+    color: '#8247E5'
   }
 }
 

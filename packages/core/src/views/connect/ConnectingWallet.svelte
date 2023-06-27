@@ -5,7 +5,8 @@
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
   import questionIcon from '../../icons/question.js'
   import en from '../../i18n/en.json'
-  import { configuration } from '../../configuration.js'
+  import { state } from '../../store/index.js'
+  import { shareReplay, startWith } from 'rxjs'
 
   export let connectWallet: () => Promise<void>
   export let selectedWallet: WalletState
@@ -14,7 +15,9 @@
   export let connectionRejected: boolean
   export let previousConnectionRequest: boolean
 
-  const { appMetadata } = configuration
+  const appMetadata$ = state
+    .select('appMetadata')
+    .pipe(startWith(state.get().appMetadata), shareReplay(1))
 </script>
 
 <style>
@@ -99,7 +102,7 @@
         <WalletAppBadge
           size={40}
           padding={8}
-          icon={(appMetadata && appMetadata.icon) || questionIcon}
+          icon={($appMetadata$ && $appMetadata$.icon) || questionIcon}
           border={connectionRejected || previousConnectionRequest
             ? 'yellow'
             : 'blue'}

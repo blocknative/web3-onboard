@@ -1,8 +1,9 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
   import { STORAGE_KEYS } from '../../constants.js'
-  import { configuration } from '../../configuration.js'
   import { delLocalStore, getLocalStore, setLocalStore } from '../../utils'
+  import { shareReplay, startWith } from 'rxjs'
+  import { state } from '../../store/index.js'
 
   export let agreed: boolean
 
@@ -13,10 +14,13 @@
   } = JSON.parse(getLocalStore(STORAGE_KEYS.TERMS_AGREEMENT) || '{}')
 
   const blankAgreement = { termsUrl: '', privacyUrl: '', version: '' }
-  const { appMetadata } = configuration
+
+  const appMetadata$ = state
+    .select('appMetadata')
+    .pipe(startWith(state.get().appMetadata), shareReplay(1))
 
   const { termsUrl, privacyUrl, version } =
-    (appMetadata && appMetadata.agreement) || blankAgreement
+    ($appMetadata$ && $appMetadata$.agreement) || blankAgreement
 
   const showTermsOfService = !!(
     (termsUrl && !termsAgreed) ||

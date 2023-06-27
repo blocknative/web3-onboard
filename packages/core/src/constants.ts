@@ -26,7 +26,8 @@ export const APP_INITIAL_STATE: AppState = {
   connect: {
     showSidebar: true,
     disableClose: false
-  }
+  },
+  appMetadata: null,
 }
 
 export const STORAGE_KEYS = {

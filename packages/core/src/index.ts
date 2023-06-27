@@ -32,7 +32,8 @@ import {
   setPrimaryWallet,
   setWalletModules,
   updateConnectModal,
-  updateTheme
+  updateTheme,
+  updateAppMetadata
 } from './store/actions.js'
 import type { PatchedEIP1193Provider } from '@web3-onboard/transaction-preview'
 import { getBlocknativeSdk } from './services.js'
@@ -53,7 +54,8 @@ const API = {
       updateBalances,
       updateAccountCenter,
       setPrimaryWallet,
-      updateTheme
+      updateTheme,
+      updateAppMetadata
     }
   }
 }
@@ -92,7 +94,7 @@ function init(options: InitOptions): OnboardAPI {
   const {
     wallets,
     chains,
-    appMetadata = null,
+    appMetadata,
     i18n,
     accountCenter,
     apiKey,
@@ -208,7 +210,6 @@ function init(options: InitOptions): OnboardAPI {
   const app = svelteInstance || mountApp(theme, disableFontDownload)
 
   updateConfiguration({
-    appMetadata,
     svelteInstance: app,
     apiKey,
     initialWalletInit: wallets,
@@ -216,6 +217,8 @@ function init(options: InitOptions): OnboardAPI {
     transactionPreview,
     unstoppableResolution
   })
+
+  appMetadata && updateAppMetadata(appMetadata)
 
   if (apiKey && transactionPreview) {
     const getBnSDK = async () => {
