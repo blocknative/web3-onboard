@@ -121,7 +121,8 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
             fromEvent(this.connector, 'accountsChanged', payload => payload)
               .pipe(takeUntil(this.disconnected$))
               .subscribe({
-                next: accounts => {
+                next: payload => {
+                  const accounts = Array.isArray(payload) ? payload : [payload]
                   this.emit('accountsChanged', accounts)
                 },
                 error: console.warn
