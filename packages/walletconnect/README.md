@@ -8,7 +8,7 @@
 
 ## Version 1 of WalletConnect has been deprecated
 
-_Version 1 of WalletConnect has been deprecated by the WC team and the WC bridge is not available. If wanting to continue to use WalletConnect V1 a custom bridge URL is required. Support will be completely remove from Web3-Onboard in the future_
+_Version 1 of WalletConnect has been deprecated by the WC team and the WC bridge is not available. If wanting to continue to use WalletConnect V1 a custom bridge URL is required. Support will be completely removed from Web3-Onboard in the future_
 
 ## Options
 
