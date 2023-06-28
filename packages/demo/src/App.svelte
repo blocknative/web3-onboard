@@ -472,7 +472,7 @@
       )
       verifySign = recoveredAddress === addr
     } catch (error) {
-      console.error('Error recovering addressL', error)
+      console.error('Error recovering address', error)
       verifySign = false
     }
 
