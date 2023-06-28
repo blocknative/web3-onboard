@@ -17,8 +17,14 @@ export type WalletConnectOptions = {
        * Support will be completely remove from Web3-Onboard in the future
        */
       version: 1
+      /**
+       * Custom URL Bridge must be defined for V1 usage. 
+       * WalletConnect no longer supports a v1 bridge.
+       * Upgrading to use WalletConnect v2 is recommended.
+       * A potential bridge option can be found here: 'https://derelay.rabby.io'
+       */
+      bridge: string
       connectFirstChainId?: boolean
-      bridge?: string
       qrcodeModalOptions?: {
         mobileLinks: string[]
       }

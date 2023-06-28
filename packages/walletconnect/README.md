@@ -18,21 +18,26 @@ type WalletConnectOptions = {
    * Optional function to handle WalletConnect URI when it becomes available
    */
   handleUri?: (uri: string) => Promise<unknown>
-  connectFirstChainId?: boolean
-  bridge?: string
-  qrcodeModalOptions?: {
-    mobileLinks: string[]
-  }
 } & (
   | {
       /**
        * @deprecated
-       * Defaults to version: 2 if undefined.
-       * Version 1 of WalletConnect has been deprecated by the WC team
-       * and the WC bridge is not available
+       * Version 1 of WalletConnect has been deprecated by the WC team and the WC bridge is not available.
+       * To use version 1 a custom bridge url will need to be provided.
        * Support will be completely remove from Web3-Onboard in the future
        */
       version: 1
+      /**
+       * Custom URL Bridge must be defined for V1 usage. 
+       * WalletConnect no longer supports a v1 bridge.
+       * Upgrading to use WalletConnect v2 is recommended.
+       * A potential bridge can be found here: 'https://derelay.rabby.io'
+       */
+      bridge: string
+      connectFirstChainId?: boolean
+      qrcodeModalOptions?: {
+        mobileLinks: string[]
+      }
     }
   | {
       /**

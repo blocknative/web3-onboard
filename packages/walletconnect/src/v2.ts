@@ -7,7 +7,7 @@ import type {
   EIP1193Provider
 } from '@web3-onboard/common'
 import type { WalletConnectOptions } from './index.js'
-import { JQueryStyleEventEmitter } from 'rxjs/internal/observable/fromEvent'
+import type { JQueryStyleEventEmitter } from 'rxjs/internal/observable/fromEvent'
 import { isHexString } from './index.js'
 
 // methods that require user interaction
