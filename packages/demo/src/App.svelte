@@ -157,7 +157,7 @@
 
   const uauthOptions = {
     clientID: 'a25c3a65-a1f2-46cc-a515-a46fe7acb78c',
-    projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
+    walletConnectProjectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
     redirectUri: 'http://localhost:8080/',
     scope:
       'openid wallet email:optional humanity_check:optional profile:optional social:optional'

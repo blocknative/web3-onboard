@@ -6,7 +6,7 @@ const uauthOptions = Joi.object({
   redirectUri: Joi.string().required(),
   scope: Joi.string().allow(null),
   shouldLoginWithRedirect: Joi.boolean().allow(null),
-  projectId: Joi.string().required(),
+  walletConnectProjectId: Joi.string().required(),
   requiredChains: Joi.array().items(Joi.number()),
   optionalChains: Joi.array().items(Joi.number()),
   additionalOptionalMethods: Joi.array().items(Joi.string()),
