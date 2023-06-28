@@ -32,15 +32,49 @@ Follow the [Login Client Congifuration Docs](https://docs.unstoppabledomains.com
 
 ```typescript
 type UauthInitOptions = {
-  clientID: string // required and will throw an error if not included: links dapp to Unstoppable Domains for customization
-  redirectUri: string // required and will throw an error if not included: used for pop-up and callback redirection
-  scope?: string // default = 'openid wallet'
-  shouldLoginWithRedirect?: boolean // if true, redirects to your callback page
-  bridge?: string // default = 'https://bridge.walletconnect.org'
-  qrcodeModalOptions?: {
-    mobileLinks: string[] // set the order and list of mobile linking wallets
-  }
-  connectFirstChainId?: boolean // if true, connects to the first network chain provided
+  /**
+   * Required and will throw an error if not included: links dapp to Unstoppable Domains for customization
+   */
+  clientID: string
+  /**
+   * Required and will throw an error if not included: used for pop-up and callback redirection
+   */
+  redirectUri: string
+  /**
+   * Optional string: Default = 'openid wallet'
+   */
+  scope?: string
+  /**
+   * Optional boolean: If true, redirects to your callback page
+   */
+  shouldLoginWithRedirect?: boolean
+  /**
+   * Project ID associated with [WalletConnect account](https://cloud.walletconnect.com)
+   */
+  walletConnectProjectId: string
+  /**
+   * Defaults to version: 2
+   */
+  version?: 2
+  /**
+   * List of Required Chain(s) ID for wallets to support in number format (integer or hex)
+   * Defaults to [1] - Ethereum
+   */
+  requiredChains?: number[] | undefined
+  /**
+   * List of Optional Chain(s) ID for wallets to support in number format (integer or hex)
+   * Defaults to the chains provided within the web3-onboard init chain property
+   */
+  optionalChains?: number[] | undefined
+  /**
+   * Additional methods to be added to the default list of ['eth_sendTransaction',  'eth_signTransaction',  'personal_sign',  'eth_sign',  'eth_signTypedData',  'eth_signTypedData_v4']
+   * Passed methods to be included along with the defaults methods - see https://docs.walletconnect.com/2.0/web/walletConnectModal/options
+   */
+  additionalOptionalMethods?: string[] | undefined
+  /**
+   * Optional function to handle WalletConnect URI when it becomes available
+   */
+  handleUri?: (uri: string) => Promise<unknown>
 }
 ```
 
@@ -52,21 +86,18 @@ import uauthModule from '@web3-onboard/uauth'
 
 // initialize the module with options
 const uauth = uauthModule({
-  clientID: 'YOUR_CLIENT_ID',
-  redirectUri: 'YOUR_REDIRECT_URI',
-  scope?: 'YOUR_SCOPES',
-  shouldLoginWithRedirect?: false
-  bridge?: 'YOUR_CUSTOM_BRIDGE_SERVER',
-  qrcodeModalOptions?: {
-    mobileLinks: ['rainbow', 'metamask', 'argent', 'trust', 'imtoken', 'pillar']
-  },
-  connectFirstChainId?: true
+  clientID: 'a25c3a65-a1f2-46cc-a515-a46fe7acb78c',
+  walletConnectProjectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
+  redirectUri: 'http://localhost:8080/',
+  scope:
+    'openid wallet email:optional humanity_check:optional profile:optional social:optional'
 })
 
 // can also initialize with basic options...
 // const uauth = uauthModule({
 //  clientID: "YOUR_CLIENT_ID",
-//  redirectUri: "YOUR_REDIRECT_URI"
+//  redirectUri: "YOUR_REDIRECT_URI",
+//  walletConnectProjectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
 // })
 
 const onboard = Onboard({

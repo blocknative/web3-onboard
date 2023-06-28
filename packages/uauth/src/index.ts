@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import type { StaticJsonRpcProvider as StaticJsonRpcProviderType } from '@ethersproject/providers'
 import type { UserInfo } from '@uauth/js'
 import type { UauthInitOptions } from './types.js'
 import type { CoreTypes } from '@walletconnect/types'
@@ -37,7 +36,7 @@ function uauth(options: UauthInitOptions): WalletInit {
       redirectUri,
       scope = 'openid wallet',
       shouldLoginWithRedirect,
-      projectId,
+      walletConnectProjectId,
       requiredChains,
       optionalChains,
       additionalOptionalMethods,
@@ -171,7 +170,7 @@ function uauth(options: UauthInitOptions): WalletInit {
               : methods
 
           const connector = await EthereumProvider.init({
-            projectId,
+            projectId: walletConnectProjectId,
             chains: requiredChainsParsed, // default to mainnet
             optionalChains: optionalChainsParsed,
             optionalMethods,

@@ -20,11 +20,7 @@ export type UauthInitOptions = {
   /**
    * Project ID associated with [WalletConnect account](https://cloud.walletconnect.com)
    */
-  projectId: string
-  /**
-   * Defaults to version: 2
-   */
-  version?: 2
+  walletConnectProjectId: string
   /**
    * List of Required Chain(s) ID for wallets to support in number format (integer or hex)
    * Defaults to [1] - Ethereum
