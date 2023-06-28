@@ -7,17 +7,22 @@ import type {
   ChainId,
   AccountAddress
 } from '@web3-onboard/common'
-import { isHexString, WalletConnectOptions } from './index.js'
+import type { WalletConnectOptions } from './index.js'
+import { isHexString } from './index.js'
 
-function walletConnect(
-  options: WalletConnectOptions = { version: 1 }
-): WalletInit {
-  const {
-    bridge = 'https://bridge.walletconnect.org',
-    qrcodeModalOptions,
-    connectFirstChainId,
-    handleUri
-  } = options || {}
+function walletConnect(options: WalletConnectOptions): WalletInit {
+  if (options.version !== 1) throw `WalletConnect version must be set to 1 to initialize - note version 1 has been deprecated by the WalletConnect team`
+
+  const { bridge, qrcodeModalOptions, connectFirstChainId, handleUri } =
+    options || {}
+
+  console.warn(
+    `Wallet Connect version 1 support has been deprecated by the WalletConnect team. Please consider using version 2. See docs for more details.`
+  )
+
+  if (!bridge) {
+    throw `WalletConnect version 1 requires a bridge to be passed in. The WalletConnect team has remove support for the bridge. Please upgrade to version 2 of WalletConnect or pass in a custom bridge URL.`
+  }
 
   return () => {
     return {

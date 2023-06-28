@@ -186,9 +186,9 @@
           {@html defaultBnIcon}
         {/if}
       </div>
-      {#if $_(`connect.${step}.sidebar.heading`, { default: '' })}
+      {#if $_(`connect.${step}.sidebar.header`, { default: '' })}
         <div class="heading">
-          {$_(`connect.${step}.sidebar.heading`, {
+          {$_(`connect.${step}.sidebar.header`, {
             default: heading
           })}
         </div>

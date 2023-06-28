@@ -6,29 +6,33 @@
 
 `npm i @web3-onboard/core @web3-onboard/walletconnect`
 
-## Not all Wallets support WalletConnect V2 currently
+## Version 1 of WalletConnect has been deprecated
 
-_For an up to date list please see the [WalletConnect Explorer](https://explorer.walletconnect.com/?version=2)_
+_Version 1 of WalletConnect has been deprecated by the WC team and the WC bridge is not available. If wanting to continue to use WalletConnect V1 a custom bridge URL is required. Support will be completely remove from Web3-Onboard in the future_
 
 ## Options
 
 ```typescript
 type WalletConnectOptions = {
-  bridge?: string // default = 'https://bridge.walletconnect.org'
-  qrcodeModalOptions?: {
-    mobileLinks: string[] // set the order and list of mobile linking wallets
-  }
-  connectFirstChainId?: boolean // if true, connects to the first network chain provided
   /**
    * Optional function to handle WalletConnect URI when it becomes available
    */
   handleUri?: (uri: string) => Promise<unknown>
+  connectFirstChainId?: boolean
+  bridge?: string
+  qrcodeModalOptions?: {
+    mobileLinks: string[]
+  }
 } & (
   | {
       /**
-       * Defaults to version: 1 - this behavior will be deprecated after the WalletConnect v1 sunset
+       * @deprecated
+       * Defaults to version: 2 if undefined.
+       * Version 1 of WalletConnect has been deprecated by the WC team
+       * and the WC bridge is not available
+       * Support will be completely remove from Web3-Onboard in the future
        */
-      version?: 1
+      version: 1
     }
   | {
       /**
@@ -36,9 +40,9 @@ type WalletConnectOptions = {
        */
       projectId: string
       /**
-       * Defaults to version: 1 - this behavior will be deprecated after the WalletConnect v1 sunset
+       * Defaults to version: 2
        */
-      version: 2
+      version?: 2
       /**
        * List of Required Chain(s) ID for wallets to support in number format (integer or hex)
        * Defaults to [1] - Ethereum
@@ -50,6 +54,11 @@ type WalletConnectOptions = {
        * `undefined` by default, see https://docs.walletconnect.com/2.0/web/walletConnectModal/options
        */
       qrModalOptions?: EthereumProviderOptions['qrModalOptions']
+      /**
+       * Defaults to include ['eth_sendTransaction',  'eth_signTransaction',  'personal_sign',  'eth_sign',  'eth_signTypedData',  'eth_signTypedData_v4']
+       * Pass methods to be included with the defaults methods if needed - see https://docs.walletconnect.com/2.0/web/walletConnectModal/options
+       */
+      optionalMethods?: string[] | undefined
     }
 )
 ```
@@ -60,16 +69,7 @@ type WalletConnectOptions = {
 import Onboard from '@web3-onboard/core'
 import walletConnectModule from '@web3-onboard/walletconnect'
 
-const wcV1InitOptions = {
-  bridge: 'YOUR_CUSTOM_BRIDGE_SERVER',
-  qrcodeModalOptions: {
-    mobileLinks: ['metamask', 'argent', 'trust']
-  },
-  connectFirstChainId: true
-}
-
 const wcV2InitOptions = {
-  version: 2,
   /**
    * Project ID associated with [WalletConnect account](https://cloud.walletconnect.com)
    */
@@ -81,11 +81,11 @@ const wcV2InitOptions = {
 }
 
 // initialize the module with options
-// If version isn't set it will default to V1 until V1 sunset
-const walletConnect = walletConnectModule(wcV2InitOptions || wcV1InitOptions)
+// If version isn't set it will default to V2 - V1 support will be completely removed shortly as it is deprecated
+const walletConnect = walletConnectModule(wcV2InitOptions)
 
 // can also initialize with no options...
-// Defaults to V1 until V1 sunset
+// Defaults to V2 - V1 support will be completely removed shortly as it is deprecated
 // const walletConnect = walletConnectModule()
 
 const onboard = Onboard({
