@@ -10,19 +10,19 @@ export type WalletConnectOptions = {
   handleUri?: (uri: string) => Promise<unknown>
 } & (
   | {
-    /**
-     * @deprecated
-     * Version 1 of WalletConnect has been deprecated by the WC team and the WC bridge is not available.
-     * To use version 1 a custom bridge url will need to be provided.
-     * Support will be completely remove from Web3-Onboard in the future
-    */
-   version: 1
-   connectFirstChainId?: boolean
-   bridge?: string
-   qrcodeModalOptions?: {
-     mobileLinks: string[]
-   }
-  }
+      /**
+       * @deprecated
+       * Version 1 of WalletConnect has been deprecated by the WC team and the WC bridge is not available.
+       * To use version 1 a custom bridge url will need to be provided.
+       * Support will be completely remove from Web3-Onboard in the future
+       */
+      version: 1
+      connectFirstChainId?: boolean
+      bridge?: string
+      qrcodeModalOptions?: {
+        mobileLinks: string[]
+      }
+    }
   | {
       /**
        * Project ID associated with [WalletConnect account](https://cloud.walletconnect.com)
@@ -47,10 +47,10 @@ export type WalletConnectOptions = {
        */
       qrModalOptions?: EthereumProviderOptions['qrModalOptions']
       /**
-       * Defaults to include ['eth_sendTransaction',  'eth_signTransaction',  'personal_sign',  'eth_sign',  'eth_signTypedData',  'eth_signTypedData_v4']
-       * Pass methods to be included with the defaults methods if needed - see https://docs.walletconnect.com/2.0/web/walletConnectModal/options
+       * Additional methods to be added to the default list of ['eth_sendTransaction',  'eth_signTransaction',  'personal_sign',  'eth_sign',  'eth_signTypedData',  'eth_signTypedData_v4']
+       * Passed methods to be included along with the defaults methods - see https://docs.walletconnect.com/2.0/web/walletConnectModal/options
        */
-      optionalMethods?: string[] | undefined
+      additionalOptionalMethods?: string[] | undefined
     }
 )
 

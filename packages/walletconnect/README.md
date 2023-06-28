@@ -46,19 +46,22 @@ type WalletConnectOptions = {
       /**
        * List of Required Chain(s) ID for wallets to support in number format (integer or hex)
        * Defaults to [1] - Ethereum
-       * The chains defined within the web3-onboard config will define the
-       * optional chains for the WalletConnect module
        */
       requiredChains?: number[] | undefined
+      /**
+       * List of Optional Chain(s) ID for wallets to support in number format (integer or hex)
+       * Defaults to the chains provided within the web3-onboard init chain property
+       */
+      optionalChains?: number[] | undefined
       /**
        * `undefined` by default, see https://docs.walletconnect.com/2.0/web/walletConnectModal/options
        */
       qrModalOptions?: EthereumProviderOptions['qrModalOptions']
       /**
-       * Defaults to include ['eth_sendTransaction',  'eth_signTransaction',  'personal_sign',  'eth_sign',  'eth_signTypedData',  'eth_signTypedData_v4']
-       * Pass methods to be included with the defaults methods if needed - see https://docs.walletconnect.com/2.0/web/walletConnectModal/options
+       * Additional methods to be added to the default list of ['eth_sendTransaction',  'eth_signTransaction',  'personal_sign',  'eth_sign',  'eth_signTypedData',  'eth_signTypedData_v4']
+       * Passed methods to be included along with the defaults methods - see https://docs.walletconnect.com/2.0/web/walletConnectModal/options
        */
-      optionalMethods?: string[] | undefined
+      additionalOptionalMethods?: string[] | undefined
     }
 )
 ```

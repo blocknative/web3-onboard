@@ -32,7 +32,7 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
     requiredChains,
     optionalChains,
     qrModalOptions,
-    optionalMethods
+    additionalOptionalMethods
   } = options
 
   return () => {
@@ -94,16 +94,16 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
 
             console.log(optionalChainsParsed, chains.map(({ id }) => parseInt(id, 16)))
 
-        const initOptionalMethods =
-          optionalMethods && Array.isArray(optionalMethods)
-            ? [...optionalMethods, ...methods]
+        const optionalMethods =
+          additionalOptionalMethods && Array.isArray(additionalOptionalMethods)
+            ? [...additionalOptionalMethods, ...methods]
             : methods
 
         const connector = await EthereumProvider.init({
           projectId,
           chains: requiredChainsParsed, // default to mainnet
           optionalChains: optionalChainsParsed,
-          optionalMethods: initOptionalMethods,
+          optionalMethods,
           showQrModal: true,
           rpcMap: chains
             .map(({ id, rpcUrl }) => ({ id, rpcUrl }))
