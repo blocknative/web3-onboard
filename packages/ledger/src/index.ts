@@ -36,7 +36,7 @@ export const isHexString = (value: string | number) => {
 }
 
 function ledger(options?: LedgerOptions): WalletInit {
-  const walletConnectVersion = options?.walletConnectVersion || 1
+  const walletConnectVersion = options?.walletConnectVersion || 2
   return walletConnectVersion === 1 ?
     v1(options as LedgerOptionsWCv1) :
     v2(options as LedgerOptionsWCv2)
