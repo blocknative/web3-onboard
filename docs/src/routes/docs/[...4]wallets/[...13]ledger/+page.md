@@ -29,10 +29,45 @@ npm install @web3-onboard/core @web3-onboard/ledger
 
 ```typescript
 interface LedgerOptions {
-  chainId?: number
-  bridge?: string
-  infuraId?: string
-  rpc?: { [chainId: number]: string }
+  /**
+   * Enable Ledger Connect Kit logs
+   */
+  enableDebugLogs?: boolean
+  /**
+   * Defaults to walletConnectVersion: 1 - this behavior will be deprecated after the WalletConnect v1 sunset
+   */
+  walletConnectVersion: 2
+  /**
+   * Project ID associated with [WalletConnect account](https://cloud.walletconnect.com)
+   */
+  projectId: string
+  /**
+   * List of Required Chain IDs for Ledger Live to support in number format (integer or hex)
+   * Defaults to [1] - Ethereum
+   * The chains defined within the web3-onboard config will define the
+   * optional chains for the WalletConnect module
+   */
+  requiredChains?: string[] | number[]
+  /**
+   * List of Required Methods for wallets to support
+   */
+  requiredMethods?: string[]
+  /**
+   * List of Optional Methods for wallets to support
+   */
+  optionalMethods?: string[]
+  /**
+   * List of Required Events for wallets to support
+   */
+  requiredEvents?: string[]
+  /**
+   * List of Optional Events for wallets to support
+   */
+  optionalEvents?: string[]
+  /**
+   * List of Chain ID to URL mapping
+   */
+  rpcMap?: { [chainId: number]: string }
 }
 ```
 
@@ -42,7 +77,17 @@ interface LedgerOptions {
 import Onboard from '@web3-onboard/core'
 import ledgerModule from '@web3-onboard/ledger'
 
-const ledger = ledgerModule()
+const ledger = ledgerModule({
+  walletConnectVersion: 2,
+  /**
+   * Project ID associated with [WalletConnect account](https://cloud.walletconnect.com)
+   */
+  projectId: 'abc123...',
+  /**
+   * Chains required to be supported by all wallets connecting to your DApp
+   */
+  requiredChains: [1, 137]
+})
 
 const onboard = Onboard({
   // ... other Onboard options
