@@ -6,8 +6,9 @@ import type {
   WalletInit,
   EIP1193Provider
 } from '@web3-onboard/common'
-import { JQueryStyleEventEmitter } from 'rxjs/internal/observable/fromEvent'
-import { isHexString, WalletConnectOptions } from './index.js'
+import type { WalletConnectOptions } from './index.js'
+import type { JQueryStyleEventEmitter } from 'rxjs/internal/observable/fromEvent'
+import { isHexString } from './index.js'
 
 // methods that require user interaction
 const methods = [
@@ -19,13 +20,20 @@ const methods = [
   'eth_signTypedData_v4'
 ]
 
-function walletConnect(options?: WalletConnectOptions): WalletInit {
-  if (!options || options.version !== 2) {
+function walletConnect(options: WalletConnectOptions): WalletInit {
+  if (options.version !== 2 || !options.projectId) {
     throw new Error(
       'WalletConnect requires a projectId. Please visit https://cloud.walletconnect.com to get one.'
     )
   }
-  const { projectId, handleUri, requiredChains, qrModalOptions } = options
+  const {
+    projectId,
+    handleUri,
+    requiredChains,
+    optionalChains,
+    qrModalOptions,
+    additionalOptionalMethods
+  } = options
 
   return () => {
     return {
@@ -74,11 +82,28 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
               requiredChains.map(chainID => parseInt(chainID))
             : [1]
 
+        // Defaults to the chains provided within the web3-onboard init chain property
+        const optionalChainsParsed: number[] =
+          Array.isArray(optionalChains) &&
+          optionalChains.length &&
+          optionalChains.every(num => !isNaN(num))
+            ? // @ts-ignore
+              // Required as WC package does not support hex numbers
+              optionalChains.map(chainID => parseInt(chainID))
+            : chains.map(({ id }) => parseInt(id, 16))
+
+            console.log(optionalChainsParsed, chains.map(({ id }) => parseInt(id, 16)))
+
+        const optionalMethods =
+          additionalOptionalMethods && Array.isArray(additionalOptionalMethods)
+            ? [...additionalOptionalMethods, ...methods]
+            : methods
+
         const connector = await EthereumProvider.init({
           projectId,
           chains: requiredChainsParsed, // default to mainnet
-          optionalChains: chains.map(({ id }) => parseInt(id, 16)),
-          optionalMethods: methods,
+          optionalChains: optionalChainsParsed,
+          optionalMethods,
           showQrModal: true,
           rpcMap: chains
             .map(({ id, rpcUrl }) => ({ id, rpcUrl }))
@@ -121,7 +146,8 @@ function walletConnect(options?: WalletConnectOptions): WalletInit {
             fromEvent(this.connector, 'accountsChanged', payload => payload)
               .pipe(takeUntil(this.disconnected$))
               .subscribe({
-                next: accounts => {
+                next: payload => {
+                  const accounts = Array.isArray(payload) ? payload : [payload]
                   this.emit('accountsChanged', accounts)
                 },
                 error: console.warn
