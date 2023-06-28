@@ -92,8 +92,6 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
               optionalChains.map(chainID => parseInt(chainID))
             : chains.map(({ id }) => parseInt(id, 16))
 
-            console.log(optionalChainsParsed, chains.map(({ id }) => parseInt(id, 16)))
-
         const optionalMethods =
           additionalOptionalMethods && Array.isArray(additionalOptionalMethods)
             ? [...additionalOptionalMethods, ...methods]

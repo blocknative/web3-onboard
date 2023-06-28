@@ -28,47 +28,44 @@ npm install @web3-onboard/core @web3-onboard/ledger
 ## Options
 
 ```typescript
-interface LedgerOptions {
+type LedgerOptionsWCv1 = {
   /**
-   * Enable Ledger Connect Kit logs
+   * @deprecated
+   * Version 1 of WalletConnect has been deprecated by the WC team and the WC bridge is not available.
+   * To use version 1 a custom bridge url will need to be provided.
+   * Support will be completely remove from Web3-Onboard in the future
    */
+  walletConnectVersion?: 1
   enableDebugLogs?: boolean
-  /**
-   * Defaults to walletConnectVersion: 1 - this behavior will be deprecated after the WalletConnect v1 sunset
-   */
+  chainId?: number
+  bridge?: string
+  infuraId?: string
+  rpc?: { [chainId: number]: string }
+}
+
+type LedgerOptionsWCv2 = {
   walletConnectVersion: 2
+  enableDebugLogs?: boolean
   /**
    * Project ID associated with [WalletConnect account](https://cloud.walletconnect.com)
    */
   projectId: string
   /**
-   * List of Required Chain IDs for Ledger Live to support in number format (integer or hex)
-   * Defaults to [1] - Ethereum
-   * The chains defined within the web3-onboard config will define the
-   * optional chains for the WalletConnect module
+   * List of Optional Chain(s) ID for wallets to support in number format (integer or hex)
+   * Defaults to the chains provided within the web3-onboard init chain property
    */
   requiredChains?: string[] | number[]
-  /**
-   * List of Required Methods for wallets to support
-   */
   requiredMethods?: string[]
   /**
-   * List of Optional Methods for wallets to support
+   * Additional methods to be added to the default list of ['eth_sendTransaction',  'eth_signTransaction',  'personal_sign',  'eth_sign',  'eth_signTypedData',  'eth_signTypedData_v4']
+   * Passed methods to be included along with the defaults methods - see https://docs.walletconnect.com/2.0/web/walletConnectModal/options
    */
   optionalMethods?: string[]
-  /**
-   * List of Required Events for wallets to support
-   */
   requiredEvents?: string[]
-  /**
-   * List of Optional Events for wallets to support
-   */
   optionalEvents?: string[]
-  /**
-   * List of Chain ID to URL mapping
-   */
-  rpcMap?: { [chainId: number]: string }
 }
+
+type LedgerOptions = LedgerOptionsWCv1 | LedgerOptionsWCv2
 ```
 
 ## Usage
@@ -78,7 +75,6 @@ import Onboard from '@web3-onboard/core'
 import ledgerModule from '@web3-onboard/ledger'
 
 const ledger = ledgerModule({
-  walletConnectVersion: 2,
   /**
    * Project ID associated with [WalletConnect account](https://cloud.walletconnect.com)
    */
