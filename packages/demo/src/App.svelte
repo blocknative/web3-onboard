@@ -146,7 +146,7 @@
 
   const torus = torusModule()
   const infinityWallet = infinityWalletModule()
-  const ledger = ledgerModule()
+  const ledger = ledgerModule({projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',})
   const keepkey = keepkeyModule()
   const keystone = keystoneModule()
   const gnosis = gnosisModule()
