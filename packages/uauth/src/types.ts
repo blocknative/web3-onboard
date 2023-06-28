@@ -1,3 +1,5 @@
+import { EthereumProviderOptions } from '@walletconnect/ethereum-provider/dist/types/EthereumProvider'
+
 export type UauthInitOptions = {
   /**
    * Required and will throw an error if not included: links dapp to Unstoppable Domains for customization
@@ -16,17 +18,30 @@ export type UauthInitOptions = {
    */
   shouldLoginWithRedirect?: boolean
   /**
-   * Optional url string: default = 'https://bridge.walletconnect.org'
+   * Project ID associated with [WalletConnect account](https://cloud.walletconnect.com)
    */
-  bridge?: string
-  qrcodeModalOptions?: {
-    /**
-     * Optional array of strings: Set the order and list of mobile linking wallets
-     */
-    mobileLinks: string[]
-  }
+  projectId: string
   /**
-   * Optional boolean: If true, connects to the first network chain provided
+   * Defaults to version: 2
    */
-  connectFirstChainId?: boolean
+  version?: 2
+  /**
+   * List of Required Chain(s) ID for wallets to support in number format (integer or hex)
+   * Defaults to [1] - Ethereum
+   */
+  requiredChains?: number[] | undefined
+  /**
+   * List of Optional Chain(s) ID for wallets to support in number format (integer or hex)
+   * Defaults to the chains provided within the web3-onboard init chain property
+   */
+  optionalChains?: number[] | undefined
+  /**
+   * Additional methods to be added to the default list of ['eth_sendTransaction',  'eth_signTransaction',  'personal_sign',  'eth_sign',  'eth_signTypedData',  'eth_signTypedData_v4']
+   * Passed methods to be included along with the defaults methods - see https://docs.walletconnect.com/2.0/web/walletConnectModal/options
+   */
+  additionalOptionalMethods?: string[] | undefined
+  /**
+   * Optional function to handle WalletConnect URI when it becomes available
+   */
+  handleUri?: (uri: string) => Promise<unknown>
 }
