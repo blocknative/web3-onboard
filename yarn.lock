@@ -3707,12 +3707,30 @@
     buffer "6.0.3"
     valtio "1.10.6"
 
+"@walletconnect/modal-core@2.5.5":
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/@walletconnect/modal-core/-/modal-core-2.5.5.tgz#dc2ee96b1dd7cd9a1dc5e276c46068ee6349616a"
+  integrity sha512-M2BKcI5aqnGfMAz+MgTsvnTRzD25uz9YJ3/xuzy+ovgFCl2VCGH2Vdrf6Ptu+UR6UMuPdssG1TXXe1rd907Dxw==
+  dependencies:
+    buffer "6.0.3"
+    valtio "1.10.6"
+
 "@walletconnect/modal-ui@2.5.4":
   version "2.5.4"
   resolved "https://registry.yarnpkg.com/@walletconnect/modal-ui/-/modal-ui-2.5.4.tgz#0433fb0226dd47e17fede620c5a5ff332baed155"
   integrity sha512-5qLLjwbE3YC4AsCVhf8J87otklkApcQ5DCMykOcS0APPv8lKQ46JxpQhfWwRYaUkuIiHonI9h1YxFARDkoaI9g==
   dependencies:
     "@walletconnect/modal-core" "2.5.4"
+    lit "2.7.5"
+    motion "10.16.2"
+    qrcode "1.5.3"
+
+"@walletconnect/modal-ui@2.5.5":
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/@walletconnect/modal-ui/-/modal-ui-2.5.5.tgz#f2ab96ab72f0f1325252224560ec610b73d1684c"
+  integrity sha512-g0LJ/gRhZ5E30gk4GnMpDlQzLFWyRjsJp57s9rZmlVkry5mfhCZ3Oh0mfgv2/ILVxdB4fUo1BjatKyOpSogOmg==
+  dependencies:
+    "@walletconnect/modal-core" "2.5.5"
     lit "2.7.5"
     motion "10.16.2"
     qrcode "1.5.3"
@@ -3724,6 +3742,14 @@
   dependencies:
     "@walletconnect/modal-core" "2.5.4"
     "@walletconnect/modal-ui" "2.5.4"
+
+"@walletconnect/modal@2.5.5":
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/@walletconnect/modal/-/modal-2.5.5.tgz#703eb076af4442dcd14a3b0b87863f17283f6514"
+  integrity sha512-y1PH1xXzFDtVZErfQErPPJzPU9DKLp4M0IEaza8LfegqHfTFaGa0s3AL+i5+7FIk9+5OHSv0Wv+e5tmSZt96yA==
+  dependencies:
+    "@walletconnect/modal-core" "2.5.5"
+    "@walletconnect/modal-ui" "2.5.5"
 
 "@walletconnect/qrcode-modal@^1.7.1":
   version "1.7.1"
@@ -4000,6 +4026,25 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.1"
     tslib "1.14.1"
+
+"@web3-onboard/core@^2.20.3":
+  version "2.20.3"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.20.3.tgz#e123979f9360057cd184d715fdedc9f0bbf45941"
+  integrity sha512-2fm8kJ4T4DXvPNU7rjWCAxFFEZXx2Xz7LiUCg+qXvhiHzJBBxGOBbL81HwZk9hR3eZzWwQt9tLmbFx0G2uREow==
+  dependencies:
+    "@web3-onboard/common" "^2.3.3"
+    bignumber.js "^9.0.0"
+    bnc-sdk "^4.6.7"
+    bowser "^2.11.0"
+    ethers "5.5.3"
+    eventemitter3 "^4.0.7"
+    joi "17.9.1"
+    lodash.merge "^4.6.2"
+    lodash.partition "^4.6.0"
+    nanoid "^4.0.0"
+    rxjs "^7.5.5"
+    svelte "^3.49.0"
+    svelte-i18n "^3.3.13"
 
 "@web3-react/abstract-connector@^6.0.7":
   version "6.0.7"

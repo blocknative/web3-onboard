@@ -50,6 +50,12 @@ function ledger(options?: LedgerOptionsWCv2): WalletInit {
             ? parseInt(id, 16)
             : id as number
         ))
+        
+        const optionalMethods =
+        options.optionalMethods && Array.isArray(options.optionalMethods)
+          ? [...options.optionalMethods, ...defaultOptionalMethods]
+          : defaultOptionalMethods
+
 
         const checkSupportResult = connectKit.checkSupport({
           providerType: SupportedProviders.Ethereum,
@@ -58,8 +64,7 @@ function ledger(options?: LedgerOptionsWCv2): WalletInit {
           chains: requiredChains,
           optionalChains: chains.map(({ id }) => parseInt(id, 16)),
           methods: options?.requiredMethods,
-          optionalMethods: options?.optionalMethods ||
-            defaultOptionalMethods,
+          optionalMethods,
           events: options?.requiredEvents,
           optionalEvents: options?.optionalEvents,
           rpcMap: chains
