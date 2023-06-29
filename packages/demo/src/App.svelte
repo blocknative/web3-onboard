@@ -477,8 +477,6 @@
         "Signature failed. Recovered address doesn' match signing address."
       )
       verifySign = recoveredAddress === addr
-    } catch (error) {
-      console.error('Error recovering address signature', error)
     }
 
     console.log({ signMsg, signature, recoveredAddress, addr })
@@ -740,12 +738,7 @@
           >
           <button
             on:click={() =>
-<<<<<<< HEAD
               onboard.state.actions.updateAppMetadata({
-=======
-              onboard.state.actions.updateAppMetadata(
-              {
->>>>>>> docs
                 // Checkmark
                 icon: `<svg width="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.59 8.59L12 13.17L7.41 8.59L6 10L12 16L18 10L16.59 8.59Z" fill="currentColor"/></svg>`,
                 // Hourglass
