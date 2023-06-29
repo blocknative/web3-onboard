@@ -19,6 +19,7 @@ This is the core package that contains all of the UI and logic to be able to sea
 
 :::admonition type="tip"
 _note: Release 2.24.0 moves the default position of the account center from topRight to bottomRight. To reset your application to topRight, include the following when initializing onboard:_
+
 ```typescript
   accountCenter: {
       desktop: {
@@ -31,6 +32,7 @@ _note: Release 2.24.0 moves the default position of the account center from topR
       }
     }
 ```
+
 :::
 
 ## Install
@@ -280,7 +282,7 @@ type ConnectModalOptions = {
    */
   wheresMyWalletLink?: string
   /**
-   * Hide the where is my wallet link notice
+   * Hide the where is my wallet link notice displayed in the connect modal
    */
   hideWhereIsMyWallet?: boolean
   /**

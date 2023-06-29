@@ -179,7 +179,7 @@ export interface AppState {
   locale: Locale
   notify: Notify
   notifications: Notification[]
-  connect: ConnectModalOptions,
+  connect: ConnectModalOptions
   appMetadata: AppMetadata
 }
 
@@ -244,7 +244,7 @@ export type ConnectModalOptions = {
    */
   wheresMyWalletLink?: string
   /**
-   * Hide the where is my wallet notice
+   * Hide the where is my wallet link notice displayed in the connect modal
    */
   hideWhereIsMyWallet?: boolean
   /**
@@ -433,7 +433,7 @@ export type Action =
   | AddNotificationAction
   | RemoveNotificationAction
   | UpdateAllWalletsAction
-  | UpdateConnectModalAction 
+  | UpdateConnectModalAction
   | UpdateAppMetadataAction
 
 export type AddChainsAction = { type: 'add_chains'; payload: Chain[] }

@@ -91,14 +91,17 @@
     {#if !connect.hideWhereIsMyWallet}
       <div class="notice-container">
         <Warning>
-          <div>{$_('connect.selectingWallet.whyDontISeeMyWallet', {
-            default: en.connect.selectingWallet.whyDontISeeMyWallet
-          })}</div>
+          <div>
+            {$_('connect.selectingWallet.whyDontISeeMyWallet', {
+              default: en.connect.selectingWallet.whyDontISeeMyWallet
+            })}
+          </div>
           <a
             class="link pointer"
             href={connect.wheresMyWalletLink || wheresMyWalletDefault}
             target="_blank"
-            rel="noreferrer noopener">{$_('connect.selectingWallet.learnMore', {
+            rel="noreferrer noopener"
+            >{$_('connect.selectingWallet.learnMore', {
               default: en.connect.selectingWallet.learnMore
             })}</a
           >
