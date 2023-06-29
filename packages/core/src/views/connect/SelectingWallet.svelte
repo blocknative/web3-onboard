@@ -88,7 +88,7 @@
           connectingWalletLabel !== wallet.label}
       />
     {/each}
-    {#if !connect.hideWhereIsMyWallet}
+    {#if !connect.removeWhereIsMyWalletWarning}
       <div class="notice-container">
         <Warning>
           <div>

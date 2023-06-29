@@ -293,7 +293,7 @@
     ],
     connect: {
       // disableClose: true,
-      // hideWhereIsMyWallet: true,
+      // removeWhereIsMyWalletWarning: true,
       autoConnectAllPreviousWallet: true
     },
     appMetadata: {
