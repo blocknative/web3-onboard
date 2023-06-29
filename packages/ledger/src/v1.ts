@@ -1,69 +1,65 @@
-import type { StaticJsonRpcProvider as StaticJsonRpcProviderType } from '@ethersproject/providers'
-import type {
+import {
   Chain,
-  ProviderAccounts,
   WalletInit,
+  GetInterfaceHelpers,
   EIP1193Provider,
+  ProviderAccounts,
   ChainId,
   AccountAddress
 } from '@web3-onboard/common'
-import type { WalletConnectOptions } from './index.js'
-import { isHexString } from './index.js'
+import type { EthereumProvider } from '@ledgerhq/connect-kit-loader'
+import type { StaticJsonRpcProvider as StaticJsonRpcProviderType } from '@ethersproject/providers'
+import WalletConnect from '@walletconnect/client'
+import { isHexString, LedgerOptionsWCv1 } from './index.js'
 
-function walletConnect(options: WalletConnectOptions): WalletInit {
-  if (options.version !== 1) throw `WalletConnect version must be set to 1 to initialize - note version 1 has been deprecated by the WalletConnect team`
-
-  const { bridge, qrcodeModalOptions, connectFirstChainId, handleUri } =
-    options || {}
-
-  console.warn(
-    `Wallet Connect version 1 support has been deprecated by the WalletConnect team. Please consider using version 2. See docs for more details.`
-  )
-
-  if (!bridge) {
-    throw `WalletConnect version 1 requires a bridge to be passed in. The WalletConnect team has remove support for the bridge. Please upgrade to version 2 of WalletConnect or pass in a custom bridge URL.`
-  }
-
+function ledger(options: LedgerOptionsWCv1 = { walletConnectVersion: 1 }): WalletInit {
   return () => {
     return {
-      label: 'WalletConnect',
+      label: 'Ledger',
       getIcon: async () => (await import('./icon.js')).default,
-      getInterface: async ({ chains, EventEmitter }) => {
-        const { StaticJsonRpcProvider } = await import(
-          '@ethersproject/providers'
-        )
+      getInterface: async ({ chains, EventEmitter }: GetInterfaceHelpers) => {
+        const {
+          loadConnectKit,
+          SupportedProviders,
+          SupportedProviderImplementations
+        } = await import('@ledgerhq/connect-kit-loader')
 
-        const { ProviderRpcError, ProviderRpcErrorCode } = await import(
-          '@web3-onboard/common'
-        )
-
-        const { default: WalletConnect } = await import('@walletconnect/client')
-
-        // This is a cjs module and therefor depending on build tooling
-        // sometimes it will be nested in the { default } object and
-        // other times it will be the actual import
-        // @ts-ignore - It thinks it is missing properties since it expect it to be nested under default
-        let QRCodeModal: typeof import('@walletconnect/qrcode-modal').default =
-          await import('@walletconnect/qrcode-modal')
-
-        // @ts-ignore - TS thinks that there is no default property on the `QRCodeModal` but sometimes there is
-        QRCodeModal = QRCodeModal.default || QRCodeModal
-
-        const { Subject, fromEvent } = await import('rxjs')
-        const { takeUntil, take } = await import('rxjs/operators')
-
-        const connector = new WalletConnect({
-          bridge
+        const connectKit = await loadConnectKit()
+        if (options.enableDebugLogs) {
+          connectKit.enableDebugLogs()
+        }
+        const checkSupportResult = connectKit.checkSupport({
+          providerType: SupportedProviders.Ethereum,
+          chainId: options?.chainId,
+          infuraId: options?.infuraId,
+          rpc: options?.rpc
         })
 
-        if (handleUri) {
-          try {
-            await handleUri(connector.uri || '')
-          } catch (error) {
-            throw `An error occurred when handling the URI. Error: ${error}`
+        // get the Ledger provider instance, it can be either Ledger Connect
+        // or WalletConnect
+        const instance = (await connectKit.getProvider()) as EthereumProvider
+
+        // return the Ledger Extension provider
+        if (
+          checkSupportResult.providerImplementation ===
+            SupportedProviderImplementations.LedgerConnect
+        ) {
+          return {
+            provider: instance
           }
         }
 
+        // fallback to WalletConnect on unsupported platforms
+        const { StaticJsonRpcProvider } = await import(
+          '@ethersproject/providers'
+        )
+        const { ProviderRpcError, ProviderRpcErrorCode } = await import(
+          '@web3-onboard/common'
+        )
+        const { default: WalletConnect } = await import('@walletconnect/client')
+        const { Subject, fromEvent } = await import('rxjs')
+        const { takeUntil, take } = await import('rxjs/operators')
+        const connector = instance.connector as WalletConnect
         const emitter = new EventEmitter()
 
         class EthProvider {
@@ -174,7 +170,6 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
                           : `0x${chainId.toString(16)}`
                         if (!activeChain) activeChain = hexChainId
                         this.emit('chainChanged', hexChainId)
-                        QRCodeModal.close()
                         resolve(lowerCaseAccounts)
                       },
                       error: reject
@@ -182,26 +177,7 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
 
                   // Check if connection is already established
                   if (!this.connector.connected) {
-                    // create new session
-                    this.connector
-                      .createSession(
-                        connectFirstChainId
-                          ? { chainId: parseInt(chains[0].id, 16) }
-                          : undefined
-                      )
-                      .then(() => {
-                        QRCodeModal.open(
-                          this.connector.uri,
-                          () =>
-                            reject(
-                              new ProviderRpcError({
-                                code: 4001,
-                                message: 'User rejected the request.'
-                              })
-                            ),
-                          qrcodeModalOptions
-                        )
-                      })
+                    resolve(instance.request({ method, params }))
                   } else {
                     const { accounts, chainId } = this.connector.session
                     const hexChainId = isHexString(chainId)
@@ -308,6 +284,7 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
                   currentChain.rpcUrl
                 )
               }
+
               return this.providers[chainId].send(
                 method,
                 // @ts-ignore
@@ -325,4 +302,4 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
   }
 }
 
-export default walletConnect
+export default ledger

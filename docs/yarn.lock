@@ -4437,10 +4437,10 @@
     "@walletconnect/window-getters" "^1.0.1"
     tslib "1.14.1"
 
-"@web3-onboard/blocto@^2.0.0-alpha.1":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/blocto/-/blocto-2.0.0.tgz#eb631e911b7c13ad11089bb3574e97b673f14463"
-  integrity sha512-99/YzRuE9VBXWVLI6tAKxwFvCXq7WV24a3rM76yY5yVEEeNfewh8PWQ/2Yfz71Vfi6YWVPKzGo3LHspz4caTzA==
+"@web3-onboard/blocto@^2.0.0":
+  version "2.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/blocto/-/blocto-2.0.0-alpha.1.tgz#8781646d98520b80be090c622e218b9dfea12221"
+  integrity sha512-YBhsjkVdL6Z/SXoQeFNt5Rjj1WxlXg1oKOBOZOqfioPuMwmi8RJOLcLi7evhVUdGs5T8sYCBWg+eDeA/K6XK7w==
   dependencies:
     "@blocto/sdk" "^0.4.6"
     "@web3-onboard/common" "^2.3.1"
