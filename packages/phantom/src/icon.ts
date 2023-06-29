@@ -1,32 +1,4 @@
-export default `
-<svg width="100%" height="100%" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0_8241_140154)">
-<circle cx="64" cy="64" r="64" fill="url(#paint0_linear_8241_140154)"/>
-<g filter="url(#filter0_d_8241_140154)">
-<path d="M110.584 64.9142H99.1423C99.1423 41.7651 80.1733 23 56.7726 23C33.6615 23 14.8719 41.3057 14.412 64.0583C13.9363 87.577 36.2412 108 60.0189 108H63.0097C83.9725 108 112.069 91.7667 116.459 71.9874C117.27 68.3413 114.359 64.9142 110.584 64.9142ZM39.7691 65.9454C39.7691 69.0411 37.2098 71.5729 34.0804 71.5729C30.9511 71.5729 28.3918 69.0399 28.3918 65.9454V56.8414C28.3918 53.7457 30.9511 51.2139 34.0804 51.2139C37.2098 51.2139 39.7691 53.7457 39.7691 56.8414V65.9454ZM59.5227 65.9454C59.5227 69.0411 56.9634 71.5729 53.834 71.5729C50.7047 71.5729 48.1454 69.0399 48.1454 65.9454V56.8414C48.1454 53.7457 50.7058 51.2139 53.834 51.2139C56.9634 51.2139 59.5227 53.7457 59.5227 56.8414V65.9454Z" fill="url(#paint1_linear_8241_140154)"/>
-</g>
-</g>
-<defs>
-<filter id="filter0_d_8241_140154" x="6.76409" y="15.3596" width="117.472" height="100.281" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feOffset/>
-<feGaussianBlur stdDeviation="3.82022"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.3 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_8241_140154"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_8241_140154" result="shape"/>
-</filter>
-<linearGradient id="paint0_linear_8241_140154" x1="64" y1="0" x2="64" y2="128" gradientUnits="userSpaceOnUse">
-<stop stop-color="#534BB1"/>
-<stop offset="1" stop-color="#551BF9"/>
-</linearGradient>
-<linearGradient id="paint1_linear_8241_140154" x1="65.5001" y1="23" x2="65.5001" y2="108" gradientUnits="userSpaceOnUse">
-<stop stop-color="white"/>
-<stop offset="1" stop-color="white" stop-opacity="0.82"/>
-</linearGradient>
-<clipPath id="clip0_8241_140154">
-<rect width="128" height="128" fill="white"/>
-</clipPath>
-</defs>
-</svg>
-`
+export default `<svg xmlns="http://www.w3.org/2000/svg" width="108" height="108" viewBox="0 0 108 108" fill="none">
+<rect width="108" height="108" rx="26" fill="#AB9FF2"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M46.5267 69.9229C42.0054 76.8509 34.4292 85.6182 24.348 85.6182C19.5824 85.6182 15 83.6563 15 75.1342C15 53.4305 44.6326 19.8327 72.1268 19.8327C87.768 19.8327 94 30.6846 94 43.0079C94 58.8258 83.7355 76.9122 73.5321 76.9122C70.2939 76.9122 68.7053 75.1342 68.7053 72.314C68.7053 71.5783 68.8275 70.7812 69.0719 69.9229C65.5893 75.8699 58.8685 81.3878 52.5754 81.3878C47.993 81.3878 45.6713 78.5063 45.6713 74.4598C45.6713 72.9884 45.9768 71.4556 46.5267 69.9229ZM83.6761 42.5794C83.6761 46.1704 81.5575 47.9658 79.1875 47.9658C76.7816 47.9658 74.6989 46.1704 74.6989 42.5794C74.6989 38.9885 76.7816 37.1931 79.1875 37.1931C81.5575 37.1931 83.6761 38.9885 83.6761 42.5794ZM70.2103 42.5795C70.2103 46.1704 68.0916 47.9658 65.7216 47.9658C63.3157 47.9658 61.233 46.1704 61.233 42.5795C61.233 38.9885 63.3157 37.1931 65.7216 37.1931C68.0916 37.1931 70.2103 38.9885 70.2103 42.5795Z" fill="#FFFDF8"/>
+</svg>`
