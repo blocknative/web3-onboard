@@ -69,7 +69,7 @@ const intiOnboard = async (theme) => {
       mobileLinks: ['rainbow', 'metamask', 'argent', 'trust', 'imtoken', 'pillar']
     }
   })
-  const ledger = ledgerModule()
+  const ledger = ledgerModule({ projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5' })
   const keystone = keystoneModule()
   const keepkey = keepkeyModule()
   const gnosis = gnosisModule()
@@ -99,7 +99,8 @@ const intiOnboard = async (theme) => {
   const uauthOptions = {
     clientID: 'a25c3a65-a1f2-46cc-a515-a46fe7acb78c',
     redirectUri: 'http://localhost:8080/',
-    scope: 'openid wallet email:optional humanity_check:optional profile:optional social:optional'
+    scope: 'openid wallet email:optional humanity_check:optional profile:optional social:optional',
+    walletConnectProjectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5'
   }
   const uauth = uauthModule(uauthOptions)
 
