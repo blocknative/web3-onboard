@@ -202,6 +202,7 @@ const connectModalOptions = Joi.object({
   autoConnectAllPreviousWallet: Joi.boolean(),
   iDontHaveAWalletLink: Joi.string(),
   wheresMyWalletLink: Joi.string(),
+  hideWhereIsMyWallet: Joi.boolean(),
   disableUDResolution: Joi.boolean()
 })
 
