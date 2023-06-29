@@ -69,7 +69,7 @@ const intiOnboard = async (theme) => {
       mobileLinks: ['rainbow', 'metamask', 'argent', 'trust', 'imtoken', 'pillar']
     }
   })
-  const ledger = ledgerModule()
+  const ledger = ledgerModule({ projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5' })
   const keystone = keystoneModule()
   const keepkey = keepkeyModule()
   const gnosis = gnosisModule()
