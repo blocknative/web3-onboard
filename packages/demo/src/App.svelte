@@ -293,7 +293,7 @@
     ],
     connect: {
       // disableClose: true,
-      // hideWhereIsMyWallet: true,
+      // removeWhereIsMyWalletWarning: true,
       autoConnectAllPreviousWallet: true
     },
     appMetadata: {
@@ -463,7 +463,6 @@
       verifySign = recoveredAddress === addr
     } catch (error) {
       console.error('Error recovering address', error)
-      verifySign = false
     }
 
     // contract wallets verify EIP-1654
@@ -477,6 +476,7 @@
       console.error(
         "Signature failed. Recovered address doesn' match signing address."
       )
+      verifySign = recoveredAddress === addr
     }
 
     console.log({ signMsg, signature, recoveredAddress, addr })
