@@ -463,7 +463,6 @@
       verifySign = recoveredAddress === addr
     } catch (error) {
       console.error('Error recovering address', error)
-      verifySign = false
     }
 
     // contract wallets verify EIP-1654
@@ -477,6 +476,15 @@
       console.error(
         "Signature failed. Recovered address doesn' match signing address."
       )
+      verifySign = recoveredAddress === addr
+    } catch (error) {
+    }
+
+    // contract wallets verify EIP-1654
+    const verifySignBy1654 = new DappAuth(provider);
+    const isAuthorizedSigner = await verifySignBy1654.isAuthorizedSigner(signMsg, signature, address);
+    if (!verifySign && !isAuthorizedSigner) {
+      console.error("Signature failed. Recovered address doesn' match signing address.");
     }
 
     console.log({ signMsg, signature, recoveredAddress, addr })

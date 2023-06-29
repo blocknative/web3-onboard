@@ -120,7 +120,16 @@ const onboard = Onboard({
   wallets: [
     walletConnect
     //... other wallets
-  ]
+  ],
+  chains: [ // chains that are passed as optional chains to WC wallet after cleaning and parsing as number[]
+      {
+        id: '0x89',
+        token: 'MATIC',
+        label: 'Polygon',
+        rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+      }
+      // ...
+    ]
 })
 
 const connectedWallets = await onboard.connectWallet()

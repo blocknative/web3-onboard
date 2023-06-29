@@ -4694,7 +4694,7 @@
     "0xsequence" "^0.43.1"
     "@web3-onboard/common" "^2.3.3"
 
-"@web3-onboard/taho@^2.0.5":
+"@web3-onboard/taho@^2.0.5-alpha.1":
   version "2.0.5-alpha.1"
   resolved "https://registry.yarnpkg.com/@web3-onboard/taho/-/taho-2.0.5-alpha.1.tgz#ae0306a17a0426253fe706e7d0df393e40959f03"
   integrity sha512-6ErW3+d7H1LD3rlABHYCReBhM84a33+axNWkPZONYcdd3zgfyTlmPKMi1JWYpX89hbK1y09f+yAX73bTP3/UAA==
