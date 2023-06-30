@@ -1317,6 +1317,9 @@ The Onboard styles can be customized via [CSS variables](https://developer.mozil
   --onboard-wallet-button-box-shadow
   --onboard-wallet-app-icon-border-color
 
+  /* Does not affect all icons, only icons with a black or white base color */
+  --onboard-wallet-icon-contrast-color
+
   /* CUSTOMIZE THE SHARED MODAL */
   --onboard-modal-background
   --onboard-modal-color

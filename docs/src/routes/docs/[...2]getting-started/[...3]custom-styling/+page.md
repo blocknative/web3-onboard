@@ -118,6 +118,9 @@ The Onboard styles can customized via [CSS custom properties](https://developer.
   --onboard-wallet-button-box-shadow
   --onboard-wallet-app-icon-border-color
 
+  /* Does not affect all icons, only icons with a black or white base color */
+  --onboard-wallet-icon-contrast-color
+
   /* CUSTOMIZE THE SHARED MODAL */
   --onboard-modal-background
   --onboard-modal-color

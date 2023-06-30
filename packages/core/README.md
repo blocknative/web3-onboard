@@ -1223,6 +1223,9 @@ The Onboard styles can customized via [CSS variables](https://developer.mozilla.
   --onboard-wallet-button-box-shadow-hover
   --onboard-wallet-app-icon-border-color
 
+  /* Does not affect all icons, only icons with a black or white base color */
+  --onboard-wallet-icon-contrast-color
+
   /* CUSTOMIZE THE SHARED MODAL */
   --onboard-modal-background
   --onboard-modal-color
