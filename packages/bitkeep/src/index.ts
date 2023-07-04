@@ -15,15 +15,9 @@ function bitKeep(): WalletInit {
       </svg>
       `,
       getInterface: async () => {
-        const ethereumInjectionExists = window.hasOwnProperty('ethereum')
-
         let provider: EIP1193Provider
-
-        // check if trust is injected into window.ethereum
-        if (ethereumInjectionExists && (window as any)?.bitkeep?.isBitKeep) {
-          provider = (window as any)?.ethereum
-        } else if ((window as any)?.bitkeep) {
-          // directly use the window.bitkeep.ethereum injection
+        // check if bitkeep is injected into window.bitkeep
+        if ((window as any)?.bitkeep) {
           provider = (window as any)?.bitkeep?.ethereum
         } else {
           // BitKeep Wallet extension is not installed
