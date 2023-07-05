@@ -4480,7 +4480,7 @@
     "@walletconnect/window-getters" "^1.0.1"
     tslib "1.14.1"
 
-"@web3-onboard/blocto@^2.0.0-alpha.1":
+"@web3-onboard/blocto@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@web3-onboard/blocto/-/blocto-2.0.0.tgz#eb631e911b7c13ad11089bb3574e97b673f14463"
   integrity sha512-99/YzRuE9VBXWVLI6tAKxwFvCXq7WV24a3rM76yY5yVEEeNfewh8PWQ/2Yfz71Vfi6YWVPKzGo3LHspz4caTzA==
@@ -4513,10 +4513,10 @@
     ethers "5.5.4"
     joi "17.9.1"
 
-"@web3-onboard/core@^2.20.4-alpha.1":
-  version "2.20.4-alpha.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.20.4-alpha.1.tgz#fb28c5fb68af989a9ef96fa05376de58e7c03af8"
-  integrity sha512-B4NPf2zSIry+wKTBDlN+gKfaAFSqQ8jYJ7V9un7llGXwllc6Zf91GiIUYecluk8UaanogYGRrTMR0njTPIsN0w==
+"@web3-onboard/core@^2.20.4":
+  version "2.20.4"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.20.4.tgz#ccc9ff509e56720e526b4ceae5459a1f2a435d22"
+  integrity sha512-IFI3DVq5QgFj5w1TyL61gHmeOlkX8AJiBAARO3cd4zW8I3h9K2+7HeE7LbsfwefZYLILzXCfF0gMB3qRN/GWYQ==
   dependencies:
     "@web3-onboard/common" "^2.3.3"
     bignumber.js "^9.0.0"
@@ -4641,10 +4641,10 @@
     "@web3-onboard/common" "^2.3.3"
     "@web3-onboard/hw-common" "^2.3.0"
 
-"@web3-onboard/ledger@^2.5.0-alpha.1":
-  version "2.5.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/ledger/-/ledger-2.5.0-alpha.1.tgz#3552a580f15bcb9c037f27e88b70a9d60a83faec"
-  integrity sha512-l53egi5Ncy0hFG1Nij+toLm/3OjL+PTyyuigHdnHcey8R8fVBdaYIRKSpilMyuN0/luSk/ttSGL+5lBK8rurlw==
+"@web3-onboard/ledger@^2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/ledger/-/ledger-2.5.0.tgz#0ed29ece757706caa88a352ef33e63f9b2a0fedb"
+  integrity sha512-hMgQk/mX+/Ed6T18eEBPy3i8QgN9JYr2brplWRssRLX+pTGtic57CchkxvLRpgm4Qpz5YQyX3IuyoIILwfUjzA==
   dependencies:
     "@ledgerhq/connect-kit-loader" "^1.1.0"
     "@walletconnect/client" "^1.8.0"
@@ -4694,10 +4694,10 @@
     "0xsequence" "^0.43.1"
     "@web3-onboard/common" "^2.3.3"
 
-"@web3-onboard/taho@^2.0.5-alpha.1":
-  version "2.0.5-alpha.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/taho/-/taho-2.0.5-alpha.1.tgz#ae0306a17a0426253fe706e7d0df393e40959f03"
-  integrity sha512-6ErW3+d7H1LD3rlABHYCReBhM84a33+axNWkPZONYcdd3zgfyTlmPKMi1JWYpX89hbK1y09f+yAX73bTP3/UAA==
+"@web3-onboard/taho@^2.0.5":
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/taho/-/taho-2.0.5.tgz#899d147c234d61e1fb81045fc7339182c230c632"
+  integrity sha512-Z5n2UMumLNppOlDgYM9MhrM+YGyz8Emouaf7htH8l4B2r/meV4F3Wkgol2xYuwwu5SJyPaJH2GxNeh/EAfyBxg==
   dependencies:
     "@web3-onboard/common" "^2.3.3"
     tallyho-detect-provider "^1.0.0"
@@ -4746,10 +4746,10 @@
   dependencies:
     "@web3-onboard/common" "^2.3.3"
 
-"@web3-onboard/uauth@^2.1.0-alpha.1":
-  version "2.1.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/uauth/-/uauth-2.1.0-alpha.1.tgz#1c666c4e0537ab36c90f0fc442b10ed0fe6d7109"
-  integrity sha512-q0FuDPaRNKI/G3yLFVBgWwnqkhjr0a2pRBAd0p97RMbk/pJ3fAKUZaYTWN3UQ1eTDMQcnOaGtw3MOGX5GNpyhg==
+"@web3-onboard/uauth@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/uauth/-/uauth-2.1.0.tgz#f17dcad227e5ee57e12c539873ce3c7680968e9e"
+  integrity sha512-havy9Kj3sJs/q1EYSKRujaXr0StWQF3zYM9nBkynOVycQyOCcb12w//hceVnBNEf9GjVNXO9j5ssz8fSzMmSHw==
   dependencies:
     "@ethersproject/providers" "^5.5.0"
     "@uauth/js" "^2.4.0"
@@ -4769,10 +4769,10 @@
     "@venly/web3-provider" "^3.1.1"
     "@web3-onboard/common" "^2.3.1"
 
-"@web3-onboard/walletconnect@^2.4.0-alpha.2":
-  version "2.4.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/walletconnect/-/walletconnect-2.4.0-alpha.2.tgz#8c959c51194b8703bb174075feb5874e115cea6d"
-  integrity sha512-qyDZT4iw7EQrk7HLi+G9LMON13Z//w+ipQFH0NHZPuLVaQ/w6oS7HD+bFQHYsC9Xn7XMrE/sGRCw8wEX3de4ZA==
+"@web3-onboard/walletconnect@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/walletconnect/-/walletconnect-2.4.0.tgz#fe446706cde736ca629c56c190bc9b314eaa70b3"
+  integrity sha512-Qu3uHWsumOedHDzwqOoUrA40rNO0C6Sgw62XeIxSC+JsIB2K4Y5rXhTbMeYtO0lmWmHA8DYXxk8czYkdMZh19Q==
   dependencies:
     "@ethersproject/providers" "5.5.0"
     "@walletconnect/client" "^1.8.0"
