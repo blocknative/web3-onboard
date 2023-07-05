@@ -2,12 +2,9 @@ import {
   Chain,
   WalletInit,
   EIP1193Provider,
-  ProviderAccounts,
-  createEIP1193Provider
+  ProviderAccounts
 } from '@web3-onboard/common'
-import type {
-  EthereumProvider as LedgerEthereumProvider
-} from '@ledgerhq/connect-kit-loader'
+import type { EthereumProvider as LedgerEthereumProvider } from '@ledgerhq/connect-kit-loader'
 import { isHexString, LedgerOptionsWCv2 } from './index.js'
 import type { JQueryStyleEventEmitter } from 'rxjs/internal/observable/fromEvent'
 
@@ -45,17 +42,16 @@ function ledger(options?: LedgerOptionsWCv2): WalletInit {
         }
 
         // accept both hex and decimal chain ids
-        const requiredChains = options?.requiredChains?.map((id) => (
-          (typeof id === 'string' && isHexString(id))
+        const requiredChains = options?.requiredChains?.map(id =>
+          typeof id === 'string' && isHexString(id)
             ? parseInt(id, 16)
-            : id as number
-        ))
-        
-        const optionalMethods =
-        options.optionalMethods && Array.isArray(options.optionalMethods)
-          ? [...options.optionalMethods, ...defaultOptionalMethods]
-          : defaultOptionalMethods
+            : (id as number)
+        )
 
+        const optionalMethods =
+          options.optionalMethods && Array.isArray(options.optionalMethods)
+            ? [...options.optionalMethods, ...defaultOptionalMethods]
+            : defaultOptionalMethods
 
         const checkSupportResult = connectKit.checkSupport({
           providerType: SupportedProviders.Ethereum,
@@ -72,17 +68,18 @@ function ledger(options?: LedgerOptionsWCv2): WalletInit {
             .reduce((rpcMap: Record<number, string>, { id, rpcUrl }) => {
               rpcMap[parseInt(id, 16)] = rpcUrl || ''
               return rpcMap
-            }, {}),
+            }, {})
         })
 
         // get the provider instance, it can be either the Ledger Extension
         // or WalletConnect
-        const instance = (await connectKit.getProvider()) as LedgerEthereumProvider
+        const instance =
+          (await connectKit.getProvider()) as LedgerEthereumProvider
 
         // return the Ledger Extension provider
         if (
           checkSupportResult.providerImplementation ===
-            SupportedProviderImplementations.LedgerConnect
+          SupportedProviderImplementations.LedgerConnect
         ) {
           return {
             provider: instance
@@ -98,7 +95,9 @@ function ledger(options?: LedgerOptionsWCv2): WalletInit {
         const { Subject, fromEvent } = await import('rxjs')
         const { takeUntil, take } = await import('rxjs/operators')
 
-        const connector = instance as unknown as InstanceType<typeof EthereumProvider>
+        const connector = instance as unknown as InstanceType<
+          typeof EthereumProvider
+        >
         const emitter = new EventEmitter()
 
         class EthProvider {

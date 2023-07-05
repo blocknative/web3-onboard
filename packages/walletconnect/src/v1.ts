@@ -11,7 +11,8 @@ import type { WalletConnectOptions } from './index.js'
 import { isHexString } from './index.js'
 
 function walletConnect(options: WalletConnectOptions): WalletInit {
-  if (options.version !== 1) throw `WalletConnect version must be set to 1 to initialize - note version 1 has been deprecated by the WalletConnect team`
+  if (options.version !== 1)
+    throw `WalletConnect version must be set to 1 to initialize - note version 1 has been deprecated by the WalletConnect team`
 
   const { bridge, qrcodeModalOptions, connectFirstChainId, handleUri } =
     options || {}
@@ -58,6 +59,7 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
 
         if (handleUri) {
           try {
+            // @ts-ignore
             await handleUri(connector.uri || '')
           } catch (error) {
             throw `An error occurred when handling the URI. Error: ${error}`
@@ -140,14 +142,17 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
                 },
                 error: console.warn
               })
-
+            // @ts-ignore
             this.disconnect = () => this.connector.killSession()
 
             this.request = async ({ method, params }) => {
               if (method === 'eth_chainId') {
+                // @ts-ignore
                 return isHexString(this.connector.chainId)
-                  ? this.connector.chainId
-                  : `0x${this.connector.chainId.toString(16)}`
+                  ? // @ts-ignore
+                    this.connector.chainId
+                  : // @ts-ignore
+                    `0x${this.connector.chainId.toString(16)}`
               }
 
               if (method === 'eth_requestAccounts') {
@@ -181,9 +186,11 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
                     })
 
                   // Check if connection is already established
+                  // @ts-ignore
                   if (!this.connector.connected) {
                     // create new session
                     this.connector
+                      // @ts-ignore
                       .createSession(
                         connectFirstChainId
                           ? { chainId: parseInt(chains[0].id, 16) }
@@ -191,6 +198,7 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
                       )
                       .then(() => {
                         QRCodeModal.open(
+                          // @ts-ignore
                           this.connector.uri,
                           () =>
                             reject(
@@ -203,6 +211,7 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
                         )
                       })
                   } else {
+                    // @ts-ignore
                     const { accounts, chainId } = this.connector.session
                     const hexChainId = isHexString(chainId)
                       ? chainId
@@ -243,6 +252,7 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
                     message: `The Provider requires a chainId to be passed in as an argument`
                   })
                 }
+                // @ts-ignore
                 return this.connector.sendCustomRequest({
                   method: 'wallet_switchEthereumChain',
                   params: [
@@ -284,6 +294,7 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
               }
 
               if (method === 'eth_accounts') {
+                // @ts-ignore
                 return this.connector.sendCustomRequest({
                   id: 1337,
                   jsonrpc: '2.0',
