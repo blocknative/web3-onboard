@@ -56,12 +56,12 @@
   "license": "MIT",
   "devDependencies": {
     "typescript": "^4.5.5",
-    "@walletconnect/types": "^2.8.6"
+    "@walletconnect/types": "^2.9.0"
   },
   "dependencies": {
     "@ethersproject/providers": "5.5.0",
     "@walletconnect/client": "^1.8.0",
-    "@walletconnect/ethereum-provider": "2.8.6",
+    "@walletconnect/ethereum-provider": "2.9.0",
     "@walletconnect/modal":"2.5.9",
     "@walletconnect/qrcode-modal": "^1.8.0",
     "@web3-onboard/common": "^2.3.3",
