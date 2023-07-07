@@ -3,6 +3,7 @@ import type { UserInfo } from '@uauth/js'
 import type { UauthInitOptions } from './types.js'
 import type { CoreTypes } from '@walletconnect/types'
 import type { EthereumProvider } from '@walletconnect/ethereum-provider'
+import type { EthereumProviderOptions } from '@walletconnect/ethereum-provider/dist/types/EthereumProvider'
 import type { JQueryStyleEventEmitter } from 'rxjs/internal/observable/fromEvent'
 import type {
   Chain,
@@ -182,7 +183,7 @@ function uauth(options: UauthInitOptions): WalletInit {
                 return rpcMap
               }, {}),
             metadata: getMetaData()
-          })
+          } as EthereumProviderOptions)
 
           const emitter = new EventEmitter()
           class EthProvider {
