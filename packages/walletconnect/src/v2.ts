@@ -1,5 +1,7 @@
 import type { CoreTypes } from '@walletconnect/types'
 import type { EthereumProvider } from '@walletconnect/ethereum-provider'
+import type { EthereumProviderOptions } from '@walletconnect/ethereum-provider/dist/types/EthereumProvider'
+
 import type {
   Chain,
   ProviderAccounts,
@@ -111,7 +113,7 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
             }, {}),
           metadata: getMetaData(),
           qrModalOptions: qrModalOptions
-        })
+        } as EthereumProviderOptions)
 
         const emitter = new EventEmitter()
         class EthProvider {
