@@ -62,7 +62,7 @@ const intiOnboard = async (theme) => {
   const coinbase = coinbaseModule()
   const dcent = dcentModule()
   const walletConnect = walletConnectModule({
-    projectId: '1aec509bc64d50be712175fe0876e2a8'
+    projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5'
   })
   const ledger = ledgerModule({
     walletConnectVersion: 2,
