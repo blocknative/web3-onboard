@@ -607,7 +607,8 @@ const bitkeep: InjectedWalletModule = {
   getInterface: async () => ({
     provider: window.bitkeep && window.bitkeep.ethereum
   }),
-  platforms: ['all']
+  platforms: ['all'],
+  externalUrl: ProviderExternalUrl.BitKeep
 }
 
 const sequence: InjectedWalletModule = {
