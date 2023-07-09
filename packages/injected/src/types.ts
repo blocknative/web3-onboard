@@ -63,7 +63,8 @@ export enum ProviderIdentityFlag {
   DeFiWallet = 'isDeficonnectProvider',
   Safeheron = 'isSafeheron',
   Talisman = 'isTalisman',
-  OneKey = 'isOneKey'
+  OneKey = 'isOneKey',
+  Fordefi = 'isFordefi',
 }
 
 
@@ -138,7 +139,8 @@ export enum ProviderLabel {
   DeFiWallet = 'DeFi Wallet',
   Safeheron = 'Safeheron',
   Talisman = 'Talisman',
-  OneKey = 'OneKey'
+  OneKey = 'OneKey',
+  Fordefi = 'Fordefi',
 }
 
 export interface MeetOneProvider extends ExternalProvider {
