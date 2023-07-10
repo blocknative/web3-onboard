@@ -62,14 +62,12 @@ const intiOnboard = async (theme) => {
   const coinbase = coinbaseModule()
   const dcent = dcentModule()
   const walletConnect = walletConnectModule({
-    connectFirstChainId: true,
-    version: 2,
-    projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
-    qrcodeModalOptions: {
-      mobileLinks: ['rainbow', 'metamask', 'argent', 'trust', 'imtoken', 'pillar']
-    }
+    projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5'
   })
-  const ledger = ledgerModule({ projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5' })
+  const ledger = ledgerModule({
+    walletConnectVersion: 2,
+    projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5'
+  })
   const keystone = keystoneModule()
   const keepkey = keepkeyModule()
   const gnosis = gnosisModule()
@@ -222,7 +220,8 @@ const intiOnboard = async (theme) => {
       recommendedInjectedWallets: [
         { name: 'MetaMask', url: 'https://metamask.io' },
         { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
-      ]
+      ],
+      explore: 'https://onboard.blocknative.com/'
     },
     accountCenter: { desktop: { enabled: true }, mobile: { enabled: true } },
     theme: theme || 'system',

@@ -28,7 +28,7 @@ type WalletConnectOptions = {
        */
       version: 1
       /**
-       * Custom URL Bridge must be defined for V1 usage. 
+       * Custom URL Bridge must be defined for V1 usage.
        * WalletConnect no longer supports a v1 bridge.
        * Upgrading to use WalletConnect v2 is recommended.
        * A potential bridge can be found here: 'https://derelay.rabby.io'
@@ -44,6 +44,12 @@ type WalletConnectOptions = {
        * Project ID associated with [WalletConnect account](https://cloud.walletconnect.com)
        */
       projectId: string
+      /**
+       * Defaults to `appMetadata.explore` that is supplied to the web3-onboard init
+       * Strongly recommended to provide atleast one URL as it is required by some wallets (i.e. MetaMask)
+       * To connect with walletconnect
+       */
+      dappUrl?: string
       /**
        * Defaults to version: 2
        */
