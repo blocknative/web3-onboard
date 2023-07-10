@@ -4470,7 +4470,7 @@
     "@cedelabs/providers" "^0.0.7"
     "@web3-onboard/common" "^2.3.3"
 
-"@web3-onboard/coinbase@^2.2.4":
+"@web3-onboard/coinbase@^2.2.5-alpha.1":
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/@web3-onboard/coinbase/-/coinbase-2.2.4.tgz#7e7f82e631816ab7ddcab8d94df6d1513baada50"
   integrity sha512-XnQejTC51ZqYm4sT+RH3tr1yWcbuZXTWXRZeIHEWiJchVBE4K9goPxhB03PX8ZQ9TDt/bUTEkl7Qfyp6bhKTKw==
@@ -4583,10 +4583,10 @@
   dependencies:
     "@infinitywallet/infinity-connector" "^1.0.6"
 
-"@web3-onboard/injected-wallets@^2.10.1":
-  version "2.10.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.10.1.tgz#d4a45ba897c578819544805399761c61b8173166"
-  integrity sha512-PhmMI+RNeGowL2cfmp7/v3atrJ8KsjKXgXs6CofwMzDxQXfu1DwXdIh+Hd2Py/ZeRgOEeAehf63gftaVvfn/9g==
+"@web3-onboard/injected-wallets@^2.10.2":
+  version "2.10.2"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.10.2.tgz#e84eabebdb888dcec4a7a48f02fafa788735e791"
+  integrity sha512-LFQ/bBfhvSfzB5Y9gB37mtyKmUz76tdZIfUvBhhnmmxLCuD1T4eFsjMo67cRdC6wcXRTMbCaPbldGqz/10b0ug==
   dependencies:
     "@web3-onboard/common" "^2.3.3"
     joi "17.9.1"
@@ -4615,10 +4615,10 @@
     "@web3-onboard/common" "^2.3.3"
     "@web3-onboard/hw-common" "^2.3.0"
 
-"@web3-onboard/ledger@^2.5.1-alpha.2":
-  version "2.5.1-alpha.2"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/ledger/-/ledger-2.5.1-alpha.2.tgz#a32acb5ee955eedf3775ea49d52dd9fe639290cb"
-  integrity sha512-HPcT4Ik18bLwIyb4CVtO2A1AffCKTo+0U3QGZMBzuFGFhJOttxKasiNcVHT5nonY5XkhXnuDVCI2GQwsDX6h9A==
+"@web3-onboard/ledger@^2.5.1":
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/ledger/-/ledger-2.5.1.tgz#c686998efd1305d02c658ee44063de97af7b4690"
+  integrity sha512-7NAOKUz2z/TkyeWF8Wq+sKhRUfHhglzoc6RtzCCooU0xxRl4xfpah5zh0vr1b56tQ/hfBWXlLaaZtdY+cXfC/A==
   dependencies:
     "@ethersproject/providers" "5.5.0"
     "@ledgerhq/connect-kit-loader" "^1.1.0"
@@ -4646,10 +4646,10 @@
     "@web3-onboard/common" "^2.3.3"
     lodash.uniqby "^4.7.0"
 
-"@web3-onboard/phantom@^2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/phantom/-/phantom-2.0.2.tgz#71f1c71d3b661dd14fea9c3c5af1db4600758e50"
-  integrity sha512-iIGk+l+t01Kv+dJyO+F50lgp/zAUozHpjn3CkL35Tq8wWvCZVtBAMMdv5hZUAdrWhgn5NJn2dOYDYmZVl1ObvQ==
+"@web3-onboard/phantom@^2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/phantom/-/phantom-2.0.3.tgz#56d308f8923e3a826d9d654a306c19ffc0bc262d"
+  integrity sha512-qMecCdBeh3w8/PzJ03hFfQ6LsXZaq8YIV11AbxtYmVAKl5ZyJzvdao7n1eVRwje4joGSOt6m3YCw83UHacSATA==
   dependencies:
     "@web3-onboard/common" "^2.3.3"
 
@@ -4721,10 +4721,10 @@
   dependencies:
     "@web3-onboard/common" "^2.3.3"
 
-"@web3-onboard/uauth@^2.1.1-alpha.2":
-  version "2.1.1-alpha.2"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/uauth/-/uauth-2.1.1-alpha.2.tgz#531323f82032390aa504c11e448391af97baaec2"
-  integrity sha512-7VOyeHNw6b+QLhDjjIi69NFOFcj5hAi+VlvEf9S1ZQYwOYEXDEAx/ELHpEd5dxorzotPw7MdqCP84qI5Qx09uQ==
+"@web3-onboard/uauth@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/uauth/-/uauth-2.1.1.tgz#cfe9c6766237bb2a5b0d1e864df81b6a3e1d120f"
+  integrity sha512-6zeYMz400lHvpOsVIFlKHRM6IUAgk9P5Vgtmxx6cPpI7aPovA9jX7Dfvp4OUbdaSIYU3rpljtbcowa3+ax5JRQ==
   dependencies:
     "@ethersproject/providers" "^5.5.0"
     "@uauth/js" "^2.4.0"
@@ -4744,10 +4744,10 @@
     "@venly/web3-provider" "^3.1.1"
     "@web3-onboard/common" "^2.3.1"
 
-"@web3-onboard/walletconnect@^2.4.1-alpha.2":
-  version "2.4.1-alpha.2"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/walletconnect/-/walletconnect-2.4.1-alpha.2.tgz#45550464de96c5933bcdf3bcb2d9460b4567904b"
-  integrity sha512-K90QpQHSgEPSx3gCrzos1FIOWOum5IdkYfCLBPWmG9Cmr8/vx2bbEqw3BnJGfkNf5oew5lSLUss0zRlwTLeRpg==
+"@web3-onboard/walletconnect@^2.4.2-alpha.1":
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/walletconnect/-/walletconnect-2.4.1.tgz#49e6699b89790b17fc702cf21f24df71ec0d7c17"
+  integrity sha512-REYvE+VQgCo3zMAb4q9W0cmyrLH7xAEB3oi2lUwXcfejvk6TMT7xl6dVLWpycyGfQWLXS2HM0YGQ1zhFyBkLIQ==
   dependencies:
     "@ethersproject/providers" "5.5.0"
     "@walletconnect/client" "^1.8.0"

@@ -34,7 +34,8 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
     requiredChains,
     optionalChains,
     qrModalOptions,
-    additionalOptionalMethods
+    additionalOptionalMethods,
+    dappUrl
   } = options
 
   return () => {
@@ -55,10 +56,20 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
 
         const getMetaData = (): CoreTypes.Metadata | undefined => {
           if (!appMetadata) return undefined
+          const url =
+            dappUrl ||
+            appMetadata.explore ||
+            ''
+
+          !url &&
+            !url.length &&
+            console.warn(
+              `It is strongly recommended to supply a dappUrl as it is required by some wallets (i.e. MetaMask) to allow connection.`
+            )
           const wcMetaData: CoreTypes.Metadata = {
             name: appMetadata.name,
             description: appMetadata.description || '',
-            url: appMetadata.explore || appMetadata.gettingStartedGuide || '',
+            url,
             icons: []
           }
 
@@ -121,8 +132,11 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
           public connector: InstanceType<typeof EthereumProvider>
           public chains: Chain[]
           public disconnect: EIP1193Provider['disconnect']
+          // @ts-ignore
           public emit: typeof EventEmitter['emit']
+          // @ts-ignore
           public on: typeof EventEmitter['on']
+          // @ts-ignore
           public removeListener: typeof EventEmitter['removeListener']
 
           private disconnected$: InstanceType<typeof Subject>
