@@ -36,7 +36,7 @@ export type WalletConnectOptions = {
        */
       projectId: string
       /**
-       * Defaults to `appMetadata.explore || appMetadata.gettingStartedGuide` that is supplied to the web3-onboard init
+       * Defaults to `appMetadata.explore` that is supplied to the web3-onboard init
        * Strongly recommended to provide atleast one URL as it is required by some wallets (i.e. MetaMask)
        * To connect with walletconnect
        */

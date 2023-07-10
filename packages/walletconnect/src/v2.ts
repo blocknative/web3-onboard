@@ -59,7 +59,6 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
           const url =
             dappUrl ||
             appMetadata.explore ||
-            appMetadata.gettingStartedGuide ||
             ''
 
           !url &&
