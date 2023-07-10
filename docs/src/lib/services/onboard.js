@@ -220,7 +220,8 @@ const intiOnboard = async (theme) => {
       recommendedInjectedWallets: [
         { name: 'MetaMask', url: 'https://metamask.io' },
         { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
-      ]
+      ],
+      explore: 'https://onboard.blocknative.com/'
     },
     accountCenter: { desktop: { enabled: true }, mobile: { enabled: true } },
     theme: theme || 'system',

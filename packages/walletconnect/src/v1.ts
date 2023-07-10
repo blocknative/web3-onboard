@@ -73,8 +73,11 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
           public connector: InstanceType<typeof WalletConnect>
           public chains: Chain[]
           public disconnect: EIP1193Provider['disconnect']
+          // @ts-ignore
           public emit: typeof EventEmitter['emit']
+          // @ts-ignore
           public on: typeof EventEmitter['on']
+          // @ts-ignore
           public removeListener: typeof EventEmitter['removeListener']
 
           private disconnected$: InstanceType<typeof Subject>

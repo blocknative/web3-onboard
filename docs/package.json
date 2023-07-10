@@ -51,7 +51,7 @@
   "dependencies": {
     "@web3-onboard/blocto": "^2.0.0",
     "@web3-onboard/cede-store": "^2.0.2",
-    "@web3-onboard/coinbase": "^2.2.4",
+    "@web3-onboard/coinbase": "^2.2.5-alpha.1",
     "@web3-onboard/core": "^2.20.4",
     "@web3-onboard/dcent": "^2.2.7",
     "@web3-onboard/enkrypt": "^2.0.4",
@@ -77,7 +77,7 @@
     "@web3-onboard/trust": "^2.0.4",
     "@web3-onboard/uauth": "^2.1.1",
     "@web3-onboard/venly": "^2.0.0",
-    "@web3-onboard/walletconnect": "^2.4.1",
+    "@web3-onboard/walletconnect": "^2.4.2-alpha.1",
     "@web3-onboard/web3auth": "^2.2.3",
     "@web3-onboard/xdefi": "^2.0.4",
     "@web3-onboard/zeal": "^2.0.4",
