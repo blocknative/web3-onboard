@@ -38,6 +38,7 @@ const walletConnect = walletConnectModule(
     version: 2,
     // Replace with your apiKey
     projectId: '4a49c32131502e8c12d54295295e2012',
+    dappUrl: 'https://onboard.blocknative.com/'
   }
 )
 const portis = portisModule({
