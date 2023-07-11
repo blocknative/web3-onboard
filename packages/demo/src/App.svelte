@@ -41,7 +41,7 @@
   import { share } from 'rxjs/operators'
   import VConsole from 'vconsole'
   import blocknativeIcon from './blocknative-icon.js'
-  import DappAuth from '@dapperlabs/dappauth'
+  import DappAuth from '@blocto/dappauth';
 
   if (window.innerWidth < 700) {
     new VConsole()
