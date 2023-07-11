@@ -33,7 +33,14 @@ const injected = injectedModule({
 
 const walletLink = coinbaseModule()
 
-const walletConnect = walletConnectModule()
+const walletConnect = walletConnectModule(
+  {
+    version: 2,
+    // Replace with your apiKey
+    projectId: '4a49c32131502e8c12d54295295e2012',
+    dappUrl: 'https://onboard.blocknative.com/'
+  }
+)
 const portis = portisModule({
   // Replace with your apiKey
   apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'

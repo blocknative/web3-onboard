@@ -41,7 +41,7 @@
   import { share } from 'rxjs/operators'
   import VConsole from 'vconsole'
   import blocknativeIcon from './blocknative-icon.js'
-  import DappAuth from '@dapperlabs/dappauth'
+  import DappAuth from '@blocto/dappauth';
 
   if (window.innerWidth < 700) {
     new VConsole()
@@ -116,7 +116,7 @@
 
   const walletConnect = walletConnectModule({
     handleUri: uri => console.log(uri),
-    projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
+    projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5'
   })
   const portis = portisModule({
     apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
