@@ -1045,10 +1045,10 @@
     "@chainsafe/as-sha256" "^0.4.1"
     "@chainsafe/persistent-merkle-tree" "^0.6.1"
 
-"@coinbase/wallet-sdk@^3.6.0":
-  version "3.6.6"
-  resolved "https://registry.yarnpkg.com/@coinbase/wallet-sdk/-/wallet-sdk-3.6.6.tgz#4a0758fe0fe0ba3ed7e33b5bb6eb094ff8bd6c98"
-  integrity sha512-vX+epj/Ttjo7XRwlr3TFUUfW5GTRMvORpERPwiu7z2jl3DSVL4rXLmHt5y6LDPlUVreas2gumdcFbu0fLRG9Jg==
+"@coinbase/wallet-sdk@^3.7.1":
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/@coinbase/wallet-sdk/-/wallet-sdk-3.7.1.tgz#44b3b7a925ff5cc974e4cbf7a44199ffdcf03541"
+  integrity sha512-LjyoDCB+7p0waQXfK+fUgcAs3Ezk6S6e+LYaoFjpJ6c9VTop3NyZF40Pi7df4z7QJohCwzuIDjz0Rhtig6Y7Pg==
   dependencies:
     "@metamask/safe-event-emitter" "2.0.0"
     "@solana/web3.js" "^1.70.1"
@@ -4471,11 +4471,11 @@
     "@web3-onboard/common" "^2.3.3"
 
 "@web3-onboard/coinbase@^2.2.5-alpha.1":
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/coinbase/-/coinbase-2.2.4.tgz#7e7f82e631816ab7ddcab8d94df6d1513baada50"
-  integrity sha512-XnQejTC51ZqYm4sT+RH3tr1yWcbuZXTWXRZeIHEWiJchVBE4K9goPxhB03PX8ZQ9TDt/bUTEkl7Qfyp6bhKTKw==
+  version "2.2.5-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/coinbase/-/coinbase-2.2.5-alpha.1.tgz#59e981be4e3a117a65d8d8911b9f1600971f7b79"
+  integrity sha512-yv3je+7/uXp192KOX8+Qw59JvjZgO40F3vKXX0AeqNe6NcTZlzWd7R5HTzlS9ZgRAQcZhZb2Ueue/UvPP6qQSg==
   dependencies:
-    "@coinbase/wallet-sdk" "^3.6.0"
+    "@coinbase/wallet-sdk" "^3.7.1"
     "@web3-onboard/common" "^2.3.3"
 
 "@web3-onboard/common@^2.3.1", "@web3-onboard/common@^2.3.3":
@@ -4745,9 +4745,9 @@
     "@web3-onboard/common" "^2.3.1"
 
 "@web3-onboard/walletconnect@^2.4.2-alpha.1":
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/walletconnect/-/walletconnect-2.4.1.tgz#49e6699b89790b17fc702cf21f24df71ec0d7c17"
-  integrity sha512-REYvE+VQgCo3zMAb4q9W0cmyrLH7xAEB3oi2lUwXcfejvk6TMT7xl6dVLWpycyGfQWLXS2HM0YGQ1zhFyBkLIQ==
+  version "2.4.2-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/walletconnect/-/walletconnect-2.4.2-alpha.1.tgz#4c21b7a6501faa91ea23e0bb65c865290c0b38f7"
+  integrity sha512-gCCuI3jj+smEHGm7/cONK0oorpIaPfobIeuP6hqi7C6cn2Rl9Ia4nEspyswc3jbuyiZ46Ha8zAVkFQS+NieDfw==
   dependencies:
     "@ethersproject/providers" "5.5.0"
     "@walletconnect/client" "^1.8.0"
@@ -4755,6 +4755,7 @@
     "@walletconnect/modal" "2.5.9"
     "@walletconnect/qrcode-modal" "^1.8.0"
     "@web3-onboard/common" "^2.3.3"
+    joi "17.9.1"
     rxjs "^7.5.2"
 
 "@web3-onboard/web3auth@^2.2.3":
