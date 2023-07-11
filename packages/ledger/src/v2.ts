@@ -1,19 +1,15 @@
-import type { CoreTypes } from '@walletconnect/types'
-import type { EthereumProvider } from '@walletconnect/ethereum-provider'
-import type { EthereumProviderOptions } from '@walletconnect/ethereum-provider/dist/types/EthereumProvider'
-
-import type {
+import {
   Chain,
-  ProviderAccounts,
   WalletInit,
-  EIP1193Provider
+  EIP1193Provider,
+  ProviderAccounts
 } from '@web3-onboard/common'
-import type { WalletConnectOptions } from './index.js'
+import type { EthereumProvider as LedgerEthereumProvider } from '@ledgerhq/connect-kit-loader'
+import { isHexString, LedgerOptionsWCv2 } from './index.js'
 import type { JQueryStyleEventEmitter } from 'rxjs/internal/observable/fromEvent'
-import { isHexString } from './index.js'
 
 // methods that require user interaction
-const methods = [
+const defaultOptionalMethods = [
   'eth_sendTransaction',
   'eth_signTransaction',
   'personal_sign',
@@ -22,121 +18,95 @@ const methods = [
   'eth_signTypedData_v4'
 ]
 
-function walletConnect(options: WalletConnectOptions): WalletInit {
-  if (options.version !== 2 || !options.projectId) {
+function ledger(options?: LedgerOptionsWCv2): WalletInit {
+  if (!options?.projectId) {
     throw new Error(
       'WalletConnect requires a projectId. Please visit https://cloud.walletconnect.com to get one.'
     )
   }
-  const {
-    projectId,
-    handleUri,
-    requiredChains,
-    optionalChains,
-    qrModalOptions,
-    additionalOptionalMethods,
-    dappUrl
-  } = options
 
   return () => {
     return {
-      label: 'WalletConnect',
+      label: 'Ledger',
       getIcon: async () => (await import('./icon.js')).default,
-      getInterface: async ({ chains, EventEmitter, appMetadata }) => {
-        const { ProviderRpcError, ProviderRpcErrorCode } = await import(
-          '@web3-onboard/common'
-        )
+      getInterface: async ({ chains, EventEmitter }) => {
+        const {
+          loadConnectKit,
+          SupportedProviders,
+          SupportedProviderImplementations
+        } = await import('@ledgerhq/connect-kit-loader')
 
-        const { default: EthereumProvider } = await import(
-          '@walletconnect/ethereum-provider'
-        )
-
-        const { Subject, fromEvent } = await import('rxjs')
-        const { takeUntil, take } = await import('rxjs/operators')
-
-        const getMetaData = (): CoreTypes.Metadata | undefined => {
-          if (!appMetadata) return undefined
-          const url =
-            dappUrl ||
-            appMetadata.explore ||
-            ''
-
-          !url &&
-            !url.length &&
-            console.warn(
-              `It is strongly recommended to supply a dappUrl as it is required by some wallets (i.e. MetaMask) to allow connection.`
-            )
-          const wcMetaData: CoreTypes.Metadata = {
-            name: appMetadata.name,
-            description: appMetadata.description || '',
-            url,
-            icons: []
-          }
-
-          if (appMetadata.icon !== undefined && appMetadata.icon.length) {
-            wcMetaData.icons = [appMetadata.icon]
-          }
-          if (appMetadata.logo !== undefined && appMetadata.logo.length) {
-            wcMetaData.icons = wcMetaData.icons.length
-              ? [...wcMetaData.icons, appMetadata.logo]
-              : [appMetadata.logo]
-          }
-
-          return wcMetaData
+        const connectKit = await loadConnectKit()
+        if (options?.enableDebugLogs) {
+          connectKit.enableDebugLogs()
         }
 
-        // default to mainnet
-        const requiredChainsParsed: number[] =
-          Array.isArray(requiredChains) &&
-          requiredChains.length &&
-          requiredChains.every(num => !isNaN(num))
-            ? // @ts-ignore
-              // Required as WC package does not support hex numbers
-              requiredChains.map(chainID => parseInt(chainID))
-            : [1]
-
-        // Defaults to the chains provided within the web3-onboard init chain property
-        const optionalChainsParsed: number[] =
-          Array.isArray(optionalChains) &&
-          optionalChains.length &&
-          optionalChains.every(num => !isNaN(num))
-            ? // @ts-ignore
-              // Required as WC package does not support hex numbers
-              optionalChains.map(chainID => parseInt(chainID))
-            : chains.map(({ id }) => parseInt(id, 16))
+        // accept both hex and decimal chain ids
+        const requiredChains = options?.requiredChains?.map(id =>
+          typeof id === 'string' && isHexString(id)
+            ? parseInt(id, 16)
+            : (id as number)
+        )
 
         const optionalMethods =
-          additionalOptionalMethods && Array.isArray(additionalOptionalMethods)
-            ? [...additionalOptionalMethods, ...methods]
-            : methods
+          options.optionalMethods && Array.isArray(options.optionalMethods)
+            ? [...options.optionalMethods, ...defaultOptionalMethods]
+            : defaultOptionalMethods
 
-        const connector = await EthereumProvider.init({
-          projectId,
-          chains: requiredChainsParsed, // default to mainnet
-          optionalChains: optionalChainsParsed,
+        const checkSupportResult = connectKit.checkSupport({
+          providerType: SupportedProviders.Ethereum,
+          walletConnectVersion: 2,
+          projectId: options?.projectId,
+          chains: requiredChains,
+          optionalChains: chains.map(({ id }) => parseInt(id, 16)),
+          methods: options?.requiredMethods,
           optionalMethods,
-          showQrModal: true,
+          events: options?.requiredEvents,
+          optionalEvents: options?.optionalEvents,
           rpcMap: chains
             .map(({ id, rpcUrl }) => ({ id, rpcUrl }))
             .reduce((rpcMap: Record<number, string>, { id, rpcUrl }) => {
               rpcMap[parseInt(id, 16)] = rpcUrl || ''
               return rpcMap
-            }, {}),
-          metadata: getMetaData(),
-          qrModalOptions: qrModalOptions
-        } as EthereumProviderOptions)
+            }, {})
+        })
 
+        // get the provider instance, it can be either the Ledger Extension
+        // or WalletConnect
+        const instance =
+          (await connectKit.getProvider()) as LedgerEthereumProvider
+
+        // return the Ledger Extension provider
+        if (
+          checkSupportResult.providerImplementation ===
+          SupportedProviderImplementations.LedgerConnect
+        ) {
+          return {
+            provider: instance
+          }
+        }
+
+        const { ProviderRpcError, ProviderRpcErrorCode } = await import(
+          '@web3-onboard/common'
+        )
+        const { default: EthereumProvider } = await import(
+          '@walletconnect/ethereum-provider'
+        )
+        const { Subject, fromEvent } = await import('rxjs')
+        const { takeUntil, take } = await import('rxjs/operators')
+
+        const connector = instance as unknown as InstanceType<
+          typeof EthereumProvider
+        >
         const emitter = new EventEmitter()
+
         class EthProvider {
           public request: EIP1193Provider['request']
           public connector: InstanceType<typeof EthereumProvider>
           public chains: Chain[]
           public disconnect: EIP1193Provider['disconnect']
-          // @ts-ignore
           public emit: typeof EventEmitter['emit']
-          // @ts-ignore
           public on: typeof EventEmitter['on']
-          // @ts-ignore
           public removeListener: typeof EventEmitter['removeListener']
 
           private disconnected$: InstanceType<typeof Subject>
@@ -160,8 +130,7 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
             fromEvent(this.connector, 'accountsChanged', payload => payload)
               .pipe(takeUntil(this.disconnected$))
               .subscribe({
-                next: payload => {
-                  const accounts = Array.isArray(payload) ? payload : [payload]
+                next: accounts => {
                   this.emit('accountsChanged', accounts)
                 },
                 error: console.warn
@@ -203,23 +172,6 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
 
             this.disconnect = () => {
               if (this.connector.session) this.connector.disconnect()
-            }
-
-            if (options && handleUri) {
-              // listen for uri event
-              fromEvent(
-                this.connector as JQueryStyleEventEmitter<any, string>,
-                'display_uri',
-                (payload: string) => payload
-              )
-                .pipe(takeUntil(this.disconnected$))
-                .subscribe(async uri => {
-                  try {
-                    handleUri && (await handleUri(uri))
-                  } catch (error) {
-                    throw `An error occurred when handling the URI. Error: ${error}`
-                  }
-                })
             }
 
             const checkForSession = () => {
@@ -265,8 +217,7 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
 
                     // Check if connection is already established
                     if (!this.connector.session) {
-                      // create new session
-                      await this.connector.connect().catch(err => {
+                      await instance.request({ method }).catch((err: Error) => {
                         console.error('err creating new session: ', err)
                         reject(
                           new ProviderRpcError({
@@ -337,4 +288,4 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
   }
 }
 
-export default walletConnect
+export default ledger

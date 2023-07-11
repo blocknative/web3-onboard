@@ -1,15 +1,18 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import type { StaticJsonRpcProvider as StaticJsonRpcProviderType } from '@ethersproject/providers'
 import type { UserInfo } from '@uauth/js'
 import type { UauthInitOptions } from './types.js'
-import { validateUauthInitOptions } from './validation.js'
-import {
-  WalletInit,
-  createEIP1193Provider,
-  EIP1193Provider,
+import type { CoreTypes } from '@walletconnect/types'
+import type { EthereumProvider } from '@walletconnect/ethereum-provider'
+import type { EthereumProviderOptions } from '@walletconnect/ethereum-provider/dist/types/EthereumProvider'
+import type { JQueryStyleEventEmitter } from 'rxjs/internal/observable/fromEvent'
+import type {
   Chain,
-  ProviderAccounts
+  ProviderAccounts,
+  WalletInit,
+  EIP1193Provider
 } from '@web3-onboard/common'
+import { validateUauthInitOptions } from './validation.js'
+import { createEIP1193Provider } from '@web3-onboard/common'
 
 const isHexString = (value: string | number) => {
   if (typeof value !== 'string' || !value.match(/^0x[0-9A-Fa-f]*$/)) {
@@ -34,15 +37,17 @@ function uauth(options: UauthInitOptions): WalletInit {
       redirectUri,
       scope = 'openid wallet',
       shouldLoginWithRedirect,
-      bridge = 'https://bridge.walletconnect.org',
-      qrcodeModalOptions,
-      connectFirstChainId
+      walletConnectProjectId,
+      requiredChains,
+      optionalChains,
+      additionalOptionalMethods,
+      handleUri
     } = options || {}
 
     return {
       label: 'Unstoppable',
       getIcon: async () => (await import('./icon.js')).default,
-      getInterface: async ({ chains, EventEmitter }) => {
+      getInterface: async ({ chains, EventEmitter, appMetadata }) => {
         const UAuth = await import('@uauth/js')
         const uauthInstance = new UAuth.default({
           clientID: clientID,
@@ -93,39 +98,97 @@ function uauth(options: UauthInitOptions): WalletInit {
             ((window as any).web3 && (window as any).web3.currentProvider)
           provider = createEIP1193Provider(provider)
         } else if (user.wallet_type_hint === 'walletconnect') {
-          const { StaticJsonRpcProvider } = await import(
-            '@ethersproject/providers'
-          )
-
+          // methods that require user interaction
+          const methods = [
+            'eth_sendTransaction',
+            'eth_signTransaction',
+            'personal_sign',
+            'eth_sign',
+            'eth_signTypedData',
+            'eth_signTypedData_v4'
+          ]
           const { ProviderRpcError, ProviderRpcErrorCode } = await import(
             '@web3-onboard/common'
           )
 
-          const { default: WalletConnect } = await import(
-            '@walletconnect/client'
+          const { default: EthereumProvider } = await import(
+            '@walletconnect/ethereum-provider'
           )
-
-          // This is a cjs module and therefor depending on build tooling
-          // sometimes it will be nested in the { default } object and
-          // other times it will be the actual import
-          let QRCodeModal = (await import('@walletconnect/qrcode-modal'))
-            .default
-
-          // @ts-ignore - TS thinks that there is no default property on the `QRCodeModal` but sometimes there is
-          QRCodeModal = QRCodeModal.default || QRCodeModal
 
           const { Subject, fromEvent } = await import('rxjs')
           const { takeUntil, take } = await import('rxjs/operators')
 
-          const connector = new WalletConnect({
-            bridge
-          })
+          const getMetaData = (): CoreTypes.Metadata | undefined => {
+            if (!appMetadata) return undefined
+            const wcMetaData: CoreTypes.Metadata = {
+              name: appMetadata.name,
+              description: appMetadata.description || '',
+              url: appMetadata.explore || appMetadata.gettingStartedGuide || '',
+              icons: []
+            }
+
+            if (appMetadata.icon !== undefined && appMetadata.icon.length) {
+              wcMetaData.icons = [appMetadata.icon]
+            }
+            if (appMetadata.logo !== undefined && appMetadata.logo.length) {
+              wcMetaData.icons = wcMetaData.icons.length
+                ? [...wcMetaData.icons, appMetadata.logo]
+                : [appMetadata.logo]
+            }
+
+            return wcMetaData
+          }
+
+          // default to mainnet
+          const requiredChainsParsed: number[] =
+            Array.isArray(requiredChains) &&
+            requiredChains.length &&
+            requiredChains.every(num => !isNaN(num))
+              ? // @ts-ignore
+                // Required as WC package does not support hex numbers
+                requiredChains.map(chainID => parseInt(chainID))
+              : [1]
+
+          // Defaults to the chains provided within the web3-onboard init chain property
+          const optionalChainsParsed: number[] =
+            Array.isArray(optionalChains) &&
+            optionalChains.length &&
+            optionalChains.every(num => !isNaN(num))
+              ? // @ts-ignore
+                // Required as WC package does not support hex numbers
+                optionalChains.map(chainID => parseInt(chainID))
+              : chains.map(({ id }) => parseInt(id, 16))
+
+          console.log(
+            optionalChainsParsed,
+            chains.map(({ id }) => parseInt(id, 16))
+          )
+
+          const optionalMethods =
+            additionalOptionalMethods &&
+            Array.isArray(additionalOptionalMethods)
+              ? [...additionalOptionalMethods, ...methods]
+              : methods
+
+          const connector = await EthereumProvider.init({
+            projectId: walletConnectProjectId,
+            chains: requiredChainsParsed, // default to mainnet
+            optionalChains: optionalChainsParsed,
+            optionalMethods,
+            showQrModal: true,
+            rpcMap: chains
+              .map(({ id, rpcUrl }) => ({ id, rpcUrl }))
+              .reduce((rpcMap: Record<number, string>, { id, rpcUrl }) => {
+                rpcMap[parseInt(id, 16)] = rpcUrl || ''
+                return rpcMap
+              }, {}),
+            metadata: getMetaData()
+          } as EthereumProviderOptions)
 
           const emitter = new EventEmitter()
-
           class EthProvider {
             public request: EIP1193Provider['request']
-            public connector: InstanceType<typeof WalletConnect>
+            public connector: InstanceType<typeof EthereumProvider>
             public chains: Chain[]
             public disconnect: EIP1193Provider['disconnect']
             // @ts-ignore
@@ -136,13 +199,12 @@ function uauth(options: UauthInitOptions): WalletInit {
             public removeListener: typeof EventEmitter['removeListener']
 
             private disconnected$: InstanceType<typeof Subject>
-            private providers: Record<string, StaticJsonRpcProviderType>
 
             constructor({
               connector,
               chains
             }: {
-              connector: InstanceType<typeof WalletConnect>
+              connector: InstanceType<typeof EthereumProvider>
               chains: Chain[]
             }) {
               this.emit = emitter.emit.bind(emitter)
@@ -152,21 +214,29 @@ function uauth(options: UauthInitOptions): WalletInit {
               this.connector = connector
               this.chains = chains
               this.disconnected$ = new Subject()
-              this.providers = {}
 
-              // @ts-ignore listen for session updates
-              fromEvent(this.connector, 'session_update', (error, payload) => {
-                if (error) {
-                  throw error
-                }
-
-                return payload
-              })
+              // listen for accountsChanged
+              fromEvent(this.connector, 'accountsChanged', payload => payload)
                 .pipe(takeUntil(this.disconnected$))
                 .subscribe({
-                  next: ({ params }) => {
-                    const [{ accounts, chainId }] = params
+                  next: payload => {
+                    const accounts = Array.isArray(payload)
+                      ? payload
+                      : [payload]
                     this.emit('accountsChanged', accounts)
+                  },
+                  error: console.warn
+                })
+
+              // listen for chainChanged
+              fromEvent(
+                this.connector as JQueryStyleEventEmitter<any, number>,
+                'chainChanged',
+                (payload: number) => payload
+              )
+                .pipe(takeUntil(this.disconnected$))
+                .subscribe({
+                  next: chainId => {
                     const hexChainId = isHexString(chainId)
                       ? chainId
                       : `0x${chainId.toString(16)}`
@@ -175,14 +245,12 @@ function uauth(options: UauthInitOptions): WalletInit {
                   error: console.warn
                 })
 
-              // @ts-ignore listen for disconnect event
-              fromEvent(this.connector, 'disconnect', (error, payload) => {
-                if (error) {
-                  throw error
-                }
-
-                return payload
-              })
+              // listen for disconnect event
+              fromEvent(
+                this.connector as JQueryStyleEventEmitter<any, string>,
+                'session_delete',
+                (payload: string) => payload
+              )
                 .pipe(takeUntil(this.disconnected$))
                 .subscribe({
                   next: () => {
@@ -194,7 +262,35 @@ function uauth(options: UauthInitOptions): WalletInit {
                   error: console.warn
                 })
 
-              this.disconnect = () => this.connector.killSession()
+              this.disconnect = () => {
+                if (this.connector.session) this.connector.disconnect()
+              }
+
+              if (options && handleUri) {
+                // listen for uri event
+                fromEvent(
+                  this.connector as JQueryStyleEventEmitter<any, string>,
+                  'display_uri',
+                  (payload: string) => payload
+                )
+                  .pipe(takeUntil(this.disconnected$))
+                  .subscribe(async uri => {
+                    try {
+                      handleUri && (await handleUri(uri))
+                    } catch (error) {
+                      throw `An error occurred when handling the URI. Error: ${error}`
+                    }
+                  })
+              }
+
+              const checkForSession = () => {
+                const session = this.connector.session
+                if (session) {
+                  this.emit('accountsChanged', this.connector.accounts)
+                  this.emit('chainChanged', this.connector.chainId)
+                }
+              }
+              checkForSession()
 
               this.request = async ({ method, params }) => {
                 if (method === 'eth_chainId') {
@@ -204,61 +300,55 @@ function uauth(options: UauthInitOptions): WalletInit {
                 }
 
                 if (method === 'eth_requestAccounts') {
-                  return new Promise<ProviderAccounts>((resolve, reject) => {
-                    // Check if connection is already established
-                    if (!this.connector.connected) {
-                      // create new session
-                      this.connector
-                        .createSession(
-                          connectFirstChainId
-                            ? { chainId: parseInt(chains[0].id, 16) }
-                            : undefined
-                        )
-                        .then(() => {
-                          QRCodeModal.open(
-                            this.connector.uri,
-                            () =>
-                              reject(
-                                new ProviderRpcError({
-                                  code: 4001,
-                                  message: 'User rejected the request.'
-                                })
-                              ),
-                            qrcodeModalOptions
+                  return new Promise<ProviderAccounts>(
+                    async (resolve, reject) => {
+                      // Subscribe to connection events
+                      fromEvent(
+                        this.connector as JQueryStyleEventEmitter<
+                          any,
+                          { chainId: number }
+                        >,
+                        'connect',
+                        (payload: { chainId: number | string }) => payload
+                      )
+                        .pipe(take(1))
+                        .subscribe({
+                          next: ({ chainId }) => {
+                            this.emit(
+                              'accountsChanged',
+                              this.connector.accounts
+                            )
+                            const hexChainId = isHexString(chainId)
+                              ? chainId
+                              : `0x${chainId.toString(16)}`
+                            this.emit('chainChanged', hexChainId)
+                            resolve(this.connector.accounts)
+                          },
+                          error: reject
+                        })
+
+                      // Check if connection is already established
+                      if (!this.connector.session) {
+                        // create new session
+                        await this.connector.connect().catch(err => {
+                          console.error('err creating new session: ', err)
+                          reject(
+                            new ProviderRpcError({
+                              code: 4001,
+                              message: 'User rejected the request.'
+                            })
                           )
                         })
-                    } else {
-                      const { accounts, chainId } = this.connector.session
-                      const hexChainId = isHexString(chainId)
-                        ? chainId
-                        : `0x${chainId.toString(16)}`
-                      this.emit('chainChanged', hexChainId)
-                      return resolve(accounts)
-                    }
-
-                    // @ts-ignore Subscribe to connection events
-                    fromEvent(this.connector, 'connect', (error, payload) => {
-                      if (error) {
-                        throw error
+                      } else {
+                        // update ethereum provider to load accounts & chainId
+                        const accounts = this.connector.accounts
+                        const chainId = this.connector.chainId
+                        const hexChainId = `0x${chainId.toString(16)}`
+                        this.emit('chainChanged', hexChainId)
+                        return resolve(accounts)
                       }
-
-                      return payload
-                    })
-                      .pipe(take(1))
-                      .subscribe({
-                        next: ({ params }) => {
-                          const [{ accounts, chainId }] = params
-                          this.emit('accountsChanged', accounts)
-                          const hexChainId = isHexString(chainId)
-                            ? chainId
-                            : `0x${chainId.toString(16)}`
-                          this.emit('chainChanged', hexChainId)
-                          QRCodeModal.close()
-                          resolve(accounts)
-                        },
-                        error: reject
-                      })
-                  })
+                    }
+                  )
                 }
 
                 if (method === 'eth_selectAccounts') {
@@ -285,77 +375,27 @@ function uauth(options: UauthInitOptions): WalletInit {
                       message: `The Provider requires a chainId to be passed in as an argument`
                     })
                   }
-                  return this.connector.updateSession({
-                    chainId: chainIdObj.chainId,
-                    accounts: this.connector.accounts
+                  return this.connector.request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [
+                      {
+                        chainId: chainIdObj.chainId
+                      }
+                    ]
                   })
                 }
 
-                // @ts-ignore
-                if (method === 'eth_sendTransaction') {
-                  // @ts-ignore
-                  return this.connector.sendTransaction(params[0])
-                }
-
-                // @ts-ignore
-                if (method === 'eth_signTransaction') {
-                  // @ts-ignore
-                  return this.connector.signTransaction(params[0])
-                }
-
-                // @ts-ignore
-                if (method === 'personal_sign') {
-                  // @ts-ignore
-                  return this.connector.signPersonalMessage(params)
-                }
-
-                // @ts-ignore
-                if (method === 'eth_sign') {
-                  // @ts-ignore
-                  return this.connector.signMessage(params)
-                }
-
-                // @ts-ignore
-                if (method.includes('eth_signTypedData')) {
-                  // @ts-ignore
-                  return this.connector.signTypedData(params)
-                }
-
-                if (method === 'eth_accounts') {
-                  return this.connector.sendCustomRequest({
-                    id: 1337,
-                    jsonrpc: '2.0',
-                    method,
-                    params
-                  })
-                }
-
-                const chainId = await this.request({ method: 'eth_chainId' })
-
-                if (!this.providers[chainId]) {
-                  const currentChain = chains.find(({ id }) => id === chainId)
-
-                  if (!currentChain) {
-                    throw new ProviderRpcError({
-                      code: ProviderRpcErrorCode.CHAIN_NOT_ADDED,
-                      message: `The Provider does not have a rpcUrl to make a request for the requested method: ${method}`
-                    })
-                  }
-
-                  this.providers[chainId] = new StaticJsonRpcProvider(
-                    currentChain.rpcUrl
-                  )
-                }
-
-                return this.providers[chainId].send(
+                return this.connector.request<Promise<any>>({
                   method,
-                  // @ts-ignore
                   params
-                )
+                })
               }
             }
           }
-          provider = new EthProvider({ chains, connector })
+
+          return {
+            provider: new EthProvider({ chains, connector })
+          }
         }
         return {
           provider,
