@@ -2,7 +2,7 @@ import type { WalletInit } from '@web3-onboard/common'
 import { EthereumProviderOptions } from '@walletconnect/ethereum-provider/dist/types/EthereumProvider'
 import v1 from './v1.js'
 import v2 from './v2.js'
-import { validateWCInitOptions } from './validation'
+import { validateWCInitOptions } from './validation.js'
 
 export type WalletConnectOptions = {
   /**
