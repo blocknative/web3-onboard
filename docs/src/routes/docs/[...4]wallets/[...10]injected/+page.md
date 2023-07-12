@@ -335,6 +335,7 @@ const injected = injectedModule({
 - Safeheron - _Desktop_
 - Talisman - _Desktop_
 - OneKey - _Desktop & Mobile_
+- Coin98 Wallet - _Desktop & Mobile_
 
 ## Build Environments
 

@@ -63,7 +63,8 @@ export enum ProviderIdentityFlag {
   DeFiWallet = 'isDeficonnectProvider',
   Safeheron = 'isSafeheron',
   Talisman = 'isTalisman',
-  OneKey = 'isOneKey'
+  OneKey = 'isOneKey',
+  Coin98Wallet = 'isCoin98'
 }
 
 
@@ -85,6 +86,7 @@ export enum ProviderExternalUrl {
   Talisman = 'https://www.talisman.xyz/',
   Trust = 'https://trustwallet.com/download/',
   OneKey = 'https://onekey.so/download/',
+  Coin98Wallet = 'https://coin98.com/wallet/'
 }
 
 export enum ProviderLabel {
@@ -138,7 +140,8 @@ export enum ProviderLabel {
   DeFiWallet = 'DeFi Wallet',
   Safeheron = 'Safeheron',
   Talisman = 'Talisman',
-  OneKey = 'OneKey'
+  OneKey = 'OneKey',
+  Coin98Wallet = 'Coin98 Wallet'
 }
 
 export interface MeetOneProvider extends ExternalProvider {
@@ -171,7 +174,8 @@ export enum InjectedNameSpace {
   DeFiConnectProvider = 'deficonnectProvider',
   Safeheron = 'safeheron',
   Talisman = 'talismanEth',
-  OneKey = '$onekey'
+  OneKey = '$onekey',
+  Coin98Wallet = 'coin98'
 }
 
 export interface CustomWindow extends Window {
@@ -211,6 +215,7 @@ export interface CustomWindow extends Window {
   $onekey: {
     ethereum: InjectedProvider
   }
+  coin98: InjectedProvider
 }
 
 export type InjectedProvider = ExternalProvider &

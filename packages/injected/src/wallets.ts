@@ -801,6 +801,35 @@ const onekey: InjectedWalletModule = {
   externalUrl: ProviderExternalUrl.OneKey
 }
 
+const coin98wallet: InjectedWalletModule = {
+  label: ProviderLabel.Coin98Wallet,
+  injectedNamespace: InjectedNameSpace.Coin98Wallet,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Coin98Wallet],
+  getIcon: async () => (await import('./icons/coin98wallet.js')).default,
+  getInterface: async () => {
+    const ethereumInjectionExists = window.hasOwnProperty(
+      InjectedNameSpace.Ethereum
+    )
+
+    let provider: EIP1193Provider
+
+    // check if coin98 is injected into window.ethereum
+    if (ethereumInjectionExists && window[InjectedNameSpace.Ethereum].isCoin98) {
+      provider = window[InjectedNameSpace.Ethereum]
+    } else {
+      // directly use the window.coin98 injection
+      provider = window[InjectedNameSpace.Coin98Wallet]
+    }
+
+    return {
+      provider
+    }
+  },
+  platforms: ['all'],
+  externalUrl: ProviderExternalUrl.Coin98Wallet
+}
+
 const wallets = [
   zeal,
   exodus,
@@ -850,7 +879,8 @@ const wallets = [
   infinitywallet,
   safeheron,
   talisman,
-  onekey
+  onekey,
+  coin98wallet
 ]
 
 export default wallets
