@@ -9,7 +9,8 @@ function gnosis(options?: GnosisOptions): WalletInit {
     whitelistedDomains = [
       /^https:\/\/gnosis-safe\.io$/,
       /^https:\/\/app\.safe\.global$/,
-      /^https:\/\/safe\.global$/
+      /^https:\/\/safe\.global$/,
+      /^https:\/\/wallet\.ambire\.com(\/.*)?$/
     ]
   } = options || {}
 
