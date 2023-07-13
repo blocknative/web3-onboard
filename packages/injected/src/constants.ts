@@ -28,5 +28,5 @@ export const WALLET_NAMES: { [key: string]: string } = {
   safeheron: 'Safeheron',
   talismanEth: 'Talisman',
   onekey: 'OneKey',
-  fordefi: 'Fordefi',
+  fordefi: 'Fordefi'
 }
