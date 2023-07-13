@@ -64,7 +64,7 @@ export enum ProviderIdentityFlag {
   Safeheron = 'isSafeheron',
   Talisman = 'isTalisman',
   OneKey = 'isOneKey',
-  Fordefi = 'isFordefi',
+  Fordefi = 'isFordefi'
 }
 
 
