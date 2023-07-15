@@ -801,6 +801,18 @@ const onekey: InjectedWalletModule = {
   externalUrl: ProviderExternalUrl.OneKey
 }
 
+const fordefi: InjectedWalletModule = {
+  label: ProviderLabel.Fordefi,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider &&
+    !!provider[ProviderIdentityFlag.Fordefi] &&
+    !otherProviderFlagsExist(ProviderIdentityFlag.Fordefi, provider),
+  getIcon: async () => (await import('./icons/fordefi.js')).default,
+  getInterface: getInjectedInterface(ProviderIdentityFlag.Fordefi, true),
+  platforms: ['desktop']
+}
+
 const coin98wallet: InjectedWalletModule = {
   label: ProviderLabel.Coin98Wallet,
   injectedNamespace: InjectedNameSpace.Coin98Wallet,
@@ -880,6 +892,7 @@ const wallets = [
   safeheron,
   talisman,
   onekey,
+  fordefi,
   coin98wallet
 ]
 

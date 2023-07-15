@@ -64,6 +64,7 @@ export enum ProviderIdentityFlag {
   Safeheron = 'isSafeheron',
   Talisman = 'isTalisman',
   OneKey = 'isOneKey',
+  Fordefi = 'isFordefi',
   Coin98Wallet = 'isCoin98'
 }
 
@@ -141,6 +142,7 @@ export enum ProviderLabel {
   Safeheron = 'Safeheron',
   Talisman = 'Talisman',
   OneKey = 'OneKey',
+  Fordefi = 'Fordefi',
   Coin98Wallet = 'Coin98 Wallet'
 }
 

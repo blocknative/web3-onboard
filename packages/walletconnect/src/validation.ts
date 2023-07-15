@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import type { WalletConnectOptions } from './index'
+import type { WalletConnectOptions } from './index.js'
 
 const wcOptions = Joi.object({
   handleUri: Joi.func().optional(),
