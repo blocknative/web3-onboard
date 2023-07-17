@@ -335,6 +335,7 @@ const injected = injectedModule({
 - Safeheron - _Desktop_
 - Talisman - _Desktop_
 - OneKey - _Desktop & Mobile_
+- Lukso - _Desktop_
 - Fordefi - _Desktop_
 - Ronin Wallet - _Desktop & Mobile_
 
