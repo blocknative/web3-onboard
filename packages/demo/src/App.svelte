@@ -31,6 +31,7 @@
   import bloctoModule from '@web3-onboard/blocto'
   import cedeStoreModule from '@web3-onboard/cede-store'
   import venlyModule from '@web3-onboard/venly'
+  import luksoModule from '@web3-onboard/lukso'
   import {
     recoverAddress,
     arrayify,
@@ -41,7 +42,7 @@
   import { share } from 'rxjs/operators'
   import VConsole from 'vconsole'
   import blocknativeIcon from './blocknative-icon.js'
-  import DappAuth from '@blocto/dappauth';
+  import DappAuth from '@blocto/dappauth'
 
   if (window.innerWidth < 700) {
     new VConsole()
@@ -145,6 +146,7 @@
   const frontier = frontierModule()
   const cedeStore = cedeStoreModule()
   const blocto = bloctoModule()
+  const lukso = luksoModule()
 
   const trezorOptions = {
     email: 'test@test.com',
@@ -193,6 +195,7 @@
       phantom,
       gnosis,
       trust,
+      lukso,
       tallyho,
       enkrypt,
       infinityWallet,

@@ -407,6 +407,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/venly
     steps:
       - node-build-steps
+  build-lukso:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/lukso
+    steps:
+      - node-build-steps
 
   # Build staging/Alpha releases
   build-staging-core:
@@ -647,6 +653,12 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/venly
+    steps:
+      - node-staging-build-steps
+  build-staging-lukso:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/lukso
     steps:
       - node-staging-build-steps
 
@@ -892,4 +904,10 @@ workflows:
       - build-venly:
           <<: *deploy_production_filters
       - build-staging-venly:
+          <<: *deploy_staging_filters
+  lukso:
+    jobs:
+      - build-lukso:
+          <<: *deploy_production_filters
+      - build-staging-lukso:
           <<: *deploy_staging_filters

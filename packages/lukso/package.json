@@ -1,0 +1,66 @@
+{
+  "name": "@web3-onboard/lukso",
+  "version": "1.0.0",
+  "description": "Module for connecting dApps to Web3-Onboard to ease connection",
+  "keywords": [
+    "Ethereum",
+    "Web3",
+    "EVM",
+    "dapp",
+    "Multichain",
+    "Lukso",
+    "Universal Profile",
+    "Wallet",
+    "Transaction",
+    "Provider",
+    "Hardware Wallet",
+    "Notifications",
+    "React",
+    "Svelte",
+    "Vue",
+    "Next",
+    "Nuxt",
+    "MetaMask",
+    "Coinbase",
+    "WalletConnect",
+    "Ledger",
+    "Trezor",
+    "Connect Wallet",
+    "Ethereum Hooks",
+    "Blocknative",
+    "Mempool",
+    "pending",
+    "confirmed",
+    "Injected Wallet",
+    "Crypto",
+    "Crypto Wallet",
+    "Phantom"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blocknative/web3-onboard.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://onboard.blocknative.com",
+  "bugs": "https://github.com/blocknative/web3-onboard/issues",
+  "module": "dist/index.js",
+  "browser": "dist/index.js",
+  "main": "dist/index.js",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w",
+    "type-check": "tsc --noEmit"
+  },
+  "author": "lukso",
+  "license": "MIT",
+  "dependencies": {
+    "@web3-onboard/common": "^2.3.3"
+  },
+  "devDependencies": {
+    "typescript": "^5.1.6"
+  }
+}

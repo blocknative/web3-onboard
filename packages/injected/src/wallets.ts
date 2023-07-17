@@ -825,6 +825,43 @@ const fordefi: InjectedWalletModule = {
   platforms: ['desktop']
 }
 
+const lukso: InjectedWalletModule = {
+  label: ProviderLabel.Lukso,
+  injectedNamespace: InjectedNameSpace.Lukso,
+  checkProviderIdentity: ({ provider }) =>
+    (!!provider &&
+      !!provider[InjectedNameSpace.Lukso] &&
+      !!provider[InjectedNameSpace.Lukso][ProviderIdentityFlag.Lukso]) ||
+    (!!provider &&
+      !!provider[InjectedNameSpace.Ethereum] &&
+      !!provider[InjectedNameSpace.Lukso][ProviderIdentityFlag.Lukso]),
+  getIcon: async () => (await import('./icons/lukso.js')).default,
+  getInterface: async () => {
+    const ethereumInjectionExists = window.hasOwnProperty(
+      InjectedNameSpace.Ethereum
+    )
+
+    let provider: EIP1193Provider
+
+    // check if trust is injected into window.ethereum
+    if (
+      ethereumInjectionExists &&
+      window[InjectedNameSpace.Ethereum][ProviderIdentityFlag.Lukso]
+    ) {
+      provider = window[InjectedNameSpace.Ethereum]
+    } else {
+      // directly use the window.lukso.ethereum injection
+      provider = window[InjectedNameSpace.Lukso]
+    }
+
+    return {
+      provider
+    }
+  },
+  platforms: ['all'],
+  externalUrl: ProviderExternalUrl.Lukso
+}
+
 const wallets = [
   zeal,
   exodus,
@@ -876,7 +913,8 @@ const wallets = [
   talisman,
   onekey,
   fordefi,
-  ronin
+  ronin,
+  lukso
 ]
 
 export default wallets
