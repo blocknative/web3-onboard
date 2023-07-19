@@ -115,7 +115,7 @@ const intiOnboard = async (theme) => {
   })
 
   return Onboard({
-    connect:{autoConnectAllPreviousWallet: true},
+    connect:  { autoConnectAllPreviousWallet: true },
     wallets: [
       injected,
       walletConnect,
