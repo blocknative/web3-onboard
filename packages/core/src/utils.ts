@@ -128,7 +128,8 @@ export const chainIdToLabel: Record<string, string> = {
   '0x14a33': 'Base Goerli',
   '0x64': 'Gnosis',
   '0x63564C40': 'Harmony One',
-  '0xa4b1': 'Arbitrum'
+  '0xa4b1': 'Arbitrum',
+  '0x7e4': 'Ronin'
 }
 
 export const networkToChainId: Record<string, ChainId> = {
