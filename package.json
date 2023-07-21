@@ -1,6 +1,6 @@
 {
   "name": "web3-onboard-monorepo",
-  "version": "2.24.1",
+  "version": "2.24.5",
   "private": true,
   "workspaces": {
     "packages": [

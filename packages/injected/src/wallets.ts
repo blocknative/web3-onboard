@@ -607,7 +607,8 @@ const bitkeep: InjectedWalletModule = {
   getInterface: async () => ({
     provider: window.bitkeep && window.bitkeep.ethereum
   }),
-  platforms: ['all']
+  platforms: ['all'],
+  externalUrl: ProviderExternalUrl.BitKeep
 }
 
 const sequence: InjectedWalletModule = {
@@ -800,6 +801,18 @@ const onekey: InjectedWalletModule = {
   externalUrl: ProviderExternalUrl.OneKey
 }
 
+const fordefi: InjectedWalletModule = {
+  label: ProviderLabel.Fordefi,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider &&
+    !!provider[ProviderIdentityFlag.Fordefi] &&
+    !otherProviderFlagsExist(ProviderIdentityFlag.Fordefi, provider),
+  getIcon: async () => (await import('./icons/fordefi.js')).default,
+  getInterface: getInjectedInterface(ProviderIdentityFlag.Fordefi, true),
+  platforms: ['desktop']
+}
+
 const wallets = [
   zeal,
   exodus,
@@ -849,7 +862,8 @@ const wallets = [
   infinitywallet,
   safeheron,
   talisman,
-  onekey
+  onekey,
+  fordefi
 ]
 
 export default wallets

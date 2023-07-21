@@ -179,7 +179,7 @@ export interface AppState {
   locale: Locale
   notify: Notify
   notifications: Notification[]
-  connect: ConnectModalOptions,
+  connect: ConnectModalOptions
   appMetadata: AppMetadata
 }
 
@@ -243,6 +243,16 @@ export type ConnectModalOptions = {
    * metamask-wont-connect-web3-wallet-troubleshooting`
    */
   wheresMyWalletLink?: string
+  /**
+   * Hide the "Where is my wallet?" link notice displayed in the connect modal
+   * at the bottom of the wallets list
+   */
+  removeWhereIsMyWalletWarning?: boolean
+  /**
+   * Hide the "I don't have a wallet" link displayed 
+   * on the left panel of the connect modal
+   */
+  removeIDontHaveAWalletInfoLink?: boolean
   /**
    * @deprecated Has no effect unless `@web3-onboard/unstoppable-resolution`
    * package has been added and passed into the web3-onboard initialization
@@ -429,7 +439,7 @@ export type Action =
   | AddNotificationAction
   | RemoveNotificationAction
   | UpdateAllWalletsAction
-  | UpdateConnectModalAction 
+  | UpdateConnectModalAction
   | UpdateAppMetadataAction
 
 export type AddChainsAction = { type: 'add_chains'; payload: Chain[] }

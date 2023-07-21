@@ -21,7 +21,7 @@ jobs:
           STATE: ${{ github.event.issue.state }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
           TITLE: ${{ github.event.issue.title }}
-          FLAG: Next Sprint
+          FLAG: Next Sprint,Github
           DATABASE_NAME: Product
           STATUS: Backlog
           # Product Work Board

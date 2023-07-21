@@ -63,7 +63,8 @@ export enum ProviderIdentityFlag {
   DeFiWallet = 'isDeficonnectProvider',
   Safeheron = 'isSafeheron',
   Talisman = 'isTalisman',
-  OneKey = 'isOneKey'
+  OneKey = 'isOneKey',
+  Fordefi = 'isFordefi'
 }
 
 
@@ -77,6 +78,7 @@ export enum ProviderIdentityFlag {
  */
 export enum ProviderExternalUrl {
   Binance = 'https://www.bnbchain.org/ru/blog/binance-extension-wallet/',
+  BitKeep = 'https://bitkeep.com/en/download?type=0',  
   Coinbase = 'https://www.coinbase.com/wallet/downloads',
   MetaMask = 'https://metamask.io/download/',
   OKXWallet = 'https://okx.com/download',
@@ -137,7 +139,8 @@ export enum ProviderLabel {
   DeFiWallet = 'DeFi Wallet',
   Safeheron = 'Safeheron',
   Talisman = 'Talisman',
-  OneKey = 'OneKey'
+  OneKey = 'OneKey',
+  Fordefi = 'Fordefi',
 }
 
 export interface MeetOneProvider extends ExternalProvider {
