@@ -150,7 +150,7 @@ We recommend you add the [Core Repo](../../modules/core.md#install) and consider
 
 - [Coinbase](../../wallets/coinbase.md#install)
 - [WalletConnect](../../wallets/walletconnect.md#install)
-- [Gnosis](../../wallets/gnosis.md#install)
+- [Safe](../../wallets/gnosis.md#install)
 - [Magic](../../wallets/magic.md#login-options)
 - [Fortmatic](../../wallets/fortmatic.md#install)
 - [MEW](../../wallets/mewwallet.md#install)

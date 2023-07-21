@@ -90,7 +90,7 @@ For full documentation, check out the README.md for each package or the [docs pa
 - [Coinbase](packages/coinbase/README.md)
 - [Trust](packages/trust/README.md)
 - [WalletConnect](packages/walletconnect/README.md)
-- [Gnosis](packages/gnosis/README.md)
+- [Safe](packages/gnosis/README.md)
 - [Magic](packages/magic/README.md)
 - [Fortmatic](packages/fortmatic/README.md)
 - [Portis](packages/portis/README.md)
