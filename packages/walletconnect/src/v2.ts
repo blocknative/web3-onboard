@@ -93,7 +93,7 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
             ? // @ts-ignore
               // Required as WC package does not support hex numbers
               requiredChains.map(chainID => parseInt(chainID))
-            : [1]
+            : []
 
         // Defaults to the chains provided within the web3-onboard init chain property
         const optionalChainsParsed: number[] =

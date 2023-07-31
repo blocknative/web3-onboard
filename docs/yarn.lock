@@ -4543,10 +4543,10 @@
     ethers "5.5.4"
     joi "17.9.1"
 
-"@web3-onboard/core@^2.20.4":
-  version "2.20.4"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.20.4.tgz#ccc9ff509e56720e526b4ceae5459a1f2a435d22"
-  integrity sha512-IFI3DVq5QgFj5w1TyL61gHmeOlkX8AJiBAARO3cd4zW8I3h9K2+7HeE7LbsfwefZYLILzXCfF0gMB3qRN/GWYQ==
+"@web3-onboard/core@^2.20.5-alpha.1":
+  version "2.20.5-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.20.5-alpha.1.tgz#823799c7dc0127bec1f38c3781acb2aa1d303da5"
+  integrity sha512-BcjPvkgY+Ybql9DCjkyfRSIGFd32AHQTdAqyrBbii+ljT1tZdnhjaXOJm3uncuCvWCdTo8rvqZDoIfIDR5AmuA==
   dependencies:
     "@web3-onboard/common" "^2.3.3"
     bignumber.js "^9.0.0"
@@ -4588,10 +4588,10 @@
     "@web3-onboard/common" "^2.3.3"
     fortmatic "^2.2.1"
 
-"@web3-onboard/frame@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/frame/-/frame-2.0.1.tgz#10cb9ff190b69789c523d5a3a6a4df1b8428f9c8"
-  integrity sha512-oWhhNjS2vIg3l3HC7rS6bcQ9F8nief3atZwPDnT4FDkRZHCht9pNr4tAD428LEahJa3NWZQD63MdtVzIV/8C3g==
+"@web3-onboard/frame@^2.0.2-alpha.1":
+  version "2.0.2-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/frame/-/frame-2.0.2-alpha.1.tgz#952ebdf460b7f8ed0043e2265089588f5f6760ad"
+  integrity sha512-rgUVateHp9kGE1RPb/e641tTSHq4I0Cc3h/T9388QxsUDAwV2xsZbnokAPOJYv0rbIxC8XIkWFGF5wTdNTatew==
   dependencies:
     "@web3-onboard/common" "^2.3.3"
     eth-provider "^0.13.6"
