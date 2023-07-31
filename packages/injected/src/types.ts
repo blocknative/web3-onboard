@@ -111,7 +111,7 @@ export enum ProviderLabel {
   InfinityWallet = 'Infinity Wallet',
   Liquality = 'Liquality',
   MeetOne = 'MeetOne',
-  MetaMask = 'MetaMask', 
+  MetaMask = 'MetaMask',
   MyKey = 'MyKey',
   Opera = 'Opera Wallet',
   OwnBit = 'OwnBit',
