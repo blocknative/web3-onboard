@@ -244,9 +244,15 @@ export type ConnectModalOptions = {
    */
   wheresMyWalletLink?: string
   /**
-   * Hide the where is my wallet link notice displayed in the connect modal
+   * Hide the "Where is my wallet?" link notice displayed in the connect modal
+   * at the bottom of the wallets list
    */
   removeWhereIsMyWalletWarning?: boolean
+  /**
+   * Hide the "I don't have a wallet" link displayed 
+   * on the left panel of the connect modal
+   */
+  removeIDontHaveAWalletInfoLink?: boolean
   /**
    * @deprecated Has no effect unless `@web3-onboard/unstoppable-resolution`
    * package has been added and passed into the web3-onboard initialization
