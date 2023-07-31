@@ -164,7 +164,7 @@
       gap: 1rem;
     }
     .indicators {
-      margin-bottom: .25rem;
+      margin-bottom: 0.25rem;
     }
   }
 </style>
@@ -207,16 +207,19 @@
         default: paragraph
       })}
     </div>
-    <a
-      href={connect.iDontHaveAWalletLink ||
-        'https://ethereum.org/en/wallets/find-wallet/#main-content'}
-      target="_blank"
-      rel="noreferrer noopener"
-      class="no-link"
-      >{$_('connect.selectingWallet.sidebar.IDontHaveAWallet', {
-        default: en.connect.selectingWallet.sidebar.IDontHaveAWallet
-      })} <div class="info-icon">{@html infoIcon}</div></a
-    >
+    {#if !connect.removeIDontHaveAWalletInfoLink}
+      <a
+        href={connect.iDontHaveAWalletLink ||
+          'https://ethereum.org/en/wallets/find-wallet/#main-content'}
+        target="_blank"
+        rel="noreferrer noopener"
+        class="no-link"
+        >{$_('connect.selectingWallet.sidebar.IDontHaveAWallet', {
+          default: en.connect.selectingWallet.sidebar.IDontHaveAWallet
+        })}
+        <div class="info-icon">{@html infoIcon}</div></a
+      >
+    {/if}
     {#if windowWidth < MOBILE_WINDOW_WIDTH}
       <div class="indicators flex items-center">
         <div class="indicator relative" class:on={true} />
@@ -258,9 +261,7 @@
         class:active={step !== 'selectingWallet'}
         class="join relative"
         style={`right: 2px; ${
-          step !== 'selectingWallet'
-            ? 'width: 78px;'
-            : 'width: 82px;'
+          step !== 'selectingWallet' ? 'width: 78px;' : 'width: 82px;'
         }`}
       />
       <div
@@ -272,9 +273,7 @@
         class:active={step === 'connectedWallet'}
         class="join relative"
         style={`right: 6px; ${
-          step === 'connectedWallet'
-            ? 'width: 74px;'
-            : 'width: 81px;'
+          step === 'connectedWallet' ? 'width: 74px;' : 'width: 81px;'
         }`}
       />
       <div
