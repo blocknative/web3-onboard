@@ -4,7 +4,7 @@ function lukso(): WalletInit {
   if (typeof window === 'undefined') return () => null
   return () => {
     return {
-      label: 'Lukso',
+      label: 'Universal Profiles',
       getIcon: async () => (await import('./icon.js')).default,
       getInterface: async () => {
         if ('ethereum' in window) {
@@ -12,7 +12,7 @@ function lukso(): WalletInit {
 
           if (
             'ethereum' in anyWindow &&
-            anyWindow.ethereum.isUniversalProfileExtension
+            anyWindow?.ethereum?.isUniversalProfileExtension
           ) {
             return {
               provider: createEIP1193Provider(anyWindow.ethereum)
@@ -26,9 +26,12 @@ function lukso(): WalletInit {
             provider: createEIP1193Provider(anyWindow.lukso)
           }
         }
-        window.open('https://lukso.network', '_blank')
+        window.open(
+          'https://chrome.google.com/webstore/detail/universal-profiles/abpickdkkbnbcoepogfhkhennhfhehfn?hl=en',
+          '_blank'
+        )
         throw new Error(
-          'Please install Lukso Universal Profile before proceeding'
+          'Please install LUKSO Universal Profile before proceeding'
         )
       },
       platforms: ['all']

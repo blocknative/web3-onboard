@@ -64,8 +64,8 @@ export enum ProviderIdentityFlag {
   Safeheron = 'isSafeheron',
   Talisman = 'isTalisman',
   OneKey = 'isOneKey',
-  Fordefi = 'isFordefi',
-  Lukso = 'isUniversalProfileExtension'
+  LUKSO = 'isUniversalProfileExtension',
+  Fordefi = 'isFordefi'
 }
 
 /**
@@ -87,7 +87,7 @@ export enum ProviderExternalUrl {
   Trust = 'https://trustwallet.com/download/',
   OneKey = 'https://onekey.so/download/',
   RoninWallet = 'https://wallet.skymavis.com/',
-  Lukso = 'https://lukso.network'
+  LUKSO = 'https://lukso.network'
 }
 
 export enum ProviderLabel {
@@ -142,9 +142,8 @@ export enum ProviderLabel {
   Safeheron = 'Safeheron',
   Talisman = 'Talisman',
   OneKey = 'OneKey',
-  Fordefi = 'Fordefi',
-  RoninWallet = 'Ronin Wallet',
-  Lukso = 'Lukso UP'
+  LUKSO = 'Universal Profiles',
+  Fordefi = 'Fordefi'
 }
 
 export interface MeetOneProvider extends ExternalProvider {
@@ -178,8 +177,7 @@ export enum InjectedNameSpace {
   Safeheron = 'safeheron',
   Talisman = 'talismanEth',
   OneKey = '$onekey',
-  RoninWallet = 'ronin',
-  Lukso = 'lukso'
+  LUKSO = 'lukso'
 }
 
 export interface CustomWindow extends Window {

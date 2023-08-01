@@ -826,15 +826,15 @@ const fordefi: InjectedWalletModule = {
 }
 
 const lukso: InjectedWalletModule = {
-  label: ProviderLabel.Lukso,
-  injectedNamespace: InjectedNameSpace.Lukso,
+  label: ProviderLabel.LUKSO,
+  injectedNamespace: InjectedNameSpace.LUKSO,
   checkProviderIdentity: ({ provider }) =>
     (!!provider &&
-      !!provider[InjectedNameSpace.Lukso] &&
-      !!provider[InjectedNameSpace.Lukso][ProviderIdentityFlag.Lukso]) ||
+      !!provider[InjectedNameSpace.LUKSO] &&
+      !!provider[InjectedNameSpace.LUKSO][ProviderIdentityFlag.LUKSO]) ||
     (!!provider &&
       !!provider[InjectedNameSpace.Ethereum] &&
-      !!provider[InjectedNameSpace.Lukso][ProviderIdentityFlag.Lukso]),
+      !!provider[InjectedNameSpace.LUKSO][ProviderIdentityFlag.LUKSO]),
   getIcon: async () => (await import('./icons/lukso.js')).default,
   getInterface: async () => {
     const ethereumInjectionExists = window.hasOwnProperty(
@@ -846,12 +846,12 @@ const lukso: InjectedWalletModule = {
     // check if trust is injected into window.ethereum
     if (
       ethereumInjectionExists &&
-      window[InjectedNameSpace.Ethereum][ProviderIdentityFlag.Lukso]
+      window[InjectedNameSpace.Ethereum][ProviderIdentityFlag.LUKSO]
     ) {
       provider = window[InjectedNameSpace.Ethereum]
     } else {
       // directly use the window.lukso.ethereum injection
-      provider = window[InjectedNameSpace.Lukso]
+      provider = window[InjectedNameSpace.LUKSO]
     }
 
     return {
@@ -859,7 +859,7 @@ const lukso: InjectedWalletModule = {
     }
   },
   platforms: ['all'],
-  externalUrl: ProviderExternalUrl.Lukso
+  externalUrl: ProviderExternalUrl.LUKSO
 }
 
 const wallets = [

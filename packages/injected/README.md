@@ -84,7 +84,7 @@ console.log(connectedWallets)
 - BifrostWallet - _Desktop & Mobile_
 - Safeheron - _Desktop_
 - Talisman - _Desktop_
-- Lukso Universal Profiles - _Desktop_
+- Universal Profiles - _Desktop_
 
 ## Filtering Wallets
 
