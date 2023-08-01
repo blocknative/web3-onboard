@@ -87,7 +87,7 @@ export enum ProviderExternalUrl {
   Trust = 'https://trustwallet.com/download/',
   OneKey = 'https://onekey.so/download/',
   RoninWallet = 'https://wallet.skymavis.com/',
-  LUKSO = 'https://lukso.network'
+  LUKSO = 'https://chrome.google.com/webstore/detail/universal-profiles/abpickdkkbnbcoepogfhkhennhfhehfn?hl=en'
 }
 
 export enum ProviderLabel {
