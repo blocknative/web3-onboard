@@ -148,24 +148,25 @@ We recommend you add the [Core Repo](../../modules/core.md#install) and consider
 
 **SDK Wallets**
 
+- [Arcana Auth](../../wallets/arcana.md#install)
+- [Blocto](../../docs/wallets/blocto.md#install)
 - [Coinbase](../../wallets/coinbase.md#install)
-- [WalletConnect](../../wallets/walletconnect.md#install)
+- [Fortmatic](../../wallets/fortmatic.md#install)
+- [Frame](../../wallets/frame.md#install)
 - [Gnosis](../../wallets/gnosis.md#install)
 - [Magic](../../wallets/magic.md#login-options)
-- [Fortmatic](../../wallets/fortmatic.md#install)
 - [MEW](../../wallets/mewwallet.md#install)
 - [Portis](../../wallets/portis.md#install)
 - [Web3Auth](../../wallets/web3auth.md#install)
-- [Frame](../../wallets/frame.md#install)
-- [Blocto](../../docs/wallets/blocto.md#install)
+- [WalletConnect](../../wallets/walletconnect.md#install)
 
 **Hardware Wallets**
 
-- [Ledger](../../wallets/ledger.md#install)
-- [Trezor](../../wallets/trezor.md#install)
+- [D'cent](../../wallets/dcent.md#install)
 - [Keystone](../../wallets/keystone.md#install)
 - [KeepKey](../../wallets/keepkey.md#install)
-- [D'cent](../../wallets/dcent.md#install)
+- [Ledger](../../wallets/ledger.md#install)
+- [Trezor](../../wallets/trezor.md#install)
 
 **Frameworks**
 
