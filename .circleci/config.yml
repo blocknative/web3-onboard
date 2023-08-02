@@ -23,7 +23,7 @@ aliases:
   - &deploy_staging_filters
     filters:
       branches:
-        only: arcana-build-fix
+        only: develop
 
   - &test_package_version_for_alpha_tag_break_false
     run:
