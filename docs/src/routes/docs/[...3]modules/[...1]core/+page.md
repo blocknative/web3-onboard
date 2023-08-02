@@ -287,7 +287,7 @@ type ConnectModalOptions = {
    */
   removeWhereIsMyWalletWarning?: boolean
   /**
-   * Hide the "I don't have a wallet" link displayed 
+   * Hide the "I don't have a wallet" link displayed
    * on the left panel of the connect modal
    */
   removeIDontHaveAWalletInfoLink?: boolean
@@ -634,16 +634,22 @@ const onboard = Onboard({
       rpcUrl: 'https://rpc.sepolia.org/'
     },
     {
+      id: '0x89',
+      token: 'MATIC',
+      label: 'Matic',
+      rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+    },
+    {
+      id: '0x2105',
+      token: 'ETH',
+      label: 'Base',
+      rpcUrl: 'https://mainnet.base.org'
+    },
+    {
       id: '0x38',
       token: 'BNB',
       label: 'Binance Smart Chain',
       rpcUrl: 'https://bsc-dataseed.binance.org/'
-    },
-    {
-      id: '0x89',
-      token: 'MATIC',
-      label: 'Matic Mainnet',
-      rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
     },
     {
       id: 10,
@@ -656,12 +662,6 @@ const onboard = Onboard({
       token: 'ARB-ETH',
       label: 'Arbitrum',
       rpcUrl: 'https://rpc.ankr.com/arbitrum'
-    },
-    {
-      id: 84531,
-      token: 'ETH',
-      label: 'Base Goerli',
-      rpcUrl: 'https://goerli.base.org'
     }
   ],
   appMetadata: {
