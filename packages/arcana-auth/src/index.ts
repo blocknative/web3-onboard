@@ -17,6 +17,7 @@ export default function (opts: {
       const instance = new AuthProvider(opts.clientID, opts.params)
       await instance.init()
       return new Promise((resolve, reject) => {
+        // @ts-ignore
         instance.provider.once('connect', () => {
           resolve({
             provider: createEIP1193Provider(instance.provider),
