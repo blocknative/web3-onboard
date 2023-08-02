@@ -898,7 +898,7 @@ workflows:
       - build-arcana-auth:
           <<: *deploy_production_filters
       - build-staging-arcana-auth:
-        <<: *deploy_staging_filters
+          <<: *deploy_staging_filters
   blocto:
     jobs:
       - build-blocto:
