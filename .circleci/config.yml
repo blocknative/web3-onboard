@@ -395,6 +395,10 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/cede-store
     steps:
       - node-build-steps
+  build-arcana-auth:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/arcana-auth
   build-blocto:
     docker:
       - image: cimg/node:16.13.1
@@ -637,6 +641,10 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/cede-store
     steps:
       - node-staging-build-steps
+  build-staging-arcana-auth:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/arcana-auth
   build-staging-blocto:
     docker:
       - image: cimg/node:16.13.1
@@ -880,6 +888,12 @@ workflows:
       - build-cede-store:
           <<: *deploy_production_filters
       - build-staging-cede-store:
+          <<: *deploy_staging_filters
+  arcana-auth:
+    jobs:
+      - build-arcana-auth:
+          <<: *deploy_production_filters
+      - build-staging-arcana-auth:
           <<: *deploy_staging_filters
   blocto:
     jobs:
