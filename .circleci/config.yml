@@ -898,7 +898,7 @@ workflows:
       - build-blocto:
           <<: *deploy_production_filters
       - build-staging-blocto:
-        <<: *deploy_staging_filters
+          <<: *deploy_staging_filters
   venly:
     jobs:
       - build-venly:
