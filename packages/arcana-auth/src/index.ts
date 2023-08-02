@@ -1,5 +1,5 @@
 import { createEIP1193Provider, WalletInit } from '@web3-onboard/common'
-import icon from './icon'
+import icon from './icon.js'
 import type { ConstructorParams } from '@arcana/auth/types'
 
 export default function (opts: {
