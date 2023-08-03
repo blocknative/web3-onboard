@@ -56,6 +56,7 @@ const intiOnboard = async (theme) => {
   const { default: arcanaModule } = await import('@web3-onboard/arcana-auth')
   const { default: bloctoModule } = await import('@web3-onboard/blocto')
   const { default: venlyModule } = await import('@web3-onboard/venly')
+  const { default: luksoModule } = await import('@web3-onboard/lukso')
   const INFURA_ID = '8b60d52405694345a99bcb82e722e0af'
 
   const injected = injectedModule()
@@ -63,6 +64,7 @@ const intiOnboard = async (theme) => {
   const arcanaWallet = arcanaModule({
     clientID: 'xar_test_c9c3bc702eb13255c58dab0e74cfa859711c13cb'
   })
+  const lukso = luksoModule()
   const coinbase = coinbaseModule()
   const dcent = dcentModule()
   const walletConnect = walletConnectModule({
@@ -119,7 +121,7 @@ const intiOnboard = async (theme) => {
   })
 
   return Onboard({
-    connect:  { autoConnectAllPreviousWallet: true },
+    connect: { autoConnectAllPreviousWallet: true },
     wallets: [
       injected,
       walletConnect,
@@ -145,7 +147,8 @@ const intiOnboard = async (theme) => {
       portis,
       frame,
       infinityWallet,
-      blocto
+      blocto,
+      lukso
       // venly
     ],
     chains: [
