@@ -17,8 +17,14 @@ const polygonMainnet = {
   label: 'Polygon',
   rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
 }
+const baseMainnet = {
+  id: '0x2105',
+  token: 'ETH',
+  label: 'Base',
+  rpcUrl: 'https://mainnet.base.org'
+}
 
-const chains = [ethereumRopsten, polygonMainnet]
+const chains = [ethereumRopsten, polygonMainnet, baseMainnet]
 const wallets = [injectedModule()]
 
 const web3Onboard = init({

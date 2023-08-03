@@ -125,6 +125,7 @@ export const chainIdToLabel: Record<string, string> = {
   '0x45': 'Optimism Kovan',
   '0xa86a': 'Avalanche',
   '0xa4ec': 'Celo',
+  '0x2105': 'Base',
   '0x14a33': 'Base Goerli',
   '0x64': 'Gnosis',
   '0x63564C40': 'Harmony One',
@@ -208,6 +209,10 @@ export const chainStyles: Record<string, ChainStyle> = {
   '0xa4b1': {
     icon: arbitrumIcon,
     color: '#33394B'
+  },
+  '0x2105': {
+    icon: baseIcon,
+    color: '#0259F9'
   },
   '0x14a33': {
     icon: baseIcon,
