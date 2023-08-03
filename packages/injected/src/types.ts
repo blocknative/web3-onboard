@@ -177,6 +177,7 @@ export enum InjectedNameSpace {
   Safeheron = 'safeheron',
   Talisman = 'talismanEth',
   OneKey = '$onekey',
+  RoninWallet = 'ronin',
   LUKSO = 'lukso'
 }
 
