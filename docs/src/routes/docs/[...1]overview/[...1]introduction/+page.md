@@ -37,9 +37,7 @@ web3-onboard supports all EVM networks. Supporting a new network is simply a mat
 
 - Ethereum
 - Polygon
-- Base Goerli
-- Goerli
-- Sepolia
+- Base
 - Arbitrum
 - Optimism
 - Avalanche
@@ -49,6 +47,9 @@ web3-onboard supports all EVM networks. Supporting a new network is simply a mat
 - Gnosis Chain
 - Harmony One
 - Moonriver
+- Goerli
+- Sepolia
+- Base Goerli
 - All other EVM network
 
 ### Optional - Use an API key to fetch real time transaction data, balances & gas
