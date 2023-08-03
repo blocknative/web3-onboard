@@ -119,7 +119,7 @@ const intiOnboard = async (theme) => {
   })
 
   return Onboard({
-    connect:  { autoConnectAllPreviousWallet: true },
+    connect: { autoConnectAllPreviousWallet: true },
     wallets: [
       injected,
       walletConnect,
@@ -177,22 +177,22 @@ const intiOnboard = async (theme) => {
         rpcUrl: 'https://rpc.sepolia.org/'
       },
       {
-        id: '0x13881',
-        token: 'MATIC',
-        label: 'Polygon - Mumbai',
-        rpcUrl: 'https://matic-mumbai.chainstacklabs.com'
-      },
-      {
-        id: '0x38',
-        token: 'BNB',
-        label: 'Binance',
-        rpcUrl: 'https://bsc-dataseed.binance.org/'
+        id: '0x2105',
+        token: 'ETH',
+        label: 'Base',
+        rpcUrl: 'https://mainnet.base.org'
       },
       {
         id: '0x89',
         token: 'MATIC',
         label: 'Polygon',
         rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+      },
+      {
+        id: '0x38',
+        token: 'BNB',
+        label: 'Binance',
+        rpcUrl: 'https://bsc-dataseed.binance.org/'
       },
       {
         id: '0xfa',
@@ -211,12 +211,6 @@ const intiOnboard = async (theme) => {
         token: 'ARB-ETH',
         label: 'Arbitrum',
         rpcUrl: 'https://rpc.ankr.com/arbitrum'
-      },
-      {
-        id: 84531,
-        token: 'ETH',
-        label: 'Base Goerli',
-        rpcUrl: 'https://goerli.base.org'
       }
     ],
     appMetadata: {
