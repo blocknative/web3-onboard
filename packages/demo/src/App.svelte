@@ -42,7 +42,7 @@
   import { share } from 'rxjs/operators'
   import VConsole from 'vconsole'
   import blocknativeIcon from './blocknative-icon.js'
-  import DappAuth from '@blocto/dappauth';
+  import DappAuth from '@blocto/dappauth'
 
   if (window.innerWidth < 700) {
     new VConsole()
@@ -260,6 +260,12 @@
         token: 'MATIC',
         label: 'Polygon - Mumbai',
         rpcUrl: 'https://matic-mumbai.chainstacklabs.com	'
+      },
+      {
+        id: '0x2105',
+        token: 'ETH',
+        label: 'Base',
+        rpcUrl: 'https://mainnet.base.org'
       },
       {
         id: '0x38',

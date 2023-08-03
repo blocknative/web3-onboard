@@ -24,7 +24,9 @@ const injected = injectedModule()
 
 // Only one RPC endpoint required per chain
 const rpcAPIKey = '<INFURA_KEY>' || '<ALCHEMY_KEY>'
-const rpcUrl = `https://eth-mainnet.g.alchemy.com/v2/${rpcAPIKey}` || `https://mainnet.infura.io/v3/${rpcAPIKey}`
+const rpcUrl =
+  `https://eth-mainnet.g.alchemy.com/v2/${rpcAPIKey}` ||
+  `https://mainnet.infura.io/v3/${rpcAPIKey}`
 
 const web3Onboard = init({
   wallets: [injected],
@@ -34,6 +36,12 @@ const web3Onboard = init({
       token: 'ETH',
       label: 'Ethereum Mainnet',
       rpcUrl
+    },
+    {
+      id: '0x2105',
+      token: 'ETH',
+      label: 'Base',
+      rpcUrl: 'https://mainnet.base.org'
     }
   ]
 })
