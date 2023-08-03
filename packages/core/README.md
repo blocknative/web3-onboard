@@ -253,7 +253,7 @@ type ConnectModalOptions = {
    */
   removeWhereIsMyWalletWarning?: boolean
   /**
-   * Hide the "I don't have a wallet" link displayed 
+   * Hide the "I don't have a wallet" link displayed
    * on the left panel of the connect modal
    */
   removeIDontHaveAWalletInfoLink?: boolean
@@ -579,6 +579,12 @@ const onboard = Onboard({
       rpcUrl: ETH_GOERLI_RPC
     },
     {
+      id: '0x2105',
+      token: 'ETH',
+      label: 'Base',
+      rpcUrl: 'https://mainnet.base.org'
+    },
+    {
       id: '0x38',
       token: 'BNB',
       label: 'Binance Smart Chain',
@@ -865,6 +871,12 @@ const onboard = Onboard({
       rpcUrl:
         `https://mainnet.infura.io/v3/${INFURA_KEY}` ||
         `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
+    },
+    {
+      id: '0x2105',
+      token: 'ETH',
+      label: 'Base',
+      rpcUrl: 'https://mainnet.base.org'
     }
   ]
 })

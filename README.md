@@ -41,6 +41,12 @@ const onboard = Onboard({
       token: 'ETH',
       label: 'Ethereum Mainnet',
       rpcUrl: MAINNET_RPC_URL
+    },
+    {
+      id: '0x2105',
+      token: 'ETH',
+      label: 'Base',
+      rpcUrl: 'https://mainnet.base.org'
     }
   ]
 })
@@ -87,6 +93,7 @@ For full documentation, check out the README.md for each package or the [docs pa
 
 **SDK Wallets**
 
+- [Arcana](packages/arcana-auth/README.md)
 - [Coinbase](packages/coinbase/README.md)
 - [Trust](packages/trust/README.md)
 - [WalletConnect](packages/walletconnect/README.md)
