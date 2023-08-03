@@ -154,10 +154,10 @@
   resolved "https://registry.yarnpkg.com/@apocentre/alias-sampling/-/alias-sampling-0.5.3.tgz#897ff181b48ad7b2bcb4ecf29400214888244f08"
   integrity sha512-7UDWIIF9hIeJqfKXkNIzkVandlwLf1FWTSdrb9iXvOP8oF544JRXQjCbiTmCv2c9n44n/FIWtehhBfNuAx2CZA==
 
-"@arcana/auth@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@arcana/auth/-/auth-1.0.7.tgz#58ed216b3e7a9cbea4ce64ce638b56f8739003e0"
-  integrity sha512-QSbVntohr0iTRJ/+FHYulNAC1agooNJXJOotNTnR75hXUMy1w5DNluvxCpEwa0gToyaKWmjqw3zVW4D7UoWtRw==
+"@arcana/auth@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@arcana/auth/-/auth-1.0.6.tgz#6b84a37e600b56c54651634debc11c8a01d3e129"
+  integrity sha512-wJ/qP6bZcJR/U3YUtGWNF359grRjPoILrRYn4jix7zlguhY34Yc27NFhsDwq7yrgnPQYa4lLz6uOZf0pDOHbgA==
   dependencies:
     "@metamask/safe-event-emitter" "^2.0.0"
     eth-rpc-errors "^4.0.3"
