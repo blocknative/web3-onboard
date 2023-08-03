@@ -24,6 +24,7 @@
     "webpack-dev-server": "4.7.4"
   },
   "dependencies": {
+    "@web3-onboard/arcana-auth": "^2.0.0-alpha.1",
     "@web3-onboard/cede-store": "^2.1.0",
     "@web3-onboard/blocto": "2.0.0",
     "@web3-onboard/coinbase": "^2.2.5",

@@ -30,6 +30,7 @@
   import frontierModule from '@web3-onboard/frontier'
   import bloctoModule from '@web3-onboard/blocto'
   import cedeStoreModule from '@web3-onboard/cede-store'
+  import arcanaAuthModule from '@web3-onboard/arcana-auth'
   import venlyModule from '@web3-onboard/venly'
   import luksoModule from '@web3-onboard/lukso'
   import {
@@ -132,6 +133,10 @@
       'DJuUOKvmNnlzy6ruVgeWYWIMKLRyYtjYa9Y10VCeJzWZcygDlrYLyXsBQjpJ2hxlBO9dnl8t9GmAC2qOP5vnIGo'
   })
 
+  const arcanaAuth = arcanaAuthModule({
+    clientID: 'xar_test_c9c3bc702eb13255c58dab0e74cfa859711c13cb'
+  })
+
   const torus = torusModule()
   const infinityWallet = infinityWalletModule()
   const ledger = ledgerModule({ projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5' })
@@ -215,6 +220,7 @@
       xdefi,
       frameWallet,
       cedeStore,
+      arcanaAuth,
       blocto,
       venly
     ],
@@ -250,7 +256,7 @@
         id: '0x5',
         token: 'ETH',
         label: 'Goerli',
-        rpcUrl: `https://goerli.infura.io/v3/${infura_key}`
+        rpcUrl: 'https://ethereum-goerli.publicnode.com'
       },
       {
         id: '0x13881',
