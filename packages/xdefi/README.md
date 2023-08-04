@@ -2,7 +2,7 @@
 
 ## Wallet module for connecting XDEFI Wallet to web3-onboard
 
-See [XDEFI Wallet Developer Docs](https://sdk.xdefi.io/)
+See [XDEFI Wallet Developer Docs](https://docs.xdefi.io/docs/technical-documentation/xdefi-extension-integration/)
 
 ### Install
 
