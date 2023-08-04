@@ -55,7 +55,7 @@
     "@web3-onboard/venly": "^2.0.0",
     "@web3-onboard/walletconnect": "^2.4.5-alpha.1",
     "@web3-onboard/web3auth": "^2.2.2",
-    "@web3-onboard/xdefi": "^2.0.3",
+    "@web3-onboard/xdefi": "^2.0.5",
     "@web3-onboard/zeal": "^2.0.3",
     "@blocto/dappauth": "^2.1.0",
     "vconsole": "^3.15.1"
