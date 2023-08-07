@@ -64,14 +64,14 @@ If you would like to support all wallets, then you can install all of the wallet
 <TabPanel value="yarn">
 
 ```sh copy
-yarn add @web3-onboard/coinbase @web3-onboard/fortmatic @web3-onboard/gnosis @web3-onboard/injected-wallets @web3-onboard/keepkey @web3-onboard/keystone @web3-onboard/ledger @web3-onboard/magic @web3-onboard/portis @web3-onboard/react @web3-onboard/torus @web3-onboard/trezor @web3-onboard/walletconnect @web3-onboard/web3auth @web3-onboard/dcent @web3-onboard/sequence @web3-onboard/enkrypt @web3-onboard/mew-wallet @web3-onboard/uauth @web3-onboard/zeal @web3-onboard/frontier
+yarn add @web3-onboard/coinbase @web3-onboard/fortmatic @web3-onboard/gnosis @web3-onboard/injected-wallets @web3-onboard/arcana-auth @web3-onboard/keepkey @web3-onboard/keystone @web3-onboard/ledger @web3-onboard/magic @web3-onboard/portis @web3-onboard/react @web3-onboard/torus @web3-onboard/trezor @web3-onboard/walletconnect @web3-onboard/web3auth @web3-onboard/dcent @web3-onboard/sequence @web3-onboard/enkrypt @web3-onboard/mew-wallet @web3-onboard/uauth @web3-onboard/zeal @web3-onboard/frontier
 ```
 
   </TabPanel>
   <TabPanel value="npm">
 
 ```sh copy
-npm install @web3-onboard/coinbase @web3-onboard/fortmatic @web3-onboard/gnosis @web3-onboard/injected-wallets @web3-onboard/keepkey @web3-onboard/keystone @web3-onboard/ledger @web3-onboard/magic @web3-onboard/portis @web3-onboard/react @web3-onboard/torus @web3-onboard/trezor @web3-onboard/walletconnect @web3-onboard/web3auth @web3-onboard/dcent @web3-onboard/sequence @web3-onboard/enkrypt @web3-onboard/mew-wallet @web3-onboard/uauth @web3-onboard/zeal @web3-onboard/frontier
+npm install @web3-onboard/coinbase @web3-onboard/fortmatic @web3-onboard/gnosis @web3-onboard/injected-wallets @web3-onboard/arcana-auth @web3-onboard/keepkey @web3-onboard/keystone @web3-onboard/ledger @web3-onboard/magic @web3-onboard/portis @web3-onboard/react @web3-onboard/torus @web3-onboard/trezor @web3-onboard/walletconnect @web3-onboard/web3auth @web3-onboard/dcent @web3-onboard/sequence @web3-onboard/enkrypt @web3-onboard/mew-wallet @web3-onboard/uauth @web3-onboard/zeal @web3-onboard/frontier
 ```
 
   </TabPanel>
@@ -287,7 +287,7 @@ type ConnectModalOptions = {
    */
   removeWhereIsMyWalletWarning?: boolean
   /**
-   * Hide the "I don't have a wallet" link displayed 
+   * Hide the "I don't have a wallet" link displayed
    * on the left panel of the connect modal
    */
   removeIDontHaveAWalletInfoLink?: boolean
@@ -634,16 +634,22 @@ const onboard = Onboard({
       rpcUrl: 'https://rpc.sepolia.org/'
     },
     {
+      id: '0x89',
+      token: 'MATIC',
+      label: 'Matic',
+      rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+    },
+    {
+      id: '0x2105',
+      token: 'ETH',
+      label: 'Base',
+      rpcUrl: 'https://mainnet.base.org'
+    },
+    {
       id: '0x38',
       token: 'BNB',
       label: 'Binance Smart Chain',
       rpcUrl: 'https://bsc-dataseed.binance.org/'
-    },
-    {
-      id: '0x89',
-      token: 'MATIC',
-      label: 'Matic Mainnet',
-      rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
     },
     {
       id: 10,
@@ -656,12 +662,6 @@ const onboard = Onboard({
       token: 'ARB-ETH',
       label: 'Arbitrum',
       rpcUrl: 'https://rpc.ankr.com/arbitrum'
-    },
-    {
-      id: 84531,
-      token: 'ETH',
-      label: 'Base Goerli',
-      rpcUrl: 'https://goerli.base.org'
     }
   ],
   appMetadata: {

@@ -136,6 +136,12 @@ const onboard = Onboard({
   chains: [
     // chains that are passed as optional chains to WC wallet after cleaning and parsing as number[]
     {
+      id: '0x2105',
+      token: 'ETH',
+      label: 'Base',
+      rpcUrl: 'https://mainnet.base.org'
+    },
+    {
       id: '0x89',
       token: 'MATIC',
       label: 'Polygon',
