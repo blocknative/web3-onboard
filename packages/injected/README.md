@@ -90,6 +90,7 @@ console.log(connectedWallets)
 - BifrostWallet - _Desktop & Mobile_
 - Safeheron - _Desktop_
 - Talisman - _Desktop_
+- Coin98 Wallet - _Desktop & Mobile_
 
 ## Filtering Wallets
 
