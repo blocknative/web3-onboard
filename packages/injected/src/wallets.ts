@@ -854,6 +854,19 @@ const coin98wallet: InjectedWalletModule = {
   externalUrl: ProviderExternalUrl.Coin98Wallet
 }
 
+const subwallet: InjectedWalletModule = {
+  label: ProviderLabel.SubWallet,
+  injectedNamespace: InjectedNameSpace.SubWallet,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.SubWallet],
+  getIcon: async () => (await import('./icons/subwallet.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.SubWallet)
+  }),
+  platforms: ['all'],
+  externalUrl: ProviderExternalUrl.SubWallet
+}
+
 const wallets = [
   zeal,
   exodus,
@@ -906,7 +919,8 @@ const wallets = [
   onekey,
   fordefi,
   ronin,
-  coin98wallet
+  coin98wallet,
+  subwallet
 ]
 
 export default wallets
