@@ -786,6 +786,18 @@ const talisman: InjectedWalletModule = {
   externalUrl: ProviderExternalUrl.Talisman
 }
 
+const ronin: InjectedWalletModule = {
+  label: ProviderLabel.RoninWallet,
+  injectedNamespace: InjectedNameSpace.RoninWallet,
+  checkProviderIdentity: ({ provider }) => !!provider,
+  getIcon: async () => (await import('./icons/roninwallet.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.ronin.provider)
+  }),
+  platforms: ['all'],
+  externalUrl: ProviderExternalUrl.RoninWallet
+}
+
 const onekey: InjectedWalletModule = {
   label: ProviderLabel.OneKey,
   injectedNamespace: InjectedNameSpace.OneKey,
@@ -811,6 +823,35 @@ const fordefi: InjectedWalletModule = {
   getIcon: async () => (await import('./icons/fordefi.js')).default,
   getInterface: getInjectedInterface(ProviderIdentityFlag.Fordefi, true),
   platforms: ['desktop']
+}
+
+const coin98wallet: InjectedWalletModule = {
+  label: ProviderLabel.Coin98Wallet,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Coin98Wallet],
+  getIcon: async () => (await import('./icons/coin98wallet.js')).default,
+  getInterface: async () => {
+    const ethereumInjectionExists = window.hasOwnProperty(
+      InjectedNameSpace.Ethereum
+    )
+
+    let provider: EIP1193Provider
+
+    // check if coin98 is injected into window.ethereum
+    if (ethereumInjectionExists && window[InjectedNameSpace.Ethereum].isCoin98) {
+      provider = window[InjectedNameSpace.Ethereum]
+    } else {
+      // directly use the window.coin98 injection
+      provider = window[InjectedNameSpace.Coin98Wallet].provider
+    }
+
+    return {
+      provider
+    }
+  },
+  platforms: ['all'],
+  externalUrl: ProviderExternalUrl.Coin98Wallet
 }
 
 const wallets = [
@@ -863,7 +904,9 @@ const wallets = [
   safeheron,
   talisman,
   onekey,
-  fordefi
+  fordefi,
+  ronin,
+  coin98wallet
 ]
 
 export default wallets

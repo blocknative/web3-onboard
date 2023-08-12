@@ -20,6 +20,12 @@ const onboard = Onboard({
       token: 'ETH',
       label: 'Ethereum Mainnet',
       rpcUrl: MAINNET_RPC_URL
+    },
+    {
+      id: '0x2105',
+      token: 'ETH',
+      label: 'Base',
+      rpcUrl: 'https://mainnet.base.org'
     }
   ],
   appMetadata: {
@@ -84,6 +90,7 @@ console.log(connectedWallets)
 - BifrostWallet - _Desktop & Mobile_
 - Safeheron - _Desktop_
 - Talisman - _Desktop_
+- Coin98 Wallet - _Desktop & Mobile_
 
 ## Filtering Wallets
 

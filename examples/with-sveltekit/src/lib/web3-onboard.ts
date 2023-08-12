@@ -7,7 +7,7 @@ const injected = injectedWalletsModule()
 const walletConnect = walletConnectModule({
   connectFirstChainId: true,
   qrcodeModalOptions: {
-  mobileLinks: ['rainbow', 'metamask', 'argent', 'trust', 'imtoken', 'pillar']
+    mobileLinks: ['rainbow', 'metamask', 'argent', 'trust', 'imtoken', 'pillar']
   }
 })
 
@@ -27,6 +27,12 @@ const chains = [
     token: 'MATIC',
     label: 'Matic Mainnet',
     rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+  },
+  {
+    id: '0x2105',
+    token: 'ETH',
+    label: 'Base',
+    rpcUrl: 'https://mainnet.base.org'
   }
 ]
 

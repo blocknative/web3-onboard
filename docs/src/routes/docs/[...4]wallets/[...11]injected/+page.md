@@ -47,6 +47,12 @@ const onboard = Onboard({
       token: 'ETH',
       label: 'Ethereum Mainnet',
       rpcUrl: MAINNET_RPC_URL
+    },
+    {
+      id: '0x2105',
+      token: 'ETH',
+      label: 'Base',
+      rpcUrl: 'https://mainnet.base.org'
     }
   ],
   appMetadata: {
@@ -336,6 +342,8 @@ const injected = injectedModule({
 - Talisman - _Desktop_
 - OneKey - _Desktop & Mobile_
 - Fordefi - _Desktop_
+- Ronin Wallet - _Desktop & Mobile_
+- Coin98 Wallet - _Desktop & Mobile_
 
 ## Build Environments
 

@@ -43,6 +43,12 @@ const web3Onboard = init({
       label: 'Ethereum Mainnet',
       rpcUrl,
     },
+    {
+      id: '0x2105',
+      token: 'ETH',
+      label: 'Base',
+      rpcUrl: 'https://mainnet.base.org'
+    }
   ],
 });
 

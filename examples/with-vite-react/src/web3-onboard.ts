@@ -115,22 +115,16 @@ export default init({
       rpcUrl: `https://mainnet.infura.io/v3/${INFURA_KEY}`
     },
     {
-      id: '0x3',
-      token: 'tROP',
-      label: 'Ethereum Ropsten Testnet',
-      rpcUrl: `https://ropsten.infura.io/v3/${INFURA_KEY}`
-    },
-    {
-      id: '0x4',
-      token: 'rETH',
-      label: 'Ethereum Rinkeby Testnet',
-      rpcUrl: `https://rinkeby.infura.io/v3/${INFURA_KEY}`
-    },
-    {
       id: '0x89',
       token: 'MATIC',
       label: 'Matic Mainnet',
       rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+    },
+    {
+      id: '0x2105',
+      token: 'ETH',
+      label: 'Base',
+      rpcUrl: 'https://mainnet.base.org'
     }
   ],
   appMetadata: {
