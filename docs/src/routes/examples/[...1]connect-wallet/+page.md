@@ -48,7 +48,7 @@ import { Web3OnboardProvider, init } from '@web3-onboard/react'
 import injectedModule from '@web3-onboard/injected-wallets'
 import infinityWalletModule from '@web3-onboard/infinity-wallet'
 import fortmaticModule from '@web3-onboard/fortmatic'
-import gnosisModule from '@web3-onboard/gnosis'
+import safeModule from '@web3-onboard/gnosis'
 import keepkeyModule from '@web3-onboard/keepkey'
 import keystoneModule from '@web3-onboard/keystone'
 import ledgerModule from '@web3-onboard/ledger'
@@ -83,7 +83,7 @@ const infinityWallet = infinityWalletModule()
 const ledger = ledgerModule()
 const keystone = keystoneModule()
 const keepkey = keepkeyModule()
-const gnosis = gnosisModule()
+const safe = safeModule()
 const sequence = sequenceModule()
 const taho = tahoModule() // Previously named Tally Ho wallet
 const trust = trustModule()
@@ -113,7 +113,7 @@ const wallets = [
   dcent,
   trezor,
   walletConnect,
-  gnosis,
+  safe,
   magic,
   fortmatic,
   keystone,
@@ -298,7 +298,7 @@ import Onboard from '@web3-onboard/core'
 import injectedModule from '@web3-onboard/injected-wallets'
 import infinityWalletModule from '@web3-onboard/infinity-wallet'
 import fortmaticModule from '@web3-onboard/fortmatic'
-import gnosisModule from '@web3-onboard/gnosis'
+import safeModule from '@web3-onboard/gnosis'
 import keepkeyModule from '@web3-onboard/keepkey'
 import keystoneModule from '@web3-onboard/keystone'
 import ledgerModule from '@web3-onboard/ledger'
@@ -334,7 +334,7 @@ const infinityWallet = infinityWalletModule()
 const ledger = ledgerModule()
 const keystone = keystoneModule()
 const keepkey = keepkeyModule()
-const gnosis = gnosisModule()
+const safe = safeModule()
 const sequence = sequenceModule()
 const taho = tahoModule() // Previously named Tally Ho wallet
 const trust = trustModule()
@@ -369,7 +369,7 @@ const wallets = [
   walletConnect,
   enkrypt,
   mewWallet,
-  gnosis,
+  safe,
   magic,
   fortmatic,
   keystone,
