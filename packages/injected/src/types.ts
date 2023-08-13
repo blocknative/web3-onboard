@@ -66,9 +66,8 @@ export enum ProviderIdentityFlag {
   OneKey = 'isOneKey',
   Fordefi = 'isFordefi',
   Coin98Wallet = 'isCoin98',
-  SubWallet = 'isSubWallet',
+  SubWallet = 'isSubWallet'
 }
-
 
 /**
  * The ProviderExternalUrl enum represents the external URLs associated
@@ -90,7 +89,7 @@ export enum ProviderExternalUrl {
   OneKey = 'https://onekey.so/download/',
   RoninWallet = 'https://wallet.skymavis.com/',
   Coin98Wallet = 'https://coin98.com/wallet/',
-  SubWallet = 'https://www.subwallet.app/',
+  SubWallet = 'https://www.subwallet.app/'
 }
 
 export enum ProviderLabel {
@@ -148,7 +147,7 @@ export enum ProviderLabel {
   Fordefi = 'Fordefi',
   RoninWallet = 'Ronin Wallet',
   Coin98Wallet = 'Coin98 Wallet',
-  SubWallet = 'SubWallet',
+  SubWallet = 'SubWallet'
 }
 
 export interface MeetOneProvider extends ExternalProvider {
@@ -223,16 +222,16 @@ export interface CustomWindow extends Window {
   talismanEth: InjectedProvider
   $onekey: {
     ethereum: InjectedProvider
-  },
+  }
   ronin: {
     provider: InjectedProvider
   }
   coin98: {
     provider: InjectedProvider
-  },
+  }
   SubWallet: {
     provider: InjectedProvider
-  },
+  }
 }
 
 export type InjectedProvider = ExternalProvider &

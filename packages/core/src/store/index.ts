@@ -51,11 +51,11 @@ function reducer(state: AppState, action: Action): AppState {
         ...state,
         chains: [...state.chains, ...(payload as Chain[])]
       }
-    
+
     case UPDATE_CHAINS: {
       const updatedChain = payload as UpdateChainsAction['payload']
       const chains = state.chains
-      const index = chains.findIndex((chain) => chain.id === updatedChain.id)
+      const index = chains.findIndex(chain => chain.id === updatedChain.id)
       chains[index] = updatedChain
       return {
         ...state,

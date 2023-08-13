@@ -14,7 +14,7 @@ function XDEFIWallet(): WalletInit {
       },
       getIcon: async () => (await import('./icon.js')).default,
       getInterface: async () => {
-       let provider
+        let provider
         if (window.xfi && window.xfi.ethereum) {
           provider = window.xfi.ethereum
         }

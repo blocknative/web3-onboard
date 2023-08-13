@@ -46,7 +46,7 @@ export type SelectAccountOptions = {
   containerElement?: string
   /**
    * A number that defines the amount of consecutive empty addresses displayed
-   * within the Account Select modal. Default is 5 
+   * within the Account Select modal. Default is 5
    */
   consecutiveEmptyAccountThreshold?: number
 }

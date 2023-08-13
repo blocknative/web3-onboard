@@ -1,8 +1,5 @@
 import { firstValueFrom, Subject } from 'rxjs'
-import {
-  ProviderRpcError,
-  ProviderRpcErrorCode
-} from '@web3-onboard/common'
+import { ProviderRpcError, ProviderRpcErrorCode } from '@web3-onboard/common'
 import type {
   PatchedEIP1193Provider,
   TransactionPreviewInitOptions,
