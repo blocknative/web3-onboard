@@ -839,10 +839,7 @@ const coin98wallet: InjectedWalletModule = {
     let provider: EIP1193Provider
 
     // check if coin98 is injected into window.ethereum
-    if (
-      ethereumInjectionExists &&
-      window[InjectedNameSpace.Ethereum].isCoin98
-    ) {
+    if (ethereumInjectionExists && window[InjectedNameSpace.Ethereum].isCoin98) {
       provider = window[InjectedNameSpace.Ethereum]
     } else {
       // directly use the window.coin98 injection

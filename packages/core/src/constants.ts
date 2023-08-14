@@ -27,7 +27,7 @@ export const APP_INITIAL_STATE: AppState = {
     showSidebar: true,
     disableClose: false
   },
-  appMetadata: null
+  appMetadata: null,
 }
 
 export const STORAGE_KEYS = {

@@ -56,7 +56,10 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
 
         const getMetaData = (): CoreTypes.Metadata | undefined => {
           if (!appMetadata) return undefined
-          const url = dappUrl || appMetadata.explore || ''
+          const url =
+            dappUrl ||
+            appMetadata.explore ||
+            ''
 
           !url &&
             !url.length &&

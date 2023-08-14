@@ -12,9 +12,7 @@ import type { StaticJsonRpcProvider as StaticJsonRpcProviderType } from '@ethers
 import WalletConnect from '@walletconnect/client'
 import { isHexString, LedgerOptionsWCv1 } from './index.js'
 
-function ledger(
-  options: LedgerOptionsWCv1 = { walletConnectVersion: 1 }
-): WalletInit {
+function ledger(options: LedgerOptionsWCv1 = { walletConnectVersion: 1 }): WalletInit {
   return () => {
     return {
       label: 'Ledger',
@@ -44,7 +42,7 @@ function ledger(
         // return the Ledger Extension provider
         if (
           checkSupportResult.providerImplementation ===
-          SupportedProviderImplementations.LedgerConnect
+            SupportedProviderImplementations.LedgerConnect
         ) {
           return {
             provider: instance

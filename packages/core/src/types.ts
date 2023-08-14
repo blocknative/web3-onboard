@@ -249,7 +249,7 @@ export type ConnectModalOptions = {
    */
   removeWhereIsMyWalletWarning?: boolean
   /**
-   * Hide the "I don't have a wallet" link displayed
+   * Hide the "I don't have a wallet" link displayed 
    * on the left panel of the connect modal
    */
   removeIDontHaveAWalletInfoLink?: boolean
