@@ -154,6 +154,20 @@ We recommend you add the [Core Repo](../../modules/core.md#install) and consider
 
 [**Injected Wallets**](../../wallets/injected.md#install)
 
+**SDK Wallets**
+
+- [Arcana Auth](../../wallets/arcana.md#install)
+- [Blocto](../../docs/wallets/blocto.md#install)
+- [Coinbase](../../wallets/coinbase.md#install)
+- [Fortmatic](../../wallets/fortmatic.md#install)
+- [Frame](../../wallets/frame.md#install)
+- [Safe](../../wallets/gnosis.md#install)
+- [Magic](../../wallets/magic.md#login-options)
+- [MEW](../../wallets/mewwallet.md#install)
+- [Portis](../../wallets/portis.md#install)
+- [Web3Auth](../../wallets/web3auth.md#install)
+- [WalletConnect](../../wallets/walletconnect.md#install)
+
 **Hardware Wallets**
 
 - [D'cent](../../wallets/dcent.md#install)
