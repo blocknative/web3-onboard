@@ -343,6 +343,8 @@ const injected = injectedModule({
 - OneKey - _Desktop & Mobile_
 - Fordefi - _Desktop_
 - Ronin Wallet - _Desktop & Mobile_
+- Coin98 Wallet - _Desktop & Mobile_
+- SubWallet - _Desktop & Mobile_
 
 ## Build Environments
 

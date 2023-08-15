@@ -18,16 +18,17 @@ Web3-Onboard is the quickest and easiest way to add multi-wallet and multi-chain
 
 - **Minimal Dependencies:** All wallet dependencies are included in separate packages, so you only include the ones you want to use in your app.
 
-- **Multiple Wallets and Accounts Connection, Multichain Support:** Allow your users to connect multiple wallets and multiple accounts within each wallet at the same time to your app. Let users switch between chains/networks with ease. ALL EVM networks supported.
+- **Multi Wallet and Multi Chain Support:** Allow your users to connect multiple wallets and multiple accounts within each wallet at the same time to your app. Let users switch between chains/networks with ease. ALL EVM networks supported.
+
+- **Account Center:** An interface to manage wallet connections and networks, with a minimal version for mobile.
+
+- **Themable:** Powerful customization options for all your needs. Style Web3 Onboard to fit into your existing designs, or pick from our pre-made themes.
 
 - **Unified Provider Interface:** All wallet modules expose a provider that is patched to be compliant with the EIP-1193, EIP-1102, EIP-3085 and EIP-3326 specifications. Whether your user is using Ledger or Metamask the provider will operate identically.
 
-- **Dynamic Imports:** Supporting multiple wallets in your app requires a lot of dependencies. Onboard dynamically imports a wallet
-  and its dependencies only when the user selects it, so that minimal bandwidth is used.
+- **Dynamic Imports:** Supporting multiple wallets in your app requires a lot of dependencies. Onboard dynamically imports a wallet and its dependencies only when the user selects it, so that minimal bandwidth is used.
 
 - **Framework Agnostic:** Avoid framework lock in -- Web3-Onboard works with any framework and includes helper packages for vue & react.
-
-- **Account Center:** An interface to manage wallet connections and networks, with a minimal version for mobile
 
 - **Notify:** Real-time transaction notifications for all transaction states for the connected wallet address(es). In-notification speedups & cancels for hardware wallet connections.
 
@@ -37,9 +38,7 @@ web3-onboard supports all EVM networks. Supporting a new network is simply a mat
 
 - Ethereum
 - Polygon
-- Base Goerli
-- Goerli
-- Sepolia
+- Base
 - Arbitrum
 - Optimism
 - Avalanche
@@ -49,6 +48,9 @@ web3-onboard supports all EVM networks. Supporting a new network is simply a mat
 - Gnosis Chain
 - Harmony One
 - Moonriver
+- Goerli
+- Sepolia
+- Base Goerli
 - All other EVM network
 
 ### Optional - Use an API key to fetch real time transaction data, balances & gas
@@ -144,7 +146,7 @@ if (wallets[0]) {
 
 ## Wallet Modules
 
-Add other wallet modules such as Wallet Connect or Ledger to increase the support and functionality of your web3-onboard implementation. All modules are listed below and can be accessed through the subpages of web3-onboard docs on the left.
+Add other wallet modules such as Wallet Connect or Ledger to increase the support and functionality of your web3-onboard implementation. All modules can be accessed through the subpages of web3-onboard docs on the left.
 
 We recommend you add the [Core Repo](../../modules/core.md#install) and consider adding the [Injected Wallets](../../wallets/injected.md#install) module to get connected with wallets like Metamask, Trust, Coinbase Wallet & more right away.
 
@@ -159,7 +161,7 @@ We recommend you add the [Core Repo](../../modules/core.md#install) and consider
 - [Coinbase](../../wallets/coinbase.md#install)
 - [Fortmatic](../../wallets/fortmatic.md#install)
 - [Frame](../../wallets/frame.md#install)
-- [Gnosis](../../wallets/gnosis.md#install)
+- [Safe](../../wallets/gnosis.md#install)
 - [Magic](../../wallets/magic.md#login-options)
 - [MEW](../../wallets/mewwallet.md#install)
 - [Portis](../../wallets/portis.md#install)
