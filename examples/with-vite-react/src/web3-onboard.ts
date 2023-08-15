@@ -1,5 +1,5 @@
 import fortmaticModule from '@web3-onboard/fortmatic'
-import gnosisModule from '@web3-onboard/gnosis'
+import safeModule from '@web3-onboard/gnosis'
 import injectedModule from '@web3-onboard/injected-wallets'
 import keepkeyModule from '@web3-onboard/keepkey'
 import keystoneModule from '@web3-onboard/keystone'
@@ -55,7 +55,7 @@ const torus = torusModule()
 const ledger = ledgerModule()
 const keepkey = keepkeyModule()
 const keystone = keystoneModule()
-const gnosis = gnosisModule()
+const safe = safeModule()
 const dcent = dcentModule()
 const mew = mewModule()
 const tahoWalletSdk = tahoWalletModule()
@@ -83,7 +83,7 @@ export default init({
   // An array of wallet modules that you would like to be presented to the user to select from when connecting a wallet.
   wallets: [
     injected,
-    gnosis,
+    safe,
     fortmatic,
     portis,
     walletLink,
