@@ -65,7 +65,8 @@ export enum ProviderIdentityFlag {
   Talisman = 'isTalisman',
   OneKey = 'isOneKey',
   Fordefi = 'isFordefi',
-  Coin98Wallet = 'isCoin98'
+  Coin98Wallet = 'isCoin98',
+  SubWallet = 'isSubWallet',
 }
 
 
@@ -88,7 +89,8 @@ export enum ProviderExternalUrl {
   Trust = 'https://trustwallet.com/download/',
   OneKey = 'https://onekey.so/download/',
   RoninWallet = 'https://wallet.skymavis.com/',
-  Coin98Wallet = 'https://coin98.com/wallet/'
+  Coin98Wallet = 'https://coin98.com/wallet/',
+  SubWallet = 'https://www.subwallet.app/',
 }
 
 export enum ProviderLabel {
@@ -145,7 +147,8 @@ export enum ProviderLabel {
   OneKey = 'OneKey',
   Fordefi = 'Fordefi',
   RoninWallet = 'Ronin Wallet',
-  Coin98Wallet = 'Coin98 Wallet'
+  Coin98Wallet = 'Coin98 Wallet',
+  SubWallet = 'SubWallet',
 }
 
 export interface MeetOneProvider extends ExternalProvider {
@@ -180,7 +183,8 @@ export enum InjectedNameSpace {
   Talisman = 'talismanEth',
   OneKey = '$onekey',
   RoninWallet = 'ronin',
-  Coin98Wallet = 'coin98'
+  Coin98Wallet = 'coin98',
+  SubWallet = 'SubWallet'
 }
 
 export interface CustomWindow extends Window {
@@ -223,9 +227,12 @@ export interface CustomWindow extends Window {
   ronin: {
     provider: InjectedProvider
   }
-  coin98: { 
-    provider: InjectedProvider 
-  }
+  coin98: {
+    provider: InjectedProvider
+  },
+  SubWallet: {
+    provider: InjectedProvider
+  },
 }
 
 export type InjectedProvider = ExternalProvider &
