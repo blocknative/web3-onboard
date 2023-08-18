@@ -30,6 +30,7 @@ const wcOptions = Joi.object({
   requiredChains: Joi.array().items(Joi.number()).optional(),
   optionalChains: Joi.array().items(Joi.number()).optional(),
   qrModalOptions: Joi.object().optional(),
+  additionalRequiredMethods: Joi.array().items(Joi.string()).optional(),
   additionalOptionalMethods: Joi.array().items(Joi.string()).optional()
 })
 
