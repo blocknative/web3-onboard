@@ -88,6 +88,11 @@ type WalletConnectOptions = {
        */
       qrModalOptions?: EthereumProviderOptions['qrModalOptions']
       /**
+       * Additional required methods to be added to the default list of ['eth_sendTransaction', 'personal_sign']
+       * Passed methods to be included along with the defaults methods - see https://docs.walletconnect.com/2.0/advanced/providers/ethereum#required-and-optional-methods
+       */
+      additionalRequiredMethods?: string[] | undefined
+      /**
        * Additional methods to be added to the default list of ['eth_sendTransaction',  'eth_signTransaction',  'personal_sign',  'eth_sign',  'eth_signTypedData',  'eth_signTypedData_v4']
        * Passed methods to be included along with the defaults methods - see https://docs.walletconnect.com/2.0/web/walletConnectModal/options
        */
