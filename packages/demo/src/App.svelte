@@ -32,6 +32,7 @@
   import cedeStoreModule from '@web3-onboard/cede-store'
   import arcanaAuthModule from '@web3-onboard/arcana-auth'
   import venlyModule from '@web3-onboard/venly'
+  import capsuleModule from '@web3-onboard/capsule'
   import {
     recoverAddress,
     arrayify,
@@ -150,6 +151,7 @@
   const frontier = frontierModule()
   const cedeStore = cedeStoreModule()
   const blocto = bloctoModule()
+  const capsule = capsuleModule()
 
   const trezorOptions = {
     email: 'test@test.com',
@@ -219,7 +221,8 @@
       cedeStore,
       arcanaAuth,
       blocto,
-      venly
+      venly,
+      capsule
     ],
     transactionPreview,
     gas,
