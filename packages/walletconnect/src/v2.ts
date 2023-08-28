@@ -1,7 +1,7 @@
-import type { CoreTypes } from '@walletconnect/types'
-import type { EthereumProvider } from '@walletconnect/ethereum-provider'
 import { REQUIRED_METHODS } from '@walletconnect/ethereum-provider'
 import type { EthereumProviderOptions } from '@walletconnect/ethereum-provider/dist/types/EthereumProvider'
+import type { EthereumProvider } from '@walletconnect/ethereum-provider'
+import type { CoreTypes } from '@walletconnect/types'
 
 import type {
   Chain,
@@ -58,10 +58,7 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
 
         const getMetaData = (): CoreTypes.Metadata | undefined => {
           if (!appMetadata) return undefined
-          const url =
-            dappUrl ||
-            appMetadata.explore ||
-            ''
+          const url = dappUrl || appMetadata.explore || ''
 
           !url &&
             !url.length &&
