@@ -118,7 +118,7 @@
   const walletConnect = walletConnectModule({
     handleUri: uri => console.log(uri),
     projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
-    additionalOptionalMethods: ['someSillyShit']
+    dappUrl: 'https://www.onboard.blocknative.com'
   })
   const portis = portisModule({
     apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
