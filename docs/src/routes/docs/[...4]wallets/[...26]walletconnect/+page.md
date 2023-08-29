@@ -29,7 +29,6 @@ npm install @web3-onboard/walletconnect
   </TabPanel>
 </Tabs>
 
-## Options
 
 ```typescript
 type WalletConnectOptions = {
@@ -38,26 +37,6 @@ type WalletConnectOptions = {
    */
   handleUri?: (uri: string) => Promise<unknown>
 } & (
-  | {
-      /**
-       * @deprecated
-       * Version 1 of WalletConnect has been deprecated by the WC team and the WC bridge is not available.
-       * To use version 1 a custom bridge url will need to be provided.
-       * Support will be completely remove from Web3-Onboard in the future
-       */
-      version: 1
-      /**
-       * Custom URL Bridge must be defined for V1 usage.
-       * WalletConnect no longer supports a v1 bridge.
-       * Upgrading to use WalletConnect v2 is recommended.
-       * A potential bridge can be found here: 'https://derelay.rabby.io'
-       */
-      bridge: string
-      connectFirstChainId?: boolean
-      qrcodeModalOptions?: {
-        mobileLinks: string[]
-      }
-    }
   | {
       /**
        * Project ID associated with [WalletConnect account](https://cloud.walletconnect.com)
@@ -88,10 +67,35 @@ type WalletConnectOptions = {
        */
       qrModalOptions?: EthereumProviderOptions['qrModalOptions']
       /**
+       * Additional required methods to be added to the default list of ['eth_sendTransaction', 'personal_sign']
+       * Passed methods to be included along with the defaults methods - see https://docs.walletconnect.com/2.0/advanced/providers/ethereum#required-and-optional-methods
+       */
+      additionalRequiredMethods?: string[] | undefined
+      /**
        * Additional methods to be added to the default list of ['eth_sendTransaction',  'eth_signTransaction',  'personal_sign',  'eth_sign',  'eth_signTypedData',  'eth_signTypedData_v4']
        * Passed methods to be included along with the defaults methods - see https://docs.walletconnect.com/2.0/web/walletConnectModal/options
        */
       additionalOptionalMethods?: string[] | undefined
+    }
+  | {
+      /**
+       * @deprecated
+       * Version 1 of WalletConnect has been deprecated by the WC team and the WC bridge is not available.
+       * To use version 1 a custom bridge url will need to be provided.
+       * Support will be completely remove from Web3-Onboard in the future
+       */
+      version: 1
+      /**
+       * Custom URL Bridge must be defined for V1 usage.
+       * WalletConnect no longer supports a v1 bridge.
+       * Upgrading to use WalletConnect v2 is recommended.
+       * A potential bridge can be found here: 'https://derelay.rabby.io'
+       */
+      bridge: string
+      connectFirstChainId?: boolean
+      qrcodeModalOptions?: {
+        mobileLinks: string[]
+      }
     }
 )
 ```
@@ -132,26 +136,16 @@ const onboard = Onboard({
   wallets: [
     walletConnect
     //... other wallets
-  ],
-  chains: [
-    // chains that are passed as optional chains to WC wallet after cleaning and parsing as number[]
-    {
-      id: '0x2105',
-      token: 'ETH',
-      label: 'Base',
-      rpcUrl: 'https://mainnet.base.org'
-    },
-    {
-      id: '0x89',
-      token: 'MATIC',
-      label: 'Polygon',
-      rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
-    }
-    // ...
   ]
 })
 
 const connectedWallets = await onboard.connectWallet()
+
+// Assuming only wallet connect is connected, index 0
+// `instance` will give insight into the WalletConnect info
+// such as namespaces, methods, chains, etc per wallet connected
+const { instance } = connectedWallets[0]
+
 console.log(connectedWallets)
 ```
 

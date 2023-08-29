@@ -6,7 +6,7 @@ title: Introduction
   import walletModal from '$lib/assets/connect-modal.svg'
 </script>
 
-# Web3-Onboard
+# Web3 Onboard
 
 The best way to connect a wallet 🚀
 
@@ -57,7 +57,7 @@ web3-onboard supports all EVM networks. Supporting a new network is simply a mat
 
 Using a Blocknative API key with web3-onboard on the free plan will allow you to gain the benefits of Blocknative balance & transaction services. Blocknative has a free forever plan you can always use.
 
-This step is not required to use web3-onboard. You can skip to the **Quickstart** step below if you want to use web3-onboard without API services or if you already have a Blocknative account & API key.
+This step is not required to use web3-onboard. You can skip to the [**Quickstart**](/docs/overview/introduction#quickstart) step below if you want to use web3-onboard without API services or if you already have a Blocknative account & API key.
 
 **Setup your Account**
 Go to the Account Dashboard at [https://explorer.blocknative.com/account](https://explorer.blocknative.com/account) and setup an account with an email address. You will receive an email to confirm your account.
