@@ -21,26 +21,6 @@ type WalletConnectOptions = {
 } & (
   | {
       /**
-       * @deprecated
-       * Version 1 of WalletConnect has been deprecated by the WC team and the WC bridge is not available.
-       * To use version 1 a custom bridge url will need to be provided.
-       * Support will be completely remove from Web3-Onboard in the future
-       */
-      version: 1
-      /**
-       * Custom URL Bridge must be defined for V1 usage.
-       * WalletConnect no longer supports a v1 bridge.
-       * Upgrading to use WalletConnect v2 is recommended.
-       * A potential bridge can be found here: 'https://derelay.rabby.io'
-       */
-      bridge: string
-      connectFirstChainId?: boolean
-      qrcodeModalOptions?: {
-        mobileLinks: string[]
-      }
-    }
-  | {
-      /**
        * Project ID associated with [WalletConnect account](https://cloud.walletconnect.com)
        */
       projectId: string
@@ -78,6 +58,26 @@ type WalletConnectOptions = {
        * Passed methods to be included along with the defaults methods - see https://docs.walletconnect.com/2.0/web/walletConnectModal/options
        */
       additionalOptionalMethods?: string[] | undefined
+    }
+  | {
+      /**
+       * @deprecated
+       * Version 1 of WalletConnect has been deprecated by the WC team and the WC bridge is not available.
+       * To use version 1 a custom bridge url will need to be provided.
+       * Support will be completely remove from Web3-Onboard in the future
+       */
+      version: 1
+      /**
+       * Custom URL Bridge must be defined for V1 usage.
+       * WalletConnect no longer supports a v1 bridge.
+       * Upgrading to use WalletConnect v2 is recommended.
+       * A potential bridge can be found here: 'https://derelay.rabby.io'
+       */
+      bridge: string
+      connectFirstChainId?: boolean
+      qrcodeModalOptions?: {
+        mobileLinks: string[]
+      }
     }
 )
 ```
@@ -122,5 +122,11 @@ const onboard = Onboard({
 })
 
 const connectedWallets = await onboard.connectWallet()
+
+// Assuming only wallet connect is connected, index 0
+// `instance` will give insight into the WalletConnect info
+// such as namespaces, methods, chains, etc per wallet connected
+const { instance } = connectedWallets[0]
+
 console.log(connectedWallets)
 ```

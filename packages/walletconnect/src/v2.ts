@@ -40,6 +40,8 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
     dappUrl
   } = options
 
+  let instance: unknown
+
   return () => {
     return {
       label: 'WalletConnect',
@@ -209,7 +211,10 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
               })
 
             this.disconnect = () => {
-              if (this.connector.session) this.connector.disconnect()
+              if (this.connector.session) {
+                this.connector.disconnect()
+                instance = null
+              }
             }
 
             if (options && handleUri) {
@@ -231,6 +236,7 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
 
             const checkForSession = () => {
               const session = this.connector.session
+              instance = session
               if (session) {
                 this.emit('accountsChanged', this.connector.accounts)
                 this.emit('chainChanged', this.connector.chainId)
@@ -286,6 +292,7 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
                       // update ethereum provider to load accounts & chainId
                       const accounts = this.connector.accounts
                       const chainId = this.connector.chainId
+                      instance = this.connector.session
                       const hexChainId = `0x${chainId.toString(16)}`
                       this.emit('chainChanged', hexChainId)
                       return resolve(accounts)
@@ -337,7 +344,8 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
         }
 
         return {
-          provider: new EthProvider({ chains, connector })
+          provider: new EthProvider({ chains, connector }),
+          instance
         }
       }
     }
