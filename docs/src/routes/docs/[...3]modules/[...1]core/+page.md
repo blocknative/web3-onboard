@@ -164,6 +164,7 @@ type Chain = {
   publicRpcUrl?: string // an optional public RPC used when adding a new chain config to the wallet
   blockExplorerUrl?: string // also used when adding a new config to the wallet
   secondaryTokens?: SecondaryTokens[] // An optional array of tokens (max of 5) to be available to the dapp in the app state object per wallet within the wallet account and displayed in Account Center (if enabled)
+  protectedRpcUrl?: string //An optional protected RPC URL - Defaults to Blocknative's private and protected RPC to allow users to update the chain RPC within their wallet, specifically for private RPCs that protect user transactions
 }
 
 interface SecondaryTokens {
