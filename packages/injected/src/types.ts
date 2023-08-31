@@ -187,7 +187,7 @@ export enum InjectedNameSpace {
   RoninWallet = 'ronin',
   Coin98Wallet = 'coin98',
   SubWallet = 'SubWallet',
-  Kayros = 'Kayros'
+  Kayros = 'kayros'
 }
 
 export interface CustomWindow extends Window {
