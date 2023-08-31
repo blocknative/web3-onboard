@@ -417,6 +417,13 @@ type AccountCenter = {
    */
   hideTransactionProtectionBtn?: boolean
   /**
+   * defaults to
+   * `docs.blocknative.com/blocknative-mev-protection/transaction-boost-alpha`
+   * Use this property to override the default link to give users
+   * more information about transaction protection and the RPC be set
+   */
+  transactionProtectionInfoLink?: string
+  /**
    * @deprecated Use top level containerElements property
    * with the accountCenter prop set to the desired container El. See documentation below
    */

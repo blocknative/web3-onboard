@@ -249,7 +249,7 @@ export type ConnectModalOptions = {
    */
   removeWhereIsMyWalletWarning?: boolean
   /**
-   * Hide the "I don't have a wallet" link displayed 
+   * Hide the "I don't have a wallet" link displayed
    * on the left panel of the connect modal
    */
   removeIDontHaveAWalletInfoLink?: boolean
@@ -281,8 +281,8 @@ export type AccountCenter = {
    * Can be set as a global for Account Center or per interface (desktop/mobile)
    */
   hideTransactionProtectionBtn?: boolean
-    /**
-   * defaults to 
+  /**
+   * defaults to
    * `docs.blocknative.com/blocknative-mev-protection/transaction-boost-alpha`
    * Use this property to override the default link to give users
    * more information about transaction protection and the RPC be set
