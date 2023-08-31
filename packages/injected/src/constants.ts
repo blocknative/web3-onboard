@@ -30,6 +30,7 @@ export const WALLET_NAMES: { [key: string]: string } = {
   onekey: 'OneKey',
   fordefi: 'Fordefi',
   roninWallet: 'Ronin Wallet',
-  coin98wallet:'Coin98 Wallet',
-  SubWallet:'SubWallet'
+  coin98wallet: 'Coin98 Wallet',
+  SubWallet: 'SubWallet',
+  kayros: 'Kayros'
 }
