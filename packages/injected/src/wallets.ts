@@ -818,8 +818,7 @@ const fordefi: InjectedWalletModule = {
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
     !!provider &&
-    !!provider[ProviderIdentityFlag.Fordefi] &&
-    !otherProviderFlagsExist(ProviderIdentityFlag.Fordefi, provider),
+    !!provider[ProviderIdentityFlag.Fordefi],
   getIcon: async () => (await import('./icons/fordefi.js')).default,
   getInterface: getInjectedInterface(ProviderIdentityFlag.Fordefi, true),
   platforms: ['desktop']
