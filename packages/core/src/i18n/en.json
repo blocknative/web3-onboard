@@ -63,7 +63,7 @@
     "confirmTransactionProtection": {
       "heading": "Enable Transaction Protection",
       "description": "Protect RPC endpoints hide your transaction from front-running and sandwich bots.",
-      "link": "Learn more about protecting your transactions.",
+      "link": "Learn more",
       "enable": "Enable",
       "dismiss": "Dismiss"
     }
