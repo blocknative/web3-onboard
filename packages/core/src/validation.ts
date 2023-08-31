@@ -183,7 +183,8 @@ const accountCenterInitOptions = Joi.object({
   position: commonPositions,
   minimal: Joi.boolean(),
   containerElement: Joi.string(),
-  hideTransactionProtectionBtn: Joi.boolean()
+  hideTransactionProtectionBtn: Joi.boolean(),
+  transactionProtectionInfoLink: Joi.boolean()
 })
 
 const accountCenter = Joi.object({
@@ -192,6 +193,7 @@ const accountCenter = Joi.object({
   expanded: Joi.boolean(),
   minimal: Joi.boolean(),
   hideTransactionProtectionBtn: Joi.boolean(),
+  transactionProtectionInfoLink: Joi.boolean(),
   containerElement: Joi.string()
 })
 

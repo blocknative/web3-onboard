@@ -28,7 +28,7 @@
   import { configuration } from '../../configuration.js'
   import SecondaryTokenTable from './SecondaryTokenTable.svelte'
   import { updateChainRPC } from '../../provider.js'
-  import { BN_PROTECT_RPC_URL } from '../../constants.js'
+  import { BN_BOOST_RPC_URL, BN_BOOST_INFO_URL } from '../../constants.js'
 
   export let expanded: boolean
 
@@ -76,7 +76,7 @@
       await updateChainRPC(
         primaryWallet.provider,
         validAppChain,
-        validAppChain?.protectedRpcUrl || BN_PROTECT_RPC_URL
+        validAppChain?.protectedRpcUrl || BN_BOOST_RPC_URL
       )
       enableTransactionProtection = false
     } catch (error) {
@@ -332,6 +332,8 @@
   <EnableTransactionProtectionModal
     onDismiss={() => (enableTransactionProtection = false)}
     onEnable={() => enableProtectionRPC()}
+    transactionProtectionInfoLink={$accountCenter$.transactionProtectionInfoLink ||
+      BN_BOOST_INFO_URL}
   />
 {/if}
 

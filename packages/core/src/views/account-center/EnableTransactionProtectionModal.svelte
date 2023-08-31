@@ -6,6 +6,7 @@
 
   export let onEnable: () => void
   export let onDismiss: () => void
+  export let transactionProtectionInfoLink: string
 </script>
 
 <style>
@@ -86,8 +87,7 @@
       <div>
         {$_('modals.confirmTransactionProtection.description')}
         <a
-        href={connect.iDontHaveAWalletLink ||
-          'https://ethereum.org/en/wallets/find-wallet/#main-content'}
+        href={transactionProtectionInfoLink}
         target="_blank"
         rel="noreferrer noopener"
         class="no-link"
