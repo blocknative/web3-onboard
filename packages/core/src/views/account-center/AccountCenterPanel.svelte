@@ -332,7 +332,7 @@
   <EnableTransactionProtectionModal
     onDismiss={() => (enableTransactionProtection = false)}
     onEnable={() => enableProtectionRPC()}
-    transactionProtectionInfoLink={$accountCenter$.transactionProtectionInfoLink ||
+    infoLink={$accountCenter$.transactionProtectionInfoLink ||
       BN_BOOST_INFO_URL}
   />
 {/if}
