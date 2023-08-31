@@ -839,7 +839,10 @@ const coin98wallet: InjectedWalletModule = {
     let provider: EIP1193Provider
 
     // check if coin98 is injected into window.ethereum
-    if (ethereumInjectionExists && window[InjectedNameSpace.Ethereum].isCoin98) {
+    if (
+      ethereumInjectionExists &&
+      window[InjectedNameSpace.Ethereum].isCoin98
+    ) {
       provider = window[InjectedNameSpace.Ethereum]
     } else {
       // directly use the window.coin98 injection
@@ -865,6 +868,18 @@ const subwallet: InjectedWalletModule = {
   }),
   platforms: ['all'],
   externalUrl: ProviderExternalUrl.SubWallet
+}
+
+const kayros: InjectedWalletModule = {
+  label: ProviderLabel.Kayros,
+  injectedNamespace: InjectedNameSpace.Kayros,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Kayros],
+  getIcon: async () => (await import('./icons/kayros.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.kayros)
+  }),
+  platforms: ['desktop']
 }
 
 const wallets = [
@@ -920,7 +935,8 @@ const wallets = [
   fordefi,
   ronin,
   coin98wallet,
-  subwallet
+  subwallet,
+  kayros
 ]
 
 export default wallets
