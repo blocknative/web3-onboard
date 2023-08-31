@@ -281,6 +281,13 @@ export type AccountCenter = {
    * Can be set as a global for Account Center or per interface (desktop/mobile)
    */
   hideTransactionProtectionBtn?: boolean
+    /**
+   * defaults to 
+   * `docs.blocknative.com/blocknative-mev-protection/transaction-boost-alpha`
+   * Use this property to override the default link to give users
+   * more information about transaction protection and the RPC be set
+   */
+  transactionProtectionInfoLink?: string
   position?: AccountCenterPosition
   expanded?: boolean
   minimal?: boolean

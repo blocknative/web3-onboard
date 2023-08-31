@@ -2,6 +2,8 @@
   import { _ } from 'svelte-i18n'
   import { fly } from 'svelte/transition'
   import { quartOut } from 'svelte/easing'
+  import { shareReplay, startWith } from 'rxjs'
+
   import { wallets$ } from '../../streams.js'
   import en from '../../i18n/en.json'
   import WalletRow from './WalletRow.svelte'
@@ -22,10 +24,9 @@
   import shieldIcon from '../../icons/shield-icon.js'
   import { poweredByBlocknative } from '../../icons/index.js'
   import DisconnectAllConfirm from './DisconnectAllConfirm.svelte'
-  import EnableTransactionProtection from './EnableTransactionProtection.svelte'
+  import EnableTransactionProtectionModal from './EnableTransactionProtectionModal.svelte'
   import { configuration } from '../../configuration.js'
   import SecondaryTokenTable from './SecondaryTokenTable.svelte'
-  import { shareReplay, startWith } from 'rxjs'
   import { updateChainRPC } from '../../provider.js'
   import { BN_PROTECT_RPC_URL } from '../../constants.js'
 
@@ -75,7 +76,7 @@
       await updateChainRPC(
         primaryWallet.provider,
         validAppChain,
-        BN_PROTECT_RPC_URL
+        validAppChain?.protectedRpcUrl || BN_PROTECT_RPC_URL
       )
       enableTransactionProtection = false
     } catch (error) {
@@ -328,7 +329,7 @@
   />
 {/if}
 {#if enableTransactionProtection}
-  <EnableTransactionProtection
+  <EnableTransactionProtectionModal
     onDismiss={() => (enableTransactionProtection = false)}
     onEnable={() => enableProtectionRPC()}
   />
@@ -457,8 +458,8 @@
             </div>
           </div>
         </div>
-        <!-- Only display on Eth Mainnet -->
-        {#if !$accountCenter$.hideTransactionProtectionBtn && primaryWalletOnMainnet}
+        <!-- Only display on Eth Mainnet if protectedRpcUrl is not set per chain -->
+        {#if !$accountCenter$.hideTransactionProtectionBtn && (primaryWalletOnMainnet || validAppChain?.protectedRpcUrl)}
           <div
             on:click={() => (enableTransactionProtection = true)}
             class="protect action-container flex items-center pointer"
