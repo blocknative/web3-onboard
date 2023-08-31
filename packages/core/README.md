@@ -364,13 +364,12 @@ type AccountCenter = {
   position?: AccountCenterPosition // default: 'bottomRight'
   expanded?: boolean // default: true
   minimal?: boolean // enabled by default for mobile
-  /**
-   * false by default - This allows removal of the
-   * Enable Transaction Protection' button within the Account Center
-   * expanded when set to true
-   * Can be set as a global for Account Center or per interface (desktop/mobile)
-   */
-  hideTransactionProtectionBtn?: boolean
+/**
+ * Controls the visibility of the 'Enable Transaction Protection' button within the expanded Account Center.
+ * - When set to false (default), the button is visible.
+ * - When set to true, the button is hidden.
+ * This setting can be configured globally for the Account Center, or separately for different interfaces like desktop/mobile.
+ */
   /**
    * defaults to
    * `docs.blocknative.com/blocknative-mev-protection/transaction-boost-alpha`
