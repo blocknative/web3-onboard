@@ -327,6 +327,8 @@
     },
     // // example customizing account center
     accountCenter: {
+      
+        transactionProtectionInfoLink: 'https://onboard.blocknative.com',
       desktop: {
         enabled: true
       }

@@ -302,6 +302,13 @@ export type AccountCenterOptions = {
   desktop: Omit<AccountCenter, 'expanded'>
   mobile: Omit<AccountCenter, 'expanded'>
   /**
+   * defaults to
+   * `docs.blocknative.com/blocknative-mev-protection/transaction-boost-alpha`
+   * Use this property to override the default link to give users
+   * more information about transaction protection and the RPC be set
+   */
+  transactionProtectionInfoLink?: string
+  /**
    * false by default - This allows removal of the
    * Enable Transaction Protection' button within the Account Center
    * expanded when set to true
