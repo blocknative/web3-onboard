@@ -93,6 +93,7 @@ console.log(connectedWallets)
 - Ronin Wallet - _Desktop & Mobile_
 - Coin98 Wallet - _Desktop & Mobile_
 - SubWallet - _Desktop & Mobile_
+- Kayros - _Desktop_
 
 ## Filtering Wallets
 
