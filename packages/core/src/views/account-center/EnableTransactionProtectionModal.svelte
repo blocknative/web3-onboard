@@ -6,6 +6,7 @@
 
   export let onEnable: () => void
   export let onDismiss: () => void
+  export let infoLink: string
 </script>
 
 <style>
@@ -13,7 +14,7 @@
     --background-color: var(--w3o-background-color);
     --text-color: var(--w3o-text-color);
     --action-color: var(--w3o-action-color, var(--primary-500));
-    
+
     font-size: 1rem;
     line-height: 1.5rem;
 
@@ -33,7 +34,7 @@
     width: 3rem;
     height: 3rem;
     border-radius: 24px;
-    padding: .75rem;
+    padding: 0.75rem;
     background: none;
   }
   .icon-container::before {
@@ -85,6 +86,15 @@
       </div>
       <div>
         {$_('modals.confirmTransactionProtection.description')}
+        <a
+          href={infoLink}
+          target="_blank"
+          rel="noreferrer noopener"
+          class="no-link"
+          >{$_('modals.confirmTransactionProtection.link', {
+            default: en.modals.confirmTransactionProtection.link
+          })}
+        </a>
       </div>
     </div>
 
