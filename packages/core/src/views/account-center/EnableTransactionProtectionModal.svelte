@@ -86,16 +86,16 @@
       </div>
       <div>
         {$_('modals.confirmTransactionProtection.description')}
-        <a
-          href={infoLink}
-          target="_blank"
-          rel="noreferrer noopener"
-          class="no-link"
-          >{$_('modals.confirmTransactionProtection.link', {
-            default: en.modals.confirmTransactionProtection.link
-          })}
-        </a>
       </div>
+      <a
+        href={infoLink}
+        target="_blank"
+        rel="noreferrer noopener"
+        class="no-link"
+        >{$_('modals.confirmTransactionProtection.link', {
+          default: en.modals.confirmTransactionProtection.link
+        })}
+      </a>
     </div>
 
     <div class="actions-container">
