@@ -170,7 +170,6 @@
   const cedeStore = cedeStoreModule()
   const blocto = bloctoModule()
   const tallyho = tallyHoModule()
-  const capsule = capsuleModule()
 
   const trezorOptions = {
     email: 'test@test.com',
@@ -209,6 +208,10 @@
     clientId: 'blocknative',
     environment: 'staging'
   })
+  const capsule = capsuleModule({ 
+    appName: 'Blocknative Test App', 
+    apiKey: undefined 
+  })
 
   const onboard = Onboard({
     wallets: [
@@ -236,6 +239,7 @@
       sequence,
       uauth,
       web3auth,
+      capsule,
       zeal,
       frontier,
       xdefi,
@@ -244,7 +248,6 @@
       arcanaAuth,
       blocto,
       venly,
-      capsule
     ],
     transactionPreview,
     gas,
