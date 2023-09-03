@@ -4389,17 +4389,17 @@
     crypto-js "^4.1.1"
     elliptic "^6.5.4"
 
-"@usecapsule/user-management-client@0.13.0":
-  version "0.13.0"
-  resolved "https://registry.yarnpkg.com/@usecapsule/user-management-client/-/user-management-client-0.13.0.tgz#ba585ad08544dbb4eed3268afc16135651b21618"
-  integrity sha512-IqT6yWmktDjwyUaBdAbX8tWmfL9BTjTH+rfFBJFBrqozhojPzkMG1XBzswBwmT5Hmdi3xKIbZbHPM2z60U8HyQ==
+"@usecapsule/user-management-client@0.14.0":
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/@usecapsule/user-management-client/-/user-management-client-0.14.0.tgz#bec115f77281cf66243255086e6a99101f7e8648"
+  integrity sha512-F7QcyHfl/5F92/cHgcV2NUT2tBE94l0Qb8C+iZH+GabWubnUgcGFJVRsS0rgPgDLk0mpUeXV+Fr5Th0I+IhyrQ==
   dependencies:
     axios "^0.27.2"
 
-"@usecapsule/web-sdk@^0.19.0":
-  version "0.19.0"
-  resolved "https://registry.yarnpkg.com/@usecapsule/web-sdk/-/web-sdk-0.19.0.tgz#caa7fa8466955ed2a73daccddede720bf1cfb158"
-  integrity sha512-JlGnJh465F6ybUGVtj8UMtKNX5Tg8WDLZHx4ORDi68ADb1VXugQIAGFdoHkKPDbgnWfi2lEgs9/MRz7obHRYjQ==
+"@usecapsule/web-sdk@0.20.0":
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/@usecapsule/web-sdk/-/web-sdk-0.20.0.tgz#cb13aebf1df0313faf777f104a9f586ce0d78c6a"
+  integrity sha512-5OdqefFmzR6dV6WMptudebhTVU1we7LYdvpJNHdPfwug7dWcl4Ljb1rz4IhXWHxQ7QLzT5ElQPjmgx3vn2AthQ==
   dependencies:
     "@celo/utils" "3.2.0"
     "@chakra-ui/react" "1.8.9"
@@ -4410,7 +4410,7 @@
     "@emotion/react" "^11.10.8"
     "@emotion/styled" "^11.10.8"
     "@ramp-network/ramp-instant-sdk" "^4.0.2"
-    "@usecapsule/user-management-client" "0.13.0"
+    "@usecapsule/user-management-client" "0.14.0"
     "@wagmi/chains" "^1.7.0"
     "@wagmi/connectors" "^2.7.0"
     assert "2.0.0"
