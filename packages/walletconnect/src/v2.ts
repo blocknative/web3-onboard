@@ -1,6 +1,7 @@
-import type { CoreTypes } from '@walletconnect/types'
-import type { EthereumProvider } from '@walletconnect/ethereum-provider'
+import { REQUIRED_METHODS } from '@walletconnect/ethereum-provider'
 import type { EthereumProviderOptions } from '@walletconnect/ethereum-provider/dist/types/EthereumProvider'
+import type { EthereumProvider } from '@walletconnect/ethereum-provider'
+import type { CoreTypes } from '@walletconnect/types'
 
 import type {
   Chain,
@@ -34,9 +35,12 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
     requiredChains,
     optionalChains,
     qrModalOptions,
+    additionalRequiredMethods,
     additionalOptionalMethods,
     dappUrl
   } = options
+
+  let instance: unknown
 
   return () => {
     return {
@@ -56,10 +60,7 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
 
         const getMetaData = (): CoreTypes.Metadata | undefined => {
           if (!appMetadata) return undefined
-          const url =
-            dappUrl ||
-            appMetadata.explore ||
-            ''
+          const url = dappUrl || appMetadata.explore || ''
 
           !url &&
             !url.length &&
@@ -105,6 +106,13 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
               optionalChains.map(chainID => parseInt(chainID))
             : chains.map(({ id }) => parseInt(id, 16))
 
+        const requiredMethodsSet = new Set(
+          additionalRequiredMethods && Array.isArray(additionalRequiredMethods)
+            ? [...additionalRequiredMethods, ...REQUIRED_METHODS]
+            : REQUIRED_METHODS
+        )
+        const requiredMethods = Array.from(requiredMethodsSet)
+
         const optionalMethods =
           additionalOptionalMethods && Array.isArray(additionalOptionalMethods)
             ? [...additionalOptionalMethods, ...methods]
@@ -113,6 +121,7 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
         const connector = await EthereumProvider.init({
           projectId,
           chains: requiredChainsParsed, // default to mainnet
+          methods: requiredMethods,
           optionalChains: optionalChainsParsed,
           optionalMethods,
           showQrModal: true,
@@ -202,7 +211,10 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
               })
 
             this.disconnect = () => {
-              if (this.connector.session) this.connector.disconnect()
+              if (this.connector.session) {
+                this.connector.disconnect()
+                instance = null
+              }
             }
 
             if (options && handleUri) {
@@ -224,6 +236,7 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
 
             const checkForSession = () => {
               const session = this.connector.session
+              instance = session
               if (session) {
                 this.emit('accountsChanged', this.connector.accounts)
                 this.emit('chainChanged', this.connector.chainId)
@@ -279,6 +292,7 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
                       // update ethereum provider to load accounts & chainId
                       const accounts = this.connector.accounts
                       const chainId = this.connector.chainId
+                      instance = this.connector.session
                       const hexChainId = `0x${chainId.toString(16)}`
                       this.emit('chainChanged', hexChainId)
                       return resolve(accounts)
@@ -330,7 +344,8 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
         }
 
         return {
-          provider: new EthProvider({ chains, connector })
+          provider: new EthProvider({ chains, connector }),
+          instance
         }
       }
     }
