@@ -299,7 +299,7 @@ const injected = injectedModule({
 - Trust - _Desktop & Mobile_
 - SafePal - _Desktop & Mobile_
 - Zerion - _Desktop & Mobile_
-- OKX Wallet - _Desktop_
+- OKX Wallet - _Desktop & Mobile_
 - Taho (Previously named Tally Ho wallet) - _Desktop_
 - Opera - _Desktop & Mobile_
 - Status - _Mobile_
@@ -345,6 +345,7 @@ const injected = injectedModule({
 - Ronin Wallet - _Desktop & Mobile_
 - Coin98 Wallet - _Desktop & Mobile_
 - SubWallet - _Desktop & Mobile_
+- Kayros - _Desktop_
 
 ## Build Environments
 
