@@ -38,4 +38,4 @@ export const STORAGE_KEYS = {
 export const MOBILE_WINDOW_WIDTH = 768
 
 export const BN_BOOST_RPC_URL = 'https://rpc.blocknative.com/boost'
-export const BN_BOOST_INFO_URL = 'https://docs.blocknative.com/blocknative-mev-protection/transaction-boost-alpha'
+export const BN_BOOST_INFO_URL = 'https://docs.blocknative.com/blocknative-mev-protection/transaction-boost'
