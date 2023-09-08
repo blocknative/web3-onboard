@@ -18,7 +18,7 @@ bitget Wallet SDK wallet module for connecting to Web3-Onboard. Web3-Onboard mak
 import Onboard from '@web3-onboard/core'
 import bitgetModule from '@web3-onboard/bitget'
 
-const bitKeep = bitgetModule()
+const bitget = bitgetModule()
 
 const onboard = Onboard({
   // ... other Onboard options
