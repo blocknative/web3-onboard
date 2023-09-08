@@ -1,77 +1,63 @@
-import { MetaMaskSDKOptions, EventType } from '@metamask/sdk'
-import { EIP1193Provider, WalletInit } from '@web3-onboard/common'
+import { MetaMaskSDK, MetaMaskSDKOptions, EventType } from '@metamask/sdk'
+import { EIP1193Provider, WalletInit, createEIP1193Provider } from '@web3-onboard/common'
 
 function metamaskWallet({
   options
 }: {
-  options: MetaMaskSDKOptions
+  options: Partial<MetaMaskSDKOptions>
 }): WalletInit {
   return (helpers) => {
+
+    let sdk: MetaMaskSDK
+
     return {
-      label: 'MetaMask Wallet',
+      label: 'MetaMask SDK',
       getIcon: async () => (await import('./icon.js')).default,
       getInterface: async ({ chains, appMetadata }) => {
         const [chain] = chains
         const { name, icon } = appMetadata || {}
-        const { Subject, fromEvent } = await import('rxjs')
-        const { takeUntil, take } = await import('rxjs/operators')
-
-        console.log(`getInterface`, helpers, options, chain, name, icon)
-        // according to https://github.com/wagmi-dev/wagmi/issues/383
-        // @coinbase/wallet-sdk export double default fields
-        // so we need to detect it to get the real constructor
-        const { MetaMaskSDK } = await import(
-          '@metamask/sdk'
-        )
-
         const base64 = window.btoa(icon || '')
         const appLogoUrl = `data:image/svg+xml;base64,${base64}`
 
-        const instance = new MetaMaskSDK({
-          communicationServerUrl: 'http://192.168.50.114:4000',
-          dappMetadata: {
-            name: name || '',
-            base64Icon: appLogoUrl
-          },
-          _source: 'web3-onboard'
-        })
+        if (!sdk) {
+          sdk = new MetaMaskSDK({
+            ...options,
+            dappMetadata: {
+              name: options.dappMetadata?.name || name || '',
+              base64Icon: appLogoUrl
+            },
+            _source: 'web3-onboard'
+          })
+        }
+        await sdk.init()
 
-        await instance.init()
-
-        fromEvent(instance.getProvider(), 'disconnect', (error, payload) => {
-          console.warn(`MetaMask Wallet disconnected`)
-          if (error) {
-            throw error
+        const getProvider = () => {
+          const provider = createEIP1193Provider(sdk.getProvider(), {
+            // If needed you can patch methods here - example
+            // eth_chainId: ({ baseRequest }) =>
+            //   baseRequest({ method: 'eth_chainId' }).then(
+            //     id => `0x${parseInt(id).toString(16)}`
+            //   ),
+            // wallet_switchEthereumChain: UNSUPPORTED_METHOD
+          })
+          provider.disconnect = () => {
+            sdk.terminate()
           }
-          return payload
-        })
-          // .pipe(takeUntil(this.disconnected$))
-          // .subscribe({
-          //   next: () => {
-          //     this.emit(‘accountsChanged’, [])
-          //     this.disconnected$.next(true)
-          //     typeof localStorage !== ‘undefined’ &&
-          //       localStorage.removeItem(‘walletconnect’)
-          //   },
-          //   error: console.warn
-          // })
+          return provider;
+        }
+        const provider = getProvider()
 
-        instance.getProvider().on('disconnect', () => {
-          console.log(`MetaMask Wallet disconnected`)
-        })
-        instance.getProvider().on('disconnected', () => {
-          console.log(`MetaMask Wallet disconnected`)
-        })
-        instance.on(EventType.PROVIDER_UPDATE, (status) => {
-          console.debug(`MetaMask Wallet provider updated`, status)
-        })
-        instance.on('disconnect', () => {
-          console.warn(`MetaMask Wallet disconnected`)
-        })
+        const _request = provider.request
+        provider.request = async ({ method, params }) => {
+          if (sdk.isExtensionActive()) {
+            return (window.extension as any).request({ method, params })
+          }
+          return _request({ method, params }) as Promise<any>
+        }
 
         return {
-          provider: instance.getProvider() as unknown as EIP1193Provider,
-          instance
+          provider,
+          instance: sdk
         }
       }
     }
