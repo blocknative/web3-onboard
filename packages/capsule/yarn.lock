@@ -2099,10 +2099,10 @@
   dependencies:
     axios "^0.27.2"
 
-"@usecapsule/web-sdk@0.20.0":
-  version "0.20.0"
-  resolved "https://registry.yarnpkg.com/@usecapsule/web-sdk/-/web-sdk-0.20.0.tgz#cb13aebf1df0313faf777f104a9f586ce0d78c6a"
-  integrity sha512-5OdqefFmzR6dV6WMptudebhTVU1we7LYdvpJNHdPfwug7dWcl4Ljb1rz4IhXWHxQ7QLzT5ElQPjmgx3vn2AthQ==
+"@usecapsule/web-sdk@0.20.0-dev.7":
+  version "0.20.0-dev.7"
+  resolved "https://registry.yarnpkg.com/@usecapsule/web-sdk/-/web-sdk-0.20.0-dev.7.tgz#7994fb3c576d3cee15f5b9d93242204f8f513872"
+  integrity sha512-zpM3pkA8C6A+XYnfdY8iCa/SReTKNUQHvAG/VK9V7W/P8LKZZI29Uq5afQeR0TM+J54c9MfKXw4pkXJyqDy6OQ==
   dependencies:
     "@celo/utils" "3.2.0"
     "@chakra-ui/react" "1.8.9"
