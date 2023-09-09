@@ -1,6 +1,6 @@
 import { WalletInit } from '@web3-onboard/common';
 import Capsule, { Environment, CapsuleEIP1193Provider } from '@usecapsule/web-sdk';
-import { mainnet, sepolia, goerli } from '@wagmi/chains';
+import { sepolia, goerli } from '@wagmi/chains';
 import type { CapsuleInitOptions } from './types.js'
 
 function capsule(options: CapsuleInitOptions): WalletInit {
