@@ -171,7 +171,7 @@ const appMetadata = {
 
 const web3Onboard = init({
   wallets,
-  chains
+  chains,
   appMetadata
 })
 
