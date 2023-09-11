@@ -183,7 +183,8 @@ const accountCenterInitOptions = Joi.object({
   position: commonPositions,
   minimal: Joi.boolean(),
   containerElement: Joi.string(),
-  hideTransactionProtectionBtn: Joi.boolean()
+  hideTransactionProtectionBtn: Joi.boolean(),
+  transactionProtectionInfoLink: Joi.string()
 })
 
 const accountCenter = Joi.object({
@@ -192,6 +193,7 @@ const accountCenter = Joi.object({
   expanded: Joi.boolean(),
   minimal: Joi.boolean(),
   hideTransactionProtectionBtn: Joi.boolean(),
+  transactionProtectionInfoLink: Joi.string(),
   containerElement: Joi.string()
 })
 
@@ -235,7 +237,8 @@ const initOptions = Joi.object({
   accountCenter: Joi.object({
     desktop: accountCenterInitOptions,
     mobile: accountCenterInitOptions,
-    hideTransactionProtectionBtn: Joi.boolean()
+    hideTransactionProtectionBtn: Joi.boolean(),
+    transactionProtectionInfoLink: Joi.string()
   }),
   notify: [notifyOptions, notify],
   gas: Joi.object({
@@ -255,14 +258,13 @@ const initOptions = Joi.object({
 })
 
 const connectOptions = Joi.object({
-  autoSelect: Joi.alternatives()
-    .try(
-      Joi.object({
-        label: Joi.string().required(),
-        disableModals: Joi.boolean()
-      }),
-      Joi.string()
-    )
+  autoSelect: Joi.alternatives().try(
+    Joi.object({
+      label: Joi.string().required(),
+      disableModals: Joi.boolean()
+    }),
+    Joi.string()
+  )
 })
 
 const disconnectOptions = Joi.object({

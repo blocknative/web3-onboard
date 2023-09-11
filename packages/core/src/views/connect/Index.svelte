@@ -65,7 +65,7 @@
 
   const { unstoppableResolution, device } = configuration
 
-  const { walletModules, connect } = state.get()
+  const { walletModules, connect, chains } = state.get()
   const cancelPreviousConnect$ = new Subject<void>()
 
   let connectionRejected = false
@@ -361,7 +361,11 @@
     }
 
     if (ens === null && validEnsChain(connectedWalletChain.id)) {
-      getEns(address, appChain).then(ens => {
+      const ensChain = chains.find(
+        ({ id }) => id === validEnsChain(connectedWalletChain.id)
+      )
+
+      getEns(address, ensChain).then(ens => {
         updateAccount(selectedWallet.label, address, {
           ens
         })
