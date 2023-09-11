@@ -148,6 +148,7 @@ type Chain = {
   publicRpcUrl?: string // an optional public RPC used when adding a new chain config to the wallet
   blockExplorerUrl?: string // also used when adding a new config to the wallet
   secondaryTokens?: SecondaryTokens[] // An optional array of tokens (max of 5) to be available to the dapp in the app state object per wallet within the wallet account and displayed in Account Center (if enabled)
+  protectedRpcUrl?: string //An optional protected RPC URL - Defaults to Blocknative's private RPC aggregator to allow users to update the chain RPC within their wallet, specifically for private RPCs that protect user transactions. More information can be found at `https://docs.blocknative.com/blocknative-mev-protection/transaction-boost`
 }
 interface SecondaryTokens {
   /**
@@ -363,6 +364,16 @@ type AccountCenter = {
   position?: AccountCenterPosition // default: 'bottomRight'
   expanded?: boolean // default: true
   minimal?: boolean // enabled by default for mobile
+  /**
+   * Controls the visibility of the 'Enable Transaction Protection' button within the expanded Account Center.
+   * - When set to false (default), the button is visible.
+   * - When set to true, the button is hidden.
+   * This setting can be configured globally for the Account Center, or separately for different interfaces like desktop/mobile.
+   * defaults to `docs.blocknative.com/blocknative-mev-protection/transaction-boost-alpha`
+   * Use this property to override the default link to give users
+   * more information about transaction protection and the RPC be set
+   */
+  transactionProtectionInfoLink?: string
 
   /**
    * @deprecated Use top level containerElements property
@@ -381,6 +392,16 @@ type AccountCenterOptions = {
    * Can be set as a global for Account Center or per interface (desktop/mobile)
    */
   hideTransactionProtectionBtn?: boolean
+  /**
+   * Controls the visibility of the 'Enable Transaction Protection' button within the expanded Account Center.
+   * - When set to false (default), the button is visible.
+   * - When set to true, the button is hidden.
+   * This setting can be configured globally for the Account Center, or separately for different interfaces like desktop/mobile.
+   * defaults to `docs.blocknative.com/blocknative-mev-protection/transaction-boost-alpha`
+   * Use this property to override the default link to give users
+   * more information about transaction protection and the RPC be set
+   */
+  transactionProtectionInfoLink?: string
 }
 
 type AccountCenterPosition =

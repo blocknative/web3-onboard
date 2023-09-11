@@ -62,15 +62,21 @@ export function getDevice(): Device | DeviceNotBrowser {
 export const notNullish = <T>(value: T | null | undefined): value is T =>
   value != null
 
-export function validEnsChain(chainId: ChainId): boolean {
+export function validEnsChain(chainId: ChainId): ChainId | null {
+  // return L2s as Eth for ens resolution
   switch (chainId) {
     case '0x1':
-    case '0x3':
-    case '0x4':
-    case '0x5':
-      return true
+    case '0x89': // Polygon
+    case '0xa': //Optimism
+    case '0xa4b1': // Arb
+    case '0x144': // zksync
+      return '0x1'
+    case '0x5': // Goerli
+      return chainId
+    case '0xaa36a7': // Sepolia
+      return chainId
     default:
-      return false
+      return null
   }
 }
 

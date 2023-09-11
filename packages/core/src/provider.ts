@@ -211,11 +211,15 @@ export function trackWallet(
         )
         const account = accounts.find(account => account.address === address)
 
+        const ensChain = chains.find(
+          ({ id }) => id === validEnsChain(connectedWalletChain.id)
+        )
+
         const ensProm =
           account && account.ens
             ? Promise.resolve(account.ens)
-            : validEnsChain(connectedWalletChain.id)
-            ? getEns(address, chain)
+            : ensChain
+            ? getEns(address, ensChain)
             : Promise.resolve(null)
 
         const unsProm =
@@ -320,13 +324,16 @@ export function trackWallet(
               address,
               chain
             )
+            const ensChain = chains.find(
+              ({ id }) => id === validEnsChain(chainId)
+            )
 
-            const ensProm = validEnsChain(chainId)
-              ? getEns(address, chain)
+            const ensProm = ensChain
+              ? getEns(address, ensChain)
               : Promise.resolve(null)
 
             const unsProm = validEnsChain(chainId)
-              ? getUns(address, chain)
+              ? getUns(address, ensChain)
               : Promise.resolve(null)
 
             const [balance, ens, uns, secondaryTokens] = await Promise.all([
