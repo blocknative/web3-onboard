@@ -130,8 +130,8 @@ const intiOnboard = async (theme) => {
   return Onboard({
     connect: { autoConnectAllPreviousWallet: true },
     wallets: [
-      injected,
       metamask,
+      injected,
       walletConnect,
       coinbase,
       ledger,
