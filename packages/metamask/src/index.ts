@@ -1,33 +1,30 @@
-import { MetaMaskSDK, MetaMaskSDKOptions } from '@metamask/sdk'
-import { WalletInit, createEIP1193Provider } from '@web3-onboard/common'
+import type { MetaMaskSDKOptions } from '@metamask/sdk'
+import type { WalletInit } from '@web3-onboard/common'
 
-function metamaskWallet({
+function metamask({
   options
 }: {
   options: Partial<MetaMaskSDKOptions>
 }): WalletInit {
-  return (helpers) => {
-
-    let sdk: MetaMaskSDK
-
+  return () => {
     return {
-      label: 'MetaMask SDK',
+      label: 'MetaMask',
       getIcon: async () => (await import('./icon.js')).default,
-      getInterface: async ({ chains, appMetadata }) => {
+      getInterface: async ({ appMetadata }) => {
         const { name, icon } = appMetadata || {}
         const base64 = window.btoa(icon || '')
         const appLogoUrl = `data:image/svg+xml;base64,${base64}`
+        const { createEIP1193Provider } = await import('@web3-onboard/common')
+        const { MetaMaskSDK } = await import('@metamask/sdk')
 
-        if (!sdk) {
-          sdk = new MetaMaskSDK({
-            ...options,
-            dappMetadata: {
-              name: options.dappMetadata?.name || name || '',
-              base64Icon: appLogoUrl
-            },
-            _source: 'web3-onboard'
-          })
-        }
+        const sdk = new MetaMaskSDK({
+          ...options,
+          dappMetadata: {
+            name: options.dappMetadata?.name || name || '',
+            base64Icon: appLogoUrl
+          },
+          _source: 'web3-onboard'
+        })
         await sdk.init()
 
         const getProvider = () => {
@@ -35,7 +32,7 @@ function metamaskWallet({
           provider.disconnect = () => {
             sdk.terminate()
           }
-          return provider;
+          return provider
         }
         const provider = getProvider()
 
@@ -56,4 +53,4 @@ function metamaskWallet({
   }
 }
 
-export default metamaskWallet
+export default metamask
