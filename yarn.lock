@@ -1880,10 +1880,10 @@
   resolved "https://registry.yarnpkg.com/@metamask/safe-event-emitter/-/safe-event-emitter-3.0.0.tgz#8c2b9073fe0722d48693143b0dc8448840daa3bd"
   integrity sha512-j6Z47VOmVyGMlnKXZmL0fyvWfEYtKWCA9yGZkU3FCsGZUT5lHGmvaV9JA5F2Y+010y7+ROtR3WMXIkvl/nVzqQ==
 
-"@metamask/sdk-communication-layer@0.6.1":
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/@metamask/sdk-communication-layer/-/sdk-communication-layer-0.6.1.tgz#8efc486382720033cd3d8c3e69acb34c3204568a"
-  integrity sha512-MdXDGkAp7I/4ufutyxNYJn888q0/EIeCsLg/Y6COoxSFSs3oPdC0ilC9kgod2e/snqJ0MOPbFqQnaDI8GKsFgg==
+"@metamask/sdk-communication-layer@0.6.2":
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/@metamask/sdk-communication-layer/-/sdk-communication-layer-0.6.2.tgz#f1366756da1793c2db98dfd54ca2e6c8dfc5dc70"
+  integrity sha512-FXCeA25fIZNGTyrfjC/39mORuOiLqCW3LUNnaeZTMkn9ItSGKVqBnLs6YPuxk26YejYltY227wxD4KAQeS8aOA==
   dependencies:
     cross-fetch "^3.1.5"
     date-fns "^2.29.3"
@@ -1892,10 +1892,10 @@
     socket.io-client "^4.5.1"
     uuid "^8.3.2"
 
-"@metamask/sdk-install-modal-web@0.6.1":
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/@metamask/sdk-install-modal-web/-/sdk-install-modal-web-0.6.1.tgz#50a4981b9966fb62078e404a5365f51a2e3c0f55"
-  integrity sha512-w602bo2/lt44onkXi6EPMdrl7/GkSHMyvD+OBPV2i/N3zzQr64v9YWW5+SciX64PSVYB4FQ5u7yFyVHkwgZZcQ==
+"@metamask/sdk-install-modal-web@0.6.2":
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/@metamask/sdk-install-modal-web/-/sdk-install-modal-web-0.6.2.tgz#b47fc4c30278a7a20974db145019eff3b3a35ecb"
+  integrity sha512-bylLobcmInduUb7Xs0Ay3iWpeBWs/ose0G/anH6qvWAN/nLNlGAGN0sS0/ejMguv7XK09ddO3oN3IOSqiqV74Q==
   dependencies:
     "@emotion/react" "^11.10.6"
     "@emotion/styled" "^11.10.6"
@@ -1903,16 +1903,16 @@
     react "^18.2.0"
     react-dom "^18.2.0"
 
-"@metamask/sdk@^0.6.0":
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/@metamask/sdk/-/sdk-0.6.1.tgz#61eb3ee70e4649c737d62fa01a10e0b66d8a2aad"
-  integrity sha512-bQDkwhKJ/eW5zEMYayXVEsiwH3+aYzkPNssc6K4PrxyawafS86CeA5Yvan+mdB/m1hzGOuuJlVp2eejax4MCBw==
+"@metamask/sdk@^0.6.2":
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/@metamask/sdk/-/sdk-0.6.2.tgz#384056e9529ca854ee73deb432a8cd80308589b8"
+  integrity sha512-IaAXEkG7v4uPJZZsp2ZOfmtGW6uO3awv5NqVuOzYxq1JyvzxZJBhVJMWQlu0WdBUMHX5GU1KPn+FeMb8x1v+yw==
   dependencies:
     "@metamask/onboarding" "^1.0.1"
     "@metamask/post-message-stream" "^6.1.0"
     "@metamask/providers" "^10.2.1"
-    "@metamask/sdk-communication-layer" "0.6.1"
-    "@metamask/sdk-install-modal-web" "0.6.1"
+    "@metamask/sdk-communication-layer" "0.6.2"
+    "@metamask/sdk-install-modal-web" "0.6.2"
     "@react-native-async-storage/async-storage" "^1.17.11"
     "@types/dom-screen-wake-lock" "^1.0.0"
     bowser "^2.9.0"
