@@ -13,7 +13,6 @@ async function disconnect(options: DisconnectOptions): Promise<WalletState[]> {
     throw error
   }
 
-  console.log(`core>disconnect`, state)
   const { label } = options
 
   if (state.get().notify.enabled) {
