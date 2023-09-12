@@ -18,6 +18,7 @@
   import gas from '@web3-onboard/gas'
   import dcentModule from '@web3-onboard/dcent'
   import sequenceModule from '@web3-onboard/sequence'
+  import tallyHoModule from '@web3-onboard/tallyho'
   import xdefiWalletModule from '@web3-onboard/xdefi'
   import zealModule from '@web3-onboard/zeal'
   import transactionPreviewModule from '@web3-onboard/transaction-preview'
@@ -117,6 +118,7 @@
   const coinbaseWallet = coinbaseModule()
 
   const metamaskSDKWallet = metamaskSDK({options: {
+    extensionOnly: false,
     dappMetadata: {
       name: 'Demo Web3Onboard'
     }
@@ -198,7 +200,6 @@
 
   const onboard = Onboard({
     wallets: [
-      // injected,
       metamaskSDKWallet,
       // ledger,
       // trezor,
