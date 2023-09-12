@@ -32,7 +32,6 @@ async function disconnect(options: DisconnectOptions): Promise<WalletState[]> {
     }
   }
 
-  console.log(`disconnectWakket$`, label)
   disconnectWallet$.next(label)
   removeWallet(label)
 
