@@ -14,7 +14,6 @@ function metamaskWallet({
       label: 'MetaMask SDK',
       getIcon: async () => (await import('./icon.js')).default,
       getInterface: async ({ chains, appMetadata }) => {
-        const [chain] = chains
         const { name, icon } = appMetadata || {}
         const base64 = window.btoa(icon || '')
         const appLogoUrl = `data:image/svg+xml;base64,${base64}`
@@ -32,14 +31,7 @@ function metamaskWallet({
         await sdk.init()
 
         const getProvider = () => {
-          const provider = createEIP1193Provider(sdk.getProvider(), {
-            // If needed you can patch methods here - example
-            // eth_chainId: ({ baseRequest }) =>
-            //   baseRequest({ method: 'eth_chainId' }).then(
-            //     id => `0x${parseInt(id).toString(16)}`
-            //   ),
-            // wallet_switchEthereumChain: UNSUPPORTED_METHOD
-          })
+          const provider = createEIP1193Provider(sdk.getProvider(), {})
           provider.disconnect = () => {
             sdk.terminate()
           }
