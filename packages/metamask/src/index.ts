@@ -1,5 +1,5 @@
-import { MetaMaskSDK, MetaMaskSDKOptions, EventType } from '@metamask/sdk'
-import { EIP1193Provider, WalletInit, createEIP1193Provider } from '@web3-onboard/common'
+import { MetaMaskSDK, MetaMaskSDKOptions } from '@metamask/sdk'
+import { WalletInit, createEIP1193Provider } from '@web3-onboard/common'
 
 function metamaskWallet({
   options
