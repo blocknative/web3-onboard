@@ -745,7 +745,7 @@ const okxwallet: InjectedWalletModule = {
   getInterface: async () => ({
     provider: createEIP1193Provider(window.okxwallet)
   }),
-  platforms: ['desktop'],
+  platforms: ['all'],
   externalUrl: ProviderExternalUrl.OKXWallet
 }
 
