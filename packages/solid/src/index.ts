@@ -8,9 +8,11 @@ import type {
   DisconnectOptions,
   WalletState,
   ConnectedChain,
-  AppState
+  AppState,
 } from "@web3-onboard/core";
-import { OnboardComposable, SetChainOptions } from "types";
+import {OnboardComposable,SetChainOptions} from "./types";
+export type * from "@web3-onboard/core"
+export type * from "./types"
 
 
 export const STORAGE_KEYS = {
