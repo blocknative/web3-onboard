@@ -154,4 +154,4 @@ const useOnboard = (): OnboardComposable => {
   }
 }
 
-export { init, useOnboard }
+export { init, useOnboard, OnboardComposable, OnboardAPI, InitOptions }
