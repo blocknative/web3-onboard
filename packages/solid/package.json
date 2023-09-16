@@ -68,14 +68,7 @@
   "peerDependencies": {
     "solid-js": "^1.6.0"
   },
-  "packageManager": "pnpm@8.6.0",
   "engines": {
-    "node": ">=18",
-    "pnpm": ">=8.6.0"
-  },
-  "pnpm": {
-    "overrides": {
-        "@rollup/plugin-node-resolve": "13.3.0"
-    }
-}
+    "node": ">=18"
+  }
 }

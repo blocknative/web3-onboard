@@ -4,7 +4,7 @@
 
 # @web3-onboard/solid
 
-A collection of composable functions for implementing web3-onboard in to a Solid project; 
+A collection of composable functions for implementing web3-onboard in to a Solid project;
 
 ## Install Modules
 
@@ -100,8 +100,13 @@ import { useOnboard } from '@web3-onboard/solid'
 // Use the composable
 const onboard = useOnboard()
 // Or destructure it
-const { wallets, connectWallet, disconnectConnectedWallet, connectedWallet } =
-  useOnboard()
+const {
+  wallets,
+  connectedWallet,
+  connectedChain,
+  connectWallet,
+  disconnectConnectedWallet
+} = useOnboard()
 // do stuff
 ```
 
@@ -111,110 +116,38 @@ Function to open the onboard modal and connect to a wallet provider. For referen
 
 ### Example usage
 
-```vue
-<script>
-import { useOnboard } from '@web3-onboard/vue'
-export default {
-  setup() {
-    const { connectWallet } = useOnboard()
-    const connect = async () => connectWallet()
-    return { connect }
-  }
-}
-</script>
+```tsx
+function SampleConnect() {
+  const { connectWallet } = useOnboard()
 
-<template>
-  <button type="button" @click="connect">Connect to a Wallet</button>
-</template>
+  return <button onClick={() => connectWallet()}> connect wallet</button>
+}
 ```
 
 ### `connectedChain`
 
-Computed property that contains the current chain to which `connectedWallet` is connected
+Property that contains the current chain to which `connectedChain` is connected
 
 ### Example usage
 
-```vue
-<script>
-import { useOnboard } from '@web3-onboard/vue'
-export default {
-  setup() {
+```tsx
+function SampleConnect() {
     const { connectedChain } = useOnboard()
-    return { connectedChain }
-  }
-}
-</script>
 
-<template>
-  <span>Connected Chain: {{ connectedChain.id }}</span>
-</template>
+  return <span>Connected Chain: { connectedChain() }</span>
 ```
 
 ### `connectedWallet`
 
-Computed property that contains the latest connected wallet
+Property that contains the latest connected wallet
 
 ### Example usage
 
-```vue
-<script>
-import { useOnboard } from '@web3-onboard/vue'
-export default {
-  setup() {
-    const { connectedWallet } = useOnboard()
-    return { connectedWallet }
-  }
+```tsx
+function SampleConnect() {
+  const { connectedWallet } = useOnboard()
+  return <span>Connected Wallet: {connectedWallet()?.label}</span>
 }
-</script>
-
-<template>
-  <span>Connected Wallet: {{ connectedWallet.label }}</span>
-</template>
-```
-
-### `connectingWallet`
-
-Readonly boolean ref that tracks the state of the wallet connection status
-
-### Example usage
-
-```vue
-<script>
-import { useOnboard } from '@web3-onboard/vue'
-export default {
-  setup() {
-    const { connectingWallet } = useOnboard()
-    return { connectingWallet }
-  }
-}
-</script>
-
-<template>
-  <span v-if="connectingWallet">Connecting...</span>
-</template>
-```
-
-### `disconnectWallet`
-
-Function to disconnect a specific wallet
-
-### Example usage
-
-```vue
-<script>
-import { useOnboard } from '@web3-onboard/vue'
-export default {
-  setup() {
-    const { disconnectWallet } = useOnboard()
-    const disconnect = async () => disconnectWallet('MetaMask')
-    return { disconnect }
-  }
-}
-</script>
-
-<template>
-  <button type="button" @click="disconnect">Disconnect MetaMask</button>
-</template>
 ```
 
 ### `disconnectConnectedWallet`
@@ -223,22 +156,17 @@ Function to disconnect the `connectedWallet`
 
 ### Example usage
 
-```vue
-<script>
-import { useOnboard } from '@web3-onboard/vue'
-export default {
-  setup() {
-    const { disconnectConnectedWallet } = useOnboard()
-    return { disconnectConnectedWallet }
-  }
+```tsx
+import { useOnboard } from '@web3-onboard/solid'
+function SampleConnect() {
+  const { disconnectConnectedWallet } = useOnboard()
+  return (
+    <button onClick={() => disconnectConnectedWallet()}>
+      {' '}
+      disconnect wallet
+    </button>
+  )
 }
-</script>
-
-<template>
-  <button type="button" @click="disconnectConnectedWallet">
-    Disconnect connectedWallet
-  </button>
-</template>
 ```
 
 ### `getChain`
@@ -247,20 +175,12 @@ Function that returns the current chain a wallet is connected to
 
 ### Example usage
 
-```vue
-<script>
-import { useOnboard } from '@web3-onboard/vue'
-export default {
-  setup() {
-    const { getChain } = useOnboard()
-    return { getChain }
-  }
+```tsx
+import { useOnboard } from '@web3-onboard/solid'
+function SampleConnect() {
+  const { getChain } = useOnboard()
+  return <span>MetaMask is connected to: {getChain('MetaMask')}</span>
 }
-</script>
-
-<template>
-  <span>MetaMask is connected to: {{ getChain('MetaMask') }}</span>
-</template>
 ```
 
 ### `setChain`
@@ -269,21 +189,17 @@ Function to set the chain of a wallet
 
 ### Example usage
 
-```vue
-<script>
-import { useOnboard } from '@web3-onboard/vue'
-export default {
-  setup() {
-    const { setChain } = useOnboard()
-    const set = () => setChain({ wallet: 'MetaMask', chainId: '0x1' })
-    return { set }
-  }
+```tsx
+import { useOnboard } from '@web3-onboard/solid'
+function SampleConnect() {
+  const { setChain } = useOnboard()
+  const set = () => setChain({ wallet: 'MetaMask', chainId: '0x1' })
+  return (
+    <button type="button" onClick={set}>
+      Set MetaMask chain to mainnet
+    </button>
+  )
 }
-</script>
-
-<template>
-  <button type="button" @click="set">Set MetaMask chain to mainnet</button>
-</template>
 ```
 
 ### `settingChain`
@@ -292,20 +208,12 @@ Readonly boolean ref that tracks the status of setting the chain
 
 ### Example usage
 
-```vue
-<script>
-import { useOnboard } from '@web3-onboard/vue'
-export default {
-  setup() {
-    const { settingChain } = useOnboard()
-    return { settingChain }
-  }
+```tsx
+import { useOnboard } from '@web3-onboard/solid'
+function SampleConnect() {
+  const { settingChain } = useOnboard()
+  return { settingChain }
 }
-</script>
-
-<template>
-  <span v-if="settingChain">Setting chain...</span>
-</template>
 ```
 
 ### `wallets`
@@ -314,40 +222,22 @@ Readonly ref that contains every wallet that has been connected
 
 ### Example usage
 
-```vue
-<script>
-import { useOnboard } from '@web3-onboard/vue'
-export default {
-  setup() {
+```tsx
+import { useOnboard } from '@web3-onboard/solid'
+function SampleConnect() {
     const { wallets } = useOnboard()
-    return { wallets }
+   return(
+    <ul>
+    <For each={wallets()}>{wallet=>{
+      return <li>
+        {wallet.label}
+      </li>
+      }}
+    </For>
+    </ul>
+   )
   }
 }
-```
-
-### `alreadyConnectedWallets`
-
-Readonly ref that contains every wallet that user connected to in the past; useful to reconnect wallets automatically after a reload
-
-### Example usage
-
-```
-vue
-<script>
-import { useOnboard } from '@web3-onboard/vue'
-export default {
-  setup() {
-    const { alreadyConnectedWallets } = useOnboard()
-    return { alreadyConnectedWallets }
-  }
-}
-</script>
-
-<template>
-  <div v-for="wallet in wallets">
-    <span>Label: {{wallet.label}}</span>
-  </div>
-</template>
 ```
 
 ### `lastConnectedTimestamp`
@@ -356,19 +246,12 @@ Readonly ref that contains the last time that the user connected a wallet in mil
 
 ### Example usage
 
-```
-vue
-<script>
-import { useOnboard } from '@web3-onboard/vue'
-export default {
-  setup() {
-    const { lastConnectedTimestamp } = useOnboard()
-    return { lastConnectedTimestamp }
-  }
+```tsx
+import { useOnboard } from '@web3-onboard/solid'
+function SampleConnect() {
+  const { lastConnectedTimestamp } = useOnboard()
+  return (
+    <span>Your last connection timestamp was: {lastConnectedTimestamp}</span>
+  )
 }
-</script>
-
-<template>
-  <span>Your last connection timestamp was: {{ lastConnectedTimestamp }}</span>
-</template>
 ```
