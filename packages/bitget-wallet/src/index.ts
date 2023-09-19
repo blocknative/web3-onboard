@@ -3,7 +3,7 @@ import { LegacyEip1193Adapter, currentProvider, getIsInstall, getDownload, insta
 import { CustomWindow } from './types.js'
 declare const window: CustomWindow
 
-function bitget(): WalletInit {
+function bitgetWallet(): WalletInit {
   if (typeof window === 'undefined') return () => null
   const sdkAdapter = new LegacyEip1193Adapter();
   const appInfo = sdkAdapter.getWalletInfo();
@@ -26,5 +26,5 @@ function bitget(): WalletInit {
   }
 }
 
-export default bitget
+export default bitgetWallet
 

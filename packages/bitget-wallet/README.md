@@ -7,23 +7,23 @@ bitget Wallet SDK wallet module for connecting to Web3-Onboard. Web3-Onboard mak
 ### Install
 
 **NPM**
-`npm i @web3-onboard/core @web3-onboard/bitget`
+`npm i @web3-onboard/core @web3-onboard/bitget-wallet`
 
 **Yarn**
-`yarn add @web3-onboard/core @web3-onboard/bitget`
+`yarn add @web3-onboard/core @web3-onboard/bitget-wallet`
 
 ## Usage
 
 ```typescript
 import Onboard from '@web3-onboard/core'
-import bitgetModule from '@web3-onboard/bitget'
+import bitgetWalletModule from '@web3-onboard/bitget-wallet'
 
-const bitget = bitgetModule()
+const bitgetWallet = bitgetWalletModule()
 
 const onboard = Onboard({
   // ... other Onboard options
   wallets: [
-    bitget()
+    bitgetWallet()
     //... other wallets
   ]
 })
