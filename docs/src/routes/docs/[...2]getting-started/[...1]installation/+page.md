@@ -62,6 +62,18 @@ const chains = [
     rpcUrl: 'https://mainnet.infura.io/v3/${INFURA_ID}'
   },
   {
+    id: 42161,
+    token: 'ARB-ETH',
+    label: 'Arbitrum One',
+    rpcUrl: 'https://rpc.ankr.com/arbitrum'
+  },
+  {
+    id: '0xa4ba',
+    token: 'ARB',
+    label: 'Arbitrum Nova',
+    rpcUrl: 'https://nova.arbitrum.io/rpc'
+  },
+  {
     id: 137,
     token: 'MATIC',
     label: 'Matic Mainnet',
