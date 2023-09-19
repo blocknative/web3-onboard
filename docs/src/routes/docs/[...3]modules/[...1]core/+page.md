@@ -654,22 +654,22 @@ const onboard = Onboard({
       rpcUrl: 'https://mainnet.base.org'
     },
     {
-      id: '0x38',
-      token: 'BNB',
-      label: 'Binance Smart Chain',
-      rpcUrl: 'https://bsc-dataseed.binance.org/'
+      id: 42161,
+      token: 'ARB-ETH',
+      label: 'Arbitrum One',
+      rpcUrl: 'https://rpc.ankr.com/arbitrum'
+    },
+    {
+      id: '0xa4ba',
+      token: 'ARB',
+      label: 'Arbitrum Nova',
+      rpcUrl: 'https://nova.arbitrum.io/rpc'
     },
     {
       id: 10,
       token: 'OETH',
       label: 'Optimism',
       rpcUrl: 'https://mainnet.optimism.io'
-    },
-    {
-      id: 42161,
-      token: 'ARB-ETH',
-      label: 'Arbitrum',
-      rpcUrl: 'https://rpc.ankr.com/arbitrum'
     }
   ],
   appMetadata: {
