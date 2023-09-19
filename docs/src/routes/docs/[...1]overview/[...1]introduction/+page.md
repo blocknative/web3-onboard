@@ -37,9 +37,10 @@ Web3-Onboard is the quickest and easiest way to add multi-wallet and multi-chain
 web3-onboard supports all EVM networks. Supporting a new network is simply a matter of adding its details in the Chains section upon initialization. For more information see [initialization options](../../modules/core.md#initialization).
 
 - Ethereum
-- Polygon
+- Arbitrum One
+- Arbitrum Nova
 - Base
-- Arbitrum
+- Polygon
 - Optimism
 - Avalanche
 - BNB Chain
@@ -51,7 +52,7 @@ web3-onboard supports all EVM networks. Supporting a new network is simply a mat
 - Goerli
 - Sepolia
 - Base Goerli
-- All other EVM network
+- All other EVM networks
 
 ### Optional - Use an API key to fetch real time transaction data, balances & gas
 
@@ -107,6 +108,18 @@ const onboard = Onboard({
       token: 'ETH',
       label: 'Ethereum Mainnet',
       rpcUrl: MAINNET_RPC_URL
+    },
+    {
+      id: 42161,
+      token: 'ARB-ETH',
+      label: 'Arbitrum One',
+      rpcUrl: 'https://rpc.ankr.com/arbitrum'
+    },
+    {
+      id: '0xa4ba',
+      token: 'ARB',
+      label: 'Arbitrum Nova',
+      rpcUrl: 'https://nova.arbitrum.io/rpc'
     },
     {
       id: '0x2105',
