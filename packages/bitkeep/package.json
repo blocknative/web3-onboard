@@ -61,7 +61,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@bitget-wallet/web3-sdk": "^0.0.5",
+    "@bitget-wallet/web3-sdk": "^0.0.6",
     "@web3-onboard/common": "^2.3.3"
   }
 }

@@ -1,5 +1,5 @@
 import type { WalletInit, EIP1193Provider } from '@web3-onboard/common'
-import { LegacyEip1193Adapter, currentProvider, getter, config } from '@bitget-wallet/web3-sdk'
+import { LegacyEip1193Adapter, currentProvider, getIsInstall, getDownload, installWalletMessage } from '@bitget-wallet/web3-sdk'
 import { CustomWindow } from './types.js'
 declare const window: CustomWindow
 
@@ -11,15 +11,14 @@ function bitget(): WalletInit {
   return () => {
     return {
       label: appInfo.name,
-      getIcon:
-        async () => logo,
+      getIcon: async () => logo,
       getInterface: async () => {
         let provider: EIP1193Provider
-        if (getter.getIsinstallBitget()) {
+        if (getIsInstall()) {
           provider = currentProvider()
         } else {
-          window.open(getter.getBitgetDownload(), '_blank')
-          throw new Error(config.installWalletMessage);
+          window.open(getDownload(), '_blank')
+          throw new Error(installWalletMessage);
         }
         return { provider }
       }
