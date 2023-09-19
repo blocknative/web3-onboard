@@ -251,6 +251,18 @@
         rpcUrl: 'https://rpc.sepolia.org/'
       },
       {
+        id: 42161,
+        token: 'ARB-ETH',
+        label: 'Arbitrum One',
+        rpcUrl: 'https://rpc.ankr.com/arbitrum'
+      },
+      {
+        id: '0xa4ba',
+        token: 'ARB',
+        label: 'Arbitrum Nova',
+        rpcUrl: 'https://nova.arbitrum.io/rpc'
+      },
+      {
         id: '0x5',
         token: 'ETH',
         label: 'Goerli',
@@ -295,18 +307,6 @@
         token: 'OETH',
         label: 'Optimism',
         rpcUrl: 'https://mainnet.optimism.io'
-      },
-      {
-        id: 42161,
-        token: 'ARB-ETH',
-        label: 'Arbitrum One',
-        rpcUrl: 'https://rpc.ankr.com/arbitrum'
-      },
-      {
-        id: '0xa4ba',
-        token: 'ARB',
-        label: 'Arbitrum Nova',
-        rpcUrl: 'https://nova.arbitrum.io/rpc'
       }
     ],
     connect: {
