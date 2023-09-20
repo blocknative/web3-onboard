@@ -217,12 +217,6 @@ const intiOnboard = async (theme) => {
         token: 'OETH',
         label: 'Optimism',
         rpcUrl: 'https://mainnet.optimism.io'
-      },
-      {
-        id: '0xA4B1',
-        token: 'ARB-ETH',
-        label: 'Arbitrum',
-        rpcUrl: 'https://rpc.ankr.com/arbitrum'
       }
     ],
     appMetadata: {
