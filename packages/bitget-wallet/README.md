@@ -1,4 +1,4 @@
-# @web3-onboard/bitget
+# @web3-onboard/bitget-wallet
 
 ## Wallet module for connecting bitget Wallet through web3-onboard
 
