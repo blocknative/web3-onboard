@@ -156,7 +156,7 @@ type Chain = {
   namespace?: 'evm' // string indicating chain namespace. Defaults to 'evm' but will allow other chain namespaces in the future
   // PLEASE NOTE: Some wallets require an rpcUrl, label, and token for actions such as adding a new chain.
   // It is recommended to include rpcUrl, label, and token for full functionality.
-  rpcUrl?: string // Recommended to include. Used for network requests.
+  rpcUrl?: string // Recommended to include. Used for network requests (eg Alchemy or Infura end point).
   label?: string // Recommended to include. Used for display, eg Ethereum Mainnet.
   token?: TokenSymbol // Recommended to include. The native token symbol, eg ETH, BNB, MATIC.
   color?: string // the color used to represent the chain and will be used as a background for the icon
@@ -164,7 +164,7 @@ type Chain = {
   publicRpcUrl?: string // an optional public RPC used when adding a new chain config to the wallet
   blockExplorerUrl?: string // also used when adding a new config to the wallet
   secondaryTokens?: SecondaryTokens[] // An optional array of tokens (max of 5) to be available to the dapp in the app state object per wallet within the wallet account and displayed in Account Center (if enabled)
-  protectedRpcUrl?: string //An optional protected RPC URL - Defaults to Blocknative's private RPC aggregator to allow users to update the chain RPC within their wallet, specifically for private RPCs that protect user transactions. More information can be found at `https://docs.blocknative.com/blocknative-mev-protection/transaction-boost-alpha`
+  protectedRpcUrl?: string //An optional protected RPC URL - Defaults to Blocknative's private RPC aggregator to allow users to update the chain RPC within their wallet, specifically for private RPCs that protect user transactions. More information can be found at `https://docs.blocknative.com/blocknative-mev-protection/transaction-boost`
 }
 
 interface SecondaryTokens {
@@ -654,22 +654,22 @@ const onboard = Onboard({
       rpcUrl: 'https://mainnet.base.org'
     },
     {
-      id: '0x38',
-      token: 'BNB',
-      label: 'Binance Smart Chain',
-      rpcUrl: 'https://bsc-dataseed.binance.org/'
+      id: 42161,
+      token: 'ARB-ETH',
+      label: 'Arbitrum One',
+      rpcUrl: 'https://rpc.ankr.com/arbitrum'
+    },
+    {
+      id: '0xa4ba',
+      token: 'ARB',
+      label: 'Arbitrum Nova',
+      rpcUrl: 'https://nova.arbitrum.io/rpc'
     },
     {
       id: 10,
       token: 'OETH',
       label: 'Optimism',
       rpcUrl: 'https://mainnet.optimism.io'
-    },
-    {
-      id: 42161,
-      token: 'ARB-ETH',
-      label: 'Arbitrum',
-      rpcUrl: 'https://rpc.ankr.com/arbitrum'
     }
   ],
   appMetadata: {
