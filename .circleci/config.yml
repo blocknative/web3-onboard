@@ -413,6 +413,18 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/venly
     steps:
       - node-build-steps
+  build-bitget:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/bitget
+    steps:
+      - node-build-steps
+  build-bitkeep:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/bitkeep
+    steps:
+      - node-build-steps
 
   # Build staging/Alpha releases
   build-staging-core:
@@ -659,6 +671,18 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/venly
+    steps:
+      - node-staging-build-steps
+  build-staging-bitget:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/bitget
+    steps:
+      - node-staging-build-steps
+  build-staging-bitkeep:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/bitkeep
     steps:
       - node-staging-build-steps
 
@@ -910,4 +934,16 @@ workflows:
       - build-venly:
           <<: *deploy_production_filters
       - build-staging-venly:
+          <<: *deploy_staging_filters
+  bitget:
+    jobs:
+      - build-bitget:
+          <<: *deploy_production_filters
+      - build-staging-bitget:
+          <<: *deploy_staging_filters
+  bitkeep:
+    jobs:
+      - build-bitkeep:
+          <<: *deploy_production_filters
+      - build-staging-bitkeep:
           <<: *deploy_staging_filters
