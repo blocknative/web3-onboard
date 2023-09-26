@@ -394,7 +394,6 @@ const imtoken: InjectedWalletModule = {
   getIcon: async () => (await import('./icons/imtoken.js')).default,
   getInterface: async () => ({
     provider: createEIP1193Provider(window.ethereum, {
-      wallet_switchEthereumChain: UNSUPPORTED_METHOD,
       eth_selectAccounts: UNSUPPORTED_METHOD
     })
   }),
