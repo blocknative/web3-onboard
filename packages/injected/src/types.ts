@@ -81,7 +81,6 @@ export enum ProviderIdentityFlag {
 export enum ProviderExternalUrl {
   Binance = 'https://www.bnbchain.org/ru/blog/binance-extension-wallet/',
   BitKeep = 'https://web3.bitget.com/en/wallet-download',
-  bitgetWallet = 'https://web3.bitget.com/en/wallet-download',
   Coinbase = 'https://www.coinbase.com/wallet/downloads',
   MetaMask = 'https://metamask.io/download/',
   OKXWallet = 'https://okx.com/download',
