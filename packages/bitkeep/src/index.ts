@@ -6,8 +6,6 @@ import {
   getDownload,
   installWalletMessage
 } from '@bitget-wallet/web3-sdk'
-import { CustomWindow } from './types.js'
-declare const window: CustomWindow
 
 function bitKeep(): WalletInit {
   if (typeof window === 'undefined') return () => null
