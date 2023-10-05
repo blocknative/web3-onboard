@@ -1640,12 +1640,12 @@
     pump "^3.0.0"
     webextension-polyfill-ts "^0.25.0"
 
-"@metamask/rpc-errors@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@metamask/rpc-errors/-/rpc-errors-6.0.0.tgz#6cd2499a0f01e027e7b627eceae17141712fa734"
-  integrity sha512-sAZwcdmidJDPbZV3XSKcWZC7CSTdjqDNRsDDdb2SstCOLEJtNqHpx32FWgwWB0arqWxUcUxYxgR39edUbsWz7A==
+"@metamask/rpc-errors@^5.1.1":
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/@metamask/rpc-errors/-/rpc-errors-5.1.1.tgz#f82732ad0952d34d219eca42699c0c74bee95a9e"
+  integrity sha512-JjZnDi2y2CfvbohhBl+FOQRzmFlJpybcQlIk37zEX8B96eVSPbH/T8S0p7cSF8IE33IWx6JkD8Ycsd+2TXFxCw==
   dependencies:
-    "@metamask/utils" "^8.0.0"
+    "@metamask/utils" "^5.0.0"
     fast-safe-stringify "^2.0.6"
 
 "@metamask/safe-event-emitter@2.0.0", "@metamask/safe-event-emitter@^2.0.0":
@@ -1668,7 +1668,7 @@
     semver "^7.3.8"
     superstruct "^1.0.3"
 
-"@metamask/utils@^5.0.1":
+"@metamask/utils@^5.0.0", "@metamask/utils@^5.0.1":
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/@metamask/utils/-/utils-5.0.2.tgz#140ba5061d90d9dac0280c19cab101bc18c8857c"
   integrity sha512-yfmE79bRQtnMzarnKfX7AEJBwFTxvTyw3nBQlu/5rmGXrjAeAMltoGxO62TFurxrQAFMNa/fEjIHNvungZp0+g==
@@ -1677,18 +1677,6 @@
     "@types/debug" "^4.1.7"
     debug "^4.3.4"
     semver "^7.3.8"
-    superstruct "^1.0.3"
-
-"@metamask/utils@^8.0.0":
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/@metamask/utils/-/utils-8.1.0.tgz#b8e73f5b4696b1b668cf5c1421daad140a3f98ac"
-  integrity sha512-sFNpzBKRicDgM2ZuU6vrPROlqNGm8/jDsjc5WrU1RzCkAMc4Xr3vUUf8p59uQ6B09etUWNb8d2GTCbISdmH/Ug==
-  dependencies:
-    "@ethereumjs/tx" "^4.1.2"
-    "@noble/hashes" "^1.3.1"
-    "@types/debug" "^4.1.7"
-    debug "^4.3.4"
-    semver "^7.5.4"
     superstruct "^1.0.3"
 
 "@motionone/animation@^10.15.1":
@@ -1850,11 +1838,6 @@
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/@noble/hashes/-/hashes-1.1.3.tgz#360afc77610e0a61f3417e497dcf36862e4f8111"
   integrity sha512-CE0FCR57H2acVI5UOzIGSSIYxZ6v/HOhDR0Ro9VLyhnzLwx0o8W1mmgaqlEUx4049qJDlIBRztv5k+MM8vbO3A==
-
-"@noble/hashes@^1.3.1":
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/@noble/hashes/-/hashes-1.3.2.tgz#6f26dbc8fbc7205873ce3cee2f690eba0d421b39"
-  integrity sha512-MVC8EAQp7MvEcm30KWENFjgR+Mkmf+D189XJTkFIlwohU5hcBbn1ZkKq7KVTi2Hme3PMGF390DaL52beVrIihQ==
 
 "@noble/hashes@~1.1.1":
   version "1.1.4"
@@ -2513,11 +2496,6 @@
     socket.io-client "^4.6.1"
     unload "^2.4.1"
 
-"@toruslabs/constants@^13.0.1":
-  version "13.0.1"
-  resolved "https://registry.yarnpkg.com/@toruslabs/constants/-/constants-13.0.1.tgz#c08bbf21f4efaad37cf5311d52b9ab9964aa8b9b"
-  integrity sha512-haFppvgyHfKl2uTQKkrWOkgQmLgzbqxhIvaNvRGei4FgFNJNLr5+ju8/PwwbgKhQUi7adkeU0pjwFYITJyHEPw==
-
 "@toruslabs/eccrypto@^2.0.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@toruslabs/eccrypto/-/eccrypto-2.1.0.tgz#2d4d7c796a98cbbd36ed0c67126d74b65043ad4f"
@@ -2541,10 +2519,10 @@
     lodash.merge "^4.6.2"
     loglevel "^1.8.1"
 
-"@toruslabs/http-helpers@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@toruslabs/http-helpers/-/http-helpers-5.0.0.tgz#2a309d2a2c5c00d50a725d83ccec8a7475771d62"
-  integrity sha512-GmezWz9JeF6YyhjLSm+9XDF4YaeICEckY0Jbo43i86SjhfJYgRWqEi63VSiNsaqc/z810Q0FQvEk1TnBRX2tgA==
+"@toruslabs/http-helpers@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@toruslabs/http-helpers/-/http-helpers-4.0.0.tgz#ca3341b7adb5f6795ded54967814850a9ff76d38"
+  integrity sha512-ef/Svevk54JANOn3Kf6UPf8X/vZlYHrusNFt8VV/LLahhVNXCXEcO8goC1bHkecu/u20CUyo9HJa0pn8fHh1sg==
   dependencies:
     lodash.merge "^4.6.2"
     loglevel "^1.8.1"
@@ -2595,13 +2573,13 @@
     pump "^3.0.0"
     readable-stream "^4.3.0"
 
-"@toruslabs/openlogin-jrpc@^5.0.2":
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/@toruslabs/openlogin-jrpc/-/openlogin-jrpc-5.1.0.tgz#3ad128f849bd980d0eb69a4b1f8e423fad4e071b"
-  integrity sha512-+wZvY2ayMhyrKpOffLecrGEcTjRDfwvYJGjj2bl/uyGfv8IyQub59txnFh7MLzDrEyHFGvkmfLJDIqCRfkm8QA==
+"@toruslabs/openlogin-jrpc@^4.7.0":
+  version "4.7.2"
+  resolved "https://registry.yarnpkg.com/@toruslabs/openlogin-jrpc/-/openlogin-jrpc-4.7.2.tgz#e04dd6945da92d790f713a58aaa1657c57b330c8"
+  integrity sha512-9Eb0cPc0lPuS6v2YkQlgzfbRnZ6fLez9Ike5wznoHSFA2/JVu1onwuI56EV1HwswdDrOWPPQEyzI1j9NriZ0ew==
   dependencies:
-    "@metamask/rpc-errors" "^6.0.0"
-    "@toruslabs/openlogin-utils" "^5.1.0"
+    "@metamask/rpc-errors" "^5.1.1"
+    "@toruslabs/openlogin-utils" "^4.7.0"
     end-of-stream "^1.4.4"
     events "^3.3.0"
     fast-safe-stringify "^2.1.1"
@@ -2625,12 +2603,11 @@
   dependencies:
     base64url "^3.0.1"
 
-"@toruslabs/openlogin-utils@^5.1.0":
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/@toruslabs/openlogin-utils/-/openlogin-utils-5.1.0.tgz#ab14aef2cac140bc5692f7f98f2e2a8b23ac23aa"
-  integrity sha512-eDbRMYubh9PdU7rDn0G8Ksp3cIs2qK93Em4NYROZbQWkVHc9n5Ou32Axl8GYr5ChwjSttopvtBWfU6+ifX54cA==
+"@toruslabs/openlogin-utils@^4.7.0":
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/@toruslabs/openlogin-utils/-/openlogin-utils-4.7.0.tgz#741d6ba1c0754b59a182b1c6dd8d0263695ed980"
+  integrity sha512-w6XkHs4WKuufsf/zzteBzs4EJuOknrUmJ+iv5FZ8HzIpMQeL/984CP8HYaFSEYkbGCP4ydAnhY4Uh0QAhpDbPg==
   dependencies:
-    "@toruslabs/constants" "^13.0.1"
     base64url "^3.0.1"
 
 "@toruslabs/openlogin@^3.2.1":
@@ -2661,19 +2638,21 @@
     loglevel "^1.8.1"
     pump "^3.0.0"
 
-"@toruslabs/torus-embed@4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@toruslabs/torus-embed/-/torus-embed-4.0.0.tgz#39037af080db33c68cf4e347c9721c2a7285c802"
-  integrity sha512-3yuT8i8yH8IQBe8s9SokcgcvBtQWHiqxC8vs/4SnjrfE/kXcHd5HBUaqU5B4KAP7Rwff283mVUlidZ5WYraeVg==
+"@toruslabs/torus-embed@2.2.9":
+  version "2.2.9"
+  resolved "https://registry.yarnpkg.com/@toruslabs/torus-embed/-/torus-embed-2.2.9.tgz#eff1b849a5938301aea65d6765705be5426a9426"
+  integrity sha512-RKks2wNq9V9vFQ5CaoL78C61++JK4ApYy3qNb7O8JDE7QlrcxsQ9Murdl0UT76IZeWtq8xOeDvNPtGcGpXus0A==
   dependencies:
-    "@metamask/rpc-errors" "^6.0.0"
-    "@toruslabs/http-helpers" "^5.0.0"
-    "@toruslabs/openlogin-jrpc" "^5.0.2"
+    "@metamask/rpc-errors" "^5.1.1"
+    "@toruslabs/http-helpers" "^4.0.0"
+    "@toruslabs/openlogin-jrpc" "^4.7.0"
+    events "^3.3.0"
     fast-deep-equal "^3.1.3"
+    is-stream "^2.0.1"
     lodash.merge "^4.6.2"
     loglevel "^1.8.1"
     pump "^3.0.0"
-    readable-stream "^4.4.2"
+    readable-stream "^4.4.1"
 
 "@toruslabs/torus-embed@^1.41.1":
   version "1.41.2"
@@ -10844,7 +10823,7 @@ readable-stream@^4.3.0:
     events "^3.3.0"
     process "^0.11.10"
 
-readable-stream@^4.4.2:
+readable-stream@^4.4.1, readable-stream@^4.4.2:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-4.4.2.tgz#e6aced27ad3b9d726d8308515b9a1b98dc1b9d13"
   integrity sha512-Lk/fICSyIhodxy1IDK2HazkeGjSmezAWX2egdtJnYhtzKEsBPJowlI6F6LPb5tqIQILrMbx22S5o3GuJavPusA==
@@ -11377,13 +11356,6 @@ semver@^7.3.8:
   version "7.5.1"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.5.1.tgz#c90c4d631cf74720e46b21c1d37ea07edfab91ec"
   integrity sha512-Wvss5ivl8TMRZXXESstBA4uR5iXgEN/VC5/sOcuXdVLzcdkz4HWetIoRfG5gb5X+ij/G9rw9YoGn3QoQ8OCSpw==
-  dependencies:
-    lru-cache "^6.0.0"
-
-semver@^7.5.4:
-  version "7.5.4"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-7.5.4.tgz#483986ec4ed38e1c6c48c34894a9182dbff68a6e"
-  integrity sha512-1bCSESV6Pv+i21Hvpxp3Dx+pSD8lIPt8uVjRrxAUt/nbswYc+tK6Y2btiULjd4+fnq15PX+nqQDC7Oft7WkwcA==
   dependencies:
     lru-cache "^6.0.0"
 

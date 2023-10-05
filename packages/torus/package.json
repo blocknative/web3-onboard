@@ -57,7 +57,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@toruslabs/torus-embed": "4.0.0",
+    "@toruslabs/torus-embed": "2.2.9",
     "@web3-onboard/common": "^2.3.3"
   }
 }
