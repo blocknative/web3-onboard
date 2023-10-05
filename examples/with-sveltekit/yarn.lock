@@ -1776,10 +1776,10 @@
     ethers "5.5.4"
     joi "17.9.1"
 
-"@web3-onboard/core@^2.17.0":
-  version "2.20.2"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.20.2.tgz#06c35b2d39a119950d3d850d23e2126f6f77c1f5"
-  integrity sha512-XrdOatA00ULnPleQbAbXppGGVErUZpscrauoXy/Zt8qpr7i+NQSeRD2/fllfx5JP6wI0whP8ZoVb9yRp52Ii0Q==
+"@web3-onboard/core@^2.21.0":
+  version "2.21.2"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.21.2.tgz#962683efc87b29ee9150ab8d7ea9568ea3b41dd5"
+  integrity sha512-apzVi2zWqs4ktZBBJ60x1e4odI1mSoZ2c69bXUg36A0xI0iRFQ9Od44peI3mfTDEru7hWsr81Nv6l+v3HRSKLw==
   dependencies:
     "@web3-onboard/common" "^2.3.3"
     bignumber.js "^9.0.0"
@@ -3200,10 +3200,15 @@ multiformats@^9.4.2:
   resolved "https://registry.yarnpkg.com/multiformats/-/multiformats-9.9.0.tgz#c68354e7d21037a8f1f8833c8ccd68618e8f1d37"
   integrity sha512-HoMUjhH9T8DDBNT+6xzkrd9ga/XiBI4xLr58LJACwK6G3HTOPeMz4nB4KJs33L2BelrIJa7P0VuNaVF3hMYfjg==
 
-nanoid@^3.3.1, nanoid@^3.3.4:
+nanoid@^3.3.1:
   version "3.3.4"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.4.tgz#730b67e3cd09e2deacf03c027c81c9d9dbc5e8ab"
   integrity sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==
+
+nanoid@^3.3.6:
+  version "3.3.6"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.6.tgz#443380c856d6e9f9824267d960b4236ad583ea4c"
+  integrity sha512-BGcqMMJuToF7i1rt+2PWSNVnWIkGCU78jBG3RxO/bZlnZPK2Cmi2QaffxGO/2RvWi9sL+FAiRiXMgsyxQ1DIDA==
 
 nanoid@^4.0.0:
   version "4.0.1"
@@ -3389,11 +3394,11 @@ pngjs@^5.0.0:
   integrity sha512-40QW5YalBNfQo5yRYmiw7Yz6TKKVr3h6970B2YE+3fQpsWcrbj1PzJgxeJ19DRQjhMbKPIuMY8rFaXc8moolVw==
 
 postcss@^8.4.20:
-  version "8.4.21"
-  resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.21.tgz#c639b719a57efc3187b13a1d765675485f4134f4"
-  integrity sha512-tP7u/Sn/dVxK2NnruI4H9BG+x+Wxz6oeZ1cJ8P6G/PZY0IKk4k/63TDsQf2kQq3+qoJeLm2kIBUNlZe3zgb4Zg==
+  version "8.4.31"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.31.tgz#92b451050a9f914da6755af352bdc0192508656d"
+  integrity sha512-PS08Iboia9mts/2ygV3eLpY5ghnUcfLV/EXTOW1E2qYxJKGGBUtNjN76FYHnMs36RmARn41bC0AZmn+rR0OVpQ==
   dependencies:
-    nanoid "^3.3.4"
+    nanoid "^3.3.6"
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
 
