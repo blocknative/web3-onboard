@@ -178,13 +178,13 @@ const intiOnboard = async (theme) => {
       },
       {
         id: 42161,
-        token: 'ARB-ETH',
+        token: 'ETH',
         label: 'Arbitrum One',
         rpcUrl: 'https://rpc.ankr.com/arbitrum'
       },
       {
         id: '0xa4ba',
-        token: 'ARB',
+        token: 'ETH',
         label: 'Arbitrum Nova',
         rpcUrl: 'https://nova.arbitrum.io/rpc'
       },
@@ -217,12 +217,6 @@ const intiOnboard = async (theme) => {
         token: 'OETH',
         label: 'Optimism',
         rpcUrl: 'https://mainnet.optimism.io'
-      },
-      {
-        id: '0xA4B1',
-        token: 'ARB-ETH',
-        label: 'Arbitrum',
-        rpcUrl: 'https://rpc.ankr.com/arbitrum'
       }
     ],
     appMetadata: {

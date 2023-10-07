@@ -80,7 +80,7 @@
     // displayUnavailable: true,
     // ||
     // display specific unavailable wallets
-    displayUnavailable: [ProviderLabel.MetaMask, ProviderLabel.Trust]
+    displayUnavailable: [ProviderLabel.MetaMask, ProviderLabel.Trust, ProviderLabel.Phantom]
     // but only show Binance and Bitski wallet if they are available
     // filter: {
     //   [ProviderLabel.Binance]: 'unavailable',

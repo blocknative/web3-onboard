@@ -3833,10 +3833,10 @@
     ethers "5.5.4"
     joi "17.9.1"
 
-"@web3-onboard/core@^2.21.1":
-  version "2.21.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.21.1.tgz#addb6c07c376cbbed3ae1d9ea6aabf05b15a8309"
-  integrity sha512-2ETfh+MIcRdEq1fY3+hc4KDTVelJLzNK9SpiH58kZ43/G5ky5IuTRS22e0xpsn/4pq5a1Y0Pgc1tHQncyZpndw==
+"@web3-onboard/core@^2.21.2":
+  version "2.21.2"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.21.2.tgz#962683efc87b29ee9150ab8d7ea9568ea3b41dd5"
+  integrity sha512-apzVi2zWqs4ktZBBJ60x1e4odI1mSoZ2c69bXUg36A0xI0iRFQ9Od44peI3mfTDEru7hWsr81Nv6l+v3HRSKLw==
   dependencies:
     "@web3-onboard/common" "^2.3.3"
     bignumber.js "^9.0.0"
@@ -8210,9 +8210,9 @@ postcss-value-parser@^4.0.0, postcss-value-parser@^4.2.0:
   integrity sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==
 
 postcss@^8.4.23:
-  version "8.4.23"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.23.tgz#df0aee9ac7c5e53e1075c24a3613496f9e6552ab"
-  integrity sha512-bQ3qMcpF6A/YjR55xtoTr0jGOlnPOKAIMdOWiv0EIT6HVPEaJiJB4NLljSbiHoC2RX7DN5Uvjtpbg1NPdwv1oA==
+  version "8.4.31"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.31.tgz#92b451050a9f914da6755af352bdc0192508656d"
+  integrity sha512-PS08Iboia9mts/2ygV3eLpY5ghnUcfLV/EXTOW1E2qYxJKGGBUtNjN76FYHnMs36RmARn41bC0AZmn+rR0OVpQ==
   dependencies:
     nanoid "^3.3.6"
     picocolors "^1.0.0"
