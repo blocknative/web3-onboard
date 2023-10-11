@@ -59,8 +59,7 @@
     "@walletconnect/types": "^2.9.0"
   },
   "dependencies": {
-    "@ethersproject/providers": "5.5.0",
-    "@walletconnect/ethereum-provider": "^2.10.1",
+    "@walletconnect/ethereum-provider": "^2.10.2",
     "@walletconnect/modal": "2.6.2",
     "@web3-onboard/common": "^2.3.3",
     "joi": "17.9.1",
