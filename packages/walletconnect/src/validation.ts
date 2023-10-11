@@ -7,14 +7,12 @@ const wcOptions = Joi.object({
     .optional()
     .custom((value, helpers) => {
       if (value === 1) {
-        return helpers.message({
-          message: `Version 1 of WalletConnect is no longer supported. Please use version 2.`,
-          type: 'any.custom'
-        })
+        console.warn(
+          'Version 1 of WalletConnect has been fully deprecated. This version of @web3-onboard/walletconnect only supports version 2'
+        )
       } else if (value !== 2 && value !== undefined) {
-        return helpers.message({
-          message: 'Invalid version number. Please use version 2.',
-          type: 'any.custom'
+        return helpers.error('any.invalid', {
+          message: 'Invalid version number. This version of @web3-onboard/walletconnect only supports version 2'
         })
       }
       return value // return the value unchanged if it's valid or not provided
