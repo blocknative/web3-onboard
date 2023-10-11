@@ -9,9 +9,8 @@ function capsule(options: CapsuleInitOptions): WalletInit {
             label: 'Capsule',
             getIcon: async () => (await import('./icon.js')).default,
             getInterface: async () => {
-                const capsule = new Capsule(Environment.DEV, options.apiKey, {
-                    offloadMPCComputationURL: 'http://localhost:9009',
-                    // offloadMPCComputationURL: 'https://partner-mpc-computation.beta.usecapsule.com',
+                const capsule = new Capsule(Environment.BETA, options.apiKey, {
+                    offloadMPCComputationURL: 'https://partner-mpc-computation.beta.usecapsule.com',
                 });
 
                 const providerOpts = {
