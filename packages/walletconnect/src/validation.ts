@@ -1,32 +1,39 @@
 import Joi from 'joi'
-import type { WalletConnectOptions } from './index.js'
+import type { WalletConnectOptions } from './types.js'
 
 const wcOptions = Joi.object({
   handleUri: Joi.func().optional(),
-  version: Joi.number().valid(1, 2).optional(),
-  bridge: Joi.string()
-    .when('version', {
-      is: 1,
-      then: Joi.required(),
-      otherwise: Joi.forbidden()
-    })
-    .messages({
-      'any.required': `A bridge URL is a required when version is 1 of WalletConnect as the WC team has removed support for their default bridge.`
-    }),
-  connectFirstChainId: Joi.boolean().optional(),
-  qrcodeModalOptions: Joi.object({
-    mobileLinks: Joi.array().items(Joi.string()).optional()
-  }).optional(),
-  projectId: Joi.string()
-    .when('version', {
-      is: 2,
-      then: Joi.required(),
-      otherwise: Joi.optional()
-    })
-    .messages({
-      'any.required': `WalletConnect version 2 requires a projectId. Please visit https://cloud.walletconnect.com to get one.`
-    }),
-  dappUrl: Joi.string().optional(),
+  version: Joi.number()
+    .optional()
+    .custom((value, helpers) => {
+      if (value === 1) {
+        return helpers.message({
+          message: `Version 1 of WalletConnect is no longer supported. Please use version 2.`,
+          type: 'any.custom'
+        })
+      } else if (value !== 2 && value !== undefined) {
+        return helpers.message({
+          message: 'Invalid version number. Please use version 2.',
+          type: 'any.custom'
+        })
+      }
+      return value // return the value unchanged if it's valid or not provided
+    }, 'Custom version validation'),
+  projectId: Joi.string().messages({
+    'any.required': `WalletConnect version 2 requires a projectId. Please visit https://cloud.walletconnect.com to get one.`
+  }),
+  dappUrl: Joi.string()
+    .optional()
+    .custom((value, helpers) => {
+      if (!value) {
+        return helpers.message({
+          message:
+            'It is strongly recommended to supply a dappUrl as it is required by some wallets (i.e. MetaMask) to allow connection.',
+          type: 'any.custom'
+        })
+      }
+      return value // return the value unchanged if it's provided
+    }, 'Custom dappUrl validation'),
   requiredChains: Joi.array().items(Joi.number()).optional(),
   optionalChains: Joi.array().items(Joi.number()).optional(),
   qrModalOptions: Joi.object().optional(),
