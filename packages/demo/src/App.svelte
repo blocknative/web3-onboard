@@ -210,7 +210,7 @@
   })
   const capsule = capsuleModule({ 
     appName: 'Blocknative Test App', 
-    apiKey: undefined 
+    apiKey: '2f938ac0c48ef356050a79bd66042a23' 
   })
 
   const onboard = Onboard({
