@@ -19,7 +19,7 @@ export const defaultWalletUnavailableMsg = ({
   externalUrl
 }: InjectedWalletModule) =>
   externalUrl
-    ? `Please <a href="${externalUrl}" target="_blank">install</a> or enable ${label} to continue`
+    ? `Please <a href="${externalUrl}" target="_blank">install or switch to</a> ${label} to continue`
     : `Please install or enable ${label} to continue`
 
 export const isWalletAvailable = (

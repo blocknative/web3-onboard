@@ -78,7 +78,7 @@
     // displayUnavailable: true,
     // ||
     // display specific unavailable wallets
-    displayUnavailable: [ProviderLabel.MetaMask, ProviderLabel.Trust]
+    displayUnavailable: [ProviderLabel.MetaMask, ProviderLabel.Trust, ProviderLabel.Phantom]
     // but only show Binance and Bitski wallet if they are available
     // filter: {
     //   [ProviderLabel.Binance]: 'unavailable',
@@ -251,6 +251,18 @@
         rpcUrl: 'https://rpc.sepolia.org/'
       },
       {
+        id: 42161,
+        token: 'ARB-ETH',
+        label: 'Arbitrum One',
+        rpcUrl: 'https://rpc.ankr.com/arbitrum'
+      },
+      {
+        id: '0xa4ba',
+        token: 'ARB',
+        label: 'Arbitrum Nova',
+        rpcUrl: 'https://nova.arbitrum.io/rpc'
+      },
+      {
         id: '0x5',
         token: 'ETH',
         label: 'Goerli',
@@ -295,12 +307,6 @@
         token: 'OETH',
         label: 'Optimism',
         rpcUrl: 'https://mainnet.optimism.io'
-      },
-      {
-        id: 42161,
-        token: 'ARB-ETH',
-        label: 'Arbitrum',
-        rpcUrl: 'https://rpc.ankr.com/arbitrum'
       }
     ],
     connect: {

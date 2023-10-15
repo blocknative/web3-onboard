@@ -1,17 +1,17 @@
 import { REQUIRED_METHODS } from '@walletconnect/ethereum-provider'
-import type { EthereumProviderOptions } from '@walletconnect/ethereum-provider/dist/types/EthereumProvider'
-import type { EthereumProvider } from '@walletconnect/ethereum-provider'
-import type { CoreTypes } from '@walletconnect/types'
+import { isHexString } from './index.js'
 
+import type { EthereumProviderOptions } from '@walletconnect/ethereum-provider/dist/types/EthereumProvider'
+import type { JQueryStyleEventEmitter } from 'rxjs/internal/observable/fromEvent'
+import type { EthereumProvider } from '@walletconnect/ethereum-provider'
+import type { WalletConnectOptions } from './types.js'
+import type { CoreTypes } from '@walletconnect/types'
 import type {
   Chain,
   ProviderAccounts,
   WalletInit,
   EIP1193Provider
 } from '@web3-onboard/common'
-import type { WalletConnectOptions } from './index.js'
-import type { JQueryStyleEventEmitter } from 'rxjs/internal/observable/fromEvent'
-import { isHexString } from './index.js'
 
 // methods that require user interaction
 const methods = [
@@ -20,13 +20,20 @@ const methods = [
   'personal_sign',
   'eth_sign',
   'eth_signTypedData',
-  'eth_signTypedData_v4'
+  'eth_signTypedData_v4',
+  'wallet_addEthereumChain',
+  'wallet_switchEthereumChain'
 ]
 
 function walletConnect(options: WalletConnectOptions): WalletInit {
-  if (options.version !== 2 || !options.projectId) {
+  if (!options.projectId) {
     throw new Error(
       'WalletConnect requires a projectId. Please visit https://cloud.walletconnect.com to get one.'
+    )
+  }
+  if (!options.dappUrl) {
+    console.warn(
+      `It is strongly recommended to supply a dappUrl to the WalletConnect init object as it is required by some wallets (i.e. MetaMask) to allow connection.`
     )
   }
   const {

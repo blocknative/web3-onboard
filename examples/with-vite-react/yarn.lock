@@ -3335,10 +3335,10 @@
     ethers "5.5.4"
     joi "17.9.1"
 
-"@web3-onboard/core@^2.20.0":
-  version "2.20.0"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.20.0.tgz#e023cdfc21a496acbf23730e469ee9d11167faa3"
-  integrity sha512-YAVRwoP7QjRJREiMtuDbNWzOwjR59QvIEH7Jl14TpwpIgx0WIGegQK7yJnmZIyWZpHZELof2m6HoFAEy6OjFpA==
+"@web3-onboard/core@^2.21.2":
+  version "2.21.2"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.21.2.tgz#962683efc87b29ee9150ab8d7ea9568ea3b41dd5"
+  integrity sha512-apzVi2zWqs4ktZBBJ60x1e4odI1mSoZ2c69bXUg36A0xI0iRFQ9Od44peI3mfTDEru7hWsr81Nv6l+v3HRSKLw==
   dependencies:
     "@web3-onboard/common" "^2.3.3"
     bignumber.js "^9.0.0"
@@ -3472,13 +3472,13 @@
     "@portis/web3" "^4.0.6"
     "@web3-onboard/common" "^2.3.3"
 
-"@web3-onboard/react@^2.8.0":
-  version "2.8.5"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/react/-/react-2.8.5.tgz#0660f2e4b070222c78213430fc8af34acb3ce2e9"
-  integrity sha512-oXRa6VK4p/WX8tnIwScYtN+f6O/yi3VX05Uet9vtuHuJGemlnhf8VwpUoWRIKdBpoqrqnAwH1zHuDLjtcBdJiQ==
+"@web3-onboard/react@^2.8.11":
+  version "2.8.13"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/react/-/react-2.8.13.tgz#c58fae9ba73f343aaa4483d57b6b27b1b14d1851"
+  integrity sha512-RhdnbVNWxYrMFOwxZKRKV3ys7SKymdHa2cHsyzcVEQlHzZVhZVlKB6KWzvk6umcyuT4DF9W4edzd1clJwCmazg==
   dependencies:
     "@web3-onboard/common" "^2.3.3"
-    "@web3-onboard/core" "^2.20.0"
+    "@web3-onboard/core" "^2.21.2"
     use-sync-external-store "1.0.0"
 
 "@web3-onboard/sequence@^2.0.5":
@@ -8131,9 +8131,9 @@ pocket-js-core@0.0.3:
     axios "^0.18.0"
 
 postcss@^8.4.14, postcss@^8.4.18:
-  version "8.4.24"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.24.tgz#f714dba9b2284be3cc07dbd2fc57ee4dc972d2df"
-  integrity sha512-M0RzbcI0sO/XJNucsGjvWU9ERWxb/ytp1w6dKtxTKgixdtQDq4rmx/g8W1hnaheq9jgwL/oyEdH5Bc4WwJKMqg==
+  version "8.4.31"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.31.tgz#92b451050a9f914da6755af352bdc0192508656d"
+  integrity sha512-PS08Iboia9mts/2ygV3eLpY5ghnUcfLV/EXTOW1E2qYxJKGGBUtNjN76FYHnMs36RmARn41bC0AZmn+rR0OVpQ==
   dependencies:
     nanoid "^3.3.6"
     picocolors "^1.0.0"
