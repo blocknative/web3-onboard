@@ -1,22 +1,40 @@
 import type { WalletInit, EIP1193Provider } from '@web3-onboard/common'
-import {
-  LegacyEip1193Adapter,
-  currentProvider,
-  getIsInstall,
-  getDownload,
-  installWalletMessage
-} from '@bitget-wallet/web3-sdk'
+
+let bitKeepDependencies: any = null
+let bitKeepAdapter: any = null
+
+const loadBitKeepDependencies = async (getAdapter?: boolean) => {
+  if (!bitKeepDependencies) {
+    bitKeepDependencies = await import('@bitget-wallet/web3-sdk')
+  }
+  if (getAdapter && !bitKeepAdapter) {
+    bitKeepAdapter = new bitKeepDependencies.LegacyEip1193Adapter()
+    return bitKeepAdapter
+  }
+  if (getAdapter) {
+    return bitKeepAdapter
+  }
+  return bitKeepDependencies
+}
 
 function bitKeep(): WalletInit {
   if (typeof window === 'undefined') return () => null
-  const sdkAdapter = new LegacyEip1193Adapter()
-  const appInfo = sdkAdapter.getWalletInfo()
-  const logo = sdkAdapter.getLogo()
+
   return () => {
     return {
-      label: appInfo.name,
-      getIcon: async () => logo,
+      label: 'BitKeep',
+      getIcon: async () => {
+        const sdkAdapter = await loadBitKeepDependencies(true)
+        return sdkAdapter.getLogo()
+      },
       getInterface: async () => {
+        const {
+          currentProvider,
+          getIsInstall,
+          getDownload,
+          installWalletMessage
+        } = await loadBitKeepDependencies()
+
         let provider: EIP1193Provider
         if (getIsInstall()) {
           provider = currentProvider()
