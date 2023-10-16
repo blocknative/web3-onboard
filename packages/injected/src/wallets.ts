@@ -503,7 +503,8 @@ const xdefi: InjectedWalletModule = {
   getInterface: async () => ({
     provider: (window as any).xfi && (window as any).xfi.ethereum
   }),
-  platforms: ['all']
+  platforms: ['all'],
+  externalUrl: ProviderExternalUrl.XDEFI
 }
 
 const oneInch: InjectedWalletModule = {

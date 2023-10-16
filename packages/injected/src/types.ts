@@ -91,7 +91,8 @@ export enum ProviderExternalUrl {
   RoninWallet = 'https://wallet.skymavis.com/',
   Coin98Wallet = 'https://coin98.com/wallet/',
   SubWallet = 'https://www.subwallet.app/',
-  Kayros = 'https://www.kayros.games/wallet/'
+  Kayros = 'https://www.kayros.games/wallet/',
+  XDEFI = 'https://xdefi.io/'
 }
 
 export enum ProviderLabel {
