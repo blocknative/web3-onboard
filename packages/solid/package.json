@@ -57,13 +57,14 @@
   "license": "MIT",
   "devDependencies": {
     "solid-devtools": "^0.27.3",
-    "typescript": "^5.1.6",
     "tsup": "^7.1.0",
-    "tsup-preset-solid": "^2.0.1"
+    "tsup-preset-solid": "^2.0.1",
+    "typescript": "^5.1.6"
   },
   "dependencies": {
     "@web3-onboard/common": "^2.3.3",
-    "@web3-onboard/core": "^2.21.0"
+    "@web3-onboard/core": "^2.21.0",
+    "solid-js": "^1.8.1"
   },
   "peerDependencies": {
     "solid-js": "^1.6.0"

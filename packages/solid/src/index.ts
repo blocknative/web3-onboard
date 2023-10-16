@@ -47,7 +47,7 @@ function createLocalStorageSignal<T>(
 
   const [value, setValue] = createSignal<T>(initialValue as T);
 
-  const setValueAndStore = ((arg) => {
+  const setValueAndStore = ((arg: any) => {
     const v = setValue(arg);
     storage.setItem(key, JSON.stringify({ value: v }));
     return v;
