@@ -52,7 +52,8 @@
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup",
-    "lint:types": "tsc --noEmit"
+    "lint:types": "tsc --noEmit",
+    "type-check": "tsc --noEmit"
   },
   "license": "MIT",
   "devDependencies": {
