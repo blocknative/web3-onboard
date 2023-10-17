@@ -1,12 +1,30 @@
-# @web3-onboard/walletconnect
+---
+title: WalletConnect
+---
 
-## Wallet module for connecting Wallet Connect to web3-onboard
+# {$frontmatter.title}
 
-### Install
+Wallet module for connecting WalletConnect to web3-onboard.
 
-`npm i @web3-onboard/core @web3-onboard/walletconnect`
+## Install
 
-## Options
+<Tabs values={['yarn', 'npm']}>
+<TabPanel value="yarn">
+
+```sh copy
+yarn add @web3-onboard/walletconnect
+```
+
+  </TabPanel>
+  <TabPanel value="npm">
+
+```sh copy
+npm install @web3-onboard/walletconnect
+```
+
+  </TabPanel>
+</Tabs>
+
 
 ```typescript
 type WalletConnectOptions = {
@@ -100,3 +118,7 @@ const { instance } = connectedWallets[0]
 
 console.log(connectedWallets)
 ```
+
+## Build Environments
+
+For build env configurations and setups please see the Build Env section [here](/docs/modules/core#build-environments)
