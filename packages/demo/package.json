@@ -28,6 +28,7 @@
     "@safe-global/safe-apps-provider": "^0.18.0",
     "@safe-global/safe-apps-sdk": "^8.1.0",
     "@web3-onboard/arcana-auth": "^2.0.0",
+    "@web3-onboard/bitget": "2.0.0",
     "@web3-onboard/blocto": "2.0.0",
     "@web3-onboard/cede-store": "^2.1.0",
     "@web3-onboard/coinbase": "^2.2.6",

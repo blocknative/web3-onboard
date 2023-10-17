@@ -56,6 +56,7 @@ const intiOnboard = async (theme) => {
   const { default: arcanaModule } = await import('@web3-onboard/arcana-auth')
   const { default: bloctoModule } = await import('@web3-onboard/blocto')
   const { default: venlyModule } = await import('@web3-onboard/venly')
+  const { default: bitgetModule } = await import('@web3-onboard/bitget')
   const INFURA_ID = '8b60d52405694345a99bcb82e722e0af'
 
   const injected = injectedModule()
@@ -66,7 +67,8 @@ const intiOnboard = async (theme) => {
   const coinbase = coinbaseModule()
   const dcent = dcentModule()
   const walletConnect = walletConnectModule({
-    projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5'
+    projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
+    dappUrl: 'https://onboard.blocknative.com/'
   })
   const ledger = ledgerModule({
     walletConnectVersion: 2,
@@ -83,6 +85,7 @@ const intiOnboard = async (theme) => {
   const trust = trustModule()
   const xdefi = xdefiModule()
   const cede = cedeModule()
+  const bitget = bitgetModule()
 
   const portis = portisModule({
     apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
@@ -123,16 +126,17 @@ const intiOnboard = async (theme) => {
     wallets: [
       injected,
       walletConnect,
-      arcanaWallet,
       coinbase,
       ledger,
       trezor,
       trust,
       gnosis,
-      uauth,
       taho,
-      cede,
+      bitget,
       xdefi,
+      uauth,
+      cede,
+      arcanaWallet,
       torus,
       sequence,
       dcent,

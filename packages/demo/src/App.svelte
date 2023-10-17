@@ -32,6 +32,7 @@
   import cedeStoreModule from '@web3-onboard/cede-store'
   import arcanaAuthModule from '@web3-onboard/arcana-auth'
   import venlyModule from '@web3-onboard/venly'
+  import bitgetModule from '@web3-onboard/bitget'
   import {
     recoverAddress,
     arrayify,
@@ -177,6 +178,7 @@
   })
 
   const dcent = dcentModule()
+  const bitget = bitgetModule()
   const frameWallet = frameModule()
   const sequence = sequenceModule()
   const enkrypt = enkryptModule()
@@ -200,6 +202,7 @@
       safe,
       trust,
       tallyho,
+      bitget,
       enkrypt,
       infinityWallet,
       mewWallet,
