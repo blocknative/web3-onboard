@@ -65,11 +65,5 @@
     "@web3-onboard/common": "^2.3.3",
     "@web3-onboard/core": "^2.21.0",
     "solid-js": "^1.8.1"
-  },
-  "peerDependencies": {
-    "solid-js": "^1.6.0"
-  },
-  "engines": {
-    "react": ">=16.8"
   }
 }
