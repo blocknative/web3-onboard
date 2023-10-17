@@ -80,9 +80,9 @@ export enum ProviderIdentityFlag {
  */
 export enum ProviderExternalUrl {
   Binance = 'https://www.bnbchain.org/ru/blog/binance-extension-wallet/',
-  BitKeep = 'https://bitkeep.com/en/download?type=0',
-  Coinbase = 'https://go.cb-w.com/dapp',
-  MetaMask = 'https://metamask.app.link/dapp/',
+  BitKeep = 'https://web3.bitget.com/en/wallet-download',
+  Coinbase = 'https://www.coinbase.com/wallet/downloads',
+  MetaMask = 'https://metamask.io/download/',
   OKXWallet = 'https://okx.com/download',
   Phantom = 'https://phantom.app/ul/v1/connect',
   Talisman = 'https://www.talisman.xyz/',
@@ -91,7 +91,8 @@ export enum ProviderExternalUrl {
   RoninWallet = 'https://wallet.skymavis.com/',
   Coin98Wallet = 'https://coin98.com/wallet/',
   SubWallet = 'https://www.subwallet.app/',
-  Kayros = 'https://www.kayros.games/wallet/'
+  Kayros = 'https://www.kayros.games/wallet/',
+  XDEFI = 'https://xdefi.io/'
 }
 
 export enum ProviderLabel {

@@ -1,7 +1,7 @@
 {
-  "name": "@web3-onboard/walletconnect",
-  "version": "2.5.0",
-  "description": "WalletConnect SDK module for connecting to Web3-Onboard. Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardised spec compliant web3 providers for all supported wallets, framework agnostic modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
+  "name": "@web3-onboard/bitkeep",
+  "version": "2.0.0",
+  "description": "Bitkeep Wallet SDK wallet module for connecting to Web3-Onboard. Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardized spec compliant web3 providers for all supported wallets, framework agnostic modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
   "keywords": [
     "Ethereum",
     "Web3",
@@ -31,14 +31,16 @@
     "confirmed",
     "Injected Wallet",
     "Crypto",
-    "Crypto Wallet"
+    "Crypto Wallet",
+    "Enkrypt",
+    "bitkeep"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/blocknative/web3-onboard.git",
-    "directory": "packages/walletconnect"
+    "directory": "packages/bitkeep"
   },
-  "homepage": "https://onboard.blocknative.com",
+  "homepage": "https://www.blocknative.com/onboard",
   "bugs": "https://github.com/blocknative/web3-onboard/issues",
   "module": "dist/index.js",
   "browser": "dist/index.js",
@@ -55,14 +57,11 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "typescript": "^4.5.5",
-    "@walletconnect/types": "^2.9.0"
+    "@types/node": "^17.0.21",
+    "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@walletconnect/ethereum-provider": "^2.10.2",
-    "@walletconnect/modal": "2.6.2",
-    "@web3-onboard/common": "^2.3.3",
-    "joi": "17.9.1",
-    "rxjs": "^7.5.2"
+    "@bitget-wallet/web3-sdk": "^0.0.6",
+    "@web3-onboard/common": "^2.3.3"
   }
 }
