@@ -85,6 +85,7 @@
     "@web3-onboard/web3auth": "^2.2.3",
     "@web3-onboard/xdefi": "^2.0.4",
     "@web3-onboard/zeal": "^2.0.4",
+    "@web3-onboard/particle-network": "^2.2.3",
     "animejs": "^3.2.1",
     "bnc-sdk": "^4.6.6",
     "ethers": "^5.7.0",
