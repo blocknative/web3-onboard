@@ -80,7 +80,11 @@
     // displayUnavailable: true,
     // ||
     // display specific unavailable wallets
-    displayUnavailable: [ProviderLabel.MetaMask, ProviderLabel.Trust, ProviderLabel.Phantom]
+    displayUnavailable: [
+      ProviderLabel.MetaMask,
+      ProviderLabel.Trust,
+      ProviderLabel.Phantom
+    ]
     // but only show Binance and Bitski wallet if they are available
     // filter: {
     //   [ProviderLabel.Binance]: 'unavailable',
@@ -117,15 +121,17 @@
 
   const coinbaseWallet = coinbaseModule()
 
-  const metamaskSDKWallet = metamaskSDK({options: {
-    extensionOnly: false,
-    i18nOptions: {
-      enabled: true,
-    },
-    dappMetadata: {
-      name: 'Demo Web3Onboard'
+  const metamaskSDKWallet = metamaskSDK({
+    options: {
+      extensionOnly: false,
+      i18nOptions: {
+        enabled: true
+      },
+      dappMetadata: {
+        name: 'Demo Web3Onboard'
+      }
     }
-  }})
+  })
 
   const walletConnect = walletConnectModule({
     handleUri: uri => console.log(uri),
