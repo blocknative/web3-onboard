@@ -119,6 +119,9 @@
 
   const metamaskSDKWallet = metamaskSDK({options: {
     extensionOnly: false,
+    i18nOptions: {
+      enabled: true,
+    },
     dappMetadata: {
       name: 'Demo Web3Onboard'
     }
