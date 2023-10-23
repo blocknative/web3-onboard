@@ -1,6 +1,7 @@
 # @web3-onboard/metamask
 
 ## Wallet module for connecting MetaMask Wallet SDK to web3-onboard
+The MetaMask Web3-Onboard module provides a reliable, secure, and seamless connection from your dapp to the MetaMask browser extension and MetaMask Mobile.
 See [MetaMask SDK Developer Docs](https://github.com/MetaMask/metamask-sdk)
 
 ### Install
