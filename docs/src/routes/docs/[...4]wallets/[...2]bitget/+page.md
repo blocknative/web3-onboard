@@ -14,14 +14,14 @@ Bitget Wallet SDK wallet module for connecting to Web3-Onboard. Web3-Onboard mak
 <TabPanel value="yarn">
 
 ```sh copy
-yarn add @web3-onboard/bitget
+yarn add @web3-onboard/bitget-wallet
 ```
 
   </TabPanel>
   <TabPanel value="npm">
 
 ```sh copy
-npm install @web3-onboard/bitget
+npm install @web3-onboard/bitget-wallet
 ```
 
   </TabPanel>

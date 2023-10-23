@@ -17,12 +17,12 @@ const loadBitgetDependencies = async (getAdapter?: boolean) => {
   return bitgetDependencies
 }
 
-function bitget(): WalletInit {
+function bitgetWallet(): WalletInit {
   if (typeof window === 'undefined') return () => null
 
   return () => {
     return {
-      label: 'Bitget',
+      label: 'Bitget Wallet',
       getIcon: async () => {
         const sdkAdapter = await loadBitgetDependencies(true)
         return sdkAdapter.getLogo()
@@ -48,4 +48,4 @@ function bitget(): WalletInit {
   }
 }
 
-export default bitget
+export default bitgetWallet
