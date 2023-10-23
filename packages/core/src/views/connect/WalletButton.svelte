@@ -12,6 +12,9 @@
   export let disabled: boolean
 
   let windowWidth: number
+
+  // Lowercase the label and remove special characters
+  export let formattedLabel = label.toLowerCase().replace(/[^a-zA-Z0-9]+/g, '');
 </script>
 
 <style>
@@ -104,7 +107,7 @@
 
 <svelte:window bind:innerWidth={windowWidth} />
 
-<div class="wallet-button-container">
+<div class="wallet-button-container wallet-{formattedLabel}">
   <button
     class="wallet-button-styling"
     class:connected
