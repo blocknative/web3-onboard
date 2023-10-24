@@ -22,6 +22,7 @@
   import xdefiWalletModule from '@web3-onboard/xdefi'
   import zealModule from '@web3-onboard/zeal'
   import transactionPreviewModule from '@web3-onboard/transaction-preview'
+  import metamaskSDK from '@web3-onboard/metamask'
   import enkryptModule from '@web3-onboard/enkrypt'
   import mewWalletModule from '@web3-onboard/mew-wallet'
   import uauthModule from '@web3-onboard/uauth'
@@ -79,7 +80,11 @@
     // displayUnavailable: true,
     // ||
     // display specific unavailable wallets
-    displayUnavailable: [ProviderLabel.MetaMask, ProviderLabel.Trust, ProviderLabel.Phantom]
+    displayUnavailable: [
+      ProviderLabel.MetaMask,
+      ProviderLabel.Trust,
+      ProviderLabel.Phantom
+    ]
     // but only show Binance and Bitski wallet if they are available
     // filter: {
     //   [ProviderLabel.Binance]: 'unavailable',
@@ -116,6 +121,18 @@
 
   const coinbaseWallet = coinbaseModule()
 
+  const metamaskSDKWallet = metamaskSDK({
+    options: {
+      extensionOnly: false,
+      i18nOptions: {
+        enabled: true
+      },
+      dappMetadata: {
+        name: 'Demo Web3Onboard'
+      }
+    }
+  })
+
   const walletConnect = walletConnectModule({
     handleUri: uri => console.log(uri),
     projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
@@ -144,7 +161,6 @@
   const keepkey = keepkeyModule()
   const keystone = keystoneModule()
   const safe = safeModule()
-  const tallyho = tallyHoModule()
   const xdefi = xdefiWalletModule()
   const zeal = zealModule()
   const phantom = phantomModule()
@@ -152,6 +168,7 @@
   const frontier = frontierModule()
   const cedeStore = cedeStoreModule()
   const blocto = bloctoModule()
+  const tallyho = tallyHoModule()
 
   const trezorOptions = {
     email: 'test@test.com',
@@ -193,6 +210,7 @@
 
   const onboard = Onboard({
     wallets: [
+      metamaskSDKWallet,
       injected,
       ledger,
       trezor,

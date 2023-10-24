@@ -36,6 +36,7 @@ const intiOnboard = async (theme) => {
   const { default: walletConnectModule } = await import('@web3-onboard/walletconnect')
   const { default: infinityWalletModule } = await import('@web3-onboard/infinity-wallet')
   const { default: coinbaseModule } = await import('@web3-onboard/coinbase')
+  const { default: metamaskModule } = await import('@web3-onboard/metamask')
   const { default: dcentModule } = await import('@web3-onboard/dcent')
   const { default: portisModule } = await import('@web3-onboard/portis')
   const { default: magicModule } = await import('@web3-onboard/magic')
@@ -65,6 +66,11 @@ const intiOnboard = async (theme) => {
     clientID: 'xar_test_c9c3bc702eb13255c58dab0e74cfa859711c13cb'
   })
   const coinbase = coinbaseModule()
+  const metamask = metamaskModule({options: {
+    dappMetadata: {
+      name: 'Web3Onboard',
+    }
+  }})
   const dcent = dcentModule()
   const walletConnect = walletConnectModule({
     projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
@@ -124,6 +130,7 @@ const intiOnboard = async (theme) => {
   return Onboard({
     connect: { autoConnectAllPreviousWallet: true },
     wallets: [
+      metamask,
       injected,
       walletConnect,
       coinbase,
