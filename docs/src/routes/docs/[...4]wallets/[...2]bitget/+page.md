@@ -21,7 +21,7 @@ yarn add @web3-onboard/bitget
   <TabPanel value="npm">
 
 ```sh copy
-npm install @web3-onboard/bitget-wallet
+npm install @web3-onboard/bitget
 ```
 
   </TabPanel>
