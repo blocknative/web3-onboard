@@ -127,18 +127,21 @@ function init(options: InitOptions): OnboardAPI {
   // update accountCenter
   if (typeof accountCenter !== 'undefined') {
     let accountCenterUpdate
-    const { hideTransactionProtectionBtn } = accountCenter
+    const { hideTransactionProtectionBtn, transactionProtectionInfoLink } =
+      accountCenter
 
     if (device.type === 'mobile') {
       accountCenterUpdate = {
         ...APP_INITIAL_STATE.accountCenter,
         hideTransactionProtectionBtn,
+        transactionProtectionInfoLink,
         ...(accountCenter.mobile ? accountCenter.mobile : {})
       }
     } else if (accountCenter.desktop) {
       accountCenterUpdate = {
         ...APP_INITIAL_STATE.accountCenter,
         hideTransactionProtectionBtn,
+        transactionProtectionInfoLink,
         ...accountCenter.desktop
       }
     }

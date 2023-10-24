@@ -62,15 +62,22 @@ export function getDevice(): Device | DeviceNotBrowser {
 export const notNullish = <T>(value: T | null | undefined): value is T =>
   value != null
 
-export function validEnsChain(chainId: ChainId): boolean {
+export function validEnsChain(chainId: ChainId): ChainId | null {
+  // return L2s as Eth for ens resolution
   switch (chainId) {
     case '0x1':
-    case '0x3':
-    case '0x4':
-    case '0x5':
-      return true
+    case '0x89': // Polygon
+    case '0xa': //Optimism
+    case '0xa4b1': // Arb One
+    case '0xa4ba': // Arb Nova
+    case '0x144': // zksync
+      return '0x1'
+    case '0x5': // Goerli
+      return chainId
+    case '0xaa36a7': // Sepolia
+      return chainId
     default:
-      return false
+      return null
   }
 }
 
@@ -129,7 +136,8 @@ export const chainIdToLabel: Record<string, string> = {
   '0x14a33': 'Base Goerli',
   '0x64': 'Gnosis',
   '0x63564C40': 'Harmony One',
-  '0xa4b1': 'Arbitrum'
+  '0xa4b1': 'Arbitrum One',
+  '0xa4ba': 'Arbitrum Nova'
 }
 
 export const networkToChainId: Record<string, ChainId> = {
@@ -207,6 +215,10 @@ export const chainStyles: Record<string, ChainStyle> = {
     color: '#ffffff'
   },
   '0xa4b1': {
+    icon: arbitrumIcon,
+    color: '#33394B'
+  },
+  '0xa4ba': {
     icon: arbitrumIcon,
     color: '#33394B'
   },

@@ -67,8 +67,8 @@ export enum ProviderIdentityFlag {
   Fordefi = 'isFordefi',
   Coin98Wallet = 'isCoin98',
   SubWallet = 'isSubWallet',
+  Kayros = 'isKayros'
 }
-
 
 /**
  * The ProviderExternalUrl enum represents the external URLs associated
@@ -80,17 +80,19 @@ export enum ProviderIdentityFlag {
  */
 export enum ProviderExternalUrl {
   Binance = 'https://www.bnbchain.org/ru/blog/binance-extension-wallet/',
-  BitKeep = 'https://bitkeep.com/en/download?type=0',
+  BitKeep = 'https://web3.bitget.com/en/wallet-download',
   Coinbase = 'https://www.coinbase.com/wallet/downloads',
   MetaMask = 'https://metamask.io/download/',
   OKXWallet = 'https://okx.com/download',
-  Phantom = 'https://phantom.app/download',
+  Phantom = 'https://phantom.app/ul/v1/connect',
   Talisman = 'https://www.talisman.xyz/',
-  Trust = 'https://trustwallet.com/download/',
+  Trust = 'https://link.trustwallet.com',
   OneKey = 'https://onekey.so/download/',
   RoninWallet = 'https://wallet.skymavis.com/',
   Coin98Wallet = 'https://coin98.com/wallet/',
   SubWallet = 'https://www.subwallet.app/',
+  Kayros = 'https://www.kayros.games/wallet/',
+  XDEFI = 'https://xdefi.io/'
 }
 
 export enum ProviderLabel {
@@ -149,6 +151,7 @@ export enum ProviderLabel {
   RoninWallet = 'Ronin Wallet',
   Coin98Wallet = 'Coin98 Wallet',
   SubWallet = 'SubWallet',
+  Kayros = 'Kayros'
 }
 
 export interface MeetOneProvider extends ExternalProvider {
@@ -184,7 +187,8 @@ export enum InjectedNameSpace {
   OneKey = '$onekey',
   RoninWallet = 'ronin',
   Coin98Wallet = 'coin98',
-  SubWallet = 'SubWallet'
+  SubWallet = 'SubWallet',
+  Kayros = 'kayros'
 }
 
 export interface CustomWindow extends Window {
@@ -223,16 +227,17 @@ export interface CustomWindow extends Window {
   talismanEth: InjectedProvider
   $onekey: {
     ethereum: InjectedProvider
-  },
+  }
   ronin: {
     provider: InjectedProvider
   }
   coin98: {
     provider: InjectedProvider
-  },
+  }
   SubWallet: {
     provider: InjectedProvider
-  },
+  }
+  kayros: InjectedProvider
 }
 
 export type InjectedProvider = ExternalProvider &

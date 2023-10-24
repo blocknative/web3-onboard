@@ -9,7 +9,7 @@
   export { className as class }
   export let backgroundStyle = ''
 
-  // Holds refference to the background element node for animation
+  // Holds reference to the background element node for animation
   export let cardBg = null
 
   const cardColors: Record<number, string> = {

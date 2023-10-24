@@ -394,7 +394,6 @@ const imtoken: InjectedWalletModule = {
   getIcon: async () => (await import('./icons/imtoken.js')).default,
   getInterface: async () => ({
     provider: createEIP1193Provider(window.ethereum, {
-      wallet_switchEthereumChain: UNSUPPORTED_METHOD,
       eth_selectAccounts: UNSUPPORTED_METHOD
     })
   }),
@@ -504,7 +503,8 @@ const xdefi: InjectedWalletModule = {
   getInterface: async () => ({
     provider: (window as any).xfi && (window as any).xfi.ethereum
   }),
-  platforms: ['all']
+  platforms: ['all'],
+  externalUrl: ProviderExternalUrl.XDEFI
 }
 
 const oneInch: InjectedWalletModule = {
@@ -745,7 +745,7 @@ const okxwallet: InjectedWalletModule = {
   getInterface: async () => ({
     provider: createEIP1193Provider(window.okxwallet)
   }),
-  platforms: ['desktop'],
+  platforms: ['all'],
   externalUrl: ProviderExternalUrl.OKXWallet
 }
 
@@ -818,8 +818,7 @@ const fordefi: InjectedWalletModule = {
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
     !!provider &&
-    !!provider[ProviderIdentityFlag.Fordefi] &&
-    !otherProviderFlagsExist(ProviderIdentityFlag.Fordefi, provider),
+    !!provider[ProviderIdentityFlag.Fordefi],
   getIcon: async () => (await import('./icons/fordefi.js')).default,
   getInterface: getInjectedInterface(ProviderIdentityFlag.Fordefi, true),
   platforms: ['desktop']
@@ -839,7 +838,10 @@ const coin98wallet: InjectedWalletModule = {
     let provider: EIP1193Provider
 
     // check if coin98 is injected into window.ethereum
-    if (ethereumInjectionExists && window[InjectedNameSpace.Ethereum].isCoin98) {
+    if (
+      ethereumInjectionExists &&
+      window[InjectedNameSpace.Ethereum].isCoin98
+    ) {
       provider = window[InjectedNameSpace.Ethereum]
     } else {
       // directly use the window.coin98 injection
@@ -865,6 +867,18 @@ const subwallet: InjectedWalletModule = {
   }),
   platforms: ['all'],
   externalUrl: ProviderExternalUrl.SubWallet
+}
+
+const kayros: InjectedWalletModule = {
+  label: ProviderLabel.Kayros,
+  injectedNamespace: InjectedNameSpace.Kayros,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Kayros],
+  getIcon: async () => (await import('./icons/kayros.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.kayros)
+  }),
+  platforms: ['desktop']
 }
 
 const wallets = [
@@ -920,7 +934,8 @@ const wallets = [
   fordefi,
   ronin,
   coin98wallet,
-  subwallet
+  subwallet,
+  kayros
 ]
 
 export default wallets
