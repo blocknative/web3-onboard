@@ -192,6 +192,7 @@ We recommend you add the [Core Repo](../../modules/core.md#install) and consider
 **Frameworks**
 
 - [React](../../modules/react.md#quickstart-with-injected-wallets-and-ethers-provider)
+- [Solid](../../modules/solid.md#install)
 - [Vue](../../modules/vue.md#install)
 
 ## Test out the demo app
