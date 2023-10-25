@@ -62,6 +62,7 @@
     "@web3-onboard/web3auth": "^2.2.2",
     "@web3-onboard/xdefi": "^2.0.5",
     "@web3-onboard/zeal": "^2.0.3",
+    "@web3-onboard/particle-network": "^2.2.3",
     "vconsole": "^3.15.1"
   },
   "license": "MIT",

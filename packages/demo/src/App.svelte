@@ -34,6 +34,7 @@
   import arcanaAuthModule from '@web3-onboard/arcana-auth'
   import venlyModule from '@web3-onboard/venly'
   import bitgetModule from '@web3-onboard/bitget'
+  import particleAuthModule from '@web3-onboard/particle-network'
   import {
     recoverAddress,
     arrayify,
@@ -194,6 +195,12 @@
     // for more info see the @web3-onboard/magic docs
   })
 
+  const particle = particleAuthModule({
+    projectId: 'b385ccf0-73c3-485a-9941-159b7855b806',
+    clientKey: 'cSTLqhvONB5j588Wz6E5WJLMPrHeUlGbymf1DFhO',
+    appId: 'b1f0239a-edb0-41f9-b0f5-ab780bb02a9e'
+  })
+
   const dcent = dcentModule()
   const bitget = bitgetModule()
   const frameWallet = frameModule()
@@ -241,7 +248,8 @@
       cedeStore,
       arcanaAuth,
       blocto,
-      venly
+      venly,
+      particle
     ],
     transactionPreview,
     gas,
