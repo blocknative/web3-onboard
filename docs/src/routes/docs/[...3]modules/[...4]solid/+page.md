@@ -203,7 +203,7 @@ Function to set the chain of a wallet
 
 #### Example usage
 
-```tsx
+```typescript
 import { useOnboard } from '@web3-onboard/solid'
 function SampleConnect() {
   const { setChain } = useOnboard()
@@ -222,7 +222,7 @@ Readonly boolean ref that tracks the status of setting the chain
 
 #### Example usage
 
-```tsx
+```typescript
 import { useOnboard } from '@web3-onboard/solid'
 function SampleConnect() {
   const { settingChain } = useOnboard()
@@ -236,7 +236,7 @@ Readonly ref that contains every wallet that has been connected
 
 #### Example usage
 
-```tsx
+```typescript
 import { useOnboard } from '@web3-onboard/solid'
 function SampleConnect() {
     const { wallets } = useOnboard()
@@ -260,7 +260,7 @@ Readonly ref that contains the last time that the user connected a wallet in mil
 
 #### Example usage
 
-```tsx
+```typescript
 import { useOnboard } from '@web3-onboard/solid'
 function SampleConnect() {
   const { lastConnectedTimestamp } = useOnboard()
