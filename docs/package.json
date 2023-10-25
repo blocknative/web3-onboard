@@ -70,6 +70,7 @@
     "@web3-onboard/keystone": "^2.3.7",
     "@web3-onboard/ledger": "^2.5.1",
     "@web3-onboard/magic": "^2.1.7",
+    "@web3-onboard/metamask": "^2.0.0-alpha.1",
     "@web3-onboard/mew-wallet": "^2.0.4",
     "@web3-onboard/phantom": "^2.0.3",
     "@web3-onboard/portis": "^2.1.7",
