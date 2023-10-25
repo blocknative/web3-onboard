@@ -1,31 +1,31 @@
 import type { WalletInit, EIP1193Provider } from '@web3-onboard/common'
 
-let bitgetDependencies: any = null
-let bitgetAdapter: any = null
+let bitgetWalletDependencies: any = null
+let bitgetWalletAdapter: any = null
 
-const loadBitgetDependencies = async (getAdapter?: boolean) => {
-  if (!bitgetDependencies) {
-    bitgetDependencies = await import('@bitget-wallet/web3-sdk')
+const loadBitgetWalletDependencies = async (getAdapter?: boolean) => {
+  if (!bitgetWalletDependencies) {
+    bitgetWalletDependencies = await import('@bitget-wallet/web3-sdk')
   }
-  if (getAdapter && !bitgetAdapter) {
-    bitgetAdapter = new bitgetDependencies.LegacyEip1193Adapter()
-    return bitgetAdapter
+  if (getAdapter && !bitgetWalletAdapter) {
+    bitgetWalletAdapter = new bitgetWalletDependencies.LegacyEip1193Adapter()
+    return bitgetWalletAdapter
   }
   if (getAdapter) {
-    return bitgetAdapter
+    return bitgetWalletAdapter
   }
-  return bitgetDependencies
+  return bitgetWalletDependencies
 }
 
-function bitget(): WalletInit {
+function bitgetWallet(): WalletInit {
   if (typeof window === 'undefined') return () => null
 
   return () => {
     return {
-      label: 'Bitget',
+      label: 'Bitget Wallet',
       getIcon: async () => {
-        const sdkAdapter = await loadBitgetDependencies(true)
-        return sdkAdapter.getLogo()
+        const { WalletInfo } = await loadBitgetWalletDependencies()
+        return WalletInfo.logolist.svg[256];
       },
       getInterface: async () => {
         const {
@@ -33,7 +33,7 @@ function bitget(): WalletInit {
           getIsInstall,
           getDownload,
           installWalletMessage
-        } = await loadBitgetDependencies()
+        } = await loadBitgetWalletDependencies()
 
         let provider: EIP1193Provider
         if (getIsInstall()) {
@@ -48,4 +48,4 @@ function bitget(): WalletInit {
   }
 }
 
-export default bitget
+export default bitgetWallet

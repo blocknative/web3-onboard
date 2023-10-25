@@ -136,6 +136,7 @@ For full documentation, check out the README.md for each package or the [docs pa
 **Frameworks**
 
 - [React](packages/react/README.md)
+- [Solid](packages/solid/README.md)
 - [Vue](packages/vue/README.md)
 
 ## Test out the demo app

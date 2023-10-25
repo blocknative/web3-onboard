@@ -24,8 +24,8 @@ function bitKeep(): WalletInit {
     return {
       label: 'BitKeep',
       getIcon: async () => {
-        const sdkAdapter = await loadBitKeepDependencies(true)
-        return sdkAdapter.getLogo()
+        const { WalletInfo } = await loadBitKeepDependencies();
+        return WalletInfo.logolist.svg[256];
       },
       getInterface: async () => {
         const {

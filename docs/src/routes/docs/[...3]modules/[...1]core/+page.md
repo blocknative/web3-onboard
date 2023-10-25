@@ -64,14 +64,14 @@ If you would like to support all wallets, then you can install all of the wallet
 <TabPanel value="yarn">
 
 ```sh copy
-yarn add @web3-onboard/coinbase @web3-onboard/fortmatic @web3-onboard/gnosis @web3-onboard/injected-wallets @web3-onboard/arcana-auth @web3-onboard/keepkey @web3-onboard/keystone @web3-onboard/ledger @web3-onboard/magic @web3-onboard/portis @web3-onboard/react @web3-onboard/torus @web3-onboard/trezor @web3-onboard/walletconnect @web3-onboard/web3auth @web3-onboard/dcent @web3-onboard/sequence @web3-onboard/enkrypt @web3-onboard/mew-wallet @web3-onboard/uauth @web3-onboard/zeal @web3-onboard/frontier
+yarn add @web3-onboard/coinbase @web3-onboard/metamask @web3-onboard/fortmatic @web3-onboard/gnosis @web3-onboard/injected-wallets @web3-onboard/arcana-auth @web3-onboard/keepkey @web3-onboard/keystone @web3-onboard/ledger @web3-onboard/magic @web3-onboard/portis @web3-onboard/react @web3-onboard/torus @web3-onboard/trezor @web3-onboard/walletconnect @web3-onboard/web3auth @web3-onboard/dcent @web3-onboard/sequence @web3-onboard/enkrypt @web3-onboard/mew-wallet @web3-onboard/uauth @web3-onboard/zeal @web3-onboard/frontier
 ```
 
   </TabPanel>
   <TabPanel value="npm">
 
 ```sh copy
-npm install @web3-onboard/coinbase @web3-onboard/fortmatic @web3-onboard/gnosis @web3-onboard/injected-wallets @web3-onboard/arcana-auth @web3-onboard/keepkey @web3-onboard/keystone @web3-onboard/ledger @web3-onboard/magic @web3-onboard/portis @web3-onboard/react @web3-onboard/torus @web3-onboard/trezor @web3-onboard/walletconnect @web3-onboard/web3auth @web3-onboard/dcent @web3-onboard/sequence @web3-onboard/enkrypt @web3-onboard/mew-wallet @web3-onboard/uauth @web3-onboard/zeal @web3-onboard/frontier
+npm install @web3-onboard/coinbase @web3-onboard/metamask @web3-onboard/fortmatic @web3-onboard/gnosis @web3-onboard/injected-wallets @web3-onboard/arcana-auth @web3-onboard/keepkey @web3-onboard/keystone @web3-onboard/ledger @web3-onboard/magic @web3-onboard/portis @web3-onboard/react @web3-onboard/torus @web3-onboard/trezor @web3-onboard/walletconnect @web3-onboard/web3auth @web3-onboard/dcent @web3-onboard/sequence @web3-onboard/enkrypt @web3-onboard/mew-wallet @web3-onboard/uauth @web3-onboard/zeal @web3-onboard/frontier
 ```
 
   </TabPanel>
@@ -81,6 +81,7 @@ npm install @web3-onboard/coinbase @web3-onboard/fortmatic @web3-onboard/gnosis 
 
 - All wallet modules (except for `injected-wallets`) require extra dependencies and may require polyfilling the node built in modules for the browser. See the [Build Environments](#build-environments) section for more info
 - **If using React** you may be interested in checking out the React Hooks package here - https://www.npmjs.com/package/@web3-onboard/react
+- **If using Solid** you may be interested in checking out the Solid package here - https://www.npmjs.com/package/@web3-onboard/solid
 - **If using Vue** you may be interested in checking out the Vue package here - https://www.npmjs.com/package/@web3-onboard/vue
   :::
 
