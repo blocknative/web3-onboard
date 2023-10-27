@@ -8,8 +8,6 @@ const $disconnected = document.querySelector('.disconnected')
 const $address = document.querySelector('.address')
 const $label = document.querySelector('.label')
 
-let label
-
 const connect = async () => {
   return await onboard.connectWallet()
 }

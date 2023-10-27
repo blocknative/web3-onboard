@@ -76,7 +76,7 @@ console.log(connectedWallets)
 - Rabby - _Desktop_
 - MathWallet - _Desktop & Mobile_
 - Gamestop - _Desktop_
-- Bitkeep - _Desktop & Mobile_
+- Bitget - _Desktop & Mobile_
 - Sequence - _Desktop & Mobile_
 - Core - _Desktop_
 - Bitski - _Desktop & Mobile_

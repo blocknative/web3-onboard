@@ -41,6 +41,8 @@ function injected(options?: InjectedWalletOptions): WalletInit {
       ({ label }) => label
     )
 
+    debugger
+
     const wallets = allWallets.reduce(
       (acc: InjectedWalletModule[], wallet: InjectedWalletModule) => {
         const { label, platforms, injectedNamespace, checkProviderIdentity } =
@@ -132,9 +134,7 @@ function injected(options?: InjectedWalletOptions): WalletInit {
           getInterface
         }))
         // default sort by alphabetical
-        .sort((a, b) =>
-          a.label < b.label ? -1 : a.label > b.label ? 1 : 0
-        )
+        .sort((a, b) => (a.label < b.label ? -1 : a.label > b.label ? 1 : 0))
 
       return sort ? sort(formattedWallets) : formattedWallets
     }
