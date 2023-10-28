@@ -7,8 +7,6 @@
       "./packages/*"
     ],
     "nohoist": [
-      "**/react",
-      "**/react-dom",
       "**/csstype"
     ]
   },

@@ -33,8 +33,8 @@
   import cedeStoreModule from '@web3-onboard/cede-store'
   import arcanaAuthModule from '@web3-onboard/arcana-auth'
   import venlyModule from '@web3-onboard/venly'
+  import capsuleModule, { Environment } from '@web3-onboard/capsule'
   import bitgetModule from '@web3-onboard/bitget'
-  import capsuleModule from '@web3-onboard/capsule'
   import {
     recoverAddress,
     arrayify,
@@ -209,7 +209,10 @@
     environment: 'staging'
   })
   const capsule = capsuleModule({ 
-    appName: 'Blocknative Test App', 
+    environment: Environment.BETA,
+    appName: 'Blocknative', 
+    chains: [11155111, 5],
+    chainId: 5,
     apiKey: '2f938ac0c48ef356050a79bd66042a23' 
   })
 
@@ -247,7 +250,7 @@
       cedeStore,
       arcanaAuth,
       blocto,
-      venly,
+      venly
     ],
     transactionPreview,
     gas,

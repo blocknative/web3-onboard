@@ -1,7 +1,26 @@
 import { WalletInit } from '@web3-onboard/common';
-import Capsule, { Environment, CapsuleEIP1193Provider } from '@usecapsule/web-sdk';
-import { sepolia, goerli } from '@wagmi/chains';
-import type { CapsuleInitOptions } from './types.js'
+import Capsule, { Environment as CapsuleEnvironment, CapsuleEIP1193Provider } from '@usecapsule/web-sdk';
+import type { CapsuleInitOptions } from './types.js';
+import { Chain } from '@wagmi/chains';
+
+type MaybeChain = Chain | null;
+
+function getChainById(chainId: number): MaybeChain {
+  const globalProperties = Object.getOwnPropertyNames(globalThis);
+
+  for (const propName of globalProperties) {
+    const possibleChain: any = (globalThis as any)[propName];
+    if (possibleChain && possibleChain.id === chainId) {
+      return possibleChain as Chain;
+    }
+  }
+
+  return null;
+}
+
+function getChainsByIds(chainIds: number[]): Chain[] {
+  return chainIds.map(id => getChainById(id)).filter(chain => chain != null) as Chain[];
+}
 
 function capsule(options: CapsuleInitOptions): WalletInit {
     return () => {
@@ -9,13 +28,14 @@ function capsule(options: CapsuleInitOptions): WalletInit {
             label: 'Capsule',
             getIcon: async () => (await import('./icon.js')).default,
             getInterface: async () => {
-                const capsule = new Capsule(Environment.BETA, options.apiKey);
+                const capsule = new Capsule(options.environment, options.apiKey);
+                const chains = getChainsByIds(options.chains);
 
                 const providerOpts = {
                     capsule: capsule,
-                    chainId: '5',
+                    chainId: options.chainId.toString(),
                     appName: options.appName,
-                    chains: [sepolia, goerli]
+                    chains: chains,
                 };
                 const provider = new CapsuleEIP1193Provider(providerOpts);
 
@@ -29,3 +49,4 @@ function capsule(options: CapsuleInitOptions): WalletInit {
 }
 
 export default capsule;
+export { CapsuleEnvironment as Environment };
