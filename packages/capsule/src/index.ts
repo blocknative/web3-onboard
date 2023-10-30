@@ -1,25 +1,27 @@
 import { WalletInit } from '@web3-onboard/common';
 import Capsule, { Environment as CapsuleEnvironment, CapsuleEIP1193Provider } from '@usecapsule/web-sdk';
 import type { CapsuleInitOptions } from './types.js';
+import * as chains from '@wagmi/chains';
 import { Chain } from '@wagmi/chains';
 
-type MaybeChain = Chain | null;
+type ChainId = number;
+type ChainsMap = Map<ChainId, Chain>;
 
-function getChainById(chainId: number): MaybeChain {
-  const globalProperties = Object.getOwnPropertyNames(globalThis);
+function buildChainsMap(): ChainsMap {
+  const chainEntries = Object.entries(chains);
+  const chainsMap: ChainsMap = new Map();
 
-  for (const propName of globalProperties) {
-    const possibleChain: any = (globalThis as any)[propName];
-    if (possibleChain && possibleChain.id === chainId) {
-      return possibleChain as Chain;
+  for (const [chainName, chainObject] of chainEntries) {
+    if (chainObject && 'id' in chainObject) {
+      chainsMap.set(chainObject.id, chainObject as Chain);
     }
   }
 
-  return null;
+  return chainsMap;
 }
 
-function getChainsByIds(chainIds: number[]): Chain[] {
-  return chainIds.map(id => getChainById(id)).filter(chain => chain != null) as Chain[];
+function getChainsByIds(chainIds: number[], chainsMap: ChainsMap): Chain[] {
+  return chainIds.map(id => chainsMap.get(id)).filter((c): c is Chain => !!c);
 }
 
 function capsule(options: CapsuleInitOptions): WalletInit {
@@ -29,13 +31,13 @@ function capsule(options: CapsuleInitOptions): WalletInit {
             getIcon: async () => (await import('./icon.js')).default,
             getInterface: async () => {
                 const capsule = new Capsule(options.environment, options.apiKey);
-                const chains = getChainsByIds(options.chains);
+                const chainsMap = buildChainsMap();
 
                 const providerOpts = {
                     capsule: capsule,
                     chainId: options.chainId.toString(),
                     appName: options.appName,
-                    chains: chains,
+                    chains: getChainsByIds(options.chains, chainsMap),
                 };
                 const provider = new CapsuleEIP1193Provider(providerOpts);
 
