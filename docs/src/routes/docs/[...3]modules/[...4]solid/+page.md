@@ -130,7 +130,7 @@ Function to open the onboard modal and connect to a wallet provider. For referen
 
 #### Example usage
 
-```tsx
+```typescript
 function SampleConnect() {
   const { connectWallet } = useOnboard()
 
@@ -144,7 +144,7 @@ Property that contains the current chain to which `connectedChain` is connected
 
 #### Example usage
 
-```tsx
+```typescript
 function SampleConnect() {
     const { connectedChain } = useOnboard()
 
@@ -157,7 +157,7 @@ Property that contains the latest connected wallet
 
 #### Example usage
 
-```tsx
+```typescript
 function SampleConnect() {
   const { connectedWallet } = useOnboard()
   return <span>Connected Wallet: {connectedWallet()?.label}</span>
@@ -170,7 +170,7 @@ Function to disconnect the `connectedWallet`
 
 #### Example usage
 
-```tsx
+```typescript
 import { useOnboard } from '@web3-onboard/solid'
 function SampleConnect() {
   const { disconnectConnectedWallet } = useOnboard()
@@ -189,7 +189,7 @@ Function that returns the current chain a wallet is connected to
 
 #### Example usage
 
-```tsx
+```typescript
 import { useOnboard } from '@web3-onboard/solid'
 function SampleConnect() {
   const { getChain } = useOnboard()
@@ -203,7 +203,7 @@ Function to set the chain of a wallet
 
 #### Example usage
 
-```tsx
+```typescript
 import { useOnboard } from '@web3-onboard/solid'
 function SampleConnect() {
   const { setChain } = useOnboard()
@@ -222,7 +222,7 @@ Readonly boolean ref that tracks the status of setting the chain
 
 #### Example usage
 
-```tsx
+```typescript
 import { useOnboard } from '@web3-onboard/solid'
 function SampleConnect() {
   const { settingChain } = useOnboard()
@@ -236,7 +236,7 @@ Readonly ref that contains every wallet that has been connected
 
 #### Example usage
 
-```tsx
+```typescript
 import { useOnboard } from '@web3-onboard/solid'
 function SampleConnect() {
     const { wallets } = useOnboard()
@@ -260,7 +260,7 @@ Readonly ref that contains the last time that the user connected a wallet in mil
 
 #### Example usage
 
-```tsx
+```typescript
 import { useOnboard } from '@web3-onboard/solid'
 function SampleConnect() {
   const { lastConnectedTimestamp } = useOnboard()
