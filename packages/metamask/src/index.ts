@@ -15,9 +15,15 @@ function metamask({
         const base64 = window.btoa(icon || '')
         const appLogoUrl = `data:image/svg+xml;base64,${base64}`
         const { createEIP1193Provider } = await import('@web3-onboard/common')
-        const { MetaMaskSDK } = await import('@metamask/sdk')
+        const { default: metaMask, MetaMaskSDK } = await import('@metamask/sdk')
 
-        const sdk = new MetaMaskSDK({
+        const MetaMaskSDKConstructor = (
+          MetaMaskSDK === undefined
+            ? (metaMask as any)
+            : MetaMaskSDK
+        ) as typeof MetaMaskSDK
+
+        const sdk = new MetaMaskSDKConstructor({
           ...options,
           dappMetadata: {
             name: options.dappMetadata?.name || name || '',
