@@ -8,6 +8,10 @@ See [MetaMask SDK Developer Docs](https://github.com/MetaMask/metamask-sdk)
 
 `npm i @web3-onboard/metamask`
 
+### If using this package with the `@web3-onboard/injected-wallets` module
+_When utilizing this package alongside the `@web3-onboard/injected-wallets` module, ensure to list this package prior to the initialized injected-wallets module within the wallets list of the Web3-Onboard init._ 
+_This order prioritizes the SDK when a MetaMask browser wallet is detected, allowing the SDK to take precedence._
+
 ## Options
 
 ```typescript
@@ -42,8 +46,10 @@ const metamaskSDKWallet = metamaskSDK({options: {
 const onboard = Onboard({
   // ... other Onboard options
   wallets: [
-    metamaskSDKWallet
+    metamaskSDKWallet,
     //... other wallets
+    // Make sure to pass in before or above the injected-wallets module
+    injectedWalletModule
   ]
 })
 

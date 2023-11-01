@@ -2504,9 +2504,9 @@
   integrity sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==
 
 "@react-native-async-storage/async-storage@^1.17.11":
-  version "1.19.3"
-  resolved "https://registry.yarnpkg.com/@react-native-async-storage/async-storage/-/async-storage-1.19.3.tgz#ad5fe3ed0a82d4624aa4500321c1e09c02daeb46"
-  integrity sha512-CwGfoHCWdPOTPS+2fW6YRE1fFBpT9++ahLEroX5hkgwyoQ+TkmjOaUxixdEIoVua9Pz5EF2pGOIJzqOTMWfBlA==
+  version "1.19.4"
+  resolved "https://registry.yarnpkg.com/@react-native-async-storage/async-storage/-/async-storage-1.19.4.tgz#f3c8648fa6d06f085e30f68f0810ea8e53165ace"
+  integrity sha512-Stj6Q1v5knTMaYOinEEJl030SzJWEhqW+IYI5uA9Nl9Olo+vDUecmQXqpIxELucwOGDJ8KwvI0UL22UHudwZeQ==
   dependencies:
     merge-options "^3.0.4"
 
@@ -4314,10 +4314,10 @@
     magic-sdk "^8.1.0"
     rxjs "^7.5.2"
 
-"@web3-onboard/metamask@^2.0.0-alpha.1":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/metamask/-/metamask-2.0.0.tgz#c2dae6413611e530bfe904335750e25728db0779"
-  integrity sha512-tZSGa1p9yRScGK0qSAjtvZK8pAZOL6B5j+OutAYLs5WpEFZiXxiJUkJwiEhlL0YI78RMA5K3/4GhY6GTC6ruiA==
+"@web3-onboard/metamask@^2.0.1-alpha.1":
+  version "2.0.1-alpha.2"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/metamask/-/metamask-2.0.1-alpha.2.tgz#b5371a55f43ba7ef70a73e8febf7d252bd47322e"
+  integrity sha512-KUcblErwCRpL4LvM8PJvKHND1ePmiDbphiizdmwiOpNxEQ6VGR3S0eIZq1iKv2hxkImdMtprHni426W4w7Q8RA==
   dependencies:
     "@metamask/sdk" "^0.10.0"
     "@web3-onboard/common" "^2.3.3"
