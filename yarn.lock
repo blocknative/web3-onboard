@@ -2197,10 +2197,10 @@
   resolved "https://registry.yarnpkg.com/@metamask/safe-event-emitter/-/safe-event-emitter-3.0.0.tgz#8c2b9073fe0722d48693143b0dc8448840daa3bd"
   integrity sha512-j6Z47VOmVyGMlnKXZmL0fyvWfEYtKWCA9yGZkU3FCsGZUT5lHGmvaV9JA5F2Y+010y7+ROtR3WMXIkvl/nVzqQ==
 
-"@metamask/sdk-communication-layer@0.10.0":
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/@metamask/sdk-communication-layer/-/sdk-communication-layer-0.10.0.tgz#897ed0e1b881517e09d40a3e9c9a323c1a9b11b5"
-  integrity sha512-Hi8sySaP+dyjd9+SQUtTnmYFRjKWgNo371yWcfOx1vogpP5YwD4VaHDbPQr5rWKDGXb/x1wai6UzPkMqHbllwQ==
+"@metamask/sdk-communication-layer@0.10.1":
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/@metamask/sdk-communication-layer/-/sdk-communication-layer-0.10.1.tgz#95c6a1786dcd7a64c54a8e5cbd11489aa708b074"
+  integrity sha512-lWeh1PUq114h1/44llZgBcG51uOEi5dHjnNHlcYK9Sjq/iJ4s3mp0y39DGXHEs2r6rJQRyQpryoYyPsQTF2Imw==
   dependencies:
     cross-fetch "^3.1.5"
     date-fns "^2.29.3"
@@ -2222,15 +2222,15 @@
     react-dom "^18.2.0"
     react-i18next "^13.2.2"
 
-"@metamask/sdk@^0.10.0":
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/@metamask/sdk/-/sdk-0.10.0.tgz#3eb169ee07e95e232ebf3f3ef27906e28423fdaa"
-  integrity sha512-a6H51cKjiWd2gb4ugjl4zP+6ZRtcSc8cwtXUSiKKlXwa//54nnx7OzCNOjbPJFnnqT51rs3v9kSoRhOgS04ezQ==
+"@metamask/sdk@^0.10.1":
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/@metamask/sdk/-/sdk-0.10.1.tgz#3a9d029d5b16684de59d6ee34401d1165dc1a740"
+  integrity sha512-cxTWnniZG0cmvaFxf/WAf4SqPw4lHrt16cMMiefAJAsNyL3aPUh8M26fh29EdftIhUXytT9ErNGW+Nf5V4EsCQ==
   dependencies:
     "@metamask/onboarding" "^1.0.1"
     "@metamask/post-message-stream" "^6.1.0"
     "@metamask/providers" "^10.2.1"
-    "@metamask/sdk-communication-layer" "0.10.0"
+    "@metamask/sdk-communication-layer" "0.10.1"
     "@metamask/sdk-install-modal-web" "0.10.0"
     "@react-native-async-storage/async-storage" "^1.17.11"
     "@types/dom-screen-wake-lock" "^1.0.0"
