@@ -18,8 +18,10 @@ function metamask({
         const { createEIP1193Provider } = await import('@web3-onboard/common')
         const { default: metaMask, MetaMaskSDK } = await import('@metamask/sdk')
 
-        let MetaMaskSDKConstructor
+        // Patch issue with MetaMask SDK, remove after SDK is fixed
+        localStorage.removeItem('providerType')
 
+        let MetaMaskSDKConstructor
         if (!MetaMaskSDK) {
           // @ts-ignore
           MetaMaskSDKConstructor = metaMask.MetaMaskSDK
