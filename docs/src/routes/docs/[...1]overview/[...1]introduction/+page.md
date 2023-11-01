@@ -170,7 +170,7 @@ We recommend you add the [Core Repo](../../modules/core.md#install) and consider
 **SDK Wallets**
 
 - [Arcana Auth](../../wallets/arcana.md#install)
-- [Blocto](../../docs/wallets/blocto.md#install)
+- [Blocto](../../wallets/blocto.md#install)
 - [Coinbase](../../wallets/coinbase.md#install)
 - [Fortmatic](../../wallets/fortmatic.md#install)
 - [Frame](../../wallets/frame.md#install)

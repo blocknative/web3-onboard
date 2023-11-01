@@ -4314,10 +4314,10 @@
     magic-sdk "^8.1.0"
     rxjs "^7.5.2"
 
-"@web3-onboard/metamask@^2.0.0-alpha.1":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/metamask/-/metamask-2.0.0.tgz#c2dae6413611e530bfe904335750e25728db0779"
-  integrity sha512-tZSGa1p9yRScGK0qSAjtvZK8pAZOL6B5j+OutAYLs5WpEFZiXxiJUkJwiEhlL0YI78RMA5K3/4GhY6GTC6ruiA==
+"@web3-onboard/metamask@^2.0.1-alpha.1":
+  version "2.0.1-alpha.2"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/metamask/-/metamask-2.0.1-alpha.2.tgz#b5371a55f43ba7ef70a73e8febf7d252bd47322e"
+  integrity sha512-KUcblErwCRpL4LvM8PJvKHND1ePmiDbphiizdmwiOpNxEQ6VGR3S0eIZq1iKv2hxkImdMtprHni426W4w7Q8RA==
   dependencies:
     "@metamask/sdk" "^0.10.0"
     "@web3-onboard/common" "^2.3.3"

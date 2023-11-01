@@ -1,5 +1,6 @@
 import type { MetaMaskSDKOptions } from '@metamask/sdk'
 import type { WalletInit } from '@web3-onboard/common'
+export type { MetaMaskSDKOptions } from '@metamask/sdk'
 
 function metamask({
   options
