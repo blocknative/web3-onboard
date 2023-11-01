@@ -29,6 +29,10 @@ function metamask({
           MetaMaskSDKConstructor = MetaMaskSDK
         }
 
+        if (!MetaMaskSDKConstructor) {
+          throw new Error('Error importing and initializing MetaMask SDK')
+        }
+
         const sdk = new MetaMaskSDKConstructor({
           ...options,
           dappMetadata: {
