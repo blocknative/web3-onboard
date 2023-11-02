@@ -6,4 +6,3 @@ package-lock.json
 .vscode
 yarn-error.log
 .env
-yarn.lock

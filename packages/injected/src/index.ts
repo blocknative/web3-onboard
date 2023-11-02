@@ -41,8 +41,6 @@ function injected(options?: InjectedWalletOptions): WalletInit {
       ({ label }) => label
     )
 
-    debugger
-
     const wallets = allWallets.reduce(
       (acc: InjectedWalletModule[], wallet: InjectedWalletModule) => {
         const { label, platforms, injectedNamespace, checkProviderIdentity } =
