@@ -4,6 +4,8 @@
 The MetaMask Web3-Onboard module provides a reliable, secure, and seamless connection from your dapp to the MetaMask browser extension and MetaMask Mobile.
 See [MetaMask SDK Developer Docs](https://github.com/MetaMask/metamask-sdk)
 
+![MetaMask SDK ConnectionFlow](https://github.com/blocknative/web3-onboard/blob/develop/assets/metaMaskSDK-connect.gif?raw=true 'MetaMask SDK ConnectionFlow')
+
 ### Install
 
 `npm i @web3-onboard/metamask`
