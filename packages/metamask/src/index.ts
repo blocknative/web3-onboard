@@ -1,5 +1,6 @@
 import type { MetaMaskSDKOptions } from '@metamask/sdk'
 import type { WalletInit } from '@web3-onboard/common'
+export type { MetaMaskSDKOptions } from '@metamask/sdk'
 
 function metamask({
   options
@@ -15,9 +16,24 @@ function metamask({
         const base64 = window.btoa(icon || '')
         const appLogoUrl = `data:image/svg+xml;base64,${base64}`
         const { createEIP1193Provider } = await import('@web3-onboard/common')
-        const { MetaMaskSDK } = await import('@metamask/sdk')
+        const { default: metaMask, MetaMaskSDK } = await import('@metamask/sdk')
 
-        const sdk = new MetaMaskSDK({
+        // Patch issue with MetaMask SDK, remove after SDK is fixed
+        localStorage.removeItem('providerType')
+
+        let MetaMaskSDKConstructor
+        if (!MetaMaskSDK) {
+          // @ts-ignore
+          MetaMaskSDKConstructor = metaMask.MetaMaskSDK
+        } else {
+          MetaMaskSDKConstructor = MetaMaskSDK
+        }
+
+        if (!MetaMaskSDKConstructor) {
+          throw new Error('Error importing and initializing MetaMask SDK')
+        }
+
+        const sdk = new MetaMaskSDKConstructor({
           ...options,
           dappMetadata: {
             name: options.dappMetadata?.name || name || '',
