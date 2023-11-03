@@ -598,17 +598,17 @@ const gamestop: InjectedWalletModule = {
   platforms: ['desktop']
 }
 
-const bitkeep: InjectedWalletModule = {
-  label: ProviderLabel.BitKeep,
-  injectedNamespace: InjectedNameSpace.BitKeep,
+const bitget: InjectedWalletModule = {
+  label: ProviderLabel.Bitget,
+  injectedNamespace: InjectedNameSpace.Bitget,
   checkProviderIdentity: ({ provider }) =>
-    !!provider && !!provider['ethereum'][ProviderIdentityFlag.BitKeep],
-  getIcon: async () => (await import('./icons/bitkeep.js')).default,
+    !!provider && !!provider['ethereum'][ProviderIdentityFlag.Bitget],
+  getIcon: async () => (await import('./icons/bitget.js')).default,
   getInterface: async () => ({
     provider: window.bitkeep && window.bitkeep.ethereum
   }),
   platforms: ['all'],
-  externalUrl: ProviderExternalUrl.BitKeep
+  externalUrl: ProviderExternalUrl.Bitget
 }
 
 const sequence: InjectedWalletModule = {
@@ -817,8 +817,7 @@ const fordefi: InjectedWalletModule = {
   label: ProviderLabel.Fordefi,
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
-    !!provider &&
-    !!provider[ProviderIdentityFlag.Fordefi],
+    !!provider && !!provider[ProviderIdentityFlag.Fordefi],
   getIcon: async () => (await import('./icons/fordefi.js')).default,
   getInterface: getInjectedInterface(ProviderIdentityFlag.Fordefi, true),
   platforms: ['desktop']
@@ -896,6 +895,7 @@ const wallets = [
   alphawallet,
   apexwallet,
   atoken,
+  bitget,
   bitpie,
   blockwallet,
   brave,
@@ -916,7 +916,6 @@ const wallets = [
   rabby,
   mathwallet,
   gamestop,
-  bitkeep,
   sequence,
   core,
   bitski,
