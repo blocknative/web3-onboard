@@ -16,7 +16,7 @@ export const WALLET_NAMES: { [key: string]: string } = {
   detected: 'Detected Wallet',
   meetone: 'MeetOne',
   frame: 'Frame',
-  bitkeep: 'BitKeep',
+  bitget: 'Bitget Wallet',
   sequence: 'Sequence',
   core: 'Core',
   enkrypt: 'Enkrypt',
