@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/cede-store",
-  "version": "2.1.0",
+  "version": "2.2.0-alpha.1",
   "description": "cede.store SDK wallet module for connecting to Web3-Onboard. Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardised spec compliant web3 providers for all supported wallets, framework agnostic modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
   "keywords": [
     "Ethereum",
@@ -69,7 +69,7 @@
     "window": "^4.2.7"
   },
   "dependencies": {
-    "@cedelabs/providers": "^1.1.0",
+    "@cedelabs/providers": "^1.3.1",
     "@web3-onboard/common": "^2.3.3"
   }
 }
