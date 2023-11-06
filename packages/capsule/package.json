@@ -62,8 +62,6 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "fp-ts": "^2.16.1",
-    "framer-motion": "^10.16.1",
     "typescript": "^5.2.2"
   }
 }

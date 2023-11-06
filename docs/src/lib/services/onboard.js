@@ -58,6 +58,7 @@ const intiOnboard = async (theme) => {
   const { default: bloctoModule } = await import('@web3-onboard/blocto')
   const { default: venlyModule } = await import('@web3-onboard/venly')
   const { default: bitgetModule } = await import('@web3-onboard/bitget')
+  const { default: capsuleModule, Environment } = await import('@web3-onboard/capsule')
   const INFURA_ID = '8b60d52405694345a99bcb82e722e0af'
 
   const injected = injectedModule()
@@ -92,6 +93,12 @@ const intiOnboard = async (theme) => {
   const xdefi = xdefiModule()
   const cede = cedeModule()
   const bitget = bitgetModule()
+  const capsule = capsuleModule({
+    environment: Environment.BETA,
+    appName: 'Blocknative',
+    chainIds: [11155111, 5],
+    initialChainId: 5
+  })
 
   const portis = portisModule({
     apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
@@ -156,7 +163,8 @@ const intiOnboard = async (theme) => {
       portis,
       frame,
       infinityWallet,
-      blocto
+      blocto,
+      capsule
       // venly
     ],
     chains: [
