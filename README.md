@@ -124,6 +124,7 @@ For full documentation, check out the README.md for each package or the [docs pa
 - [Infinity Wallet](packages/infinity-wallet/README.md)
 - [Frame](packages/frame/README.md)
 - [Blocto](packages/blocto/README.md)
+- [FoxWallet](packages/foxwallet/README.md)
 
 **Hardware Wallets**
 

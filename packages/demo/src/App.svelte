@@ -34,6 +34,7 @@
   import arcanaAuthModule from '@web3-onboard/arcana-auth'
   import venlyModule from '@web3-onboard/venly'
   import bitgetModule from '@web3-onboard/bitget'
+  import foxwalletModule from '@web3-onboard/foxwallet'
   import {
     recoverAddress,
     arrayify,
@@ -169,6 +170,7 @@
   const cedeStore = cedeStoreModule()
   const blocto = bloctoModule()
   const tallyho = tallyHoModule()
+  const foxwallet = foxwalletModule()
 
   const trezorOptions = {
     email: 'test@test.com',
@@ -241,7 +243,8 @@
       cedeStore,
       arcanaAuth,
       blocto,
-      venly
+      venly,
+      foxwallet
     ],
     transactionPreview,
     gas,
