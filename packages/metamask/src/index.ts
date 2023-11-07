@@ -1,13 +1,47 @@
 import type { MetaMaskSDKOptions } from '@metamask/sdk'
 import type { WalletInit } from '@web3-onboard/common'
 export type { MetaMaskSDKOptions } from '@metamask/sdk'
+import type { MetaMaskSDK } from '@metamask/sdk'
+import type {createEIP1193Provider} from '@web3-onboard/common'
+
+type ImportSDK = { createEIP1193Provider: typeof createEIP1193Provider, MetaMaskSDKConstructor: typeof MetaMaskSDK }
+
+const loadImports = async () => {
+  if(importPromise) {
+    return await importPromise
+  }
+
+  const { createEIP1193Provider } = await import('@web3-onboard/common')
+  const { MetaMaskSDK } = await import('@metamask/sdk')
+
+  let MetaMaskSDKConstructor
+  if (!MetaMaskSDK) {
+    // @ts-ignore
+    MetaMaskSDKConstructor = metaMask.MetaMaskSDK
+  } else {
+    MetaMaskSDKConstructor = MetaMaskSDK
+  }
+
+  if (!MetaMaskSDKConstructor) {
+    throw new Error('Error importing and initializing MetaMask SDK')
+  }
+
+  return { createEIP1193Provider, MetaMaskSDKConstructor }
+}
+
+let importPromise : Promise<ImportSDK> | null = null
 
 function metamask({
   options
 }: {
   options: Partial<MetaMaskSDKOptions>
 }): WalletInit {
+
   return () => {
+    importPromise = loadImports().catch((error) => {
+      throw error
+    });
+
     return {
       label: 'MetaMask',
       getIcon: async () => (await import('./icon.js')).default,
@@ -15,24 +49,16 @@ function metamask({
         const { name, icon } = appMetadata || {}
         const base64 = window.btoa(icon || '')
         const appLogoUrl = `data:image/svg+xml;base64,${base64}`
-        const { createEIP1193Provider } = await import('@web3-onboard/common')
-        const { default: metaMask, MetaMaskSDK } = await import('@metamask/sdk')
+        const imports = await importPromise
 
         // Patch issue with MetaMask SDK, remove after SDK is fixed
         localStorage.removeItem('providerType')
 
-        let MetaMaskSDKConstructor
-        if (!MetaMaskSDK) {
-          // @ts-ignore
-          MetaMaskSDKConstructor = metaMask.MetaMaskSDK
-        } else {
-          MetaMaskSDKConstructor = MetaMaskSDK
-        }
-
-        if (!MetaMaskSDKConstructor) {
+        if(!imports?.MetaMaskSDKConstructor || !imports?.createEIP1193Provider) {
           throw new Error('Error importing and initializing MetaMask SDK')
         }
 
+        const { createEIP1193Provider, MetaMaskSDKConstructor } = imports
         const sdk = new MetaMaskSDKConstructor({
           ...options,
           dappMetadata: {
@@ -46,7 +72,7 @@ function metamask({
         const getProvider = () => {
           const provider = createEIP1193Provider(sdk.getProvider(), {})
           provider.disconnect = () => {
-            sdk.terminate()
+            sdk.terminate();
           }
           return provider
         }
