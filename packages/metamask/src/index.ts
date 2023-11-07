@@ -12,18 +12,12 @@ const loadImports = async () => {
   }
 
   const { createEIP1193Provider } = await import('@web3-onboard/common')
-  const { MetaMaskSDK } = await import('@metamask/sdk')
-
-  let MetaMaskSDKConstructor
-  if (!MetaMaskSDK) {
+  const sdk = await import('@metamask/sdk')
     // @ts-ignore
-    MetaMaskSDKConstructor = metaMask.MetaMaskSDK
-  } else {
-    MetaMaskSDKConstructor = MetaMaskSDK
-  }
+  const MetaMaskSDKConstructor = sdk.MetaMaskSDK || sdk.default.MetaMaskSDK;
 
   if (!MetaMaskSDKConstructor) {
-    throw new Error('Error importing and initializing MetaMask SDK')
+    throw new Error('Error importing and initializing MetaMask SDK');
   }
 
   return { createEIP1193Provider, MetaMaskSDKConstructor }
