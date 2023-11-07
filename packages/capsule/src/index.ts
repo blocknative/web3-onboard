@@ -1,8 +1,9 @@
-import { WalletInit } from '@web3-onboard/common';
+import { AppMetadata, WalletInit } from '@web3-onboard/common';
 import Capsule, { Environment as CapsuleEnvironment, CapsuleEIP1193Provider } from '@usecapsule/web-sdk';
 import type { CapsuleInitOptions } from './types';
-import * as chains from '@wagmi/chains';
+import * as chains from 'viem/chains';
 import { Chain } from '@wagmi/chains';
+import { Chain as BlocknativeChain } from '@web3-onboard/common';
 
 type ChainId = number;
 type ChainsMap = Map<ChainId, Chain>;
@@ -24,24 +25,32 @@ function getChainsByIds(chainIds: number[], chainsMap: ChainsMap): Chain[] {
   return chainIds.map(id => chainsMap.get(id)).filter((c): c is Chain => !!c);
 }
 
-function validateOptions(options: CapsuleInitOptions): void {
+function convertChainIdToNumber(chainId: string | number): number {
+    if (typeof chainId === 'number') {
+        return chainId;
+      }
+      const hexRegex = /^[0-9a-fA-F]+$/;
+      return hexRegex.test(chainId) ? parseInt(chainId, 16) : Number(chainId);
+}
+
+function validateOptions(options: CapsuleInitOptions, chains: BlocknativeChain[], appMetadata: AppMetadata | null): void {
   if (!(options.environment in CapsuleEnvironment)) {
       throw new Error(`Invalid environment. Must be one of the Environment enum values.`);
   }
 
-  if (typeof options.appName !== 'string' || options.appName.trim() === '') {
+  if (appMetadata == null) {
+    throw new Error('No appMetadata passed into the Onboard object');
+  }
+
+  if (typeof appMetadata.name !== 'string' || appMetadata.name.trim() === '') {
       throw new Error('appName must be a non-empty string.');
   }
 
-  if (!Array.isArray(options.chainIds) || options.chainIds.length === 0) {
+  if (!Array.isArray(chains) || chains.length === 0) {
       throw new Error('chains must be a non-empty array.');
   }
-  if (options.chainIds.some(chain => typeof chain !== 'number')) {
+  if (chains.some(chain => typeof Number(chain.id) !== 'number')) {
       throw new Error('All elements in chains must be numbers.');
-  }
-
-  if (!options.chainIds.includes(options.initialChainId)) {
-      throw new Error('chainId must be contained within the chains array.');
   }
 
   if (options.apiKey !== undefined && (typeof options.apiKey !== 'string' || options.apiKey.trim() === '')) {
@@ -50,20 +59,20 @@ function validateOptions(options: CapsuleInitOptions): void {
 }
 
 function capsule(options: CapsuleInitOptions): WalletInit {
-    validateOptions(options);
     return () => {
         return {
             label: 'Capsule',
             getIcon: async () => (await import('./icon')).default,
-            getInterface: async () => {
+            getInterface: async ({ chains, appMetadata }) => {
+                validateOptions(options, chains, appMetadata);
                 const capsule = new Capsule(options.environment, options.apiKey);
                 const chainsMap = buildChainsMap();
 
                 const providerOpts = {
                     capsule: capsule,
-                    chainId: options.initialChainId.toString(),
-                    appName: options.appName,
-                    chains: getChainsByIds(options.chainIds, chainsMap),
+                    chainId: convertChainIdToNumber(chains[0].id).toString(),
+                    appName: appMetadata?.name as string,
+                    chains: getChainsByIds(chains.map(ch => convertChainIdToNumber(ch.id)), chainsMap),
                 };
                 const provider = new CapsuleEIP1193Provider(providerOpts);
 

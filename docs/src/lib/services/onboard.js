@@ -95,9 +95,6 @@ const intiOnboard = async (theme) => {
   const bitget = bitgetModule()
   const capsule = capsuleModule({
     environment: Environment.BETA,
-    appName: 'Blocknative',
-    chainIds: [11155111, 5],
-    initialChainId: 5
   })
 
   const portis = portisModule({

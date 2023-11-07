@@ -210,10 +210,6 @@
   })
   const capsule = capsuleModule({ 
     environment: Environment.BETA,
-    appName: 'Blocknative', 
-    chainIds: [11155111, 5],
-    initialChainId: 5,
-    apiKey: '2f938ac0c48ef356050a79bd66042a23' 
   })
 
   const onboard = Onboard({
