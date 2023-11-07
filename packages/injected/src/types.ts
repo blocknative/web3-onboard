@@ -67,7 +67,8 @@ export enum ProviderIdentityFlag {
   Fordefi = 'isFordefi',
   Coin98Wallet = 'isCoin98',
   SubWallet = 'isSubWallet',
-  Kayros = 'isKayros'
+  Kayros = 'isKayros',
+  FoxWallet = 'isFoxWallet'
 }
 
 /**
@@ -92,7 +93,8 @@ export enum ProviderExternalUrl {
   Coin98Wallet = 'https://coin98.com/wallet/',
   SubWallet = 'https://www.subwallet.app/',
   Kayros = 'https://www.kayros.games/wallet/',
-  XDEFI = 'https://xdefi.io/'
+  XDEFI = 'https://xdefi.io/',
+  FoxWallet = 'https://foxwallet.com/download'
 }
 
 export enum ProviderLabel {
@@ -151,7 +153,8 @@ export enum ProviderLabel {
   RoninWallet = 'Ronin Wallet',
   Coin98Wallet = 'Coin98 Wallet',
   SubWallet = 'SubWallet',
-  Kayros = 'Kayros'
+  Kayros = 'Kayros',
+  FoxWallet = 'FoxWallet'
 }
 
 export interface MeetOneProvider extends ExternalProvider {
@@ -188,7 +191,8 @@ export enum InjectedNameSpace {
   RoninWallet = 'ronin',
   Coin98Wallet = 'coin98',
   SubWallet = 'SubWallet',
-  Kayros = 'kayros'
+  Kayros = 'kayros',
+  FoxWallet = 'foxwallet'
 }
 
 export interface CustomWindow extends Window {
@@ -238,6 +242,7 @@ export interface CustomWindow extends Window {
     provider: InjectedProvider
   }
   kayros: InjectedProvider
+  foxwallet: InjectedProvider
 }
 
 export type InjectedProvider = ExternalProvider &
