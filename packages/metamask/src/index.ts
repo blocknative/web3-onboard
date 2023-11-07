@@ -66,7 +66,7 @@ function metamask({
         const getProvider = () => {
           const provider = createEIP1193Provider(sdk.getProvider(), {})
           provider.disconnect = () => {
-            sdk.terminate();
+            sdk.terminate()
           }
           return provider
         }
