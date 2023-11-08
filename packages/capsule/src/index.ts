@@ -1,14 +1,14 @@
-import { AppMetadata, WalletInit } from '@web3-onboard/common';
-import Capsule, { Environment as CapsuleEnvironment, CapsuleEIP1193Provider } from '@usecapsule/web-sdk';
+import type { AppMetadata, WalletInit } from '@web3-onboard/common';
 import type { CapsuleInitOptions } from './types';
-import * as chains from 'viem/chains';
-import { Chain } from '@wagmi/chains';
-import { Chain as BlocknativeChain } from '@web3-onboard/common';
+import type { Chain } from '@wagmi/chains';
+import type { Chain as BlocknativeChain } from '@web3-onboard/common';
+import { Environment as CapsuleEnvironment } from '@usecapsule/web-sdk';
 
 type ChainId = number;
 type ChainsMap = Map<ChainId, Chain>;
 
-function buildChainsMap(): ChainsMap {
+async function buildChainsMap(): Promise<ChainsMap> {
+  const chains = await import ('viem/chains');
   const chainEntries = Object.entries(chains);
   const chainsMap: ChainsMap = new Map();
 
@@ -64,9 +64,10 @@ function capsule(options: CapsuleInitOptions): WalletInit {
             label: 'Capsule',
             getIcon: async () => (await import('./icon')).default,
             getInterface: async ({ chains, appMetadata }) => {
+                const { default: Capsule, CapsuleEIP1193Provider } = await import('@usecapsule/web-sdk');
                 validateOptions(options, chains, appMetadata);
                 const capsule = new Capsule(options.environment, options.apiKey);
-                const chainsMap = buildChainsMap();
+                const chainsMap = await buildChainsMap();
 
                 const providerOpts = {
                     capsule: capsule,
