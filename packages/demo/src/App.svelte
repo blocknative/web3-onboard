@@ -209,7 +209,7 @@
     environment: 'staging'
   })
   const capsule = capsuleModule({ 
-    environment: Environment.BETA,
+    environment: Environment.DEVELOPMENT,
   })
 
   const onboard = Onboard({

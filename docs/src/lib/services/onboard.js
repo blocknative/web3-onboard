@@ -94,7 +94,7 @@ const intiOnboard = async (theme) => {
   const cede = cedeModule()
   const bitget = bitgetModule()
   const capsule = capsuleModule({
-    environment: Environment.BETA,
+    environment: Environment.DEVELOPMENT,
   })
 
   const portis = portisModule({
