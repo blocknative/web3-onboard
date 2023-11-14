@@ -1,10 +1,13 @@
 import type { MetaMaskSDKOptions } from '@metamask/sdk'
 import type { WalletInit } from '@web3-onboard/common'
 export type { MetaMaskSDKOptions } from '@metamask/sdk'
-import { MetaMaskSDK } from '@metamask/sdk'
+import type { MetaMaskSDK } from '@metamask/sdk'
 import type { createEIP1193Provider } from '@web3-onboard/common'
 
-type ImportSDK = { createEIP1193Provider: typeof createEIP1193Provider, MetaMaskSDKConstructor: typeof MetaMaskSDK }
+type ImportSDK = {
+  createEIP1193Provider: typeof createEIP1193Provider
+  MetaMaskSDKConstructor: typeof MetaMaskSDK
+}
 
 const loadImports = async () => {
   if (importPromise) {
@@ -13,31 +16,31 @@ const loadImports = async () => {
 
   const { createEIP1193Provider } = await import('@web3-onboard/common')
   const importedSDK = await import('@metamask/sdk')
-  // @ts-ignore
-  const MetaMaskSDKConstructor = importedSDK.MetaMaskSDK || importedSDK.default.MetaMaskSDK;
+
+  const MetaMaskSDKConstructor =
+    // @ts-ignore
+    importedSDK.MetaMaskSDK || importedSDK.default.MetaMaskSDK
 
   if (!MetaMaskSDKConstructor) {
-    throw new Error('Error importing and initializing MetaMask SDK');
+    throw new Error('Error importing and initializing MetaMask SDK')
   }
 
   return { createEIP1193Provider, MetaMaskSDKConstructor }
 }
 
 let importPromise: Promise<ImportSDK> | null = null
-let sdk: MetaMaskSDK | null = null;
-let createInstance: typeof createEIP1193Provider;
+let sdk: MetaMaskSDK | null = null
+let createInstance: typeof createEIP1193Provider
 
 function metamask({
   options
 }: {
   options: Partial<MetaMaskSDKOptions>
 }): WalletInit {
-
   return () => {
-    importPromise = loadImports().catch((error) => {
+    importPromise = loadImports().catch(error => {
       throw error
-    });
-
+    })
 
     const getProvider = (_sdk: MetaMaskSDK) => {
       const provider = createInstance(_sdk.getProvider(), {})
@@ -67,13 +70,16 @@ function metamask({
         // Patch issue with MetaMask SDK, remove after SDK is fixed
         localStorage.removeItem('providerType')
 
-        if (!imports?.MetaMaskSDKConstructor || !imports?.createEIP1193Provider) {
+        if (
+          !imports?.MetaMaskSDKConstructor ||
+          !imports?.createEIP1193Provider
+        ) {
           throw new Error('Error importing and initializing MetaMask SDK')
         }
 
         const { createEIP1193Provider, MetaMaskSDKConstructor } = imports
 
-        createInstance = createEIP1193Provider;
+        createInstance = createEIP1193Provider
         sdk = new MetaMaskSDKConstructor({
           ...options,
           dappMetadata: {
