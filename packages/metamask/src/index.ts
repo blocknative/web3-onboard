@@ -24,15 +24,14 @@ const loadImports = async () => {
 }
 
 let importPromise: Promise<ImportSDK> | null = null
+let sdk: MetaMaskSDK | null = null;
+let createInstance: typeof createEIP1193Provider;
 
 function metamask({
   options
 }: {
   options: Partial<MetaMaskSDKOptions>
 }): WalletInit {
-
-  let sdk: MetaMaskSDK | null = null;
-  let createInstance: typeof createEIP1193Provider;
 
   return () => {
     importPromise = loadImports().catch((error) => {

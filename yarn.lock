@@ -2197,22 +2197,24 @@
   resolved "https://registry.yarnpkg.com/@metamask/safe-event-emitter/-/safe-event-emitter-3.0.0.tgz#8c2b9073fe0722d48693143b0dc8448840daa3bd"
   integrity sha512-j6Z47VOmVyGMlnKXZmL0fyvWfEYtKWCA9yGZkU3FCsGZUT5lHGmvaV9JA5F2Y+010y7+ROtR3WMXIkvl/nVzqQ==
 
-"@metamask/sdk-communication-layer@0.12.0":
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/@metamask/sdk-communication-layer/-/sdk-communication-layer-0.12.0.tgz#fe8de414e42f9037a3c2b791e99e6d5b427448a3"
-  integrity sha512-wrrmPsB1i8Kec5dBUnsIqqGHvq7qbXB0KZGPgQ4wECO3glBcqtHkVT63qaP6T2r+YZnVWisegIVKA+p18/4OmA==
+"@metamask/sdk-communication-layer@0.12.1":
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/@metamask/sdk-communication-layer/-/sdk-communication-layer-0.12.1.tgz#b4dd80e9c2f4bcaa38ed9ea7e269a2770a411a2d"
+  integrity sha512-LKsBzJ56wjTIRBpdwCfO69JwbKMFURwXIQjm0rzCHhtfybKA4PPRbElp0Ie9W9x9UNv0U/0nK5EBTnKLc94RMw==
   dependencies:
+    bufferutil "^4.0.8"
     cross-fetch "^3.1.5"
     date-fns "^2.29.3"
     eciesjs "^0.3.16"
     eventemitter2 "^6.4.5"
     socket.io-client "^4.5.1"
+    utf-8-validate "^6.0.3"
     uuid "^8.3.2"
 
-"@metamask/sdk-install-modal-web@0.12.0":
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/@metamask/sdk-install-modal-web/-/sdk-install-modal-web-0.12.0.tgz#e7be9a57965e27b12966d6091b7eb2c328efb8c9"
-  integrity sha512-YJjobvLDhJRt4eVOKbE1Q9YDYcDwwPkbnoPQxPxaRcFr+BWCNVPjSu7wiPnsR0JzseWbjTNy30Hkz9JIC04vIA==
+"@metamask/sdk-install-modal-web@0.12.1":
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/@metamask/sdk-install-modal-web/-/sdk-install-modal-web-0.12.1.tgz#82adbb1a420af325a32c0302b5516bbb3d3ca36e"
+  integrity sha512-4EdTE6BXM8YZgqMmm9E3Y03FyyGVR46Vr/3953AVwanC/DYv+zfYyhARdRZx6ta4KeWy/Jz7AFx2O83KwTo6UQ==
   dependencies:
     "@emotion/react" "^11.10.6"
     "@emotion/styled" "^11.10.6"
@@ -2222,16 +2224,16 @@
     react-dom "^18.2.0"
     react-i18next "^13.2.2"
 
-"@metamask/sdk@^0.12.0":
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/@metamask/sdk/-/sdk-0.12.0.tgz#435646a247347c08d7648d46f29f469d17361967"
-  integrity sha512-X1qptbnR6/TUf/gaBLoB0hpj0CdjiuoYqTkcVYW2Q1g7QfN7zR71Kt9r9YuEDUu8KxAnQT+LUvDd6jj5RY9e+g==
+"@metamask/sdk@^0.12.1":
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/@metamask/sdk/-/sdk-0.12.1.tgz#6741e2fd0121bb8eda5e4b22847706199cb28cce"
+  integrity sha512-Fc5M+/6tZVvflkhHCuJcXcKTfFqETiB1e73N7f5NPfFndZehPnfWS8l2DW+AbwpyNLyyS7+usR1FXNJmCScYQw==
   dependencies:
     "@metamask/onboarding" "^1.0.1"
     "@metamask/post-message-stream" "^6.1.0"
     "@metamask/providers" "^10.2.1"
-    "@metamask/sdk-communication-layer" "0.12.0"
-    "@metamask/sdk-install-modal-web" "0.12.0"
+    "@metamask/sdk-communication-layer" "0.12.1"
+    "@metamask/sdk-install-modal-web" "0.12.1"
     "@react-native-async-storage/async-storage" "^1.17.11"
     "@types/dom-screen-wake-lock" "^1.0.0"
     bowser "^2.9.0"
@@ -6282,6 +6284,13 @@ bufferutil@^4.0.1:
   version "4.0.6"
   resolved "https://registry.yarnpkg.com/bufferutil/-/bufferutil-4.0.6.tgz#ebd6c67c7922a0e902f053e5d8be5ec850e48433"
   integrity sha512-jduaYOYtnio4aIAyc6UbvPCVcgq7nYpVnucyxr6eCYg/Woad9Hf/oxxBRDnGGjPfjUm6j5O/uBWhIu4iLebFaw==
+  dependencies:
+    node-gyp-build "^4.3.0"
+
+bufferutil@^4.0.8:
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/bufferutil/-/bufferutil-4.0.8.tgz#1de6a71092d65d7766c4d8a522b261a6e787e8ea"
+  integrity sha512-4T53u4PdgsXqKaIctwF8ifXlRTTmEPJ8iEPWFdGZvcf7sbwYo6FKFEX9eNNAnzFZ7EzJAQ3CJeOtCRA4rDp7Pw==
   dependencies:
     node-gyp-build "^4.3.0"
 
@@ -13894,6 +13903,13 @@ utf-8-validate@^5.0.2:
   version "5.0.8"
   resolved "https://registry.yarnpkg.com/utf-8-validate/-/utf-8-validate-5.0.8.tgz#4a735a61661dbb1c59a0868c397d2fe263f14e58"
   integrity sha512-k4dW/Qja1BYDl2qD4tOMB9PFVha/UJtxTc1cXYOe3WwA/2m0Yn4qB7wLMpJyLJ/7DR0XnTut3HsCSzDT4ZvKgA==
+  dependencies:
+    node-gyp-build "^4.3.0"
+
+utf-8-validate@^6.0.3:
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/utf-8-validate/-/utf-8-validate-6.0.3.tgz#7d8c936d854e86b24d1d655f138ee27d2636d777"
+  integrity sha512-uIuGf9TWQ/y+0Lp+KGZCMuJWc3N9BHA+l/UmHd/oUHwJJDeysyTRxNQVkbzsIWfGFbRe3OcgML/i0mvVRPOyDA==
   dependencies:
     node-gyp-build "^4.3.0"
 
