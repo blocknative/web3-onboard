@@ -50,7 +50,8 @@ console.log(connectedWallets)
 ## Build env settings (webpack config)
 
 You may need to add the following rule to your webpack config module
-in order to handle certain styling files:
+in order to handle certain styling files (See the config for the 
+Blocknative demo app):
 
 ```typescript
 {
