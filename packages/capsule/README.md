@@ -46,3 +46,18 @@ const onboard = Onboard({
 const connectedWallets = await onboard.connectWallet()
 console.log(connectedWallets)
 ```
+
+## Build env settings (webpack config)
+
+You may need to add the following rule to your webpack config module
+in order to handle certain styling files:
+
+```typescript
+{
+  test: /\.(woff(2)?|eot|ttf|otf|svg)$/,
+  type: 'asset/resource',
+  generator: {
+    filename: 'fonts/[name][ext][query]'
+  }
+}
+```
