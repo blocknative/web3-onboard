@@ -431,6 +431,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/metamask
     steps:
       - node-build-steps
+  build-solid:
+    docker:
+      - image: cimg/node:16.14.2
+    working_directory: ~/web3-onboard-monorepo/packages/solid
+    steps:
+      - node-build-steps
 
   # Build staging/Alpha releases
   build-staging-core:
@@ -695,6 +701,12 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/metamask
+    steps:
+      - node-staging-build-steps
+  build-staging-solid:
+    docker:
+      - image: cimg/node:16.14.2
+    working_directory: ~/web3-onboard-monorepo/packages/solid
     steps:
       - node-staging-build-steps
 
@@ -964,4 +976,10 @@ workflows:
       - build-metamask:
           <<: *deploy_production_filters
       - build-staging-metamask:
+          <<: *deploy_staging_filters
+  solid:
+    jobs:
+      - build-solid:
+          <<: *deploy_production_filters
+      - build-staging-solid:
           <<: *deploy_staging_filters
