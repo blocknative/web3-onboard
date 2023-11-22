@@ -437,6 +437,14 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/solid
     steps:
       - node-build-steps
+  build-capsule:
+    docker:
+      - image: cimg/node:16.14.2
+    working_directory: ~/web3-onboard-monorepo/packages/capsule
+    steps:
+      - node-build-steps
+
+
 
   # Build staging/Alpha releases
   build-staging-core:
@@ -707,6 +715,12 @@ jobs:
     docker:
       - image: cimg/node:16.14.2
     working_directory: ~/web3-onboard-monorepo/packages/solid
+    steps:
+      - node-staging-build-steps
+  build-staging-capsule:
+    docker:
+      - image: cimg/node:16.14.2
+    working_directory: ~/web3-onboard-monorepo/packages/capsule
     steps:
       - node-staging-build-steps
 
@@ -982,4 +996,10 @@ workflows:
       - build-solid:
           <<: *deploy_production_filters
       - build-staging-solid:
+          <<: *deploy_staging_filters
+  capsule:
+    jobs:
+      - build-capsule:
+          <<: *deploy_production_filters
+      - build-staging-capsule:
           <<: *deploy_staging_filters
