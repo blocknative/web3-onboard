@@ -19,7 +19,8 @@
     },
     "scripts": {
       "build": "tsc",
-      "dev": "tsc -w"
+      "dev": "tsc -w",
+      "type-check": "tsc --noEmit"
     },
     "license": "MIT",
     "keywords": [

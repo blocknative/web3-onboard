@@ -248,7 +248,7 @@
       blocto,
       venly
     ],
-    transactionPreview,
+    // transactionPreview,
     gas,
     chains: [
       {
