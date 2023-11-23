@@ -1,7 +1,5 @@
-import type { MetaMaskSDKOptions } from '@metamask/sdk'
 import type { WalletInit } from '@web3-onboard/common'
-export type { MetaMaskSDKOptions } from '@metamask/sdk'
-import { MetaMaskSDK } from '@metamask/sdk'
+import type { MetaMaskSDK, MetaMaskSDKOptions } from '@metamask/sdk'
 import type { createEIP1193Provider } from '@web3-onboard/common'
 
 type ImportSDK = {
