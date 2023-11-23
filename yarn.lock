@@ -647,10 +647,10 @@
     eip1193-provider "^1.0.1"
     js-sha3 "^0.8.0"
 
-"@cedelabs/providers@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@cedelabs/providers/-/providers-1.1.0.tgz#94bb25a7010454c7ca5a486dc9644cbaeb87fada"
-  integrity sha512-A7r7Y3Ful69yDc674SCA/TxsjzO0zq2+Qlhr01QNnorNSoZdqEpwIfuLKiZD5PUFOAMxC8osTd0swyh+1IkGSg==
+"@cedelabs/providers@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@cedelabs/providers/-/providers-1.5.0.tgz#c973d6fd16bc8d8e64f41809ba5f206854156530"
+  integrity sha512-zl3W3rTmcEATCcvrB4LcMlJv3j5fBDzwZonbpsxc4NqS84deDTpnn14q7b5IoUSQuVAR7g0ELhNXo6tJV7u/2A==
   dependencies:
     "@metamask/providers" "^8.1.1"
     "@metamask/safe-event-emitter" "^3.0.0"
