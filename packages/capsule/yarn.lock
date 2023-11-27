@@ -2257,17 +2257,17 @@
   dependencies:
     "@types/node" "*"
 
-"@usecapsule/user-management-client@0.17.0":
-  version "0.17.0"
-  resolved "https://registry.yarnpkg.com/@usecapsule/user-management-client/-/user-management-client-0.17.0.tgz#346a9b5285c2c245da84d16a8de27bd94dea28f1"
-  integrity sha512-LzqgCkaO3L9mC0Sk1ygpNZAziojBQoooiWSnmkinaVuX+usZANsLnKRdEjGqkslFtBbdidcFo8QMf7y9zP8qHw==
+"@usecapsule/user-management-client@0.18.0":
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/@usecapsule/user-management-client/-/user-management-client-0.18.0.tgz#2198eb04a5fc89f9134903877bd36f4c6291a198"
+  integrity sha512-Zyy1OD0CwLgd9LrY/agjugLZOGhBzrKF3aBKbSkHZMKtVSRWnsvSf6j1MqFTBj10k119EuF8e97LtdcNghkDog==
   dependencies:
     axios "^0.27.2"
 
-"@usecapsule/web-sdk@0.27.0":
-  version "0.27.0"
-  resolved "https://registry.yarnpkg.com/@usecapsule/web-sdk/-/web-sdk-0.27.0.tgz#9235aad1221c8435e8c2ba859e7ce7122042b64f"
-  integrity sha512-5QJ+OAw287UkOIpOCNT8XI9TYUQBGRMg6KCCtmm3dQUApkMUWDp1Azpe/W0vZoLN5bq4Wjk7a2+XalUjfKOqnQ==
+"@usecapsule/web-sdk@^0.29.1":
+  version "0.29.1"
+  resolved "https://registry.yarnpkg.com/@usecapsule/web-sdk/-/web-sdk-0.29.1.tgz#7c9b84a1cd520c9610cc283c8035449ab2714647"
+  integrity sha512-xtuYab1HKKa6SsWYIcciGWIg1AVZWbUPefbz7GdV2qw6n+Z5l35izkb5fYl1lDD61W4plKcSiW4gU4LCfLnUdQ==
   dependencies:
     "@celo/utils" "3.2.0"
     "@chakra-ui/icons" "^2.1.1"
@@ -2279,7 +2279,8 @@
     "@emotion/react" "^11.10.8"
     "@emotion/styled" "^11.10.8"
     "@ramp-network/ramp-instant-sdk" "^4.0.2"
-    "@usecapsule/user-management-client" "0.17.0"
+    "@usecapsule/user-management-client" "0.18.0"
+    "@wagmi/chains" "^1.8.0"
     "@wagmi/connectors" "^3.0.0"
     assert "^2.1.0"
     axios "1.4.0"
