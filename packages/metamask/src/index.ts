@@ -1,7 +1,5 @@
-import type { MetaMaskSDKOptions } from '@metamask/sdk'
 import type { WalletInit } from '@web3-onboard/common'
-export type { MetaMaskSDKOptions } from '@metamask/sdk'
-import type { MetaMaskSDK } from '@metamask/sdk'
+import type { MetaMaskSDK, MetaMaskSDKOptions } from '@metamask/sdk'
 import type { createEIP1193Provider } from '@web3-onboard/common'
 
 type ImportSDK = {
@@ -16,7 +14,6 @@ const loadImports = async () => {
 
   const { createEIP1193Provider } = await import('@web3-onboard/common')
   const importedSDK = await import('@metamask/sdk')
-
   const MetaMaskSDKConstructor =
     // @ts-ignore
     importedSDK.MetaMaskSDK || importedSDK.default.MetaMaskSDK
@@ -54,6 +51,8 @@ function metamask({
       label: 'MetaMask',
       getIcon: async () => (await import('./icon.js')).default,
       getInterface: async ({ appMetadata }) => {
+        sdk = (window as any).mmsdk || sdk; // Prevent conflict with existing mmsdk instances
+
         if (sdk) {
           // Prevent re-initializing instance as it causes issues with MetaMask sdk mobile provider.
           return {

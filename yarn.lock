@@ -659,10 +659,10 @@
     eip1193-provider "^1.0.1"
     js-sha3 "^0.8.0"
 
-"@cedelabs/providers@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@cedelabs/providers/-/providers-1.1.0.tgz#94bb25a7010454c7ca5a486dc9644cbaeb87fada"
-  integrity sha512-A7r7Y3Ful69yDc674SCA/TxsjzO0zq2+Qlhr01QNnorNSoZdqEpwIfuLKiZD5PUFOAMxC8osTd0swyh+1IkGSg==
+"@cedelabs/providers@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@cedelabs/providers/-/providers-1.5.0.tgz#c973d6fd16bc8d8e64f41809ba5f206854156530"
+  integrity sha512-zl3W3rTmcEATCcvrB4LcMlJv3j5fBDzwZonbpsxc4NqS84deDTpnn14q7b5IoUSQuVAR7g0ELhNXo6tJV7u/2A==
   dependencies:
     "@metamask/providers" "^8.1.1"
     "@metamask/safe-event-emitter" "^3.0.0"
@@ -2906,10 +2906,10 @@
   resolved "https://registry.yarnpkg.com/@metamask/safe-event-emitter/-/safe-event-emitter-3.0.0.tgz#8c2b9073fe0722d48693143b0dc8448840daa3bd"
   integrity sha512-j6Z47VOmVyGMlnKXZmL0fyvWfEYtKWCA9yGZkU3FCsGZUT5lHGmvaV9JA5F2Y+010y7+ROtR3WMXIkvl/nVzqQ==
 
-"@metamask/sdk-communication-layer@0.12.1":
-  version "0.12.1"
-  resolved "https://registry.yarnpkg.com/@metamask/sdk-communication-layer/-/sdk-communication-layer-0.12.1.tgz#b4dd80e9c2f4bcaa38ed9ea7e269a2770a411a2d"
-  integrity sha512-LKsBzJ56wjTIRBpdwCfO69JwbKMFURwXIQjm0rzCHhtfybKA4PPRbElp0Ie9W9x9UNv0U/0nK5EBTnKLc94RMw==
+"@metamask/sdk-communication-layer@0.13.0":
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/@metamask/sdk-communication-layer/-/sdk-communication-layer-0.13.0.tgz#31f4bf1d68b8ff8b74c6485566a8c7f8ffbc86ef"
+  integrity sha512-5168fUbiKLi29jaYTvySi6VQEqCduITMEKQ+GpSQ1VRfzdezQtk3/hBgozmEtWgoIulNyrx4u4LfzN951+AmIA==
   dependencies:
     bufferutil "^4.0.8"
     cross-fetch "^3.1.5"
@@ -2920,10 +2920,10 @@
     utf-8-validate "^6.0.3"
     uuid "^8.3.2"
 
-"@metamask/sdk-install-modal-web@0.12.1":
-  version "0.12.1"
-  resolved "https://registry.yarnpkg.com/@metamask/sdk-install-modal-web/-/sdk-install-modal-web-0.12.1.tgz#82adbb1a420af325a32c0302b5516bbb3d3ca36e"
-  integrity sha512-4EdTE6BXM8YZgqMmm9E3Y03FyyGVR46Vr/3953AVwanC/DYv+zfYyhARdRZx6ta4KeWy/Jz7AFx2O83KwTo6UQ==
+"@metamask/sdk-install-modal-web@0.13.0":
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/@metamask/sdk-install-modal-web/-/sdk-install-modal-web-0.13.0.tgz#555b1ef055c0dad264888d75b5acaaa68e8c6e3f"
+  integrity sha512-962kr1wQ/3JEx4trPhYbdSdfpyApR8eZkzKlChwx+I2SzwIQOGIur6NNqBEebI2b4++9oWAg7OOffeXrHsoWpw==
   dependencies:
     "@emotion/react" "^11.10.6"
     "@emotion/styled" "^11.10.6"
@@ -2933,16 +2933,16 @@
     react-dom "^18.2.0"
     react-i18next "^13.2.2"
 
-"@metamask/sdk@^0.12.1":
-  version "0.12.1"
-  resolved "https://registry.yarnpkg.com/@metamask/sdk/-/sdk-0.12.1.tgz#6741e2fd0121bb8eda5e4b22847706199cb28cce"
-  integrity sha512-Fc5M+/6tZVvflkhHCuJcXcKTfFqETiB1e73N7f5NPfFndZehPnfWS8l2DW+AbwpyNLyyS7+usR1FXNJmCScYQw==
+"@metamask/sdk@^0.13.0":
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/@metamask/sdk/-/sdk-0.13.0.tgz#536c1df12ade15507da468c95c7e09d3937b3660"
+  integrity sha512-CjFnQ58ecAPzV+CoPwszGEAAyjTKwI3RoDlbq/N6LShrF+yC4WvfuVKJ/s2GflMmaLKqshomFP2e9jCT8j0dRA==
   dependencies:
     "@metamask/onboarding" "^1.0.1"
     "@metamask/post-message-stream" "^6.1.0"
     "@metamask/providers" "^10.2.1"
-    "@metamask/sdk-communication-layer" "0.12.1"
-    "@metamask/sdk-install-modal-web" "0.12.1"
+    "@metamask/sdk-communication-layer" "0.13.0"
+    "@metamask/sdk-install-modal-web" "0.13.0"
     "@react-native-async-storage/async-storage" "^1.17.11"
     "@types/dom-screen-wake-lock" "^1.0.0"
     bowser "^2.9.0"
@@ -4488,9 +4488,9 @@
   integrity sha512-WJQas3OFGcC8AeMzaa7FwzzbNNfanuV2R12kQYNp4BkUMghsRz5JxJ5RgVhJifhw7t0s6LvRSWZArmKbMDZ+5g==
 
 "@types/elliptic@^6.4.9":
-  version "6.4.17"
-  resolved "https://registry.yarnpkg.com/@types/elliptic/-/elliptic-6.4.17.tgz#6c9ff6ba137670c8bc3c65da2e23995b22ec3607"
-  integrity sha512-+NOzUIq9aenYuaIFS+8Gmv72r72zb12jttZsAsu4zEJ3QmQfGo958Kh0jQ+GJp5+uflE14KI4BcZqcsGCxTNFA==
+  version "6.4.18"
+  resolved "https://registry.yarnpkg.com/@types/elliptic/-/elliptic-6.4.18.tgz#bc96e26e1ccccbabe8b6f0e409c85898635482e1"
+  integrity sha512-UseG6H5vjRiNpQvrhy4VF/JXdA3V/Fp5amvveaL+fs28BZ6xIKJBPnUPRlEaZpysD9MbpfaLi8lbl7PGUAkpWw==
   dependencies:
     "@types/bn.js" "*"
 
@@ -4880,9 +4880,9 @@
     "@types/node" "*"
 
 "@types/ws@^8.5.4":
-  version "8.5.9"
-  resolved "https://registry.yarnpkg.com/@types/ws/-/ws-8.5.9.tgz#384c489f99c83225a53f01ebc3eddf3b8e202a8c"
-  integrity sha512-jbdrY0a8lxfdTp/+r7Z4CkycbOFN8WX+IOchLJr3juT/xzbJ8URyTVSJ/hvNdadTgM1mnedb47n+Y31GsFnQlg==
+  version "8.5.10"
+  resolved "https://registry.yarnpkg.com/@types/ws/-/ws-8.5.10.tgz#4acfb517970853fa6574a3a6886791d04a396787"
+  integrity sha512-vmQSUcfalpIq0R9q7uTo2lXs6eGIpt9wtnLdMv9LVpIjCA/+ufZRozlVoVelIYixx1ugCBKDhn89vnsEGOCx9A==
   dependencies:
     "@types/node" "*"
 
@@ -5001,10 +5001,10 @@
   dependencies:
     axios "^0.27.2"
 
-"@usecapsule/web-sdk@0.29.1-dev.1":
-  version "0.29.1-dev.1"
-  resolved "https://registry.yarnpkg.com/@usecapsule/web-sdk/-/web-sdk-0.29.1-dev.1.tgz#1338dd1323230311127ae50ad007a534749097d0"
-  integrity sha512-LM2JPHNsnKRC9ieW48Zh8mmXzkUmk1VdK3ef047kCtw9dl1aN1fv3UArTu5GE6Tj1Nx9c/MA2J3GwxdmWo8qOQ==
+"@usecapsule/web-sdk@^0.29.1":
+  version "0.29.1"
+  resolved "https://registry.yarnpkg.com/@usecapsule/web-sdk/-/web-sdk-0.29.1.tgz#7c9b84a1cd520c9610cc283c8035449ab2714647"
+  integrity sha512-xtuYab1HKKa6SsWYIcciGWIg1AVZWbUPefbz7GdV2qw6n+Z5l35izkb5fYl1lDD61W4plKcSiW4gU4LCfLnUdQ==
   dependencies:
     "@celo/utils" "3.2.0"
     "@chakra-ui/icons" "^2.1.1"
@@ -12016,9 +12016,9 @@ nan@^2.13.2, nan@^2.14.0, nan@^2.2.1:
   integrity sha512-8ZtvEnA2c5aYCZYd1cvgdnU6cqwixRoYg70xPLWUws5ORTa/lnw+u4amixRS/Ac5U5mQVgp9pnlSUnbNWFaWZQ==
 
 nano-css@^5.3.1:
-  version "5.5.0"
-  resolved "https://registry.yarnpkg.com/nano-css/-/nano-css-5.5.0.tgz#492769654b046f544a345c52c986aaf22d7cf808"
-  integrity sha512-CV45SuKMlq+s7k4WS49+iMj6LZ38sHWeQ6r2ZfLwttYKYRzgs4/WOFg/ealI7itzL3pQWv9+sODfz4TCoOk7Tg==
+  version "5.6.1"
+  resolved "https://registry.yarnpkg.com/nano-css/-/nano-css-5.6.1.tgz#964120cb1af6cccaa6d0717a473ccd876b34c197"
+  integrity sha512-T2Mhc//CepkTa3X4pUhKgbEheJHYAxD0VptuqFhDbGMUWVV2m+lkNiW/Ieuj35wrfC8Zm0l7HvssQh7zcEttSw==
   dependencies:
     "@jridgewell/sourcemap-codec" "^1.4.15"
     css-tree "^1.1.2"
