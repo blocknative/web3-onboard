@@ -56,7 +56,7 @@
     "Capsule"
   ],
   "dependencies": {
-    "@usecapsule/web-sdk": "^0.29.3",
+    "@usecapsule/web-sdk": "^0.29.4",
     "@wagmi/chains": "^1.8.0",
     "@web3-onboard/common": "^2.3.3",
     "react-dom" : "^18.2.0"
