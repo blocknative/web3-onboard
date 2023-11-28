@@ -2283,10 +2283,10 @@
   dependencies:
     axios "^0.27.2"
 
-"@usecapsule/web-sdk@^0.29.2":
-  version "0.29.2"
-  resolved "https://registry.yarnpkg.com/@usecapsule/web-sdk/-/web-sdk-0.29.2.tgz#e5e218cabe5647b93aa52f1b2464b0197448db63"
-  integrity sha512-gYffYYYsaM9OJZVzBcDNXpPJ1dbNl3nJqBpcTYpCoHvY+NRjUU3XX/UflZxvKOmY2ZjDl70Yyx8IQ5hI9Qpk/A==
+"@usecapsule/web-sdk@0.29.2-alpha":
+  version "0.29.2-alpha"
+  resolved "https://registry.yarnpkg.com/@usecapsule/web-sdk/-/web-sdk-0.29.2-alpha.tgz#dd3670bbc4d16432394344c7bd0947c59154bb7d"
+  integrity sha512-Sc3DRL87K70VV6Gt5KupEZawhLASFG6YQd9Zd7hWZMrkndh+wVP4B+hEPHjy+ZIO7sktXGOvnUVsgdIubDfm7Q==
   dependencies:
     "@celo/utils" "3.2.0"
     "@chakra-ui/icons" "^2.1.1"
