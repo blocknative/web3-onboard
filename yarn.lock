@@ -5001,10 +5001,10 @@
   dependencies:
     axios "^0.27.2"
 
-"@usecapsule/web-sdk@^0.29.1":
-  version "0.29.1"
-  resolved "https://registry.yarnpkg.com/@usecapsule/web-sdk/-/web-sdk-0.29.1.tgz#7c9b84a1cd520c9610cc283c8035449ab2714647"
-  integrity sha512-xtuYab1HKKa6SsWYIcciGWIg1AVZWbUPefbz7GdV2qw6n+Z5l35izkb5fYl1lDD61W4plKcSiW4gU4LCfLnUdQ==
+"@usecapsule/web-sdk@^0.29.2":
+  version "0.29.2"
+  resolved "https://registry.yarnpkg.com/@usecapsule/web-sdk/-/web-sdk-0.29.2.tgz#e5e218cabe5647b93aa52f1b2464b0197448db63"
+  integrity sha512-gYffYYYsaM9OJZVzBcDNXpPJ1dbNl3nJqBpcTYpCoHvY+NRjUU3XX/UflZxvKOmY2ZjDl70Yyx8IQ5hI9Qpk/A==
   dependencies:
     "@celo/utils" "3.2.0"
     "@chakra-ui/icons" "^2.1.1"
@@ -16943,8 +16943,8 @@ yn@3.1.1:
   integrity sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==
 
 zustand@^4.3.1:
-  version "4.4.6"
-  resolved "https://registry.yarnpkg.com/zustand/-/zustand-4.4.6.tgz#03c78e3e2686c47095c93714c0c600b72a6512bd"
-  integrity sha512-Rb16eW55gqL4W2XZpJh0fnrATxYEG3Apl2gfHTyDSE965x/zxslTikpNch0JgNjJA9zK6gEFW8Fl6d1rTZaqgg==
+  version "4.4.7"
+  resolved "https://registry.yarnpkg.com/zustand/-/zustand-4.4.7.tgz#355406be6b11ab335f59a66d2cf9815e8f24038c"
+  integrity sha512-QFJWJMdlETcI69paJwhSMJz7PPWjVP8Sjhclxmxmxv/RYI7ZOvR5BHX+ktH0we9gTWQMxcne8q1OY8xxz604gw==
   dependencies:
     use-sync-external-store "1.2.0"
