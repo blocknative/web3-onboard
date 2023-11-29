@@ -16,9 +16,9 @@ To learn more, check out the [Capsule Developer Docs](https://docs.usecapsule.co
 
 ```typescript
 type CapsuleInitOptions = {
-    environment: Environment
-    appName: string
-    apiKey?: string
+  environment: Environment
+  appName: string
+  apiKey?: string
 }
 ```
 
@@ -50,7 +50,7 @@ console.log(connectedWallets)
 ## Build env settings (webpack config)
 
 You may need to add the following rule to your webpack config module
-in order to handle certain styling files (See the config for the 
+in order to handle certain styling files (See the config for the
 Blocknative demo app):
 
 ```typescript
