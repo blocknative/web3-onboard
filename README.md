@@ -115,6 +115,7 @@ For full documentation, check out the README.md for each package or the [docs pa
 - [Portis](packages/portis/README.md)
 - [MEW-Wallet](packages/mew-wallet/README.md)
 - [Web3Auth](packages/web3auth/README.md)
+- [Capsule](packages/capsule/README.md)
 - [Sequence](packages/sequence/README.md)
 - [Taho (previously Tally Ho)](packages/tallyho/README.md)
 - [Enkrypt](packages/enkrypt/README.md)

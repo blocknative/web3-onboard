@@ -880,6 +880,18 @@ const kayros: InjectedWalletModule = {
   platforms: ['desktop']
 }
 
+const foxwallet: InjectedWalletModule = {
+  label: ProviderLabel.FoxWallet,
+  injectedNamespace: InjectedNameSpace.FoxWallet,
+  checkProviderIdentity: ({ provider }) =>
+      !!provider && !!provider[ProviderIdentityFlag.FoxWallet],
+  getIcon: async () => (await import('./icons/foxwallet.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.foxwallet)
+  }),
+  platforms: ['mobile']
+}
+
 const wallets = [
   zeal,
   exodus,
@@ -934,7 +946,8 @@ const wallets = [
   ronin,
   coin98wallet,
   subwallet,
-  kayros
+  kayros,
+  foxwallet
 ]
 
 export default wallets
