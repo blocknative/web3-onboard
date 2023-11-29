@@ -55,6 +55,7 @@
     "@web3-onboard/bitget": "^2.0.0",
     "@web3-onboard/blocto": "^2.0.0",
     "@web3-onboard/capsule": "^2.0.0",
+    "@web3-onboard/cede-store": "^2.2.0",
     "@web3-onboard/coinbase": "^2.2.5",
     "@web3-onboard/core": "^2.21.2",
     "@web3-onboard/dcent": "^2.2.7",
