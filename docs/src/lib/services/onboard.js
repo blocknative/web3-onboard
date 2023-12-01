@@ -130,6 +130,7 @@ const intiOnboard = async (theme) => {
 
   const capsule = capsuleModule({
     environment: Environment.DEVELOPMENT,
+    apiKey: '992bbd9146d5de8ad0419f141d9a7ca7'
   })
 
   return Onboard({
