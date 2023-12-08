@@ -5098,10 +5098,10 @@
   dependencies:
     axios "^0.27.2"
 
-"@usecapsule/web-sdk@0.29.4-dev.15":
-  version "0.29.4-dev.15"
-  resolved "https://registry.yarnpkg.com/@usecapsule/web-sdk/-/web-sdk-0.29.4-dev.15.tgz#33d3ec6d57c59baa469748d88719175b7722189a"
-  integrity sha512-lrnuohk7XbbDxlbJJiSHL+MMD50mGimkg6xWqdUFs6ucFZY2b4OBAiCvZQX9/WfQpB3qH5aP3hl3SRLFT5adMw==
+"@usecapsule/web-sdk@0.29.4":
+  version "0.29.4"
+  resolved "https://registry.yarnpkg.com/@usecapsule/web-sdk/-/web-sdk-0.29.4.tgz#17e5e2604f97d59ccd2f4ba69b7b99a021f3dadd"
+  integrity sha512-0V2rknVTVdrz7Gt3K8BvfYqz/yXFWgfscrHM5S4NfOBhVITYdg/Sd3naCROyNBrbXRpmOBUA23AlF+7jo/GkMA==
   dependencies:
     "@celo/utils" "3.2.0"
     "@chakra-ui/icons" "^2.1.1"
