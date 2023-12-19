@@ -2232,9 +2232,9 @@
   integrity sha512-ga8y9v9uyeiLdpKddhxYQkxNDrfvuPrlFb0N1qnZZByvcElJaXthF1UhvCh9TLWJBEHeNtdnbysW7Y6Uq8CVng==
 
 "@types/react@^18.0.2":
-  version "18.2.39"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.39.tgz#744bee99e053ad61fe74eb8b897f3ab5b19a7e25"
-  integrity sha512-Oiw+ppED6IremMInLV4HXGbfbG6GyziY3kqAwJYOR0PNbkYDmLWQA3a95EhdSmamsvbkJN96ZNN+YD+fGjzSBA==
+  version "18.2.42"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.42.tgz#6f6b11a904f6d96dda3c2920328a97011a00aba7"
+  integrity sha512-c1zEr96MjakLYus/wPnuWDo1/zErfdU9rNsIGmE+NV71nx88FG9Ttgo5dqorXTu/LImX2f63WBP986gJkMPNbA==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -2283,10 +2283,10 @@
   dependencies:
     axios "^0.27.2"
 
-"@usecapsule/web-sdk@0.29.4-dev.15":
-  version "0.29.4-dev.15"
-  resolved "https://registry.yarnpkg.com/@usecapsule/web-sdk/-/web-sdk-0.29.4-dev.15.tgz#33d3ec6d57c59baa469748d88719175b7722189a"
-  integrity sha512-lrnuohk7XbbDxlbJJiSHL+MMD50mGimkg6xWqdUFs6ucFZY2b4OBAiCvZQX9/WfQpB3qH5aP3hl3SRLFT5adMw==
+"@usecapsule/web-sdk@0.29.4":
+  version "0.29.4"
+  resolved "https://registry.yarnpkg.com/@usecapsule/web-sdk/-/web-sdk-0.29.4.tgz#17e5e2604f97d59ccd2f4ba69b7b99a021f3dadd"
+  integrity sha512-0V2rknVTVdrz7Gt3K8BvfYqz/yXFWgfscrHM5S4NfOBhVITYdg/Sd3naCROyNBrbXRpmOBUA23AlF+7jo/GkMA==
   dependencies:
     "@celo/utils" "3.2.0"
     "@chakra-ui/icons" "^2.1.1"
