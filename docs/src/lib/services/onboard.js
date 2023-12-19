@@ -163,7 +163,7 @@ const intiOnboard = async (theme) => {
       frame,
       infinityWallet,
       blocto,
-      capsule
+      // capsule
       // venly
     ],
     chains: [
