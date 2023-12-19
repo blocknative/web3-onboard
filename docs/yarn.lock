@@ -682,9 +682,9 @@
     js-sha3 "^0.8.0"
 
 "@cedelabs/providers@^1.5.0":
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/@cedelabs/providers/-/providers-1.5.1.tgz#9016354e3e0e2198e80e02c039ef856cbd418265"
-  integrity sha512-mmbB5J+WWVHiw9X1VikGLlyNYhd9vjlGqGy/rLzZBsFudMIa171kuv5b47vP4acaD+AFTehnHcJ9YHYQZRb1uw==
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@cedelabs/providers/-/providers-1.5.0.tgz#c973d6fd16bc8d8e64f41809ba5f206854156530"
+  integrity sha512-zl3W3rTmcEATCcvrB4LcMlJv3j5fBDzwZonbpsxc4NqS84deDTpnn14q7b5IoUSQuVAR7g0ELhNXo6tJV7u/2A==
   dependencies:
     "@metamask/providers" "^8.1.1"
     "@metamask/safe-event-emitter" "^3.0.0"
@@ -5629,7 +5629,7 @@
     "@blocto/sdk" "^0.4.6"
     "@web3-onboard/common" "^2.3.1"
 
-"@web3-onboard/capsule@^2.0.1-alpha.3":
+"@web3-onboard/capsule@^2.0.1":
   version "2.0.1-alpha.3"
   resolved "https://registry.yarnpkg.com/@web3-onboard/capsule/-/capsule-2.0.1-alpha.3.tgz#a2586a1522b3a9662becd6c1f304dcd05126980e"
   integrity sha512-FqWFTnoHasthmCvM59KYIzNa0etpyiLCMM63F2K/V9r50CLF8quqlgr36zCRl8fP6flvG3ytupykAyRxTot4XA==
@@ -5929,7 +5929,7 @@
     "@venly/web3-provider" "^3.1.1"
     "@web3-onboard/common" "^2.3.1"
 
-"@web3-onboard/walletconnect@^2.5.2-alpha.1":
+"@web3-onboard/walletconnect@^2.5.2":
   version "2.5.2-alpha.1"
   resolved "https://registry.yarnpkg.com/@web3-onboard/walletconnect/-/walletconnect-2.5.2-alpha.1.tgz#70d7a4abcc8a1eef85d04621788d86ee32e16eb9"
   integrity sha512-h1yYsB/W/ZfcgsPY8Tit1G1EjcdhZlR34dBnx0boEnz+jTQKk/AIj/v/d3FZfmtZymDfOt6nBz7hEyET3CxkNw==
@@ -12162,9 +12162,9 @@ standard-as-callback@^2.1.0:
   integrity sha512-qoRRSyROncaz1z0mvYqIE4lCd9p2R90i6GxW3uZv5ucSu8tU7B5HXUP1gG8pVZsYNVaXjk8ClXHPttLyxAL48A==
 
 std-env@^3.4.3:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/std-env/-/std-env-3.6.0.tgz#94807562bddc68fa90f2e02c5fd5b6865bb4e98e"
-  integrity sha512-aFZ19IgVmhdB2uX599ve2kE6BIE3YMnQ6Gp6BURhW/oIzpXGKr878TQfAQZn1+i0Flcc/UKUy1gOlcfaUBCryg==
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/std-env/-/std-env-3.5.0.tgz#83010c9e29bd99bf6f605df87c19012d82d63b97"
+  integrity sha512-JGUEaALvL0Mf6JCfYnJOTcobY+Nc7sG/TemDRBqCA0wEr4DER7zDchaaixTlmOxAjG1uRJmX82EQcxwTQTkqVA==
 
 stream-browserify@3.0.0, stream-browserify@^3.0.0:
   version "3.0.0"
