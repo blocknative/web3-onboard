@@ -1,4 +1,4 @@
-import type { AppMetadata, WalletInit } from '@web3-onboard/common'
+import type { AppMetadata, EIP1193Provider, WalletInit } from '@web3-onboard/common'
 import type { CapsuleInitOptions } from './types'
 import type { Chain } from '@wagmi/chains'
 import type { Chain as BlocknativeChain } from '@web3-onboard/common'
@@ -89,7 +89,9 @@ function capsule(options: CapsuleInitOptions): WalletInit {
             chainsMap
           )
         }
-        const provider = new CapsuleEIP1193Provider(providerOpts)
+        const provider: EIP1193Provider = new CapsuleEIP1193Provider(providerOpts)
+
+        provider.disconnect = () => { capsule.logout(); };
 
         return {
           instance: capsule,

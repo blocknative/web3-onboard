@@ -210,7 +210,7 @@
   })
   const capsule = capsuleModule({
     environment: Environment.DEVELOPMENT,
-    apiKey: 'ec45efe699969c2b909fdb271f9a3aa0'
+    apiKey: '992bbd9146d5de8ad0419f141d9a7ca7'
   })
 
   const onboard = Onboard({
