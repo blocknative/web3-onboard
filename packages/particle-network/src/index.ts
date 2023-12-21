@@ -49,7 +49,7 @@ const particleAuth = (options: ParticleAuthModuleOptions): WalletInit => {
 		label: displayLabel,
 		getIcon: async () => {
 			const iconName = authType && setAsDisplay ? authType : 'icon';
-			return (await import(`./${iconName}.js`)).default;
+			return (await import(`./${iconName}.svg.ts`)).default;
 		},
 		getInterface: async ({ EventEmitter, chains }) => {
 			const [currentChain] = chains;
