@@ -1,4 +1,11 @@
-import type { WalletInit } from '@web3-onboard/common';
+import {
+	WalletInit,
+	EIP1193Provider,
+	ProviderRpcError,
+	ProviderRpcErrorCode,
+	ProviderAccounts,
+} from '@web3-onboard/common';
+import { createEIP1193Provider } from '@web3-onboard/common';
 import { ParticleNetwork, Config } from '@particle-network/auth';
 import { ParticleProvider } from '@particle-network/provider';
 
@@ -49,10 +56,10 @@ const particleAuth = (options: ParticleAuthModuleOptions): WalletInit => {
 		label: displayLabel,
 		getIcon: async () => {
 			const iconName = authType && setAsDisplay ? authType : 'icon';
-			return (await import(`./${iconName}.svg.ts`)).default;
+			return (await import(`./${iconName}.svg`)).default;
 		},
-		getInterface: async ({ EventEmitter, chains }) => {
-			const [currentChain] = chains;
+		getInterface: async ({ chains }) => {
+			let [currentChain] = chains;
 			const { label, id } = currentChain;
 
 			const chainName = label
@@ -66,15 +73,34 @@ const particleAuth = (options: ParticleAuthModuleOptions): WalletInit => {
 				chainId,
 			};
 
-			const particle = new ParticleNetwork(particleConfig);
+			let particle = new ParticleNetwork(particleConfig);
+			let provider = new ParticleProvider(particle.auth);
 
-			const loginOptions = authType
-				? { preferredAuthType: authType }
-				: undefined;
-			await particle.auth.login(loginOptions);
+			function patchProvider(): EIP1193Provider {
+				const patchedProvider = createEIP1193Provider(provider, {
+					eth_selectAccounts: null,
+					eth_requestAccounts: async ({ baseRequest }) => {
+						try {
+							const accounts = await baseRequest({ method: 'eth_accounts' });
+							return accounts as ProviderAccounts;
+						} catch (error) {
+							console.error(error);
+							throw new ProviderRpcError({
+								code: ProviderRpcErrorCode.ACCOUNT_ACCESS_REJECTED,
+								message: 'Account access rejected',
+							});
+						}
+					},
+				});
+
+				patchedProvider.disconnect = () => particle.auth.logout();
+				return patchedProvider;
+			}
+
+			provider = patchProvider();
 
 			return {
-				provider: new ParticleProvider(particle.auth),
+				provider,
 				instance: particle,
 			};
 		},
