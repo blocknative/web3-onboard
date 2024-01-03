@@ -47,8 +47,7 @@ export enum ProviderIdentityFlag {
   BraveWallet = 'isBraveWallet',
   Rabby = 'isRabby',
   MathWallet = 'isMathWallet',
-  GameStop = 'isGamestop',
-  BitKeep = 'isBitKeep',
+  Bitget = 'isBitKeep',
   Sequence = 'isSequence',
   Core = 'isAvalanche',
   Opera = 'isOpera',
@@ -67,7 +66,8 @@ export enum ProviderIdentityFlag {
   Fordefi = 'isFordefi',
   Coin98Wallet = 'isCoin98',
   SubWallet = 'isSubWallet',
-  Kayros = 'isKayros'
+  Kayros = 'isKayros',
+  FoxWallet = 'isFoxWallet'
 }
 
 /**
@@ -80,7 +80,7 @@ export enum ProviderIdentityFlag {
  */
 export enum ProviderExternalUrl {
   Binance = 'https://www.bnbchain.org/ru/blog/binance-extension-wallet/',
-  BitKeep = 'https://web3.bitget.com/en/wallet-download',
+  Bitget = 'https://web3.bitget.com/en/wallet-download',
   Coinbase = 'https://www.coinbase.com/wallet/downloads',
   MetaMask = 'https://metamask.io/download/',
   OKXWallet = 'https://okx.com/download',
@@ -92,7 +92,8 @@ export enum ProviderExternalUrl {
   Coin98Wallet = 'https://coin98.com/wallet/',
   SubWallet = 'https://www.subwallet.app/',
   Kayros = 'https://www.kayros.games/wallet/',
-  XDEFI = 'https://xdefi.io/'
+  XDEFI = 'https://xdefi.io/',
+  FoxWallet = 'https://foxwallet.com/download'
 }
 
 export enum ProviderLabel {
@@ -132,8 +133,7 @@ export enum ProviderLabel {
   Tally = 'Taho',
   Rabby = 'Rabby Wallet',
   MathWallet = 'MathWallet',
-  GameStop = 'GameStop Wallet',
-  BitKeep = 'BitKeep',
+  Bitget = 'Bitget Wallet',
   Sequence = 'Sequence',
   Core = 'Core',
   Enkrypt = 'Enkrypt',
@@ -151,7 +151,8 @@ export enum ProviderLabel {
   RoninWallet = 'Ronin Wallet',
   Coin98Wallet = 'Coin98 Wallet',
   SubWallet = 'SubWallet',
-  Kayros = 'Kayros'
+  Kayros = 'Kayros',
+  FoxWallet = 'FoxWallet'
 }
 
 export interface MeetOneProvider extends ExternalProvider {
@@ -171,8 +172,7 @@ export enum InjectedNameSpace {
   Web3 = 'web3',
   Arbitrum = 'arbitrum',
   XFI = 'xfi',
-  GameStop = 'gamestop',
-  BitKeep = 'bitkeep',
+  Bitget = 'bitkeep',
   Avalanche = 'avalanche',
   Bitski = 'Bitski',
   Enkrypt = 'enkrypt',
@@ -188,7 +188,8 @@ export enum InjectedNameSpace {
   RoninWallet = 'ronin',
   Coin98Wallet = 'coin98',
   SubWallet = 'SubWallet',
-  Kayros = 'kayros'
+  Kayros = 'kayros',
+  FoxWallet = 'foxwallet'
 }
 
 export interface CustomWindow extends Window {
@@ -201,7 +202,6 @@ export interface CustomWindow extends Window {
   xfi: {
     ethereum: InjectedProvider
   }
-  gamestop: InjectedProvider
   bitkeep: {
     ethereum: InjectedProvider
   }
@@ -238,6 +238,7 @@ export interface CustomWindow extends Window {
     provider: InjectedProvider
   }
   kayros: InjectedProvider
+  foxwallet: InjectedProvider
 }
 
 export type InjectedProvider = ExternalProvider &

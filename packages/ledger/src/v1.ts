@@ -12,7 +12,9 @@ import type { StaticJsonRpcProvider as StaticJsonRpcProviderType } from '@ethers
 import WalletConnect from '@walletconnect/client'
 import { isHexString, LedgerOptionsWCv1 } from './index.js'
 
-function ledger(options: LedgerOptionsWCv1 = { walletConnectVersion: 1 }): WalletInit {
+function ledger(
+  options: LedgerOptionsWCv1 = { walletConnectVersion: 1 }
+): WalletInit {
   return () => {
     return {
       label: 'Ledger',
@@ -42,7 +44,7 @@ function ledger(options: LedgerOptionsWCv1 = { walletConnectVersion: 1 }): Walle
         // return the Ledger Extension provider
         if (
           checkSupportResult.providerImplementation ===
-            SupportedProviderImplementations.LedgerConnect
+          SupportedProviderImplementations.LedgerConnect
         ) {
           return {
             provider: instance
@@ -136,14 +138,18 @@ function ledger(options: LedgerOptionsWCv1 = { walletConnectVersion: 1 }): Walle
                 },
                 error: console.warn
               })
-
+            
+              // @ts-ignore
             this.disconnect = () => this.connector.killSession()
 
             this.request = async ({ method, params }) => {
               if (method === 'eth_chainId') {
+                // @ts-ignore
                 return isHexString(this.connector.chainId)
-                  ? this.connector.chainId
-                  : `0x${this.connector.chainId.toString(16)}`
+                  ? // @ts-ignore
+                    this.connector.chainId
+                  : // @ts-ignore
+                    `0x${this.connector.chainId.toString(16)}`
               }
 
               if (method === 'eth_requestAccounts') {
@@ -176,9 +182,11 @@ function ledger(options: LedgerOptionsWCv1 = { walletConnectVersion: 1 }): Walle
                     })
 
                   // Check if connection is already established
+                  // @ts-ignore
                   if (!this.connector.connected) {
                     resolve(instance.request({ method, params }))
                   } else {
+                    // @ts-ignore
                     const { accounts, chainId } = this.connector.session
                     const hexChainId = isHexString(chainId)
                       ? chainId
@@ -219,6 +227,7 @@ function ledger(options: LedgerOptionsWCv1 = { walletConnectVersion: 1 }): Walle
                     message: `The Provider requires a chainId to be passed in as an argument`
                   })
                 }
+                // @ts-ignore
                 return this.connector.sendCustomRequest({
                   method: 'wallet_switchEthereumChain',
                   params: [
@@ -260,6 +269,7 @@ function ledger(options: LedgerOptionsWCv1 = { walletConnectVersion: 1 }): Walle
               }
 
               if (method === 'eth_accounts') {
+                // @ts-ignore
                 return this.connector.sendCustomRequest({
                   id: 1337,
                   jsonrpc: '2.0',

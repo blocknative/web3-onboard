@@ -577,38 +577,17 @@ const mathwallet: InjectedWalletModule = {
   platforms: ['all']
 }
 
-const gamestop: InjectedWalletModule = {
-  label: ProviderLabel.GameStop,
-  injectedNamespace: InjectedNameSpace.GameStop,
+const bitget: InjectedWalletModule = {
+  label: ProviderLabel.Bitget,
+  injectedNamespace: InjectedNameSpace.Bitget,
   checkProviderIdentity: ({ provider }) =>
-    !!provider && !!provider[ProviderIdentityFlag.GameStop],
-  getIcon: async () => (await import('./icons/gamestop.js')).default,
-  getInterface: async () => {
-    const provider = createEIP1193Provider(window.gamestop, {
-      eth_chainId: ({ baseRequest }) =>
-        baseRequest({ method: 'eth_chainId' }).then(
-          id => `0x${parseInt(id).toString(16)}`
-        ),
-      wallet_switchEthereumChain: UNSUPPORTED_METHOD
-    })
-    provider.removeListener = (event, listener) => {}
-    provider.on = (event, listener) => {}
-    return { provider }
-  },
-  platforms: ['desktop']
-}
-
-const bitkeep: InjectedWalletModule = {
-  label: ProviderLabel.BitKeep,
-  injectedNamespace: InjectedNameSpace.BitKeep,
-  checkProviderIdentity: ({ provider }) =>
-    !!provider && !!provider['ethereum'][ProviderIdentityFlag.BitKeep],
-  getIcon: async () => (await import('./icons/bitkeep.js')).default,
+    !!provider && !!provider['ethereum'][ProviderIdentityFlag.Bitget],
+  getIcon: async () => (await import('./icons/bitget.js')).default,
   getInterface: async () => ({
     provider: window.bitkeep && window.bitkeep.ethereum
   }),
   platforms: ['all'],
-  externalUrl: ProviderExternalUrl.BitKeep
+  externalUrl: ProviderExternalUrl.Bitget
 }
 
 const sequence: InjectedWalletModule = {
@@ -817,8 +796,7 @@ const fordefi: InjectedWalletModule = {
   label: ProviderLabel.Fordefi,
   injectedNamespace: InjectedNameSpace.Ethereum,
   checkProviderIdentity: ({ provider }) =>
-    !!provider &&
-    !!provider[ProviderIdentityFlag.Fordefi],
+    !!provider && !!provider[ProviderIdentityFlag.Fordefi],
   getIcon: async () => (await import('./icons/fordefi.js')).default,
   getInterface: getInjectedInterface(ProviderIdentityFlag.Fordefi, true),
   platforms: ['desktop']
@@ -881,6 +859,18 @@ const kayros: InjectedWalletModule = {
   platforms: ['desktop']
 }
 
+const foxwallet: InjectedWalletModule = {
+  label: ProviderLabel.FoxWallet,
+  injectedNamespace: InjectedNameSpace.FoxWallet,
+  checkProviderIdentity: ({ provider }) =>
+      !!provider && !!provider[ProviderIdentityFlag.FoxWallet],
+  getIcon: async () => (await import('./icons/foxwallet.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.foxwallet)
+  }),
+  platforms: ['mobile']
+}
+
 const wallets = [
   zeal,
   exodus,
@@ -896,6 +886,7 @@ const wallets = [
   alphawallet,
   apexwallet,
   atoken,
+  bitget,
   bitpie,
   blockwallet,
   brave,
@@ -915,8 +906,6 @@ const wallets = [
   tally,
   rabby,
   mathwallet,
-  gamestop,
-  bitkeep,
   sequence,
   core,
   bitski,
@@ -935,7 +924,8 @@ const wallets = [
   ronin,
   coin98wallet,
   subwallet,
-  kayros
+  kayros,
+  foxwallet
 ]
 
 export default wallets

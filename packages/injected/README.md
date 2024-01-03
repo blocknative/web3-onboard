@@ -72,11 +72,9 @@ console.log(connectedWallets)
 - xDefi - _Desktop & Mobile_
 - 1inch - _Mobile_
 - Tokenary - _Mobile_
-- GameStop - _Desktop_
 - Rabby - _Desktop_
 - MathWallet - _Desktop & Mobile_
-- Gamestop - _Desktop_
-- Bitkeep - _Desktop & Mobile_
+- Bitget - _Desktop & Mobile_
 - Sequence - _Desktop & Mobile_
 - Core - _Desktop_
 - Bitski - _Desktop & Mobile_

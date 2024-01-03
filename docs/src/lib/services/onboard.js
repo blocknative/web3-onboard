@@ -58,6 +58,7 @@ const intiOnboard = async (theme) => {
   const { default: bloctoModule } = await import('@web3-onboard/blocto')
   const { default: venlyModule } = await import('@web3-onboard/venly')
   const { default: bitgetModule } = await import('@web3-onboard/bitget')
+  const { default: capsuleModule, Environment } = await import('@web3-onboard/capsule')
   const INFURA_ID = '8b60d52405694345a99bcb82e722e0af'
 
   const injected = injectedModule()
@@ -127,6 +128,11 @@ const intiOnboard = async (theme) => {
     environment: 'staging'
   })
 
+  const capsule = capsuleModule({
+    environment: Environment.DEVELOPMENT,
+    apiKey: '992bbd9146d5de8ad0419f141d9a7ca7'
+  })
+
   return Onboard({
     connect: { autoConnectAllPreviousWallet: true },
     wallets: [
@@ -156,7 +162,8 @@ const intiOnboard = async (theme) => {
       portis,
       frame,
       infinityWallet,
-      blocto
+      blocto,
+      // capsule
       // venly
     ],
     chains: [

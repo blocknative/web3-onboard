@@ -15,6 +15,7 @@
     "Notifications",
     "React",
     "Svelte",
+    "Solid.js",
     "Vue",
     "Next",
     "Nuxt",
@@ -30,7 +31,6 @@
     "pending",
     "confirmed",
     "Injected Wallet",
-    "GameStop",
     "Crypto",
     "Crypto Wallet"
   ],

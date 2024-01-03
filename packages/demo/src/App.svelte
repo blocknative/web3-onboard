@@ -35,6 +35,7 @@
   import venlyModule from '@web3-onboard/venly'
   import bitgetModule from '@web3-onboard/bitget'
   import particleAuthModule from '@web3-onboard/particle-network'
+  import capsuleModule, { Environment } from '@web3-onboard/capsule'
   import {
     recoverAddress,
     arrayify,
@@ -214,6 +215,10 @@
     clientId: 'blocknative',
     environment: 'staging'
   })
+  const capsule = capsuleModule({
+    environment: Environment.DEVELOPMENT,
+    apiKey: '992bbd9146d5de8ad0419f141d9a7ca7'
+  })
 
   const onboard = Onboard({
     wallets: [
@@ -241,6 +246,7 @@
       sequence,
       uauth,
       web3auth,
+      capsule,
       zeal,
       frontier,
       xdefi,
@@ -251,7 +257,7 @@
       venly,
       particle
     ],
-    transactionPreview,
+    // transactionPreview,
     gas,
     chains: [
       {

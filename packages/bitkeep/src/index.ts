@@ -17,6 +17,9 @@ const loadBitKeepDependencies = async (getAdapter?: boolean) => {
   return bitKeepDependencies
 }
 
+/**
+ * @deprecated Please use `@web3-onboard/bitget` instead.
+ */
 function bitKeep(): WalletInit {
   if (typeof window === 'undefined') return () => null
 
@@ -24,8 +27,8 @@ function bitKeep(): WalletInit {
     return {
       label: 'BitKeep',
       getIcon: async () => {
-        const sdkAdapter = await loadBitKeepDependencies(true)
-        return sdkAdapter.getLogo()
+        const { WalletInfo } = await loadBitKeepDependencies()
+        return WalletInfo.logolist.svg[256]
       },
       getInterface: async () => {
         const {

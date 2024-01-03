@@ -170,12 +170,13 @@ We recommend you add the [Core Repo](../../modules/core.md#install) and consider
 **SDK Wallets**
 
 - [Arcana Auth](../../wallets/arcana.md#install)
-- [Blocto](../../docs/wallets/blocto.md#install)
+- [Blocto](../../wallets/blocto.md#install)
 - [Coinbase](../../wallets/coinbase.md#install)
 - [Fortmatic](../../wallets/fortmatic.md#install)
 - [Frame](../../wallets/frame.md#install)
 - [Safe](../../wallets/gnosis.md#install)
 - [Magic](../../wallets/magic.md#login-options)
+- [MetaMask](../../wallets/metamask.md#install)
 - [MEW](../../wallets/mewwallet.md#install)
 - [Portis](../../wallets/portis.md#install)
 - [Web3Auth](../../wallets/web3auth.md#install)
@@ -192,6 +193,7 @@ We recommend you add the [Core Repo](../../modules/core.md#install) and consider
 **Frameworks**
 
 - [React](../../modules/react.md#quickstart-with-injected-wallets-and-ethers-provider)
+- [Solid](../../modules/solid.md#install)
 - [Vue](../../modules/vue.md#install)
 
 ## Test out the demo app
