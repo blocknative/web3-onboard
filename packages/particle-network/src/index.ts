@@ -1,12 +1,16 @@
-import {
+import type {
   WalletInit,
   EIP1193Provider,
   ProviderRpcError,
   ProviderRpcErrorCode,
   ProviderAccounts
 } from '@web3-onboard/common'
-import { Config } from '@particle-network/auth'
+import type { Config } from '@particle-network/auth'
 
+/**
+ * Represents the different authentication methods available.
+ * @typedef {'email' | 'phone' | 'google' | 'apple' | 'twitter' | 'facebook' | 'microsoft' | 'linkedin' | 'github' | 'twitch' | 'discord'} AuthTypes
+ */
 type AuthTypes =
   | 'email'
   | 'phone'
@@ -20,11 +24,20 @@ type AuthTypes =
   | 'twitch'
   | 'discord'
 
+/**
+ * Interface for setting a preferred social login type and whether it should be displayed or just routed through the standard menu item.
+ * @interface
+ */
 interface PreferredAuthType {
   type: AuthTypes
   setAsDisplay: boolean
 }
 
+/**
+ * Configuration options enabling custom authentication type selection, extending the basic Config.
+ * @interface
+ * @extends {Config}
+ */
 interface ParticleAuthModuleOptions extends Config {
   preferredAuthType?: AuthTypes | PreferredAuthType
 }
