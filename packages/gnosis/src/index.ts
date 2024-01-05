@@ -8,7 +8,8 @@ function gnosis(options?: GnosisOptions): WalletInit {
   const {
     allowedDomains = [
       /^https:\/\/app\.safe\.global$/,
-      /^https:\/\/safe\.global$/
+      /^https:\/\/safe\.global$/,
+      /^https:\/\/.*\.blockscout\.com$/
     ]
   } = options || {}
 
