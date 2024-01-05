@@ -10,7 +10,7 @@
 
 ```typescript
 type GnosisOptions = {
-  whitelistedDomains: RegExp[]
+  allowedDomains: RegExp[]
 }
 ```
 
