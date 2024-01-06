@@ -54,10 +54,7 @@ const getDisplayLabel = (authType?: string, shouldSetDisplay?: boolean) => {
 const particleAuth = async (
   options: ParticleAuthModuleOptions
 ): Promise<WalletInit> => {
-  const { createEIP1193Provider } = await import('@web3-onboard/common')
-  const { ParticleNetwork } = await import('@particle-network/auth')
-  const { ParticleProvider } = await import('@particle-network/provider')
-
+  
   const { preferredAuthType, ...otherOptions } = options
   const isAuthTypeObject = typeof preferredAuthType === 'object'
   const authType =
@@ -76,6 +73,9 @@ const particleAuth = async (
       return (await import(`./${iconName}.svg`)).default
     },
     getInterface: async ({ chains }) => {
+      const { createEIP1193Provider } = await import('@web3-onboard/common')
+      const { ParticleNetwork } = await import('@particle-network/auth')
+      const { ParticleProvider } = await import('@particle-network/provider')
       let [currentChain] = chains
       const { label, id } = currentChain
 
