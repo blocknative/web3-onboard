@@ -6152,13 +6152,6 @@
     "@walletconnect/window-getters" "^1.0.1"
     tslib "1.14.1"
 
-"@web3-onboard/gnosis@^2.1.10":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/gnosis/-/gnosis-2.2.0.tgz#134dd79d13b651934f4233760f4337752d1c35df"
-  integrity sha512-+CtvrI30jj3zJdplQfrCU1rSAUN6R0rfBZggl8JXvqsH5CNTFjU3ctVWeqbyGBPfcVhRQ5oLqKcj464LTwy2iw==
-  dependencies:
-    "@web3-onboard/common" "^2.3.3"
-
 "@web3-onboard/injected-wallets@^2.10.9":
   version "2.10.10"
   resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.10.10.tgz#c938da6fe335e8d5787661f5ef590ab2132796b9"
