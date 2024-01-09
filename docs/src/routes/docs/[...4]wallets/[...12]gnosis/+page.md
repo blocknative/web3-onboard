@@ -29,7 +29,7 @@ npm install @web3-onboard/gnosis @safe-global/safe-apps-provider @safe-global/sa
 
 ```typescript
 type GnosisOptions = {
-  allowedDomains: RegExp[]
+  whitelistedDomains: RegExp[]
 }
 ```
 

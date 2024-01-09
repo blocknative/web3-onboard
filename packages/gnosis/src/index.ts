@@ -1,12 +1,12 @@
 import { WalletInit } from '@web3-onboard/common'
 
 type GnosisOptions = {
-  allowedDomains: RegExp[]
+  whitelistedDomains: RegExp[]
 }
 
 function gnosis(options?: GnosisOptions): WalletInit {
   const {
-    allowedDomains = [
+    whitelistedDomains = [
       /^https:\/\/app\.safe\.global$/,
       /^https:\/\/safe\.global$/,
       /^https:\/\/.*\.blockscout\.com$/
@@ -38,7 +38,7 @@ function gnosis(options?: GnosisOptions): WalletInit {
               SafeAppsSDK.default || SafeAppsSDK
 
             const opts = {
-              allowedDomains
+              allowedDomains: whitelistedDomains
             }
 
             const appsSdk = new SafeAppProviderConstructor(opts)
