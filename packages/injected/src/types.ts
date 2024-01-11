@@ -47,7 +47,6 @@ export enum ProviderIdentityFlag {
   BraveWallet = 'isBraveWallet',
   Rabby = 'isRabby',
   MathWallet = 'isMathWallet',
-  GameStop = 'isGamestop',
   Bitget = 'isBitKeep',
   Sequence = 'isSequence',
   Core = 'isAvalanche',
@@ -134,7 +133,6 @@ export enum ProviderLabel {
   Tally = 'Taho',
   Rabby = 'Rabby Wallet',
   MathWallet = 'MathWallet',
-  GameStop = 'GameStop Wallet',
   Bitget = 'Bitget Wallet',
   Sequence = 'Sequence',
   Core = 'Core',
@@ -174,7 +172,6 @@ export enum InjectedNameSpace {
   Web3 = 'web3',
   Arbitrum = 'arbitrum',
   XFI = 'xfi',
-  GameStop = 'gamestop',
   Bitget = 'bitkeep',
   Avalanche = 'avalanche',
   Bitski = 'Bitski',
@@ -205,7 +202,6 @@ export interface CustomWindow extends Window {
   xfi: {
     ethereum: InjectedProvider
   }
-  gamestop: InjectedProvider
   bitkeep: {
     ethereum: InjectedProvider
   }

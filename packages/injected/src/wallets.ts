@@ -577,27 +577,6 @@ const mathwallet: InjectedWalletModule = {
   platforms: ['all']
 }
 
-const gamestop: InjectedWalletModule = {
-  label: ProviderLabel.GameStop,
-  injectedNamespace: InjectedNameSpace.GameStop,
-  checkProviderIdentity: ({ provider }) =>
-    !!provider && !!provider[ProviderIdentityFlag.GameStop],
-  getIcon: async () => (await import('./icons/gamestop.js')).default,
-  getInterface: async () => {
-    const provider = createEIP1193Provider(window.gamestop, {
-      eth_chainId: ({ baseRequest }) =>
-        baseRequest({ method: 'eth_chainId' }).then(
-          id => `0x${parseInt(id).toString(16)}`
-        ),
-      wallet_switchEthereumChain: UNSUPPORTED_METHOD
-    })
-    provider.removeListener = (event, listener) => {}
-    provider.on = (event, listener) => {}
-    return { provider }
-  },
-  platforms: ['desktop']
-}
-
 const bitget: InjectedWalletModule = {
   label: ProviderLabel.Bitget,
   injectedNamespace: InjectedNameSpace.Bitget,
@@ -927,7 +906,6 @@ const wallets = [
   tally,
   rabby,
   mathwallet,
-  gamestop,
   sequence,
   core,
   bitski,
