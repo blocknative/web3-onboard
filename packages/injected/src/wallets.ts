@@ -871,6 +871,21 @@ const foxwallet: InjectedWalletModule = {
   platforms: ['mobile']
 }
 
+const Lif3Wallet: InjectedWalletModule = {
+  label: ProviderLabel.Lif3Wallet,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Lif3Wallet],
+  getIcon: async () => (await import('./icons/lif3wallet.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.ethereum, {
+      wallet_switchEthereumChain: UNSUPPORTED_METHOD,
+      eth_selectAccounts: UNSUPPORTED_METHOD
+    })
+  }),
+  platforms: ['mobile']
+}
+
 const wallets = [
   zeal,
   exodus,
@@ -925,7 +940,8 @@ const wallets = [
   coin98wallet,
   subwallet,
   kayros,
-  foxwallet
+  foxwallet,
+  Lif3Wallet
 ]
 
 export default wallets
