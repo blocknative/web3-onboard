@@ -4,7 +4,7 @@ import {
   EIP1193Provider,
   ProviderAccounts
 } from '@web3-onboard/common'
-import type { EthereumProvider as LedgerEthereumProvider } from '@ledgerhq/connect-kit-loader'
+import type { EthereumProvider as LedgerEthereumProvider } from '@ledgerhq/connect-kit/dist/umd/index.d.ts'
 import { isHexString, LedgerOptionsWCv2 } from './index.js'
 import type { JQueryStyleEventEmitter } from 'rxjs/internal/observable/fromEvent'
 
@@ -30,13 +30,8 @@ function ledger(options?: LedgerOptionsWCv2): WalletInit {
       label: 'Ledger',
       getIcon: async () => (await import('./icon.js')).default,
       getInterface: async ({ chains, EventEmitter }) => {
-        const {
-          loadConnectKit,
-          SupportedProviders,
-          SupportedProviderImplementations
-        } = await import('@ledgerhq/connect-kit-loader')
+        const connectKit = await import('@ledgerhq/connect-kit/dist/umd')
 
-        const connectKit = await loadConnectKit()
         if (options?.enableDebugLogs) {
           connectKit.enableDebugLogs()
         }
@@ -54,7 +49,7 @@ function ledger(options?: LedgerOptionsWCv2): WalletInit {
             : defaultOptionalMethods
 
         const checkSupportResult = connectKit.checkSupport({
-          providerType: SupportedProviders.Ethereum,
+          providerType: connectKit.SupportedProviders.Ethereum,
           walletConnectVersion: 2,
           projectId: options?.projectId,
           chains: requiredChains,
@@ -79,7 +74,7 @@ function ledger(options?: LedgerOptionsWCv2): WalletInit {
         // return the Ledger Extension provider
         if (
           checkSupportResult.providerImplementation ===
-          SupportedProviderImplementations.LedgerConnect
+          connectKit.SupportedProviderImplementations.LedgerConnect
         ) {
           return {
             provider: instance
