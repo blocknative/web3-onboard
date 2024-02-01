@@ -4,7 +4,7 @@ import {
   EIP1193Provider,
   ProviderAccounts
 } from '@web3-onboard/common'
-import type { EthereumProvider as LedgerEthereumProvider } from '@ledgerhq/connect-kit/dist/umd/index.d.ts'
+import type { EthereumProvider as LedgerEthereumProvider } from '@ledgerhq/connect-kit/dist/umd/index.js'
 import { isHexString, LedgerOptionsWCv2 } from './index.js'
 import type { JQueryStyleEventEmitter } from 'rxjs/internal/observable/fromEvent'
 

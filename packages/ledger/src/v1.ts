@@ -7,7 +7,7 @@ import {
   ChainId,
   AccountAddress
 } from '@web3-onboard/common'
-import type { EthereumProvider } from '@ledgerhq/connect-kit/dist/umd/index.d.ts'
+import type { EthereumProvider } from '@ledgerhq/connect-kit/dist/umd/index.js'
 import type { StaticJsonRpcProvider as StaticJsonRpcProviderType } from '@ethersproject/providers'
 import WalletConnect from '@walletconnect/client'
 import { isHexString, LedgerOptionsWCv1 } from './index.js'
