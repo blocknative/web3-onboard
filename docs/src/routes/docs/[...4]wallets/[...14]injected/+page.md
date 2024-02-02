@@ -357,6 +357,7 @@ const injected = injectedModule({
 - Coin98 Wallet - _Desktop & Mobile_
 - SubWallet - _Desktop & Mobile_
 - Kayros - _Desktop_
+- Lif3Wallet - _Mobile_
 
 ## Build Environments
 
