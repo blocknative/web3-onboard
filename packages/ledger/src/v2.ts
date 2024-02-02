@@ -15,7 +15,9 @@ const defaultOptionalMethods = [
   'personal_sign',
   'eth_sign',
   'eth_signTypedData',
-  'eth_signTypedData_v4'
+  'eth_signTypedData_v4',
+  'wallet_addEthereumChain',
+  'wallet_switchEthereumChain'
 ]
 
 function ledger(options?: LedgerOptionsWCv2): WalletInit {
