@@ -51,9 +51,7 @@ const getDisplayLabel = (authType?: string, shouldSetDisplay?: boolean) => {
   return 'Particle Network'
 }
 
-const particleAuth = async (
-  options: ParticleAuthModuleOptions
-): Promise<WalletInit> => {
+const particleAuth = (options: ParticleAuthModuleOptions): WalletInit => {
   const { preferredAuthType, ...otherOptions } = options
   const isAuthTypeObject = typeof preferredAuthType === 'object'
   const authType =
@@ -92,7 +90,7 @@ const particleAuth = async (
       let particle = new ParticleNetwork(particleConfig)
       let provider = new ParticleProvider(particle.auth)
 
-      function patchProvider(provider: any): any {
+      provider = (function patchProvider(provider: any): any {
         const patchedProvider = createEIP1193Provider(provider, {
           eth_selectAccounts: null,
           eth_requestAccounts: async ({ baseRequest }) => {
@@ -111,9 +109,7 @@ const particleAuth = async (
 
         patchedProvider.disconnect = () => particle.auth.logout()
         return patchedProvider
-      }
-
-      provider = patchProvider(provider)
+      })(provider)
 
       return {
         provider,
