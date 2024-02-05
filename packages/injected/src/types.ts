@@ -155,7 +155,7 @@ export enum ProviderLabel {
   SubWallet = 'SubWallet',
   Kayros = 'Kayros',
   FoxWallet = 'FoxWallet',
-  Lif3Wallet = 'Lif3Wallet',
+  Lif3Wallet = 'Lif3 Wallet',
 }
 
 export interface MeetOneProvider extends ExternalProvider {
