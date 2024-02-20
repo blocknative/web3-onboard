@@ -443,6 +443,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/capsule
     steps:
       - node-build-steps
+  build-particle:
+    docker:
+      - image: cimg/node:18.0.0
+    working_directory: ~/web3-onboard-monorepo/packages/particle-network
+    steps:
+      - node-build-steps
 
 
 
@@ -723,6 +729,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/capsule
     steps:
       - node-staging-build-steps
+  build-staging-particle:
+    docker:
+      - image: cimg/node:18.0.0
+    working_directory: ~/web3-onboard-monorepo/packages/particle-network
+    steps:
+      - node-build-steps
 
 workflows:
   version: 2
@@ -1002,4 +1014,10 @@ workflows:
       - build-capsule:
           <<: *deploy_production_filters
       - build-staging-capsule:
+          <<: *deploy_staging_filters
+  particle:
+    jobs:
+      - build-particle:
+          <<: *deploy_production_filters
+      - build-staging-particle:
           <<: *deploy_staging_filters
