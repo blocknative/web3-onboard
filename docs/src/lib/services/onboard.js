@@ -59,6 +59,7 @@ const intiOnboard = async (theme) => {
   const { default: venlyModule } = await import('@web3-onboard/venly')
   const { default: bitgetModule } = await import('@web3-onboard/bitget')
   const { default: capsuleModule, Environment } = await import('@web3-onboard/capsule')
+  const { default: particleAuthModule } = await import('@web3-onboard/particle-network')
   const INFURA_ID = '8b60d52405694345a99bcb82e722e0af'
 
   const injected = injectedModule()
@@ -67,11 +68,13 @@ const intiOnboard = async (theme) => {
     clientID: 'xar_test_c9c3bc702eb13255c58dab0e74cfa859711c13cb'
   })
   const coinbase = coinbaseModule()
-  const metamask = metamaskModule({options: {
-    dappMetadata: {
-      name: 'Web3Onboard',
+  const metamask = metamaskModule({
+    options: {
+      dappMetadata: {
+        name: 'Web3Onboard'
+      }
     }
-  }})
+  })
   const dcent = dcentModule()
   const walletConnect = walletConnectModule({
     projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
@@ -133,6 +136,12 @@ const intiOnboard = async (theme) => {
     apiKey: '992bbd9146d5de8ad0419f141d9a7ca7'
   })
 
+  const particle = particleAuthModule({
+    projectId: 'b385ccf0-73c3-485a-9941-159b7855b806',
+    clientKey: 'cSTLqhvONB5j588Wz6E5WJLMPrHeUlGbymf1DFhO',
+    appId: 'b1f0239a-edb0-41f9-b0f5-ab780bb02a9e'
+  })
+
   return Onboard({
     connect: { autoConnectAllPreviousWallet: true },
     wallets: [
@@ -163,7 +172,10 @@ const intiOnboard = async (theme) => {
       frame,
       infinityWallet,
       blocto,
-      capsule
+      capsule,
+      particle
+      // capsule
+
       // venly
     ],
     chains: [
