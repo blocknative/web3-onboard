@@ -336,7 +336,6 @@ const injected = injectedModule({
 - Tokenary - _Mobile_
 - Rabby - _Desktop_
 - MathWallet - _Desktop & Mobile_
-- Bitkeep - _Desktop & Mobile_
 - BitGet Wallet - _Desktop & Mobile_
 - Sequence - _Desktop & Mobile_
 - Core - _Desktop_
