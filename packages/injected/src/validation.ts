@@ -25,7 +25,8 @@ const walletOptions = Joi.object({
   displayUnavailable: [Joi.boolean(), Joi.array().items(Joi.string())],
   walletUnavailableMessage: Joi.function(),
   sort: Joi.function(),
-  externalUrl: Joi.string()
+  externalUrl: Joi.string(),
+  disable6963Support: Joi.boolean()
 })
 
 export const validateWalletOptions = (

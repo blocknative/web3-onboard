@@ -278,6 +278,10 @@ export interface InjectedWalletOptions {
   walletUnavailableMessage?: (wallet: WalletModule) => string
   /**Function that can be used to sort the order of wallets that are displayed */
   sort?: (wallets: WalletModule[]) => WalletModule[]
+  /** A boolean that can be passed to disable supporting 6963 (https://eips.ethereum.org/EIPS/eip-6963) 
+   * which will display wallets available on the browser
+   */
+  disable6963Support?: boolean
 }
 
 export interface InjectedWalletModule extends WalletModule {

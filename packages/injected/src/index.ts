@@ -63,7 +63,7 @@ function injected(options?: InjectedWalletOptions): WalletInit {
     if (result && result.error) throw result.error
   }
 
-  checkFor6963Providers()
+  !options?.disable6963Support && checkFor6963Providers()
 
   return helpers => {
     const { device } = helpers
