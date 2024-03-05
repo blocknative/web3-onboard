@@ -68,7 +68,7 @@ export enum ProviderIdentityFlag {
   SubWallet = 'isSubWallet',
   Kayros = 'isKayros',
   FoxWallet = 'isFoxWallet',
-  Lif3Wallet = 'isLif3Wallet',
+  Lif3Wallet = 'isLif3Wallet'
 }
 
 /**
@@ -155,7 +155,7 @@ export enum ProviderLabel {
   SubWallet = 'SubWallet',
   Kayros = 'Kayros',
   FoxWallet = 'FoxWallet',
-  Lif3Wallet = 'Lif3 Wallet',
+  Lif3Wallet = 'Lif3 Wallet'
 }
 
 export interface MeetOneProvider extends ExternalProvider {
@@ -281,7 +281,7 @@ export interface InjectedWalletOptions {
 }
 
 export interface InjectedWalletModule extends WalletModule {
-  injectedNamespace: InjectedNameSpace
+  injectedNamespace?: InjectedNameSpace
   checkProviderIdentity: (helpers: { provider: any; device: Device }) => boolean
   platforms: Platform[]
   /**
@@ -289,4 +289,32 @@ export interface InjectedWalletModule extends WalletModule {
    * to be shown if not installed or available on the browser
    */
   externalUrl?: string
+  eip6963Provider?: InjectedProvider
+}
+
+// Define a class for the "eip6963:requestProvider" event
+export class EIP6963RequestProviderEvent extends Event {
+  constructor() {
+    super('eip6963:requestProvider')
+  }
+}
+
+// Define an interface for the "eip6963:announceProvider" event
+export interface EIP6963AnnounceProviderEvent extends Event {
+  type: 'eip6963:announceProvider'
+  detail: EIP6963ProviderDetail
+}
+
+// Define an interface for the provider details
+export interface EIP6963ProviderDetail {
+  info: EIP6963ProviderInfo
+  provider: EIP1193Provider
+}
+
+// Define an interface for the provider information
+export interface EIP6963ProviderInfo {
+  uuid: string // Unique identifier of the wallet extension announcement, keep in mind it changes on every request-announcement cycle
+  name: string // Name of the wallet extension
+  icon: string // Icon for the wallet extension
+  rdns: string // Reverse DNS name of the wallet extension
 }

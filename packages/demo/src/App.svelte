@@ -602,6 +602,10 @@
   const updateTheme = () => {
     onboard.state.actions.updateTheme(selectedTheme)
   }
+
+  function isSVG(str) {
+    return str.includes('<svg')
+  }
 </script>
 
 <style>
@@ -816,7 +820,15 @@
     {#each $wallets$ as { icon, label, accounts, chains, provider, instance }}
       <div class="connected-wallet" data-testid="connected-wallet">
         <div class="flex-centered" style="width: 10rem;">
-          <div style="width: 2rem; height: 2rem">{@html icon}</div>
+          <div style="width: 2rem; height: 2rem">
+            {#if isSVG(icon)}
+              <!-- render svg string -->
+              {@html icon}
+            {:else}
+              <!-- load img url -->
+              <img style="width: 2rem; height: 2rem" src={icon} alt="logo" />
+            {/if}
+          </div>
           <span data-testid={label}>{label}</span>
         </div>
 

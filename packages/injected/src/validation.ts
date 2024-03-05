@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import { InjectedWalletOptions } from './types.js'
+import { EIP6963ProviderDetail, InjectedWalletOptions } from './types.js'
 import { validate, type ValidateReturn } from '@web3-onboard/common'
 
 const walletModule = Joi.object({
@@ -31,3 +31,19 @@ const walletOptions = Joi.object({
 export const validateWalletOptions = (
   data: InjectedWalletOptions | Partial<InjectedWalletOptions>
 ): ValidateReturn => validate(walletOptions, data)
+
+const eip6963ProviderInfo = Joi.object({
+  uuid: Joi.string().required(),
+  name: Joi.string().required(),
+  icon: Joi.string().required(),
+  rdns: Joi.string().required()
+})
+
+const eip6963ProviderDetail = Joi.object({
+  info: eip6963ProviderInfo.required(),
+  provider: Joi.object().required()
+})
+
+export const validateEIP6963ProviderDetail = (
+  data: EIP6963ProviderDetail
+): ValidateReturn => validate(eip6963ProviderDetail, data)
