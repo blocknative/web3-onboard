@@ -342,6 +342,18 @@
         token: 'OETH',
         label: 'Optimism',
         rpcUrl: 'https://mainnet.optimism.io'
+      },
+      {
+        id: '0x1e',
+        token: 'RBTC',
+        label: 'Rootstock Mainnet',
+        rpcUrl: 'https://public-node.rsk.co'
+      },
+      {
+        id: '0x1f',
+        token: 'tRBTC',
+        label: 'Rootstock Testnet',
+        rpcUrl: 'https://public-node.testnet.rsk.co'
       }
     ],
     connect: {
@@ -750,6 +762,9 @@
           >
           <button on:click={() => onboard.setChain({ chainId: 10 })}
             >Set Chain to Optimism</button
+          >
+          <button on:click={() => onboard.setChain({ chainId: '0x1f' })}
+            >Set Chain to Rootstock</button
           >
         </div>
         <div class="position-buttons">

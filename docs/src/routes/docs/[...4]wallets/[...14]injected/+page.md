@@ -65,6 +65,18 @@ const onboard = Onboard({
       token: 'ETH',
       label: 'Base',
       rpcUrl: 'https://mainnet.base.org'
+    },
+    {
+      id: '0x1e',
+      token: 'RBTC',
+      label: 'Rootstock Mainnet',
+      rpcUrl: 'https://public-node.rsk.co'
+    },
+    {
+      id: '0x1f',
+      token: 'tRBTC',
+      label: 'Rootstock Testnet',
+      rpcUrl: 'https://public-node.testnet.rsk.co'
     }
   ],
   appMetadata: {

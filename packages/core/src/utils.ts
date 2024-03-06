@@ -28,7 +28,8 @@ import {
   avalancheIcon,
   harmonyOneIcon,
   arbitrumIcon,
-  baseIcon
+  baseIcon,
+  rootstockIcon
 } from './icons/index.js'
 
 import type {
@@ -137,7 +138,9 @@ export const chainIdToLabel: Record<string, string> = {
   '0x64': 'Gnosis',
   '0x63564C40': 'Harmony One',
   '0xa4b1': 'Arbitrum One',
-  '0xa4ba': 'Arbitrum Nova'
+  '0xa4ba': 'Arbitrum Nova',
+  '0x1e': 'Rootstock Mainnet',
+  '0x1f': 'Rootstock Testnet'
 }
 
 export const networkToChainId: Record<string, ChainId> = {
@@ -150,7 +153,9 @@ export const networkToChainId: Record<string, ChainId> = {
   'bsc-main': '0x38',
   'matic-main': '0x89',
   'fantom-main': '0xfa',
-  'matic-mumbai': '0x80001'
+  'matic-mumbai': '0x80001',
+  'rootstock-mainnet': '0x1e',
+  'rootstock-testnet': '0x1f'
 }
 
 export const chainStyles: Record<string, ChainStyle> = {
@@ -232,6 +237,14 @@ export const chainStyles: Record<string, ChainStyle> = {
   },
   '0x80001': {
     icon: polygonIcon,
+    color: '#8247E5'
+  },
+  '0x1e': {
+    icon: rootstockIcon,
+    color: '#0259F9'
+  },
+  '0x1f': {
+    icon: rootstockIcon,
     color: '#8247E5'
   }
 }

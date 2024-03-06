@@ -247,6 +247,18 @@ const intiOnboard = async (theme) => {
         token: 'OETH',
         label: 'Optimism',
         rpcUrl: 'https://mainnet.optimism.io'
+      },
+      {
+        id: '0x1e',
+        token: 'RBTC',
+        label: 'Rootstock Mainnet',
+        rpcUrl: 'https://public-node.rsk.co'
+      },
+      {
+        id: '0x1f',
+        token: 'tRBTC',
+        label: 'Rootstock Testnet',
+        rpcUrl: 'https://public-node.testnet.rsk.co'
       }
     ],
     appMetadata: {

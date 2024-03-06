@@ -52,6 +52,7 @@ web3-onboard supports all EVM networks. Supporting a new network is simply a mat
 - Goerli
 - Sepolia
 - Base Goerli
+- Rootstock
 - All other EVM networks
 
 ### Optional - Use an API key to fetch real time transaction data, balances & gas
@@ -126,7 +127,19 @@ const onboard = Onboard({
       token: 'ETH',
       label: 'Base',
       rpcUrl: 'https://mainnet.base.org'
-    }
+    },
+    {
+      id: '0x1e',
+      token: 'RBTC',
+      label: 'Rootstock Mainnet',
+      rpcUrl: 'https://public-node.rsk.co'
+    },
+    {
+      id: '0x1f',
+      token: 'tRBTC',
+      label: 'Rootstock Testnet',
+      rpcUrl: 'https://public-node.testnet.rsk.co'
+    },
   ]
 })
 

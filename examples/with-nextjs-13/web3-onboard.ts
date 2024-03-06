@@ -123,6 +123,18 @@ export default init({
       token: 'MATIC',
       label: 'Matic Mainnet',
       rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+    },
+    {
+      id: '0x1e',
+      token: 'RBTC',
+      label: 'Rootstock Mainnet',
+      rpcUrl: 'https://public-node.rsk.co'
+    },
+    {
+      id: '0x1f',
+      token: 'tRBTC',
+      label: 'Rootstock Testnet',
+      rpcUrl: 'https://public-node.testnet.rsk.co'
     }
   ],
   appMetadata: {
