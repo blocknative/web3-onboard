@@ -564,7 +564,7 @@ const rabby: InjectedWalletModule = {
   getInterface: async () => ({
     provider: createEIP1193Provider(window.ethereum)
   }),
-  platforms: ['desktop']
+  platforms: ['desktop', 'mobile']
 }
 
 const mathwallet: InjectedWalletModule = {
@@ -863,7 +863,7 @@ const foxwallet: InjectedWalletModule = {
   label: ProviderLabel.FoxWallet,
   injectedNamespace: InjectedNameSpace.FoxWallet,
   checkProviderIdentity: ({ provider }) =>
-      !!provider && !!provider[ProviderIdentityFlag.FoxWallet],
+    !!provider && !!provider[ProviderIdentityFlag.FoxWallet],
   getIcon: async () => (await import('./icons/foxwallet.js')).default,
   getInterface: async () => ({
     provider: createEIP1193Provider(window.foxwallet)
