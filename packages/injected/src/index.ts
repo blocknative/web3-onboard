@@ -6,7 +6,11 @@ import {
   validateEIP6963ProviderDetail,
   validateWalletOptions
 } from './validation.js'
-import { defaultWalletUnavailableMsg, isWalletAvailable } from './helpers.js'
+import {
+  containsExecutableJavaScript,
+  defaultWalletUnavailableMsg,
+  isWalletAvailable
+} from './helpers.js'
 
 import type {
   InjectedWalletOptions,
@@ -23,6 +27,7 @@ export { ProviderIdentityFlag, ProviderLabel } from './types.js'
 const providers6963: InjectedWalletModule[] = []
 function checkFor6963Providers() {
   // Add event listener for 'eip6963:announceProvider' event
+  console.log('even listener added')
   window.addEventListener('eip6963:announceProvider', (event: Event) => {
     const eipEvent = event as EIP6963AnnounceProviderEvent
     const { detail } = eipEvent
@@ -36,6 +41,13 @@ function checkFor6963Providers() {
 
     const { info, provider } = detail
     const { name, icon } = info
+
+    if (containsExecutableJavaScript(icon)) {
+      console.error(
+        `The icon for injected wallet: ${name} contains executable JavaScript and has been blocked.`
+      )
+      return
+    }
 
     // Push the provider information to the providers6963 array
     providers6963.push({

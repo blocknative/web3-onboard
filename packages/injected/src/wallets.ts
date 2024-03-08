@@ -890,7 +890,7 @@ const wallets = [
   zeal,
   exodus,
   frontier,
-  metamask,
+  // metamask,
   bifrostwallet,
   binance,
   coinbase,
