@@ -42,7 +42,7 @@
     "@web3-onboard/gas": "^2.1.7",
     "@web3-onboard/gnosis": "^2.2.1",
     "@web3-onboard/infinity-wallet": "^2.0.3",
-    "@web3-onboard/injected-wallets": "^2.10.12-alpha.2",
+    "@web3-onboard/injected-wallets": "^2.10.12-alpha.3",
     "@web3-onboard/keepkey": "^2.3.7",
     "@web3-onboard/keystone": "^2.3.7",
     "@web3-onboard/ledger": "^2.6.0-alpha.1",

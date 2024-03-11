@@ -4,7 +4,7 @@ title: Injected Wallets
 
 # {$frontmatter.title}
 
-This module lets web3-onboard automatically detect Browser Injected Wallets such as Metamask or Coinbase Wallet. We recommend you install this module to get the most out of your w3o implementation. This module supports [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) and [recognizes many injected wallets natively](#injected-wallets-supported-natively).
+This module lets web3-onboard automatically detect Browser Injected Wallets such as Metamask or Coinbase Wallet. We recommend you install this module to get the most out of your w3o implementation. This module supports [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) and [recognizes many injected wallets natively](#injected-wallets-supported-natively) as well as supports [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) and recognizes any wallet that has implemented 6963 support.
 
 Note: Make sure to install the core module before installing other modules to w3o.
 
@@ -186,6 +186,19 @@ const injected = injectedModule({
 const onboard = Onboard({
   wallets: [injected]
   //... other options
+})
+```
+
+### This module supports any injected wallet that has implemented support for [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963)
+
+This can be disabled by passing in `disable6963Support` as true within the injected module init object.
+
+```ts
+const injected = injectedModule({ disable6963Support: true })
+
+const onboard = Onboard({
+  wallets: [injected],
+  ...
 })
 ```
 

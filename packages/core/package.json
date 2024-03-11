@@ -32,7 +32,8 @@
     "confirmed",
     "Injected Wallet",
     "Crypto",
-    "Crypto Wallet"
+    "Crypto Wallet",
+    "onchain"
   ],
   "repository": {
     "type": "git",
