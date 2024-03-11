@@ -28,24 +28,24 @@ function BloctoWallet(): WalletInit {
               return item.id === (params && params[0] && params[0].chainId)
             })
             if (!chain) throw new Error('chain must be set before switching')
-            const providerRpcurl = bloctoProvider.rpc && bloctoProvider.rpc;
+            const providerRpcurl = bloctoProvider.rpc && bloctoProvider.rpc
             const chainUrl = chain.rpcUrl
-              if (providerRpcurl !== chainUrl) {
-                await baseRequest({
-                  method: 'wallet_addEthereumChain',
-                  params: [
-                    {
-                      chainId: chain.id,
-                      rpcUrls: [chainUrl]
-                    }
-                  ]
-                })
-              }
+            if (providerRpcurl !== chainUrl) {
               await baseRequest({
-                method: 'wallet_switchEthereumChain',
-                params: [{ chainId: chain.id }]
+                method: 'wallet_addEthereumChain',
+                params: [
+                  {
+                    chainId: chain.id,
+                    rpcUrls: [chainUrl]
+                  }
+                ]
               })
-              return null
+            }
+            await baseRequest({
+              method: 'wallet_switchEthereumChain',
+              params: [{ chainId: chain.id }]
+            })
+            return null
           },
           eth_chainId: async ({ baseRequest }) => {
             const chainId = await baseRequest({ method: 'eth_chainId' })
@@ -65,8 +65,7 @@ function BloctoWallet(): WalletInit {
         ) => {
           on(event, (val: any) => {
             if (event === 'chainChanged') {
-              console.log('has chainChanged')
-              listener(`0x${(val as number).toString(16)}`)
+              listener(val)
               return
             }
             listener(val)
