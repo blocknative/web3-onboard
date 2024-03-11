@@ -95,7 +95,8 @@ export enum ProviderExternalUrl {
   Kayros = 'https://www.kayros.games/wallet/',
   XDEFI = 'https://xdefi.io/',
   FoxWallet = 'https://foxwallet.com/download',
-  Lif3Wallet = 'https://lif3.com'
+  Lif3Wallet = 'https://lif3.com',
+  Rabby = 'https://rabby.io'
 }
 
 export enum ProviderLabel {
@@ -155,7 +156,7 @@ export enum ProviderLabel {
   SubWallet = 'SubWallet',
   Kayros = 'Kayros',
   FoxWallet = 'FoxWallet',
-  Lif3Wallet = 'Lif3 Wallet',
+  Lif3Wallet = 'Lif3 Wallet'
 }
 
 export interface MeetOneProvider extends ExternalProvider {
