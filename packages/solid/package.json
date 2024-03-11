@@ -63,7 +63,7 @@
   },
   "dependencies": {
     "@web3-onboard/common": "^2.3.3",
-    "@web3-onboard/core": "^2.21.3-alpha.1",
+    "@web3-onboard/core": "^2.21.3-alpha.2",
     "solid-js": "^1.8.1"
   }
 }
