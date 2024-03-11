@@ -66,6 +66,6 @@
   },
   "dependencies": {
     "@web3-onboard/common": "^2.3.1",
-    "@blocto/sdk": "^0.4.6"
+    "@blocto/sdk": "^0.9.1"
   }
 }

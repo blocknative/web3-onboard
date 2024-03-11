@@ -649,12 +649,11 @@
     safe-buffer "^5.1.2"
     web3 "^1.3.1"
 
-"@blocto/sdk@^0.4.6":
-  version "0.4.9"
-  resolved "https://registry.yarnpkg.com/@blocto/sdk/-/sdk-0.4.9.tgz#646cfea7737d8e5bb4c57885c0bb26d132185826"
-  integrity sha512-fscOaN4oux/7ySaNCQtltKLIefcZ7J85TpW/LKgAqfbEniBQ3z6SYxkG8ud6SPJs/camfljr+5hRdvcjTZCgGw==
+"@blocto/sdk@^0.9.1":
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/@blocto/sdk/-/sdk-0.9.1.tgz#86eb3f972f6bdd78a1c929e271c652f8ec5e1bd0"
+  integrity sha512-JPBKDUrgTrTc9PaCj1iNleMy68V6DARa93sJa6OBvxkFCtYNxGn+sNCOZqhCU/3YjQ6z75/Mls2oF4kQe/04cw==
   dependencies:
-    bs58 "^5.0.0"
     buffer "^6.0.3"
     eip1193-provider "^1.0.1"
     js-sha3 "^0.8.0"
