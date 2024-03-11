@@ -85,7 +85,7 @@ const onboard = Onboard({
 - xDefi - _Desktop & Mobile_
 - 1inch - _Mobile_
 - Tokenary - _Mobile_
-- Rabby - _Desktop_
+- Rabby - _Desktop & Mobile_
 - MathWallet - _Desktop & Mobile_
 - Bitget - _Desktop & Mobile_
 - Sequence - _Desktop & Mobile_

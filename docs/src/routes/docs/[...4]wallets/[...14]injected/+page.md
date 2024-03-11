@@ -347,7 +347,7 @@ const injected = injectedModule({
 - TP - _Mobile_
 - 1inch - _Mobile_
 - Tokenary - _Mobile_
-- Rabby - _Desktop_
+- Rabby - _Desktop & Mobile_
 - MathWallet - _Desktop & Mobile_
 - Bitkeep - _Desktop & Mobile_
 - BitGet Wallet - _Desktop & Mobile_
