@@ -307,7 +307,7 @@
         id: '0x13881',
         token: 'MATIC',
         label: 'Polygon - Mumbai',
-        rpcUrl: 'https://matic-mumbai.chainstacklabs.com	'
+        rpcUrl: 'https://polygon-mumbai-bor-rpc.publicnode.com'
       },
       {
         id: '0x2105',
