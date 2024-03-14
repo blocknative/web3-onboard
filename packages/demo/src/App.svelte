@@ -222,7 +222,7 @@
 
   const onboard = Onboard({
     wallets: [
-      // metamaskSDKWallet,
+      metamaskSDKWallet,
       injected,
       ledger,
       trezor,
