@@ -13,6 +13,7 @@ export { default as gnosisIcon } from './gnosis.js'
 export { default as harmonyOneIcon } from './harmony-one.js'
 export { default as arbitrumIcon } from './arbitrum.js'
 export { default as baseIcon } from './base.js'
+export { default as rootstockIcon } from './rootstock.js'
 // other
 export { default as hourglass } from './hourglass.js'
 export { default as questionIcon } from './question.js'

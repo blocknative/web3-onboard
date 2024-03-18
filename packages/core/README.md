@@ -635,7 +635,19 @@ const onboard = Onboard({
       token: 'FTM',
       label: 'Fantom Mainnet',
       rpcUrl: 'https://rpc.ftm.tools/'
-    }
+    },
+    {
+      id: '0x1e',
+      token: 'RBTC',
+      label: 'Rootstock Mainnet',
+      rpcUrl: 'https://public-node.rsk.co'
+    },
+    {
+      id: '0x1f',
+      token: 'tRBTC',
+      label: 'Rootstock Testnet',
+      rpcUrl: 'https://public-node.testnet.rsk.co'
+    },
   ],
   appMetadata: {
     name: 'Token Swap',
