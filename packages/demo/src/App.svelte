@@ -223,11 +223,11 @@
   const onboard = Onboard({
     wallets: [
       metamaskSDKWallet,
+      coinbaseWallet,
       injected,
       ledger,
       trezor,
       walletConnect,
-      coinbaseWallet,
       phantom,
       safe,
       trust,
