@@ -6284,7 +6284,7 @@
     "@walletconnect/window-getters" "^1.0.1"
     tslib "1.14.1"
 
-"@web3-onboard/common@2.3.3", "@web3-onboard/common@^2.3.1", "@web3-onboard/common@^2.3.3":
+"@web3-onboard/common@2.3.3":
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/@web3-onboard/common/-/common-2.3.3.tgz#02096e967dbed272c0637cda955902b96a0fce06"
   integrity sha512-Ytppszqe77VY8WglRdr/Lfx+HmcZ2hXQEkBA23JaVYmzKvP/mC6j+sjGUD8CgXDpRRxyKoiRj6nz95GRABie6Q==
@@ -6292,17 +6292,6 @@
     bignumber.js "^9.1.0"
     ethers "5.5.4"
     joi "17.9.1"
-
-"@web3-onboard/hw-common@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/hw-common/-/hw-common-2.3.0.tgz#715d35c4039515e3f8ec839643e6d4c49097891f"
-  integrity sha512-ai5gwaXHxMOgov+TKuy2yUtBf7b2Vq8c28L9tSx4Hl8Q2IM6boGZQEqfW6Hw0GHu/Ez+MxRR5+M6nfwFBf8JRw==
-  dependencies:
-    "@ethereumjs/common" "2.6.2"
-    "@web3-onboard/common" "^2.3.3"
-    ethers "5.5.4"
-    joi "17.9.1"
-    rxjs "^7.5.2"
 
 "@web3-react/abstract-connector@^6.0.7":
   version "6.0.7"
