@@ -205,7 +205,7 @@ jobs:
       - node-build-steps
   build-keepkey:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.20.2
     working_directory: ~/web3-onboard-monorepo/packages/keepkey
     steps:
       - node-build-steps
@@ -421,7 +421,7 @@ jobs:
       - node-build-steps
   build-bitkeep:
     docker:
-      - image: cimg/node:16.20.2
+      - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/bitkeep
     steps:
       - node-build-steps
@@ -489,7 +489,7 @@ jobs:
       - node-staging-build-steps
   build-staging-keepkey:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.20.2
     working_directory: ~/web3-onboard-monorepo/packages/keepkey
     steps:
       - node-staging-build-steps
@@ -705,7 +705,7 @@ jobs:
       - node-staging-build-steps
   build-staging-bitkeep:
     docker:
-      - image: cimg/node:16.20.2
+      - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/bitkeep
     steps:
       - node-staging-build-steps
