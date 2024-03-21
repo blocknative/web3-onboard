@@ -1,7 +1,7 @@
 {
-  "name": "@web3-onboard/blocto",
-  "version": "2.0.1",
-  "description": "Blocto SDK wallet module for connecting to Web3-Onboard. Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardised spec compliant web3 providers for all supported wallets, framework agnostic modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
+  "name": "@web3-onboard/particle-network",
+  "version": "2.0.0",
+  "description": "Particle Network SDK wallet module for connecting to Web3-Onboard. Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardised spec compliant web3 providers for all supported wallets, framework agnostic modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
   "keywords": [
     "Ethereum",
     "Web3",
@@ -29,16 +29,12 @@
     "Mempool",
     "pending",
     "confirmed",
-    "Injected Wallet",
-    "Crypto",
-    "Crypto Wallet",
-    "Tally Ho",
-    "Blocto"
+    "Injected Wallet"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/blocknative/web3-onboard.git",
-    "directory": "packages/core"
+    "directory": "packages/particle-network"
   },
   "homepage": "https://onboard.blocknative.com",
   "bugs": "https://github.com/blocknative/web3-onboard/issues",
@@ -57,15 +53,16 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@ethersproject/providers": "^5.5.0",
-    "@types/lodash.uniqby": "^4.7.6",
-    "@types/node": "^17.0.21",
-    "ts-node": "^10.2.1",
-    "typescript": "^4.5.5",
-    "window": "^4.2.7"
+    "react": "^18.2.0",
+    "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.3.1",
-    "@blocto/sdk": "^0.9.1"
+    "@web3-onboard/common": "^2.3.3",
+    "@particle-network/auth": "^1.2.1",
+    "@particle-network/provider": "^1.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "peerDependencies": {
+    "react": ">=18.2"
   }
 }

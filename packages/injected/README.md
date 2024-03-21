@@ -2,7 +2,7 @@
 
 ## Quickstart
 
-To allow all injected wallets that are supported, don't pass in any options:
+To allow all injected wallets that are supported natively by web3-onboard or wallets that have implemented [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) support - don't pass in any options:
 
 ```javascript
 import Onboard from '@web3-onboard/core'
@@ -40,6 +40,19 @@ const connectedWallets = await onboard.connectWallet()
 console.log(connectedWallets)
 ```
 
+### This module supports any injected wallet that has implemented support for [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963)
+
+This can be disabled by passing in `disable6963Support` as true within the injected module init object.
+
+```ts
+const injected = injectedModule({ disable6963Support: true })
+
+const onboard = Onboard({
+  wallets: [injected],
+  ...
+})
+```
+
 ### Injected Wallets Supported Natively
 
 - Metamask - _Desktop & Mobile_
@@ -72,7 +85,7 @@ console.log(connectedWallets)
 - xDefi - _Desktop & Mobile_
 - 1inch - _Mobile_
 - Tokenary - _Mobile_
-- Rabby - _Desktop_
+- Rabby - _Desktop & Mobile_
 - MathWallet - _Desktop & Mobile_
 - Bitget - _Desktop & Mobile_
 - Sequence - _Desktop & Mobile_
@@ -92,6 +105,7 @@ console.log(connectedWallets)
 - Coin98 Wallet - _Desktop & Mobile_
 - SubWallet - _Desktop & Mobile_
 - Kayros - _Desktop_
+- Lif3Wallet - _Mobile_
 
 ## Filtering Wallets
 

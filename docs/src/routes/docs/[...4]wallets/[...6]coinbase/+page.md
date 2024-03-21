@@ -29,7 +29,12 @@ npm install @web3-onboard/coinbase
 
 ```typescript
 type CoinbaseWalletOptions = {
-  darkMode: boolean // default = false
+  /** @optional Use dark theme */
+  darkMode?: boolean
+  /** @optional whether to connect mobile web app via WalletLink, defaults to false */
+  enableMobileWalletLink?: boolean
+  /** @optional whether or not to reload dapp automatically after disconnect, defaults to true */
+  reloadOnDisconnect?: boolean
 }
 ```
 

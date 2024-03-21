@@ -44,3 +44,34 @@ export const isWalletAvailable = (
     checkProviderIdentity({ provider, device })
   )
 }
+
+export 
+function containsExecutableJavaScript(svgString: string): boolean {
+  if (!svgString) return false
+  // Regular expression to match <script> tags
+  const scriptTagRegex = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi
+
+  // Regular expression to match event handler attributes (e.g., onclick, onload)
+  const eventHandlerRegex = /\bon[a-z]+\s*=\s*["']?(?:javascript:)?/gi
+
+  // Regular expression to match href or xlink:href attributes containing "javascript:"
+  const hrefJavaScriptRegex = /\b(href|xlink:href)\s*=\s*["']?javascript:/gi
+
+  // Check for <script> tags
+  if (scriptTagRegex.test(svgString)) {
+    return true
+  }
+
+  // Check for event handlers
+  if (eventHandlerRegex.test(svgString)) {
+    return true
+  }
+
+  // Check for "javascript:" in href or xlink:href
+  if (hrefJavaScriptRegex.test(svgString)) {
+    return true
+  }
+
+  // No executable JavaScript found
+  return false
+}

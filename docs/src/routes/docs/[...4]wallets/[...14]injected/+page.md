@@ -4,7 +4,7 @@ title: Injected Wallets
 
 # {$frontmatter.title}
 
-This module lets web3-onboard automatically detect Browser Injected Wallets such as Metamask or Coinbase Wallet. We recommend you install this module to get the most out of your w3o implementation. This module supports [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) and [recognizes many injected wallets natively](#injected-wallets-supported-natively).
+This module lets web3-onboard automatically detect Browser Injected Wallets such as Metamask or Coinbase Wallet. We recommend you install this module to get the most out of your w3o implementation. This module supports [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) and [recognizes many injected wallets natively](#injected-wallets-supported-natively) as well as supports [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) and recognizes any wallet that has implemented 6963 support.
 
 Note: Make sure to install the core module before installing other modules to w3o.
 
@@ -189,6 +189,19 @@ const onboard = Onboard({
 })
 ```
 
+### This module supports any injected wallet that has implemented support for [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963)
+
+This can be disabled by passing in `disable6963Support` as true within the injected module init object.
+
+```ts
+const injected = injectedModule({ disable6963Support: true })
+
+const onboard = Onboard({
+  wallets: [injected],
+  ...
+})
+```
+
 ## Display Unavailable Wallets
 
 You may want to display injected wallets that are not currently available to the user and you can use the `displayUnavailable` option to do that:
@@ -334,7 +347,7 @@ const injected = injectedModule({
 - TP - _Mobile_
 - 1inch - _Mobile_
 - Tokenary - _Mobile_
-- Rabby - _Desktop_
+- Rabby - _Desktop & Mobile_
 - MathWallet - _Desktop & Mobile_
 - Bitkeep - _Desktop & Mobile_
 - BitGet Wallet - _Desktop & Mobile_
@@ -357,6 +370,7 @@ const injected = injectedModule({
 - Coin98 Wallet - _Desktop & Mobile_
 - SubWallet - _Desktop & Mobile_
 - Kayros - _Desktop_
+- Lif3Wallet - _Mobile_
 
 ## Build Environments
 

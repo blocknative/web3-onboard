@@ -205,7 +205,7 @@ jobs:
       - node-build-steps
   build-keepkey:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.20.2
     working_directory: ~/web3-onboard-monorepo/packages/keepkey
     steps:
       - node-build-steps
@@ -217,7 +217,7 @@ jobs:
       - node-build-steps
   build-ledger:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:18.0.0
     working_directory: ~/web3-onboard-monorepo/packages/ledger
     steps:
       - node-build-steps
@@ -247,7 +247,7 @@ jobs:
       - node-build-steps
   build-trezor:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:18.19.1
     working_directory: ~/web3-onboard-monorepo/packages/trezor
     steps:
       - node-build-steps
@@ -427,7 +427,7 @@ jobs:
       - node-build-steps
   build-metamask:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:18.19.1
     working_directory: ~/web3-onboard-monorepo/packages/metamask
     steps:
       - node-build-steps
@@ -443,8 +443,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/capsule
     steps:
       - node-build-steps
-
-
+  build-particle:
+    docker:
+      - image: cimg/node:18.0.0
+    working_directory: ~/web3-onboard-monorepo/packages/particle-network
+    steps:
+      - node-build-steps
 
   # Build staging/Alpha releases
   build-staging-core:
@@ -485,7 +489,7 @@ jobs:
       - node-staging-build-steps
   build-staging-keepkey:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:16.20.2
     working_directory: ~/web3-onboard-monorepo/packages/keepkey
     steps:
       - node-staging-build-steps
@@ -497,7 +501,7 @@ jobs:
       - node-staging-build-steps
   build-staging-ledger:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:18.0.0
     working_directory: ~/web3-onboard-monorepo/packages/ledger
     steps:
       - node-staging-build-steps
@@ -527,7 +531,7 @@ jobs:
       - node-staging-build-steps
   build-staging-trezor:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:18.19.1
     working_directory: ~/web3-onboard-monorepo/packages/trezor
     steps:
       - node-staging-build-steps
@@ -707,7 +711,7 @@ jobs:
       - node-staging-build-steps
   build-staging-metamask:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:18.19.1
     working_directory: ~/web3-onboard-monorepo/packages/metamask
     steps:
       - node-staging-build-steps
@@ -723,6 +727,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/capsule
     steps:
       - node-staging-build-steps
+  build-staging-particle:
+    docker:
+      - image: cimg/node:18.0.0
+    working_directory: ~/web3-onboard-monorepo/packages/particle-network
+    steps:
+      - node-build-steps
 
 workflows:
   version: 2
@@ -1002,4 +1012,10 @@ workflows:
       - build-capsule:
           <<: *deploy_production_filters
       - build-staging-capsule:
+          <<: *deploy_staging_filters
+  particle:
+    jobs:
+      - build-particle:
+          <<: *deploy_production_filters
+      - build-staging-particle:
           <<: *deploy_staging_filters
