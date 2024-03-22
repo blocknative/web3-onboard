@@ -34,6 +34,7 @@
   import arcanaAuthModule from '@web3-onboard/arcana-auth'
   import venlyModule from '@web3-onboard/venly'
   import bitgetModule from '@web3-onboard/bitget'
+  import particleAuthModule from '@web3-onboard/particle-network'
   import capsuleModule, { Environment } from '@web3-onboard/capsule'
   import {
     recoverAddress,
@@ -195,6 +196,12 @@
     // for more info see the @web3-onboard/magic docs
   })
 
+  const particle = particleAuthModule({
+    projectId: 'b385ccf0-73c3-485a-9941-159b7855b806',
+    clientKey: 'cSTLqhvONB5j588Wz6E5WJLMPrHeUlGbymf1DFhO',
+    appId: 'b1f0239a-edb0-41f9-b0f5-ab780bb02a9e'
+  })
+
   const dcent = dcentModule()
   const bitget = bitgetModule()
   const frameWallet = frameModule()
@@ -216,11 +223,11 @@
   const onboard = Onboard({
     wallets: [
       metamaskSDKWallet,
+      coinbaseWallet,
       injected,
       ledger,
       trezor,
       walletConnect,
-      coinbaseWallet,
       phantom,
       safe,
       trust,
@@ -247,7 +254,8 @@
       cedeStore,
       arcanaAuth,
       blocto,
-      venly
+      venly,
+      particle
     ],
     // transactionPreview,
     gas,
@@ -299,7 +307,7 @@
         id: '0x13881',
         token: 'MATIC',
         label: 'Polygon - Mumbai',
-        rpcUrl: 'https://matic-mumbai.chainstacklabs.com	'
+        rpcUrl: 'https://polygon-mumbai-bor-rpc.publicnode.com'
       },
       {
         id: '0x2105',
@@ -594,6 +602,10 @@
   const updateTheme = () => {
     onboard.state.actions.updateTheme(selectedTheme)
   }
+
+  function isSVG(str) {
+    return str.includes('<svg')
+  }
 </script>
 
 <style>
@@ -808,7 +820,15 @@
     {#each $wallets$ as { icon, label, accounts, chains, provider, instance }}
       <div class="connected-wallet" data-testid="connected-wallet">
         <div class="flex-centered" style="width: 10rem;">
-          <div style="width: 2rem; height: 2rem">{@html icon}</div>
+          <div style="width: 2rem; height: 2rem">
+            {#if isSVG(icon)}
+              <!-- render svg string -->
+              {@html icon}
+            {:else}
+              <!-- load img url -->
+              <img style="width: 2rem; height: 2rem" src={icon} alt="logo" />
+            {/if}
+          </div>
           <span data-testid={label}>{label}</span>
         </div>
 
