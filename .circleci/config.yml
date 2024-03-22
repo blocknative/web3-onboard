@@ -247,7 +247,7 @@ jobs:
       - node-build-steps
   build-trezor:
     docker:
-      - image: cimg/node:18.19.0
+      - image: cimg/node:18.9.1
     working_directory: ~/web3-onboard-monorepo/packages/trezor
     steps:
       - node-build-steps
@@ -427,11 +427,10 @@ jobs:
       - node-build-steps
   build-metamask:
     docker:
-      - image: cimg/node:18.19.0
+      - image: cimg/node:18.9.1
     working_directory: ~/web3-onboard-monorepo/packages/metamask
     steps:
       - node-build-steps
-    resource_class: large
   build-solid:
     docker:
       - image: cimg/node:16.14.2
@@ -532,7 +531,7 @@ jobs:
       - node-staging-build-steps
   build-staging-trezor:
     docker:
-      - image: cimg/node:18.19.0
+      - image: cimg/node:18.9.1
     working_directory: ~/web3-onboard-monorepo/packages/trezor
     steps:
       - node-staging-build-steps
@@ -712,7 +711,7 @@ jobs:
       - node-staging-build-steps
   build-staging-metamask:
     docker:
-      - image: cimg/node:18.19.0
+      - image: cimg/node:18.9.1
     working_directory: ~/web3-onboard-monorepo/packages/metamask
     steps:
       - node-staging-build-steps
