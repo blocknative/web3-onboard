@@ -427,7 +427,7 @@ jobs:
       - node-build-steps
   build-metamask:
     docker:
-      - image: cimg/node:18.19.0
+      - image: cimg/node:18.18.1
     working_directory: ~/web3-onboard-monorepo/packages/metamask
     steps:
       - node-build-steps
