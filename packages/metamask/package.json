@@ -64,6 +64,6 @@
     "@web3-onboard/common": "^2.3.3"
   },
   "engines": {
-    "node": ">=18.8"
+    "node": ">=18.18"
   }
 }
