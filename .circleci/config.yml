@@ -417,12 +417,6 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/bitget
     steps:
       - node-build-steps
-  build-bitkeep:
-    docker:
-      - image: cimg/node:16.13.1
-    working_directory: ~/web3-onboard-monorepo/packages/bitkeep
-    steps:
-      - node-build-steps
   build-metamask:
     docker:
       - image: cimg/node:18.18.2
@@ -700,12 +694,6 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/bitget
-    steps:
-      - node-staging-build-steps
-  build-staging-bitkeep:
-    docker:
-      - image: cimg/node:16.13.1
-    working_directory: ~/web3-onboard-monorepo/packages/bitkeep
     steps:
       - node-staging-build-steps
   build-staging-metamask:
@@ -987,12 +975,6 @@ workflows:
       - build-bitget:
           <<: *deploy_production_filters
       - build-staging-bitget:
-          <<: *deploy_staging_filters
-  bitkeep:
-    jobs:
-      - build-bitkeep:
-          <<: *deploy_production_filters
-      - build-staging-bitkeep:
           <<: *deploy_staging_filters
   metamask:
     jobs:
