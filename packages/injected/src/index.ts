@@ -89,7 +89,7 @@ function injected(options?: InjectedWalletOptions): WalletInit {
 
     // combine custom with standard wallets and dedupe
     const allWallets = uniqBy(
-      [...custom, ...standardWallets, ...providers6963],
+      [...custom, ...providers6963, ...standardWallets],
       ({ label }) => label
     )
 
