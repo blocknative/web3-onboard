@@ -6003,10 +6003,10 @@
   dependencies:
     "@infinitywallet/infinity-connector" "^1.0.6"
 
-"@web3-onboard/injected-wallets@^2.10.12":
-  version "2.10.12"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.10.12.tgz#c0dc2f72e3a0f7a3c39f75c99762356ad8382a45"
-  integrity sha512-nurPfsIZ9EbuAtOjrr40J5h2HQ69KIIFUgAtO5iq5ox6I4Zw4k4hmu7rqby4pSYrbv/hwgiRBCha7+/X6d1VMg==
+"@web3-onboard/injected-wallets@^2.10.13":
+  version "2.10.13-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.10.13-alpha.1.tgz#6e7c54e242079d621ddd0c5aa79eec4ff5df8e5b"
+  integrity sha512-yBPt+25q6e3L3QbL8gxlGinhABVMRsaLMmpraAH+dfkRDxwrsvINcfrkZAOJu5K4ZOr1u9S3HUxd3bz5Eq8IPw==
   dependencies:
     "@web3-onboard/common" "^2.3.3"
     joi "17.9.1"
