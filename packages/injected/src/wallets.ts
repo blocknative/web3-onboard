@@ -886,6 +886,16 @@ const Lif3Wallet: InjectedWalletModule = {
   platforms: ['mobile']
 }
 
+const stablewallet: InjectedWalletModule = {
+  label: ProviderLabel.StableWallet,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.StableWallet],
+  getIcon: async () => (await import('./icons/stablewallet.js')).default,
+  getInterface: getInjectedInterface(ProviderIdentityFlag.StableWallet),
+  platforms: ['mobile']
+}
+
 const wallets = [
   zeal,
   exodus,
@@ -941,7 +951,8 @@ const wallets = [
   subwallet,
   kayros,
   foxwallet,
-  Lif3Wallet
+  Lif3Wallet,
+  stablewallet
 ]
 
 export default wallets
