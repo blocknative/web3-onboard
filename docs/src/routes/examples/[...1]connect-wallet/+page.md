@@ -38,7 +38,6 @@ npm install @web3-onboard/react @web3-onboard/injected-wallets @web3-onboard/inf
   </TabPanel>
 </Tabs>
 
-
 ## Step 2: Import + Configure
 
 Import the libraries and any wallets you would like to use. For this example, we are going to use the injected wallets module. You can easily add more wallet support to your dapp via our other wallet modules. Additionally, we'll setup web3-onboard to support 2 chains: Ethereum mainnet and Polygon mainnet.
@@ -156,6 +155,12 @@ const chains = [
     token: 'ARB-ETH',
     label: 'Arbitrum',
     rpcUrl: 'https://rpc.ankr.com/arbitrum'
+  },
+  {
+    id: '0xa4ec',
+    token: 'ETH',
+    label: 'Celo',
+    rpcUrl: 'https://1rpc.io/celo'
   }
 ]
 
@@ -412,6 +417,12 @@ const chains = [
     token: 'ARB-ETH',
     label: 'Arbitrum',
     rpcUrl: 'https://rpc.ankr.com/arbitrum'
+  },
+  {
+    id: '0xa4ec',
+    token: 'ETH',
+    label: 'Celo',
+    rpcUrl: 'https://1rpc.io/celo'
   }
 ]
 
@@ -497,3 +508,7 @@ Now that we have our wallet connected, let's display some basic information, suc
 
   </TabPanel>
 </Tabs>
+
+## Interacting with the providers - Transfer, Send, Sign using ethers.js
+
+For examples of interacting with the wallet providers please see our demo project [here](https://github.com/blocknative/web3-onboard/blob/9b871a1b3117e92a7c87285677fa5b35c544a8e0/packages/demo/src/App.svelte#L447)
