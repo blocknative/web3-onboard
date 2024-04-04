@@ -776,6 +776,10 @@ async function connectWallet() {
 connectWallet()
 ```
 
+### Interacting with the providers - Transfer, Send, Sign using ethers.js
+
+For examples of interacting with the wallet providers please see our demo project [here](https://github.com/blocknative/web3-onboard/blob/9b871a1b3117e92a7c87285677fa5b35c544a8e0/packages/demo/src/App.svelte#L447)
+
 ### Auto Selecting a Wallet
 
 A common UX pattern is to remember the last wallet that a user has previously connected by storing it in localStorage and then automatically selecting them for the user next time they visit your app.
