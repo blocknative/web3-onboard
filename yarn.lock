@@ -6293,24 +6293,16 @@
     ethers "5.5.4"
     joi "17.9.1"
 
-"@web3-onboard/core@^2.21.3":
-  version "2.21.3"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.21.3.tgz#12f1561da218bae9d9d4c48cd132fa6ebaf4beca"
-  integrity sha512-PVQtsk5eLHNIxrLqjEtbF+w8yDxovTmgIQobrJj0D4m3wZE0Cr7AQay1q5u+bC1FKmTvQ7ZVzEXMFdquPxjA2A==
+"@web3-onboard/dcent@^2.2.7":
+  version "2.2.7"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/dcent/-/dcent-2.2.7.tgz#f7de77d85fde96158321635eab4baad911a0b9dd"
+  integrity sha512-ajGtg0OJh+QN0d4SZJaTOgbtPmbMT+VYqxRMIapNa8L+07cVoukwM4RaksqOc69AjosKuPK0TFQa2m5NPu4hpQ==
   dependencies:
-    "@web3-onboard/common" "^2.3.4"
-    bignumber.js "^9.0.0"
-    bnc-sdk "^4.6.7"
-    bowser "^2.11.0"
-    ethers "5.5.3"
-    eventemitter3 "^4.0.7"
-    joi "17.9.1"
-    lodash.merge "^4.6.2"
-    lodash.partition "^4.6.0"
-    nanoid "^4.0.0"
-    rxjs "^7.5.5"
-    svelte "^3.49.0"
-    svelte-i18n "^3.3.13"
+    "@ethereumjs/tx" "^3.4.0"
+    "@ethersproject/providers" "^5.5.0"
+    "@web3-onboard/common" "^2.3.3"
+    "@web3-onboard/hw-common" "^2.3.0"
+    eth-dcent-keyring "^0.2.2"
 
 "@web3-onboard/injected-wallets@^2.10.13":
   version "2.10.13"
