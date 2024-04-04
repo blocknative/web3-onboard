@@ -1,5 +1,5 @@
 import uniqBy from 'lodash.uniqby'
-import type { WalletInit } from '@web3-onboard/common'
+import { createEIP1193Provider, type WalletInit } from '@web3-onboard/common'
 import { ProviderLabel } from './types.js'
 import standardWallets from './wallets.js'
 import {
