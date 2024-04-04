@@ -23,17 +23,23 @@ const baseMainnet = {
   label: 'Base',
   rpcUrl: 'https://mainnet.base.org'
 }
+const celoMainnet = {
+  id: '0xa4ec',
+  token: 'ETH',
+  label: 'Celo',
+  rpcUrl: 'https://1rpc.io/celo'
+}
 
-const chains = [ethereumRopsten, polygonMainnet, baseMainnet]
+const chains = [ethereumRopsten, polygonMainnet, baseMainnet,celoMainnet]
 const wallets = [injectedModule()]
 
 const web3Onboard = init({
   wallets,
   chains,
   appMetadata: {
-    name: "Web3-Onboard Demo",
+    name: 'Web3-Onboard Demo',
     icon: '<svg>My App Icon</svg>',
-    description: "A demo of Web3-Onboard."
+    description: 'A demo of Web3-Onboard.'
   }
 })
 
