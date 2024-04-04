@@ -1,5 +1,5 @@
 import uniqBy from 'lodash.uniqby'
-import { createEIP1193Provider, type WalletInit } from '@web3-onboard/common'
+import type { WalletInit } from '@web3-onboard/common'
 import { ProviderLabel } from './types.js'
 import standardWallets from './wallets.js'
 import {
@@ -53,10 +53,10 @@ function checkFor6963Providers() {
       label: name,
       getIcon: async () => icon,
       getInterface: async () => ({
-        provider: createEIP1193Provider(provider)
+        provider
       }),
       platforms: ['all'],
-      eip6963Provider: createEIP1193Provider(provider) as InjectedProvider,
+      eip6963Provider: provider as InjectedProvider,
       checkProviderIdentity: ({ provider }) => !!provider
     })
   })
