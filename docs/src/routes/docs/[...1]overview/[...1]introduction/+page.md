@@ -32,9 +32,9 @@ Web3-Onboard is the quickest and easiest way to add multi-wallet and multi-chain
 
 - **Notify:** Real-time transaction notifications for all transaction states for the connected wallet address(es). In-notification speedups & cancels for hardware wallet connections.
 
-### Supported Networks
+### EVM Natively Supported Networks
 
-web3-onboard supports all EVM networks. Supporting a new network is simply a matter of adding its details in the Chains section upon initialization. For more information see [initialization options](../../modules/core.md#initialization).
+web3-onboard supports ALL EVM networks. Supporting a new network is simply a matter of adding its details in the Chains section upon initialization. For more information see [initialization options](../../modules/core.md#initialization).
 
 - Ethereum
 - Arbitrum One
