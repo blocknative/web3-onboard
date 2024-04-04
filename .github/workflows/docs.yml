@@ -40,7 +40,7 @@ jobs:
       - name: Setup Nodejs and yarn
         uses: actions/setup-node@v2
         with:
-          node-version: "16"
+          node-version: "18.18"
           cache: yarn
 
       - name: Install dependencies
