@@ -2,7 +2,7 @@ import type { AppMetadata, EIP1193Provider, WalletInit } from '@web3-onboard/com
 import type { CapsuleInitOptions } from './types'
 import type { Chain } from '@wagmi/chains'
 import type { Chain as BlocknativeChain } from '@web3-onboard/common'
-import { Environment as CapsuleEnvironment } from '@usecapsule/web-sdk'
+import { Environment as CapsuleEnvironment, OAuthMetho as} from '@usecapsule/web-sdk'
 
 type ChainId = number
 type ChainsMap = Map<ChainId, Chain>
@@ -77,7 +77,7 @@ function capsule(options: CapsuleInitOptions): WalletInit {
           '@usecapsule/web-sdk'
         )
         validateOptions(options, chains, appMetadata)
-        const capsule = new Capsule(options.environment, options.apiKey)
+        const capsule = new Capsule(options.environment, options.apiKey, options.constructorOpts)
         const chainsMap = await buildChainsMap()
 
         const providerOpts = {
@@ -87,7 +87,8 @@ function capsule(options: CapsuleInitOptions): WalletInit {
           chains: getChainsByIds(
             chains.map(ch => convertChainIdToNumber(ch.id)),
             chainsMap
-          )
+          ),
+          ...options.modalProps
         }
         const provider: EIP1193Provider = new CapsuleEIP1193Provider(providerOpts)
 
