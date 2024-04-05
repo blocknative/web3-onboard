@@ -6293,21 +6293,8 @@
     ethers "5.5.4"
     joi "17.9.1"
 
-"@web3-onboard/dcent@^2.2.7":
-  version "2.2.7"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/dcent/-/dcent-2.2.7.tgz#f7de77d85fde96158321635eab4baad911a0b9dd"
-  integrity sha512-ajGtg0OJh+QN0d4SZJaTOgbtPmbMT+VYqxRMIapNa8L+07cVoukwM4RaksqOc69AjosKuPK0TFQa2m5NPu4hpQ==
-  dependencies:
-    "@ethereumjs/tx" "^3.4.0"
-    "@ethersproject/providers" "^5.5.0"
-    "@web3-onboard/common" "^2.3.3"
-    "@web3-onboard/hw-common" "^2.3.0"
-    eth-dcent-keyring "^0.2.2"
-
-"@web3-onboard/injected-wallets@^2.10.13":
-  version "2.10.13"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.10.13.tgz#e82c5275db22f7711cce02c607e9e6e9ab144658"
-  integrity sha512-YnuwqbtlbAa6QyqJ/1YIkNLX92f8CkcFCt7HePjlZhYhaG9Gron/JzbAv2o7TcKQyySjahhwvvntvgXlABx8Ag==
+"@web3-onboard/injected-wallets@^2.10.14":
+  version "2.10.14-alpha.1"
   dependencies:
     "@web3-onboard/common" "^2.3.3"
     joi "17.9.1"
