@@ -28,6 +28,12 @@ export const chains = [
     token: 'ETH',
     label: 'Base',
     rpcUrl: 'https://mainnet.base.org'
+  },
+  {
+    id: '0xa4ec',
+    token: 'ETH',
+    label: 'Celo',
+    rpcUrl: 'https://1rpc.io/celo'
   }
 ];
 
