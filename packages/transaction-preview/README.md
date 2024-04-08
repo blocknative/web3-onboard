@@ -11,10 +11,10 @@ Full Simulation Platform API documentation can be found [here](https://docs.bloc
 ### Install
 
 **NPM**
-`npm i @web3-onboard/core @web3-onboard/injected @web3-onboard/transaction-preview`
+`npm i @web3-onboard/core @web3-onboard/injected-wallets @web3-onboard/transaction-preview`
 
 **Yarn**
-`yarn add @web3-onboard/core @web3-onboard/injected @web3-onboard/transaction-preview`
+`yarn add @web3-onboard/core @web3-onboard/injected-wallets @web3-onboard/transaction-preview`
 
 ### Usage with Web3-Onboard Core package
 
