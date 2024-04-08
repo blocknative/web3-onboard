@@ -247,6 +247,12 @@ const intiOnboard = async (theme) => {
         token: 'OETH',
         label: 'Optimism',
         rpcUrl: 'https://mainnet.optimism.io'
+      },
+      {
+        id: 666666666,
+        token: 'DEGEN',
+        label: 'Degen',
+        rpcUrl: 'https://rpc.degen.tips'
       }
     ],
     appMetadata: {
