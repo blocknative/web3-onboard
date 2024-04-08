@@ -64,6 +64,12 @@ init({
       token: 'FTM',
       label: 'Fantom',
       rpcUrl: 'https://rpc.ftm.tools/'
+    },
+    {
+      id: 666666666,
+      token: 'DEGEN',
+      label: 'Degen',
+      rpcUrl: 'https://rpc.degen.tips'
     }
   ],
   appMetadata: {
