@@ -671,6 +671,12 @@ const onboard = Onboard({
       token: 'OETH',
       label: 'Optimism',
       rpcUrl: 'https://mainnet.optimism.io'
+    },
+    {
+      id: '0xa4ec',
+      token: 'ETH',
+      label: 'Celo',
+      rpcUrl: 'https://1rpc.io/celo'
     }
   ],
   appMetadata: {
@@ -755,6 +761,10 @@ const onboard = Onboard({
 
 To initiate a user to select and connect a wallet you can call the `connectWallet` function on an initialized Onboard instance. It will return a `Promise` that will resolve when the user either successfully connects a wallet, or when they dismiss the UI. The resolved value from the promise will be the latest state of the `wallets` array. The order of the wallets array is last to first, so the most recently selected wallet will be the first item in the array and can be thought of as the "primary wallet". If no wallet was selected, then the `wallets` array will have the same state as it had before calling `connectWallet`.
 
+### Wallet Provider
+
+Wallets connected through web3-onboard are all passed to the dapp following the EIP-1193 standard. This allows for the same interaction between all wallets connected through web3-onboard and abstracts away the challenges of working with different wallet providers.
+
 ### Example
 
 ```javascript
@@ -765,6 +775,10 @@ async function connectWallet() {
 
 connectWallet()
 ```
+
+### Interacting with the providers - Transfer, Send, Sign using ethers.js
+
+For examples of interacting with the wallet providers please see our demo project [here](https://github.com/blocknative/web3-onboard/blob/9b871a1b3117e92a7c87285677fa5b35c544a8e0/packages/demo/src/App.svelte#L447)
 
 ### Auto Selecting a Wallet
 

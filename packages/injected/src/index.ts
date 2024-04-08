@@ -27,7 +27,6 @@ export { ProviderIdentityFlag, ProviderLabel } from './types.js'
 const providers6963: InjectedWalletModule[] = []
 function checkFor6963Providers() {
   // Add event listener for 'eip6963:announceProvider' event
-  console.log('even listener added')
   window.addEventListener('eip6963:announceProvider', (event: Event) => {
     const eipEvent = event as EIP6963AnnounceProviderEvent
     const { detail } = eipEvent
@@ -54,10 +53,10 @@ function checkFor6963Providers() {
       label: name,
       getIcon: async () => icon,
       getInterface: async () => ({
-        provider: createEIP1193Provider(provider)
+        provider
       }),
       platforms: ['all'],
-      eip6963Provider: createEIP1193Provider(provider) as InjectedProvider,
+      eip6963Provider: provider as InjectedProvider,
       checkProviderIdentity: ({ provider }) => !!provider
     })
   })
@@ -90,7 +89,7 @@ function injected(options?: InjectedWalletOptions): WalletInit {
 
     // combine custom with standard wallets and dedupe
     const allWallets = uniqBy(
-      [...custom, ...standardWallets, ...providers6963],
+      [...custom, ...providers6963, ...standardWallets],
       ({ label }) => label
     )
 
