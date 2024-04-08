@@ -280,7 +280,7 @@
         rpcUrl: `https://mainnet.infura.io/v3/${infura_key}`
       },
       {
-        id: '0xAA36A7',
+        id: '11155111',
         token: 'ETH',
         label: 'Sepolia',
         rpcUrl: 'https://rpc.sepolia.org/'
