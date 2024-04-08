@@ -11,10 +11,10 @@ Full Simulation Platform API documentation can be found [here](https://docs.bloc
 ### Install
 
 **NPM**
-`npm i @web3-onboard/core @web3-onboard/injected @web3-onboard/transaction-preview`
+`npm i @web3-onboard/core @web3-onboard/injected-wallets @web3-onboard/transaction-preview`
 
 **Yarn**
-`yarn add @web3-onboard/core @web3-onboard/injected @web3-onboard/transaction-preview`
+`yarn add @web3-onboard/core @web3-onboard/injected-wallets @web3-onboard/transaction-preview`
 
 ### Usage with Web3-Onboard Core package
 
@@ -24,7 +24,7 @@ To use the Transaction Preview package with web3-onboard all a developer needs t
 
 ```typescript
 import Onboard from '@web3-onboard/core'
-import injectedModule from '@web3-onboard/injected'
+import injectedModule from '@web3-onboard/injected-wallets'
 import transactionPreviewModule from '@web3-onboard/transaction-preview'
 
 const injected = injectedModule()
@@ -57,7 +57,8 @@ const onboard = Onboard({
 
 ### Standalone Usage
 
-To use the Transaction Preview package without web3-onboard all a developer needs to do is: 
+To use the Transaction Preview package without web3-onboard all a developer needs to do is:
+
 - Execute the entry function from the `@web3-onboard/transaction-preview` package and optional params
 - Run the returned `init` function with their [Blocknative API key](https://onboard.blocknative.com/docs/overview/introduction#optional-use-an-api-key-to-fetch-real-time-transaction-data-balances-gas), an initialized instance of their [Blocknative SDK](https://www.npmjs.com/package/bnc-sdk) and a containerElement string with the html ID of the target element to append the visualization to
 - Finally pass a transaction meant for a wallet provider (created using libraries like Ethers or Web3)
