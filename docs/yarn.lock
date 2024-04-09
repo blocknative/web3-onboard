@@ -3230,10 +3230,10 @@
   dependencies:
     qr-code-styling "^1.6.0-rc.1"
 
-"@metamask/sdk@^0.18.2":
-  version "0.18.2"
-  resolved "https://registry.yarnpkg.com/@metamask/sdk/-/sdk-0.18.2.tgz#3ecbbe62530de0046fb885e70e3de9f6ce6b641a"
-  integrity sha512-iLiadHCDNxPKjOEjVxmhawLm6NdRW+2Cf1mnvQgHk/xueZysruZcwd1cpV63Eya5KfGl5T7fJNUwKur5zCY05g==
+"@metamask/sdk@^0.18.3":
+  version "0.18.3"
+  resolved "https://registry.yarnpkg.com/@metamask/sdk/-/sdk-0.18.3.tgz#0e29fc88633fc8d74495d7f149eb7a34a2f4b4ef"
+  integrity sha512-rdPJ0RjxMnikpI1uqJJDYkBE8smyM49G9ErzauBzDjdlpnkjt6TdF0Qobro8yHv/glLrECy+38BjlT3eSQTOiQ==
   dependencies:
     "@metamask/onboarding" "^1.0.1"
     "@metamask/providers" "^15.0.0"
@@ -5907,10 +5907,10 @@
     ethers "5.5.4"
     joi "17.9.1"
 
-"@web3-onboard/core@^2.21.4":
-  version "2.21.4"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.21.4.tgz#0bf80a30c32f5fd8d5330cda4b6c6729c40ca316"
-  integrity sha512-+nOKj3hudHXfS5J8Ej5P5v/NWuG1b/863Ikaob/UHsCrulle5ILmBNrJqs2LESLdbHjZPFQBoJG+IxTPo7yIAA==
+"@web3-onboard/core@^2.21.5":
+  version "2.21.5"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.21.5.tgz#aaddc12fc29e134f3ec44a84f863e0c2c490a249"
+  integrity sha512-e23bmWj0+dC9sbu/TvzPJm0mUikUB/0yAL+Gqh2mmWOpr2GKBpROnRNhevne3IyeDf16mdkUo8wVEO6eGsiANg==
   dependencies:
     "@web3-onboard/common" "^2.3.4"
     bignumber.js "^9.0.0"
@@ -6003,10 +6003,10 @@
   dependencies:
     "@infinitywallet/infinity-connector" "^1.0.6"
 
-"@web3-onboard/injected-wallets@^2.10.13":
-  version "2.10.14"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.10.14.tgz#ad4f7585927651050caec232a62774f422fb9c01"
-  integrity sha512-lU/YCCYNr7+Qgg1lJ1vQofmJhMPZrkRTYO0lgkGsmLFVWZZ4rJIU1dm31h5iHm4nVUbw3ItYDICKsI1NgX46AQ==
+"@web3-onboard/injected-wallets@^2.10.15":
+  version "2.10.15"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.10.15.tgz#52b3af3ed058a90a930a0013c090dddf2cbe4ed5"
+  integrity sha512-EduNaStUmk8Zls1suLgxGPPC27nQGa/1ZcYOQxeP7jM45c4GSI1m3DpueFS+zD0kDS6AABs0PbBg72VCZ5vHbw==
   dependencies:
     "@web3-onboard/common" "^2.3.3"
     joi "17.9.1"
@@ -6058,12 +6058,12 @@
     magic-sdk "^8.1.0"
     rxjs "^7.5.2"
 
-"@web3-onboard/metamask@^2.0.4-alpha.1":
-  version "2.0.4-alpha.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/metamask/-/metamask-2.0.4-alpha.1.tgz#82a2c38642ceca806ef9e336cb3f14fce4815d56"
-  integrity sha512-CF/ue+zYSm3Qz4rJaBRrfk6jqrity/rG/H+JOcZ5ajZPeCUm9T4O7W3bFvZtwmaoIE0WQVxzOWqRCzpVSgP79A==
+"@web3-onboard/metamask@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/metamask/-/metamask-2.0.4.tgz#0eae0e8b63f514447d551e9c60d0c995689cc557"
+  integrity sha512-iE3+W7amSYAd91uVBq//Yzlsur+8XAO+1FtjMzu2SLF3BIOpYd4ZXyr/AvLzpOClYdbUXyv802LcnxEN5/7dmg==
   dependencies:
-    "@metamask/sdk" "^0.18.2"
+    "@metamask/sdk" "^0.18.3"
     "@web3-onboard/common" "^2.3.3"
 
 "@web3-onboard/mew-wallet@^2.0.4":
