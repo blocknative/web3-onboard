@@ -3005,10 +3005,10 @@
   dependencies:
     qr-code-styling "^1.6.0-rc.1"
 
-"@metamask/sdk@^0.18.2":
-  version "0.18.2"
-  resolved "https://registry.yarnpkg.com/@metamask/sdk/-/sdk-0.18.2.tgz#3ecbbe62530de0046fb885e70e3de9f6ce6b641a"
-  integrity sha512-iLiadHCDNxPKjOEjVxmhawLm6NdRW+2Cf1mnvQgHk/xueZysruZcwd1cpV63Eya5KfGl5T7fJNUwKur5zCY05g==
+"@metamask/sdk@^0.18.3":
+  version "0.18.3"
+  resolved "https://registry.yarnpkg.com/@metamask/sdk/-/sdk-0.18.3.tgz#0e29fc88633fc8d74495d7f149eb7a34a2f4b4ef"
+  integrity sha512-rdPJ0RjxMnikpI1uqJJDYkBE8smyM49G9ErzauBzDjdlpnkjt6TdF0Qobro8yHv/glLrECy+38BjlT3eSQTOiQ==
   dependencies:
     "@metamask/onboarding" "^1.0.1"
     "@metamask/providers" "^15.0.0"
