@@ -635,6 +635,12 @@ const onboard = Onboard({
       token: 'FTM',
       label: 'Fantom Mainnet',
       rpcUrl: 'https://rpc.ftm.tools/'
+    },
+    {
+      id: 666666666,
+      token: 'DEGEN',
+      label: 'Degen',
+      rpcUrl: 'https://rpc.degen.tips'
     }
   ],
   appMetadata: {

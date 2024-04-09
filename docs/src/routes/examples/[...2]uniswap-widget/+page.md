@@ -59,6 +59,13 @@ const polygonMainnet = {
   rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
 }
 
+const degenChain = {
+  id: 666666666,
+  token: 'DEGEN',
+  label: 'Degen',
+  rpcUrl: 'https://rpc.degen.tips'
+}
+
 const chains = [ethereumRopsten, polygonMainnet]
 
 const wallets = [injectedModule()]

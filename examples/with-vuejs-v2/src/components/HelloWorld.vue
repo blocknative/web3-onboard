@@ -66,6 +66,12 @@ const web3Onboard = init({
       token: 'ETH',
       label: 'Celo',
       rpcUrl: 'https://1rpc.io/celo'
+    },
+    {
+      id: 666666666,
+      token: 'DEGEN',
+      label: 'Degen',
+      rpcUrl: 'https://rpc.degen.tips'
     }
   ]
 })

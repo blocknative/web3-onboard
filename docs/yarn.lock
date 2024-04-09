@@ -3212,10 +3212,10 @@
   resolved "https://registry.yarnpkg.com/@metamask/safe-event-emitter/-/safe-event-emitter-3.0.0.tgz#8c2b9073fe0722d48693143b0dc8448840daa3bd"
   integrity sha512-j6Z47VOmVyGMlnKXZmL0fyvWfEYtKWCA9yGZkU3FCsGZUT5lHGmvaV9JA5F2Y+010y7+ROtR3WMXIkvl/nVzqQ==
 
-"@metamask/sdk-communication-layer@0.17.0":
-  version "0.17.0"
-  resolved "https://registry.yarnpkg.com/@metamask/sdk-communication-layer/-/sdk-communication-layer-0.17.0.tgz#890dbcdc983be32fdd9600cc996ede00cc2090fc"
-  integrity sha512-au1HzkU4VxAWjIvGGhvv/yPlB+x4jEi70c/GpjhHgJ7EG8TJprYy9jAOxfzc8h7hXRzOA8PCkFMzJu5COrJCYA==
+"@metamask/sdk-communication-layer@0.18.2":
+  version "0.18.2"
+  resolved "https://registry.yarnpkg.com/@metamask/sdk-communication-layer/-/sdk-communication-layer-0.18.2.tgz#f7cf48a6938890397f39386bcfc82c8b967b7652"
+  integrity sha512-5Hf2K+v3PWjmk+yxl9C2UXc7bMp77tBu3nUvZrpETB+bJ5y5rsKSe8Tkz7EFTobP+Xp6zUmqkSGmw24kO+Qqag==
   dependencies:
     bufferutil "^4.0.8"
     date-fns "^2.29.3"
@@ -3230,14 +3230,14 @@
   dependencies:
     qr-code-styling "^1.6.0-rc.1"
 
-"@metamask/sdk@^0.17.1":
-  version "0.17.2"
-  resolved "https://registry.yarnpkg.com/@metamask/sdk/-/sdk-0.17.2.tgz#047e08a6a6460ca84efcfd2ebd477a83ba34c38a"
-  integrity sha512-5DkeywTJLf2BLCQ2aa2D7bIcoAc/107uFXlDA/1lpCnbWc9ZHloFomdu3d1e3dRegqCOzDGuJjOA+dPonDQZZw==
+"@metamask/sdk@^0.18.3":
+  version "0.18.3"
+  resolved "https://registry.yarnpkg.com/@metamask/sdk/-/sdk-0.18.3.tgz#0e29fc88633fc8d74495d7f149eb7a34a2f4b4ef"
+  integrity sha512-rdPJ0RjxMnikpI1uqJJDYkBE8smyM49G9ErzauBzDjdlpnkjt6TdF0Qobro8yHv/glLrECy+38BjlT3eSQTOiQ==
   dependencies:
     "@metamask/onboarding" "^1.0.1"
     "@metamask/providers" "^15.0.0"
-    "@metamask/sdk-communication-layer" "0.17.0"
+    "@metamask/sdk-communication-layer" "0.18.2"
     "@metamask/sdk-install-modal-web" "0.17.0"
     "@types/dom-screen-wake-lock" "^1.0.0"
     bowser "^2.9.0"
@@ -5907,10 +5907,10 @@
     ethers "5.5.4"
     joi "17.9.1"
 
-"@web3-onboard/core@^2.21.3":
-  version "2.21.3"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.21.3.tgz#12f1561da218bae9d9d4c48cd132fa6ebaf4beca"
-  integrity sha512-PVQtsk5eLHNIxrLqjEtbF+w8yDxovTmgIQobrJj0D4m3wZE0Cr7AQay1q5u+bC1FKmTvQ7ZVzEXMFdquPxjA2A==
+"@web3-onboard/core@^2.21.5":
+  version "2.21.5"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.21.5.tgz#aaddc12fc29e134f3ec44a84f863e0c2c490a249"
+  integrity sha512-e23bmWj0+dC9sbu/TvzPJm0mUikUB/0yAL+Gqh2mmWOpr2GKBpROnRNhevne3IyeDf16mdkUo8wVEO6eGsiANg==
   dependencies:
     "@web3-onboard/common" "^2.3.4"
     bignumber.js "^9.0.0"
@@ -6003,10 +6003,10 @@
   dependencies:
     "@infinitywallet/infinity-connector" "^1.0.6"
 
-"@web3-onboard/injected-wallets@^2.10.13":
-  version "2.10.13-alpha.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.10.13-alpha.1.tgz#6e7c54e242079d621ddd0c5aa79eec4ff5df8e5b"
-  integrity sha512-yBPt+25q6e3L3QbL8gxlGinhABVMRsaLMmpraAH+dfkRDxwrsvINcfrkZAOJu5K4ZOr1u9S3HUxd3bz5Eq8IPw==
+"@web3-onboard/injected-wallets@^2.10.15":
+  version "2.10.15"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.10.15.tgz#52b3af3ed058a90a930a0013c090dddf2cbe4ed5"
+  integrity sha512-EduNaStUmk8Zls1suLgxGPPC27nQGa/1ZcYOQxeP7jM45c4GSI1m3DpueFS+zD0kDS6AABs0PbBg72VCZ5vHbw==
   dependencies:
     "@web3-onboard/common" "^2.3.3"
     joi "17.9.1"
@@ -6058,12 +6058,12 @@
     magic-sdk "^8.1.0"
     rxjs "^7.5.2"
 
-"@web3-onboard/metamask@^2.0.3":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/metamask/-/metamask-2.0.3.tgz#ea9ef80e90700134f99f7f0a8667ca6c3dad8775"
-  integrity sha512-kf+4jMtJfokSFNhOyV1WxOGtmvibUK58Lho+6cvDFGSzmFQ+q+U5jK9gWMm2gkb5+l70UibUHqVCrHPFdgey+w==
+"@web3-onboard/metamask@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/metamask/-/metamask-2.0.4.tgz#0eae0e8b63f514447d551e9c60d0c995689cc557"
+  integrity sha512-iE3+W7amSYAd91uVBq//Yzlsur+8XAO+1FtjMzu2SLF3BIOpYd4ZXyr/AvLzpOClYdbUXyv802LcnxEN5/7dmg==
   dependencies:
-    "@metamask/sdk" "^0.17.1"
+    "@metamask/sdk" "^0.18.3"
     "@web3-onboard/common" "^2.3.3"
 
 "@web3-onboard/mew-wallet@^2.0.4":
@@ -13285,10 +13285,10 @@ viem@^1.0.0:
     isomorphic-ws "5.0.0"
     ws "8.12.0"
 
-vite@^4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-4.5.0.tgz#ec406295b4167ac3bc23e26f9c8ff559287cff26"
-  integrity sha512-ulr8rNLA6rkyFAlVWw2q5YJ91v098AFQ2R0PRFwPzREXOUJQPtFUG0t+/ZikhaOCDqFoDhN6/v8Sq0o4araFAw==
+vite@^4.5.3:
+  version "4.5.3"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-4.5.3.tgz#d88a4529ea58bae97294c7e2e6f0eab39a50fb1a"
+  integrity sha512-kQL23kMeX92v3ph7IauVkXkikdDRsYMGTVl5KY2E9OY4ONLvkHf04MDTbnfo6NKxZiDLWzVpP5oTa8hQD8U3dg==
   dependencies:
     esbuild "^0.18.10"
     postcss "^8.4.27"
