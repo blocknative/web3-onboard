@@ -73,11 +73,14 @@ function capsule(options: CapsuleInitOptions): WalletInit {
       label: 'Capsule',
       getIcon: async () => (await import('./icon')).default,
       getInterface: async ({ chains, appMetadata }) => {
-        const { default: Capsule, CapsuleEIP1193Provider } = await import(
+        const { default: Capsule } = await import(
           '@usecapsule/web-sdk'
         )
+        const { CapsuleEIP1193Provider } = await import(
+          '@usecapsule/wagmi-v2-integration'
+        )
         validateOptions(options, chains, appMetadata)
-        const capsule = new Capsule(options.environment, options.apiKey)
+        const capsule = new Capsule(options.environment, options.apiKey, ...options.constructorOpts)
         const chainsMap = await buildChainsMap()
 
         const providerOpts = {
@@ -87,7 +90,8 @@ function capsule(options: CapsuleInitOptions): WalletInit {
           chains: getChainsByIds(
             chains.map(ch => convertChainIdToNumber(ch.id)),
             chainsMap
-          )
+          ),
+          ...options.modalProps
         }
         const provider: EIP1193Provider = new CapsuleEIP1193Provider(providerOpts)
 

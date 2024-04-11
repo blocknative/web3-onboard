@@ -1,6 +1,5 @@
-import { Environment } from '@usecapsule/web-sdk'
-import { ChainId } from '@web3-onboard/common'
-
+import { ConstructorOpts, Environment } from '@usecapsule/web-sdk'
+import { CapsuleModalV2Props } from "@usecapsule/react-sdk";
 /**
  * Options for initializing the Capsule environment.
  *
@@ -13,5 +12,7 @@ import { ChainId } from '@web3-onboard/common'
  */
 export type CapsuleInitOptions = {
   environment: Environment
-  apiKey: string
+  apiKey: string,
+  constructorOpts?: ConstructorOpts
+  modalProps?: CapsuleModalV2Props
 }
