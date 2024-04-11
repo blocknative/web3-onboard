@@ -886,6 +886,19 @@ const Lif3Wallet: InjectedWalletModule = {
   platforms: ['mobile']
 }
 
+const zodiacPilot: InjectedWalletModule = {
+  label: ProviderLabel.ZodiacPilot,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.ZodiacPilot],
+  getIcon: async () => (await import('./icons/zodiacpilot.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.ethereum)
+  }),
+  platforms: ['desktop'],
+  externalUrl: ProviderExternalUrl.ZodiacPilot
+}
+
 const wallets = [
   zeal,
   exodus,
@@ -941,7 +954,8 @@ const wallets = [
   subwallet,
   kayros,
   foxwallet,
-  Lif3Wallet
+  Lif3Wallet,
+  zodiacPilot
 ]
 
 export default wallets
