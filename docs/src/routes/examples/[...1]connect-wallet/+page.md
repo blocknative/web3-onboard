@@ -147,7 +147,7 @@ const chains = [
   {
     id: '0xA',
     token: 'OETH',
-    label: 'Optimism',
+    label: 'OP Mainnet',
     rpcUrl: 'https://mainnet.optimism.io'
   },
   {
@@ -415,7 +415,7 @@ const chains = [
   {
     id: '0xA',
     token: 'OETH',
-    label: 'Optimism',
+    label: 'OP Mainnet',
     rpcUrl: 'https://mainnet.optimism.io'
   },
   {
