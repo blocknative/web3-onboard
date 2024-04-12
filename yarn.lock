@@ -4616,22 +4616,10 @@
     gsap "^3.12.5"
     qr-code-styling "^1.6.0-rc.1"
 
-"@usecapsule/core-sdk@1.6.0":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@usecapsule/core-sdk/-/core-sdk-1.6.0.tgz#0572194625eceb4c33275c507b8fe99d6a9fb6b9"
-  integrity sha512-QqLFFmCtS8Ndl4T+CwRSl+ul4BWe8GJB4ve03cOisi7J8rduCIjNrzdSOU2nLf6tjAQtWLBERSLgNzp4XVcO/w==
-  dependencies:
-    "@celo/utils" "^3.2.0"
-    "@usecapsule/user-management-client" "1.4.0"
-    base64url "^3.0.1"
-    buffer "6.0.3"
-    ethereumjs-util "7.1.5"
-    node-forge "^1.3.1"
-
-"@usecapsule/core-sdk@1.6.0-dev.blocknative":
-  version "1.6.0-dev.blocknative"
-  resolved "https://registry.yarnpkg.com/@usecapsule/core-sdk/-/core-sdk-1.6.0-dev.blocknative.tgz#bb8afd598c4eed20f1431b717e6ff22e6b764fa6"
-  integrity sha512-/DFpO81A2emvWIjyQKGSo64SCbp69ENfiDWcvy3fplPAyskwRgqiSCVcD4DJ3PR8U+kgscpfwfffqr9BgkPfdw==
+"@usecapsule/core-sdk@1.6.0-dev.0":
+  version "1.6.0-dev.0"
+  resolved "https://registry.yarnpkg.com/@usecapsule/core-sdk/-/core-sdk-1.6.0-dev.0.tgz#83494f0a199366a7b2b508c21a211fe789071f3f"
+  integrity sha512-VqaYHFopsUA9ajYCc+XRIK0YSCkV8rVb744PeqYHKhgwj2E/HanV8k0/SWsmnhpf22j1GI94BMLSaJ1TH+jbIg==
   dependencies:
     "@celo/utils" "^3.2.0"
     "@usecapsule/user-management-client" "1.4.0"
@@ -4647,15 +4635,15 @@
   dependencies:
     "@usecapsule/core-components" "^1.0.13"
 
-"@usecapsule/react-sdk@2.3.0-dev.blocknative":
-  version "2.3.0-dev.blocknative"
-  resolved "https://registry.yarnpkg.com/@usecapsule/react-sdk/-/react-sdk-2.3.0-dev.blocknative.tgz#ffb2d73121000ed4edd20aa18c9cc223326576cb"
-  integrity sha512-CkUyHeXhbxYLSBryU7nDUfns0T7iToVc6N9VV5gDdU8j4oDZ/oLfPlnUuZ9GBX2YRRSCha5kBtpnh0kdu51CTg==
+"@usecapsule/react-sdk@2.3.0-dev.0":
+  version "2.3.0-dev.0"
+  resolved "https://registry.yarnpkg.com/@usecapsule/react-sdk/-/react-sdk-2.3.0-dev.0.tgz#933329c3edfda135eb4909a9aa0951586a510b95"
+  integrity sha512-gz6TYKkGIhbXWPBsqLZ8Xr1H33mq5IxabA5T2uwcyYkxzVn6oAJLeRLKdZzI/F/9tQxMF7QuFQpa4diO0flBng==
   dependencies:
     "@gsap/react" "^2.1.0"
     "@ramp-network/ramp-instant-sdk" "^4.0.2"
     "@usecapsule/react-components" "1.0.13"
-    "@usecapsule/web-sdk" "1.7.0-dev.blocknative"
+    "@usecapsule/web-sdk" "1.7.0-dev.0"
     gsap "^3.12.5"
     styled-components "^6.1.8"
     zustand "^4.5.2"
@@ -4668,27 +4656,27 @@
     axios "^1.6.3"
     qs "^6.12.0"
 
-"@usecapsule/viem-v2-integration@1.5.0":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@usecapsule/viem-v2-integration/-/viem-v2-integration-1.5.0.tgz#78fab915ef7ef65828f6314b852bdbae5226e65f"
-  integrity sha512-fNngFn8E1CGK2e9XUQFYctz4lZ5BV5ELF5W8QwuOfXmKPhL18wgyQ26bZynk0HrURI6t55+lhaeaHc30fl826A==
+"@usecapsule/viem-v2-integration@1.5.0-dev.0":
+  version "1.5.0-dev.0"
+  resolved "https://registry.yarnpkg.com/@usecapsule/viem-v2-integration/-/viem-v2-integration-1.5.0-dev.0.tgz#bea050171458bc8e5f7bab6b8a36bf7a65313bd5"
+  integrity sha512-mr25fsyxv9agSsw3aXp5h9ML2LnQlrTxHR8osXWRMQ1MfXnOsI/B+8sNZQA51W3Y0nWtcLo2Ub8qHX2MJVXVCg==
   dependencies:
-    "@usecapsule/core-sdk" "1.6.0"
+    "@usecapsule/core-sdk" "1.6.0-dev.0"
 
-"@usecapsule/wagmi-v2-integration@1.7.0-dev.blocknative":
-  version "1.7.0-dev.blocknative"
-  resolved "https://registry.yarnpkg.com/@usecapsule/wagmi-v2-integration/-/wagmi-v2-integration-1.7.0-dev.blocknative.tgz#66367132323de098810d4a165b56ed2efb8c5c51"
-  integrity sha512-8yz2MXJqizZK+ky0/mFRE0aH4Kk2fftOnpP1R85xEPUUX+Ro3pC37nvdcZ78DCi82WatbnV356kUyhtcWRXarg==
+"@usecapsule/wagmi-v2-integration@1.7.0-dev.0":
+  version "1.7.0-dev.0"
+  resolved "https://registry.yarnpkg.com/@usecapsule/wagmi-v2-integration/-/wagmi-v2-integration-1.7.0-dev.0.tgz#82cc5cb7eab295074610d53ccce60c329a0ce599"
+  integrity sha512-KMTYDXw7lSZYGAEe5vs+Vjud6LQ5HCh6n4xsO7u3OjwUBCZ5XOiSL6hbU0C8F+J2wesO8Z7M0nQ5dqMOTMH3Ug==
   dependencies:
-    "@usecapsule/react-sdk" "2.3.0-dev.blocknative"
-    "@usecapsule/viem-v2-integration" "1.5.0"
+    "@usecapsule/react-sdk" "2.3.0-dev.0"
+    "@usecapsule/viem-v2-integration" "1.5.0-dev.0"
 
-"@usecapsule/web-sdk@1.7.0-dev.blocknative":
-  version "1.7.0-dev.blocknative"
-  resolved "https://registry.yarnpkg.com/@usecapsule/web-sdk/-/web-sdk-1.7.0-dev.blocknative.tgz#d7c5cf92ae1f785cc3d5fcdc093edb435789873c"
-  integrity sha512-wL6g0nTr3Y4iRK+g/QWzARbDEkAIJXF9NpOvXPpOjBozvK+OU3CYvOXvDCBNdiGjFBhnTaL6AAAPUf+s+dIrSQ==
+"@usecapsule/web-sdk@1.7.0-dev.0":
+  version "1.7.0-dev.0"
+  resolved "https://registry.yarnpkg.com/@usecapsule/web-sdk/-/web-sdk-1.7.0-dev.0.tgz#7c546046b50c96e148440db4a350ebe82fd1dde0"
+  integrity sha512-6tOOe8nzjvFgSc5ajGa1jYCBOq8itTpwT9L/rhBz3JXdQW/YfBUK8M58iHvCl9qgZFlMoEdH1TNxcaF1pP6RSQ==
   dependencies:
-    "@usecapsule/core-sdk" "1.6.0-dev.blocknative"
+    "@usecapsule/core-sdk" "1.6.0-dev.0"
     "@usecapsule/user-management-client" "1.4.0"
     assert "^2.1.0"
     base64url "3.0.1"
@@ -13037,17 +13025,10 @@ react@16.13.1:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
 
-react@>=16, react@^18.2.0:
+react@>=16, react@^18.0.0, react@^18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
-  dependencies:
-    loose-envify "^1.1.0"
-
-react@^18.0.0:
-  version "18.0.0"
-  resolved "https://registry.yarnpkg.com/react/-/react-18.0.0.tgz#b468736d1f4a5891f38585ba8e8fb29f91c3cb96"
-  integrity sha512-x+VL6wbT4JRVPm7EGxXhZ8w8LTROaxPXOqhlGyVSrv0sB1jkyFGgXxJ8LVoPRLvPR6/CIZGFmfzqUa2NYeMr2A==
   dependencies:
     loose-envify "^1.1.0"
 

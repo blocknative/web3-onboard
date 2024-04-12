@@ -1636,10 +1636,10 @@
   dependencies:
     "@usecapsule/core-components" "^1.0.13"
 
-"@usecapsule/react-sdk@2.2.3":
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/@usecapsule/react-sdk/-/react-sdk-2.2.3.tgz#5c2c3338066e642930959b1ee446fc068e4277a7"
-  integrity sha512-3ZBCAH9tKw1/BS5ZR+Nfo9ydEZKHd1ggY12eD1LD/KVeO/pR7bmiM9mxQL3aaZmYEv7MA5N1Kov9V6m5/f0RSg==
+"@usecapsule/react-sdk@2.3.0", "@usecapsule/react-sdk@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@usecapsule/react-sdk/-/react-sdk-2.3.0.tgz#b959505dd3fb57ccfd2685f46de8944cff1def0d"
+  integrity sha512-xZdVNaOiiTJqUyfeq9p5vnXbp0ciGD6EoEEk6hk0sWeaZOoeuGitHWsSBUNTKm5bsFpjNxvqWyMEsF3uaRPUYw==
   dependencies:
     "@gsap/react" "^2.1.0"
     "@ramp-network/ramp-instant-sdk" "^4.0.2"
@@ -1664,15 +1664,15 @@
   dependencies:
     "@usecapsule/core-sdk" "1.6.0"
 
-"@usecapsule/wagmi-v2-integration@^1.6.3":
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/@usecapsule/wagmi-v2-integration/-/wagmi-v2-integration-1.6.3.tgz#719eb27f1c40977c1ca9eac108e19cebe4e0f561"
-  integrity sha512-yqez2jxsU86fRv/4zwI7Z3vYdCA2UXe/Qv/05rinoOmElZyWEE55mmbavIdkgn0KQEBdwTiMo/lwO/HiU4YoWw==
+"@usecapsule/wagmi-v2-integration@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@usecapsule/wagmi-v2-integration/-/wagmi-v2-integration-1.7.0.tgz#6545607b22dc870086e75961ca9b60e68f4799b1"
+  integrity sha512-d6oG5K1BP9DRc4+Mb4rhWDOkEikwygyhVsFITVkOgb8VAUirwtJkl4Ok5b9QHC970B5EGbt4sra5L9tgvBqh6A==
   dependencies:
-    "@usecapsule/react-sdk" "2.2.3"
+    "@usecapsule/react-sdk" "2.3.0"
     "@usecapsule/viem-v2-integration" "1.5.0"
 
-"@usecapsule/web-sdk@1.7.0", "@usecapsule/web-sdk@^1.7.0":
+"@usecapsule/web-sdk@1.7.0":
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/@usecapsule/web-sdk/-/web-sdk-1.7.0.tgz#01b145d64e84fa2b265873000a31a119e9b40a86"
   integrity sha512-o27C5WFbq5c5+VI5ZsRy1lLGJp9Jwk9TXWUH3sSc6ZFSu+WXHFZiv3i//GblwiV7a1483Pdb4esPZk576f+AhA==

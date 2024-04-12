@@ -1,5 +1,4 @@
-import { ConstructorOpts, Environment } from '@usecapsule/web-sdk'
-import { CapsuleModalV2Props } from "@usecapsule/react-sdk";
+import type { ConstructorOpts, Environment, CapsuleModalV2Props } from '@usecapsule/react-sdk'
 /**
  * Options for initializing the Capsule environment.
  *
