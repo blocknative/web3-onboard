@@ -67,7 +67,7 @@ const particleAuth = (options: ParticleAuthModuleOptions): WalletInit => {
     label: displayLabel,
     getIcon: async () => {
       const iconName = authType && setAsDisplay ? authType : 'icon'
-      return (await import(`./${iconName}.svg`)).default
+      return (await import(`./${iconName}.js`)).default
     },
     getInterface: async ({ chains }) => {
       const { createEIP1193Provider } = await import('@web3-onboard/common')
