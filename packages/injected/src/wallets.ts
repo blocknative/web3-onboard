@@ -899,6 +899,16 @@ const zodiacPilot: InjectedWalletModule = {
   externalUrl: ProviderExternalUrl.ZodiacPilot
 }
 
+const stablewallet: InjectedWalletModule = {
+  label: ProviderLabel.StableWallet,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.StableWallet],
+  getIcon: async () => (await import('./icons/stablewallet.js')).default,
+  getInterface: getInjectedInterface(ProviderIdentityFlag.StableWallet),
+  platforms: ['mobile']
+}
+
 const wallets = [
   zeal,
   exodus,
@@ -955,7 +965,8 @@ const wallets = [
   kayros,
   foxwallet,
   Lif3Wallet,
-  zodiacPilot
+  zodiacPilot,
+  stablewallet
 ]
 
 export default wallets

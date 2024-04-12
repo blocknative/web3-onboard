@@ -69,7 +69,8 @@ export enum ProviderIdentityFlag {
   Kayros = 'isKayros',
   FoxWallet = 'isFoxWallet',
   Lif3Wallet = 'isLif3Wallet',
-  ZodiacPilot = 'isZodiacPilot'
+  ZodiacPilot = 'isZodiacPilot',
+  StableWallet = 'isStableWallet'
 }
 
 /**
@@ -159,7 +160,8 @@ export enum ProviderLabel {
   Kayros = 'Kayros',
   FoxWallet = 'FoxWallet',
   Lif3Wallet = 'Lif3 Wallet',
-  ZodiacPilot = 'Zodiac Pilot'
+  ZodiacPilot = 'Zodiac Pilot',
+  StableWallet = 'StableWallet'
 }
 
 export interface MeetOneProvider extends ExternalProvider {
