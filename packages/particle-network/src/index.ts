@@ -77,7 +77,8 @@ const particleAuth = (options: ParticleAuthModuleOptions): WalletInit => {
         import('./linkedin.js'),
         import('./github.js'),
         import('./twitch.js'),
-        import('./discord.js')
+        import('./discord.js'),
+        import('./icon.js')
       ])
 
       const iconMap = {
@@ -91,7 +92,8 @@ const particleAuth = (options: ParticleAuthModuleOptions): WalletInit => {
         linkedin: icons[7].default,
         github: icons[8].default,
         twitch: icons[9].default,
-        discord: icons[10].default
+        discord: icons[10].default,
+        icon: icons[10].default
       }
       const iconName =
         authType && setAsDisplay ? authType : ('icon' as AuthTypes)
