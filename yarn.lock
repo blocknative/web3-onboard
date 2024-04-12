@@ -6293,15 +6293,6 @@
     ethers "5.5.4"
     joi "17.9.1"
 
-"@web3-onboard/injected-wallets@^2.10.14":
-  version "2.10.14"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.10.14.tgz#ad4f7585927651050caec232a62774f422fb9c01"
-  integrity sha512-lU/YCCYNr7+Qgg1lJ1vQofmJhMPZrkRTYO0lgkGsmLFVWZZ4rJIU1dm31h5iHm4nVUbw3ItYDICKsI1NgX46AQ==
-  dependencies:
-    "@web3-onboard/common" "^2.3.3"
-    joi "17.9.1"
-    lodash.uniqby "^4.7.0"
-
 "@web3-react/abstract-connector@^6.0.7":
   version "6.0.7"
   resolved "https://registry.yarnpkg.com/@web3-react/abstract-connector/-/abstract-connector-6.0.7.tgz#401b3c045f1e0fab04256311be49d5144e9badc6"

@@ -41,7 +41,7 @@ web3-onboard supports ALL EVM networks. Supporting a new network is simply a mat
 - Arbitrum Nova
 - Base
 - Polygon
-- Optimism
+- OP Mainnet
 - Avalanche
 - BNB Chain
 - Celo
