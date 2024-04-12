@@ -36,6 +36,7 @@ const config = {
       '@web3-onboard/gas',
       '@web3-onboard/ledger',
       '@web3-onboard/uauth',
+      '@web3-onboard/particle',
       '@web3-onboard/walletconnect',
       '@web3-onboard/sequence',
       'js-sha3',
