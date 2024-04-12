@@ -93,7 +93,7 @@ const particleAuth = (options: ParticleAuthModuleOptions): WalletInit => {
         github: icons[8].default,
         twitch: icons[9].default,
         discord: icons[10].default,
-        icon: icons[10].default
+        icon: icons[11].default
       }
       const iconName =
         authType && setAsDisplay ? authType : ('icon' as AuthTypes)
