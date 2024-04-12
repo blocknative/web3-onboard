@@ -6074,10 +6074,10 @@
     "@web3-onboard/common" "^2.3.3"
     lodash.uniqby "^4.7.0"
 
-"@web3-onboard/particle-network@^2.0.1-alpha.3":
-  version "2.0.1-alpha.3"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/particle-network/-/particle-network-2.0.1-alpha.3.tgz#0a6b51272723676e1fb8804c9c9b70bec09666e2"
-  integrity sha512-Mad0p6pkexbQNGVOdDna2QTVQ/GVd4PluIE0zsNNIpR8gmzJAZY3K8XnDZdH6riZ5/I15DQE5Sgb3bmxygWPlA==
+"@web3-onboard/particle-network@^2.0.1-alpha.4":
+  version "2.0.1-alpha.4"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/particle-network/-/particle-network-2.0.1-alpha.4.tgz#17adf2bfa85cca9c71b44a8480a3aeb661fbb4d8"
+  integrity sha512-lS7j8lVgxsnZg0mBa6B6k9Rsv4mxptJVk0+USDAO+rAt1S9PZaZnzr+uWx3LTt37oT4bl/cjO4acfTlu+awdQQ==
   dependencies:
     "@particle-network/auth" "^1.2.1"
     "@particle-network/provider" "^1.2.0"
