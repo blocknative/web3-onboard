@@ -69,7 +69,8 @@ export enum ProviderIdentityFlag {
   Kayros = 'isKayros',
   FoxWallet = 'isFoxWallet',
   Lif3Wallet = 'isLif3Wallet',
-  StableWallet = 'isStableWallet',
+  ZodiacPilot = 'isZodiacPilot',
+  StableWallet = 'isStableWallet'
 }
 
 /**
@@ -97,7 +98,8 @@ export enum ProviderExternalUrl {
   XDEFI = 'https://xdefi.io/',
   FoxWallet = 'https://foxwallet.com/download',
   Lif3Wallet = 'https://lif3.com',
-  Rabby = 'https://rabby.io'
+  Rabby = 'https://rabby.io',
+  ZodiacPilot = 'https://pilot.gnosisguild.org/'
 }
 
 export enum ProviderLabel {
@@ -158,7 +160,8 @@ export enum ProviderLabel {
   Kayros = 'Kayros',
   FoxWallet = 'FoxWallet',
   Lif3Wallet = 'Lif3 Wallet',
-  StableWallet = 'StableWallet',
+  ZodiacPilot = 'Zodiac Pilot',
+  StableWallet = 'StableWallet'
 }
 
 export interface MeetOneProvider extends ExternalProvider {
