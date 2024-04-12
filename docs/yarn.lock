@@ -5908,9 +5908,9 @@
     joi "17.9.1"
 
 "@web3-onboard/core@^2.21.6-alpha.1":
-  version "2.21.5"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.21.5.tgz#aaddc12fc29e134f3ec44a84f863e0c2c490a249"
-  integrity sha512-e23bmWj0+dC9sbu/TvzPJm0mUikUB/0yAL+Gqh2mmWOpr2GKBpROnRNhevne3IyeDf16mdkUo8wVEO6eGsiANg==
+  version "2.21.6-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.21.6-alpha.1.tgz#43070f4c187c39199b77f4ae6d5893fb366afc74"
+  integrity sha512-AB5M3Fc3RisZFNwXmH9CbGRmieaHnCsLMNNvrb6cpTpmmx1UFXj6vDwdQJwX0rrvUNAurdavbDK0DkzvnINofg==
   dependencies:
     "@web3-onboard/common" "^2.3.4"
     bignumber.js "^9.0.0"
@@ -6074,10 +6074,10 @@
     "@web3-onboard/common" "^2.3.3"
     lodash.uniqby "^4.7.0"
 
-"@web3-onboard/particle-network@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/particle-network/-/particle-network-2.0.0.tgz#3120c507c0486b6c0f3e4b7a93967d0d97d83c69"
-  integrity sha512-2uiXMuKcRKe9lYnbxAa/jmfdtUmQruAyVuQ8QtPj0UQi5nBWHcrK/grmimUHzboxe/UCbn9+Qe8FrrGF1HA9Hw==
+"@web3-onboard/particle-network@^2.0.1-alpha.2":
+  version "2.0.1-alpha.2"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/particle-network/-/particle-network-2.0.1-alpha.2.tgz#45e60de7033904c1d2304759dff3caf9f8d5db81"
+  integrity sha512-jc3YdIwQWS2aSV7aGt2Z965e9ulN7Kz6hBew2BVlIu1FLDOFsbca402Btk8SWc/tsURcNgVnfNpwPqLM2rnCEw==
   dependencies:
     "@particle-network/auth" "^1.2.1"
     "@particle-network/provider" "^1.2.0"
