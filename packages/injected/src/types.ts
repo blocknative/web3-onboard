@@ -68,7 +68,8 @@ export enum ProviderIdentityFlag {
   SubWallet = 'isSubWallet',
   Kayros = 'isKayros',
   FoxWallet = 'isFoxWallet',
-  Lif3Wallet = 'isLif3Wallet'
+  Lif3Wallet = 'isLif3Wallet',
+  StableWallet = 'isStableWallet',
 }
 
 /**
@@ -156,7 +157,8 @@ export enum ProviderLabel {
   SubWallet = 'SubWallet',
   Kayros = 'Kayros',
   FoxWallet = 'FoxWallet',
-  Lif3Wallet = 'Lif3 Wallet'
+  Lif3Wallet = 'Lif3 Wallet',
+  StableWallet = 'StableWallet',
 }
 
 export interface MeetOneProvider extends ExternalProvider {
