@@ -346,7 +346,7 @@
       {
         id: 10,
         token: 'OETH',
-        label: 'Optimism',
+        label: 'OP Mainnet',
         rpcUrl: 'https://mainnet.optimism.io'
       },
       {
@@ -765,7 +765,7 @@
             >Set Chain to Matic</button
           >
           <button on:click={() => onboard.setChain({ chainId: 10 })}
-            >Set Chain to Optimism</button
+            >Set Chain to OP Mainnet</button
           >
         </div>
         <div class="position-buttons">

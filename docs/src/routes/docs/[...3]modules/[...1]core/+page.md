@@ -669,7 +669,7 @@ const onboard = Onboard({
     {
       id: 10,
       token: 'OETH',
-      label: 'Optimism',
+      label: 'OP Mainnet',
       rpcUrl: 'https://mainnet.optimism.io'
     },
     {
