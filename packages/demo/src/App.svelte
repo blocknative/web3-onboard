@@ -298,12 +298,6 @@
         rpcUrl: 'https://nova.arbitrum.io/rpc'
       },
       {
-        id: '0x5',
-        token: 'ETH',
-        label: 'Goerli',
-        rpcUrl: 'https://ethereum-goerli.publicnode.com'
-      },
-      {
         id: '0x13881',
         token: 'MATIC',
         label: 'Polygon - Mumbai',
@@ -346,7 +340,7 @@
       {
         id: 10,
         token: 'OETH',
-        label: 'Optimism',
+        label: 'OP Mainnet',
         rpcUrl: 'https://mainnet.optimism.io'
       },
       {
@@ -410,7 +404,7 @@
           //     type: 'hint',
           //     message: 'Your in the pool, hope you brought a towel!',
           //     autoDismiss: 0,
-          //     link: `https://goerli.etherscan.io/tx/${transaction.hash}`
+          //     link: `https://sepolia.etherscan.io/tx/${transaction.hash}`
           //   }
           // }
         },
@@ -759,13 +753,13 @@
             >Set Chain to Mainnet</button
           >
           <button on:click={() => onboard.setChain({ chainId: '0x5' })}
-            >Set Chain to Goerli</button
+            >Set Chain to Sepolia</button
           >
           <button on:click={() => onboard.setChain({ chainId: '0x89' })}
             >Set Chain to Matic</button
           >
           <button on:click={() => onboard.setChain({ chainId: 10 })}
-            >Set Chain to Optimism</button
+            >Set Chain to OP Mainnet</button
           >
         </div>
         <div class="position-buttons">
