@@ -2987,10 +2987,10 @@
   resolved "https://registry.yarnpkg.com/@metamask/safe-event-emitter/-/safe-event-emitter-3.0.0.tgz#8c2b9073fe0722d48693143b0dc8448840daa3bd"
   integrity sha512-j6Z47VOmVyGMlnKXZmL0fyvWfEYtKWCA9yGZkU3FCsGZUT5lHGmvaV9JA5F2Y+010y7+ROtR3WMXIkvl/nVzqQ==
 
-"@metamask/sdk-communication-layer@0.18.2":
-  version "0.18.2"
-  resolved "https://registry.yarnpkg.com/@metamask/sdk-communication-layer/-/sdk-communication-layer-0.18.2.tgz#f7cf48a6938890397f39386bcfc82c8b967b7652"
-  integrity sha512-5Hf2K+v3PWjmk+yxl9C2UXc7bMp77tBu3nUvZrpETB+bJ5y5rsKSe8Tkz7EFTobP+Xp6zUmqkSGmw24kO+Qqag==
+"@metamask/sdk-communication-layer@0.18.4":
+  version "0.18.4"
+  resolved "https://registry.yarnpkg.com/@metamask/sdk-communication-layer/-/sdk-communication-layer-0.18.4.tgz#8ddef419101de86149a8cdc442dcbb80686f002c"
+  integrity sha512-aBJu3l56h8nnToYF+KXVGXQ82m4MEl8x3q89GBjMyX8/+f7SnmgNkkB2ApqLI/1XMnJRBQw/s1/zUSI7TUyutA==
   dependencies:
     bufferutil "^4.0.8"
     date-fns "^2.29.3"
@@ -3005,14 +3005,14 @@
   dependencies:
     qr-code-styling "^1.6.0-rc.1"
 
-"@metamask/sdk@^0.18.3":
-  version "0.18.3"
-  resolved "https://registry.yarnpkg.com/@metamask/sdk/-/sdk-0.18.3.tgz#0e29fc88633fc8d74495d7f149eb7a34a2f4b4ef"
-  integrity sha512-rdPJ0RjxMnikpI1uqJJDYkBE8smyM49G9ErzauBzDjdlpnkjt6TdF0Qobro8yHv/glLrECy+38BjlT3eSQTOiQ==
+"@metamask/sdk@^0.18.4":
+  version "0.18.4"
+  resolved "https://registry.yarnpkg.com/@metamask/sdk/-/sdk-0.18.4.tgz#17164ce3cef2d1b9ab45e4bdb4087856a10aae6c"
+  integrity sha512-AW9R3lu0Z+bJKgEAnSEqo4OFjG+Q9PHQI5p2ZRQJWul08uvdlSFJsM424ZxKJtWBcN49YcZI+NuHZfKfAXrEvg==
   dependencies:
     "@metamask/onboarding" "^1.0.1"
     "@metamask/providers" "^15.0.0"
-    "@metamask/sdk-communication-layer" "0.18.2"
+    "@metamask/sdk-communication-layer" "0.18.4"
     "@metamask/sdk-install-modal-web" "0.17.0"
     "@types/dom-screen-wake-lock" "^1.0.0"
     bowser "^2.9.0"
