@@ -23,8 +23,20 @@ const baseMainnet = {
   label: 'Base',
   rpcUrl: 'https://mainnet.base.org'
 }
+const celoMainnet = {
+  id: '0xa4ec',
+  token: 'ETH',
+  label: 'Celo',
+  rpcUrl: 'https://1rpc.io/celo'
+},
+{
+  id: 666666666,
+  token: 'DEGEN',
+  label: 'Degen',
+  rpcUrl: 'https://rpc.degen.tips'
+}
 
-const chains = [ethereumRopsten, polygonMainnet, baseMainnet]
+const chains = [ethereumRopsten, polygonMainnet, baseMainnet,celoMainnet]
 const wallets = [injectedModule()]
 
 const web3Onboard = init({

@@ -66,7 +66,11 @@ const degenChain = {
   rpcUrl: 'https://rpc.degen.tips'
 }
 
+<<<<<<< HEAD
 const chains = [ethereumSepolia, polygonMainnet]
+=======
+const chains = [ethereumRopsten, polygonMainnet]
+>>>>>>> docs
 
 const wallets = [injectedModule()]
 
