@@ -2,7 +2,7 @@ import type { AppMetadata, EIP1193Provider, WalletInit } from '@web3-onboard/com
 import type { CapsuleInitOptions } from './types'
 import type { Chain } from '@wagmi/chains'
 import type { Chain as BlocknativeChain } from '@web3-onboard/common'
-import { Environment as CapsuleEnvironment } from '@usecapsule/react-sdk'
+import { Environment as CapsuleEnvironment, OAuthMethod, Theme } from '@usecapsule/react-sdk'
 
 type ChainId = number
 type ChainsMap = Map<ChainId, Chain>
@@ -112,3 +112,4 @@ function capsule(options: CapsuleInitOptions): WalletInit {
 
 export default capsule
 export { CapsuleEnvironment as Environment }
+export { OAuthMethod, Theme }

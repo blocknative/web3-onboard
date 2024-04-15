@@ -1636,10 +1636,10 @@
   dependencies:
     "@usecapsule/core-components" "^1.0.13"
 
-"@usecapsule/react-sdk@2.3.0", "@usecapsule/react-sdk@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@usecapsule/react-sdk/-/react-sdk-2.3.0.tgz#b959505dd3fb57ccfd2685f46de8944cff1def0d"
-  integrity sha512-xZdVNaOiiTJqUyfeq9p5vnXbp0ciGD6EoEEk6hk0sWeaZOoeuGitHWsSBUNTKm5bsFpjNxvqWyMEsF3uaRPUYw==
+"@usecapsule/react-sdk@2.3.1", "@usecapsule/react-sdk@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@usecapsule/react-sdk/-/react-sdk-2.3.1.tgz#8f43034e01f206863a99c08417e0260d176c6a33"
+  integrity sha512-hXAvzEzYQ/3Q9al+AlUkNjQ9UxxZLZYCKmx/q0p5049EQdwPLt+prEa60oL0ES8s2fnKNDutneZ75EELaY99wQ==
   dependencies:
     "@gsap/react" "^2.1.0"
     "@ramp-network/ramp-instant-sdk" "^4.0.2"
@@ -1664,12 +1664,12 @@
   dependencies:
     "@usecapsule/core-sdk" "1.6.0"
 
-"@usecapsule/wagmi-v2-integration@^1.7.0":
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/@usecapsule/wagmi-v2-integration/-/wagmi-v2-integration-1.7.0.tgz#6545607b22dc870086e75961ca9b60e68f4799b1"
-  integrity sha512-d6oG5K1BP9DRc4+Mb4rhWDOkEikwygyhVsFITVkOgb8VAUirwtJkl4Ok5b9QHC970B5EGbt4sra5L9tgvBqh6A==
+"@usecapsule/wagmi-v2-integration@^1.7.1":
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/@usecapsule/wagmi-v2-integration/-/wagmi-v2-integration-1.7.1.tgz#5d68af99389e600111b5197a8d5251897f31f344"
+  integrity sha512-tFS76vkqEnwjd5C6yvjWyAMMw0a0C7ErR46xbkN0FgpDGe9xyCuVtN21F+vSSiT0k5sj1/UldiGyyIG+EtpHZg==
   dependencies:
-    "@usecapsule/react-sdk" "2.3.0"
+    "@usecapsule/react-sdk" "2.3.1"
     "@usecapsule/viem-v2-integration" "1.5.0"
 
 "@usecapsule/web-sdk@1.7.0":
