@@ -298,12 +298,6 @@
         rpcUrl: 'https://nova.arbitrum.io/rpc'
       },
       {
-        id: '0x5',
-        token: 'ETH',
-        label: 'Goerli',
-        rpcUrl: 'https://ethereum-goerli.publicnode.com'
-      },
-      {
         id: '0x13881',
         token: 'MATIC',
         label: 'Polygon - Mumbai',
