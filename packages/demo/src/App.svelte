@@ -404,7 +404,7 @@
           //     type: 'hint',
           //     message: 'Your in the pool, hope you brought a towel!',
           //     autoDismiss: 0,
-          //     link: `https://goerli.etherscan.io/tx/${transaction.hash}`
+          //     link: `https://sepolia.etherscan.io/tx/${transaction.hash}`
           //   }
           // }
         },
@@ -753,7 +753,7 @@
             >Set Chain to Mainnet</button
           >
           <button on:click={() => onboard.setChain({ chainId: '0x5' })}
-            >Set Chain to Goerli</button
+            >Set Chain to Sepolia</button
           >
           <button on:click={() => onboard.setChain({ chainId: '0x89' })}
             >Set Chain to Matic</button

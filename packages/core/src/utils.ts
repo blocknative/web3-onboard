@@ -73,8 +73,6 @@ export function validEnsChain(chainId: ChainId): ChainId | null {
     case '0xa4ba': // Arb Nova
     case '0x144': // zksync
       return '0x1'
-    case '0x5': // Goerli
-      return chainId
     case '0xaa36a7': // Sepolia
       return chainId
     default:
@@ -121,11 +119,7 @@ export function gweiToWeiHex(gwei: number): string {
 
 export const chainIdToLabel: Record<string, string> = {
   '0x1': 'Ethereum',
-  '0x3': 'Ropsten',
-  '0x4': 'Rinkeby',
-  '0x5': 'Goerli',
   '0xaa36a7': 'Sepolia',
-  '0x2a': 'Kovan',
   '0x38': 'Binance',
   '0x89': 'Polygon',
   '0xfa': 'Fantom',
@@ -144,37 +138,17 @@ export const chainIdToLabel: Record<string, string> = {
 
 export const networkToChainId: Record<string, ChainId> = {
   main: '0x1',
-  ropsten: '0x3',
-  rinkeby: '0x4',
-  goerli: '0x5',
-  kovan: '0x2a',
+  sepolia: '0xaa36a7',
   xdai: '0x64',
   'bsc-main': '0x38',
   'matic-main': '0x89',
   'fantom-main': '0xfa',
   'matic-mumbai': '0x80001',
-  'degen': '0x27bc86aa'
-
+  degen: '0x27bc86aa'
 }
 
 export const chainStyles: Record<string, ChainStyle> = {
   '0x1': {
-    icon: ethereumIcon,
-    color: '#627EEA'
-  },
-  '0x3': {
-    icon: ethereumIcon,
-    color: '#627EEA'
-  },
-  '0x4': {
-    icon: ethereumIcon,
-    color: '#627EEA'
-  },
-  '0x5': {
-    icon: ethereumIcon,
-    color: '#627EEA'
-  },
-  '0x2a': {
     icon: ethereumIcon,
     color: '#627EEA'
   },
