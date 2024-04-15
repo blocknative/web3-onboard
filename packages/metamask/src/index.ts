@@ -27,7 +27,6 @@ const loadImports = async () => {
 
 let importPromise: Promise<ImportSDK> | null = null
 let sdk: MetaMaskSDK | null = null
-let createInstance: typeof createEIP1193Provider
 
 function metamask({
   options
@@ -38,14 +37,6 @@ function metamask({
     importPromise = loadImports().catch(error => {
       throw error
     })
-
-    const getProvider = (_sdk: MetaMaskSDK) => {
-      const provider = createInstance(_sdk.getProvider(), {})
-      provider.disconnect = () => {
-        sdk?.terminate()
-      }
-      return provider
-    }
 
     return {
       label: 'MetaMask',
@@ -66,9 +57,6 @@ function metamask({
         const appLogoUrl = `data:image/svg+xml;base64,${base64}`
         const imports = await importPromise
 
-        // Patch issue with MetaMask SDK, remove after SDK is fixed
-        localStorage.removeItem('providerType')
-
         if (
           !imports?.MetaMaskSDKConstructor ||
           !imports?.createEIP1193Provider
@@ -78,25 +66,24 @@ function metamask({
 
         const { createEIP1193Provider, MetaMaskSDKConstructor } = imports
 
-        createInstance = createEIP1193Provider
         sdk = new MetaMaskSDKConstructor({
           ...options,
           dappMetadata: {
             name: options.dappMetadata?.name || name || '',
+            url: options.dappMetadata?.url || window.location.origin,
             base64Icon: appLogoUrl
           },
           _source: 'web3-onboard'
         })
-        await sdk.init()
 
-        const provider = getProvider(sdk)
+        await sdk.init();
+        const provider = sdk.getProvider();
 
-        const _request = provider.request
-        provider.request = async ({ method, params }) => {
-          if (sdk?.isExtensionActive()) {
-            return (window.extension as any).request({ method, params })
+        const _disconnect = sdk.disconnect
+        if(provider) {
+          (provider as any).disconnect = () => {
+            sdk?.terminate();
           }
-          return _request({ method, params }) as Promise<any>
         }
 
         return {
