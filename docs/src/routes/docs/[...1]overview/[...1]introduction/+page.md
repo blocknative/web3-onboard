@@ -50,7 +50,6 @@ web3-onboard supports ALL EVM networks. Supporting a new network is simply a mat
 - Gnosis Chain
 - Harmony One
 - Moonriver
-- Goerli
 - Sepolia
 - Base Goerli
 - All other EVM networks

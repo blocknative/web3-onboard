@@ -36,7 +36,7 @@ export const metamaskTest = base.extend<{
     // setup metamask
     await initialSetup(chromium, {
       secretWordsOrPrivateKey: process.env.TEST_WALLET_PHRASE,
-      network: 'goerli',
+      network: 'sepolia',
       password: 'Tester@1234',
       enableAdvancedSettings: true
     })
