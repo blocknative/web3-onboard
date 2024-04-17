@@ -58,7 +58,7 @@
   },
   "dependencies": {
     "@web3-onboard/common": "^2.3.3",
-    "@solana/web3.js": "^1.73.0",
+    "@solana/web3.js": "^1.91.3",
     "@web3auth/base": "^5.0.1",
     "@web3auth/modal": "^5.0.1",
     "react-dom": "^18.2.0"
