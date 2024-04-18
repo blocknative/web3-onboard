@@ -53,7 +53,7 @@
   "scripts": {
     "install-m1-mac": "yarn install --ignore-optional",
     "format": "prettier --write 'packages/**/*.ts'",
-    "dev": "PORT=8081 yarn wsrun dev",
+    "dev": "yarn wsrun dev",
     "build": "yarn wsrun --serial build",
     "type-check": "yarn wsrun type-check",
     "file-check": "yarn install --check-files",
