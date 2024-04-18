@@ -127,10 +127,10 @@ const chains = [
     rpcUrl: `https://mainnet.infura.io/v3/${INFURA_KEY}`
   },
   {
-    id: '0x5',
+    id: 11155111,
     token: 'ETH',
-    label: 'Goerli',
-    rpcUrl: `https://goerli.infura.io/v3/${INFURA_KEY}`
+    label: 'Sepolia',
+    rpcUrl: 'https://rpc.sepolia.org/'
   },
   {
     id: '0x13881',
@@ -147,7 +147,7 @@ const chains = [
   {
     id: '0xA',
     token: 'OETH',
-    label: 'Optimism',
+    label: 'OP Mainnet',
     rpcUrl: 'https://mainnet.optimism.io'
   },
   {
@@ -395,10 +395,10 @@ const chains = [
     rpcUrl: `https://mainnet.infura.io/v3/${INFURA_ID}`
   },
   {
-    id: '0x5',
+    id: 11155111,
     token: 'ETH',
-    label: 'Goerli',
-    rpcUrl: `https://goerli.infura.io/v3/${INFURA_ID}`
+    label: 'Sepolia',
+    rpcUrl: 'https://rpc.sepolia.org/'
   },
   {
     id: '0x13881',
@@ -415,7 +415,7 @@ const chains = [
   {
     id: '0xA',
     token: 'OETH',
-    label: 'Optimism',
+    label: 'OP Mainnet',
     rpcUrl: 'https://mainnet.optimism.io'
   },
   {
