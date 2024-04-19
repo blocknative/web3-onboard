@@ -597,7 +597,7 @@ type Notification = {
 
 type NotificationType = 'pending' | 'success' | 'error' | 'hint'
 
-export declare type Network = 'main' | 'goerli' | 'matic-main' | 'matic-mumbai' | 'local'
+export declare type Network = 'main' | 'sepolia' | 'matic-main' | 'matic-mumbai' | 'local'
 
 export interface UpdateNotification {
   (notificationObject: CustomNotification): {
@@ -629,12 +629,6 @@ const onboard = Onboard({
       token: 'ETH',
       label: 'Ethereum Mainnet',
       rpcUrl: `https://mainnet.infura.io/v3/${INFURA_ID}`
-    },
-    {
-      id: '0x5',
-      token: 'ETH',
-      label: 'Goerli',
-      rpcUrl: `https://goerli.infura.io/v3/${INFURA_ID}`
     },
     {
       id: 11155111,
@@ -669,7 +663,7 @@ const onboard = Onboard({
     {
       id: 10,
       token: 'OETH',
-      label: 'Optimism',
+      label: 'OP Mainnet',
       rpcUrl: 'https://mainnet.optimism.io'
     },
     {
