@@ -761,7 +761,7 @@
           <button on:click={() => onboard.setChain({ chainId: '0x1' })}
             >Set Chain to Mainnet</button
           >
-          <button on:click={() => onboard.setChain({ chainId: '0x5' })}
+          <button on:click={() => onboard.setChain({ chainId: 11155111 })}
             >Set Chain to Sepolia</button
           >
           <button on:click={() => onboard.setChain({ chainId: '0x89' })}
