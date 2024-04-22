@@ -2363,10 +2363,10 @@
     utf-8-validate "^6.0.3"
     uuid "^8.3.2"
 
-"@metamask/sdk-communication-layer@0.18.4":
-  version "0.18.4"
-  resolved "https://registry.yarnpkg.com/@metamask/sdk-communication-layer/-/sdk-communication-layer-0.18.4.tgz#8ddef419101de86149a8cdc442dcbb80686f002c"
-  integrity sha512-aBJu3l56h8nnToYF+KXVGXQ82m4MEl8x3q89GBjMyX8/+f7SnmgNkkB2ApqLI/1XMnJRBQw/s1/zUSI7TUyutA==
+"@metamask/sdk-communication-layer@0.18.5":
+  version "0.18.5"
+  resolved "https://registry.yarnpkg.com/@metamask/sdk-communication-layer/-/sdk-communication-layer-0.18.5.tgz#4d153512172e6d0ff940f8ff6c50c2796ba49ceb"
+  integrity sha512-WMf9oJa3rAimjCXMAaaRVFPD0Q6dfZR0r9037KCpD5g9SlVh+TeMISfdQCEKAyhXP3d4CGxmp/Kib8C3mn2YLw==
   dependencies:
     bufferutil "^4.0.8"
     date-fns "^2.29.3"
@@ -2387,10 +2387,10 @@
     react-dom "^18.2.0"
     react-i18next "^13.2.2"
 
-"@metamask/sdk-install-modal-web@0.17.0":
-  version "0.17.0"
-  resolved "https://registry.yarnpkg.com/@metamask/sdk-install-modal-web/-/sdk-install-modal-web-0.17.0.tgz#230e6868f52ff9adcb22ed07ffdfab26cd72a0c7"
-  integrity sha512-R/Cr3Z2ZDMHkYjp5XUz5gs2yyaFtN1TmvBYueoD++wEH659WmSIL6/HTrU/sTRImvOpxCkF+FihwbYrlqagisw==
+"@metamask/sdk-install-modal-web@0.18.5":
+  version "0.18.5"
+  resolved "https://registry.yarnpkg.com/@metamask/sdk-install-modal-web/-/sdk-install-modal-web-0.18.5.tgz#f074f0c9a9c4d7272004ebf9792ce816418f13e0"
+  integrity sha512-Wygc0dgr1PwIA/Sg9WW9QWAsQr4G2GV6iveXt2xw8VKW/9cRORWqYukH1NZLr71hBKzi9AKYBU54Tk5Dfg41zg==
   dependencies:
     qr-code-styling "^1.6.0-rc.1"
 
@@ -2425,15 +2425,15 @@
     util "^0.12.4"
     uuid "^8.3.2"
 
-"@metamask/sdk@^0.18.4":
-  version "0.18.4"
-  resolved "https://registry.yarnpkg.com/@metamask/sdk/-/sdk-0.18.4.tgz#17164ce3cef2d1b9ab45e4bdb4087856a10aae6c"
-  integrity sha512-AW9R3lu0Z+bJKgEAnSEqo4OFjG+Q9PHQI5p2ZRQJWul08uvdlSFJsM424ZxKJtWBcN49YcZI+NuHZfKfAXrEvg==
+"@metamask/sdk@^0.18.6":
+  version "0.18.6"
+  resolved "https://registry.yarnpkg.com/@metamask/sdk/-/sdk-0.18.6.tgz#ac6cfb80d35b179ee6efd9b2b2f6b67e27422e0a"
+  integrity sha512-ZT8e4BrcWrm44apLb412WR0fDsgeaS8UlI1c0wKRUPu1w/UntpXuUVO+EaY8WDlnOPAiAsjyqWKey64/DfvbXQ==
   dependencies:
     "@metamask/onboarding" "^1.0.1"
     "@metamask/providers" "^15.0.0"
-    "@metamask/sdk-communication-layer" "0.18.4"
-    "@metamask/sdk-install-modal-web" "0.17.0"
+    "@metamask/sdk-communication-layer" "0.18.5"
+    "@metamask/sdk-install-modal-web" "0.18.5"
     "@types/dom-screen-wake-lock" "^1.0.0"
     bowser "^2.9.0"
     cross-fetch "^4.0.0"
