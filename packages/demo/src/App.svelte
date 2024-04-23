@@ -35,7 +35,11 @@
   import venlyModule from '@web3-onboard/venly'
   import bitgetModule from '@web3-onboard/bitget'
   import particleAuthModule from '@web3-onboard/particle-network'
-  import capsuleModule, { Environment, OAuthMethod, Theme } from '@web3-onboard/capsule'
+  import capsuleModule, {
+    Environment,
+    OAuthMethod,
+    Theme
+  } from '@web3-onboard/capsule'
   import {
     recoverAddress,
     arrayify,
