@@ -12,6 +12,6 @@ import type { ConstructorOpts, Environment, CapsuleModalV2Props } from '@usecaps
 export type CapsuleInitOptions = {
   environment: Environment
   apiKey: string,
-  constructorOpts?: ConstructorOpts
-  modalProps?: CapsuleModalV2Props
+  constructorOpts?: Partial<ConstructorOpts>
+  modalProps?: Partial<CapsuleModalV2Props>
 }
