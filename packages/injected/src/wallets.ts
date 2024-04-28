@@ -909,6 +909,17 @@ const stablewallet: InjectedWalletModule = {
   platforms: ['mobile']
 }
 
+const echooo: InjectedWalletModule = {
+  label: ProviderLabel.Echooo,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Echooo],
+  getIcon: async () => (await import('./icons/echooo.js')).default,
+  getInterface: getInjectedInterface(ProviderIdentityFlag.Echooo),
+  platforms: ['all'],
+  externalUrl: ProviderExternalUrl.Echooo
+}
+
 const wallets = [
   zeal,
   exodus,
@@ -966,7 +977,8 @@ const wallets = [
   foxwallet,
   Lif3Wallet,
   zodiacPilot,
-  stablewallet
+  stablewallet,
+  echooo
 ]
 
 export default wallets

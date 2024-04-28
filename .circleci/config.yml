@@ -448,6 +448,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/particle-network
     steps:
       - node-build-steps
+  build-echooo:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/echooo
+    steps:
+      - node-build-steps
 
   # Build staging/Alpha releases
   build-staging-core:
@@ -730,6 +736,12 @@ jobs:
     docker:
       - image: cimg/node:18.0.0
     working_directory: ~/web3-onboard-monorepo/packages/particle-network
+    steps:
+      - node-staging-build-steps
+  build-staging-echooo:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/echooo
     steps:
       - node-staging-build-steps
 
@@ -1017,4 +1029,10 @@ workflows:
       - build-particle:
           <<: *deploy_production_filters
       - build-staging-particle:
+          <<: *deploy_staging_filters
+  echooo:
+    jobs:
+      - build-echooo:
+          <<: *deploy_production_filters
+      - build-staging-echooo:
           <<: *deploy_staging_filters

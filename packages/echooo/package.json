@@ -1,7 +1,7 @@
 {
-  "name": "@web3-onboard/injected-wallets",
-  "version": "2.10.17-alpha.1",
-  "description": "Injected wallet module for connecting browser extension and mobile wallets to Web3-Onboard. Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardised spec compliant web3 providers for all supported wallets, framework agnostic modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
+  "name": "@web3-onboard/echooo",
+  "version": "2.0.1-alpha.1",
+  "description": "Echooo wallet module for connecting to Web3-Onboard. Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardised spec compliant web3 providers for all supported wallets, framework agnostic modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
   "keywords": [
     "Ethereum",
     "Web3",
@@ -30,18 +30,14 @@
     "pending",
     "confirmed",
     "Injected Wallet",
-    "Phantom",
-    "DeFi Wallet",
-    "Fordefi",
-    "Coin98 Wallet",
-    "FoxWallet",
-    "6963",
-    "onchain"
+    "Crypto",
+    "Crypto Wallet",
+    "Echooo"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/blocknative/web3-onboard.git",
-    "directory": "packages/injected"
+    "directory": "packages/core"
   },
   "homepage": "https://onboard.blocknative.com",
   "bugs": "https://github.com/blocknative/web3-onboard/issues",
@@ -68,8 +64,6 @@
     "window": "^4.2.7"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.3.3",
-    "joi": "17.9.1",
-    "lodash.uniqby": "^4.7.0"
+    "@web3-onboard/common": "^2.3.3"
   }
 }
