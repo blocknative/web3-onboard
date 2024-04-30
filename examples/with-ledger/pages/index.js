@@ -16,7 +16,6 @@ const buttonStyles = {
   fontFamily: 'inherit'
 }
 
-
 const INFURA__KEY = 'cf540cb0b3b643d399e59aef4f5ac179'
 const ledger = ledgerModule()
 
@@ -31,16 +30,22 @@ init({
       rpcUrl: `https://mainnet.infura.io/v3/${INFURA__KEY}`
     },
     {
-      id: '0x3',
-      token: 'tROP',
-      label: 'Ropsten',
-      rpcUrl: `https://ropsten.infura.io/v3/${INFURA__KEY}`
+      id: 42161,
+      token: 'ARB-ETH',
+      label: 'Arbitrum One',
+      rpcUrl: 'https://rpc.ankr.com/arbitrum'
     },
     {
-      id: '0x4',
-      token: 'rETH',
-      label: 'Rinkeby',
-      rpcUrl: `https://rinkeby.infura.io/v3/${INFURA__KEY}`
+      id: '0xa4ba',
+      token: 'ARB',
+      label: 'Arbitrum Nova',
+      rpcUrl: 'https://nova.arbitrum.io/rpc'
+    },
+    {
+      id: '0x2105',
+      token: 'ETH',
+      label: 'Base',
+      rpcUrl: 'https://mainnet.base.org'
     },
     {
       id: '0x38',
@@ -59,12 +64,18 @@ init({
       token: 'FTM',
       label: 'Fantom',
       rpcUrl: 'https://rpc.ftm.tools/'
+    },
+    {
+      id: 666666666,
+      token: 'DEGEN',
+      label: 'Degen',
+      rpcUrl: 'https://rpc.degen.tips'
     }
   ],
   appMetadata: {
-    name: "Web3-Onboard Demo",
+    name: 'Web3-Onboard Demo',
     icon: '<svg>My App Icon</svg>',
-    description: "A demo of Web3-Onboard with Ledger."
+    description: 'A demo of Web3-Onboard with Ledger.'
   },
   accountCenter: {
     desktop: {
@@ -74,8 +85,6 @@ init({
     }
   }
 })
-
-
 
 export default function Home() {
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet()

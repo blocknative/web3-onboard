@@ -11,10 +11,10 @@ Full Simulation Platform API documentation can be found [here](https://docs.bloc
 ### Install
 
 **NPM**
-`npm i @web3-onboard/core @web3-onboard/injected @web3-onboard/transaction-preview`
+`npm i @web3-onboard/core @web3-onboard/injected-wallets @web3-onboard/transaction-preview`
 
 **Yarn**
-`yarn add @web3-onboard/core @web3-onboard/injected @web3-onboard/transaction-preview`
+`yarn add @web3-onboard/core @web3-onboard/injected-wallets @web3-onboard/transaction-preview`
 
 ### Usage with Web3-Onboard Core package
 
@@ -24,7 +24,7 @@ To use the Transaction Preview package with web3-onboard all a developer needs t
 
 ```typescript
 import Onboard from '@web3-onboard/core'
-import injectedModule from '@web3-onboard/injected'
+import injectedModule from '@web3-onboard/injected-wallets'
 import transactionPreviewModule from '@web3-onboard/transaction-preview'
 
 const injected = injectedModule()
@@ -341,10 +341,7 @@ export type System = 'bitcoin' | 'ethereum'
 export type Network =
   | 'main'
   | 'testnet'
-  | 'ropsten'
-  | 'rinkeby'
-  | 'goerli'
-  | 'kovan'
+  | 'sepolia'
   | 'xdai'
   | 'bsc-main'
   | 'matic-main'

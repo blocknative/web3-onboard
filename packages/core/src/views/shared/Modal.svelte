@@ -53,6 +53,7 @@
   .full-screen-background {
     width: 100vw;
     height: 100vh;
+    height: 100dvh;
   }
 
   .max-height {
@@ -71,7 +72,8 @@
   }
 
   .modal-styling {
-    --border-radius: var(--onboard-modal-border-radius,
+    --border-radius: var(
+      --onboard-modal-border-radius,
       var(--w3o-border-radius, 1rem)
     );
     border-radius: var(--border-radius) var(--border-radius) 0 0;

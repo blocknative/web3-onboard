@@ -6,7 +6,7 @@ title: Introduction
   import walletModal from '$lib/assets/connect-modal.svg'
 </script>
 
-# Web3-Onboard
+# Web3 Onboard
 
 The best way to connect a wallet 🚀
 
@@ -18,44 +18,47 @@ Web3-Onboard is the quickest and easiest way to add multi-wallet and multi-chain
 
 - **Minimal Dependencies:** All wallet dependencies are included in separate packages, so you only include the ones you want to use in your app.
 
-- **Multiple Wallets and Accounts Connection, Multichain Support:** Allow your users to connect multiple wallets and multiple accounts within each wallet at the same time to your app. Let users switch between chains/networks with ease. ALL EVM networks supported.
+- **Multi Wallet and Multi Chain Support:** Allow your users to connect multiple wallets and multiple accounts within each wallet at the same time to your app. Let users switch between chains/networks with ease. ALL EVM networks supported.
+
+- **Account Center:** An interface to manage wallet connections and networks, with a minimal version for mobile.
+
+- **Themable:** Powerful customization options for all your needs. Style Web3 Onboard to fit into your existing designs, or pick from our pre-made themes.
 
 - **Unified Provider Interface:** All wallet modules expose a provider that is patched to be compliant with the EIP-1193, EIP-1102, EIP-3085 and EIP-3326 specifications. Whether your user is using Ledger or Metamask the provider will operate identically.
 
-- **Dynamic Imports:** Supporting multiple wallets in your app requires a lot of dependencies. Onboard dynamically imports a wallet
-  and its dependencies only when the user selects it, so that minimal bandwidth is used.
+- **Dynamic Imports:** Supporting multiple wallets in your app requires a lot of dependencies. Onboard dynamically imports a wallet and its dependencies only when the user selects it, so that minimal bandwidth is used.
 
 - **Framework Agnostic:** Avoid framework lock in -- Web3-Onboard works with any framework and includes helper packages for vue & react.
 
-- **Account Center:** An interface to manage wallet connections and networks, with a minimal version for mobile
-
 - **Notify:** Real-time transaction notifications for all transaction states for the connected wallet address(es). In-notification speedups & cancels for hardware wallet connections.
 
-### Supported Networks
+### Natively Supported EVM Chains
 
-web3-onboard supports all EVM networks. Supporting a new network is simply a matter of adding its details in the Chains section upon initialization. For more information see [initialization options](../../modules/core.md#initialization).
+web3-onboard supports ALL EVM networks. Supporting a new network is simply a matter of adding its details in the Chains section upon initialization. For more information see [initialization options](../../modules/core.md#initialization).
 
 - Ethereum
+- Arbitrum One
+- Arbitrum Nova
+- Base
 - Polygon
-- Base Goerli
-- Goerli
-- Sepolia
-- Arbitrum
-- Optimism
+- OP Mainnet
 - Avalanche
 - BNB Chain
 - Celo
+- Degen
 - Fantom
 - Gnosis Chain
 - Harmony One
 - Moonriver
-- All other EVM network
+- Sepolia
+- Base Goerli
+- All other EVM networks
 
-### [Optional] Use an API key to fetch real time transaction data, balances & gas
+### Optional - Use an API key to fetch real time transaction data, balances & gas
 
 Using a Blocknative API key with web3-onboard on the free plan will allow you to gain the benefits of Blocknative balance & transaction services. Blocknative has a free forever plan you can always use.
 
-This step is not required to use web3-onboard. You can skip to the **Quickstart** step below if you want to use web3-onboard without API services or if you already have a Blocknative account & API key.
+This step is not required to use web3-onboard. You can skip to the [**Quickstart**](/docs/overview/introduction#quickstart) step below if you want to use web3-onboard without API services or if you already have a Blocknative account & API key.
 
 **Setup your Account**
 Go to the Account Dashboard at [https://explorer.blocknative.com/account](https://explorer.blocknative.com/account) and setup an account with an email address. You will receive an email to confirm your account.
@@ -105,6 +108,36 @@ const onboard = Onboard({
       token: 'ETH',
       label: 'Ethereum Mainnet',
       rpcUrl: MAINNET_RPC_URL
+    },
+    {
+      id: 42161,
+      token: 'ARB-ETH',
+      label: 'Arbitrum One',
+      rpcUrl: 'https://rpc.ankr.com/arbitrum'
+    },
+    {
+      id: '0xa4ba',
+      token: 'ARB',
+      label: 'Arbitrum Nova',
+      rpcUrl: 'https://nova.arbitrum.io/rpc'
+    },
+    {
+      id: '0x2105',
+      token: 'ETH',
+      label: 'Base',
+      rpcUrl: 'https://mainnet.base.org'
+    },
+    {
+      id: '0xa4ec',
+      token: 'ETH',
+      label: 'Celo',
+      rpcUrl: 'https://1rpc.io/celo'
+    },
+    {
+      id: 666666666,
+      token: 'DEGEN',
+      label: 'Degen',
+      rpcUrl: 'https://rpc.degen.tips'
     }
   ]
 })
@@ -138,7 +171,7 @@ if (wallets[0]) {
 
 ## Wallet Modules
 
-Add other wallet modules such as Wallet Connect or Ledger to increase the support and functionality of your web3-onboard implementation. All modules are listed below and can be accessed through the subpages of web3-onboard docs on the left.
+Add other wallet modules such as Wallet Connect or Ledger to increase the support and functionality of your web3-onboard implementation. All modules can be accessed through the subpages of web3-onboard docs on the left.
 
 We recommend you add the [Core Repo](../../modules/core.md#install) and consider adding the [Injected Wallets](../../wallets/injected.md#install) module to get connected with wallets like Metamask, Trust, Coinbase Wallet & more right away.
 
@@ -148,27 +181,31 @@ We recommend you add the [Core Repo](../../modules/core.md#install) and consider
 
 **SDK Wallets**
 
+- [Arcana Auth](../../wallets/arcana.md#install)
+- [Blocto](../../wallets/blocto.md#install)
 - [Coinbase](../../wallets/coinbase.md#install)
-- [WalletConnect](../../wallets/walletconnect.md#install)
-- [Gnosis](../../wallets/gnosis.md#install)
-- [Magic](../../wallets/magic.md#login-options)
 - [Fortmatic](../../wallets/fortmatic.md#install)
+- [Frame](../../wallets/frame.md#install)
+- [Safe](../../wallets/gnosis.md#install)
+- [Magic](../../wallets/magic.md#login-options)
+- [MetaMask](../../wallets/metamask.md#install)
 - [MEW](../../wallets/mewwallet.md#install)
 - [Portis](../../wallets/portis.md#install)
 - [Web3Auth](../../wallets/web3auth.md#install)
-- [Frame](../../wallets/frame.md#install)
+- [WalletConnect](../../wallets/walletconnect.md#install)
 
 **Hardware Wallets**
 
-- [Ledger](../../wallets/ledger.md#install)
-- [Trezor](../../wallets/trezor.md#install)
+- [D'cent](../../wallets/dcent.md#install)
 - [Keystone](../../wallets/keystone.md#install)
 - [KeepKey](../../wallets/keepkey.md#install)
-- [D'cent](../../wallets/dcent.md#install)
+- [Ledger](../../wallets/ledger.md#install)
+- [Trezor](../../wallets/trezor.md#install)
 
 **Frameworks**
 
 - [React](../../modules/react.md#quickstart-with-injected-wallets-and-ethers-provider)
+- [Solid](../../modules/solid.md#install)
 - [Vue](../../modules/vue.md#install)
 
 ## Test out the demo app

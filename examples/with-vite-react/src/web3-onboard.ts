@@ -1,5 +1,5 @@
 import fortmaticModule from '@web3-onboard/fortmatic'
-import gnosisModule from '@web3-onboard/gnosis'
+import safeModule from '@web3-onboard/gnosis'
 import injectedModule from '@web3-onboard/injected-wallets'
 import keepkeyModule from '@web3-onboard/keepkey'
 import keystoneModule from '@web3-onboard/keystone'
@@ -33,7 +33,12 @@ const injected = injectedModule({
 
 const walletLink = coinbaseModule()
 
-const walletConnect = walletConnectModule()
+const walletConnect = walletConnectModule({
+  version: 2,
+  // Replace with your apiKey
+  projectId: '4a49c32131502e8c12d54295295e2012',
+  dappUrl: 'https://onboard.blocknative.com/'
+})
 const portis = portisModule({
   // Replace with your apiKey
   apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
@@ -48,7 +53,7 @@ const torus = torusModule()
 const ledger = ledgerModule()
 const keepkey = keepkeyModule()
 const keystone = keystoneModule()
-const gnosis = gnosisModule()
+const safe = safeModule()
 const dcent = dcentModule()
 const mew = mewModule()
 const tahoWalletSdk = tahoWalletModule()
@@ -76,7 +81,7 @@ export default init({
   // An array of wallet modules that you would like to be presented to the user to select from when connecting a wallet.
   wallets: [
     injected,
-    gnosis,
+    safe,
     fortmatic,
     portis,
     walletLink,
@@ -108,22 +113,40 @@ export default init({
       rpcUrl: `https://mainnet.infura.io/v3/${INFURA_KEY}`
     },
     {
-      id: '0x3',
-      token: 'tROP',
-      label: 'Ethereum Ropsten Testnet',
-      rpcUrl: `https://ropsten.infura.io/v3/${INFURA_KEY}`
+      id: 42161,
+      token: 'ARB-ETH',
+      label: 'Arbitrum One',
+      rpcUrl: 'https://rpc.ankr.com/arbitrum'
     },
     {
-      id: '0x4',
-      token: 'rETH',
-      label: 'Ethereum Rinkeby Testnet',
-      rpcUrl: `https://rinkeby.infura.io/v3/${INFURA_KEY}`
+      id: '0xa4ba',
+      token: 'ARB',
+      label: 'Arbitrum Nova',
+      rpcUrl: 'https://nova.arbitrum.io/rpc'
     },
     {
       id: '0x89',
       token: 'MATIC',
       label: 'Matic Mainnet',
       rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+    },
+    {
+      id: '0x2105',
+      token: 'ETH',
+      label: 'Base',
+      rpcUrl: 'https://mainnet.base.org'
+    },
+    {
+      id: '0xa4ec',
+      token: 'ETH',
+      label: 'Celo',
+      rpcUrl: 'https://1rpc.io/celo'
+    },
+    {
+      id: 666666666,
+      token: 'DEGEN',
+      label: 'Degen',
+      rpcUrl: 'https://rpc.degen.tips'
     }
   ],
   appMetadata: {

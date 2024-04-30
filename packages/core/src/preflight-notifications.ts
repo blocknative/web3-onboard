@@ -162,7 +162,7 @@ export function extractMessageFromError(error: {
   if (!error.stack || !error.message) {
     return {
       eventCode: 'txError',
-      errorMsg: 'An unknown error occured'
+      errorMsg: 'An unknown error occurred'
     }
   }
 

@@ -33,6 +33,14 @@
   // import phantomModule from '@web3-onboard/phantom'
   // import trustModule from '@web3-onboard/trust'
   // import frontierModule from '@web3-onboard/frontier'
+
+  // import bloctoModule from '@web3-onboard/blocto'
+  // import cedeStoreModule from '@web3-onboard/cede-store'
+  // import arcanaAuthModule from '@web3-onboard/arcana-auth'
+  // import venlyModule from '@web3-onboard/venly'
+  // import bitgetModule from '@web3-onboard/bitget'
+  // import particleAuthModule from '@web3-onboard/particle-network'
+  // import capsuleModule, { Environment } from '@web3-onboard/capsule'
   import {
     recoverAddress,
     arrayify,
@@ -43,6 +51,7 @@
   import { share } from 'rxjs/operators'
   import VConsole from 'vconsole'
   import blocknativeIcon from './blocknative-icon.js'
+  import DappAuth from '@blocto/dappauth'
 
   if (window.innerWidth < 700) {
     new VConsole()
@@ -73,9 +82,16 @@
   const injected = injectedModule({
     custom: [
       // include custom (not natively supported) injected wallet modules here
+    ],
+    // display all unavailable injected wallets
+    // displayUnavailable: true,
+    // ||
+    // display specific unavailable wallets
+    displayUnavailable: [
+      ProviderLabel.MetaMask,
+      ProviderLabel.Trust,
+      ProviderLabel.Phantom
     ]
-    // display all wallets even if they are unavailable
-    // displayUnavailable: true
     // but only show Binance and Bitski wallet if they are available
     // filter: {
     //   [ProviderLabel.Binance]: 'unavailable',
@@ -104,22 +120,32 @@
     //       .filter(wallet => wallet)
     //   )
     // }
-    // walletUnavailableMessage: wallet => `Oops ${wallet.label} is unavailable!`
+    // walletUnavailableMessage: wallet =>
+    //   wallet.externalUrl
+    //     ? `Oops ${wallet.label} is unavailable! Please <a href="${wallet.externalUrl}" target="_blank">install</a>`
+    //     : `Oops ${wallet.label} is unavailable!`
   })
 
   // const coinbaseWallet = coinbaseModule()
 
   // const walletConnect = walletConnectModule({
-  //   connectFirstChainId: true,
-  //   version: 2,
   //   handleUri: uri => console.log(uri),
   //   projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
-  //   qrcodeModalOptions: {
-  //   mobileLinks: ['rainbow', 'metamask', 'argent', 'trust', 'imtoken', 'pillar']
-  //   }
+  //   dappUrl: 'https://www.onboard.blocknative.com'
   // })
   // const portis = portisModule({
   //   apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
+  // })
+  // const metamaskSDKWallet = metamaskSDK({
+  //   options: {
+  //     extensionOnly: false,
+  //     i18nOptions: {
+  //       enabled: true
+  //     },
+  //     dappMetadata: {
+  //       name: 'Demo Web3Onboard'
+  //     }
+  //   }
   // })
 
   // const fortmatic = fortmaticModule({
@@ -131,26 +157,32 @@
   //     'DJuUOKvmNnlzy6ruVgeWYWIMKLRyYtjYa9Y10VCeJzWZcygDlrYLyXsBQjpJ2hxlBO9dnl8t9GmAC2qOP5vnIGo'
   // })
 
+  // const arcanaAuth = arcanaAuthModule({
+  //   clientID: 'xar_test_c9c3bc702eb13255c58dab0e74cfa859711c13cb'
+  // })
+
   // const torus = torusModule()
   // const infinityWallet = infinityWalletModule()
-  // const ledger = ledgerModule()
+  // const ledger = ledgerModule({ projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5' })
   // const keepkey = keepkeyModule()
   // const keystone = keystoneModule()
-  // const gnosis = gnosisModule()
-  // const tallyho = tallyHoModule()
+  // const safe = safeModule()
   // const xdefi = xdefiWalletModule()
   // const zeal = zealModule()
   // const phantom = phantomModule()
   // const trust = trustModule()
   // const frontier = frontierModule()
+  // const cedeStore = cedeStoreModule()
+  // const blocto = bloctoModule()
+  // const tallyho = tallyHoModule()
 
-  const trezorOptions = {
-    email: 'test@test.com',
-    appUrl: 'https://www.blocknative.com',
-    consecutiveEmptyAccountThreshold: 10
-    // containerElement: '#sample-container-el'
-  }
-  const trezor = trezorModule(trezorOptions)
+  // const trezorOptions = {
+  //   email: 'test@test.com',
+  //   appUrl: 'https://www.blocknative.com',
+  //   consecutiveEmptyAccountThreshold: 10
+  //   // containerElement: '#sample-container-el'
+  // }
+  // const trezor = trezorModule(trezorOptions)
 
   // const uauthOptions = {
   //   clientID: 'a25c3a65-a1f2-46cc-a515-a46fe7acb78c',
@@ -167,41 +199,66 @@
   //   // for more info see the @web3-onboard/magic docs
   // })
 
+  // const particle = particleAuthModule({
+  //   projectId: 'b385ccf0-73c3-485a-9941-159b7855b806',
+  //   clientKey: 'cSTLqhvONB5j588Wz6E5WJLMPrHeUlGbymf1DFhO',
+  //   appId: 'b1f0239a-edb0-41f9-b0f5-ab780bb02a9e'
+  // })
+
   // const dcent = dcentModule()
+  // const bitget = bitgetModule()
+  // const frameWallet = frameModule()
   // const sequence = sequenceModule()
   // const enkrypt = enkryptModule()
   // const mewWallet = mewWalletModule()
   // const transactionPreview = transactionPreviewModule({
   //   requireTransactionApproval: true
   // })
+  // const venly = venlyModule({
+  //   clientId: 'blocknative',
+  //   environment: 'staging'
+  // })
+  // const capsule = capsuleModule({
+  //   environment: Environment.DEVELOPMENT,
+  //   apiKey: '992bbd9146d5de8ad0419f141d9a7ca7'
+  // })
 
   const onboard = Onboard({
     wallets: [
-      trezor,
+      // metamaskSDKWallet,
+      // coinbaseWallet,
       injected
       // ledger,
+      // trezor,
       // walletConnect,
-      // infinityWallet,
+      // phantom,
+      // safe,
       // trust,
+      // tallyho,
+      // bitget,
       // enkrypt,
+      // infinityWallet,
       // mewWallet,
       // keepkey,
       // keystone,
-      // coinbaseWallet,
       // magic,
       // fortmatic,
       // portis,
       // torus,
-      // gnosis,
       // dcent,
       // sequence,
-      // tallyho,
       // uauth,
       // web3auth,
+      // capsule,
       // zeal,
       // frontier,
-      // phantom,
-      // xdefi
+      // xdefi,
+      // frameWallet,
+      // cedeStore,
+      // arcanaAuth,
+      // blocto,
+      // venly,
+      // particle
     ],
     // transactionPreview,
     // gas,
@@ -232,16 +289,34 @@
         rpcUrl: 'https://rpc.sepolia.org/'
       },
       {
-        id: '0x5',
-        token: 'ETH',
-        label: 'Goerli',
-        rpcUrl: `https://goerli.infura.io/v3/${infura_key}`
+        id: 42161,
+        token: 'ARB-ETH',
+        label: 'Arbitrum One',
+        rpcUrl: 'https://rpc.ankr.com/arbitrum'
+      },
+      {
+        id: '0xa4ba',
+        token: 'ARB',
+        label: 'Arbitrum Nova',
+        rpcUrl: 'https://nova.arbitrum.io/rpc'
       },
       {
         id: '0x13881',
         token: 'MATIC',
         label: 'Polygon - Mumbai',
-        rpcUrl: 'https://matic-mumbai.chainstacklabs.com	'
+        rpcUrl: 'https://polygon-mumbai-bor-rpc.publicnode.com'
+      },
+      {
+        id: '0x2105',
+        token: 'ETH',
+        label: 'Base',
+        rpcUrl: 'https://mainnet.base.org'
+      },
+      {
+        id: '0xa4ec',
+        token: 'ETH',
+        label: 'Celo',
+        rpcUrl: 'https://1rpc.io/celo'
       },
       {
         id: '0x38',
@@ -265,34 +340,28 @@
         label: 'Polygon',
         rpcUrl: 'https://matic-mainnet.chainstacklabs.com',
         secondaryTokens: [
-  {
-    address: '0xc3c7d422809852031b44ab29eec9f1eff2a58756',
-    icon: `https://avatars.githubusercontent.com/u/43341157`
-  }
-  ]
+          {
+            address: '0xc3c7d422809852031b44ab29eec9f1eff2a58756',
+            icon: `https://avatars.githubusercontent.com/u/43341157`
+          }
+        ]
       },
       {
         id: 10,
         token: 'OETH',
-        label: 'Optimism',
+        label: 'OP Mainnet',
         rpcUrl: 'https://mainnet.optimism.io'
       },
       {
-        id: 42161,
-        token: 'ARB-ETH',
-        label: 'Arbitrum',
-        rpcUrl: 'https://rpc.ankr.com/arbitrum',
-        secondaryTokens: [
-          {
-            address: '0x539bde0d7dbd336b79148aa742883198bbf60342',
-            icon: `https://avatars.githubusercontent.com/u/43341157`
-          }
-        ]
+        id: 666666666,
+        token: 'DEGEN',
+        label: 'Degen',
+        rpcUrl: 'https://rpc.degen.tips'
       }
     ],
     connect: {
       // disableClose: true,
-      autoConnectLastWallet: true,
+      // removeWhereIsMyWalletWarning: true,
       autoConnectAllPreviousWallet: true
     },
     appMetadata: {
@@ -315,9 +384,7 @@
     // // example customizing account center
     accountCenter: {
       desktop: {
-        position: 'topRight',
-        enabled: true,
-        minimal: false
+        enabled: true
       }
     },
     // example customizing copy
@@ -346,7 +413,7 @@
           //     type: 'hint',
           //     message: 'Your in the pool, hope you brought a towel!',
           //     autoDismiss: 0,
-          //     link: `https://goerli.etherscan.io/tx/${transaction.hash}`
+          //     link: `https://sepolia.etherscan.io/tx/${transaction.hash}`
           //   }
           // }
         },
@@ -361,7 +428,7 @@
     // },
     // Sign up for your free api key at www.Blocknative.com
     apiKey,
-    theme: 'system'
+    theme: 'default'
   })
 
   // Subscribe to wallet updates
@@ -450,20 +517,34 @@
     // if using ethers v6 this is:
     // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
     const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
-
     const signer = ethersProvider?.getSigner()
     const addr = await signer?.getAddress()
     const signature = await signer?.signMessage(signMsg)
+    let verifySign = false
+    let recoveredAddress = null
 
-    const recoveredAddress = recoverAddress(
-      arrayify(hashMessage(signMsg)),
-      signature
+    try {
+      recoveredAddress = recoverAddress(
+        arrayify(hashMessage(signMsg)),
+        signature
+      )
+      verifySign = recoveredAddress === addr
+    } catch (error) {
+      console.error('Error recovering address', error)
+    }
+
+    // contract wallets verify EIP-1654
+    const verifySignBy1654 = new DappAuth(provider)
+    const isAuthorizedSigner = await verifySignBy1654.isAuthorizedSigner(
+      signMsg,
+      signature,
+      address
     )
-
-    if (recoveredAddress !== address) {
+    if (!verifySign && !isAuthorizedSigner) {
       console.error(
         "Signature failed. Recovered address doesn' match signing address."
       )
+      verifySign = recoveredAddress === addr
     }
 
     console.log({ signMsg, signature, recoveredAddress, addr })
@@ -536,6 +617,10 @@
   const updateTheme = () => {
     onboard.state.actions.updateTheme(selectedTheme)
   }
+
+  function isSVG(str) {
+    return str.includes('<svg')
+  }
 </script>
 
 <style>
@@ -592,6 +677,10 @@
     height: 58px;
     border-radius: 100%;
     border: 1px solid black;
+  }
+  .position-buttons {
+    display: flex;
+    flex-direction: column;
   }
 </style>
 
@@ -678,13 +767,70 @@
             >Set Chain to Mainnet</button
           >
           <button on:click={() => onboard.setChain({ chainId: '0x5' })}
-            >Set Chain to Goerli</button
+            >Set Chain to Sepolia</button
           >
           <button on:click={() => onboard.setChain({ chainId: '0x89' })}
             >Set Chain to Matic</button
           >
           <button on:click={() => onboard.setChain({ chainId: 10 })}
-            >Set Chain to Optimism</button
+            >Set Chain to OP Mainnet</button
+          >
+        </div>
+        <div class="position-buttons">
+          <button
+            on:click={() =>
+              onboard.state.actions.updateAccountCenter({
+                position: 'bottomLeft'
+              })}>AC Bottom Left</button
+          >
+          <button
+            on:click={() =>
+              onboard.state.actions.updateAccountCenter({
+                position: 'topRight'
+              })}>AC Top Right</button
+          >
+          <button
+            on:click={() =>
+              onboard.state.actions.updateAccountCenter({
+                position: 'bottomRight'
+              })}>AC Bottom Right</button
+          >
+          <button
+            on:click={() =>
+              onboard.state.actions.updateAccountCenter({
+                position: 'topLeft'
+              })}>AC Top Left</button
+          >
+          <button
+            on:click={() =>
+              onboard.state.actions.updateAccountCenter({
+                minimal: false
+              })}>Large Trigger</button
+          >
+          <button
+            on:click={() =>
+              onboard.state.actions.updateAccountCenter({
+                minimal: true
+              })}>Small Trigger</button
+          >
+          <button
+            on:click={() =>
+              onboard.state.actions.updateAppMetadata({
+                // Checkmark
+                icon: `<svg width="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.59 8.59L12 13.17L7.41 8.59L6 10L12 16L18 10L16.59 8.59Z" fill="currentColor"/></svg>`,
+                // Hourglass
+                logo: `<svg width="100%" height="100%" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0 0L0.0100002 6L4 10L0.0100002 14.01L0 20H12V14L8 10L12 6.01V0H0ZM10 14.5V18H2V14.5L6 10.5L10 14.5Z" fill="#929BED"/>
+                  </svg>`,
+                description: 'Updated Description!',
+                agreement: {
+                  version: '2.0.0',
+                  termsUrl: 'https://onboard.blocknative.com/',
+                  privacyUrl: 'https://onboard.blocknative.com/'
+                },
+                gettingStartedGuide: 'https://onboard.blocknative.com/',
+                explore: 'https://onboard.blocknative.com/'
+              })}>Update appMetadata</button
           >
         </div>
       </div>
@@ -694,7 +840,15 @@
     {#each $wallets$ as { icon, label, accounts, chains, provider, instance }}
       <div class="connected-wallet" data-testid="connected-wallet">
         <div class="flex-centered" style="width: 10rem;">
-          <div style="width: 2rem; height: 2rem">{@html icon}</div>
+          <div style="width: 2rem; height: 2rem">
+            {#if isSVG(icon)}
+              <!-- render svg string -->
+              {@html icon}
+            {:else}
+              <!-- load img url -->
+              <img style="width: 2rem; height: 2rem" src={icon} alt="logo" />
+            {/if}
+          </div>
           <span data-testid={label}>{label}</span>
         </div>
 

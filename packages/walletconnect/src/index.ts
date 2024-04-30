@@ -1,61 +1,8 @@
+import { validateWCInitOptions } from './validation.js'
 import type { WalletInit } from '@web3-onboard/common'
-import type { Web3ModalConfig } from '@web3modal/standalone'
-import v1 from './v1.js'
-import v2 from './v2.js'
+import walletConnect from './walletConnect.js'
 
-export type WalletConnectOptions = {
-  /**
-   * Optional function to handle WalletConnect URI when it becomes available
-   */
-  handleUri?: (uri: string) => Promise<unknown>
-  connectFirstChainId?: boolean
-  bridge?: string
-  qrcodeModalOptions?: {
-    mobileLinks: string[]
-  }
-} & (
-  | {
-      /**
-       * Defaults to version: 1 - this behavior will be deprecated after the WalletConnect v1 sunset
-       */
-      version?: 1
-    }
-  | {
-      /**
-       * Project ID associated with [WalletConnect account](https://cloud.walletconnect.com)
-       */
-      projectId: string
-      /**
-       * Defaults to version: 1 - this behavior will be deprecated after the WalletConnect v1 sunset
-       */
-      version: 2
-      /**
-       * List of Required Chain(s) ID for wallets to support in number format (integer or hex)
-       * Defaults to [1] - Ethereum
-       * The chains defined within the web3-onboard config will define the
-       * optional chains for the WalletConnect module
-       */
-      requiredChains?: number[] | undefined
-      /**
-       * `undefined` by default, see https://docs.walletconnect.com/2.0/web3modal/options
-       */
-      qrModalOptions?: Pick<
-        Web3ModalConfig,
-        | 'themeMode'
-        | 'themeVariables'
-        | 'chainImages'
-        | 'desktopWallets'
-        | 'enableExplorer'
-        | 'explorerRecommendedWalletIds'
-        | 'explorerExcludedWalletIds'
-        | 'mobileWallets'
-        | 'privacyPolicyUrl'
-        | 'termsOfServiceUrl'
-        | 'tokenImages'
-        | 'walletImages'
-      >
-    }
-)
+import type { WalletConnectOptions } from 'types.js'
 
 export const isHexString = (value: string | number) => {
   if (typeof value !== 'string' || !value.match(/^0x[0-9A-Fa-f]*$/)) {
@@ -65,9 +12,20 @@ export const isHexString = (value: string | number) => {
   return true
 }
 
-function walletConnect(options?: WalletConnectOptions): WalletInit {
-  const version = (options && options.version) || 1
-  return version === 1 ? v1(options) : v2(options)
+function initWalletConnect(options: WalletConnectOptions): WalletInit {
+  if (!options) {
+    throw new Error(
+      `WalletConnect requires an initialization object to be passed - see the official docs for an example: https://onboard.blocknative.com/docs/wallets/walletconnect`
+    )
+  }
+  if (options) {
+    const error = validateWCInitOptions(options)
+
+    if (error) {
+      throw error
+    }
+  }
+  return walletConnect(options)
 }
 
-export default walletConnect
+export default initWalletConnect

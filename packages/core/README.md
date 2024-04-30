@@ -6,6 +6,21 @@
 
 This is the core package that contains all of the UI and logic to be able to seamlessly connect user's wallets to your app and track the state of those wallets. Onboard no longer contains any wallet specific code, so wallets need to be passed in upon initialization.
 
+_Tip: Release 2.24.0 moves the default position of the account center from topRight to bottomRight. To reset your application to topRight, include the following when initializing onboard:_
+
+```typescript
+  accountCenter: {
+      desktop: {
+        enabled: true,
+        position: 'topRight'
+      },
+      mobile: {
+        enabled: true,
+        position: 'topRight'
+      }
+    }
+```
+
 ## Quick start
 
 Checkout our full library of quick start examples for connecting and interacting with EVM based wallets
@@ -40,6 +55,7 @@ Note:
 
 - All wallet modules (except for `injected-wallets`) require extra dependencies and may require polyfilling the node built in modules for the browser. See the [Build Environments](#build-environments) section for more info
 - **If using React** you may be interested in checking out the React Hooks package here - https://www.npmjs.com/package/@web3-onboard/react
+- **If using Solid** you may be interested in checking out the Solid package here - https://www.npmjs.com/package/@web3-onboard/solid
 - **If using Vue** you may be interested in checking out the Vue package here - https://www.npmjs.com/package/@web3-onboard/vue
 
 ## Initialization
@@ -133,6 +149,7 @@ type Chain = {
   publicRpcUrl?: string // an optional public RPC used when adding a new chain config to the wallet
   blockExplorerUrl?: string // also used when adding a new config to the wallet
   secondaryTokens?: SecondaryTokens[] // An optional array of tokens (max of 5) to be available to the dapp in the app state object per wallet within the wallet account and displayed in Account Center (if enabled)
+  protectedRpcUrl?: string //An optional protected RPC URL - Defaults to Blocknative's private RPC aggregator to allow users to update the chain RPC within their wallet, specifically for private RPCs that protect user transactions. More information can be found at `https://docs.blocknative.com/blocknative-mev-protection/transaction-boost`
 }
 interface SecondaryTokens {
   /**
@@ -179,6 +196,20 @@ type RecommendedInjectedWallets = {
 }
 ```
 
+**`updateAppMetadata`**
+
+If you need to update your Application Metadata after initialization, you can call the `updateAppMetadata` function with the new configuration
+
+```typescript
+onboard.state.actions.updateAppMetadata({
+  logo: `<svg width="100%" height="100%" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 0L0.0100002 6L4 10L0.0100002 14.01L0 20H12V14L8 10L12 6.01V0H0ZM10 14.5V18H2V14.5L6 10.5L10 14.5Z" fill="#929BED"/>
+  </svg>`,
+  description: 'Updated Description!'
+})
+```
+
+---
+
 **`connect`**
 An object that allows for customization of the Connect Modal and accepts the type ConnectModalOptions.
 
@@ -218,6 +249,16 @@ type ConnectModalOptions = {
    * Defaults to `https://www.blocknative.com/blog/metamask-wont-connect-web3-wallet-troubleshooting`
    */
   wheresMyWalletLink?: string
+  /**
+   * Hide the "Where is my wallet?" link notice displayed in the connect modal
+   * at the bottom of the wallets list
+   */
+  removeWhereIsMyWalletWarning?: boolean
+  /**
+   * Hide the "I don't have a wallet" link displayed
+   * on the left panel of the connect modal
+   */
+  removeIDontHaveAWalletInfoLink?: boolean
   /**
    * @deprecated Has no effect unless `@web3-onboard/unstoppable-resolution`
    * package has been added and passed into the web3-onboard initialization
@@ -324,6 +365,16 @@ type AccountCenter = {
   position?: AccountCenterPosition // default: 'bottomRight'
   expanded?: boolean // default: true
   minimal?: boolean // enabled by default for mobile
+  /**
+   * Controls the visibility of the 'Enable Transaction Protection' button within the expanded Account Center.
+   * - When set to false (default), the button is visible.
+   * - When set to true, the button is hidden.
+   * This setting can be configured globally for the Account Center, or separately for different interfaces like desktop/mobile.
+   * defaults to `docs.blocknative.com/blocknative-mev-protection/transaction-boost-alpha`
+   * Use this property to override the default link to give users
+   * more information about transaction protection and the RPC be set
+   */
+  transactionProtectionInfoLink?: string
 
   /**
    * @deprecated Use top level containerElements property
@@ -335,6 +386,23 @@ type AccountCenter = {
 type AccountCenterOptions = {
   desktop: Omit<AccountCenter, 'expanded'>
   mobile: Omit<AccountCenter, 'expanded'>
+  /**
+   * false by default - This allows removal of the
+   * Enable Transaction Protection' button within the Account Center
+   * expanded when set to true
+   * Can be set as a global for Account Center or per interface (desktop/mobile)
+   */
+  hideTransactionProtectionBtn?: boolean
+  /**
+   * Controls the visibility of the 'Enable Transaction Protection' button within the expanded Account Center.
+   * - When set to false (default), the button is visible.
+   * - When set to true, the button is hidden.
+   * This setting can be configured globally for the Account Center, or separately for different interfaces like desktop/mobile.
+   * defaults to `docs.blocknative.com/blocknative-mev-protection/transaction-boost-alpha`
+   * Use this property to override the default link to give users
+   * more information about transaction protection and the RPC be set
+   */
+  transactionProtectionInfoLink?: string
 }
 
 type AccountCenterPosition =
@@ -480,7 +548,7 @@ type NotificationType = 'pending' | 'success' | 'error' | 'hint'
 
 declare type Network =
   | 'main'
-  | 'goerli'
+  | 'sepolia'
   | 'matic-main'
   | 'matic-mumbai'
   | 'local'
@@ -507,7 +575,6 @@ const injected = injectedModule()
 
 // Only one RPC endpoint required per chain
 const ETH_MAINNET_RPC = `https://mainnet.infura.io/v3/${INFURA_KEY}` || `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
-const ETH_GOERLI_RPC = `https://goerli.infura.io/v3/${INFURA_ID}` || `https://eth-goerli.g.alchemy.com/v2/${ALCHEMY_KEY}`
 
 const onboard = Onboard({
   // head to https://explorer.blocknative.com/account to sign up for free
@@ -527,10 +594,22 @@ const onboard = Onboard({
       rpcUrl: 'https://rpc.sepolia.org/'
     },
     {
-      id: '0x5',
+      id: 42161,
+      token: 'ARB-ETH',
+      label: 'Arbitrum One',
+      rpcUrl: 'https://rpc.ankr.com/arbitrum'
+    },
+    {
+      id: '0xa4ba',
+      token: 'ARB',
+      label: 'Arbitrum Nova',
+      rpcUrl: 'https://nova.arbitrum.io/rpc'
+    },
+    {
+      id: '0x2105',
       token: 'ETH',
-      label: 'Goerli',
-      rpcUrl: ETH_GOERLI_RPC
+      label: 'Base',
+      rpcUrl: 'https://mainnet.base.org'
     },
     {
       id: '0x38',
@@ -549,6 +628,12 @@ const onboard = Onboard({
       token: 'FTM',
       label: 'Fantom Mainnet',
       rpcUrl: 'https://rpc.ftm.tools/'
+    },
+    {
+      id: 666666666,
+      token: 'DEGEN',
+      label: 'Degen',
+      rpcUrl: 'https://rpc.degen.tips'
     }
   ],
   appMetadata: {
@@ -819,6 +904,12 @@ const onboard = Onboard({
       rpcUrl:
         `https://mainnet.infura.io/v3/${INFURA_KEY}` ||
         `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
+    },
+    {
+      id: '0x2105',
+      token: 'ETH',
+      label: 'Base',
+      rpcUrl: 'https://mainnet.base.org'
     }
   ]
 })

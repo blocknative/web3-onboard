@@ -41,6 +41,24 @@ const onboard = Onboard({
       token: 'ETH',
       label: 'Ethereum Mainnet',
       rpcUrl: MAINNET_RPC_URL
+    },
+    {
+      id: 42161,
+      token: 'ARB-ETH',
+      label: 'Arbitrum One',
+      rpcUrl: 'https://rpc.ankr.com/arbitrum'
+    },
+    {
+      id: '0xa4ba',
+      token: 'ARB',
+      label: 'Arbitrum Nova',
+      rpcUrl: 'https://nova.arbitrum.io/rpc'
+    },
+    {
+      id: '0x2105',
+      token: 'ETH',
+      label: 'Base',
+      rpcUrl: 'https://mainnet.base.org'
     }
   ]
 })
@@ -87,15 +105,17 @@ For full documentation, check out the README.md for each package or the [docs pa
 
 **SDK Wallets**
 
+- [Arcana](packages/arcana-auth/README.md)
 - [Coinbase](packages/coinbase/README.md)
 - [Trust](packages/trust/README.md)
 - [WalletConnect](packages/walletconnect/README.md)
-- [Gnosis](packages/gnosis/README.md)
+- [Safe](packages/gnosis/README.md)
 - [Magic](packages/magic/README.md)
 - [Fortmatic](packages/fortmatic/README.md)
 - [Portis](packages/portis/README.md)
 - [MEW-Wallet](packages/mew-wallet/README.md)
 - [Web3Auth](packages/web3auth/README.md)
+- [Capsule](packages/capsule/README.md)
 - [Sequence](packages/sequence/README.md)
 - [Taho (previously Tally Ho)](packages/tallyho/README.md)
 - [Enkrypt](packages/enkrypt/README.md)
@@ -104,6 +124,8 @@ For full documentation, check out the README.md for each package or the [docs pa
 - [XDEFI](packages/xdefi/README.md)
 - [Infinity Wallet](packages/infinity-wallet/README.md)
 - [Frame](packages/frame/README.md)
+- [Blocto](packages/blocto/README.md)
+- [Particle Network](packages/particle-network/README.md)
 
 **Hardware Wallets**
 
@@ -116,6 +138,7 @@ For full documentation, check out the README.md for each package or the [docs pa
 **Frameworks**
 
 - [React](packages/react/README.md)
+- [Solid](packages/solid/README.md)
 - [Vue](packages/vue/README.md)
 
 ## Test out the demo app

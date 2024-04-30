@@ -17,6 +17,24 @@ title: Core
 
 This is the core package that contains all of the UI and logic to be able to seamlessly connect user's wallets to your app and track the state of those wallets. Onboard no longer contains any wallet specific code, so wallets need to be passed in upon initialization.
 
+:::admonition type="tip"
+_note: Release 2.24.0 moves the default position of the account center from topRight to bottomRight. To reset your application to topRight, include the following when initializing onboard:_
+
+```typescript
+  accountCenter: {
+      desktop: {
+        enabled: true,
+        position: 'topRight'
+      },
+      mobile: {
+        enabled: true,
+        position: 'topRight'
+      }
+    }
+```
+
+:::
+
 ## Install
 
 Install the core module:
@@ -46,14 +64,14 @@ If you would like to support all wallets, then you can install all of the wallet
 <TabPanel value="yarn">
 
 ```sh copy
-yarn add @web3-onboard/coinbase @web3-onboard/fortmatic @web3-onboard/gnosis @web3-onboard/injected-wallets @web3-onboard/keepkey @web3-onboard/keystone @web3-onboard/ledger @web3-onboard/magic @web3-onboard/portis @web3-onboard/react @web3-onboard/torus @web3-onboard/trezor @web3-onboard/walletconnect @web3-onboard/web3auth @web3-onboard/dcent @web3-onboard/sequence @web3-onboard/enkrypt @web3-onboard/mew-wallet @web3-onboard/uauth @web3-onboard/zeal @web3-onboard/frontier
+yarn add @web3-onboard/coinbase @web3-onboard/metamask @web3-onboard/fortmatic @web3-onboard/gnosis @web3-onboard/injected-wallets @web3-onboard/arcana-auth @web3-onboard/keepkey @web3-onboard/keystone @web3-onboard/ledger @web3-onboard/magic @web3-onboard/portis @web3-onboard/react @web3-onboard/torus @web3-onboard/trezor @web3-onboard/walletconnect @web3-onboard/web3auth @web3-onboard/dcent @web3-onboard/sequence @web3-onboard/enkrypt @web3-onboard/mew-wallet @web3-onboard/uauth @web3-onboard/zeal @web3-onboard/frontier
 ```
 
   </TabPanel>
   <TabPanel value="npm">
 
 ```sh copy
-npm install @web3-onboard/coinbase @web3-onboard/fortmatic @web3-onboard/gnosis @web3-onboard/injected-wallets @web3-onboard/keepkey @web3-onboard/keystone @web3-onboard/ledger @web3-onboard/magic @web3-onboard/portis @web3-onboard/react @web3-onboard/torus @web3-onboard/trezor @web3-onboard/walletconnect @web3-onboard/web3auth @web3-onboard/dcent @web3-onboard/sequence @web3-onboard/enkrypt @web3-onboard/mew-wallet @web3-onboard/uauth @web3-onboard/zeal @web3-onboard/frontier
+npm install @web3-onboard/coinbase @web3-onboard/metamask @web3-onboard/fortmatic @web3-onboard/gnosis @web3-onboard/injected-wallets @web3-onboard/arcana-auth @web3-onboard/keepkey @web3-onboard/keystone @web3-onboard/ledger @web3-onboard/magic @web3-onboard/portis @web3-onboard/react @web3-onboard/torus @web3-onboard/trezor @web3-onboard/walletconnect @web3-onboard/web3auth @web3-onboard/dcent @web3-onboard/sequence @web3-onboard/enkrypt @web3-onboard/mew-wallet @web3-onboard/uauth @web3-onboard/zeal @web3-onboard/frontier
 ```
 
   </TabPanel>
@@ -63,6 +81,7 @@ npm install @web3-onboard/coinbase @web3-onboard/fortmatic @web3-onboard/gnosis 
 
 - All wallet modules (except for `injected-wallets`) require extra dependencies and may require polyfilling the node built in modules for the browser. See the [Build Environments](#build-environments) section for more info
 - **If using React** you may be interested in checking out the React Hooks package here - https://www.npmjs.com/package/@web3-onboard/react
+- **If using Solid** you may be interested in checking out the Solid package here - https://www.npmjs.com/package/@web3-onboard/solid
 - **If using Vue** you may be interested in checking out the Vue package here - https://www.npmjs.com/package/@web3-onboard/vue
   :::
 
@@ -138,14 +157,15 @@ type Chain = {
   namespace?: 'evm' // string indicating chain namespace. Defaults to 'evm' but will allow other chain namespaces in the future
   // PLEASE NOTE: Some wallets require an rpcUrl, label, and token for actions such as adding a new chain.
   // It is recommended to include rpcUrl, label, and token for full functionality.
-  rpcUrl?: string // Recommended to include. Used for network requests.
+  rpcUrl?: string // Recommended to include. Used for network requests (eg Alchemy or Infura end point).
   label?: string // Recommended to include. Used for display, eg Ethereum Mainnet.
   token?: TokenSymbol // Recommended to include. The native token symbol, eg ETH, BNB, MATIC.
   color?: string // the color used to represent the chain and will be used as a background for the icon
   icon?: string // the icon to represent the chain
   publicRpcUrl?: string // an optional public RPC used when adding a new chain config to the wallet
   blockExplorerUrl?: string // also used when adding a new config to the wallet
-   secondaryTokens?: SecondaryTokens[] // An optional array of tokens (max of 5) to be available to the dapp in the app state object per wallet within the wallet account and displayed in Account Center (if enabled)
+  secondaryTokens?: SecondaryTokens[] // An optional array of tokens (max of 5) to be available to the dapp in the app state object per wallet within the wallet account and displayed in Account Center (if enabled)
+  protectedRpcUrl?: string //An optional protected RPC URL - Defaults to Blocknative's private RPC aggregator to allow users to update the chain RPC within their wallet, specifically for private RPCs that protect user transactions. More information can be found at `https://docs.blocknative.com/blocknative-mev-protection/transaction-boost`
 }
 
 interface SecondaryTokens {
@@ -207,6 +227,18 @@ type RecommendedInjectedWallets = {
 }
 ```
 
+**`updateAppMetadata`**
+
+If you need to update your Application Metadata after initialization, you can call the `updateAppMetadata` function with the new configuration
+
+```typescript
+onboard.state.actions.updateAppMetadata({
+  logo: `<svg width="100%" height="100%" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 0L0.0100002 6L4 10L0.0100002 14.01L0 20H12V14L8 10L12 6.01V0H0ZM10 14.5V18H2V14.5L6 10.5L10 14.5Z" fill="#929BED"/>
+  </svg>`,
+  description: 'Updated Description!'
+})
+```
+
 ---
 
 #### connect
@@ -251,6 +283,16 @@ type ConnectModalOptions = {
    * Defaults to `https://www.blocknative.com/blog/metamask-wont-connect-web3-wallet-troubleshooting`
    */
   wheresMyWalletLink?: string
+  /**
+   * Hide the "Where is my wallet?" link notice displayed in the connect modal
+   * at the bottom of the wallets list
+   */
+  removeWhereIsMyWalletWarning?: boolean
+  /**
+   * Hide the "I don't have a wallet" link displayed
+   * on the left panel of the connect modal
+   */
+  removeIDontHaveAWalletInfoLink?: boolean
   /**
    * @deprecated Has no effect unless `@web3-onboard/unstoppable-resolution`
    * package has been added and passed into the web3-onboard initialization
@@ -368,7 +410,20 @@ type AccountCenter = {
   position?: AccountCenterPosition // default: 'bottomRight'
   expanded?: boolean // default: true
   minimal?: boolean // enabled by default for mobile
-
+  /**
+   * false by default - This allows removal of the
+   * Enable Transaction Protection' button within the Account Center
+   * expanded when set to true
+   * Can be set as a global for Account Center or per interface (desktop/mobile)
+   */
+  hideTransactionProtectionBtn?: boolean
+  /**
+   * defaults to
+   * `docs.blocknative.com/blocknative-mev-protection/transaction-boost-alpha`
+   * Use this property to override the default link to give users
+   * more information about transaction protection and the RPC be set
+   */
+  transactionProtectionInfoLink?: string
   /**
    * @deprecated Use top level containerElements property
    * with the accountCenter prop set to the desired container El. See documentation below
@@ -379,6 +434,13 @@ type AccountCenter = {
 type AccountCenterOptions = {
   desktop: Omit<AccountCenter, 'expanded'>
   mobile: Omit<AccountCenter, 'expanded'>
+  /**
+   * false by default - This allows removal of the
+   * Enable Transaction Protection' button within the Account Center
+   * expanded when set to true
+   * Can be set as a global for Account Center or per interface (desktop/mobile)
+   */
+  hideTransactionProtectionBtn?: boolean
 }
 
 type AccountCenterPosition = 'topRight' | 'bottomRight' | 'bottomLeft' | 'topLeft'
@@ -535,7 +597,7 @@ type Notification = {
 
 type NotificationType = 'pending' | 'success' | 'error' | 'hint'
 
-export declare type Network = 'main' | 'goerli' | 'matic-main' | 'matic-mumbai' | 'local'
+export declare type Network = 'main' | 'sepolia' | 'matic-main' | 'matic-mumbai' | 'local'
 
 export interface UpdateNotification {
   (notificationObject: CustomNotification): {
@@ -569,46 +631,52 @@ const onboard = Onboard({
       rpcUrl: `https://mainnet.infura.io/v3/${INFURA_ID}`
     },
     {
-      id: '0x5',
-      token: 'ETH',
-      label: 'Goerli',
-      rpcUrl: `https://goerli.infura.io/v3/${INFURA_ID}`
-    },
-    {
       id: 11155111,
       token: 'ETH',
       label: 'Sepolia',
       rpcUrl: 'https://rpc.sepolia.org/'
     },
     {
-      id: '0x38',
-      token: 'BNB',
-      label: 'Binance Smart Chain',
-      rpcUrl: 'https://bsc-dataseed.binance.org/'
-    },
-    {
       id: '0x89',
       token: 'MATIC',
-      label: 'Matic Mainnet',
+      label: 'Matic',
       rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
     },
     {
-      id: 10,
-      token: 'OETH',
-      label: 'Optimism',
-      rpcUrl: 'https://mainnet.optimism.io'
+      id: '0x2105',
+      token: 'ETH',
+      label: 'Base',
+      rpcUrl: 'https://mainnet.base.org'
     },
     {
       id: 42161,
       token: 'ARB-ETH',
-      label: 'Arbitrum',
+      label: 'Arbitrum One',
       rpcUrl: 'https://rpc.ankr.com/arbitrum'
     },
     {
-      id: 84531,
+      id: '0xa4ba',
+      token: 'ARB',
+      label: 'Arbitrum Nova',
+      rpcUrl: 'https://nova.arbitrum.io/rpc'
+    },
+    {
+      id: 10,
+      token: 'OETH',
+      label: 'OP Mainnet',
+      rpcUrl: 'https://mainnet.optimism.io'
+    },
+    {
+      id: '0xa4ec',
       token: 'ETH',
-      label: 'Base Goerli',
-      rpcUrl: 'https://goerli.base.org'
+      label: 'Celo',
+      rpcUrl: 'https://1rpc.io/celo'
+    },
+    {
+      id: 666666666,
+      token: 'DEGEN',
+      label: 'Degen',
+      rpcUrl: 'https://rpc.degen.tips'
     }
   ],
   appMetadata: {
@@ -693,6 +761,10 @@ const onboard = Onboard({
 
 To initiate a user to select and connect a wallet you can call the `connectWallet` function on an initialized Onboard instance. It will return a `Promise` that will resolve when the user either successfully connects a wallet, or when they dismiss the UI. The resolved value from the promise will be the latest state of the `wallets` array. The order of the wallets array is last to first, so the most recently selected wallet will be the first item in the array and can be thought of as the "primary wallet". If no wallet was selected, then the `wallets` array will have the same state as it had before calling `connectWallet`.
 
+### Wallet Provider
+
+Wallets connected through web3-onboard are all passed to the dapp following the EIP-1193 standard. This allows for the same interaction between all wallets connected through web3-onboard and abstracts away the challenges of working with different wallet providers.
+
 ### Example
 
 ```javascript
@@ -703,6 +775,10 @@ async function connectWallet() {
 
 connectWallet()
 ```
+
+### Interacting with the providers - Transfer, Send, Sign using ethers.js
+
+For examples of interacting with the wallet providers please see our demo project [here](https://github.com/blocknative/web3-onboard/blob/9b871a1b3117e92a7c87285677fa5b35c544a8e0/packages/demo/src/App.svelte#L447)
 
 ### Auto Selecting a Wallet
 
@@ -1447,7 +1523,8 @@ module.exports = {
       os: 'os-browserify/browser',
       process: 'process/browser',
       stream: 'stream-browserify',
-      util: 'util'
+      util: 'util',
+      zlib: 'browserify-zlib'
     }
   },
   experiments: {
@@ -1496,7 +1573,8 @@ module.exports = function override(config) {
     process: require.resolve('process/browser'),
     stream: require.resolve('stream-browserify'),
     url: require.resolve('url'),
-    util: require.resolve('util')
+    util: require.resolve('util'),
+    zlib: require.resolve('browserify-zlib')
   })
   config.resolve.fallback = fallback
   config.resolve.alias = {
@@ -1535,7 +1613,7 @@ module.exports = function override(config) {
 
 Add the following dev dependencies:
 
-`yarn add rollup-plugin-polyfill-node crypto-browserify stream-browserify assert -D`
+`yarn add rollup-plugin-polyfill-node crypto-browserify stream-browserify assert browserify-zlib -D`
 
 Then add the following to your `svelte.config.js` file:
 
@@ -1565,7 +1643,8 @@ const config = {
         alias: {
           crypto: 'crypto-browserify',
           stream: 'stream-browserify',
-          assert: 'assert'
+          assert: 'assert',
+          zlib: 'browserify-zlib'
         }
       },
       build: {
@@ -1600,7 +1679,7 @@ Checkout a boilerplate example [here](https://github.com/blocknative/web3-onboar
 
 Add the following dev dependencies:
 
-`yarn add rollup-plugin-polyfill-node crypto-browserify stream-browserify assert -D`
+`yarn add rollup-plugin-polyfill-node crypto-browserify stream-browserify assert browserify-zlib -D`
 
 Then add the following to your `svelte.config.js` file:
 
@@ -1648,7 +1727,8 @@ const config: UserConfig = {
     alias: {
       crypto: 'crypto-browserify',
       stream: 'stream-browserify',
-      assert: 'assert'
+      assert: 'assert',
+      zlib: 'browserify-zlib'
     }
   },
   build: {
@@ -1713,7 +1793,7 @@ Checkout a boilerplate example for Vite-React [here](https://github.com/blocknat
 
 Add the following dev dependencies:
 
-`npm i --save-dev rollup-plugin-polyfill-node crypto-browserify stream-browserify assert`
+`npm i --save-dev rollup-plugin-polyfill-node crypto-browserify stream-browserify assert browserify-zlib`
 
 Then add the following to your `vite.config.js` file:
 
@@ -1735,7 +1815,8 @@ export default {
     alias: {
       crypto: 'crypto-browserify',
       stream: 'stream-browserify',
-      assert: 'assert'
+      assert: 'assert',
+      zlib: 'browserify-zlib'
     }
   },
   build: {

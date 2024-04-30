@@ -378,9 +378,9 @@
   .container {
     padding: 16px;
     font-family: var(--onboard-font-family-normal, var(--font-family-normal));
-    width: 100%;
     pointer-events: none;
     touch-action: none;
+    width: 100%;
   }
 
   .z-indexed {
@@ -442,18 +442,7 @@
     {#if $accountCenter$.position.includes('bottom')}
       <div id="w3o-transaction-preview-container" style="margin-bottom: 8px;" />
     {/if}
-    <div
-      style={!$accountCenter$.expanded &&
-      $accountCenter$.minimal &&
-      $accountCenter$.position.includes('Right')
-        ? 'margin-left: auto'
-        : !$accountCenter$.expanded &&
-          $accountCenter$.minimal &&
-          $accountCenter$.position.includes('Left')
-        ? 'margin-right: auto'
-        : ''}
-      id="account-center-with-notify"
-    >
+    <div id="account-center-with-notify">
       {#await accountCenterComponent then AccountCenter}
         {#if AccountCenter}
           <svelte:component this={AccountCenter} />
@@ -491,21 +480,11 @@
     {#if $accountCenter$.position.includes('bottom')}
       <div id="w3o-transaction-preview-container" style="margin-bottom: 8px;" />
     {/if}
-    <div
-      style={!$accountCenter$.expanded &&
-      $accountCenter$.minimal &&
-      $accountCenter$.position.includes('Right')
-        ? 'margin-left: auto'
-        : !$accountCenter$.expanded &&
-          $accountCenter$.minimal &&
-          $accountCenter$.position.includes('Left')
-        ? 'margin-right: auto'
-        : ''}
-    >
+    <div>
       {#if $accountCenter$.enabled && $wallets$.length}
         {#await accountCenterComponent then AccountCenter}
           {#if AccountCenter}
-            <svelte:component this={AccountCenter} />
+          <svelte:component this={AccountCenter} />
           {/if}
         {/await}
       {/if}

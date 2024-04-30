@@ -22,7 +22,8 @@ module.exports = {
       os: 'os-browserify/browser',
       process: 'process/browser',
       stream: 'stream-browserify',
-      util: 'util'
+      util: 'util',
+      zlib: 'browserify-zlib'
     },
     extensions: ['.mjs', '.js', '.svelte'],
     mainFields: ['svelte', 'browser', 'module', 'main']
@@ -63,6 +64,13 @@ module.exports = {
         test: /\.m?js/,
         resolve: {
           fullySpecified: false
+        }
+      },
+      {
+        test: /\.(woff(2)?|eot|ttf|otf|svg)$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'fonts/[name][ext][query]'
         }
       }
     ]

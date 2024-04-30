@@ -1,4 +1,4 @@
-import { WalletInit } from '@web3-onboard/common'
+import type { WalletInit } from '@web3-onboard/common'
 
 type GnosisOptions = {
   whitelistedDomains: RegExp[]
@@ -7,9 +7,10 @@ type GnosisOptions = {
 function gnosis(options?: GnosisOptions): WalletInit {
   const {
     whitelistedDomains = [
-      /^https:\/\/gnosis-safe\.io$/,
       /^https:\/\/app\.safe\.global$/,
-      /^https:\/\/safe\.global$/
+      /^https:\/\/safe\.global$/,
+      /^https:\/\/.*\.blockscout\.com$/,
+      /^https:\/\/pilot\.gnosisguild\.org$/
     ]
   } = options || {}
 
@@ -22,11 +23,11 @@ function gnosis(options?: GnosisOptions): WalletInit {
           getIcon: async () => (await import('./icon.js')).default,
           getInterface: async () => {
             const { default: SafeAppsSDK } = await import(
-              '@gnosis.pm/safe-apps-sdk'
+              '@safe-global/safe-apps-sdk'
             )
 
             const { SafeAppProvider } = await import(
-              '@gnosis.pm/safe-apps-provider'
+              '@safe-global/safe-apps-provider'
             )
 
             const { createEIP1193Provider } = await import(
@@ -38,7 +39,7 @@ function gnosis(options?: GnosisOptions): WalletInit {
               SafeAppsSDK.default || SafeAppsSDK
 
             const opts = {
-              whitelistedDomains
+              allowedDomains: whitelistedDomains
             }
 
             const appsSdk = new SafeAppProviderConstructor(opts)
@@ -50,7 +51,7 @@ function gnosis(options?: GnosisOptions): WalletInit {
 
             if (!safe) {
               throw new Error(
-                `App must be loaded in a Safe App context, head to <a href="https://gnosis-safe.io/app">the Safe</a> and open this website as an app.`
+                `App must be loaded in a Safe App context, head to <a href="https://app.safe.global/">the Safe</a> and open this website as an app.`
               )
             }
 

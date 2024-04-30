@@ -1,4 +1,3 @@
-import { configuration } from './configuration.js'
 import type { AppState } from './types.js'
 
 export const APP_INITIAL_STATE: AppState = {
@@ -7,9 +6,9 @@ export const APP_INITIAL_STATE: AppState = {
   chains: [],
   accountCenter: {
     enabled: true,
-    position: 'topRight',
+    position: 'bottomRight',
     expanded: false,
-    minimal: configuration.device.type === 'mobile'
+    minimal: true
   },
   notify: {
     enabled: true,
@@ -27,7 +26,8 @@ export const APP_INITIAL_STATE: AppState = {
   connect: {
     showSidebar: true,
     disableClose: false
-  }
+  },
+  appMetadata: null,
 }
 
 export const STORAGE_KEYS = {
@@ -36,3 +36,6 @@ export const STORAGE_KEYS = {
 }
 
 export const MOBILE_WINDOW_WIDTH = 768
+
+export const BN_BOOST_RPC_URL = 'https://rpc.blocknative.com/boost'
+export const BN_BOOST_INFO_URL = 'https://docs.blocknative.com/blocknative-mev-protection/transaction-boost'

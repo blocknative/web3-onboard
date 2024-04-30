@@ -43,6 +43,12 @@ init({
       token: 'ETH',
       label: 'Ethereum Mainnet',
       rpcUrl
+    },
+    {
+      id: '0x2105',
+      token: 'ETH',
+      label: 'Base',
+      rpcUrl: 'https://mainnet.base.org'
     }
   ]
 })
@@ -61,7 +67,10 @@ function App() {
 
   return (
     <div>
-      <button disabled={connecting} onClick={() => (wallet ? disconnect(wallet) : connect())}>
+      <button
+        disabled={connecting}
+        onClick={() => (wallet ? disconnect(wallet) : connect())}
+      >
         {connecting ? 'connecting' : wallet ? 'disconnect' : 'connect'}
       </button>
     </div>
@@ -72,6 +81,7 @@ export default App
 ```
 
 ### Using the `Web3OnboardProvider`
+
 You can use the context provider `Web3OnboardProvider` to better manage global state. Simply wrap the provider around your `App` and
 the initialized web3Onboard instance will be available in all children components. See example below.
 
@@ -81,23 +91,23 @@ import injectedModule from '@web3-onboard/injected-wallets'
 
 const INFURA_KEY = ''
 
-const ethereumRopsten = {
-  id: '0x3',
-  token: 'rETH',
-  label: 'Ethereum Ropsten',
-  rpcUrl: `https://ropsten.infura.io/v3/${INFURA_KEY}`
+const ethereumSepolia = {
+  id: 11155111,
+  token: 'ETH',
+  label: 'Sepolia',
+  rpcUrl: 'https://rpc.sepolia.org/'
 }
 
-const chains = [ethereumRopsten]
+const chains = [ethereumSepolia]
 const wallets = [injectedModule()]
 
 const web3Onboard = init({
   wallets,
   chains,
   appMetadata: {
-    name: "Web3-Onboard Demo",
+    name: 'Web3-Onboard Demo',
     icon: '<svg>App Icon</svg>',
-    description: "A demo of Web3-Onboard."
+    description: 'A demo of Web3-Onboard.'
   }
 })
 
@@ -165,6 +175,7 @@ const [
 
 
 ```
+
 **`setPrimaryWallet`**
 The primary wallet (first in the list of connected wallets) and primary account (first in the list of connected accounts for a wallet) can be set by using the `setPrimaryWallet` function. The wallet that is set needs to be passed in for the first parameter and if you would like to set the primary account, the address of that account also needs to be passed in:
 
@@ -174,10 +185,7 @@ setPrimaryWallet(wallets[1])
 
 // set the second wallet in the wallets array as the primary wallet
 // as well as setting the third account in that wallet as the primary account
-setPrimaryWallet(
-  wallets[1],
-  wallets[1].accounts[2].address
-)
+setPrimaryWallet(wallets[1], wallets[1].accounts[2].address)
 ```
 
 ## `useSetChain`
@@ -203,7 +211,7 @@ type SetChainOptions = {
   chainNamespace?: string
   wallet?: WalletState['label'],
   // if chain was instantiated without rpcUrl, include here. Used for network requests
-  rpcUrl?: string, 
+  rpcUrl?: string,
   // if chain was instantiated without token, include here. Used for display, eg Ethereum Mainnet
   label?: string,
   // if chain was instantiated without label, include here. The native token symbol, eg ETH, BNB, MATIC

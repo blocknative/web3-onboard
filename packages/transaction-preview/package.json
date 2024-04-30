@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/transaction-preview",
-  "version": "2.0.7",
+  "version": "2.0.9-alpha.1",
   "description": "In app preview of Ethereum transactions",
   "keywords": [
     "Ethereum",

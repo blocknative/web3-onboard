@@ -47,8 +47,7 @@ export enum ProviderIdentityFlag {
   BraveWallet = 'isBraveWallet',
   Rabby = 'isRabby',
   MathWallet = 'isMathWallet',
-  GameStop = 'isGamestop',
-  BitKeep = 'isBitKeep',
+  Bitget = 'isBitKeep',
   Sequence = 'isSequence',
   Core = 'isAvalanche',
   Opera = 'isOpera',
@@ -62,7 +61,45 @@ export enum ProviderIdentityFlag {
   SafePal = 'isSafePal',
   DeFiWallet = 'isDeficonnectProvider',
   Safeheron = 'isSafeheron',
-  Talisman = 'isTalisman'
+  Talisman = 'isTalisman',
+  OneKey = 'isOneKey',
+  Fordefi = 'isFordefi',
+  Coin98Wallet = 'isCoin98',
+  SubWallet = 'isSubWallet',
+  Kayros = 'isKayros',
+  FoxWallet = 'isFoxWallet',
+  Lif3Wallet = 'isLif3Wallet',
+  ZodiacPilot = 'isZodiacPilot',
+  StableWallet = 'isStableWallet'
+}
+
+/**
+ * The ProviderExternalUrl enum represents the external URLs associated
+ * with different injected providers. It is used to direct end users who
+ * do not have a wallet installed to the corresponding wallet installation page.
+ * For this to be displayed a dapp must set `displayUnavailable`
+ * to an array (to specify displayed unavailable wallets) or
+ * true (to display all unavailable wallets) and a user select that wallet.
+ */
+export enum ProviderExternalUrl {
+  Binance = 'https://www.bnbchain.org/ru/blog/binance-extension-wallet/',
+  Bitget = 'https://web3.bitget.com/en/wallet-download',
+  Coinbase = 'https://www.coinbase.com/wallet/downloads',
+  MetaMask = 'https://metamask.io/download/',
+  OKXWallet = 'https://okx.com/download',
+  Phantom = 'https://phantom.app/ul/v1/connect',
+  Talisman = 'https://www.talisman.xyz/',
+  Trust = 'https://link.trustwallet.com',
+  OneKey = 'https://onekey.so/download/',
+  RoninWallet = 'https://wallet.skymavis.com/',
+  Coin98Wallet = 'https://coin98.com/wallet/',
+  SubWallet = 'https://www.subwallet.app/',
+  Kayros = 'https://www.kayros.games/wallet/',
+  XDEFI = 'https://xdefi.io/',
+  FoxWallet = 'https://foxwallet.com/download',
+  Lif3Wallet = 'https://lif3.com',
+  Rabby = 'https://rabby.io',
+  ZodiacPilot = 'https://pilot.gnosisguild.org/'
 }
 
 export enum ProviderLabel {
@@ -102,8 +139,7 @@ export enum ProviderLabel {
   Tally = 'Taho',
   Rabby = 'Rabby Wallet',
   MathWallet = 'MathWallet',
-  GameStop = 'GameStop Wallet',
-  BitKeep = 'BitKeep',
+  Bitget = 'Bitget Wallet',
   Sequence = 'Sequence',
   Core = 'Core',
   Enkrypt = 'Enkrypt',
@@ -115,7 +151,17 @@ export enum ProviderLabel {
   SafePal = 'SafePal',
   DeFiWallet = 'DeFi Wallet',
   Safeheron = 'Safeheron',
-  Talisman = 'Talisman'
+  Talisman = 'Talisman',
+  OneKey = 'OneKey',
+  Fordefi = 'Fordefi',
+  RoninWallet = 'Ronin Wallet',
+  Coin98Wallet = 'Coin98 Wallet',
+  SubWallet = 'SubWallet',
+  Kayros = 'Kayros',
+  FoxWallet = 'FoxWallet',
+  Lif3Wallet = 'Lif3 Wallet',
+  ZodiacPilot = 'Zodiac Pilot',
+  StableWallet = 'StableWallet'
 }
 
 export interface MeetOneProvider extends ExternalProvider {
@@ -135,8 +181,7 @@ export enum InjectedNameSpace {
   Web3 = 'web3',
   Arbitrum = 'arbitrum',
   XFI = 'xfi',
-  GameStop = 'gamestop',
-  BitKeep = 'bitkeep',
+  Bitget = 'bitkeep',
   Avalanche = 'avalanche',
   Bitski = 'Bitski',
   Enkrypt = 'enkrypt',
@@ -147,7 +192,13 @@ export enum InjectedNameSpace {
   Frontier = 'frontier',
   DeFiConnectProvider = 'deficonnectProvider',
   Safeheron = 'safeheron',
-  Talisman = 'talismanEth'
+  Talisman = 'talismanEth',
+  OneKey = '$onekey',
+  RoninWallet = 'ronin',
+  Coin98Wallet = 'coin98',
+  SubWallet = 'SubWallet',
+  Kayros = 'kayros',
+  FoxWallet = 'foxwallet'
 }
 
 export interface CustomWindow extends Window {
@@ -160,7 +211,6 @@ export interface CustomWindow extends Window {
   xfi: {
     ethereum: InjectedProvider
   }
-  gamestop: InjectedProvider
   bitkeep: {
     ethereum: InjectedProvider
   }
@@ -184,6 +234,20 @@ export interface CustomWindow extends Window {
   deficonnectProvider: InjectedProvider
   safeheron: InjectedProvider
   talismanEth: InjectedProvider
+  $onekey: {
+    ethereum: InjectedProvider
+  }
+  ronin: {
+    provider: InjectedProvider
+  }
+  coin98: {
+    provider: InjectedProvider
+  }
+  SubWallet: {
+    provider: InjectedProvider
+  }
+  kayros: InjectedProvider
+  foxwallet: InjectedProvider
 }
 
 export type InjectedProvider = ExternalProvider &
@@ -207,20 +271,60 @@ export interface InjectedWalletOptions {
    * By default all wallets listed in ./packages/injected/
    * are included add them to here to remove them. */
   filter?: WalletFilters
-  /**Will display wallets to be selected even if they
+  /**If set to true: Will display all unavailable injected wallets even if they
    * are not currently available to the end user.
+   * If set to an array of ProviderLabel.walletLabel
+   * those wallets will be the only unavailable injected wallets shown
+   * For example [ProviderLabel.MetaMask, ProviderLabel.Trust]
    */
-  displayUnavailable?: boolean
+  displayUnavailable?: boolean | string[]
   /**A function that allows for customizing the message to be displayed if the wallet
    * is unavailable
    */
   walletUnavailableMessage?: (wallet: WalletModule) => string
   /**Function that can be used to sort the order of wallets that are displayed */
   sort?: (wallets: WalletModule[]) => WalletModule[]
+  /** A boolean that can be passed to disable supporting 6963 (https://eips.ethereum.org/EIPS/eip-6963) 
+   * which will display wallets available on the browser
+   */
+  disable6963Support?: boolean
 }
 
 export interface InjectedWalletModule extends WalletModule {
-  injectedNamespace: InjectedNameSpace
+  injectedNamespace?: InjectedNameSpace
   checkProviderIdentity: (helpers: { provider: any; device: Device }) => boolean
   platforms: Platform[]
+  /**
+   * A Url to link users to a download page for the wallet
+   * to be shown if not installed or available on the browser
+   */
+  externalUrl?: string
+  eip6963Provider?: InjectedProvider
+}
+
+// Define a class for the "eip6963:requestProvider" event
+export class EIP6963RequestProviderEvent extends Event {
+  constructor() {
+    super('eip6963:requestProvider')
+  }
+}
+
+// Define an interface for the "eip6963:announceProvider" event
+export interface EIP6963AnnounceProviderEvent extends Event {
+  type: 'eip6963:announceProvider'
+  detail: EIP6963ProviderDetail
+}
+
+// Define an interface for the provider details
+export interface EIP6963ProviderDetail {
+  info: EIP6963ProviderInfo
+  provider: EIP1193Provider
+}
+
+// Define an interface for the provider information
+export interface EIP6963ProviderInfo {
+  uuid: string // Unique identifier of the wallet extension announcement, keep in mind it changes on every request-announcement cycle
+  name: string // Name of the wallet extension
+  icon: string // Icon for the wallet extension
+  rdns: string // Reverse DNS name of the wallet extension
 }

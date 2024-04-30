@@ -9,7 +9,8 @@ import {
   chainNamespaceValidation,
   chainIdValidation,
   chainValidation,
-  validate
+  validate,
+  AppMetadata
 } from '@web3-onboard/common'
 
 import type {
@@ -128,6 +129,19 @@ const appMetadata = Joi.object({
   agreement
 })
 
+const appMetadataUpdate = Joi.object({
+  name: Joi.string(),
+  description: Joi.string(),
+  icon: Joi.string(),
+  logo: Joi.string(),
+  gettingStartedGuide: Joi.string(),
+  email: Joi.string(),
+  appUrl: Joi.string(),
+  explore: Joi.string(),
+  recommendedInjectedWallets: Joi.array().items(recommendedWallet),
+  agreement
+})
+
 const walletModule = Joi.object({
   label: Joi.string().required(),
   getInfo: Joi.function().arity(1).required(),
@@ -168,7 +182,9 @@ const accountCenterInitOptions = Joi.object({
   enabled: Joi.boolean(),
   position: commonPositions,
   minimal: Joi.boolean(),
-  containerElement: Joi.string()
+  containerElement: Joi.string(),
+  hideTransactionProtectionBtn: Joi.boolean(),
+  transactionProtectionInfoLink: Joi.string()
 })
 
 const accountCenter = Joi.object({
@@ -176,6 +192,8 @@ const accountCenter = Joi.object({
   position: commonPositions,
   expanded: Joi.boolean(),
   minimal: Joi.boolean(),
+  hideTransactionProtectionBtn: Joi.boolean(),
+  transactionProtectionInfoLink: Joi.string(),
   containerElement: Joi.string()
 })
 
@@ -186,6 +204,8 @@ const connectModalOptions = Joi.object({
   autoConnectAllPreviousWallet: Joi.boolean(),
   iDontHaveAWalletLink: Joi.string(),
   wheresMyWalletLink: Joi.string(),
+  removeWhereIsMyWalletWarning: Joi.boolean(),
+  removeIDontHaveAWalletInfoLink: Joi.boolean(),
   disableUDResolution: Joi.boolean()
 })
 
@@ -216,7 +236,9 @@ const initOptions = Joi.object({
   apiKey: Joi.string(),
   accountCenter: Joi.object({
     desktop: accountCenterInitOptions,
-    mobile: accountCenterInitOptions
+    mobile: accountCenterInitOptions,
+    hideTransactionProtectionBtn: Joi.boolean(),
+    transactionProtectionInfoLink: Joi.string()
   }),
   notify: [notifyOptions, notify],
   gas: Joi.object({
@@ -236,15 +258,13 @@ const initOptions = Joi.object({
 })
 
 const connectOptions = Joi.object({
-  autoSelect: Joi.alternatives()
-    .try(
-      Joi.object({
-        label: Joi.string().required(),
-        disableModals: Joi.boolean()
-      }),
-      Joi.string()
-    )
-    .required()
+  autoSelect: Joi.alternatives().try(
+    Joi.object({
+      label: Joi.string().required(),
+      disableModals: Joi.boolean()
+    }),
+    Joi.string()
+  )
 })
 
 const disconnectOptions = Joi.object({
@@ -263,6 +283,7 @@ const setChainOptions = Joi.object({
   rpcUrl: Joi.string(),
   label: Joi.string(),
   token: Joi.string(),
+  protectedRpcUrl: Joi.string(),
   secondaryTokens: Joi.array().max(5).items(secondaryTokenValidation).optional()
 })
 
@@ -428,4 +449,10 @@ export function validateUpdateBalances(data: WalletState[]): ValidateReturn {
 
 export function validateUpdateTheme(data: Theme): ValidateReturn {
   return validate(theme, data)
+}
+
+export function validateAppMetadataUpdate(
+  data: AppMetadata | Partial<AppMetadata>
+): ValidateReturn {
+  return validate(appMetadataUpdate, data)
 }

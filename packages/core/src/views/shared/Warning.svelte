@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { fade } from 'svelte/transition'
+  import { slide } from 'svelte/transition'
   import infoIcon from '../../icons/info.js'
 </script>
 
@@ -25,7 +25,7 @@
   
 </style>
 
-<div in:fade class="container flex justify-between">
+<div in:slide|local="{{delay: 50, duration: 500}}" class="container flex justify-between">
   <div>
     <slot />
   </div>

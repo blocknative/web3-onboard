@@ -220,6 +220,7 @@ export function trackWallet(
         const ensChain = chains.find(
           ({ id }) => id === validEnsChain(connectedWalletChain.id)
         )
+
         const ensProm =
           account && account.ens
             ? Promise.resolve(account.ens)
@@ -331,6 +332,9 @@ export function trackWallet(
             const secondaryTokenBal = updateSecondaryTokens(
               address,
               chain
+            )
+            const ensChain = chains.find(
+              ({ id }) => id === validEnsChain(chainId)
             )
 
             const ensProm = ensChain
@@ -486,6 +490,31 @@ export function addNewChain(
           decimals: 18
         },
         rpcUrls: [chain.publicRpcUrl || chain.rpcUrl],
+        blockExplorerUrls: chain.blockExplorerUrl
+          ? [chain.blockExplorerUrl]
+          : undefined
+      }
+    ]
+  })
+}
+
+export function updateChainRPC(
+  provider: EIP1193Provider,
+  chain: Chain,
+  rpcUrl: string
+): Promise<unknown> {
+  return provider.request({
+    method: 'wallet_addEthereumChain',
+    params: [
+      {
+        chainId: chain.id,
+        chainName: chain.label,
+        nativeCurrency: {
+          name: chain.label,
+          symbol: chain.token,
+          decimals: 18
+        },
+        rpcUrls: [rpcUrl],
         blockExplorerUrls: chain.blockExplorerUrl
           ? [chain.blockExplorerUrl]
           : undefined

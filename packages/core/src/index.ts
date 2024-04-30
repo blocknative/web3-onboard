@@ -5,7 +5,12 @@ import { state } from './store/index.js'
 import { reset$, wallets$ } from './streams.js'
 import initI18N from './i18n/index.js'
 import App from './views/Index.svelte'
-import type { ConnectModalOptions, InitOptions, Notify, Theme } from './types.js'
+import type {
+  ConnectModalOptions,
+  InitOptions,
+  Notify,
+  Theme
+} from './types.js'
 import { APP_INITIAL_STATE, STORAGE_KEYS } from './constants.js'
 import { configuration, updateConfiguration } from './configuration.js'
 import updateBalances from './update-balances.js'
@@ -27,7 +32,8 @@ import {
   setPrimaryWallet,
   setWalletModules,
   updateConnectModal,
-  updateTheme
+  updateTheme,
+  updateAppMetadata
 } from './store/actions.js'
 import type { PatchedEIP1193Provider } from '@web3-onboard/transaction-preview'
 import { getBlocknativeSdk } from './services.js'
@@ -48,7 +54,8 @@ const API = {
       updateBalances,
       updateAccountCenter,
       setPrimaryWallet,
-      updateTheme
+      updateTheme,
+      updateAppMetadata
     }
   }
 }
@@ -87,7 +94,7 @@ function init(options: InitOptions): OnboardAPI {
   const {
     wallets,
     chains,
-    appMetadata = null,
+    appMetadata,
     i18n,
     accountCenter,
     apiKey,
@@ -117,19 +124,24 @@ function init(options: InitOptions): OnboardAPI {
   if (typeof connect !== undefined) {
     updateConnectModal(connect)
   }
-
   // update accountCenter
   if (typeof accountCenter !== 'undefined') {
     let accountCenterUpdate
+    const { hideTransactionProtectionBtn, transactionProtectionInfoLink } =
+      accountCenter
 
     if (device.type === 'mobile') {
       accountCenterUpdate = {
         ...APP_INITIAL_STATE.accountCenter,
+        hideTransactionProtectionBtn,
+        transactionProtectionInfoLink,
         ...(accountCenter.mobile ? accountCenter.mobile : {})
       }
     } else if (accountCenter.desktop) {
       accountCenterUpdate = {
         ...APP_INITIAL_STATE.accountCenter,
+        hideTransactionProtectionBtn,
+        transactionProtectionInfoLink,
         ...accountCenter.desktop
       }
     }
@@ -201,7 +213,6 @@ function init(options: InitOptions): OnboardAPI {
   const app = svelteInstance || mountApp(theme, disableFontDownload)
 
   updateConfiguration({
-    appMetadata,
     svelteInstance: app,
     apiKey,
     initialWalletInit: wallets,
@@ -209,6 +220,8 @@ function init(options: InitOptions): OnboardAPI {
     transactionPreview,
     unstoppableResolution
   })
+
+  appMetadata && updateAppMetadata(appMetadata)
 
   if (apiKey && transactionPreview) {
     const getBnSDK = async () => {

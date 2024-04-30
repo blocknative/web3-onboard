@@ -4,6 +4,6 @@ export const InterVar = `
   font-style:  normal;
   font-weight: 300 600;
   font-display: swap;
-  src: url("https://rsms.me/inter/font-files/Inter-roman.var.woff2?v=3.19") format("woff2");
+  src: url("https://rsms.me/inter/font-files/InterVariable.woff2") format("woff2-variations");
 }
 `

@@ -16,7 +16,7 @@ export const WALLET_NAMES: { [key: string]: string } = {
   detected: 'Detected Wallet',
   meetone: 'MeetOne',
   frame: 'Frame',
-  bitkeep: 'BitKeep',
+  bitget: 'Bitget Wallet',
   sequence: 'Sequence',
   core: 'Core',
   enkrypt: 'Enkrypt',
@@ -26,5 +26,13 @@ export const WALLET_NAMES: { [key: string]: string } = {
   rainbow: 'Rainbow',
   defiwallet: 'DeFi Wallet',
   safeheron: 'Safeheron',
-  talismanEth: 'Talisman'
+  talismanEth: 'Talisman',
+  onekey: 'OneKey',
+  fordefi: 'Fordefi',
+  roninWallet: 'Ronin Wallet',
+  coin98wallet: 'Coin98 Wallet',
+  SubWallet: 'SubWallet',
+  kayros: 'Kayros',
+  foxwallet: "FoxWallet",
+  Lif3Wallet: 'Lif3 Wallet'
 }

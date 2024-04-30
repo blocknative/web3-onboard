@@ -84,7 +84,7 @@
     }
 
     .name {
-      font-size: 1rem;
+      font-size: var(--onboard-font-size-5, var(--font-size-5));
       line-height: 1.25rem;
       text-align: initial;
       max-width: inherit;
@@ -109,7 +109,7 @@
     class="wallet-button-styling"
     class:connected
     {disabled}
-    in:fade
+    in:fade|local
     on:click={onClick}
   >
     <div class="wallet-button-container-inner">

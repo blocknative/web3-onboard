@@ -7,7 +7,7 @@ const injected = injectedWalletsModule()
 const walletConnect = walletConnectModule({
   connectFirstChainId: true,
   qrcodeModalOptions: {
-  mobileLinks: ['rainbow', 'metamask', 'argent', 'trust', 'imtoken', 'pillar']
+    mobileLinks: ['rainbow', 'metamask', 'argent', 'trust', 'imtoken', 'pillar']
   }
 })
 
@@ -27,6 +27,24 @@ const chains = [
     token: 'MATIC',
     label: 'Matic Mainnet',
     rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
+  },
+  {
+    id: '0x2105',
+    token: 'ETH',
+    label: 'Base',
+    rpcUrl: 'https://mainnet.base.org'
+  },
+  {
+    id: '0xa4ec',
+    token: 'ETH',
+    label: 'Celo',
+    rpcUrl: 'https://1rpc.io/celo'
+  },
+  {
+    id: 666666666,
+    token: 'DEGEN',
+    label: 'Degen',
+    rpcUrl: 'https://rpc.degen.tips'
   }
 ]
 

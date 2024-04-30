@@ -175,6 +175,7 @@ export interface AppState {
   notify: Notify
   notifications: Notification[]
   connect: ConnectModalOptions
+  appMetadata: AppMetadata
 }
 
 export type Configuration = {
@@ -238,6 +239,16 @@ export type ConnectModalOptions = {
    */
   wheresMyWalletLink?: string
   /**
+   * Hide the "Where is my wallet?" link notice displayed in the connect modal
+   * at the bottom of the wallets list
+   */
+  removeWhereIsMyWalletWarning?: boolean
+  /**
+   * Hide the "I don't have a wallet" link displayed
+   * on the left panel of the connect modal
+   */
+  removeIDontHaveAWalletInfoLink?: boolean
+  /**
    * @deprecated Has no effect unless `@web3-onboard/unstoppable-resolution`
    * package has been added and passed into the web3-onboard initialization
    * In this case remove the `@web3-onboard/unstoppable-resolution` package
@@ -258,6 +269,26 @@ export type NotificationPosition = CommonPositions
 
 export type AccountCenter = {
   enabled: boolean
+  /**
+   * false by default - This allows removal of the
+   * Enable Transaction Protection' button within the Account Center
+   * expanded when set to true
+   * Can be set as a global for Account Center or per interface (desktop/mobile)
+   */
+  hideTransactionProtectionBtn?: boolean
+  /**
+   * Controls the visibility of the 'Enable Transaction Protection' button 
+   * within the expanded Account Center.
+   * - When set to false (default), the button is visible.
+   * - When set to true, the button is hidden.
+   * This setting can be configured globally for the Account Center, or 
+   * separately for different interfaces like desktop/mobile.
+   * defaults to 
+   * `docs.blocknative.com/blocknative-mev-protection/transaction-boost-alpha`
+   * Use this property to override the default link to give users
+   * more information about transaction protection and the RPC be set
+   */
+  transactionProtectionInfoLink?: string
   position?: AccountCenterPosition
   expanded?: boolean
   minimal?: boolean
@@ -271,6 +302,26 @@ export type AccountCenter = {
 export type AccountCenterOptions = {
   desktop: Omit<AccountCenter, 'expanded'>
   mobile: Omit<AccountCenter, 'expanded'>
+  /**
+   * Controls the visibility of the 'Enable Transaction Protection' button 
+   * within the expanded Account Center.
+   * - When set to false (default), the button is visible.
+   * - When set to true, the button is hidden.
+   * This setting can be configured globally for the Account Center, or 
+   * separately for different interfaces like desktop/mobile.
+   * defaults to 
+   * `docs.blocknative.com/blocknative-mev-protection/transaction-boost-alpha`
+   * Use this property to override the default link to give users
+   * more information about transaction protection and the RPC be set
+   */
+  transactionProtectionInfoLink?: string
+  /**
+   * false by default - This allows removal of the
+   * Enable Transaction Protection' button within the Account Center
+   * expanded when set to true
+   * Can be set as a global for Account Center or per interface (desktop/mobile)
+   */
+  hideTransactionProtectionBtn?: boolean
 }
 
 export type ContainerElements = {
@@ -410,6 +461,7 @@ export type Action =
   | RemoveNotificationAction
   | UpdateAllWalletsAction
   | UpdateConnectModalAction
+  | UpdateAppMetadataAction
 
 export type AddChainsAction = { type: 'add_chains'; payload: Chain[] }
 export type UpdateChainsAction = { type: 'update_chains'; payload: Chain }
@@ -473,6 +525,11 @@ export type RemoveNotificationAction = {
 export type UpdateAllWalletsAction = {
   type: 'update_balance'
   payload: WalletState[]
+}
+
+export type UpdateAppMetadataAction = {
+  type: 'update_app_metadata'
+  payload: AppMetadata | Partial<AppMetadata>
 }
 
 // ==== MISC ==== //
