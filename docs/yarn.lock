@@ -5183,10 +5183,10 @@
     "@blocto/sdk" "^0.4.6"
     "@web3-onboard/common" "^2.3.1"
 
-"@web3-onboard/capsule@^2.0.2-alpha.1":
-  version "2.0.2-alpha.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/capsule/-/capsule-2.0.2-alpha.1.tgz#afb47364766b7e42787a025b75ef3063dc279f65"
-  integrity sha512-hbgCTTiPjWkckNTEA3gbaSA6WWIbzSedsl7cxEQzO1fW1eMjQO6XXXmDGwDSfsrOqfcYwiFkuL6M4PxPMGRZRg==
+"@web3-onboard/capsule@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/capsule/-/capsule-2.0.2.tgz#da13e0d5b63d29e58027b5c9f6339952db07a7ea"
+  integrity sha512-U5PSZZg742OB+qKNyPlumsCehpSSqnT+jxnn6NC2vUGcWR1pTnuudJ351s3GAykaCJ1i3uwGsPoz1ZLJm4yK+Q==
   dependencies:
     "@tanstack/react-query" "^5.29.0"
     "@usecapsule/react-sdk" "^2.3.1"
@@ -5380,10 +5380,10 @@
     magic-sdk "^8.1.0"
     rxjs "^7.5.2"
 
-"@web3-onboard/metamask@^2.0.6-alpha.1":
-  version "2.0.6-alpha.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/metamask/-/metamask-2.0.6-alpha.1.tgz#f874f73e41a0b9a92ca84613ff2e2400cd48eba2"
-  integrity sha512-QGS4d4i9FpwBpkNYXGpvvXnVmnLsA+zyGu2oZ4qZdls0TM/XsDHt5pudI6RPZR9gPEWPtXqOxmzm6Ce1OxE+ng==
+"@web3-onboard/metamask@^2.0.6":
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/metamask/-/metamask-2.0.6.tgz#9dd59a88e16fa27754f29b54b4656b31ab6e3159"
+  integrity sha512-hxOdsqEtvohkYSisXqq7CizECmT7o+Qt6Z4zFfB7fgxcKa80mMmN0sgS3kAa3jl7nQ/JuJbhpNZsInbNN5HFnA==
   dependencies:
     "@metamask/sdk" "^0.18.6"
     "@web3-onboard/common" "^2.3.3"
