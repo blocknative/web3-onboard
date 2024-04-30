@@ -367,7 +367,7 @@
       })
     }
 
-    if (uns === null && unstoppableResolution) {
+    if (uns === null && configuration.unstoppableResolution) {
       getUns(address, appChain).then(uns => {
         updateAccount(selectedWallet.label, address, {
           uns

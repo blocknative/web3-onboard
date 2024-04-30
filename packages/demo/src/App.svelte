@@ -433,6 +433,7 @@
 
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
+  $:console.log('wallets$', $wallets$)
   wallets$.subscribe(wallet => {
     console.log(wallet)
     const unstoppableUser = wallet.find(

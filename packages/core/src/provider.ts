@@ -9,7 +9,10 @@ import disconnect from './disconnect.js'
 import { state } from './store/index.js'
 import { getBNMulitChainSdk } from './services.js'
 import { configuration } from './configuration.js'
+import { updateSecondaryTokens } from './update-balances'
 
+import type { Uns } from '@web3-onboard/unstoppable-resolution'
+import type { PublicClient } from 'viem'
 import type {
   Address,
   ChainId,
@@ -29,10 +32,6 @@ import type {
   WalletPermission,
   WalletState
 } from './types.js'
-import type { Uns } from '@web3-onboard/unstoppable-resolution'
-import { updateSecondaryTokens } from './update-balances'
-
-import type { PublicClient } from 'viem'
 
 export const viemProviders: {
   [key: string]: PublicClient
@@ -50,13 +49,13 @@ async function getProvider(chain: Chain): Promise<PublicClient> {
       chain: viemChain,
       transport: http(
         chain.providerConnectionInfo && chain.providerConnectionInfo.url
-          ? chain.providerConnectionInfo.url
+          ? chain.providerConnectionInfo.url as string
           : (chain.rpcUrl as string)
-      )
-    })
+      ),
+    }) as PublicClient
   }
 
-  return viemProviders[chain.rpcUrl]
+  return viemProviders[chain.rpcUrl] as PublicClient;
 }
 
 export function requestAccounts(
@@ -232,7 +231,7 @@ export function trackWallet(
           account && account.uns
             ? Promise.resolve(account.uns)
             : getUns(address, ensChain)
-
+            console.log('ENS', await ensProm)
         return Promise.all([
           Promise.resolve(address),
           balanceProm,
@@ -325,10 +324,6 @@ export function trackWallet(
           accounts.map(async ({ address }) => {
             const balanceProm = getBalance(address, chain)
 
-            const ensChain = chains.find(
-              ({ id }) => id === validEnsChain(chainId)
-            )
-
             const secondaryTokenBal = updateSecondaryTokens(
               address,
               chain
@@ -396,7 +391,6 @@ export async function getEns(
       const avatar = await provider.getEnsAvatar({
         name: normalizedName
       })
-
       const contentHash = labelhash(normalizedName)
       const getText = async (key: string): Promise<string> => {
         return await provider.getEnsText({
