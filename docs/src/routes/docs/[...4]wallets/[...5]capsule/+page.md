@@ -42,10 +42,10 @@ type CapsuleInitOptions = {
   environment: string
   apiKey: string
   /** @optional capsule object opts */
-  constructorOpts?: ConstructorOpts
+  constructorOpts?: Partial<ConstructorOpts>
   appName: string
   /** @optional capsule modal props */
-  modalProps?: CapsuleModalV2Props
+  modalProps?: Partial<CapsuleModalV2Props>
 }
 ```
 ## Usage
