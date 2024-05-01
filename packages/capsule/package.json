@@ -58,7 +58,7 @@
   "dependencies": {
     "@usecapsule/web-sdk": "0.29.4",
     "@wagmi/chains": "^1.8.0",
-    "@web3-onboard/common": "^2.3.3",
+    "@web3-onboard/common": "^2.4.0-alpha.1",
     "react-dom": "^18.2.0"
   },
   "peerDependencies": {

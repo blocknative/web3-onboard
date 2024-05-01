@@ -61,7 +61,7 @@
   },
   "dependencies": {
     "@metamask/sdk": "^0.18.4",
-    "@web3-onboard/common": "^2.3.3"
+    "@web3-onboard/common": "^2.4.0-alpha.1"
   },
   "engines": {
     "node": ">=18.18"

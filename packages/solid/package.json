@@ -62,7 +62,7 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.3.3",
+    "@web3-onboard/common": "^2.4.0-alpha.1",
     "@web3-onboard/core": "^2.21.6-alpha.2",
     "solid-js": "^1.8.1"
   }

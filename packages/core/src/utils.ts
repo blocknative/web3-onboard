@@ -151,17 +151,9 @@ export const chainIdToViemImport = async (
       const { mainnet } = await import('viem/chains')
       return mainnet
     }
-    case '0x5': {
-      const { goerli } = await import('viem/chains')
-      return goerli
-    }
     case '0xaa36a7': {
       const { sepolia } = await import('viem/chains')
       return sepolia
-    }
-    case '0x14a33': {
-      const { baseGoerli } = await import('viem/chains')
-      return baseGoerli
     }
     default:
       return null
