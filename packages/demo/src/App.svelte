@@ -349,7 +349,7 @@
       },
       {
         id: 10,
-        token: 'OETH',
+        token: 'OP',
         label: 'OP Mainnet',
         rpcUrl: 'https://mainnet.optimism.io'
       },

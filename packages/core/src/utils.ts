@@ -138,6 +138,26 @@ export function validEnsChain(chainId: ChainId): string {
 }
 
 import { defineChain, type Chain as ViemChain } from 'viem'
+export const chainIdToViemENSImport = async (
+  chainId: string
+): Promise<ViemChain> => {
+  switch (chainId) {
+    case '0x89':
+    case '0xa':
+    case '0xa4b1':
+    case '0x144':
+    case '0x1': {
+      const { mainnet } = await import('viem/chains')
+      return mainnet
+    }
+    case '0xaa36a7': {
+      const { sepolia } = await import('viem/chains')
+      return sepolia
+    }
+    default:
+      return null
+  }
+}
 export const chainIdToViemImport = async (
   w3oChain: Chain
 ): Promise<ViemChain> => {

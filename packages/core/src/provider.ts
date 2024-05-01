@@ -4,7 +4,7 @@ import partition from 'lodash.partition'
 import { isAddress, weiHexToEth } from '@web3-onboard/common'
 import { disconnectWallet$ } from './streams.js'
 import { updateAccount, updateWallet } from './store/actions.js'
-import { chainIdToViemImport, validEnsChain } from './utils.js'
+import { chainIdToViemENSImport, validEnsChain } from './utils.js'
 import disconnect from './disconnect.js'
 import { state } from './store/index.js'
 import { getBNMulitChainSdk } from './services.js'
@@ -32,6 +32,7 @@ import type {
   WalletPermission,
   WalletState
 } from './types.js'
+import type { Chain as ViemChain } from 'viem'
 
 export const viemProviders: {
   [key: string]: PublicClient
@@ -41,21 +42,21 @@ async function getProvider(chain: Chain): Promise<PublicClient> {
   if (!chain) return null
 
   if (!viemProviders[chain.rpcUrl]) {
-    const viemChain = await chainIdToViemImport(chain)
+    const viemChain = await chainIdToViemENSImport(chain.id)
     if (!viemChain) return
 
     const { createPublicClient, http } = await import('viem')
     viemProviders[chain.rpcUrl] = createPublicClient({
-      chain: viemChain,
+      chain: viemChain as ViemChain,
       transport: http(
         chain.providerConnectionInfo && chain.providerConnectionInfo.url
-          ? chain.providerConnectionInfo.url as string
+          ? (chain.providerConnectionInfo.url as string)
           : (chain.rpcUrl as string)
-      ),
+      )
     }) as PublicClient
   }
 
-  return viemProviders[chain.rpcUrl] as PublicClient;
+  return viemProviders[chain.rpcUrl] as PublicClient
 }
 
 export function requestAccounts(
@@ -210,10 +211,7 @@ export function trackWallet(
         )
 
         const balanceProm = getBalance(address, chain)
-        const secondaryTokenBal = updateSecondaryTokens(
-          address,
-          chain
-        )
+        const secondaryTokenBal = updateSecondaryTokens(address, chain)
         const account = accounts.find(account => account.address === address)
 
         const ensChain = chains.find(
@@ -231,7 +229,7 @@ export function trackWallet(
           account && account.uns
             ? Promise.resolve(account.uns)
             : getUns(address, ensChain)
-            console.log('ENS', await ensProm)
+        console.log('ENS', await ensProm)
         return Promise.all([
           Promise.resolve(address),
           balanceProm,
@@ -324,10 +322,7 @@ export function trackWallet(
           accounts.map(async ({ address }) => {
             const balanceProm = getBalance(address, chain)
 
-            const secondaryTokenBal = updateSecondaryTokens(
-              address,
-              chain
-            )
+            const secondaryTokenBal = updateSecondaryTokens(address, chain)
             const ensChain = chains.find(
               ({ id }) => id === validEnsChain(chainId)
             )

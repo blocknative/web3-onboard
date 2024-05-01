@@ -4,6 +4,7 @@ import { updateAllWallets } from './store/actions.js'
 import { AccountAddress, Address, Chain, weiToEth } from '@web3-onboard/common'
 import type { SecondaryTokenBalances } from './types'
 import type { ReadContractParameters } from 'viem'
+import { chainIdToViemImport } from './utils'
 
 async function updateBalances(addresses?: string[]): Promise<void> {
   const { wallets, chains } = state.get()
@@ -50,8 +51,9 @@ export const updateSecondaryTokens = async (
     chain.secondaryTokens.map(async token => {
       try {
         const { createPublicClient, http } = await import('viem')
+        const viemChain = await chainIdToViemImport(chain)
         const client = createPublicClient({
-          // chain: mainnet,
+          chain: viemChain,
           transport: http(
             chain.providerConnectionInfo && chain.providerConnectionInfo.url
               ? chain.providerConnectionInfo.url
