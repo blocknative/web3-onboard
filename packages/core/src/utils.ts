@@ -119,7 +119,6 @@ export const chainIdToLabel: Record<string, string> = {
   '0x27bc86aa': 'Degen'
 }
 
-
 export function validEnsChain(chainId: ChainId): string {
   // return L2s as Eth for ens resolution
   switch (chainId) {
@@ -138,15 +137,32 @@ export function validEnsChain(chainId: ChainId): string {
   }
 }
 
-import type { Chain as ViemChain } from 'viem'
+import { defineChain, type Chain as ViemChain } from 'viem'
 export const chainIdToViemImport = async (
-  chainId: string
+  w3oChain: Chain
 ): Promise<ViemChain> => {
-  switch (chainId) {
-    case '0x89':
-    case '0xa':
-    case '0xa4b1':
-    case '0x144':
+  const { id, label, token, publicRpcUrl, blockExplorerUrl, rpcUrl } = w3oChain
+  switch (id) {
+    case '0x89': {
+      const { polygon } = await import('viem/chains')
+      return polygon
+    }
+    case '0xa': {
+      const { optimism } = await import('viem/chains')
+      return optimism as ViemChain
+    }
+    case '0xa4b1': {
+      const { arbitrum } = await import('viem/chains')
+      return arbitrum
+    }
+    case '0x144': {
+      const { zkSync } = await import('viem/chains')
+      return zkSync as ViemChain
+    }
+    case '0x38': {
+      const { bsc } = await import('viem/chains')
+      return bsc
+    }
     case '0x1': {
       const { mainnet } = await import('viem/chains')
       return mainnet
@@ -155,8 +171,56 @@ export const chainIdToViemImport = async (
       const { sepolia } = await import('viem/chains')
       return sepolia
     }
+    case '0xfa': {
+      const { fantom } = await import('viem/chains')
+      return fantom
+    }
+    case '0xa86a': {
+      const { avalanche } = await import('viem/chains')
+      return avalanche
+    }
+    case '0xa4ec': {
+      const { celo } = await import('viem/chains')
+      return celo as ViemChain
+    }
+    case '0x2105': {
+      const { base } = await import('viem/chains')
+      return base as ViemChain
+    }
+    case '0x14a33': {
+      const { baseGoerli } = await import('viem/chains')
+      return baseGoerli as ViemChain
+    }
+    case '0x64': {
+      const { gnosis } = await import('viem/chains')
+      return gnosis
+    }
+    case '0x63564C40': {
+      const { harmonyOne } = await import('viem/chains')
+      return harmonyOne
+    }
+    case '0x27bc86aa': {
+      const { degen } = await import('viem/chains')
+      return degen
+    }
     default:
-      return null
+      return defineChain({
+        id: parseInt(id, 16),
+        name: label,
+        nativeCurrency: {
+          decimals: 18,
+          name: token,
+          symbol: token
+        },
+        rpcUrls: {
+          default: {
+            http: [rpcUrl, publicRpcUrl]
+          }
+        },
+        blockExplorers: {
+          default: { name: 'Explorer', url: blockExplorerUrl }
+        }
+      })
   }
 }
 

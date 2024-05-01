@@ -404,7 +404,7 @@ function trezor(options: TrezorOptions): WalletInit {
 
           // 'gas' is an invalid property for the TransactionRequest type
           delete transactionObject.gas
-
+console.log('transactionObject', transactionObject)
           const populatedTransaction = await signer.populateTransaction(
             transactionObject
           )

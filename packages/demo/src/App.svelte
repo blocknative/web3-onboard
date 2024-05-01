@@ -6,12 +6,12 @@
   import injectedModule, { ProviderLabel } from '@web3-onboard/injected-wallets'
   // import keepkeyModule from '@web3-onboard/keepkey'
   // import keystoneModule from '@web3-onboard/keystone'
-  // import ledgerModule from '@web3-onboard/ledger'
+  import ledgerModule from '@web3-onboard/ledger'
   // import portisModule from '@web3-onboard/portis'
   // import torusModule from '@web3-onboard/torus'
   import trezorModule from '@web3-onboard/trezor'
   // import walletConnectModule from '@web3-onboard/walletconnect'
-  // import coinbaseModule from '@web3-onboard/coinbase'
+  import coinbaseModule from '@web3-onboard/coinbase'
   // import magicModule from '@web3-onboard/magic'
   // import web3authModule from '@web3-onboard/web3auth'
   // import dcentModule from '@web3-onboard/dcent'
@@ -41,6 +41,7 @@
   // import bitgetModule from '@web3-onboard/bitget'
   // import particleAuthModule from '@web3-onboard/particle-network'
   // import capsuleModule, { Environment } from '@web3-onboard/capsule'
+  import metamaskSDK from '@web3-onboard/metamask'
   import {
     recoverAddress,
     arrayify,
@@ -126,7 +127,7 @@
     //     : `Oops ${wallet.label} is unavailable!`
   })
 
-  // const coinbaseWallet = coinbaseModule()
+  const coinbaseWallet = coinbaseModule()
 
   // const walletConnect = walletConnectModule({
   //   handleUri: uri => console.log(uri),
@@ -136,17 +137,17 @@
   // const portis = portisModule({
   //   apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
   // })
-  // const metamaskSDKWallet = metamaskSDK({
-  //   options: {
-  //     extensionOnly: false,
-  //     i18nOptions: {
-  //       enabled: true
-  //     },
-  //     dappMetadata: {
-  //       name: 'Demo Web3Onboard'
-  //     }
-  //   }
-  // })
+  const metamaskSDKWallet = metamaskSDK({
+    options: {
+      extensionOnly: false,
+      i18nOptions: {
+        enabled: true
+      },
+      dappMetadata: {
+        name: 'Demo Web3Onboard'
+      }
+    }
+  })
 
   // const fortmatic = fortmaticModule({
   //   apiKey: 'pk_test_886ADCAB855632AA'
@@ -163,7 +164,7 @@
 
   // const torus = torusModule()
   // const infinityWallet = infinityWalletModule()
-  // const ledger = ledgerModule({ projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5' })
+  const ledger = ledgerModule({ projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5' })
   // const keepkey = keepkeyModule()
   // const keystone = keystoneModule()
   // const safe = safeModule()
@@ -225,10 +226,10 @@
 
   const onboard = Onboard({
     wallets: [
-      // metamaskSDKWallet,
-      // coinbaseWallet,
-      injected
-      // ledger,
+      metamaskSDKWallet,
+      coinbaseWallet,
+      injected,
+      ledger,
       // trezor,
       // walletConnect,
       // phantom,

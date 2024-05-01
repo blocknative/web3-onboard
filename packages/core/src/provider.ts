@@ -41,7 +41,7 @@ async function getProvider(chain: Chain): Promise<PublicClient> {
   if (!chain) return null
 
   if (!viemProviders[chain.rpcUrl]) {
-    const viemChain = await chainIdToViemImport(chain.id)
+    const viemChain = await chainIdToViemImport(chain)
     if (!viemChain) return
 
     const { createPublicClient, http } = await import('viem')
