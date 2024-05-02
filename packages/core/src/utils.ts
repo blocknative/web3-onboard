@@ -140,7 +140,7 @@ export function validEnsChain(chainId: ChainId): string {
 import { defineChain, type Chain as ViemChain } from 'viem'
 export const chainIdToViemENSImport = async (
   chainId: string
-): Promise<ViemChain> => {
+): Promise<ViemChain> | null => {
   switch (chainId) {
     case '0x89':
     case '0xa':

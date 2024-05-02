@@ -12,7 +12,12 @@
     "resolveJsonModule": true,
     "strictNullChecks": false,
     "allowSyntheticDefaultImports": true,
-    "lib": ["es2020"]
+    "lib": ["es2020"],
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true, // This can help skip type checking of all declaration files (*.d.ts)
+    "forceConsistentCasingInFileNames": true
   },
   "outDir": "dist",
 }

@@ -38,7 +38,8 @@ export default {
     }),
     typescript({
       sourceMap: !production,
-      inlineSources: !production
+      inlineSources: !production,
+      tsconfig: './tsconfig.json'
     }),
     copy({
       src: 'src/i18n/en.json',

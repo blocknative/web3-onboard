@@ -76,7 +76,7 @@ export type Account = {
   derivationPath: DerivationPath
   balance: {
     asset: Asset['label']
-    value: bigint
+    value: BigNumber
   }
 }
 

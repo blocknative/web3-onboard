@@ -7,13 +7,11 @@ import type {
   FeeMarketEIP1559Transaction,
   Transaction
 } from '@ethereumjs/tx'
-import type { PublicClient, Chain as ViemChain } from 'viem'
 
 // cannot be dynamically imported
 import { Buffer } from 'buffer'
 
 import type {
-  AccountAddress,
   Chain,
   CustomNetwork,
   Platform,
@@ -59,7 +57,7 @@ const getAccount = async (
   { publicKey, chainCode, path }: AccountData,
   asset: Asset,
   index: number,
-  provider: PublicClient
+  provider: StaticJsonRpcProvider
 ): Promise<Account> => {
   //@ts-ignore
   const { default: HDKey } = await import('hdkey')
@@ -84,7 +82,7 @@ const getAccount = async (
     address,
     balance: {
       asset: asset.label,
-      value: await provider.getBalance({address})
+      value: await provider.getBalance(address)
     }
   }
 }
@@ -92,7 +90,7 @@ const getAccount = async (
 const getAddresses = async (
   account: AccountData,
   asset: Asset,
-  provider: PublicClient,
+  provider: StaticJsonRpcProvider,
   consecutiveEmptyAccounts: number
 ): Promise<Account[]> => {
   const accounts = []
@@ -175,8 +173,8 @@ function trezor(options: TrezorOptions): WalletInit {
         const ethUtil = await import('ethereumjs-util')
         const { compress } = (await import('eth-crypto')).publicKey
 
-        const { createPublicClient, http } = await import(
-          'viem'
+        const { StaticJsonRpcProvider } = await import(
+          '@ethersproject/providers'
         )
 
         // @ts-ignore
@@ -194,36 +192,14 @@ function trezor(options: TrezorOptions): WalletInit {
           | { publicKey: string; chainCode: string; path: string }
           | undefined
 
-        let viemProvider: PublicClient
+        let ethersProvider: StaticJsonRpcProvider
         const scanAccounts = async ({
           derivationPath,
           chainId,
           asset
         }: ScanAccountsOptions): Promise<Account[]> => {
-
-          const chainIdToViemImport = async (
-            chainId: string
-          ): Promise<ViemChain> => {
-            switch (chainId) {
-              case '0x89':
-              case '0xa':
-              case '0xa4b1':
-              case '0x144':
-              case '0x1': {
-                const { mainnet } = await import('viem/chains')
-                return mainnet
-              }
-              case '0xaa36a7': {
-                const { sepolia } = await import('viem/chains')
-                return sepolia
-              }
-              default:
-                return null
-            }
-          }
           currentChain = chains.find(({ id }) => id === chainId) || currentChain
-          const viemChain = await chainIdToViemImport(currentChain.id)
-          viemProvider = createPublicClient({chain: viemChain, transport: http(currentChain.rpcUrl)})
+          ethersProvider = new StaticJsonRpcProvider(currentChain.rpcUrl)
 
           const { publicKey, chainCode, path } = await getPublicKey(
             derivationPath
@@ -237,7 +213,7 @@ function trezor(options: TrezorOptions): WalletInit {
                 address,
                 balance: {
                   asset: asset.label,
-                  value: await viemProvider.getBalance(address.toLowerCase())
+                  value: await ethersProvider.getBalance(address.toLowerCase())
                 }
               }
             ]
@@ -250,7 +226,7 @@ function trezor(options: TrezorOptions): WalletInit {
               path: derivationPath
             },
             asset,
-            viemProvider,
+            ethersProvider,
             consecutiveEmptyAccounts
           )
         }
@@ -404,7 +380,9 @@ function trezor(options: TrezorOptions): WalletInit {
 
           // 'gas' is an invalid property for the TransactionRequest type
           delete transactionObject.gas
-console.log('transactionObject', transactionObject)
+
+          const signer = ethersProvider.getSigner(address)
+
           const populatedTransaction = await signer.populateTransaction(
             transactionObject
           )
@@ -536,17 +514,17 @@ console.log('transactionObject', transactionObject)
               throw new Error(
                 'No address property associated with the selected account'
               )
-            return [accounts[0].address as AccountAddress]
+            return [accounts[0].address]
           },
           eth_selectAccounts: async () => {
             const accounts = await getAccountFromAccountSelect()
-            return accounts.map(({ address }) => address as AccountAddress)
+            return accounts.map(({ address }) => address)
           },
           eth_accounts: async () =>
             Array.isArray(accounts) &&
             accounts.length &&
             accounts[0].hasOwnProperty('address')
-              ? [accounts[0].address as AccountAddress]
+              ? [accounts[0].address]
               : [],
           eth_chainId: async () =>
             currentChain.hasOwnProperty('id') ? currentChain.id : '',

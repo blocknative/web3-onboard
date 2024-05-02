@@ -77,13 +77,12 @@
     "svelte-check": "^2.2.6",
     "svelte-preprocess": "^4.9.4",
     "tslib": "^2.0.0",
-    "ethers": "5.5.4",
-    "typescript": "^4.9.4"
+    "typescript": "^4.5.5"
   },
   "dependencies": {
     "@ethereumjs/common": "2.6.2",
     "@web3-onboard/common": "^2.4.0-alpha.1",
-    "viem": "2.9.29",
+    "ethers": "5.5.4",
     "joi": "17.9.1",
     "rxjs": "^7.5.2"
   }

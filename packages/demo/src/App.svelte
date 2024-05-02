@@ -177,13 +177,13 @@
   // const blocto = bloctoModule()
   // const tallyho = tallyHoModule()
 
-  // const trezorOptions = {
-  //   email: 'test@test.com',
-  //   appUrl: 'https://www.blocknative.com',
-  //   consecutiveEmptyAccountThreshold: 10
-  //   // containerElement: '#sample-container-el'
-  // }
-  // const trezor = trezorModule(trezorOptions)
+  const trezorOptions = {
+    email: 'test@test.com',
+    appUrl: 'https://www.blocknative.com',
+    consecutiveEmptyAccountThreshold: 10
+    // containerElement: '#sample-container-el'
+  }
+  const trezor = trezorModule(trezorOptions)
 
   // const uauthOptions = {
   //   clientID: 'a25c3a65-a1f2-46cc-a515-a46fe7acb78c',
@@ -230,7 +230,7 @@
       coinbaseWallet,
       injected,
       ledger,
-      // trezor,
+      trezor,
       // walletConnect,
       // phantom,
       // safe,

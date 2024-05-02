@@ -38,12 +38,12 @@ export const viemProviders: {
   [key: string]: PublicClient
 } = {}
 
-async function getProvider(chain: Chain): Promise<PublicClient> {
+async function getProvider(chain: Chain): Promise<PublicClient | null> {
   if (!chain) return null
 
   if (!viemProviders[chain.rpcUrl]) {
-    const viemChain = await chainIdToViemENSImport(chain.id)
-    if (!viemChain) return
+    const viemChain = (await chainIdToViemENSImport(chain.id))
+    if (!viemChain) return null
 
     const { createPublicClient, http } = await import('viem')
     viemProviders[chain.rpcUrl] = createPublicClient({
@@ -56,7 +56,7 @@ async function getProvider(chain: Chain): Promise<PublicClient> {
     }) as PublicClient
   }
 
-  return viemProviders[chain.rpcUrl] as PublicClient
+  return viemProviders[chain.rpcUrl]
 }
 
 export function requestAccounts(
@@ -370,6 +370,7 @@ export async function getEns(
   if (!chain) return null
 
   const provider = await getProvider(chain)
+  if (!provider) return null
 
   try {
     const name = await provider.getEnsName({
