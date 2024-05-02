@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ProviderRpcErrorCode, WalletModule } from '@web3-onboard/common'
+  import { ProviderRpcErrorCode, type WalletModule } from '@web3-onboard/common'
   import EventEmitter from 'eventemitter3'
   import { _ } from 'svelte-i18n'
   import en from '../../i18n/en.json'

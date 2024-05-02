@@ -1,8 +1,7 @@
 {
   "extends": "@tsconfig/svelte/tsconfig.json",
-
-  "include": ["src/**/*"],
-  "exclude": ["node_modules/*", "dist"],
+  "include": ["src/**/*", "src/node_modules/**/*"],
+  "exclude": ["node_modules/*", "dist", "public/*"],
   "compilerOptions": {
     "strict": true,
     "declaration": true,
@@ -13,11 +12,9 @@
     "strictNullChecks": false,
     "allowSyntheticDefaultImports": true,
     "lib": ["es2020"],
-    "moduleResolution": "node",
     "experimentalDecorators": true,
     "esModuleInterop": true,
-    "skipLibCheck": true, // This can help skip type checking of all declaration files (*.d.ts)
-    "forceConsistentCasingInFileNames": true
+    "types": ["svelte"]
   },
-  "outDir": "dist",
+  "outDir": "dist"
 }
