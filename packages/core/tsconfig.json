@@ -1,7 +1,7 @@
 {
   "extends": "@tsconfig/svelte/tsconfig.json",
-  "include": ["src/**/*", "src/node_modules/**/*"],
-  "exclude": ["node_modules/*", "dist", "public/*"],
+  "include": ["src/**/*"],
+  "exclude": ["node_modules/*", "dist"],
   "compilerOptions": {
     "strict": true,
     "declaration": true,
@@ -10,9 +10,7 @@
     "module": "esnext",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "lib": ["es2020", "dom", "es6", "dom.iterable", "scripthost"],
-    "experimentalDecorators": true,
-    "esModuleInterop": true,
+    "lib": ["es2020", "dom", "dom.iterable"],
     "types": ["svelte"]
   },
   "outDir": "dist"

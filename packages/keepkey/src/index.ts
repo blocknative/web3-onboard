@@ -1,4 +1,4 @@
-import type { AccountAddress, Chain, Platform, WalletInit } from '@web3-onboard/common'
+import type { Chain, Platform, WalletInit } from '@web3-onboard/common'
 import type { StaticJsonRpcProvider } from '@ethersproject/providers'
 import type { ETHAccountPath } from '@shapeshiftoss/hdwallet-core'
 import type { KeepKeyHDWallet } from '@shapeshiftoss/hdwallet-keepkey'
@@ -208,9 +208,9 @@ function keepkey({
                 acc.balance.value.isZero()
               ) {
                 zeroBalanceAccounts++
-                accounts.push(acc as Account)
+                accounts.push(acc)
               } else {
-                accounts.push(acc as Account)
+                accounts.push(acc)
                 // Reset the number of 0 balance accounts
                 zeroBalanceAccounts = 0
               }
@@ -249,7 +249,7 @@ function keepkey({
                 asset
               })
 
-              return [account as Account]
+              return [account]
             } catch (error) {
               throw new Error('Invalid derivation path')
             }
@@ -359,18 +359,18 @@ function keepkey({
               )
             }
 
-            return [accounts[0].address as AccountAddress]
+            return [accounts[0].address]
           },
           eth_selectAccounts: async () => {
             const accounts = await getAccounts()
-            return accounts.map(({ address }) => address as AccountAddress)
+            return accounts.map(({ address }) => address)
           },
           eth_accounts: async () => {
             if (!accounts || !Array.isArray(accounts)) {
               throw new Error('No accounts were returned from Keepkey device')
             }
             return accounts[0].hasOwnProperty('address')
-              ? [accounts[0].address as AccountAddress]
+              ? [accounts[0].address]
               : []
           },
           eth_chainId: async () => {
