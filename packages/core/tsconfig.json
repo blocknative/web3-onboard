@@ -9,9 +9,8 @@
     "target": "esnext",
     "module": "esnext",
     "resolveJsonModule": true,
-    "strictNullChecks": false,
     "allowSyntheticDefaultImports": true,
-    "lib": ["es2020"],
+    "lib": ["es2020", "dom", "es6", "dom.iterable", "scripthost"],
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "types": ["svelte"]

@@ -27,7 +27,11 @@ export function handleTransactionUpdates(
   }
 
   if (transaction.eventCode === 'txConfirmed') {
-    updateBalances([transaction.watchedAddress, transaction.counterparty])
+    const addresses = [
+      transaction.watchedAddress,
+      transaction.counterparty
+    ].filter(Boolean) as string[]
+    updateBalances(addresses)
   }
 
   const notification = transactionEventToNotification(transaction, customized)

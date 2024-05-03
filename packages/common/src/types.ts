@@ -125,8 +125,14 @@ export type WalletInit = (
   helpers: WalletHelpers
 ) => WalletModule | WalletModule[] | null
 
+export type DeviceNotBrowser = {
+  type: null
+  os: null
+  browser: null
+}
+
 export type WalletHelpers = {
-  device: Device
+  device: Device | DeviceNotBrowser
 }
 
 export interface APIKey {

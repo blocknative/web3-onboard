@@ -12,7 +12,7 @@ import { configuration } from './configuration.js'
 import { updateSecondaryTokens } from './update-balances'
 
 import type { Uns } from '@web3-onboard/unstoppable-resolution'
-import type { PublicClient } from 'viem'
+import type { PublicClient, GetEnsTextReturnType } from 'viem'
 import type {
   Address,
   ChainId,
@@ -32,31 +32,27 @@ import type {
   WalletPermission,
   WalletState
 } from './types.js'
-import type { Chain as ViemChain } from 'viem'
 
 export const viemProviders: {
   [key: string]: PublicClient
 } = {}
 
-async function getProvider(chain: Chain): Promise<PublicClient | null> {
+async function getProvider(chain: Chain) {
   if (!chain) return null
 
-  if (!viemProviders[chain.rpcUrl]) {
-    const viemChain: ViemChain = (await chainIdToViemENSImport(chain.id))
+  if (!viemProviders[chain.rpcUrl as string]) {
+    const viemChain = await chainIdToViemENSImport(chain.id)
     if (!viemChain) return null
 
     const { createPublicClient, http } = await import('viem')
-    viemProviders[chain.rpcUrl] = createPublicClient({
+    const publicProvider = createPublicClient({
       chain: viemChain,
-      transport: http(
-        chain.providerConnectionInfo && chain.providerConnectionInfo.url
-          ? chain.providerConnectionInfo.url
-          : chain.rpcUrl
-      )
-    }) as PublicClient
+      transport: http()
+    })
+    viemProviders[chain.rpcUrl as string] = publicProvider as PublicClient
   }
 
-  return viemProviders[chain.rpcUrl]
+  return viemProviders[chain.rpcUrl as string] as PublicClient
 }
 
 export function requestAccounts(
@@ -150,7 +146,8 @@ export function trackWallet(
     }
 
     const { wallets } = state.get()
-    const { accounts } = wallets.find(wallet => wallet.label === label)
+    const wallet = wallets.find(wallet => wallet.label === label)
+    const accounts = wallet ? wallet.accounts : []
 
     const [[existingAccount], restAccounts] = partition(
       accounts,
@@ -180,11 +177,13 @@ export function trackWallet(
           .get()
           .wallets.find(wallet => wallet.label === label)
         try {
-          sdk.subscribe({
-            id: address,
-            chainId: wallet.chains[0].id,
-            type: 'account'
-          })
+          if (wallet) {
+            sdk.subscribe({
+              id: address,
+              chainId: wallet.chains[0]?.id,
+              type: 'account'
+            })
+          }
         } catch (error) {
           // unsupported network for transaction events
         }
@@ -201,6 +200,8 @@ export function trackWallet(
         const { wallets, chains } = state.get()
 
         const primaryWallet = wallets.find(wallet => wallet.label === label)
+        if (!primaryWallet) return // Add null check for primaryWallet
+
         const { chains: walletChains, accounts } = primaryWallet
 
         const [connectedWalletChain] = walletChains
@@ -209,6 +210,7 @@ export function trackWallet(
           ({ namespace, id }) =>
             namespace === 'evm' && id === connectedWalletChain.id
         )
+        if (!chain) return
 
         const balanceProm = getBalance(address, chain)
         const secondaryTokenBal = updateSecondaryTokens(address, chain)
@@ -228,7 +230,9 @@ export function trackWallet(
         const unsProm =
           account && account.uns
             ? Promise.resolve(account.uns)
-            : getUns(address, ensChain)
+            : ensChain
+            ? getUns(address, ensChain)
+            : Promise.resolve(null)
         console.log('ENS', await ensProm)
         return Promise.all([
           Promise.resolve(address),
@@ -252,7 +256,9 @@ export function trackWallet(
   // Update chain on wallet when chainId changed
   chainChanged$.subscribe(async chainId => {
     const { wallets } = state.get()
-    const { chains, accounts } = wallets.find(wallet => wallet.label === label)
+    const wallet = wallets.find(wallet => wallet.label === label)
+    if (!wallet) return // Add null check for wallet
+    const { chains, accounts } = wallet
     const [connectedWalletChain] = chains
 
     if (chainId === connectedWalletChain.id) return
@@ -264,6 +270,8 @@ export function trackWallet(
         const wallet = state
           .get()
           .wallets.find(wallet => wallet.label === label)
+
+        if (!wallet) return // Add null check for wallet
 
         // Unsubscribe with timeout of 60 seconds
         // to allow for any currently inflight transactions
@@ -312,11 +320,12 @@ export function trackWallet(
       switchMap(async chainId => {
         const { wallets, chains } = state.get()
         const primaryWallet = wallets.find(wallet => wallet.label === label)
-        const { accounts } = primaryWallet
+        const accounts = primaryWallet?.accounts || []
 
         const chain = chains.find(
           ({ namespace, id }) => namespace === 'evm' && id === chainId
         )
+        if (!chain) return Promise.resolve(null)
 
         return Promise.all(
           accounts.map(async ({ address }) => {
@@ -381,6 +390,7 @@ export async function getEns(
     if (name) {
       const { labelhash, normalize } = await import('viem/ens')
       const normalizedName = normalize(name)
+
       const ensResolver = await provider.getEnsResolver({
         name: normalizedName
       })
@@ -388,7 +398,7 @@ export async function getEns(
         name: normalizedName
       })
       const contentHash = labelhash(normalizedName)
-      const getText = async (key: string): Promise<string> => {
+      const getText = async (key: string): Promise<GetEnsTextReturnType> => {
         return await provider.getEnsText({
           name,
           key
@@ -440,6 +450,7 @@ export async function getBalance(
 
   try {
     const wallet = wallets.find(wallet => !!wallet.provider)
+    if (!wallet) return null
     const provider = wallet.provider
     const balanceHex = await provider.request({
       method: 'eth_getBalance',
@@ -531,6 +542,7 @@ export async function syncWalletConnectedAccounts(
   label: WalletState['label']
 ): Promise<void> {
   const wallet = state.get().wallets.find(wallet => wallet.label === label)
+  if (!wallet) return
   const permissions = await getPermissions(wallet.provider)
   const accountsPermissions = permissions.find(
     ({ parentCapability }) => parentCapability === 'eth_accounts'

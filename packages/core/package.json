@@ -83,7 +83,7 @@
     "svelte-check": "^2.2.6",
     "svelte-preprocess": "^5.1.4",
     "tslib": "^2.0.0",
-    "typescript": "^5.0.4",
+    "typescript": "^5.4.5",
     "@rollup/plugin-commonjs":"24.0.1" 
   },
   "dependencies": {
@@ -98,7 +98,7 @@
     "rxjs": "^7.5.5",
     "svelte": "^3.49.0",
     "svelte-i18n": "^3.3.13",
-    "viem": "^2.9.28"
+    "viem": "^2.9.31"
   },
   "engines": {
     "node": ">=16.15.1"

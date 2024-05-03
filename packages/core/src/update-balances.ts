@@ -1,16 +1,24 @@
 import { state } from './store/index.js'
 import { getBalance } from './provider.js'
 import { updateAllWallets } from './store/actions.js'
-import { AccountAddress, Address, Chain, weiToEth } from '@web3-onboard/common'
-import type { SecondaryTokenBalances } from './types'
-import type { ReadContractParameters } from 'viem'
-import { chainIdToViemImport } from './utils'
+import {
+  type AccountAddress,
+  type Address,
+  type Chain,
+  weiToEth
+} from '@web3-onboard/common'
+import type { SecondaryTokenBalances, WalletState } from './types'
+import type { PublicClient, ReadContractParameters } from 'viem'
+import type { Chain as ViemChain } from 'viem'
+import { chainIdToViemImport } from './utils.js'
+
 
 async function updateBalances(addresses?: string[]): Promise<void> {
   const { wallets, chains } = state.get()
   const updatedWallets = await Promise.all(
     wallets.map(async wallet => {
       const chain = chains.find(({ id }) => id === wallet.chains[0].id)
+      if (!chain) return
 
       const updatedAccounts = await Promise.all(
         wallet.accounts.map(async account => {
@@ -35,29 +43,30 @@ async function updateBalances(addresses?: string[]): Promise<void> {
       return { ...wallet, accounts: updatedAccounts }
     })
   )
-  updateAllWallets(updatedWallets)
+  updateAllWallets(updatedWallets as WalletState[])
 }
 
 export const updateSecondaryTokens = async (
   accountAddress: AccountAddress,
   chain: Chain
 ): Promise<SecondaryTokenBalances[]> => {
-  if (!chain) return
+  if (!chain) return []
   const chainRPC = chain.rpcUrl
   if (!chain.secondaryTokens || !chain.secondaryTokens.length || !chainRPC)
-    return
+    return []
 
   const tokenBalances = await Promise.all(
     chain.secondaryTokens.map(async token => {
       try {
         const { createPublicClient, http } = await import('viem')
+
         const viemChain = await chainIdToViemImport(chain)
         const client = createPublicClient({
-          chain: viemChain,
+          chain: viemChain as ViemChain,
           transport: http(
             chain.providerConnectionInfo && chain.providerConnectionInfo.url
               ? chain.providerConnectionInfo.url
-              : (chain.rpcUrl as string)
+              : (chainRPC as string)
           )
         })
         const viemTokenInterface = {
@@ -81,14 +90,14 @@ export const updateSecondaryTokens = async (
         }
 
         const supplyProm =
-          client.readContract({
+          (client as PublicClient).readContract({
             ...viemTokenInterface,
             functionName: 'balanceOf',
             args: [accountAddress] as unknown[]
           } as ReadContractParameters) || ''
 
         const tokenProm =
-          client.readContract({
+          (client as PublicClient).readContract({
             ...viemTokenInterface,
             functionName: 'symbol',
             args: []
@@ -101,7 +110,7 @@ export const updateSecondaryTokens = async (
 
         return {
           name: tokenName as string,
-          balance: weiToEth(tokenSupply.toString()),
+          balance: weiToEth((tokenSupply as number).toString()),
           icon: token.icon
         }
       } catch (error) {
@@ -112,7 +121,7 @@ export const updateSecondaryTokens = async (
       }
     })
   )
-  return tokenBalances
+  return tokenBalances as SecondaryTokenBalances[]
 }
 
 export default updateBalances

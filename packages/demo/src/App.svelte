@@ -219,9 +219,19 @@
   //   clientId: 'blocknative',
   //   environment: 'staging'
   // })
+
   // const capsule = capsuleModule({
   //   environment: Environment.DEVELOPMENT,
-  //   apiKey: '992bbd9146d5de8ad0419f141d9a7ca7'
+  //   apiKey: '992bbd9146d5de8ad0419f141d9a7ca7',
+  //   modalProps: {
+  //     oAuthMethods: [OAuthMethod.GOOGLE, OAuthMethod.TWITTER],
+  //     theme: Theme.dark
+  //   },
+  //   constructorOpts: {
+  //     portalBackgroundColor: '#5e5656',
+  //     portalPrimaryButtonColor: '#ff6700',
+  //     portalTextColor: '#ffffff'
+  //   }
   // })
 
   const onboard = Onboard({
@@ -467,7 +477,6 @@
     const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 
     const signer = ethersProvider.getSigner()
-
     const popTransaction = await signer.populateTransaction({
       to: toAddress,
       value: 10000000000000
@@ -768,7 +777,7 @@
           <button on:click={() => onboard.setChain({ chainId: '0x1' })}
             >Set Chain to Mainnet</button
           >
-          <button on:click={() => onboard.setChain({ chainId: '0x5' })}
+          <button on:click={() => onboard.setChain({ chainId: 11155111 })}
             >Set Chain to Sepolia</button
           >
           <button on:click={() => onboard.setChain({ chainId: '0x89' })}

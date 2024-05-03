@@ -1,5 +1,5 @@
 import { CedeProvider, detectCedeProvider } from '@cedelabs/providers'
-import type { WalletInit } from '@web3-onboard/common'
+import type { ProviderAccounts, WalletInit } from '@web3-onboard/common'
 import { createEIP1193Provider } from '@web3-onboard/common'
 
 type CustomWindow = typeof window & {
@@ -38,7 +38,7 @@ function cedeStoreWallet(): WalletInit {
 
             const activeVault = accounts.find(account => account.isActive)
 
-            return [activeVault?.name || accounts[0].name]
+            return [activeVault?.name || accounts[0].name] as ProviderAccounts
           },
           eth_chainId: () => Promise.resolve('0x1'), // cede.store doesn't support chains, but we have to provide a value to complete the connection
           wallet_switchEthereumChain: null,

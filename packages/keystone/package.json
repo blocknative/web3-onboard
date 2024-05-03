@@ -52,7 +52,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "typescript": "^4.9.4"
+    "typescript": "^5.4.5"
   },
   "dependencies": {
     "@ethereumjs/tx": "^3.4.0",

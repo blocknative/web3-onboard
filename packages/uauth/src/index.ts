@@ -2,7 +2,6 @@
 import type { UserInfo } from '@uauth/js'
 import type { UauthInitOptions } from './types.js'
 import type { CoreTypes } from '@walletconnect/types'
-import type { EthereumProvider } from '@walletconnect/ethereum-provider'
 import type { EthereumProviderOptions } from '@walletconnect/ethereum-provider/dist/types/EthereumProvider'
 import type { JQueryStyleEventEmitter } from 'rxjs/internal/observable/fromEvent'
 import type {
@@ -322,7 +321,7 @@ function uauth(options: UauthInitOptions): WalletInit {
                               ? chainId
                               : `0x${chainId.toString(16)}`
                             this.emit('chainChanged', hexChainId)
-                            resolve(this.connector.accounts)
+                            resolve(this.connector.accounts as ProviderAccounts)
                           },
                           error: reject
                         })
@@ -339,20 +338,22 @@ function uauth(options: UauthInitOptions): WalletInit {
                             })
                           )
                         })
-                    } else {
-                      const { accounts, chainId } = this.connector.session
-                      const hexChainId = isHexString(chainId)
-                        ? chainId
-                        : `0x${chainId.toString(16)}`
-                      this.emit('chainChanged', hexChainId)
-                      return resolve(accounts as ProviderAccounts)
-                    }
-
-                    // @ts-ignore Subscribe to connection events
-                    fromEvent(this.connector, 'connect', (error, payload) => {
-                      if (error) {
-                        throw error
+                      } else {
+                        // @ts-ignore
+                        const { accounts, chainId } = this.connector.session
+                        const hexChainId = isHexString(chainId)
+                          ? chainId
+                          : `0x${chainId.toString(16)}`
+                        this.emit('chainChanged', hexChainId)
+                        return resolve(accounts as ProviderAccounts)
                       }
+
+                      // @ts-ignore Subscribe to connection events
+                      fromEvent(this.connector, 'connect', (error, payload) => {
+                        if (error) {
+                          throw error
+                        }
+                      })
                     }
                   )
                 }

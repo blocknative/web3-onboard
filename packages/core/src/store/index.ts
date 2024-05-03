@@ -227,7 +227,8 @@ function reducer(state: AppState, action: Action): AppState {
         ...state,
         appMetadata: {
           ...state.appMetadata,
-          ...update
+          ...update,
+          name: update.name || ''
         }
       }
     }

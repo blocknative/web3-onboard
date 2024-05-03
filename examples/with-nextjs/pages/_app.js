@@ -28,21 +28,15 @@ const celoMainnet = {
   token: 'ETH',
   label: 'Celo',
   rpcUrl: 'https://1rpc.io/celo'
-}
-const degenMainnet = {
+},
+{
   id: 666666666,
   token: 'DEGEN',
   label: 'Degen',
   rpcUrl: 'https://rpc.degen.tips'
 }
 
-const chains = [
-  ethereumSepolia,
-  polygonMainnet,
-  baseMainnet,
-  celoMainnet,
-  degenMainnet
-]
+const chains = [ethereumRopsten, polygonMainnet, baseMainnet,celoMainnet]
 const wallets = [injectedModule()]
 
 const web3Onboard = init({

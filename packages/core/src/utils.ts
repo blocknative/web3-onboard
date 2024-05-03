@@ -9,7 +9,8 @@ import type {
   Chain,
   WalletInit,
   WalletModule,
-  ChainWithDecimalId
+  ChainWithDecimalId,
+  DeviceNotBrowser
 } from '@web3-onboard/common'
 
 import {
@@ -35,9 +36,9 @@ import {
 import type {
   ChainStyle,
   ConnectedChain,
-  DeviceNotBrowser,
   NotifyEventStyles
 } from './types.js'
+import { type Chain as ViemChain, type ChainFormatters } from 'viem'
 
 export function getDevice(): Device | DeviceNotBrowser {
   if (typeof window !== 'undefined') {
@@ -119,7 +120,7 @@ export const chainIdToLabel: Record<string, string> = {
   '0x27bc86aa': 'Degen'
 }
 
-export function validEnsChain(chainId: ChainId): string {
+export function validEnsChain(chainId: ChainId): string | null {
   // return L2s as Eth for ens resolution
   switch (chainId) {
     case '0x1':
@@ -137,10 +138,9 @@ export function validEnsChain(chainId: ChainId): string {
   }
 }
 
-import { defineChain, type Chain as ViemChain } from 'viem'
 export const chainIdToViemENSImport = async (
   chainId: string
-): Promise<ViemChain> | null => {
+): Promise<ViemChain | null> => {
   switch (chainId) {
     case '0x89':
     case '0xa':
@@ -148,11 +148,11 @@ export const chainIdToViemENSImport = async (
     case '0x144':
     case '0x1': {
       const { mainnet } = await import('viem/chains')
-      return mainnet
+      return mainnet as ViemChain
     }
     case '0xaa36a7': {
       const { sepolia } = await import('viem/chains')
-      return sepolia
+      return sepolia as ViemChain
     }
     default:
       return null
@@ -160,7 +160,7 @@ export const chainIdToViemENSImport = async (
 }
 export const chainIdToViemImport = async (
   w3oChain: Chain
-): Promise<ViemChain> => {
+): Promise<ViemChain | unknown> => {
   const { id, label, token, publicRpcUrl, blockExplorerUrl, rpcUrl } = w3oChain
   switch (id) {
     case '0x89': {
@@ -169,7 +169,7 @@ export const chainIdToViemImport = async (
     }
     case '0xa': {
       const { optimism } = await import('viem/chains')
-      return optimism as ViemChain
+      return optimism
     }
     case '0xa4b1': {
       const { arbitrum } = await import('viem/chains')
@@ -177,7 +177,7 @@ export const chainIdToViemImport = async (
     }
     case '0x144': {
       const { zkSync } = await import('viem/chains')
-      return zkSync as ViemChain
+      return zkSync
     }
     case '0x38': {
       const { bsc } = await import('viem/chains')
@@ -201,15 +201,15 @@ export const chainIdToViemImport = async (
     }
     case '0xa4ec': {
       const { celo } = await import('viem/chains')
-      return celo as ViemChain
+      return celo
     }
     case '0x2105': {
       const { base } = await import('viem/chains')
-      return base as ViemChain
+      return base
     }
     case '0x14a33': {
       const { baseGoerli } = await import('viem/chains')
-      return baseGoerli as ViemChain
+      return baseGoerli
     }
     case '0x64': {
       const { gnosis } = await import('viem/chains')
@@ -223,7 +223,8 @@ export const chainIdToViemImport = async (
       const { degen } = await import('viem/chains')
       return degen
     }
-    default:
+    default: {
+      const { defineChain } = await import('viem')
       return defineChain({
         id: parseInt(id, 16),
         name: label,
@@ -240,7 +241,8 @@ export const chainIdToViemImport = async (
         blockExplorers: {
           default: { name: 'Explorer', url: blockExplorerUrl }
         }
-      })
+      } as ViemChain<ChainFormatters>)
+    }
   }
 }
 

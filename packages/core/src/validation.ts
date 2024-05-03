@@ -6,11 +6,11 @@ import {
   type WalletInit,
   type WalletModule,
   type ValidateReturn,
+  type AppMetadata,
   chainNamespaceValidation,
   chainIdValidation,
   chainValidation,
-  validate,
-  AppMetadata
+  validate
 } from '@web3-onboard/common'
 
 import type {

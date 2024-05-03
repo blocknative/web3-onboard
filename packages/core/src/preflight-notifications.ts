@@ -49,7 +49,10 @@ export async function preflightNotifications(
   // to disable hints for `txAwaitingApproval`, `txConfirmReminder`
   // or any other notification, then return false from listener functions
 
-  const [gas, price] = await gasEstimates(estimateGas, gasPrice)
+  const [gas, price] = await gasEstimates(
+    estimateGas || (() => Promise.resolve('')),
+    gasPrice || (() => Promise.resolve(''))
+  )
   const id = createId(nanoid())
   const value = BigInt((txDetails && txDetails.value) || 0)
 

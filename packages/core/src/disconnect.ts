@@ -22,20 +22,22 @@ async function disconnect(options: DisconnectOptions): Promise<WalletState[]> {
     if (sdk) {
       const wallet = state.get().wallets.find(wallet => wallet.label === label)
 
-      wallet.accounts.forEach(({ address }) => {
-        sdk.unsubscribe({
-          id: address,
-          chainId: wallet.chains[0].id,
-          timeout: 60000
+      if (wallet) {
+        wallet.accounts.forEach(({ address }) => {
+          sdk.unsubscribe({
+            id: address,
+            chainId: wallet.chains[0].id,
+            timeout: 60000
+          })
         })
-      })
+      }
     }
   }
 
   disconnectWallet$.next(label)
   removeWallet(label)
 
-  const labels = JSON.parse(getLocalStore(STORAGE_KEYS.LAST_CONNECTED_WALLET))
+  const labels = JSON.parse(getLocalStore(STORAGE_KEYS.LAST_CONNECTED_WALLET) || '')
 
   if (Array.isArray(labels) && labels.indexOf(label) >= 0) {
     setLocalStore(

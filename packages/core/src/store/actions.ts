@@ -1,4 +1,10 @@
-import type { AppMetadata, Chain, WalletInit, WalletModule } from '@web3-onboard/common'
+import type {
+  AppMetadata,
+  Chain,
+  WalletHelpers,
+  WalletInit,
+  WalletModule
+} from '@web3-onboard/common'
 import { nanoid } from 'nanoid'
 import { dispatch } from './index.js'
 import { configuration } from '../configuration.js'
@@ -87,15 +93,19 @@ export function addChains(chains: Chain[]): void {
 
 export function updateChain(updatedChain: Chain): void {
   const {
-    label, 
-    token, 
-    rpcUrl, 
-    id: chainId, 
+    label,
+    token,
+    rpcUrl,
+    id: chainId,
     namespace: chainNamespace
   } = updatedChain
-  const error = validateSetChainOptions(
-    { label, token, rpcUrl, chainId, chainNamespace }
-  )
+  const error = validateSetChainOptions({
+    label,
+    token,
+    rpcUrl,
+    chainId,
+    chainNamespace
+  })
 
   if (error) {
     throw error
@@ -300,7 +310,11 @@ export function customNotification(updatedNotification: CustomNotification): {
   }
   addCustomNotification(notification)
 
-  const dismiss = () => removeNotification(notification.id)
+  const dismiss = () => {
+    if (notification.id) {
+      removeNotification(notification.id)
+    }
+  }
 
   const update = (
     notificationUpdate: CustomNotification
@@ -407,7 +421,8 @@ export function updateAllWallets(wallets: WalletState[]): void {
 
 // ==== HELPERS ==== //
 export function initializeWalletModules(modules: WalletInit[]): WalletModule[] {
-  const { device } = configuration
+  const { device }: WalletHelpers = configuration
+  if (!device) return []
   return modules.reduce((acc, walletInit) => {
     const initialized = walletInit({ device })
 
@@ -444,7 +459,7 @@ export function updateTheme(theme: Theme): void {
 }
 
 export function updateAppMetadata(
-  update: AppMetadata| Partial<AppMetadata>
+  update: AppMetadata | Partial<AppMetadata>
 ): void {
   const error = validateAppMetadataUpdate(update)
 

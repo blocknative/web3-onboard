@@ -17,6 +17,6 @@
     "@web3-onboard/common": "2.3.3"
   },
   "devDependencies": {
-    "typescript": "^5.1.6"
+    "typescript": "^5.4.5"
   }
 }

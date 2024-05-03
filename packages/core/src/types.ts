@@ -9,7 +9,8 @@ import type {
   WalletModule,
   Chain,
   TokenSymbol,
-  ChainWithDecimalId
+  ChainWithDecimalId,
+  DeviceNotBrowser
 } from '@web3-onboard/common'
 
 import type gas from '@web3-onboard/gas'
@@ -18,6 +19,7 @@ import type { TransactionPreviewAPI } from '@web3-onboard/transaction-preview'
 
 import type en from './i18n/en.json'
 import type { EthereumTransactionData, Network } from 'bnc-sdk'
+import type { GetEnsTextReturnType } from 'viem'
 
 export interface InitOptions {
   /**
@@ -159,7 +161,7 @@ export interface Ens {
   avatar: string | null
   contentHash: Address | null
   ensResolver: Address | null
-  getText: (key: string) => Promise<string | undefined>
+  getText: (key: string) => Promise<GetEnsTextReturnType>
 }
 
 export interface Uns {
@@ -175,7 +177,7 @@ export interface AppState {
   notify: Notify
   notifications: Notification[]
   connect: ConnectModalOptions
-  appMetadata: AppMetadata
+  appMetadata: AppMetadata | null
 }
 
 export type Configuration = {
@@ -543,12 +545,6 @@ export type NotifyEventStyles = {
   borderColor: string
   eventIcon: string
   iconColor?: string
-}
-
-export type DeviceNotBrowser = {
-  type: null
-  os: null
-  browser: null
 }
 
 export type WalletPermission = {
