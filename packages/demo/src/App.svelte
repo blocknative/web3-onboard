@@ -35,6 +35,7 @@
   import venlyModule from '@web3-onboard/venly'
   import bitgetModule from '@web3-onboard/bitget'
   import particleAuthModule from '@web3-onboard/particle-network'
+  import finoaConnectModule from '@web3-onboard/finoaconnect'
   import capsuleModule, {
     Environment,
     OAuthMethod,
@@ -175,6 +176,7 @@
   const cedeStore = cedeStoreModule()
   const blocto = bloctoModule()
   const tallyho = tallyHoModule()
+  const finoaConnect = finoaConnectModule()
 
   const trezorOptions = {
     email: 'test@test.com',
@@ -268,7 +270,8 @@
       arcanaAuth,
       blocto,
       venly,
-      particle
+      particle,
+      finoaConnect
     ],
     // transactionPreview,
     gas,

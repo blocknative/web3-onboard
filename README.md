@@ -126,6 +126,7 @@ For full documentation, check out the README.md for each package or the [docs pa
 - [Frame](packages/frame/README.md)
 - [Blocto](packages/blocto/README.md)
 - [Particle Network](packages/particle-network/README.md)
+- [FinoaConnect](packages/finoaconnect/README.md)
 
 **Hardware Wallets**
 
