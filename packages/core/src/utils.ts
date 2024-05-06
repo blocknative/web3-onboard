@@ -148,11 +148,11 @@ export const chainIdToViemENSImport = async (
     case '0x144':
     case '0x1': {
       const { mainnet } = await import('viem/chains')
-      return mainnet as ViemChain
+      return mainnet
     }
     case '0xaa36a7': {
       const { sepolia } = await import('viem/chains')
-      return sepolia as ViemChain
+      return sepolia
     }
     default:
       return null
@@ -241,7 +241,7 @@ export const chainIdToViemImport = async (
         blockExplorers: {
           default: { name: 'Explorer', url: blockExplorerUrl }
         }
-      } as ViemChain<ChainFormatters>)
+      })
     }
   }
 }

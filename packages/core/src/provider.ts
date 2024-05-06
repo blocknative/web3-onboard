@@ -37,7 +37,7 @@ export const viemProviders: {
   [key: string]: PublicClient
 } = {}
 
-async function getProvider(chain: Chain) {
+async function getProvider(chain: Chain): Promise<PublicClient> {
   if (!chain) return null
 
   if (!viemProviders[chain.rpcUrl as string]) {
@@ -52,7 +52,7 @@ async function getProvider(chain: Chain) {
     viemProviders[chain.rpcUrl as string] = publicProvider as PublicClient
   }
 
-  return viemProviders[chain.rpcUrl as string] as PublicClient
+  return viemProviders[chain.rpcUrl as string]
 }
 
 export function requestAccounts(
