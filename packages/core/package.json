@@ -80,7 +80,7 @@
     "prettier-plugin-svelte": "^2.4.0",
     "rollup": "^2.14.0",
     "rollup-plugin-svelte": "^7.2.0",
-    "svelte-check": "^2.2.6",
+    "svelte-check": "^3.7.1",
     "svelte-preprocess": "^5.1.4",
     "tslib": "^2.0.0",
     "typescript": "^5.4.5",
@@ -98,7 +98,7 @@
     "rxjs": "^7.5.5",
     "svelte": "^3.49.0",
     "svelte-i18n": "^3.3.13",
-    "viem": "^2.9.31"
+    "viem": "^2.9.32"
   },
   "engines": {
     "node": ">=16.15.1"

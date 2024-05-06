@@ -10,7 +10,8 @@
     "module": "esnext",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "lib": ["es2020", "dom", "dom.iterable"],
+    "strictNullChecks": false,
+    "lib": ["es2020", "dom"],
     "types": ["svelte"]
   },
   "outDir": "dist"

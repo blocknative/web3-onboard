@@ -8,7 +8,7 @@ import {
   weiToEth
 } from '@web3-onboard/common'
 import type { SecondaryTokenBalances, WalletState } from './types'
-import type { PublicClient, ReadContractParameters } from 'viem'
+import type { ReadContractParameters } from 'viem'
 import type { Chain as ViemChain } from 'viem'
 import { chainIdToViemImport } from './utils.js'
 

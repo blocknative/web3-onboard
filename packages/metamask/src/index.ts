@@ -42,7 +42,7 @@ function metamask({
       label: 'MetaMask',
       getIcon: async () => (await import('./icon.js')).default,
       getInterface: async ({ appMetadata }) => {
-        sdk = (window as any).mmsdk || sdk; // Prevent conflict with existing mmsdk instances
+        sdk = (window as any).mmsdk || sdk // Prevent conflict with existing mmsdk instances
 
         if (sdk) {
           // Prevent re-initializing instance as it causes issues with MetaMask sdk mobile provider.
@@ -64,7 +64,7 @@ function metamask({
           throw new Error('Error importing and initializing MetaMask SDK')
         }
 
-        const { createEIP1193Provider, MetaMaskSDKConstructor } = imports
+        const { MetaMaskSDKConstructor } = imports
 
         sdk = new MetaMaskSDKConstructor({
           ...options,
@@ -76,13 +76,12 @@ function metamask({
           _source: 'web3-onboard'
         })
 
-        await sdk.init();
-        const provider = sdk.getProvider();
+        await sdk.init()
+        const provider = sdk.getProvider()
 
-        const _disconnect = sdk.disconnect
-        if(provider) {
-          (provider as any).disconnect = () => {
-            sdk?.terminate();
+        if (provider) {
+          ;(provider as any).disconnect = () => {
+            sdk?.terminate()
           }
         }
 

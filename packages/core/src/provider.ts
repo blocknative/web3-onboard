@@ -382,7 +382,7 @@ export async function getEns(
   if (!provider) return null
 
   try {
-    const name = await (provider as any).getEnsName({
+    const name = await provider.getEnsName({
       address
     })
     let ens = null
@@ -391,15 +391,15 @@ export async function getEns(
       const { labelhash, normalize } = await import('viem/ens')
       const normalizedName = normalize(name)
 
-      const ensResolver = await (provider as any).getEnsResolver({
+      const ensResolver = await provider.getEnsResolver({
         name: normalizedName
       })
-      const avatar = await (provider as any).getEnsAvatar({
+      const avatar = await provider.getEnsAvatar({
         name: normalizedName
       })
       const contentHash = labelhash(normalizedName)
       const getText = async (key: string): Promise<GetEnsTextReturnType> => {
-        return await (provider as any).getEnsText({
+        return await provider.getEnsText({
           name,
           key
         })
