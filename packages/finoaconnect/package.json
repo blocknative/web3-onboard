@@ -1,6 +1,6 @@
 {
     "name": "@web3-onboard/finoaconnect",
-    "version": "1.0.0-alpha.1",
+    "version": "2.0.0-alpha.1",
     "description": "FinoaConnect enables DApp users to use Finoa's Institutional Custody services.",
     "keywords": [
       "Ethereum",
