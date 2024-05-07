@@ -56,7 +56,7 @@ function finoaConnect(option?: string | FinoaWalletOption): WalletInit {
                         chain => BigInt(chain.id) === chainIdN
                       )
                     } catch {
-                      /* empty */
+                      /* Not handled: the chain id in the error is not a valid one */
                     }
                     if (chain?.rpcUrl == null) {
                       throw err
