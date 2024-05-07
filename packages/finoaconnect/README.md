@@ -20,6 +20,20 @@ const onboard = Onboard({
   ]
 })
 
+// alternatively to connect to a localised development environment
+const onboard = Onboard({
+  // ... other Onboard options
+  wallets: [
+    finoaConnectModule([
+      {
+        labelSuffix: 'localhost',
+        url: 'http://localhost:8080',
+      }
+    ])
+    //... other wallets
+  ]
+})
+
 const connectedWallets = await onboard.connectWallet()
 console.log(connectedWallets)
 ```
