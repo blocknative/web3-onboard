@@ -215,13 +215,13 @@ commands:
 jobs:
   build-core:
     docker:
-      - image: cimg/node:16.15.1
+      - image: cimg/node:18.18.2
     working_directory: ~/web3-onboard-monorepo/packages/core
     steps:
       - node-build-steps
   build-common:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:18.18.2
     working_directory: ~/web3-onboard-monorepo/packages/common
     steps:
       - node-build-steps
