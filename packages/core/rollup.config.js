@@ -39,7 +39,8 @@ export default {
     }),
     resolve({
       browser: true,
-      dedupe: ['svelte']
+      dedupe: ['svelte'],
+      extensions: ['.js', '.ts', '.svelte']
     }),
     typescript({
       sourceMap: !production,
