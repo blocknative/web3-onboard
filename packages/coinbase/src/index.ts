@@ -23,6 +23,7 @@ function coinbaseWallet({
         // according to https://github.com/wagmi-dev/wagmi/issues/383
         // @coinbase/wallet-sdk export double default fields
         // so we need to detect it to get the real constructor
+        // TODO issue here!
         const { default: CoinbaseWalletSDK } = await import(
           '@coinbase/wallet-sdk'
         )

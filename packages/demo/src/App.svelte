@@ -1,5 +1,5 @@
 <script>
-  import Onboard from '@web3-onboard/core'
+  import Onboard from '@web3-onboard/core-wagmi'
   // import fortmaticModule from '@web3-onboard/fortmatic'
   // import gnosisModule from '@web3-onboard/gnosis'
   // import infinityWalletModule from '@web3-onboard/infinity-wallet'
@@ -53,7 +53,8 @@
   import VConsole from 'vconsole'
   import blocknativeIcon from './blocknative-icon.js'
   import DappAuth from '@blocto/dappauth'
-
+  import { sendTransaction as wagmiSendTransaction } from '@wagmi/core'
+import { parseEther } from 'viem'
   if (window.innerWidth < 700) {
     new VConsole()
   }
@@ -238,9 +239,9 @@
     wallets: [
       metamaskSDKWallet,
       coinbaseWallet,
-      injected,
+      // injected,
       ledger,
-      trezor,
+      trezor
       // walletConnect,
       // phantom,
       // safe,
@@ -444,7 +445,7 @@
 
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
-  $:console.log('wallets$', $wallets$)
+  $: console.log('wallets$', $wallets$)
   wallets$.subscribe(wallet => {
     console.log(wallet)
     const unstoppableUser = wallet.find(
@@ -474,18 +475,25 @@
   const sendTransaction = async provider => {
     // if using ethers v6 this is:
     // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
-    const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
+    // const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 
-    const signer = ethersProvider.getSigner()
-    const popTransaction = await signer.populateTransaction({
+    // const signer = ethersProvider.getSigner()
+    // const popTransaction = await signer.populateTransaction({
+    //   to: toAddress,
+    //   value: 10000000000000
+    // })
+    // console.log(popTransaction)
+    // const txn = await signer.sendTransaction(popTransaction)
+
+    // const receipt = await txn.wait()
+    const wagmiConfig = onboard.state.get().wagmiConfig
+    console.log(wagmiConfig)
+    const result = await wagmiSendTransaction(wagmiConfig, {
       to: toAddress,
-      value: 10000000000000
+      value: parseEther('0.001')
     })
-    console.log(popTransaction)
-    const txn = await signer.sendTransaction(popTransaction)
-
-    const receipt = await txn.wait()
-    console.log(receipt)
+    console.log(result)
+    // console.log(receipt)
   }
 
   const sendTransactionWithPreFlight = async (provider, balance) => {

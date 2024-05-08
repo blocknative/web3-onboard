@@ -33,6 +33,7 @@
     "@web3-onboard/capsule": "2.0.3-viem.1",
     "@web3-onboard/cede-store": "^2.3.0-viem.1",
     "@web3-onboard/core": "^2.22.0-viem.1",
+    "@web3-onboard/core-wagmi": "^2.22.0-viem.1",
     "@web3-onboard/coinbase": "^2.3.0-viem.1",
     "@web3-onboard/dcent": "^2.2.7",
     "@web3-onboard/enkrypt": "^2.1.0-viem.1",
