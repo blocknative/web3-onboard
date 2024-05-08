@@ -58,7 +58,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@coinbase/wallet-sdk": "^3.9.3",
+    "@coinbase/wallet-sdk": "3.9.2",
     "@web3-onboard/common": "^2.4.0-viem.1"
   }
 }

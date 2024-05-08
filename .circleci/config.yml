@@ -33,14 +33,14 @@ aliases:
 
   - &test_package_version_for_test_tag_break_false
     run:
-      name: Tagged as viemtest version if True Continue Flow
+      name: Tagged as viem version if True Continue Flow
       command: |
         PACKAGE_VERSION=$(cat package.json \
         | grep version \
         | head -1 \
         | awk -F: '{ print $2 }' \
         | sed 's/[",]//g');
-        if [[ $PACKAGE_VERSION =~ "-viemtest" ]];
+        if [[ $PACKAGE_VERSION =~ "-viem" ]];
         then
           echo true
         else
