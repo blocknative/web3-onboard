@@ -9,7 +9,8 @@ import type {
   WalletModule,
   Chain,
   TokenSymbol,
-  ChainWithDecimalId
+  ChainWithDecimalId,
+  DeviceNotBrowser
 } from '@web3-onboard/common'
 
 import type gas from '@web3-onboard/gas'
@@ -556,10 +557,4 @@ export type WalletPermission = {
   }[]
 
   date: number
-}
-
-export type DeviceNotBrowser = {
-  type: null
-  os: null
-  browser: null
 }
