@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { Subject } from 'rxjs'
-  import { weiToEth } from '../utils.js'
   import { fade } from 'svelte/transition'
   import CloseButton from '../elements/CloseButton.svelte'
   import AddressTable from '../elements/AddressTable.svelte'
@@ -12,6 +11,7 @@
     Account,
     AccountsList
   } from '../types.js'
+  import { weiToEth } from '../utils'
 
   export let selectAccountOptions: SelectAccountOptions
   export let accounts$: Subject<Account[]>
