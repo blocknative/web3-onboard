@@ -233,7 +233,7 @@ export function trackWallet(
             : ensChain
             ? getUns(address, ensChain)
             : Promise.resolve(null)
-        console.log('ENS', await ensProm)
+
         return Promise.all([
           Promise.resolve(address),
           balanceProm,
