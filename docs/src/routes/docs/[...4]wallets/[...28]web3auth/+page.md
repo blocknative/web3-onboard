@@ -4,7 +4,7 @@ title: Web3auth
 
 # {$frontmatter.title}
 
-Wallet module for connecting Web3auth to web3-onboard
+Wallet module for connecting Web3auth to Web3 Onboard.
 
 ## Install
 

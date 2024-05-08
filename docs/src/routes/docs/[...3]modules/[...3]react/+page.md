@@ -4,7 +4,7 @@ title: React
 
 # {$frontmatter.title}
 
-A collection of React hooks for implementing web3-onboard into a React project
+A collection of React hooks for implementing Web3 Onboard into a React project
 
 ## Quickstart with Injected Wallets and Ethers Provider
 
@@ -244,8 +244,8 @@ const [
 
 ## `useNotifications`
 
-This hook allows the dev to access all notifications if enabled, send custom notifications and update notify <enable/disable & update transactionHandler function>
-**note** requires an API key be added to the initialization, enabled by default if API key exists
+This hook allows the dev to access all notifications if enabled, send custom notifications, and update notify <enable/disable & update transactionHandler function>
+**note** This requires an API key be added to the initialization, enabled by default if an API key exists
 For full Notification documentation please see [Notify section within the `@web3-onboard/core` docs](../../modules/core.md#initialization)
 
 ```typescript
@@ -411,7 +411,7 @@ const sendTransactionWithPreFlightNotifications = async () => {
 
 ## `useWallets`
 
-This hook allows you to track the state of all the currently connected wallets.
+This hook allows you to track the state of all the currently connected wallets:
 
 ```typescript
 import { useWallets } from '@web3-onboard/react'
@@ -423,7 +423,7 @@ const connectedWallets = useWallets()
 
 ## `useAccountCenter`
 
-This hook allows you to track and update the state of the AccountCenter
+This hook allows you to track and update the state of the Account Center:
 
 ```typescript
 import { useAccountCenter } from '@web3-onboard/react'
@@ -450,7 +450,7 @@ const updateAccountCenter = useAccountCenter()
 
 ## `useSetLocale`
 
-This hook allows you to set the locale of your application to allow language updates associated with the i18n config
+This hook allows you to set the locale of your application to allow language updates associated with the i18n config:
 
 ```typescript
 import { useSetLocale } from '@web3-onboard/react'
@@ -470,7 +470,7 @@ Many of the wallet modules require dependencies that are not normally included i
 
 Node built-ins are automatically bundled in v4 so that portion is handled automatically.
 
-**web3auth** and **torus** will require a Babel to compile from es6 if not already supported. See config for Babel and Webpack4 as follows
+**web3auth** and **torus** will require a Babel to compile from es6 if not already supported. See config for Babel and Webpack4 as follows:
 
 `npm i --save-dev @babel/cli @babel/core @babel/node @babel/plugin-proposal-nullish-coalescing-operator @babel/plugin-proposal-optional-chaining @babel/plugin-syntax-bigint @babel/register`
 **AND**
@@ -602,7 +602,7 @@ Be sure to update the scripts in package.json:
   }
 ```
 
-[React App Rewired](https://www.npmjs.com/package/react-app-rewired) is another option for working with Create React App DApps
+[React App Rewired](https://www.npmjs.com/package/react-app-rewired) is another option for working with Create React App dapps
 
 Add React App Rewired:
 

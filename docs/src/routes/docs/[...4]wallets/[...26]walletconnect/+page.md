@@ -4,7 +4,7 @@ title: WalletConnect
 
 # {$frontmatter.title}
 
-Wallet module for connecting WalletConnect to web3-onboard, currently supporting both v1 and v2.
+Wallet module for connecting WalletConnect to Web3 Onboard, currently supporting both v1 and v2.
 
 :::admonition type=warning
 _Version 1 of WalletConnect has been deprecated by the WC team and the WC bridge is not available. Upgrading to use WalletConnect v2 is recommended. Support will be completely removed from Web3-Onboard in the future_

@@ -1,6 +1,6 @@
 ---
 title: Connect Wallet Example
-description: Learn how to connect a wallet to your dapp with Web3-Onboard. For this example, we are going to use the injected wallets module.
+description: Learn how to connect a wallet to your dapp with Web3 Onboard. For this example, we are going to use the injected wallets module.
 ---
 
 <script>
@@ -41,7 +41,7 @@ npm install @web3-onboard/react @web3-onboard/injected-wallets @web3-onboard/inf
 
 ## Step 2: Import + Configure
 
-Import the libraries and any wallets you would like to use. For this example, we are going to use the injected wallets module. You can easily add more wallet support to your dapp via our other wallet modules. Additionally, we'll setup web3-onboard to support 2 chains: Ethereum mainnet and Polygon mainnet.
+Import the libraries and any wallets you would like to use. For this example, we are going to use the injected wallets module. You can easily add more wallet support to your dapp via our other wallet modules. Additionally, we'll setup Web3 Onboard to support 2 chains: Ethereum mainnet and Polygon mainnet.
 
 ```js title="App.tsx"|copy
 import { Web3OnboardProvider, init } from '@web3-onboard/react'
@@ -186,9 +186,9 @@ function App() {
 export default App
 ```
 
-## Step 2: Display the connect wallet button
+## Step 3: Display the connect wallet button
 
-In another file we'll create the component that will display our connect wallet button. We'll be using the `useConnectWallet` hook in order to achieve this.
+In another file, we'll create the component that will display our connect wallet button. We'll be using the `useConnectWallet` hook in order to achieve this.
 
 ```js title="ConnectWallet.tsx"|copy
 import { useEffect, useState } from 'react'
@@ -220,7 +220,7 @@ export default function ConnectWallet() {
 }
 ```
 
-## Step 3: Display account information
+## Step 4: Display account information
 
 Now that we have our wallet connected, let's display some basic information, such as the connected wallet's address, ENS name, and avatar.
 
@@ -291,7 +291,7 @@ export default function ConnectWallet() {
 
 ## Step 1: Import + Configure
 
-Import the libraries and any wallets you would like to use. For this example, we are going to use the injected wallets module. You can easily add more wallet support to your dapp via our other wallet modules. Additionally, we'll setup web3-onboard to support 2 chains: Ethereum mainnet and Polygon mainnet.
+Import the libraries and any wallets you would like to use. For this example, we are going to use the injected wallets module. You can easily add more wallet support to your dapp via our other wallet modules. Additionally, we'll setup Web3 Onboard to support 2 chains: Ethereum mainnet and Polygon mainnet.
 
 ```js title="onboard.js"|copy
 import Onboard from '@web3-onboard/core'

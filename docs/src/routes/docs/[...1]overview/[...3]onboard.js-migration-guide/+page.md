@@ -4,11 +4,11 @@ title: 'Migration Guide from v1'
 
 # Migration Guide from onboard.js to web3-onboard
 
-Follow the steps below to easily migrate from onboard.js to Web3-Onboard.
+Follow the steps below to easily migrate from onboard.js to Web3 Onboard.
 
 ### Background
 
-With Web3-Onboard, we’ve introduced significant architectural changes that provide a more robust and efficient web3 onboarding experience. While this upgrade may result in breaking changes, the improved overall experience makes it worthwhile.
+With Web3 Onboard, we’ve introduced significant architectural changes that provide a more robust and efficient web3 onboarding experience. While this upgrade may result in breaking changes, the improved overall experience makes it worthwhile.
 
 ### Steps
 
@@ -23,15 +23,15 @@ To help you get started quickly we’ve put together [a set of examples across m
 
 ### Package Upgrade - Modularization
 
-This is the biggest change you might experience as an onboard.js user. With Web3-Onboard, we’ve separated all supported wallets into their modules, meaning you only need to integrate specific wallet modules you intend to support in your app.
+This is the biggest change you might experience as an onboard.js user. With Web3 Onboard, we’ve separated all supported wallets into their modules, meaning you only need to integrate specific wallet modules you intend to support in your app.
 For example with Onboard, if you wanted to support only Metamask and Coinbase in your app, you had to install Onboard complete with all other wallets: `npm install bnc-onboard`.
-With Web3-Onboard, you only need to install core along with the desired wallet modules: `npm i @web3-onboard/core @web3-onboard/injected-wallets @web3-onboard/coinbase`
+With Web3 Onboard, you only need to install core along with the desired wallet modules: `npm i @web3-onboard/core @web3-onboard/injected-wallets @web3-onboard/coinbase`
 This change allows us to support many web3 wallets without affecting the overall library performance.
 
 ### Expansive Initialization Options
 
-We’ve made initialization simpler while introducing more powerful options like [Account Center](https://www.blocknative.com/blog/multichain-and-multiwallet-account-management-on-your-dapp-with-account-center) and Notify in Web3-Onboard.
-Onboard now requires two compulsory initial setup options: `wallets` (Wallet modules, as shown above, to be initialized and added to wallet selection modal) and `chains` (EVM networks your app should work with). You can also pass multiple wallets and chains.
+We’ve made initialization simpler while introducing more powerful options like [Account Center](https://www.blocknative.com/blog/multichain-and-multiwallet-account-management-on-your-dapp-with-account-center) and Notify in Web3 Onboard.
+Web3 Onboard now requires two compulsory initial setup options: `wallets` (Wallet modules, as shown above, to be initialized and added to wallet selection modal) and `chains` (EVM networks your app should work with). You can also pass multiple wallets and chains.
 
 ```
 const onboard = Onboard({
@@ -56,19 +56,19 @@ Now, you only need to call the connectWallet API:
 
 `await onboard.connectWallet()`
 
-Learn more about state changes tracked with the Onboard API [here](/docs/modules/core#state) and the exposed actions you can use to modify the state [here](/docs/modules/core#actions-to-modify-state).
+Learn more about state changes tracked with the Web3 Onboard API [here](/docs/modules/core#state) and the exposed actions you can use to modify the state [here](/docs/modules/core#actions-to-modify-state).
 
 ### Framework Support
 
-Although Onboard is still framework-agnostic, we’ve introduced a couple of framework-specific modules that are frequently asked for by our users.
+Although Web3 Onboard is still framework-agnostic, we’ve introduced a couple of framework-specific modules that are frequently asked for by our users.
 
-`@web3-onboard/react` - React Hooks to connect users to web3 dApps better. You can check out [a comprehensive React Hooks guide](https://www.blocknative.com/blog/react-hooks-ethereum) we've written on it.
+`@web3-onboard/react` - React Hooks to connect users to web3 dapps better. You can check out [a comprehensive React Hooks guide](https://www.blocknative.com/blog/react-hooks-ethereum) we've written on it.
 
-`@web3-onboard/vue` - A set of reusable functions for integrating Web3-Onboard into a Vue 3 project. This is also compatible with a Vue 2 + composition-api dApp.
+`@web3-onboard/vue` - A set of reusable functions for integrating Web3 Onboard into a Vue 3 project. This is also compatible with a Vue 2 + composition-api dApp.
 
 ### CSS Customizations
 
-We've also added more expansive custom CSS properties so you can style every part of your onboarding experience to match the overall experience of your dApp. To apply Web3-Onboard CSS customizations, you don't need to attach them to the `.bn-onboard-custom` class like before. Instead, you can simply place them in the `:root` CSS pseudo-class, as shown below:
+We've also added more expansive custom CSS properties so you can style every part of your onboarding experience to match the overall experience of your dApp. To apply Web3 Onboard CSS customizations, you don't need to attach them to the `.bn-onboard-custom` class like before. Instead, you can simply place them in the `:root` CSS pseudo-class, as shown below:
 
 ```
 :root {
@@ -90,11 +90,11 @@ We've also added more expansive custom CSS properties so you can style every par
 }
 ```
 
-The full list of CSS variables for web3-onboard is available [here](/docs/modules/core#custom-styling).
+The full list of CSS variables for Web3 Onboard is available [here](/docs/modules/core#custom-styling).
 
 ### Other Important Changes
 
-There are also other notable infrastructural changes in Web3-Onboard:
+There are also other notable infrastructural changes in Web3 Onboard:
 
 - Dynamic Imports of dependencies
 - Wallet Provider Standardization
