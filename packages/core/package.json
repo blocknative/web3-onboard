@@ -87,7 +87,7 @@
     "@rollup/plugin-commonjs":"24.0.1" 
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.4.0-viem.1",
+    "@web3-onboard/common": "2.4.0-viem.2",
     "bnc-sdk": "^4.6.7",
     "bowser": "^2.11.0",
     "eventemitter3": "^4.0.7",
