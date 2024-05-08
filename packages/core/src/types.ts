@@ -9,8 +9,7 @@ import type {
   WalletModule,
   Chain,
   TokenSymbol,
-  ChainWithDecimalId,
-  DeviceNotBrowser
+  ChainWithDecimalId
 } from '@web3-onboard/common'
 
 import type gas from '@web3-onboard/gas'
@@ -279,13 +278,13 @@ export type AccountCenter = {
    */
   hideTransactionProtectionBtn?: boolean
   /**
-   * Controls the visibility of the 'Enable Transaction Protection' button 
+   * Controls the visibility of the 'Enable Transaction Protection' button
    * within the expanded Account Center.
    * - When set to false (default), the button is visible.
    * - When set to true, the button is hidden.
-   * This setting can be configured globally for the Account Center, or 
+   * This setting can be configured globally for the Account Center, or
    * separately for different interfaces like desktop/mobile.
-   * defaults to 
+   * defaults to
    * `docs.blocknative.com/blocknative-mev-protection/transaction-boost-alpha`
    * Use this property to override the default link to give users
    * more information about transaction protection and the RPC be set
@@ -305,13 +304,13 @@ export type AccountCenterOptions = {
   desktop: Omit<AccountCenter, 'expanded'>
   mobile: Omit<AccountCenter, 'expanded'>
   /**
-   * Controls the visibility of the 'Enable Transaction Protection' button 
+   * Controls the visibility of the 'Enable Transaction Protection' button
    * within the expanded Account Center.
    * - When set to false (default), the button is visible.
    * - When set to true, the button is hidden.
-   * This setting can be configured globally for the Account Center, or 
+   * This setting can be configured globally for the Account Center, or
    * separately for different interfaces like desktop/mobile.
-   * defaults to 
+   * defaults to
    * `docs.blocknative.com/blocknative-mev-protection/transaction-boost-alpha`
    * Use this property to override the default link to give users
    * more information about transaction protection and the RPC be set
@@ -557,4 +556,10 @@ export type WalletPermission = {
   }[]
 
   date: number
+}
+
+export type DeviceNotBrowser = {
+  type: null
+  os: null
+  browser: null
 }

@@ -1,5 +1,5 @@
 import type { ConnectionInfo } from 'ethers/lib/utils'
-import type EventEmitter from 'eventemitter3'
+import * as EventEmitter from 'eventemitter3'
 import type { TypedData as EIP712TypedData } from 'eip-712'
 export type { TypedData as EIP712TypedData } from 'eip-712'
 
