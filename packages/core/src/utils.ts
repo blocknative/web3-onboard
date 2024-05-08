@@ -38,7 +38,7 @@ import type {
   ConnectedChain,
   NotifyEventStyles
 } from './types.js'
-import { type Chain as ViemChain } from 'viem'
+import type { Chain as ViemChain } from 'viem'
 
 export function getDevice(): Device | DeviceNotBrowser {
   if (typeof window !== 'undefined') {
