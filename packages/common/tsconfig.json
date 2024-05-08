@@ -12,6 +12,9 @@
       "*": ["./src/*", "./node_modules/*"]
     },
     "typeRoots": ["node_modules/@types"],
-    "lib": ["es2020"]
+    "lib": ["es2020"],
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "types": ["svelte"]
   }
 }
