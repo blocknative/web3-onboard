@@ -172,14 +172,11 @@ const coinbase: InjectedWalletModule = {
     )()
 
     const addListener: SimpleEventEmitter['on'] = provider.on.bind(provider)
-    console.log('coinbase')
     provider.on = (event, func) => {
-      console.log(event)
       // intercept chainChanged event and format string
       if (event === 'chainChanged') {
         addListener(event, (chainId: string) => {
           const cb = func as ChainListener
-          console.log(chainId)
           cb(`0x${parseInt(chainId).toString(16)}`)
         })
       } else {

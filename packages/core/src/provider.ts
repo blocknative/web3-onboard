@@ -233,7 +233,7 @@ export function trackWallet(
             : ensChain
             ? getUns(address, ensChain)
             : Promise.resolve(null)
-        console.log('ENS', await ensProm)
+
         return Promise.all([
           Promise.resolve(address),
           balanceProm,
@@ -455,7 +455,7 @@ export async function getBalance(
     const balanceHex = await provider.request({
       method: 'eth_getBalance',
       params: [address, 'latest']
-    })
+    }) as `0x${string}`
     return balanceHex
       ? { [chain.token || 'eth']: weiHexToEth(balanceHex) }
       : null

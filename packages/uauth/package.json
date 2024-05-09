@@ -63,7 +63,6 @@
   },
   "dependencies": {
     "@uauth/js": "^2.4.0",
-    "@ethersproject/providers": "^5.5.0",
     "@walletconnect/client": "^1.8.0",
     "@walletconnect/ethereum-provider": "2.9.1",
     "@walletconnect/modal": "2.6.1",

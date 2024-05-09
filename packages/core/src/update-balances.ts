@@ -90,14 +90,14 @@ export const updateSecondaryTokens = async (
         }
 
         const supplyProm =
-          client.readContract({
+          (client as any).readContract({
             ...viemTokenInterface,
             functionName: 'balanceOf',
             args: [accountAddress] as unknown[]
           } as ReadContractParameters) || ''
 
         const tokenProm =
-          client.readContract({
+          (client as any).readContract({
             ...viemTokenInterface,
             functionName: 'symbol',
             args: []

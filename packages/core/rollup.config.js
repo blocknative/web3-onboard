@@ -5,11 +5,8 @@ import json from '@rollup/plugin-json'
 import sveltePreprocess from 'svelte-preprocess'
 import typescript from '@rollup/plugin-typescript'
 import copy from '@rollup-extras/plugin-copy'
-import commonjs from '@rollup/plugin-commonjs'
 
 const production = !process.env.ROLLUP_WATCH
-const specificPackages = ['idna-uts46-hx'] // Replace with the package names you want to target
-const includePackages = specificPackages.map(pkg => `node_modules/${pkg}/**`)
 
 export default {
   input: 'src/index.ts',
@@ -39,7 +36,8 @@ export default {
     }),
     resolve({
       browser: true,
-      dedupe: ['svelte']
+      dedupe: ['svelte'],
+      extensions: ['.js', '.ts', '.svelte']
     }),
     typescript({
       sourceMap: !production,
@@ -49,9 +47,6 @@ export default {
       src: 'src/i18n/en.json',
       dest: 'i18n'
     }),
-    commonjs({
-      include: includePackages
-    })
   ],
   external: [
     '@web3-onboard/common',

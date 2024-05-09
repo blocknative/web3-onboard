@@ -83,11 +83,10 @@
     "svelte-check": "^3.7.1",
     "svelte-preprocess": "^5.1.4",
     "tslib": "^2.0.0",
-    "typescript": "^5.4.5",
-    "@rollup/plugin-commonjs":"24.0.1" 
+    "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.4.0-viem.1",
+    "@web3-onboard/common": "^2.4.0-viem.3",
     "bnc-sdk": "^4.6.7",
     "bowser": "^2.11.0",
     "eventemitter3": "^4.0.7",
@@ -98,8 +97,8 @@
     "rxjs": "^7.5.5",
     "svelte": "^3.49.0",
     "svelte-i18n": "^3.3.13",
-    "viem": "^2.9.32",
-    "@wagmi/core": "^2.9.1"
+    "viem": "^2.10.3",
+    "@wagmi/core": "^2.9.3"
   },
   "engines": {
     "node": ">=16.15.1"

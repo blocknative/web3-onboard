@@ -33,7 +33,6 @@ import {
 } from './icons/index.js'
 
 import type { ChainStyle, ConnectedChain, NotifyEventStyles } from './types.js'
-import { configuration } from './configuration'
 
 export function getDevice(): Device | DeviceNotBrowser {
   if (typeof window !== 'undefined') {
