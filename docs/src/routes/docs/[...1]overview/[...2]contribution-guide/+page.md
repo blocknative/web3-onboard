@@ -41,7 +41,7 @@ Example 2 : Bug fix within the `core` package -
 
 ## How can I add a new wallet? 💳
 
-To add a new wallet to the official Web3 Onboard packages and repo, create a [pull request](#pull-requests-🗂️). Web3 Onboard does not require a wallet to be a part of the main code, so a separate wallet module can be created without any changes to the Web3Onboard codebase. Your PR must include a detailed README for the package, keeping in mind that this README is the the first point of contact for dapp devs looking to implement your wallet.
+To add a new wallet to the official Web3 Onboard packages and repo, create a [pull request](#pull-requests-🗂️). Web3 Onboard does not require a wallet to be a part of the main code, so a separate wallet module can be created without any changes to the Web3 Onboard codebase. Your PR must include a detailed README for the package, keeping in mind that this README is the the first point of contact for dapp developers looking to implement your wallet.
 
 Please also include updates to documentation in your PR. Refer to the [docs contributions section](#documentation-contributions-📄) and the PR template docs checklist.
 
@@ -69,7 +69,7 @@ PRs for adding/updating a wallet should include a README (new or updated) for th
 
 [See here for an example of a docs pull request.](https://github.com/blocknative/web3-onboard/pull/1544/files)
 
-We highly encourage the community to help us improve the web3-onboard docs! If you have any questions don't hesitate to reach out.
+We highly encourage the community to help us improve the Web3 Onboard docs! If you have any questions don't hesitate to [reach out](https://discord.com/invite/KZaBVME).
 
 ## Feedback 💬
 

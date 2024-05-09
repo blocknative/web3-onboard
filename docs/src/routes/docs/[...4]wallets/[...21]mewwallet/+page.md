@@ -4,7 +4,7 @@ title: Mew Wallet
 
 # {$frontmatter.title}
 
-Wallet module for connecting Mew wallet through web3-onboard
+Wallet module for connecting Mew wallet through Web3 Onboard
 
 ### Install
 

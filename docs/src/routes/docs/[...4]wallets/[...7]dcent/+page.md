@@ -4,7 +4,7 @@ title: Dcent
 
 # {$frontmatter.title}
 
-## Wallet module for connecting D'CENT hardware wallets to web3-onboard
+Wallet module for connecting D'CENT hardware wallets to Web3 Onboard.
 
 ### Install
 
