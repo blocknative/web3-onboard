@@ -19,7 +19,7 @@ export const defaultWalletUnavailableMsg = ({
   externalUrl
 }: InjectedWalletModule) =>
   externalUrl
-    ? `Please <a href="${externalUrl}" target="_blank">install</a> or enable ${label} to continue`
+    ? `Please <a href="${externalUrl}" target="_blank">install or switch to</a> ${label} to continue`
     : `Please install or enable ${label} to continue`
 
 export const isWalletAvailable = (
@@ -43,4 +43,35 @@ export const isWalletAvailable = (
   return !!provider.providers?.some(provider =>
     checkProviderIdentity({ provider, device })
   )
+}
+
+export 
+function containsExecutableJavaScript(svgString: string): boolean {
+  if (!svgString) return false
+  // Regular expression to match <script> tags
+  const scriptTagRegex = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi
+
+  // Regular expression to match event handler attributes (e.g., onclick, onload)
+  const eventHandlerRegex = /\bon[a-z]+\s*=\s*["']?(?:javascript:)?/gi
+
+  // Regular expression to match href or xlink:href attributes containing "javascript:"
+  const hrefJavaScriptRegex = /\b(href|xlink:href)\s*=\s*["']?javascript:/gi
+
+  // Check for <script> tags
+  if (scriptTagRegex.test(svgString)) {
+    return true
+  }
+
+  // Check for event handlers
+  if (eventHandlerRegex.test(svgString)) {
+    return true
+  }
+
+  // Check for "javascript:" in href or xlink:href
+  if (hrefJavaScriptRegex.test(svgString)) {
+    return true
+  }
+
+  // No executable JavaScript found
+  return false
 }

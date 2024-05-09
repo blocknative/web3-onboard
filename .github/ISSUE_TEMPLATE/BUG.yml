@@ -46,7 +46,7 @@ body:
         - '@web3-onboard/decent'
         - '@web3-onboard/formatic'
         - '@web3-onboard/gnosis'
-        - '@web3-onboard/injected'
+        - '@web3-onboard/injected-wallets'
         - '@web3-onboard/keepkey'
         - '@web3-onboard/keystone'
         - '@web3-onboard/ledger'

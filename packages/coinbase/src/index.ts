@@ -1,9 +1,16 @@
 import { WalletInit } from '@web3-onboard/common'
 
 function coinbaseWallet({
-  darkMode = false
+  darkMode = false,
+  enableMobileWalletLink = false,
+  reloadOnDisconnect = true
 }: {
+  /** @optional Use dark theme */
   darkMode?: boolean
+  /** @optional whether to connect mobile web app via WalletLink, defaults to false */
+  enableMobileWalletLink?: boolean
+  /** @optional whether or not to reload dapp automatically after disconnect, defaults to true */
+  reloadOnDisconnect?: boolean
 } = {}): WalletInit {
   return () => {
     return {
@@ -31,7 +38,9 @@ function coinbaseWallet({
         const instance = new CoinbaseWalletSDKConstructor({
           appName: name || '',
           appLogoUrl,
-          darkMode
+          darkMode,
+          enableMobileWalletLink,
+          reloadOnDisconnect
         })
 
         const coinbaseWalletProvider = instance.makeWeb3Provider(

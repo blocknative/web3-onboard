@@ -32,7 +32,7 @@ Web3 Onboard is the quickest and easiest way to add multi-wallet and multi-chain
 
 - **Notify:** Real-time transaction notifications for all transaction states for the connected wallet address(es). In-notification speedups & cancels for hardware wallet connections.
 
-### Supported Networks
+### Natively Supported EVM Chains
 
 Web3 Onboard supports all EVM networks. Supporting a new network is simply a matter of adding its details in the Chains section upon initialization. For more information see [initialization options](../../modules/core.md#initialization).
 
@@ -41,15 +41,15 @@ Web3 Onboard supports all EVM networks. Supporting a new network is simply a mat
 - Arbitrum Nova
 - Base
 - Polygon
-- Optimism
+- OP Mainnet
 - Avalanche
 - BNB Chain
 - Celo
+- Degen
 - Fantom
 - Gnosis Chain
 - Harmony One
 - Moonriver
-- Goerli
 - Sepolia
 - Base Goerli
 - Degen
@@ -127,6 +127,18 @@ const onboard = Onboard({
       token: 'ETH',
       label: 'Base',
       rpcUrl: 'https://mainnet.base.org'
+    },
+    {
+      id: '0xa4ec',
+      token: 'ETH',
+      label: 'Celo',
+      rpcUrl: 'https://1rpc.io/celo'
+    },
+    {
+      id: 666666666,
+      token: 'DEGEN',
+      label: 'Degen',
+      rpcUrl: 'https://rpc.degen.tips'
     }
   ]
 })
@@ -171,12 +183,14 @@ We recommend you add the [Core Repo](../../modules/core.md#install) and consider
 **SDK Wallets**
 
 - [Arcana Auth](../../wallets/arcana.md#install)
-- [Blocto](../../docs/wallets/blocto.md#install)
+- [Blocto](../../wallets/blocto.md#install)
+- [Capsule](../../wallets/capsule.md#install)
 - [Coinbase](../../wallets/coinbase.md#install)
 - [Fortmatic](../../wallets/fortmatic.md#install)
 - [Frame](../../wallets/frame.md#install)
 - [Safe](../../wallets/gnosis.md#install)
 - [Magic](../../wallets/magic.md#login-options)
+- [MetaMask](../../wallets/metamask.md#install)
 - [MEW](../../wallets/mewwallet.md#install)
 - [Portis](../../wallets/portis.md#install)
 - [Web3Auth](../../wallets/web3auth.md#install)
@@ -193,6 +207,7 @@ We recommend you add the [Core Repo](../../modules/core.md#install) and consider
 **Frameworks**
 
 - [React](../../modules/react.md#quickstart-with-injected-wallets-and-ethers-provider)
+- [Solid](../../modules/solid.md#install)
 - [Vue](../../modules/vue.md#install)
 
 ## Test out the demo app

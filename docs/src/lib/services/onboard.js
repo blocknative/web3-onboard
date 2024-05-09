@@ -36,6 +36,7 @@ const intiOnboard = async (theme) => {
   const { default: walletConnectModule } = await import('@web3-onboard/walletconnect')
   const { default: infinityWalletModule } = await import('@web3-onboard/infinity-wallet')
   const { default: coinbaseModule } = await import('@web3-onboard/coinbase')
+  const { default: metamaskModule } = await import('@web3-onboard/metamask')
   const { default: dcentModule } = await import('@web3-onboard/dcent')
   const { default: portisModule } = await import('@web3-onboard/portis')
   const { default: magicModule } = await import('@web3-onboard/magic')
@@ -56,6 +57,9 @@ const intiOnboard = async (theme) => {
   const { default: arcanaModule } = await import('@web3-onboard/arcana-auth')
   const { default: bloctoModule } = await import('@web3-onboard/blocto')
   const { default: venlyModule } = await import('@web3-onboard/venly')
+  const { default: bitgetModule } = await import('@web3-onboard/bitget')
+  const { default: capsuleModule, Environment } = await import('@web3-onboard/capsule')
+  const { default: particleAuthModule } = await import('@web3-onboard/particle-network')
   const INFURA_ID = '8b60d52405694345a99bcb82e722e0af'
 
   const injected = injectedModule()
@@ -64,9 +68,17 @@ const intiOnboard = async (theme) => {
     clientID: 'xar_test_c9c3bc702eb13255c58dab0e74cfa859711c13cb'
   })
   const coinbase = coinbaseModule()
+  const metamask = metamaskModule({
+    options: {
+      dappMetadata: {
+        name: 'Web3Onboard'
+      }
+    }
+  })
   const dcent = dcentModule()
   const walletConnect = walletConnectModule({
-    projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5'
+    projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
+    dappUrl: 'https://onboard.blocknative.com/'
   })
   const ledger = ledgerModule({
     walletConnectVersion: 2,
@@ -83,6 +95,7 @@ const intiOnboard = async (theme) => {
   const trust = trustModule()
   const xdefi = xdefiModule()
   const cede = cedeModule()
+  const bitget = bitgetModule()
 
   const portis = portisModule({
     apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
@@ -118,21 +131,34 @@ const intiOnboard = async (theme) => {
     environment: 'staging'
   })
 
+  const capsule = capsuleModule({
+    environment: Environment.DEVELOPMENT,
+    apiKey: '992bbd9146d5de8ad0419f141d9a7ca7'
+  })
+
+  const particle = particleAuthModule({
+    projectId: 'b385ccf0-73c3-485a-9941-159b7855b806',
+    clientKey: 'cSTLqhvONB5j588Wz6E5WJLMPrHeUlGbymf1DFhO',
+    appId: 'b1f0239a-edb0-41f9-b0f5-ab780bb02a9e'
+  })
+
   return Onboard({
     connect: { autoConnectAllPreviousWallet: true },
     wallets: [
+      metamask,
       injected,
       walletConnect,
-      arcanaWallet,
       coinbase,
       ledger,
       trezor,
       trust,
       gnosis,
-      uauth,
       taho,
-      cede,
+      bitget,
       xdefi,
+      uauth,
+      cede,
+      arcanaWallet,
       torus,
       sequence,
       dcent,
@@ -145,7 +171,11 @@ const intiOnboard = async (theme) => {
       portis,
       frame,
       infinityWallet,
-      blocto
+      blocto,
+      capsule,
+      particle
+      // capsule
+
       // venly
     ],
     chains: [
@@ -165,12 +195,6 @@ const intiOnboard = async (theme) => {
         ]
       },
       {
-        id: '0x5',
-        token: 'ETH',
-        label: 'Goerli',
-        rpcUrl: `https://goerli.infura.io/v3/${INFURA_ID}`
-      },
-      {
         id: 11155111,
         token: 'ETH',
         label: 'Sepolia',
@@ -178,13 +202,13 @@ const intiOnboard = async (theme) => {
       },
       {
         id: 42161,
-        token: 'ARB-ETH',
+        token: 'ETH',
         label: 'Arbitrum One',
         rpcUrl: 'https://rpc.ankr.com/arbitrum'
       },
       {
         id: '0xa4ba',
-        token: 'ARB',
+        token: 'ETH',
         label: 'Arbitrum Nova',
         rpcUrl: 'https://nova.arbitrum.io/rpc'
       },
@@ -215,14 +239,14 @@ const intiOnboard = async (theme) => {
       {
         id: '0xA',
         token: 'OETH',
-        label: 'Optimism',
+        label: 'OP Mainnet',
         rpcUrl: 'https://mainnet.optimism.io'
       },
       {
-        id: '0xA4B1',
-        token: 'ARB-ETH',
-        label: 'Arbitrum',
-        rpcUrl: 'https://rpc.ankr.com/arbitrum'
+        id: 666666666,
+        token: 'DEGEN',
+        label: 'Degen',
+        rpcUrl: 'https://rpc.degen.tips'
       }
     ],
     appMetadata: {

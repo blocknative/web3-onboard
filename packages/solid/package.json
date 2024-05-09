@@ -1,0 +1,69 @@
+{
+  "name": "@web3-onboard/solid",
+  "version": "2.0.4",
+  "description": "A collection of solid Composables for integrating Web3-Onboard in to a Solid project. Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardized spec compliant web3 providers for all supported wallets, modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
+  "keywords": [
+    "Ethereum",
+    "Web3",
+    "EVM",
+    "dapp",
+    "Multichain",
+    "Wallet",
+    "Transaction",
+    "Provider",
+    "Hardware Wallet",
+    "Notifications",
+    "React",
+    "Svelte",
+    "Vue",
+    "Next",
+    "Nuxt",
+    "MetaMask",
+    "Coinbase",
+    "WalletConnect",
+    "Ledger",
+    "Trezor",
+    "Connect Wallet",
+    "Ethereum Hooks",
+    "Blocknative",
+    "Mempool",
+    "pending",
+    "confirmed",
+    "Injected Wallet",
+    "Crypto",
+    "Crypto Wallet"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blocknative/web3-onboard.git",
+    "directory": "packages/solid"
+  },
+  "homepage": "https://onboard.blocknative.com",
+  "bugs": "https://github.com/blocknative/web3-onboard/issues",
+  "module": "dist/index.js",
+  "browser": "dist/index.js",
+  "main": "dist/index.js",
+  "type": "module",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "lint:types": "tsc --noEmit",
+    "type-check": "tsc --noEmit"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "solid-devtools": "^0.27.3",
+    "tsup": "^7.1.0",
+    "tsup-preset-solid": "^2.0.1",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "@web3-onboard/common": "^2.3.3",
+    "@web3-onboard/core": "^2.21.6",
+    "solid-js": "^1.8.1"
+  }
+}

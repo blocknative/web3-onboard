@@ -2,12 +2,14 @@ import Onboard from '@web3-onboard/core'
 import injectedWalletsModule from '@web3-onboard/injected-wallets'
 import walletConnectModule from '@web3-onboard/walletconnect'
 import coinbaseModule from '@web3-onboard/coinbase'
+import bitgetModule from '@web3-onboard/bitget'
 
 const injected = injectedWalletsModule()
 const walletConnect = walletConnectModule({})
 const coinbaseWallet = coinbaseModule()
+const bitgetWallet = bitgetModule()
 
-const wallets = [injected, walletConnect, coinbaseWallet]
+const wallets = [injected, walletConnect, bitgetWallet, coinbaseWallet]
 
 const chains = [
   {
@@ -27,6 +29,18 @@ const chains = [
     token: 'ETH',
     label: 'Base',
     rpcUrl: 'https://mainnet.base.org'
+  },
+  {
+    id: '0xa4ec',
+    token: 'ETH',
+    label: 'Celo',
+    rpcUrl: 'https://1rpc.io/celo'
+  },
+  {
+    id: 666666666,
+    token: 'DEGEN',
+    label: 'Degen',
+    rpcUrl: 'https://rpc.degen.tips'
   }
 ]
 

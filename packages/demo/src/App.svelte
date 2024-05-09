@@ -22,6 +22,7 @@
   import xdefiWalletModule from '@web3-onboard/xdefi'
   import zealModule from '@web3-onboard/zeal'
   import transactionPreviewModule from '@web3-onboard/transaction-preview'
+  import metamaskSDK from '@web3-onboard/metamask'
   import enkryptModule from '@web3-onboard/enkrypt'
   import mewWalletModule from '@web3-onboard/mew-wallet'
   import uauthModule from '@web3-onboard/uauth'
@@ -32,6 +33,13 @@
   import cedeStoreModule from '@web3-onboard/cede-store'
   import arcanaAuthModule from '@web3-onboard/arcana-auth'
   import venlyModule from '@web3-onboard/venly'
+  import bitgetModule from '@web3-onboard/bitget'
+  import particleAuthModule from '@web3-onboard/particle-network'
+  import capsuleModule, {
+    Environment,
+    OAuthMethod,
+    Theme
+  } from '@web3-onboard/capsule'
   import {
     recoverAddress,
     arrayify,
@@ -78,7 +86,11 @@
     // displayUnavailable: true,
     // ||
     // display specific unavailable wallets
-    displayUnavailable: [ProviderLabel.MetaMask, ProviderLabel.Trust]
+    displayUnavailable: [
+      ProviderLabel.MetaMask,
+      ProviderLabel.Trust,
+      ProviderLabel.Phantom
+    ]
     // but only show Binance and Bitski wallet if they are available
     // filter: {
     //   [ProviderLabel.Binance]: 'unavailable',
@@ -115,6 +127,18 @@
 
   const coinbaseWallet = coinbaseModule()
 
+  const metamaskSDKWallet = metamaskSDK({
+    options: {
+      extensionOnly: false,
+      i18nOptions: {
+        enabled: true
+      },
+      dappMetadata: {
+        name: 'Demo Web3Onboard'
+      }
+    }
+  })
+
   const walletConnect = walletConnectModule({
     handleUri: uri => console.log(uri),
     projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
@@ -143,7 +167,6 @@
   const keepkey = keepkeyModule()
   const keystone = keystoneModule()
   const safe = safeModule()
-  const tallyho = tallyHoModule()
   const xdefi = xdefiWalletModule()
   const zeal = zealModule()
   const phantom = phantomModule()
@@ -151,6 +174,7 @@
   const frontier = frontierModule()
   const cedeStore = cedeStoreModule()
   const blocto = bloctoModule()
+  const tallyho = tallyHoModule()
 
   const trezorOptions = {
     email: 'test@test.com',
@@ -176,7 +200,14 @@
     // for more info see the @web3-onboard/magic docs
   })
 
+  const particle = particleAuthModule({
+    projectId: 'b385ccf0-73c3-485a-9941-159b7855b806',
+    clientKey: 'cSTLqhvONB5j588Wz6E5WJLMPrHeUlGbymf1DFhO',
+    appId: 'b1f0239a-edb0-41f9-b0f5-ab780bb02a9e'
+  })
+
   const dcent = dcentModule()
+  const bitget = bitgetModule()
   const frameWallet = frameModule()
   const sequence = sequenceModule()
   const enkrypt = enkryptModule()
@@ -188,18 +219,33 @@
     clientId: 'blocknative',
     environment: 'staging'
   })
+  const capsule = capsuleModule({
+    environment: Environment.DEVELOPMENT,
+    apiKey: '992bbd9146d5de8ad0419f141d9a7ca7',
+    modalProps: {
+      oAuthMethods: [OAuthMethod.GOOGLE, OAuthMethod.TWITTER],
+      theme: Theme.dark
+    },
+    constructorOpts: {
+      portalBackgroundColor: '#5e5656',
+      portalPrimaryButtonColor: '#ff6700',
+      portalTextColor: '#ffffff'
+    }
+  })
 
   const onboard = Onboard({
     wallets: [
+      metamaskSDKWallet,
+      coinbaseWallet,
       injected,
       ledger,
       trezor,
       walletConnect,
-      coinbaseWallet,
       phantom,
       safe,
       trust,
       tallyho,
+      bitget,
       enkrypt,
       infinityWallet,
       mewWallet,
@@ -213,6 +259,7 @@
       sequence,
       uauth,
       web3auth,
+      capsule,
       zeal,
       frontier,
       xdefi,
@@ -220,9 +267,10 @@
       cedeStore,
       arcanaAuth,
       blocto,
-      venly
+      venly,
+      particle
     ],
-    transactionPreview,
+    // transactionPreview,
     gas,
     chains: [
       {
@@ -263,22 +311,22 @@
         rpcUrl: 'https://nova.arbitrum.io/rpc'
       },
       {
-        id: '0x5',
-        token: 'ETH',
-        label: 'Goerli',
-        rpcUrl: 'https://ethereum-goerli.publicnode.com'
-      },
-      {
         id: '0x13881',
         token: 'MATIC',
         label: 'Polygon - Mumbai',
-        rpcUrl: 'https://matic-mumbai.chainstacklabs.com	'
+        rpcUrl: 'https://polygon-mumbai-bor-rpc.publicnode.com'
       },
       {
         id: '0x2105',
         token: 'ETH',
         label: 'Base',
         rpcUrl: 'https://mainnet.base.org'
+      },
+      {
+        id: '0xa4ec',
+        token: 'ETH',
+        label: 'Celo',
+        rpcUrl: 'https://1rpc.io/celo'
       },
       {
         id: '0x38',
@@ -305,8 +353,14 @@
       {
         id: 10,
         token: 'OETH',
-        label: 'Optimism',
+        label: 'OP Mainnet',
         rpcUrl: 'https://mainnet.optimism.io'
+      },
+      {
+        id: 666666666,
+        token: 'DEGEN',
+        label: 'Degen',
+        rpcUrl: 'https://rpc.degen.tips'
       }
     ],
     connect: {
@@ -363,7 +417,7 @@
           //     type: 'hint',
           //     message: 'Your in the pool, hope you brought a towel!',
           //     autoDismiss: 0,
-          //     link: `https://goerli.etherscan.io/tx/${transaction.hash}`
+          //     link: `https://sepolia.etherscan.io/tx/${transaction.hash}`
           //   }
           // }
         },
@@ -567,6 +621,10 @@
   const updateTheme = () => {
     onboard.state.actions.updateTheme(selectedTheme)
   }
+
+  function isSVG(str) {
+    return str.includes('<svg')
+  }
 </script>
 
 <style>
@@ -707,14 +765,14 @@
           <button on:click={() => onboard.setChain({ chainId: '0x1' })}
             >Set Chain to Mainnet</button
           >
-          <button on:click={() => onboard.setChain({ chainId: '0x5' })}
-            >Set Chain to Goerli</button
+          <button on:click={() => onboard.setChain({ chainId: 11155111 })}
+            >Set Chain to Sepolia</button
           >
           <button on:click={() => onboard.setChain({ chainId: '0x89' })}
             >Set Chain to Matic</button
           >
           <button on:click={() => onboard.setChain({ chainId: 10 })}
-            >Set Chain to Optimism</button
+            >Set Chain to OP Mainnet</button
           >
         </div>
         <div class="position-buttons">
@@ -781,7 +839,15 @@
     {#each $wallets$ as { icon, label, accounts, chains, provider, instance }}
       <div class="connected-wallet" data-testid="connected-wallet">
         <div class="flex-centered" style="width: 10rem;">
-          <div style="width: 2rem; height: 2rem">{@html icon}</div>
+          <div style="width: 2rem; height: 2rem">
+            {#if isSVG(icon)}
+              <!-- render svg string -->
+              {@html icon}
+            {:else}
+              <!-- load img url -->
+              <img style="width: 2rem; height: 2rem" src={icon} alt="logo" />
+            {/if}
+          </div>
           <span data-testid={label}>{label}</span>
         </div>
 

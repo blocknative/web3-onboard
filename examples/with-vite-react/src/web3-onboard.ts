@@ -33,14 +33,12 @@ const injected = injectedModule({
 
 const walletLink = coinbaseModule()
 
-const walletConnect = walletConnectModule(
-  {
-    version: 2,
-    // Replace with your apiKey
-    projectId: '4a49c32131502e8c12d54295295e2012',
-    dappUrl: 'https://onboard.blocknative.com/'
-  }
-)
+const walletConnect = walletConnectModule({
+  version: 2,
+  // Replace with your apiKey
+  projectId: '4a49c32131502e8c12d54295295e2012',
+  dappUrl: 'https://onboard.blocknative.com/'
+})
 const portis = portisModule({
   // Replace with your apiKey
   apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
@@ -137,6 +135,18 @@ export default init({
       token: 'ETH',
       label: 'Base',
       rpcUrl: 'https://mainnet.base.org'
+    },
+    {
+      id: '0xa4ec',
+      token: 'ETH',
+      label: 'Celo',
+      rpcUrl: 'https://1rpc.io/celo'
+    },
+    {
+      id: 666666666,
+      token: 'DEGEN',
+      label: 'Degen',
+      rpcUrl: 'https://rpc.degen.tips'
     }
   ],
   appMetadata: {
