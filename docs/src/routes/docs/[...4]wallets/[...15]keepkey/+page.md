@@ -4,7 +4,7 @@ title: Keepkey
 
 # {$frontmatter.title}
 
-Wallet module for connecting KeepKey hardware wallets to web3-onboard
+Wallet module for connecting KeepKey hardware wallets to Web3 Onboard.
 
 ## Install
 

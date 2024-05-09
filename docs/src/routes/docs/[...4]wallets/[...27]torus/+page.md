@@ -4,7 +4,7 @@ title: Torus
 
 # {$frontmatter.title}
 
-## Wallet module for connecting Torus wallet to web3-onboard
+Wallet module for connecting Torus wallet to Web3 Onboard
 
 ### Install
 
@@ -89,3 +89,7 @@ config.module.rules = [
   }
 ]
 ```
+
+## Build Environments
+
+For build env configurations and setups please see the Build Env section [here](/docs/modules/core#build-environments)

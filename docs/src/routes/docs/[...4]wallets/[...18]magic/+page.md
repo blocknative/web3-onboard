@@ -4,12 +4,12 @@ title: Magic
 
 # {$frontmatter.title}
 
-Wallet module for connecting Magic wallets to Onboard V2
+Wallet module for connecting Magic wallets to Web3 Onboard.
 
 ### Login options
 
 - **Email** - The Magic module comes with a built in email login modal that is customizable
-  in the same fashion that all other web3-onboard UI components are
+  in the same fashion that all other Web3 Onboard UI components are.
 
 :::admonition type=note
 
@@ -72,7 +72,7 @@ console.log(connectedWallets)
 
 When a Magic wallet is connected the Magic instance is exposed.
 This can be used to get information such as user MetaData, update a user's email address or handle the user's token.
-The user's email can be set in local storage and passed through the `MagicInitOptions` to avoid a user having to login again if they are returning to the DApp within the set user session time.
+The user's email can be set in local storage and passed through the `MagicInitOptions` to avoid a user having to login again if they are returning to the dapp within the set user session time.
 Magic has a default time of 7 days and this can be configured through your Magic API Key settings.
 
 ```typescript
@@ -91,7 +91,7 @@ For full documentation and examples please visit [Magic's official docs](https:/
 
 ## Custom Styling
 
-The Magic Wallet Login styles can customized via [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties). The following properties and their default properties can be customized by adding these variables to the `:root` in your CSS file. If they are not specified they will fall back on the style variables prefixed with `--onboard` and beyond that to the styles developed by Blocknative:
+The Magic Wallet Login styles can customized via [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties). The following properties and their default properties can be customized by adding these variables to the `:root` in your CSS file. If they are not specified they will fall back on the style variables prefixed with `--onboard` and beyond that to the styles developed by Web3 Onboard:
 
 ```css
 :root {
