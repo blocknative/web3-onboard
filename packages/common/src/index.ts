@@ -6,7 +6,8 @@ export {
   weiToEth,
   isAddress,
   bigIntToHex,
-  ethToWeiBigInt
+  ethToWeiBigInt,
+  createDownloadMessage
 } from './utils.js'
 
 export * from './types.js'

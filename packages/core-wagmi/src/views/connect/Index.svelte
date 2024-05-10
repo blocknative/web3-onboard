@@ -41,7 +41,6 @@
 
   import {
     getChainId,
-    requestAccounts,
     trackWallet,
     getBalance,
     getEns,
@@ -55,7 +54,10 @@
     WalletWithLoadingIcon
   } from '../../types.js'
   import { updateSecondaryTokens } from '../../update-balances'
-  import { wagmiConfig, createWagmiConnector } from '../../services/wagmi'
+  import {
+    wagmiConfig,
+    initializeWAGMI
+  } from '../../services/wagmi'
   import { connect as wagmiConnect } from '@wagmi/core'
 
   export let autoSelect: ConnectOptions['autoSelect']
@@ -202,13 +204,16 @@
 
     cancelPreviousConnect$.next()
 
-    const selectedWagmiWallet = await createWagmiConnector(
-      label,
-      provider
-    )
+    const chain = await getChainId(provider)
+    
     try {
+      await initializeWAGMI(label, provider)
+
       const accountsReq = await Promise.race([
-        wagmiConnect(wagmiConfig, {connector: selectedWagmiWallet}),
+        wagmiConnect(wagmiConfig, {
+          chainId: parseInt(chain, 16),
+          connector: wagmiConfig.connectors[0]
+        }),
         // or connect wallet is called again whilst waiting for response
         firstValueFrom(cancelPreviousConnect$.pipe(mapTo([])))
       ])
@@ -253,8 +258,6 @@
           JSON.stringify(labelsList)
         )
       }
-
-      const chain = await getChainId(provider)
 
       if (state.get().notify.enabled) {
         const sdk = await getBNMulitChainSdk()

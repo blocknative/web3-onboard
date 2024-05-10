@@ -1,47 +1,45 @@
 <script>
   import Onboard from '@web3-onboard/core-wagmi'
-  // import fortmaticModule from '@web3-onboard/fortmatic'
-  // import gnosisModule from '@web3-onboard/gnosis'
-  // import infinityWalletModule from '@web3-onboard/infinity-wallet'
+  import fortmaticModule from '@web3-onboard/fortmatic'
+  import frameModule from '@web3-onboard/frame'
+  import safeModule from '@web3-onboard/gnosis'
+  import infinityWalletModule from '@web3-onboard/infinity-wallet'
   import injectedModule, { ProviderLabel } from '@web3-onboard/injected-wallets'
-  // import keepkeyModule from '@web3-onboard/keepkey'
-  // import keystoneModule from '@web3-onboard/keystone'
+  import keepkeyModule from '@web3-onboard/keepkey'
+  import keystoneModule from '@web3-onboard/keystone'
   import ledgerModule from '@web3-onboard/ledger'
-  // import portisModule from '@web3-onboard/portis'
-  // import torusModule from '@web3-onboard/torus'
+  import portisModule from '@web3-onboard/portis'
+  import torusModule from '@web3-onboard/torus'
   import trezorModule from '@web3-onboard/trezor'
-  // import walletConnectModule from '@web3-onboard/walletconnect'
+  import walletConnectModule from '@web3-onboard/walletconnect'
   import coinbaseModule from '@web3-onboard/coinbase'
-  // import magicModule from '@web3-onboard/magic'
-  // import web3authModule from '@web3-onboard/web3auth'
-  // import dcentModule from '@web3-onboard/dcent'
-  // import sequenceModule from '@web3-onboard/sequence'
-  // import tallyHoModule from '@web3-onboard/tallyho'
-  // import xdefiWalletModule from '@web3-onboard/xdefi'
-  // import zealModule from '@web3-onboard/zeal'
-  // import gas from '@web3-onboard/gas'
-  // import unstoppableResolution from '@web3-onboard/unstoppable-resolution'
-  // import dcentModule from '@web3-onboard/dcent'
-  // import sequenceModule from '@web3-onboard/sequence'
-  // import tallyHoModule from '@web3-onboard/tallyho'
-  // import xdefiWalletModule from '@web3-onboard/xdefi'
-  // import zealModule from '@web3-onboard/zeal'
-  // import transactionPreviewModule from '@web3-onboard/transaction-preview'
-  // import enkryptModule from '@web3-onboard/enkrypt'
-  // import mewWalletModule from '@web3-onboard/mew-wallet'
-  // import uauthModule from '@web3-onboard/uauth'
-  // import phantomModule from '@web3-onboard/phantom'
-  // import trustModule from '@web3-onboard/trust'
-  // import frontierModule from '@web3-onboard/frontier'
-
-  // import bloctoModule from '@web3-onboard/blocto'
-  // import cedeStoreModule from '@web3-onboard/cede-store'
-  // import arcanaAuthModule from '@web3-onboard/arcana-auth'
-  // import venlyModule from '@web3-onboard/venly'
-  // import bitgetModule from '@web3-onboard/bitget'
-  // import particleAuthModule from '@web3-onboard/particle-network'
-  // import capsuleModule, { Environment } from '@web3-onboard/capsule'
+  import magicModule from '@web3-onboard/magic'
+  import web3authModule from '@web3-onboard/web3auth'
+  import gas from '@web3-onboard/gas'
+  import dcentModule from '@web3-onboard/dcent'
+  import sequenceModule from '@web3-onboard/sequence'
+  import tallyHoModule from '@web3-onboard/tallyho'
+  import xdefiWalletModule from '@web3-onboard/xdefi'
+  import zealModule from '@web3-onboard/zeal'
+  import transactionPreviewModule from '@web3-onboard/transaction-preview'
   import metamaskSDK from '@web3-onboard/metamask'
+  import enkryptModule from '@web3-onboard/enkrypt'
+  import mewWalletModule from '@web3-onboard/mew-wallet'
+  import uauthModule from '@web3-onboard/uauth'
+  import phantomModule from '@web3-onboard/phantom'
+  import trustModule from '@web3-onboard/trust'
+  import frontierModule from '@web3-onboard/frontier'
+  import bloctoModule from '@web3-onboard/blocto'
+  import cedeStoreModule from '@web3-onboard/cede-store'
+  import arcanaAuthModule from '@web3-onboard/arcana-auth'
+  import venlyModule from '@web3-onboard/venly'
+  import bitgetModule from '@web3-onboard/bitget'
+  import particleAuthModule from '@web3-onboard/particle-network'
+  // import capsuleModule, {
+  //   Environment,
+  //   OAuthMethod,
+  //   Theme
+  // } from '@web3-onboard/capsule'
   import {
     recoverAddress,
     arrayify,
@@ -54,7 +52,8 @@
   import blocknativeIcon from './blocknative-icon.js'
   import DappAuth from '@blocto/dappauth'
   import { sendTransaction as wagmiSendTransaction } from '@wagmi/core'
-import { parseEther } from 'viem'
+  import { parseEther } from 'viem'
+
   if (window.innerWidth < 700) {
     new VConsole()
   }
@@ -130,14 +129,6 @@ import { parseEther } from 'viem'
 
   const coinbaseWallet = coinbaseModule()
 
-  // const walletConnect = walletConnectModule({
-  //   handleUri: uri => console.log(uri),
-  //   projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
-  //   dappUrl: 'https://www.onboard.blocknative.com'
-  // })
-  // const portis = portisModule({
-  //   apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
-  // })
   const metamaskSDKWallet = metamaskSDK({
     options: {
       extensionOnly: false,
@@ -150,33 +141,42 @@ import { parseEther } from 'viem'
     }
   })
 
-  // const fortmatic = fortmaticModule({
-  //   apiKey: 'pk_test_886ADCAB855632AA'
-  // })
+  const walletConnect = walletConnectModule({
+    handleUri: uri => console.log(uri),
+    projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
+    dappUrl: 'https://www.onboard.blocknative.com'
+  })
+  const portis = portisModule({
+    apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
+  })
 
-  // const web3auth = web3authModule({
-  //   clientId:
-  //     'DJuUOKvmNnlzy6ruVgeWYWIMKLRyYtjYa9Y10VCeJzWZcygDlrYLyXsBQjpJ2hxlBO9dnl8t9GmAC2qOP5vnIGo'
-  // })
+  const fortmatic = fortmaticModule({
+    apiKey: 'pk_test_886ADCAB855632AA'
+  })
 
-  // const arcanaAuth = arcanaAuthModule({
-  //   clientID: 'xar_test_c9c3bc702eb13255c58dab0e74cfa859711c13cb'
-  // })
+  const web3auth = web3authModule({
+    clientId:
+      'DJuUOKvmNnlzy6ruVgeWYWIMKLRyYtjYa9Y10VCeJzWZcygDlrYLyXsBQjpJ2hxlBO9dnl8t9GmAC2qOP5vnIGo'
+  })
 
-  // const torus = torusModule()
-  // const infinityWallet = infinityWalletModule()
+  const arcanaAuth = arcanaAuthModule({
+    clientID: 'xar_test_c9c3bc702eb13255c58dab0e74cfa859711c13cb'
+  })
+
+  const torus = torusModule()
+  const infinityWallet = infinityWalletModule()
   const ledger = ledgerModule({ projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5' })
-  // const keepkey = keepkeyModule()
-  // const keystone = keystoneModule()
-  // const safe = safeModule()
-  // const xdefi = xdefiWalletModule()
-  // const zeal = zealModule()
-  // const phantom = phantomModule()
-  // const trust = trustModule()
-  // const frontier = frontierModule()
-  // const cedeStore = cedeStoreModule()
-  // const blocto = bloctoModule()
-  // const tallyho = tallyHoModule()
+  const keepkey = keepkeyModule()
+  const keystone = keystoneModule()
+  const safe = safeModule()
+  const xdefi = xdefiWalletModule()
+  const zeal = zealModule()
+  const phantom = phantomModule()
+  const trust = trustModule()
+  const frontier = frontierModule()
+  const cedeStore = cedeStoreModule()
+  const blocto = bloctoModule()
+  const tallyho = tallyHoModule()
 
   const trezorOptions = {
     email: 'test@test.com',
@@ -186,41 +186,41 @@ import { parseEther } from 'viem'
   }
   const trezor = trezorModule(trezorOptions)
 
-  // const uauthOptions = {
-  //   clientID: 'a25c3a65-a1f2-46cc-a515-a46fe7acb78c',
-  //   redirectUri: 'http://localhost:8080/',
-  //   scope:
-  //     'openid wallet email:optional humanity_check:optional profile:optional social:optional'
-  // }
-  // const uauth = uauthModule(uauthOptions)
+  const uauthOptions = {
+    clientID: 'a25c3a65-a1f2-46cc-a515-a46fe7acb78c',
+    walletConnectProjectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
+    redirectUri: 'http://localhost:8080/',
+    scope:
+      'openid wallet email:optional humanity_check:optional profile:optional social:optional'
+  }
+  const uauth = uauthModule(uauthOptions)
 
-  // const magic = magicModule({
-  //   apiKey: 'pk_live_02207D744E81C2BA'
-  //   // userEmail: 'test@test.com'
-  //   // userEmail is optional - if user has already logged in and/or session is still active a login modal will not appear
-  //   // for more info see the @web3-onboard/magic docs
-  // })
+  const magic = magicModule({
+    apiKey: 'pk_live_02207D744E81C2BA'
+    // userEmail: 'test@test.com'
+    // userEmail is optional - if user has already logged in and/or session is still active a login modal will not appear
+    // for more info see the @web3-onboard/magic docs
+  })
 
-  // const particle = particleAuthModule({
-  //   projectId: 'b385ccf0-73c3-485a-9941-159b7855b806',
-  //   clientKey: 'cSTLqhvONB5j588Wz6E5WJLMPrHeUlGbymf1DFhO',
-  //   appId: 'b1f0239a-edb0-41f9-b0f5-ab780bb02a9e'
-  // })
+  const particle = particleAuthModule({
+    projectId: 'b385ccf0-73c3-485a-9941-159b7855b806',
+    clientKey: 'cSTLqhvONB5j588Wz6E5WJLMPrHeUlGbymf1DFhO',
+    appId: 'b1f0239a-edb0-41f9-b0f5-ab780bb02a9e'
+  })
 
-  // const dcent = dcentModule()
-  // const bitget = bitgetModule()
-  // const frameWallet = frameModule()
-  // const sequence = sequenceModule()
-  // const enkrypt = enkryptModule()
-  // const mewWallet = mewWalletModule()
-  // const transactionPreview = transactionPreviewModule({
-  //   requireTransactionApproval: true
-  // })
-  // const venly = venlyModule({
-  //   clientId: 'blocknative',
-  //   environment: 'staging'
-  // })
-
+  const dcent = dcentModule()
+  const bitget = bitgetModule()
+  const frameWallet = frameModule()
+  const sequence = sequenceModule()
+  const enkrypt = enkryptModule()
+  const mewWallet = mewWalletModule()
+  const transactionPreview = transactionPreviewModule({
+    requireTransactionApproval: true
+  })
+  const venly = venlyModule({
+    clientId: 'blocknative',
+    environment: 'staging'
+  })
   // const capsule = capsuleModule({
   //   environment: Environment.DEVELOPMENT,
   //   apiKey: '992bbd9146d5de8ad0419f141d9a7ca7',
@@ -237,43 +237,43 @@ import { parseEther } from 'viem'
 
   const onboard = Onboard({
     wallets: [
-      metamaskSDKWallet,
+      // metamaskSDKWallet,
       coinbaseWallet,
-      // injected,
+      injected,
       ledger,
-      trezor
-      // walletConnect,
-      // phantom,
-      // safe,
-      // trust,
-      // tallyho,
-      // bitget,
-      // enkrypt,
-      // infinityWallet,
-      // mewWallet,
-      // keepkey,
-      // keystone,
-      // magic,
-      // fortmatic,
-      // portis,
-      // torus,
-      // dcent,
-      // sequence,
-      // uauth,
-      // web3auth,
+      trezor,
+      walletConnect,
+      phantom,
+      safe,
+      trust,
+      tallyho,
+      bitget,
+      enkrypt,
+      infinityWallet,
+      mewWallet,
+      keepkey,
+      keystone,
+      magic,
+      fortmatic,
+      portis,
+      torus,
+      dcent,
+      sequence,
+      uauth,
+      web3auth,
       // capsule,
-      // zeal,
-      // frontier,
-      // xdefi,
-      // frameWallet,
-      // cedeStore,
-      // arcanaAuth,
-      // blocto,
-      // venly,
-      // particle
+      zeal,
+      frontier,
+      xdefi,
+      frameWallet,
+      cedeStore,
+      arcanaAuth,
+      blocto,
+      venly,
+      particle
     ],
     // transactionPreview,
-    // gas,
+    gas,
     chains: [
       {
         id: '0x1',
@@ -350,17 +350,11 @@ import { parseEther } from 'viem'
         id: '0x89',
         token: 'MATIC',
         label: 'Polygon',
-        rpcUrl: 'https://matic-mainnet.chainstacklabs.com',
-        secondaryTokens: [
-          {
-            address: '0xc3c7d422809852031b44ab29eec9f1eff2a58756',
-            icon: `https://avatars.githubusercontent.com/u/43341157`
-          }
-        ]
+        rpcUrl: 'https://matic-mainnet.chainstacklabs.com'
       },
       {
         id: 10,
-        token: 'OP',
+        token: 'OETH',
         label: 'OP Mainnet',
         rpcUrl: 'https://mainnet.optimism.io'
       },
@@ -445,7 +439,7 @@ import { parseEther } from 'viem'
 
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
-  $: console.log('wallets$', $wallets$)
+  $: console.log('wagmiConfig', onboard.state.select('wagmiConfig'))
   wallets$.subscribe(wallet => {
     console.log(wallet)
     const unstoppableUser = wallet.find(
@@ -478,14 +472,16 @@ import { parseEther } from 'viem'
     // const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 
     // const signer = ethersProvider.getSigner()
+
     // const popTransaction = await signer.populateTransaction({
     //   to: toAddress,
     //   value: 10000000000000
     // })
-    // console.log(popTransaction)
+
     // const txn = await signer.sendTransaction(popTransaction)
 
     // const receipt = await txn.wait()
+    // console.log(receipt)
     const wagmiConfig = onboard.state.get().wagmiConfig
     console.log(wagmiConfig)
     const result = await wagmiSendTransaction(wagmiConfig, {
@@ -493,7 +489,6 @@ import { parseEther } from 'viem'
       value: parseEther('0.001')
     })
     console.log(result)
-    // console.log(receipt)
   }
 
   const sendTransactionWithPreFlight = async (provider, balance) => {
@@ -507,7 +502,7 @@ import { parseEther } from 'viem'
     const signer = ethersProvider.getSigner()
     const txDetails = {
       to: toAddress,
-      value: 1000000000000000
+      value: 100000000000000
     }
 
     const sendTransaction = () => {
@@ -691,11 +686,6 @@ import { parseEther } from 'viem'
     display: flex;
     flex-direction: column;
     width: 15rem;
-  }
-  .user-avatar {
-    height: 58px;
-    border-radius: 100%;
-    border: 1px solid black;
   }
   .position-buttons {
     display: flex;
@@ -889,7 +879,6 @@ import { parseEther } from 'viem'
             {/if}
 
             {#if ens}
-              <img class="user-avatar" src={ens?.avatar} alt="avatar" />
               <div>ENS Name: {(ens && ens.name) || ''}</div>
             {/if}
 

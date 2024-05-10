@@ -11,7 +11,6 @@ import type {
 } from './types.js'
 import { wait } from './utils.js'
 import { validateConnectOptions } from './validation.js'
-import { initializeWAGMI } from './services/wagmi'
 
 async function connect(
   options?: ConnectOptions | ConnectOptionsString
@@ -44,7 +43,6 @@ async function connect(
   // first time calling connect, so initialize and set wallet modules
   if (!state.get().walletModules.length) {
     setWalletModules(configuration.initialWalletInit)
-    await initializeWAGMI(state.get().walletModules)
   }
 
   connectWallet$.next({

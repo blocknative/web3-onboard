@@ -94,6 +94,10 @@ function keystone({
       label: 'Keystone',
       getIcon,
       getInterface: async ({ EventEmitter, chains }) => {
+
+        // TODO: this needs work!
+
+        
         const { StaticJsonRpcProvider } = await import(
           '@ethersproject/providers'
         )

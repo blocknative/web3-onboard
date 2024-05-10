@@ -7,45 +7,43 @@ import type {
 import { state } from '../store'
 import { http, createConfig, createConnector, connect } from '@wagmi/core'
 import { type Chain as ViemChain, type Transport } from 'viem'
-import type { Chain, EIP1193Provider, WalletModule } from '@web3-onboard/common'
+import {
+  ProviderRpcErrorCode,
+  type Chain,
+  type EIP1193Provider
+} from '@web3-onboard/common'
 import { chainIdToViemImport } from '../utils'
-import { addOrSwitchChain, getChainId, requestAccounts } from '../provider'
+import {
+  addOrSwitchChain,
+  getChainId,
+  requestAccounts,
+  switchChain
+} from '../provider'
 import EventEmitter from 'eventemitter3'
-import { updateWagmiConfig } from '../store/actions'
+import { updateChain, updateWagmiConfig } from '../store/actions'
 
 export let wagmiConfig: Config | undefined
+const wagmiConnectorFn: Record<string, CreateConnectorFn> = {}
+const createWalletId = (walletLabel: string): string =>
+  walletLabel.split(' ').join() + '-id'
 
 export async function initializeWAGMI(
-  walletModules: WalletModule[]
+  walletLabel: string,
+  provider: EIP1193Provider
 ): Promise<void> {
-  const { chains, appMetadata } = state.get()
-  const connectors = await walletModules.reduce(async (acc, wallet) => {
-    const result = await acc
-    const { label, getInterface } = wallet
-    try {
-      console.log(label, wallet)
-      const provider = await getInterface({
-        chains,
-        EventEmitter,
-        appMetadata
-      })
-      if (provider) {
-        console.log(label, provider)
-        const wagmiConnector = await createWagmiConnector(
-          label,
-          provider.provider
-        )
-        result.push(wagmiConnector)
-      }
-    } catch (e) {
-      console.warn(`Error creating wagmi connector for wallet: ${wallet.label} 
-      - Wallet may not be installed or available to the browser. Error: ${e}`)
-    }
-    return result
-  }, Promise.resolve([]))
+  if (!provider || !walletLabel) {
+    throw new Error(
+      'Provider and wallet label are required to initialize WAGMI'
+    )
+  }
+
+  const latestWallet = await createWagmiConnector(walletLabel, provider)
+  wagmiConnectorFn[createWalletId(walletLabel)] = latestWallet
+  const connectors: CreateConnectorFn[] = [...Object.values(wagmiConnectorFn)]
 
   const transports: Record<ViemChain['id'], Transport> = {}
 
+  const { chains } = state.get()
   const viemChains = (await Promise.all(
     chains.map(async (w3OChain: Chain) => {
       const { id } = w3OChain
@@ -59,7 +57,7 @@ export async function initializeWAGMI(
       chains: [...viemChains],
       transports,
       multiInjectedProviderDiscovery: false,
-      connectors: await Promise.all(connectors) // Await the connectors array
+      connectors
     })
     updateWagmiConfig(wagmiConfig)
   } catch (e) {
@@ -74,59 +72,7 @@ export async function createWagmiConnector(
   provider: EIP1193Provider
 ): Promise<CreateConnectorFn> {
   try {
-    return createConnector(() =>
-        ({
-          name: label,
-          id: label.split(' ').join(),
-          connect: () =>
-            Promise.all([requestAccounts(provider), getChainId(provider)]).then(
-              ([accounts, chainId]) => {
-                return {
-                  chainId: parseInt(chainId, 16),
-                  accounts: accounts as `0x${string}`[]
-                }
-              }
-            ),
-          disconnect: () => Promise.resolve(provider.disconnect()),
-          getAccounts: () =>
-            requestAccounts(provider).then(acc => {
-              return acc
-            }),
-          getChainId: () =>
-            getChainId(provider).then(chainId => {
-              console.log('chainId', chainId)
-              return parseInt(chainId, 16)
-            }),
-          getProvider: () => Promise.resolve(provider),
-          isAuthorized: () =>
-            requestAccounts(provider).then(accounts => {
-              console.log('accounts', accounts)
-              return !!accounts.length
-            }),
-          switchChain: ({ chainId }: { chainId: number }) => {
-            try {
-              return addOrSwitchChain(provider, chainId.toString(16)).then(
-                id => {
-                  getChainId(provider).then(chainId => {
-                    console.log('chainId', chainId)
-                    return parseInt(chainId, 16)
-                  })
-                }
-              )
-            } catch (error) {
-              console.log('error switching chain', error)
-            }
-          },
-
-          onAccountsChanged: (accounts: string[]) => {
-            // Disconnect if there are no accounts
-            if (accounts.length === 0) provider.disconnect()
-          },
-          onChainChanged: () => {},
-          onDisconnect: () => {},
-          emitter: new EventEmitter()
-        } as unknown as Connector)
-    )
+    return createConnector(() => convertW3OToWagmiWallet(label, provider))
   } catch (e) {
     console.error('error creating connector', e)
   }
@@ -138,57 +84,85 @@ export async function connectWalletToWagmi(
 ): Promise<ConnectReturnType<Config>> {
   try {
     return await connect(wagmiConfig, {
-      connector: {
-        name: label,
-        id: label.split(' ').join(),
-        connect: () =>
-          Promise.all([requestAccounts(provider), getChainId(provider)]).then(
-            ([accounts, chainId]) => {
-              return {
-                chainId: parseInt(chainId, 16),
-                accounts: accounts as `0x${string}`[]
-              }
-            }
-          ),
-        disconnect: () => Promise.resolve(provider.disconnect()),
-        getAccounts: () =>
-          requestAccounts(provider).then(acc => {
-            return acc
-          }),
-        getChainId: () =>
-          getChainId(provider).then(chainId => {
-            console.log('chainId', chainId)
-            return parseInt(chainId, 16)
-          }),
-        getProvider: () => Promise.resolve(provider),
-        isAuthorized: () =>
-          requestAccounts(provider).then(accounts => {
-            console.log('accounts', accounts)
-            return !!accounts.length
-          }),
-        switchChain: ({ chainId }: { chainId: number }) => {
-          try {
-            return addOrSwitchChain(provider, chainId.toString(16)).then(id => {
-              getChainId(provider).then(chainId => {
-                console.log('chainId', chainId)
-                return parseInt(chainId, 16)
-              })
-            })
-          } catch (error) {
-            console.log('error switching chain', error)
-          }
-        },
-
-        onAccountsChanged: (accounts: string[]) => {
-          // Disconnect if there are no accounts
-          if (accounts.length === 0) provider.disconnect()
-        },
-        onChainChanged: () => {},
-        onDisconnect: () => {},
-        emitter: new EventEmitter()
-      } as unknown as Connector
+      connector: convertW3OToWagmiWallet(label, provider)
     })
   } catch (e) {
     console.error('error connecting wallet to wagmi', e)
   }
 }
+
+const convertW3OToWagmiWallet = (
+  label: string,
+  provider: EIP1193Provider
+): Connector =>
+  ({
+    name: label,
+    id: createWalletId(label),
+    connect: () =>
+      Promise.all([requestAccounts(provider), getChainId(provider)]).then(
+        ([accounts, chainId]) => {
+          console.log('connect')
+          return {
+            chainId: parseInt(chainId, 16),
+            accounts: accounts as `0x${string}`[]
+          }
+        }
+      ),
+    disconnect: () => {
+      delete wagmiConnectorFn[createWalletId(label)]
+      return provider.disconnect()
+    },
+    getAccounts: () =>
+      requestAccounts(provider).then(acc => {
+        return acc
+      }),
+    getChainId: () =>
+      getChainId(provider).then(chainId => {
+        console.log('chainId', chainId)
+        return parseInt(chainId, 16)
+      }),
+    getProvider: () => Promise.resolve(provider),
+    isAuthorized: () =>
+      requestAccounts(provider).then(accounts => {
+        console.log('accounts', accounts)
+        return !!accounts.length
+      }),
+    switchChain: ({ chainId }: { chainId: number }) => {
+      try {
+        switchChain(provider, chainId.toString(16)).then(() => {
+          return chainId
+        })
+      } catch (error) {
+        const { code } = error as { code: number }
+        if (
+          code === ProviderRpcErrorCode.CHAIN_NOT_ADDED ||
+          code === ProviderRpcErrorCode.UNRECOGNIZED_CHAIN_ID
+        ) {
+          const { chains } = state.get()
+
+          // chain has not been added to wallet
+          const targetChain = chains.find(
+            ({ id }) => id === chainId.toString(16)
+          )
+          updateChain(targetChain)
+
+          // add chain to wallet
+          addOrSwitchChain(provider, targetChain).then(id => {
+            return parseInt(id, 16)
+          })
+        }
+      }
+    },
+
+    onAccountsChanged: (accounts: string[]) => {
+      // Disconnect if there are no accounts
+      if (accounts.length === 0) provider.disconnect()
+    },
+    onChainChanged: (chainId: number) => {
+      switchChain(provider, chainId.toString(16))
+    },
+    onDisconnect: () => {
+      delete wagmiConnectorFn[createWalletId(label)]
+    },
+    emitter: new EventEmitter()
+  } as unknown as Connector)

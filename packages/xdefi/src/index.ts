@@ -1,5 +1,8 @@
 import type { WalletInit } from '@web3-onboard/common'
-import { createEIP1193Provider } from '@web3-onboard/common'
+import {
+  createDownloadMessage,
+  createEIP1193Provider
+} from '@web3-onboard/common'
 import { CustomWindow } from './types.js'
 declare const window: CustomWindow
 
@@ -14,18 +17,17 @@ function XDEFIWallet(): WalletInit {
       },
       getIcon: async () => (await import('./icon.js')).default,
       getInterface: async () => {
-       let provider
+        let provider
         if (window.xfi && window.xfi.ethereum) {
           provider = window.xfi.ethereum
         }
         if (!provider) {
-          const newWindow = window.open(
-            'https://install.xdefi.io/?utm_source=web3Onboard&utm_medium=organic&utm_campaign=xdefi.io&utm_id=xdefi.io',
-            '_blank',
-            'noopener noreferrer'
+          throw new Error(
+            createDownloadMessage(
+              'XDEFI Wallet',
+              'https://install.xdefi.io/?utm_source=web3Onboard&utm_medium=organic&utm_campaign=xdefi.io&utm_id=xdefi.io'
+            )
           )
-          if (newWindow) newWindow.opener = null
-          throw new Error('Please install XDEFI Wallet to use this wallet')
         } else {
           return { provider: createEIP1193Provider(window.xfi.ethereum) }
         }

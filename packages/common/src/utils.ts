@@ -29,3 +29,15 @@ export const ethToWeiBigInt = (eth: string | number): bigint => {
 export const bigIntToHex = (value: bigint): string => {
   return numberToHex(value)
 }
+
+export const createDownloadMessage = (
+  walletLabel: string,
+  download?: string | (() => void)
+): string => {
+  if(!download) return `Please switch to ${walletLabel} to continue`
+  if (typeof download === 'function') {
+    return `Please <a href="#" onclick="${() => download()}">install</a> or enable to ${walletLabel} to continue`
+  } else {
+    return `Please <a href="${download}" target="_blank">install</a> or enable to ${walletLabel} to continue`
+  }
+}

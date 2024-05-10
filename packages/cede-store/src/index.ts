@@ -1,6 +1,9 @@
 import { CedeProvider, detectCedeProvider } from '@cedelabs/providers'
 import type { ProviderAccounts, WalletInit } from '@web3-onboard/common'
-import { createEIP1193Provider } from '@web3-onboard/common'
+import {
+  createDownloadMessage,
+  createEIP1193Provider
+} from '@web3-onboard/common'
 
 type CustomWindow = typeof window & {
   cede: CedeProvider
@@ -16,8 +19,9 @@ function cedeStoreWallet(): WalletInit {
     getInterface: async () => {
       const provider = await detectCedeProvider()
       if (!provider) {
-        window.open('https://cede.store', '_blank')
-        throw new Error('Please, install cede.store to use this wallet')
+        throw new Error(
+          createDownloadMessage('cede.store', 'https://cede.store')
+        )
       }
 
       // handle disconnect
