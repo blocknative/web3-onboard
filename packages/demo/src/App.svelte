@@ -530,38 +530,40 @@
   const signMessage = async (provider, address) => {
     // if using ethers v6 this is:
     // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
-    const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
-    const signer = ethersProvider?.getSigner()
-    const addr = await signer?.getAddress()
-    const signature = await signer?.signMessage(signMsg)
-    let verifySign = false
-    let recoveredAddress = null
+    // const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
+    // const signer = ethersProvider?.getSigner()
+    // const addr = await signer?.getAddress()
+    // const signature = await signer?.signMessage(signMsg)
+    // let verifySign = false
+    // let recoveredAddress = null
+    const wagmiConfig = onboard.state.get().wagmiConfig
 
-    try {
-      recoveredAddress = recoverAddress(
-        arrayify(hashMessage(signMsg)),
-        signature
-      )
-      verifySign = recoveredAddress === addr
-    } catch (error) {
-      console.error('Error recovering address', error)
-    }
+    await signMessage(wagmiConfig, { message: signMsg })
+    // try {
+    //   recoveredAddress = recoverAddress(
+    //     arrayify(hashMessage(signMsg)),
+    //     signature
+    //   )
+    //   verifySign = recoveredAddress === addr
+    // } catch (error) {
+    //   console.error('Error recovering address', error)
+    // }
 
-    // contract wallets verify EIP-1654
-    const verifySignBy1654 = new DappAuth(provider)
-    const isAuthorizedSigner = await verifySignBy1654.isAuthorizedSigner(
-      signMsg,
-      signature,
-      address
-    )
-    if (!verifySign && !isAuthorizedSigner) {
-      console.error(
-        "Signature failed. Recovered address doesn' match signing address."
-      )
-      verifySign = recoveredAddress === addr
-    }
+    // // contract wallets verify EIP-1654
+    // const verifySignBy1654 = new DappAuth(provider)
+    // const isAuthorizedSigner = await verifySignBy1654.isAuthorizedSigner(
+    //   signMsg,
+    //   signature,
+    //   address
+    // )
+    // if (!verifySign && !isAuthorizedSigner) {
+    //   console.error(
+    //     "Signature failed. Recovered address doesn' match signing address."
+    //   )
+    //   verifySign = recoveredAddress === addr
+    // }
 
-    console.log({ signMsg, signature, recoveredAddress, addr })
+    // console.log({ signMsg, signature, recoveredAddress, addr })
   }
 
   let typedMsg = JSON.stringify(
