@@ -62,8 +62,8 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.4.0-viem.1",
-    "@web3-onboard/core": "^2.21.6",
+    "@web3-onboard/common": "^2.4.0-viem.4",
+    "@web3-onboard/core": "^2.22.0-viem.4",
     "solid-js": "^1.8.1"
   }
 }

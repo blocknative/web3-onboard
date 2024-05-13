@@ -46,6 +46,6 @@
   },
   "dependencies": {
     "@venly/web3-provider": "^3.1.1",
-    "@web3-onboard/common": "^2.4.0-viem.1"
+    "@web3-onboard/common": "^2.4.0-viem.4"
   }
 }
