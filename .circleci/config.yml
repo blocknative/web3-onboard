@@ -23,7 +23,8 @@ aliases:
   - &deploy_staging_filters
     filters:
       branches:
-        only: develop
+        only: enhancement/replace_ethers
+        # only: develop
 
   - &deploy_testing_filters
     filters:
