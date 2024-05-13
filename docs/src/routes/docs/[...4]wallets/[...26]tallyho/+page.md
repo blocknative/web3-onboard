@@ -5,7 +5,7 @@ title: Tally Ho
 # {$frontmatter.title}
 
 :::admonition type=warning
-_Wallet module for connecting TallyHo to web3-onboard is now deprecated. Please use [@web3-onboard/taho](../../wallets/taho.md)_
+_Wallet module for connecting TallyHo to Web3 Onboard is now deprecated. Please use [@web3-onboard/taho](../../wallets/taho.md)_
 :::
 
 ## Wallet module for connecting TallyHo
@@ -48,3 +48,7 @@ const onboard = Onboard({
 const connectedWallets = await onboard.connectWallet()
 console.log(connectedWallets)
 ```
+
+## Build Environments
+
+For build env configurations and setups please see the Build Env section [here](/docs/modules/core#build-environments)
