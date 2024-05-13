@@ -13,7 +13,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@arcana/auth": "^1.0.7",
+    "@arcana/auth": "^1.0.10",
     "@web3-onboard/common": "2.4.0-viem.4"
   },
   "devDependencies": {

@@ -1,5 +1,4 @@
 import { createEIP1193Provider, WalletInit } from '@web3-onboard/common'
-import icon from './icon.js'
 import type { ConstructorParams } from '@arcana/auth/types'
 
 export default function (opts: {
@@ -8,9 +7,7 @@ export default function (opts: {
 }): WalletInit {
   return () => ({
     label: 'Arcana Auth',
-    async getIcon() {
-      return icon
-    },
+    getIcon: async () => (await import('./icon.js')).default,
     async getInterface() {
       const { AuthProvider } = await import('@arcana/auth')
 
