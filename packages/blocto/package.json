@@ -64,7 +64,7 @@
     "window": "^4.2.7"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.4.0-viem.1",
+    "@web3-onboard/common": "^2.4.0-viem.4",
     "@blocto/sdk": "^0.9.1"
   }
 }

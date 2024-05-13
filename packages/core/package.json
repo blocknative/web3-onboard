@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/core",
-  "version": "2.22.0-viem.3",
+  "version": "2.22.0-viem.5",
   "description": "Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardized spec compliant web3 providers for all supported wallets, framework agnostic modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
   "keywords": [
     "Ethereum",
@@ -86,7 +86,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@web3-onboard/common": "2.4.0-viem.3",
+    "@web3-onboard/common": "2.4.0-viem.4",
     "bnc-sdk": "^4.6.7",
     "bowser": "^2.11.0",
     "eventemitter3": "^4.0.7",
@@ -97,7 +97,7 @@
     "rxjs": "^7.5.5",
     "svelte": "^3.49.0",
     "svelte-i18n": "^3.3.13",
-    "viem": "^2.10.2"
+    "viem": "^2.10.5"
   },
   "engines": {
     "node": ">=16.15.1"

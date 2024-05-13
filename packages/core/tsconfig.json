@@ -14,7 +14,7 @@
     "lib": ["es2020", "dom"],
     "types": ["svelte"],
     "ignoreDeprecations": "5.0",
-    "moduleResolution": "node",
+    "moduleResolution": "node"
   },
   "outDir": "dist"
 }

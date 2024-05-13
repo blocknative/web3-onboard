@@ -63,7 +63,7 @@
     "@walletconnect/client": "^1.8.0",
     "@walletconnect/ethereum-provider": "2.9.1",
     "@walletconnect/modal": "2.6.1",
-    "@web3-onboard/common": "^2.4.0-viem.1",
+    "@web3-onboard/common": "^2.4.0-viem.4",
     "rxjs": "^7.5.2"
   }
 }
