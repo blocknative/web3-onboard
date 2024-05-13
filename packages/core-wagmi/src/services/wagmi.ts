@@ -21,13 +21,14 @@ import {
 } from '../provider'
 import EventEmitter from 'eventemitter3'
 import { updateChain, updateWagmiConfig } from '../store/actions'
+import disconnect from '../disconnect'
 
 export let wagmiConfig: Config | undefined
 const wagmiConnectorFn: Record<string, CreateConnectorFn> = {}
 const createWalletId = (walletLabel: string): string =>
   walletLabel.split(' ').join() + '-id'
 
-export async function initializeWAGMI(
+export async function createWagmiConfig(
   walletLabel: string,
   provider: EIP1193Provider
 ): Promise<void> {
@@ -101,7 +102,6 @@ const convertW3OToWagmiWallet = (
     connect: () =>
       Promise.all([requestAccounts(provider), getChainId(provider)]).then(
         ([accounts, chainId]) => {
-          console.log('connect')
           return {
             chainId: parseInt(chainId, 16),
             accounts: accounts as `0x${string}`[]
@@ -109,6 +109,7 @@ const convertW3OToWagmiWallet = (
         }
       ),
     disconnect: () => {
+      disconnect({ label })
       delete wagmiConnectorFn[createWalletId(label)]
       return provider.disconnect()
     },
@@ -124,7 +125,6 @@ const convertW3OToWagmiWallet = (
     getProvider: () => Promise.resolve(provider),
     isAuthorized: () =>
       requestAccounts(provider).then(accounts => {
-        console.log('accounts', accounts)
         return !!accounts.length
       }),
     switchChain: ({ chainId }: { chainId: number }) => {
@@ -162,6 +162,7 @@ const convertW3OToWagmiWallet = (
       switchChain(provider, chainId.toString(16))
     },
     onDisconnect: () => {
+      disconnect({ label })
       delete wagmiConnectorFn[createWalletId(label)]
     },
     emitter: new EventEmitter()

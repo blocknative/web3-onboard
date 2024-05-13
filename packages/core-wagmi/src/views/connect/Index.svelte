@@ -56,7 +56,7 @@
   import { updateSecondaryTokens } from '../../update-balances'
   import {
     wagmiConfig,
-    initializeWAGMI
+    createWagmiConfig
   } from '../../services/wagmi'
   import { connect as wagmiConnect } from '@wagmi/core'
 
@@ -207,7 +207,7 @@
     const chain = await getChainId(provider)
     
     try {
-      await initializeWAGMI(label, provider)
+      await createWagmiConfig(label, provider)
 
       const accountsReq = await Promise.race([
         wagmiConnect(wagmiConfig, {

@@ -63,7 +63,7 @@
     "@web3-onboard/common": "^2.4.0-viem.1",
     "react-dom": "^18.2.0",
     "viem": "^2.9.15",
-    "wagmi": "^2.5.19"
+    "wagmi": "2.5.19"
   },
   "peerDependencies": {
     "react": ">=18.2"
