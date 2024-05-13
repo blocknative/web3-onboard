@@ -444,7 +444,7 @@ jobs:
       - node-build-steps
   build-arcana-auth:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:18.0.0
     working_directory: ~/web3-onboard-monorepo/packages/arcana-auth
     steps:
       - node-build-steps
@@ -729,7 +729,7 @@ jobs:
       - node-staging-build-steps
   build-staging-arcana-auth:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:18.0.0
     working_directory: ~/web3-onboard-monorepo/packages/arcana-auth
     steps:
       - node-staging-build-steps
