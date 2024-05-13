@@ -54,7 +54,9 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "17.0.19",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "@safe-global/safe-apps-provider": "^0.18.2",
+    "@safe-global/safe-apps-sdk": "^8.0.0"
   },
   "dependencies": {
     "@web3-onboard/common": "^2.4.0-viem.4"
