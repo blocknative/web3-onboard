@@ -1,5 +1,5 @@
 import { createEIP1193Provider, WalletInit } from '@web3-onboard/common'
-import type { ConstructorParams } from '@arcana/auth/types'
+import type { ConstructorParams } from '@arcana/auth'
 
 export default function (opts: {
   clientID: string
