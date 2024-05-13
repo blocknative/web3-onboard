@@ -5,6 +5,7 @@
     "outDir": "dist",
     "rootDir": "src",
     "declarationDir": "dist",
+    "moduleResolution": "node",
     "paths": {
       "*": ["./src/*", "./node_modules/*"]
     },
