@@ -8,6 +8,18 @@
 
 ## Usage
 
+Optional initialization object
+```typescript
+	/** Optional object provided to the initiation of the wallet connector. 
+	 * When not included, the wallet connector service connects to FinoaConnect production systems.
+	 * @field {url} URL of the FinoaConnect backend systems to be used
+	 * @field {labelSuffix} arbitrary string label to denote the context of the URL field  */
+	export interface FinoaWalletOption {
+	  url?: string
+	  labelSuffix?: string
+	}
+```
+
 ```typescript
 import Onboard from '@web3-onboard/core';
 import finoaConnectModule from '@web3-onboard/finoaconnect';
