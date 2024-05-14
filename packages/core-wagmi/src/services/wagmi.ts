@@ -6,7 +6,7 @@ import type {
 } from '@wagmi/core'
 import { state } from '../store'
 import { http, createConfig, createConnector, connect } from '@wagmi/core'
-import { type Chain as ViemChain, type Transport } from 'viem'
+import { type Chain as ViemChain, type Transport, toHex } from 'viem'
 import {
   ProviderRpcErrorCode,
   type Chain,
@@ -128,8 +128,9 @@ const convertW3OToWagmiWallet = (
         return !!accounts.length
       }),
     switchChain: ({ chainId }: { chainId: number }) => {
+      const hexChainId = toHex(chainId)
       try {
-        switchChain(provider, chainId.toString(16)).then(() => {
+        switchChain(provider, hexChainId).then(() => {
           return chainId
         })
       } catch (error) {
@@ -142,7 +143,7 @@ const convertW3OToWagmiWallet = (
 
           // chain has not been added to wallet
           const targetChain = chains.find(
-            ({ id }) => id === chainId.toString(16)
+            ({ id }) => id === hexChainId
           )
           updateChain(targetChain)
 
@@ -159,7 +160,7 @@ const convertW3OToWagmiWallet = (
       if (accounts.length === 0) provider.disconnect()
     },
     onChainChanged: (chainId: number) => {
-      switchChain(provider, chainId.toString(16))
+      switchChain(provider, toHex(chainId))
     },
     onDisconnect: () => {
       disconnect({ label })
