@@ -207,7 +207,7 @@
       const wagmiConnector = wagmiConfig.connectors.find(con => {
         return con.name === label
       })
-      console.log('wagmiConnector', wagmiConnector)
+      console.log('anything??')
       const accountsReq = await Promise.race([
         wagmiConnect(wagmiConfig, {
           connector: wagmiConnector
@@ -215,7 +215,7 @@
         // or connect wallet is called again whilst waiting for response
         firstValueFrom(cancelPreviousConnect$.pipe(mapTo([])))
       ])
-console.log('accountsReq', accountsReq)
+      console.log('accountsReq', accountsReq)
       // canceled previous request
       if (!accountsReq || !('accounts' in accountsReq)) {
         return

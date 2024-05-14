@@ -157,11 +157,7 @@ export const chainIdToViemImport = async (
   w3oChain: Chain
 ): Promise<ViemChain | unknown> => {
   const viemChains = await import('viem/chains')
-<<<<<<< Updated upstream
   const { id } = w3oChain
-=======
-  const { id, label, token, publicRpcUrl, blockExplorerUrl, rpcUrl } = w3oChain
->>>>>>> Stashed changes
   switch (id) {
     case '0x89': {
       const { polygon } = viemChains
