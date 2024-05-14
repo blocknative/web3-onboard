@@ -208,6 +208,9 @@
         return con.name === label
       })
       console.log('anything??')
+      // chainId = await getChainId(provider)
+      // console.log('anything2', chainId)
+      // TODO: add chainId to wagmiConfig
       const accountsReq = await Promise.race([
         wagmiConnect(wagmiConfig, {
           connector: wagmiConnector

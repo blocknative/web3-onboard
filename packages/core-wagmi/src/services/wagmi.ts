@@ -6,7 +6,15 @@ import type {
 } from '@wagmi/core'
 import { state } from '../store'
 import { http, createConfig, createConnector, connect } from '@wagmi/core'
-import { type Chain as ViemChain, type Transport, toHex, fromHex, RpcError, UserRejectedRequestError, ResourceUnavailableRpcError } from 'viem'
+import {
+  type Chain as ViemChain,
+  type Transport,
+  toHex,
+  fromHex,
+  RpcError,
+  UserRejectedRequestError,
+  ResourceUnavailableRpcError
+} from 'viem'
 import {
   ProviderRpcErrorCode,
   type Chain,
@@ -104,19 +112,22 @@ const convertW3OToWagmiWallet = (
     name: label,
     id: createWalletId(label),
     connect: () => {
-      try{
-        let accounts: `0x${string}`[]
-      requestAccounts(provider).then(acc => {
-        accounts = acc
-        console.log('accounts1', accounts)
-        getChainId(provider).then(id => {
-          console.log('chainId1', id, fromHex(id as `0x${string}`, 'number'), accounts)
-          return {
-            chainId: fromHex(id as `0x${string}`, 'number'),
-            accounts: accounts as `0x${string}`[]
-          }
-        })
-      })
+      try {
+        return Promise.resolve(
+          requestAccounts(provider).then(accounts => {
+            const acc = accounts
+            console.log(acc, 'accounts')
+            //TODO add param check for chainId being passed in
+            return getChainId(provider).then(id => {
+              console.log('accounts and chainId', accounts, id)
+              return {
+                chainId: parseInt(id, 16),
+                accounts: acc as `0x${string}`[]
+              }
+            })
+          })
+        )
+
       } catch (err) {
         const error = err as RpcError
         if (error.code === UserRejectedRequestError.code)
@@ -125,7 +136,7 @@ const convertW3OToWagmiWallet = (
           throw new ResourceUnavailableRpcError(error)
         throw error
       }
-      },
+    },
     disconnect: () => {
       disconnect({ label })
       delete wagmiConnectorFn[createWalletId(label)]
