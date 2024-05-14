@@ -6,7 +6,7 @@ import type {
 } from '@wagmi/core'
 import { state } from '../store'
 import { http, createConfig, createConnector, connect } from '@wagmi/core'
-import { type Chain as ViemChain, type Transport, toHex } from 'viem'
+import { type Chain as ViemChain, type Transport, toHex, fromHex } from 'viem'
 import {
   ProviderRpcErrorCode,
   type Chain,
@@ -44,15 +44,16 @@ export async function createWagmiConfig(
   const connectors: CreateConnectorFn[] = [...Object.values(wagmiConnectorFn)]
 
   const transports: Record<ViemChain['id'], Transport> = {}
-
+  console.log(1)
   const { chains } = state.get()
   const viemChains = (await Promise.all(
     chains.map(async (w3OChain: Chain) => {
       const { id } = w3OChain
-      transports[parseInt(id, 16)] = http()
+      transports[fromHex(id as `0x${string}`, 'number')] = http()
       return (await chainIdToViemImport(w3OChain)) as ViemChain
     })
   )) as [ViemChain, ...ViemChain[]]
+  console.log(2)
 
   try {
     wagmiConfig = createConfig({
@@ -62,6 +63,7 @@ export async function createWagmiConfig(
       connectors
     })
     updateWagmiConfig(wagmiConfig)
+    console.log(3)
   } catch (e) {
     console.error(
       `Failed to initialize Web3-Onboard WAGMI instance - Error: ${e}`
@@ -109,7 +111,7 @@ const convertW3OToWagmiWallet = (
         getChainId(provider).then(chainId => {
           console.log('chainId1', chainId)
           return {
-            chainId: parseInt(chainId, 16),
+            chainId: fromHex(chainId as `0x${string}`, 'number'),
             accounts: accounts as `0x${string}`[]
           }
         })
@@ -126,7 +128,7 @@ const convertW3OToWagmiWallet = (
     getChainId: () =>
       getChainId(provider).then(chainId => {
         console.log('chainId', chainId)
-        return parseInt(chainId, 16)
+        return fromHex(chainId as `0x${string}`, 'number')
       }),
     getProvider: () => Promise.resolve(provider),
     isAuthorized: () =>
@@ -153,7 +155,7 @@ const convertW3OToWagmiWallet = (
 
           // add chain to wallet
           addOrSwitchChain(provider, targetChain).then(id => {
-            return parseInt(id, 16)
+            return fromHex(id as `0x${string}`, 'number')
           })
         }
       }

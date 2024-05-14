@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import {
   formatEther,
   fromHex,
@@ -5,6 +6,9 @@ import {
   numberToHex,
   parseEther
 } from 'viem'
+=======
+import { formatEther, fromHex, hexToBigInt, numberToHex, parseEther } from 'viem'
+>>>>>>> Stashed changes
 import type { Address } from './types.js'
 
 export const isAddress = (address: string): address is Address => {

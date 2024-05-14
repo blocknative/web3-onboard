@@ -5,6 +5,7 @@ import { state } from './store/index.js'
 import type { WalletState } from './types.js'
 import { gweiToWeiHex, networkToChainId, toHexString } from './utils.js'
 import type { GasPrice } from '@web3-onboard/gas'
+import { fromHex } from 'viem'
 
 const ACTIONABLE_EVENT_CODES: string[] = ['txPool']
 const VALID_GAS_NETWORKS: Network[] = ['main', 'matic-main']
@@ -78,7 +79,7 @@ export async function replaceTransaction({
         type: '0x2',
         from,
         to: type === 'cancel' ? from : to,
-        chainId: parseInt(chainId),
+        chainId: fromHex(chainId as `0x${string}`, 'number'),
         value: bigIntToHex(BigInt(value)),
         nonce: toHexString(nonce),
         gasLimit: toHexString(gasLimit),
