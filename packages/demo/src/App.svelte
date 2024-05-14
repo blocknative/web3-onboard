@@ -238,7 +238,7 @@
   const onboard = Onboard({
     wallets: [
       // metamaskSDKWallet,
-      coinbaseWallet,
+      // coinbaseWallet,
       injected,
       ledger,
       trezor,
@@ -439,7 +439,11 @@
 
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
-  $: console.log('wagmiConfig', onboard.state.select('wagmiConfig'))
+  let wagmiConfig
+  $: onboard.state.select('wagmiConfig').subscribe(config => {
+    wagmiConfig = config
+    console.log(wagmiConfig)
+  })
   wallets$.subscribe(wallet => {
     console.log(wallet)
     const unstoppableUser = wallet.find(
@@ -648,7 +652,6 @@
       throw new Error('Invalid chainId');
     }
     const wagmiConfig = onboard.state.get().wagmiConfig;
-    console.log(chainAsNumber)
     await switchChain(wagmiConfig, {chainId: chainAsNumber})
   }
 </script>

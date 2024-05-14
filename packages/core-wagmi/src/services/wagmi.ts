@@ -26,7 +26,7 @@ import disconnect from '../disconnect'
 export let wagmiConfig: Config | undefined
 const wagmiConnectorFn: Record<string, CreateConnectorFn> = {}
 const createWalletId = (walletLabel: string): string =>
-  walletLabel.split(' ').join() + '-id'
+  walletLabel.replace(/\s/g, '') + 'Id'
 
 export async function createWagmiConfig(
   walletLabel: string,
@@ -40,6 +40,7 @@ export async function createWagmiConfig(
 
   const latestWallet = await createWagmiConnector(walletLabel, provider)
   wagmiConnectorFn[createWalletId(walletLabel)] = latestWallet
+
   const connectors: CreateConnectorFn[] = [...Object.values(wagmiConnectorFn)]
 
   const transports: Record<ViemChain['id'], Transport> = {}
@@ -83,6 +84,7 @@ export async function connectWalletToWagmi(
   label: string,
   provider: EIP1193Provider
 ): Promise<ConnectReturnType<Config>> {
+  console.log('connecting wallet to wagmi', label, provider)
   try {
     return await connect(wagmiConfig, {
       connector: convertW3OToWagmiWallet(label, provider)
@@ -142,9 +144,7 @@ const convertW3OToWagmiWallet = (
           const { chains } = state.get()
 
           // chain has not been added to wallet
-          const targetChain = chains.find(
-            ({ id }) => id === hexChainId
-          )
+          const targetChain = chains.find(({ id }) => id === hexChainId)
           updateChain(targetChain)
 
           // add chain to wallet

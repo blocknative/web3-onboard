@@ -209,10 +209,13 @@
     try {
       await createWagmiConfig(label, provider)
 
+      const wagmiChain = wagmiConfig.connectors.find(con => {
+        return con.name === label
+      })
       const accountsReq = await Promise.race([
         wagmiConnect(wagmiConfig, {
           chainId: parseInt(chain, 16),
-          connector: wagmiConfig.connectors[0]
+          connector: wagmiChain
         }),
         // or connect wallet is called again whilst waiting for response
         firstValueFrom(cancelPreviousConnect$.pipe(mapTo([])))
