@@ -1,4 +1,10 @@
-import { formatEther, hexToBigInt, numberToHex, parseEther } from 'viem'
+import {
+  formatEther,
+  fromHex,
+  hexToBigInt,
+  numberToHex,
+  parseEther
+} from 'viem'
 import type { Address } from './types.js'
 
 export const isAddress = (address: string): address is Address => {
@@ -12,7 +18,7 @@ export const weiHexToEth = (wei: `0x${string}`): string => {
 
 export const weiToEth = (wei: string): string => {
   if (!wei) return wei
-  const weiBigInt = BigInt(parseInt(wei))
+  const weiBigInt = fromHex(wei as `0x${string}`, 'bigint')
   return formatEther(weiBigInt)
 }
 

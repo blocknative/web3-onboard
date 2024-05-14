@@ -58,6 +58,7 @@ async function getProvider(chain: Chain): Promise<PublicClient> {
 export function requestAccounts(
   provider: EIP1193Provider
 ): Promise<ProviderAccounts> {
+  console.log('requestAccounts', provider)
   const args = { method: 'eth_requestAccounts' } as EIP1102Request
   return provider.request(args)
 }
@@ -70,6 +71,8 @@ export function selectAccounts(
 }
 
 export function getChainId(provider: EIP1193Provider): Promise<string> {
+  console.log('getChainId', provider)
+
   return provider.request({ method: 'eth_chainId' }) as Promise<string>
 }
 

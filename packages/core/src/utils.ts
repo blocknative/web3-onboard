@@ -33,12 +33,8 @@ import {
   degenIcon
 } from './icons/index.js'
 
-import type {
-  ChainStyle,
-  ConnectedChain,
-  NotifyEventStyles
-} from './types.js'
-import type { Chain as ViemChain } from 'viem'
+import type { ChainStyle, ConnectedChain, NotifyEventStyles } from './types.js'
+import { fromHex, type Chain as ViemChain } from 'viem'
 
 export function getDevice(): Device | DeviceNotBrowser {
   if (typeof window !== 'undefined') {
@@ -158,75 +154,83 @@ export const chainIdToViemENSImport = async (
       return null
   }
 }
+
 export const chainIdToViemImport = async (
   w3oChain: Chain
 ): Promise<ViemChain | unknown> => {
+  const viemChains = await import('viem/chains')
   const { id, label, token, publicRpcUrl, blockExplorerUrl, rpcUrl } = w3oChain
   switch (id) {
     case '0x89': {
-      const { polygon } = await import('viem/chains')
+      const { polygon } = viemChains
       return polygon
     }
     case '0xa': {
-      const { optimism } = await import('viem/chains')
+      const { optimism } = viemChains
       return optimism
     }
     case '0xa4b1': {
-      const { arbitrum } = await import('viem/chains')
+      const { arbitrum } = viemChains
       return arbitrum
     }
     case '0x144': {
-      const { zkSync } = await import('viem/chains')
+      const { zkSync } = viemChains
       return zkSync
     }
     case '0x38': {
-      const { bsc } = await import('viem/chains')
+      const { bsc } = viemChains
       return bsc
     }
     case '0x1': {
-      const { mainnet } = await import('viem/chains')
+      const { mainnet } = viemChains
       return mainnet
     }
     case '0xaa36a7': {
-      const { sepolia } = await import('viem/chains')
+      const { sepolia } = viemChains
       return sepolia
     }
     case '0xfa': {
-      const { fantom } = await import('viem/chains')
+      const { fantom } = viemChains
       return fantom
     }
     case '0xa86a': {
-      const { avalanche } = await import('viem/chains')
+      const { avalanche } = viemChains
       return avalanche
     }
     case '0xa4ec': {
-      const { celo } = await import('viem/chains')
+      const { celo } = viemChains
       return celo
     }
     case '0x2105': {
-      const { base } = await import('viem/chains')
+      const { base } = viemChains
       return base
     }
     case '0x14a33': {
-      const { baseGoerli } = await import('viem/chains')
+      const { baseGoerli } = viemChains
       return baseGoerli
     }
     case '0x64': {
-      const { gnosis } = await import('viem/chains')
+      const { gnosis } = viemChains
       return gnosis
     }
     case '0x63564C40': {
-      const { harmonyOne } = await import('viem/chains')
+      const { harmonyOne } = viemChains
       return harmonyOne
     }
     case '0x27bc86aa': {
-      const { degen } = await import('viem/chains')
+      const { degen } = viemChains
       return degen
     }
     default: {
-      const { defineChain } = await import('viem')
+      const { extractChain, defineChain } = await import('viem')
+      const nonNativeChain = extractChain({
+        chains: Object.values(viemChains) as ViemChain[],
+        id: fromHex(id as `0x${string}`, 'number')
+      })
+      if (nonNativeChain) return nonNativeChain
+
       return defineChain({
-        id: parseInt(id, 16),
+        id: fromHex(id as `0x${string}`, 'number'),
         name: label,
         nativeCurrency: {
           decimals: 18,

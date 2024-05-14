@@ -101,15 +101,19 @@ const convertW3OToWagmiWallet = (
   ({
     name: label,
     id: createWalletId(label),
-    connect: () =>
-      Promise.all([requestAccounts(provider), getChainId(provider)]).then(
-        ([accounts, chainId]) => {
+    connect: () => {
+      let accounts: `0x${string}`[]
+      console.log('accounts1')
+      requestAccounts(provider).then(acc => {
+        accounts = acc
+        getChainId(provider).then(chainId => {
+          console.log('chainId1', chainId)
           return {
             chainId: parseInt(chainId, 16),
             accounts: accounts as `0x${string}`[]
           }
-        }
-      ),
+        })
+      })},
     disconnect: () => {
       disconnect({ label })
       delete wagmiConnectorFn[createWalletId(label)]
