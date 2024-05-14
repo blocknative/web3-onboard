@@ -5,10 +5,10 @@ title: Phantom
 # {$frontmatter.title}
 
 :::admonition type=warning
-The module for connecting Phantom to web3-onboard is still in alpha testing and Phantom Eth mainnet coverage is not fully public yet but will be soon. Please visit the [Official Phantom Site](https://phantom.app/) for more details.
+The module for connecting Phantom to Web3 Onboard is still in alpha testing and Phantom Eth mainnet coverage is not fully public yet but will be soon. Please visit the [Official Phantom Site](https://phantom.app/) for more details.
 :::
 
-[Web3-Onboard](https://onboard.blocknative.com/) is an open-source, framework-agnostic JavaScript library to onboard users to web3 apps. This package can be used to integrate [Phantom Wallet](https://phantom.app/) support into Web3-Onboard's "Connect Wallet" modal. With this module the Phantom option will be shown even if the extension is not installed on the users browser or used within the Phantom app. If selected the user will be taken to a download screen and prompted to create a Phantom wallet. For more information on Phantom, please refer to the [Phantom developer docs](https://docs.phantom.app/).
+[Web3-Onboard](https://onboard.blocknative.com/) is an open-source, framework-agnostic JavaScript library to onboard users to web3 apps. This package can be used to integrate [Phantom Wallet](https://phantom.app/) support into Web3 Onboard's "Connect Wallet" modal. With this module the Phantom option will be shown even if the extension is not installed on the users browser or used within the Phantom app. If selected the user will be taken to a download screen and prompted to create a Phantom wallet. For more information on Phantom, please refer to the [Phantom developer docs](https://docs.phantom.app/).
 
 ### Install
 
@@ -49,3 +49,7 @@ const onboard = Onboard({
 const connectedWallets = await onboard.connectWallet()
 console.log(connectedWallets)
 ```
+
+## Build Environments
+
+For build env configurations and setups please see the Build Env section [here](/docs/modules/core#build-environments)

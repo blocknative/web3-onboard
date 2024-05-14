@@ -6,30 +6,30 @@ title: Frequently Asked Questions
 
 Join our [discord](https://discord.com/invite/KZaBVME) if you want to chat with us in real time.
 
-1. Is web3-onboard open source?
+1. Is Web3 Onboard open source?
 
    Yes, [here’s the link to our github](https://github.com/blocknative/web3-onboard)
 
-2. Is web3-onboard free?
+2. Is Web3 Onboard free?
 
    Yes it’s free to use forever.
 
 3. Do I need an API key?
 
-   No you don’t need an API key to use web3-onboard. The optional addition of an API key allows access to transaction notifications and more frequent gas estimates from Blocknative. You can [get one here](https://explorer.blocknative.com/account)
+   No you don’t need an API key to use Web3 Onboard. The optional addition of an API key allows access to transaction notifications and more frequent gas estimates from Blocknative. You can [get one here](https://explorer.blocknative.com/account)
 
-4. Which frameworks does web3-onboard support?
+4. Which frameworks does Web3 Onboard support?
 
-   web3-onboard is framework agnostic and is usable with your favorite framework.
+   Web3 Onboard is framework agnostic and is usable with your favorite framework.
 
-5. Is web3-onboard customizable?
+5. Is Web3 Onboard customizable?
 
-   Yes, we’ve made a theming interface here to show how you can theme web3-onboard for your dapp.
+   Yes, we’ve made a [theming interface](https://onboard.blocknative.com/theming-tool) to show how you can theme Web3 Onboard for your dapp.
 
 6. Are there any code examples?
 
-   Yes, we’ve made a connect wallet example available here.
+   Yes, we’ve made a connect wallet example available [here](https://onboard.blocknative.com/examples/connect-wallet#main-sidebar).
 
-7. Does web3-onboard support my favorite network?
+7. Does Web3 Onboard support my favorite network?
 
-   web3-onboard is compatible with all EVM networks, which can be specified on initialization. You can add your chain to [this list in the docs](/docs/overview/introduction#supported-networks) to call out its support.
+   Web3 Onboard is compatible with all EVM networks, which can be specified on initialization. You can add your chain to [this list in the docs](/docs/overview/introduction#supported-networks) to call out its support.

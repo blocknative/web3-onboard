@@ -4,7 +4,7 @@ title: Unstoppable Domains Resolution
 
 # {$frontmatter.title}
 
-A module to add Unstoppable Domain resolution to web3-onboard.
+A module to add Unstoppable Domain resolution to Web3 Onboard.
 
 ### Install
 

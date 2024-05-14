@@ -4,7 +4,7 @@ title: UAuth
 
 # {$frontmatter.title}
 
-Wallet module for connecting Unstoppable Domains to web3-onboard
+Wallet module for connecting Unstoppable Domains to Web3 Onboard.
 
 ### Install
 

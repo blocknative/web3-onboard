@@ -4,7 +4,7 @@ title: Taho (previously Tally Ho)
 
 # {$frontmatter.title}
 
-## Wallet module for connecting Taho (wallet previously named Tally Ho)
+Wallet module for connecting Taho (wallet previously named Tally Ho) to Web3 Onboard.
 
 See [Taho Developer Docs](https://docs.tally.cash/tally/developers/integrating-dapps)
 
@@ -44,3 +44,7 @@ const onboard = Onboard({
 const connectedWallets = await onboard.connectWallet()
 console.log(connectedWallets)
 ```
+
+## Build Environments
+
+For build env configurations and setups please see the Build Env section [here](/docs/modules/core#build-environments)
