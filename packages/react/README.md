@@ -91,14 +91,14 @@ import injectedModule from '@web3-onboard/injected-wallets'
 
 const INFURA_KEY = ''
 
-const ethereumRopsten = {
-  id: '0x3',
-  token: 'rETH',
-  label: 'Ethereum Ropsten',
-  rpcUrl: `https://ropsten.infura.io/v3/${INFURA_KEY}`
+const ethereumSepolia = {
+  id: 11155111,
+  token: 'ETH',
+  label: 'Sepolia',
+  rpcUrl: 'https://rpc.sepolia.org/'
 }
 
-const chains = [ethereumRopsten]
+const chains = [ethereumSepolia]
 const wallets = [injectedModule()]
 
 const web3Onboard = init({

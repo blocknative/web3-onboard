@@ -10,7 +10,7 @@ title: Gas
 
 A module for requesting streams or single requests of gas price estimates from the [Blocknative Gas Platform API](https://docs.blocknative.com/gas-platform).
 
-Supports both Eth Mainnet and Polygon gas pricing.
+Supports both Ethereum Mainnet and Polygon Mainnet gas pricing.
 
 <Gas />
 
@@ -82,7 +82,7 @@ const gasBlockPrices = await gas.get({
 
 ## Usage with Web3-Onboard wallet Connect and Ethers.js
 
-This example assumes you have already setup web3-onboard to connect wallets to your dapp.
+This example assumes you have already setup Web3 Onboard to connect wallets to your dapp.
 For more information see [web3-onboard docs](/docs/modules/core#install).
 
 ```ts copy

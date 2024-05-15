@@ -4,7 +4,7 @@ title: Keystone
 
 # {$frontmatter.title}
 
-Wallet module for connecting Keystone hardware wallets to web3-onboard
+Wallet module for connecting Keystone hardware wallets to Web3 Onboard.
 
 ## Install
 

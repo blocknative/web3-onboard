@@ -10,11 +10,11 @@ title: Uniswap Widget Example
 
 # {$frontmatter.title}
 
-This example will walk you through how to integrate `@web3-onboard` with the [Uniswap Widget](https://docs.uniswap.org/sdk/widgets/swap-widget)! Add this web3-onboard enabled uniswap widget to your site to provide users with token swap capabilities quickly.
+This example will walk you through how to integrate `@web3-onboard` with the [Uniswap Widget](https://docs.uniswap.org/sdk/widgets/swap-widget)! Add this Web3 Onboard enabled Uniswap widget to your site to provide users with token swap capabilities quickly.
 
 ## Step 1: Install
 
-To start, we'll install the widgets library and the web3-onboard react library using npm or Yarn.
+To start, we'll install the widgets library and the Web3 Onboard react library using npm or Yarn.
 
 <Tabs values={frameworks}>
   <TabPanel value="yarn">
@@ -35,7 +35,7 @@ npm install @web3-onboard/react @web3-onboard/injected-wallets
 
 ## Step 2: Import + Configure
 
-Import the libraries and any wallets you would like to use. For this example, we are going to use the injected wallets module. You can easily add more wallet support to your dapp via our other wallet modules. Additionally, we'll setup web3-onboard to support 2 chains: Ethereum mainnet and Polygon mainnet.
+Import the libraries and any wallets you would like to use. For this example, we are going to use the injected wallets module. You can easily add more wallet support to your dapp via our other wallet modules. Additionally, we'll setup Web3 Onboard to support 2 chains: Ethereum mainnet and Polygon mainnet.
 
 We'll create a file called `web3-onboard.ts` and then export the initialized `web3-onboard` instance and use this throughout our dapp.
 
@@ -45,11 +45,11 @@ import injectedModule from '@web3-onboard/injected-wallets'
 
 const INFURA_KEY = ''
 
-const ethereumRopsten = {
-  id: '0x3',
-  token: 'rETH',
-  label: 'Ethereum Ropsten',
-  rpcUrl: `https://ropsten.infura.io/v3/${INFURA_KEY}`
+const ethereumSepolia = {
+  id: 11155111,
+  token: 'ETH',
+  label: 'Sepolia',
+  rpcUrl: 'https://rpc.sepolia.org/'
 }
 
 const polygonMainnet = {
@@ -66,7 +66,7 @@ const degenChain = {
   rpcUrl: 'https://rpc.degen.tips'
 }
 
-const chains = [ethereumRopsten, polygonMainnet]
+const chains = [ethereumSepolia, polygonMainnet]
 
 const wallets = [injectedModule()]
 
@@ -90,7 +90,7 @@ export default init({
 
 ## Step 3: Add the react hooks
 
-In our main `App` component we'll setup our Web3-Onboard react hooks. For this example we'll be using the `useConnectWallet` react hook. This will give us access to the currently connected wallets, as well as, methods for us to facilitate connecting and disconnecting a wallet.
+In our main `App` component we'll setup our Web3 Onboard react hooks. For this example we'll be using the `useConnectWallet` react hook. This will give us access to the currently connected wallets, as well as, methods for us to facilitate connecting and disconnecting a wallet.
 
 ```ts title="App.tsx"|copy
 import { useState, useEffect } from 'react'

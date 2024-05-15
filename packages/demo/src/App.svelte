@@ -35,7 +35,11 @@
   import venlyModule from '@web3-onboard/venly'
   import bitgetModule from '@web3-onboard/bitget'
   import particleAuthModule from '@web3-onboard/particle-network'
-  import capsuleModule, { Environment } from '@web3-onboard/capsule'
+  import capsuleModule, {
+    Environment,
+    OAuthMethod,
+    Theme
+  } from '@web3-onboard/capsule'
   import {
     recoverAddress,
     arrayify,
@@ -217,7 +221,16 @@
   })
   const capsule = capsuleModule({
     environment: Environment.DEVELOPMENT,
-    apiKey: '992bbd9146d5de8ad0419f141d9a7ca7'
+    apiKey: '992bbd9146d5de8ad0419f141d9a7ca7',
+    modalProps: {
+      oAuthMethods: [OAuthMethod.GOOGLE, OAuthMethod.TWITTER],
+      theme: Theme.dark
+    },
+    constructorOpts: {
+      portalBackgroundColor: '#5e5656',
+      portalPrimaryButtonColor: '#ff6700',
+      portalTextColor: '#ffffff'
+    }
   })
 
   const onboard = Onboard({
@@ -296,12 +309,6 @@
         token: 'ARB',
         label: 'Arbitrum Nova',
         rpcUrl: 'https://nova.arbitrum.io/rpc'
-      },
-      {
-        id: '0x5',
-        token: 'ETH',
-        label: 'Goerli',
-        rpcUrl: 'https://ethereum-goerli.publicnode.com'
       },
       {
         id: '0x13881',
@@ -410,7 +417,7 @@
           //     type: 'hint',
           //     message: 'Your in the pool, hope you brought a towel!',
           //     autoDismiss: 0,
-          //     link: `https://goerli.etherscan.io/tx/${transaction.hash}`
+          //     link: `https://sepolia.etherscan.io/tx/${transaction.hash}`
           //   }
           // }
         },
@@ -758,8 +765,8 @@
           <button on:click={() => onboard.setChain({ chainId: '0x1' })}
             >Set Chain to Mainnet</button
           >
-          <button on:click={() => onboard.setChain({ chainId: '0x5' })}
-            >Set Chain to Goerli</button
+          <button on:click={() => onboard.setChain({ chainId: 11155111 })}
+            >Set Chain to Sepolia</button
           >
           <button on:click={() => onboard.setChain({ chainId: '0x89' })}
             >Set Chain to Matic</button
