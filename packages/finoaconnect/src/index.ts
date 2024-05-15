@@ -16,7 +16,7 @@ function finoaConnect(option?: string | FinoaWalletOption): WalletInit {
 
   return () => {
     return {
-      label: `Finoa Wallet${labelSuffix == null ? '' : ' - ' + labelSuffix}`,
+      label: `FinoaConnect${labelSuffix == null ? '' : ' - ' + labelSuffix}`,
       getIcon: async () => (await import('./icon')).default,
       getInterface: async ({ chains }) => {
         const {
