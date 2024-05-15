@@ -58,13 +58,12 @@ function metamask({
         const imports = await importPromise
 
         if (
-          !imports?.MetaMaskSDKConstructor ||
-          !imports?.createEIP1193Provider
+          !imports?.MetaMaskSDKConstructor
         ) {
           throw new Error('Error importing and initializing MetaMask SDK')
         }
 
-        const { createEIP1193Provider, MetaMaskSDKConstructor } = imports
+        const { MetaMaskSDKConstructor } = imports
 
         sdk = new MetaMaskSDKConstructor({
           ...options,
@@ -79,7 +78,6 @@ function metamask({
         await sdk.init();
         const provider = sdk.getProvider();
 
-        const _disconnect = sdk.disconnect
         if(provider) {
           (provider as any).disconnect = () => {
             sdk?.terminate();
