@@ -32,7 +32,9 @@ import { updateChain, updateWagmiConfig } from '../store/actions'
 import disconnect from '../disconnect'
 
 export let wagmiConfig: Config | undefined
+
 const wagmiConnectorFn: Record<string, CreateConnectorFn> = {}
+
 const createWalletId = (walletLabel: string): string =>
   walletLabel.replace(/\s/g, '') + 'Id'
 
@@ -45,25 +47,23 @@ export async function createWagmiConfig(
       'Provider and wallet label are required to initialize WAGMI'
     )
   }
-
-  const latestWallet = await createWagmiConnector(walletLabel, provider)
-  wagmiConnectorFn[createWalletId(walletLabel)] = latestWallet
-
-  const connectors: CreateConnectorFn[] = [...Object.values(wagmiConnectorFn)]
-
-  const transports: Record<ViemChain['id'], Transport> = {}
-  console.log(1)
-  const { chains } = state.get()
-  const viemChains = (await Promise.all(
-    chains.map(async (w3OChain: Chain) => {
-      const { id } = w3OChain
-      transports[fromHex(id as `0x${string}`, 'number')] = http()
-      return (await chainIdToViemImport(w3OChain)) as ViemChain
-    })
-  )) as [ViemChain, ...ViemChain[]]
-  console.log(2)
-
   try {
+    const latestWallet = await createWagmiConnector(walletLabel, provider)
+    wagmiConnectorFn[createWalletId(walletLabel)] = latestWallet
+
+    const connectors: CreateConnectorFn[] = [...Object.values(wagmiConnectorFn)]
+
+    const transports: Record<ViemChain['id'], Transport> = {}
+    const { chains } = state.get()
+
+    const viemChains = (await Promise.all(
+      chains.map(async (w3OChain: Chain) => {
+        const { id } = w3OChain
+        transports[fromHex(id as `0x${string}`, 'number')] = http()
+        return (await chainIdToViemImport(w3OChain)) as ViemChain
+      })
+    )) as [ViemChain, ...ViemChain[]]
+
     wagmiConfig = createConfig({
       chains: [...viemChains],
       transports,
@@ -71,7 +71,6 @@ export async function createWagmiConfig(
       connectors
     })
     updateWagmiConfig(wagmiConfig)
-    console.log(3)
   } catch (e) {
     console.error(
       `Failed to initialize Web3-Onboard WAGMI instance - Error: ${e}`
@@ -94,7 +93,6 @@ export async function connectWalletToWagmi(
   label: string,
   provider: EIP1193Provider
 ): Promise<ConnectReturnType<Config>> {
-  console.log('connecting wallet to wagmi', label, provider)
   try {
     return await connect(wagmiConfig, {
       connector: convertW3OToWagmiWallet(label, provider)
@@ -111,23 +109,26 @@ const convertW3OToWagmiWallet = (
   ({
     name: label,
     id: createWalletId(label),
-    connect: () => {
+    connect: ({ chainId }: { chainId: number }) => {
       try {
         return Promise.resolve(
           requestAccounts(provider).then(accounts => {
-            const acc = accounts
-            console.log(acc, 'accounts')
-            //TODO add param check for chainId being passed in
-            return getChainId(provider).then(id => {
-              console.log('accounts and chainId', accounts, id)
+            const acc: `0x${string}`[] = accounts
+            if (chainId) {
               return {
-                chainId: parseInt(id, 16),
-                accounts: acc as `0x${string}`[]
+                chainId,
+                accounts: acc
+              }
+            }
+
+            return getChainId(provider).then(id => {
+              return {
+                chainId: fromHex(id as `0x${string}`, 'number'),
+                accounts: acc
               }
             })
           })
         )
-
       } catch (err) {
         const error = err as RpcError
         if (error.code === UserRejectedRequestError.code)
@@ -148,7 +149,6 @@ const convertW3OToWagmiWallet = (
       }),
     getChainId: () =>
       getChainId(provider).then(chainId => {
-        console.log('chainId', chainId)
         return fromHex(chainId as `0x${string}`, 'number')
       }),
     getProvider: () => Promise.resolve(provider),
