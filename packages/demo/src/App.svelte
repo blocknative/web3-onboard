@@ -51,7 +51,11 @@
   import VConsole from 'vconsole'
   import blocknativeIcon from './blocknative-icon.js'
   import DappAuth from '@blocto/dappauth'
-  import { sendTransaction as wagmiSendTransaction, switchChain, disconnect } from '@wagmi/core'
+  import {
+    sendTransaction as wagmiSendTransaction,
+    switchChain,
+    disconnect
+  } from '@wagmi/core'
   import { parseEther } from 'viem'
 
   if (window.innerWidth < 700) {
@@ -643,16 +647,16 @@
   }
 
   async function switchWagmiChain(chainId) {
-    let chainAsNumber;
+    let chainAsNumber
     if (typeof chainId === 'string' && /^0x[0-9A-Fa-f]+$/.test(chainId)) {
-      chainAsNumber = parseInt(chainId, 16);
+      chainAsNumber = parseInt(chainId, 16)
     } else if (typeof chainId === 'number') {
-      chainAsNumber = chainId;
+      chainAsNumber = chainId
     } else {
-      throw new Error('Invalid chainId');
+      throw new Error('Invalid chainId')
     }
-    const wagmiConfig = onboard.state.get().wagmiConfig;
-    await switchChain(wagmiConfig, {chainId: chainAsNumber})
+    const wagmiConfig = onboard.state.get().wagmiConfig
+    await switchChain(wagmiConfig, { chainId: chainAsNumber })
   }
 </script>
 
@@ -791,16 +795,16 @@
           >
         </div>
         <div class="switch-chain-container">
-          <button on:click={() => switchWagmiChain( '0x1' )}
+          <button on:click={() => switchWagmiChain('0x1')}
             >Set Chain to Mainnet</button
           >
-          <button on:click={() => switchWagmiChain( 11155111 )}
+          <button on:click={() => switchWagmiChain(11155111)}
             >Set Chain to Sepolia</button
           >
-          <button on:click={() => switchWagmiChain( '0x89' )}
+          <button on:click={() => switchWagmiChain('0x89')}
             >Set Chain to Matic</button
           >
-          <button on:click={() => switchWagmiChain( 10 )}
+          <button on:click={() => switchWagmiChain(10)}
             >Set Chain to OP Mainnet</button
           >
         </div>

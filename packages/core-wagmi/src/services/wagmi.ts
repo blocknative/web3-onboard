@@ -30,7 +30,6 @@ import {
 import EventEmitter from 'eventemitter3'
 import { updateChain, updateWagmiConfig } from '../store/actions'
 import disconnect from '../disconnect'
-import { build } from 'joi'
 
 export let wagmiConfig: Config | undefined
 
@@ -105,6 +104,15 @@ export async function connectWalletToWagmi(
   }
 }
 
+export async function disconnectWagmiWallet(label: string): Promise<void> {
+  try {
+    delete wagmiConnectorFn[createWalletId(label)]
+    buildWagmiConfig()
+  } catch (e) {
+    console.error('error disconnecting wallet from wagmi', e)
+  }
+}
+
 const convertW3OToWagmiWallet = (
   label: string,
   provider: EIP1193Provider
@@ -142,9 +150,8 @@ const convertW3OToWagmiWallet = (
       }
     },
     disconnect: () => {
+      disconnectWagmiWallet(label)
       disconnect({ label })
-      delete wagmiConnectorFn[createWalletId(label)]
-      buildWagmiConfig()
     },
     getAccounts: () =>
       requestAccounts(provider).then(acc => {
@@ -193,9 +200,8 @@ const convertW3OToWagmiWallet = (
       switchChain(provider, toHex(chainId))
     },
     onDisconnect: () => {
+      disconnectWagmiWallet(label)
       disconnect({ label })
-      delete wagmiConnectorFn[createWalletId(label)]
-      buildWagmiConfig()
     },
     emitter: new EventEmitter()
   } as unknown as Connector)
