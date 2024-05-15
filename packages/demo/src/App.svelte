@@ -51,7 +51,7 @@
   import VConsole from 'vconsole'
   import blocknativeIcon from './blocknative-icon.js'
   import DappAuth from '@blocto/dappauth'
-  import { sendTransaction as wagmiSendTransaction, switchChain } from '@wagmi/core'
+  import { sendTransaction as wagmiSendTransaction, switchChain, disconnect } from '@wagmi/core'
   import { parseEther } from 'viem'
 
   if (window.innerWidth < 700) {
@@ -976,7 +976,7 @@
         {/each}
         <button
           style="margin-top: 0.5rem;"
-          on:click={() => onboard.disconnectWallet({ label })}
+          on:click={() => disconnect(wagmiConfig, wagmiConfig.connectors[0])}
         >
           Disconnect Wallet
         </button>

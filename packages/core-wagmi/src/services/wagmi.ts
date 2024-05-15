@@ -30,6 +30,7 @@ import {
 import EventEmitter from 'eventemitter3'
 import { updateChain, updateWagmiConfig } from '../store/actions'
 import disconnect from '../disconnect'
+import { build } from 'joi'
 
 export let wagmiConfig: Config | undefined
 
@@ -38,19 +39,21 @@ const wagmiConnectorFn: Record<string, CreateConnectorFn> = {}
 const createWalletId = (walletLabel: string): string =>
   walletLabel.replace(/\s/g, '') + 'Id'
 
-export async function createWagmiConfig(
-  walletLabel: string,
+export async function buildWagmiConfig(walletData?: {
+  label: string
   provider: EIP1193Provider
-): Promise<void> {
-  if (!provider || !walletLabel) {
+}): Promise<void> {
+  if (walletData && (!walletData.provider || !walletData.label)) {
     throw new Error(
-      'Provider and wallet label are required to initialize WAGMI'
+      'Provider and wallet label are required to initialize WAGMI with a new connector'
     )
   }
   try {
-    const latestWallet = await createWagmiConnector(walletLabel, provider)
-    wagmiConnectorFn[createWalletId(walletLabel)] = latestWallet
-
+    if (walletData) {
+      const { label, provider } = walletData
+      const latestWallet = await createWagmiConnector(label, provider)
+      wagmiConnectorFn[createWalletId(label)] = latestWallet
+    }
     const connectors: CreateConnectorFn[] = [...Object.values(wagmiConnectorFn)]
 
     const transports: Record<ViemChain['id'], Transport> = {}
@@ -141,7 +144,7 @@ const convertW3OToWagmiWallet = (
     disconnect: () => {
       disconnect({ label })
       delete wagmiConnectorFn[createWalletId(label)]
-      return provider.disconnect()
+      buildWagmiConfig()
     },
     getAccounts: () =>
       requestAccounts(provider).then(acc => {
@@ -192,6 +195,7 @@ const convertW3OToWagmiWallet = (
     onDisconnect: () => {
       disconnect({ label })
       delete wagmiConnectorFn[createWalletId(label)]
+      buildWagmiConfig()
     },
     emitter: new EventEmitter()
   } as unknown as Connector)

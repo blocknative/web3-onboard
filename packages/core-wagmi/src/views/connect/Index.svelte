@@ -54,7 +54,7 @@
     WalletWithLoadingIcon
   } from '../../types.js'
   import { updateSecondaryTokens } from '../../update-balances'
-  import { wagmiConfig, createWagmiConfig } from '../../services/wagmi'
+  import { wagmiConfig, buildWagmiConfig } from '../../services/wagmi'
   import { connect as wagmiConnect } from '@wagmi/core'
 
   export let autoSelect: ConnectOptions['autoSelect']
@@ -202,7 +202,7 @@
     cancelPreviousConnect$.next()
 
     try {
-      await createWagmiConfig(label, provider)
+      await buildWagmiConfig({label, provider})
 
       const wagmiConnector = wagmiConfig.connectors.find(con => {
         return con.name === label
