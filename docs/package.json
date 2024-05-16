@@ -89,7 +89,6 @@
     "@web3-onboard/xdefi": "^2.0.4",
     "@web3-onboard/zeal": "^2.0.4",
     "@web3-onboard/particle-network": "^2.0.1",
-    "@web3-onboard/echooo": "2.0.1-alpha.1",
     "animejs": "^3.2.1",
     "bnc-sdk": "^4.6.6",
     "ethers": "^5.7.0",

@@ -35,7 +35,6 @@
   import venlyModule from '@web3-onboard/venly'
   import bitgetModule from '@web3-onboard/bitget'
   import particleAuthModule from '@web3-onboard/particle-network'
-  import echoooModule from '@web3-onboard/echooo'
   import capsuleModule, {
     Environment,
     OAuthMethod,
@@ -233,7 +232,6 @@
       portalTextColor: '#ffffff'
     }
   })
-  const echooo = echoooModule()
 
   const onboard = Onboard({
     wallets: [
@@ -271,7 +269,6 @@
       blocto,
       venly,
       particle,
-      echooo
     ],
     // transactionPreview,
     gas,

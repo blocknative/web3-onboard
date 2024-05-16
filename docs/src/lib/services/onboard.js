@@ -60,7 +60,6 @@ const intiOnboard = async (theme) => {
   const { default: bitgetModule } = await import('@web3-onboard/bitget')
   const { default: capsuleModule, Environment } = await import('@web3-onboard/capsule')
   const { default: particleAuthModule } = await import('@web3-onboard/particle-network')
-  const { default: echoooModule } = await import('@web3-onboard/echooo')
   const INFURA_ID = '8b60d52405694345a99bcb82e722e0af'
 
   const injected = injectedModule()
@@ -143,7 +142,6 @@ const intiOnboard = async (theme) => {
     appId: 'b1f0239a-edb0-41f9-b0f5-ab780bb02a9e'
   })
 
-  const echooo = echoooModule()
 
   return Onboard({
     connect: { autoConnectAllPreviousWallet: true },
@@ -180,7 +178,6 @@ const intiOnboard = async (theme) => {
       // capsule
 
       // venly
-      echooo
     ],
     chains: [
       {
