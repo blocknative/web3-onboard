@@ -34,12 +34,8 @@ For more information see [web3-onboard docs](https://onboard.blocknative.com/doc
 import Onboard from '@web3-onboard/core'
 import injectedModule from '@web3-onboard/injected-wallets'
 import wagmi from '@web3-onboard/wagmi'
-import { parseEther } from 'viem'
-import {
-  sendTransaction as wagmiSendTransaction,
-  switchChain,
-  disconnect
-} from '@wagmi/core'
+import { parseEther, isHex, fromHex } from 'viem'
+import { sendTransaction as wagmiSendTransaction, switchChain, disconnect } from '@wagmi/core'
 
 const injected = injectedModule()
 
@@ -57,7 +53,7 @@ const onboard = Onboard({
   // ... other Onboard options
 })
 
-const sendTransaction = async provider => {
+const sendTransaction = async (provider) => {
   const wagmiConfig = onboard.state.get().wagmiConfig
   const result = await wagmiSendTransaction(wagmiConfig, {
     to: toAddress,
@@ -68,9 +64,9 @@ const sendTransaction = async provider => {
 
 async function switchWagmiChain(chainId) {
   let chainAsNumber
-  if (typeof chainId === 'string' && /^0x[0-9A-Fa-f]+$/.test(chainId)) {
-    chainAsNumber = parseInt(chainId, 16)
-  } else if (typeof chainId === 'number') {
+  if (isHex(chainId)) {
+    chainAsNumber = fromHex(chainId, 'number')
+  } else if (!isHex(chainId) && typeof chainId === 'number') {
     chainAsNumber = chainId
   } else {
     throw new Error('Invalid chainId')

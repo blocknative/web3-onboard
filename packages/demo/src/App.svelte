@@ -57,7 +57,7 @@
     switchChain,
     disconnect
   } from '@wagmi/core'
-  import { parseEther } from 'viem'
+  import { parseEther, isHex, fromHex } from 'viem'
 
   if (window.innerWidth < 700) {
     new VConsole()
@@ -650,9 +650,9 @@
 
   async function switchWagmiChain(chainId) {
     let chainAsNumber
-    if (typeof chainId === 'string' && /^0x[0-9A-Fa-f]+$/.test(chainId)) {
-      chainAsNumber = parseInt(chainId, 16)
-    } else if (typeof chainId === 'number') {
+    if (isHex(chainId)) {
+      chainAsNumber = fromHex(chainId, 'number')
+    } else if (!isHex(chainId) && typeof chainId === 'number') {
       chainAsNumber = chainId
     } else {
       throw new Error('Invalid chainId')
