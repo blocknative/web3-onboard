@@ -5,12 +5,12 @@ import {
   type AccountAddress,
   type Address,
   type Chain,
-  weiToEth
+  weiToEth,
+  chainIdToViemImport
 } from '@web3-onboard/common'
 import type { SecondaryTokenBalances, WalletState } from './types'
 import type { ReadContractParameters } from 'viem'
 import type { Chain as ViemChain } from 'viem'
-import { chainIdToViemImport } from './utils.js'
 
 
 async function updateBalances(addresses?: string[]): Promise<void> {

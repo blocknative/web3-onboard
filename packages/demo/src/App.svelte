@@ -1,5 +1,5 @@
 <script>
-  import Onboard from '@web3-onboard/core-wagmi'
+  import Onboard from '@web3-onboard/core'
   import fortmaticModule from '@web3-onboard/fortmatic'
   import frameModule from '@web3-onboard/frame'
   import safeModule from '@web3-onboard/gnosis'
@@ -16,6 +16,7 @@
   import magicModule from '@web3-onboard/magic'
   import web3authModule from '@web3-onboard/web3auth'
   import gas from '@web3-onboard/gas'
+  import wagmi from '@web3-onboard/wagmi'
   import dcentModule from '@web3-onboard/dcent'
   import sequenceModule from '@web3-onboard/sequence'
   import tallyHoModule from '@web3-onboard/tallyho'
@@ -278,6 +279,7 @@
     ],
     // transactionPreview,
     gas,
+    wagmi,
     chains: [
       {
         id: '0x1',

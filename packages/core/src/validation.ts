@@ -245,6 +245,7 @@ const initOptions = Joi.object({
     get: Joi.function().required(),
     stream: Joi.function().required()
   }),
+  wagmi: Joi.function(),
   connect: connectModalOptions,
   containerElements: containerElements,
   transactionPreview: Joi.object({

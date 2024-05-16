@@ -61,7 +61,7 @@
   "dependencies": {
     "@vueuse/core": "^8.4.2",
     "@vueuse/rxjs": "^8.2.0",
-    "@web3-onboard/common": "^2.4.0-viem.4",
+    "@web3-onboard/common": "^2.4.0-viem.5",
     "@web3-onboard/core": "^2.22.0-viem.5",
     "vue-demi": "^0.12.4"
   },

@@ -67,7 +67,7 @@
     "@walletconnect/ethereum-provider": "2.9.1",
     "@walletconnect/modal": "2.6.1",
     "@walletconnect/qrcode-modal": "^1.8.0",
-    "@web3-onboard/common": "^2.4.0-viem.4",
+    "@web3-onboard/common": "^2.4.0-viem.5",
     "joi": "17.9.1",
     "rxjs": "^7.5.2"
   }

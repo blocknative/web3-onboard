@@ -28,6 +28,7 @@ export const APP_INITIAL_STATE: AppState = {
     disableClose: false
   },
   appMetadata: null,
+  wagmiConfig: null
 }
 
 export const STORAGE_KEYS = {

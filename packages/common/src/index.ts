@@ -7,7 +7,8 @@ export {
   isAddress,
   bigIntToHex,
   ethToWeiBigInt,
-  createDownloadMessage
+  createDownloadMessage,
+  chainIdToViemImport
 } from './utils.js'
 
 export * from './types.js'

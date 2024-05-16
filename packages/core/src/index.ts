@@ -33,10 +33,13 @@ import {
   setWalletModules,
   updateConnectModal,
   updateTheme,
-  updateAppMetadata
+  updateAppMetadata,
+  updateChain
 } from './store/actions.js'
 import type { PatchedEIP1193Provider } from '@web3-onboard/transaction-preview'
 import { getBlocknativeSdk } from './services.js'
+import type { WagmiModuleAPI } from '@web3-onboard/wagmi'
+import { wagmiProviderMethods } from './provider'
 
 const API = {
   connectWallet,
@@ -105,7 +108,8 @@ function init(options: InitOptions): OnboardAPI {
     transactionPreview,
     theme,
     disableFontDownload,
-    unstoppableResolution
+    unstoppableResolution,
+    wagmi
   } = options
 
   if (containerElements) updateConfiguration({ containerElements })
@@ -150,6 +154,15 @@ function init(options: InitOptions): OnboardAPI {
     if (typeof accountCenterUpdate !== 'undefined') {
       updateAccountCenter(accountCenterUpdate)
     }
+  }
+
+  let wagmiApi: WagmiModuleAPI | undefined
+  if (typeof wagmi !== 'undefined') {
+    wagmiApi = wagmi({
+      disconnect: disconnectWallet,
+      updateChain,
+      ...wagmiProviderMethods()
+    })
   }
 
   // update notify
@@ -227,7 +240,8 @@ function init(options: InitOptions): OnboardAPI {
     initialWalletInit: wallets,
     gas,
     transactionPreview,
-    unstoppableResolution
+    unstoppableResolution,
+    wagmi: wagmiApi
   })
 
   appMetadata && updateAppMetadata(appMetadata)

@@ -59,7 +59,7 @@
     "@safe-global/safe-apps-sdk": "^8.0.0"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.4.0-viem.4"
+    "@web3-onboard/common": "^2.4.0-viem.5"
   },
   "peerDependencies": {
     "@safe-global/safe-apps-provider": "^0.18.2",

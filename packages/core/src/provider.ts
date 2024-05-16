@@ -452,10 +452,10 @@ export async function getBalance(
     const wallet = wallets.find(wallet => !!wallet.provider)
     if (!wallet) return null
     const provider = wallet.provider
-    const balanceHex = await provider.request({
+    const balanceHex = (await provider.request({
       method: 'eth_getBalance',
       params: [address, 'latest']
-    }) as `0x${string}`
+    })) as `0x${string}`
     return balanceHex
       ? { [chain.token || 'eth']: weiHexToEth(balanceHex) }
       : null
@@ -562,3 +562,32 @@ export async function syncWalletConnectedAccounts(
     }
   }
 }
+
+export const addOrSwitchChain = async (
+  provider: EIP1193Provider,
+  chain: Chain
+): Promise<string> => {
+  try {
+    const { id } = chain
+    await addNewChain(provider, chain)
+    await switchChain(provider, id)
+    return id
+  } catch (error) {
+    return
+  }
+}
+
+export const wagmiProviderMethods = (): {
+  addOrSwitchChain: (
+    provider: EIP1193Provider,
+    chain: Chain
+  ) => Promise<string | undefined>
+  getChainId: (provider: EIP1193Provider) => Promise<string>
+  requestAccounts: (provider: EIP1193Provider) => Promise<ProviderAccounts>
+  switchChain: (provider: EIP1193Provider, chainId: ChainId) => Promise<unknown>
+} => ({
+  addOrSwitchChain,
+  getChainId,
+  requestAccounts,
+  switchChain
+})

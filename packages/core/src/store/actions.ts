@@ -36,7 +36,8 @@ import type {
   UpdateConnectModalAction,
   Theme,
   UpdateChainsAction,
-  UpdateAppMetadataAction
+  UpdateAppMetadataAction,
+  UpdateWagmiConfigAction
 } from '../types.js'
 
 import {
@@ -72,9 +73,11 @@ import {
   UPDATE_ALL_WALLETS,
   UPDATE_CONNECT_MODAL,
   UPDATE_CHAINS,
-  UPDATE_APP_METADATA
+  UPDATE_APP_METADATA,
+  UPDATE_WAGMI_CONFIG
 } from './constants.js'
 import type { Address } from 'bnc-sdk'
+import type { Config } from '@web3-onboard/wagmi'
 
 export function addChains(chains: Chain[]): void {
   // chains are validated on init
@@ -473,4 +476,16 @@ export function updateAppMetadata(
   }
 
   dispatch(action as UpdateAppMetadataAction)
+}
+
+export function updateWagmiConfig(
+  update: Config
+): void {
+
+  const action = {
+    type: UPDATE_WAGMI_CONFIG,
+    payload: update
+  }
+
+  dispatch(action as UpdateWagmiConfigAction)
 }

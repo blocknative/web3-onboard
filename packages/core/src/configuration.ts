@@ -9,7 +9,8 @@ export let configuration: Configuration = {
   gas: undefined,
   containerElements: { accountCenter: undefined, connectModal: undefined },
   transactionPreview: undefined,
-  unstoppableResolution: undefined
+  unstoppableResolution: undefined,
+  wagmi: undefined
 }
 
 export function updateConfiguration(update: Partial<Configuration>): void {

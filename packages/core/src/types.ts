@@ -20,6 +20,8 @@ import type { TransactionPreviewAPI } from '@web3-onboard/transaction-preview'
 import type en from './i18n/en.json'
 import type { EthereumTransactionData, Network } from 'bnc-sdk'
 import type { GetEnsTextReturnType } from 'viem'
+import type { Config, WagmiModuleAPI } from '@web3-onboard/wagmi'
+import type wagmi from '@web3-onboard/wagmi'
 
 export interface InitOptions {
   /**
@@ -57,6 +59,8 @@ export interface InitOptions {
   notify?: Partial<NotifyOptions> | Partial<Notify>
   /** Gas module */
   gas?: typeof gas
+  /** Wagmi module */
+  wagmi?: typeof wagmi
   /**
    * Object mapping for W3O components with the key being the DOM
    * element to mount the component to, this defines the DOM container
@@ -178,6 +182,7 @@ export interface AppState {
   notifications: Notification[]
   connect: ConnectModalOptions
   appMetadata: AppMetadata | null
+  wagmiConfig: Config | null
 }
 
 export type Configuration = {
@@ -187,6 +192,7 @@ export type Configuration = {
   appMetadata?: AppMetadata | null
   apiKey?: string
   gas?: typeof gas
+  wagmi?: WagmiModuleAPI
   containerElements?: ContainerElements
   transactionPreview?: TransactionPreviewAPI
   unstoppableResolution?: typeof unstoppableResolution
@@ -464,6 +470,7 @@ export type Action =
   | UpdateAllWalletsAction
   | UpdateConnectModalAction
   | UpdateAppMetadataAction
+  | UpdateWagmiConfigAction
 
 export type AddChainsAction = { type: 'add_chains'; payload: Chain[] }
 export type UpdateChainsAction = { type: 'update_chains'; payload: Chain }
@@ -532,6 +539,11 @@ export type UpdateAllWalletsAction = {
 export type UpdateAppMetadataAction = {
   type: 'update_app_metadata'
   payload: AppMetadata | Partial<AppMetadata>
+}
+
+export type UpdateWagmiConfigAction = {
+  type: 'update_wagmi_config'
+  payload: Config
 }
 
 // ==== MISC ==== //

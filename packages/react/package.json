@@ -62,7 +62,7 @@
   },
   "dependencies": {
     "@web3-onboard/core": "^2.22.0-viem.5",
-    "@web3-onboard/common": "^2.4.0-viem.4",
+    "@web3-onboard/common": "^2.4.0-viem.5",
     "use-sync-external-store": "1.0.0"
   },
   "peerDependencies": {

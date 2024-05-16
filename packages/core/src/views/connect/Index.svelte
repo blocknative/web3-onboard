@@ -1,12 +1,19 @@
 <script lang="ts">
-  import { ProviderRpcErrorCode, type WalletModule } from '@web3-onboard/common'
+  import {
+    ProviderRpcErrorCode,
+    type WalletModule
+  } from '@web3-onboard/common'
   import EventEmitter from 'eventemitter3'
   import { _ } from 'svelte-i18n'
   import en from '../../i18n/en.json'
   import { listenAccountsChanged } from '../../provider.js'
   import { state } from '../../store/index.js'
   import { connectWallet$, onDestroy$ } from '../../streams.js'
-  import { addWallet, updateAccount } from '../../store/actions.js'
+  import {
+    addWallet,
+    updateAccount,
+    updateWagmiConfig
+  } from '../../store/actions.js'
   import {
     validEnsChain,
     isSVG,
@@ -25,7 +32,7 @@
   import { getBNMulitChainSdk } from '../../services.js'
   import { MOBILE_WINDOW_WIDTH, STORAGE_KEYS } from '../../constants.js'
   import { defaultBnIcon } from '../../icons/index.js'
-
+  import type { Config } from '@web3-onboard/wagmi'
   import {
     BehaviorSubject,
     distinctUntilChanged,
@@ -64,6 +71,7 @@
 
   const { walletModules, connect, chains } = state.get()
   const cancelPreviousConnect$ = new Subject<void>()
+  const { unstoppableResolution, wagmi } = configuration
 
   let connectionRejected = false
   let previousConnectionRequest = false
@@ -201,16 +209,44 @@
     cancelPreviousConnect$.next()
 
     try {
-      const [address] = await Promise.race([
-        // resolved account
-        requestAccounts(provider),
-        // or connect wallet is called again whilst waiting for response
-        firstValueFrom(cancelPreviousConnect$.pipe(mapTo([])))
-      ])
+      let address
+      
+      if (wagmi) {
+        const { buildWagmiConfig, wagmiConnect } = wagmi
 
-      // canceled previous request
-      if (!address) {
-        return
+        const wagmiConfig: Config = await buildWagmiConfig(chains, { label, provider })
+        updateWagmiConfig(wagmiConfig)
+        const wagmiConnector = wagmiConfig.connectors.find(con => {
+          return con.name === label
+        })
+
+        const accountsReq = await Promise.race([
+          wagmiConnect(wagmiConfig, {
+            connector: wagmiConnector
+          }),
+          // or connect wallet is called again whilst waiting for response
+          firstValueFrom(cancelPreviousConnect$.pipe(mapTo([])))
+        ])
+
+        // canceled previous request
+        if (!accountsReq || !('accounts' in accountsReq)) {
+          return
+        }
+        const [connectedAddress] = accountsReq.accounts
+        address = connectedAddress
+      } else {
+        const [connectedAddress] = await Promise.race([
+          // resolved account
+          requestAccounts(provider),
+          // or connect wallet is called again whilst waiting for response
+          firstValueFrom(cancelPreviousConnect$.pipe(mapTo([])))
+        ])
+
+        // canceled previous request
+        if (!connectedAddress) {
+          return
+        }
+        address = connectedAddress
       }
 
       // store last connected wallet
@@ -347,13 +383,11 @@
       Array.isArray(appChain.secondaryTokens) &&
       appChain.secondaryTokens.length
     ) {
-      updateSecondaryTokens( address, appChain).then(
-        secondaryTokens => {
-          updateAccount(selectedWallet.label, address, {
-            secondaryTokens
-          })
-        }
-      )
+      updateSecondaryTokens(address, appChain).then(secondaryTokens => {
+        updateAccount(selectedWallet.label, address, {
+          secondaryTokens
+        })
+      })
     }
 
     if (ens === null && validEnsChain(connectedWalletChain.id)) {
@@ -367,7 +401,7 @@
       })
     }
 
-    if (uns === null && configuration.unstoppableResolution) {
+    if (uns === null && unstoppableResolution) {
       getUns(address, appChain).then(uns => {
         updateAccount(selectedWallet.label, address, {
           uns
@@ -418,7 +452,6 @@
   function scrollToTop() {
     scrollContainer && scrollContainer.scrollTo(0, 0)
   }
-
 </script>
 
 <style>
