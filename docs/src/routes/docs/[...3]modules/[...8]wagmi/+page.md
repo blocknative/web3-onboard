@@ -1,14 +1,29 @@
-# @web3-onboard/wagmi
+---
+title: wagmi
+---
 
-## A module for connecting wallets using WAGMI which returns a WAGMI config object to be used with [@wagmi/core](https://wagmi.sh/core/getting-started) functions.
+# {$frontmatter.title}
+
+A module for connecting wallets using WAGMI which returns a WAGMI config object to be used with [@wagmi/core](https://wagmi.sh/core/getting-started) functions.
 
 ### Install
 
-**NPM**
-`npm i @web3-onboard/wagmi`
+<Tabs values={['yarn', 'npm']}>
+<TabPanel value="yarn">
 
-**Yarn**
-`yarn add @web3-onboard/wagmi`
+```sh copy
+yarn add @web3-onboard/wagmi
+```
+
+  </TabPanel>
+  <TabPanel value="npm">
+
+```sh copy
+npm install @web3-onboard/wagmi
+```
+
+  </TabPanel>
+</Tabs>
 
 ## Usage
 
