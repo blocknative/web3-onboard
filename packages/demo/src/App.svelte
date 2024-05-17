@@ -268,7 +268,7 @@
       arcanaAuth,
       blocto,
       venly,
-      particle
+      particle,
     ],
     // transactionPreview,
     gas,
