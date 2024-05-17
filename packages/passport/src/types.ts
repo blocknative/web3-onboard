@@ -1,5 +1,5 @@
-import { Network, SignerWithOptionalCreator } from '@0xpass/passport'
-import { Chain } from 'viem'
+import type { Network, SignerWithOptionalCreator } from '@0xpass/passport'
+import type { Chain } from 'viem'
 
 /**
  * Options for initializing the Passport environment.

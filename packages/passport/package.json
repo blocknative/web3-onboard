@@ -59,7 +59,6 @@
   "dependencies": {
     "@0xpass/passport": "2.1.1",
     "@0xpass/passport-viem": "2.0.1",
-    "@types/crypto-js": "^4.2.2",
     "@web3-onboard/common": "^2.3.3",
     "crypto-js": "^4.2.0",
     "react-dom": "^18.2.0",
@@ -70,6 +69,7 @@
   },
   "devDependencies": {
     "@types/react": "^18.0.2",
+    "@types/crypto-js": "^4.2.2",
     "react": "^18.2.0",
     "typescript": "^5.2.2"
   }

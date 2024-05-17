@@ -1,6 +1,6 @@
 import type { WalletInit } from '@web3-onboard/common'
 import type { AuthenticatedHeaders } from '@0xpass/passport/dist/types'
-import type { PassportOptions } from 'types'
+import type { PassportOptions } from './types'
 import { Network } from '@0xpass/passport'
 
 async function createUsernameModal(
