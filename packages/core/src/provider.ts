@@ -37,7 +37,7 @@ export const viemProviders: {
   [key: string]: PublicClient
 } = {}
 
-async function getProvider(chain: Chain): Promise<PublicClient> {
+async function getProvider(chain: Chain): Promise<PublicClient | null> {
   if (!chain) return null
 
   if (!viemProviders[chain.rpcUrl as string]) {
@@ -566,14 +566,14 @@ export async function syncWalletConnectedAccounts(
 export const addOrSwitchChain = async (
   provider: EIP1193Provider,
   chain: Chain
-): Promise<string> => {
+): Promise<string | undefined> => {
   try {
     const { id } = chain
     await addNewChain(provider, chain)
     await switchChain(provider, id)
     return id
   } catch (error) {
-    return
+    return undefined
   }
 }
 

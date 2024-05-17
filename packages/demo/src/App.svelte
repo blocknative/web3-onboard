@@ -55,7 +55,9 @@
   import {
     sendTransaction as wagmiSendTransaction,
     switchChain,
-    disconnect
+    disconnect,
+    signMessage as wagmiSignMessage,
+    getConnectors
   } from '@wagmi/core'
   import { parseEther, isHex, fromHex } from 'viem'
 
@@ -547,8 +549,8 @@
     // let verifySign = false
     // let recoveredAddress = null
     const wagmiConfig = onboard.state.get().wagmiConfig
-
-    await signMessage(wagmiConfig, { message: signMsg })
+    console.log('signMessage', wagmiConfig)
+    await wagmiSignMessage(wagmiConfig, { message: signMsg })
     // try {
     //   recoveredAddress = recoverAddress(
     //     arrayify(hashMessage(signMsg)),
@@ -982,7 +984,13 @@
         {/each}
         <button
           style="margin-top: 0.5rem;"
-          on:click={() => disconnect(wagmiConfig, wagmiConfig.connectors[0])}
+          on:click={() => {
+            const wagmiConfig = onboard.state.get().wagmiConfig
+            const disconnectThisWallet = getConnectors(wagmiConfig).find(
+              connector => connector.name === label
+            )
+            disconnect(wagmiConfig, {connector: disconnectThisWallet})
+          }}
         >
           Disconnect Wallet
         </button>

@@ -34,8 +34,14 @@ For more information see [web3-onboard docs](https://onboard.blocknative.com/doc
 import Onboard from '@web3-onboard/core'
 import injectedModule from '@web3-onboard/injected-wallets'
 import wagmi from '@web3-onboard/wagmi'
+import { parseEther } from 'viem'
+import {
+  sendTransaction as wagmiSendTransaction,
+  switchChain,
+  disconnect,
+  getConnectors
+} from '@wagmi/core'
 import { parseEther, isHex, fromHex } from 'viem'
-import { sendTransaction as wagmiSendTransaction, switchChain, disconnect } from '@wagmi/core'
 
 const injected = injectedModule()
 
@@ -76,6 +82,10 @@ async function switchWagmiChain(chainId) {
 }
 
 async function disconnectWallet() {
-  disconnect(wagmiConfig, wagmiConfig.connectors[0])
+  const wagmiConfig = onboard.state.get().wagmiConfig
+  const disconnectThisWallet = getConnectors(wagmiConfig).find(
+    (connector) => connector.name === label
+  )
+  disconnect(wagmiConfig, { connector: disconnectThisWallet })
 }
 ```

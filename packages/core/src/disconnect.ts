@@ -1,6 +1,6 @@
 import { getBNMulitChainSdk } from './services.js'
 import { state } from './store/index.js'
-import { removeWallet } from './store/actions.js'
+import { removeWallet, updateWagmiConfig } from './store/actions.js'
 import { disconnectWallet$ } from './streams.js'
 import type { DisconnectOptions, WalletState } from './types.js'
 import { validateDisconnectOptions } from './validation.js'
@@ -35,8 +35,12 @@ async function disconnect(options: DisconnectOptions): Promise<WalletState[]> {
     }
   }
   const { wagmi } = configuration
+  console.log(wagmi)
   if (wagmi) {
-    wagmi.disconnectWagmiWallet(label)
+    const wagmiConfig = await wagmi.wagmiDisconnectWallet(label)
+    if (wagmiConfig) {
+      updateWagmiConfig(wagmiConfig)
+    }
   }
   disconnectWallet$.next(label)
   removeWallet(label)

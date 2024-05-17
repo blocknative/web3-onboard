@@ -10,7 +10,6 @@
     "module": "esnext",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "strictNullChecks": false,
     "lib": ["es2020", "dom"],
     "types": ["svelte"],
     "ignoreDeprecations": "5.0",

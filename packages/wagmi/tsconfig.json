@@ -1,7 +1,9 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "@tsconfig/svelte/tsconfig.json",
   "include": ["src/**/*"],
+  "exclude": ["node_modules/*", "dist"],
   "compilerOptions": {
+    "declaration": true,
     "outDir": "dist",
     "rootDir": "src",
     "declarationDir": "dist",
@@ -10,6 +12,11 @@
     },
     "typeRoots": ["node_modules/@types"],
     "strict": false,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "target": "esnext",
+    "module": "esnext",
+    "strictNullChecks": false,
+    "ignoreDeprecations": "5.0",
+    "moduleResolution": "node"
   }
 }

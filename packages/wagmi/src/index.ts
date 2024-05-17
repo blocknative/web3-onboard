@@ -4,7 +4,7 @@ import type {
   Connector,
   CreateConnectorFn
 } from '@wagmi/core'
-import type { WagmiInitOptions, WagmiModuleAPI } from 'types'
+import type { WagmiInitOptions, WagmiModuleAPI } from './types'
 import { createConfig, createConnector } from '@wagmi/core'
 import { createWagmiChains, createWalletId } from './utils'
 import { connect as wagmiConnect } from '@wagmi/core'
@@ -55,7 +55,7 @@ function wagmiInit(initOptions: WagmiInitOptions): WagmiModuleAPI {
     createWagmiConnector,
     connectWalletToWagmi,
     wagmiConnect,
-    disconnectWagmiWallet
+    wagmiDisconnectWallet
   }
 }
 
@@ -108,7 +108,12 @@ async function createWagmiConnector(
   provider: EIP1193Provider
 ): Promise<CreateConnectorFn | undefined> {
   try {
-    return createConnector(() => convertW3OToWagmiWallet(label, provider))
+    if (!providerMethods) {
+      throw new Error('WAGMI config not initialized')
+    }
+    return createConnector(() =>
+      convertW3OToWagmiWallet(label, provider, providerMethods!)
+    )
   } catch (e) {
     console.error('Error creating wagmi connector', e)
     return undefined
@@ -120,11 +125,11 @@ async function connectWalletToWagmi(
   provider: EIP1193Provider
 ): Promise<ConnectReturnType<Config> | undefined> {
   try {
-    if (!wagmiConfig) {
-      throw new Error('WAGMI config not initialized')
+    if (!wagmiConfig || !providerMethods) {
+      throw new Error('WAGMI connectWalletToWagmi could not be completed')
     }
     return await wagmiConnect(wagmiConfig, {
-      connector: convertW3OToWagmiWallet(label, provider)
+      connector: convertW3OToWagmiWallet(label, provider, providerMethods)
     })
   } catch (e) {
     console.error('Error connecting wallet to wagmi', e)
@@ -132,10 +137,13 @@ async function connectWalletToWagmi(
   }
 }
 
-async function disconnectWagmiWallet(label: string): Promise<void> {
+async function wagmiDisconnectWallet(
+  label: string
+): Promise<Config | undefined> {
   try {
     delete wagmiConnectorFn[createWalletId(label)]
-    buildWagmiConfig()
+    wagmiConfig = await buildWagmiConfig()
+    return wagmiConfig
   } catch (e) {
     console.error('error disconnecting wallet from wagmi', e)
   }
@@ -143,100 +151,110 @@ async function disconnectWagmiWallet(label: string): Promise<void> {
 
 const convertW3OToWagmiWallet = (
   label: string,
-  provider: EIP1193Provider
+  provider: EIP1193Provider,
+  coreProviderMethods: WagmiInitOptions
 ): Connector => {
-  if (!providerMethods) {
+  if (!coreProviderMethods || typeof coreProviderMethods === undefined) {
     console.error('Required provider methods not defined for Wagmi Module API')
-  }
-  return {
-    name: label,
-    id: createWalletId(label),
-    connect: ({ chainId }: { chainId: number }) => {
-      try {
-        return Promise.resolve(
-          providerMethods.requestAccounts(provider).then(accounts => {
-            const acc = accounts as `0x${string}`[]
-            if (chainId) {
-              return {
-                chainId,
-                accounts: acc
-              }
-            }
+    return {} as Connector
+  } else {
+    return {
+      name: label,
+      id: createWalletId(label),
+      connect: ({ chainId }: { chainId: number }) => {
+        try {
+          return Promise.resolve(
+            coreProviderMethods
+              .requestAccounts(provider)
+              .then((accounts: string[]) => {
+                const acc = accounts as `0x${string}`[]
+                if (chainId) {
+                  return {
+                    chainId,
+                    accounts: acc
+                  }
+                }
 
-            return providerMethods.getChainId(provider).then(id => {
-              return {
-                chainId: fromHex(id as `0x${string}`, 'number'),
-                accounts: acc
-              }
-            })
-          })
-        )
-      } catch (err) {
-        const error = err as RpcError
-        if (error.code === UserRejectedRequestError.code)
-          throw new UserRejectedRequestError(error)
-        if (error.code === ResourceUnavailableRpcError.code)
-          throw new ResourceUnavailableRpcError(error)
-        throw error
-      }
-    },
-    disconnect: () => {
-      disconnectWagmiWallet(label)
-      providerMethods.disconnect({ label })
-    },
-    getAccounts: () =>
-      providerMethods.requestAccounts(provider).then((acc: string) => {
-        return acc
-      }),
-    getChainId: () =>
-      providerMethods.getChainId(provider).then((chainId: string) => {
-        return fromHex(chainId as `0x${string}`, 'number')
-      }),
-    getProvider: () => Promise.resolve(provider),
-    isAuthorized: () =>
-      providerMethods.requestAccounts(provider).then((accounts: string[]) => {
-        return !!accounts.length
-      }),
-    switchChain: ({ chainId }: { chainId: number }) => {
-      const hexChainId = toHex(chainId)
-      try {
-        providerMethods.switchChain(provider, hexChainId).then(() => {
-          return chainId
-        })
-      } catch (error) {
-        const { code } = error as { code: number }
-        if (
-          code === ProviderRpcErrorCode.CHAIN_NOT_ADDED ||
-          code === ProviderRpcErrorCode.UNRECOGNIZED_CHAIN_ID
-        ) {
-          if (!chainsList) throw new Error('Chains list not defined')
-          // chain has not been added to wallet
-          const targetChain = chainsList.find(({ id }) => id === hexChainId)
-          providerMethods.updateChain(targetChain)
-
-          // add chain to wallet
-          providerMethods
-            .addOrSwitchChain(provider, targetChain)
-            .then((id: string) => {
-              return fromHex(id as `0x${string}`, 'number')
-            })
+                return coreProviderMethods
+                  .getChainId(provider)
+                  .then((id: string) => {
+                    return {
+                      chainId: fromHex(id as `0x${string}`, 'number'),
+                      accounts: acc
+                    }
+                  })
+              })
+          )
+        } catch (err) {
+          const error = err as RpcError
+          if (error.code === UserRejectedRequestError.code)
+            throw new UserRejectedRequestError(error)
+          if (error.code === ResourceUnavailableRpcError.code)
+            throw new ResourceUnavailableRpcError(error)
+          throw error
         }
-      }
-    },
+      },
+      disconnect: () => {
+        wagmiDisconnectWallet(label)
+        coreProviderMethods.disconnect({ label })
+      },
+      getAccounts: () =>
+        coreProviderMethods.requestAccounts(provider).then((acc: string[]) => {
+          return acc
+        }),
+      getChainId: () =>
+        coreProviderMethods.getChainId(provider).then((chainId: string) => {
+          return fromHex(chainId as `0x${string}`, 'number')
+        }),
+      getProvider: () => Promise.resolve(provider),
+      isAuthorized: () =>
+        coreProviderMethods
+          .requestAccounts(provider)
+          .then((accounts: string[]) => {
+            return !!accounts.length
+          }),
+      switchChain: ({ chainId }: { chainId: number }) => {
+        const hexChainId = toHex(chainId)
+        try {
+          coreProviderMethods.switchChain(provider, hexChainId).then(() => {
+            return chainId
+          })
+        } catch (error) {
+          const { code } = error as { code: number }
+          if (
+            code === ProviderRpcErrorCode.CHAIN_NOT_ADDED ||
+            code === ProviderRpcErrorCode.UNRECOGNIZED_CHAIN_ID
+          ) {
+            if (!chainsList) throw new Error('Chains list not defined')
+            // chain has not been added to wallet
+            const targetChain = chainsList.find(({ id }) => id === hexChainId)
+            if (!targetChain) throw new Error('Chain not found in chains list')
+            coreProviderMethods.updateChain(targetChain)
 
-    onAccountsChanged: (accounts: string[]) => {
-      // Disconnect if there are no accounts
-      if (accounts.length === 0) providerMethods.disconnect()
-    },
-    onChainChanged: (chainId: number) => {
-      providerMethods.switchChain(provider, toHex(chainId))
-    },
-    onDisconnect: () => {
-      disconnectWagmiWallet(label)
-      providerMethods.disconnect({ label })
-    },
-    emitter: new EventEmitter()
-  } as unknown as Connector
+            // add chain to wallet
+            coreProviderMethods
+              .addOrSwitchChain(provider, targetChain)
+              .then((id: string) => {
+                return fromHex(id as `0x${string}`, 'number')
+              })
+          }
+        }
+      },
+
+      onAccountsChanged: (accounts: string[]) => {
+        // Disconnect if there are no accounts
+        if (accounts.length === 0) coreProviderMethods.disconnect({ label })
+      },
+      onChainChanged: (chainId: number) => {
+        coreProviderMethods.switchChain(provider, toHex(chainId))
+      },
+      onDisconnect: () => {
+        wagmiDisconnectWallet(label)
+        coreProviderMethods.disconnect({ label })
+      },
+      emitter: new EventEmitter()
+    } as unknown as Connector
+  }
 }
 
 export default wagmiInit

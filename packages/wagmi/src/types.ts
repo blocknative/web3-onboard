@@ -1,17 +1,25 @@
-import { Config, ConnectReturnType, CreateConnectorFn } from '@wagmi/core'
-import { Chain, EIP1193Provider, ProviderAccounts } from '@web3-onboard/common'
-import type { ConnectParameters, connect as wagmiConnect } from '@wagmi/core'
+import type { Config, ConnectReturnType, CreateConnectorFn } from '@wagmi/core'
+import type {
+  Chain,
+  EIP1193Provider,
+  ProviderAccounts
+} from '@web3-onboard/common'
+import type { WalletState } from '@web3-onboard/core'
+import type { ConnectParameters } from '@wagmi/core'
 
 export type WagmiInitOptions = {
+  disconnect: (options: { label: string }) => Promise<WalletState[]>
+  updateChain: (chain: Chain) => void
   requestAccounts: (provider: EIP1193Provider) => Promise<ProviderAccounts>
   getChainId: (provider: EIP1193Provider) => Promise<string>
-  disconnect: (options: { label: string }) => void
   switchChain: (
     provider: EIP1193Provider,
     hexChainId: string
-  ) => Promise<number>
-  updateChain: (chain: Chain) => void
-  addOrSwitchChain: (provider: EIP1193Provider, chain: Chain) => Promise<string>
+  ) => Promise<unknown>
+  addOrSwitchChain: (
+    provider: EIP1193Provider,
+    chain: Chain
+  ) => Promise<string | undefined>
 }
 
 export type WagmiModuleAPI = {
@@ -21,18 +29,18 @@ export type WagmiModuleAPI = {
       label: string
       provider: EIP1193Provider
     }
-  ) => Promise<Config>
+  ) => Promise<Config | undefined>
   createWagmiConnector: (
     label: string,
     provider: EIP1193Provider
-  ) => Promise<CreateConnectorFn>
+  ) => Promise<CreateConnectorFn | undefined>
   connectWalletToWagmi: (
     label: string,
     provider: EIP1193Provider
-  ) => Promise<ConnectReturnType<Config>>
+  ) => Promise<ConnectReturnType<Config> | undefined>
   wagmiConnect: (
     config: Config,
     parameters: ConnectParameters<Config>
   ) => Promise<ConnectReturnType<Config>>
-  disconnectWagmiWallet: (label: string) => Promise<void>
+  wagmiDisconnectWallet: (label: string) => Promise<Config | undefined>
 }

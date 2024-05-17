@@ -23,7 +23,8 @@ import { parseEther } from 'viem'
 import {
   sendTransaction as wagmiSendTransaction,
   switchChain,
-  disconnect
+  disconnect,
+  getConnectors
 } from '@wagmi/core'
 import { parseEther, isHex, fromHex } from 'viem'
 
@@ -66,6 +67,10 @@ async function switchWagmiChain(chainId) {
 }
 
 async function disconnectWallet() {
-  disconnect(wagmiConfig, wagmiConfig.connectors[0])
+  const wagmiConfig = onboard.state.get().wagmiConfig
+  const disconnectThisWallet = getConnectors(wagmiConfig).find(
+    connector => connector.name === label
+  )
+  disconnect(wagmiConfig, { connector: disconnectThisWallet })
 }
 ```
