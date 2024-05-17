@@ -17,4 +17,6 @@ export type CapsuleInitOptions = {
   apiKey: string,
   constructorOpts?: Partial<ConstructorOpts>
   modalProps?: Partial<CapsuleModalPropsForInit>
+  walletIcon: () => Promise<string>
+  walletLabel?: string 
 }
