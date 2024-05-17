@@ -58,8 +58,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "typescript": "^5.4.5",
-    "@web3-onboard/core": "^2.22.0-viem.6"
+    "typescript": "^5.4.5"
   },
   "dependencies": {
     "@web3-onboard/common": "^2.4.0-viem.5",

@@ -6,14 +6,13 @@
     "strict": true,
     "declaration": true,
     "declarationDir": "dist",
-    "target": "esnext",
-    "module": "esnext",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "lib": ["es2020", "dom"],
     "types": ["svelte"],
     "ignoreDeprecations": "5.0",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "strictNullChecks": false,
   },
   "outDir": "dist"
 }

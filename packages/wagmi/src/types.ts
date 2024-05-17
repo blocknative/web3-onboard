@@ -4,11 +4,10 @@ import type {
   EIP1193Provider,
   ProviderAccounts
 } from '@web3-onboard/common'
-import type { WalletState } from '@web3-onboard/core'
 import type { ConnectParameters } from '@wagmi/core'
 
 export type WagmiInitOptions = {
-  disconnect: (options: { label: string }) => Promise<WalletState[]>
+  disconnect: (options: { label: string }) => Promise<unknown>
   updateChain: (chain: Chain) => void
   requestAccounts: (provider: EIP1193Provider) => Promise<ProviderAccounts>
   getChainId: (provider: EIP1193Provider) => Promise<string>

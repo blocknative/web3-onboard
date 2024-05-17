@@ -13,8 +13,6 @@
     "typeRoots": ["node_modules/@types"],
     "strict": false,
     "allowSyntheticDefaultImports": true,
-    "target": "esnext",
-    "module": "esnext",
     "strictNullChecks": false,
     "ignoreDeprecations": "5.0",
     "moduleResolution": "node"
