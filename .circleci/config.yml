@@ -23,14 +23,8 @@ aliases:
   - &deploy_staging_filters
     filters:
       branches:
-        only: enhancement/replace_ethers
+        only: feat/wagmi_support
         # only: develop
-
-  - &deploy_testing_filters
-    filters:
-      branches:
-        only: enhancement/replace_ethers
-
 
   - &test_package_version_for_test_tag_break_false
     run:
