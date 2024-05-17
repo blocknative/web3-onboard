@@ -65,7 +65,7 @@ async function buildWagmiConfig(
     label: string
     provider: EIP1193Provider
   }
-): Promise<Config> {
+): Promise<Config | undefined> {
   if (wallet && (!wallet.provider || !wallet.label)) {
     throw new Error(
       'Provider and wallet label are required to initialize WAGMI with a new connector'
@@ -76,10 +76,17 @@ async function buildWagmiConfig(
     if (wallet) {
       const { label, provider } = wallet
       const latestWallet = await createWagmiConnector(label, provider)
-      wagmiConnectorFn[createWalletId(label)] = latestWallet
+      if (latestWallet) {
+        wagmiConnectorFn[createWalletId(label)] = latestWallet
+      } else {
+        console.error(
+          `Failed to initialize Web3-Onboard WAGMI instance because of error from creating wallet connector - Label: ${label}`
+        )
+        return undefined
+      }
     }
     const connectors: CreateConnectorFn[] = [...Object.values(wagmiConnectorFn)]
-    const viemChains = await createWagmiChains(chainsList, transports)
+    const viemChains = await createWagmiChains(chainsList || [], transports)
 
     wagmiConfig = createConfig({
       chains: [...viemChains],
@@ -92,30 +99,36 @@ async function buildWagmiConfig(
     console.error(
       `Failed to initialize Web3-Onboard WAGMI instance - Error: ${e}`
     )
+    return undefined
   }
 }
 
 async function createWagmiConnector(
   label: string,
   provider: EIP1193Provider
-): Promise<CreateConnectorFn> {
+): Promise<CreateConnectorFn | undefined> {
   try {
     return createConnector(() => convertW3OToWagmiWallet(label, provider))
   } catch (e) {
-    console.error('error creating connector', e)
+    console.error('Error creating wagmi connector', e)
+    return undefined
   }
 }
 
 async function connectWalletToWagmi(
   label: string,
   provider: EIP1193Provider
-): Promise<ConnectReturnType<Config>> {
+): Promise<ConnectReturnType<Config> | undefined> {
   try {
+    if (!wagmiConfig) {
+      throw new Error('WAGMI config not initialized')
+    }
     return await wagmiConnect(wagmiConfig, {
       connector: convertW3OToWagmiWallet(label, provider)
     })
   } catch (e) {
-    console.error('error connecting wallet to wagmi', e)
+    console.error('Error connecting wallet to wagmi', e)
+    return undefined
   }
 }
 
