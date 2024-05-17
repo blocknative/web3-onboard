@@ -54,7 +54,8 @@ function wagmiInit(initOptions: WagmiInitOptions): WagmiModuleAPI {
     buildWagmiConfig,
     createWagmiConnector,
     connectWalletToWagmi,
-    wagmiConnect
+    wagmiConnect,
+    disconnectWagmiWallet
   }
 }
 
@@ -171,16 +172,16 @@ const convertW3OToWagmiWallet = (
       providerMethods.disconnect({ label })
     },
     getAccounts: () =>
-      providerMethods.requestAccounts(provider).then(acc => {
+      providerMethods.requestAccounts(provider).then((acc: string) => {
         return acc
       }),
     getChainId: () =>
-      providerMethods.getChainId(provider).then(chainId => {
+      providerMethods.getChainId(provider).then((chainId: string) => {
         return fromHex(chainId as `0x${string}`, 'number')
       }),
     getProvider: () => Promise.resolve(provider),
     isAuthorized: () =>
-      providerMethods.requestAccounts(provider).then(accounts => {
+      providerMethods.requestAccounts(provider).then((accounts: string[]) => {
         return !!accounts.length
       }),
     switchChain: ({ chainId }: { chainId: number }) => {
@@ -195,21 +196,24 @@ const convertW3OToWagmiWallet = (
           code === ProviderRpcErrorCode.CHAIN_NOT_ADDED ||
           code === ProviderRpcErrorCode.UNRECOGNIZED_CHAIN_ID
         ) {
+          if (!chainsList) throw new Error('Chains list not defined')
           // chain has not been added to wallet
           const targetChain = chainsList.find(({ id }) => id === hexChainId)
           providerMethods.updateChain(targetChain)
 
           // add chain to wallet
-          providerMethods.addOrSwitchChain(provider, targetChain).then(id => {
-            return fromHex(id as `0x${string}`, 'number')
-          })
+          providerMethods
+            .addOrSwitchChain(provider, targetChain)
+            .then((id: string) => {
+              return fromHex(id as `0x${string}`, 'number')
+            })
         }
       }
     },
 
     onAccountsChanged: (accounts: string[]) => {
       // Disconnect if there are no accounts
-      if (accounts.length === 0) provider.disconnect()
+      if (accounts.length === 0) providerMethods.disconnect()
     },
     onChainChanged: (chainId: number) => {
       providerMethods.switchChain(provider, toHex(chainId))

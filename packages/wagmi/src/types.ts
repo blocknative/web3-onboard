@@ -34,4 +34,5 @@ export type WagmiModuleAPI = {
     config: Config,
     parameters: ConnectParameters<Config>
   ) => Promise<ConnectReturnType<Config>>
+  disconnectWagmiWallet: (label: string) => Promise<void>
 }

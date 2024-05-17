@@ -6,6 +6,7 @@ import type { DisconnectOptions, WalletState } from './types.js'
 import { validateDisconnectOptions } from './validation.js'
 import { delLocalStore, getLocalStore, setLocalStore } from './utils'
 import { STORAGE_KEYS } from './constants'
+import { configuration } from './configuration'
 
 async function disconnect(options: DisconnectOptions): Promise<WalletState[]> {
   const error = validateDisconnectOptions(options)
@@ -33,11 +34,16 @@ async function disconnect(options: DisconnectOptions): Promise<WalletState[]> {
       }
     }
   }
-
+  const { wagmi } = configuration
+  if (wagmi) {
+    wagmi.disconnectWagmiWallet(label)
+  }
   disconnectWallet$.next(label)
   removeWallet(label)
 
-  const labels = JSON.parse(getLocalStore(STORAGE_KEYS.LAST_CONNECTED_WALLET) || '')
+  const labels = JSON.parse(
+    getLocalStore(STORAGE_KEYS.LAST_CONNECTED_WALLET) || ''
+  )
 
   if (Array.isArray(labels) && labels.indexOf(label) >= 0) {
     setLocalStore(
