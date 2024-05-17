@@ -492,6 +492,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/particle-network
     steps:
       - node-build-steps
+  build-wagmi:
+    docker:
+      - image: cimg/node:18.0.0
+    working_directory: ~/web3-onboard-monorepo/packages/wagmi
+    steps:
+      - node-build-steps
 
   # Build staging/Alpha releases
   build-staging-core:
@@ -774,6 +780,12 @@ jobs:
     docker:
       - image: cimg/node:18.0.0
     working_directory: ~/web3-onboard-monorepo/packages/particle-network
+    steps:
+      - node-staging-build-steps
+  build-staging-wagmi:
+    docker:
+      - image: cimg/node:18.0.0
+    working_directory: ~/web3-onboard-monorepo/packages/wagmi
     steps:
       - node-staging-build-steps
 
@@ -1062,4 +1074,10 @@ workflows:
       - build-particle:
           <<: *deploy_production_filters
       - build-staging-particle:
+          <<: *deploy_staging_filters
+  wagmi:
+    jobs:
+      - build-wagmi:
+          <<: *deploy_production_filters
+      - build-staging-wagmi:
           <<: *deploy_staging_filters
