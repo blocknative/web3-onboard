@@ -47,7 +47,7 @@
   }
 
   const cleanGas = (gasComputed: number): number => {
-    const gweiHexToEther = weiHexToEth(gasComputed.toString())
+    const gweiHexToEther = weiHexToEth(`0x${gasComputed.toString(16)}`)
     return roundAndCleanGas(gweiHexToEther)
   }
 
