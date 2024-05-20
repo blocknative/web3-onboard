@@ -65,6 +65,8 @@
     "@web3-onboard/web3auth": "^2.3.0-wagmi.1",
     "@web3-onboard/xdefi": "^2.1.0-wagmi.1",
     "@web3-onboard/zeal": "^2.1.0-wagmi.1",
+    "@web3-onboard/passport": "^2.0.0-alpha.1",
+    "@0xpass/webauthn-signer": "2.0.0",
     "vconsole": "^3.15.1"
   },
   "license": "MIT",

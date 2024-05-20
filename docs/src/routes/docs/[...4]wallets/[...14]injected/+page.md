@@ -376,6 +376,7 @@ const injected = injectedModule({
 - Kayros - _Desktop_
 - Lif3Wallet - _Mobile_
 - StableWallet - _Mobile_
+- Echooo - _Desktop & Mobile_
 
 ## Build Environments
 
