@@ -22,6 +22,7 @@ import type { EthereumTransactionData, Network } from 'bnc-sdk'
 import type { GetEnsTextReturnType } from 'viem'
 import type { Config, WagmiModuleAPI } from '@web3-onboard/wagmi'
 import type wagmi from '@web3-onboard/wagmi'
+export type { Config as WagmiConfig } from '@web3-onboard/wagmi'
 
 export interface InitOptions {
   /**

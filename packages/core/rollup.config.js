@@ -41,7 +41,8 @@ export default {
     }),
     typescript({
       sourceMap: !production,
-      inlineSources: !production
+      inlineSources: !production,
+      exclude: ['node_modules/**']
     }),
     copy({
       src: 'src/i18n/en.json',

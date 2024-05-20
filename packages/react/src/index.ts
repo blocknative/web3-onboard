@@ -6,7 +6,8 @@ export {
   useSetChain,
   useSetLocale,
   useUpdateTheme,
-  useWallets
+  useWallets,
+  useWagmiConfig
 } from './hooks/index.js'
 
 export {

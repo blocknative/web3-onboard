@@ -78,7 +78,8 @@ export type {
   Notify,
   UpdateNotification,
   PreflightNotificationsOptions,
-  Theme
+  Theme,
+  WagmiConfig
 } from './types.js'
 
 export type { EIP1193Provider } from '@web3-onboard/common'
