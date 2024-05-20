@@ -45,9 +45,13 @@ const onboard = Onboard({
 })
 
 const sendTransaction = async provider => {
+  // current primary wallet - as multiple wallets can connect this value is the currently active
+  const [currentPrimaryWallet] = onboard.state.get().wallets
   const wagmiConfig = onboard.state.get().wagmiConfig
   const result = await wagmiSendTransaction(wagmiConfig, {
     to: toAddress,
+    // desired connector to send txn from
+    account: currentPrimaryWallet.accounts[0], 
     value: parseEther('0.001')
   })
   console.log(result)

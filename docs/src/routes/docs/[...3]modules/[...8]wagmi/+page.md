@@ -59,10 +59,14 @@ const onboard = Onboard({
   // ... other Onboard options
 })
 
-const sendTransaction = async (provider) => {
+const sendTransaction = async provider => {
+  // current primary wallet - as multiple wallets can connect this value is the currently active
+  const [currentPrimaryWallet] = onboard.state.get().wallets
   const wagmiConfig = onboard.state.get().wagmiConfig
   const result = await wagmiSendTransaction(wagmiConfig, {
     to: toAddress,
+    // desired connector to send txn from
+    account: currentPrimaryWallet.accounts[0], 
     value: parseEther('0.001')
   })
   console.log(result)
@@ -84,7 +88,7 @@ async function switchWagmiChain(chainId) {
 async function disconnectWallet() {
   const wagmiConfig = onboard.state.get().wagmiConfig
   const disconnectThisWallet = getConnectors(wagmiConfig).find(
-    (connector) => connector.name === label
+    connector => connector.name === label
   )
   disconnect(wagmiConfig, { connector: disconnectThisWallet })
 }
