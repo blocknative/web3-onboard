@@ -57,14 +57,7 @@ function metamask({
         const appLogoUrl = `data:image/svg+xml;base64,${base64}`
         const imports = await importPromise
 
-<<<<<<< HEAD
         if (!imports?.MetaMaskSDKConstructor) {
-=======
-        if (
-          !imports?.MetaMaskSDKConstructor ||
-          !imports?.createEIP1193Provider
-        ) {
->>>>>>> docs
           throw new Error('Error importing and initializing MetaMask SDK')
         }
 
@@ -79,7 +72,6 @@ function metamask({
           },
           _source: 'web3-onboard'
         })
-<<<<<<< HEAD
 
         await sdk.init()
         const provider = sdk.getProvider()
@@ -87,16 +79,6 @@ function metamask({
         if (provider) {
           ;(provider as any).disconnect = () => {
             sdk?.terminate()
-=======
-
-        await sdk.init();
-        const provider = sdk.getProvider();
-
-        const _disconnect = sdk.disconnect
-        if(provider) {
-          (provider as any).disconnect = () => {
-            sdk?.terminate();
->>>>>>> docs
           }
         }
 
