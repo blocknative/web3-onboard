@@ -4,13 +4,13 @@ title: Injected Wallets
 
 # {$frontmatter.title}
 
-This module lets web3-onboard automatically detect Browser Injected Wallets such as Metamask or Coinbase Wallet. We recommend you install this module to get the most out of your w3o implementation. This module supports [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) and [recognizes many injected wallets natively](#injected-wallets-supported-natively) as well as supports all [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) compatible wallets.
+This module lets Web3 Onboard automatically detect Browser Injected Wallets such as Metamask or Coinbase Wallet. We recommend you install this module to get the most out of your Web3 Onboard implementation. This module supports [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193), [recognizes many injected wallets natively](#injected-wallets-supported-natively), and supports all [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) compatible wallets.
 
-Note: Make sure to install the core module before installing other modules to w3o.
+Note: Make sure to install the core module before installing other modules to Web3 Onboard.
 
 ### Support all EIP-6963 Wallets out of the box
 
-Web3-Onboard supports all [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) compatible wallets out of the box and will automatically recognizes any wallet which has integrated 6963 support.
+Web3 Onboard supports all [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) compatible wallets out of the box and will automatically recognizes any wallet which has integrated 6963 support.
 
 ## Install
 
@@ -151,7 +151,7 @@ type Platform =
 
 ## Adding Custom Injected Wallets
 
-If there is an injected wallet that you would like to support in your app, but is not yet included in this repo, you can add a custom wallet module in the `custom` field:
+If there is an injected wallet that you would like to support in your dapp, but is not yet included in this repo, you can add a custom wallet module in the `custom` field:
 
 ```typescript
 const equal = {
@@ -220,8 +220,8 @@ const injected = injectedModule({
 })
 ```
 
-This can be set to an array top specify which unavailable injected wallets to show or set to true to display all unavailable injected wallets regardless of whether it has been detected in the window, happy days.
-Then the issue of the order of wallets displayed becomes apparent when you have 21 injected wallets at the top of the wallets list. To solve this, all injected wallets are sorted **alphabetically** by default and there is an additional `sort` parameter which receives the final list of wallets and then returns the list to be rendered. This allows for example setting MetaMask and Coinbase first and then just the rest alphabetically:
+This can be set to an array to specify which unavailable injected wallets to show, or set to true to display all unavailable injected wallets regardless of whether it has been detected in the window.
+Then the issue of the order of wallets displayed becomes apparent when you have 21 injected wallets at the top of the wallets list. To solve this, all injected wallets are sorted **alphabetically** by default and there is an additional `sort` parameter which receives the final list of wallets and then returns the list to be rendered. This allows, for example, setting MetaMask and Coinbase first and then the rest are sorted alphabetically:
 
 ```javascript
 const injected = injectedModule({
@@ -248,7 +248,7 @@ const injected = injectedModule({
 })
 ```
 
-You may want to display all unavailable injected wallets, but filter out specific wallets based on their availability. For example I may want to display all unavailable wallets except when Binance and Bitski wallet is unavailable, then don't show them, but if they are available, then do show them. To do this, the filters value has been extended to have a new value: `'unavailable'`, as in; remove this wallet if it is unavailable, even though `displayUnavailable` wallets is set:
+You may want to display all unavailable injected wallets, but filter out specific wallets based on their availability. For example, I may want to display all unavailable wallets except when Binance and Bitski wallet is unavailable, then don't show them, but if they are available, then do show them. To do this, the filters value has been extended to have a new value: `'unavailable'`, as in; remove this wallet if it is unavailable, even though `displayUnavailable` wallets is set:
 
 ```javascript
 const injected = injectedModule({
@@ -280,7 +280,7 @@ const injected = injectedModule({
 })
 ```
 
-If a wallet is selected, but is not available the default error message is: `Oops ${wallet.label} is unavailable! Please <a href="${wallet.externalUrl}" target="_blank">install</a>` if a download link is available for that wallet. If there isn't a download link for that wallet the default is: `Please install or enable ${walletName} to continue`. You may want to customize that message, so there is the `walletUnavailableMessage` parameter which is a function that takes the wallet object that is unavailable and returns a string which is the message to display:
+If a wallet is selected, but is not available, the default error message is: `Oops ${wallet.label} is unavailable! Please <a href="${wallet.externalUrl}" target="_blank">install</a>` if a download link is available for that wallet. If there isn't a download link for that wallet the default is: `Please install or enable ${walletName} to continue`. You may want to customize that message, so there is the `walletUnavailableMessage` parameter which is a function that takes the wallet object that is unavailable and returns a string which is the message to display:
 
 ```javascript
 const injected = injectedModule({
@@ -376,6 +376,7 @@ const injected = injectedModule({
 - Kayros - _Desktop_
 - Lif3Wallet - _Mobile_
 - StableWallet - _Mobile_
+- Echooo - _Desktop & Mobile_
 
 ## Build Environments
 

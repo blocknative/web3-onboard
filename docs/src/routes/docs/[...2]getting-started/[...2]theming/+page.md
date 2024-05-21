@@ -8,7 +8,7 @@ To customize the color theme of web3-onboard and match it with your dapp, you ca
 
 ## Available Themes
 
-To set the color theme of web3-onboard to one of the available native themes, import Onboard from `@web3-onboard/core` and pass the theme as a string to the `theme` init option.
+To set the color theme of Web3 Onboard to one of the available native themes, import Web3 Onboard from `@web3-onboard/core` and pass the theme as a string to the `theme` init option.
 
 | theme     | description                                                                       |
 | --------- | --------------------------------------------------------------------------------- |
@@ -32,7 +32,7 @@ const onboard = Onboard({
 
 ## Variables
 
-In the table below, you'll find a list of css variables that you can use to theme web3-onboard.
+In the table below, you'll find a list of css variables that you can use to theme Web3 Onboard.
 
 | variable               | description       |
 | ---------------------- | ----------------- |
@@ -47,7 +47,7 @@ In the table below, you'll find a list of css variables that you can use to them
 
 ## Custom Theme
 
-To create a custom theme, you can define a `ThemingMap` object with CSS variables for different components of web3-onboard. Pass this object as the theme option.
+To create a custom theme, you can define a `ThemingMap` object with CSS variables for different components of Web3 Onboard. Pass this object as the theme option.
 
 ```typescript copy
 import Onboard, { ThemingMap } from '@web3-onboard/core'
@@ -71,7 +71,7 @@ const onboard = Onboard({
 
 ## Dynamically Update Theme with API
 
-**`updateTheme`** is an exposed API method for actively updating the theme of web3-onboard. The function accepts `Theme` types (see below).
+**`updateTheme`** is an exposed API method for actively updating the theme of Web3 Onboard. The function accepts `Theme` types (see below).
 _If using the `@web3-onboard/react` package there is a hook exposed called `updateTheme`_
 
 The function also accepts a custom built `ThemingMap` object that contains all or some of the theming variables
@@ -122,7 +122,7 @@ export type ThemingMap = {
 
 ## Theming Tool
 
-You can preview how web3-onboard will look on your site by using our [theming tool](/theming-tool) to customize the look and feel of web3-onboard. You can try different themes or create your own and preview the result by entering a URL or adding a screenshot.
+You can preview how Web3 Onboard will look on your site by using our [theming tool](/theming-tool) to customize the look and feel of Web3 Onboard. You can try different themes or create your own and preview the result by entering a URL or adding a screenshot.
 
 To do this:
 

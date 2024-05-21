@@ -4,11 +4,11 @@ title: Zeal
 
 # {$frontmatter.title}
 
-## Wallet module for connecting Zeal to web3-onboard
+Wallet module for connecting Zeal to Web3 Onboard.
 
 See [Zeal](https://www.zeal.app/) for details.
 
-For any questions or issues related to integration with Zeal wallet do not hesitate to contact our builders via [hi@zeal.app](mailto:hi@zeal.app) OR ping us on twitter [@withzeal](https://twitter.com/withzeal)
+For any questions or issues related to integration with Zeal wallet do not hesitate to contact our builders via [hi@zeal.app](mailto:hi@zeal.app) OR ping us on X [@withzeal](https://twitter.com/withzeal)
 
 ## Install
 
@@ -49,3 +49,7 @@ const onboard = Onboard({
 const connectedWallets = await onboard.connectWallet()
 console.log(connectedWallets)
 ```
+
+## Build Environments
+
+For build env configurations and setups please see the Build Env section [here](/docs/modules/core#build-environments)

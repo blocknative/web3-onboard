@@ -4,7 +4,7 @@ title: Vue
 
 # {$frontmatter.title}
 
-A collection of composable functions for implementing web3-onboard in to a Vue project; compatible both with Vue 2 + composition-api and Vue 3
+A collection of composable functions for implementing Web3 Onboard into a Vue project; compatible both with Vue 2 + composition-api and Vue 3
 
 ## Install
 
@@ -121,7 +121,7 @@ const { wallets, connectWallet, disconnectConnectedWallet, connectedWallet } = u
 
 ### `connectWallet`
 
-Function to open the onboard modal and connect to a wallet provider. For reference check out the [connecting a wallet for `@web3-onboard/core`](../../modules/core.md#connecting-a-wallet)
+Function to open the Web3 Onboard modal and connect to a wallet provider. For reference check out the [connecting a wallet for `@web3-onboard/core`](../../modules/core.md#connecting-a-wallet)
 
 ### Example usage
 
@@ -300,7 +300,7 @@ Function to set the chain of a wallet
 
 ### `settingChain`
 
-Readonly boolean ref that tracks the status of setting the chain
+Read-only boolean ref that tracks the status of setting the chain
 
 ### Example usage
 
@@ -322,7 +322,7 @@ Readonly boolean ref that tracks the status of setting the chain
 
 ### `wallets`
 
-Readonly ref that contains every wallet that has been connected
+Read-only ref that contains every wallet that has been connected
 
 ### Example usage
 
@@ -339,7 +339,7 @@ export default {
 
 ### `alreadyConnectedWallets`
 
-Readonly ref that contains every wallet that user connected to in the past; useful to reconnect wallets automatically after a reload
+Read-only ref that contains every wallet that user connected to in the past; useful to reconnect wallets automatically after a reload
 
 ### Example usage
 
@@ -363,7 +363,7 @@ Readonly ref that contains every wallet that user connected to in the past; usef
 
 ### `lastConnectedTimestamp`
 
-Readonly ref that contains the last time that the user connected a wallet in milliseconds
+Read-only ref that contains the last time that the user connected a wallet in milliseconds
 
 ### Example usage
 
@@ -391,7 +391,7 @@ Many of the wallet modules require dependencies that are not normally included i
 
 Node built-ins are automatically bundled in v4 so that portion is handled automatically.
 
-**web3auth** and **torus** will require a Babel to compile from es6 if not already supported. See config for Babel and Webpack4 as follows
+**web3auth** and **torus** will require a Babel to compile from es6 if not already supported. See config for Babel and Webpack4 as follows:
 
 `npm i --save-dev @babel/cli @babel/core @babel/node @babel/plugin-proposal-nullish-coalescing-operator @babel/plugin-proposal-optional-chaining @babel/plugin-syntax-bigint @babel/register`
 **AND**

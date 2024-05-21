@@ -4,7 +4,7 @@ title: Safe
 
 # {$frontmatter.title}
 
-Wallet module for connecting Safe to web3-onboard
+Wallet module for connecting Safe to Web3 Onboard
 
 ## Install
 

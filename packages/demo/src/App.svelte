@@ -35,7 +35,11 @@
   import venlyModule from '@web3-onboard/venly'
   import bitgetModule from '@web3-onboard/bitget'
   import particleAuthModule from '@web3-onboard/particle-network'
-  import capsuleModule, { Environment, OAuthMethod, Theme } from '@web3-onboard/capsule'
+  import capsuleModule, {
+    Environment,
+    OAuthMethod,
+    Theme
+  } from '@web3-onboard/capsule'
   import {
     recoverAddress,
     arrayify,
@@ -47,6 +51,8 @@
   import VConsole from 'vconsole'
   import blocknativeIcon from './blocknative-icon.js'
   import DappAuth from '@blocto/dappauth'
+  import passportModule, { Network } from '@web3-onboard/passport'
+  import { WebauthnSigner } from '@0xpass/webauthn-signer'
 
   if (window.innerWidth < 700) {
     new VConsole()
@@ -172,6 +178,19 @@
   const blocto = bloctoModule()
   const tallyho = tallyHoModule()
 
+  const webauthnSigner = new WebauthnSigner({
+    rpId: 'localhost',
+    rpName: '0xPass'
+  })
+
+  const passport = passportModule({
+    network: Network.TESTNET,
+    scopeId: 'd8ae4424-c1f6-42b0-ab5e-2688bdaa0ff2',
+    signer: webauthnSigner,
+    fallbackProvider: '' // insert your alchemy / infura url here
+    // encryptionSecret: '' // encryption secret is optional, but advised to securely store values in browser storage
+  })
+
   const trezorOptions = {
     email: 'test@test.com',
     appUrl: 'https://www.blocknative.com',
@@ -264,7 +283,8 @@
       arcanaAuth,
       blocto,
       venly,
-      particle
+      particle,
+      passport
     ],
     // transactionPreview,
     gas,
@@ -761,7 +781,7 @@
           <button on:click={() => onboard.setChain({ chainId: '0x1' })}
             >Set Chain to Mainnet</button
           >
-          <button on:click={() => onboard.setChain({ chainId: '0x5' })}
+          <button on:click={() => onboard.setChain({ chainId: 11155111 })}
             >Set Chain to Sepolia</button
           >
           <button on:click={() => onboard.setChain({ chainId: '0x89' })}
