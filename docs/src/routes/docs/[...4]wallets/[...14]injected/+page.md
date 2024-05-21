@@ -16,6 +16,10 @@ Web3 Onboard supports all [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) co
 
 Web3-Onboard supports all [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) compatible wallets out of the box and will automatically recognizes any wallet which has integrated 6963 support.
 
+### Support all EIP-6963 Wallets out of the box
+
+Web3-Onboard supports all [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) compatible wallets out of the box and will automatically recognizes any wallet which has integrated 6963 support.
+
 ## Install
 
 <Tabs values={['yarn', 'npm']}>
