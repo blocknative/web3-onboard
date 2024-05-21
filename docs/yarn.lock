@@ -748,6 +748,7 @@
     sha.js "^2.4.11"
 
 "@coinbase/wallet-sdk@^3.9.3", "cbw-sdk@npm:@coinbase/wallet-sdk@3.9.3":
+  name cbw-sdk
   version "3.9.3"
   resolved "https://registry.yarnpkg.com/@coinbase/wallet-sdk/-/wallet-sdk-3.9.3.tgz#daf10cb0c85d0363315b7270cb3f02bedc408aab"
   integrity sha512-N/A2DRIf0Y3PHc1XAMvbBUu4zisna6qAdqABMZwBMNEfWrXpAwx16pZGkYCLGE+Rvv1edbcB2LYDRnACNcmCiw==
@@ -4925,9 +4926,9 @@
     "@web3-onboard/common" "^2.3.1"
 
 "@web3-onboard/capsule@^2.0.3":
-  version "2.0.3-alpha.2"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/capsule/-/capsule-2.0.3-alpha.2.tgz#75b171f5ec6db14d74688a273481304fb2682147"
-  integrity sha512-tRgr3YT/8l1xOtmv+SijcXYkXB3C5tJCFFme2byXFg/y6pSmFoyWPcEXIrwTbmFxrAoGXfTBC6TwxLsApgceBg==
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/capsule/-/capsule-2.0.3.tgz#f1b4a5d7a04d33ee1bfc92b009d8f606bc6ce2d2"
+  integrity sha512-0LDADjaeyFm0Uyaw/246GgsQkkOBP+09/uHaHDW/VQbh2Ji4mj20BwJeMj89fCYIkE9efUHd89r4Sey0tKjDuA==
   dependencies:
     "@tanstack/react-query" "^5.29.0"
     "@usecapsule/react-sdk" "^2.3.1"
@@ -5067,9 +5068,9 @@
     "@infinitywallet/infinity-connector" "^1.0.6"
 
 "@web3-onboard/injected-wallets@^2.10.17":
-  version "2.10.17-alpha.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.10.17-alpha.1.tgz#41f3d6983ea579740c47cda1e04adc726b40f2c6"
-  integrity sha512-dbj/ghgy3FBhcO01QoTYGSjAVtX5qRJhUD7YSJC+y9G0lyjr7v/XeuXI2RNRO18XRP4lr2yw8PlYJo5uAZ6HyQ==
+  version "2.10.17"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.10.17.tgz#7234962a6dec68352eb868cc778c98c68b83ccd5"
+  integrity sha512-jq7ZqzTWWUPD52jh0oQWz9FpCWi7LY0eLYxXU9FKB+7aZx4S4v/5yHoX4uhS0pHH8SdDzGfLwZqgIKHkC1OMUg==
   dependencies:
     "@web3-onboard/common" "^2.3.3"
     joi "17.9.1"
@@ -5122,9 +5123,9 @@
     rxjs "^7.5.2"
 
 "@web3-onboard/metamask@^2.0.7":
-  version "2.0.7-alpha-1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/metamask/-/metamask-2.0.7-alpha-1.tgz#62dd1616eb6441cf01983ff60ad9448d2ad729bc"
-  integrity sha512-B2n03aiwwawndyhp8PYOb9wzJrgLLPEtKmwwODnUF15i6dbiqnUVZQDEEg6T00UEKyN/hPzVR7uQbYnH6rLIaA==
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/metamask/-/metamask-2.0.7.tgz#c41aa7ba37a9842a59587e2124fd5141f5eafdfd"
+  integrity sha512-EZChJfHjjLPUfTZcj1NF2P7dOA9lYAj9pbu2jZNy9Nqhc5+YU0VAASmztN6PU6MJoHs7VLLmGeQNV0qbdAO3Lw==
   dependencies:
     "@metamask/sdk" "^0.20.3"
     "@web3-onboard/common" "^2.3.3"
