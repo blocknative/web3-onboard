@@ -36,11 +36,11 @@
   import venlyModule from '@web3-onboard/venly'
   import bitgetModule from '@web3-onboard/bitget'
   import particleAuthModule from '@web3-onboard/particle-network'
-  // import capsuleModule, {
-  //   Environment,
-  //   OAuthMethod,
-  //   Theme
-  // } from '@web3-onboard/capsule'
+  import capsuleModule, {
+    Environment,
+    OAuthMethod,
+    Theme
+  } from '@web3-onboard/capsule'
   import {
     recoverAddress,
     arrayify,
@@ -243,19 +243,19 @@
     clientId: 'blocknative',
     environment: 'staging'
   })
-  // const capsule = capsuleModule({
-  //   environment: Environment.DEVELOPMENT,
-  //   apiKey: '992bbd9146d5de8ad0419f141d9a7ca7',
-  //   modalProps: {
-  //     oAuthMethods: [OAuthMethod.GOOGLE, OAuthMethod.TWITTER],
-  //     theme: Theme.dark
-  //   },
-  //   constructorOpts: {
-  //     portalBackgroundColor: '#5e5656',
-  //     portalPrimaryButtonColor: '#ff6700',
-  //     portalTextColor: '#ffffff'
-  //   }
-  // })
+  const capsule = capsuleModule({
+    environment: Environment.DEVELOPMENT,
+    apiKey: '992bbd9146d5de8ad0419f141d9a7ca7',
+    modalProps: {
+      oAuthMethods: [OAuthMethod.GOOGLE, OAuthMethod.TWITTER],
+      theme: Theme.dark
+    },
+    constructorOpts: {
+      portalBackgroundColor: '#5e5656',
+      portalPrimaryButtonColor: '#ff6700',
+      portalTextColor: '#ffffff'
+    }
+  })
 
   const onboard = Onboard({
     wallets: [
@@ -283,7 +283,7 @@
       sequence,
       uauth,
       web3auth,
-      // capsule,
+      capsule,
       zeal,
       frontier,
       xdefi,
@@ -1005,7 +1005,7 @@
             const disconnectThisWallet = getConnectors(wagmiConfig).find(
               connector => connector.name === label
             )
-            disconnect(wagmiConfig, {connector: disconnectThisWallet})
+            disconnect(wagmiConfig, { connector: disconnectThisWallet })
           }}
         >
           Disconnect Wallet
