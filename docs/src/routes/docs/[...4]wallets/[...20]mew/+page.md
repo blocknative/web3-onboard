@@ -5,10 +5,10 @@ title: Mew
 # {$frontmatter.title}
 
 :::admonition type=warning
-_Wallet module for connecting Mew to web3-onboard is now deprecated. Please use [@web3-onboard/mew-wallet](../../wallets/mewwallet.md)_
+_Wallet module for connecting Mew to Web3 Onboard is now deprecated. Please use [@web3-onboard/mew-wallet](../../wallets/mewwallet.md)_
 :::
 
-Wallet module for connecting Mew wallet to web3-onboard
+Wallet module for connecting Mew wallet to Web3 Onboard
 
 ## Install
 

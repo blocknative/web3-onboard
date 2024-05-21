@@ -48,11 +48,11 @@
       />
       <FeatureCard
         title={'Dynamic Imports'}
-        text={"Supporting multiple wallets in your app requires a lot of dependencies. Onboard dynamically imports a wallet and it's dependencies only when the user selects it, so that minimal bandwidth is used."}
+        text={"Supporting multiple wallets in your app requires a lot of dependencies. Web3 Onboard dynamically imports a wallet and it's dependencies only when the user selects it, so that minimal bandwidth is used."}
       />
       <FeatureCard
         title={'Wallet Provider Standardization'}
-        text={'All wallet modules expose a provider that is patched to be compliant with the EIP-1193, EIP-1102, EIP-3085 and EIP-3326 specifications.'}
+        text={'All wallet modules expose a provider that is patched to be compliant with the EIP-1193, EIP-1102, EIP-3085, EIP-3326, and EIP-6963 specifications.'}
       />
       <FeatureCard
         title={'Multiple Chain Support'}

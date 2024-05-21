@@ -12,7 +12,7 @@ The best way to connect a wallet 🚀
 
 <img src="{walletModal}" alt="Web3-Onboard connect wallet modal"/>
 
-Web3-Onboard is the quickest and easiest way to add multi-wallet and multi-chain support to your project. With built-in modules for more than 35 unique hardware and software wallets, Web3-Onboard saves you time and headaches.
+Web3 Onboard is the quickest and easiest way to add multi-wallet and multi-chain support to your project. With built-in modules for more than 80 unique hardware and software wallets, Web3 Onboard saves you time and headaches.
 
 ## Features
 
@@ -24,17 +24,17 @@ Web3-Onboard is the quickest and easiest way to add multi-wallet and multi-chain
 
 - **Themable:** Powerful customization options for all your needs. Style Web3 Onboard to fit into your existing designs, or pick from our pre-made themes.
 
-- **Unified Provider Interface:** All wallet modules expose a provider that is patched to be compliant with the EIP-1193, EIP-1102, EIP-3085 and EIP-3326 specifications. Whether your user is using Ledger or Metamask the provider will operate identically.
+- **Unified Provider Interface:** All wallet modules expose a provider that is patched to be compliant with the EIP-1193, EIP-1102, EIP-3085, EIP-3326, and EIP-6963 specifications. Whether your user is using Ledger or Metamask, the provider will operate identically.
 
-- **Dynamic Imports:** Supporting multiple wallets in your app requires a lot of dependencies. Onboard dynamically imports a wallet and its dependencies only when the user selects it, so that minimal bandwidth is used.
+- **Dynamic Imports:** Supporting multiple wallets in your app requires a lot of dependencies. Web3 Onboard dynamically imports a wallet and its dependencies only when the user selects it, so that minimal bandwidth is used.
 
-- **Framework Agnostic:** Avoid framework lock in -- Web3-Onboard works with any framework and includes helper packages for vue & react.
+- **Framework Agnostic:** Avoid framework lock in -- Web3 Onboard works with any framework and includes helper packages for vue & react.
 
 - **Notify:** Real-time transaction notifications for all transaction states for the connected wallet address(es). In-notification speedups & cancels for hardware wallet connections.
 
 ### Natively Supported EVM Chains
 
-web3-onboard supports ALL EVM networks. Supporting a new network is simply a matter of adding its details in the Chains section upon initialization. For more information see [initialization options](../../modules/core.md#initialization).
+Web3 Onboard supports all EVM networks. Supporting a new network is simply a matter of adding its details in the Chains section upon initialization. For more information see [initialization options](../../modules/core.md#initialization).
 
 - Ethereum
 - Arbitrum One
@@ -52,13 +52,14 @@ web3-onboard supports ALL EVM networks. Supporting a new network is simply a mat
 - Moonriver
 - Sepolia
 - Base Goerli
+- Degen
 - All other EVM networks
 
-### Optional - Use an API key to fetch real time transaction data, balances & gas
+### Optional - Use an API key to fetch real-time transaction data, balances & gas
 
-Using a Blocknative API key with web3-onboard on the free plan will allow you to gain the benefits of Blocknative balance & transaction services. Blocknative has a free forever plan you can always use.
+Using a Blocknative API key with Web3 Onboard on the free plan will allow you to gain the benefits of Blocknative balance & transaction services. Blocknative has a free forever plan you can always use.
 
-This step is not required to use web3-onboard. You can skip to the [**Quickstart**](/docs/overview/introduction#quickstart) step below if you want to use web3-onboard without API services or if you already have a Blocknative account & API key.
+This step is not required to use Web3 Onboard. You can skip to the [**Quickstart**](/docs/overview/introduction#quickstart) step below if you want to use Web3 Onboard without API services or if you already have a Blocknative account & API key.
 
 **Setup your Account**
 Go to the Account Dashboard at [https://explorer.blocknative.com/account](https://explorer.blocknative.com/account) and setup an account with an email address. You will receive an email to confirm your account.
@@ -68,7 +69,7 @@ On the Account Dashboard at [https://explorer.blocknative.com/account](https://e
 
 ## Quickstart
 
-Install the core Onboard library, the injected wallets module and optionally ethers.js to support browser extension and mobile wallets:
+Install the core web3-onboard library, the injected wallets module, and optionally ethers.js to support browser extension and mobile wallets:
 
 <Tabs values={['npm', 'yarn']}>
 <TabPanel value="yarn">
@@ -87,7 +88,7 @@ npm i @web3-onboard/core @web3-onboard/injected-wallets ethers
   </TabPanel>
 </Tabs>
 
-You can find a link to web3-onboard's official NPM Documentation here: [@web3-onboard/core Official NPM Documentation](https://www.npmjs.com/package/@web3-onboard/core)
+You can find a link to Web3 Onboard's official NPM Documentation here: [@web3-onboard/core Official NPM Documentation](https://www.npmjs.com/package/@web3-onboard/core)
 
 Then initialize in your app:
 
@@ -171,9 +172,9 @@ if (wallets[0]) {
 
 ## Wallet Modules
 
-Add other wallet modules such as Wallet Connect or Ledger to increase the support and functionality of your web3-onboard implementation. All modules can be accessed through the subpages of web3-onboard docs on the left.
+Add other wallet modules such as Wallet Connect or Ledger to increase the support and functionality of your Web3 Onboard implementation. All modules can be accessed through the subpages of Web3 Onboard docs on the left.
 
-We recommend you add the [Core Repo](../../modules/core.md#install) and consider adding the [Injected Wallets](../../wallets/injected.md#install) module to get connected with wallets like Metamask, Trust, Coinbase Wallet & more right away.
+We recommend you add the [Core Repo](../../modules/core.md#install) and consider adding the [Injected Wallets](../../wallets/injected.md#install) module to get connected with wallets like Metamask, Trust, Coinbase Wallet, and more right away.
 
 [**Core Repo**](../../modules/core.md#install)
 
@@ -211,7 +212,7 @@ We recommend you add the [Core Repo](../../modules/core.md#install) and consider
 
 ## Test out the demo app
 
-Test out the current functionality of web3-onboard in a small browser demo:
+Test out the current functionality of Web3 Onboard in a small browser demo:
 
 - Clone the repo: `git clone git@github.com:blocknative/web3-onboard.git`
 - Change it to the onboard directory: `cd web3-onboard`
@@ -224,10 +225,10 @@ Test out the current functionality of web3-onboard in a small browser demo:
 
 Checkout our live demo using React at [https://reactdemo.blocknative.com/](https://reactdemo.blocknative.com/)
 
-The demo is open source so you can see a sample implementation of web3-onboard: [https://github.com/blocknative/react-demo](https://github.com/blocknative/react-demo)
+The demo is open source so you can see a sample implementation of Web3 Onboard: [https://github.com/blocknative/react-demo](https://github.com/blocknative/react-demo)
 
 ## More Examples
 
-You can find starter examples from the web3 community here using web3-onboard:
+You can find starter examples from the web3 community here using Web3 Onboard:
 
 - [eth-scaffold](https://github.com/scaffold-eth/scaffold-eth-examples/tree/bnc-onboard)

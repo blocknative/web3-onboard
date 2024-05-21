@@ -4,17 +4,17 @@ title: Custom Styling
 
 # {$frontmatter.title}
 
-You can customize web3-onboard to match the look and feel of your dapp. web3-onboard exposes css variables for each of its UI components.
+You can customize Web3 Onboard to match the look and feel of your dapp. Web3 Onboard exposes css variables for each of its UI components.
 
-Interested in seeing how web3-onboard will look on your site?
+Interested in seeing how Web3 Onboard will look on your site?
 
 [Try out our theming tool](/theming-tool)
 
-It will allow you to customize the look and feel of web3-onboard, try different themes or create your own, and preview how web3-onboard will look on your site by entering a URL or adding a screenshot.
+It will allow you to customize the look and feel of Web3 Onboard, try different themes or create your own, and preview how Web3 Onboard will look on your site by entering a URL or adding a screenshot.
 
 ## CSS custom properties (variables)
 
-The Onboard styles can customized via [CSS custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties). The following properties and their default properties can be customized by adding these variables to the `:root` in your CSS file:
+The Web3 Onboard styles can be customized via [CSS custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties). The following properties and their default properties can be customized by adding these variables to the `:root` in your CSS file:
 
 ```css
 :root {

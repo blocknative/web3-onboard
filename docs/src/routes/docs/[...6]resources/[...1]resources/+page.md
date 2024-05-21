@@ -4,7 +4,7 @@ title: Resources
 
 # {$frontmatter.title}
 
-Useful Videos, Blog Posts & Links for Web3-Onboard
+Useful Videos, Blog Posts & Links for Web3 Onboard.
 
 ### Videos
 
@@ -28,10 +28,6 @@ Useful Videos, Blog Posts & Links for Web3-Onboard
 
 [Curve](https://www.curve.fi)
 
-[Mintgate](https://app.mintgate.io/login)
-
-[Spritz Finance](https://www.spritz.finance)
-
 [Beefy Finance](https://app.beefy.com)
 
 [Alienworlds](https://alienworlds.io/)
@@ -43,6 +39,8 @@ Useful Videos, Blog Posts & Links for Web3-Onboard
 [Synthetix - Governance](https://governance.synthetix.io/)
 
 [Merlin](https://merlin.valktech.io/)
+
+[Mintgate](https://app.mintgate.io/login)
 
 ### Other links
 

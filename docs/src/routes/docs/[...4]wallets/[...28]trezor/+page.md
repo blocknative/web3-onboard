@@ -4,7 +4,7 @@ title: Trezor
 
 # {$frontmatter.title}
 
-Wallet module for connecting Trezor hardware wallets to web3-onboard
+Wallet module for connecting Trezor hardware wallets to Web3 Onboard.
 
 ### Install
 
