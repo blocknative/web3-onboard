@@ -448,6 +448,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/particle-network
     steps:
       - node-build-steps
+  build-passport:
+    docker:
+      - image: cimg/node:18.0.0
+    working_directory: ~/web3-onboard-monorepo/packages/passport
+    steps:
+      - node-build-steps
 
   # Build staging/Alpha releases
   build-staging-core:
@@ -730,6 +736,12 @@ jobs:
     docker:
       - image: cimg/node:18.0.0
     working_directory: ~/web3-onboard-monorepo/packages/particle-network
+    steps:
+      - node-staging-build-steps
+  build-staging-passport:
+    docker:
+      - image: cimg/node:18.0.0
+    working_directory: ~/web3-onboard-monorepo/packages/passport
     steps:
       - node-staging-build-steps
 
@@ -1017,4 +1029,10 @@ workflows:
       - build-particle:
           <<: *deploy_production_filters
       - build-staging-particle:
+          <<: *deploy_staging_filters
+  passport:
+    jobs:
+      - build-passport:
+          <<: *deploy_production_filters
+      - build-staging-passport:
           <<: *deploy_staging_filters

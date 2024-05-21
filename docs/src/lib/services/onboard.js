@@ -173,7 +173,7 @@ const intiOnboard = async (theme) => {
       infinityWallet,
       blocto,
       capsule,
-      particle
+      particle,
       // capsule
 
       // venly

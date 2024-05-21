@@ -1,6 +1,6 @@
 # Venly
 
-Wallet module for connecting Venly Wallet SDK to web3-onboard. Check out the [Venly Docs](https://docs.venly.io/) for more information.
+Wallet module for connecting Venly Wallet SDK to Web3 Onboard. Check out the [Venly Docs](https://docs.venly.io/) for more information.
 ## Install
 
 <Tabs values={['yarn', 'npm']}>

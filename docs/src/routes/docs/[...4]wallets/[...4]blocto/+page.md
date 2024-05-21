@@ -4,7 +4,7 @@ title: Blocto
 
 # {$frontmatter.title}
 
-Wallet module for connecting Blocto SDK to web3-onboard. Check out the [Blocto Developer Docs](https://docs.blocto.app/blocto-sdk/javascript-sdk/evm-sdk) for more information.
+Wallet module for connecting Blocto SDK to Web3 Onboard. Check out the [Blocto Developer Docs](https://docs.blocto.app/blocto-sdk/javascript-sdk/evm-sdk) for more information.
 
 ## Install
 
@@ -54,7 +54,7 @@ For build env configurations and setups please see the Build Env section [here](
 
 Node built-ins are automatically bundled in v4 so that portion is handled automatically.
 
-**Blocto** support will require a Babel to compile from es6 if not already supported. See config for Babel and Webpack4 as follows
+**Blocto** support will require a Babel to compile from es6 if not already supported. See config for Babel and Webpack4 as follows:
 
 `npm i --save-dev @babel/cli @babel/core @babel/node @babel/plugin-proposal-nullish-coalescing-operator @babel/plugin-proposal-optional-chaining @babel/plugin-syntax-bigint @babel/register`
 **AND**
