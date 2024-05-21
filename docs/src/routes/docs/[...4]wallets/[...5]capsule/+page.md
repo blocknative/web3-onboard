@@ -45,7 +45,7 @@ type CapsuleInitOptions = {
   constructorOpts?: Partial<ConstructorOpts>
   appName: string
   /** @optional capsule modal props */
-  modalProps?: Partial<CapsuleModalV2Props>
+  modalProps?: Partial<CapsuleModalPropsForInit>
 }
 ```
 ## Usage

@@ -70,8 +70,8 @@ function validateOptions(
 function capsule(options: CapsuleInitOptions): WalletInit {
   return () => {
     return {
-      label: 'Capsule',
-      getIcon: async () => (await import('./icon')).default,
+      label: options.walletLabel || 'Capsule',
+      getIcon:options.walletIcon || (async () => (await import('./icon')).default),
       getInterface: async ({ chains, appMetadata }) => {
         const { default: Capsule } = await import(
           '@usecapsule/react-sdk'
