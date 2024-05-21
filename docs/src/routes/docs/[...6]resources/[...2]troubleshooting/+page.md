@@ -6,7 +6,7 @@ title: Troubleshooting
 
 ## Where's My Wallet? (Injected/Browser Extension)
 
-This is a common problem and as the web3 space grows as do the pains of decentralized teams trying to find solutions that there are not standards for… yet.
+This is a common problem: as the web3 space grows so do the pains of decentralized teams trying to find solutions that there are not standards for… yet.
 
 ### 1. Disabled Browser Extension
 
@@ -44,7 +44,7 @@ Disable that wallet, refresh the page and run the steps above again.
 
 ### 3. Brave browser default Web3 Wallet
 
-Brave is a great browser and some of the best privacy, paid to view ads and even comes with a web3 wallet right off the bat! While this is all great it does come along with some challenges around web3 wallets. In the same vein as the issue noted above with conflicting wallets the built- in browser must be switched from the default wallet if you are wanting to use other browser based extension wallets such as MetaMask.
+Brave is a great browser with some of the best privacy, paid to view ads, and even comes with a web3 wallet right off the bat! While this is great it does come with some challenges regarding web3 wallets. In the same vein as the issue noted above with conflicting wallets, the built-in browser must be switched from the default wallet if you are wanting to use other browser based extension wallets such as MetaMask.
 
 This can be done by:
 
@@ -57,4 +57,4 @@ This can be done by:
 A desktop computer user may not see their browser-injected Ethereum-based web3 wallets if they are using an outdated browser or extension. MetaMask and other wallets may update their software frequently to address security concerns or to improve functionality. If a user is running an outdated version of their wallet extension or their browser, they may experience issues accessing their wallet.
 To address this issue, users should ensure that they are running the latest version of their browser and MetaMask extension. Users can check for updates by navigating to their browser's extension settings(on Chrome browser navigate to _chrome://extensions/_) and selecting “Update” at the top of the extensions window, through the extension store or updating through the wallet’s website.
 
-If you are still having issues feel free to visit the [Blocknative web3-onboard discord channel](https://discord.gg/4qZUshUY) or tag us on twitter for further support. We are always happy to assist and love working in the wallet space!
+If you are still having issues feel free to visit the [Blocknative Web3 Onboard discord channel](https://discord.gg/4qZUshUY) or tag us on twitter for further support. We are always happy to assist and love working with the wallet space!

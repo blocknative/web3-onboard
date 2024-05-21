@@ -4,7 +4,7 @@ title: Enkrypt
 
 # {$frontmatter.title}
 
-Wallet module for connecting Enkrypt wallet through web3-onboard
+Wallet module for connecting Enkrypt wallet through Web3 Onboard.
 
 ### Install
 

@@ -35,7 +35,11 @@
   import venlyModule from '@web3-onboard/venly'
   import bitgetModule from '@web3-onboard/bitget'
   import particleAuthModule from '@web3-onboard/particle-network'
-  import capsuleModule, { Environment } from '@web3-onboard/capsule'
+  import capsuleModule, {
+    Environment,
+    OAuthMethod,
+    Theme
+  } from '@web3-onboard/capsule'
   import {
     recoverAddress,
     arrayify,
@@ -47,6 +51,8 @@
   import VConsole from 'vconsole'
   import blocknativeIcon from './blocknative-icon.js'
   import DappAuth from '@blocto/dappauth'
+  import passportModule, { Network } from '@web3-onboard/passport'
+  import { WebauthnSigner } from '@0xpass/webauthn-signer'
 
   if (window.innerWidth < 700) {
     new VConsole()
@@ -172,6 +178,19 @@
   const blocto = bloctoModule()
   const tallyho = tallyHoModule()
 
+  const webauthnSigner = new WebauthnSigner({
+    rpId: 'localhost',
+    rpName: '0xPass'
+  })
+
+  const passport = passportModule({
+    network: Network.TESTNET,
+    scopeId: 'd8ae4424-c1f6-42b0-ab5e-2688bdaa0ff2',
+    signer: webauthnSigner,
+    fallbackProvider: '' // insert your alchemy / infura url here
+    // encryptionSecret: '' // encryption secret is optional, but advised to securely store values in browser storage
+  })
+
   const trezorOptions = {
     email: 'test@test.com',
     appUrl: 'https://www.blocknative.com',
@@ -217,7 +236,16 @@
   })
   const capsule = capsuleModule({
     environment: Environment.DEVELOPMENT,
-    apiKey: '992bbd9146d5de8ad0419f141d9a7ca7'
+    apiKey: '992bbd9146d5de8ad0419f141d9a7ca7',
+    modalProps: {
+      oAuthMethods: [OAuthMethod.GOOGLE, OAuthMethod.TWITTER],
+      theme: Theme.dark
+    },
+    constructorOpts: {
+      portalBackgroundColor: '#5e5656',
+      portalPrimaryButtonColor: '#ff6700',
+      portalTextColor: '#ffffff'
+    }
   })
 
   const onboard = Onboard({
@@ -255,7 +283,8 @@
       arcanaAuth,
       blocto,
       venly,
-      particle
+      particle,
+      passport
     ],
     // transactionPreview,
     gas,
@@ -298,12 +327,6 @@
         rpcUrl: 'https://nova.arbitrum.io/rpc'
       },
       {
-        id: '0x5',
-        token: 'ETH',
-        label: 'Goerli',
-        rpcUrl: 'https://ethereum-goerli.publicnode.com'
-      },
-      {
         id: '0x13881',
         token: 'MATIC',
         label: 'Polygon - Mumbai',
@@ -314,6 +337,12 @@
         token: 'ETH',
         label: 'Base',
         rpcUrl: 'https://mainnet.base.org'
+      },
+      {
+        id: '0xa4ec',
+        token: 'ETH',
+        label: 'Celo',
+        rpcUrl: 'https://1rpc.io/celo'
       },
       {
         id: '0x38',
@@ -340,8 +369,14 @@
       {
         id: 10,
         token: 'OETH',
-        label: 'Optimism',
+        label: 'OP Mainnet',
         rpcUrl: 'https://mainnet.optimism.io'
+      },
+      {
+        id: 666666666,
+        token: 'DEGEN',
+        label: 'Degen',
+        rpcUrl: 'https://rpc.degen.tips'
       }
     ],
     connect: {
@@ -398,7 +433,7 @@
           //     type: 'hint',
           //     message: 'Your in the pool, hope you brought a towel!',
           //     autoDismiss: 0,
-          //     link: `https://goerli.etherscan.io/tx/${transaction.hash}`
+          //     link: `https://sepolia.etherscan.io/tx/${transaction.hash}`
           //   }
           // }
         },
@@ -746,14 +781,14 @@
           <button on:click={() => onboard.setChain({ chainId: '0x1' })}
             >Set Chain to Mainnet</button
           >
-          <button on:click={() => onboard.setChain({ chainId: '0x5' })}
-            >Set Chain to Goerli</button
+          <button on:click={() => onboard.setChain({ chainId: 11155111 })}
+            >Set Chain to Sepolia</button
           >
           <button on:click={() => onboard.setChain({ chainId: '0x89' })}
             >Set Chain to Matic</button
           >
           <button on:click={() => onboard.setChain({ chainId: 10 })}
-            >Set Chain to Optimism</button
+            >Set Chain to OP Mainnet</button
           >
         </div>
         <div class="position-buttons">

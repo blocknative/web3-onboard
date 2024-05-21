@@ -13,14 +13,14 @@
   <TabPanel value="npm">
 
 ```sh copy
-npm i @web3-onboard/core @web3-onboard/injected @web3-onboard/transaction-preview
+npm i @web3-onboard/core @web3-onboard/injected-wallets @web3-onboard/transaction-preview
 ```
 
   </TabPanel>
   <TabPanel value="yarn">
 
 ```sh copy
-yarn add @web3-onboard/core @web3-onboard/injected @web3-onboard/transaction-preview
+yarn add @web3-onboard/core @web3-onboard/injected-wallets @web3-onboard/transaction-preview
 ```
 
   </TabPanel>
@@ -32,14 +32,14 @@ yarn add @web3-onboard/core @web3-onboard/injected @web3-onboard/transaction-pre
   <TabPanel value="npm">
 
 ```sh copy
-npm i @web3-onboard/core @web3-onboard/injected @web3-onboard/transaction-preview
+npm i @web3-onboard/core @web3-onboard/injected-wallets @web3-onboard/transaction-preview
 ```
 
   </TabPanel>
   <TabPanel value="yarn">
 
 ```sh copy
-yarn add @web3-onboard/core @web3-onboard/injected @web3-onboard/transaction-preview
+yarn add @web3-onboard/core @web3-onboard/injected-wallets @web3-onboard/transaction-preview
 ```
 
   </TabPanel>
@@ -48,14 +48,14 @@ yarn add @web3-onboard/core @web3-onboard/injected @web3-onboard/transaction-pre
   <TabPanel value="npm">
 
 ```sh copy
-npm i @web3-onboard/core @web3-onboard/injected @web3-onboard/transaction-preview
+npm i @web3-onboard/core @web3-onboard/injected-wallets @web3-onboard/transaction-preview
 ```
 
   </TabPanel>
   <TabPanel value="yarn">
 
 ```sh copy
-yarn add @web3-onboard/core @web3-onboard/injected @web3-onboard/transaction-preview
+yarn add @web3-onboard/core @web3-onboard/injected-wallets @web3-onboard/transaction-preview
 ```
 
   </TabPanel>
@@ -90,7 +90,7 @@ yarn add @web3-onboard/core @web3-onboard/injected @web3-onboard/transaction-pre
 
 ## Installation
 
-Install the core Onboard library and the injected wallets module to support browser extension and mobile wallets:
+Install the core Web3 Onboard library and the injected wallets module to support browser extension and mobile wallets:
 
 ```bash copy
 npm i @web3-onboard/core @web3-onboard/injected-wallets

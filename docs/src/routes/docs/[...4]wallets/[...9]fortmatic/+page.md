@@ -4,7 +4,7 @@ title: Fortmatic
 
 # {$frontmatter.title}
 
-Wallet module for connecting Fortmatic wallets to web3-onboard
+Wallet module for connecting Fortmatic wallets to Web3 Onboard.
 
 ### Install
 

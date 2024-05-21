@@ -1,6 +1,4 @@
-import { Environment } from '@usecapsule/web-sdk'
-import { ChainId } from '@web3-onboard/common'
-
+import type { ConstructorOpts, Environment, CapsuleModalV2Props } from '@usecapsule/react-sdk'
 /**
  * Options for initializing the Capsule environment.
  *
@@ -11,7 +9,14 @@ import { ChainId } from '@web3-onboard/common'
  * @property {string} [apiKey] - API key is necessary for performing transactions and wallet creation.
  *           This key needs to be obtained by completing a form available at https://7f4shq8oyfd.typeform.com/to/F86oVLhb.
  */
+
+export type CapsuleModalPropsForInit = Omit<CapsuleModalV2Props,'isOpen' | 'capsule'>;
+
 export type CapsuleInitOptions = {
   environment: Environment
-  apiKey: string
+  apiKey: string,
+  constructorOpts?: Partial<ConstructorOpts>
+  modalProps?: Partial<CapsuleModalPropsForInit>
+  walletIcon: () => Promise<string>
+  walletLabel?: string 
 }

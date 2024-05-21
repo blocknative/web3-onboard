@@ -4,11 +4,11 @@ import injectedModule from '@web3-onboard/injected-wallets'
 
 const INFURA_KEY = ''
 
-const ethereumRopsten = {
-  id: '0x3',
-  token: 'rETH',
-  label: 'Ethereum Ropsten',
-  rpcUrl: `https://ropsten.infura.io/v3/${INFURA_KEY}`
+const ethereumSepolia = {
+  id: 11155111,
+  token: 'ETH',
+  label: 'Sepolia',
+  rpcUrl: 'https://rpc.sepolia.org/'
 }
 
 const polygonMainnet = {
@@ -23,17 +23,29 @@ const baseMainnet = {
   label: 'Base',
   rpcUrl: 'https://mainnet.base.org'
 }
+const celoMainnet = {
+  id: '0xa4ec',
+  token: 'ETH',
+  label: 'Celo',
+  rpcUrl: 'https://1rpc.io/celo'
+},
+{
+  id: 666666666,
+  token: 'DEGEN',
+  label: 'Degen',
+  rpcUrl: 'https://rpc.degen.tips'
+}
 
-const chains = [ethereumRopsten, polygonMainnet, baseMainnet]
+const chains = [ethereumRopsten, polygonMainnet, baseMainnet,celoMainnet]
 const wallets = [injectedModule()]
 
 const web3Onboard = init({
   wallets,
   chains,
   appMetadata: {
-    name: "Web3-Onboard Demo",
+    name: 'Web3-Onboard Demo',
     icon: '<svg>My App Icon</svg>',
-    description: "A demo of Web3-Onboard."
+    description: 'A demo of Web3-Onboard.'
   }
 })
 

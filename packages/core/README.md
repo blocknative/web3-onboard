@@ -548,7 +548,7 @@ type NotificationType = 'pending' | 'success' | 'error' | 'hint'
 
 declare type Network =
   | 'main'
-  | 'goerli'
+  | 'sepolia'
   | 'matic-main'
   | 'matic-mumbai'
   | 'local'
@@ -575,7 +575,6 @@ const injected = injectedModule()
 
 // Only one RPC endpoint required per chain
 const ETH_MAINNET_RPC = `https://mainnet.infura.io/v3/${INFURA_KEY}` || `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
-const ETH_GOERLI_RPC = `https://goerli.infura.io/v3/${INFURA_ID}` || `https://eth-goerli.g.alchemy.com/v2/${ALCHEMY_KEY}`
 
 const onboard = Onboard({
   // head to https://explorer.blocknative.com/account to sign up for free
@@ -593,12 +592,6 @@ const onboard = Onboard({
       token: 'ETH',
       label: 'Sepolia',
       rpcUrl: 'https://rpc.sepolia.org/'
-    },
-    {
-      id: '0x5',
-      token: 'ETH',
-      label: 'Goerli',
-      rpcUrl: ETH_GOERLI_RPC
     },
     {
       id: 42161,
@@ -635,6 +628,12 @@ const onboard = Onboard({
       token: 'FTM',
       label: 'Fantom Mainnet',
       rpcUrl: 'https://rpc.ftm.tools/'
+    },
+    {
+      id: 666666666,
+      token: 'DEGEN',
+      label: 'Degen',
+      rpcUrl: 'https://rpc.degen.tips'
     }
   ],
   appMetadata: {

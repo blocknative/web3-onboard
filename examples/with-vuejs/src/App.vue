@@ -28,6 +28,18 @@ init({
       token: 'ARB',
       label: 'Arbitrum Nova',
       rpcUrl: 'https://nova.arbitrum.io/rpc'
+    },
+    {
+      id: '0xa4ec',
+      token: 'ETH',
+      label: 'Celo',
+      rpcUrl: 'https://1rpc.io/celo'
+    },
+    {
+      id: 666666666,
+      token: 'DEGEN',
+      label: 'Degen',
+      rpcUrl: 'https://rpc.degen.tips'
     }
   ]
 })

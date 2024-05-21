@@ -106,6 +106,8 @@ const onboard = Onboard({
 - SubWallet - _Desktop & Mobile_
 - Kayros - _Desktop_
 - Lif3Wallet - _Mobile_
+- Zodiac Pilot - _Desktop_
+- Echooo - _Desktop & Mobile_
 
 ## Filtering Wallets
 

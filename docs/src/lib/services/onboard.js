@@ -142,6 +142,7 @@ const intiOnboard = async (theme) => {
     appId: 'b1f0239a-edb0-41f9-b0f5-ab780bb02a9e'
   })
 
+
   return Onboard({
     connect: { autoConnectAllPreviousWallet: true },
     wallets: [
@@ -173,7 +174,7 @@ const intiOnboard = async (theme) => {
       infinityWallet,
       blocto,
       capsule,
-      particle
+      particle,
       // capsule
 
       // venly
@@ -193,12 +194,6 @@ const intiOnboard = async (theme) => {
               </svg>`
           }
         ]
-      },
-      {
-        id: '0x5',
-        token: 'ETH',
-        label: 'Goerli',
-        rpcUrl: `https://goerli.infura.io/v3/${INFURA_ID}`
       },
       {
         id: 11155111,
@@ -245,8 +240,14 @@ const intiOnboard = async (theme) => {
       {
         id: '0xA',
         token: 'OETH',
-        label: 'Optimism',
+        label: 'OP Mainnet',
         rpcUrl: 'https://mainnet.optimism.io'
+      },
+      {
+        id: 666666666,
+        token: 'DEGEN',
+        label: 'Degen',
+        rpcUrl: 'https://rpc.degen.tips'
       }
     ],
     appMetadata: {
