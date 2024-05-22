@@ -58,7 +58,7 @@
     disconnect,
     signMessage as wagmiSignMessage,
     getConnectors
-  } from '@wagmi/core'
+  } from '@web3-onboard/wagmi'
   import { parseEther, isHex, fromHex } from 'viem'
   import passportModule, { Network } from '@web3-onboard/passport'
   import { WebauthnSigner } from '@0xpass/webauthn-signer'

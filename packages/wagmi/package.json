@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/wagmi",
-  "version": "2.0.0-wagmi.1",
+  "version": "2.0.0-wagmi.2",
   "description": "Module to configure, connect and return web3-onboard wallets as wagmi wallets and wagmi-config to be used with wagmi-core methods",
   "keywords": [
     "Ethereum",

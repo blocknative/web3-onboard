@@ -40,7 +40,7 @@
     "@web3-onboard/frame": "^2.1.0-wagmi.1",
     "@web3-onboard/frontier": "^2.1.0-wagmi.1",
     "@web3-onboard/gas": "^2.2.0-wagmi.1",
-    "@web3-onboard/wagmi": "^2.0.0-wagmi.1",
+    "@web3-onboard/wagmi": "^2.0.0-wagmi.2",
     "@web3-onboard/gnosis": "^2.3.0-wagmi.1",
     "@web3-onboard/infinity-wallet": "^2.1.0-wagmi.1",
     "@web3-onboard/injected-wallets": "^2.11.0-wagmi.1",

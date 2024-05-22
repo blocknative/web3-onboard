@@ -24,6 +24,7 @@ import {
   type Chain,
   type EIP1193Provider
 } from '@web3-onboard/common'
+export * from '@wagmi/core'
 
 export type {
   Config,
