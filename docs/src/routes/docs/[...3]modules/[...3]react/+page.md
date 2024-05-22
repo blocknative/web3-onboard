@@ -46,6 +46,7 @@ const rpcUrl = `https://mainnet.infura.io/v3/${infuraKey}`
 
 // initialize Onboard
 init({
+  // This javascript object is unordered meaning props do not require a certain order
   apiKey,
   wallets: [injected],
   chains: [

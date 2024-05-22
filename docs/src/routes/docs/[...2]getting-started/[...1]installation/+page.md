@@ -110,6 +110,7 @@ const appMetadata = {
 
 ```ts
 const onboard = Onboard({
+  // This javascript object is unordered meaning props do not require a certain order
   wallets,
   chains,
   appMetadata
