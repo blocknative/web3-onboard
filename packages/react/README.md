@@ -454,7 +454,7 @@ updateLocale('es')
 This hook allows you to get the WagmiConfig (Config from the Wagmi project) from @web3-onboard/core if web3-onboard has been initialized with the wagmi property imported and passing into the web3-onboard/core config.
 
 ```typescript
-import { sendTransaction as wagmiSendTransaction } from '@wagmi/core'
+import { sendTransaction as wagmiSendTransaction } from '@web3-onboard/wagmi'
 import { parseEther } from 'viem'
 import { useWagmiConfig, wallets } from '@web3-onboard/react'
 import type { WagmiConfig } from '@web3-onboard/core'

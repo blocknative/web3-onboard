@@ -25,7 +25,7 @@ import {
   switchChain,
   disconnect,
   getConnectors
-} from '@wagmi/core'
+} from '@web3-onboard/wagmi'
 import { parseEther, isHex, fromHex } from 'viem'
 
 const injected = injectedModule()
