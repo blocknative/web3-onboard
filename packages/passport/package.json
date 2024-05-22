@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/passport",
-  "version": "2.0.0-wagmi.1",
+  "version": "2.1.0-wagmi.1",
   "description": "passport",
   "module": "dist/index.js",
   "browser": "dist/index.js",

@@ -142,7 +142,6 @@ const intiOnboard = async (theme) => {
     appId: 'b1f0239a-edb0-41f9-b0f5-ab780bb02a9e'
   })
 
-
   return Onboard({
     connect: { autoConnectAllPreviousWallet: true },
     wallets: [
