@@ -464,7 +464,7 @@ type useWagmiConfig = (): WagmiConfig
 const wagmiConfig = useWagmiConfig()
 const w3OWallets = useWallets()
 
-const sendTransaction = async provider => {
+const sendTransaction = async () => {
   // current primary wallet - as multiple wallets can connect this value is the currently active
   const [currentPrimaryWallet] = w3OWallets
   const result = await wagmiSendTransaction(wagmiConfig, {

@@ -61,7 +61,7 @@ const onboard = Onboard({
   // ... other Onboard options
 })
 
-const sendTransaction = async (provider) => {
+const sendTransaction = async () => {
   // current primary wallet - as multiple wallets can connect this value is the currently active
   const [currentPrimaryWallet] = onboard.state.get().wallets
   const wagmiConfig = onboard.state.get().wagmiConfig
