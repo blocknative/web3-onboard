@@ -1,23 +1,37 @@
-import { WalletInit } from '@web3-onboard/common'
+import type {
+  EIP1193Provider,
+  WalletInit,
+  WalletInterface
+} from '@web3-onboard/common'
 
 function coinbaseWallet({
+  supportedWalletType = 'all',
   darkMode = false,
   enableMobileWalletLink = false,
   reloadOnDisconnect = true
 }: {
-  /** @optional Use dark theme */
+  /** @deprecated Deprecated after version 2.2.7 of @web3-onboard/coinbase Use dark theme */
   darkMode?: boolean
-  /** @optional whether to connect mobile web app via WalletLink, defaults to false */
+  /** @deprecated Deprecated after version 2.2.7 of @web3-onboard/coinbase whether to connect mobile web app via WalletLink, defaults to false */
   enableMobileWalletLink?: boolean
-  /** @optional whether or not to reload dapp automatically after disconnect, defaults to true */
+  /** @deprecated Deprecated after version 2.2.7 of @web3-onboard/coinbase whether or not to reload dapp automatically after disconnect, defaults to true */
   reloadOnDisconnect?: boolean
+  /** Type of Coinbase wallets to support - options : 'all' | 'smartWalletOnly' | 'eoaOnly' - Default to `all` */
+  supportedWalletType?: 'all' | 'smartWalletOnly' | 'eoaOnly'
 } = {}): WalletInit {
   return () => {
     return {
       label: 'Coinbase Wallet',
       getIcon: async () => (await import('./icon.js')).default,
-      getInterface: async ({ chains, appMetadata }) => {
-        const [chain] = chains
+      getInterface: async ({
+        chains,
+        appMetadata
+      }): Promise<WalletInterface> => {
+        if (enableMobileWalletLink || reloadOnDisconnect) {
+          console.warn(
+            'enableMobileWalletLink and reloadOnDisconnect are deprecated after version 2.2.7 of @web3-onboard/coinbase'
+          )
+        }
         const { name, icon } = appMetadata || {}
 
         // according to https://github.com/wagmi-dev/wagmi/issues/383
@@ -35,25 +49,27 @@ function coinbaseWallet({
         const base64 = window.btoa(icon || '')
         const appLogoUrl = `data:image/svg+xml;base64,${base64}`
 
+        const appChainIds = chains.map(({ id }) => parseInt(id, 16))
+
         const instance = new CoinbaseWalletSDKConstructor({
           appName: name || '',
           appLogoUrl,
-          darkMode,
-          enableMobileWalletLink,
-          reloadOnDisconnect
+          appChainIds
         })
 
-        const coinbaseWalletProvider = instance.makeWeb3Provider(
-          chain.rpcUrl,
-          parseInt(chain.id)
-        )
+        const coinbaseWalletProvider = instance.makeWeb3Provider({
+          options: supportedWalletType
+        })
 
         // patch the chainChanged event
         const on = coinbaseWalletProvider.on.bind(coinbaseWalletProvider)
         coinbaseWalletProvider.on = (event, listener) => {
+          // @ts-ignore
           on(event, val => {
             if (event === 'chainChanged') {
-              listener(`0x${(val as number).toString(16)}`)
+              const numberVal = `0x${(val).toString(16)}`
+              // @ts-ignore
+              listener(numberVal)
               return
             }
 
@@ -64,7 +80,7 @@ function coinbaseWallet({
         }
 
         return {
-          provider: coinbaseWalletProvider,
+          provider: coinbaseWalletProvider as EIP1193Provider,
           instance
         }
       }

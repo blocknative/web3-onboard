@@ -1,6 +1,7 @@
 # @web3-onboard/coinbase
 
 ## Wallet module for connecting Coinbase Wallet SDK to web3-onboard
+
 See [Coinbase Wallet Developer Docs](https://docs.cloud.coinbase.com/wallet-sdk/docs)
 
 ### Install
@@ -11,12 +12,14 @@ See [Coinbase Wallet Developer Docs](https://docs.cloud.coinbase.com/wallet-sdk/
 
 ```typescript
 type CoinbaseWalletOptions = {
-  /** @optional Use dark theme */
+  /** @deprecated Deprecated after version 2.2.7 of @web3-onboard/coinbase Use dark theme */
   darkMode?: boolean
-  /** @optional whether to connect mobile web app via WalletLink, defaults to false */
+  /** @deprecated Deprecated after version 2.2.7 of @web3-onboard/coinbase whether to connect mobile web app via WalletLink, defaults to false */
   enableMobileWalletLink?: boolean
-  /** @optional whether or not to reload dapp automatically after disconnect, defaults to true */
+  /** @deprecated Deprecated after version 2.2.7 of @web3-onboard/coinbase whether or not to reload dapp automatically after disconnect, defaults to true */
   reloadOnDisconnect?: boolean
+  /** Type of Coinbase wallets to support - options : 'all' | 'smartWalletOnly' | 'eoaOnly' - Default to `all` */
+  supportedWalletType?: 'all' | 'smartWalletOnly' | 'eoaOnly'
 }
 ```
 
@@ -27,7 +30,7 @@ import Onboard from '@web3-onboard/core'
 import coinbaseWalletModule from '@web3-onboard/coinbase'
 
 // initialize the module with options
-const coinbaseWalletSdk = coinbaseWalletModule({ darkMode: true })
+const coinbaseWalletSdk = coinbaseWalletModule()
 
 // can also initialize with no options...
 // const coinbaseWalletSdk = coinbaseWalletModule()
