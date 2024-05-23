@@ -62,7 +62,7 @@
   },
   "dependencies": {
     "@web3-onboard/core": "^2.22.0-wagmi.3",
-    "@web3-onboard/common": "^2.4.0-wagmi.1",
+    "@web3-onboard/common": "^2.4.0-wagmi.2",
     "use-sync-external-store": "1.0.0"
   },
   "peerDependencies": {

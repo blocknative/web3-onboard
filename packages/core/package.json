@@ -71,7 +71,7 @@
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
     "@web3-onboard/gas": "^2.1.5",
-    "@web3-onboard/wagmi": "^2.0.0-wagmi.1",
+    "@web3-onboard/wagmi": "^2.0.0-wagmi.2",
     "@web3-onboard/transaction-preview": "^2.0.5",
     "@web3-onboard/unstoppable-resolution": "^2.0.0-alpha.1",
     "eslint": "^7.32.0",
@@ -87,7 +87,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@web3-onboard/common": "2.4.0-wagmi.1",
+    "@web3-onboard/common": "2.4.0-wagmi.2",
     "bnc-sdk": "^4.6.7",
     "bowser": "^2.11.0",
     "eventemitter3": "^4.0.7",
