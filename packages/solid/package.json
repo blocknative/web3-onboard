@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/solid",
-  "version": "2.1.0-wagmi.2",
+  "version": "2.1.0-alpha.2",
   "description": "A collection of solid Composables for integrating Web3-Onboard in to a Solid project. Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardized spec compliant web3 providers for all supported wallets, modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
   "keywords": [
     "Ethereum",
@@ -62,8 +62,8 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.4.0-wagmi.2",
-    "@web3-onboard/core": "^2.22.0-wagmi.2",
+    "@web3-onboard/common": "^2.4.0-alpha.2",
+    "@web3-onboard/core": "^2.22.0-alpha.2",
     "solid-js": "^1.8.1"
   }
 }
