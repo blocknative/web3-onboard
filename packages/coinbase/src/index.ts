@@ -61,15 +61,28 @@ function coinbaseWallet({
           options: supportedWalletType
         })
 
-        // patch the chainChanged event
-        const on = coinbaseWalletProvider.on.bind(coinbaseWalletProvider)
+// patch the chainChanged event
+const on = coinbaseWalletProvider.on.bind(coinbaseWalletProvider)
+console.log('coinbaseWalletProvider', coinbaseWalletProvider)
+on('chainChanged', (chainId: string) => {
+  console.log('chainChanged in cb provider', chainId)
+})
+on('connect', (chainId: any) => {
+  console.log('connect in cb provider', chainId)
+})
+on('accountsChanged', (chainId: any) => {
+  console.log('accountsChanged in cb provider', chainId)
+})
         coinbaseWalletProvider.on = (event, listener) => {
+          console.log(event, listener)
           // @ts-ignore
           on(event, val => {
+            console.log('val', val)
             if (event === 'chainChanged') {
-              const numberVal = `0x${(val).toString(16)}`
+              const hexVal = `0x${val.toString(16)}`
+              console.log(val)
               // @ts-ignore
-              listener(numberVal)
+              listener(hexVal)
               return
             }
 

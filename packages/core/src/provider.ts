@@ -448,9 +448,10 @@ export function switchChain(
   provider: EIP1193Provider,
   chainId: ChainId
 ): Promise<unknown> {
+  console.log('switchChain',  parseInt(chainId, 16))
   return provider.request({
     method: 'wallet_switchEthereumChain',
-    params: [{ chainId }]
+    params: [{ chainId: parseInt(chainId, 16) }]
   })
 }
 
