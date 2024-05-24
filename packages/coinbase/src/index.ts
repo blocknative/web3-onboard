@@ -49,8 +49,11 @@ function coinbaseWallet({
         const base64 = window.btoa(icon || '')
         const appLogoUrl = `data:image/svg+xml;base64,${base64}`
 
-        const appChainIds = chains.map(({ id }) => parseInt(id, 16))
-
+        const appChainIds = chains.map(
+          // @ts-ignore - treating hex strings as numbers as they are expected to be hex numbers
+          ({ id }) => id as number
+        )
+        
         const instance = new CoinbaseWalletSDKConstructor({
           appName: name || '',
           appLogoUrl,
@@ -61,26 +64,35 @@ function coinbaseWallet({
           options: supportedWalletType
         })
 
-// patch the chainChanged event
-const on = coinbaseWalletProvider.on.bind(coinbaseWalletProvider)
-console.log('coinbaseWalletProvider', coinbaseWalletProvider)
-on('chainChanged', (chainId: string) => {
-  console.log('chainChanged in cb provider', chainId)
-})
-on('connect', (chainId: any) => {
-  console.log('connect in cb provider', chainId)
-})
-on('accountsChanged', (chainId: any) => {
-  console.log('accountsChanged in cb provider', chainId)
-})
+        // patch the chainChanged event
+        const on = coinbaseWalletProvider.on.bind(coinbaseWalletProvider)
+        console.log('coinbaseWalletProvider', coinbaseWalletProvider)
+        on('chainChanged', (chainId: string) => {
+          console.log('chainChanged in cb provider', chainId)
+        })
+        on('connect', (chainId: any) => {
+          console.log('connect in cb provider', chainId)
+        })
+        on('accountsChanged', (chainId: any) => {
+          console.log('accountsChanged in cb provider', chainId)
+        })
         coinbaseWalletProvider.on = (event, listener) => {
-          console.log(event, listener)
           // @ts-ignore
           on(event, val => {
-            console.log('val', val)
             if (event === 'chainChanged') {
-              const hexVal = `0x${val.toString(16)}`
-              console.log(val)
+              let hexVal: string
+              // TODO: Refine using viem functions
+              if (typeof val === 'number') {
+                hexVal = `0x${val.toString(16)}`
+              } else if (
+                typeof val === 'string' &&
+                /^0x[0-9a-fA-F]+$/.test(val)
+              ) {
+                hexVal = val
+              } else {
+                throw new Error('Invalid chainId')
+              }
+
               // @ts-ignore
               listener(hexVal)
               return
