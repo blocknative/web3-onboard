@@ -286,7 +286,7 @@
       particle,
       passport
     ],
-    // transactionPreview,
+    transactionPreview,
     gas,
     chains: [
       {
