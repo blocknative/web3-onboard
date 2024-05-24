@@ -107,10 +107,6 @@ type InitOptions = {
    */
   containerElements?: Partial<ContainerElements>
   /**
-   * Transaction Preview module
-   */
-  transactionPreview?: TransactionPreviewAPI
-  /**
    * Custom or predefined theme for Web3Onboard
    * BuiltInThemes: ['default', 'dark', 'light', 'system']
    * or customize with a ThemingMap object.

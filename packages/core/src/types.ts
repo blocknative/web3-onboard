@@ -13,7 +13,6 @@ import type {
 
 import type gas from '@web3-onboard/gas'
 import type unstoppableResolution from '@web3-onboard/unstoppable-resolution'
-import type { TransactionPreviewAPI } from '@web3-onboard/transaction-preview'
 
 import type en from './i18n/en.json'
 import type { EthereumTransactionData, Network } from 'bnc-sdk'
@@ -60,10 +59,6 @@ export interface InitOptions {
    *  element for svelte to attach the component
    */
   containerElements?: Partial<ContainerElements>
-  /**
-   * Transaction Preview module
-   */
-  transactionPreview?: TransactionPreviewAPI
   /**
    * Custom or predefined theme for Web3Onboard
    * BuiltInThemes: ['default', 'dark', 'light', 'system']
@@ -191,7 +186,6 @@ export type Configuration = {
   apiKey?: string
   gas?: typeof gas
   containerElements?: ContainerElements
-  transactionPreview?: TransactionPreviewAPI
   unstoppableResolution?: typeof unstoppableResolution
 }
 

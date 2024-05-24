@@ -1,10 +1,8 @@
 import type { MultiChain } from 'bnc-sdk'
-import type SDK from 'bnc-sdk'
 import { configuration } from './configuration.js'
 import { handleTransactionUpdates } from './notify.js'
 
 let blocknativeMultiChainSdk: MultiChain
-let blocknativeSdk: SDK
 
 /**
  *
@@ -26,25 +24,4 @@ export async function getBNMulitChainSdk(): Promise<MultiChain | null> {
   }
 
   return blocknativeMultiChainSdk
-}
-
-/**
- *
- * @returns SDK if apiKey
- */
-export async function getBlocknativeSdk(): Promise<SDK> {
-  const { apiKey } = configuration
-
-  if (!apiKey) return null
-
-  if (!blocknativeSdk) {
-    const { default: Blocknative } = await import('bnc-sdk')
-    blocknativeSdk = new Blocknative({
-      dappId: configuration.apiKey,
-      networkId: 1
-    })
-    return blocknativeSdk
-  }
-
-  return blocknativeSdk
 }

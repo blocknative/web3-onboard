@@ -11,7 +11,6 @@
   import NetworksGraphic from './svg/networks-graphic.svg'
   import AccountCenterGraphic from './svg/account-center-graphic.svg'
   import WalletsGraphic from './svg/wallet-row.svg'
-  import TransactionPreviewGraphic from './svg/transaction-preview-graphic.svg'
 </script>
 
 <section class="features-a">
@@ -89,37 +88,6 @@
       style="margin: 0 auto; max-width: none;"
     />
   </ScrollContainer>
-  <Container>
-    <div class="flexbox">
-      <div>
-        <img
-          src={TransactionPreviewGraphic}
-          alt="Transaction Preview"
-          style="margin: 0 auto; max-width: none;"
-        />
-      </div>
-      <div>
-        <TextBlock
-          title={'Transaction Preview'}
-          subtitle={'Preview transactions to see net-balance changes and gas spent'}
-          text={'Reduce transaction anxiety by allowing users to easily preview expected net-balance changes for their connected wallets before authorizing transactions.'}
-        >
-          <Flexbox --wrap="wrap">
-            <Button href="/docs/modules/transaction-preview" buttonStyle={'link'}
-              >{'Learn More'}</Button
-            >
-            <Button
-              href="/docs/modules/transaction-preview#try-transaction-preview"
-              buttonStyle={'link'}>{'View Demo'}</Button
-            >
-          </Flexbox>
-          <div class="prose">
-            <slot name="installTp" />
-          </div>
-        </TextBlock>
-      </div>
-    </div>
-  </Container>
   <Container>
     <div class="flexbox">
       <TextBlock

@@ -21,7 +21,6 @@
   import tallyHoModule from '@web3-onboard/tallyho'
   import xdefiWalletModule from '@web3-onboard/xdefi'
   import zealModule from '@web3-onboard/zeal'
-  import transactionPreviewModule from '@web3-onboard/transaction-preview'
   import metamaskSDK from '@web3-onboard/metamask'
   import enkryptModule from '@web3-onboard/enkrypt'
   import mewWalletModule from '@web3-onboard/mew-wallet'
@@ -227,9 +226,6 @@
   const sequence = sequenceModule()
   const enkrypt = enkryptModule()
   const mewWallet = mewWalletModule()
-  const transactionPreview = transactionPreviewModule({
-    requireTransactionApproval: true
-  })
   const venly = venlyModule({
     clientId: 'blocknative',
     environment: 'staging'
@@ -286,7 +282,6 @@
       particle,
       passport
     ],
-    // transactionPreview,
     gas,
     chains: [
       {

@@ -8,7 +8,6 @@ export let configuration: Configuration = {
   initialWalletInit: [],
   gas: null,
   containerElements: { accountCenter: null, connectModal: null },
-  transactionPreview: null,
   unstoppableResolution: null
 }
 

@@ -247,11 +247,11 @@ const initOptions = Joi.object({
   }),
   connect: connectModalOptions,
   containerElements: containerElements,
-  transactionPreview: Joi.object({
-    patchProvider: Joi.function().required(),
-    init: Joi.function().required(),
-    previewTransaction: Joi.function()
-  }),
+  transactionPreview: Joi.forbidden().error(
+    new Error(
+      'transactionPreview is no longer supported - support removed July 1st 2024'
+    )
+  ),
   theme: theme,
   disableFontDownload: Joi.boolean(),
   unstoppableResolution: Joi.function()

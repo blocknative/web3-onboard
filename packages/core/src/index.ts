@@ -35,8 +35,6 @@ import {
   updateTheme,
   updateAppMetadata
 } from './store/actions.js'
-import type { PatchedEIP1193Provider } from '@web3-onboard/transaction-preview'
-import { getBlocknativeSdk } from './services.js'
 
 const API = {
   connectWallet,
@@ -102,7 +100,6 @@ function init(options: InitOptions): OnboardAPI {
     gas,
     connect,
     containerElements,
-    transactionPreview,
     theme,
     disableFontDownload,
     unstoppableResolution
@@ -217,27 +214,10 @@ function init(options: InitOptions): OnboardAPI {
     apiKey,
     initialWalletInit: wallets,
     gas,
-    transactionPreview,
     unstoppableResolution
   })
 
   appMetadata && updateAppMetadata(appMetadata)
-
-  if (apiKey && transactionPreview) {
-    const getBnSDK = async () => {
-      transactionPreview.init({
-        containerElement: '#w3o-transaction-preview-container',
-        sdk: await getBlocknativeSdk(),
-        apiKey
-      })
-      wallets$.subscribe(wallets => {
-        wallets.forEach(({ provider }) => {
-          transactionPreview.patchProvider(provider as PatchedEIP1193Provider)
-        })
-      })
-    }
-    getBnSDK()
-  }
 
   theme && updateTheme(theme)
 
