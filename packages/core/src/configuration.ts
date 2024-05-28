@@ -3,13 +3,14 @@ import { getDevice } from './utils.js'
 
 export let configuration: Configuration = {
   svelteInstance: null,
-  apiKey: null,
+  apiKey: undefined,
   device: getDevice(),
   initialWalletInit: [],
-  gas: null,
-  containerElements: { accountCenter: null, connectModal: null },
-  transactionPreview: null,
-  unstoppableResolution: null
+  gas: undefined,
+  containerElements: { accountCenter: undefined, connectModal: undefined },
+  transactionPreview: undefined,
+  unstoppableResolution: undefined,
+  wagmi: undefined
 }
 
 export function updateConfiguration(update: Partial<Configuration>): void {

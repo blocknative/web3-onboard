@@ -238,6 +238,7 @@
 
   :global(input[type='checkbox']) {
     -webkit-appearance: none;
+    appearance: none;
     width: auto;
     background: var(--onboard-white, var(--white));
     outline: 1px solid var(--onboard-gray-300, var(--gray-300));

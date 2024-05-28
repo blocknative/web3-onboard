@@ -84,6 +84,7 @@
     "@web3-onboard/common": "^2.3.4",
     "ethers": "5.5.4",
     "joi": "17.9.1",
-    "rxjs": "^7.5.2"
+    "rxjs": "^7.5.2",
+    "bignumber.js": "^9.1.0"
   }
 }

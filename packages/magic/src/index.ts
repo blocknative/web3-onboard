@@ -1,4 +1,4 @@
-import type { WalletInit, EIP1193Provider } from '@web3-onboard/common'
+import { WalletInit, EIP1193Provider, weiToEth } from '@web3-onboard/common'
 import type { MagicInitOptions } from './types.js'
 import { validateMagicInitOptions } from './validation.js'
 
@@ -17,7 +17,7 @@ function magic(options: MagicInitOptions): WalletInit {
     return {
       label: walletName,
       getIcon: async () => (await import('./icon.js')).default,
-      getInterface: async ({ EventEmitter, BigNumber, chains }) => {
+      getInterface: async ({ EventEmitter, chains }) => {
         const { Magic, RPCErrorCode } = await import('magic-sdk')
         const loginModal = (await import('./login-modal.js')).default
         const brandingHTML = (await import('./branding.js')).default
@@ -97,9 +97,7 @@ function magic(options: MagicInitOptions): WalletInit {
                 method: 'eth_getBalance',
                 params: [activeAddress, 'latest']
               })
-              return balance
-                ? BigNumber.from(balance).mul('1000000000000000000').toString()
-                : '0'
+              return balance ? weiToEth(balance) : '0'
             },
             wallet_switchEthereumChain: async ({ params }) => {
               const chain = chains.find(({ id }) => id === params[0].chainId)
