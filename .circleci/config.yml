@@ -23,25 +23,7 @@ aliases:
   - &deploy_staging_filters
     filters:
       branches:
-        only: feat/wagmi_support
-        # only: develop
-
-  - &test_package_version_for_test_tag_break_false
-    run:
-      name: Tagged as wagmi version if True Continue Flow
-      command: |
-        PACKAGE_VERSION=$(cat package.json \
-        | grep version \
-        | head -1 \
-        | awk -F: '{ print $2 }' \
-        | sed 's/[",]//g');
-        if [[ $PACKAGE_VERSION =~ "-wagmi" ]];
-        then
-          echo true
-        else
-          echo false
-          circleci step halt
-        fi;
+        only: develop
 
   - &test_package_version_for_alpha_tag_break_false
     run:
@@ -158,31 +140,6 @@ commands:
       - *publish-npm
       - save-build-flag
 
-  # node-staging-build-steps:
-  #   steps:
-  #     - checkout:
-  #         # Since our working_directory is deeper than the root,
-  #         # remind the job where it needs to checkout.
-  #         path: ~/web3-onboard-monorepo
-  #     - *restore-build-flag
-  #     - *test-build-flag
-  #     - *test_package_version_for_alpha_tag_break_false
-  #     # Services and packages in a Workspace don't get their own
-  #     # yarn.lock so we need to generate them manually.
-  #     - *generate-lock-file
-  #     - *restore-cache
-  #     - run:
-  #         name: Build
-  #         command: |
-  #           yarn
-  #           yarn type-check
-  #           yarn build
-  #     - *save-cache
-  #     - *create-npm-config
-  #     - *publish-npm-tag-as-next
-  #     - save-build-flag
-
-  # TODO: remove this after testing is complete and restore the above code
   node-staging-build-steps:
     steps:
       - checkout:
@@ -191,7 +148,6 @@ commands:
           path: ~/web3-onboard-monorepo
       - *restore-build-flag
       - *test-build-flag
-      # Tag must be defined for testing publish outside of Alpha or standard prod publish
       - *test_package_version_for_test_tag_break_false
       # Services and packages in a Workspace don't get their own
       # yarn.lock so we need to generate them manually.
