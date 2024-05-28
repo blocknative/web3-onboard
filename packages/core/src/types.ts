@@ -20,7 +20,7 @@ import type { TransactionPreviewAPI } from '@web3-onboard/transaction-preview'
 import type en from './i18n/en.json'
 import type { EthereumTransactionData, Network } from 'bnc-sdk'
 import type { GetEnsTextReturnType } from 'viem'
-import type { Config, WagmiModuleAPI } from '@web3-onboard/wagmi'
+import type { Config, Connector, WagmiModuleAPI } from '@web3-onboard/wagmi'
 import type wagmi from '@web3-onboard/wagmi'
 export type { Config as WagmiConfig } from '@web3-onboard/wagmi'
 
@@ -143,6 +143,13 @@ export interface WalletState {
   // is connected to multiple chains at once
   chains: ConnectedChain[]
   instance?: unknown
+  /**
+   * WAGMI Connector object
+   * Can be used to leverage all WAGMI functions from
+   * the @web3-onboard/wagmi module
+   * See https://www.npmjs.com/package/@web3-onboard/wagmi for more details
+   */
+  wagmiConnector?: Connector
 }
 
 export type Account = {

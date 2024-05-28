@@ -30,6 +30,11 @@ npm install @web3-onboard/wagmi
 This example assumes you have already setup web3-onboard to connect wallets to your dapp.
 For more information see [web3-onboard docs](https://onboard.blocknative.com/docs/modules/core#install).
 
+### `wagmiConnector` and Connectors
+
+`wagmiConnector` is a property returned as part of the wallet state object and can be used to interact with
+the WAGMI API returned from this module or an external WAGMI instance. Please see examples below...
+
 ```ts
 import Onboard from '@web3-onboard/core'
 import injectedModule from '@web3-onboard/injected-wallets'
@@ -45,8 +50,6 @@ import { parseEther, isHex, fromHex } from 'viem'
 const injected = injectedModule()
 
 const onboard = Onboard({
-  // This javascript object is unordered meaning props do not require a certain order
-  // ... other Onboard options
   wagmi,
   wallets: [injected],
   chains: [
@@ -62,22 +65,22 @@ const onboard = Onboard({
 
 const sendTransaction = async () => {
   // current primary wallet - as multiple wallets can connect this value is the currently active
-  const [currentPrimaryWallet] = onboard.state.get().wallets
-  const { label } = currentPrimaryWallet
-  const transactWithThisWallet = getConnectors(wagmiConfig).find(
-    (connector) => connector.name === label
-  )
+  const [activeWallet] = onboard.state.get().wallets
+  const { wagmiConnector } = activeWallet
   const wagmiConfig = onboard.state.get().wagmiConfig
   const result = await wagmiSendTransaction(wagmiConfig, {
     to: toAddress,
     // desired connector to send txn from
-    connector: transactWithThisWallet,
+    connector: wagmiConnector,
     value: parseEther('0.001')
   })
   console.log(result)
 }
 
 async function switchWagmiChain(chainId) {
+  // current primary wallet - as multiple wallets can connect this value is the currently active
+  const [activeWallet] = onboard.state.get().wallets
+  const { wagmiConnector } = activeWallet
   let chainAsNumber
   if (isHex(chainId)) {
     chainAsNumber = fromHex(chainId, 'number')
@@ -87,14 +90,16 @@ async function switchWagmiChain(chainId) {
     throw new Error('Invalid chainId')
   }
   const wagmiConfig = onboard.state.get().wagmiConfig
-  await switchChain(wagmiConfig, { chainId: chainAsNumber })
+  await switchChain(wagmiConfig, {
+    chainId: chainAsNumber,
+    connector: wagmiConnector
+  })
 }
 
 async function disconnectWallet() {
   const wagmiConfig = onboard.state.get().wagmiConfig
-  const disconnectThisWallet = getConnectors(wagmiConfig).find(
-    (connector) => connector.name === label
-  )
-  disconnect(wagmiConfig, { connector: disconnectThisWallet })
+  const [activeWallet] = onboard.state.get().wallets
+  const { wagmiConnector } = activeWallet
+  disconnect(wagmiConfig, { connector: wagmiConnector })
 }
 ```

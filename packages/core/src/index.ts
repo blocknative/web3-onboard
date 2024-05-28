@@ -34,7 +34,8 @@ import {
   updateConnectModal,
   updateTheme,
   updateAppMetadata,
-  updateChain
+  updateChain,
+  updateWallet
 } from './store/actions.js'
 import type { PatchedEIP1193Provider } from '@web3-onboard/transaction-preview'
 import { getBlocknativeSdk } from './services.js'
