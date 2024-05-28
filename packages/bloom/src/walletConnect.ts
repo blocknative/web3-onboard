@@ -111,8 +111,8 @@ function walletConnect(walletName: string, options: WalletConnectOptions): Walle
                         .pipe(takeUntil(this.disconnected$))
                         .subscribe({
                             next: payload => {
-                            const accounts = Array.isArray(payload) ? payload : [payload]
-                            this.emit('accountsChanged', accounts)
+                                const accounts = Array.isArray(payload) ? payload : [payload]
+                                this.emit('accountsChanged', accounts)
                             },
                             error: console.warn
                         })
@@ -143,19 +143,19 @@ function walletConnect(walletName: string, options: WalletConnectOptions): Walle
                         .pipe(takeUntil(this.disconnected$))
                         .subscribe({
                             next: () => {
-                            this.emit('accountsChanged', [])
-                            this.disconnected$.next(true)
-                            typeof localStorage !== 'undefined' &&
-                                localStorage.removeItem('walletconnect')
+                                this.emit('accountsChanged', [])
+                                this.disconnected$.next(true)
+                                typeof localStorage !== 'undefined' &&
+                                    localStorage.removeItem('walletconnect')
                             },
                             error: console.warn
                         })
 
                         this.disconnect = () => {
-                        if (this.connector.session) {
-                            this.connector.disconnect()
-                            instance = null
-                        }
+                            if (this.connector.session) {
+                                this.connector.disconnect()
+                                instance = null
+                            }
                         }
 
                         if (options?.handleUri) {
@@ -185,101 +185,101 @@ function walletConnect(walletName: string, options: WalletConnectOptions): Walle
                         }
                         checkForSession()
 
-                        this.request = async ({ method, params }: { method: string, params: object | unknown[] | undefined }) => {
-                        if (method === 'eth_chainId') {
-                            return isHexString(this.connector.chainId)
-                            ? this.connector.chainId
-                            : `0x${this.connector.chainId.toString(16)}`
-                        }
+                        this.request = async ({ method, params }) => {
+                            if (method === 'eth_chainId') {
+                                return isHexString(this.connector.chainId)
+                                    ? this.connector.chainId
+                                    : `0x${this.connector.chainId.toString(16)}`
+                            }
 
-                        if (method === 'eth_requestAccounts') {
-                            return new Promise<ProviderAccounts>(
-                            async (resolve, reject) => {
-                                // Subscribe to connection events
-                                fromEvent(
-                                this.connector as JQueryStyleEventEmitter<
-                                    any,
-                                    { chainId: number }
-                                >,
-                                'connect',
-                                (payload: { chainId: number | string }) => payload
-                                )
-                                .pipe(take(1))
-                                .subscribe({
-                                    next: ({ chainId }) => {
-                                    this.emit('accountsChanged', this.connector.accounts)
-                                    const hexChainId = isHexString(chainId)
-                                        ? chainId
-                                        : `0x${chainId.toString(16)}`
-                                    this.emit('chainChanged', hexChainId)
-                                    resolve(this.connector.accounts)
-                                    },
-                                    error: reject
-                                })
-
-                                // Check if connection is already established
-                                if (!this.connector.session) {
-                                // create new session
-                                await this.connector.connect().catch(err => {
-                                    console.error('err creating new session: ', err)
-                                    reject(
-                                    new ProviderRpcError({
-                                        code: 4001,
-                                        message: 'User rejected the request.'
-                                    })
+                            if (method === 'eth_requestAccounts') {
+                                return new Promise<ProviderAccounts>(
+                                async (resolve, reject) => {
+                                    // Subscribe to connection events
+                                    fromEvent(
+                                        this.connector as JQueryStyleEventEmitter<
+                                            any,
+                                            { chainId: number }
+                                        >,
+                                        'connect',
+                                        (payload: { chainId: number | string }) => payload
                                     )
+                                    .pipe(take(1))
+                                    .subscribe({
+                                        next: ({ chainId }) => {
+                                            this.emit('accountsChanged', this.connector.accounts)
+                                            const hexChainId = isHexString(chainId)
+                                                ? chainId
+                                                : `0x${chainId.toString(16)}`
+                                            this.emit('chainChanged', hexChainId)
+                                            resolve(this.connector.accounts)
+                                        },
+                                        error: reject
+                                    })
+
+                                    // Check if connection is already established
+                                    if (!this.connector.session) {
+                                        // create new session
+                                        await this.connector.connect().catch(err => {
+                                            console.error('err creating new session: ', err)
+                                            reject(
+                                                new ProviderRpcError({
+                                                    code: 4001,
+                                                    message: 'User rejected the request.'
+                                                })
+                                            )
+                                        })
+                                    } else {
+                                        // update ethereum provider to load accounts & chainId
+                                        const accounts = this.connector.accounts
+                                        const chainId = this.connector.chainId
+                                        instance = this.connector.session
+                                        const hexChainId = `0x${chainId.toString(16)}`
+                                        this.emit('chainChanged', hexChainId)
+                                        return resolve(accounts)
+                                    }
+                                }
+                                )
+                            }
+
+                            if (method === 'eth_selectAccounts') {
+                                throw new ProviderRpcError({
+                                    code: ProviderRpcErrorCode.UNSUPPORTED_METHOD,
+                                    message: `The Provider does not support the requested method: ${method}`
                                 })
-                                } else {
-                                // update ethereum provider to load accounts & chainId
-                                const accounts = this.connector.accounts
-                                const chainId = this.connector.chainId
-                                instance = this.connector.session
-                                const hexChainId = `0x${chainId.toString(16)}`
-                                this.emit('chainChanged', hexChainId)
-                                return resolve(accounts)
+                            }
+
+                            if (method == 'wallet_switchEthereumChain') {
+                                if (!params) {
+                                throw new ProviderRpcError({
+                                    code: ProviderRpcErrorCode.INVALID_PARAMS,
+                                    message: `The Provider requires a chainId to be passed in as an argument`
+                                })
                                 }
-                            }
-                            )
-                        }
-
-                        if (method === 'eth_selectAccounts') {
-                            throw new ProviderRpcError({
-                            code: ProviderRpcErrorCode.UNSUPPORTED_METHOD,
-                            message: `The Provider does not support the requested method: ${method}`
-                            })
-                        }
-
-                        if (method == 'wallet_switchEthereumChain') {
-                            if (!params) {
-                            throw new ProviderRpcError({
-                                code: ProviderRpcErrorCode.INVALID_PARAMS,
-                                message: `The Provider requires a chainId to be passed in as an argument`
-                            })
-                            }
-                            const chainIdObj = params[0] as { chainId?: number }
-                            if (
-                            !chainIdObj.hasOwnProperty('chainId') ||
-                            typeof chainIdObj['chainId'] === 'undefined'
-                            ) {
-                            throw new ProviderRpcError({
-                                code: ProviderRpcErrorCode.INVALID_PARAMS,
-                                message: `The Provider requires a chainId to be passed in as an argument`
-                            })
-                            }
-                            return this.connector.request({
-                            method: 'wallet_switchEthereumChain',
-                            params: [
-                                {
-                                chainId: chainIdObj.chainId
+                                const chainIdObj = params[0] as { chainId?: number }
+                                if (
+                                    !chainIdObj.hasOwnProperty('chainId') ||
+                                    typeof chainIdObj['chainId'] === 'undefined'
+                                ) {
+                                    throw new ProviderRpcError({
+                                        code: ProviderRpcErrorCode.INVALID_PARAMS,
+                                        message: `The Provider requires a chainId to be passed in as an argument`
+                                    })
                                 }
-                            ]
-                            })
-                        }
+                                return this.connector.request({
+                                    method: 'wallet_switchEthereumChain',
+                                    params: [
+                                        {
+                                        chainId: chainIdObj.chainId
+                                        }
+                                    ]
+                                })
+                            }
 
-                        return this.connector.request<Promise<any>>({
-                            method,
-                            params
-                        })
+                            return this.connector.request<Promise<any>>({
+                                method,
+                                params
+                            })
                         }
                     }
                 }
