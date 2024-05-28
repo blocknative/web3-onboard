@@ -34,6 +34,7 @@
   import arcanaAuthModule from '@web3-onboard/arcana-auth'
   import venlyModule from '@web3-onboard/venly'
   import bitgetModule from '@web3-onboard/bitget'
+  import bloomModule from '@web3-onboard/bloom'
   import particleAuthModule from '@web3-onboard/particle-network'
   import capsuleModule, {
     Environment,
@@ -177,6 +178,7 @@
   const cedeStore = cedeStoreModule()
   const blocto = bloctoModule()
   const tallyho = tallyHoModule()
+  const bloom = bloomModule()
 
   const webauthnSigner = new WebauthnSigner({
     rpId: 'localhost',
