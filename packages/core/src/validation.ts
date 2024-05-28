@@ -6,11 +6,11 @@ import {
   type WalletInit,
   type WalletModule,
   type ValidateReturn,
+  type AppMetadata,
   chainNamespaceValidation,
   chainIdValidation,
   chainValidation,
-  validate,
-  AppMetadata
+  validate
 } from '@web3-onboard/common'
 
 import type {
@@ -245,6 +245,7 @@ const initOptions = Joi.object({
     get: Joi.function().required(),
     stream: Joi.function().required()
   }),
+  wagmi: Joi.function(),
   connect: connectModalOptions,
   containerElements: containerElements,
   transactionPreview: Joi.object({

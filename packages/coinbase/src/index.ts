@@ -45,6 +45,7 @@ function coinbaseWallet({
             ? (CoinbaseWalletSDK as any).default
             : CoinbaseWalletSDK
         ) as typeof CoinbaseWalletSDK
+        const { isHex, toHex } = await import('@web3-onboard/common')
 
         const base64 = window.btoa(icon || '')
         const appLogoUrl = `data:image/svg+xml;base64,${base64}`
@@ -53,7 +54,7 @@ function coinbaseWallet({
           // @ts-ignore - treating hex strings as numbers as they are expected to be hex numbers
           ({ id }) => id as number
         )
-        
+
         const instance = new CoinbaseWalletSDKConstructor({
           appName: name || '',
           appLogoUrl,
@@ -66,31 +67,16 @@ function coinbaseWallet({
 
         // patch the chainChanged event
         const on = coinbaseWalletProvider.on.bind(coinbaseWalletProvider)
-        console.log('coinbaseWalletProvider', coinbaseWalletProvider)
-        on('chainChanged', (chainId: string) => {
-          console.log('chainChanged in cb provider', chainId)
-        })
-        on('connect', (chainId: any) => {
-          console.log('connect in cb provider', chainId)
-        })
-        on('accountsChanged', (chainId: any) => {
-          console.log('accountsChanged in cb provider', chainId)
-        })
+
         coinbaseWalletProvider.on = (event, listener) => {
           // @ts-ignore
           on(event, val => {
             if (event === 'chainChanged') {
               let hexVal: string
-              // TODO: Refine using viem functions
-              if (typeof val === 'number') {
-                hexVal = `0x${val.toString(16)}`
-              } else if (
-                typeof val === 'string' &&
-                /^0x[0-9a-fA-F]+$/.test(val)
-              ) {
+              if (isHex(val)) {
                 hexVal = val
               } else {
-                throw new Error('Invalid chainId')
+                hexVal = toHex(val)
               }
 
               // @ts-ignore

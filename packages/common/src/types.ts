@@ -1,7 +1,8 @@
 import type { ConnectionInfo } from 'ethers/lib/utils'
-import type EventEmitter from 'eventemitter3'
+import EventEmitter from 'eventemitter3'
 import type { TypedData as EIP712TypedData } from 'eip-712'
-import type { ethers } from 'ethers'
+import type { Address } from 'viem'
+export type { Address } from 'viem'
 export type { TypedData as EIP712TypedData } from 'eip-712'
 
 /**
@@ -120,14 +121,20 @@ export type RecommendedInjectedWallets = {
 
 /**
  * A method that takes `WalletHelpers` and
- * returns an initialised `WalletModule` or array of `WalletModule`s.
+ * returns an initialized `WalletModule` or array of `WalletModule`s.
  */
 export type WalletInit = (
   helpers: WalletHelpers
 ) => WalletModule | WalletModule[] | null
 
+export type DeviceNotBrowser = {
+  type: null
+  os: null
+  browser: null
+}
+
 export type WalletHelpers = {
-  device: Device
+  device: Device | DeviceNotBrowser
 }
 
 export interface APIKey {
@@ -189,7 +196,6 @@ export interface WalletModule {
 export type GetInterfaceHelpers = {
   chains: Chain[]
   appMetadata: AppMetadata | null
-  BigNumber: typeof ethers.BigNumber
   EventEmitter: typeof EventEmitter
 }
 
@@ -219,7 +225,7 @@ export interface ProviderInfo {
   chainId: ChainId
 }
 
-export type AccountAddress = string
+export type AccountAddress = Address
 
 /**
  * An array of addresses
@@ -296,7 +302,6 @@ export interface EthSignTransactionRequest {
   params: [TransactionObject]
 }
 
-type Address = string
 type Message = string
 export interface EthSignMessageRequest {
   method: 'eth_sign'
@@ -421,8 +426,8 @@ export interface Chain {
   providerConnectionInfo?: ConnectionInfo
   /* An optional public RPC used when adding a new chain config to the wallet */
   publicRpcUrl?: string
-  /** An optional protected RPC URL - Defaults to Blocknative's private and 
-   * protected RPC to allow users to update the chain RPC within their wallet, 
+  /** An optional protected RPC URL - Defaults to Blocknative's private and
+   * protected RPC to allow users to update the chain RPC within their wallet,
    * specifically for private RPCs that protect user transactions
    */
   protectedRpcUrl?: string

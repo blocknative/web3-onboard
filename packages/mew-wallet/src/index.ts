@@ -1,4 +1,8 @@
-import { ProviderRpcError, WalletInit } from '@web3-onboard/common'
+import {
+  ProviderRpcError,
+  WalletInit,
+  createDownloadMessage
+} from '@web3-onboard/common'
 import { createEIP1193Provider } from '@web3-onboard/common'
 import { CustomWindow } from './types.js'
 declare const window: CustomWindow
@@ -29,12 +33,11 @@ function mewWallet(): WalletInit {
                 })
               }
             } else {
-              window.open(
-                'https://download.mewwallet.com?source=onboard',
-                '_blank'
-              )
               throw new Error(
-                'Please Install MEW wallet and use within the MEW DApp browser'
+                createDownloadMessage(
+                  'MEW wallet',
+                  'https://download.mewwallet.com?source=onboard'
+                )
               )
             }
           }

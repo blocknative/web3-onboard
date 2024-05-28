@@ -11,6 +11,8 @@
       "*": ["./src/*", "./node_modules/*"]
     },
     "moduleResolution": "node",
-    "typeRoots": ["node_modules/@types"]
+    "typeRoots": ["node_modules/@types"],
+    "target": "es2020",
+    "lib": ["es2020", "dom"]
   }
 }

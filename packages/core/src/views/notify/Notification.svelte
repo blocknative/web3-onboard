@@ -52,6 +52,12 @@
     }, notification.autoDismiss)
   }
 
+  function handleClick(e: MouseEvent) {
+    if (notification?.onClick) {
+      notification.onClick(e);
+    }
+  }
+
   onDestroy(() => {
     clearTimeout(timeoutId)
   })
@@ -184,7 +190,7 @@
   on:mouseenter={() => (hovered = true)}
   on:mouseleave={() => (hovered = false)}
   class:bn-notify-clickable={notification.onClick}
-  on:click={e => notification.onClick && notification.onClick(e)}
+  on:click={handleClick}
   class="bn-notify-notification bn-notify-notification-{notification.type}}"
 >
   <div class="flex bn-notify-notification-inner">

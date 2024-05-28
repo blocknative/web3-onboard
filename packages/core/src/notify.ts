@@ -1,7 +1,7 @@
-import BigNumber from 'bignumber.js'
 import { get } from 'svelte/store'
 import { _ } from 'svelte-i18n'
 import defaultCopy from './i18n/en.json'
+import { weiToEth } from '@web3-onboard/common'
 import type { EthereumTransactionData } from 'bnc-sdk'
 
 import type {
@@ -27,7 +27,11 @@ export function handleTransactionUpdates(
   }
 
   if (transaction.eventCode === 'txConfirmed') {
-    updateBalances([transaction.watchedAddress, transaction.counterparty])
+    const addresses = [
+      transaction.watchedAddress,
+      transaction.counterparty
+    ].filter(Boolean) as string[]
+    updateBalances(addresses)
   }
 
   const notification = transactionEventToNotification(transaction, customized)
@@ -63,11 +67,7 @@ export function transactionEventToNotification(
     counterparty.substring(0, 4) +
       '...' +
       counterparty.substring(counterparty.length - 4)
-
-  const formattedValue = new BigNumber(value || 0)
-    .div(new BigNumber('1000000000000000000'))
-    .toString(10)
-
+  const formattedValue = weiToEth(value)
   const formatterOptions =
     counterparty && value
       ? {

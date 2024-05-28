@@ -1,17 +1,20 @@
 import { fromEventPattern, Observable } from 'rxjs'
 import { filter, takeUntil, take, share, switchMap } from 'rxjs/operators'
 import partition from 'lodash.partition'
-import { providers, utils } from 'ethers'
-import { weiToEth } from '@web3-onboard/common'
+import { isAddress, weiHexToEth } from '@web3-onboard/common'
 import { disconnectWallet$ } from './streams.js'
 import { updateAccount, updateWallet } from './store/actions.js'
-import { validEnsChain } from './utils.js'
+import { chainIdToViemENSImport, validEnsChain } from './utils.js'
 import disconnect from './disconnect.js'
 import { state } from './store/index.js'
 import { getBNMulitChainSdk } from './services.js'
 import { configuration } from './configuration.js'
+import { updateSecondaryTokens } from './update-balances'
 
+import type { Uns } from '@web3-onboard/unstoppable-resolution'
+import type { PublicClient, GetEnsTextReturnType } from 'viem'
 import type {
+  Address,
   ChainId,
   EIP1102Request,
   EIP1193Provider,
@@ -24,32 +27,32 @@ import type {
 
 import type {
   Account,
-  Address,
   Balances,
   Ens,
   WalletPermission,
   WalletState
 } from './types.js'
 
-import type { Uns } from '@web3-onboard/unstoppable-resolution'
-import { updateSecondaryTokens } from './update-balances'
-
-export const ethersProviders: {
-  [key: string]: providers.StaticJsonRpcProvider
+export const viemProviders: {
+  [key: string]: PublicClient
 } = {}
 
-export function getProvider(chain: Chain): providers.StaticJsonRpcProvider {
+async function getProvider(chain: Chain): Promise<PublicClient | null> {
   if (!chain) return null
 
-  if (!ethersProviders[chain.rpcUrl]) {
-    ethersProviders[chain.rpcUrl] = new providers.StaticJsonRpcProvider(
-      chain.providerConnectionInfo && chain.providerConnectionInfo.url
-        ? chain.providerConnectionInfo
-        : chain.rpcUrl
-    )
+  if (!viemProviders[chain.rpcUrl as string]) {
+    const viemChain = await chainIdToViemENSImport(chain.id)
+    if (!viemChain) return null
+
+    const { createPublicClient, http } = await import('viem')
+    const publicProvider = createPublicClient({
+      chain: viemChain,
+      transport: http()
+    })
+    viemProviders[chain.rpcUrl as string] = publicProvider as PublicClient
   }
 
-  return ethersProviders[chain.rpcUrl]
+  return viemProviders[chain.rpcUrl as string]
 }
 
 export function requestAccounts(
@@ -143,7 +146,8 @@ export function trackWallet(
     }
 
     const { wallets } = state.get()
-    const { accounts } = wallets.find(wallet => wallet.label === label)
+    const wallet = wallets.find(wallet => wallet.label === label)
+    const accounts = wallet ? wallet.accounts : []
 
     const [[existingAccount], restAccounts] = partition(
       accounts,
@@ -154,7 +158,7 @@ export function trackWallet(
     updateWallet(label, {
       accounts: [
         existingAccount || {
-          address: address,
+          address: address as Address,
           ens: null,
           uns: null,
           balance: null
@@ -173,11 +177,13 @@ export function trackWallet(
           .get()
           .wallets.find(wallet => wallet.label === label)
         try {
-          sdk.subscribe({
-            id: address,
-            chainId: wallet.chains[0].id,
-            type: 'account'
-          })
+          if (wallet) {
+            sdk.subscribe({
+              id: address,
+              chainId: wallet.chains[0]?.id,
+              type: 'account'
+            })
+          }
         } catch (error) {
           // unsupported network for transaction events
         }
@@ -194,6 +200,8 @@ export function trackWallet(
         const { wallets, chains } = state.get()
 
         const primaryWallet = wallets.find(wallet => wallet.label === label)
+        if (!primaryWallet) return // Add null check for primaryWallet
+
         const { chains: walletChains, accounts } = primaryWallet
 
         const [connectedWalletChain] = walletChains
@@ -202,13 +210,10 @@ export function trackWallet(
           ({ namespace, id }) =>
             namespace === 'evm' && id === connectedWalletChain.id
         )
+        if (!chain) return
 
         const balanceProm = getBalance(address, chain)
-        const secondaryTokenBal = updateSecondaryTokens(
-          primaryWallet,
-          address,
-          chain
-        )
+        const secondaryTokenBal = updateSecondaryTokens(address, chain)
         const account = accounts.find(account => account.address === address)
 
         const ensChain = chains.find(
@@ -225,7 +230,9 @@ export function trackWallet(
         const unsProm =
           account && account.uns
             ? Promise.resolve(account.uns)
-            : getUns(address, chain)
+            : ensChain
+            ? getUns(address, ensChain)
+            : Promise.resolve(null)
 
         return Promise.all([
           Promise.resolve(address),
@@ -249,7 +256,9 @@ export function trackWallet(
   // Update chain on wallet when chainId changed
   chainChanged$.subscribe(async chainId => {
     const { wallets } = state.get()
-    const { chains, accounts } = wallets.find(wallet => wallet.label === label)
+    const wallet = wallets.find(wallet => wallet.label === label)
+    if (!wallet) return // Add null check for wallet
+    const { chains, accounts } = wallet
     const [connectedWalletChain] = chains
 
     if (chainId === connectedWalletChain.id) return
@@ -261,6 +270,8 @@ export function trackWallet(
         const wallet = state
           .get()
           .wallets.find(wallet => wallet.label === label)
+
+        if (!wallet) return // Add null check for wallet
 
         // Unsubscribe with timeout of 60 seconds
         // to allow for any currently inflight transactions
@@ -309,21 +320,18 @@ export function trackWallet(
       switchMap(async chainId => {
         const { wallets, chains } = state.get()
         const primaryWallet = wallets.find(wallet => wallet.label === label)
-        const { accounts } = primaryWallet
+        const accounts = primaryWallet?.accounts || []
 
         const chain = chains.find(
           ({ namespace, id }) => namespace === 'evm' && id === chainId
         )
+        if (!chain) return Promise.resolve(null)
 
         return Promise.all(
           accounts.map(async ({ address }) => {
             const balanceProm = getBalance(address, chain)
 
-            const secondaryTokenBal = updateSecondaryTokens(
-              primaryWallet,
-              address,
-              chain
-            )
+            const secondaryTokenBal = updateSecondaryTokens(address, chain)
             const ensChain = chains.find(
               ({ id }) => id === validEnsChain(chainId)
             )
@@ -332,7 +340,7 @@ export function trackWallet(
               ? getEns(address, ensChain)
               : Promise.resolve(null)
 
-            const unsProm = validEnsChain(chainId)
+            const unsProm = ensChain
               ? getUns(address, ensChain)
               : Promise.resolve(null)
 
@@ -370,29 +378,39 @@ export async function getEns(
   // chain we don't recognize and don't have a rpcUrl for requests
   if (!chain) return null
 
-  const provider = getProvider(chain)
+  const provider = await getProvider(chain)
+  if (!provider) return null
 
   try {
-    const name = await provider.lookupAddress(address)
+    const name = await provider.getEnsName({
+      address
+    })
     let ens = null
 
     if (name) {
-      const resolver = await provider.getResolver(name)
+      const { labelhash, normalize } = await import('viem/ens')
+      const normalizedName = normalize(name)
 
-      if (resolver) {
-        const [contentHash, avatar] = await Promise.all([
-          resolver.getContentHash(),
-          resolver.getAvatar()
-        ])
-
-        const getText = resolver.getText.bind(resolver)
-
-        ens = {
+      const ensResolver = await provider.getEnsResolver({
+        name: normalizedName
+      })
+      const avatar = await provider.getEnsAvatar({
+        name: normalizedName
+      })
+      const contentHash = labelhash(normalizedName)
+      const getText = async (key: string): Promise<GetEnsTextReturnType> => {
+        return await provider.getEnsText({
           name,
-          avatar,
-          contentHash,
-          getText
-        }
+          key
+        })
+      }
+
+      ens = {
+        name,
+        avatar,
+        contentHash,
+        ensResolver,
+        getText
       }
     }
 
@@ -411,7 +429,7 @@ export async function getUns(
 
   // check if address is valid ETH address before attempting to resolve
   // chain we don't recognize and don't have a rpcUrl for requests
-  if (!unstoppableResolution || !utils.isAddress(address) || !chain) return null
+  if (!unstoppableResolution || !isAddress(address) || !chain) return null
 
   try {
     return await unstoppableResolution(address)
@@ -422,7 +440,7 @@ export async function getUns(
 }
 
 export async function getBalance(
-  address: string,
+  address: Address,
   chain: Chain
 ): Promise<Balances | null> {
   // chain we don't recognize and don't have a rpcUrl for requests
@@ -432,12 +450,15 @@ export async function getBalance(
 
   try {
     const wallet = wallets.find(wallet => !!wallet.provider)
+    if (!wallet) return null
     const provider = wallet.provider
-    const balanceHex = await provider.request({
+    const balanceHex = (await provider.request({
       method: 'eth_getBalance',
       params: [address, 'latest']
-    })
-    return balanceHex ? { [chain.token || 'eth']: weiToEth(balanceHex) } : null
+    })) as `0x${string}`
+    return balanceHex
+      ? { [chain.token || 'eth']: weiHexToEth(balanceHex) }
+      : null
   } catch (error) {
     console.error(error)
     return null
@@ -521,6 +542,7 @@ export async function syncWalletConnectedAccounts(
   label: WalletState['label']
 ): Promise<void> {
   const wallet = state.get().wallets.find(wallet => wallet.label === label)
+  if (!wallet) return
   const permissions = await getPermissions(wallet.provider)
   const accountsPermissions = permissions.find(
     ({ parentCapability }) => parentCapability === 'eth_accounts'
@@ -540,3 +562,32 @@ export async function syncWalletConnectedAccounts(
     }
   }
 }
+
+export const addOrSwitchChain = async (
+  provider: EIP1193Provider,
+  chain: Chain
+): Promise<string | undefined> => {
+  try {
+    const { id } = chain
+    await addNewChain(provider, chain)
+    await switchChain(provider, id)
+    return id
+  } catch (error) {
+    return undefined
+  }
+}
+
+export const wagmiProviderMethods = (): {
+  addOrSwitchChain: (
+    provider: EIP1193Provider,
+    chain: Chain
+  ) => Promise<string | undefined>
+  getChainId: (provider: EIP1193Provider) => Promise<string>
+  requestAccounts: (provider: EIP1193Provider) => Promise<ProviderAccounts>
+  switchChain: (provider: EIP1193Provider, chainId: ChainId) => Promise<unknown>
+} => ({
+  addOrSwitchChain,
+  getChainId,
+  requestAccounts,
+  switchChain
+})

@@ -1,5 +1,3 @@
-import { EthereumProviderOptions } from '@walletconnect/ethereum-provider/dist/types/EthereumProvider'
-
 export type UauthInitOptions = {
   /**
    * Required and will throw an error if not included: links dapp to Unstoppable Domains for customization

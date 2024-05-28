@@ -1,7 +1,7 @@
-import BigNumber from 'bignumber.js'
 import { nanoid } from 'nanoid'
 import defaultCopy from './i18n/en.json'
 import type { Network } from 'bnc-sdk'
+import { bigIntToHex, ethToWeiBigInt } from '@web3-onboard/common'
 
 import type { Notification, PreflightNotificationsOptions } from './types.js'
 import { addNotification, removeNotification } from './store/actions.js'
@@ -49,16 +49,19 @@ export async function preflightNotifications(
   // to disable hints for `txAwaitingApproval`, `txConfirmReminder`
   // or any other notification, then return false from listener functions
 
-  const [gas, price] = await gasEstimates(estimateGas, gasPrice)
+  const [gas, price] = await gasEstimates(
+    estimateGas || (() => Promise.resolve('')),
+    gasPrice || (() => Promise.resolve(''))
+  )
   const id = createId(nanoid())
-  const value = new BigNumber((txDetails && txDetails.value) || 0)
+  const value = BigInt((txDetails && txDetails.value) || 0)
 
   // check sufficient balance if required parameters are available
   if (balance && gas && price) {
-    const transactionCost = gas.times(price).plus(value)
+    const transactionCost = BigInt(gas) * BigInt(price) + value
 
     // if transaction cost is greater than the current balance
-    if (transactionCost.gt(new BigNumber(balance))) {
+    if (bigIntToHex(transactionCost) > bigIntToHex(ethToWeiBigInt(balance))) {
       const eventCode = 'nsfFail'
 
       addNotification(buildNotification(eventCode, id))
@@ -220,7 +223,7 @@ const gasEstimates = async (
         )
       }
 
-      return [new BigNumber(gasResult), new BigNumber(gasPriceResult)]
+      return [BigInt(gasResult), BigInt(gasPriceResult)]
     })
     .catch(error => {
       throw new Error(`There was an error getting gas estimates: ${error}`)

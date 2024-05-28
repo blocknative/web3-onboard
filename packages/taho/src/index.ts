@@ -1,5 +1,8 @@
 import type { WalletInit } from '@web3-onboard/common'
-import { createEIP1193Provider } from '@web3-onboard/common'
+import {
+  createDownloadMessage,
+  createEIP1193Provider
+} from '@web3-onboard/common'
 import { CustomWindow } from './types.js'
 import detectEthereumProvider from 'tallyho-detect-provider'
 import TallyHoOnboarding from 'tallyho-onboarding'
@@ -19,8 +22,9 @@ function tahoWallet(): WalletInit {
         const provider = await detectEthereumProvider({ mustBeTallyHo: true })
         if (!provider) {
           const onboarding = new TallyHoOnboarding()
-          onboarding.startOnboarding()
-          throw new Error('Please install Taho to use this wallet')
+          throw new Error(
+            createDownloadMessage('Taho', () => onboarding.startOnboarding())
+          )
         } else {
           return { provider: createEIP1193Provider(window.tally) }
         }
