@@ -35,7 +35,6 @@ async function disconnect(options: DisconnectOptions): Promise<WalletState[]> {
     }
   }
   const { wagmi } = configuration
-  console.log(wagmi)
   if (wagmi) {
     const wagmiConfig = await wagmi.wagmiDisconnectWallet(label)
     if (wagmiConfig) {
