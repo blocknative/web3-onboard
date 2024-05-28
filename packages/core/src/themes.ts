@@ -52,7 +52,7 @@ export const handleThemeChange = (update: ThemingMap): void => {
   Object.keys(update).forEach(targetStyle => {
     document.documentElement.style.setProperty(
       targetStyle,
-      update[targetStyle as keyof ThemingMap]
+      update[targetStyle as keyof ThemingMap] || null
     )
   })
 }

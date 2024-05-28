@@ -1,6 +1,6 @@
 import { firstValueFrom, Observable } from 'rxjs'
 import { filter, map } from 'rxjs/operators'
-import { Chain, ProviderRpcErrorCode } from '@web3-onboard/common'
+import { type Chain, ProviderRpcErrorCode } from '@web3-onboard/common'
 import { addNewChain, switchChain } from './provider.js'
 import { state } from './store/index.js'
 import { switchChainModal$ } from './streams.js'

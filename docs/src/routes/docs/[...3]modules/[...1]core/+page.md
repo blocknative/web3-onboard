@@ -621,6 +621,7 @@ import injectedModule from '@web3-onboard/injected-wallets'
 const injected = injectedModule()
 
 const onboard = Onboard({
+  // This javascript object is unordered meaning props do not require a certain order
   // head to https://explorer.blocknative.com/account to sign up for free
   apiKey: 'xxx387fb-bxx1-4xxc-a0x3-9d37e426xxxx'
   wallets: [injected],

@@ -16,6 +16,7 @@
   import magicModule from '@web3-onboard/magic'
   import web3authModule from '@web3-onboard/web3auth'
   import gas from '@web3-onboard/gas'
+  import wagmi from '@web3-onboard/wagmi'
   import dcentModule from '@web3-onboard/dcent'
   import sequenceModule from '@web3-onboard/sequence'
   import tallyHoModule from '@web3-onboard/tallyho'
@@ -35,11 +36,11 @@
   import venlyModule from '@web3-onboard/venly'
   import bitgetModule from '@web3-onboard/bitget'
   import particleAuthModule from '@web3-onboard/particle-network'
-  import capsuleModule, {
-    Environment,
-    OAuthMethod,
-    Theme
-  } from '@web3-onboard/capsule'
+  // import capsuleModule, {
+  //   Environment,
+  //   OAuthMethod,
+  //   Theme
+  // } from '@web3-onboard/capsule'
   import {
     recoverAddress,
     arrayify,
@@ -51,6 +52,14 @@
   import VConsole from 'vconsole'
   import blocknativeIcon from './blocknative-icon.js'
   import DappAuth from '@blocto/dappauth'
+  import {
+    sendTransaction as wagmiSendTransaction,
+    switchChain,
+    disconnect,
+    signMessage as wagmiSignMessage,
+    getConnectors
+  } from '@web3-onboard/wagmi'
+  import { parseEther, isHex, fromHex } from 'viem'
   import passportModule, { Network } from '@web3-onboard/passport'
   import { WebauthnSigner } from '@0xpass/webauthn-signer'
 
@@ -234,19 +243,19 @@
     clientId: 'blocknative',
     environment: 'staging'
   })
-  const capsule = capsuleModule({
-    environment: Environment.DEVELOPMENT,
-    apiKey: '992bbd9146d5de8ad0419f141d9a7ca7',
-    modalProps: {
-      oAuthMethods: [OAuthMethod.GOOGLE, OAuthMethod.TWITTER],
-      theme: Theme.dark
-    },
-    constructorOpts: {
-      portalBackgroundColor: '#5e5656',
-      portalPrimaryButtonColor: '#ff6700',
-      portalTextColor: '#ffffff'
-    }
-  })
+  // const capsule = capsuleModule({
+  //   environment: Environment.DEVELOPMENT,
+  //   apiKey: '992bbd9146d5de8ad0419f141d9a7ca7',
+  //   modalProps: {
+  //     oAuthMethods: [OAuthMethod.GOOGLE, OAuthMethod.TWITTER],
+  //     theme: Theme.dark
+  //   },
+  //   constructorOpts: {
+  //     portalBackgroundColor: '#5e5656',
+  //     portalPrimaryButtonColor: '#ff6700',
+  //     portalTextColor: '#ffffff'
+  //   }
+  // })
 
   const onboard = Onboard({
     wallets: [
@@ -274,7 +283,7 @@
       sequence,
       uauth,
       web3auth,
-      capsule,
+      // capsule,
       zeal,
       frontier,
       xdefi,
@@ -288,6 +297,7 @@
     ],
     transactionPreview,
     gas,
+    wagmi,
     chains: [
       {
         id: '0x1',
@@ -453,6 +463,11 @@
 
   // Subscribe to wallet updates
   const wallets$ = onboard.state.select('wallets').pipe(share())
+  let wagmiConfig
+  $: onboard.state.select('wagmiConfig').subscribe(config => {
+    wagmiConfig = config
+    console.log(wagmiConfig)
+  })
   wallets$.subscribe(wallet => {
     console.log(wallet)
     const unstoppableUser = wallet.find(
@@ -482,19 +497,26 @@
   const sendTransaction = async provider => {
     // if using ethers v6 this is:
     // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
-    const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
+    // const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
 
-    const signer = ethersProvider.getSigner()
+    // const signer = ethersProvider.getSigner()
 
-    const popTransaction = await signer.populateTransaction({
+    // const popTransaction = await signer.populateTransaction({
+    //   to: toAddress,
+    //   value: 10000000000000
+    // })
+
+    // const txn = await signer.sendTransaction(popTransaction)
+
+    // const receipt = await txn.wait()
+    // console.log(receipt)
+    const wagmiConfig = onboard.state.get().wagmiConfig
+    console.log(wagmiConfig)
+    const result = await wagmiSendTransaction(wagmiConfig, {
       to: toAddress,
-      value: 10000000000000
+      value: parseEther('0.001')
     })
-
-    const txn = await signer.sendTransaction(popTransaction)
-
-    const receipt = await txn.wait()
-    console.log(receipt)
+    console.log(result)
   }
 
   const sendTransactionWithPreFlight = async (provider, balance) => {
@@ -536,38 +558,40 @@
   const signMessage = async (provider, address) => {
     // if using ethers v6 this is:
     // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
-    const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
-    const signer = ethersProvider?.getSigner()
-    const addr = await signer?.getAddress()
-    const signature = await signer?.signMessage(signMsg)
-    let verifySign = false
-    let recoveredAddress = null
+    // const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
+    // const signer = ethersProvider?.getSigner()
+    // const addr = await signer?.getAddress()
+    // const signature = await signer?.signMessage(signMsg)
+    // let verifySign = false
+    // let recoveredAddress = null
+    const wagmiConfig = onboard.state.get().wagmiConfig
+    console.log('signMessage', wagmiConfig)
+    await wagmiSignMessage(wagmiConfig, { message: signMsg })
+    // try {
+    //   recoveredAddress = recoverAddress(
+    //     arrayify(hashMessage(signMsg)),
+    //     signature
+    //   )
+    //   verifySign = recoveredAddress === addr
+    // } catch (error) {
+    //   console.error('Error recovering address', error)
+    // }
 
-    try {
-      recoveredAddress = recoverAddress(
-        arrayify(hashMessage(signMsg)),
-        signature
-      )
-      verifySign = recoveredAddress === addr
-    } catch (error) {
-      console.error('Error recovering address', error)
-    }
+    // // contract wallets verify EIP-1654
+    // const verifySignBy1654 = new DappAuth(provider)
+    // const isAuthorizedSigner = await verifySignBy1654.isAuthorizedSigner(
+    //   signMsg,
+    //   signature,
+    //   address
+    // )
+    // if (!verifySign && !isAuthorizedSigner) {
+    //   console.error(
+    //     "Signature failed. Recovered address doesn' match signing address."
+    //   )
+    //   verifySign = recoveredAddress === addr
+    // }
 
-    // contract wallets verify EIP-1654
-    const verifySignBy1654 = new DappAuth(provider)
-    const isAuthorizedSigner = await verifySignBy1654.isAuthorizedSigner(
-      signMsg,
-      signature,
-      address
-    )
-    if (!verifySign && !isAuthorizedSigner) {
-      console.error(
-        "Signature failed. Recovered address doesn' match signing address."
-      )
-      verifySign = recoveredAddress === addr
-    }
-
-    console.log({ signMsg, signature, recoveredAddress, addr })
+    // console.log({ signMsg, signature, recoveredAddress, addr })
   }
 
   let typedMsg = JSON.stringify(
@@ -640,6 +664,19 @@
 
   function isSVG(str) {
     return str.includes('<svg')
+  }
+
+  async function switchWagmiChain(chainId) {
+    let chainAsNumber
+    if (isHex(chainId)) {
+      chainAsNumber = fromHex(chainId, 'number')
+    } else if (!isHex(chainId) && typeof chainId === 'number') {
+      chainAsNumber = chainId
+    } else {
+      throw new Error('Invalid chainId')
+    }
+    const wagmiConfig = onboard.state.get().wagmiConfig
+    await switchChain(wagmiConfig, { chainId: chainAsNumber })
   }
 </script>
 
@@ -778,16 +815,16 @@
           >
         </div>
         <div class="switch-chain-container">
-          <button on:click={() => onboard.setChain({ chainId: '0x1' })}
+          <button on:click={() => switchWagmiChain('0x1')}
             >Set Chain to Mainnet</button
           >
-          <button on:click={() => onboard.setChain({ chainId: 11155111 })}
+          <button on:click={() => switchWagmiChain(11155111)}
             >Set Chain to Sepolia</button
           >
-          <button on:click={() => onboard.setChain({ chainId: '0x89' })}
+          <button on:click={() => switchWagmiChain('0x89')}
             >Set Chain to Matic</button
           >
-          <button on:click={() => onboard.setChain({ chainId: 10 })}
+          <button on:click={() => switchWagmiChain(10)}
             >Set Chain to OP Mainnet</button
           >
         </div>
@@ -963,7 +1000,13 @@
         {/each}
         <button
           style="margin-top: 0.5rem;"
-          on:click={() => onboard.disconnectWallet({ label })}
+          on:click={() => {
+            const wagmiConfig = onboard.state.get().wagmiConfig
+            const disconnectThisWallet = getConnectors(wagmiConfig).find(
+              connector => connector.name === label
+            )
+            disconnect(wagmiConfig, { connector: disconnectThisWallet })
+          }}
         >
           Disconnect Wallet
         </button>

@@ -1,0 +1,70 @@
+{
+  "name": "@web3-onboard/wagmi",
+  "version": "2.0.0-alpha.4",
+  "description": "Module to configure, connect and return web3-onboard wallets as wagmi wallets and wagmi-config to be used with wagmi-core methods",
+  "keywords": [
+    "Ethereum",
+    "Web3",
+    "EVM",
+    "dapp",
+    "Multichain",
+    "Wallet",
+    "Transaction",
+    "Provider",
+    "Hardware Wallet",
+    "Notifications",
+    "React",
+    "Svelte",
+    "Solid.js",
+    "Vue",
+    "Next",
+    "Nuxt",
+    "MetaMask",
+    "Coinbase",
+    "WalletConnect",
+    "Ledger",
+    "Trezor",
+    "Connect Wallet",
+    "Ethereum Hooks",
+    "Blocknative",
+    "Mempool",
+    "pending",
+    "confirmed",
+    "Injected Wallet",
+    "Crypto",
+    "Crypto Wallet",
+    "onchain",
+    "wagmi"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blocknative/web3-onboard.git",
+    "directory": "packages/wagmi"
+  },
+  "homepage": "https://onboard.blocknative.com",
+  "bugs": "https://github.com/blocknative/web3-onboard/issues",
+  "module": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "browser": "dist/index.js",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w",
+    "type-check": "tsc --noEmit"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@web3-onboard/common": "^2.4.0-alpha.2",
+    "joi": "17.9.1",
+    "viem": "2.12.0",
+    "@wagmi/core": "2.10.3",
+    "eventemitter3": "^4.0.7"
+  }
+}

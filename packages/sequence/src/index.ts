@@ -1,4 +1,4 @@
-import type { WalletInit } from '@web3-onboard/common'
+import type { ProviderAccounts, WalletInit } from '@web3-onboard/common'
 
 interface SequenceOptions {
   appName?: string
@@ -40,7 +40,7 @@ function sequence(options?: SequenceOptions): WalletInit {
               const provider = createEIP1193Provider(sequenceProvider, {
                 eth_requestAccounts: async () => {
                   const address = await instance.getAddress()
-                  return [address]
+                  return [address] as ProviderAccounts
                 },
                 eth_chainId: async () => {
                   const chainId = await instance.getChainId()
