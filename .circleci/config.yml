@@ -148,7 +148,7 @@ commands:
           path: ~/web3-onboard-monorepo
       - *restore-build-flag
       - *test-build-flag
-      - *test_package_version_for_test_tag_break_false
+      - *test_package_version_for_alpha_tag_break_false
       # Services and packages in a Workspace don't get their own
       # yarn.lock so we need to generate them manually.
       - *generate-lock-file
