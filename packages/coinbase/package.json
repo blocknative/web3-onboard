@@ -31,7 +31,8 @@
     "confirmed",
     "Injected Wallet",
     "Crypto",
-    "Crypto Wallet"
+    "Crypto Wallet",
+    "Smart Wallet"
   ],
   "repository": {
     "type": "git",
