@@ -19,7 +19,6 @@ For more information see [web3-onboard docs](https://onboard.blocknative.com/doc
 import Onboard from '@web3-onboard/core'
 import injectedModule from '@web3-onboard/injected-wallets'
 import wagmi from '@web3-onboard/wagmi'
-import { parseEther } from 'viem'
 import {
   sendTransaction as wagmiSendTransaction,
   switchChain,
