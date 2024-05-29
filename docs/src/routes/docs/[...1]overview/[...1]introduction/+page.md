@@ -187,6 +187,7 @@ We recommend you add the [Core Repo](../../modules/core.md#install) and consider
 - [Blocto](../../wallets/blocto.md#install)
 - [Capsule](../../wallets/capsule.md#install)
 - [Coinbase](../../wallets/coinbase.md#install)
+- [OKX](../../wallets/okx.md#install)
 - [Fortmatic](../../wallets/fortmatic.md#install)
 - [Frame](../../wallets/frame.md#install)
 - [Safe](../../wallets/gnosis.md#install)

@@ -50,6 +50,7 @@
     "@web3-onboard/magic": "^2.2.0-alpha.2",
     "@web3-onboard/metamask": "^2.1.0-alpha.2",
     "@web3-onboard/mew-wallet": "^2.1.0-alpha.2",
+    "@web3-onboard/okx": "^2.0.0-alpha.1",
     "@web3-onboard/particle-network": "^2.1.0-alpha.2",
     "@web3-onboard/phantom": "^2.1.0-alpha.2",
     "@web3-onboard/portis": "^2.2.0-alpha.2",

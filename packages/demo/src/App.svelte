@@ -35,6 +35,7 @@
   import arcanaAuthModule from '@web3-onboard/arcana-auth'
   import venlyModule from '@web3-onboard/venly'
   import bitgetModule from '@web3-onboard/bitget'
+  import okxModule from '@web3-onboard/okx'
   import particleAuthModule from '@web3-onboard/particle-network'
   // import capsuleModule, {
   //   Environment,
@@ -232,6 +233,7 @@
 
   const dcent = dcentModule()
   const bitget = bitgetModule()
+  const okx = okxModule()
   const frameWallet = frameModule()
   const sequence = sequenceModule()
   const enkrypt = enkryptModule()
@@ -270,6 +272,7 @@
       trust,
       tallyho,
       bitget,
+      okx,
       enkrypt,
       infinityWallet,
       mewWallet,

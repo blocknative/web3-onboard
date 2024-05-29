@@ -61,7 +61,6 @@ const onboard = Onboard({
 - Phantom - _Desktop & Mobile_
 - SafePal - _Desktop & Mobile_
 - Zerion - _Desktop & Mobile_
-- OKX Wallet - _Desktop & Mobile_
 - Taho (Previously named Tally Ho wallet) - _Desktop_
 - Trust - _Mobile_
 - Opera - _Desktop & Mobile_

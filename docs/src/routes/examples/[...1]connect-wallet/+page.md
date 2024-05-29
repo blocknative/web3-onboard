@@ -25,14 +25,14 @@ Remember- if you used create-react-app, please follow the [additional setup inst
 <TabPanel value="yarn">
 
 ```sh copy
-yarn add @web3-onboard/react @web3-onboard/injected-wallets @web3-onboard/infinity-wallet @web3-onboard/fortmatic @web3-onboard/gnosis @web3-onboard/keepkey @web3-onboard/keystone @web3-onboard/ledger @web3-onboard/portis @web3-onboard/trezor @web3-onboard/walletconnect @web3-onboard/coinbase @web3-onboard/magic @web3-onboard/dcent @web3-onboard/sequence @web3-onboard/taho @web3-onboard/trust @web3-onboard/frontier
+yarn add @web3-onboard/react @web3-onboard/injected-wallets @web3-onboard/infinity-wallet @web3-onboard/fortmatic @web3-onboard/gnosis @web3-onboard/keepkey @web3-onboard/keystone @web3-onboard/ledger @web3-onboard/portis @web3-onboard/trezor @web3-onboard/walletconnect @web3-onboard/coinbase @web3-onboard/magic @web3-onboard/dcent @web3-onboard/sequence @web3-onboard/taho @web3-onboard/trust @web3-onboard/okx @web3-onboard/frontier
 ```
 
   </TabPanel>
   <TabPanel value="npm">
 
 ```sh copy
-npm install @web3-onboard/react @web3-onboard/injected-wallets @web3-onboard/infinity-wallet @web3-onboard/fortmatic @web3-onboard/gnosis @web3-onboard/keepkey @web3-onboard/keystone @web3-onboard/ledger @web3-onboard/portis @web3-onboard/trezor @web3-onboard/walletconnect @web3-onboard/coinbase @web3-onboard/magic @web3-onboard/dcent @web3-onboard/sequence @web3-onboard/taho @web3-onboard/trust @web3-onboard/frontier
+npm install @web3-onboard/react @web3-onboard/injected-wallets @web3-onboard/infinity-wallet @web3-onboard/fortmatic @web3-onboard/gnosis @web3-onboard/keepkey @web3-onboard/keystone @web3-onboard/ledger @web3-onboard/portis @web3-onboard/trezor @web3-onboard/walletconnect @web3-onboard/coinbase @web3-onboard/magic @web3-onboard/dcent @web3-onboard/sequence @web3-onboard/taho @web3-onboard/trust @web3-onboard/okx @web3-onboard/frontier
 ```
 
   </TabPanel>
@@ -60,6 +60,7 @@ import dcentModule from '@web3-onboard/dcent'
 import sequenceModule from '@web3-onboard/sequence'
 import tahoModule from '@web3-onboard/taho'
 import trustModule from '@web3-onboard/trust'
+import okxModule from '@web3-onboard/okx'
 import frontierModule from '@web3-onboard/frontier'
 import ConnectWallet from './ConnectWallet'
 
@@ -86,6 +87,7 @@ const safe = safeModule()
 const sequence = sequenceModule()
 const taho = tahoModule() // Previously named Tally Ho wallet
 const trust = trustModule()
+const okx = okxModule()
 const frontier = frontierModule()
 
 const trezorOptions = {
@@ -105,6 +107,7 @@ const wallets = [
   sequence,
   injected,
   trust,
+  okx,
   frontier,
   taho,
   ledger,
@@ -324,6 +327,7 @@ import dcentModule from '@web3-onboard/dcent'
 import sequenceModule from '@web3-onboard/sequence'
 import tahoModule from '@web3-onboard/taho'
 import trustModule from '@web3-onboard/trust'
+import okxModule from '@web3-onboard/okx'
 import frontierModule from '@web3-onboard/frontier'
 
 const INFURA_KEY = ''
@@ -349,6 +353,7 @@ const safe = safeModule()
 const sequence = sequenceModule()
 const taho = tahoModule() // Previously named Tally Ho wallet
 const trust = trustModule()
+const okx = okxModule()
 const frontier = frontierModule()
 
 const trezorOptions = {
@@ -375,6 +380,7 @@ const wallets = [
   coinbase,
   dcent,
   trust,
+  okx,
   frontier,
   trezor,
   walletConnect,

@@ -54,7 +54,6 @@ export enum ProviderIdentityFlag {
   Bitski = 'isBitski',
   Enkrypt = 'isEnkrypt',
   Phantom = 'isPhantom',
-  OKXWallet = 'isOkxWallet',
   Zeal = 'isZeal',
   Zerion = 'isZerion',
   Rainbow = 'isRainbow',
@@ -87,7 +86,6 @@ export enum ProviderExternalUrl {
   Bitget = 'https://web3.bitget.com/en/wallet-download',
   Coinbase = 'https://www.coinbase.com/wallet/downloads',
   MetaMask = 'https://metamask.io/download/',
-  OKXWallet = 'https://okx.com/download',
   Phantom = 'https://phantom.app/ul/v1/connect',
   Talisman = 'https://www.talisman.xyz/',
   Trust = 'https://link.trustwallet.com',
@@ -147,7 +145,6 @@ export enum ProviderLabel {
   Enkrypt = 'Enkrypt',
   Zeal = 'Zeal',
   Phantom = 'Phantom',
-  OKXWallet = 'OKX Wallet',
   Zerion = 'Zerion',
   Rainbow = 'Rainbow',
   SafePal = 'SafePal',
@@ -190,7 +187,6 @@ export enum InjectedNameSpace {
   Enkrypt = 'enkrypt',
   Zeal = 'zeal',
   Phantom = 'phantom',
-  OKXWallet = 'okxwallet',
   Trust = 'trustwallet',
   Frontier = 'frontier',
   DeFiConnectProvider = 'deficonnectProvider',
@@ -233,7 +229,6 @@ export interface CustomWindow extends Window {
   phantom: {
     ethereum: InjectedProvider
   }
-  okxwallet: InjectedProvider
   trustwallet: InjectedProvider
   deficonnectProvider: InjectedProvider
   safeheron: InjectedProvider
