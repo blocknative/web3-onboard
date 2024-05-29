@@ -453,26 +453,55 @@ updateLocale('es')
 
 This hook allows you to get the WagmiConfig (Config from the Wagmi project) from @web3-onboard/core if web3-onboard has been initialized with the wagmi property imported and passing into the web3-onboard/core config.
 
-```typescript
-import { sendTransaction as wagmiSendTransaction } from '@web3-onboard/wagmi'
-import { parseEther } from 'viem'
-import { useWagmiConfig, wallets } from '@web3-onboard/react'
-import type { WagmiConfig } from '@web3-onboard/core'
+```ts
+import Onboard from '@web3-onboard/core'
+import injectedModule from '@web3-onboard/injected-wallets'
+import wagmi from '@web3-onboard/wagmi'
+import {
+  sendTransaction as wagmiSendTransaction,
+  switchChain,
+  disconnect,
+  getConnectors
+} from '@web3-onboard/wagmi'
+import { parseEther, isHex, fromHex } from 'viem'
 
-type useWagmiConfig = (): WagmiConfig
+const injected = injectedModule()
 
-const wagmiConfig = useWagmiConfig()
-const w3OWallets = useWallets()
+const onboard = Onboard({
+  wagmi,
+  wallets: [injected],
+  chains: [
+    {
+      id: '0x1',
+      token: 'ETH',
+      label: 'Ethereum',
+      rpcUrl: 'https://mainnet.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
+    }
+  ]
+  // ... other Onboard options
+})
 
 const sendTransaction = async () => {
   // current primary wallet - as multiple wallets can connect this value is the currently active
-  const [currentPrimaryWallet] = w3OWallets
+  const [activeWallet] = onboard.state.get().wallets
+  const { wagmiConnector } = activeWallet
+  const wagmiConfig = onboard.state.get().wagmiConfig
   const result = await wagmiSendTransaction(wagmiConfig, {
     to: toAddress,
     // desired connector to send txn from
-    account: currentPrimaryWallet.accounts[0],
+    connector: wagmiConnector,
     value: parseEther('0.001')
   })
   console.log(result)
+}
+
+async function signMessage(chainId) {
+  // current primary wallet - as multiple wallets can connect this value is the currently active
+  const [activeWallet] = onboard.state.get().wallets
+  const wagmiConfig = onboard.state.get().wagmiConfig
+  await wagmiSignMessage(wagmiConfig, {
+    message: 'This is my message to you',
+    connector: activeWallet.wagmiConnector
+  })
 }
 ```

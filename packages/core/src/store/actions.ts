@@ -9,6 +9,7 @@ import { nanoid } from 'nanoid'
 import { dispatch } from './index.js'
 import { configuration } from '../configuration.js'
 import { handleThemeChange, returnTheme } from '../themes.js'
+import { state } from '../store/index.js'
 
 import type {
   Account,
@@ -191,6 +192,9 @@ export function setPrimaryWallet(wallet: WalletState, address?: string): void {
       ]
     }
   }
+
+  // Update wagmi config if wagmi is being used
+  handleWagmiConnectorUpdate(wallet)
 
   // add wallet will set it to first wallet since it already exists
   addWallet(wallet)
@@ -478,14 +482,30 @@ export function updateAppMetadata(
   dispatch(action as UpdateAppMetadataAction)
 }
 
-export function updateWagmiConfig(
-  update: Config
-): void {
-
+export function updateWagmiConfig(update: Config): void {
   const action = {
     type: UPDATE_WAGMI_CONFIG,
     payload: update
   }
 
   dispatch(action as UpdateWagmiConfigAction)
+}
+
+function handleWagmiConnectorUpdate(wallet: WalletState) {
+  const { wagmi } = configuration
+  if (!wagmi) return
+
+  try {
+    const { label } = wallet
+    const { wagmiConnect, getWagmiConnector } = wagmi
+    const wagmiConfig = state.get().wagmiConfig
+    const wagmiConnector = getWagmiConnector(label)
+    wagmiConnect(wagmiConfig, { connector: wagmiConnector }).then(() => {
+      updateWallet(label, { wagmiConnector })
+    })
+  } catch (e) {
+    console.error(
+      `Error updating Wagmi connector on primary wallet switch ${e}`
+    )
+  }
 }

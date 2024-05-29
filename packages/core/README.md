@@ -793,7 +793,13 @@ type WalletState = {
   accounts: Account[]
   chains: ConnectedChain[]
   instance?: unknown
-}
+  /**
+   * WAGMI Connector object
+   * Can be used to leverage all WAGMI functions from
+   * the @web3-onboard/wagmi module
+   * See https://www.npmjs.com/package/@web3-onboard/wagmi for more details
+   */
+  wagmiConnector?: Connector}
 
 type Account = {
   address: string

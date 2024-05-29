@@ -32,7 +32,7 @@
   import { getBNMulitChainSdk } from '../../services.js'
   import { MOBILE_WINDOW_WIDTH, STORAGE_KEYS } from '../../constants.js'
   import { defaultBnIcon } from '../../icons/index.js'
-  import type { Config } from '@web3-onboard/wagmi'
+  import type { Config, Connector } from '@web3-onboard/wagmi'
   import {
     BehaviorSubject,
     distinctUntilChanged,
@@ -210,15 +210,14 @@
 
     try {
       let address
+      let wagmiConnector: Connector | undefined
       
       if (wagmi) {
-        const { buildWagmiConfig, wagmiConnect } = wagmi
+        const { buildWagmiConfig, wagmiConnect, getWagmiConnector } = wagmi
 
         const wagmiConfig: Config = await buildWagmiConfig(chains, { label, provider })
         updateWagmiConfig(wagmiConfig)
-        const wagmiConnector = wagmiConfig.connectors.find(con => {
-          return con.name === label
-        })
+        wagmiConnector = getWagmiConnector(label)
 
         const accountsReq = await Promise.race([
           wagmiConnect(wagmiConfig, {
@@ -302,9 +301,10 @@
         }
       }
 
-      const update: Pick<WalletState, 'accounts' | 'chains'> = {
+      const update: Pick<WalletState, 'accounts' | 'chains' | 'wagmiConnector'> = {
         accounts: [{ address, ens: null, uns: null, balance: null }],
-        chains: [{ namespace: 'evm', id: chain }]
+        chains: [{ namespace: 'evm', id: chain }],
+        wagmiConnector
       }
 
       addWallet({ ...selectedWallet, ...update })
