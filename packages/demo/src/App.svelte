@@ -178,7 +178,10 @@
   const cedeStore = cedeStoreModule()
   const blocto = bloctoModule()
   const tallyho = tallyHoModule()
-  const bloom = bloomModule()
+  const bloom = bloomModule({
+    projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
+    dappUrl: 'https://www.onboard.blocknative.com'
+  })
 
   const webauthnSigner = new WebauthnSigner({
     rpId: 'localhost',
@@ -263,6 +266,7 @@
       trust,
       tallyho,
       bitget,
+      bloom,
       enkrypt,
       infinityWallet,
       mewWallet,
