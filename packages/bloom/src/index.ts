@@ -19,7 +19,7 @@ function initBloom(options: WalletConnectOptions): WalletInit {
     const walletName = "Bloom"
     options.handleUri = (uri: string) => {
         const deeplink = `bloom://wallet-connect/wc?uri=${encodeURIComponent(uri)}`
-        window.location = deeplink
+        window.location.href = deeplink
         return Promise.resolve()
     }
 
