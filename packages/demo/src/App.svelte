@@ -296,7 +296,7 @@
       particle,
       passport
     ],
-    // transactionPreview,
+    transactionPreview,
     gas,
     wagmi,
     chains: [
