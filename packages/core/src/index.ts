@@ -248,6 +248,9 @@ function init(options: InitOptions): OnboardAPI {
   appMetadata && updateAppMetadata(appMetadata)
 
   if (apiKey && transactionPreview) {
+    console.warn(
+      'Transaction Preview support is going to be sunset on July 1st 2024 and will no longer work after that date'
+    )
     const getBnSDK = async () => {
       const sdk = await getBlocknativeSdk()
       if (!sdk) return
