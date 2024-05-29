@@ -71,7 +71,7 @@
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
     "@web3-onboard/gas": "^2.1.5",
-    "@web3-onboard/wagmi": "^2.0.0-alpha.5",
+    "@web3-onboard/wagmi": "2.0.0-alpha.6",
     "@web3-onboard/transaction-preview": "^2.0.5",
     "@web3-onboard/unstoppable-resolution": "^2.0.0-alpha.1",
     "eslint": "^7.32.0",
