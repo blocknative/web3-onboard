@@ -1,7 +1,7 @@
 import { validateWCInitOptions } from './validation.js'
 import type { WalletInit } from '@web3-onboard/common'
 import walletConnect from './walletConnect.js'
-import type { WalletConnectOptions } from 'types.js'
+import type { WalletConnectOptions } from './types.js'
 
 
 function initBloom(options: WalletConnectOptions): WalletInit {
@@ -19,7 +19,7 @@ function initBloom(options: WalletConnectOptions): WalletInit {
     const walletName = "Bloom"
     options.handleUri = (uri: string) => {
         const deeplink = `bloom://wallet-connect/wc?uri=${encodeURIComponent(uri)}`
-        window.open(deeplink, '_blank')
+        window.location = deeplink
         return Promise.resolve()
     }
 

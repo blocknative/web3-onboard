@@ -7,7 +7,7 @@ import type {
   WalletInit,
   EIP1193Provider
 } from '@web3-onboard/common'
-import { buildWCChains, buildWCMethods, getMetaData } from 'utils.js'
+import { buildWCChains, buildWCMethods, getMetaData } from './utils.js'
 
 // methods that require user interaction
 const methods = [
