@@ -87,6 +87,7 @@ async function buildWagmiConfig(
         return undefined
       }
     }
+    console.log('wagmiConnectorFn', wagmiConnectorFn)
     const connectors: CreateConnectorFn[] = [...Object.values(wagmiConnectorFn)]
     const viemChains = await createWagmiChains(chainsList || [], transports)
 

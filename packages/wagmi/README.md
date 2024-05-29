@@ -35,6 +35,7 @@ import { parseEther, isHex, fromHex } from 'viem'
 const injected = injectedModule()
 
 const onboard = Onboard({
+  // This javascript object is unordered meaning props do not require a certain order
   wagmi,
   wallets: [injected],
   chains: [
@@ -62,21 +63,13 @@ const sendTransaction = async () => {
   console.log(result)
 }
 
-async function switchWagmiChain(chainId) {
+async function signMessage(chainId) {
   // current primary wallet - as multiple wallets can connect this value is the currently active
   const [activeWallet] = onboard.state.get().wallets
-  let chainAsNumber
-  if (isHex(chainId)) {
-    chainAsNumber = fromHex(chainId, 'number')
-  } else if (!isHex(chainId) && typeof chainId === 'number') {
-    chainAsNumber = chainId
-  } else {
-    throw new Error('Invalid chainId')
-  }
   const wagmiConfig = onboard.state.get().wagmiConfig
-  await switchChain(wagmiConfig, {
-    chainId: chainAsNumber,
-    connector: wagmiConnector
+  await wagmiSignMessage(wagmiConfig, {
+    message: 'This is my message to you',
+    connector: activeWallet.wagmiConnector
   })
 }
 
