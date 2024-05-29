@@ -3,7 +3,10 @@ import type {
   SimpleEventEmitter,
   EIP1193Provider
 } from '@web3-onboard/common'
-import { createEIP1193Provider } from '@web3-onboard/common'
+import {
+  createDownloadMessage,
+  createEIP1193Provider
+} from '@web3-onboard/common'
 import { CustomWindow } from './types.js'
 declare const window: CustomWindow
 
@@ -34,8 +37,9 @@ function enkrypt(): WalletInit {
             provider
           }
         } else {
-          window.open('https://enkrypt.com', '_blank')
-          throw new Error('Please Install Enkrypt to use this wallet')
+          throw new Error(
+            createDownloadMessage('Enkrypt', 'https://enkrypt.com')
+          )
         }
       }
     }

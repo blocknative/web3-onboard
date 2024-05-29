@@ -1,11 +1,11 @@
-import {
+import type {
   Chain,
   WalletInit,
   EIP1193Provider,
   ProviderAccounts
 } from '@web3-onboard/common'
 import type { EthereumProvider as LedgerEthereumProvider } from '@ledgerhq/connect-kit/dist/umd/index.js'
-import { isHexString, LedgerOptionsWCv2 } from './index.js'
+import type { LedgerOptionsWCv2 } from './index.js'
 import type { JQueryStyleEventEmitter } from 'rxjs/internal/observable/fromEvent'
 
 // methods that require user interaction
@@ -19,6 +19,14 @@ const defaultOptionalMethods = [
   'wallet_addEthereumChain',
   'wallet_switchEthereumChain'
 ]
+
+const isHexString = (value: string | number) => {
+  if (typeof value !== 'string' || !value.match(/^0x[0-9A-Fa-f]*$/)) {
+    return false
+  }
+
+  return true
+}
 
 function ledger(options?: LedgerOptionsWCv2): WalletInit {
   if (!options?.projectId) {
@@ -207,7 +215,7 @@ function ledger(options?: LedgerOptionsWCv2): WalletInit {
                             ? chainId
                             : `0x${chainId.toString(16)}`
                           this.emit('chainChanged', hexChainId)
-                          resolve(this.connector.accounts)
+                          resolve(this.connector.accounts as ProviderAccounts)
                         },
                         error: reject
                       })
@@ -229,7 +237,7 @@ function ledger(options?: LedgerOptionsWCv2): WalletInit {
                       const chainId = this.connector.chainId
                       const hexChainId = `0x${chainId.toString(16)}`
                       this.emit('chainChanged', hexChainId)
-                      return resolve(accounts)
+                      return resolve(accounts as ProviderAccounts)
                     }
                   }
                 )

@@ -1,6 +1,5 @@
 import {
   WalletInit,
-  EIP1193Provider,
   ProviderRpcError,
   ProviderRpcErrorCode,
   ProviderAccounts

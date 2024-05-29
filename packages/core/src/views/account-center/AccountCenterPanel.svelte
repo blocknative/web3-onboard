@@ -76,7 +76,7 @@
       await updateChainRPC(
         primaryWallet.provider,
         validAppChain,
-        validAppChain?.protectedRpcUrl || BN_BOOST_RPC_URL
+        validAppChain.protectedRpcUrl || BN_BOOST_RPC_URL
       )
       enableTransactionProtection = false
     } catch (error) {
@@ -461,7 +461,7 @@
           </div>
         </div>
         <!-- Only display on Eth Mainnet if protectedRpcUrl is not set per chain -->
-        {#if !$accountCenter$.hideTransactionProtectionBtn && (primaryWalletOnMainnet || validAppChain?.protectedRpcUrl)}
+        {#if !$accountCenter$.hideTransactionProtectionBtn && (primaryWalletOnMainnet || validAppChain.protectedRpcUrl)}
           <div
             on:click={() => (enableTransactionProtection = true)}
             class="protect action-container flex items-center pointer"

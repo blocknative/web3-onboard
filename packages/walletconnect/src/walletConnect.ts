@@ -276,7 +276,7 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
                             ? chainId
                             : `0x${chainId.toString(16)}`
                           this.emit('chainChanged', hexChainId)
-                          resolve(this.connector.accounts)
+                          resolve(this.connector.accounts as ProviderAccounts)
                         },
                         error: reject
                       })
@@ -300,7 +300,7 @@ function walletConnect(options: WalletConnectOptions): WalletInit {
                       instance = this.connector.session
                       const hexChainId = `0x${chainId.toString(16)}`
                       this.emit('chainChanged', hexChainId)
-                      return resolve(accounts)
+                      return resolve(accounts as ProviderAccounts)
                     }
                   }
                 )

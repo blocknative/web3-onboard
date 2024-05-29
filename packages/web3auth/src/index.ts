@@ -25,7 +25,7 @@ function web3auth(options: Web3AuthModuleOptions): WalletInit {
     getIcon: async () => (await import('./icon.js')).default,
     getInterface: async ({ EventEmitter, chains }) => {
       const { Web3Auth } = await import('@web3auth/modal')
-      const { CHAIN_NAMESPACES, ADAPTER_EVENTS } = await import(
+      const { CHAIN_NAMESPACES } = await import(
         '@web3auth/base'
       )
       const { createEIP1193Provider, ProviderRpcError, ProviderRpcErrorCode } =

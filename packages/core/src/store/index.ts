@@ -20,7 +20,8 @@ import type {
   UpdateAllWalletsAction,
   UpdateConnectModalAction,
   UpdateChainsAction,
-  UpdateAppMetadataAction
+  UpdateAppMetadataAction,
+  UpdateWagmiConfigAction
 } from '../types.js'
 
 import {
@@ -39,7 +40,8 @@ import {
   REMOVE_NOTIFICATION,
   UPDATE_ALL_WALLETS,
   UPDATE_CHAINS,
-  UPDATE_APP_METADATA
+  UPDATE_APP_METADATA,
+  UPDATE_WAGMI_CONFIG
 } from './constants.js'
 
 function reducer(state: AppState, action: Action): AppState {
@@ -227,8 +229,18 @@ function reducer(state: AppState, action: Action): AppState {
         ...state,
         appMetadata: {
           ...state.appMetadata,
-          ...update
+          ...update,
+          name: update.name || ''
         }
+      }
+    }
+
+    case UPDATE_WAGMI_CONFIG: {
+      const update = payload as UpdateWagmiConfigAction['payload']
+
+      return {
+        ...state,
+        wagmiConfig: update
       }
     }
 
