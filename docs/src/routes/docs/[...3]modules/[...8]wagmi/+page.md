@@ -1,5 +1,5 @@
 ---
-title: wagmi
+title: WAGMI
 ---
 
 # {$frontmatter.title}
@@ -25,15 +25,24 @@ npm install @web3-onboard/wagmi
   </TabPanel>
 </Tabs>
 
-## Usage
+## WAGMI Usage
+
+To add [WAGMI API](https://wagmi.sh/core/getting-started) support to your project you can simply install `web3-onboard/wagmi` import and pass in the WAGMI package default export directly into your onboard configuration. After doing so you can use all of the native WAGMI API functions directly from `@web3-onboard/wagmi`. This will give access to all WAGMI function available on or before `@wagmi/core` version `2.10.4`.
+
+Full documentation for `wagmi/core` API functions can be found [here](https://wagmi.sh/core/getting-started).
+
+### wagmiConfig
+
+After initialization an up-to-date WAGMI config will will be available from the onboard state object `onboard.state.get().wagmiConfig` which will need to be passed as the first prop of most [@wagmi/core](https://wagmi.sh/core/getting-started) methods. 
+
+### wagmiConnector and Connectors
+Wallets will also have a `wagmiConnector` prop within the onboard state object which will allow you to target specific wallets for interactions. This can also be bi-passed if the primary or most recently connected wallet is the wallet meant for the transactions.
+The config and connectors can be used with the WAGMI API returned from this module or an external WAGMI instance.
+
+## WAGMI Example
 
 This example assumes you have already setup web3-onboard to connect wallets to your dapp.
 For more information see [web3-onboard docs](https://onboard.blocknative.com/docs/modules/core#install).
-
-### `wagmiConnector` and Connectors
-
-`wagmiConnector` is a property returned as part of the wallet state object and can be used to interact with
-the WAGMI API returned from this module or an external WAGMI instance. Please see examples below...
 
 ```ts
 import Onboard from '@web3-onboard/core'

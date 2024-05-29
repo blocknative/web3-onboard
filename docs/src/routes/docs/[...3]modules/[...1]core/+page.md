@@ -108,6 +108,10 @@ type InitOptions {
   wallets: WalletInit[]
   chains: Chain[]
   appMetadata?: AppMetadata
+  /** Web3-Onboard module to add Wagmi support
+   * see https://www.npmjs.com/package/@web3-onboard/wagmi
+   */
+  wagmi?: typeof wagmi
   i18n?: i18nOptions
   accountCenter?: AccountCenterOptions
   apiKey?: string
@@ -386,6 +390,57 @@ Interested in seeing how Web3 Onboard will look on your site?
 It will allow you to customize the look and feel of Web3 Onboard, try different themes or create your own, and preview how Web3 Onboard will look on your site by entering a URL or adding a screenshot.
 :::
 
+---
+
+#### wagmi
+
+To add [WAGMI API](https://wagmi.sh/core/getting-started) support to your project you can simply install `web3-onboard/wagmi` import and pass in the [wagmi package](/docs/modules/wagmi) export directly into your onboard configuration. After doing so you can use all of the native WAGMI API functions directly from `@web3-onboard/wagmi`. This will give access to all WAGMI function available on or before `@wagmi/core` version `2.10.4`.
+After initialization an up-to-date WAGMI config will will be available from the onboard state object `onboard.state.get().wagmiConfig` which will need to be passed as the first prop of most [@wagmi/core](https://wagmi.sh/core/getting-started) methods. Wallets will also have a [wagmiConnector](#state) prop within the onboard state object which will allow you to target specific wallets for interactions. This can also be bi-passed if the primary or most recently connected wallet is the wallet meant for the transactions.
+The config and connectors can be used with the WAGMI API returned from this module or an external WAGMI instance.
+
+Full documentation for the `@web3-onboard/wagmi` module can be found [here](/docs/modules/wagmi).
+
+```typescript
+import Onboard from '@web3-onboard/core'
+import wagmi from '@web3-onboard/wagmi'
+import {
+  sendTransaction as wagmiSendTransaction,
+  switchChain,
+  disconnect,
+  getConnectors
+} from '@web3-onboard/wagmi'
+
+const injected = injectedModule()
+
+const onboard = Onboard({
+  // This javascript object is unordered meaning props do not require a certain order
+  wagmi,
+  wallets: [injected],
+  chains: [
+    {
+      id: '0x1',
+      token: 'ETH',
+      label: 'Ethereum',
+      rpcUrl: 'https://mainnet.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
+    }
+  ]
+  // ... other Onboard options
+})
+
+const sendTransaction = async () => {
+  // current primary wallet - as multiple wallets can connect this value is the currently active
+  const [activeWallet] = onboard.state.get().wallets
+  const { wagmiConnector } = activeWallet
+  const wagmiConfig = onboard.state.get().wagmiConfig
+  const result = await wagmiSendTransaction(wagmiConfig, {
+    to: toAddress,
+    // desired connector to send txn from
+    connector: wagmiConnector,
+    value: parseEther('0.001')
+  })
+  console.log(result)
+}
+```
 ---
 
 #### disableFontDownload

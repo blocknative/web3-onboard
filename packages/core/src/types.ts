@@ -60,7 +60,9 @@ export interface InitOptions {
   notify?: Partial<NotifyOptions> | Partial<Notify>
   /** Gas module */
   gas?: typeof gas
-  /** Wagmi module */
+  /** Web3-Onboard module to add Wagmi support
+   * see https://www.npmjs.com/package/@web3-onboard/wagmi
+   */
   wagmi?: typeof wagmi
   /**
    * Object mapping for W3O components with the key being the DOM
