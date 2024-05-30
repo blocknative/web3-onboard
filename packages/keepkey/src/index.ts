@@ -1,4 +1,4 @@
-import type { Chain, Platform, WalletInit } from '@web3-onboard/common'
+import type { AccountAddress, Chain, Platform, WalletInit } from '@web3-onboard/common'
 import type { StaticJsonRpcProvider } from '@ethersproject/providers'
 import type { ETHAccountPath } from '@shapeshiftoss/hdwallet-core'
 import type { KeepKeyHDWallet } from '@shapeshiftoss/hdwallet-keepkey'
@@ -56,7 +56,8 @@ function keepkey({
 
     const filtered =
       Array.isArray(filter) &&
-      (filter.includes(device.type) || filter.includes(device.os.name))
+      ((device?.type && filter.includes(device.type)) ||
+        (device?.os?.name && filter.includes(device.os.name)))
 
     if (filtered) return null
 
@@ -164,7 +165,7 @@ function keepkey({
           const address = await keepKeyWallet.ethGetAddress({
             addressNList: paths.addressNList,
             showDisplay: false
-          })
+          }) as AccountAddress
 
           const balance = await provider.getBalance(address)
 
@@ -249,7 +250,7 @@ function keepkey({
                 asset
               })
 
-              return [account]
+              return [account as Account]
             } catch (error) {
               throw new Error('Invalid derivation path')
             }

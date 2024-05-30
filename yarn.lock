@@ -5803,6 +5803,40 @@
     joi "17.8.1"
     rxjs "^7.5.2"
 
+"@web3-onboard/hw-common@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/hw-common/-/hw-common-2.3.1.tgz#1a968a0b40e64bb6b82593810c15b1fa7f620306"
+  integrity sha512-Dbztkmr+0iN3BJmwu7f3nvk7atbJEm9AmySlyyIYTqn+kuPWk88j8s1PAyHHOej2lLrtswyj1c3ER65O5S1M2g==
+  dependencies:
+    "@ethereumjs/common" "2.6.2"
+    "@web3-onboard/common" "^2.3.4"
+    ethers "5.5.4"
+    joi "17.9.1"
+    rxjs "^7.5.2"
+
+"@web3-onboard/keepkey@^2.3.8":
+  version "2.3.8"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/keepkey/-/keepkey-2.3.8.tgz#5b82cb6c0899a0ca4648b07d33507095464a9a7a"
+  integrity sha512-5yx/GeO+YK3aD4Wa9McoEfnOjskedRF5ABq2Wr0pUPeEFxhoS5Mi4i//205KTn3Tgv9q0e65liYXNItzCn03lA==
+  dependencies:
+    "@ethersproject/providers" "^5.5.0"
+    "@shapeshiftoss/hdwallet-core" "^1.15.2"
+    "@shapeshiftoss/hdwallet-keepkey-webusb" "^1.15.2"
+    "@web3-onboard/common" "^2.3.4"
+    "@web3-onboard/hw-common" "^2.3.1"
+    ethereumjs-util "^7.1.3"
+
+"@web3-onboard/keystone@^2.3.8":
+  version "2.3.8"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/keystone/-/keystone-2.3.8.tgz#c1447161d1d91b88170400e7ebfb7284db54d351"
+  integrity sha512-1kwf3luSMlv61R9KGxXNVB6548Axmsppq+JL++wACFBwKBig3JQrvqw1llIc9rkPUGcxq+o/FDY3XpBeO7jrig==
+  dependencies:
+    "@ethereumjs/tx" "^3.4.0"
+    "@ethersproject/providers" "^5.5.0"
+    "@keystonehq/eth-keyring" "^0.14.00.3"
+    "@web3-onboard/common" "^2.3.4"
+    "@web3-onboard/hw-common" "^2.3.1"
+
 "@web3-onboard/transaction-preview@^2.0.5":
   version "2.0.9"
   resolved "https://registry.yarnpkg.com/@web3-onboard/transaction-preview/-/transaction-preview-2.0.9.tgz#1eae3d22d3d8fbc305684b64491f6ccce0c0bf3c"
@@ -5815,6 +5849,21 @@
     rxjs "^7.5.2"
     svelte "^3.49.0"
     svelte-i18n "^3.3.13"
+
+"@web3-onboard/trezor@^2.4.4":
+  version "2.4.4"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/trezor/-/trezor-2.4.4.tgz#71ae98a86f4a0978bc7b76d4b2253de2bc7effa3"
+  integrity sha512-4NeNAdy8Qg3cfFo35vDHBNU18cMKiHUkl0nZi9VDWSxnEzv0ydesx9n0z79BHqu046vV3m5b4mqf2jJeVAlcEQ==
+  dependencies:
+    "@ethereumjs/tx" "^3.4.0"
+    "@ethersproject/providers" "^5.5.0"
+    "@trezor/connect-web" "^9.0.11"
+    "@web3-onboard/common" "^2.3.4"
+    "@web3-onboard/hw-common" "^2.3.1"
+    buffer "^6.0.3"
+    eth-crypto "^2.1.0"
+    ethereumjs-util "^7.1.3"
+    hdkey "^2.0.1"
 
 "@web3-onboard/unstoppable-resolution@^2.0.0-alpha.1":
   version "2.0.2"
@@ -15365,15 +15414,15 @@ typescript@*:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.5.5.tgz#d8c953832d28924a9e3d37c73d729c846c5896f3"
   integrity sha512-TCTIul70LyWe6IJWT8QSYeA54WQe8EjQFU4wY52Fasj5UKx88LNYKCgBEHcOMOrFF1rKGbD8v/xcNWVUq9SymA==
 
-typescript@^4.5.5, typescript@^4.9.4:
-  version "4.9.5"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.5.tgz#095979f9bcc0d09da324d58d03ce8f8374cbe65a"
-  integrity sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==
-
 typescript@^4.6.2:
   version "4.6.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.4.tgz#caa78bbc3a59e6a5c510d35703f6a09877ce45e9"
   integrity sha512-9ia/jWHIEbo49HfjrLGfKbZSuWo9iTMwXO+Ca3pRsSpbsMbc7/IU8NKdCZVRRBafVPGnoJeFL76ZOAA84I9fEg==
+
+typescript@^4.9.4:
+  version "4.9.5"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.5.tgz#095979f9bcc0d09da324d58d03ce8f8374cbe65a"
+  integrity sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==
 
 typescript@^5.0.3, typescript@^5.4.5:
   version "5.4.5"
