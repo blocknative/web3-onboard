@@ -1,5 +1,7 @@
 # @web3-onboard/transaction-preview
 
+## (Deprecated) Transaction Preview support is going to be sunset on July 1st 2024 and will no longer work after that date
+
 ## A modular UI for previewing a single or set of unsigned Ethereum transactions.
 
 ![Transaction Preview Flow](https://github.com/blocknative/web3-onboard/blob/develop/assets/transaction-preview.gif?raw=true 'Transaction Preview Flow')

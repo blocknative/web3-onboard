@@ -98,7 +98,8 @@ const wallet = Joi.object({
   provider: unknownObject,
   instance: unknownObject,
   accounts,
-  chains: Joi.array().items(connectedChain)
+  chains: Joi.array().items(connectedChain),
+  wagmiConnector: unknownObject
 })
   .required()
   .error(new Error('wallet must be defined'))
