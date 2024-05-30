@@ -58,7 +58,7 @@ const intiOnboard = async (theme) => {
   const { default: bloctoModule } = await import('@web3-onboard/blocto')
   const { default: venlyModule } = await import('@web3-onboard/venly')
   const { default: bitgetModule } = await import('@web3-onboard/bitget')
-  const { default: capsuleModule, Environment } = await import('@web3-onboard/capsule')
+  // const { default: capsuleModule, Environment } = await import('@web3-onboard/capsule')
   const { default: particleAuthModule } = await import('@web3-onboard/particle-network')
   const INFURA_ID = '8b60d52405694345a99bcb82e722e0af'
 
@@ -131,10 +131,10 @@ const intiOnboard = async (theme) => {
     environment: 'staging'
   })
 
-  const capsule = capsuleModule({
-    environment: Environment.DEVELOPMENT,
-    apiKey: '992bbd9146d5de8ad0419f141d9a7ca7'
-  })
+  // const capsule = capsuleModule({
+  //   environment: Environment.DEVELOPMENT,
+  //   apiKey: '992bbd9146d5de8ad0419f141d9a7ca7'
+  // })
 
   const particle = particleAuthModule({
     projectId: 'b385ccf0-73c3-485a-9941-159b7855b806',
@@ -172,7 +172,6 @@ const intiOnboard = async (theme) => {
       frame,
       infinityWallet,
       blocto,
-      capsule,
       particle,
       // capsule
 
