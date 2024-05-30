@@ -1,7 +1,8 @@
-import type {
-  EIP1193Provider,
-  WalletInit,
-  WalletInterface
+import {
+  createEIP1193Provider,
+  fromHex,
+  type WalletInit,
+  type WalletInterface
 } from '@web3-onboard/common'
 
 function coinbaseWallet({
@@ -27,9 +28,9 @@ function coinbaseWallet({
         chains,
         appMetadata
       }): Promise<WalletInterface> => {
-        if (enableMobileWalletLink || reloadOnDisconnect) {
+        if (enableMobileWalletLink || reloadOnDisconnect || darkMode) {
           console.warn(
-            'enableMobileWalletLink and reloadOnDisconnect are deprecated after version 2.2.7 of @web3-onboard/coinbase'
+            'darkMode, enableMobileWalletLink and reloadOnDisconnect init props are deprecated after version 2.2.7 of @web3-onboard/coinbase'
           )
         }
         const { name, icon } = appMetadata || {}
@@ -50,9 +51,8 @@ function coinbaseWallet({
         const base64 = window.btoa(icon || '')
         const appLogoUrl = `data:image/svg+xml;base64,${base64}`
 
-        const appChainIds = chains.map(
-          // @ts-ignore - treating hex strings as numbers as they are expected to be hex numbers
-          ({ id }) => id as number
+        const appChainIds = chains.map(({ id }) =>
+          fromHex(id as `0x${string}`, 'number')
         )
 
         const instance = new CoinbaseWalletSDKConstructor({
@@ -89,9 +89,20 @@ function coinbaseWallet({
 
           return coinbaseWalletProvider
         }
+        const provider = createEIP1193Provider(coinbaseWalletProvider, {
+          eth_chainId: ({ baseRequest }) =>
+            baseRequest({ method: 'eth_chainId' }).then(id => {
+              if (isHex(id)) {
+                return id
+              } else {
+                return toHex(id)
+              }
+            })
+        })
+        provider.removeListener = (event, func) => {}
 
         return {
-          provider: coinbaseWalletProvider as EIP1193Provider,
+          provider,
           instance
         }
       }
