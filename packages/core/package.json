@@ -73,7 +73,7 @@
     "@web3-onboard/gas": "^2.1.5",
     "@web3-onboard/wagmi": "2.0.0-alpha.6",
     "@web3-onboard/transaction-preview": "^2.0.5",
-    "@web3-onboard/unstoppable-resolution": "^2.0.0-alpha.1",
+    "@web3-onboard/unstoppable-resolution": "^2.0.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-svelte3": "^3.2.1",
