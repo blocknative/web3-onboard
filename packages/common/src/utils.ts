@@ -50,6 +50,14 @@ export const createDownloadMessage = (
   }
 }
 
+export const convertChainIdToNumber = (chainId: string | number): number => {
+  if (typeof chainId === 'number') {
+    return chainId
+  }
+  const hexRegex = /^[0-9a-fA-F]+$/
+  return hexRegex.test(chainId) ? parseInt(chainId, 16) : Number(chainId)
+}
+
 export const chainIdToViemImport = async (
   w3oChain: Chain
 ): Promise<ViemChain | unknown> => {

@@ -3,6 +3,7 @@ import type {
   WalletInit,
   WalletInterface
 } from '@web3-onboard/common'
+import { convertChainIdToNumber } from '@web3-onboard/common'
 
 function coinbaseWallet({
   supportedWalletType = 'all',
@@ -50,10 +51,7 @@ function coinbaseWallet({
         const base64 = window.btoa(icon || '')
         const appLogoUrl = `data:image/svg+xml;base64,${base64}`
 
-        const appChainIds = chains.map(
-          // @ts-ignore - treating hex strings as numbers as they are expected to be hex numbers
-          ({ id }) => id as number
-        )
+        const appChainIds = chains.map(({ id }) => convertChainIdToNumber(id))
 
         const instance = new CoinbaseWalletSDKConstructor({
           appName: name || '',

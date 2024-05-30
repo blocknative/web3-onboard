@@ -8,7 +8,8 @@ export {
   bigIntToHex,
   ethToWeiBigInt,
   createDownloadMessage,
-  chainIdToViemImport
+  chainIdToViemImport,
+  convertChainIdToNumber
 } from './utils.js'
 
 export * from './types.js'
