@@ -54,19 +54,19 @@ const intiOnboard = async (theme) => {
   const { default: xdefiModule } = await import('@web3-onboard/xdefi')
   const { default: cedeModule } = await import('@web3-onboard/cede-store')
   const { default: frameModule } = await import('@web3-onboard/frame')
-  const { default: arcanaModule } = await import('@web3-onboard/arcana-auth')
+  // const { default: arcanaModule } = await import('@web3-onboard/arcana-auth')
   const { default: bloctoModule } = await import('@web3-onboard/blocto')
   const { default: venlyModule } = await import('@web3-onboard/venly')
   const { default: bitgetModule } = await import('@web3-onboard/bitget')
-  // const { default: capsuleModule, Environment } = await import('@web3-onboard/capsule')
+  // // const { default: capsuleModule, Environment } = await import('@web3-onboard/capsule')
   const { default: particleAuthModule } = await import('@web3-onboard/particle-network')
   const INFURA_ID = '8b60d52405694345a99bcb82e722e0af'
 
   const injected = injectedModule()
   const infinityWallet = infinityWalletModule()
-  const arcanaWallet = arcanaModule({
-    clientID: 'xar_test_c9c3bc702eb13255c58dab0e74cfa859711c13cb'
-  })
+  // const arcanaWallet = arcanaModule({
+  //   clientID: 'xar_test_c9c3bc702eb13255c58dab0e74cfa859711c13cb'
+  // })
   const coinbase = coinbaseModule()
   const metamask = metamaskModule({
     options: {
@@ -131,10 +131,10 @@ const intiOnboard = async (theme) => {
     environment: 'staging'
   })
 
-  // const capsule = capsuleModule({
-  //   environment: Environment.DEVELOPMENT,
-  //   apiKey: '992bbd9146d5de8ad0419f141d9a7ca7'
-  // })
+  // // const capsule = capsuleModule({
+  // //   environment: Environment.DEVELOPMENT,
+  // //   apiKey: '992bbd9146d5de8ad0419f141d9a7ca7'
+  // // })
 
   const particle = particleAuthModule({
     projectId: 'b385ccf0-73c3-485a-9941-159b7855b806',
@@ -158,7 +158,7 @@ const intiOnboard = async (theme) => {
       xdefi,
       uauth,
       cede,
-      arcanaWallet,
+      // arcanaWallet,
       torus,
       sequence,
       dcent,
@@ -173,9 +173,8 @@ const intiOnboard = async (theme) => {
       infinityWallet,
       blocto,
       particle,
+      venly
       // capsule
-
-      // venly
     ],
     chains: [
       {
