@@ -577,6 +577,7 @@ const injected = injectedModule()
 const ETH_MAINNET_RPC = `https://mainnet.infura.io/v3/${INFURA_KEY}` || `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
 
 const onboard = Onboard({
+  // This javascript object is unordered meaning props do not require a certain order
   // head to https://explorer.blocknative.com/account to sign up for free
   apiKey: 'xxx387fb-bxx1-4xxc-a0x3-9d37e426xxxx'
   wallets: [injected],
@@ -792,7 +793,13 @@ type WalletState = {
   accounts: Account[]
   chains: ConnectedChain[]
   instance?: unknown
-}
+  /**
+   * WAGMI Connector object
+   * Can be used to leverage all WAGMI functions from
+   * the @web3-onboard/wagmi module
+   * See https://www.npmjs.com/package/@web3-onboard/wagmi for more details
+   */
+  wagmiConnector?: Connector}
 
 type Account = {
   address: string

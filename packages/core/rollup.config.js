@@ -12,7 +12,8 @@ export default {
   input: 'src/index.ts',
   output: {
     format: 'es',
-    dir: 'dist/'
+    dir: 'dist/',
+    sourcemap: true
   },
   plugins: [
     json(),
@@ -21,7 +22,13 @@ export default {
       preventAssignment: true
     }),
     svelte({
-      preprocess: sveltePreprocess({ sourceMap: !production }),
+      preprocess: sveltePreprocess({
+        sourceMap: !production,
+        typescript: {
+          tsconfigFile: './tsconfig.json'
+        },
+        postcss: true
+      }),
       compilerOptions: {
         dev: !production
       },
@@ -29,20 +36,21 @@ export default {
     }),
     resolve({
       browser: true,
-      dedupe: ['svelte']
+      dedupe: ['svelte'],
+      extensions: ['.js', '.ts', '.svelte']
     }),
     typescript({
       sourceMap: !production,
-      inlineSources: !production
+      inlineSources: !production,
+      exclude: ['node_modules/**']
     }),
     copy({
       src: 'src/i18n/en.json',
       dest: 'i18n'
-    })
+    }),
   ],
   external: [
     '@web3-onboard/common',
-    'ethers',
     'bowser',
     'joi',
     'rxjs',
@@ -52,9 +60,9 @@ export default {
     'lodash.merge',
     'lodash.partition',
     'eventemitter3',
-    'bignumber.js',
     'bnc-sdk',
     'nanoid',
-    '@unstoppabledomains/resolution'
+    '@unstoppabledomains/resolution',
+    'viem'
   ]
 }

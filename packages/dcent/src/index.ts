@@ -2,7 +2,8 @@ import type {
   Chain,
   WalletInit,
   EIP1193Provider,
-  Platform
+  Platform,
+  AccountAddress
 } from '@web3-onboard/common'
 
 import type {
@@ -178,14 +179,16 @@ function dcent({
                 message: 'User rejected the request.'
               })
             }
-            return accounts[0] ? [accounts[0].address] : []
+            return accounts[0] ? [accounts[0].address as AccountAddress] : []
           },
           eth_selectAccounts: async () => {
             const accounts = await getAccounts()
-            return accounts.map(({ address }) => address)
+            return accounts.map(({ address }) => address as AccountAddress)
           },
           eth_accounts: async () => {
-            return accounts && accounts[0].address ? [accounts[0].address] : []
+            return accounts && accounts[0].address
+              ? [accounts[0].address as AccountAddress]
+              : []
           },
           eth_chainId: async () => {
             return currentChain.id

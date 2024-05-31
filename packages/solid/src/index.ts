@@ -1,5 +1,5 @@
 import { createSignal, createEffect, createMemo, Signal } from 'solid-js'
-import { SetStoreFunction, Store, createStore } from 'solid-js/store'
+import { type SetStoreFunction, type Store, createStore } from 'solid-js/store'
 import Web3Onboard from '@web3-onboard/core'
 import type {
   InitOptions,
@@ -10,7 +10,7 @@ import type {
   ConnectedChain,
   AppState
 } from '@web3-onboard/core'
-import { OnboardComposable, SetChainOptions } from './types'
+import type { OnboardComposable, SetChainOptions } from './types'
 export type * from '@web3-onboard/core'
 export type * from './types'
 
@@ -152,4 +152,10 @@ const useOnboard = (): OnboardComposable => {
   }
 }
 
-export { init, useOnboard, OnboardComposable, OnboardAPI, InitOptions }
+export {
+  init,
+  useOnboard,
+  type OnboardComposable,
+  type OnboardAPI,
+  type InitOptions
+}

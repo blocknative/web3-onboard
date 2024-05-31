@@ -31,7 +31,6 @@ function bitgetWallet(): WalletInit {
         const {
           currentProvider,
           getIsInstall,
-          getDownload,
           installWalletMessage
         } = await loadBitgetWalletDependencies()
 
@@ -39,7 +38,6 @@ function bitgetWallet(): WalletInit {
         if (getIsInstall()) {
           provider = currentProvider()
         } else {
-          window.open(getDownload(), '_blank')
           throw new Error(installWalletMessage)
         }
         return { provider }

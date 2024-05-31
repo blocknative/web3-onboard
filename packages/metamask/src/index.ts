@@ -81,6 +81,7 @@ function metamask({
             sdk?.terminate()
           }
         }
+        
 
         return {
           provider,

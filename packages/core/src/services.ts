@@ -19,7 +19,7 @@ export async function getBNMulitChainSdk(): Promise<MultiChain | null> {
   if (!blocknativeMultiChainSdk) {
     const { default: Blocknative } = await import('bnc-sdk')
     blocknativeMultiChainSdk = Blocknative.multichain({
-      apiKey: configuration.apiKey
+      apiKey: configuration.apiKey ?? ''
     })
 
     blocknativeMultiChainSdk.transactions$.subscribe(handleTransactionUpdates)
@@ -32,7 +32,7 @@ export async function getBNMulitChainSdk(): Promise<MultiChain | null> {
  *
  * @returns SDK if apiKey
  */
-export async function getBlocknativeSdk(): Promise<SDK> {
+export async function getBlocknativeSdk(): Promise<SDK | null> {
   const { apiKey } = configuration
 
   if (!apiKey) return null
@@ -40,7 +40,7 @@ export async function getBlocknativeSdk(): Promise<SDK> {
   if (!blocknativeSdk) {
     const { default: Blocknative } = await import('bnc-sdk')
     blocknativeSdk = new Blocknative({
-      dappId: configuration.apiKey,
+      dappId: configuration.apiKey ?? '',
       networkId: 1
     })
     return blocknativeSdk
