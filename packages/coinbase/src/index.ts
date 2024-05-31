@@ -1,4 +1,5 @@
 import {
+  EIP1193Provider,
   createEIP1193Provider,
   fromHex,
   type WalletInit,
@@ -6,7 +7,7 @@ import {
 } from '@web3-onboard/common'
 
 function coinbaseWallet({
-  supportedWalletType = 'all',
+  supportedWalletType = 'smartWalletOnly',
   darkMode = false,
   enableMobileWalletLink = false,
   reloadOnDisconnect = true
@@ -89,11 +90,9 @@ function coinbaseWallet({
 
           return coinbaseWalletProvider
         }
-        const provider = createEIP1193Provider(coinbaseWalletProvider)
-        provider.removeListener = (event, func) => {}
 
         return {
-          provider,
+          provider: coinbaseWalletProvider as EIP1193Provider,
           instance
         }
       }
