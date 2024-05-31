@@ -89,16 +89,7 @@ function coinbaseWallet({
 
           return coinbaseWalletProvider
         }
-        const provider = createEIP1193Provider(coinbaseWalletProvider, {
-          eth_chainId: ({ baseRequest }) =>
-            baseRequest({ method: 'eth_chainId' }).then(id => {
-              if (isHex(id)) {
-                return id
-              } else {
-                return toHex(id)
-              }
-            })
-        })
+        const provider = createEIP1193Provider(coinbaseWalletProvider)
         provider.removeListener = (event, func) => {}
 
         return {
