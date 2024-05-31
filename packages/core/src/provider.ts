@@ -328,7 +328,9 @@ export function trackWallet(
         const { wallets, chains } = state.get()
         const primaryWallet = wallets.find(wallet => wallet.label === label)
         const accounts = primaryWallet?.accounts || []
-
+        if (!isHex(chainId)) {
+          chainId = toHex(chainId)
+        }
         const chain = chains.find(
           ({ namespace, id }) => namespace === 'evm' && id === chainId
         )
