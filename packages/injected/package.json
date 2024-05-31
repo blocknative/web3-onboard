@@ -70,6 +70,7 @@
   "dependencies": {
     "@web3-onboard/common": "^2.4.0",
     "joi": "17.9.1",
-    "lodash.uniqby": "^4.7.0"
+    "lodash.uniqby": "^4.7.0",
+    "viem": "2.12.0"
   }
 }
