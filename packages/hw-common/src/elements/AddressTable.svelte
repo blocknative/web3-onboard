@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { weiToEth } from '@web3-onboard/common'
+  import { weiToEth } from '../utils.js'
   import type { Account, AccountsList } from '../types.js'
 
   export let accountsListObject: AccountsList | undefined

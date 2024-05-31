@@ -1,4 +1,8 @@
-import type { WalletInit, EIP1193Provider } from '@web3-onboard/common'
+import {
+  type WalletInit,
+  type EIP1193Provider,
+  createDownloadMessage
+} from '@web3-onboard/common'
 import { CustomWindow } from './types.js'
 declare const window: CustomWindow
 
@@ -23,8 +27,12 @@ function trust(): WalletInit {
         } else {
           // trustwallet extension is not installed
           // send user to install page
-          window.open('https://trustwallet.com/browser-extension', '_blank')
-          throw new Error('Please Install Trust to use this wallet')
+          throw new Error(
+            createDownloadMessage(
+              'Trust Wallet',
+              'https://trustwallet.com/browser-extension'
+            )
+          )
         }
 
         return {

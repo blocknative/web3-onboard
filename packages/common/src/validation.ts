@@ -17,20 +17,6 @@ export const chainIdValidation = Joi.alternatives().try(
 
 export const chainNamespaceValidation = Joi.string().valid('evm')
 
-/** Related to ConnectionInfo from 'ethers/lib/utils' */
-export const providerConnectionInfoValidation = Joi.object({
-  url: Joi.string().required(),
-  headers: Joi.object(),
-  user: Joi.string(),
-  password: Joi.string(),
-  allowInsecureAuthentication: Joi.boolean(),
-  allowGzip: Joi.boolean(),
-  throttleLimit: Joi.number(),
-  throttleSlotInterval: Joi.number(),
-  throttleCallback: Joi.function(),
-  timeout: Joi.number()
-})
-
 const secondaryTokenValidation = Joi.object({
   address: Joi.string().required(),
   icon: Joi.string().optional()
@@ -50,6 +36,5 @@ export const chainValidation = Joi.object({
   color: Joi.string(),
   publicRpcUrl: Joi.string(),
   protectedRpcUrl: Joi.string(),
-  blockExplorerUrl: Joi.string(),
-  providerConnectionInfoValidation
+  blockExplorerUrl: Joi.string()
 })

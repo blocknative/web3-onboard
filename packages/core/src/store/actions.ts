@@ -1,8 +1,15 @@
-import type { AppMetadata, Chain, WalletInit, WalletModule } from '@web3-onboard/common'
+import type {
+  AppMetadata,
+  Chain,
+  WalletHelpers,
+  WalletInit,
+  WalletModule
+} from '@web3-onboard/common'
 import { nanoid } from 'nanoid'
 import { dispatch } from './index.js'
 import { configuration } from '../configuration.js'
 import { handleThemeChange, returnTheme } from '../themes.js'
+import { state } from '../store/index.js'
 
 import type {
   Account,
@@ -30,7 +37,8 @@ import type {
   UpdateConnectModalAction,
   Theme,
   UpdateChainsAction,
-  UpdateAppMetadataAction
+  UpdateAppMetadataAction,
+  UpdateWagmiConfigAction
 } from '../types.js'
 
 import {
@@ -66,8 +74,11 @@ import {
   UPDATE_ALL_WALLETS,
   UPDATE_CONNECT_MODAL,
   UPDATE_CHAINS,
-  UPDATE_APP_METADATA
+  UPDATE_APP_METADATA,
+  UPDATE_WAGMI_CONFIG
 } from './constants.js'
+import type { Address } from 'bnc-sdk'
+import type { Config } from '@web3-onboard/wagmi'
 
 export function addChains(chains: Chain[]): void {
   // chains are validated on init
@@ -86,15 +97,19 @@ export function addChains(chains: Chain[]): void {
 
 export function updateChain(updatedChain: Chain): void {
   const {
-    label, 
-    token, 
-    rpcUrl, 
-    id: chainId, 
+    label,
+    token,
+    rpcUrl,
+    id: chainId,
     namespace: chainNamespace
   } = updatedChain
-  const error = validateSetChainOptions(
-    { label, token, rpcUrl, chainId, chainNamespace }
-  )
+  const error = validateSetChainOptions({
+    label,
+    token,
+    rpcUrl,
+    chainId,
+    chainNamespace
+  })
 
   if (error) {
     throw error
@@ -178,13 +193,16 @@ export function setPrimaryWallet(wallet: WalletState, address?: string): void {
     }
   }
 
+  // Update wagmi config if wagmi is being used
+  handleWagmiConnectorUpdate(wallet)
+
   // add wallet will set it to first wallet since it already exists
   addWallet(wallet)
 }
 
 export function updateAccount(
   id: string,
-  address: string,
+  address: Address,
   update: Partial<Account>
 ): void {
   const action = {
@@ -299,7 +317,11 @@ export function customNotification(updatedNotification: CustomNotification): {
   }
   addCustomNotification(notification)
 
-  const dismiss = () => removeNotification(notification.id)
+  const dismiss = () => {
+    if (notification.id) {
+      removeNotification(notification.id)
+    }
+  }
 
   const update = (
     notificationUpdate: CustomNotification
@@ -406,7 +428,8 @@ export function updateAllWallets(wallets: WalletState[]): void {
 
 // ==== HELPERS ==== //
 export function initializeWalletModules(modules: WalletInit[]): WalletModule[] {
-  const { device } = configuration
+  const { device }: WalletHelpers = configuration
+  if (!device) return []
   return modules.reduce((acc, walletInit) => {
     const initialized = walletInit({ device })
 
@@ -443,7 +466,7 @@ export function updateTheme(theme: Theme): void {
 }
 
 export function updateAppMetadata(
-  update: AppMetadata| Partial<AppMetadata>
+  update: AppMetadata | Partial<AppMetadata>
 ): void {
   const error = validateAppMetadataUpdate(update)
 
@@ -457,4 +480,32 @@ export function updateAppMetadata(
   }
 
   dispatch(action as UpdateAppMetadataAction)
+}
+
+export function updateWagmiConfig(update: Config): void {
+  const action = {
+    type: UPDATE_WAGMI_CONFIG,
+    payload: update
+  }
+
+  dispatch(action as UpdateWagmiConfigAction)
+}
+
+function handleWagmiConnectorUpdate(wallet: WalletState) {
+  const { wagmi } = configuration
+  if (!wagmi) return
+
+  try {
+    const { label } = wallet
+    const { wagmiConnect, getWagmiConnector } = wagmi
+    const wagmiConfig = state.get().wagmiConfig
+    const wagmiConnector = getWagmiConnector(label)
+    wagmiConnect(wagmiConfig, { connector: wagmiConnector }).then(() => {
+      updateWallet(label, { wagmiConnector })
+    })
+  } catch (e) {
+    console.error(
+      `Error updating Wagmi connector on primary wallet switch ${e}`
+    )
+  }
 }

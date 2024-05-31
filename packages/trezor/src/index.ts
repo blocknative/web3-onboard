@@ -143,7 +143,8 @@ function trezor(options: TrezorOptions): WalletInit {
 
     const filtered =
       Array.isArray(filter) &&
-      (filter.includes(device.type) || filter.includes(device.os.name))
+      ((device?.type && filter.includes(device.type)) ||
+        (device?.os?.name && filter.includes(device.os.name)))
 
     if (filtered) return null
 

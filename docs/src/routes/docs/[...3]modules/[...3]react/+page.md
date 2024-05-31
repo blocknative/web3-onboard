@@ -46,6 +46,7 @@ const rpcUrl = `https://mainnet.infura.io/v3/${infuraKey}`
 
 // initialize Onboard
 init({
+  // This javascript object is unordered meaning props do not require a certain order
   apiKey,
   wallets: [injected],
   chains: [
@@ -136,11 +137,11 @@ function MyApp({ Component, pageProps }) {
 export default MyApp
 ```
 
-## `init`
+## init
 
 The `init` function must be called before any hooks can be used. The `init` function just initializes `web3-onboard` and makes it available for all hooks to use. For reference check out the [initialization docs for `@web3-onboard/core`](../../modules/core.md#initialization)
 
-## `useConnectWallet`
+## useConnectWallet
 
 This hook allows you to connect the user's wallet and track the state of the connection status and the wallet that is connected.
 
@@ -202,7 +203,7 @@ setPrimaryWallet(wallets[1])
 setPrimaryWallet(wallets[1], wallets[1].accounts[2].address)
 ```
 
-## `useSetChain`
+## useSetChain
 
 This hook allows you to set the chain of a user's connected wallet, keep track of the current chain the user is connected to and the status of setting the chain. Passing in a wallet label will operate on that connected wallet, otherwise it will default to the last connected wallet. If a chain was instantiated without an rpcUrl, token, or label, add these options for wallets that require this information for adding a new chain.
 
@@ -242,7 +243,64 @@ const [
 ] = useSetChain()
 ```
 
-## `useNotifications`
+## useWagmiConfig
+
+This hook allows you to get the WagmiConfig (Config from the Wagmi project) from @web3-onboard/core if W3O has been initialized with the [WAGMI property imported and passing into the web3-onboard/core config](../../modules/wagmi.md#usage).
+
+```ts
+import Onboard from '@web3-onboard/core'
+import injectedModule from '@web3-onboard/injected-wallets'
+import wagmi from '@web3-onboard/wagmi'
+import {
+  sendTransaction as wagmiSendTransaction,
+  switchChain,
+  disconnect,
+  getConnectors
+} from '@web3-onboard/wagmi'
+import { parseEther, isHex, fromHex } from 'viem'
+
+const injected = injectedModule()
+
+const onboard = Onboard({
+  wagmi,
+  wallets: [injected],
+  chains: [
+    {
+      id: '0x1',
+      token: 'ETH',
+      label: 'Ethereum',
+      rpcUrl: 'https://mainnet.infura.io/v3/17c1e1500e384acfb6a72c5d2e67742e'
+    }
+  ]
+  // ... other Onboard options
+})
+
+const sendTransaction = async () => {
+  // current primary wallet - as multiple wallets can connect this value is the currently active
+  const [activeWallet] = onboard.state.get().wallets
+  const { wagmiConnector } = activeWallet
+  const wagmiConfig = onboard.state.get().wagmiConfig
+  const result = await wagmiSendTransaction(wagmiConfig, {
+    to: toAddress,
+    // desired connector to send txn from
+    connector: wagmiConnector,
+    value: parseEther('0.001')
+  })
+  console.log(result)
+}
+
+async function signMessage(chainId) {
+  // current primary wallet - as multiple wallets can connect this value is the currently active
+  const [activeWallet] = onboard.state.get().wallets
+  const wagmiConfig = onboard.state.get().wagmiConfig
+  await wagmiSignMessage(wagmiConfig, {
+    message: 'This is my message to you',
+    connector: activeWallet.wagmiConnector
+  })
+}
+```
+
+## useNotifications
 
 This hook allows the dev to access all notifications if enabled, send custom notifications, and update notify <enable/disable & update transactionHandler function>
 **note** This requires an API key be added to the initialization, enabled by default if an API key exists
@@ -409,7 +467,7 @@ const sendTransactionWithPreFlightNotifications = async () => {
 </button>
 ```
 
-## `useWallets`
+## useWallets
 
 This hook allows you to track the state of all the currently connected wallets:
 
@@ -421,7 +479,7 @@ type UseWallets = (): WalletState[]
 const connectedWallets = useWallets()
 ```
 
-## `useAccountCenter`
+## useAccountCenter
 
 This hook allows you to track and update the state of the Account Center:
 
@@ -448,7 +506,7 @@ type AccountCenter = {
 const updateAccountCenter = useAccountCenter()
 ```
 
-## `useSetLocale`
+## useSetLocale
 
 This hook allows you to set the locale of your application to allow language updates associated with the i18n config:
 

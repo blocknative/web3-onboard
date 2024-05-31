@@ -12,7 +12,7 @@ async function buildChainsMap(): Promise<ChainsMap> {
   const chainEntries = Object.entries(chains)
   const chainsMap: ChainsMap = new Map()
 
-  for (const [chainName, chainObject] of chainEntries) {
+  for (const [, chainObject] of chainEntries) {
     if (chainObject && 'id' in chainObject) {
       chainsMap.set(chainObject.id, chainObject as Chain)
     }

@@ -1,5 +1,5 @@
 import uniqBy from 'lodash.uniqby'
-import { createEIP1193Provider, type WalletInit } from '@web3-onboard/common'
+import type { Device, Platform, WalletInit } from '@web3-onboard/common'
 import { ProviderLabel } from './types.js'
 import standardWallets from './wallets.js'
 import {
@@ -112,7 +112,7 @@ function injected(options?: InjectedWalletOptions): WalletInit {
         const walletAvailable = isWalletAvailable(
           provider,
           checkProviderIdentity,
-          device
+          device as Device
         )
 
         let excludedDevice: boolean = false
@@ -120,8 +120,8 @@ function injected(options?: InjectedWalletOptions): WalletInit {
         // dev specified platform filters
         if (
           Array.isArray(walletFilters) &&
-          (walletFilters.includes(device.type) ||
-            walletFilters.includes(device.os.name))
+          (walletFilters.includes(device.type as Platform) ||
+            (device.os && walletFilters.includes(device.os.name)))
         ) {
           excludedDevice = true
         }
@@ -134,6 +134,7 @@ function injected(options?: InjectedWalletOptions): WalletInit {
         // wallet specified platform filters
         const invalidPlatform =
           !platforms.includes('all') &&
+          device.type !== null &&
           !platforms.includes(device.type) &&
           !platforms.includes(device.os.name)
 

@@ -1,9 +1,10 @@
 import type { EthereumTransactionData, Network } from 'bnc-sdk'
-import { BigNumber } from 'ethers'
+import { bigIntToHex } from '@web3-onboard/common'
 import { configuration } from './configuration.js'
 import { state } from './store/index.js'
 import type { WalletState } from './types.js'
 import { gweiToWeiHex, networkToChainId, toHexString } from './utils.js'
+import type { GasPrice } from '@web3-onboard/gas'
 
 const ACTIONABLE_EVENT_CODES: string[] = ['txPool']
 const VALID_GAS_NETWORKS: Network[] = ['main', 'matic-main']
@@ -38,9 +39,14 @@ export async function replaceTransaction({
 
   const chainId = networkToChainId[network]
 
-  const { gasPriceProbability } = state.get().notify.replacement
-  const { gas, apiKey } = configuration
+  const { gasPriceProbability } = state.get().notify.replacement as {
+    gasPriceProbability?:
+      | { speedup?: number | undefined; cancel?: number | undefined }
+      | undefined
+  }
 
+  const { gas, apiKey } = configuration
+  if (!gas) return
   // get gas price
   const [gasResult] = await gas.get({
     chains: [networkToChainId[network]],
@@ -49,13 +55,15 @@ export async function replaceTransaction({
   })
 
   const { maxFeePerGas, maxPriorityFeePerGas } =
-    gasResult.blockPrices[0].estimatedPrices.find(
+    (gasResult.blockPrices[0].estimatedPrices.find(
       ({ confidence }) =>
         confidence ===
         (type === 'speedup'
-          ? gasPriceProbability.speedup
-          : gasPriceProbability.cancel)
-    )
+          ? gasPriceProbability?.speedup
+          : gasPriceProbability?.cancel)
+    ) as GasPrice) || {}
+
+  if (!maxFeePerGas || !maxPriorityFeePerGas) return
 
   const maxFeePerGasWeiHex = gweiToWeiHex(maxFeePerGas)
   const maxPriorityFeePerGasWeiHex = gweiToWeiHex(maxPriorityFeePerGas)
@@ -71,7 +79,7 @@ export async function replaceTransaction({
         from,
         to: type === 'cancel' ? from : to,
         chainId: parseInt(chainId),
-        value: `${BigNumber.from(value).toHexString()}`,
+        value: bigIntToHex(BigInt(value)),
         nonce: toHexString(nonce),
         gasLimit: toHexString(gasLimit),
         maxFeePerGas: maxFeePerGasWeiHex,

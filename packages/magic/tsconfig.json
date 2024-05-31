@@ -11,7 +11,8 @@
     "resolveJsonModule": true,
     "strictNullChecks": false,
     "allowSyntheticDefaultImports": true,
-    "types": ["node", "svelte"]
+    "types": ["node", "svelte"],
+    "ignoreDeprecations": "5.0"
   },
-  "outDir": "dist"
+  "outDir": "dist",
 }

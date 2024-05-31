@@ -6,11 +6,12 @@ export {
   useSetChain,
   useSetLocale,
   useUpdateTheme,
-  useWallets
+  useWallets,
+  useWagmiConfig
 } from './hooks/index.js'
 
 export {
   init,
   Web3OnboardProvider,
-  Web3OnboardProviderProps
+  type Web3OnboardProviderProps
 } from './context.js'
