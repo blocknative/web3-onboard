@@ -12,7 +12,12 @@ import { configuration } from './configuration.js'
 import { updateSecondaryTokens } from './update-balances'
 
 import type { Uns } from '@web3-onboard/unstoppable-resolution'
-import type { PublicClient, GetEnsTextReturnType } from 'viem'
+import {
+  type PublicClient,
+  type GetEnsTextReturnType,
+  isHex,
+  toHex
+} from 'viem'
 import type {
   Address,
   ChainId,
@@ -260,7 +265,9 @@ export function trackWallet(
     if (!wallet) return // Add null check for wallet
     const { chains, accounts } = wallet
     const [connectedWalletChain] = chains
-
+    if (!isHex(chainId)) {
+      chainId = toHex(chainId)
+    }
     if (chainId === connectedWalletChain.id) return
 
     if (state.get().notify.enabled) {
@@ -321,7 +328,9 @@ export function trackWallet(
         const { wallets, chains } = state.get()
         const primaryWallet = wallets.find(wallet => wallet.label === label)
         const accounts = primaryWallet?.accounts || []
-
+        if (!isHex(chainId)) {
+          chainId = toHex(chainId)
+        }
         const chain = chains.find(
           ({ namespace, id }) => namespace === 'evm' && id === chainId
         )
