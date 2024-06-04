@@ -1,4 +1,4 @@
-import { type WalletInit, type WalletInterface } from '@web3-onboard/common'
+import type { WalletInit, WalletInterface } from '@web3-onboard/common'
 
 function coinbaseWallet({
   supportedWalletType = 'all',
