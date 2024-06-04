@@ -783,16 +783,13 @@
     preact "^10.16.0"
     sha.js "^2.4.11"
 
-"@coinbase/wallet-sdk@3.9.2":
-  version "3.9.2"
-  resolved "https://registry.yarnpkg.com/@coinbase/wallet-sdk/-/wallet-sdk-3.9.2.tgz#757d6652d0972eb8804c50e3923a05242833caf1"
-  integrity sha512-SyfUlG0DzgRu2WQ8+c7DpFEIe8Bt/nxyP1hcExDUXF7cHaopdAU43djT8SLIWH8Li40ZK9VBGVuNIK/pwHR9LA==
+"@coinbase/wallet-sdk@4.0.3":
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/@coinbase/wallet-sdk/-/wallet-sdk-4.0.3.tgz#fd52dd4c168c35979c7b3294018a6f78d163a593"
+  integrity sha512-y/OGEjlvosikjfB+wk+4CVb9OxD1ob9cidEBLI5h8Hxaf/Qoob2XoVT1uvhtAzBx34KpGYSd+alKvh/GCRre4Q==
   dependencies:
-    bn.js "^5.2.1"
     buffer "^6.0.3"
     clsx "^1.2.1"
-    eth-block-tracker "^7.1.0"
-    eth-json-rpc-filters "^6.0.0"
     eventemitter3 "^5.0.1"
     keccak "^3.0.3"
     preact "^10.16.0"
