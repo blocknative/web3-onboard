@@ -1,9 +1,4 @@
-import {
-  createEIP1193Provider,
-  fromHex,
-  type WalletInit,
-  type WalletInterface
-} from '@web3-onboard/common'
+import type { WalletInit, WalletInterface } from '@web3-onboard/common'
 
 function coinbaseWallet({
   supportedWalletType = 'all',
@@ -46,7 +41,9 @@ function coinbaseWallet({
             ? (CoinbaseWalletSDK as any).default
             : CoinbaseWalletSDK
         ) as typeof CoinbaseWalletSDK
-        const { isHex, toHex } = await import('@web3-onboard/common')
+        const { isHex, toHex, createEIP1193Provider, fromHex } = await import(
+          '@web3-onboard/common'
+        )
 
         const base64 = window.btoa(icon || '')
         const appLogoUrl = `data:image/svg+xml;base64,${base64}`
