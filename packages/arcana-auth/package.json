@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/arcana-auth",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "license": "MIT",
   "description": "Arcana wallet is a built-in, secure Web3 wallet that users can access instantly when logging into an app integrated with the Arcana Auth SDK. It offers a customizable interface that can be branded to match the app's style. Users don't need to generate or manage cryptographic keys or remember passphrases. The wallet uses advanced distributed key generation, giving users full control over their wallets while onboarding Web3 apps using familiar Web2 authentication methods. It is user-friendly, secure, and puts users in control of their Web3 experience.",
   "private": false,
@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@arcana/auth": "^1.0.10",
-    "@web3-onboard/common": "2.4.0"
+    "@web3-onboard/common": "^2.4.1"
   },
   "devDependencies": {
     "typescript": "^5.4.5"

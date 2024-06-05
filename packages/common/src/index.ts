@@ -13,3 +13,4 @@ export {
 
 export * from './types.js'
 export * from './validation.js'
+export { parseEther, isHex, toHex, fromHex } from 'viem'
