@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/gas",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Estimate the gas prices needed to get a transaction in to the next block for Ethereum Mainnet and Polygon Matic Mainnet.",
   "keywords": [
     "gas",
@@ -32,7 +32,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.4.0",
+    "@web3-onboard/common": "^2.4.1",
     "rxjs": "^7.5.2",
     "joi": "17.9.1"
   }

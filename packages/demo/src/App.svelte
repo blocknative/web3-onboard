@@ -261,7 +261,7 @@
   const onboard = Onboard({
     wallets: [
       // metamaskSDKWallet,
-      // coinbaseWallet,
+      coinbaseWallet,
       injected,
       ledger,
       trezor,

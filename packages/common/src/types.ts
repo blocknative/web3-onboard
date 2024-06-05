@@ -1,6 +1,8 @@
 import type { ConnectionInfo } from 'ethers/lib/utils'
 import EventEmitter from 'eventemitter3'
 import type { TypedData as EIP712TypedData } from 'eip-712'
+import type { Address } from 'viem'
+export type { Address } from 'viem'
 export type { TypedData as EIP712TypedData } from 'eip-712'
 
 /**
@@ -300,7 +302,6 @@ export interface EthSignTransactionRequest {
   params: [TransactionObject]
 }
 
-export type Address = `0x${string}`
 type Message = string
 export interface EthSignMessageRequest {
   method: 'eth_sign'

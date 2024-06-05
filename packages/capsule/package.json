@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/capsule",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Capsule SDK wallet module for connecting to Web3-Onboard. Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardised spec compliant web3 providers for all supported wallets, framework agnostic modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
   "module": "dist/index.js",
   "browser": "dist/index.js",
@@ -60,7 +60,7 @@
     "@usecapsule/react-sdk": "^2.3.1",
     "@usecapsule/wagmi-v2-integration": "^1.7.1",
     "@wagmi/chains": "^1.8.0",
-    "@web3-onboard/common": "^2.4.0",
+    "@web3-onboard/common": "^2.4.1",
     "react-dom": "^18.2.0",
     "viem": "2.9.15",
     "wagmi": "2.5.19"
