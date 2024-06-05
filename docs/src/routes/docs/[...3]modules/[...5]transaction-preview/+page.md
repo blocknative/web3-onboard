@@ -10,6 +10,10 @@ title: Transaction Preview
 
 # {$frontmatter.title}
 
+:::admonition type=warning
+_Transaction Preview support is sunset on July 1st 2024 and will no longer work after that date_
+:::
+
 A modular UI for previewing a single or set of unsigned Ethereum transactions.
 
 <img src="{previewImg}" alt="Transaction Preview Flow image"/>
