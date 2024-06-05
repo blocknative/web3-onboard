@@ -59,7 +59,8 @@
     "@types/node": "^17.0.21",
     "ts-node": "^10.2.1",
     "typescript": "^5.4.5",
-    "window": "^4.2.7"
+    "window": "^4.2.7",
+    "@ethersproject/providers": "^5.5.0"
   },
   "dependencies": {
     "@web3-onboard/common": "^2.4.1"
