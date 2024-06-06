@@ -43,10 +43,6 @@ function finoaConnect(option?: string | FinoaWalletOption): WalletInit {
                 ...args: Parameters<FinoaEIP1193Provider['request']>
               ) {
 
-                // if (args[0].method === "eth_getBalance") {
-                //   return ("0xDE0B6B3A7640000")
-                // }
-
                 try {
                   return await (source as FinoaEIP1193Provider['request']).call(
                     this,
