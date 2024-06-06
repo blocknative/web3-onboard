@@ -1,5 +1,5 @@
 import { FinoaEIP1193Provider } from '@finoa/finoa-connect-sdk'
-import type { Chain, WalletInit } from '@web3-onboard/common'
+import { ProviderRpcError, ProviderRpcErrorCode, type Chain, type WalletInit } from '@web3-onboard/common'
 
 /** Optional object provided to the initiation of the wallet connector. 
  * When not included, the wallet connector service connects to FinoaConnect production systems.
@@ -42,6 +42,11 @@ function finoaConnect(option?: string | FinoaWalletOption): WalletInit {
                 this: FinoaEIP1193Provider,
                 ...args: Parameters<FinoaEIP1193Provider['request']>
               ) {
+
+                // if (args[0].method === "eth_getBalance") {
+                //   return ("0xDE0B6B3A7640000")
+                // }
+
                 try {
                   return await (source as FinoaEIP1193Provider['request']).call(
                     this,
@@ -49,19 +54,10 @@ function finoaConnect(option?: string | FinoaWalletOption): WalletInit {
                   )
                 } catch (err) {
                   if (err instanceof UnsupportedRequestError) {
-                    let chain: Chain | undefined
-                    try {
-                      const chainIdN = BigInt(err.chainId)
-                      chain = chains.find(
-                        chain => BigInt(chain.id) === chainIdN
-                      )
-                    } catch {
-                      /* Not handled: the chain id in the error is not a valid one */
-                    }
-                    if (chain?.rpcUrl == null) {
-                      throw err
-                    }
-                    return await request(chain.rpcUrl, ...args)
+                    throw new ProviderRpcError({
+                      code: ProviderRpcErrorCode.UNSUPPORTED_METHOD,
+                      message: `FinoaConnect Provider does not support the requested method: ${args[0].method}`
+                    })
                   }
                   throw err
                 }
