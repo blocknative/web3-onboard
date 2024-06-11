@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/wagmi",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Module to configure, connect and return web3-onboard wallets as wagmi wallets and wagmi-config to be used with wagmi-core methods",
   "keywords": [
     "Ethereum",
@@ -61,7 +61,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.4.0",
+    "@web3-onboard/common": "^2.4.1",
     "joi": "17.9.1",
     "viem": "2.12.0",
     "@wagmi/core": "2.10.4",

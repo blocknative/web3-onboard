@@ -146,9 +146,9 @@ const intiOnboard = async (theme) => {
     connect: { autoConnectAllPreviousWallet: true },
     wallets: [
       metamask,
+      coinbase,
       injected,
       walletConnect,
-      coinbase,
       ledger,
       trezor,
       trust,
