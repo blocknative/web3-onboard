@@ -29,7 +29,7 @@ type CapsuleInitOptions = {
   constructorOpts?: ConstructorOpts
   appName: string
   /** @optional capsule modal props */
-  modalProps?: CapsuleModalV2Props
+  modalProps?: CapsuleModalProps
 }
 ```
 ## Usage

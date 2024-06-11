@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/passport",
-  "version": "2.1.0-alpha.2",
+  "version": "2.1.1",
   "description": "passport",
   "module": "dist/index.js",
   "browser": "dist/index.js",
@@ -59,7 +59,7 @@
   "dependencies": {
     "@0xpass/passport": "2.1.1",
     "@0xpass/passport-viem": "2.0.1",
-    "@web3-onboard/common": "^2.4.0-alpha.2",
+    "@web3-onboard/common": "^2.4.1",
     "crypto-js": "^4.2.0",
     "react-dom": "^18.2.0",
     "viem": "^2.9.4"

@@ -5,7 +5,7 @@ import type {
   CreateConnectorFn
 } from '@wagmi/core'
 import type { WagmiInitOptions, WagmiModuleAPI } from './types'
-import { createConfig, createConnector } from '@wagmi/core'
+import { createConfig, createConnector, getConnectors } from '@wagmi/core'
 import { createWagmiChains, createWalletId } from './utils'
 import { connect as wagmiConnect } from '@wagmi/core'
 import { validateWagmiInit } from './validation'
@@ -56,7 +56,8 @@ function wagmiInit(initOptions: WagmiInitOptions): WagmiModuleAPI {
     createWagmiConnector,
     connectWalletToWagmi,
     wagmiConnect,
-    wagmiDisconnectWallet
+    wagmiDisconnectWallet,
+    getWagmiConnector
   }
 }
 
@@ -86,6 +87,7 @@ async function buildWagmiConfig(
         return undefined
       }
     }
+
     const connectors: CreateConnectorFn[] = [...Object.values(wagmiConnectorFn)]
     const viemChains = await createWagmiChains(chainsList || [], transports)
 
@@ -145,6 +147,16 @@ async function wagmiDisconnectWallet(
     delete wagmiConnectorFn[createWalletId(label)]
     wagmiConfig = await buildWagmiConfig()
     return wagmiConfig
+  } catch (e) {
+    console.error('error disconnecting wallet from wagmi', e)
+  }
+}
+
+function getWagmiConnector(label: string): Connector | undefined {
+  try {
+    const wagmiConnectors = getConnectors(wagmiConfig)
+    if (!wagmiConnectors?.length) return undefined
+    return wagmiConnectors.find(connector => connector.name === label)
   } catch (e) {
     console.error('error disconnecting wallet from wagmi', e)
   }

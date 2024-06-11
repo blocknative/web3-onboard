@@ -37,11 +37,10 @@
   import bitgetModule from '@web3-onboard/bitget'
   import bloomModule from '@web3-onboard/bloom'
   import particleAuthModule from '@web3-onboard/particle-network'
-  // import capsuleModule, {
-  //   Environment,
-  //   OAuthMethod,
-  //   Theme
-  // } from '@web3-onboard/capsule'
+  import capsuleModule, {
+    Environment,
+    OAuthMethod
+  } from '@web3-onboard/capsule'
   import {
     recoverAddress,
     arrayify,
@@ -58,7 +57,8 @@
     switchChain,
     disconnect,
     signMessage as wagmiSignMessage,
-    getConnectors
+    getConnectors,
+    watchConnectors
   } from '@web3-onboard/wagmi'
   import { parseEther, isHex, fromHex } from 'viem'
   import passportModule, { Network } from '@web3-onboard/passport'
@@ -248,23 +248,22 @@
     clientId: 'blocknative',
     environment: 'staging'
   })
-  // const capsule = capsuleModule({
-  //   environment: Environment.DEVELOPMENT,
-  //   apiKey: '992bbd9146d5de8ad0419f141d9a7ca7',
-  //   modalProps: {
-  //     oAuthMethods: [OAuthMethod.GOOGLE, OAuthMethod.TWITTER],
-  //     theme: Theme.dark
-  //   },
-  //   constructorOpts: {
-  //     portalBackgroundColor: '#5e5656',
-  //     portalPrimaryButtonColor: '#ff6700',
-  //     portalTextColor: '#ffffff'
-  //   }
-  // })
+  const capsule = capsuleModule({
+    environment: Environment.DEVELOPMENT,
+    apiKey: '992bbd9146d5de8ad0419f141d9a7ca7',
+    modalProps: {
+      oAuthMethods: [OAuthMethod.GOOGLE, OAuthMethod.TWITTER]
+    },
+    constructorOpts: {
+      portalBackgroundColor: '#5e5656',
+      portalPrimaryButtonColor: '#ff6700',
+      portalTextColor: '#ffffff'
+    }
+  })
 
   const onboard = Onboard({
     wallets: [
-      metamaskSDKWallet,
+      // metamaskSDKWallet,
       coinbaseWallet,
       injected,
       ledger,
@@ -289,7 +288,7 @@
       sequence,
       uauth,
       web3auth,
-      // capsule,
+      capsule,
       zeal,
       frontier,
       xdefi,
@@ -301,7 +300,7 @@
       particle,
       passport
     ],
-    // transactionPreview,
+    transactionPreview,
     gas,
     wagmi,
     chains: [
@@ -516,11 +515,11 @@
 
     // const receipt = await txn.wait()
     // console.log(receipt)
-    const wagmiConfig = onboard.state.get().wagmiConfig
-    console.log(wagmiConfig)
+    const [primaryWallet] = onboard.state.get().wallets
     const result = await wagmiSendTransaction(wagmiConfig, {
       to: toAddress,
-      value: parseEther('0.001')
+      value: parseEther('0.001'),
+      connector: primaryWallet.wagmiConnector
     })
     console.log(result)
   }
@@ -561,7 +560,7 @@
     console.log(transactionHash)
   }
 
-  const signMessage = async (provider, address) => {
+  const signMessage = async (wagmiConnector, address) => {
     // if using ethers v6 this is:
     // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
     // const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
@@ -570,9 +569,10 @@
     // const signature = await signer?.signMessage(signMsg)
     // let verifySign = false
     // let recoveredAddress = null
-    const wagmiConfig = onboard.state.get().wagmiConfig
-    console.log('signMessage', wagmiConfig)
-    await wagmiSignMessage(wagmiConfig, { message: signMsg })
+    await wagmiSignMessage(wagmiConfig, {
+      message: signMsg,
+      connector: wagmiConnector
+    })
     // try {
     //   recoveredAddress = recoverAddress(
     //     arrayify(hashMessage(signMsg)),
@@ -681,8 +681,12 @@
     } else {
       throw new Error('Invalid chainId')
     }
-    const wagmiConfig = onboard.state.get().wagmiConfig
-    await switchChain(wagmiConfig, { chainId: chainAsNumber })
+    const [primaryWallet] = onboard.state.get().wallets
+    const { wagmiConnector } = primaryWallet
+    await switchChain(wagmiConfig, {
+      chainId: chainAsNumber,
+      connector: wagmiConnector
+    })
   }
 </script>
 
@@ -895,7 +899,7 @@
     {/if}
   </div>
   {#if $wallets$}
-    {#each $wallets$ as { icon, label, accounts, chains, provider, instance }}
+    {#each $wallets$ as { icon, label, accounts, chains, provider, instance, wagmiConnector }}
       <div class="connected-wallet" data-testid="connected-wallet">
         <div class="flex-centered" style="width: 10rem;">
           <div style="width: 2rem; height: 2rem">
@@ -951,7 +955,7 @@
               bind:value={toAddress}
               data-testid="sendTransaction"
             />
-            <button on:click={sendTransaction(provider)}>
+            <button on:click={sendTransaction(wagmiConnector)}>
               Send Transaction
             </button>
           </div>
@@ -975,7 +979,7 @@
               placeholder="Message..."
               bind:value={signMsg}
             />
-            <button on:click={signMessage(provider, address)}>
+            <button on:click={signMessage(wagmiConnector, address)}>
               Sign Message
             </button>
           </div>
@@ -985,7 +989,7 @@
               type="text"
               class="sign-transaction-textarea"
             />
-            <button on:click={signTypedMessage(provider, address)}>
+            <button on:click={signTypedMessage(wagmiConnector, address)}>
               Sign Typed Message
             </button>
           </div>
@@ -997,7 +1001,7 @@
               class="sign-transaction-textarea"
             />
             <button
-              on:click={signTransactionMessage(provider)}
+              on:click={signTransactionMessage(wagmiConnector)}
               style="margin: 0 0 0 .5rem"
             >
               Sign Transaction
@@ -1011,7 +1015,7 @@
             const disconnectThisWallet = getConnectors(wagmiConfig).find(
               connector => connector.name === label
             )
-            disconnect(wagmiConfig, { connector: disconnectThisWallet })
+            disconnect(wagmiConfig, { connector: wagmiConnector })
           }}
         >
           Disconnect Wallet

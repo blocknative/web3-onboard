@@ -1,4 +1,4 @@
-import type { Config, ConnectReturnType, CreateConnectorFn } from '@wagmi/core'
+import type { Config, ConnectReturnType, Connector, CreateConnectorFn } from '@wagmi/core'
 import type {
   Chain,
   EIP1193Provider,
@@ -42,4 +42,5 @@ export type WagmiModuleAPI = {
     parameters: ConnectParameters<Config>
   ) => Promise<ConnectReturnType<Config>>
   wagmiDisconnectWallet: (label: string) => Promise<Config | undefined>
+  getWagmiConnector: (label: string) => Connector | undefined
 }
