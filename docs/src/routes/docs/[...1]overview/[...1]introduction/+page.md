@@ -193,6 +193,7 @@ We recommend you add the [Core Repo](../../modules/core.md#install) and consider
 - [Magic](../../wallets/magic.md#login-options)
 - [MetaMask](../../wallets/metamask.md#install)
 - [MEW](../../wallets/mewwallet.md#install)
+- [OKX](../../wallets/okx.md#install)
 - [Portis](../../wallets/portis.md#install)
 - [Web3Auth](../../wallets/web3auth.md#install)
 - [WalletConnect](../../wallets/walletconnect.md#install)
