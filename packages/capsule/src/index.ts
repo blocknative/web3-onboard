@@ -3,6 +3,7 @@ import type { CapsuleInitOptions } from './types'
 import type { Chain } from '@wagmi/chains'
 import type { Chain as BlocknativeChain } from '@web3-onboard/common'
 import { Environment as CapsuleEnvironment, OAuthMethod, Theme } from '@usecapsule/react-sdk'
+import "@usecapsule/react-sdk/styles.css"
 
 type ChainId = number
 type ChainsMap = Map<ChainId, Chain>
@@ -12,7 +13,7 @@ async function buildChainsMap(): Promise<ChainsMap> {
   const chainEntries = Object.entries(chains)
   const chainsMap: ChainsMap = new Map()
 
-  for (const [chainName, chainObject] of chainEntries) {
+  for (const [, chainObject] of chainEntries) {
     if (chainObject && 'id' in chainObject) {
       chainsMap.set(chainObject.id, chainObject as Chain)
     }
@@ -70,8 +71,8 @@ function validateOptions(
 function capsule(options: CapsuleInitOptions): WalletInit {
   return () => {
     return {
-      label: 'Capsule',
-      getIcon: async () => (await import('./icon')).default,
+      label: options.walletLabel || 'Capsule',
+      getIcon:options.walletIcon || (async () => (await import('./icon')).default),
       getInterface: async ({ chains, appMetadata }) => {
         const { default: Capsule } = await import(
           '@usecapsule/react-sdk'

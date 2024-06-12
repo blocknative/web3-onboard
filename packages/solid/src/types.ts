@@ -33,4 +33,4 @@ interface OnboardComposable {
   wallets: Accessor<WalletState[]>
 }
 
-export { ReadonlyRef, SetChainOptions, OnboardComposable }
+export type { ReadonlyRef, SetChainOptions, OnboardComposable }

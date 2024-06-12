@@ -1,4 +1,4 @@
-import type { ConstructorOpts, Environment, CapsuleModalV2Props } from '@usecapsule/react-sdk'
+import type { ConstructorOpts, Environment, CapsuleModalProps } from '@usecapsule/react-sdk'
 /**
  * Options for initializing the Capsule environment.
  *
@@ -9,9 +9,14 @@ import type { ConstructorOpts, Environment, CapsuleModalV2Props } from '@usecaps
  * @property {string} [apiKey] - API key is necessary for performing transactions and wallet creation.
  *           This key needs to be obtained by completing a form available at https://7f4shq8oyfd.typeform.com/to/F86oVLhb.
  */
+
+export type CapsuleModalPropsForInit = Omit<CapsuleModalProps,'isOpen' | 'capsule'>;
+
 export type CapsuleInitOptions = {
   environment: Environment
   apiKey: string,
   constructorOpts?: Partial<ConstructorOpts>
-  modalProps?: Partial<CapsuleModalV2Props>
+  modalProps?: Partial<CapsuleModalPropsForInit>
+  walletIcon?: () => Promise<string>
+  walletLabel?: string 
 }

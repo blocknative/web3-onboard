@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/unstoppable-resolution",
-  "version": "2.0.2",
+  "version": "2.1.1",
   "description": "Adds Unstoppable Domain resolution for a wallet address, similar to ENS resolution",
   "keywords": [
     "Unstoppable Domain",
@@ -29,8 +29,8 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@web3-onboard/common": "^2.3.3",
-    "typescript": "^4.5.5"
+    "@web3-onboard/common": "^2.4.1",
+    "typescript": "^5.4.5"
   },
   "dependencies": {
     "@unstoppabledomains/resolution": "^8.0"

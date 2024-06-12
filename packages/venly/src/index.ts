@@ -13,17 +13,17 @@ function venly(options: VenlyOptions): WalletInit {
       label: 'Venly',
       getIcon: async () => (await import('./icon.js')).default,
       getInterface: async ({ chains }) => {
-        const { VenlyProvider, SECRET_TYPES } = await import('@venly/web3-provider')
+        const { VenlyProvider, SecretType } = await import(
+          '@venly/web3-provider'
+        )
 
         const chainId = +chains[0].id
-        const chain = SECRET_TYPES[chainId]
-        if (!chain) 
-          throw new Error('Chain not supported')
+        const chain = SecretType[chainId]
+        if (!chain) throw new Error('Chain not supported')
 
         const providerOptions = { ...options, secretType: chain.secretType }
-        if (!options.environment) 
-          providerOptions.environment = chain.env
-        
+        if (!options.environment) providerOptions.environment = chain.env
+
         const instance = new VenlyProvider()
         const provider = await instance.createProvider(providerOptions)
 

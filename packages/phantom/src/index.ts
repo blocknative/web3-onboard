@@ -1,4 +1,8 @@
-import { WalletInit, createEIP1193Provider } from '@web3-onboard/common'
+import {
+  WalletInit,
+  createDownloadMessage,
+  createEIP1193Provider
+} from '@web3-onboard/common'
 
 function phantom(): WalletInit {
   if (typeof window === 'undefined') return () => null
@@ -20,8 +24,9 @@ function phantom(): WalletInit {
             }
           }
         }
-        window.open('https://phantom.app/download', '_blank')
-        throw new Error('Please install Phantom before proceeding')
+        throw new Error(
+          createDownloadMessage('Phantom', 'https://phantom.app/download')
+        )
       },
       platforms: ['all']
     }
