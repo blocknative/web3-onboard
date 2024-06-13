@@ -90,53 +90,6 @@
   let transactionObject = defaultTransactionObject
   let signMsg = 'Any string message'
 
-  const injected = injectedModule({
-    custom: [
-      // include custom (not natively supported) injected wallet modules here
-    ],
-    // display all unavailable injected wallets
-    // displayUnavailable: true,
-    // ||
-    // display specific unavailable wallets
-    displayUnavailable: [
-      ProviderLabel.MetaMask,
-      ProviderLabel.Trust,
-      ProviderLabel.Phantom
-    ]
-    // but only show Binance and Bitski wallet if they are available
-    // filter: {
-    //   [ProviderLabel.Binance]: 'unavailable',
-    //   [ProviderLabel.Bitski]: 'unavailable'
-    // }
-    // do a manual sort of injected wallets so that MetaMask and Coinbase are ordered first
-    // sort: wallets => {
-    //   const metaMask = wallets.find(
-    //     ({ label }) => label === ProviderLabel.MetaMask
-    //   )
-    //   const coinbase = wallets.find(
-    //     ({ label }) => label === ProviderLabel.Coinbase
-    //   )
-
-    //   return (
-    //     [
-    //       metaMask,
-    //       coinbase,
-    //       ...wallets.filter(
-    //         ({ label }) =>
-    //           label !== ProviderLabel.MetaMask &&
-    //           label !== ProviderLabel.Coinbase
-    //       )
-    //     ]
-    //       // remove undefined values
-    //       .filter(wallet => wallet)
-    //   )
-    // }
-    // walletUnavailableMessage: wallet =>
-    //   wallet.externalUrl
-    //     ? `Oops ${wallet.label} is unavailable! Please <a href="${wallet.externalUrl}" target="_blank">install</a>`
-    //     : `Oops ${wallet.label} is unavailable!`
-  })
-
   const coinbaseWallet = coinbaseModule()
 
   const metamaskSDKWallet = metamaskSDK({
@@ -244,57 +197,48 @@
     clientId: 'blocknative',
     environment: 'staging'
   })
-  // const capsule = capsuleModule({
-  //   environment: Environment.DEVELOPMENT,
-  //   apiKey: '992bbd9146d5de8ad0419f141d9a7ca7',
-  //   modalProps: {
-  //     oAuthMethods: [OAuthMethod.GOOGLE, OAuthMethod.TWITTER],
-  //     theme: Theme.dark
-  //   },
-  //   constructorOpts: {
-  //     portalBackgroundColor: '#5e5656',
-  //     portalPrimaryButtonColor: '#ff6700',
-  //     portalTextColor: '#ffffff'
-  //   }
-  // })
 
+  const injected = injectedModule({
+    // display specific unavailable wallets
+    displayUnavailable: [ProviderLabel.OKXWallet]
+  })
   const onboard = Onboard({
     wallets: [
       // metamaskSDKWallet,
-      coinbaseWallet,
-      injected,
-      ledger,
-      trezor,
-      walletConnect,
-      phantom,
-      safe,
-      trust,
-      tallyho,
-      bitget,
-      enkrypt,
-      infinityWallet,
-      mewWallet,
-      keepkey,
-      keystone,
-      magic,
-      fortmatic,
-      portis,
-      torus,
-      dcent,
-      sequence,
-      uauth,
-      web3auth,
-      // capsule,
-      zeal,
-      frontier,
-      xdefi,
-      frameWallet,
-      cedeStore,
-      arcanaAuth,
-      blocto,
-      venly,
-      particle,
-      passport
+      injected
+      // coinbaseWallet,
+      // ledger,
+      // trezor,
+      // walletConnect,
+      // phantom,
+      // safe,
+      // trust,
+      // tallyho,
+      // bitget,
+      // enkrypt,
+      // infinityWallet,
+      // mewWallet,
+      // keepkey,
+      // keystone,
+      // magic,
+      // fortmatic,
+      // portis,
+      // torus,
+      // dcent,
+      // sequence,
+      // uauth,
+      // web3auth,
+      // // capsule,
+      // zeal,
+      // frontier,
+      // xdefi,
+      // frameWallet,
+      // cedeStore,
+      // arcanaAuth,
+      // blocto,
+      // venly,
+      // particle,
+      // passport
     ],
     transactionPreview,
     gas,
@@ -1007,11 +951,12 @@
         <button
           style="margin-top: 0.5rem;"
           on:click={() => {
-            const wagmiConfig = onboard.state.get().wagmiConfig
-            const disconnectThisWallet = getConnectors(wagmiConfig).find(
-              connector => connector.name === label
-            )
-            disconnect(wagmiConfig, { connector: wagmiConnector })
+            onboard.disconnectWallet({ label })
+            // const wagmiConfig = onboard.state.get().wagmiConfig
+            // const disconnectThisWallet = getConnectors(wagmiConfig).find(
+            //   connector => connector.name === label
+            // )
+            // disconnect(wagmiConfig, { connector: wagmiConnector })
           }}
         >
           Disconnect Wallet
