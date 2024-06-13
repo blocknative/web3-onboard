@@ -1,5 +1,5 @@
 import { FinoaEIP1193Provider } from '@finoa/finoa-connect-sdk'
-import { ProviderRpcError, ProviderRpcErrorCode, type Chain, type WalletInit } from '@web3-onboard/common'
+import { ProviderRpcError, ProviderRpcErrorCode, type WalletInit } from '@web3-onboard/common'
 
 /** Optional object provided to the initiation of the wallet connector. 
  * When not included, the wallet connector service connects to FinoaConnect production systems.
@@ -24,8 +24,6 @@ function finoaConnect(option?: string | FinoaWalletOption): WalletInit {
           FinoaBrowserClient,
           UnsupportedRequestError
         } = await import('@finoa/finoa-connect-sdk')
-
-        const { request } = await import('./fetch-rpc')
 
         const client = new FinoaBrowserClient({
           windowUrl: url
