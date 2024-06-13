@@ -48,7 +48,7 @@ function web3auth(options: Web3AuthModuleOptions): WalletInit {
           ticker: token,
           tickerName: label,
           chainId: id,
-          rpcTarget: rpcUrl ?? "", // TODO: Ask maintainers if we should throw instead.
+          rpcTarget: rpcUrl!,
           chainNamespace:
             namespace === 'evm'
               ? CHAIN_NAMESPACES.EIP155
