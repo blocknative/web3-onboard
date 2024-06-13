@@ -12,7 +12,8 @@ const wcOptions = Joi.object({
         )
       } else if (value !== 2 && value !== undefined) {
         return helpers.error('any.invalid', {
-          message: 'Invalid version number. This version of @web3-onboard/walletconnect only supports version 2'
+          message:
+            'Invalid version number. This version of @web3-onboard/walletconnect only supports version 2'
         })
       }
       return value // return the value unchanged if it's valid or not provided
