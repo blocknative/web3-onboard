@@ -29,6 +29,7 @@
   import uauthModule from '@web3-onboard/uauth'
   import phantomModule from '@web3-onboard/phantom'
   import trustModule from '@web3-onboard/trust'
+  import okxModule from '@web3-onboard/okx'
   import frontierModule from '@web3-onboard/frontier'
   import bloctoModule from '@web3-onboard/blocto'
   import cedeStoreModule from '@web3-onboard/cede-store'
@@ -101,7 +102,8 @@
     displayUnavailable: [
       ProviderLabel.MetaMask,
       ProviderLabel.Trust,
-      ProviderLabel.Phantom
+      ProviderLabel.Phantom,
+      ProviderLabel.OKXWallet
     ]
     // but only show Binance and Bitski wallet if they are available
     // filter: {
@@ -183,6 +185,7 @@
   const zeal = zealModule()
   const phantom = phantomModule()
   const trust = trustModule()
+  const okx = okxModule()
   const frontier = frontierModule()
   const cedeStore = cedeStoreModule()
   const blocto = bloctoModule()
@@ -272,6 +275,7 @@
       phantom,
       safe,
       trust,
+      okx,
       tallyho,
       bitget,
       bloom,
