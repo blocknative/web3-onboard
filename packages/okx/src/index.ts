@@ -1,4 +1,8 @@
-import type { WalletInit, EIP1193Provider } from '@web3-onboard/common'
+import {
+  type WalletInit,
+  type EIP1193Provider,
+  createDownloadMessage
+} from '@web3-onboard/common'
 import { createEIP1193Provider } from '@web3-onboard/common'
 
 import { CustomWindow } from './types.js'
@@ -28,10 +32,8 @@ function okx(): WalletInit {
                     encodeURIComponent(window.location.href)
                 )
               : 'https://www.okx.com/download'
-          window.open(downloadUrl, '_blank')
-          throw new Error('Please Install OKX Wallet before proceeding')
+          throw new Error(createDownloadMessage('OKX Wallet', downloadUrl))
         }
-
         return {
           provider
         }
