@@ -255,6 +255,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/trust
     steps:
       - node-build-steps
+  build-okx:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/okx
+    steps:
+      - node-build-steps
   build-frontier:
     docker:
       - image: cimg/node:16.13.1
@@ -556,6 +562,12 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/trust
+    steps:
+      - node-staging-build-steps
+  build-staging-okx:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/okx
     steps:
       - node-staging-build-steps
   build-staging-frontier:
@@ -862,6 +874,12 @@ workflows:
       - build-trust:
           <<: *deploy_production_filters
       - build-staging-trust:
+          <<: *deploy_staging_filters
+  okx:
+    jobs:
+      - build-okx:
+          <<: *deploy_production_filters
+      - build-staging-okx:
           <<: *deploy_staging_filters
   frontier:
     jobs:
