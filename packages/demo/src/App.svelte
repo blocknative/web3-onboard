@@ -29,6 +29,7 @@
   import uauthModule from '@web3-onboard/uauth'
   import phantomModule from '@web3-onboard/phantom'
   import trustModule from '@web3-onboard/trust'
+  import okxModule from '@web3-onboard/okx'
   import frontierModule from '@web3-onboard/frontier'
   import bloctoModule from '@web3-onboard/blocto'
   import cedeStoreModule from '@web3-onboard/cede-store'
@@ -36,11 +37,10 @@
   import venlyModule from '@web3-onboard/venly'
   import bitgetModule from '@web3-onboard/bitget'
   import particleAuthModule from '@web3-onboard/particle-network'
-  // import capsuleModule, {
-  //   Environment,
-  //   OAuthMethod,
-  //   Theme
-  // } from '@web3-onboard/capsule'
+  import capsuleModule, {
+    Environment,
+    OAuthMethod
+  } from '@web3-onboard/capsule'
   import {
     recoverAddress,
     arrayify,
@@ -62,6 +62,8 @@
   } from '@web3-onboard/wagmi'
   import { parseEther, isHex, fromHex } from 'viem'
   import passportModule, { Network } from '@web3-onboard/passport'
+  import { EthereumPrivateKeyProvider } from '@web3auth/ethereum-provider'
+  import { CHAIN_NAMESPACES } from '@web3auth/base'
   import { WebauthnSigner } from '@0xpass/webauthn-signer'
 
   if (window.innerWidth < 700) {
@@ -90,6 +92,54 @@
   let transactionObject = defaultTransactionObject
   let signMsg = 'Any string message'
 
+  const injected = injectedModule({
+    custom: [
+      // include custom (not natively supported) injected wallet modules here
+    ],
+    // display all unavailable injected wallets
+    // displayUnavailable: true,
+    // ||
+    // display specific unavailable wallets
+    displayUnavailable: [
+      ProviderLabel.MetaMask,
+      ProviderLabel.Trust,
+      ProviderLabel.Phantom,
+      ProviderLabel.OKXWallet
+    ]
+    // but only show Binance and Bitski wallet if they are available
+    // filter: {
+    //   [ProviderLabel.Binance]: 'unavailable',
+    //   [ProviderLabel.Bitski]: 'unavailable'
+    // }
+    // do a manual sort of injected wallets so that MetaMask and Coinbase are ordered first
+    // sort: wallets => {
+    //   const metaMask = wallets.find(
+    //     ({ label }) => label === ProviderLabel.MetaMask
+    //   )
+    //   const coinbase = wallets.find(
+    //     ({ label }) => label === ProviderLabel.Coinbase
+    //   )
+
+    //   return (
+    //     [
+    //       metaMask,
+    //       coinbase,
+    //       ...wallets.filter(
+    //         ({ label }) =>
+    //           label !== ProviderLabel.MetaMask &&
+    //           label !== ProviderLabel.Coinbase
+    //       )
+    //     ]
+    //       // remove undefined values
+    //       .filter(wallet => wallet)
+    //   )
+    // }
+    // walletUnavailableMessage: wallet =>
+    //   wallet.externalUrl
+    //     ? `Oops ${wallet.label} is unavailable! Please <a href="${wallet.externalUrl}" target="_blank">install</a>`
+    //     : `Oops ${wallet.label} is unavailable!`
+  })
+
   const coinbaseWallet = coinbaseModule()
 
   const metamaskSDKWallet = metamaskSDK({
@@ -117,9 +167,27 @@
     apiKey: 'pk_test_886ADCAB855632AA'
   })
 
+  const privateKeyProvider = new EthereumPrivateKeyProvider({
+    config: {
+      chainConfig: {
+        chainId: `0xAA36A7`,
+        rpcTarget: `https://rpc.sepolia.org/`,
+        chainNamespace: CHAIN_NAMESPACES.EIP155,
+        displayName: 'Sepolia',
+        blockExplorerUrl: 'https://sepolia.etherscan.io',
+        ticker: 'ETH',
+        tickerName: 'Ether',
+        logo: 'https://images.toruswallet.io/ethereum.svg'
+      }
+    }
+  })
+
+  // must access via http://localhost:8080 to be whitelisted
   const web3auth = web3authModule({
     clientId:
-      'DJuUOKvmNnlzy6ruVgeWYWIMKLRyYtjYa9Y10VCeJzWZcygDlrYLyXsBQjpJ2hxlBO9dnl8t9GmAC2qOP5vnIGo'
+      'BErDmyuxFPtpvM_Isiy8RHNWOWYvkAUehrgmO0rDoe5yr33ixt5s98eT_qePTyRsgpN7SVQwrEUMx7gON0jBDQI',
+    privateKeyProvider: privateKeyProvider,
+    web3AuthNetwork: 'sapphire_devnet'
   })
 
   const arcanaAuth = arcanaAuthModule({
@@ -136,6 +204,7 @@
   const zeal = zealModule()
   const phantom = phantomModule()
   const trust = trustModule()
+  const okx = okxModule()
   const frontier = frontierModule()
   const cedeStore = cedeStoreModule()
   const blocto = bloctoModule()
@@ -197,11 +266,19 @@
     clientId: 'blocknative',
     environment: 'staging'
   })
-
-  const injected = injectedModule({
-    // display specific unavailable wallets
-    displayUnavailable: [ProviderLabel.OKXWallet]
+  const capsule = capsuleModule({
+    environment: Environment.DEVELOPMENT,
+    apiKey: '992bbd9146d5de8ad0419f141d9a7ca7',
+    modalProps: {
+      oAuthMethods: [OAuthMethod.GOOGLE, OAuthMethod.TWITTER]
+    },
+    constructorOpts: {
+      portalBackgroundColor: '#5e5656',
+      portalPrimaryButtonColor: '#ff6700',
+      portalTextColor: '#ffffff'
+    }
   })
+
   const onboard = Onboard({
     wallets: [
       metamaskSDKWallet,
@@ -213,6 +290,7 @@
       phantom,
       safe,
       trust,
+      okx,
       tallyho,
       bitget,
       enkrypt,
@@ -228,7 +306,7 @@
       sequence,
       uauth,
       web3auth,
-      // capsule,
+      capsule,
       zeal,
       frontier,
       xdefi,
@@ -465,7 +543,7 @@
   }
 
   const sendTransactionWithPreFlight = async (provider, balance) => {
-    await onboard.setChain({ chainId: '0x5' })
+    await onboard.setChain({ chainId: '0xAA36A7' })
 
     const balanceValue = Object.values(balance)[0]
     // if using ethers v6 this is:
@@ -512,7 +590,7 @@
     await wagmiSignMessage(wagmiConfig, {
       message: signMsg,
       connector: wagmiConnector
-    })
+    }).then(console.log)
     // try {
     //   recoveredAddress = recoverAddress(
     //     arrayify(hashMessage(signMsg)),
@@ -543,7 +621,7 @@
   let typedMsg = JSON.stringify(
     {
       domain: {
-        chainId: '0x5',
+        chainId: '0xAA36A7',
         name: 'Web3-Onboard Test App',
         verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
         version: '1'
@@ -590,8 +668,9 @@
     undefined,
     2
   )
-  const signTypedMessage = async (provider, address) => {
-    await onboard.setChain({ chainId: '0x5' })
+  const signTypedMessage = async (connector, address) => {
+    await onboard.setChain({ chainId: '0xAA36A7' })
+    const provider = await connector.getProvider()
     const signature = await provider.request({
       method: 'eth_signTypedData_v4',
       params: [address, typedMsg]

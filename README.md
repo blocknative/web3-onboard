@@ -108,6 +108,7 @@ For full documentation, check out the README.md for each package or the [docs pa
 - [Arcana](packages/arcana-auth/README.md)
 - [Coinbase](packages/coinbase/README.md)
 - [Trust](packages/trust/README.md)
+- [OKX](packages/okx/README.md)
 - [WalletConnect](packages/walletconnect/README.md)
 - [Safe](packages/gnosis/README.md)
 - [Magic](packages/magic/README.md)
