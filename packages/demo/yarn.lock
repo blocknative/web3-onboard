@@ -5013,7 +5013,7 @@
     joi "17.9.1"
     rxjs "^7.5.2"
 
-"@web3-onboard/web3auth@^2.4.0-alpha.1":
+"@web3-onboard/web3auth@^2.4.0-alpha.2":
   version "2.4.0-alpha.1"
   resolved "https://registry.yarnpkg.com/@web3-onboard/web3auth/-/web3auth-2.4.0-alpha.1.tgz#592382f4280bb20faf66e6fa20d15f76024f6910"
   integrity sha512-DXDtZOjYONinwTPL6lcMlsz8IVdpVPy4Te0YxJIa2VD98Y9ZfIxljkT7DVbgqxWSbYtAwDPLp4aVT110Nlv5AQ==

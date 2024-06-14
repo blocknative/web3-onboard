@@ -65,7 +65,7 @@
     "@web3-onboard/venly": "^2.1.1",
     "@web3-onboard/wagmi": "^2.0.1",
     "@web3-onboard/walletconnect": "^2.6.1",
-    "@web3-onboard/web3auth": "^2.4.0-alpha.1",
+    "@web3-onboard/web3auth": "^2.4.0-alpha.2",
     "@web3-onboard/xdefi": "^2.1.1",
     "@web3-onboard/zeal": "^2.1.1",
     "@web3auth/base": "^8.6.2",
