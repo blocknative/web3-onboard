@@ -204,41 +204,41 @@
   })
   const onboard = Onboard({
     wallets: [
-      // metamaskSDKWallet,
-      injected
-      // coinbaseWallet,
-      // ledger,
-      // trezor,
-      // walletConnect,
-      // phantom,
-      // safe,
-      // trust,
-      // tallyho,
-      // bitget,
-      // enkrypt,
-      // infinityWallet,
-      // mewWallet,
-      // keepkey,
-      // keystone,
-      // magic,
-      // fortmatic,
-      // portis,
-      // torus,
-      // dcent,
-      // sequence,
-      // uauth,
-      // web3auth,
-      // // capsule,
-      // zeal,
-      // frontier,
-      // xdefi,
-      // frameWallet,
-      // cedeStore,
-      // arcanaAuth,
-      // blocto,
-      // venly,
-      // particle,
-      // passport
+      metamaskSDKWallet,
+      injected,
+      coinbaseWallet,
+      ledger,
+      trezor,
+      walletConnect,
+      phantom,
+      safe,
+      trust,
+      tallyho,
+      bitget,
+      enkrypt,
+      infinityWallet,
+      mewWallet,
+      keepkey,
+      keystone,
+      magic,
+      fortmatic,
+      portis,
+      torus,
+      dcent,
+      sequence,
+      uauth,
+      web3auth,
+      // capsule,
+      zeal,
+      frontier,
+      xdefi,
+      frameWallet,
+      cedeStore,
+      arcanaAuth,
+      blocto,
+      venly,
+      particle,
+      passport
     ],
     transactionPreview,
     gas,
@@ -951,12 +951,11 @@
         <button
           style="margin-top: 0.5rem;"
           on:click={() => {
-            onboard.disconnectWallet({ label })
-            // const wagmiConfig = onboard.state.get().wagmiConfig
-            // const disconnectThisWallet = getConnectors(wagmiConfig).find(
-            //   connector => connector.name === label
-            // )
-            // disconnect(wagmiConfig, { connector: wagmiConnector })
+            const wagmiConfig = onboard.state.get().wagmiConfig
+            const disconnectThisWallet = getConnectors(wagmiConfig).find(
+              connector => connector.name === label
+            )
+            disconnect(wagmiConfig, { connector: wagmiConnector })
           }}
         >
           Disconnect Wallet
