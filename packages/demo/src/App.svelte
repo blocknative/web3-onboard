@@ -62,6 +62,8 @@
   } from '@web3-onboard/wagmi'
   import { parseEther, isHex, fromHex } from 'viem'
   import passportModule, { Network } from '@web3-onboard/passport'
+  import { EthereumPrivateKeyProvider } from '@web3auth/ethereum-provider'
+  import { CHAIN_NAMESPACES } from '@web3auth/base'
   import { WebauthnSigner } from '@0xpass/webauthn-signer'
 
   if (window.innerWidth < 700) {
@@ -165,9 +167,27 @@
     apiKey: 'pk_test_886ADCAB855632AA'
   })
 
+  const privateKeyProvider = new EthereumPrivateKeyProvider({
+    config: {
+        chainConfig: {
+                chainId: `0x1`,
+                rpcTarget: `https://mainnet.infura.io/v3/${infura_key}`,
+                chainNamespace: CHAIN_NAMESPACES.EIP155,
+                displayName: "Ethereum Mainnet",
+                blockExplorerUrl: "https://etherscan.io",
+                ticker: "ETH",
+                tickerName: "Ether",
+                logo: "https://images.toruswallet.io/ethereum.svg"
+            },
+    },
+});
+
+// must access via http://localhost:8080 to be whitelisted
   const web3auth = web3authModule({
     clientId:
-      'DJuUOKvmNnlzy6ruVgeWYWIMKLRyYtjYa9Y10VCeJzWZcygDlrYLyXsBQjpJ2hxlBO9dnl8t9GmAC2qOP5vnIGo'
+      'BErDmyuxFPtpvM_Isiy8RHNWOWYvkAUehrgmO0rDoe5yr33ixt5s98eT_qePTyRsgpN7SVQwrEUMx7gON0jBDQI',
+    privateKeyProvider: privateKeyProvider,
+    web3AuthNetwork: 'sapphire_devnet',
   })
 
   const arcanaAuth = arcanaAuthModule({
@@ -570,7 +590,7 @@
     await wagmiSignMessage(wagmiConfig, {
       message: signMsg,
       connector: wagmiConnector
-    })
+    }).then(console.log)
     // try {
     //   recoveredAddress = recoverAddress(
     //     arrayify(hashMessage(signMsg)),
