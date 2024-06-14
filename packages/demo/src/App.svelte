@@ -169,25 +169,25 @@
 
   const privateKeyProvider = new EthereumPrivateKeyProvider({
     config: {
-        chainConfig: {
-                chainId: `0xAA36A7`,
-                rpcTarget: `https://rpc.sepolia.org/`,
-                chainNamespace: CHAIN_NAMESPACES.EIP155,
-                displayName: "Sepolia",
-                blockExplorerUrl: "https://sepolia.etherscan.io",
-                ticker: "ETH",
-                tickerName: "Ether",
-                logo: "https://images.toruswallet.io/ethereum.svg"
-            },
-    },
-});
+      chainConfig: {
+        chainId: `0xAA36A7`,
+        rpcTarget: `https://rpc.sepolia.org/`,
+        chainNamespace: CHAIN_NAMESPACES.EIP155,
+        displayName: 'Sepolia',
+        blockExplorerUrl: 'https://sepolia.etherscan.io',
+        ticker: 'ETH',
+        tickerName: 'Ether',
+        logo: 'https://images.toruswallet.io/ethereum.svg'
+      }
+    }
+  })
 
-// must access via http://localhost:8080 to be whitelisted
+  // must access via http://localhost:8080 to be whitelisted
   const web3auth = web3authModule({
     clientId:
       'BErDmyuxFPtpvM_Isiy8RHNWOWYvkAUehrgmO0rDoe5yr33ixt5s98eT_qePTyRsgpN7SVQwrEUMx7gON0jBDQI',
     privateKeyProvider: privateKeyProvider,
-    web3AuthNetwork: 'sapphire_devnet',
+    web3AuthNetwork: 'sapphire_devnet'
   })
 
   const arcanaAuth = arcanaAuthModule({
@@ -670,7 +670,7 @@
   )
   const signTypedMessage = async (connector, address) => {
     await onboard.setChain({ chainId: '0xAA36A7' })
-    const provider = await connector.getProvider();
+    const provider = await connector.getProvider()
     const signature = await provider.request({
       method: 'eth_signTypedData_v4',
       params: [address, typedMsg]
