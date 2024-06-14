@@ -170,11 +170,11 @@
   const privateKeyProvider = new EthereumPrivateKeyProvider({
     config: {
         chainConfig: {
-                chainId: `0x1`,
-                rpcTarget: `https://mainnet.infura.io/v3/${infura_key}`,
+                chainId: `0xAA36A7`,
+                rpcTarget: `https://rpc.sepolia.org/`,
                 chainNamespace: CHAIN_NAMESPACES.EIP155,
-                displayName: "Ethereum Mainnet",
-                blockExplorerUrl: "https://etherscan.io",
+                displayName: "Sepolia",
+                blockExplorerUrl: "https://sepolia.etherscan.io",
                 ticker: "ETH",
                 tickerName: "Ether",
                 logo: "https://images.toruswallet.io/ethereum.svg"
@@ -543,7 +543,7 @@
   }
 
   const sendTransactionWithPreFlight = async (provider, balance) => {
-    await onboard.setChain({ chainId: '0x5' })
+    await onboard.setChain({ chainId: '0xAA36A7' })
 
     const balanceValue = Object.values(balance)[0]
     // if using ethers v6 this is:
@@ -621,7 +621,7 @@
   let typedMsg = JSON.stringify(
     {
       domain: {
-        chainId: '0x5',
+        chainId: '0xAA36A7',
         name: 'Web3-Onboard Test App',
         verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
         version: '1'
@@ -668,8 +668,9 @@
     undefined,
     2
   )
-  const signTypedMessage = async (provider, address) => {
-    await onboard.setChain({ chainId: '0x5' })
+  const signTypedMessage = async (connector, address) => {
+    await onboard.setChain({ chainId: '0xAA36A7' })
+    const provider = await connector.getProvider();
     const signature = await provider.request({
       method: 'eth_signTypedData_v4',
       params: [address, typedMsg]
