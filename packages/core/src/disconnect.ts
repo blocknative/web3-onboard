@@ -46,16 +46,22 @@ async function disconnect(options: DisconnectOptions): Promise<WalletState[]> {
 
   const lastConnectedWallets = getLocalStore(STORAGE_KEYS.LAST_CONNECTED_WALLET)
   if (lastConnectedWallets) {
-    const labels = JSON.parse(lastConnectedWallets)
+    try {
+      const labels = JSON.parse(lastConnectedWallets)
 
-    if (Array.isArray(labels) && labels.indexOf(label) >= 0) {
-      setLocalStore(
-        STORAGE_KEYS.LAST_CONNECTED_WALLET,
-        JSON.stringify(labels.filter(walletLabel => walletLabel !== label))
+      if (Array.isArray(labels) && labels.indexOf(label) >= 0) {
+        setLocalStore(
+          STORAGE_KEYS.LAST_CONNECTED_WALLET,
+          JSON.stringify(labels.filter(walletLabel => walletLabel !== label))
+        )
+      }
+      if (typeof labels === 'string' && labels === label) {
+        delLocalStore(STORAGE_KEYS.LAST_CONNECTED_WALLET)
+      }
+    } catch (e) {
+      console.error(
+        `There was an error disconnecting the last connected wallet from localStorage - Error: ${e}`
       )
-    }
-    if (typeof labels === 'string' && labels === label) {
-      delLocalStore(STORAGE_KEYS.LAST_CONNECTED_WALLET)
     }
   }
 
