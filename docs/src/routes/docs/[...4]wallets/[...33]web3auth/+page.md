@@ -35,10 +35,30 @@ For troubleshooting web3Auth errors, framework, polyfill, etc please see the [of
 ```typescript
 import Onboard from '@web3-onboard/core'
 import web3authModule from '@web3-onboard/web3auth'
+import { EthereumPrivateKeyProvider } from '@web3auth/ethereum-provider'
+import { CHAIN_NAMESPACES } from '@web3auth/base'
 
+const privateKeyProvider = new EthereumPrivateKeyProvider({
+  config: {
+    chainConfig: {
+      chainId: `0xAA36A7`,
+      rpcTarget: `https://rpc.sepolia.org/`,
+      chainNamespace: CHAIN_NAMESPACES.EIP155,
+      displayName: 'Sepolia',
+      blockExplorerUrl: 'https://sepolia.etherscan.io',
+      ticker: 'ETH',
+      tickerName: 'Ether',
+      logo: 'https://images.toruswallet.io/ethereum.svg'
+    }
+  }
+})
+
+// must access via http://localhost:8080 to be whitelisted
 const web3auth = web3authModule({
   clientId:
-    'DJuUOKvmNnlzy6ruVgeWYWIMKLRyYtjYa9Y10VCeJzWZcygDlrYLyXsBQjpJ2hxlBO9dnl8t9GmAC2qOP5vnIGo'
+    'BErDmyuxFPtpvM_Isiy8RHNWOWYvkAUehrgmO0rDoe5yr33ixt5s98eT_qePTyRsgpN7SVQwrEUMx7gON0jBDQI',
+  privateKeyProvider: privateKeyProvider,
+  web3AuthNetwork: 'sapphire_devnet'
 })
 
 const onboard = Onboard({
@@ -56,11 +76,15 @@ console.log(connectedWallets)
 ## Types
 
 ```typescript
+import type { Web3AuthOptions, ModalConfig } from '@web3auth/modal'
+import type { CustomChainConfig, OPENLOGIN_NETWORK_TYPE } from '@web3auth/base'
 type Web3AuthModuleOptions = Omit<Web3AuthOptions, 'chainConfig'> & {
   chainConfig?: Partial<CustomChainConfig> & Pick<CustomChainConfig, 'chainNamespace'>
-
   modalConfig?: Record<string, ModalConfig> | undefined
-
+  /**
+   * Web3Auth Network to use for the session & the issued idToken
+   */
+  web3AuthNetwork: OPENLOGIN_NETWORK_TYPE
   /**
    * @deprecated use web3Auth native Z-Index config through
    * uiConfig.modalZIndex

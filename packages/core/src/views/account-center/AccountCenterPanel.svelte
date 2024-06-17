@@ -72,6 +72,7 @@
   const { device } = configuration
 
   const enableProtectionRPC = async () => {
+    if (!validAppChain) return
     try {
       await updateChainRPC(
         primaryWallet.provider,
@@ -461,7 +462,7 @@
           </div>
         </div>
         <!-- Only display on Eth Mainnet if protectedRpcUrl is not set per chain -->
-        {#if !$accountCenter$.hideTransactionProtectionBtn && (primaryWalletOnMainnet || validAppChain.protectedRpcUrl)}
+        {#if !$accountCenter$.hideTransactionProtectionBtn && (primaryWalletOnMainnet || (validAppChain && validAppChain.protectedRpcUrl))}
           <div
             on:click={() => (enableTransactionProtection = true)}
             class="protect action-container flex items-center pointer"
