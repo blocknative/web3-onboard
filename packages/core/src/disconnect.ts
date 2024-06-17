@@ -44,18 +44,19 @@ async function disconnect(options: DisconnectOptions): Promise<WalletState[]> {
   disconnectWallet$.next(label)
   removeWallet(label)
 
-  const labels = JSON.parse(
-    getLocalStore(STORAGE_KEYS.LAST_CONNECTED_WALLET) || ''
-  )
+  const lastConnectedWallets = getLocalStore(STORAGE_KEYS.LAST_CONNECTED_WALLET)
+  if (lastConnectedWallets) {
+    const labels = JSON.parse(lastConnectedWallets)
 
-  if (Array.isArray(labels) && labels.indexOf(label) >= 0) {
-    setLocalStore(
-      STORAGE_KEYS.LAST_CONNECTED_WALLET,
-      JSON.stringify(labels.filter(walletLabel => walletLabel !== label))
-    )
-  }
-  if (typeof labels === 'string' && labels === label) {
-    delLocalStore(STORAGE_KEYS.LAST_CONNECTED_WALLET)
+    if (Array.isArray(labels) && labels.indexOf(label) >= 0) {
+      setLocalStore(
+        STORAGE_KEYS.LAST_CONNECTED_WALLET,
+        JSON.stringify(labels.filter(walletLabel => walletLabel !== label))
+      )
+    }
+    if (typeof labels === 'string' && labels === label) {
+      delLocalStore(STORAGE_KEYS.LAST_CONNECTED_WALLET)
+    }
   }
 
   return state.get().wallets

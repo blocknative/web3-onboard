@@ -361,6 +361,7 @@ const connectAllPreviousWallets = async (
       }
     }
   }
+
   setLocalStore(
     STORAGE_KEYS.LAST_CONNECTED_WALLET,
     JSON.stringify(activeWalletsList)
