@@ -290,6 +290,12 @@ function init(options: InitOptions): OnboardAPI {
       ) {
         connectAllPreviousWallets(lastConnectedWalletsParsed, connect)
       }
+      if (
+        lastConnectedWalletsParsed &&
+        typeof lastConnectedWalletsParsed === 'string'
+      ) {
+        connectAllPreviousWallets([lastConnectedWalletsParsed], connect)
+      }
     } catch (err) {
       // Handle for legacy single wallet approach
       // Above try will throw syntax error is local storage is not json
@@ -361,6 +367,7 @@ const connectAllPreviousWallets = async (
       }
     }
   }
+
   setLocalStore(
     STORAGE_KEYS.LAST_CONNECTED_WALLET,
     JSON.stringify(activeWalletsList)
