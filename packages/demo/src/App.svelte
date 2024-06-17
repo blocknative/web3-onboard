@@ -281,7 +281,7 @@
 
   const onboard = Onboard({
     wallets: [
-      // metamaskSDKWallet,
+      metamaskSDKWallet,
       coinbaseWallet,
       injected,
       ledger,
@@ -412,7 +412,12 @@
         rpcUrl: 'https://rpc.degen.tips'
       }
     ],
-    connect: {},
+    connect: {
+      // disableClose: true,
+      // removeWhereIsMyWalletWarning: true,
+      // autoConnectLastWallet: false,
+      autoConnectAllPreviousWallet: true,
+    },
     appMetadata: {
       name: 'Blocknative',
       icon: blocknativeIcon,
