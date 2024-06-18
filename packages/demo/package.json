@@ -48,7 +48,7 @@
     "@web3-onboard/keystone": "^2.3.8",
     "@web3-onboard/ledger": "^2.7.1",
     "@web3-onboard/magic": "^2.2.1",
-    "@web3-onboard/metamask": "^2.1.1",
+    "@web3-onboard/metamask": "^2.1.2-alpha.1",
     "@web3-onboard/mew-wallet": "^2.1.1",
     "@web3-onboard/okx": "2.0.0-alpha.1",
     "@web3-onboard/particle-network": "^2.1.1",
