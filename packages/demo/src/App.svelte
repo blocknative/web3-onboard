@@ -284,8 +284,8 @@
   const onboard = Onboard({
     wallets: [
       metamaskSDKWallet,
-      injected,
       coinbaseWallet,
+      injected,
       ledger,
       trezor,
       walletConnect,
@@ -418,7 +418,8 @@
     connect: {
       // disableClose: true,
       // removeWhereIsMyWalletWarning: true,
-      autoConnectAllPreviousWallet: true
+      // autoConnectLastWallet: false,
+      autoConnectAllPreviousWallet: true,
     },
     appMetadata: {
       name: 'Blocknative',
