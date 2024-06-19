@@ -15,14 +15,18 @@ function initBloom(options: WalletConnectOptions): WalletInit {
     throw error
   }
 
-  const walletName = 'Bloom'
+  const wallet = {
+    name: 'Bloom',
+    protocol: 'bloom',
+    downloadLink: 'https://bloomwallet.io/',
+  }
   options.handleUri = (uri: string) => {
-    const deeplink = `bloom://wallet-connect/wc?uri=${encodeURIComponent(uri)}`
+    const deeplink = `${wallet.protocol}://wallet-connect/wc?uri=${encodeURIComponent(uri)}`
     window.location.href = deeplink
     return Promise.resolve()
   }
 
-  return walletConnect(walletName, options)
+  return walletConnect(wallet, options)
 }
 
 export default initBloom

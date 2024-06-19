@@ -7,6 +7,7 @@ import type {
   WalletInit,
   EIP1193Provider
 } from '@web3-onboard/common'
+import { createDownloadMessage } from '@web3-onboard/common'
 import { buildWCChains, buildWCMethods, getMetaData } from './utils.js'
 
 // methods that require user interaction
@@ -26,7 +27,11 @@ declare type ArrayOneOrMore<T> = {
 } & Array<T>
 
 function walletConnect(
-  walletName: string,
+  wallet: {
+    name: string,
+    protocol: string,
+    downloadLink: string,
+  },
   options: WalletConnectOptions
 ): WalletInit {
   if (!options.dappUrl) {
@@ -40,9 +45,16 @@ function walletConnect(
 
   return () => {
     return {
-      label: walletName,
+      label: wallet.name,
       getIcon: async () => (await import('./icon.js')).default,
       getInterface: async ({ chains, EventEmitter, appMetadata }) => {
+
+        // Check if the wallet can be opened by a deeplink like protocol://XYZ
+        const isInstalled = checkIfProtocolIsSupported(wallet.protocol)
+        if (!isInstalled) {
+            throw new Error(createDownloadMessage(wallet.name, wallet.downloadLink))
+        }
+
         const { ProviderRpcError, ProviderRpcErrorCode } = await import(
           '@web3-onboard/common'
         )
@@ -306,6 +318,26 @@ const isHexString = (value: string | number) => {
   }
 
   return true
+}
+
+// This is a workaround to determine if a protocol is supported by the users device
+// This doesn't work for Linux devices, as for that not error are thrown when the protocol is not supported
+function checkIfProtocolIsSupported(protocol: string) {
+    let iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+
+    if (!iframe.contentWindow) {
+        return false;
+    }
+    try {
+        iframe.contentWindow.location.href = protocol + '://';
+        return true;
+    } catch(e) {
+        return false;
+    } finally {
+        document.body.removeChild(iframe);
+    }
 }
 
 export default walletConnect
