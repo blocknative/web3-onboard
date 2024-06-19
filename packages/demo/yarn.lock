@@ -327,7 +327,7 @@
   dependencies:
     regenerator-runtime "^0.14.0"
 
-"@babel/runtime@^7.17.2", "@babel/runtime@^7.19.0", "@babel/runtime@^7.20.6", "@babel/runtime@^7.21.0", "@babel/runtime@^7.22.6", "@babel/runtime@^7.5.5":
+"@babel/runtime@^7.17.2", "@babel/runtime@^7.19.0", "@babel/runtime@^7.20.6", "@babel/runtime@^7.21.0", "@babel/runtime@^7.5.5":
   version "7.23.2"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.23.2.tgz#062b0ac103261d68a966c4c7baf2ae3e62ec3885"
   integrity sha512-mM8eg4yl5D6i3lu2QKPuPH4FArvJ8KhTofbE7jwMUv9KX5mBvwPAqnV3MlyBNqdp9RyRKP6Yck8TrfYrPvX3bg==
@@ -2217,7 +2217,7 @@
     util "^0.12.4"
     uuid "^8.3.2"
 
-"@metamask/sdk@^0.20.3":
+"@metamask/sdk@^0.20.5":
   version "0.20.5"
   resolved "https://registry.yarnpkg.com/@metamask/sdk/-/sdk-0.20.5.tgz#ae90b4e5108f2a0e5f5536e66354c3e31b121af9"
   integrity sha512-BEL3BKbb0O09QgOzvyPH5xUONl2uicS9WT1AYhZ8yR4ytz5fhyHWJzs8Q/cwgm1qIdn3eumnjXfgA6pKirWa3A==
@@ -2372,7 +2372,7 @@
   dependencies:
     "@noble/hashes" "1.3.1"
 
-"@noble/curves@1.2.0", "@noble/curves@^1.2.0", "@noble/curves@~1.2.0":
+"@noble/curves@1.2.0", "@noble/curves@~1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@noble/curves/-/curves-1.2.0.tgz#92d7e12e4e49b23105a2555c6984d41733d65c35"
   integrity sha512-oYclrNgRaM9SsBUBVbb8M6DTV7ZHRTKugureoYEncY5c65HOmRzvSiTE3y5CYaPYJA/GVkrhXEoF0M3Ya9PMnw==
@@ -2851,35 +2851,14 @@
   resolved "https://registry.yarnpkg.com/@socket.io/component-emitter/-/component-emitter-3.1.0.tgz#96116f2a912e0c02817345b3c10751069920d553"
   integrity sha512-+9jVqKhRSpsc591z5vX+X5Yyw+he/HCB4iQ/RYxw35CEPaY1gnsNE43nf9n9AaYjAQrTiI/mOwKUKdUs9vf7Xg==
 
-"@solana/buffer-layout@^4.0.0", "@solana/buffer-layout@^4.0.1":
+"@solana/buffer-layout@^4.0.1":
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/@solana/buffer-layout/-/buffer-layout-4.0.1.tgz#b996235eaec15b1e0b5092a8ed6028df77fa6c15"
   integrity sha512-E1ImOIAD1tBZFRdjeM4/pzTiTApC0AOBGwyAMS4fwIodCWArzJ3DWdoh8cKxeFM2fElkxBh2Aqts1BPC373rHA==
   dependencies:
     buffer "~6.0.3"
 
-"@solana/web3.js@^1.73.0", "@solana/web3.js@^1.78.0":
-  version "1.87.1"
-  resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.87.1.tgz#da376cebbc4cc97ece0cb028d799163ea147f299"
-  integrity sha512-E8Y9bNlZ8TQlhOvCx1b7jG+TjA4SJLVwufmIk1+tcQctUhK5HiB1Q8ljd4yQDkFlk6OOeAlAeqvW0YntWJU94Q==
-  dependencies:
-    "@babel/runtime" "^7.22.6"
-    "@noble/curves" "^1.2.0"
-    "@noble/hashes" "^1.3.1"
-    "@solana/buffer-layout" "^4.0.0"
-    agentkeepalive "^4.3.0"
-    bigint-buffer "^1.1.5"
-    bn.js "^5.2.1"
-    borsh "^0.7.0"
-    bs58 "^4.0.1"
-    buffer "6.0.3"
-    fast-stable-stringify "^1.0.0"
-    jayson "^4.1.0"
-    node-fetch "^2.6.12"
-    rpc-websockets "^7.5.1"
-    superstruct "^0.14.2"
-
-"@solana/web3.js@^1.87.3":
+"@solana/web3.js@^1.73.0", "@solana/web3.js@^1.78.0", "@solana/web3.js@^1.87.3":
   version "1.93.0"
   resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.93.0.tgz#4b6975020993cec2f6626e4f2bf559ca042df8db"
   integrity sha512-suf4VYwWxERz4tKoPpXCRHFRNst7jmcFUaD65kII+zg9urpy5PeeqgLV6G5eWGzcVzA9tZeXOju1A1Y+0ojEVw==
@@ -4692,10 +4671,10 @@
     joi "17.9.1"
     viem "2.12.0"
 
-"@web3-onboard/core@2.22.1":
-  version "2.22.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.22.1.tgz#169b8300f609648034f41f6d6cd020a9aabfcaa1"
-  integrity sha512-FcwHnpfOQsHB0PBliYh6jdSrjyIrxGHfbnAzjUsInLJMFxjpmn8maexBfkGF9dFUh5UKRWTQauuWpzS0cJhh5w==
+"@web3-onboard/core@2.22.2-alpha.2":
+  version "2.22.2-alpha.2"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.22.2-alpha.2.tgz#9b8830e6f2c42a2f22695077fdac247bc619547a"
+  integrity sha512-l3MmGNHUhwKs5QLncn8RH2vYnagxPq3CidCYv0vPqE/yCJu+L8+JER604COIVSkxrPcp5dEond1e/yRs/ERGEA==
   dependencies:
     "@web3-onboard/common" "^2.4.1"
     bnc-sdk "^4.6.7"
@@ -4850,12 +4829,12 @@
     magic-sdk "^8.1.0"
     rxjs "^7.5.2"
 
-"@web3-onboard/metamask@^2.1.1":
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/metamask/-/metamask-2.1.1.tgz#1cfa6d2f8f0709dc6b76b86703cef926f98202eb"
-  integrity sha512-GFIGiR3OSFi/XdUOBps2NdPiWBSChUtkXZrkYizeEVLekZFA2pYMr03MCUr6fZJW4CVHuQfp0I+aoBTXPAk5tA==
+"@web3-onboard/metamask@^2.1.2-alpha.1":
+  version "2.1.2-alpha.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/metamask/-/metamask-2.1.2-alpha.1.tgz#cab8fa87df7619c4645b89f31ad0f095cd5341d2"
+  integrity sha512-6OZL2S6coURwX6cBtbRJr45mwNjhNfn/tRkWC7nwjOmNr8a51+a4s3a1C8vDOfDtAVDf/wy0iE+T6O8ukDCNQg==
   dependencies:
-    "@metamask/sdk" "^0.20.3"
+    "@metamask/sdk" "^0.20.5"
     "@web3-onboard/common" "^2.4.1"
 
 "@web3-onboard/mew-wallet@^2.1.1":
@@ -5014,9 +4993,9 @@
     rxjs "^7.5.2"
 
 "@web3-onboard/web3auth@^2.4.0-alpha.2":
-  version "2.4.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/web3auth/-/web3auth-2.4.0-alpha.1.tgz#592382f4280bb20faf66e6fa20d15f76024f6910"
-  integrity sha512-DXDtZOjYONinwTPL6lcMlsz8IVdpVPy4Te0YxJIa2VD98Y9ZfIxljkT7DVbgqxWSbYtAwDPLp4aVT110Nlv5AQ==
+  version "2.4.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/web3auth/-/web3auth-2.4.0-alpha.2.tgz#6f9f166506faeb22a4a236d9f8e51f90d0d2ce2c"
+  integrity sha512-e3e+DwD31Q3kknunjnA6MbmdvltvBJSXtj+C0SKBHfIYf0PbTiG7XRAQwP0Fdn1L+DBfq8QSaTKtFp3/RMOKuQ==
   dependencies:
     "@solana/web3.js" "^1.73.0"
     "@web3-onboard/common" "^2.4.1"
@@ -5388,7 +5367,7 @@ agent-base@6, agent-base@^6.0.2:
   dependencies:
     debug "4"
 
-agentkeepalive@^4.3.0, agentkeepalive@^4.5.0:
+agentkeepalive@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/agentkeepalive/-/agentkeepalive-4.5.0.tgz#2673ad1389b3c418c5a20c5d7364f93ca04be923"
   integrity sha512-5GG/5IbQQpC9FpkRGsSvZI5QYeSCzlJHdpBQntCsuTOxhKD8lqKhrleg2Yi7yvMIf82Ycmmqln9U8V9qwEiJew==
@@ -11237,7 +11216,7 @@ react@16.13.1:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
 
-react@>=16, react@>=18.2, react@^18.2.0:
+react@>=16, react@^18.2.0:
   version "18.3.1"
   resolved "https://registry.yarnpkg.com/react/-/react-18.3.1.tgz#49ab892009c53933625bd16b2533fc754cab2891"
   integrity sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==
@@ -11553,19 +11532,6 @@ rollup-plugin-visualizer@^5.9.2:
     picomatch "^2.3.1"
     source-map "^0.7.4"
     yargs "^17.5.1"
-
-rpc-websockets@^7.5.1:
-  version "7.6.0"
-  resolved "https://registry.yarnpkg.com/rpc-websockets/-/rpc-websockets-7.6.0.tgz#d3f4c0dac108ca35566b0e31552c32e58928cd04"
-  integrity sha512-Jgcs8q6t8Go98dEulww1x7RysgTkzpCMelVxZW4hvuyFtOGpeUz9prpr2KjUa/usqxgFCd9Tu3+yhHEP9GVmiQ==
-  dependencies:
-    "@babel/runtime" "^7.17.2"
-    eventemitter3 "^4.0.7"
-    uuid "^8.3.2"
-    ws "^8.5.0"
-  optionalDependencies:
-    bufferutil "^4.0.1"
-    utf-8-validate "^5.0.2"
 
 rpc-websockets@^9.0.0:
   version "9.0.1"
@@ -12294,11 +12260,6 @@ stylis@4.3.2:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/stylis/-/stylis-4.3.2.tgz#8f76b70777dd53eb669c6f58c997bf0a9972e444"
   integrity sha512-bhtUjWd/z6ltJiQwg0dUfxEJ+W+jdqQd8TbWLWyeIJHlnsqmGLRFFd8e5mA0AZi/zx90smXRlN66YMTcaSFifg==
-
-superstruct@^0.14.2:
-  version "0.14.2"
-  resolved "https://registry.yarnpkg.com/superstruct/-/superstruct-0.14.2.tgz#0dbcdf3d83676588828f1cf5ed35cda02f59025b"
-  integrity sha512-nPewA6m9mR3d6k7WkZ8N8zpTWfenFH3q9pA2PkuiZxINr9DKB2+40wEQf0ixn8VaGuJ78AB6iWOtStI+/4FKZQ==
 
 superstruct@^0.15.3:
   version "0.15.5"
