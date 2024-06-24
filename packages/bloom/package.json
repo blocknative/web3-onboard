@@ -1,8 +1,11 @@
 {
-  "name": "@web3-onboard/react",
-  "version": "2.9.2",
-  "description": "A collection of React hooks for integrating Web3-Onboard in to React and Next.js projects. Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardised spec compliant web3 providers for all supported wallets, modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
+  "name": "@web3-onboard/bloom",
+  "version": "2.0.0",
+  "description": "Unstoppable Domains module for connecting to Web3-Onboard. Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardised spec compliant web3 providers for all supported wallets, framework agnostic modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
   "keywords": [
+    "Bloom",
+    "Iota",
+    "Shimmer",
     "Ethereum",
     "Web3",
     "EVM",
@@ -31,12 +34,15 @@
     "confirmed",
     "Injected Wallet",
     "Crypto",
-    "Crypto Wallet"
+    "Crypto Wallet",
+    "Domain Name",
+    "Unstoppable Domains",
+    "Unstoppable"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/blocknative/web3-onboard.git",
-    "directory": "packages/react"
+    "directory": "packages/bloom"
   },
   "homepage": "https://onboard.blocknative.com",
   "bugs": "https://github.com/blocknative/web3-onboard/issues",
@@ -55,20 +61,13 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@types/react": "^18.0.2",
-    "@types/use-sync-external-store": "^0.0.3",
-    "react": "^18.0.0",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "@walletconnect/types": "^2.13.0"
   },
   "dependencies": {
-    "@web3-onboard/core": "2.22.2",
+    "@walletconnect/ethereum-provider": "^2.13.0",
     "@web3-onboard/common": "^2.4.1",
-    "use-sync-external-store": "1.0.0"
-  },
-  "peerDependencies": {
-    "react": ">=16.8"
-  },
-  "engines": {
-    "node": ">=16.15.1"
+    "joi": "17.9.1",
+    "rxjs": "^7.5.2"
   }
 }

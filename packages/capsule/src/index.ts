@@ -3,6 +3,7 @@ import type { CapsuleInitOptions } from './types'
 import type { Chain } from '@wagmi/chains'
 import type { Chain as BlocknativeChain } from '@web3-onboard/common'
 import { Environment as CapsuleEnvironment, OAuthMethod, Theme } from '@usecapsule/react-sdk'
+import "@usecapsule/react-sdk/styles.css"
 
 type ChainId = number
 type ChainsMap = Map<ChainId, Chain>

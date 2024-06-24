@@ -31,8 +31,9 @@ async function connect(
       'At least one chain must be set before attempting to connect a wallet'
     )
 
-  const { autoSelect } = options || {
-    autoSelect: { label: '', disableModals: false }
+  let { autoSelect } = options || {}
+  if (!autoSelect) {
+    autoSelect = { label: '', disableModals: false }
   }
 
   // if auto selecting, wait until next event loop
@@ -44,7 +45,6 @@ async function connect(
   if (!state.get().walletModules.length) {
     setWalletModules(configuration.initialWalletInit)
   }
-
   connectWallet$.next({
     autoSelect:
       typeof autoSelect === 'string'
