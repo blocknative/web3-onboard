@@ -31,7 +31,7 @@
     "@web3-onboard/arcana-auth": "^2.1.0",
     "@web3-onboard/bitget": "2.1.1",
     "@web3-onboard/blocto": "^2.1.1",
-    "@web3-onboard/capsule": "2.2.0",
+    "@web3-onboard/bloom": "2.0.0",
     "@web3-onboard/cede-store": "^2.3.1",
     "@web3-onboard/core": "2.22.2",
     "@web3-onboard/coinbase": "^2.4.1",
