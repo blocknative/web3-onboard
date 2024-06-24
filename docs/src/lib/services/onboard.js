@@ -51,6 +51,7 @@ const intiOnboard = async (theme) => {
   const { default: torusModule } = await import('@web3-onboard/torus')
   const { default: uauthModule } = await import('@web3-onboard/uauth')
   const { default: trustModule } = await import('@web3-onboard/trust')
+  const { default: okxModule } = await import('@web3-onboard/okx')
   const { default: xdefiModule } = await import('@web3-onboard/xdefi')
   const { default: cedeModule } = await import('@web3-onboard/cede-store')
   const { default: frameModule } = await import('@web3-onboard/frame')
@@ -93,6 +94,7 @@ const intiOnboard = async (theme) => {
   const taho = tahoModule()
   const torus = torusModule()
   const trust = trustModule()
+  const okx = okxModule()
   const xdefi = xdefiModule()
   const cede = cedeModule()
   const bitget = bitgetModule()
@@ -146,12 +148,13 @@ const intiOnboard = async (theme) => {
     connect: { autoConnectAllPreviousWallet: true },
     wallets: [
       metamask,
+      coinbase,
       injected,
       walletConnect,
-      coinbase,
       ledger,
       trezor,
       trust,
+      okx,
       gnosis,
       taho,
       bitget,

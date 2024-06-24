@@ -4,7 +4,7 @@ title: Coinbase
 
 # {$frontmatter.title}
 
-Wallet module for connecting Coinbase Wallet SDK to Web3 Onboard. Check out the [Coinbase Wallet Developer Docs](https://docs.cloud.coinbase.com/wallet-sdk/docs) for more information.
+Wallet module for connecting Coinbase Wallet SDK to Web3 Onboard. Check out the [Coinbase Wallet Developer Docs](https://www.smartwallet.dev/why) for more information.
 
 ## Install
 
@@ -42,7 +42,7 @@ type CoinbaseWalletOptions = {
 
 ## Smart Wallet
 
-Starting at `@web3-onboard/coinbase` version 2.3.0 smart wallet support has been added. A smart wallet lives in your browser, no extensions or app installs needed. Use passkeys for signing, with enterprise-grade security without complex seed phrases. One wallet, one address, works universally across major L2s and onchain apps. [More info on Coinbase smart wallets](https://www.coinbase.com/wallet/smart-wallet).
+Starting at `@web3-onboard/coinbase` version 2.3.0 smart wallet support has been added. A smart wallet lives in your browser, no extensions or app installs needed. Use passkeys for signing, with enterprise-grade security without complex seed phrases. One wallet, one address, works universally across major L2s and onchain apps. [More info on Coinbase smart wallets](https://www.smartwallet.dev/why).
 
 ## Usage
 
