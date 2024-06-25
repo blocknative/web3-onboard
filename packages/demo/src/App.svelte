@@ -36,6 +36,7 @@
   import arcanaAuthModule from '@web3-onboard/arcana-auth'
   import venlyModule from '@web3-onboard/venly'
   import bitgetModule from '@web3-onboard/bitget'
+  import bloomModule from '@web3-onboard/bloom'
   import particleAuthModule from '@web3-onboard/particle-network'
   import finoaConnectModule from '@web3-onboard/finoaconnect'
   import capsuleModule, {
@@ -210,6 +211,10 @@
   const cedeStore = cedeStoreModule()
   const blocto = bloctoModule()
   const tallyho = tallyHoModule()
+  const bloom = bloomModule({
+    projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
+    dappUrl: 'https://www.onboard.blocknative.com'
+  })
 
   const webauthnSigner = new WebauthnSigner({
     rpId: 'localhost',
@@ -295,6 +300,7 @@
       okx,
       tallyho,
       bitget,
+      bloom,
       enkrypt,
       infinityWallet,
       mewWallet,

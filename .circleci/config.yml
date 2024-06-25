@@ -472,6 +472,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/passport
     steps:
       - node-build-steps
+  build-bloom:
+    docker:
+      - image: cimg/node:18.0.0
+    working_directory: ~/web3-onboard-monorepo/packages/bloom
+    steps:
+      - node-build-steps
 
   # Build staging/Alpha releases
   build-staging-core:
@@ -772,6 +778,12 @@ jobs:
     docker:
       - image: cimg/node:18.0.0
     working_directory: ~/web3-onboard-monorepo/packages/passport
+    steps:
+      - node-staging-build-steps
+  build-staging-bloom:
+    docker:
+      - image: cimg/node:18.0.0
+    working_directory: ~/web3-onboard-monorepo/packages/bloom
     steps:
       - node-staging-build-steps
   build-staging-finoaconnect:
@@ -1084,6 +1096,12 @@ workflows:
       - build-passport:
           <<: *deploy_production_filters
       - build-staging-passport:
+          <<: *deploy_staging_filters
+  bloom:
+    jobs:
+      - build-bloom:
+          <<: *deploy_production_filters
+      - build-staging-bloom:
           <<: *deploy_staging_filters
   finoaconnect:
     jobs:
