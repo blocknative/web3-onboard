@@ -2247,10 +2247,10 @@
     utf-8-validate "^6.0.3"
     uuid "^8.3.2"
 
-"@metamask/sdk-communication-layer@0.26.0":
-  version "0.26.0"
-  resolved "https://registry.yarnpkg.com/@metamask/sdk-communication-layer/-/sdk-communication-layer-0.26.0.tgz#4578138328823762ee5b25f7943bb7910b888aa6"
-  integrity sha512-Pu9y2YoQMC7mnaVyr2MddUUofPqqE+rZL1NFk30lJbNCVGopWSubWoF8fJZw54fWngNEN0HXPNkTokd5UCvwjQ==
+"@metamask/sdk-communication-layer@0.26.2":
+  version "0.26.2"
+  resolved "https://registry.yarnpkg.com/@metamask/sdk-communication-layer/-/sdk-communication-layer-0.26.2.tgz#e36f298e78fa7c276a4db6a5bfa76085af3f75ef"
+  integrity sha512-YMqwjhCZ4sXYAsEp1LxLrZZycBwpUeEsA4yIx48m1yW9sZ8pv3NGnbjM+F0zf29DLjyqLxJdxHJ7b5YkgtB26g==
   dependencies:
     bufferutil "^4.0.8"
     date-fns "^2.29.3"
@@ -2309,14 +2309,14 @@
     util "^0.12.4"
     uuid "^8.3.2"
 
-"@metamask/sdk@^0.26.1":
-  version "0.26.1"
-  resolved "https://registry.yarnpkg.com/@metamask/sdk/-/sdk-0.26.1.tgz#9484c868a4826058781a037237959f3fe2b669d6"
-  integrity sha512-WLlCBtqqsi+DEqW7DfBq0k1Hu3fqIkiNFH0EehUix0UDPWnpv6a6acrOFoeB4ga/lbaQK2CrlIfUp0shaYdZbA==
+"@metamask/sdk@^0.26.3":
+  version "0.26.3"
+  resolved "https://registry.yarnpkg.com/@metamask/sdk/-/sdk-0.26.3.tgz#d7b08955f0b2fcb1248913a292490745d52fd57b"
+  integrity sha512-DM4BFPr1BDAIhTz7/RWb3oWQRvX79TJVZH8EL/Ljp+CRY7IjCbaVwaLdyQjVd8Doyq1V7AL4N/JjXplpo2YyYg==
   dependencies:
     "@metamask/onboarding" "^1.0.1"
     "@metamask/providers" "^15.0.0"
-    "@metamask/sdk-communication-layer" "0.26.0"
+    "@metamask/sdk-communication-layer" "0.26.2"
     "@metamask/sdk-install-modal-web" "0.26.0"
     "@types/dom-screen-wake-lock" "^1.0.0"
     bowser "^2.9.0"
