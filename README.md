@@ -106,6 +106,7 @@ For full documentation, check out the README.md for each package or the [docs pa
 **SDK Wallets**
 
 - [Arcana](packages/arcana-auth/README.md)
+- [Bitget](packages/bitget/README.md)
 - [Coinbase](packages/coinbase/README.md)
 - [Trust](packages/trust/README.md)
 - [OKX](packages/okx/README.md)
