@@ -71,7 +71,8 @@ export enum ProviderIdentityFlag {
   Lif3Wallet = 'isLif3Wallet',
   ZodiacPilot = 'isZodiacPilot',
   StableWallet = 'isStableWallet',
-  Echooo = 'isEchooo'
+  Echooo = 'isEchooo',
+  Gate = 'isWeb3Wallet'
 }
 
 /**
@@ -101,7 +102,8 @@ export enum ProviderExternalUrl {
   Lif3Wallet = 'https://lif3.com',
   Rabby = 'https://rabby.io',
   ZodiacPilot = 'https://pilot.gnosisguild.org/',
-  Echooo = 'https://www.echooo.xyz'
+  Echooo = 'https://www.echooo.xyz',
+  Gate = "https://www.gate.io/mobileapp"
 }
 
 export enum ProviderLabel {
@@ -164,7 +166,8 @@ export enum ProviderLabel {
   Lif3Wallet = 'Lif3 Wallet',
   ZodiacPilot = 'Zodiac Pilot',
   StableWallet = 'StableWallet',
-  Echooo = 'Echooo'
+  Echooo = 'Echooo',
+  Gate = "Gate Wallet"
 }
 
 export interface MeetOneProvider extends ExternalProvider {
@@ -191,6 +194,7 @@ export enum InjectedNameSpace {
   Zeal = 'zeal',
   Phantom = 'phantom',
   OKXWallet = 'okxwallet',
+  Gate = 'gatewallet',
   Trust = 'trustwallet',
   Frontier = 'frontier',
   DeFiConnectProvider = 'deficonnectProvider',
@@ -254,7 +258,8 @@ export interface CustomWindow extends Window {
   foxwallet: InjectedProvider
   echooo: {
     ethereum: InjectedProvider
-  }
+  },
+  gatewallet: InjectedProvider
 }
 
 export type InjectedProvider = ExternalProvider &

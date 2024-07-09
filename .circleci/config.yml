@@ -423,6 +423,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/bitget
     steps:
       - node-build-steps
+  build-gate:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/gate
+    steps:
+      - node-build-steps
   build-bitkeep:
     docker:
       - image: cimg/node:16.13.1
@@ -730,6 +736,13 @@ jobs:
     docker:
       - image: cimg/node:16.13.1
     working_directory: ~/web3-onboard-monorepo/packages/bitget
+    steps:
+      - node-staging-build-steps
+  
+  build-staging-gate:
+    docker:
+      - image: cimg/node:16.13.1
+    working_directory: ~/web3-onboard-monorepo/packages/gate
     steps:
       - node-staging-build-steps
   build-staging-bitkeep:
@@ -1042,6 +1055,12 @@ workflows:
       - build-bitget:
           <<: *deploy_production_filters
       - build-staging-bitget:
+          <<: *deploy_staging_filters
+  gate:
+    jobs:
+      - build-gate:
+          <<: *deploy_production_filters
+      - build-staging-gate:
           <<: *deploy_staging_filters
   bitkeep:
     jobs:
