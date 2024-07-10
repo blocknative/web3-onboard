@@ -72,7 +72,7 @@ export enum ProviderIdentityFlag {
   ZodiacPilot = 'isZodiacPilot',
   StableWallet = 'isStableWallet',
   Echooo = 'isEchooo',
-  Gate = 'isWeb3Wallet'
+  Gate = 'isGateWallet'
 }
 
 /**
