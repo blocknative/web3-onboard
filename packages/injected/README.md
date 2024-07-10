@@ -88,6 +88,7 @@ const onboard = Onboard({
 - Rabby - _Desktop & Mobile_
 - MathWallet - _Desktop & Mobile_
 - Bitget - _Desktop & Mobile_
+- Gate Wallet - _Desktop & Mobile_
 - Sequence - _Desktop & Mobile_
 - Core - _Desktop_
 - Bitski - _Desktop & Mobile_
