@@ -1,6 +1,6 @@
 {
   "name": "@web3-onboard/passport",
-  "version": "2.1.2",
+  "version": "2.1.2-alpha.1",
   "description": "passport",
   "module": "dist/index.js",
   "browser": "dist/index.js",
