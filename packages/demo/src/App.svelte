@@ -38,6 +38,7 @@
   import bitgetModule from '@web3-onboard/bitget'
   import bloomModule from '@web3-onboard/bloom'
   import particleAuthModule from '@web3-onboard/particle-network'
+  import keplrModule from '@web3-onboard/keplr'
   import capsuleModule, {
     Environment,
     OAuthMethod
@@ -257,6 +258,7 @@
     clientKey: 'cSTLqhvONB5j588Wz6E5WJLMPrHeUlGbymf1DFhO',
     appId: 'b1f0239a-edb0-41f9-b0f5-ab780bb02a9e'
   })
+  const keplr = keplrModule()
 
   const dcent = dcentModule()
   const bitget = bitgetModule()
@@ -322,7 +324,8 @@
       blocto,
       venly,
       particle,
-      passport
+      passport,
+      keplr
     ],
     transactionPreview,
     gas,
