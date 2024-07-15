@@ -79,7 +79,12 @@ Note: With the `safeTxGas` you will see additional value on the `gasLimit` displ
 
 ## Build Environments
 
-For build env configurations and setups please see the Build Env section [here](/docs/modules/core#build-environments)
+For build env configurations and setups please see the Build Env section [here](/docs/modules/core#build-environments).
+
+
+## Local testing within the Safe app
+
+Ensure the application is building and working properly within the browser and then add or enable your cors blocker extension or script of choice. An example is the `Allow CORS` browser extension.
 
 ## Vue Build Configuration
 
