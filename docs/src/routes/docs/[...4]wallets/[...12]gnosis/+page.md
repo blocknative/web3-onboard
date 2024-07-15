@@ -80,3 +80,21 @@ Note: With the `safeTxGas` you will see additional value on the `gasLimit` displ
 ## Build Environments
 
 For build env configurations and setups please see the Build Env section [here](/docs/modules/core#build-environments)
+
+## Vue Build Configuration
+
+If using Vue be sure to include the necessary peerDeps in the `vite.config.ts` specifically within the `optimizeDeps.include` list and install the necessary peer deps `npm i @safe-global/safe-apps-provider @safe-global/safe-apps-sdk`.
+
+```typescript
+export default defineConfig({
+  plugins: [vue(), vueJsx(), VueDevTools()],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  },
+  optimizeDeps: {
+    include: ['@safe-global/safe-apps-sdk', '@safe-global/safe-apps-provider']
+  }
+})
+```
