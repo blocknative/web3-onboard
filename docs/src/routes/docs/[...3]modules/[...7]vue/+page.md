@@ -503,6 +503,9 @@ export default {
     commonjsOptions: {
       transformMixedEsModules: true
     }
+  },
+  optimizeDeps: {
+    include: ['@safe-global/safe-apps-sdk', '@safe-global/safe-apps-provider']
   }
 }
 ```
