@@ -83,7 +83,7 @@ For build env configurations and setups please see the Build Env section [here](
 
 ## Vue Build Configuration
 
-If using Vue be sure to include the necessary peerDeps in the `vite.config.ts` specifically within the `optimizeDeps.include` list
+If using Vue be sure to include the necessary peerDeps in the `vite.config.ts` specifically within the `optimizeDeps.include` list and install the necessary peer deps `npm i @safe-global/safe-apps-provider @safe-global/safe-apps-sdk`.
 
 ```typescript
 export default defineConfig({
