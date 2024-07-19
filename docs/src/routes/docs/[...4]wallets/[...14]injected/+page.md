@@ -363,7 +363,6 @@ const injected = injectedModule({
 - MathWallet - _Desktop & Mobile_
 - Bitkeep - _Desktop & Mobile_
 - BitGet Wallet - _Desktop & Mobile_
-- Gate Wallet - _Desktop & Mobile_
 - Sequence - _Desktop & Mobile_
 - Core - _Desktop_
 - Bitski - _Desktop & Mobile_
