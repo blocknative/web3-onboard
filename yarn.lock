@@ -5494,6 +5494,13 @@
     "@walletconnect/window-getters" "^1.0.1"
     tslib "1.14.1"
 
+"@web3-onboard/gnosis@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/gnosis/-/gnosis-2.3.1.tgz#e62b4095097a3d59848eb01986616f6909d5f936"
+  integrity sha512-p+27gDF8BAr8MuhKkUisbP/d7LvFZs2ifbOsR5Xs61oObw7HNifN3IzUbeMaUCZ1l8P7JMgU1TOqE75GPwl1fg==
+  dependencies:
+    "@web3-onboard/common" "^2.4.1"
+
 "@web3-onboard/wagmi@2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@web3-onboard/wagmi/-/wagmi-2.0.0.tgz#9beda01b4539d399aa0420e7afaacc09fc25ed7d"
@@ -13968,9 +13975,9 @@ socket.io-client@^4.7.4, socket.io-client@^4.7.5:
     socket.io-parser "~4.2.4"
 
 socket.io-parser@~3.3.0:
-  version "3.3.3"
-  resolved "https://registry.yarnpkg.com/socket.io-parser/-/socket.io-parser-3.3.3.tgz#3a8b84823eba87f3f7624e64a8aaab6d6318a72f"
-  integrity sha512-qOg87q1PMWWTeO01768Yh9ogn7chB9zkKtQnya41Y355S0UmpXgpcrFwAgjYJxu9BdKug5r5e9YtVSeWhKBUZg==
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/socket.io-parser/-/socket.io-parser-3.3.4.tgz#ab84236b6d06eaf1fb68b179b3a7501195886cc3"
+  integrity sha512-z/pFQB3x+EZldRRzORYW1vwVO8m/3ILkswtnpoeU6Ve3cbMWkmHEWDAVJn4QJtchiiFTo5j7UG2QvwxvaA9vow==
   dependencies:
     component-emitter "~1.3.0"
     debug "~3.1.0"
