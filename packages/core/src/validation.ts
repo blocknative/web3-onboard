@@ -249,11 +249,10 @@ const initOptions = Joi.object({
   wagmi: Joi.function(),
   connect: connectModalOptions,
   containerElements: containerElements,
-  transactionPreview: Joi.object({
-    patchProvider: Joi.function().required(),
-    init: Joi.function().required(),
-    previewTransaction: Joi.function()
-  }),
+  // transactionPreview is deprecated but is still allowed to 
+  // avoid breaking dapps a console error is shown although 
+  // transactionPreview functionality has been removed
+  transactionPreview: Joi.any(),
   theme: theme,
   disableFontDownload: Joi.boolean(),
   unstoppableResolution: Joi.function()
