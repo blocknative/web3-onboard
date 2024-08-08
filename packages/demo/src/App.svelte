@@ -275,7 +275,7 @@
     environment: Environment.DEVELOPMENT,
     apiKey: '992bbd9146d5de8ad0419f141d9a7ca7',
     modalProps: {
-      oAuthMethods: [OAuthMethod.GOOGLE, OAuthMethod.TWITTER]
+      oAuthMethods: [OAuthMethod.GOOGLE, OAuthMethod.TWITTER, OAuthMethod.APPLE,OAuthMethod.DISCORD]
     },
     constructorOpts: {
       portalBackgroundColor: '#5e5656',

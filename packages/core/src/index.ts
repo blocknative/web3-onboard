@@ -37,7 +37,6 @@ import {
   updateChain,
   updateWallet
 } from './store/actions.js'
-import type { PatchedEIP1193Provider } from '@web3-onboard/transaction-preview'
 import { getBlocknativeSdk } from './services.js'
 import type { WagmiModuleAPI } from '@web3-onboard/wagmi'
 import { wagmiProviderMethods } from './provider'
@@ -241,7 +240,6 @@ function init(options: InitOptions): OnboardAPI {
     apiKey,
     initialWalletInit: wallets,
     gas,
-    transactionPreview,
     unstoppableResolution,
     wagmi: wagmiApi
   })
@@ -249,24 +247,9 @@ function init(options: InitOptions): OnboardAPI {
   appMetadata && updateAppMetadata(appMetadata)
 
   if (apiKey && transactionPreview) {
-    console.warn(
-      'Transaction Preview support is going to be sunset on July 1st 2024 and will no longer work after that date'
+    console.error(
+      'Transaction Preview support has been removed and is no longer supported within Web3-Onboard'
     )
-    const getBnSDK = async () => {
-      const sdk = await getBlocknativeSdk()
-      if (!sdk) return
-      transactionPreview.init({
-        containerElement: '#w3o-transaction-preview-container',
-        sdk,
-        apiKey
-      })
-      wallets$.subscribe(wallets => {
-        wallets.forEach(({ provider }) => {
-          transactionPreview.patchProvider(provider as PatchedEIP1193Provider)
-        })
-      })
-    }
-    getBnSDK()
   }
 
   theme && updateTheme(theme)

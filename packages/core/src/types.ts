@@ -15,7 +15,6 @@ import type {
 
 import type gas from '@web3-onboard/gas'
 import type unstoppableResolution from '@web3-onboard/unstoppable-resolution'
-import type { TransactionPreviewAPI } from '@web3-onboard/transaction-preview'
 
 import type en from './i18n/en.json'
 import type { EthereumTransactionData, Network } from 'bnc-sdk'
@@ -71,9 +70,12 @@ export interface InitOptions {
    */
   containerElements?: Partial<ContainerElements>
   /**
-   * Transaction Preview module
+   * @deprecated Transaction Preview support has ended and Transaction Preview
+   * is no longer supported as part of Web3-Onboard.
+   * Please remove from your onboard config to avoid 
+   * console errors and un-expected behavior
    */
-  transactionPreview?: TransactionPreviewAPI
+  transactionPreview?: unknown
   /**
    * Custom or predefined theme for Web3Onboard
    * BuiltInThemes: ['default', 'dark', 'light', 'system']
@@ -204,7 +206,7 @@ export type Configuration = {
   gas?: typeof gas
   wagmi?: WagmiModuleAPI
   containerElements?: ContainerElements
-  transactionPreview?: TransactionPreviewAPI
+  transactionPreview?: unknown
   unstoppableResolution?: typeof unstoppableResolution
 }
 
