@@ -106,7 +106,6 @@ For full documentation, check out the README.md for each package or the [docs pa
 **SDK Wallets**
 
 - [Arcana](packages/arcana-auth/README.md)
-- [Bitget](packages/bitget/README.md)
 - [Coinbase](packages/coinbase/README.md)
 - [Trust](packages/trust/README.md)
 - [OKX](packages/okx/README.md)
@@ -129,6 +128,7 @@ For full documentation, check out the README.md for each package or the [docs pa
 - [Blocto](packages/blocto/README.md)
 - [Particle Network](packages/particle-network/README.md)
 - [MetaMask](packages/metamask/README.md)
+- [Bitget](packages/bitget/README.md)
 
 **Hardware Wallets**
 
