@@ -128,6 +128,7 @@ For full documentation, check out the README.md for each package or the [docs pa
 - [Blocto](packages/blocto/README.md)
 - [Particle Network](packages/particle-network/README.md)
 - [MetaMask](packages/metamask/README.md)
+- [Bitget](packages/bitget/README.md)
 
 **Hardware Wallets**
 
