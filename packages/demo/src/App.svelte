@@ -39,6 +39,7 @@
   import bloomModule from '@web3-onboard/bloom'
   import particleAuthModule from '@web3-onboard/particle-network'
   import finoaConnectModule from '@web3-onboard/finoaconnect'
+  import keplrModule from '@web3-onboard/keplr'
   import capsuleModule, {
     Environment,
     OAuthMethod
@@ -259,6 +260,7 @@
     clientKey: 'cSTLqhvONB5j588Wz6E5WJLMPrHeUlGbymf1DFhO',
     appId: 'b1f0239a-edb0-41f9-b0f5-ab780bb02a9e'
   })
+  const keplr = keplrModule()
 
   const dcent = dcentModule()
   const bitget = bitgetModule()
@@ -277,7 +279,7 @@
     environment: Environment.DEVELOPMENT,
     apiKey: '992bbd9146d5de8ad0419f141d9a7ca7',
     modalProps: {
-      oAuthMethods: [OAuthMethod.GOOGLE, OAuthMethod.TWITTER]
+      oAuthMethods: [OAuthMethod.GOOGLE, OAuthMethod.TWITTER, OAuthMethod.APPLE,OAuthMethod.DISCORD]
     },
     constructorOpts: {
       portalBackgroundColor: '#5e5656',
@@ -325,7 +327,8 @@
       venly,
       particle,
       passport,
-      finoaConnect
+      finoaConnect,
+      keplr
     ],
     transactionPreview,
     gas,
