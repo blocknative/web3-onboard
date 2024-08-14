@@ -5529,6 +5529,25 @@
   dependencies:
     "@web3-onboard/common" "^2.4.1"
 
+"@web3-onboard/passport@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/passport/-/passport-2.1.1.tgz#4a3421803f174197160a3ea3e30e1c3cf7f47790"
+  integrity sha512-73kAE6KPBNYi+b67ziA5EGzRBY6foN7NHINmk25hMnivBzUiyXvSvV85V35wH7EnWfzUlHvihFmd0fFurQuE6A==
+  dependencies:
+    "@0xpass/passport" "2.1.1"
+    "@0xpass/passport-viem" "2.0.1"
+    "@web3-onboard/common" "^2.4.1"
+    crypto-js "^4.2.0"
+    react-dom "^18.2.0"
+    viem "^2.9.4"
+
+"@web3-onboard/trust@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/trust/-/trust-2.1.1.tgz#334d3c8297249193516aa9e3847b87ba02039863"
+  integrity sha512-NvSfJ4a7SpHwiVLsAQQq6j4cj5V8HqRfX9hreJcjpvixWK0TtUMkFVbdU5QnnhBaU6gUe+WUva64i0SeRSpYRg==
+  dependencies:
+    "@web3-onboard/common" "^2.4.1"
+
 "@web3-onboard/wagmi@2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@web3-onboard/wagmi/-/wagmi-2.0.0.tgz#9beda01b4539d399aa0420e7afaacc09fc25ed7d"
