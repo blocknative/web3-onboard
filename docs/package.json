@@ -60,6 +60,7 @@
     "@web3-onboard/core": "^2.22.1",
     "@web3-onboard/dcent": "^2.2.8",
     "@web3-onboard/enkrypt": "^2.1.1",
+    "@web3-onboard/finoaconnect": "^2.0.0",
     "@web3-onboard/fortmatic": "^2.1.1",
     "@web3-onboard/frame": "^2.1.1",
     "@web3-onboard/frontier": "^2.1.1",
