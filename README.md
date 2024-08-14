@@ -129,6 +129,7 @@ For full documentation, check out the README.md for each package or the [docs pa
 - [Particle Network](packages/particle-network/README.md)
 - [MetaMask](packages/metamask/README.md)
 - [Bitget](packages/bitget/README.md)
+- [FinoaConnect](packages/finoaconnect/README.md)
 
 **Hardware Wallets**
 
