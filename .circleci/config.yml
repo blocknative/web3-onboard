@@ -478,6 +478,12 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/bloom
     steps:
       - node-build-steps
+  build-keplr:
+    docker:
+      - image: cimg/node:18.0.0
+    working_directory: ~/web3-onboard-monorepo/packages/keplr
+    steps:
+      - node-build-steps
 
   # Build staging/Alpha releases
   build-staging-core:
@@ -790,6 +796,12 @@ jobs:
     docker:
       - image: cimg/node:18.0.0
     working_directory: ~/web3-onboard-monorepo/packages/finoaconnect
+    steps:
+      - node-staging-build-steps
+  build-staging-keplr:
+    docker:
+      - image: cimg/node:18.0.0
+    working_directory: ~/web3-onboard-monorepo/packages/keplr
     steps:
       - node-staging-build-steps
 
@@ -1108,4 +1120,10 @@ workflows:
       - build-finoaconnect:
           <<: *deploy_production_filters
       - build-staging-finoaconnect:
+          <<: *deploy_staging_filters
+  keplr:
+    jobs:
+      - build-keplr:
+          <<: *deploy_production_filters
+      - build-staging-keplr:
           <<: *deploy_staging_filters
