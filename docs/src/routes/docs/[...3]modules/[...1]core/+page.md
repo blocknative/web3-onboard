@@ -441,6 +441,7 @@ const sendTransaction = async () => {
   console.log(result)
 }
 ```
+
 ---
 
 #### disableFontDownload
@@ -1902,7 +1903,9 @@ export default {
       '@web3-onboard/gas',
       '@web3-onboard/sequence',
       'js-sha3',
-      '@ethersproject/bignumber'
+      '@ethersproject/bignumber',
+      '@safe-global/safe-apps-sdk',
+      '@safe-global/safe-apps-provider'
     ],
     esbuildOptions: {
       // Node.js global to browser globalThis

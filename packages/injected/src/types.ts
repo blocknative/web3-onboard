@@ -71,7 +71,8 @@ export enum ProviderIdentityFlag {
   Lif3Wallet = 'isLif3Wallet',
   ZodiacPilot = 'isZodiacPilot',
   StableWallet = 'isStableWallet',
-  Echooo = 'isEchooo'
+  Echooo = 'isEchooo',
+  Keplr = 'keplr'
 }
 
 /**
@@ -101,7 +102,8 @@ export enum ProviderExternalUrl {
   Lif3Wallet = 'https://lif3.com',
   Rabby = 'https://rabby.io',
   ZodiacPilot = 'https://pilot.gnosisguild.org/',
-  Echooo = 'https://www.echooo.xyz'
+  Echooo = 'https://www.echooo.xyz',
+  Keplr = 'https://www.keplr.app/download'
 }
 
 export enum ProviderLabel {
@@ -164,7 +166,8 @@ export enum ProviderLabel {
   Lif3Wallet = 'Lif3 Wallet',
   ZodiacPilot = 'Zodiac Pilot',
   StableWallet = 'StableWallet',
-  Echooo = 'Echooo'
+  Echooo = 'Echooo',
+  Keplr = 'Keplr'
 }
 
 export interface MeetOneProvider extends ExternalProvider {
@@ -291,7 +294,7 @@ export interface InjectedWalletOptions {
   walletUnavailableMessage?: (wallet: WalletModule) => string
   /**Function that can be used to sort the order of wallets that are displayed */
   sort?: (wallets: WalletModule[]) => WalletModule[]
-  /** A boolean that can be passed to disable supporting 6963 (https://eips.ethereum.org/EIPS/eip-6963) 
+  /** A boolean that can be passed to disable supporting 6963 (https://eips.ethereum.org/EIPS/eip-6963)
    * which will display wallets available on the browser
    */
   disable6963Support?: boolean

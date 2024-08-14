@@ -202,7 +202,7 @@ function passport(options: PassportOptions): WalletInit {
     return {
       label: 'Passport',
       getIcon: async () => (await import('./icon')).default,
-      getInterface: async () => {
+      getInterface: async ({ EventEmitter }) => {
         const { Passport, Network } = await import('@0xpass/passport')
         const { createPassportClient } = await import('@0xpass/passport-viem')
         const { http } = await import('viem')
@@ -287,6 +287,9 @@ function passport(options: PassportOptions): WalletInit {
         )
 
         const provider = createEIP1193Provider(client)
+
+        const events = new EventEmitter()
+        provider.on = events.on.bind(events)
 
         return {
           instance: passport,
