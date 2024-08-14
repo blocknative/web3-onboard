@@ -36,7 +36,6 @@
     "prettier-plugin-svelte": "^2.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "rollup-plugin-polyfill-node": "^0.13.0",
     "shiki": "^0.12.0",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
@@ -46,7 +45,8 @@
     "tslib": "^2.4.1",
     "typescript": "^5.4.5",
     "unplugin-icons": "^0.14.0",
-    "vite": "^4.5.3"
+    "vite": "^4.5.3",
+    "vite-plugin-node-polyfills": "^0.22.0"
   },
   "type": "module",
   "dependencies": {
@@ -54,6 +54,7 @@
     "@safe-global/safe-apps-sdk": "^8.1.0",
     "@web3-onboard/bitget": "^2.1.1",
     "@web3-onboard/blocto": "^2.1.1",
+    "@web3-onboard/capsule": "^2.3.0",
     "@web3-onboard/cede-store": "^2.3.1",
     "@web3-onboard/coinbase": "^2.3.1",
     "@web3-onboard/core": "^2.22.1",
@@ -72,7 +73,7 @@
     "@web3-onboard/magic": "^2.2.1",
     "@web3-onboard/metamask": "^2.1.1",
     "@web3-onboard/mew-wallet": "^2.1.1",
-    "@web3-onboard/okx": "2.0.0-alpha.1",
+    "@web3-onboard/okx": "2.0.0",
     "@web3-onboard/particle-network": "^2.1.1",
     "@web3-onboard/phantom": "^2.1.1",
     "@web3-onboard/portis": "^2.2.1",
