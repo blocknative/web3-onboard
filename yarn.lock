@@ -1770,6 +1770,11 @@
   dependencies:
     keccak "^3.0.0"
 
+"@finoa/finoa-connect-sdk@^1.0.4":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@finoa/finoa-connect-sdk/-/finoa-connect-sdk-1.0.5.tgz#95e9707a8382e8c80b44342aa49e74b07eb04e28"
+  integrity sha512-Dzp8fCZVODtG+xirXjy7JFAqvOgU9fRMFISiUr5N53XW+hsOsjYTi7IO/HApoXSAq9vFtVw7CMHG2+M0PlX+wg==
+
 "@formatjs/ecma402-abstract@1.11.3":
   version "1.11.3"
   resolved "https://registry.yarnpkg.com/@formatjs/ecma402-abstract/-/ecma402-abstract-1.11.3.tgz#f25276dfd4ef3dac90da667c3961d8aa9732e384"
