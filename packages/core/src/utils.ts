@@ -115,7 +115,7 @@ export const chainIdToLabel: Record<string, string> = {
   '0xa4b1': 'Arbitrum One',
   '0xa4ba': 'Arbitrum Nova',
   '0x27bc86aa': 'Degen',
-  '???': 'SNAX'
+  '0x890': 'SNAX'
 }
 
 export function validEnsChain(chainId: ChainId): string | null {
@@ -166,7 +166,7 @@ export const networkToChainId: Record<string, ChainId> = {
   'fantom-main': '0xfa',
   'matic-mumbai': '0x80001',
   degen: '0x27bc86aa',
-  SNAX: '???'
+  SNAX: '0x890'
 }
 
 export const chainStyles: Record<string, ChainStyle> = {
@@ -238,9 +238,9 @@ export const chainStyles: Record<string, ChainStyle> = {
     icon: degenIcon,
     color: '#a36dfe'
   },
-  '???': {
+  '0x890': {
     icon: snaxIcon,
-    color: '???'
+    color: '#00D1FF'
   }
 }
 
