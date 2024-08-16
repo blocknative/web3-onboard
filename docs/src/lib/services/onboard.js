@@ -1,7 +1,7 @@
 import blocknativeIcon from '../components/icons/blocknative-icon'
 
 let onboard
-const getOnboard = async (passedTheme) => {
+const getOnboard = async passedTheme => {
   const key = 'svelteness::color-scheme'
   const scheme = localStorage[key]
   let theme = passedTheme || scheme
@@ -10,8 +10,8 @@ const getOnboard = async (passedTheme) => {
   return onboard
 }
 
-const classMutationsCheck = (mutationsList) => {
-  mutationsList.forEach((mutation) => {
+const classMutationsCheck = mutationsList => {
+  mutationsList.forEach(mutation => {
     if (onboard && mutation.attributeName === 'class') {
       if (mutation.target.className.includes('dark')) {
         onboard.state.actions.updateTheme('dark')
@@ -28,7 +28,7 @@ const classMutationListener = () => {
   mutationObserver.observe(document.querySelector('html'), { attributes: true })
 }
 
-const intiOnboard = async (theme) => {
+const intiOnboard = async theme => {
   const { default: Onboard } = await import('@web3-onboard/core')
   const { default: injectedModule } = await import('@web3-onboard/injected-wallets')
   const { default: trezorModule } = await import('@web3-onboard/trezor')
@@ -135,7 +135,7 @@ const intiOnboard = async (theme) => {
 
   const capsule = capsuleModule({
     environment: Environment.DEVELOPMENT,
-    apiKey: '992bbd9146d5de8ad0419f141d9a7ca7' 
+    apiKey: '992bbd9146d5de8ad0419f141d9a7ca7'
   })
 
   const particle = particleAuthModule({
@@ -248,6 +248,12 @@ const intiOnboard = async (theme) => {
         token: 'DEGEN',
         label: 'Degen',
         rpcUrl: 'https://rpc.degen.tips'
+      },
+      {
+        id: 2192,
+        token: 'SNAX',
+        label: 'SNAX Chain',
+        rpcUrl: 'https://mainnet.snaxchain.io'
       }
     ],
     appMetadata: {

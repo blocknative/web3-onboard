@@ -735,6 +735,12 @@ const onboard = Onboard({
       token: 'DEGEN',
       label: 'Degen',
       rpcUrl: 'https://rpc.degen.tips'
+    },
+    {
+      id: 2192,
+      token: 'SNAX',
+      label: 'SNAX Chain',
+      rpcUrl: 'https://mainnet.snaxchain.io'
     }
   ],
   appMetadata: {
