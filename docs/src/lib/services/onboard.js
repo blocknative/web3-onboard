@@ -59,6 +59,7 @@ const intiOnboard = async theme => {
   const { default: bloctoModule } = await import('@web3-onboard/blocto')
   const { default: venlyModule } = await import('@web3-onboard/venly')
   const { default: bitgetModule } = await import('@web3-onboard/bitget')
+  const { default: finoaConnectModule } = await import('@web3-onboard/finoaconnect')
   const { default: capsuleModule, Environment } = await import('@web3-onboard/capsule')
   const { default: particleAuthModule } = await import('@web3-onboard/particle-network')
   const INFURA_ID = '8b60d52405694345a99bcb82e722e0af'
@@ -112,6 +113,9 @@ const intiOnboard = async theme => {
     appUrl: 'https://www.blocknative.com'
   }
   const trezor = trezorModule(trezorOptions)
+
+  const finoaConnectOptions = {};
+  const finoaconnect = finoaConnectModule(finoaConnectOptions);
 
   const uauthOptions = {
     clientID: 'a25c3a65-a1f2-46cc-a515-a46fe7acb78c',
@@ -177,6 +181,7 @@ const intiOnboard = async theme => {
       blocto,
       particle,
       venly,
+      finoaconnect,
       capsule
     ],
     chains: [
