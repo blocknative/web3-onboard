@@ -450,7 +450,7 @@ const chains = [
   },
   {
     id: 2192,
-    token: 'SNAX',
+    token: 'SNAXETH',
     label: 'SNAX Chain',
     rpcUrl: 'https://mainnet.snaxchain.io'
   }

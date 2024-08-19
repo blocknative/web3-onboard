@@ -114,8 +114,8 @@ const intiOnboard = async theme => {
   }
   const trezor = trezorModule(trezorOptions)
 
-  const finoaConnectOptions = {};
-  const finoaconnect = finoaConnectModule(finoaConnectOptions);
+  const finoaConnectOptions = {}
+  const finoaconnect = finoaConnectModule(finoaConnectOptions)
 
   const uauthOptions = {
     clientID: 'a25c3a65-a1f2-46cc-a515-a46fe7acb78c',
@@ -256,7 +256,7 @@ const intiOnboard = async theme => {
       },
       {
         id: 2192,
-        token: 'SNAX',
+        token: 'SNAXETH',
         label: 'SNAX Chain',
         rpcUrl: 'https://mainnet.snaxchain.io'
       }
