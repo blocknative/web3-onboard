@@ -1,66 +1,65 @@
 {
-    "name": "@web3-onboard/finoaconnect",
-    "version": "2.0.0",
-    "description": "FinoaConnect enables DApp users to use Finoa's Institutional Custody services.",
-    "keywords": [
-      "Ethereum",
-      "Web3",
-      "EVM",
-      "dapp",
-      "Multichain",
-      "Wallet",
-      "Transaction",
-      "Provider",
-      "Hardware Wallet",
-      "Notifications",
-      "React",
-      "Svelte",
-      "Vue",
-      "Next",
-      "Nuxt",
-      "MetaMask",
-      "Coinbase",
-      "WalletConnect",
-      "Ledger",
-      "Trezor",
-      "Connect Wallet",
-      "Ethereum Hooks",
-      "Blocknative",
-      "Mempool",
-      "pending",
-      "confirmed",
-      "Injected Wallet",
-      "Crypto",
-      "Crypto Wallet",
-      "Tally Ho",
-      "FinoaConnect"
-    ],
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/blocknative/web3-onboard.git",
-      "directory": "packages/finoaconnect"
-    },
-    "homepage": "https://onboard.blocknative.com",
-    "bugs": "https://github.com/blocknative/web3-onboard/issues",
-    "module": "dist/index.js",
-    "browser": "dist/index.js",
-    "main": "dist/index.js",
-    "type": "module",
-    "typings": "dist/index.d.ts",
-    "files": [
-      "dist"
-    ],
-    "scripts": {
-      "build": "tsc",
-      "dev": "tsc -w",
-      "type-check": "tsc --noEmit"
-    },
-    "devDependencies": {
-      "typescript": "^5.4.5"
-    },
-    "dependencies": {
-      "@finoa/finoa-connect-sdk": "^1.0.4",
-      "@web3-onboard/core": "^2.20.4"
-    }
-  
+  "name": "@web3-onboard/finoaconnect",
+  "version": "2.0.0",
+  "description": "FinoaConnect enables DApp users to use Finoa's Institutional Custody services.",
+  "keywords": [
+    "Ethereum",
+    "Web3",
+    "EVM",
+    "dapp",
+    "Multichain",
+    "Wallet",
+    "Transaction",
+    "Provider",
+    "Hardware Wallet",
+    "Notifications",
+    "React",
+    "Svelte",
+    "Vue",
+    "Next",
+    "Nuxt",
+    "MetaMask",
+    "Coinbase",
+    "WalletConnect",
+    "Ledger",
+    "Trezor",
+    "Connect Wallet",
+    "Ethereum Hooks",
+    "Blocknative",
+    "Mempool",
+    "pending",
+    "confirmed",
+    "Injected Wallet",
+    "Crypto",
+    "Crypto Wallet",
+    "Tally Ho",
+    "FinoaConnect"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blocknative/web3-onboard.git",
+    "directory": "packages/finoaconnect"
+  },
+  "homepage": "https://onboard.blocknative.com",
+  "bugs": "https://github.com/blocknative/web3-onboard/issues",
+  "module": "dist/index.js",
+  "browser": "dist/index.js",
+  "main": "dist/index.js",
+  "type": "module",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@finoa/finoa-connect-sdk": "^1.0.4",
+    "@web3-onboard/core": "^2.22.3-alpha.1"
   }
+}
