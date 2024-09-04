@@ -502,7 +502,7 @@ export function addNewChain(
         rpcUrls: [chain.publicRpcUrl || chain.rpcUrl],
         blockExplorerUrls: chain.blockExplorerUrl
           ? [chain.blockExplorerUrl]
-          : undefined
+          : null
       }
     ]
   })
