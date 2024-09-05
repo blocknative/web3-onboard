@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@web3-onboard/coinbase": "^2.2.2",
-    "@web3-onboard/core": "^2.21.0",
+    "@web3-onboard/core": "^2.22.3",
     "@web3-onboard/injected-wallets": "^2.8.4",
     "@web3-onboard/walletconnect": "^2.3.5"
   }

@@ -35,7 +35,7 @@
     "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
     "@fontsource/fira-mono": "^4.5.10",
     "@rollup/plugin-commonjs": "^25.0.7",
-    "@web3-onboard/core": "^2.21.4",
+    "@web3-onboard/core": "^2.22.3",
     "@web3-onboard/injected-wallets": "^2.8.5",
     "@web3-onboard/walletconnect": "^2.3.6",
     "assert": "^2.1.0",
