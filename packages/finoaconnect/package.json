@@ -60,6 +60,6 @@
   },
   "dependencies": {
     "@finoa/finoa-connect-sdk": "^1.0.4",
-    "@web3-onboard/core": "^2.22.3-alpha.1"
+    "@web3-onboard/core": "^2.22.3"
   }
 }
