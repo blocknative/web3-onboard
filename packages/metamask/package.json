@@ -60,7 +60,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "@metamask/sdk": "^0.27.0",
+    "@metamask/sdk": "^0.28.2",
     "@web3-onboard/common": "^2.4.1"
   },
   "engines": {
