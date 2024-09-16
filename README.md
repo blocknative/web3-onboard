@@ -116,6 +116,7 @@ For full documentation, check out the README.md for each package or the [docs pa
 - [Frame](packages/frame/README.md)
 - [Frontier](packages/frontier/README.md)
 - [Infinity Wallet](packages/infinity-wallet/README.md)
+- [Keplr](packages/keplr/README.md)
 - [Magic](packages/magic/README.md)
 - [MetaMask](packages/metamask/README.md)
 - [MEW-Wallet](packages/mew-wallet/README.md)
