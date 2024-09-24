@@ -71,7 +71,7 @@
     "eventemitter3": "^4.0.7",
     "prettier": "^2.4.0",
     "prettier-plugin-svelte": "^2.4.0",
-    "rollup": "^2.3.4",
+    "rollup": "^3.29.5",
     "rollup-plugin-svelte": "^7.0.0",
     "svelte": "^3.49.0",
     "svelte-check": "^2.2.6",
