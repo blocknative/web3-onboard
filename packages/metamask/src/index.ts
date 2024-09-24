@@ -65,6 +65,7 @@ function metamask({
 
         sdk = new MetaMaskSDKConstructor({
           ...options,
+          useDeeplink: options.useDeeplink ?? true,
           dappMetadata: {
             name: options.dappMetadata?.name || name || '',
             url: options.dappMetadata?.url || window.location.origin,
