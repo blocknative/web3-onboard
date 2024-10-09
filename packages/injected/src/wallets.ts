@@ -933,6 +933,17 @@ const echooo: InjectedWalletModule = {
   externalUrl: ProviderExternalUrl.Echooo
 }
 
+const keplr: InjectedWalletModule = {
+  label: ProviderLabel.Keplr,
+  injectedNamespace: InjectedNameSpace.Ethereum,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Keplr],
+  getIcon: async () => (await import('./icons/keplr.js')).default,
+  getInterface: getInjectedInterface(ProviderIdentityFlag.Keplr),
+  platforms: ['all'],
+  externalUrl: ProviderExternalUrl.Keplr
+}
+
 const wallets = [
   zeal,
   exodus,
@@ -992,7 +1003,8 @@ const wallets = [
   Lif3Wallet,
   zodiacPilot,
   stablewallet,
-  echooo
+  echooo,
+  keplr
 ]
 
 export default wallets

@@ -57,3 +57,26 @@ let trans = await wallet.instance.txs.send({txs:[tx], params})
 ```
 
 Note: With the `safeTxGas` you will see additional value on the `gasLimit` displayed in the Safe. Check [Safe docs](https://github.com/safe-global/safe-contracts/blob/a6504a9afdeac186a8cdb29ad68b189523c80eda/docs/safe_tx_gas.md) for full details on that computation.
+
+
+## Local testing within the Safe app
+
+Ensure the application is building and working properly within the browser and then add or enable your cors blocker extension or script of choice. An example is the `Allow CORS` browser extension.
+
+## Vue Build Configuration
+
+If using Vue be sure to include the necessary peerDeps in the `vite.config.ts` specifically within the `optimizeDeps.include` list and install the necessary peer deps `npm i @safe-global/safe-apps-provider @safe-global/safe-apps-sdk`.
+
+```typescript
+export default defineConfig({
+  plugins: [vue(), vueJsx(), VueDevTools()],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  },
+  optimizeDeps: {
+    include: ['@safe-global/safe-apps-sdk', '@safe-global/safe-apps-provider']
+  }
+})
+```

@@ -73,6 +73,7 @@ export enum ProviderIdentityFlag {
   StableWallet = 'isStableWallet',
   Echooo = 'isEchooo',
   Gate = 'isGateWallet'
+  Keplr = 'keplr'
 }
 
 /**
@@ -104,6 +105,7 @@ export enum ProviderExternalUrl {
   ZodiacPilot = 'https://pilot.gnosisguild.org/',
   Echooo = 'https://www.echooo.xyz',
   Gate = "https://www.gate.io/mobileapp"
+  Keplr = 'https://www.keplr.app/download'
 }
 
 export enum ProviderLabel {
@@ -168,6 +170,7 @@ export enum ProviderLabel {
   StableWallet = 'StableWallet',
   Echooo = 'Echooo',
   Gate = "Gate Wallet"
+  Keplr = 'Keplr'
 }
 
 export interface MeetOneProvider extends ExternalProvider {
@@ -296,7 +299,7 @@ export interface InjectedWalletOptions {
   walletUnavailableMessage?: (wallet: WalletModule) => string
   /**Function that can be used to sort the order of wallets that are displayed */
   sort?: (wallets: WalletModule[]) => WalletModule[]
-  /** A boolean that can be passed to disable supporting 6963 (https://eips.ethereum.org/EIPS/eip-6963) 
+  /** A boolean that can be passed to disable supporting 6963 (https://eips.ethereum.org/EIPS/eip-6963)
    * which will display wallets available on the browser
    */
   disable6963Support?: boolean

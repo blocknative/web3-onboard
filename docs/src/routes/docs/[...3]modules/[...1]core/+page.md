@@ -441,6 +441,7 @@ const sendTransaction = async () => {
   console.log(result)
 }
 ```
+
 ---
 
 #### disableFontDownload
@@ -734,6 +735,12 @@ const onboard = Onboard({
       token: 'DEGEN',
       label: 'Degen',
       rpcUrl: 'https://rpc.degen.tips'
+    },
+    {
+      id: 2192,
+      token: 'SNAXETH',
+      label: 'SNAX Chain',
+      rpcUrl: 'https://mainnet.snaxchain.io'
     }
   ],
   appMetadata: {
@@ -1902,7 +1909,9 @@ export default {
       '@web3-onboard/gas',
       '@web3-onboard/sequence',
       'js-sha3',
-      '@ethersproject/bignumber'
+      '@ethersproject/bignumber',
+      '@safe-global/safe-apps-sdk',
+      '@safe-global/safe-apps-provider'
     ],
     esbuildOptions: {
       // Node.js global to browser globalThis

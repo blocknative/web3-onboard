@@ -1,7 +1,7 @@
 import blocknativeIcon from '../components/icons/blocknative-icon'
 
 let onboard
-const getOnboard = async (passedTheme) => {
+const getOnboard = async passedTheme => {
   const key = 'svelteness::color-scheme'
   const scheme = localStorage[key]
   let theme = passedTheme || scheme
@@ -10,8 +10,8 @@ const getOnboard = async (passedTheme) => {
   return onboard
 }
 
-const classMutationsCheck = (mutationsList) => {
-  mutationsList.forEach((mutation) => {
+const classMutationsCheck = mutationsList => {
+  mutationsList.forEach(mutation => {
     if (onboard && mutation.attributeName === 'class') {
       if (mutation.target.className.includes('dark')) {
         onboard.state.actions.updateTheme('dark')
@@ -28,7 +28,7 @@ const classMutationListener = () => {
   mutationObserver.observe(document.querySelector('html'), { attributes: true })
 }
 
-const intiOnboard = async (theme) => {
+const intiOnboard = async theme => {
   const { default: Onboard } = await import('@web3-onboard/core')
   const { default: injectedModule } = await import('@web3-onboard/injected-wallets')
   const { default: trezorModule } = await import('@web3-onboard/trezor')
@@ -61,6 +61,8 @@ const intiOnboard = async (theme) => {
   const { default: bitgetModule } = await import('@web3-onboard/bitget')
   const { default: gateModule } = await import('@web3-onboard/gate')
   // // const { default: capsuleModule, Environment } = await import('@web3-onboard/capsule')
+  const { default: finoaConnectModule } = await import('@web3-onboard/finoaconnect')
+  const { default: capsuleModule, Environment } = await import('@web3-onboard/capsule')
   const { default: particleAuthModule } = await import('@web3-onboard/particle-network')
   const INFURA_ID = '8b60d52405694345a99bcb82e722e0af'
 
@@ -115,6 +117,9 @@ const intiOnboard = async (theme) => {
   }
   const trezor = trezorModule(trezorOptions)
 
+  const finoaConnectOptions = {}
+  const finoaconnect = finoaConnectModule(finoaConnectOptions)
+
   const uauthOptions = {
     clientID: 'a25c3a65-a1f2-46cc-a515-a46fe7acb78c',
     redirectUri: 'http://localhost:8080/',
@@ -135,10 +140,10 @@ const intiOnboard = async (theme) => {
     environment: 'staging'
   })
 
-  // // const capsule = capsuleModule({
-  // //   environment: Environment.DEVELOPMENT,
-  // //   apiKey: '992bbd9146d5de8ad0419f141d9a7ca7'
-  // // })
+  const capsule = capsuleModule({
+    environment: Environment.DEVELOPMENT,
+    apiKey: '992bbd9146d5de8ad0419f141d9a7ca7'
+  })
 
   const particle = particleAuthModule({
     projectId: 'b385ccf0-73c3-485a-9941-159b7855b806',
@@ -179,8 +184,9 @@ const intiOnboard = async (theme) => {
       infinityWallet,
       blocto,
       particle,
-      venly
-      // capsule
+      venly,
+      finoaconnect,
+      capsule
     ],
     chains: [
       {
@@ -251,6 +257,12 @@ const intiOnboard = async (theme) => {
         token: 'DEGEN',
         label: 'Degen',
         rpcUrl: 'https://rpc.degen.tips'
+      },
+      {
+        id: 2192,
+        token: 'SNAXETH',
+        label: 'SNAX Chain',
+        rpcUrl: 'https://mainnet.snaxchain.io'
       }
     ],
     appMetadata: {

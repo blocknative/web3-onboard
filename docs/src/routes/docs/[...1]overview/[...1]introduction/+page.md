@@ -46,6 +46,7 @@ Web3 Onboard supports all EVM networks. Supporting a new network is simply a mat
 - BNB Chain
 - Celo
 - Degen
+- SNAX
 - Fantom
 - Gnosis Chain
 - Harmony One
@@ -140,6 +141,12 @@ const onboard = Onboard({
       token: 'DEGEN',
       label: 'Degen',
       rpcUrl: 'https://rpc.degen.tips'
+    },
+    {
+      id: 2192,
+      token: 'SNAXETH',
+      label: 'SNAX Chain',
+      rpcUrl: 'https://mainnet.snaxchain.io'
     }
   ]
 })
