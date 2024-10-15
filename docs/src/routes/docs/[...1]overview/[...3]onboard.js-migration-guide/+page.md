@@ -30,7 +30,7 @@ This change allows us to support many web3 wallets without affecting the overall
 
 ### Expansive Initialization Options
 
-We’ve made initialization simpler while introducing more powerful options like [Account Center](https://www.blocknative.com/blog/multichain-and-multiwallet-account-management-on-your-dapp-with-account-center) and Notify in Web3 Onboard.
+We’ve made initialization simpler while introducing more powerful options like [Account Center](https://www.blocknative.com/blog/multichain-and-multiwallet-account-management-on-your-dapp-with-account-center) in Web3 Onboard.
 Web3 Onboard now requires two compulsory initial setup options: `wallets` (Wallet modules, as shown above, to be initialized and added to wallet selection modal) and `chains` (EVM networks your app should work with). You can also pass multiple wallets and chains.
 
 ```

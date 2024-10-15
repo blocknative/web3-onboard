@@ -12,7 +12,6 @@ export const APP_INITIAL_STATE: AppState = {
   },
   notify: {
     enabled: true,
-    transactionHandler: () => {},
     position: 'topRight',
     replacement: {
       gasPriceProbability: {

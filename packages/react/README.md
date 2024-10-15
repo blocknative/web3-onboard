@@ -243,7 +243,6 @@ type UseNotifications = (): [
     update: UpdateNotification
   },
   (update: Partial<Notify>) => void,
-  (options: PreflightNotificationsOptions) => Promise<void | string>
 ]
 
 type Notification = {
@@ -298,14 +297,6 @@ type Notify = {
   position?: NotificationPosition
 }
 
-type PreflightNotificationsOptions = {
-  sendTransaction?: () => Promise<string | void>
-  estimateGas?: () => Promise<string>
-  gasPrice?: () => Promise<string>
-  balance?: string | number
-  txDetails?: TxDetails
-  txApproveReminderTimeout?: number
-}
 type TxDetails = {
   value: string | number
   to?: string

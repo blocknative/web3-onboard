@@ -2,7 +2,7 @@ import connectWallet from './connect.js'
 import disconnectWallet from './disconnect.js'
 import setChain from './chain.js'
 import { state } from './store/index.js'
-import { reset$, wallets$ } from './streams.js'
+import { reset$ } from './streams.js'
 import initI18N from './i18n/index.js'
 import App from './views/Index.svelte'
 import type {
@@ -15,7 +15,6 @@ import { APP_INITIAL_STATE, STORAGE_KEYS } from './constants.js'
 import { configuration, updateConfiguration } from './configuration.js'
 import updateBalances from './update-balances.js'
 import { chainIdToHex, getLocalStore, setLocalStore } from './utils.js'
-import { preflightNotifications } from './preflight-notifications.js'
 
 import {
   validateInitOptions,
@@ -34,10 +33,8 @@ import {
   updateConnectModal,
   updateTheme,
   updateAppMetadata,
-  updateChain,
-  updateWallet
+  updateChain
 } from './store/actions.js'
-import { getBlocknativeSdk } from './services.js'
 import type { WagmiModuleAPI } from '@web3-onboard/wagmi'
 import { wagmiProviderMethods } from './provider'
 
@@ -53,7 +50,6 @@ const API = {
       setLocale,
       updateNotify,
       customNotification,
-      preflightNotifications,
       updateBalances,
       updateAccountCenter,
       setPrimaryWallet,
@@ -77,7 +73,6 @@ export type {
   Notification,
   Notify,
   UpdateNotification,
-  PreflightNotificationsOptions,
   Theme,
   WagmiConfig
 } from './types.js'
@@ -168,6 +163,9 @@ function init(options: InitOptions): OnboardAPI {
 
   // update notify
   if (typeof notify !== 'undefined') {
+    console.warn(
+      `Support for notifications on transaction state changes have been deprecated. Custom notifications can still be sent ot the user.`
+    )
     if ('desktop' in notify || 'mobile' in notify) {
       const error = validateNotifyOptions(notify)
 

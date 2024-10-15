@@ -367,15 +367,6 @@ export type Notify = {
    */
   enabled: boolean
   /**
-   * Callback that receives all transaction events
-   * Return a custom notification based on the event
-   * Or return false to disable notification for this event
-   * Or return undefined for a default notification
-   */
-  transactionHandler: (
-    event: EthereumTransactionData
-  ) => TransactionHandlerReturn
-  /**
    * Position of notifications that defaults to the same position as the
    * Account Center (if enabled) of the top right if AC is disabled
    * and notifications are enabled (enabled by default with API key)
@@ -447,15 +438,6 @@ export interface UpdateNotification {
     dismiss: () => void
     update: UpdateNotification
   }
-}
-
-export interface PreflightNotificationsOptions {
-  sendTransaction?: () => Promise<string | void>
-  estimateGas?: () => Promise<string>
-  gasPrice?: () => Promise<string>
-  balance?: string | number
-  txDetails?: TxDetails
-  txApproveReminderTimeout?: number
 }
 
 export interface TxDetails {
