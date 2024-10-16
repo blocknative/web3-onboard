@@ -89,12 +89,6 @@ type InitOptions = {
    */
   accountCenter?: AccountCenterOptions
   /**
-   * Opt in to Blocknative value add services (transaction updates) by providing
-   * your Blocknative API key, head to https://explorer.blocknative.com/account to sign
-   * up for free
-   */
-  apiKey?: string
-  /**
    * Transaction notification options
    */
   notify?: Partial<NotifyOptions> | Partial<Notify>
@@ -557,8 +551,6 @@ const ETH_MAINNET_RPC = `https://mainnet.infura.io/v3/${INFURA_KEY}` || `https:/
 
 const onboard = Onboard({
   // This javascript object is unordered meaning props do not require a certain order
-  // head to https://explorer.blocknative.com/account to sign up for free
-  apiKey: 'xxx387fb-bxx1-4xxc-a0x3-9d37e426xxxx'
   wallets: [injected],
   chains: [
     {

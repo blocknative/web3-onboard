@@ -35,10 +35,6 @@ import { init, useConnectWallet } from '@web3-onboard/react'
 import injectedModule from '@web3-onboard/injected-wallets'
 import { ethers } from 'ethers'
 
-// Sign up to get your free API key at https://explorer.blocknative.com/?signup=true
-// Required for Transaction Notifications and Transaction Preview
-const apiKey = '1730eff0-9d50-4382-a3fe-89f0d34a2070'
-
 const injected = injectedModule()
 
 const infuraKey = '<INFURA_KEY>'
@@ -47,7 +43,6 @@ const rpcUrl = `https://mainnet.infura.io/v3/${infuraKey}`
 // initialize Onboard
 init({
   // This javascript object is unordered meaning props do not require a certain order
-  apiKey,
   wallets: [injected],
   chains: [
     {
