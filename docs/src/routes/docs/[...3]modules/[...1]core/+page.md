@@ -136,6 +136,11 @@ type InitOptions {
    * the Theme initialization object or set as css variable
    */
   disableFontDownload?: boolean
+  /**
+   * @deprecated apiKey parameter has been deprecated and is no
+   * longer used within Web3-Onboard to provide notifications
+   */
+  apiKey?: string
 }
 
 ```
@@ -533,7 +538,7 @@ type ContainerElements = {
 
 #### notify
 
-Notify is a feature that provides DApps with the ability to send custom messages to the client. This document will provide you with an overview of Notify and guide you through the process of integrating it into your decentralized application (dapp). Check out the [customNotifications API docs for examples and code snippets](#customnotification). 
+Notify is a feature that provides DApps with the ability to send custom messages to the client. This document will provide you with an overview of Notify and guide you through the process of integrating it into your decentralized application (dapp). Check out the [customNotifications API docs for examples and code snippets](#customnotification).
 
 <img src="{notifyImg}" alt="Transaction notifications image"/>
 
@@ -541,10 +546,10 @@ Notifications are by default positioned in the same location as the Account Cent
 
 ##### **Notify Configuration**
 
-| Property             | Type            | Description                                                   |
-| -------------------- | --------------- | ------------------------------------------------------------- |
-| `enabled`            | boolean         | Indicates whether transaction notifications will be displayed |
-| `position`           | CommonPositions | Position of the notification on the screen                    |
+| Property   | Type            | Description                                                   |
+| ---------- | --------------- | ------------------------------------------------------------- |
+| `enabled`  | boolean         | Indicates whether transaction notifications will be displayed |
+| `position` | CommonPositions | Position of the notification on the screen                    |
 
 ##### **Position Options**
 
@@ -727,12 +732,12 @@ const onboard = Onboard({
   notify: {
     desktop: {
       enabled: true,
-      transactionHandler: transaction => {
+      transactionHandler: (transaction) => {
         console.log({ transaction })
         if (transaction.eventCode === 'txPool') {
           return {
             type: 'success',
-            message: 'Your transaction from #1 DApp is in the mempool',
+            message: 'Your transaction from #1 DApp is in the mempool'
           }
         }
       },
@@ -740,12 +745,12 @@ const onboard = Onboard({
     },
     mobile: {
       enabled: true,
-      transactionHandler: transaction => {
+      transactionHandler: (transaction) => {
         console.log({ transaction })
         if (transaction.eventCode === 'txPool') {
           return {
             type: 'success',
-            message: 'Your transaction from #1 DApp is in the mempool',
+            message: 'Your transaction from #1 DApp is in the mempool'
           }
         }
       },
@@ -777,7 +782,8 @@ const onboard = Onboard({
         },
         watched: {
           // Any words in brackets can be re-ordered or removed to fit your dapps desired verbiage
-          "txPool": "Your account is {verb} {formattedValue} {asset} {preposition} {counterpartyShortened}"
+          txPool:
+            'Your account is {verb} {formattedValue} {asset} {preposition} {counterpartyShortened}'
         }
       }
     },

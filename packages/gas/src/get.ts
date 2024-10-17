@@ -11,10 +11,10 @@ function get(options: RequestOptions): Promise<GasPlatformResponse[]> {
     throw invalid
   }
 
-  const { chains, endpoint, apiKey } = options
+  const { chains, endpoint } = options
 
   const requestUrls = chains.map(chainId =>
-    getRequestUrl({ chainId, apiKey, endpoint })
+    getRequestUrl({ chainId, endpoint })
   )
 
   return firstValueFrom(
