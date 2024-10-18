@@ -35,10 +35,6 @@ import { init, useConnectWallet } from '@web3-onboard/react'
 import injectedModule from '@web3-onboard/injected-wallets'
 import { ethers } from 'ethers'
 
-// Sign up to get your free API key at https://explorer.blocknative.com/?signup=true
-// Required for Transaction Notifications and Transaction Preview
-const apiKey = '1730eff0-9d50-4382-a3fe-89f0d34a2070'
-
 const injected = injectedModule()
 
 const infuraKey = '<INFURA_KEY>'
@@ -47,7 +43,6 @@ const rpcUrl = `https://mainnet.infura.io/v3/${infuraKey}`
 // initialize Onboard
 init({
   // This javascript object is unordered meaning props do not require a certain order
-  apiKey,
   wallets: [injected],
   chains: [
     {
@@ -303,7 +298,6 @@ async function signMessage(chainId) {
 ## useNotifications
 
 This hook allows the dev to access all notifications if enabled, send custom notifications, and update notify <enable/disable & update transactionHandler function>
-**note** This requires an API key be added to the initialization, enabled by default if an API key exists
 For full Notification documentation please see [Notify section within the `@web3-onboard/core` docs](../../modules/core.md#initialization)
 
 ```typescript
@@ -314,7 +308,6 @@ type UseNotifications = (): [
     update: UpdateNotification
   },
   (update: Partial<Notify>) => void,
-  (options: PreflightNotificationsOptions) => Promise<void | string>
 ]
 
 type Notification = {
@@ -367,20 +360,6 @@ type Notify = {
    * and notifications are enabled (enabled by default with API key)
    */
   position?: NotificationPosition
-}
-
-type PreflightNotificationsOptions = {
-  sendTransaction?: () => Promise<string | void>
-  estimateGas?: () => Promise<string>
-  gasPrice?: () => Promise<string>
-  balance?: string | number
-  txDetails?: TxDetails
-  txApproveReminderTimeout?: number
-}
-type TxDetails = {
-  value: string | number
-  to?: string
-  from?: string
 }
 ```
 

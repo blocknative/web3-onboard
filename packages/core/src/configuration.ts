@@ -3,7 +3,6 @@ import { getDevice } from './utils.js'
 
 export let configuration: Configuration = {
   svelteInstance: null,
-  apiKey: undefined,
   device: getDevice(),
   initialWalletInit: [],
   gas: undefined,

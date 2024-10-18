@@ -2,12 +2,10 @@ import { ChainId, RequestEndpoint } from './types.js'
 
 export function getRequestUrl({
   chainId,
-  endpoint,
-  apiKey
+  endpoint
 }: {
   chainId: ChainId
   endpoint: RequestEndpoint
-  apiKey?: string
 }): { url: string; headers: { authorization?: string } } {
   switch (endpoint) {
     case 'blockPrices':
@@ -16,11 +14,7 @@ export function getRequestUrl({
           chainId,
           16
         )}`,
-        headers: apiKey
-          ? {
-              authorization: apiKey
-            }
-          : {}
+        headers: {}
       }
     default:
       throw new Error(`Unrecognized request endpoint: ${endpoint}`)

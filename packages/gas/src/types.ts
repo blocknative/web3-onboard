@@ -3,7 +3,6 @@ export type RequestEndpoint = 'blockPrices'
 export type RequestOptions = {
   chains: ChainId[]
   endpoint: RequestEndpoint
-  apiKey?: string
 }
 
 export type StreamOptions = RequestOptions & { poll?: number }

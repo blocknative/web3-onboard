@@ -7,7 +7,6 @@ import { updateAccount, updateWallet } from './store/actions.js'
 import { chainIdToViemENSImport, validEnsChain } from './utils.js'
 import disconnect from './disconnect.js'
 import { state } from './store/index.js'
-import { getBNMulitChainSdk } from './services.js'
 import { configuration } from './configuration.js'
 import { updateSecondaryTokens } from './update-balances'
 
@@ -171,29 +170,6 @@ export function trackWallet(
         ...restAccounts
       ]
     })
-
-    // if not existing account and notifications,
-    // then subscribe to transaction events
-    if (state.get().notify.enabled && !existingAccount) {
-      const sdk = await getBNMulitChainSdk()
-
-      if (sdk) {
-        const wallet = state
-          .get()
-          .wallets.find(wallet => wallet.label === label)
-        try {
-          if (wallet) {
-            sdk.subscribe({
-              id: address,
-              chainId: wallet.chains[0]?.id,
-              type: 'account'
-            })
-          }
-        } catch (error) {
-          // unsupported network for transaction events
-        }
-      }
-    }
   })
 
   // also when accounts change, update Balance and ENS/UNS
@@ -269,41 +245,6 @@ export function trackWallet(
       chainId = toHex(chainId)
     }
     if (chainId === connectedWalletChain.id) return
-
-    if (state.get().notify.enabled) {
-      const sdk = await getBNMulitChainSdk()
-
-      if (sdk) {
-        const wallet = state
-          .get()
-          .wallets.find(wallet => wallet.label === label)
-
-        if (!wallet) return // Add null check for wallet
-
-        // Unsubscribe with timeout of 60 seconds
-        // to allow for any currently inflight transactions
-        wallet.accounts.forEach(({ address }) => {
-          sdk.unsubscribe({
-            id: address,
-            chainId: wallet.chains[0].id,
-            timeout: 60000
-          })
-        })
-
-        // resubscribe for new chainId
-        wallet.accounts.forEach(({ address }) => {
-          try {
-            sdk.subscribe({
-              id: address,
-              chainId: chainId,
-              type: 'account'
-            })
-          } catch (error) {
-            // unsupported network for transaction events
-          }
-        })
-      }
-    }
 
     const resetAccounts = accounts.map(
       ({ address }) =>
