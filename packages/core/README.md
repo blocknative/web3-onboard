@@ -89,12 +89,6 @@ type InitOptions = {
    */
   accountCenter?: AccountCenterOptions
   /**
-   * Opt in to Blocknative value add services (transaction updates) by providing
-   * your Blocknative API key, head to https://explorer.blocknative.com/account to sign
-   * up for free
-   */
-  apiKey?: string
-  /**
    * Transaction notification options
    */
   notify?: Partial<NotifyOptions> | Partial<Notify>
@@ -414,12 +408,10 @@ type AccountCenterPosition =
 
 **`notify`**
 
-Notify is a feature that provides transaction notifications for all connected wallets on the current blockchain. This document will provide you with an overview of Notify and guide you through the process of integrating it into your decentralized application (DApp).
+Notify is a feature that provides DApps with the ability to send custom messages to the client. This document will provide you with an overview of Notify and guide you through the process of integrating it into your decentralized application (dapp). Check out the [customNotifications API docs for examples and code snippets](#customnotification). 
 
 <img alt="Notify UI Components" src="https://github.com/blocknative/web3-onboard/blob/develop/assets/notify-example.png?raw=true" />
 
-To enable transaction notifications and updates simply add your Blocknative `apiKey`([sign up for free](https://explorer.blocknative.com/account)) to the web3-onboard configurations as the value to the `apiKey` prop and thats it!
-Transaction notifications will be shown for all transactions occurring on supported chains for all of the users connected wallets.
 When switching chains, the previous chain listeners remain active for 60 seconds to allow the capture and report of any remaining transactions that may be in flight.
 
 Notifications are by default positioned in the same location as the Account Center (if enabled) or can be positioned separately using the `position` property.
@@ -429,7 +421,6 @@ Notifications are by default positioned in the same location as the Account Cent
 | Property             | Type            | Description                                                   |
 | -------------------- | --------------- | ------------------------------------------------------------- |
 | `enabled`            | boolean         | Indicates whether transaction notifications will be displayed |
-| `transactionHandler` | function        | Optional callback for customizations of notifications         |
 | `position`           | CommonPositions | Position of the notification on the screen                    |
 
 ##### **Position Options**
@@ -441,9 +432,6 @@ Notifications are by default positioned in the same location as the Account Cent
 
 Both `desktop` and `mobile` configurations are of type `Notify`.
 
-###### **Transaction Handler**
-
-The `transactionHandler` is a callback that receives an object of type `EthereumTransactionData`. Based on the data received, the handler can return a custom `Notification` object or a boolean value (false to disable the notification for the current event or undefined for a default notification).
 
 ##### **Customizing Notification**
 
@@ -474,10 +462,6 @@ const { unsubscribe } = wallets.subscribe(update =>
 unsubscribe()
 ```
 
-##### **Notifications as Toast Messages**
-
-The Notifications messages can also be used to send fully customized Dapp toast messages and updated. Check out the [customNotifications API docs for examples and code snippets](#customnotification)
-
 ```javascript
 const wallets = onboard.state.select('notifications')
 const { unsubscribe } = wallets.subscribe(update =>
@@ -495,21 +479,10 @@ type NotifyOptions = {
 }
 type Notify = {
   enabled: boolean // default: true
-  /**
-   * Callback that receives all transaction events
-   * Return a custom notification based on the event
-   * Or return false to disable notification for this event
-   * Or return undefined for a default notification
-   */
-  transactionHandler?: (
-    event: EthereumTransactionData
-  ) => TransactionHandlerReturn
   position: CommonPositions
 }
 
 type CommonPositions = 'topRight' | 'bottomRight' | 'bottomLeft' | 'topLeft'
-
-type TransactionHandlerReturn = CustomNotification | boolean | void
 
 type CustomNotification = Partial<Omit<Notification, 'id' | 'startTime'>>
 
@@ -578,8 +551,6 @@ const ETH_MAINNET_RPC = `https://mainnet.infura.io/v3/${INFURA_KEY}` || `https:/
 
 const onboard = Onboard({
   // This javascript object is unordered meaning props do not require a certain order
-  // head to https://explorer.blocknative.com/account to sign up for free
-  apiKey: 'xxx387fb-bxx1-4xxc-a0x3-9d37e426xxxx'
   wallets: [injected],
   chains: [
     {
@@ -650,28 +621,10 @@ const onboard = Onboard({
   notify: {
     desktop: {
       enabled: true,
-      transactionHandler: transaction => {
-        console.log({ transaction })
-        if (transaction.eventCode === 'txPool') {
-          return {
-            type: 'success',
-            message: 'Your transaction from #1 DApp is in the mempool',
-          }
-        }
-      },
       position: 'bottomLeft'
     },
     mobile: {
       enabled: true,
-      transactionHandler: transaction => {
-        console.log({ transaction })
-        if (transaction.eventCode === 'txPool') {
-          return {
-            type: 'success',
-            message: 'Your transaction from #1 DApp is in the mempool',
-          }
-        }
-      },
       position: 'topRight'
     }
   },
@@ -1013,28 +966,10 @@ If you need to update your notify configuration after initialization, you can do
 onboard.state.actions.updateNotify({
   desktop: {
     enabled: true,
-    transactionHandler: transaction => {
-      console.log({ transaction })
-      if (transaction.eventCode === 'txPool') {
-        return {
-          type: 'success',
-          message: 'Your transaction from #1 DApp is in the mempool'
-        }
-      }
-    },
     position: 'bottomLeft'
   },
   mobile: {
     enabled: true,
-    transactionHandler: transaction => {
-      console.log({ transaction })
-      if (transaction.eventCode === 'txPool') {
-        return {
-          type: 'success',
-          message: 'Your transaction from #1 DApp is in the mempool'
-        }
-      }
-    },
     position: 'topRight'
   }
 })
@@ -1056,72 +991,6 @@ The `customNotification` method also returns a `dismiss` method that is called w
 | `autoDismiss` | number   | Time (in ms) after which the notification will be dismissed |
 | `link`        | string   | Adds a link to the transaction hash                         |
 | `onClick`     | function | onClick handler for the notification element                |
-
-**`preflightNotifications`**
-
-Notify can be used to deliver standard notifications along with preflight updates by passing a `PreflightNotificationsOptions` object to the `preflightNotifications` API action.
-
-<img alt="Web3-Onboard UI Components" src="https://github.com/blocknative/web3-onboard/blob/develop/assets/notify-preflight-example.png?raw=true" />
-
-Preflight event types include:
-
-- `txRequest` : Alert user there is a transaction request awaiting confirmation by their wallet
-- `txAwaitingApproval` : A previous transaction is awaiting confirmation
-- `txConfirmReminder` : Reminder to confirm a transaction to continue - configurable with the `txApproveReminderTimeout` property; defaults to 15 seconds
-- `nsfFail` : The user has insufficient funds for transaction (requires `gasPrice`, `estimateGas`, `balance`, `txDetails.value`)
-- `txError` : General transaction error (requires `sendTransaction`)
-- `txSendFail` : The user rejected the transaction (requires `sendTransaction`)
-- `txUnderpriced` : The gas price for the transaction is too low (requires `sendTransaction`)
-
-This API call will return a promise that resolves to the transaction hash (if `sendTransaction` resolves the transaction hash and is successful), the internal notification id (if no `sendTransaction` function is provided) or return nothing if an error occurs or `sendTransaction` is not provided or doesn't resolve to a string.
-
-Example:
-
-```typescript copy
-const balanceValue = Object.values(balance)[0]
-// if using ethers v6 this is:
-// ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
-const ethersProvider = new ethers.providers.Web3Provider(provider, 'any')
-
-const signer = ethersProvider.getSigner()
-const txDetails = {
-  to: toAddress,
-  value: 100000000000000
-}
-
-const sendTransaction = () => {
-  return signer.sendTransaction(txDetails).then(tx => tx.hash)
-}
-
-const gasPrice = () => ethersProvider.getGasPrice().then(res => res.toString())
-
-const estimateGas = () => {
-  return ethersProvider.estimateGas(txDetails).then(res => res.toString())
-}
-const transactionHash = await onboard.state.actions.preflightNotifications({
-  sendTransaction,
-  gasPrice,
-  estimateGas,
-  balance: balanceValue,
-  txDetails: txDetails
-})
-console.log(transactionHash)
-```
-
-```typescript
-interface PreflightNotificationsOptions {
-  sendTransaction?: () => Promise<string | void>
-  estimateGas?: () => Promise<string>
-  gasPrice?: () => Promise<string>
-  balance?: string | number
-  txDetails?: {
-    value: string | number
-    to?: string
-    from?: string
-  }
-  txApproveReminderTimeout?: number // defaults to 15 seconds if not specified
-}
-```
 
 **`updateAccountCenter`**
 If you need to update your Account Center configuration after initialization, you can call the `updateAccountCenter` function with the new configuration

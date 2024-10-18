@@ -12,10 +12,10 @@ function stream(options: StreamOptions): Observable<GasPlatformResponse[]> {
     throw invalid
   }
 
-  const { chains, endpoint, apiKey, poll = 5000 } = options
+  const { chains, endpoint, poll = 5000 } = options
 
   const requestUrls = chains.map(chainId =>
-    getRequestUrl({ chainId, apiKey, endpoint })
+    getRequestUrl({ chainId, endpoint })
   )
 
   // start polling

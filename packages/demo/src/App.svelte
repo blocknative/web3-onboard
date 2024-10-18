@@ -467,22 +467,6 @@
     notify: {
       desktop: {
         enabled: true,
-        transactionHandler: transaction => {
-          console.log({ transaction })
-          if (transaction.eventCode === 'txConfirmed') {
-            return {
-              autoDismiss: 0
-            }
-          }
-          // if (transaction.eventCode === 'txPool') {
-          //   return {
-          //     type: 'hint',
-          //     message: 'Your in the pool, hope you brought a towel!',
-          //     autoDismiss: 0,
-          //     link: `https://sepolia.etherscan.io/tx/${transaction.hash}`
-          //   }
-          // }
-        },
         position: 'topRight'
       }
     },
@@ -493,7 +477,7 @@
     //   accountCenter: '#sample-container-el2'
     // },
     // Sign up for your free api key at www.Blocknative.com
-    apiKey,
+    // apiKey,
     theme: 'default'
   })
 

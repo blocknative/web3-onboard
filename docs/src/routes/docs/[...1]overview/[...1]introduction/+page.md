@@ -30,8 +30,6 @@ Web3 Onboard is the quickest and easiest way to add multi-wallet and multi-chain
 
 - **Framework Agnostic:** Avoid framework lock in -- Web3 Onboard works with any framework and includes helper packages for vue & react.
 
-- **Notify:** Real-time transaction notifications for all transaction states for the connected wallet address(es). In-notification speedups & cancels for hardware wallet connections.
-
 ### Natively Supported EVM Chains
 
 Web3 Onboard supports all EVM networks. Supporting a new network is simply a matter of adding its details in the Chains section upon initialization. For more information see [initialization options](../../modules/core.md#initialization).
