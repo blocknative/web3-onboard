@@ -21,7 +21,6 @@ import gas from '@web3-onboard/gas'
 // API key is optional and if provided allows for faster poll rates
 const ethMainnetGasBlockPrices = gas.stream({
   chains: ['0x1'],
-  apiKey: '<OPTIONAL_API_KEY>',
   endpoint: 'blockPrices'
 })
 
@@ -35,7 +34,6 @@ setTimeout(ethGasUnsub, 10000)
 // OR you can subscribe to multiple chains at once:
 const gasBlockPrices = gas.stream({
   chains: ['0x1', '0x89'],
-  apiKey: '<OPTIONAL_API_KEY>',
   endpoint: 'blockPrices',
   // can override default poll rate as well
   poll: 1000
@@ -54,7 +52,6 @@ setTimeout(unsubscribe, 10000)
 // Can also just do a one time get rather than a stream
 const gasBlockPrices = await gas.get({
   chains: ['0x1', '0x89'],
-  apiKey: '<OPTIONAL_API_KEY>',
   endpoint: 'blockPrices'
 })
 ```
@@ -74,7 +71,6 @@ let bnGasPrices
 
 const ethMainnetGasBlockPrices = gas.stream({
   chains: ['0x1'], // '0x89' can also be added/replaced here for Polygon gas data 
-  apiKey: '<OPTIONAL_API_KEY>', // for faster refresh rates
   endpoint: 'blockPrices'
 })
 

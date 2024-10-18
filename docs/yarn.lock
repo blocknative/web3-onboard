@@ -5351,10 +5351,10 @@
     svelte-i18n "^3.3.13"
     viem "2.12.0"
 
-"@web3-onboard/core@^2.22.1":
-  version "2.22.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.22.1.tgz#169b8300f609648034f41f6d6cd020a9aabfcaa1"
-  integrity sha512-FcwHnpfOQsHB0PBliYh6jdSrjyIrxGHfbnAzjUsInLJMFxjpmn8maexBfkGF9dFUh5UKRWTQauuWpzS0cJhh5w==
+"@web3-onboard/core@^2.22.3-alpha.2":
+  version "2.22.3"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.22.3.tgz#975d22d2d8b1e922bae81e35d1324a7f742f3730"
+  integrity sha512-/7pE20n910kvdTS3hn/ui5mWCMMu6jot+mdSsn2nAoNdLBCmSgRQgVuEFTL84CR99K6O0dFUCdnKvhrs8t5bog==
   dependencies:
     "@web3-onboard/common" "^2.4.1"
     bnc-sdk "^4.6.7"

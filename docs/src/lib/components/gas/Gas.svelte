@@ -24,7 +24,6 @@
   onMount(() => {
     ethMainnetGasBlockPrices = gasModule.stream({
       chains: ['0x1'],
-      apiKey: 'da1b962d-314d-4903-bfe1-426821d14a35',
       endpoint: 'blockPrices'
     })
     gasSub = ethMainnetGasBlockPrices.subscribe(() => {
