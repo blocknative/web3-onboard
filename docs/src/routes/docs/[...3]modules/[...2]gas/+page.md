@@ -97,7 +97,6 @@ let bnGasPrices
 
 const ethMainnetGasBlockPrices = gas.stream({
   chains: ['0x1'], // '0x89' can also be added/replaced here for Polygon gas data
-  apiKey: '<OPTIONAL_API_KEY>', // for faster refresh rates
   endpoint: 'blockPrices'
 })
 

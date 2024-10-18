@@ -45,13 +45,12 @@ export async function replaceTransaction({
       | undefined
   }
 
-  const { gas, apiKey } = configuration
+  const { gas } = configuration
   if (!gas) return
   // get gas price
   const [gasResult] = await gas.get({
     chains: [networkToChainId[network]],
-    endpoint: 'blockPrices',
-    apiKey
+    endpoint: 'blockPrices'
   })
 
   const { maxFeePerGas, maxPriorityFeePerGas } =

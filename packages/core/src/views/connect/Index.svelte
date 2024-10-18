@@ -29,7 +29,6 @@
   import SelectingWallet from './SelectingWallet.svelte'
   import Sidebar from './Sidebar.svelte'
   import { configuration } from '../../configuration.js'
-  import { getBNMulitChainSdk } from '../../services.js'
   import { MOBILE_WINDOW_WIDTH, STORAGE_KEYS } from '../../constants.js'
   import { defaultBnIcon } from '../../icons/index.js'
   import type { Config, Connector } from '@web3-onboard/wagmi'
@@ -284,22 +283,6 @@
       }
 
       const chain = await getChainId(provider)
-
-      if (state.get().notify.enabled) {
-        const sdk = await getBNMulitChainSdk()
-
-        if (sdk) {
-          try {
-            sdk.subscribe({
-              id: address,
-              chainId: chain,
-              type: 'account'
-            })
-          } catch (error) {
-            // unsupported network for transaction events
-          }
-        }
-      }
 
       const update: Pick<WalletState, 'accounts' | 'chains' | 'wagmiConnector'> = {
         accounts: [{ address, ens: null, uns: null, balance: null }],
