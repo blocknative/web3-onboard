@@ -2,8 +2,7 @@ import type {
   CustomNotification,
   Notify,
   UpdateNotification,
-  Notification,
-  PreflightNotificationsOptions
+  Notification
 } from '@web3-onboard/core'
 import { useWeb3Onboard } from '../context.js'
 import { useAppState } from './useAppState.js'
@@ -14,20 +13,12 @@ export const useNotifications = (): [
     dismiss: () => void
     update: UpdateNotification
   },
-  (update: Partial<Notify>) => void,
-  (options: PreflightNotificationsOptions) => Promise<void | string>
+  (update: Partial<Notify>) => void
 ] => {
   const web3Onboard = useWeb3Onboard()
 
   const customNotification = web3Onboard.state.actions.customNotification
   const updateNotify = web3Onboard.state.actions.updateNotify
-  const preflightNotifications =
-    web3Onboard.state.actions.preflightNotifications
 
-  return [
-    useAppState('notifications'),
-    customNotification,
-    updateNotify,
-    preflightNotifications
-  ]
+  return [useAppState('notifications'), customNotification, updateNotify]
 }

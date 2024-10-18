@@ -50,6 +50,7 @@
   "files": [
     "dist"
   ],
+  "license": "MIT",
   "scripts": {
     "build": "tsc",
     "dev": "tsc -w",
