@@ -476,8 +476,6 @@
     //   connectModal: '#sample-container-el',
     //   accountCenter: '#sample-container-el2'
     // },
-    // Sign up for your free api key at www.Blocknative.com
-    // apiKey,
     theme: 'default'
   })
 
@@ -778,7 +776,6 @@
       <button
         class="updateBalanceBtn"
         on:click={() => {
-          // Only necessary if a Blocknative API key is not provided and notify is disabled
           onboard.state.actions.updateBalances()
         }}>Update Wallet Balance</button
       >

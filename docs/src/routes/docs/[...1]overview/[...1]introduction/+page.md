@@ -54,18 +54,6 @@ Web3 Onboard supports all EVM networks. Supporting a new network is simply a mat
 - Degen
 - All other EVM networks
 
-### Optional - Use an API key to fetch real-time transaction data, balances & gas
-
-Using a Blocknative API key with Web3 Onboard on the free plan will allow you to gain the benefits of Blocknative balance & transaction services. Blocknative has a free forever plan you can always use.
-
-This step is not required to use Web3 Onboard. You can skip to the [**Quickstart**](/docs/overview/introduction#quickstart) step below if you want to use Web3 Onboard without API services or if you already have a Blocknative account & API key.
-
-**Setup your Account**
-Go to the Account Dashboard at [https://explorer.blocknative.com/account](https://explorer.blocknative.com/account) and setup an account with an email address. You will receive an email to confirm your account.
-
-**Create your API Key**
-On the Account Dashboard at [https://explorer.blocknative.com/account](https://explorer.blocknative.com/account), create an API key with your choice of name or use/rename the Default Key. Consider using different API keys for development, staging, and production releases.
-
 ## Quickstart
 
 Install the core web3-onboard library, the injected wallets module, and optionally ethers.js to support browser extension and mobile wallets:

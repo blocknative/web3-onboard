@@ -39,10 +39,8 @@ npm install @web3-onboard/gas
 import gas from '@web3-onboard/gas'
 
 // subscribe to a single chain for estimates using the default poll rate of 5 secs
-// API key is optional and if provided allows for faster poll rates
 const ethMainnetGasBlockPrices = gas.stream({
   chains: ['0x1'],
-  apiKey: '<OPTIONAL_API_KEY>',
   endpoint: 'blockPrices'
 })
 
