@@ -63,7 +63,7 @@
     getConnectors,
     watchConnectors
   } from '@web3-onboard/wagmi'
-  import { parseEther, isHex, fromHex } from 'viem'
+  import { parseEther, isHex, fromHex, toHex } from 'viem'
   import passportModule, { Network } from '@web3-onboard/passport'
   import { EthereumPrivateKeyProvider } from '@web3auth/ethereum-provider'
   import { CHAIN_NAMESPACES } from '@web3auth/base'
@@ -172,18 +172,18 @@
 
   const privateKeyProvider = new EthereumPrivateKeyProvider({
     config: {
-      chainConfig: {
-        chainId: `0xAA36A7`,
-        rpcTarget: `https://rpc.sepolia.org/`,
-        chainNamespace: CHAIN_NAMESPACES.EIP155,
-        displayName: 'Sepolia',
-        blockExplorerUrl: 'https://sepolia.etherscan.io',
-        ticker: 'ETH',
-        tickerName: 'Ether',
-        logo: 'https://images.toruswallet.io/ethereum.svg'
-      }
-    }
-  })
+        chainConfig: {
+                chainId: `0x1`,
+                rpcTarget: `https://mainnet.infura.io/v3/${infura_key}`,
+                chainNamespace: CHAIN_NAMESPACES.EIP155,
+                displayName: "Ethereum",
+                blockExplorerUrl: "https://sepolia.etherscan.io",
+                ticker: "ETH",
+                tickerName: "Ether",
+                logo: "https://images.toruswallet.io/ethereum.svg"
+            },
+    },
+});
 
   // must access via http://localhost:8080 to be whitelisted
   const web3auth = web3authModule({
