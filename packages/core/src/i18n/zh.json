@@ -39,7 +39,9 @@
         "subheading": "连接成功！",
         "paragraph": "您的钱包现已连接到{app}"
       },
-      "mainText": "已连接"
+      "mainText": "已连接",
+      "accountSelected": "已选择账户",
+      "availableWallet": "可用钱包"
     }
   },
   "modals": {

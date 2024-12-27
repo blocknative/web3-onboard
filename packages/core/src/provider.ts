@@ -1,4 +1,4 @@
-import { fromEventPattern, Observable } from 'rxjs'
+import { fromEventPattern, type Observable } from 'rxjs'
 import { filter, takeUntil, take, share, switchMap } from 'rxjs/operators'
 import partition from 'lodash.partition'
 import { isAddress, weiHexToEth } from '@web3-onboard/common'
