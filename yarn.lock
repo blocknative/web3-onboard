@@ -5542,6 +5542,24 @@
     "@walletconnect/window-getters" "^1.0.1"
     tslib "1.14.1"
 
+"@web3-onboard/core@^2.22.3":
+  version "2.23.0"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.23.0.tgz#fff882ca67e954ba3b38680b876eca676e54d8d1"
+  integrity sha512-2gzBgVDq0eV6tLqAHzvYY6McRlq+6TgEkfkk31JuZUOy2vq2mhwAl3/MuXmItm/GSd3ePLpQl/Kiyr1V3I56yg==
+  dependencies:
+    "@web3-onboard/common" "^2.4.1"
+    bnc-sdk "^4.6.7"
+    bowser "^2.11.0"
+    eventemitter3 "^4.0.7"
+    joi "17.9.1"
+    lodash.merge "^4.6.2"
+    lodash.partition "^4.6.0"
+    nanoid "^4.0.0"
+    rxjs "^7.5.5"
+    svelte "^3.49.0"
+    svelte-i18n "^3.3.13"
+    viem "2.12.0"
+
 "@web3-onboard/wagmi@2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@web3-onboard/wagmi/-/wagmi-2.0.0.tgz#9beda01b4539d399aa0420e7afaacc09fc25ed7d"
