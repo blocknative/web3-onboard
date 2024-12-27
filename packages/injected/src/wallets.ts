@@ -581,7 +581,7 @@ const bitget: InjectedWalletModule = {
   label: ProviderLabel.Bitget,
   injectedNamespace: InjectedNameSpace.Bitget,
   checkProviderIdentity: ({ provider }) =>
-    !!provider && !!provider['ethereum'][ProviderIdentityFlag.Bitget],
+    !!provider && !!provider['ethereum'] && !!provider['ethereum'][ProviderIdentityFlag.Bitget],
   getIcon: async () => (await import('./icons/bitget.js')).default,
   getInterface: async () => ({
     provider: window.bitkeep && window.bitkeep.ethereum
