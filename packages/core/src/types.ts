@@ -373,7 +373,6 @@ export type Notify = {
   /**
    * Position of notifications that defaults to the same position as the
    * Account Center (if enabled) of the top right if AC is disabled
-   * and notifications are enabled (enabled by default with API key)
    */
   position?: NotificationPosition
   replacement?: {

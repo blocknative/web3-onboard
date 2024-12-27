@@ -1,0 +1,123 @@
+{
+  "connect": {
+    "selectingWallet": {
+      "header": "可用钱包",
+      "sidebar": {
+        "heading": "",
+        "subheading": "连接您的钱包",
+        "paragraph": "连接钱包就像是“登录”到Web3。请选择一个钱包开始使用。",
+        "IDontHaveAWallet": "我没有钱包"
+      },
+      "recommendedWalletsPart1": "{app}仅支持",
+      "recommendedWalletsPart2": "在该平台上。请使用或安装受支持的钱包以继续。",
+      "installWallet": "您未安装{app}支持的任何钱包，请使用受支持的钱包。",
+      "agreement": {
+        "agree": "我同意",
+        "terms": "条款与条件",
+        "and": "和",
+        "privacy": "隐私政策"
+      },
+      "whyDontISeeMyWallet": "为什么我看不到我的钱包？",
+      "learnMore": "点击这里了解更多"
+    },
+    "connectingWallet": {
+      "header": "{connectionRejected, select, false {正在连接{wallet}...} other {连接被拒绝}}",
+      "sidebar": {
+        "subheading": "批准连接",
+        "paragraph": "请在您的钱包中批准连接并授权访问以继续。"
+      },
+      "mainText": "正在连接...",
+      "paragraph": "请确保选择所有您想授予访问权限的账户。",
+      "previousConnection": "{wallet}已有待处理的连接请求，请打开{wallet}应用登录并连接。",
+      "rejectedText": "连接被拒绝！",
+      "rejectedCTA": "点击这里重试",
+      "primaryButton": "返回钱包"
+    },
+    "connectedWallet": {
+      "header": "连接成功",
+      "sidebar": {
+        "subheading": "连接成功！",
+        "paragraph": "您的钱包现已连接到{app}"
+      },
+      "mainText": "已连接",
+      "accountSelected": "已选择账户",
+      "availableWallet": "可用钱包"
+    }
+  },
+  "modals": {
+    "actionRequired": {
+      "heading": "{wallet}中需要操作",
+      "paragraph": "请在钱包中切换活跃账户。",
+      "linkText": "了解更多。",
+      "buttonText": "好的"
+    },
+    "switchChain": {
+      "heading": "切换网络",
+      "paragraph1": "{app}需要您将钱包切换到{nextNetworkName}网络以继续。",
+      "paragraph2": "*某些钱包可能不支持更换网络。如果您无法在钱包中切换网络，可以考虑切换到其他钱包。"
+    },
+    "confirmDisconnectAll": {
+      "heading": "断开所有钱包连接",
+      "description": "您确定要断开所有钱包连接吗？",
+      "confirm": "确认",
+      "cancel": "取消"
+    },
+    "confirmTransactionProtection": {
+      "heading": "启用交易保护",
+      "description": "保护RPC端点以防止您的交易被抢先交易和三明治攻击。",
+      "link": "了解更多",
+      "enable": "启用",
+      "dismiss": "忽略"
+    }
+  },
+  "accountCenter": {
+    "connectAnotherWallet": "连接另一个钱包",
+    "disconnectAllWallets": "断开所有钱包连接",
+    "currentNetwork": "当前网络",
+    "enableTransactionProtection": "启用交易保护",
+    "appInfo": "应用信息",
+    "learnMore": "了解更多",
+    "gettingStartedGuide": "入门指南",
+    "smartContracts": "智能合约",
+    "explore": "探索",
+    "poweredBy": "技术支持",
+    "addAccount": "添加账户",
+    "setPrimaryAccount": "设为主要账户",
+    "disconnectWallet": "断开钱包连接",
+    "copyAddress": "复制钱包地址"
+  },
+  "notify": {
+    "transaction": {
+      "txRequest": "您的交易等待确认",
+      "nsfFail": "您的资金不足，无法进行此交易",
+      "txUnderpriced": "您的交易Gas费过低，请尝试设置更高的Gas费",
+      "txRepeat": "这可能是重复交易",
+      "txAwaitingApproval": "您有一个待确认的交易",
+      "txConfirmReminder": "请确认交易以继续",
+      "txSendFail": "您已拒绝该交易",
+      "txSent": "您的交易已发送到网络",
+      "txStallPending": "您的交易在发送前被卡住了，请重试",
+      "txStuck": "由于nonce差异，您的交易被卡住了",
+      "txPool": "您的交易已开始",
+      "txStallConfirmed": "您的交易未确认且已暂停",
+      "txSpeedUp": "您的交易已加速",
+      "txCancel": "您的交易正在取消",
+      "txFailed": "您的交易失败了",
+      "txConfirmed": "您的交易成功了",
+      "txError": "出了点问题，请重试",
+      "txReplaceError": "替换交易时出错，请重试"
+    },
+    "watched": {
+      "txPool": "您的账户正在{verb}{formattedValue}{asset}{preposition}{counterpartyShortened}",
+      "txSpeedUp": "关于{formattedValue}{asset}{preposition}{counterpartyShortened}的交易已加速",
+      "txCancel": "关于{formattedValue}{asset}{preposition}{counterpartyShortened}的交易已取消",
+      "txConfirmed": "您的账户已成功{verb}{formattedValue}{asset}{preposition}{counterpartyShortened}",
+      "txFailed": "您的账户未能{verb}{formattedValue}{asset}{preposition}{counterpartyShortened}",
+      "txStuck": "由于nonce差异，您的交易被卡住了"
+    },
+    "time": {
+      "minutes": "分钟",
+      "seconds": "秒"
+    }
+  }
+}
