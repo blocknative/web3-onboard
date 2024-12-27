@@ -317,9 +317,12 @@ type ConnectModalOptions = {
 #### i18n
 
 An object that defines the display text for different locales. Can also be used to override the default text. To override the default text, pass in an object for the `en` locale.
+Currently there is built-in support for:
+- English (`en`) - Default
+- Simplified Chinese (`zh`)
 
 ```typescript
-type Locale = string // eg 'en', 'es'
+type Locale = string // eg 'en', 'zh', 'es'
 type i18nOptions = Record<Locale, i18n>
 ```
 
