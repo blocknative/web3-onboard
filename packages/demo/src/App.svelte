@@ -41,8 +41,8 @@
   import finoaConnectModule from '@web3-onboard/finoaconnect'
   import keplrModule from '@web3-onboard/keplr'
   import capsuleModule, {
-    Environment,
-    OAuthMethod
+    Environment as CapsuleEnvironment,
+    OAuthMethod as CapsuleOAuthMethods
   } from '@web3-onboard/capsule'
   import {
     recoverAddress,
@@ -276,16 +276,16 @@
     environment: 'staging'
   })
   const capsule = capsuleModule({
-    environment: Environment.DEVELOPMENT,
+    environment: CapsuleEnvironment.DEVELOPMENT,
     apiKey: '992bbd9146d5de8ad0419f141d9a7ca7',
     modalProps: {
-      oAuthMethods: [OAuthMethod.GOOGLE, OAuthMethod.TWITTER, OAuthMethod.APPLE,OAuthMethod.DISCORD]
+      appName: 'Capsule',
+      disableEmailLogin: false,
+      disablePhoneLogin: false,
+      oAuthMethods: Object.values(CapsuleOAuthMethods)
     },
-    constructorOpts: {
-      portalBackgroundColor: '#5e5656',
-      portalPrimaryButtonColor: '#ff6700',
-      portalTextColor: '#ffffff'
-    }
+
+    walletLabel: 'Capsule'
   })
 
   const onboard = Onboard({

@@ -1,77 +1,87 @@
 # @web3-onboard/capsule
 
-## Wallet module for connecting Capsule Embedded Wallets to web3-onboard
+## Wallet module for connecting Capsule Embedded Wallets to Web3-Onboard
 
-[Capsule](https://usecapsule.com/) is a signing solution that you can use to create secure embedded MPC wallets to onboard your users with just an email or social login. Capsule wallets are recoverable, portable, and permissioned across different crypto applications, so your users don't need to create different signers or contract accounts for every app they use
+[Capsule](https://usecapsule.com/) is a signing solution that enables you to create secure embedded MPC wallets, allowing users to onboard with just an email or social login. Capsule wallets are recoverable, portable, and permissioned across different crypto applications, eliminating the need for users to create separate signers or contract accounts for each app.
 
-If you'd like to use Capsule's full functionality within the web3onboard package without any extra integration steps, you can also [request a Capsule API Key](https://usecapsule.com/api) and use it with this package.
+### Getting Started
 
-To learn more, check out the [Capsule Developer Docs](https://docs.usecapsule.com/)
+1. Visit the [Capsule Developer Portal](https://developer.usecapsule.com)
+2. Create a new project
+3. Generate an API key for your project
+4. Configure your project settings and environments
 
-### Install
+### Installation
 
 ```bash
-yarn add @web3-onboard/capsule
-# OR
+# Using npm
 npm install @web3-onboard/capsule
-# OR
+
+# Using yarn
+yarn add @web3-onboard/capsule
+
+# Using pnpm
 pnpm install @web3-onboard/capsule
+
+# Using bun
+bun add @web3-onboard/capsule
 ```
 
-## Options
-For configuration options, check out the [Integration Guide Docs](https://docs.usecapsule.com/integration-guide)
+## Configuration Options
 
 ```typescript
-type CapsuleInitOptions = {
-  environment: string
+export type CapsuleInitOptions = {
+  // The environment to connect to (PROD or BETA)
+  environment: Environment
+
+  // Your Capsule API key from the developer portal
   apiKey: string
-  /** @optional capsule object opts */
-  constructorOpts?: ConstructorOpts
-  appName: string
-  /** @optional capsule modal props */
-  modalProps?: CapsuleModalProps
+
+  // Optional: Additional constructor options for the Capsule client
+  constructorOpts?: Partial<ConstructorOpts>
+
+  // Optional: Customization props for the Capsule modal
+  modalProps?: Partial<CapsuleModalProps>
+
+  // Optional: Custom function to load wallet icon
+  walletIcon?: () => Promise<string>
+
+  // Optional: Custom label for the wallet
+  walletLabel?: string
 }
 ```
-## Usage
+
+## Implementation
+
 ```typescript
 import Onboard from '@web3-onboard/core'
-import Capsule, { Environment } from '@usecapsule/react-sdk';
+import Capsule, { Environment } from '@usecapsule/react-sdk'
 import capsuleModule from '@web3-onboard/capsule'
 
-// initialize capsule
+// Initialize Capsule client
 const capsule = new Capsule(
-  Environment.BETA,  // for production, use ENVIRONMENT.PROD
-  "YOUR_API_KEY"
-  { opts }    // find these at docs.usecapsule.com
-);
+  Environment.BETA, // Use Environment.PROD for production
+  'YOUR_API_KEY' // Your API key from developer.usecapsule.com
+)
 
-// initialize the module with options
+// Initialize the Capsule module
 const capsuleWallet = capsuleModule(capsule)
 
+// Initialize web3-onboard
 const onboard = Onboard({
   // ... other Onboard options
   wallets: [
-    capsule
+    capsuleWallet
     //... other wallets
   ]
 })
 
+// Connect wallet
 const connectedWallets = await onboard.connectWallet()
 console.log(connectedWallets)
 ```
 
-## Build env settings (webpack config)
+## Additional Resources
 
-You may need to add the following rule to your webpack config module
-in order to handle certain styling files (See the config for the
-Blocknative demo app):
-
-```typescript
-{
-  test: /\.(woff(2)?|eot|ttf|otf|svg)$/,
-  type: 'asset/resource',
-  generator: {
-    filename: 'fonts/[name][ext][query]'
-  }
-}
-```
+- [Capsule Documentation](https://docs.usecapsule.com/)
+- [Developer Portal](https://developer.usecapsule.com)
