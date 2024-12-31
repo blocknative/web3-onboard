@@ -57,7 +57,7 @@
   "dependencies": {
     "@ethereumjs/tx": "^3.4.0",
     "@ethersproject/providers": "^5.5.0",
-    "@keystonehq/eth-keyring": "^0.14.00.3",
+    "@keystonehq/eth-keyring": "^0.14.4",
     "@web3-onboard/common": "^2.4.1",
     "@web3-onboard/hw-common": "^2.3.2"
   }
