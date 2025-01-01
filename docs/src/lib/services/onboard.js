@@ -59,6 +59,8 @@ const intiOnboard = async theme => {
   const { default: bloctoModule } = await import('@web3-onboard/blocto')
   const { default: venlyModule } = await import('@web3-onboard/venly')
   const { default: bitgetModule } = await import('@web3-onboard/bitget')
+  const { default: gateModule } = await import('@web3-onboard/gate')
+  // // const { default: capsuleModule, Environment } = await import('@web3-onboard/capsule')
   const { default: finoaConnectModule } = await import('@web3-onboard/finoaconnect')
   const { default: capsuleModule, Environment } = await import('@web3-onboard/capsule')
   const { default: particleAuthModule } = await import('@web3-onboard/particle-network')
@@ -99,6 +101,7 @@ const intiOnboard = async theme => {
   const xdefi = xdefiModule()
   const cede = cedeModule()
   const bitget = bitgetModule()
+  const gate = gateModule()
 
   const portis = portisModule({
     apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
@@ -162,6 +165,7 @@ const intiOnboard = async theme => {
       gnosis,
       taho,
       bitget,
+      gate,
       xdefi,
       uauth,
       cede,
