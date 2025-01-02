@@ -10,7 +10,7 @@ export const Web3Context = createContext<OnboardActions>();
  * */
 export const useWeb3Onboard = () => {
   if (isServer)
-    throw new Error("Context 'Web3Context' is not accessable server-side");
+    throw new Error("Context 'Web3Context' is not accessible server-side");
 
   const value = useContext(Web3Context);
   const context = useOnboard();
