@@ -22,7 +22,7 @@
   import warningIcon from '../../icons/warning.js'
   import questionIcon from '../../icons/question.js'
   import shieldIcon from '../../icons/shield-icon.js'
-  import { poweredByBlocknative } from '../../icons/index.js'
+  import { poweredByThirdweb } from '../../icons/index.js'
   import DisconnectAllConfirm from './DisconnectAllConfirm.svelte'
   import EnableTransactionProtectionModal from './EnableTransactionProtectionModal.svelte'
   import { configuration } from '../../configuration.js'
@@ -563,7 +563,7 @@
             rel="noopener noreferrer"
             class="flex justify-center items-center powered-by-container"
           >
-            {@html poweredByBlocknative}
+            {@html poweredByThirdweb}
           </a>
         </div>
       </div>

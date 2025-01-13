@@ -2,7 +2,7 @@
   import { _ } from 'svelte-i18n'
   import {
     defaultBnIcon,
-    poweredByBlocknative,
+    poweredByThirdweb,
     infoIcon
   } from '../../icons/index.js'
   import en from '../../i18n/en.json'
@@ -284,6 +284,6 @@
     </div>
   {/if}
   <div>
-    {@html poweredByBlocknative}
+    {@html poweredByThirdweb}
   </div>
 </div>
