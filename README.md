@@ -1,4 +1,4 @@
-# Web3-Onboard
+# Web3-Onboard (acquired by thirdweb)
 
 **easy way to connect users to dapps**
 
