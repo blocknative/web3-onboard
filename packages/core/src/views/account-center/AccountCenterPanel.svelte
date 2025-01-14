@@ -558,7 +558,7 @@
         {/if}
         <div class="w100">
           <a
-            href="https://blocknative.com"
+            href="https://thirdweb.com"
             target="_blank"
             rel="noopener noreferrer"
             class="flex justify-center items-center powered-by-container"
