@@ -53,7 +53,7 @@
   import { ethers } from 'ethers'
   import { share } from 'rxjs/operators'
   import VConsole from 'vconsole'
-  import blocknativeIcon from './blocknative-icon.js'
+  import thirdwebIcon from './thirdweb-icon.js'
   import DappAuth from '@blocto/dappauth'
   import {
     sendTransaction as wagmiSendTransaction,
@@ -432,7 +432,7 @@
     },
     appMetadata: {
       name: 'Blocknative',
-      icon: blocknativeIcon,
+      icon: thirdwebIcon,
       // logo: blocknativeLogo,
       description: 'Demo app for Onboard V2',
       recommendedInjectedWallets: [
