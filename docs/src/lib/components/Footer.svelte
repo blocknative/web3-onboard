@@ -1,6 +1,6 @@
 <script>
   import Flexbox from './base/Flexbox.svelte'
-  import PoweredByBn from './svg/powered-by-blocknative.svg'
+  import PoweredByTw from './svg/powered-by-thirdweb.svg'
 
   import DiscordIcon from '~icons/ri/discord-fill'
   import GitHubIcon from '~icons/ri/github-fill'
@@ -29,22 +29,22 @@
         <GitHubIcon width={iconSize} height={iconSize} />
         <span class="sr-only">Github</span>
       </a>
-      <a class="icon-link" href="//discord.com/invite/KZaBVME" target="_blank">
+      <a class="icon-link" href="//discord.com/invite/thirdweb" target="_blank">
         <DiscordIcon width={iconSize} height={iconSize} />
         <span class="sr-only">Discord</span>
       </a>
-      <a class="icon-link" href="//twitter.com/blocknative" target="_blank">
+      <a class="icon-link" href="https://x.com/thirdweb" target="_blank">
         <TwitterIcon width={iconSize} height={iconSize} />
-        <span class="sr-only">Twitter</span>
+        <span class="sr-only">X (formerly Twitter)</span>
       </a>
-      <a class="icon-link" href="//www.youtube.com/c/Blocknative" target="_blank">
+      <a class="icon-link" href="//www.youtube.com/channel/UCdzMx7Zhy5va5End1-XJFbA" target="_blank">
         <YoutubeIcon width={iconSize} height={iconSize} />
         <span class="sr-only">Youtube</span>
       </a>
     </Flexbox>
-    <a href="//www.blocknative.com/" target="_blank">
-      <img src={PoweredByBn} alt="Powered by Blocknative" />
-      <span class="sr-only">Powered by Blocknative</span>
+    <a href="//www.thirdweb.com/" target="_blank">
+      <img src={PoweredByTw} alt="Powered by thirdweb" />
+      <span class="sr-only">Powered by thirdweb</span>
     </a>
   </Flexbox>
   <div class="copyright-box">
@@ -55,13 +55,13 @@
     <div class="flex">
       <a
         target="_blank"
-        href="https://www.blocknative.com/privacy-policy"
+        href="https://thirdweb.com/privacy-policy"
         class="text-sm hover:text-white">Privacy Policy</a
       >
       <div class="w-px bg-gray-divider mx-2 h-4" />
       <a
         target="_blank"
-        href="https://www.blocknative.com/terms-conditions"
+        href="https://thirdweb.com/terms"
         class="text-sm hover:text-white">Terms of Service</a
       >
     </div>
