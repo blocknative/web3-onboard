@@ -934,10 +934,9 @@ const keplr: InjectedWalletModule = {
 const kaiaWallet: InjectedWalletModule = {
   label: ProviderLabel.KaiaWallet,
   injectedNamespace: InjectedNameSpace.KaiaWallet,
-  checkProviderIdentity: ({ provider }) => true,
-    // !!provider && !!provider[ProviderIdentityFlag.KaiaWallet],
+  checkProviderIdentity: ({ provider }) => 
+    !!provider && !!provider[ProviderIdentityFlag.KaiaWallet],
   getIcon: async () => (await import('./icons/kaiawallet.js')).default,
-  // getInterface: getInjectedInterface(ProviderIdentityFlag.KaiaWallet),
   getInterface: async () => ({
     provider: createEIP1193Provider(window.klaytn)
   }),
