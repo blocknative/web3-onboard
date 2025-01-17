@@ -25,7 +25,6 @@ npm install @web3-onboard/walletconnect
   </TabPanel>
 </Tabs>
 
-
 ```typescript
 type WalletConnectOptions = {
   /**

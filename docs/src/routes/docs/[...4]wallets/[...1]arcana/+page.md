@@ -49,7 +49,7 @@ const arcanaAuth = arcanaAuthModule({
 const onboard = Onboard({
   // ... other Onboard options
   wallets: [
-    arcanaAuth,
+    arcanaAuth
     //... other wallets
   ]
 })

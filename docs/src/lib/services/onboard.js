@@ -1,7 +1,7 @@
-import thirdwebIcon from '../components/icons/thirdweb-icon'
+import blocknativeIcon from '../components/icons/blocknative-icon'
 
 let onboard
-const getOnboard = async passedTheme => {
+const getOnboard = async (passedTheme) => {
   const key = 'svelteness::color-scheme'
   const scheme = localStorage[key]
   let theme = passedTheme || scheme
@@ -10,8 +10,8 @@ const getOnboard = async passedTheme => {
   return onboard
 }
 
-const classMutationsCheck = mutationsList => {
-  mutationsList.forEach(mutation => {
+const classMutationsCheck = (mutationsList) => {
+  mutationsList.forEach((mutation) => {
     if (onboard && mutation.attributeName === 'class') {
       if (mutation.target.className.includes('dark')) {
         onboard.state.actions.updateTheme('dark')
@@ -28,7 +28,7 @@ const classMutationListener = () => {
   mutationObserver.observe(document.querySelector('html'), { attributes: true })
 }
 
-const intiOnboard = async theme => {
+const intiOnboard = async (theme) => {
   const { default: Onboard } = await import('@web3-onboard/core')
   const { default: injectedModule } = await import('@web3-onboard/injected-wallets')
   const { default: trezorModule } = await import('@web3-onboard/trezor')
@@ -118,8 +118,8 @@ const intiOnboard = async theme => {
   const finoaconnect = finoaConnectModule(finoaConnectOptions)
 
   const uauthOptions = {
-    clientID: "a7371c4a-a61e-4fac-af48-4471c2e69e93",
-    redirectUri: "https://onboard.blocknative.com",
+    clientID: 'a7371c4a-a61e-4fac-af48-4471c2e69e93',
+    redirectUri: 'https://onboard.blocknative.com',
     scope: 'openid wallet email:optional humanity_check:optional profile:optional social:optional',
     walletConnectProjectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5'
   }
@@ -263,7 +263,7 @@ const intiOnboard = async theme => {
     ],
     appMetadata: {
       name: 'Web3 Onboard Documentation',
-      icon: thirdwebIcon,
+      icon: blocknativeIcon,
       description: 'Example showcasing how to connect a wallet.',
       recommendedInjectedWallets: [
         { name: 'MetaMask', url: 'https://metamask.io' },

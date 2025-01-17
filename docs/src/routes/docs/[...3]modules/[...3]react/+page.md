@@ -357,7 +357,7 @@ type Notify = {
   /**
    * Position of notifications that defaults to the same position as the
    * Account Center (if enabled) of the top right if AC is disabled
-   * and notifications are enabled 
+   * and notifications are enabled
    */
   position?: NotificationPosition
 }

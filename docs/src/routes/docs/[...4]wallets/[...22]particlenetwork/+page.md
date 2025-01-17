@@ -60,7 +60,18 @@ console.log(connectedWallets)
 /**
  * Enumerates the supported authentication types.
  */
-type AuthTypes = 'email' | 'phone' | 'google' | 'apple' | 'twitter' | 'facebook' | 'microsoft' | 'linkedin' | 'github' | 'twitch' | 'discord';
+type AuthTypes =
+  | 'email'
+  | 'phone'
+  | 'google'
+  | 'apple'
+  | 'twitter'
+  | 'facebook'
+  | 'microsoft'
+  | 'linkedin'
+  | 'github'
+  | 'twitch'
+  | 'discord'
 
 /**
  * Interface that describes the preferred authentication type.
@@ -68,8 +79,8 @@ type AuthTypes = 'email' | 'phone' | 'google' | 'apple' | 'twitter' | 'facebook'
  * @property {boolean} setAsDisplay - Indicates whether the type should be displayed within the UI.
  */
 interface PreferredAuthType {
-  type: AuthTypes;
-  setAsDisplay: boolean;
+  type: AuthTypes
+  setAsDisplay: boolean
 }
 
 /**
@@ -83,12 +94,12 @@ interface PreferredAuthType {
  * @property {AuthTypes | PreferredAuthType} [preferredAuthType] - (Optional) Specifies the preferred type of authentication.
  */
 interface ParticleAuthModuleOptions {
-  projectId: string;
-  clientKey: string;
-  appId: string;
-  chainName?: string;
-  chainId?: number;
-  wallet?: object;
-  preferredAuthType?: AuthTypes | PreferredAuthType;
+  projectId: string
+  clientKey: string
+  appId: string
+  chainName?: string
+  chainId?: number
+  wallet?: object
+  preferredAuthType?: AuthTypes | PreferredAuthType
 }
 ```
