@@ -35,6 +35,7 @@ pnpm install @web3-onboard/capsule
 </Tabs>
 
 ## Options
+
 For configuration options, check out the [Integration Guide Docs](https://docs.usecapsule.com/integration-guide)
 
 ```typescript
@@ -48,7 +49,9 @@ type CapsuleInitOptions = {
   modalProps?: Partial<CapsuleModalPropsForInit>
 }
 ```
+
 ## Usage
+
 ```typescript
 import Onboard from '@web3-onboard/core'
 import Capsule, { Environment } from '@usecapsule/react-sdk';

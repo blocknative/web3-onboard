@@ -27,7 +27,6 @@ npm install @web3-onboard/solid @web3-onboard/injected-wallets
   </TabPanel>
 </Tabs>
 
-
 ## Quickstart
 
 ```typescript
@@ -39,8 +38,7 @@ const injected = injectedModule()
 // Only one RPC endpoint required per chain
 const rpcAPIKey = '<INFURA_KEY>' || '<ALCHEMY_KEY>'
 const rpcUrl =
-  `https://eth-mainnet.g.alchemy.com/v2/${rpcAPIKey}` ||
-  `https://mainnet.infura.io/v3/${rpcAPIKey}`
+  `https://eth-mainnet.g.alchemy.com/v2/${rpcAPIKey}` || `https://mainnet.infura.io/v3/${rpcAPIKey}`
 
 const web3Onboard = init({
   wallets: [injected],
@@ -60,16 +58,12 @@ const web3Onboard = init({
   ]
 })
 
-const { wallets, connectWallet, disconnectConnectedWallet, connectedWallet } =
-  useOnboard()
+const { wallets, connectWallet, disconnectConnectedWallet, connectedWallet } = useOnboard()
 
 if (connectedWallet) {
   // if using ethers v6 this is:
   // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
-  const ethersProvider = new ethers.providers.Web3Provider(
-    connectedWallet.provider,
-    'any'
-  )
+  const ethersProvider = new ethers.providers.Web3Provider(connectedWallet.provider, 'any')
   // ..... do stuff with the provider
 }
 ```
@@ -114,13 +108,8 @@ import { useOnboard } from '@web3-onboard/solid'
 // Use the composable
 const onboard = useOnboard()
 // Or destructure it
-const {
-  wallets,
-  connectedWallet,
-  connectedChain,
-  connectWallet,
-  disconnectConnectedWallet
-} = useOnboard()
+const { wallets, connectedWallet, connectedChain, connectWallet, disconnectConnectedWallet } =
+  useOnboard()
 // do stuff
 ```
 
@@ -174,12 +163,7 @@ Function to disconnect the `connectedWallet`
 import { useOnboard } from '@web3-onboard/solid'
 function SampleConnect() {
   const { disconnectConnectedWallet } = useOnboard()
-  return (
-    <button onClick={() => disconnectConnectedWallet()}>
-      {' '}
-      disconnect wallet
-    </button>
-  )
+  return <button onClick={() => disconnectConnectedWallet()}> disconnect wallet</button>
 }
 ```
 
@@ -264,8 +248,6 @@ Readonly ref that contains the last time that the user connected a wallet in mil
 import { useOnboard } from '@web3-onboard/solid'
 function SampleConnect() {
   const { lastConnectedTimestamp } = useOnboard()
-  return (
-    <span>Your last connection timestamp was: {lastConnectedTimestamp}</span>
-  )
+  return <span>Your last connection timestamp was: {lastConnectedTimestamp}</span>
 }
 ```

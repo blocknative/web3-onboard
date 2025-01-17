@@ -37,7 +37,11 @@
         <TwitterIcon width={iconSize} height={iconSize} />
         <span class="sr-only">X (formerly Twitter)</span>
       </a>
-      <a class="icon-link" href="//www.youtube.com/channel/UCdzMx7Zhy5va5End1-XJFbA" target="_blank">
+      <a
+        class="icon-link"
+        href="//www.youtube.com/channel/UCdzMx7Zhy5va5End1-XJFbA"
+        target="_blank"
+      >
         <YoutubeIcon width={iconSize} height={iconSize} />
         <span class="sr-only">Youtube</span>
       </a>
@@ -53,16 +57,12 @@
       <div class="text">{text.copyright}</div>
     </div>
     <div class="flex">
-      <a
-        target="_blank"
-        href="https://thirdweb.com/privacy-policy"
-        class="text-sm hover:text-white">Privacy Policy</a
+      <a target="_blank" href="https://thirdweb.com/privacy-policy" class="text-sm hover:text-white"
+        >Privacy Policy</a
       >
       <div class="w-px bg-gray-divider mx-2 h-4" />
-      <a
-        target="_blank"
-        href="https://thirdweb.com/terms"
-        class="text-sm hover:text-white">Terms of Service</a
+      <a target="_blank" href="https://thirdweb.com/terms" class="text-sm hover:text-white"
+        >Terms of Service</a
       >
     </div>
   </div>

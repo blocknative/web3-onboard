@@ -33,9 +33,10 @@ Full documentation for `wagmi/core` API functions can be found [here](https://wa
 
 ### wagmiConfig
 
-After initialization an up-to-date WAGMI config will will be available from the onboard state object `onboard.state.get().wagmiConfig` which will need to be passed as the first prop of most [@wagmi/core](https://wagmi.sh/core/getting-started) methods. 
+After initialization an up-to-date WAGMI config will will be available from the onboard state object `onboard.state.get().wagmiConfig` which will need to be passed as the first prop of most [@wagmi/core](https://wagmi.sh/core/getting-started) methods.
 
 ### wagmiConnector and Connectors
+
 Wallets will also have a `wagmiConnector` prop within the onboard state object which will allow you to target specific wallets for interactions. This can also be bi-passed if the primary or most recently connected wallet is the wallet meant for the transactions.
 The config and connectors can be used with the WAGMI API returned from this module or an external WAGMI instance.
 

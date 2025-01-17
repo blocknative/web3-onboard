@@ -25,7 +25,6 @@ npm install @web3-onboard/bloom
   </TabPanel>
 </Tabs>
 
-
 ```typescript
 type WalletConnectOptions = {
   /**

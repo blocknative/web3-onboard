@@ -1,8 +1,8 @@
 import { sveltekit } from '@sveltejs/kit/vite'
 import icons from 'unplugin-icons/vite'
 import kitDocs from '@svelteness/kit-docs/node'
-import {nodePolyfills} from 'vite-plugin-node-polyfills'
-import react from '@vitejs/plugin-react';
+import { nodePolyfills } from 'vite-plugin-node-polyfills'
+import react from '@vitejs/plugin-react'
 
 /** @type {import('vite').UserConfig} */
 const config = {
@@ -18,7 +18,7 @@ const config = {
   },
   build: {
     rollupOptions: {
-      external: ['@web3-onboard/*'],
+      external: ['@web3-onboard/*']
     },
     commonjsOptions: {
       transformMixedEsModules: true

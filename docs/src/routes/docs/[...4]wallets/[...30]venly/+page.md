@@ -1,6 +1,7 @@
 # Venly
 
 Wallet module for connecting Venly Wallet SDK to Web3 Onboard. Check out the [Venly Docs](https://docs.venly.io/) for more information.
+
 ## Install
 
 <Tabs values={['yarn', 'npm']}>
@@ -41,8 +42,8 @@ import Onboard from '@web3-onboard/core'
 import venlyModule from '@web3-onboard/venly'
 
 // initialize the module with options
-const venly = venlyModule({ 
-  clientId: 'YOUR_CLIENT_ID',
+const venly = venlyModule({
+  clientId: 'YOUR_CLIENT_ID'
 })
 
 const onboard = Onboard({
@@ -58,4 +59,5 @@ console.log(connectedWallets)
 ```
 
 ## Build Environments
+
 For build env configurations and setups please see the Build Env section [here](/docs/modules/core#build-environments)

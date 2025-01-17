@@ -318,6 +318,7 @@ type ConnectModalOptions = {
 
 An object that defines the display text for different locales. Can also be used to override the default text. To override the default text, pass in an object for the `en` locale.
 Currently there is built-in support for:
+
 - English (`en`) - Default
 - Simplified Chinese (`zh`)
 
