@@ -10,9 +10,9 @@ import type { Ref, ComputedRef } from 'vue-demi'
 type ReadonlyRef<T> = Readonly<Ref<T>>
 
 type SetChainOptions = {
-  chainId: string
+  chainId: string | number
   chainNamespace?: string
-  wallet: string
+  wallet?: WalletState['label']
   rpcUrl?: string
   label?: string
   token?: string
