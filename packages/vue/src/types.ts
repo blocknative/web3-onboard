@@ -20,15 +20,15 @@ type SetChainOptions = {
 
 interface OnboardComposable {
   alreadyConnectedWallets: ReadonlyRef<string[]>
-  connectWallet: (options?: ConnectOptions) => Promise<void>
+  connectWallet: (options?: ConnectOptions) => Promise<WalletState[]>
   connectedChain: ComputedRef<ConnectedChain | null>
   connectedWallet: ComputedRef<WalletState | null>
   connectingWallet: ReadonlyRef<boolean>
-  disconnectWallet: (wallet: DisconnectOptions) => Promise<void>
+  disconnectWallet: (wallet: DisconnectOptions) => Promise<WalletState[]>
   disconnectConnectedWallet: () => Promise<void>
   getChain: (walletLabel: string) => ConnectedChain | null
   lastConnectionTimestamp: ReadonlyRef<number>
-  setChain: (options: SetChainOptions) => Promise<void>
+  setChain: (options: SetChainOptions) => Promise<boolean>
   settingChain: ReadonlyRef<boolean>
   wallets: ReadonlyRef<WalletState[]>
 }
