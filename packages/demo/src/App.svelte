@@ -275,7 +275,7 @@
     clientId: 'blocknative',
     environment: 'staging'
   })
-  const paraModule = paraModule({
+  const para = paraModule({
     environment: ParaEnvironment.DEVELOPMENT,
     apiKey: '992bbd9146d5de8ad0419f141d9a7ca7',
     modalProps: {
