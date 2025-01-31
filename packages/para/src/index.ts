@@ -1,9 +1,17 @@
-import type { AppMetadata, EIP1193Provider, WalletInit } from '@web3-onboard/common'
-import type { CapsuleInitOptions } from './types'
+import type {
+  AppMetadata,
+  EIP1193Provider,
+  WalletInit
+} from '@web3-onboard/common'
+import type { ParaInitOptions } from './types'
 import type { Chain } from '@wagmi/chains'
 import type { Chain as BlocknativeChain } from '@web3-onboard/common'
-import { Environment as CapsuleEnvironment, OAuthMethod, Theme } from '@usecapsule/react-sdk'
-import "@usecapsule/react-sdk/styles.css"
+import {
+  Environment as ParaEnvironment,
+  OAuthMethod,
+  Theme
+} from '@getpara/react-sdk'
+import '@getpara/react-sdk/styles.css'
 
 type ChainId = number
 type ChainsMap = Map<ChainId, Chain>
@@ -35,11 +43,11 @@ function convertChainIdToNumber(chainId: string | number): number {
 }
 
 function validateOptions(
-  options: CapsuleInitOptions,
+  options: ParaInitOptions,
   chains: BlocknativeChain[],
   appMetadata: AppMetadata | null
 ): void {
-  if (!(options.environment in CapsuleEnvironment)) {
+  if (!(options.environment in ParaEnvironment)) {
     throw new Error(
       `Invalid environment. Must be one of the Environment enum values.`
     )
@@ -68,28 +76,27 @@ function validateOptions(
   }
 }
 
-function capsule(options: CapsuleInitOptions): WalletInit {
+function para(options: ParaInitOptions): WalletInit {
   return () => {
     return {
-      label: options.walletLabel || 'Capsule',
-      getIcon:options.walletIcon || (async () => (await import('./icon')).default),
+      label: options.walletLabel || 'Para',
+      getIcon:
+        options.walletIcon || (async () => (await import('./icon')).default),
       getInterface: async ({ chains, appMetadata }) => {
-        const { default: Capsule } = await import(
-          '@usecapsule/react-sdk'
-        )
-        const { CapsuleEIP1193Provider } = await import(
-          '@usecapsule/wagmi-v2-integration'
+        const { default: Para } = await import('@getpara/react-sdk')
+        const { ParaEIP1193Provider } = await import(
+          '@getpara/wagmi-v2-integration'
         )
         validateOptions(options, chains, appMetadata)
-        const capsule = new Capsule(
-          options.environment, 
-          options.apiKey, 
+        const para = new Para(
+          options.environment,
+          options.apiKey,
           options.constructorOpts
         )
         const chainsMap = await buildChainsMap()
 
         const providerOpts = {
-          capsule: capsule,
+          para: para,
           chainId: convertChainIdToNumber(chains[0].id).toString(),
           appName: appMetadata?.name as string,
           chains: getChainsByIds(
@@ -98,12 +105,14 @@ function capsule(options: CapsuleInitOptions): WalletInit {
           ),
           ...options.modalProps
         }
-        const provider: EIP1193Provider = new CapsuleEIP1193Provider(providerOpts)
+        const provider: EIP1193Provider = new ParaEIP1193Provider(providerOpts)
 
-        provider.disconnect = () => { capsule.logout(); };
+        provider.disconnect = () => {
+          para.logout()
+        }
 
         return {
-          instance: capsule,
+          instance: para,
           provider: provider
         }
       }
@@ -111,6 +120,6 @@ function capsule(options: CapsuleInitOptions): WalletInit {
   }
 }
 
-export default capsule
-export { CapsuleEnvironment as Environment }
+export default para
+export { ParaEnvironment as Environment }
 export { OAuthMethod, Theme }
