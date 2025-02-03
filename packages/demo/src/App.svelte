@@ -41,7 +41,7 @@
   import finoaConnectModule from '@web3-onboard/finoaconnect'
   import keplrModule from '@web3-onboard/keplr'
   import paraModule, {
-    Environment as paraEnvironment,
+    Environment as ParaEnvironment,
     OAuthMethod as ParaOAuthMethods
   } from '@web3-onboard/para'
   import {
