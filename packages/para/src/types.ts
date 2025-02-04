@@ -1,8 +1,12 @@
-import type { ConstructorOpts, Environment, CapsuleModalProps } from '@usecapsule/react-sdk'
+import type {
+  ConstructorOpts,
+  Environment,
+  ParaModalProps
+} from '@getpara/react-sdk'
 /**
- * Options for initializing the Capsule environment.
+ * Options for initializing the Para environment.
  *
- * @typedef {Object} CapsuleInitOptions
+ * @typedef {Object} ParaInitOptions
  * @property {Environment} environment - Specifies the working environment for the application.
  *           'DEVELOPMENT' should be used for testing with non-real funds and wallets on a testnet.
  *           'PRODUCTION' should be used when the application is ready for live deployment with real transactions.
@@ -10,13 +14,13 @@ import type { ConstructorOpts, Environment, CapsuleModalProps } from '@usecapsul
  *           This key needs to be obtained by completing a form available at https://7f4shq8oyfd.typeform.com/to/F86oVLhb.
  */
 
-export type CapsuleModalPropsForInit = Omit<CapsuleModalProps,'isOpen' | 'capsule'>;
+export type ParaModalPropsForInit = Omit<ParaModalProps, 'isOpen' | 'para'>
 
-export type CapsuleInitOptions = {
+export type ParaInitOptions = {
   environment: Environment
-  apiKey: string,
+  apiKey: string
   constructorOpts?: Partial<ConstructorOpts>
-  modalProps?: Partial<CapsuleModalPropsForInit>
+  modalProps?: Partial<ParaModalPropsForInit>
   walletIcon?: () => Promise<string>
-  walletLabel?: string 
+  walletLabel?: string
 }

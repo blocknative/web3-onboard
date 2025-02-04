@@ -442,10 +442,10 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/solid
     steps:
       - node-build-steps
-  build-capsule:
+  build-para:
     docker:
       - image: cimg/node:18.18.2
-    working_directory: ~/web3-onboard-monorepo/packages/capsule
+    working_directory: ~/web3-onboard-monorepo/packages/para
     steps:
       - node-build-steps
   build-particle:
@@ -762,10 +762,10 @@ jobs:
     working_directory: ~/web3-onboard-monorepo/packages/solid
     steps:
       - node-staging-build-steps
-  build-staging-capsule:
+  build-staging-para:
     docker:
       - image: cimg/node:18.18.2
-    working_directory: ~/web3-onboard-monorepo/packages/capsule
+    working_directory: ~/web3-onboard-monorepo/packages/para
     steps:
       - node-staging-build-steps
   build-staging-particle:
@@ -1085,11 +1085,11 @@ workflows:
           <<: *deploy_production_filters
       - build-staging-solid:
           <<: *deploy_staging_filters
-  capsule:
+  para:
     jobs:
-      - build-capsule:
+      - build-para:
           <<: *deploy_production_filters
-      - build-staging-capsule:
+      - build-staging-para:
           <<: *deploy_staging_filters
   particle:
     jobs:
