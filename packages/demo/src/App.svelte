@@ -277,7 +277,7 @@
   })
   const para = paraModule({
     environment: ParaEnvironment.DEVELOPMENT,
-    apiKey: '992bbd9146d5de8ad0419f141d9a7ca7',
+    apiKey: '2777c7a647fa0ff6cf88d69b5f8a4709',
     modalProps: {
       appName: 'Para',
       disableEmailLogin: false,

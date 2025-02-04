@@ -12,6 +12,7 @@ import {
   Theme
 } from '@getpara/react-sdk'
 import '@getpara/react-sdk/styles.css'
+import { http, HttpTransport } from 'viem'
 
 type ChainId = number
 type ChainsMap = Map<ChainId, Chain>
@@ -95,6 +96,12 @@ function para(options: ParaInitOptions): WalletInit {
         )
         const chainsMap = await buildChainsMap()
 
+        const transports: Record<string, HttpTransport> = {}
+
+        chains.forEach(c => {
+          transports[convertChainIdToNumber(c.id)] = http()
+        })
+
         const providerOpts = {
           para: para,
           chainId: convertChainIdToNumber(chains[0].id).toString(),
@@ -103,6 +110,7 @@ function para(options: ParaInitOptions): WalletInit {
             chains.map(ch => convertChainIdToNumber(ch.id)),
             chainsMap
           ),
+          transports: transports,
           ...options.modalProps
         }
         const provider: EIP1193Provider = new ParaEIP1193Provider(providerOpts)
