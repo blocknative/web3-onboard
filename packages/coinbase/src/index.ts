@@ -73,7 +73,7 @@ function coinbaseWallet({
               if (isHex(val)) {
                 hexVal = val
               } else {
-                hexVal = toHex(val)
+                hexVal = toHex(val as string)
               }
 
               // @ts-ignore
