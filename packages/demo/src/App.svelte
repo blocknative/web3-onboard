@@ -36,6 +36,7 @@
   import arcanaAuthModule from '@web3-onboard/arcana-auth'
   import venlyModule from '@web3-onboard/venly'
   import bitgetModule from '@web3-onboard/bitget'
+  import gateModule from '@web3-onboard/gate'
   import bloomModule from '@web3-onboard/bloom'
   import particleAuthModule from '@web3-onboard/particle-network'
   import finoaConnectModule from '@web3-onboard/finoaconnect'
@@ -264,6 +265,7 @@
 
   const dcent = dcentModule()
   const bitget = bitgetModule()
+  const gate = gateModule()
   const frameWallet = frameModule()
   const sequence = sequenceModule()
   const enkrypt = enkryptModule()
@@ -302,6 +304,7 @@
       okx,
       tallyho,
       bitget,
+      gate,
       bloom,
       enkrypt,
       infinityWallet,
