@@ -76,16 +76,20 @@ const useOnboard = (): OnboardComposable => {
 
   const connectWallet = async (options?: ConnectOptions) => {
     connectingWallet.value = true
-    await (web3Onboard as OnboardAPI).connectWallet(options)
+    const walletState = await (web3Onboard as OnboardAPI).connectWallet(options)
     lastConnectionTimestamp.value = Date.now()
     connectingWallet.value = false
+    return walletState
   }
 
   const disconnectWallet = async (wallet: DisconnectOptions) => {
     connectingWallet.value = true
-    await (web3Onboard as OnboardAPI).disconnectWallet(wallet)
+    const walletState = await (web3Onboard as OnboardAPI).disconnectWallet(
+      wallet
+    )
     updateAlreadyConnectedWallets()
     connectingWallet.value = false
+    return walletState
   }
 
   const disconnectConnectedWallet = async () => {
@@ -115,8 +119,9 @@ const useOnboard = (): OnboardComposable => {
 
   const setChain = async (options: SetChainOptions) => {
     settingChain.value = true
-    await (web3Onboard as OnboardAPI).setChain(options)
+    const success = await (web3Onboard as OnboardAPI).setChain(options)
     settingChain.value = false
+    return success
   }
 
   return {
