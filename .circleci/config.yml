@@ -3,7 +3,7 @@ version: 2.1
 aliases:
   - &docker-image
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:18.20.3
 
   - &install_typescript_globally
     run:
