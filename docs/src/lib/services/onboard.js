@@ -1,4 +1,4 @@
-import blocknativeIcon from '../components/icons/blocknative-icon'
+import thirdwebIcon from '../components/icons/thirdweb-icon'
 
 let onboard
 const getOnboard = async passedTheme => {
@@ -118,8 +118,8 @@ const intiOnboard = async theme => {
   const finoaconnect = finoaConnectModule(finoaConnectOptions)
 
   const uauthOptions = {
-    clientID: 'a25c3a65-a1f2-46cc-a515-a46fe7acb78c',
-    redirectUri: 'http://localhost:8080/',
+    clientID: "a7371c4a-a61e-4fac-af48-4471c2e69e93",
+    redirectUri: "https://onboard.blocknative.com",
     scope: 'openid wallet email:optional humanity_check:optional profile:optional social:optional',
     walletConnectProjectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5'
   }
@@ -263,7 +263,7 @@ const intiOnboard = async theme => {
     ],
     appMetadata: {
       name: 'Web3 Onboard Documentation',
-      icon: blocknativeIcon,
+      icon: thirdwebIcon,
       description: 'Example showcasing how to connect a wallet.',
       recommendedInjectedWallets: [
         { name: 'MetaMask', url: 'https://metamask.io' },

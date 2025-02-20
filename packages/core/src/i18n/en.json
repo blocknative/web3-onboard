@@ -39,7 +39,9 @@
         "subheading": "Connection Successful!",
         "paragraph": "Your wallet is now connected to {app}"
       },
-      "mainText": "Connected"
+      "mainText": "Connected",
+      "accountSelected": "Account Selected",
+      "availableWallet": "available wallet"
     }
   },
   "modals": {
