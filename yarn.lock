@@ -2200,7 +2200,7 @@
     base58check "^2.0.0"
     tslib "^2.3.0"
 
-"@keystonehq/eth-keyring@^0.14.00.3":
+"@keystonehq/eth-keyring@^0.14.4":
   version "0.14.4"
   resolved "https://registry.yarnpkg.com/@keystonehq/eth-keyring/-/eth-keyring-0.14.4.tgz#08dbfb5cdd9648b89ae27c17dca06e221dae26ec"
   integrity sha512-aWEKlPGtmGhZRbkRdj26ilUKs2dG+7ov78gz4F1EqU5ES+ZQud2iIlIFKElNQw3qIDZmcObMwNfL/KcyfPKUYQ==
@@ -5945,6 +5945,24 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.1"
     tslib "1.14.1"
+
+"@web3-onboard/core@2.23.1":
+  version "2.23.1"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.23.1.tgz#47d4f086af0e743d9227b42cf70c23c0ad32d2c4"
+  integrity sha512-a3dseMpoe7jBfWzyvTNsIhpOh5MncaOLps/83zsUi32oXhYOPz5vUlJuUOAUx8O6LHGZh3RkRQWAwBTf96qsFA==
+  dependencies:
+    "@web3-onboard/common" "^2.4.1"
+    bnc-sdk "^4.6.7"
+    bowser "^2.11.0"
+    eventemitter3 "^4.0.7"
+    joi "17.9.1"
+    lodash.merge "^4.6.2"
+    lodash.partition "^4.6.0"
+    nanoid "^4.0.0"
+    rxjs "^7.5.5"
+    svelte "^3.49.0"
+    svelte-i18n "^4.0.1"
+    viem "2.12.0"
 
 "@web3-onboard/wagmi@2.0.0":
   version "2.0.0"
