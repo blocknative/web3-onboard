@@ -209,7 +209,7 @@ jobs:
       - node-build-steps
   build-keystone:
     docker:
-      - image: cimg/node:16.13.1
+      - image: cimg/node:18.0.0
     working_directory: ~/web3-onboard-monorepo/packages/keystone
     steps:
       - node-build-steps
