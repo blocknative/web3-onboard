@@ -59,7 +59,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.4.1",
+    "@web3-onboard/common": "^2.4.3",
     "eth-provider": "^0.13.6"
   }
 }

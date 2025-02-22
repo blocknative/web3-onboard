@@ -5070,15 +5070,6 @@
     "@walletconnect/ethereum-provider" "2.11.2"
     "@walletconnect/modal" "2.6.2"
 
-"@wagmi/core@2.10.4":
-  version "2.10.4"
-  resolved "https://registry.yarnpkg.com/@wagmi/core/-/core-2.10.4.tgz#13113dc5a9817e731671cb7cb457f2571e98aa24"
-  integrity sha512-X/PW4zckkSQ/y4LwkQ5cwLKv551I6kVorH3VsTQghxYt0Vj9K5/XhCCRQg5Q200u6fiUCJ+2WjpmhZu3XYNU9w==
-  dependencies:
-    eventemitter3 "5.0.1"
-    mipd "0.0.5"
-    zustand "4.4.1"
-
 "@wagmi/core@2.16.4":
   version "2.16.4"
   resolved "https://registry.yarnpkg.com/@wagmi/core/-/core-2.16.4.tgz#96f1a2803dbf3ca110938402bdf2d99ab8da638e"
@@ -5993,53 +5984,6 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.1"
     tslib "1.14.1"
-
-"@web3-onboard/core@2.23.1":
-  version "2.23.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.23.1.tgz#47d4f086af0e743d9227b42cf70c23c0ad32d2c4"
-  integrity sha512-a3dseMpoe7jBfWzyvTNsIhpOh5MncaOLps/83zsUi32oXhYOPz5vUlJuUOAUx8O6LHGZh3RkRQWAwBTf96qsFA==
-  dependencies:
-    "@web3-onboard/common" "^2.4.1"
-    bnc-sdk "^4.6.7"
-    bowser "^2.11.0"
-    eventemitter3 "^4.0.7"
-    joi "17.9.1"
-    lodash.merge "^4.6.2"
-    lodash.partition "^4.6.0"
-    nanoid "^4.0.0"
-    rxjs "^7.5.5"
-    svelte "^3.49.0"
-    svelte-i18n "^4.0.1"
-    viem "2.12.0"
-
-"@web3-onboard/core@2.24.0":
-  version "2.24.0"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.24.0.tgz#e31f202b557c51c05f9a8a298552e3143d152017"
-  integrity sha512-aFfao9ln5DMW9QSTzXHP4ymuFoJslBs3TrYR+z+5B6/lPMK1CUSe5wmPeFVaqTXs4gIGkyWByuznb9LUq/Vong==
-  dependencies:
-    "@web3-onboard/common" "^2.4.1"
-    bnc-sdk "^4.6.7"
-    bowser "^2.11.0"
-    eventemitter3 "^4.0.7"
-    joi "17.9.1"
-    lodash.merge "^4.6.2"
-    lodash.partition "^4.6.0"
-    nanoid "^4.0.0"
-    rxjs "^7.5.5"
-    svelte "^3.49.0"
-    svelte-i18n "^4.0.1"
-    viem "2.12.0"
-
-"@web3-onboard/wagmi@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/wagmi/-/wagmi-2.0.0.tgz#9beda01b4539d399aa0420e7afaacc09fc25ed7d"
-  integrity sha512-d+F/eQugLKTTwJtTplCQQtWxb5eGiX5IgMA63+6t0DbHD17Rl6F84l1dz9RcQHqQfm7VtElYUKJ66SYjgsr8DQ==
-  dependencies:
-    "@wagmi/core" "2.10.4"
-    "@web3-onboard/common" "^2.4.0"
-    eventemitter3 "^4.0.7"
-    joi "17.9.1"
-    viem "2.12.0"
 
 "@web3-react/abstract-connector@^6.0.7":
   version "6.0.7"
@@ -11231,11 +11175,6 @@ isows@1.0.3:
   resolved "https://registry.yarnpkg.com/isows/-/isows-1.0.3.tgz#93c1cf0575daf56e7120bab5c8c448b0809d0d74"
   integrity sha512-2cKei4vlmg2cxEjm3wVSqn8pcoRF/LX/wpifuuNquFO4SQmPwarClT+SUCA2lt+l581tTeZIPIZuIDo2jWN1fg==
 
-isows@1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/isows/-/isows-1.0.4.tgz#810cd0d90cc4995c26395d2aa4cfa4037ebdf061"
-  integrity sha512-hEzjY+x9u9hPmBom9IIAqdJCwNLax+xrPb51vEPpERoFlIxgmZcHzsT5jKG06nvInKOBGvReAVz80Umed5CczQ==
-
 isows@1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/isows/-/isows-1.0.6.tgz#0da29d706fa51551c663c627ace42769850f86e7"
@@ -16115,20 +16054,6 @@ verror@1.10.0:
     assert-plus "^1.0.0"
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
-
-viem@2.12.0:
-  version "2.12.0"
-  resolved "https://registry.yarnpkg.com/viem/-/viem-2.12.0.tgz#699ba326a1ce0df81042dc8b6f22fa751f9cefce"
-  integrity sha512-XBvORspE4x2/gfy7idH6IVFwkJiXirygFCU3lxUH6fttsj8zufLtgiokfvZF/LAZUEDvdxSgL08whSYgffM2fw==
-  dependencies:
-    "@adraffy/ens-normalize" "1.10.0"
-    "@noble/curves" "1.2.0"
-    "@noble/hashes" "1.3.2"
-    "@scure/bip32" "1.3.2"
-    "@scure/bip39" "1.2.1"
-    abitype "1.0.0"
-    isows "1.0.4"
-    ws "8.13.0"
 
 viem@2.23.4:
   version "2.23.4"

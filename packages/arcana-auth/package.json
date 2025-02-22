@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@arcana/auth": "^1.0.10",
-    "@web3-onboard/common": "^2.4.1"
+    "@web3-onboard/common": "^2.4.3"
   },
   "devDependencies": {
     "typescript": "^5.4.5"

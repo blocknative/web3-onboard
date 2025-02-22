@@ -61,7 +61,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.4.1",
+    "@web3-onboard/common": "^2.4.3",
     "joi": "17.9.1",
     "viem": "2.23.4",
     "@wagmi/core": "2.16.4",

@@ -60,7 +60,7 @@
     "@usecapsule/react-sdk": "4.10.0",
     "@usecapsule/wagmi-v2-integration": "3.10.0",
     "@wagmi/chains": "^1.8.0",
-    "@web3-onboard/common": "^2.4.1",
+    "@web3-onboard/common": "^2.4.3",
     "react-dom": "^18.2.0",
     "viem": "2.9.15",
     "wagmi": "2.5.19"
