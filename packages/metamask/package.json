@@ -59,7 +59,7 @@
 	},
 	"dependencies": {
 		"@metamask/sdk": "^0.32.0",
-		"@web3-onboard/common": "^2.4.1"
+		"@web3-onboard/common": "^2.4.3"
 	},
 	"engines": {
 		"node": ">=18.18"

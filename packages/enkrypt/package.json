@@ -63,6 +63,6 @@
     "@ethersproject/providers": "^5.5.0"
   },
   "dependencies": {
-    "@web3-onboard/common": "^2.4.1"
+    "@web3-onboard/common": "^2.4.3"
   }
 }

@@ -60,7 +60,7 @@
   },
   "dependencies": {
     "@walletconnect/ethereum-provider": "^2.17.3",
-    "@web3-onboard/common": "^2.4.1",
+    "@web3-onboard/common": "^2.4.3",
     "joi": "17.9.1",
     "rxjs": "^7.5.2"
   }
