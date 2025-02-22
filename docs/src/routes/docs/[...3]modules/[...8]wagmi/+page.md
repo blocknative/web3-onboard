@@ -27,7 +27,7 @@ npm install @web3-onboard/wagmi
 
 ## WAGMI Usage
 
-To add [WAGMI API](https://wagmi.sh/core/getting-started) support to your project you can simply install `web3-onboard/wagmi` import and pass in the WAGMI package default export directly into your onboard configuration. After doing so you can use all of the native WAGMI API functions directly from `@web3-onboard/wagmi`. This will give access to all WAGMI function available on or before `@wagmi/core` version `2.10.4`.
+To add [WAGMI API](https://wagmi.sh/core/getting-started) support to your project you can simply install `web3-onboard/wagmi` import and pass in the WAGMI package default export directly into your onboard configuration. After doing so you can use all of the native WAGMI API functions directly from `@web3-onboard/wagmi`. This will give access to all WAGMI function available on or before `@wagmi/core` version `2.16.4`.
 
 Full documentation for `wagmi/core` API functions can be found [here](https://wagmi.sh/core/getting-started).
 
