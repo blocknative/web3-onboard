@@ -19,7 +19,7 @@ jobs:
       - name: Setup Nodejs and yarn
         uses: actions/setup-node@v2
         with:
-          node-version: "18.19.1"
+          node-version: "20.18.0"
           cache: yarn
 
       - name: Install dependencies
@@ -31,5 +31,5 @@ jobs:
       - name: Check formatting and types
         run: yarn type-check
 
-      - name: Check that versions of the package dependencies match those in yarn’s lock file
+      - name: Check that versions of the package dependencies match those in yarn's lock file
         run: yarn file-check
