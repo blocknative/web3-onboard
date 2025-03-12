@@ -40,10 +40,10 @@
   import particleAuthModule from '@web3-onboard/particle-network'
   import finoaConnectModule from '@web3-onboard/finoaconnect'
   import keplrModule from '@web3-onboard/keplr'
-  import capsuleModule, {
-    Environment as CapsuleEnvironment,
-    OAuthMethod as CapsuleOAuthMethods
-  } from '@web3-onboard/capsule'
+  import paraModule, {
+    Environment as ParaEnvironment,
+    OAuthMethod as ParaOAuthMethods
+  } from '@web3-onboard/para'
   import {
     recoverAddress,
     arrayify,
@@ -275,17 +275,17 @@
     clientId: 'blocknative',
     environment: 'staging'
   })
-  const capsule = capsuleModule({
-    environment: CapsuleEnvironment.DEVELOPMENT,
-    apiKey: '992bbd9146d5de8ad0419f141d9a7ca7',
+  const para = paraModule({
+    environment: ParaEnvironment.DEVELOPMENT,
+    apiKey: '2777c7a647fa0ff6cf88d69b5f8a4709',
     modalProps: {
-      appName: 'Capsule',
+      appName: 'Para',
       disableEmailLogin: false,
       disablePhoneLogin: false,
-      oAuthMethods: Object.values(CapsuleOAuthMethods)
+      oAuthMethods: Object.values(ParaOAuthMethods)
     },
 
-    walletLabel: 'Capsule'
+    walletLabel: 'Para'
   })
 
   const onboard = Onboard({
@@ -316,7 +316,7 @@
       sequence,
       uauth,
       web3auth,
-      capsule,
+      para,
       zeal,
       frontier,
       xdefi,
@@ -428,7 +428,7 @@
       // disableClose: true,
       // removeWhereIsMyWalletWarning: true,
       // autoConnectLastWallet: false,
-      autoConnectAllPreviousWallet: true,
+      autoConnectAllPreviousWallet: true
     },
     appMetadata: {
       name: 'Blocknative',
