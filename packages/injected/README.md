@@ -108,6 +108,7 @@ const onboard = Onboard({
 - Lif3Wallet - _Mobile_
 - Zodiac Pilot - _Desktop_
 - Echooo - _Desktop & Mobile_
+- Kaia - _Desktop & Mobile_
 
 ## Filtering Wallets
 
