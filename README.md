@@ -107,7 +107,7 @@ For full documentation, check out the README.md for each package or the [docs pa
 - [Arcana](packages/arcana-auth/README.md)
 - [Bitget](packages/bitget/README.md)
 - [Blocto](packages/blocto/README.md)
-- [Capsule](packages/capsule/README.md)
+- [Para](packages/para/README.md)
 - [Coinbase](packages/coinbase/README.md)
 - [Enkrypt](packages/enkrypt/README.md)
 - [FinoaConnect](packages/finoaconnect/README.md)
