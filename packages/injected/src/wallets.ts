@@ -590,6 +590,19 @@ const bitget: InjectedWalletModule = {
   externalUrl: ProviderExternalUrl.Bitget
 }
 
+const gate: InjectedWalletModule = {
+  label: ProviderLabel.Gate,
+  injectedNamespace: InjectedNameSpace.Gate,
+  checkProviderIdentity: ({ provider }) =>
+    !!provider && !!provider[ProviderIdentityFlag.Gate],
+  getIcon: async () => (await import('./icons/gate.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.gatewallet)
+  }),
+  platforms: ['all'],
+  externalUrl: ProviderExternalUrl.Gate
+}
+
 const sequence: InjectedWalletModule = {
   label: ProviderLabel.Sequence,
   injectedNamespace: InjectedNameSpace.Ethereum,
@@ -947,6 +960,7 @@ const wallets = [
   apexwallet,
   atoken,
   bitget,
+  gate,
   bitpie,
   blockwallet,
   brave,

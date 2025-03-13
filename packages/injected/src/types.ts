@@ -72,6 +72,7 @@ export enum ProviderIdentityFlag {
   ZodiacPilot = 'isZodiacPilot',
   StableWallet = 'isStableWallet',
   Echooo = 'isEchooo',
+  Gate = 'isGateWallet'
   Keplr = 'keplr'
 }
 
@@ -103,6 +104,7 @@ export enum ProviderExternalUrl {
   Rabby = 'https://rabby.io',
   ZodiacPilot = 'https://pilot.gnosisguild.org/',
   Echooo = 'https://www.echooo.xyz',
+  Gate = "https://www.gate.io/mobileapp"
   Keplr = 'https://www.keplr.app/download'
 }
 
@@ -167,6 +169,7 @@ export enum ProviderLabel {
   ZodiacPilot = 'Zodiac Pilot',
   StableWallet = 'StableWallet',
   Echooo = 'Echooo',
+  Gate = "Gate Wallet"
   Keplr = 'Keplr'
 }
 
@@ -194,6 +197,7 @@ export enum InjectedNameSpace {
   Zeal = 'zeal',
   Phantom = 'phantom',
   OKXWallet = 'okxwallet',
+  Gate = 'gatewallet',
   Trust = 'trustwallet',
   Frontier = 'frontier',
   DeFiConnectProvider = 'deficonnectProvider',
@@ -257,7 +261,8 @@ export interface CustomWindow extends Window {
   foxwallet: InjectedProvider
   echooo: {
     ethereum: InjectedProvider
-  }
+  },
+  gatewallet: InjectedProvider
 }
 
 export type InjectedProvider = ExternalProvider &
