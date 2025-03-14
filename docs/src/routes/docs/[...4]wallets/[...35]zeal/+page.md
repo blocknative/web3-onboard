@@ -8,7 +8,7 @@ Wallet module for connecting Zeal to Web3 Onboard.
 
 See [Zeal](https://www.zeal.app/) for details.
 
-For any questions or issues related to integration with Zeal wallet do not hesitate to contact our builders via [hi@zeal.app](mailto:hi@zeal.app) OR ping us on X [@withzeal](https://twitter.com/withzeal)
+For any questions or issues related to integration with Zeal wallet do not hesitate to contact our builders via [hi@zeal.app](mailto:hi@zeal.app) OR ping us on X [@withzeal](https://x.com/withzeal)
 
 ## Install
 
