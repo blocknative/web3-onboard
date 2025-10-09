@@ -56,10 +56,10 @@
   "license": "MIT",
   "devDependencies": {
     "typescript": "^5.4.5",
-    "@walletconnect/types": "^2.17.3"
+    "@walletconnect/types": "^2.21.10"
   },
   "dependencies": {
-    "@walletconnect/ethereum-provider": "^2.17.3",
+    "@walletconnect/ethereum-provider": "^2.21.10",
     "@web3-onboard/common": "^2.4.1",
     "joi": "17.9.1",
     "rxjs": "^7.5.2"
