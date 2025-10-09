@@ -11,7 +11,7 @@ import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfil
 import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill'
 
 // For further build env configs and troubleshooting
-// checkout our official docs [here](https://onboard.blocknative.com/docs/modules/core#sveltekit-vite)
+// checkout our official docs [here](https://web3onboard.thirdweb.com/docs/modules/core#sveltekit-vite)
 
 const MODE = process.env.NODE_ENV
 const development = MODE === 'development'

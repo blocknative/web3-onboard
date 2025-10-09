@@ -31,7 +31,7 @@ console.log(connectedWallets)
 
 ## Build Environments
 
-For build env configurations and setups please see the Build Env section [here](https://onboard.blocknative.com/docs/modules/core#build-environments)
+For build env configurations and setups please see the Build Env section [here](https://web3onboard.thirdweb.com/docs/modules/core#build-environments)
 
 ### Webpack 4
 

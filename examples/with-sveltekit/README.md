@@ -40,4 +40,4 @@ You can preview the production build with `npm run preview`.
 
 ## Build env configurations and troubleshooting
 
-For further build env configs and troubleshooting checkout our official docs [here](https://onboard.blocknative.com/docs/modules/core#sveltekit-vite)
+For further build env configs and troubleshooting checkout our official docs [here](https://web3onboard.thirdweb.com/docs/modules/core#sveltekit-vite)

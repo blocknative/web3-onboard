@@ -28,7 +28,6 @@
       { title: 'Documentation', slug: '/docs', match: /\/docs/ },
       { title: 'Examples', slug: '/examples', match: /\/examples/ },
       { title: 'FAQ', slug: '/faq', match: /\/faq/ },
-      { title: 'Blog', slug: 'https://www.blocknative.com/blog/tag/web3-onboard' }
     ]
   }
 
@@ -37,7 +36,7 @@
   const title = 'Web3-Onboard | Framework-agnostic Web3 Connect Wallet Button'
   const metadescription =
     'Open-source, framework-agnostic JavaScript library to onboard users to web3 apps. Help your users transact with ease by enabling wallet connection, real-time transaction states, and more.'
-  const url = 'https://onboard.blocknative.com/'
+  const url = 'https://web3onboard.thirdweb.com/'
 </script>
 
 <svelte:head>
@@ -71,8 +70,6 @@
     <div slot="navbar-right-alt">
       <div class="flex items-center">
         <ConnectWalletButton />
-        <SocialLink type="gitHub" href="//github.com/blocknative/web3-onboard" class="socialIcon" />
-        <SocialLink type="discord" href="//discord.com/invite/KZaBVME" class="socialIcon" />
       </div>
     </div>
 

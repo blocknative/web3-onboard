@@ -20,11 +20,11 @@ Join our [discord](https://discord.com/invite/KZaBVME) if you want to chat with 
 
 4. Is Web3 Onboard customizable?
 
-   Yes, we’ve made a [theming interface](https://onboard.blocknative.com/theming-tool) to show how you can theme Web3 Onboard for your dapp.
+   Yes, we’ve made a [theming interface](https://web3onboard.thirdweb.com/theming-tool) to show how you can theme Web3 Onboard for your dapp.
 
 5. Are there any code examples?
 
-   Yes, we’ve made a connect wallet example available [here](https://onboard.blocknative.com/examples/connect-wallet#main-sidebar).
+   Yes, we’ve made a connect wallet example available [here](https://web3onboard.thirdweb.com/examples/connect-wallet#main-sidebar).
 
 6. Does Web3 Onboard support my favorite network?
 

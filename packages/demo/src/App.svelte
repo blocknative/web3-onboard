@@ -160,7 +160,7 @@
   const walletConnect = walletConnectModule({
     handleUri: uri => console.log(uri),
     projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
-    dappUrl: 'https://www.onboard.blocknative.com'
+    dappUrl: 'https://www.web3onboard.thirdweb.com'
   })
   const portis = portisModule({
     apiKey: 'b2b7586f-2b1e-4c30-a7fb-c2d1533b153b'
@@ -214,7 +214,7 @@
   const tallyho = tallyHoModule()
   const bloom = bloomModule({
     projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
-    dappUrl: 'https://www.onboard.blocknative.com'
+    dappUrl: 'https://www.web3onboard.thirdweb.com'
   })
 
   const webauthnSigner = new WebauthnSigner({
@@ -900,11 +900,11 @@
                 description: 'Updated Description!',
                 agreement: {
                   version: '2.0.0',
-                  termsUrl: 'https://onboard.blocknative.com/',
-                  privacyUrl: 'https://onboard.blocknative.com/'
+                  termsUrl: 'https://web3onboard.thirdweb.com/',
+                  privacyUrl: 'https://web3onboard.thirdweb.com/'
                 },
-                gettingStartedGuide: 'https://onboard.blocknative.com/',
-                explore: 'https://onboard.blocknative.com/'
+                gettingStartedGuide: 'https://web3onboard.thirdweb.com/',
+                explore: 'https://web3onboard.thirdweb.com/'
               })}>Update appMetadata</button
           >
         </div>

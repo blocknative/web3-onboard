@@ -10,8 +10,8 @@
   export let iconSize = 40
 
   let text = {
-    license: 'Released under the MIT License.',
-    copyright: '© 2023 Blocknative. All Rights Reserved.'
+    license: 'Released under the MIT License',
+    copyright: '© 2025 thirdweb'
   }
 </script>
 
@@ -25,7 +25,7 @@
     --padding="2rem"
   >
     <Flexbox --direction="row" --gap="2rem" --padding="0">
-      <a class="icon-link" href="//github.com/blocknative/web3-onboard" target="_blank">
+      <a class="icon-link" href="//github.com/thirdweb-dev/web3-onboard" target="_blank">
         <GitHubIcon width={iconSize} height={iconSize} />
         <span class="sr-only">Github</span>
       </a>
@@ -42,15 +42,14 @@
         <span class="sr-only">Youtube</span>
       </a>
     </Flexbox>
-    <a href="//www.thirdweb.com/" target="_blank">
-      <img src={PoweredByTw} alt="Powered by thirdweb" />
+    <a href="//www.thirdweb.com/" target="_blank" class="logo-link">
+      <img src={PoweredByTw} alt="Powered by thirdweb" style="max-height: 20px;" />
       <span class="sr-only">Powered by thirdweb</span>
     </a>
   </Flexbox>
   <div class="copyright-box">
     <div class="flex flex-row flex-wrap justify-center">
-      <div class="text">{text.license}</div>
-      <div class="text">{text.copyright}</div>
+      <div class="text">{text.license} {text.copyright}</div>
     </div>
     <div class="flex">
       <a
@@ -70,22 +69,29 @@
 
 <style>
   footer {
-    background: #1a1d26;
-    min-height: 400px;
+    background: #ebebed;
+    min-height: 200px;
     display: flex;
     flex-flow: column;
   }
 
   a.icon-link {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(20, 20, 20, 0.8);
     transition: transform 200ms ease-in-out;
   }
   a.icon-link:hover {
-    color: rgba(255, 255, 255, 1);
-    transform: scale(1.2);
+    color: rgba(20, 20, 20, 1.0);
+    transform: scale(1.1);
   }
   a.icon-link:focus {
     transform: none;
+  }
+
+  a.logo-link {
+    opacity: 0.8;
+  }
+  a.logo-link:hover {
+    opacity: 1.0;
   }
 
   .copyright-box {

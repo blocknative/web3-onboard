@@ -30,4 +30,4 @@ Open [http://localhost:9000](http://localhost:9000) with your browser to see the
 
 ## Learn More
 
-To learn more about other web3Onboard integraions, take a look at our documentation: [Web3Onboard Documentation](https://onboard.blocknative.com/docs/overview/introduction#features) for more details.
+To learn more about other web3Onboard integraions, take a look at our documentation: [Web3Onboard Documentation](https://web3onboard.thirdweb.com/docs/overview/introduction#features) for more details.

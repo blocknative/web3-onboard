@@ -88,11 +88,11 @@ if (wallets[0]) {
 
 **Onboard v1 migration guide**
 
-If you're coming from v1, we've created a [migration guide for you](https://onboard.blocknative.com/docs/overview/onboard.js-migration-guide#background).
+If you're coming from v1, we've created a [migration guide for you](https://web3onboard.thirdweb.com/docs/overview/onboard.js-migration-guide#background).
 
 ## Documentation
 
-For full documentation, check out the README.md for each package or the [docs page here](https://onboard.blocknative.com/docs/overview/introduction#features):
+For full documentation, check out the README.md for each package or the [docs page here](https://web3onboard.thirdweb.com/docs/overview/introduction#features):
 
 **Core Repo**
 

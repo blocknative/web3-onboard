@@ -13,7 +13,7 @@
 ## Usage
 
 This example assumes you have already setup web3-onboard to connect wallets to your dapp.
-For more information see [web3-onboard docs](https://onboard.blocknative.com/docs/modules/core#install).
+For more information see [web3-onboard docs](https://web3onboard.thirdweb.com/docs/modules/core#install).
 
 ### `wagmiConnector` and Connectors
 

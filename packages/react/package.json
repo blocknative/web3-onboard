@@ -38,7 +38,7 @@
     "url": "https://github.com/blocknative/web3-onboard.git",
     "directory": "packages/react"
   },
-  "homepage": "https://onboard.blocknative.com",
+  "homepage": "https://web3onboard.thirdweb.com",
   "bugs": "https://github.com/blocknative/web3-onboard/issues",
   "module": "dist/index.js",
   "browser": "dist/index.js",

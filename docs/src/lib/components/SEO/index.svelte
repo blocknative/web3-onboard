@@ -7,7 +7,7 @@
   export let url
 
   export let image = {
-    url: 'https://onboard.blocknative.com/blocknative-onboard-og-image.png',
+    url: 'https://web3onboard.thirdweb.com/blocknative-onboard-og-image.png',
     alt: 'Web3-Onboard Connect Wallet Button'
   }
 

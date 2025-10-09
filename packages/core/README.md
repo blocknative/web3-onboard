@@ -1,4 +1,4 @@
-<a href="https://onboard.blocknative.com/">
+<a href="https://web3onboard.thirdweb.com/">
   <img alt="Web3-Onboard UI Components" src="https://github.com/blocknative/web3-onboard/blob/develop/assets/core.svg?raw=true" />
 </a>
 

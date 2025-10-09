@@ -15,7 +15,7 @@ export const isHexString = (value: string | number) => {
 function initWalletConnect(options: WalletConnectOptions): WalletInit {
   if (!options) {
     throw new Error(
-      `WalletConnect requires an initialization object to be passed - see the official docs for an example: https://onboard.blocknative.com/docs/wallets/walletconnect`
+      `WalletConnect requires an initialization object to be passed - see the official docs for an example: https://web3onboard.thirdweb.com/docs/wallets/walletconnect`
     )
   }
   if (options) {

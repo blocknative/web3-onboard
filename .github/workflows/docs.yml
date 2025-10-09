@@ -2,10 +2,6 @@
 name: Deploy documentation to Pages
 
 on:
-  # Runs on pushes targeting the default branch
-  push:
-    branches: ["docs"]
-
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -32,13 +28,13 @@ jobs:
         working-directory: ./docs
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         
       - name: Setup Pages
-        uses: actions/configure-pages@v2
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b
     
       - name: Setup Nodejs and yarn
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: "18.18"
           cache: yarn
@@ -52,21 +48,21 @@ jobs:
         run: yarn build
 
       - name: Generate the sitemap
-        uses: cicirello/generate-sitemap@v1
+        uses: cicirello/generate-sitemap@f76c8312a5a364c49e2610b8af12ae861805a056
         with:
           path-to-root: './docs/build'
           drop-html-extension: true
-          base-url-path: https://onboard.blocknative.com
+          base-url-path: https://web3onboard.thirdweb.com
         
       - name: Peak at folder contents
         run: ls -al
         
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa
         with:
           # Upload entire repository
           path: './docs/build'
           
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e

@@ -13,7 +13,7 @@ function App() {
   return (
     <div className="App">
       <div>
-        <a href="https://onboard.blocknative.com" target="_blank">
+        <a href="https://web3onboard.thirdweb.com" target="_blank">
           <img
             src="/blocknative.svg"
             className="logo blocknative"

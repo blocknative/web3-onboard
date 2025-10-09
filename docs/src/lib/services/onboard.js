@@ -80,7 +80,7 @@ const intiOnboard = async theme => {
   const dcent = dcentModule()
   const walletConnect = walletConnectModule({
     projectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5',
-    dappUrl: 'https://onboard.blocknative.com/'
+    dappUrl: 'https://web3onboard.thirdweb.com/'
   })
   const ledger = ledgerModule({
     walletConnectVersion: 2,
@@ -119,7 +119,7 @@ const intiOnboard = async theme => {
 
   const uauthOptions = {
     clientID: "a7371c4a-a61e-4fac-af48-4471c2e69e93",
-    redirectUri: "https://onboard.blocknative.com",
+    redirectUri: "https://web3onboard.thirdweb.com",
     scope: 'openid wallet email:optional humanity_check:optional profile:optional social:optional',
     walletConnectProjectId: 'f6bd6e2911b56f5ac3bc8b2d0e2d7ad5'
   }
@@ -269,7 +269,7 @@ const intiOnboard = async theme => {
         { name: 'MetaMask', url: 'https://metamask.io' },
         { name: 'Coinbase', url: 'https://wallet.coinbase.com/' }
       ],
-      explore: 'https://onboard.blocknative.com/'
+      explore: 'https://web3onboard.thirdweb.com/'
     },
     accountCenter: { desktop: { enabled: true }, mobile: { enabled: true } },
     theme: theme || 'system',

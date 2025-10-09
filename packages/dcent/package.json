@@ -38,7 +38,7 @@
     "url": "https://github.com/blocknative/web3-onboard.git",
     "directory": "packages/dcent"
   },
-  "homepage": "https://onboard.blocknative.com",
+  "homepage": "https://web3onboard.thirdweb.com",
   "bugs": "https://github.com/blocknative/web3-onboard/issues",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
