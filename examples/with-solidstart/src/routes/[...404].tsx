@@ -1,4 +1,4 @@
-import { Title } from "@solidjs/meta";
+import { Title } from '@solidjs/meta'
 
 export default function NotFound() {
   return (
@@ -13,5 +13,5 @@ export default function NotFound() {
         Go Home
       </a>
     </main>
-  );
+  )
 }

@@ -1,9 +1,9 @@
-import { Suspense } from "solid-js";
-import { formatBalance } from "~/web3/utils";
-import useAuth from "~/auth";
+import { Suspense } from 'solid-js'
+import { formatBalance } from '~/web3/utils'
+import useAuth from '~/auth'
 
 export default function Balance() {
-  const { web3 } = useAuth();
+  const { web3 } = useAuth()
 
   return (
     <Suspense
@@ -15,5 +15,5 @@ export default function Balance() {
         {formatBalance(web3()?.eth)} ETH
       </div>
     </Suspense>
-  );
+  )
 }
