@@ -85,11 +85,14 @@ export default function AuthProvider(props: ParentProps) {
 
   const logout = async () => {
     try {
-      const { label } = onboard!.connectedWallet();
-      await onboard!.disconnectWallet({ label });
+      const wallet = onboard?.connectedWallet();
+      if (wallet) {
+        await onboard!.disconnectWallet({ label: wallet.label });
+      }
     } finally {
-      return signOut();
+      await signOut();
     }
+  };
   };
 
   return (
