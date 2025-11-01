@@ -95,6 +95,8 @@ export default function AuthProvider(props: ParentProps) {
   };
   };
 
+   return (
+
   return (
     <Context.Provider value={{ session, signedIn, logout, web3 }}>
       {props.children}
