@@ -35,10 +35,10 @@ export default function AuthProvider(props: ParentProps) {
   });
 
   createResource(
-    () => searchParams.login === "true" && !signedIn(),
-    async () => {
+    () => searchParams.login === "true" && !signedIn() && onboard,
+    async (instance) => {
       try {
-        const [wallet] = await onboard!.connectWallet();
+        const [wallet] = await instance.connectWallet();
         if (!wallet?.provider) throw new Error("Wallet connection failed");
         const address = await sign(wallet.provider);
         const r = searchParams.redirect;
