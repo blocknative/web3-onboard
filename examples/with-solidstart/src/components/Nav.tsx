@@ -1,18 +1,18 @@
-import { createSignal, Show } from 'solid-js'
-import { clientOnly } from '@solidjs/start'
-import { useMatch, useSearchParams } from '@solidjs/router'
-import useAuth from '~/auth'
-import { shortenAddress } from '~/web3/utils'
-import { Logout, Wallet } from '~/components/Icons'
+import { createSignal, Show } from "solid-js";
+import { clientOnly } from "@solidjs/start";
+import { useMatch, useSearchParams } from "@solidjs/router";
+import useAuth from "~/auth";
+import { shortenAddress } from "~/web3/utils";
+import { Logout, Wallet } from "~/components/Icons";
 
-const Balance = clientOnly(() => import('./Balance'))
+const Balance = clientOnly(() => import("./Balance"));
 
 export default function Nav() {
-  const { session, logout } = useAuth()
-  const [searchParams, setSearchParams] = useSearchParams()
-  const isHome = useMatch(() => '/')
-  const isAbout = useMatch(() => '/about')
-  const [show, setShow] = createSignal(false)
+  const { session, logout } = useAuth();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const isHome = useMatch(() => "/");
+  const isAbout = useMatch(() => "/about");
+  const [show, setShow] = createSignal(false);
 
   return (
     <nav class="fixed top-0 left-0 w-full bg-sky-600 border-b border-sky-700 z-2">
@@ -22,8 +22,8 @@ export default function Nav() {
             href="/"
             class={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
               isHome()
-                ? 'text-white bg-white/20'
-                : 'text-white/80 hover:text-white hover:bg-white/10'
+                ? "text-white bg-white/20"
+                : "text-white/80 hover:text-white hover:bg-white/10"
             }`}
           >
             Home
@@ -32,8 +32,8 @@ export default function Nav() {
             href="/about"
             class={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
               isAbout()
-                ? 'text-white bg-white/20'
-                : 'text-white/80 hover:text-white hover:bg-white/10'
+                ? "text-white bg-white/20"
+                : "text-white/80 hover:text-white hover:bg-white/10"
             }`}
           >
             About
@@ -54,11 +54,11 @@ export default function Nav() {
           }
           keyed
         >
-          {address => (
+          {(address) => (
             <div class="relative">
               <button
                 class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/20 backdrop-blur-md hover:bg-white/30 border border-white/30 transition-colors duration-200"
-                onclick={() => setShow(prev => !prev)}
+                onclick={() => setShow((prev) => !prev)}
               >
                 <Wallet class="w-5 fill-white" />
                 <span class="text-sm font-medium text-white">
@@ -66,7 +66,7 @@ export default function Nav() {
                 </span>
                 <svg
                   class="w-4 h-4 fill-white/80 transition-transform duration-200"
-                  classList={{ 'rotate-180': show() }}
+                  classList={{ "rotate-180": show() }}
                   viewBox="0 0 20 20"
                 >
                   <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
@@ -75,8 +75,8 @@ export default function Nav() {
               <div
                 class={`absolute right-0 mt-2 w-48 rounded-lg bg-white/90 backdrop-blur-md shadow-lg border border-white/50 overflow-hidden transition-all duration-200 ${
                   show()
-                    ? 'opacity-100 visible'
-                    : 'opacity-0 invisible pointer-events-none'
+                    ? "opacity-100 visible"
+                    : "opacity-0 invisible pointer-events-none"
                 }`}
               >
                 <div class="px-4 py-3 border-b border-gray-200/50">
@@ -100,5 +100,5 @@ export default function Nav() {
         </Show>
       </div>
     </nav>
-  )
+  );
 }

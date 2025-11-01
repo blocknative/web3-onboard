@@ -40,18 +40,18 @@ To ensure Web3-related logic runs only on the client, use the `clientOnly` utili
 1. **Client-Only Component** (e.g. for a component showing user balance)
 
    ```jsx
-   import { clientOnly } from '@solidjs/start/client'
+   import { clientOnly } from "@solidjs/start/client";
 
-   const ClientComponent = clientOnly(() => import('./ClientOnlyComponent'))
+   const ClientComponent = clientOnly(() => import("./ClientOnlyComponent"));
    ```
 
 2. **Client-Only Page** (e.g. for a `/swap` page)
    Add the following at the top of your route file to render the entire page on the client:
 
    ```jsx
-   import { clientOnly } from '@solidjs/start/client'
+   import { clientOnly } from "@solidjs/start/client";
 
-   export default clientOnly(async () => ({ default: MyPage }))
+   export default clientOnly(async () => ({ default: MyPage }));
    ```
 
 For more details, refer to the `clientOnly` [documentation](https://docs.solidjs.com/solid-start/reference/client/client-only#clientonly).

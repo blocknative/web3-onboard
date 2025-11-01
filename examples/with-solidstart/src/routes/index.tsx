@@ -1,10 +1,10 @@
-import { Title } from '@solidjs/meta'
-import { For } from 'solid-js'
-import useAuth from '~/auth'
+import { Title } from "@solidjs/meta";
+import { For } from "solid-js";
+import useAuth from "~/auth";
 
 export default function Home() {
-  const { session } = useAuth()
-  const wallets = () => session()?.wallets ?? []
+  const { session } = useAuth();
+  const wallets = () => session()?.wallets ?? [];
 
   return (
     <main>
@@ -21,7 +21,7 @@ export default function Home() {
           <div class="text-sm font-medium text-gray-500 mb-2">Your Wallets</div>
           <div class="space-y-2">
             <For each={wallets()}>
-              {wallet => (
+              {(wallet) => (
                 <div class="text-sm font-mono text-gray-900 p-3 bg-gray-50 rounded border border-gray-200 select-text">
                   {wallet}
                 </div>
@@ -31,5 +31,5 @@ export default function Home() {
         </div>
       </section>
     </main>
-  )
+  );
 }
