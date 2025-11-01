@@ -1,0 +1,28 @@
+{
+  "type": "module",
+  "scripts": {
+    "dev": "vinxi dev --port 3001",
+    "build": "vinxi build",
+    "start": "vinxi start",
+    "format": "prettier --write . --trailing-comma none"
+  },
+  "dependencies": {
+    "@solidjs/meta": "^0.29.4",
+    "@solidjs/router": "^0.15.3",
+    "@solidjs/start": "^1.2.0",
+    "@web3-onboard/core": "^2.24.1",
+    "@web3-onboard/injected-wallets": "^2.11.3",
+    "ethers": "^6.15.0",
+    "solid-js": "^1.9.10",
+    "unstorage": "1.17.1",
+    "vinxi": "^0.5.8"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.16",
+    "prettier": "^3.6.2",
+    "tailwindcss": "^4.1.16"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

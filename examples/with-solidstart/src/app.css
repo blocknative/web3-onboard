@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+#app {
+  background-color: white;
+  user-select: none;
+  @media (scripting: none) {
+    display: none;
+  }
+}
+
+main {
+  @apply flex flex-col items-center justify-center min-h-screen bg-gray-50 gap-18 px-4;
+}
+
+h1 {
+  @apply uppercase text-6xl text-sky-700 font-thin;
+}
+
+button {
+  cursor: pointer;
+}
+
+.loader {
+  @apply animate-spin border-current border-t-transparent text-current rounded-full;
+}
