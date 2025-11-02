@@ -12,7 +12,7 @@ export const getSession = () =>
 export const updateSession = async (wallets: string[], id?: number) => {
   const session = await getSession();
   const { data } = await session.update(() => ({
-    id: id || session.data.id,
+    id: id ?? session.data.id,
     wallets
   }));
   return data as Session;
