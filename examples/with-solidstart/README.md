@@ -11,25 +11,27 @@ Launch your DeFi app with this starter template, featuring [SolidStart](https://
 
 ## Getting Started
 
-1. Install dependencies
+1. Rename `.env.example` to `.env`. For production, generate a secure `SESSION_SECRET` with
+
+   ```bash
+   openssl rand -hex 32
+   ```
+
+2. Install dependencies
 
    ```bash
    # use preferred package manager
    npm install
    ```
 
-2. Run the development server
+3. Run the development server
 
    ```bash
    # use preferred package manager
    npm run dev
    ```
 
-3. Rename `.env.example` to `.env`. For production, generate a secure `SESSION_SECRET` with
-
-   ```bash
-   openssl rand -hex 32
-   ```
+For more details, refer to SolidStart's [README.md](https://github.com/solidjs/solid-start/blob/main/packages/start/README.md)
 
 ## Usage
 
