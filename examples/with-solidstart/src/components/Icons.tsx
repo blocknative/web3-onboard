@@ -2,7 +2,7 @@ type Icon = { class: string };
 
 export const Fallback = (props: Icon) => (
   <span
-    class={`inline-block ${props.class} bg-gray-300/50 rounded animate-pulse`}
+    class={props.class + " inline-block bg-gray-300/50 rounded animate-pulse"}
   />
 );
 
@@ -28,7 +28,7 @@ export const Logout = (props: Icon) => (
 );
 
 export const Wallet = (props: Icon) => (
-  <svg viewBox="0 0 48 48" fill="current" class={props.class}>
+  <svg viewBox="0 0 48 48" class={props.class}>
     <path d="M 10.5 6 C 8.1446521 6 6.2064176 7.8574235 6.0332031 10.171875 A 1.50015 1.50015 0 0 0 6 10.5 L 6 13.5 L 6 15 L 6 37.5 C 6 39.967501 8.0324991 42 10.5 42 L 37.5 42 C 39.967501 42 42 39.967501 42 37.5 L 42 16.5 C 42 14.032499 39.967501 12 37.5 12 L 10.5 12 C 9.6535009 12 9 11.346499 9 10.5 C 9 9.6535009 9.6535009 9 10.5 9 L 35.5 9 A 1.50015 1.50015 0 1 0 35.5 6 L 10.5 6 z M 9 15 L 10.5 15 L 37.5 15 C 38.346499 15 39 15.653501 39 16.5 L 39 37.5 C 39 38.346499 38.346499 39 37.5 39 L 10.5 39 C 9.6535009 39 9 38.346499 9 37.5 L 9 15 z M 33.5 24 A 2.5 2.5 0 0 0 33.5 29 A 2.5 2.5 0 0 0 33.5 24 z" />
   </svg>
 );
