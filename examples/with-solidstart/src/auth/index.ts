@@ -4,6 +4,7 @@ import { getSession } from "./server";
 import context from "./context";
 
 const PROTECTED_ROUTES = ["/"];
+const FALLBACK_PAGE = "/about";
 
 export const protectedRoute = (path: string) =>
   PROTECTED_ROUTES.some((route) =>
@@ -17,14 +18,14 @@ export const querySession = query(async (path: string) => {
   const { data: session } = await getSession();
   if (session.wallets?.length) return session;
   if (protectedRoute(path))
-    throw redirect("/about?login=true&redirect=" + path);
+    throw redirect(`${FALLBACK_PAGE}?login=true&redirect=${path}`);
 }, "querySession");
 
 export const signOutAction = action(async () => {
   "use server";
   const session = await getSession();
   await session.update({ wallets: undefined });
-  throw redirect("/about", { revalidate: querySession.key });
+  throw redirect(FALLBACK_PAGE, { revalidate: querySession.key });
 });
 
 export default function useAuth() {

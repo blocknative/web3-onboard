@@ -36,9 +36,9 @@ export default function AuthProvider(props: ParentProps) {
 
   createResource(
     () => searchParams.login === "true" && !signedIn() && onboard,
-    async (instance) => {
+    async (onboard) => {
       try {
-        const [wallet] = await instance.connectWallet();
+        const [wallet] = await onboard.connectWallet();
         if (!wallet?.provider) throw new Error("Wallet connection failed");
         const address = await sign(wallet.provider);
         const r = searchParams.redirect;
@@ -52,20 +52,20 @@ export default function AuthProvider(props: ParentProps) {
     }
   );
 
+  // with SSR enabled make sure to only access the web3 resource on the client
   const [web3] = createResource(onboard?.connectedWallet, load);
 
   createEffect(
     on(
       () => onboard?.walletAddress(),
-      async (current, previous) => {
+      async (curr, prev) => {
         const saved = session()?.wallets;
-        if (!saved?.length || !previous) return;
-        if (!current) await signOut();
-        if (current && current !== previous) {
+        if (!saved?.length || !prev) return;
+        if (!curr) await signOut();
+        if (curr && curr !== prev) {
           try {
             const { provider } = onboard!.connectedWallet();
-            const addr = current.toLowerCase();
-            const verified = saved.includes(addr) ? addr : await sign(provider);
+            const verified = saved.includes(curr) ? curr : await sign(provider);
             await addWallet(verified);
           } catch (err) {
             setSearchParams({ error: err instanceof Error ? err.message : "" });

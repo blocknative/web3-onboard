@@ -2,7 +2,7 @@ import { Title } from "@solidjs/meta";
 
 export default function About() {
   return (
-    <main>
+    <>
       <Title>About Page</Title>
       <h1>Template</h1>
       <div class="flex gap-12 items-center">
@@ -14,6 +14,6 @@ export default function About() {
           <img src="onboard.svg" alt="onboard logo" class="w-20" />
         </a>
       </div>
-    </main>
+    </>
   );
 }

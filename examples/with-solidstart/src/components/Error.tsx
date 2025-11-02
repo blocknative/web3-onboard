@@ -1,16 +1,19 @@
+import { createEffect, on, onCleanup, Show } from "solid-js";
 import { useSearchParams } from "@solidjs/router";
-import { createEffect, onCleanup, Show } from "solid-js";
 import { X } from "./Icons";
 
 export default function ErrorNotification() {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  createEffect(() => {
-    if (searchParams.error) {
-      const timer = setTimeout(() => setSearchParams({ error: "" }), 5000);
-      onCleanup(() => clearTimeout(timer));
-    }
-  });
+  createEffect(
+    on(
+      () => searchParams.error,
+      () => {
+        const timer = setTimeout(() => setSearchParams({ error: "" }), 5000);
+        onCleanup(() => clearTimeout(timer));
+      }
+    )
+  );
 
   return (
     <Show

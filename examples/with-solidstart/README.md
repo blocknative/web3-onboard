@@ -1,14 +1,12 @@
 [![Banner](https://assets.solidjs.com/banner?background=tiles&type=Start&project=template)](https://github.com/solidjs/solid-start)
 
-Kickstart your DeFi app development with this starter template, built with [SolidStart](https://start.solidjs.com) and [Web3Onboard](https://web3onboard.thirdweb.com).
-It seamlessly integrates SolidStart’s server-side rendering (_SSR_) with client-side Web3 features, leveraging libraries like [ethers.js](https://github.com/ethers-io/ethers.js).
+Launch your DeFi app with this starter template, featuring [SolidStart](https://start.solidjs.com) with server-side rendering capabilities and [Web3Onboard](https://web3onboard.thirdweb.com) for seamless Web3 integration with [ethers.js](https://github.com/ethers-io/ethers.js).
 
 ## Features
 
 - **SSR Compliant**: Web3 code loads only on the client, ensuring compatibility with SSR architecture
 - **Auth Context**: A reactive context to monitor wallet changes, handle signatures, and more
-- **Local Storage**: Utilizes a lightweight, file-based database with `unstorage` for persistence
-- **Starter Kit for DeFi**: Preconfigured setup to kickstart your DeFi app development with SolidStart and Web3Onboard
+- **Database**: Includes `unstorage`, a lightweight file-based DB
 - **Client-Only**: Easily isolate client-side logic for Web3 interactions
 
 ## Getting Started
@@ -57,7 +55,5 @@ To ensure Web3-related logic runs only on the client, use the `clientOnly` utili
 For more details, refer to the `clientOnly` [documentation](https://docs.solidjs.com/solid-start/reference/client/client-only#clientonly).
 
 <div align="center">
-   </br>
-   </br>
-  <img src="public/logo.svg" width="300px">
+  <img src="public/logo.png" width="350px">
 </div>

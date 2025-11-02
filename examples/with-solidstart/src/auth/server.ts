@@ -7,7 +7,7 @@ export interface Session {
 }
 
 export const getSession = () =>
-  useSession<Session>({ password: process.env.SESSION_SECRET! });
+  useSession<Session>({ password: process.env.SESSION_SECRET });
 
 export const updateSession = async (wallets: string[], id?: number) => {
   const session = await getSession();

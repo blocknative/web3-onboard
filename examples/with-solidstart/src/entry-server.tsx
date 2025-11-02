@@ -13,7 +13,7 @@ export default createHandler(() => (
         <body>
           <div id="app">{children}</div>
           <noscript class="flex flex-col justify-center items-center h-screen px-8 text-center gap-2 select-none">
-            <h1 class="text-2xl font-medium">JavaScript Disabled</h1>
+            <b class="text-2xl font-medium">JavaScript Disabled</b>
             <p class="text-gray-500">Please enable it and refresh the page</p>
           </noscript>
           {scripts}

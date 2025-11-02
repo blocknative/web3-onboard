@@ -1,7 +1,7 @@
 export const shortenAddress = (addr: string) =>
   `${addr.slice(0, 4)}..${addr.slice(-4)}`;
 
-export const formatBalance = <T extends string | undefined>(balance: T) => {
+export const formatBalance = (balance: string | undefined) => {
   if (!balance) return balance;
   const number = Number(balance);
   if (isNaN(number)) return balance;
