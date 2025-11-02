@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 #app {
-  @apply flex flex-col items-center justify-center min-h-screen bg-gray-50 gap-18 px-4 select-none noscript:hidden;
+  @apply flex flex-col items-center justify-center min-h-screen bg-gray-50 gap-16 px-4 select-none noscript:hidden;
 }
 
 h1 {
