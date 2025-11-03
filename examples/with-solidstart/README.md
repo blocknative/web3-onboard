@@ -1,10 +1,12 @@
-[![Banner](https://assets.solidjs.com/banner?background=tiles&type=Start&project=template)](https://github.com/solidjs/solid-start)
+[![Banner](https://github.com/blocknative/web3-onboard/blob/develop/assets/core.svg)](https://web3onboard.thirdweb.com)
 
-Launch your DeFi app with this starter template, featuring [SolidStart](https://start.solidjs.com) with server-side rendering capabilities and [Web3Onboard](https://web3onboard.thirdweb.com) for seamless Web3 integration with [ethers.js](https://github.com/ethers-io/ethers.js).
+# SolidStart Example
+
+Everything you need to integrate Web3Onboard in [SolidStart](https://start.solidjs.com)
 
 ## Features
 
-- **SSR Compliant**: Web3 code loads only on the client, ensuring compatibility with SSR architecture
+- **SSR Compliant**: Web3 code loads only on the client
 - **Auth Context**: A reactive context to monitor wallet changes, handle signatures, and more
 - **Database**: Includes `unstorage`, a lightweight file-based DB
 - **Client-Only**: Easily isolate client-side logic for Web3 interactions
@@ -35,9 +37,10 @@ For more details, refer to SolidStart's [README.md](https://github.com/solidjs/s
 
 ## Usage
 
-To ensure Web3-related logic runs only on the client, use the `clientOnly` utility from SolidStart. Here are two ways to implement client-only code:
+To ensure Web3-related logic runs only on the client, use the `clientOnly` utility from SolidStart.
+Here are two ways to implement client-only code:
 
-1. **Client-Only Component** (e.g. for a component showing user balance)
+1. **In Component** (e.g. for a component showing eth balance)
 
    ```jsx
    import { clientOnly } from "@solidjs/start/client";
@@ -45,8 +48,7 @@ To ensure Web3-related logic runs only on the client, use the `clientOnly` utili
    const ClientComponent = clientOnly(() => import("./ClientOnlyComponent"));
    ```
 
-2. **Client-Only Page** (e.g. for a `/swap` page)
-   Add the following at the top of your route file to render the entire page on the client:
+2. **In Routes** (e.g. for a `/swap` page)
 
    ```jsx
    import { clientOnly } from "@solidjs/start/client";
