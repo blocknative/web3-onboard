@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+#app {
+  @apply flex flex-col items-center justify-center min-h-screen bg-gray-50 gap-16 px-4 select-none noscript:hidden;
+}
+
+h1 {
+  @apply uppercase text-6xl text-sky-700 font-thin;
+}
+
+button {
+  @apply cursor-pointer;
+}
+
+.loader {
+  @apply animate-spin border-current border-t-transparent text-current rounded-full;
+}
