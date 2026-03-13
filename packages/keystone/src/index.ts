@@ -1,15 +1,12 @@
-import {
-  Account,
-  accountSelect,
+import type {
   Chain,
-  createEIP1193Provider,
   CustomNetwork,
-  ProviderRpcErrorCode,
-  ProviderRpcError,
-  ScanAccountsOptions,
+  Platform,
   WalletInit
 } from '@web3-onboard/common'
-import type { providers } from 'ethers'
+
+import type { Account, ScanAccountsOptions } from '@web3-onboard/hw-common'
+import type { StaticJsonRpcProvider } from '@ethersproject/providers'
 
 const DEFAULT_BASE_PATH = "m/44'/60'/0'/0"
 
@@ -28,7 +25,7 @@ const assets = [
 
 const getAccount = async (
   keyring: any,
-  provider: providers.StaticJsonRpcProvider,
+  provider: StaticJsonRpcProvider,
   index: number
 ): Promise<Account> => {
   const address = (await keyring.addAccounts())[index]
@@ -45,13 +42,14 @@ const getAccount = async (
 
 const generateAccounts = async (
   keyring: any,
-  provider: providers.StaticJsonRpcProvider
+  provider: StaticJsonRpcProvider,
+  consecutiveEmptyAccounts: number
 ): Promise<Account[]> => {
   const accounts = []
   let zeroBalanceAccounts = 0,
     index = 0
 
-  while (zeroBalanceAccounts < 5) {
+  while (zeroBalanceAccounts < consecutiveEmptyAccounts) {
     const account = await getAccount(keyring, provider, index)
     if (account.balance.value.isZero()) {
       zeroBalanceAccounts++
@@ -67,46 +65,91 @@ const generateAccounts = async (
 }
 
 function keystone({
-  customNetwork
+  customNetwork,
+  filter,
+  containerElement,
+  consecutiveEmptyAccountThreshold
 }: {
   customNetwork?: CustomNetwork
+  filter?: Platform[]
+  containerElement?: string
+  /**
+   * A number that defines the amount of consecutive empty addresses displayed
+   * within the Account Select modal. Default is 5
+   */
+  consecutiveEmptyAccountThreshold?: number
 } = {}): WalletInit {
   const getIcon = async () => (await import('./icon.js')).default
-  return () => {
+
+  return ({ device }) => {
     let accounts: Account[] | undefined
+
+    const filtered =
+      Array.isArray(filter) &&
+      (filter.includes(device.type) || filter.includes(device.os.name))
+
+    if (filtered) return null
+
     return {
       label: 'Keystone',
       getIcon,
       getInterface: async ({ EventEmitter, chains }) => {
+
         const { StaticJsonRpcProvider } = await import(
           '@ethersproject/providers'
         )
-        const { default: Common, Hardfork } = await import('@ethereumjs/common')
 
-        const { default: AirGappedKeyring } = await import(
+        let { default: AirGappedKeyring } = await import(
           '@keystonehq/eth-keyring'
         )
+
+        // Super weird esm issue where the default export is an object with a property default on it
+        // if that is the case then we just grab the default value
+        // @ts-ignore
+        AirGappedKeyring =
+          'default' in AirGappedKeyring
+            ? // @ts-ignore
+              AirGappedKeyring.default
+            : AirGappedKeyring
 
         const { TransactionFactory: Transaction } = await import(
           '@ethereumjs/tx'
         )
 
+        const {
+          createEIP1193Provider,
+          ProviderRpcError,
+          ProviderRpcErrorCode
+        } = await import('@web3-onboard/common')
+
+        const {
+          accountSelect,
+          getCommon,
+          bigNumberFieldsToStrings,
+          getHardwareWalletProvider
+        } = await import('@web3-onboard/hw-common')
+
+        const consecutiveEmptyAccounts = consecutiveEmptyAccountThreshold || 5
         const keyring = AirGappedKeyring.getEmptyKeyring()
         await keyring.readKeyring()
 
         const eventEmitter = new EventEmitter()
 
+        let ethersProvider: StaticJsonRpcProvider
+
         let currentChain: Chain = chains[0]
         const scanAccounts = async ({
-          derivationPath,
-          chainId,
-          asset
+          chainId
         }: ScanAccountsOptions): Promise<Account[]> => {
           currentChain =
             chains.find(({ id }: Chain) => id === chainId) || currentChain
 
-          const provider = new StaticJsonRpcProvider(currentChain.rpcUrl)
-          return generateAccounts(keyring, provider)
+          ethersProvider = new StaticJsonRpcProvider(currentChain.rpcUrl)
+          return generateAccounts(
+            keyring,
+            ethersProvider,
+            consecutiveEmptyAccounts
+          )
         }
 
         const getAccounts = async () => {
@@ -115,7 +158,8 @@ function keystone({
             assets,
             chains,
             scanAccounts,
-            supportsCustomPath: false
+            supportsCustomPath: false,
+            containerElement
           })
 
           if (accounts.length) {
@@ -125,7 +169,22 @@ function keystone({
           return accounts
         }
 
-        const keystoneProvider = {}
+        const signMessage = (address: string, message: string) => {
+          if (!(accounts && accounts.length && accounts.length > 0))
+            throw new Error(
+              'No account selected. Must call eth_requestAccounts first.'
+            )
+
+          const account =
+            accounts.find(account => account.address === address) || accounts[0]
+
+          return keyring.signMessage(account.address, message)
+        }
+
+        const keystoneProvider = getHardwareWalletProvider(
+          () => currentChain.rpcUrl
+        )
+
         const provider = createEIP1193Provider(keystoneProvider, {
           eth_requestAccounts: async () => {
             // Triggers the account select modal if no accounts have been selected
@@ -142,12 +201,9 @@ function keystone({
             const accounts = await getAccounts()
             return accounts.map(({ address }) => address)
           },
-          eth_accounts: async () => {
-            return accounts && accounts[0].address ? [accounts[0].address] : []
-          },
-          eth_chainId: async () => {
-            return currentChain.id
-          },
+          eth_accounts: async () =>
+            accounts && accounts[0].address ? [accounts[0].address] : [],
+          eth_chainId: async () => currentChain.id,
           eth_signTransaction: async ({ params: [transactionObject] }) => {
             if (!accounts)
               throw new Error(
@@ -171,44 +227,59 @@ function keystone({
             // Set the `from` field to the currently selected account
             transactionObject = { ...transactionObject, from }
 
-            // @ts-ignore -- Due to weird commonjs exports
-            const CommonConstructor = Common.default || Common
-
-            const common = new Common({
-              chain: customNetwork || Number.parseInt(currentChain.id) || 1,
-              // Berlin is the minimum hardfork that will allow for EIP1559
-              hardfork: Hardfork.Berlin,
-              // List of supported EIPS
-              eips: [1559]
-            })
+            const chainId = currentChain.hasOwnProperty('id')
+              ? Number.parseInt(currentChain.id)
+              : 1
+            const common = await getCommon({ customNetwork, chainId })
 
             transactionObject.gasLimit =
               transactionObject.gas || transactionObject.gasLimit
 
-            const transaction = Transaction.fromTxData(
-              {
-                ...transactionObject
-              },
-              { common, freeze: false }
+            // 'gas' is an invalid property for the TransactionRequest type
+            delete transactionObject.gas
+
+            const signer = ethersProvider.getSigner(from)
+
+            let populatedTransaction = bigNumberFieldsToStrings(
+              await signer.populateTransaction(transactionObject)
             )
 
-            // @ts-ignore
-            const signedTx = await keyring.signTransaction(from, transaction)
+            const transaction = Transaction.fromTxData(populatedTransaction, {
+              common,
+              freeze: false
+            })
+
+            let signedTx
+            try {
+              // @ts-ignore
+              signedTx = await keyring.signTransaction(from, transaction)
+            } catch (error: any) {
+              if (error.message && error.message.message) {
+                throw new Error(error.message.message)
+              } else {
+                throw new Error(error)
+              }
+            }
 
             return `0x${signedTx.serialize().toString('hex')}`
           },
-          eth_sign: async ({ params: [address, message] }) => {
-            if (!(accounts && accounts.length && accounts.length > 0))
-              throw new Error(
-                'No account selected. Must call eth_requestAccounts first.'
-              )
+          eth_sendTransaction: async ({ baseRequest, params }) => {
+            const signedTx = await provider.request({
+              method: 'eth_signTransaction',
+              params
+            })
 
-            const account =
-              accounts.find(account => account.address === address) ||
-              accounts[0]
+            const transactionHash = await baseRequest({
+              method: 'eth_sendRawTransaction',
+              params: [signedTx]
+            })
 
-            return keyring.signMessage(account.address, message)
+            return transactionHash as string
           },
+          eth_sign: async ({ params: [address, message] }) =>
+            signMessage(address, message),
+          personal_sign: async ({ params: [message, address] }) =>
+            signMessage(address, message),
           eth_signTypedData: async ({ params: [address, typedData] }) => {
             if (!(accounts && accounts.length && accounts.length > 0))
               throw new Error(

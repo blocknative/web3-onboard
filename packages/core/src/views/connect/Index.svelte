@@ -1,111 +1,171 @@
 <script lang="ts">
-  import { ProviderRpcErrorCode, WalletModule } from '@web3-onboard/common'
-  import { _ } from 'svelte-i18n'
-  import { BigNumber } from 'ethers'
+  import { ProviderRpcErrorCode, type WalletModule } from '@web3-onboard/common'
   import EventEmitter from 'eventemitter3'
+  import { _ } from 'svelte-i18n'
+  import en from '../../i18n/en.json'
+  import { listenAccountsChanged } from '../../provider.js'
+  import { state } from '../../store/index.js'
+  import { connectWallet$, onDestroy$ } from '../../streams.js'
+  import {
+    addWallet,
+    updateAccount,
+    updateWagmiConfig
+  } from '../../store/actions.js'
+  import {
+    validEnsChain,
+    isSVG,
+    setLocalStore,
+    getLocalStore
+  } from '../../utils.js'
+  import CloseButton from '../shared/CloseButton.svelte'
+  import Modal from '../shared/Modal.svelte'
+  import Agreement from './Agreement.svelte'
+  import ConnectedWallet from './ConnectedWallet.svelte'
+  import ConnectingWallet from './ConnectingWallet.svelte'
+  import InstallWallet from './InstallWallet.svelte'
+  import SelectingWallet from './SelectingWallet.svelte'
+  import Sidebar from './Sidebar.svelte'
+  import { configuration } from '../../configuration.js'
+  import { MOBILE_WINDOW_WIDTH, STORAGE_KEYS } from '../../constants.js'
+  import { defaultBnIcon } from '../../icons/index.js'
+  import type { Config, Connector } from '@web3-onboard/wagmi'
+  import {
+    BehaviorSubject,
+    distinctUntilChanged,
+    filter,
+    firstValueFrom,
+    mapTo,
+    shareReplay,
+    startWith,
+    Subject,
+    take,
+    takeUntil
+  } from 'rxjs'
+
+  import {
+    getChainId,
+    requestAccounts,
+    trackWallet,
+    getBalance,
+    getEns,
+    getUns
+  } from '../../provider.js'
 
   import type {
-    WalletWithLoadingIcon,
-    WalletWithLoadedIcon,
+    ConnectOptions,
     i18n,
-    WalletState
-  } from '../../types'
+    WalletState,
+    WalletWithLoadingIcon
+  } from '../../types.js'
+  import { updateSecondaryTokens } from '../../update-balances'
 
-  import Modal from '../shared/Modal.svelte'
-  import SelectingWallet from './SelectingWallet.svelte'
-  import InstallWallet from './InstallWallet.svelte'
-  import ConnectingWallet from './ConnectingWallet.svelte'
-  import ConnectedWallet from './ConnectedWallet.svelte'
-  import CloseButton from '../shared/CloseButton.svelte'
-  import Sidebar from './Sidebar.svelte'
-  import Agreement from './Agreement.svelte'
+  export let autoSelect: ConnectOptions['autoSelect']
 
-  import { connectWallet$, internalState$ } from '../../streams'
+  const appMetadata$ = state
+    .select('appMetadata')
+    .pipe(startWith(state.get().appMetadata), shareReplay(1))
 
-  import { state } from '../../store'
-  import { addWallet } from '../../store/actions'
-  import en from '../../i18n/en.json'
-  import { selectAccounts } from '../../provider'
+  const { walletModules, connect, chains } = state.get()
+  const cancelPreviousConnect$ = new Subject<void>()
+  const { unstoppableResolution, wagmi } = configuration
 
-  export let autoSelect: string
-
-  const { walletModules, appMetadata } = internalState$.getValue()
-
-  let loading = true
   let connectionRejected = false
+  let previousConnectionRequest = false
   let wallets: WalletWithLoadingIcon[] = []
   let selectedWallet: WalletState | null
   let agreed: boolean
+  let connectingWalletLabel: string
+  let connectingErrorMessage: string
 
   let windowWidth: number
+  let scrollContainer: HTMLElement
 
-  const walletToAutoSelect =
-    autoSelect &&
-    walletModules.find(
-      ({ label }) => label.toLowerCase() === autoSelect.toLowerCase()
+  const modalStep$ = new BehaviorSubject<keyof i18n['connect']>(
+    'selectingWallet'
+  )
+
+  $: availableWallets = wallets.length - state.get().wallets.length
+
+  $: displayConnectingWallet =
+    ($modalStep$ === 'connectingWallet' &&
+      selectedWallet &&
+      windowWidth >= MOBILE_WINDOW_WIDTH) ||
+    (windowWidth <= MOBILE_WINDOW_WIDTH &&
+      connectionRejected &&
+      $modalStep$ === 'connectingWallet' &&
+      selectedWallet)
+
+  // handle the edge case where disableModals was set to true on first call
+  // and then set to false on second call and there is still a pending call
+  connectWallet$
+    .pipe(
+      distinctUntilChanged(
+        (prev, curr) =>
+          prev.autoSelect &&
+          curr.autoSelect &&
+          prev.autoSelect.disableModals === curr.autoSelect.disableModals
+      ),
+      filter(
+        ({ autoSelect }) => autoSelect && autoSelect.disableModals === false
+      ),
+      takeUntil(onDestroy$)
     )
+    .subscribe(() => {
+      selectedWallet && connectWallet()
+    })
 
-  if (walletToAutoSelect) {
-    autoSelectWallet(walletToAutoSelect)
-  } else {
-    loadWalletsForSelection()
-  }
-
+  // ==== SELECT WALLET ==== //
   async function selectWallet({
     label,
     icon,
     getInterface
-  }: WalletWithLoadedIcon): Promise<void> {
-    const existingWallet = state
-      .get()
-      .wallets.find(wallet => wallet.label === label)
+  }: WalletWithLoadingIcon): Promise<void> {
+    connectingWalletLabel = label
 
-    if (existingWallet) {
-      // set as first wallet
-      addWallet(existingWallet)
+    try {
+      const existingWallet = state
+        .get()
+        .wallets.find(wallet => wallet.label === label)
 
-      try {
-        await selectAccounts(existingWallet.provider)
-        // change step on next event loop
+      if (existingWallet) {
+        // set as first wallet
+        addWallet(existingWallet)
         setTimeout(() => setStep('connectedWallet'), 1)
-      } catch (error) {
-        const { code } = error as { code: number }
 
-        if (
-          code === ProviderRpcErrorCode.UNSUPPORTED_METHOD ||
-          code === ProviderRpcErrorCode.DOES_NOT_EXIST
-        ) {
-          connectWallet$.next({
-            inProgress: false,
-            actionRequired: existingWallet.label
-          })
-        }
+        selectedWallet = existingWallet
+
+        return
       }
 
-      selectedWallet = existingWallet
+      const { chains } = state.get()
 
-      return
+      const { provider, instance } = await getInterface({
+        chains,
+        EventEmitter,
+        appMetadata: $appMetadata$
+      })
+
+      const loadedIcon = await icon
+
+      selectedWallet = {
+        label,
+        icon: loadedIcon,
+        provider,
+        instance,
+        accounts: [],
+        chains: [{ namespace: 'evm', id: '0x1' }]
+      }
+
+      connectingErrorMessage = ''
+      scrollToTop()
+      // change step on next event loop
+      setTimeout(() => setStep('connectingWallet'), 1)
+    } catch (error) {
+      const { message } = error as { message: string }
+      connectingErrorMessage = message
+      connectingWalletLabel = ''
+      scrollToTop()
     }
-
-    const { chains } = state.get()
-
-    const { provider } = await getInterface({
-      chains,
-      BigNumber,
-      EventEmitter,
-      appMetadata
-    })
-
-    selectedWallet = {
-      label,
-      icon,
-      provider,
-      accounts: [],
-      chains: [{ namespace: 'evm', id: '0x1' }]
-    }
-
-    // change step on next event loop
-    setTimeout(() => setStep('connectingWallet'), 1)
   }
 
   function deselectWallet() {
@@ -118,10 +178,8 @@
 
   async function autoSelectWallet(wallet: WalletModule): Promise<void> {
     const { getIcon, getInterface, label } = wallet
-    const icon = await getIcon()
+    const icon = getIcon()
     selectWallet({ label, icon, getInterface })
-
-    loading = false
   }
 
   async function loadWalletsForSelection() {
@@ -132,37 +190,347 @@
         getInterface
       }
     })
-
-    loading = false
   }
 
   function close() {
     connectWallet$.next({ inProgress: false })
   }
 
-  let step: keyof i18n['connect'] = 'selectingWallet'
+  // ==== CONNECT WALLET ==== //
+  async function connectWallet() {
+    connectionRejected = false
+
+    const { provider, label } = selectedWallet
+
+    cancelPreviousConnect$.next()
+
+    try {
+      let address
+      let wagmiConnector: Connector | undefined
+
+      if (wagmi) {
+        const { buildWagmiConfig, wagmiConnect, getWagmiConnector } = wagmi
+
+        const wagmiConfig: Config = await buildWagmiConfig(chains, {
+          label,
+          provider
+        })
+        updateWagmiConfig(wagmiConfig)
+        wagmiConnector = getWagmiConnector(label)
+
+        const accountsReq = await Promise.race([
+          wagmiConnect(wagmiConfig, {
+            connector: wagmiConnector
+          }),
+          // or connect wallet is called again whilst waiting for response
+          firstValueFrom(cancelPreviousConnect$.pipe(mapTo([])))
+        ])
+
+        // canceled previous request
+        if (!accountsReq || !('accounts' in accountsReq)) {
+          return
+        }
+        const [connectedAddress] = accountsReq.accounts
+        address = connectedAddress
+      } else {
+        const [connectedAddress] = await Promise.race([
+          // resolved account
+          requestAccounts(provider),
+          // or connect wallet is called again whilst waiting for response
+          firstValueFrom(cancelPreviousConnect$.pipe(mapTo([])))
+        ])
+
+        // canceled previous request
+        if (!connectedAddress) {
+          return
+        }
+        address = connectedAddress
+      }
+
+      // store last connected wallet
+      if (
+        state.get().connect.autoConnectLastWallet ||
+        state.get().connect.autoConnectAllPreviousWallet
+      ) {
+        let labelsList: string | Array<String> = getLocalStore(
+          STORAGE_KEYS.LAST_CONNECTED_WALLET
+        )
+
+        try {
+          let labelsListParsed: Array<String> = JSON.parse(labelsList)
+          if (labelsListParsed && Array.isArray(labelsListParsed)) {
+            const tempLabels = labelsListParsed
+            labelsList = [...new Set([label, ...tempLabels])]
+          }
+        } catch (err) {
+          if (
+            err instanceof SyntaxError &&
+            labelsList &&
+            typeof labelsList === 'string'
+          ) {
+            const tempLabel = labelsList
+            labelsList = [tempLabel]
+          } else {
+            throw new Error(err as string)
+          }
+        }
+
+        if (!labelsList) labelsList = [label]
+        setLocalStore(
+          STORAGE_KEYS.LAST_CONNECTED_WALLET,
+          JSON.stringify(labelsList)
+        )
+      }
+
+      const chain = await getChainId(provider)
+
+      const update: Pick<
+        WalletState,
+        'accounts' | 'chains' | 'wagmiConnector'
+      > = {
+        accounts: [{ address, ens: null, uns: null, balance: null }],
+        chains: [{ namespace: 'evm', id: chain }],
+        wagmiConnector
+      }
+
+      addWallet({ ...selectedWallet, ...update })
+      trackWallet(provider, label)
+      updateSelectedWallet(update)
+      setStep('connectedWallet')
+      scrollToTop()
+    } catch (error) {
+      const { code } = error as { code: number; message: string }
+      scrollToTop()
+
+      // user rejected account access
+      if (code === ProviderRpcErrorCode.ACCOUNT_ACCESS_REJECTED) {
+        connectionRejected = true
+
+        if (autoSelect.disableModals) {
+          connectWallet$.next({ inProgress: false })
+        } else if (autoSelect.label) {
+          autoSelect.label = ''
+        }
+
+        return
+      }
+
+      // account access has already been requested and is awaiting approval
+      if (code === ProviderRpcErrorCode.ACCOUNT_ACCESS_ALREADY_REQUESTED) {
+        previousConnectionRequest = true
+
+        if (autoSelect.disableModals) {
+          connectWallet$.next({ inProgress: false })
+          return
+        }
+
+        listenAccountsChanged({
+          provider: selectedWallet.provider,
+          disconnected$: connectWallet$.pipe(
+            filter(({ inProgress }) => !inProgress),
+            mapTo('')
+          )
+        })
+          .pipe(take(1))
+          .subscribe(([account]) => {
+            account && connectWallet()
+          })
+
+        return
+      }
+    }
+  }
+
+  // ==== CONNECTED WALLET ==== //
+  async function updateAccountDetails() {
+    const { accounts, chains: selectedWalletChains } = selectedWallet
+    const appChains = state.get().chains
+    const [connectedWalletChain] = selectedWalletChains
+
+    const appChain = appChains.find(
+      ({ namespace, id }) =>
+        namespace === connectedWalletChain.namespace &&
+        id === connectedWalletChain.id
+    )
+
+    const { address } = accounts[0]
+    let { balance, ens, uns, secondaryTokens } = accounts[0]
+
+    if (balance === null) {
+      getBalance(address, appChain).then(balance => {
+        updateAccount(selectedWallet.label, address, {
+          balance
+        })
+      })
+    }
+    if (
+      appChain &&
+      !secondaryTokens &&
+      Array.isArray(appChain.secondaryTokens) &&
+      appChain.secondaryTokens.length
+    ) {
+      updateSecondaryTokens(address, appChain).then(secondaryTokens => {
+        updateAccount(selectedWallet.label, address, {
+          secondaryTokens
+        })
+      })
+    }
+
+    if (ens === null && validEnsChain(connectedWalletChain.id)) {
+      const ensChain = chains.find(
+        ({ id }) => id === validEnsChain(connectedWalletChain.id)
+      )
+      getEns(address, ensChain).then(ens => {
+        updateAccount(selectedWallet.label, address, {
+          ens
+        })
+      })
+    }
+
+    if (uns === null && unstoppableResolution) {
+      getUns(address, appChain).then(uns => {
+        updateAccount(selectedWallet.label, address, {
+          uns
+        })
+      })
+    }
+
+    setTimeout(() => connectWallet$.next({ inProgress: false }), 1500)
+  }
+
+  modalStep$.pipe(takeUntil(onDestroy$)).subscribe(step => {
+    switch (step) {
+      case 'selectingWallet': {
+        if (autoSelect.label) {
+          const walletToAutoSelect = walletModules.find(
+            ({ label }) =>
+              label.toLowerCase() === autoSelect.label.toLowerCase()
+          )
+
+          if (walletToAutoSelect) {
+            autoSelectWallet(walletToAutoSelect)
+          } else if (autoSelect.disableModals) {
+            connectWallet$.next({ inProgress: false })
+          }
+        } else {
+          connectingWalletLabel = ''
+          loadWalletsForSelection()
+        }
+        break
+      }
+      case 'connectingWallet': {
+        connectWallet()
+        break
+      }
+      case 'connectedWallet': {
+        connectingWalletLabel = ''
+        updateAccountDetails()
+        break
+      }
+    }
+  })
 
   function setStep(update: keyof i18n['connect']) {
-    step = update
+    cancelPreviousConnect$.next()
+    modalStep$.next(update)
+  }
+
+  function scrollToTop() {
+    scrollContainer && scrollContainer.scrollTo(0, 0)
   }
 </script>
 
 <style>
   .container {
+    /* component values */
+    --background-color: var(
+      --onboard-main-scroll-container-background,
+      var(--w3o-background-color)
+    );
+    --foreground-color: var(--w3o-foreground-color);
+    --text-color: var(--onboard-connect-text-color, var(--w3o-text-color));
+    --border-color: var(--w3o-border-color, var(--gray-200));
+    --action-color: var(--w3o-action-color, var(--primary-500));
+
+    /* themeable properties */
+    font-family: var(--onboard-font-family-normal, var(--font-family-normal));
+    font-size: var(--onboard-font-size-5, 1rem);
+    background: var(--background-color);
+    color: var(--text-color);
+    border-color: var(--border-color);
+
+    /* non-themeable properties */
+    line-height: 24px;
+    overflow: hidden;
     position: relative;
     display: flex;
-    font-family: var(--onboard-font-family-normal, var(--font-family-normal));
-    line-height: 24px;
-    color: var(--onboard-gray-700, var(--gray-700));
-    font-size: var(--onboard-font-size-5, var(--font-size-5));
-    height: var(--onboard-connect-content-height, 440px);
-    overflow: hidden;
+    height: min-content;
+    flex-flow: column-reverse;
   }
 
   .content {
-    width: var(--onboard-connect-content-width, 488px);
+    width: var(--onboard-connect-content-width, 100%);
+  }
+
+  .header {
     display: flex;
-    flex-direction: column;
+    padding: 1rem;
+    border-bottom: 1px solid transparent;
+    background: var(--onboard-connect-header-background);
+    color: var(--onboard-connect-header-color);
+    border-color: var(--border-color);
+  }
+
+  .header-heading {
+    line-height: 1rem;
+  }
+
+  .button-container {
+    right: 0.5rem;
+    top: 0.5rem;
+  }
+
+  .mobile-header {
+    display: flex;
+    gap: 0.5rem;
+    height: 4.5rem; /* 72px */
+    padding: 1rem;
+    border-bottom: 1px solid;
+    border-color: var(--border-color);
+  }
+
+  .mobile-subheader {
+    opacity: 0.6;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1rem;
+    margin-top: 0.25rem;
+  }
+
+  .icon-container {
+    display: flex;
+    flex: 0 0 auto;
+    height: 2.5rem;
+    width: 2.5rem;
+    min-width: 2.5rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .disabled {
+    opacity: 0.2;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  :global(.icon-container svg) {
+    display: block;
+    height: 100%;
+    width: auto;
+  }
+
+  .w-full {
+    width: 100%;
   }
 
   .scroll-container {
@@ -175,101 +543,130 @@
     display: none; /* Chrome, Safari and Opera */
   }
 
-  .header {
-    position: relative;
-    display: flex;
-    align-items: center;
-    box-shadow: var(--onboard-shadow-2, var(--shadow-2));
-    background-color: var(
-      --onboard-connect-header-background,
-      var(--onboard-white, var(--white))
-    );
-    color: var(
-      --onboard-connect-header-color,
-      var(--onboard-black, var(--black))
-    );
-    border-radius: 0 24px 0 0;
-  }
-
-  .header-heading {
-    margin: var(--onboard-spacing-4, var(--spacing-4));
-    line-height: 16px;
-  }
-
-  .button-container {
-    position: absolute;
-    right: var(--onboard-spacing-5, var(--spacing-5));
-    top: var(--onboard-spacing-5, var(--spacing-5));
-  }
-
-  .disabled {
-    opacity: 0.2;
-    pointer-events: none;
-  }
-
-  @media all and (max-width: 520px) {
-    .content {
-      width: 100%;
-    }
-
+  @media all and (min-width: 768px) {
     .container {
-      height: auto;
-      min-height: 228px;
+      margin: 0;
+      flex-flow: row;
+      height: var(--onboard-connect-content-height, 440px);
+    }
+    .content {
+      width: var(--onboard-connect-content-width, 488px);
+    }
+    .mobile-subheader {
+      display: none;
+    }
+    .icon-container {
+      display: none;
     }
   }
 </style>
 
 <svelte:window bind:innerWidth={windowWidth} />
 
-{#if !loading}
-  <Modal {close}>
+{#if !autoSelect.disableModals}
+  <Modal close={!connect.disableClose && close}>
     <div class="container">
-      {#if windowWidth >= 809}
-        <Sidebar {step} />
+      {#if connect.showSidebar}
+        <Sidebar step={$modalStep$} />
       {/if}
 
-      <div class="content">
-        <div class="header">
-          <h4 class="header-heading">
-            {$_(`connect.${step}.header`, {
-              default: en.connect[step].header,
-              values: {
-                connectionRejected,
-                wallet: selectedWallet && selectedWallet.label
-              }
-            })}
-          </h4>
-          <div on:click={close} class="button-container">
+      <div class="content flex flex-column">
+        {#if windowWidth <= MOBILE_WINDOW_WIDTH}
+          <div class="mobile-header">
+            <div class="icon-container">
+              {#if $appMetadata$ && $appMetadata$.icon}
+                {#if isSVG($appMetadata$.icon)}
+                  {@html $appMetadata$.icon}
+                {:else}
+                  <img src={$appMetadata$.icon} alt="logo" />
+                {/if}
+              {:else}
+                {@html defaultBnIcon}
+              {/if}
+            </div>
+            <div class="flex flex-column justify-center w-full">
+              <div class="header-heading">
+                {$_(
+                  $modalStep$ === 'connectingWallet' && selectedWallet
+                    ? `connect.${$modalStep$}.header`
+                    : `connect.${$modalStep$}.sidebar.subheading`,
+                  {
+                    default:
+                      $modalStep$ === 'connectingWallet' && selectedWallet
+                        ? en.connect[$modalStep$].header
+                        : en.connect[$modalStep$].sidebar.subheading,
+                    values: {
+                      connectionRejected,
+                      wallet: selectedWallet && selectedWallet.label
+                    }
+                  }
+                )}
+              </div>
+              <div class="mobile-subheader">
+                {$modalStep$ === 'selectingWallet'
+                  ? availableWallets > 1
+                    ? `${availableWallets} ${$_(
+                        'connect.selectingWallet.header'
+                      ).toLowerCase()}`
+                    : `1 ${$_(
+                        'connect.connectedWallet.availableWallet'
+                      ).toLowerCase()}`
+                  : `1 ${$_(
+                      'connect.connectedWallet.accountSelected'
+                    ).toLowerCase()}`}
+              </div>
+            </div>
+          </div>
+        {:else}
+          <div class="header relative flex items-center">
+            <div class="header-heading">
+              {$_(`connect.${$modalStep$}.header`, {
+                default: en.connect[$modalStep$].header,
+                values: {
+                  connectionRejected,
+                  wallet: selectedWallet && selectedWallet.label
+                }
+              })}
+              {$modalStep$ === 'selectingWallet' ? `(${availableWallets})` : ''}
+            </div>
+          </div>
+        {/if}
+        {#if !connect.disableClose}
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <div on:click={close} class="button-container absolute">
             <CloseButton />
           </div>
-        </div>
-
-        <div class="scroll-container">
-          {#if step === 'selectingWallet'}
+        {/if}
+        <div class="scroll-container" bind:this={scrollContainer}>
+          {#if $modalStep$ === 'selectingWallet' || windowWidth <= MOBILE_WINDOW_WIDTH}
             {#if wallets.length}
               <Agreement bind:agreed />
 
               <div class:disabled={!agreed}>
-                <SelectingWallet {selectWallet} {wallets} />
+                <SelectingWallet
+                  {selectWallet}
+                  {wallets}
+                  {connectingWalletLabel}
+                  {connectingErrorMessage}
+                />
               </div>
             {:else}
               <InstallWallet />
             {/if}
           {/if}
 
-          {#if step === 'connectingWallet' && selectedWallet}
+          {#if displayConnectingWallet}
             <ConnectingWallet
-              on:connectionRejected={({ detail }) => {
-                connectionRejected = detail
-              }}
+              {connectWallet}
+              {connectionRejected}
+              {previousConnectionRequest}
               {setStep}
               {deselectWallet}
               {selectedWallet}
-              {updateSelectedWallet}
             />
           {/if}
 
-          {#if step === 'connectedWallet' && selectedWallet}
+          {#if $modalStep$ === 'connectedWallet' && selectedWallet && windowWidth >= MOBILE_WINDOW_WIDTH}
             <ConnectedWallet {selectedWallet} />
           {/if}
         </div>

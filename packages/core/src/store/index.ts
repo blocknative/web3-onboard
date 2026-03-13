@@ -1,7 +1,9 @@
 import { BehaviorSubject, Subject, Observable } from 'rxjs'
 import { distinctUntilKeyChanged, pluck, filter } from 'rxjs/operators'
-
-import type { Chain } from '@web3-onboard/common'
+import { locale } from 'svelte-i18n'
+import { APP_INITIAL_STATE } from '../constants.js'
+import { notNullish } from '../utils.js'
+import type { Chain, WalletModule } from '@web3-onboard/common'
 
 import type {
   AppState,
@@ -9,8 +11,18 @@ import type {
   Action,
   UpdateWalletAction,
   AddWalletAction,
-  UpdateAccountAction
-} from '../types'
+  UpdateAccountAction,
+  UpdateAccountCenterAction,
+  Locale,
+  UpdateNotifyAction,
+  AddNotificationAction,
+  RemoveNotificationAction,
+  UpdateAllWalletsAction,
+  UpdateConnectModalAction,
+  UpdateChainsAction,
+  UpdateAppMetadataAction,
+  UpdateWagmiConfigAction
+} from '../types.js'
 
 import {
   ADD_CHAINS,
@@ -18,17 +30,19 @@ import {
   UPDATE_WALLET,
   REMOVE_WALLET,
   RESET_STORE,
-  UPDATE_ACCOUNT
-} from './constants'
-
-import { APP_INITIAL_STATE } from '../constants'
-import { notNullish } from '../utils'
-
-// observable to log actions or do sideeffects after every state change
-export const actions$ = new Subject<{
-  action: Action
-  state: AppState
-}>()
+  UPDATE_ACCOUNT,
+  UPDATE_CONNECT_MODAL,
+  UPDATE_ACCOUNT_CENTER,
+  UPDATE_NOTIFY,
+  SET_WALLET_MODULES,
+  SET_LOCALE,
+  ADD_NOTIFICATION,
+  REMOVE_NOTIFICATION,
+  UPDATE_ALL_WALLETS,
+  UPDATE_CHAINS,
+  UPDATE_APP_METADATA,
+  UPDATE_WAGMI_CONFIG
+} from './constants.js'
 
 function reducer(state: AppState, action: Action): AppState {
   const { type, payload } = action
@@ -39,6 +53,17 @@ function reducer(state: AppState, action: Action): AppState {
         ...state,
         chains: [...state.chains, ...(payload as Chain[])]
       }
+    
+    case UPDATE_CHAINS: {
+      const updatedChain = payload as UpdateChainsAction['payload']
+      const chains = state.chains
+      const index = chains.findIndex((chain) => chain.id === updatedChain.id)
+      chains[index] = updatedChain
+      return {
+        ...state,
+        chains
+      }
+    }
 
     case ADD_WALLET: {
       const wallet = payload as AddWalletAction['payload']
@@ -73,6 +98,7 @@ function reducer(state: AppState, action: Action): AppState {
 
     case REMOVE_WALLET: {
       const update = payload as { id: string }
+
       return {
         ...state,
         wallets: state.wallets.filter(({ label }) => label !== update.id)
@@ -103,6 +129,121 @@ function reducer(state: AppState, action: Action): AppState {
       }
     }
 
+    case UPDATE_ALL_WALLETS: {
+      const updatedWallets = payload as UpdateAllWalletsAction['payload']
+      return {
+        ...state,
+        wallets: updatedWallets
+      }
+    }
+
+    case UPDATE_CONNECT_MODAL: {
+      const update = payload as UpdateConnectModalAction['payload']
+
+      return {
+        ...state,
+        connect: {
+          ...state.connect,
+          ...update
+        }
+      }
+    }
+
+    case UPDATE_ACCOUNT_CENTER: {
+      const update = payload as UpdateAccountCenterAction['payload']
+
+      return {
+        ...state,
+        accountCenter: {
+          ...state.accountCenter,
+          ...update
+        }
+      }
+    }
+
+    case UPDATE_NOTIFY: {
+      const update = payload as UpdateNotifyAction['payload']
+
+      return {
+        ...state,
+        notify: {
+          ...state.notify,
+          ...update
+        }
+      }
+    }
+
+    case ADD_NOTIFICATION: {
+      const update = payload as AddNotificationAction['payload']
+      const notificationsUpdate = [...state.notifications]
+
+      const notificationExistsIndex = notificationsUpdate.findIndex(
+        ({ id }) => id === update.id
+      )
+
+      if (notificationExistsIndex !== -1) {
+        // if notification with same id, replace it with update
+        notificationsUpdate[notificationExistsIndex] = update
+      } else {
+        // otherwise add it to the beginning of array as new notification
+        notificationsUpdate.unshift(update)
+      }
+
+      return {
+        ...state,
+        notifications: notificationsUpdate
+      }
+    }
+
+    case REMOVE_NOTIFICATION: {
+      const id = payload as RemoveNotificationAction['payload']
+
+      return {
+        ...state,
+        notifications: state.notifications.filter(
+          notification => notification.id !== id
+        )
+      }
+    }
+
+    case SET_WALLET_MODULES: {
+      return {
+        ...state,
+        walletModules: payload as WalletModule[]
+      }
+    }
+
+    case SET_LOCALE: {
+      // Set the locale in the svelte-i18n internal state
+      locale.set(payload as Locale)
+      return {
+        ...state,
+        locale: payload as Locale
+      }
+    }
+
+    case UPDATE_APP_METADATA: {
+      const update = payload as UpdateAppMetadataAction['payload']
+
+      return {
+        ...state,
+        appMetadata: {
+          ...state.appMetadata,
+          ...update,
+          name: update.name || ''
+        }
+      }
+    }
+
+    case UPDATE_WAGMI_CONFIG: {
+      const update = payload as UpdateWagmiConfigAction['payload']
+
+      return {
+        ...state,
+        wagmiConfig: update
+      }
+    }
+
     case RESET_STORE:
       return APP_INITIAL_STATE
 
@@ -118,8 +259,6 @@ _stateUpdates.subscribe(_store)
 
 export function dispatch(action: Action): void {
   const state = _store.getValue()
-  actions$.next({ action, state })
-
   _stateUpdates.next(reducer(state, action))
 }
 

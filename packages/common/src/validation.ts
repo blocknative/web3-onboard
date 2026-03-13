@@ -1,44 +1,40 @@
 import Joi from 'joi'
-import type { SelectAccountOptions } from './types'
 
-const basePath = Joi.object({
-  label: Joi.string().required(),
-  value: Joi.string().required()
-})
-const basePaths = Joi.array().items(basePath)
+export type ValidateReturn = Joi.ValidationResult | null
 
-const chain = Joi.object({
-  namespace: Joi.string(),
-  id: Joi.string().required(),
-  label: Joi.string(),
-  token: Joi.string().required(),
-  rpcUrl: Joi.string()
-})
-const chains = Joi.array().items(chain)
-
-const asset = Joi.object({
-  label: Joi.string().required(),
-  address: Joi.string()
-})
-const assets = Joi.array().items(asset)
-
-const selectAccountOptions = Joi.object({
-  basePaths: basePaths,
-  assets: assets,
-  chains: chains,
-  scanAccounts: Joi.function().arity(1).required(),
-  supportsCustomPath: Joi.bool()
-})
-
-type ValidateReturn = Joi.ValidationResult | null
-
-const validate = (validator: Joi.Schema, data: unknown): ValidateReturn => {
+export function validate(
+  validator: Joi.AnySchema<any>,
+  data: unknown
+): ValidateReturn {
   const result = validator.validate(data)
   return result.error ? result : null
 }
 
-export const validateSelectAccountOptions = (
-  data: SelectAccountOptions
-): ValidateReturn => {
-  return validate(selectAccountOptions, data)
-}
+export const chainIdValidation = Joi.alternatives().try(
+  Joi.string().pattern(/^0x[0-9a-fA-F]+$/),
+  Joi.number().positive()
+)
+
+export const chainNamespaceValidation = Joi.string().valid('evm')
+
+const secondaryTokenValidation = Joi.object({
+  address: Joi.string().required(),
+  icon: Joi.string().optional()
+})
+
+export const chainValidation = Joi.object({
+  namespace: chainNamespaceValidation,
+  id: chainIdValidation.required(),
+  rpcUrl: Joi.string(),
+  label: Joi.string(),
+  token: Joi.string(),
+  secondaryTokens: Joi.array()
+    .max(5)
+    .items(secondaryTokenValidation)
+    .optional(),
+  icon: Joi.string(),
+  color: Joi.string(),
+  publicRpcUrl: Joi.string(),
+  protectedRpcUrl: Joi.string(),
+  blockExplorerUrl: Joi.string()
+})

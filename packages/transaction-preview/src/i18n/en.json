@@ -1,0 +1,23 @@
+{
+  "time": {
+    "minutes": "min",
+    "seconds": "sec"
+  },
+  "header":"Transaction Preview",
+  "timeSection": {
+    "action": "Simulated",
+    "past": "ago"
+  },
+  "minimized": {
+    "show": "Show details"
+  },
+  "maximized": {
+    "balanceChangeHeading": "Simulated balance changes for",
+    "tokenColumnHeader": "Token",
+    "balanceColumnHeader": "Balance",
+    "gasUsed": "Gas Used",
+    "hide": "Hide details",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  }
+}

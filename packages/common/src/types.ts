@@ -1,6 +1,8 @@
-import type { ethers, BigNumber } from 'ethers'
-import type EventEmitter from 'eventemitter3'
+import type { ConnectionInfo } from 'ethers/lib/utils'
+import EventEmitter from 'eventemitter3'
 import type { TypedData as EIP712TypedData } from 'eip-712'
+import type { Address } from 'viem'
+export type { Address } from 'viem'
 export type { TypedData as EIP712TypedData } from 'eip-712'
 
 /**
@@ -37,10 +39,22 @@ export type RequestPatch = {
         params: EthSignTransactionRequest['params']
       }) => Promise<string>)
     | null
+  eth_sendTransaction?:
+    | ((args: {
+        baseRequest: EIP1193Provider['request']
+        params: EthSignTransactionRequest['params']
+      }) => Promise<string>)
+    | null
   eth_sign?:
     | ((args: {
         baseRequest: EIP1193Provider['request']
         params: EthSignMessageRequest['params']
+      }) => Promise<string>)
+    | null
+  personal_sign?:
+    | ((args: {
+        baseRequest: EIP1193Provider['request']
+        params: PersonalSignMessageRequest['params']
       }) => Promise<string>)
     | null
   eth_signTypedData?:
@@ -62,64 +76,21 @@ export type RequestPatch = {
       }) => Promise<null>)
     | null
 }
-
-// eslint-disable-next-line max-len
-export type AccountSelectAPI = (
-  options: SelectAccountOptions
-) => Promise<Account>
-
-export type SelectAccountOptions = {
-  basePaths: BasePath[] // the paths to display in the base path selector
-  assets: Asset[] // the selectable assets to scan for a balance
-  chains: Chain[] // the selectable chains/networks to scan for balance
-  scanAccounts: ScanAccounts
-  supportsCustomPath?: boolean
-}
-
-export type BasePath = {
-  label: string // eg - Ethereum Ledger Live
-  value: DerivationPath
-}
-
-export type DerivationPath = string // eg - m/44'/60'
-
-export type Asset = {
-  label: string // eg - ETH
-  address?: string // if is a token, address to query contract
-}
-
-export type ScanAccounts = (options: ScanAccountsOptions) => Promise<Account[]>
-
-export type ScanAccountsOptions = {
-  derivationPath: DerivationPath
-  chainId: Chain['id']
-  asset: Asset
-}
-
-export type AccountAddress = string
-
-export type Account = {
-  address: AccountAddress
-  derivationPath: DerivationPath
-  balance: {
-    asset: Asset['label']
-    value: BigNumber
-  }
-}
-
-export type AccountsList = {
-  all: Account[]
-  filtered: Account[]
-}
-
 export interface AppMetadata {
   /* App name */
   name: string
 
-  /* SVG icon string or image url, with height set to 100% */
-  icon: string
+  /* An SVG icon string or image url, with height set to 100% 
+    Note: `icon` is displayed on both mobile AND desktop. If `logo`
+    below is provided then `icon` displays on mobile and `logo` on
+    desktop.
+  */
+  icon?: string
 
-  /* SVG logo (icon and text) string or image url, with width set to 100% */
+  /* SVG logo (icon and text) string or image url, with width set to 100% 
+     Note: This will ONLY display on desktop. It is best used with wide
+     format logos. Use `icon` for standard 40x40 icons.
+  */
   logo?: string
 
   /* Description of app*/
@@ -150,14 +121,20 @@ export type RecommendedInjectedWallets = {
 
 /**
  * A method that takes `WalletHelpers` and
- * returns an initialised `WalletModule` or array of `WalletModule`s.
+ * returns an initialized `WalletModule` or array of `WalletModule`s.
  */
 export type WalletInit = (
   helpers: WalletHelpers
 ) => WalletModule | WalletModule[] | null
 
+export type DeviceNotBrowser = {
+  type: null
+  os: null
+  browser: null
+}
+
 export type WalletHelpers = {
-  device: Device
+  device: Device | DeviceNotBrowser
 }
 
 export interface APIKey {
@@ -219,16 +196,18 @@ export interface WalletModule {
 export type GetInterfaceHelpers = {
   chains: Chain[]
   appMetadata: AppMetadata | null
-  BigNumber: typeof ethers.BigNumber
   EventEmitter: typeof EventEmitter
 }
 
 export type ChainId = string
 
+export type DecimalChainId = number
+
 export type RpcUrl = string
 
 export type WalletInterface = {
   provider: EIP1193Provider
+  instance?: unknown
 }
 
 export interface ProviderRpcError extends Error {
@@ -245,6 +224,8 @@ export interface ProviderMessage {
 export interface ProviderInfo {
   chainId: ChainId
 }
+
+export type AccountAddress = Address
 
 /**
  * An array of addresses
@@ -321,11 +302,16 @@ export interface EthSignTransactionRequest {
   params: [TransactionObject]
 }
 
-type Address = string
 type Message = string
 export interface EthSignMessageRequest {
   method: 'eth_sign'
   params: [Address, Message]
+}
+
+//https://geth.ethereum.org/docs/rpc/ns-personal#personal_sign
+export interface PersonalSignMessageRequest {
+  method: 'personal_sign'
+  params: [Message, Address]
 }
 
 // request -> signTypedData_v3`
@@ -383,7 +369,9 @@ export interface EIP1193Provider extends SimpleEventEmitter {
   request(args: EthChainIdRequest): Promise<ChainId>
   request(args: EthSignTransactionRequest): Promise<string>
   request(args: EthSignMessageRequest): Promise<string>
+  request(args: PersonalSignMessageRequest): Promise<string>
   request(args: EIP712Request): Promise<string>
+  request(args: { method: string; params?: Array<unknown> }): Promise<unknown>
   disconnect?(): void
 }
 
@@ -396,16 +384,71 @@ export enum ProviderRpcErrorCode {
   DISCONNECTED = 4900,
   CHAIN_DISCONNECTED = 4901,
   CHAIN_NOT_ADDED = 4902,
-  DOES_NOT_EXIST = -32601
+  DOES_NOT_EXIST = -32601,
+  UNRECOGNIZED_CHAIN_ID = -32603
 }
 
 export interface Chain {
+  /**
+   * String indicating chain namespace.
+   * Defaults to 'evm' but will allow other chain namespaces in the future
+   */
   namespace?: 'evm'
+  /* Hex encoded string, eg '0x1' for Ethereum Mainnet */
   id: ChainId
-  rpcUrl: string
-  label: string
-  token: TokenSymbol // eg ETH, BNB, MATIC
+  /**
+   * Recommended to include. Used for network requests
+   * (eg Alchemy or Infura end point).
+   * PLEASE NOTE: Some wallets require an rpcUrl, label,
+   * and token for actions such as adding a new chain.
+   * It is recommended to include rpcUrl, label,
+   * and token for full functionality.
+   */
+  rpcUrl?: string
+  /* Recommended to include. Used for display, eg Ethereum Mainnet */
+  label?: string
+  /* Recommended to include. The native token symbol, eg ETH, BNB, MATIC */
+  token?: TokenSymbol
+  /**
+   * An optional array of tokens (max of 5) to be available to the dapp in the
+   * app state object per wallet within the wallet account and displayed
+   * in Account Center (if enabled)
+   */
+  secondaryTokens?: SecondaryTokens[]
+  /**
+   * The color used to represent the chain and
+   * will be used as a background for the icon
+   */
+  color?: string
+  /* Svg string. The icon to represent the chain */
+  icon?: string
+  /* Related to ConnectionInfo from 'ethers/lib/utils' */
+  providerConnectionInfo?: ConnectionInfo
+  /* An optional public RPC used when adding a new chain config to the wallet */
+  publicRpcUrl?: string
+  /** An optional protected RPC URL - Defaults to Blocknative's private and
+   * protected RPC to allow users to update the chain RPC within their wallet,
+   * specifically for private RPCs that protect user transactions
+   */
+  protectedRpcUrl?: string
+  /* Also used when adding a new config to the wallet */
+  blockExplorerUrl?: string
 }
+
+export interface SecondaryTokens {
+  /**
+   * Required - The onchain address of the token associated
+   * with the chain it is entered under
+   */
+  address: string
+  /**
+   * An optional svg or url string for the icon of the token.
+   * If an svg is used ensure the height/width is set to 100%
+   */
+  icon?: string
+}
+
+export type ChainWithDecimalId = Omit<Chain, 'id'> & { id: DecimalChainId }
 
 export type TokenSymbol = string // eg ETH
 
@@ -438,4 +481,11 @@ export interface BootstrapNode {
   id: string
   location: string
   comment: string
+}
+
+export interface RPCResponse {
+  id: number
+  jsonrpc: string
+  error?: { code: number; message: string }
+  result?: any
 }

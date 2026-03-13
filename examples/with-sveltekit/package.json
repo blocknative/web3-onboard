@@ -1,0 +1,47 @@
+{
+  "name": "with-sveltekit",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "lint": "prettier --check . && eslint .",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-auto": "next",
+    "@sveltejs/kit": "next",
+    "@types/cookie": "^0.5.1",
+    "@typescript-eslint/eslint-plugin": "^5.49.0",
+    "@typescript-eslint/parser": "^5.49.0",
+    "eslint": "^8.33.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-svelte3": "^4.0.0",
+    "prettier": "^2.8.3",
+    "prettier-plugin-svelte": "^2.9.0",
+    "rollup-plugin-polyfill-node": "^0.12.0",
+    "svelte": "^3.55.1",
+    "svelte-check": "^3.0.3",
+    "svelte-preprocess": "^5.0.1",
+    "tslib": "^2.5.0",
+    "typescript": "^4.9.5",
+    "vite": "^4.5.3"
+  },
+  "type": "module",
+  "dependencies": {
+    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
+    "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
+    "@fontsource/fira-mono": "^4.5.10",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@web3-onboard/core": "^2.22.3",
+    "@web3-onboard/injected-wallets": "^2.8.5",
+    "@web3-onboard/walletconnect": "^2.3.6",
+    "assert": "^2.1.0",
+    "browserify-zlib": "^0.2.0",
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.0",
+    "stream-browserify": "^3.0.0"
+  }
+}

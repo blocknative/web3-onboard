@@ -4,6 +4,7 @@ import replace from '@rollup/plugin-replace'
 import json from '@rollup/plugin-json'
 import sveltePreprocess from 'svelte-preprocess'
 import typescript from '@rollup/plugin-typescript'
+import copy from '@rollup-extras/plugin-copy'
 
 const production = !process.env.ROLLUP_WATCH
 
@@ -11,7 +12,8 @@ export default {
   input: 'src/index.ts',
   output: {
     format: 'es',
-    dir: 'dist/'
+    dir: 'dist/',
+    sourcemap: true
   },
   plugins: [
     json(),
@@ -20,7 +22,13 @@ export default {
       preventAssignment: true
     }),
     svelte({
-      preprocess: sveltePreprocess({ sourceMap: !production }),
+      preprocess: sveltePreprocess({
+        sourceMap: !production,
+        typescript: {
+          tsconfigFile: './tsconfig.json'
+        },
+        postcss: true
+      }),
       compilerOptions: {
         dev: !production
       },
@@ -28,16 +36,21 @@ export default {
     }),
     resolve({
       browser: true,
-      dedupe: ['svelte']
+      dedupe: ['svelte'],
+      extensions: ['.js', '.ts', '.svelte']
     }),
     typescript({
       sourceMap: !production,
-      inlineSources: !production
-    })
+      inlineSources: !production,
+      exclude: ['node_modules/**']
+    }),
+    copy({
+      src: 'src/i18n/en.json',
+      dest: 'i18n'
+    }),
   ],
   external: [
     '@web3-onboard/common',
-    'ethers',
     'bowser',
     'joi',
     'rxjs',
@@ -46,6 +59,10 @@ export default {
     'svelte/store',
     'lodash.merge',
     'lodash.partition',
-    'eventemitter3'
+    'eventemitter3',
+    'bnc-sdk',
+    'nanoid',
+    '@unstoppabledomains/resolution',
+    'viem'
   ]
 }

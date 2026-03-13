@@ -1,20 +1,54 @@
 # @web3-onboard/walletconnect
 
-## Wallet module for connecting Ledger hardware wallets to web3-onboard
+## Wallet module for connecting Wallet Connect to web3-onboard
 
 ### Install
 
-`npm i @web3-onboard/walletconnect`
+`npm i @web3-onboard/core @web3-onboard/walletconnect`
 
 ## Options
 
 ```typescript
 type WalletConnectOptions = {
-  bridge?: string // default = 'https://bridge.walletconnect.org'
-  qrcodeModalOptions?: {
-    mobileLinks: string[] // set the order and list of mobile linking wallets
-  }
-}
+  /**
+   * Project ID associated with [WalletConnect account](https://cloud.walletconnect.com)
+   */
+  projectId: string
+  /**
+   * Defaults to `appMetadata.explore` that is supplied to the web3-onboard init
+   * Strongly recommended to provide atleast one URL as it is required by some wallets (i.e. MetaMask)
+   * To connect with walletconnect
+   */
+  dappUrl?: string
+  /**
+   * List of Required Chain(s) ID for wallets to support in number format (integer or hex)
+   * Defaults to [1] - Ethereum
+   */
+  requiredChains?: number[] | undefined
+  /**
+   * List of Optional Chain(s) ID for wallets to support in number format (integer or hex)
+   * Defaults to the chains provided within the web3-onboard init chain property
+   */
+  optionalChains?: number[] | undefined
+  /**
+   * `undefined` by default, see https://docs.walletconnect.com/2.0/web/walletConnectModal/options
+   */
+  qrModalOptions?: EthereumProviderOptions['qrModalOptions']
+  /**
+   * Additional required methods to be added to the default list of ['eth_sendTransaction', 'personal_sign']
+   * Passed methods to be included along with the defaults methods - see https://docs.walletconnect.com/2.0/advanced/providers/ethereum#required-and-optional-methods
+   */
+  additionalRequiredMethods?: string[] | undefined
+  /**
+   * Additional methods to be added to the default list of ['eth_sendTransaction',  'eth_signTransaction',  'personal_sign',  'eth_sign',  'eth_signTypedData',  'eth_signTypedData_v4']
+   * Passed methods to be included along with the defaults methods - see https://docs.walletconnect.com/2.0/web/walletConnectModal/options
+   */
+  additionalOptionalMethods?: string[] | undefined
+  /**
+   * Optional function to handle WalletConnect URI when it becomes available
+   */
+  handleUri?: (uri: string) => Promise<unknown>
+)
 ```
 
 ## Usage
@@ -23,16 +57,31 @@ type WalletConnectOptions = {
 import Onboard from '@web3-onboard/core'
 import walletConnectModule from '@web3-onboard/walletconnect'
 
+const wcInitOptions = {
+  /**
+   * Project ID associated with [WalletConnect account](https://cloud.walletconnect.com)
+   */
+  projectId: 'abc123...',
+  /**
+   * Chains required to be supported by all wallets connecting to your DApp
+   */
+  requiredChains: [1],
+  /**
+   * Chains required to be supported by all wallets connecting to your DApp
+   */
+  optionalChains: [42161, 8453, 10, 137, 56],
+  /**
+   * Defaults to `appMetadata.explore` that is supplied to the web3-onboard init
+   * Strongly recommended to provide atleast one URL as it is required by some wallets (i.e. MetaMask)
+   * To connect with WalletConnect
+   */
+  dappUrl: 'http://YourAwesomeDapp.com'
+}
+
 // initialize the module with options
-const walletConnect = walletConnectModule({
-  bridge: 'YOUR_CUSTOM_BRIDGE_SERVER',
-  qrcodeModalOptions: {
-    mobileLinks: ['rainbow', 'metamask', 'argent', 'trust', 'imtoken', 'pillar']
-  }
-})
+const walletConnect = walletConnectModule(wcInitOptions)
 
 // can also initialize with no options...
-// const walletConnect = walletConnectModule()
 
 const onboard = Onboard({
   // ... other Onboard options
@@ -43,5 +92,11 @@ const onboard = Onboard({
 })
 
 const connectedWallets = await onboard.connectWallet()
+
+// Assuming only wallet connect is connected, index 0
+// `instance` will give insight into the WalletConnect info
+// such as namespaces, methods, chains, etc per wallet connected
+const { instance } = connectedWallets[0]
+
 console.log(connectedWallets)
 ```

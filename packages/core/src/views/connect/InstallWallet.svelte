@@ -1,11 +1,13 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
   import en from '../../i18n/en.json'
-  import { internalState$ } from '../../streams'
-  import Warning from '../shared/Warning.svelte'
+  import { Warning } from '../shared/index.js'
+  import { state } from '../../store/index.js'
+  import { shareReplay, startWith } from 'rxjs'
 
-  const { recommendedInjectedWallets, name } =
-    internalState$.getValue().appMetadata || {}
+  const appMetadata$ = state
+    .select('appMetadata')
+    .pipe(startWith(state.get().appMetadata), shareReplay(1))
 </script>
 
 <style>
@@ -16,23 +18,26 @@
     font-size: var(--onboard-font-size-7, var(--font-size-7));
     line-height: 16px;
     color: var(--onboard-primary-500, var(--primary-500));
-    cursor: pointer;
     text-decoration: none;
   }
 </style>
 
 <div class="outer-container">
   <Warning>
-    {#if recommendedInjectedWallets}
+    {#if $appMetadata$.recommendedInjectedWallets}
       {$_('connect.selectingWallet.recommendedWalletsPart1', {
         default: en.connect.selectingWallet.recommendedWalletsPart1,
         values: {
-          app: name || 'This app'
+          app: $appMetadata$.name || 'This app'
         }
       })}
-      {#each recommendedInjectedWallets as { name, url }, i}
-        <a class="link" href={url} target="_blank" rel="noreferrer noopener"
-          >{name}{i < recommendedInjectedWallets.length - 1 ? ', ' : ''}
+      {#each $appMetadata$.recommendedInjectedWallets as { name, url }, i}
+        <a
+          class="link pointer"
+          href={url}
+          target="_blank"
+          rel="noreferrer noopener"
+          >{name}{i < $appMetadata$.recommendedInjectedWallets.length - 1 ? ', ' : ''}
         </a>
       {/each}
       {$_('connect.selectingWallet.recommendedWalletsPart2', {
@@ -42,7 +47,7 @@
       {$_('connect.selectingWallet.installWallet', {
         default: en.connect.selectingWallet.installWallet,
         values: {
-          app: name || 'this app'
+          app: $appMetadata$.name || 'this app'
         }
       })}
     {/if}

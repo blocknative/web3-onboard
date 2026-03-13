@@ -5,41 +5,73 @@ type GnosisOptions = {
 }
 
 function gnosis(options?: GnosisOptions): WalletInit {
-  const { whitelistedDomains = [/gnosis-safe.io/] } = options || {}
+  const {
+    whitelistedDomains = [
+      /^https:\/\/app\.safe\.global$/,
+      /^https:\/\/safe\.global$/,
+      /^https:\/\/.*\.blockscout\.com$/,
+      /^https:\/\/pilot\.gnosisguild\.org$/
+    ]
+  } = options || {}
 
   return () => {
-    return {
-      label: 'Gnosis Safe',
-      getIcon: async () => (await import('./icon.js')).default,
-      getInterface: async () => {
-        const { default: SafeAppsSDK } = await import(
-          '@gnosis.pm/safe-apps-sdk'
-        )
+    const loadedInIframe = window.self !== window.top
 
-        const { SafeAppProvider } = await import(
-          '@gnosis.pm/safe-apps-provider'
-        )
+    return loadedInIframe
+      ? {
+          label: 'Safe',
+          getIcon: async () => (await import('./icon.js')).default,
+          getInterface: async () => {
+            const { default: SafeAppsSDK } = await import(
+              '@safe-global/safe-apps-sdk'
+            )
 
-        const opts = {
-          whitelistedDomains
+            const { SafeAppProvider } = await import(
+              '@safe-global/safe-apps-provider'
+            )
+
+            const { createEIP1193Provider } = await import(
+              '@web3-onboard/common'
+            )
+
+            const SafeAppProviderConstructor =
+              // @ts-ignore
+              SafeAppsSDK.default || SafeAppsSDK
+
+            const opts = {
+              allowedDomains: whitelistedDomains
+            }
+
+            const appsSdk = new SafeAppProviderConstructor(opts)
+
+            const safe = await Promise.race([
+              appsSdk.safe.getInfo(),
+              new Promise(resolve => setTimeout(resolve, 200))
+            ])
+
+            if (!safe) {
+              throw new Error(
+                `App must be loaded in a Safe App context, head to <a href="https://app.safe.global/">the Safe</a> and open this website as an app.`
+              )
+            }
+
+            const provider = new SafeAppProvider(
+              safe,
+              // @ts-ignore
+              appsSdk
+            )
+
+            const patchedProvider = createEIP1193Provider(provider, {
+              eth_requestAccounts: () => Promise.resolve([safe.safeAddress])
+            })
+
+            return {
+              provider: patchedProvider,
+              instance: appsSdk
+            }
+          }
         }
-
-        const appsSdk = new SafeAppsSDK(opts)
-
-        const safe = await appsSdk.safe.getInfo()
-
-        const provider = new SafeAppProvider(
-          safe,
-          // @ts-ignore
-          appsSdk
-        )
-
-        return {
-          provider,
-          instance: appsSdk
-        }
-      }
-    }
+      : []
   }
 }
 

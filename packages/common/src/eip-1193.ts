@@ -4,8 +4,8 @@ import type {
   ChainId,
   EIP1193Provider,
   ProviderAccounts
-} from './types'
-import { ProviderRpcError } from './errors'
+} from './types.js'
+import { ProviderRpcError } from './errors.js'
 
 /**
  * Takes a provider instance along with events

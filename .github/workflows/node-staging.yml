@@ -1,0 +1,175 @@
+name: Node Packages – Staging (Alpha ➜ next)
+
+on:
+  push:
+    branches: [develop]
+
+permissions:
+  contents: read
+  id-token: write
+  packages: write
+
+env:
+  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+jobs:
+  build-and-publish:
+    name: Build & publish alpha ${{ matrix.package }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - package: core
+            node: 22
+          - package: common
+            node: 22
+          - package: fortmatic
+            node: 22
+          - package: gnosis
+            node: 22
+          - package: injected
+            node: 22
+          - package: frame
+            node: 22
+          - package: keepkey
+            node: 22
+          - package: keystone
+            node: 22
+          - package: ledger
+            node: 22
+          - package: mew
+            node: 22
+          - package: mew-wallet
+            node: 22
+          - package: portis
+            node: 22
+          - package: torus
+            node: 22
+          - package: trezor
+            node: 22
+          - package: trust
+            node: 22
+          - package: okx
+            node: 22
+          - package: frontier
+            node: 22
+          - package: walletconnect
+            node: 22
+          - package: walletlink
+            node: 22
+          - package: react
+            node: 22
+          - package: magic
+            node: 22
+          - package: coinbase
+            node: 22
+          - package: web3auth
+            node: 22
+          - package: dcent
+            node: 22
+          - package: vue
+            node: 22
+          - package: gas
+            node: 22
+          - package: hw-common
+            node: 22
+          - package: sequence
+            node: 22
+          - package: tallyho
+            node: 22
+          - package: enkrypt
+            node: 22
+          - package: uauth
+            node: 22
+          - package: transaction-preview
+            node: 22
+          - package: zeal
+            node: 22
+          - package: phantom
+            node: 22
+          - package: xdefi
+            node: 22
+          - package: infinity-wallet
+            node: 22
+          - package: taho
+            node: 22
+          - package: unstoppable-resolution
+            node: 22
+          - package: cede-store
+            node: 22
+          - package: arcana-auth
+            node: 22
+          - package: blocto
+            node: 22
+          - package: venly
+            node: 22
+          - package: bitget
+            node: 22
+          - package: bitkeep
+            node: 22
+          - package: metamask
+            node: 22
+          - package: solid
+            node: 22
+          - package: para
+            node: 22
+          - package: particle-network
+            node: 22
+          - package: finoaconnect
+            node: 22
+          - package: wagmi
+            node: 22
+          - package: passport
+            node: 22
+          - package: bloom
+            node: 22
+          - package: keplr
+            node: 22
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: packages/${{ matrix.package }}
+
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Use Node ${{ matrix.node }}
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: ${{ matrix.node }}
+          registry-url: https://registry.npmjs.org/
+
+      # ────── only publish *alpha* versions ──────
+      - id: version
+        run: echo "v=$(node -p 'require(\"./package.json\").version')" >> "$GITHUB_OUTPUT"
+
+      - name: Skip non‑alpha builds on develop
+        if: ${{ !contains(steps.version.outputs.v, '-alpha') }}
+        run: echo "Not an alpha – skipping publish."
+      # ───────────────────────────────────────────
+
+      - name: Cache Yarn
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        with:
+          path: |
+            ~/.cache/yarn
+            node_modules
+          key: ${{ runner.os }}-${{ matrix.node }}-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Generate workspace lock‑file
+        run: yarn generate-lock-entry >> yarn.lock
+
+      - name: Install dependencies
+        run: yarn --immutable
+
+      - name: Type‑check & build
+        run: |
+          yarn type-check
+          yarn build
+
+      - name: Publish to npm (next)
+        if: contains(steps.version.outputs.v, '-alpha')
+        run: npm publish --tag next --access public

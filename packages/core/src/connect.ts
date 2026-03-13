@@ -1,11 +1,20 @@
 import { firstValueFrom } from 'rxjs'
 import { filter, withLatestFrom, pluck } from 'rxjs/operators'
-import { state } from './store'
-import { connectWallet$, wallets$ } from './streams'
-import type { ConnectOptions, WalletState } from './types'
-import { validateConnectOptions } from './validation'
+import { configuration } from './configuration.js'
+import { state } from './store/index.js'
+import { setWalletModules } from './store/actions.js'
+import { connectWallet$, wallets$ } from './streams.js'
+import type {
+  ConnectOptions,
+  ConnectOptionsString,
+  WalletState
+} from './types.js'
+import { wait } from './utils.js'
+import { validateConnectOptions } from './validation.js'
 
-async function connect(options?: ConnectOptions): Promise<WalletState[]> {
+async function connect(
+  options?: ConnectOptions | ConnectOptionsString
+): Promise<WalletState[]> {
   if (options) {
     const error = validateConnectOptions(options)
     if (error) {
@@ -22,9 +31,27 @@ async function connect(options?: ConnectOptions): Promise<WalletState[]> {
       'At least one chain must be set before attempting to connect a wallet'
     )
 
-  const { autoSelect } = options || { autoSelect: '' }
+  let { autoSelect } = options || {}
+  if (!autoSelect) {
+    autoSelect = { label: '', disableModals: false }
+  }
 
-  connectWallet$.next({ autoSelect, inProgress: true })
+  // if auto selecting, wait until next event loop
+  if (autoSelect && (typeof autoSelect === 'string' || autoSelect.label)) {
+    await wait(50)
+  }
+
+  // first time calling connect, so initialize and set wallet modules
+  if (!state.get().walletModules.length) {
+    setWalletModules(configuration.initialWalletInit)
+  }
+  connectWallet$.next({
+    autoSelect:
+      typeof autoSelect === 'string'
+        ? { label: autoSelect, disableModals: false }
+        : autoSelect,
+    inProgress: true
+  })
 
   const result$ = connectWallet$.pipe(
     filter(

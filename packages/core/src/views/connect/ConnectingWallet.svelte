@@ -1,106 +1,45 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
-  import { createEventDispatcher } from 'svelte'
-  import { ProviderRpcErrorCode } from '@web3-onboard/common'
-
-  import { getChainId, requestAccounts, trackWallet } from '../../provider'
-  import { internalState$ } from '../../streams'
-  import type { WalletState, i18n } from '../../types'
+  import type { WalletState, i18n } from '../../types.js'
 
   import WalletAppBadge from '../shared/WalletAppBadge.svelte'
-  import defaultAppIcon from '../../icons/default-app-icon'
+  import questionIcon from '../../icons/question.js'
   import en from '../../i18n/en.json'
-  import { addWallet } from '../../store/actions'
+  import { state } from '../../store/index.js'
+  import { shareReplay, startWith } from 'rxjs'
 
+  export let connectWallet: () => Promise<void>
   export let selectedWallet: WalletState
   export let deselectWallet: (label: string) => void
-  export let updateSelectedWallet: (update: Partial<WalletState>) => void
   export let setStep: (update: keyof i18n['connect']) => void
+  export let connectionRejected: boolean
+  export let previousConnectionRequest: boolean
 
-  let connectionRejected = false
-
-  const { appMetadata } = internalState$.getValue()
-
-  const dispatch = createEventDispatcher<{ connectionRejected: boolean }>()
-
-  async function connect() {
-    dispatch('connectionRejected', false)
-    connectionRejected = false
-
-    const { provider, label } = selectedWallet
-
-    try {
-      const [address] = await requestAccounts(provider)
-
-      // canceled previous request
-      if (!address) {
-        return
-      }
-
-      const chain = await getChainId(provider)
-
-      const update: Pick<WalletState, 'accounts' | 'chains'> = {
-        accounts: [{ address, ens: null, balance: null }],
-        chains: [{ namespace: 'evm', id: chain }]
-      }
-
-      addWallet({ ...selectedWallet, ...update })
-      trackWallet(provider, label)
-      updateSelectedWallet(update)
-      setStep('connectedWallet')
-    } catch (error) {
-      const { code } = error as { code: number; message: string }
-
-      // user rejected account access
-      if (code === ProviderRpcErrorCode.ACCOUNT_ACCESS_REJECTED) {
-        connectionRejected = true
-        dispatch('connectionRejected', true)
-        return
-      }
-
-      // account access has already been requested and is awaiting approval
-      if (code === ProviderRpcErrorCode.ACCOUNT_ACCESS_ALREADY_REQUESTED) {
-        return
-      }
-    }
-  }
-
-  connect()
+  const appMetadata$ = state
+    .select('appMetadata')
+    .pipe(startWith(state.get().appMetadata), shareReplay(1))
 </script>
 
 <style>
   .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     padding: var(--onboard-spacing-4, var(--spacing-4));
   }
 
   .connecting-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     width: 100%;
     padding: var(--onboard-spacing-4, var(--spacing-4));
     transition: background-color 100ms ease-in-out,
       border-color 100ms ease-in-out;
     border-radius: 24px;
-    background-color: var(--onboard-primary-100, var(--primary-100));
+    background: var(--onboard-primary-100, var(--primary-100));
     border: 1px solid;
     border-color: var(--onboard-primary-300, var(--primary-300));
-    box-sizing: border-box;
     color: var(--onboard-gray-600, var(--gray-600));
   }
 
   .connecting-container.warning {
-    background-color: var(--onboard-warning-100, var(--warning-100));
+    background: var(--onboard-warning-100, var(--warning-100));
     border-color: var(--onboard-warning-400, var(--warning-400));
-  }
-
-  .icons {
-    display: flex;
-    justify-content: center;
-    position: relative;
   }
 
   .text {
@@ -120,72 +59,101 @@
 
   .rejected-cta {
     color: var(--onboard-primary-500, var(--primary-500));
-    cursor: pointer;
   }
 
   .onboard-button-primary {
-    position: absolute;
     bottom: var(--onboard-spacing-3, var(--spacing-3));
-  }
-
-  .centered-flex-column {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
   }
 
   .ml {
     margin-left: var(--onboard-spacing-4, var(--spacing-4));
   }
+
+  @media all and (max-width: 520px) {
+    .connecting-container {
+      border-radius: var(--onboard-border-radius-4, var(--border-radius-4));
+    }
+
+    .container {
+      padding-bottom: 0;
+    }
+
+    .wallet-badges {
+      display: none;
+    }
+
+    .connecting-wallet-info {
+      margin: 0;
+    }
+
+    .onboard-button-primary {
+      display: none;
+    }
+  }
 </style>
 
-<div class="container">
-  <div class="connecting-container" class:warning={connectionRejected}>
-    <div style="display: flex;">
-      <div class="icons">
+<div class="container flex flex-column items-center">
+  <div
+    class="connecting-container flex justify-between items-center"
+    class:warning={connectionRejected || previousConnectionRequest}
+  >
+    <div class="flex">
+      <div class="flex justify-center relative wallet-badges">
         <WalletAppBadge
           size={40}
           padding={8}
-          icon={(appMetadata && appMetadata.icon) || defaultAppIcon}
-          border={connectionRejected ? 'yellow' : 'blue'}
+          icon={($appMetadata$ && $appMetadata$.icon) || questionIcon}
+          border={connectionRejected || previousConnectionRequest
+            ? 'yellow'
+            : 'blue'}
           background="lightGray"
         />
 
-        <div style="position: relative; right: 0.5rem;">
+        <div class="relative" style="right: 0.5rem;">
           <WalletAppBadge
             size={40}
             padding={8}
-            border={connectionRejected ? 'yellow' : 'blue'}
+            border={connectionRejected || previousConnectionRequest
+              ? 'yellow'
+              : 'blue'}
             background="white"
             icon={selectedWallet.icon}
           />
         </div>
       </div>
 
-      <div class="centered-flex-column ml">
+      <div class="flex flex-column justify-center ml connecting-wallet-info">
         <div class="text" class:text-rejected={connectionRejected}>
           {$_(
-            connectionRejected
-              ? 'connect.connectingWallet.rejectedText'
-              : 'connect.connectingWallet.mainText',
+            `connect.connectingWallet.${
+              connectionRejected ? 'rejectedText' : 'mainText'
+            }`,
             {
               default: connectionRejected
                 ? en.connect.connectingWallet.rejectedText
-                : en.connect.connectingWallet.mainText
+                : en.connect.connectingWallet.mainText,
+              values: { wallet: selectedWallet.label }
             }
           )}
         </div>
         {#if connectionRejected}
-          <div class="rejected-cta subtext" on:click={connect}>
+          <div class="rejected-cta pointer subtext" on:click={connectWallet}>
             {$_('connect.connectingWallet.rejectedCTA', {
-              default: en.connect.connectingWallet.rejectedCTA
+              default: en.connect.connectingWallet.rejectedCTA,
+              values: { wallet: selectedWallet.label }
             })}
           </div>
         {:else}
           <div class="subtext">
-            {$_('connect.connectingWallet.paragraph', {
-              default: en.connect.connectingWallet.paragraph
-            })}
+            {$_(
+              `connect.connectingWallet.${
+                previousConnectionRequest ? 'previousConnection' : 'paragraph'
+              }`,
+              {
+                default: en.connect.connectingWallet.paragraph,
+                values: { wallet: selectedWallet.label }
+              }
+            )}
           </div>
         {/if}
       </div>
@@ -195,10 +163,9 @@
   <button
     on:click={() => {
       deselectWallet(selectedWallet.label)
-      dispatch('connectionRejected', false)
       setStep('selectingWallet')
     }}
-    class="onboard-button-primary"
+    class="onboard-button-primary absolute"
     >{$_('connect.connectingWallet.primaryButton', {
       default: en.connect.connectingWallet.primaryButton
     })}</button

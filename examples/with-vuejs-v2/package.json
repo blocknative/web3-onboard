@@ -1,0 +1,19 @@
+{
+  "name": "vue2-vite",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "@web3-onboard/injected-wallets": "^2.8.3",
+    "@web3-onboard/vue": "^2.5.7",
+    "vue": "^2.7.14",
+    "vue-template-compiler": "2.7.14"
+  },
+  "devDependencies": {
+    "vite": "^4.5.3",
+    "vite-plugin-vue2": "^2.0.3"
+  }
+}

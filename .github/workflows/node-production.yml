@@ -1,0 +1,175 @@
+name: Node Packages – Production Release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  id-token: write      # for provenance / npm‑pkg OIDC
+  packages: write
+
+env:
+  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+jobs:
+  build-and-publish:
+    name: Build & publish ${{ matrix.package }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - package: core                 # 1
+            node: 22
+          - package: common               # 2
+            node: 22
+          - package: fortmatic            # 3
+            node: 22
+          - package: gnosis               # 4
+            node: 22
+          - package: injected             # 5
+            node: 22
+          - package: frame                # 6
+            node: 22
+          - package: keepkey              # 7
+            node: 22
+          - package: keystone             # 8
+            node: 22
+          - package: ledger               # 9
+            node: 22
+          - package: mew                  # 10
+            node: 22
+          - package: mew-wallet           # 11
+            node: 22
+          - package: portis               # 12
+            node: 22
+          - package: torus                # 13
+            node: 22
+          - package: trezor               # 14
+            node: 22
+          - package: trust                # 15
+            node: 22
+          - package: okx                  # 16
+            node: 22
+          - package: frontier             # 17
+            node: 22
+          - package: walletconnect        # 18
+            node: 22
+          - package: walletlink           # 19
+            node: 22
+          - package: react                # 20
+            node: 22
+          - package: magic                # 21
+            node: 22
+          - package: coinbase             # 22
+            node: 22
+          - package: web3auth             # 23
+            node: 22
+          - package: dcent                # 24
+            node: 22
+          - package: vue                  # 25
+            node: 22
+          - package: gas                  # 26
+            node: 22
+          - package: hw-common            # 27
+            node: 22
+          - package: sequence             # 28
+            node: 22
+          - package: tallyho              # 29
+            node: 22
+          - package: enkrypt              # 30
+            node: 22
+          - package: uauth                # 31
+            node: 22
+          - package: transaction-preview  # 32
+            node: 22
+          - package: zeal                 # 33
+            node: 22
+          - package: phantom              # 34
+            node: 22
+          - package: xdefi                # 35
+            node: 22
+          - package: infinity-wallet      # 36
+            node: 22
+          - package: taho                 # 37
+            node: 22
+          - package: unstoppable-resolution  # 38
+            node: 22
+          - package: cede-store           # 39
+            node: 22
+          - package: arcana-auth          # 40
+            node: 22
+          - package: blocto               # 41
+            node: 22
+          - package: venly                # 42
+            node: 22
+          - package: bitget               # 43
+            node: 22
+          - package: bitkeep              # 44
+            node: 22
+          - package: metamask             # 45
+            node: 22
+          - package: solid                # 46
+            node: 22
+          - package: para                 # 47
+            node: 22
+          - package: particle-network     # 48
+            node: 22
+          - package: finoaconnect         # 49
+            node: 22
+          - package: wagmi                # 50
+            node: 22
+          - package: passport             # 51
+            node: 22
+          - package: bloom                # 52
+            node: 22
+          - package: keplr                # 53
+            node: 22
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: packages/${{ matrix.package }}
+
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Use Node ${{ matrix.node }}
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: ${{ matrix.node }}
+          registry-url: https://registry.npmjs.org/
+
+      # ────── skip alpha versions ──────
+      - id: version
+        run: echo "v=$(node -p 'require(\"./package.json\").version')" >> "$GITHUB_OUTPUT"
+
+      - name: Skip alpha builds on main
+        if: contains(steps.version.outputs.v, '-alpha')
+        run: echo "Alpha version detected – skipping publish."
+      # ─────────────────────────────────
+
+      - name: Cache Yarn
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        with:
+          path: |
+            ~/.cache/yarn
+            node_modules
+          key: ${{ runner.os }}-${{ matrix.node }}-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Generate workspace lock‑file
+        run: yarn generate-lock-entry >> yarn.lock
+
+      - name: Install dependencies
+        run: yarn --immutable
+
+      - name: Type‑check & build
+        run: |
+          yarn type-check
+          yarn build
+
+      - name: Publish to npm (latest)
+        if: ${{ !contains(steps.version.outputs.v, '-alpha') }}
+        run: npm publish --access public

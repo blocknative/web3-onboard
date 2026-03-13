@@ -1,21 +1,24 @@
 <script>
   import { _ } from 'svelte-i18n'
-  import { internalState$, switchChainModal$ } from '../../streams'
+  import { switchChainModal$ } from '../../streams.js'
   import en from '../../i18n/en.json'
   import CloseButton from '../shared/CloseButton.svelte'
   import Modal from '../shared/Modal.svelte'
+  import { state } from '../../store/index.js'
+  import { shareReplay, startWith } from 'rxjs/operators'
 
-  const { appMetadata } = internalState$.getValue()
   const nextNetworkName = $switchChainModal$.chain.label
 
   function close() {
     switchChainModal$.next(null)
   }
+  const appMetadata$ = state
+    .select('appMetadata')
+    .pipe(startWith(state.get().appMetadata), shareReplay(1))
 </script>
 
 <style>
   .container {
-    position: relative;
     padding: var(--onboard-spacing-4, var(--spacing-4));
     font-family: var(--onboard-font-family-normal, var(--font-family-normal));
     line-height: 16px;
@@ -23,7 +26,6 @@
   }
 
   .close {
-    position: absolute;
     top: var(--onboard-spacing-5, var(--spacing-5));
     right: var(--onboard-spacing-5, var(--spacing-5));
     padding: 0.5rem;
@@ -41,7 +43,7 @@
 </style>
 
 <Modal {close}>
-  <div class="container">
+  <div class="container relative">
     <h4>
       {$_('modals.switchChain.heading', {
         default: en.modals.switchChain.heading
@@ -52,7 +54,7 @@
       {$_('modals.switchChain.paragraph1', {
         default: en.modals.switchChain.paragraph1,
         values: {
-          app: (appMetadata && appMetadata.name) || 'This app',
+          app: ($appMetadata$ && $appMetadata$.name) || 'This app',
           nextNetworkName
         }
       })}
@@ -64,6 +66,6 @@
       })}
     </p>
 
-    <div class="close" on:click={close}><CloseButton /></div>
+    <div class="close absolute" on:click={close}><CloseButton /></div>
   </div>
 </Modal>

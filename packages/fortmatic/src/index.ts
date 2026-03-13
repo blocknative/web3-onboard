@@ -1,4 +1,10 @@
-import type { WalletInit, APIKey, EIP1193Provider } from '@web3-onboard/common'
+import {
+  WalletInit,
+  APIKey,
+  EIP1193Provider,
+  ProviderAccounts,
+  weiToEth
+} from '@web3-onboard/common'
 
 function fortmatic(options: APIKey): WalletInit {
   const { apiKey } = options
@@ -7,7 +13,7 @@ function fortmatic(options: APIKey): WalletInit {
     return {
       label: 'Fortmatic',
       getIcon: async () => (await import('./icon.js')).default,
-      getInterface: async ({ EventEmitter, BigNumber, chains }) => {
+      getInterface: async ({ EventEmitter, chains }) => {
         const { default: Fortmatic } = await import('fortmatic')
         const {
           createEIP1193Provider,
@@ -18,18 +24,19 @@ function fortmatic(options: APIKey): WalletInit {
         const emitter = new EventEmitter()
 
         let instance = new Fortmatic(apiKey, {
-          chainId: parseInt(chains[0].id, 10),
-          rpcUrl: chains[0].rpcUrl
+          chainId: parseInt(chains[0].id),
+          rpcUrl: chains[0].rpcUrl || ''
         })
 
         let fortmaticProvider = instance.getProvider()
         let provider: EIP1193Provider
 
         function patchProvider(): EIP1193Provider {
-          provider = createEIP1193Provider(fortmaticProvider, {
+          const patchedProvider = createEIP1193Provider(fortmaticProvider, {
             eth_requestAccounts: async () => {
               try {
-                const accounts = await instance.user.login()
+                const accounts =
+                  (await instance.user.login()) as ProviderAccounts
                 return accounts
               } catch (error) {
                 const { code } = error as { code: number }
@@ -46,11 +53,7 @@ function fortmatic(options: APIKey): WalletInit {
             eth_selectAccounts: null,
             eth_getBalance: async () => {
               const [balance] = await instance.user.getBalances()
-              return balance
-                ? BigNumber.from(balance.crypto_amount)
-                    .mul('1000000000000000000')
-                    .toString()
-                : '0'
+              return balance ? weiToEth(balance.crypto_amount) : '0'
             },
             wallet_switchEthereumChain: async ({ params }) => {
               const chain = chains.find(({ id }) => id === params[0].chainId)
@@ -58,8 +61,8 @@ function fortmatic(options: APIKey): WalletInit {
 
               // re-instantiate instance with new network
               instance = new Fortmatic(apiKey, {
-                chainId: parseInt(chain.id, 10),
-                rpcUrl: chain.rpcUrl
+                chainId: parseInt(chain.id),
+                rpcUrl: chain.rpcUrl || ''
               })
 
               // get the provider again
@@ -74,10 +77,22 @@ function fortmatic(options: APIKey): WalletInit {
             }
           })
 
-          provider.on = emitter.on.bind(emitter)
-          provider.disconnect = () => instance.user.logout()
+          if (!provider) {
+            patchedProvider.on = emitter.on.bind(emitter)
+            patchedProvider.disconnect = () => () => instance.user.logout()
 
-          return provider
+            return patchedProvider
+          } else {
+            provider.request = patchedProvider.request.bind(patchedProvider)
+
+            // @ts-ignore - bind old methods for backwards compat
+            provider.send = patchedProvider.send.bind(patchedProvider)
+
+            // @ts-ignore - bind old methods for backwards compat
+            provider.sendAsync = patchedProvider.sendAsync.bind(patchedProvider)
+
+            return provider
+          }
         }
 
         provider = patchProvider()

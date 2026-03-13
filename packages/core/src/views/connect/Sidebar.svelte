@@ -1,45 +1,71 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
-  import blocknative from '../../icons/blocknative'
-  import { internalState$ } from '../../streams'
+  import {
+    defaultBnIcon,
+    poweredByThirdweb,
+    infoIcon
+  } from '../../icons/index.js'
   import en from '../../i18n/en.json'
-  import type { i18n } from '../../types'
-  import { isSVG } from '../../utils'
+  import type { i18n } from '../../types.js'
+  import { isSVG } from '../../utils.js'
+  import { MOBILE_WINDOW_WIDTH } from '../../constants.js'
+  import { state } from '../../store'
+  import { shareReplay, startWith } from 'rxjs'
 
   export let step: keyof i18n['connect']
 
-  const { appMetadata } = internalState$.getValue()
-  const { icon, logo, name = 'This app' } = appMetadata || {}
+  const { connect } = state.get()
 
   const defaultContent = en.connect[step].sidebar
   const { subheading, paragraph } = defaultContent
+
   const { heading } =
     defaultContent as i18n['connect']['selectingWallet']['sidebar']
+
+  let windowWidth: number
+
+  const appMetadata$ = state
+    .select('appMetadata')
+    .pipe(startWith(state.get().appMetadata), shareReplay(1))
 </script>
 
 <style>
   .sidebar {
-    padding: var(--onboard-spacing-3, var(--spacing-3));
-    border-radius: 24px 0 0 24px;
-    background: var(
+    --background-color: var(
       --onboard-connect-sidebar-background,
-      var(--onboard-gray-100, var(--gray-100))
+      var(--w3o-foreground-color, none)
     );
-    color: var(
-      --onboard-connect-sidebar-color,
-      var(--onboard-gray-700, var(--gray-700))
-    );
+    --text-color: var(--onboard-connect-sidebar-color, inherit);
+    --border-color: var(--onboard-connect-sidebar-border-color, inherit);
+
+    display: flex;
+    flex-flow: column;
+    gap: 1rem;
+    padding: 1rem;
+    align-items: center;
   }
 
   .inner-container {
-    padding-left: var(--onboard-spacing-5, var(--spacing-5));
-    max-width: 236px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    align-self: stretch;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    text-align: center;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    border-color: var(--border-color);
+    background: var(--background-color);
+    color: var(--text-color);
   }
 
   .icon-container {
-    height: 3rem;
     display: flex;
-    margin-bottom: var(--onboard-spacing-4, var(--spacing-4));
+    height: 3.5rem;
+    width: auto;
+    min-width: 3.5rem;
+    max-width: 100%;
   }
 
   .heading {
@@ -48,29 +74,31 @@
   }
 
   .subheading {
-    margin: 0 0 var(--onboard-spacing-5, var(--spacing-5)) 0;
+    line-height: 1rem;
   }
 
   .description {
-    line-height: 20px;
+    line-height: 1.25rem;
     font-size: var(--onboard-font-size-6, var(--font-size-6));
-    margin: 0;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
   }
 
   .indicators {
-    display: flex;
-    align-items: center;
-    margin-top: var(--onboard-spacing-2, var(--spacing-2));
+    margin-top: auto;
   }
 
   .indicator {
-    position: relative;
+    box-sizing: content-box;
     width: 8px;
     height: 8px;
     border-radius: 8px;
     background: var(
       --onboard-connect-sidebar-progress-background,
-      var(--onboard-gray-200, var(--gray-200))
+      var(--onboard-gray-700, var(--gray-700))
     );
     transition: background 250ms ease-in-out;
   }
@@ -78,23 +106,23 @@
   .indicator.on {
     background: var(
       --onboard-connect-sidebar-progress-color,
-      var(--onboard-primary-600, var(--primary-600))
+      var(--action-color)
     );
     border: 2px solid
       var(
         --onboard-connect-sidebar-progress-background,
-        var(--onboard-gray-200, var(--gray-200))
+        var(--onboard-gray-700, var(--gray-700))
       );
   }
 
   .join {
-    position: relative;
+    box-sizing: content-box;
     z-index: 1;
     right: 4px;
     height: 2px;
     background: var(
       --onboard-connect-sidebar-progress-background,
-      var(--onboard-gray-200, var(--gray-200))
+      var(--onboard-gray-700, var(--gray-700))
     );
     transition: background 250ms ease-in-out;
   }
@@ -102,80 +130,162 @@
   .join.active {
     background: var(
       --onboard-connect-sidebar-progress-color,
-      var(--onboard-primary-600, var(--primary-600))
+      var(--action-color)
     );
   }
+  .no-link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0.25rem 0.5rem 0.25rem 0.75rem;
+    gap: 0.25rem;
+    font-size: var(--onboard-font-size-6, var(--font-size-6));
+  }
 
-  img {
-    max-width: 100%;
-    height: auto;
+  .info-icon {
+    width: 1.25rem;
+    display: flex;
+    align-items: center;
+  }
+
+  @media all and (min-width: 768px) {
+    .sidebar {
+      max-width: 280px;
+      border-right: 1px solid;
+
+      border-color: var(--border-color);
+      background: var(--background-color);
+    }
+    .inner-container {
+      border: none;
+      text-align: initial;
+      flex: 1;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .indicators {
+      margin-bottom: 0.25rem;
+    }
   }
 </style>
 
+<svelte:window bind:innerWidth={windowWidth} />
+
 <div class="sidebar">
   <div class="inner-container">
-    <div class="icon-container">
-      {#if logo || icon}
-        {#if isSVG(logo || icon)}
-          {@html logo || icon}
+    <!-- On Mobile we display the icon only & within the header rather than the sidebar -->
+    {#if windowWidth >= MOBILE_WINDOW_WIDTH}
+      <div class="icon-container">
+        {#if $appMetadata$ && ($appMetadata$.logo || $appMetadata$.icon)}
+          {#if isSVG($appMetadata$.logo || $appMetadata$.icon)}
+            {@html $appMetadata$.logo || $appMetadata$.icon}​
+          {:else}
+            <img src={$appMetadata$.logo || $appMetadata$.icon} alt="logo" />
+          {/if}
         {:else}
-          <img src={logo || icon} alt="logo" />
+          {@html defaultBnIcon}
         {/if}
-      {:else}
-        {@html blocknative}
+      </div>
+      {#if $_(`connect.${step}.sidebar.header`, { default: '' })}
+        <div class="heading">
+          {$_(`connect.${step}.sidebar.header`, {
+            default: heading
+          })}
+        </div>
       {/if}
-    </div>
-    {#if $_(`connect.${step}.sidebar.heading`, { default: '' })}
-      <h2 class="heading">
-        {$_(`connect.${step}.sidebar.heading`, {
-          default: heading
-        })}
-      </h2>
     {/if}
 
-    <h4 class="subheading">
+    <div class="subheading">
       {$_(`connect.${step}.sidebar.subheading`, {
         default: subheading
       })}
-    </h4>
+    </div>
 
-    <p class="description">
+    <div class="description">
       {$_(`connect.${step}.sidebar.paragraph`, {
-        values: { app: name },
+        values: { app: ($appMetadata$ && $appMetadata$.name) || 'This App' },
         default: paragraph
       })}
-    </p>
-
-    <div class="indicators">
-      <div class="indicator" class:on={true} />
+    </div>
+    {#if !connect.removeIDontHaveAWalletInfoLink}
+      <a
+        href={connect.iDontHaveAWalletLink ||
+          'https://ethereum.org/en/wallets/find-wallet/#main-content'}
+        target="_blank"
+        rel="noreferrer noopener"
+        class="no-link"
+        >{$_('connect.selectingWallet.sidebar.IDontHaveAWallet', {
+          default: en.connect.selectingWallet.sidebar.IDontHaveAWallet
+        })}
+        <div class="info-icon">{@html infoIcon}</div></a
+      >
+    {/if}
+    {#if windowWidth < MOBILE_WINDOW_WIDTH}
+      <div class="indicators flex items-center">
+        <div class="indicator relative" class:on={true} />
+        <div
+          class:active={step !== 'selectingWallet'}
+          class="join relative"
+          style={`${
+            step !== 'selectingWallet'
+              ? 'right: 4px; width: 52px;'
+              : 'right: 2px; width: 54px;'
+          }`}
+        />
+        <div
+          class="indicator relative"
+          style={`right: 8px;`}
+          class:on={step !== 'selectingWallet'}
+        />
+        <div
+          class:active={step === 'connectedWallet'}
+          class="join relative"
+          style={`${
+            step === 'connectedWallet'
+              ? 'right: 12px; width: 52px;'
+              : 'right: 10px; width: 54px;'
+          }`}
+        />
+        <div
+          style={`right: 16px;`}
+          class="indicator relative"
+          class:on={step === 'connectedWallet'}
+        />
+      </div>
+    {/if}
+  </div>
+  {#if windowWidth >= MOBILE_WINDOW_WIDTH}
+    <div class="indicators flex items-center">
+      <div class="indicator relative" class:on={true} />
       <div
         class:active={step !== 'selectingWallet'}
-        class="join"
-        style={`${
-          step !== 'selectingWallet'
-            ? 'right: 4px; width: 52px;'
-            : 'right: 2px; width: 54px;'
+        class="join relative"
+        style={`right: 2px; ${
+          step !== 'selectingWallet' ? 'width: 78px;' : 'width: 82px;'
         }`}
       />
       <div
-        class="indicator"
-        style={`right: 8px;`}
+        class="indicator relative"
+        style={`right: 4px;`}
         class:on={step !== 'selectingWallet'}
       />
       <div
         class:active={step === 'connectedWallet'}
-        class="join"
-        style={`${
-          step === 'connectedWallet'
-            ? 'right: 12px; width: 52px;'
-            : 'right: 10px; width: 54px;'
+        class="join relative"
+        style={`right: 6px; ${
+          step === 'connectedWallet' ? 'width: 74px;' : 'width: 81px;'
         }`}
       />
       <div
-        style={`right: 16px;`}
-        class="indicator"
+        style={`right: 8px;`}
+        class="indicator relative"
         class:on={step === 'connectedWallet'}
       />
     </div>
+  {/if}
+  <div>
+    <a href="https://thirdweb.com/connect?utm_source=cw_text" target="_blank">
+      {@html poweredByThirdweb}
+    </a>
   </div>
 </div>

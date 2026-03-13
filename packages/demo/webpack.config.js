@@ -8,6 +8,10 @@ const prod = mode === 'production'
 module.exports = {
   entry: './src/main.js',
   resolve: {
+    fallback: {
+      path: require.resolve('path-browserify'),
+      zlib: require.resolve('browserify-zlib')
+    },
     alias: {
       svelte: path.dirname(require.resolve('svelte/package.json')),
       assert: 'assert',
@@ -18,7 +22,8 @@ module.exports = {
       os: 'os-browserify/browser',
       process: 'process/browser',
       stream: 'stream-browserify',
-      util: 'util'
+      util: 'util',
+      zlib: 'browserify-zlib'
     },
     extensions: ['.mjs', '.js', '.svelte'],
     mainFields: ['svelte', 'browser', 'module', 'main']
@@ -60,6 +65,13 @@ module.exports = {
         resolve: {
           fullySpecified: false
         }
+      },
+      {
+        test: /\.(woff(2)?|eot|ttf|otf|svg)$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'fonts/[name][ext][query]'
+        }
       }
     ]
   },
@@ -82,5 +94,9 @@ module.exports = {
     static: {
       directory: path.join(__dirname, 'public')
     }
+  },
+  performance: {
+    maxEntrypointSize: 3000000,
+    maxAssetSize: 3000000
   }
 }

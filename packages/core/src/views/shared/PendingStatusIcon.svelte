@@ -1,17 +1,16 @@
 <script lang="ts">
-  import pendingIcon from '../../icons/pending'
+  import { pendingIcon } from '../../icons/index.js'
 
   export let size: number // px
   export let color = 'yellow'
+  let className = 'test'
+  export { className as class }
 </script>
 
 <style>
   .icon {
-    display: flex;
     color: var(--onboard-white, var(--white));
     border-radius: 50px;
-    box-sizing: border-box;
-    position: absolute;
     bottom: -0.25rem;
     right: -0.25rem;
   }
@@ -23,7 +22,7 @@
 
 <div
   class:yellow={color === 'yellow'}
-  class="icon"
+  class={`${className} icon flex absolute`}
   style={`width: ${size}px; height: ${size}px; padding: ${size / 6}px;`}
 >
   {@html pendingIcon}

@@ -1,17 +1,18 @@
 {
   "extends": "@tsconfig/svelte/tsconfig.json",
-
   "include": ["src/**/*"],
   "exclude": ["node_modules/*", "dist"],
   "compilerOptions": {
     "strict": true,
     "declaration": true,
     "declarationDir": "dist",
-    "target": "esnext",
-    "module": "esnext",
     "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "lib": ["es2020", "dom"],
+    "types": ["svelte"],
+    "ignoreDeprecations": "5.0",
+    "moduleResolution": "node",
     "strictNullChecks": false,
-    "allowSyntheticDefaultImports": true
   },
-  "outDir": "dist",
+  "outDir": "dist"
 }

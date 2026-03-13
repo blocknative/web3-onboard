@@ -12,7 +12,7 @@ function portis(options: APIKey): WalletInit {
         const { createEIP1193Provider } = await import('@web3-onboard/common')
 
         const instance = new Portis(apiKey, {
-          nodeUrl: chains[0].rpcUrl,
+          nodeUrl: chains[0].rpcUrl || '',
           chainId: chains[0].id
         })
 
@@ -26,7 +26,7 @@ function portis(options: APIKey): WalletInit {
             if (!chain) throw new Error('chain must be set before switching')
 
             instance.changeNetwork({
-              nodeUrl: chain.rpcUrl,
+              nodeUrl: chain.rpcUrl || '',
               chainId: chain.id
             })
 
