@@ -1,7 +1,7 @@
 {
 	"name": "@web3-onboard/metamask",
-	"version": "2.2.1",
-	"description": "MetaMask SDK wallet module for connecting to Web3-Onboard. Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardised spec compliant web3 providers for all supported wallets, framework agnostic modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
+	"version": "2.3.0",
+	"description": "MetaMask Connect EVM wallet module for connecting to Web3-Onboard. Web3-Onboard makes it simple to connect Ethereum hardware and software wallets to your dapp. Features standardised spec compliant web3 providers for all supported wallets, framework agnostic modern javascript UI with code splitting, CSS customization, multi-chain and multi-account support, reactive wallet state subscriptions and real-time transaction state change notifications.",
 	"keywords": [
 		"Ethereum",
 		"Web3",
@@ -58,7 +58,7 @@
 		"typescript": "^5.2.2"
 	},
 	"dependencies": {
-		"@metamask/sdk": "^0.32.0",
+		"@metamask/connect-evm": "^1.0.0",
 		"@web3-onboard/common": "^2.4.1"
 	},
 	"engines": {

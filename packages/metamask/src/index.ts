@@ -1,32 +1,67 @@
 import type { WalletInit } from '@web3-onboard/common'
-import type { MetaMaskSDK, MetaMaskSDKOptions } from '@metamask/sdk'
-import type { createEIP1193Provider } from '@web3-onboard/common'
+import type {
+  createEVMClient as CreateEVMClientFn,
+  getInfuraRpcUrls as GetInfuraRpcUrlsFn,
+  MetamaskConnectEVM
+} from '@metamask/connect-evm'
 
-type ImportSDK = {
-  createEIP1193Provider: typeof createEIP1193Provider
-  MetaMaskSDKConstructor: typeof MetaMaskSDK
+/**
+ * Legacy MetaMask SDK options that this module continues to accept for
+ * backwards compatibility. Each field is mapped to its
+ * `@metamask/connect-evm` equivalent inside `getInterface` so callers can
+ * upgrade transparently without changing their integration code.
+ */
+export type MetaMaskSDKOptions = {
+  dappMetadata?: {
+    name?: string
+    url?: string
+    iconUrl?: string
+    base64Icon?: string
+  }
+  /** Maps to `ui.preferExtension` in `@metamask/connect-evm`. */
+  extensionOnly?: boolean
+  /** Maps to `ui.headless` in `@metamask/connect-evm`. */
+  headless?: boolean
+  /** Used to populate `api.supportedNetworks` via `getInfuraRpcUrls`. */
+  infuraAPIKey?: string
+  /** Merged into `api.supportedNetworks`. */
+  readonlyRPCMap?: Record<string, string>
+  /** Maps to `mobile.preferredOpenLink`. */
+  openDeeplink?: (deeplink: string) => void
+  /** Maps to `mobile.useDeeplink`. */
+  useDeeplink?: boolean
+  // Allow legacy/forward-compat fields (e.g. `i18nOptions`, `_source`,
+  // `enableAnalytics`) without a type error. They are silently ignored.
+  [key: string]: unknown
 }
 
-const loadImports = async () => {
-  if (importPromise) {
-    return await importPromise
-  }
+type EvmClientOptions = Parameters<typeof CreateEVMClientFn>[0]
 
-  const { createEIP1193Provider } = await import('@web3-onboard/common')
-  const importedSDK = await import('@metamask/sdk')
-  const MetaMaskSDKConstructor =
+type ConnectEvmImports = {
+  createEVMClient: typeof CreateEVMClientFn
+  getInfuraRpcUrls: typeof GetInfuraRpcUrlsFn
+}
+
+let importPromise: Promise<ConnectEvmImports> | null = null
+let client: MetamaskConnectEVM | null = null
+
+const loadImports = async (): Promise<ConnectEvmImports> => {
+  const mmConnect = await import('@metamask/connect-evm')
+
+  const createEVMClient =
+    // @ts-ignore — handle both ESM and CJS default-export shapes
+    mmConnect.createEVMClient || mmConnect.default?.createEVMClient
+
+  const getInfuraRpcUrls =
     // @ts-ignore
-    importedSDK.MetaMaskSDK || importedSDK.default.MetaMaskSDK
+    mmConnect.getInfuraRpcUrls || mmConnect.default?.getInfuraRpcUrls
 
-  if (!MetaMaskSDKConstructor) {
-    throw new Error('Error importing and initializing MetaMask SDK')
+  if (!createEVMClient) {
+    throw new Error('Error importing and initializing @metamask/connect-evm')
   }
 
-  return { createEIP1193Provider, MetaMaskSDKConstructor }
+  return { createEVMClient, getInfuraRpcUrls }
 }
-
-let importPromise: Promise<ImportSDK> | null = null
-let sdk: MetaMaskSDK | null = null
 
 function metamask({
   options
@@ -34,7 +69,7 @@ function metamask({
   options: Partial<MetaMaskSDKOptions>
 }): WalletInit {
   return () => {
-    importPromise = loadImports().catch(error => {
+    importPromise = importPromise ?? loadImports().catch(error => {
       throw error
     })
 
@@ -42,54 +77,128 @@ function metamask({
       label: 'MetaMask',
       getIcon: async () => (await import('./icon.js')).default,
       getInterface: async ({ appMetadata }) => {
-        sdk = (window as any).mmsdk || sdk // Prevent conflict with existing mmsdk instances
-
-        if (sdk) {
-          // Prevent re-initializing instance as it causes issues with MetaMask sdk mobile provider.
+        // Reuse the existing client/provider if we have already initialized
+        // it. Re-initializing would needlessly reset state and historically
+        // caused issues with the MetaMask mobile provider.
+        if (client) {
+          const existingProvider = client.getProvider()
+          attachDisconnectShim(existingProvider)
           return {
-            provider: sdk.getProvider() as any,
-            instance: sdk
+            provider: existingProvider as any,
+            instance: client
           }
         }
+
+        const imports = await importPromise
+
+        if (!imports?.createEVMClient) {
+          throw new Error(
+            'Error importing and initializing @metamask/connect-evm'
+          )
+        }
+
+        const { createEVMClient, getInfuraRpcUrls } = imports
 
         const { name, icon } = appMetadata || {}
         const base64 = window.btoa(icon || '')
         const appLogoUrl = `data:image/svg+xml;base64,${base64}`
-        const imports = await importPromise
 
-        if (!imports?.MetaMaskSDKConstructor) {
-          throw new Error('Error importing and initializing MetaMask SDK')
-        }
-
-        const { MetaMaskSDKConstructor } = imports
-
-        sdk = new MetaMaskSDKConstructor({
-          ...options,
-          dappMetadata: {
-            name: options.dappMetadata?.name || name || '',
-            url: options.dappMetadata?.url || window.location.origin,
-            base64Icon: appLogoUrl
-          },
-          _source: 'web3-onboard'
+        const evmOptions = mapLegacyOptions({
+          options,
+          getInfuraRpcUrls,
+          fallbackName: name,
+          fallbackBase64Icon: appLogoUrl
         })
 
-        await sdk.init()
-        const provider = sdk.getProvider()
+        client = await createEVMClient(evmOptions)
 
-        if (provider) {
-          ;(provider as any).disconnect = () => {
-            sdk?.terminate()
-          }
-        }
-        
+        const provider = client.getProvider()
+        attachDisconnectShim(provider)
 
         return {
-          provider,
-          instance: sdk
+          provider: provider as any,
+          instance: client
         }
       }
     }
   }
+}
+
+function attachDisconnectShim(provider: unknown): void {
+  // Web3-Onboard expects a `disconnect` method on the provider so it can
+  // tear down the wallet session when the user disconnects from the dapp.
+  // The MetaMask Connect EVM client exposes this via `client.disconnect()`.
+  ;(provider as { disconnect?: () => void }).disconnect = () => {
+    void client?.disconnect()
+  }
+}
+
+function mapLegacyOptions({
+  options,
+  getInfuraRpcUrls,
+  fallbackName,
+  fallbackBase64Icon
+}: {
+  options: Partial<MetaMaskSDKOptions>
+  getInfuraRpcUrls: typeof GetInfuraRpcUrlsFn
+  fallbackName?: string
+  fallbackBase64Icon: string
+}): EvmClientOptions {
+  const supportedNetworks: Record<string, string> = {
+    ...(typeof options.infuraAPIKey === 'string' && options.infuraAPIKey
+      ? getInfuraRpcUrls({ infuraApiKey: options.infuraAPIKey })
+      : {}),
+    ...(options.readonlyRPCMap ?? {})
+  }
+
+  const evmOptions: EvmClientOptions = {
+    dapp: {
+      name: options.dappMetadata?.name || fallbackName || '',
+      url: options.dappMetadata?.url || window.location.origin,
+      // Mirror the legacy module's behavior: the rendered web3-onboard logo
+      // (`appLogoUrl`) is always used as the dapp icon, just like the old
+      // `MetaMaskSDK` integration that always set `base64Icon: appLogoUrl`.
+      base64Icon: fallbackBase64Icon
+    },
+    // `api.supportedNetworks` is required by `createEVMClient`. Pass the
+    // merged Infura + custom RPC map (or an empty object when neither is
+    // provided — the client still works, with read-only requests routed
+    // through MetaMask's default transport).
+    api: { supportedNetworks: supportedNetworks as Record<`0x${string}`, string> }
+  }
+
+  if (
+    typeof options.headless === 'boolean' ||
+    typeof options.extensionOnly === 'boolean'
+  ) {
+    evmOptions.ui = {
+      ...(typeof options.headless === 'boolean'
+        ? { headless: options.headless }
+        : {}),
+      // `extensionOnly: true` semantically meant "prefer the extension when
+      // available" in the legacy SDK, which is exactly what
+      // `ui.preferExtension` controls in `@metamask/connect-evm`.
+      ...(typeof options.extensionOnly === 'boolean'
+        ? { preferExtension: options.extensionOnly }
+        : {})
+    }
+  }
+
+  if (
+    typeof options.openDeeplink === 'function' ||
+    typeof options.useDeeplink === 'boolean'
+  ) {
+    evmOptions.mobile = {
+      ...(typeof options.openDeeplink === 'function'
+        ? { preferredOpenLink: options.openDeeplink }
+        : {}),
+      ...(typeof options.useDeeplink === 'boolean'
+        ? { useDeeplink: options.useDeeplink }
+        : {})
+    }
+  }
+
+  return evmOptions
 }
 
 export default metamask
