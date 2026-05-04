@@ -1,9 +1,17 @@
-import type { WalletInit } from '@web3-onboard/common'
+import type { Chain, WalletInit } from '@web3-onboard/common'
 import type {
   createEVMClient as CreateEVMClientFn,
   getInfuraRpcUrls as GetInfuraRpcUrlsFn,
   MetamaskConnectEVM
 } from '@metamask/connect-evm'
+
+/**
+ * Public Mainnet RPC used as a last-resort fallback when no
+ * `supportedNetworks` can be derived from user options or the chains web3-
+ * onboard was configured with. `@metamask/connect-evm` requires the map to
+ * contain at least one chain.
+ */
+const FALLBACK_MAINNET_RPC = 'https://1.rpc.thirdweb.com'
 
 /**
  * Legacy MetaMask SDK options that this module continues to accept for
@@ -18,10 +26,21 @@ export type MetaMaskSDKOptions = {
     iconUrl?: string
     base64Icon?: string
   }
-  /** Maps to `ui.preferExtension` in `@metamask/connect-evm`. */
+  /**
+   * When `true`, prefer the MetaMask browser extension over the mobile/QR
+   * flow. Maps to `ui.preferExtension`. The default mirrors the new
+   * `@metamask/connect-evm` default (extension is preferred when installed).
+   */
   extensionOnly?: boolean
   /** Maps to `ui.headless` in `@metamask/connect-evm`. */
   headless?: boolean
+  /**
+   * When `true`, allow `@metamask/connect-evm` to render its own
+   * install/QR modal. Defaults to `false` because web3-onboard already
+   * supplies the surrounding wallet-selection UI and a second modal would
+   * sit on top of it.
+   */
+  showInstallModal?: boolean
   /** Used to populate `api.supportedNetworks` via `getInfuraRpcUrls`. */
   infuraAPIKey?: string
   /** Merged into `api.supportedNetworks`. */
@@ -69,14 +88,21 @@ function metamask({
   options: Partial<MetaMaskSDKOptions>
 }): WalletInit {
   return () => {
-    importPromise = importPromise ?? loadImports().catch(error => {
-      throw error
-    })
+    // Cache the dynamic import so we only fetch the SDK once per page load.
+    // On rejection (e.g. transient network failure during `import(...)`)
+    // clear the cache so the next `getInterface` call can retry instead of
+    // permanently surfacing the original error.
+    if (!importPromise) {
+      importPromise = loadImports().catch(error => {
+        importPromise = null
+        throw error
+      })
+    }
 
     return {
       label: 'MetaMask',
       getIcon: async () => (await import('./icon.js')).default,
-      getInterface: async ({ appMetadata }) => {
+      getInterface: async ({ appMetadata, chains }) => {
         // Reuse the existing client/provider if we have already initialized
         // it. Re-initializing would needlessly reset state and historically
         // caused issues with the MetaMask mobile provider.
@@ -107,7 +133,8 @@ function metamask({
           options,
           getInfuraRpcUrls,
           fallbackName: name,
-          fallbackBase64Icon: appLogoUrl
+          fallbackBase64Icon: appLogoUrl,
+          chains
         })
 
         client = await createEVMClient(evmOptions)
@@ -133,22 +160,68 @@ function attachDisconnectShim(provider: unknown): void {
   }
 }
 
+/**
+ * Build a `{ '0xHexChainId': rpcUrl }` map from web3-onboard's `chains`
+ * config, normalizing chain IDs to lower-case hex (the format
+ * `@metamask/connect-evm` expects).
+ */
+function chainsToRpcMap(chains: Chain[]): Record<string, string> {
+  const map: Record<string, string> = {}
+  for (const chain of chains) {
+    if (!chain.rpcUrl) continue
+    const hexId = toHexChainId(chain.id)
+    if (!hexId) continue
+    map[hexId] = chain.rpcUrl
+  }
+  return map
+}
+
+function toHexChainId(id: string | number): string | null {
+  if (typeof id === 'number') {
+    return Number.isFinite(id) ? `0x${id.toString(16)}` : null
+  }
+  const trimmed = id.trim().toLowerCase()
+  if (trimmed.startsWith('0x')) return trimmed
+  if (/^\d+$/.test(trimmed)) {
+    return `0x${BigInt(trimmed).toString(16)}`
+  }
+  return null
+}
+
 function mapLegacyOptions({
   options,
   getInfuraRpcUrls,
   fallbackName,
-  fallbackBase64Icon
+  fallbackBase64Icon,
+  chains
 }: {
   options: Partial<MetaMaskSDKOptions>
   getInfuraRpcUrls: typeof GetInfuraRpcUrlsFn
   fallbackName?: string
   fallbackBase64Icon: string
+  chains: Chain[]
 }): EvmClientOptions {
-  const supportedNetworks: Record<string, string> = {
-    ...(typeof options.infuraAPIKey === 'string' && options.infuraAPIKey
+  // `api.supportedNetworks` must be a non-empty `Record<hexChainId, rpcUrl>`.
+  // We derive it from (in priority order):
+  //   1. `options.infuraAPIKey` -> `getInfuraRpcUrls`
+  //   2. `options.readonlyRPCMap`
+  //   3. RPC URLs of the chains web3-onboard itself was configured with
+  //   4. A public Mainnet RPC, so the client always has at least one chain.
+  const fromInfura =
+    typeof options.infuraAPIKey === 'string' && options.infuraAPIKey
       ? getInfuraRpcUrls({ infuraApiKey: options.infuraAPIKey })
-      : {}),
+      : {}
+
+  const fromChains = chainsToRpcMap(chains)
+
+  const supportedNetworks: Record<string, string> = {
+    ...fromInfura,
+    ...fromChains,
     ...(options.readonlyRPCMap ?? {})
+  }
+
+  if (Object.keys(supportedNetworks).length === 0) {
+    supportedNetworks['0x1'] = FALLBACK_MAINNET_RPC
   }
 
   const evmOptions: EvmClientOptions = {
@@ -160,28 +233,33 @@ function mapLegacyOptions({
       // `MetaMaskSDK` integration that always set `base64Icon: appLogoUrl`.
       base64Icon: fallbackBase64Icon
     },
-    // `api.supportedNetworks` is required by `createEVMClient`. Pass the
-    // merged Infura + custom RPC map (or an empty object when neither is
-    // provided — the client still works, with read-only requests routed
-    // through MetaMask's default transport).
-    api: { supportedNetworks: supportedNetworks as Record<`0x${string}`, string> }
+    api: {
+      supportedNetworks: supportedNetworks as Record<`0x${string}`, string>
+    }
   }
 
-  if (
-    typeof options.headless === 'boolean' ||
-    typeof options.extensionOnly === 'boolean'
-  ) {
-    evmOptions.ui = {
-      ...(typeof options.headless === 'boolean'
-        ? { headless: options.headless }
-        : {}),
-      // `extensionOnly: true` semantically meant "prefer the extension when
-      // available" in the legacy SDK, which is exactly what
-      // `ui.preferExtension` controls in `@metamask/connect-evm`.
-      ...(typeof options.extensionOnly === 'boolean'
-        ? { preferExtension: options.extensionOnly }
-        : {})
-    }
+  // Build the `ui` block.
+  //
+  // - The legacy `extensionOnly` option is intentionally only honored when
+  //   set to `true`, mapping to `preferExtension: true`. The legacy default
+  //   (`false`) meant "fall back to mobile/QR if no extension"; in the new
+  //   client that behavior is the default of `preferExtension: true` (use
+  //   the extension when present, otherwise the modal). Mapping
+  //   `extensionOnly: false` to `preferExtension: false` would force the
+  //   install/QR modal to open even when the extension is installed, which
+  //   matches what users have been reporting.
+  // - `showInstallModal` defaults to `false` because web3-onboard already
+  //   renders its own connect modal; layering the MetaMask install modal on
+  //   top breaks click-through.
+  evmOptions.ui = {
+    ...(typeof options.headless === 'boolean'
+      ? { headless: options.headless }
+      : {}),
+    ...(options.extensionOnly === true ? { preferExtension: true } : {}),
+    showInstallModal:
+      typeof options.showInstallModal === 'boolean'
+        ? options.showInstallModal
+        : false
   }
 
   if (
