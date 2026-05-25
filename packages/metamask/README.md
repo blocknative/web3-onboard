@@ -23,6 +23,13 @@ _This order prioritizes the MetaMask Connect EVM client when a MetaMask browser 
 // All fields are optional. Legacy MetaMaskSDK option names are accepted for
 // backwards compatibility and mapped to MetaMask Connect EVM internally.
 interface MetaMaskSDKOptions {
+  /**
+   * Dapp identity forwarded to MetaMask Connect EVM (used for the mobile
+   * connection prompt). Only the values you supply here are passed through.
+   * web3-onboard's `appMetadata.icon` is NOT automatically base64-encoded into
+   * `base64Icon`, because inline SVGs can overflow the QR/deeplink payload —
+   * prefer `iconUrl` for the MetaMask-side icon.
+   */
   dappMetadata?: {
     url?: string
     name?: string
@@ -30,15 +37,22 @@ interface MetaMaskSDKOptions {
     base64Icon?: string
   }
   /**
-   * If MetaMask browser extension is detected, prefer it over the mobile flow.
-   * Mapped to `ui.preferExtension`.
+   * If `true`, prefer the MetaMask browser extension over the mobile flow.
+   * Mapped to `ui.preferExtension`. The legacy default of `false` is a no-op
+   * because Connect EVM already prefers the extension when it is installed.
    */
   extensionOnly?: boolean
   /** Mapped to `ui.headless`. */
   headless?: boolean
+  /**
+   * Whether to let Connect EVM render its own install/QR modal. Mapped to
+   * `ui.showInstallModal`. Defaults to `false` because web3-onboard already
+   * provides the surrounding wallet-selection UI.
+   */
+  showInstallModal?: boolean
   /** Used to populate `api.supportedNetworks` via `getInfuraRpcUrls`. */
   infuraAPIKey?: string
-  /** Merged into `api.supportedNetworks`. */
+  /** Merged into `api.supportedNetworks` (keys are normalized to hex). */
   readonlyRPCMap?: Record<string, string>
   /** Mapped to `mobile.preferredOpenLink`. */
   openDeeplink?: (deeplink: string) => void
@@ -56,7 +70,6 @@ import metamaskSDK from '@web3-onboard/metamask'
 // initialize the module with options
 const metamaskSDKWallet = metamaskSDK({
   options: {
-    extensionOnly: false,
     dappMetadata: {
       name: 'Demo Web3Onboard'
     }

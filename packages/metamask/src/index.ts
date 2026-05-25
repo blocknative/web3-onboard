@@ -20,6 +20,15 @@ const FALLBACK_MAINNET_RPC = 'https://1.rpc.thirdweb.com'
  * upgrade transparently without changing their integration code.
  */
 export type MetaMaskSDKOptions = {
+  /**
+   * Dapp identity forwarded to `@metamask/connect-evm` (used for the
+   * MetaMask Mobile connection prompt). Only the explicitly provided
+   * fields are passed through — web3-onboard's `appMetadata.icon` is not
+   * automatically base64-encoded into `base64Icon`, because inline SVGs
+   * can overflow the QR/deeplink payload. Provide an explicit `iconUrl`
+   * (recommended) or `base64Icon` here when you want a dapp icon on the
+   * MetaMask side.
+   */
   dappMetadata?: {
     name?: string
     url?: string
@@ -126,14 +135,12 @@ function metamask({
         const { createEVMClient, getInfuraRpcUrls } = imports
 
         const { name, icon } = appMetadata || {}
-        const base64 = window.btoa(icon || '')
-        const appLogoUrl = `data:image/svg+xml;base64,${base64}`
 
         const evmOptions = mapLegacyOptions({
           options,
           getInfuraRpcUrls,
           fallbackName: name,
-          fallbackBase64Icon: appLogoUrl,
+          fallbackIconUrl: isHttpUrl(icon) ? icon : undefined,
           chains
         })
 
@@ -188,24 +195,41 @@ function toHexChainId(id: string | number): string | null {
   return null
 }
 
+function isHttpUrl(value: unknown): value is string {
+  return typeof value === 'string' && /^https?:\/\//i.test(value.trim())
+}
+
+function normalizeReadonlyRPCMap(
+  map: Record<string, string> | undefined
+): Record<string, string> {
+  if (!map) return {}
+  const normalized: Record<string, string> = {}
+  for (const [key, value] of Object.entries(map)) {
+    const hexId = toHexChainId(key)
+    if (!hexId) continue
+    normalized[hexId] = value
+  }
+  return normalized
+}
+
 function mapLegacyOptions({
   options,
   getInfuraRpcUrls,
   fallbackName,
-  fallbackBase64Icon,
+  fallbackIconUrl,
   chains
 }: {
   options: Partial<MetaMaskSDKOptions>
   getInfuraRpcUrls: typeof GetInfuraRpcUrlsFn
   fallbackName?: string
-  fallbackBase64Icon: string
+  fallbackIconUrl?: string
   chains: Chain[]
 }): EvmClientOptions {
   // `api.supportedNetworks` must be a non-empty `Record<hexChainId, rpcUrl>`.
   // We derive it from (in priority order):
   //   1. `options.infuraAPIKey` -> `getInfuraRpcUrls`
-  //   2. `options.readonlyRPCMap`
-  //   3. RPC URLs of the chains web3-onboard itself was configured with
+  //   2. RPC URLs of the chains web3-onboard itself was configured with
+  //   3. `options.readonlyRPCMap` (keys normalized to hex)
   //   4. A public Mainnet RPC, so the client always has at least one chain.
   const fromInfura =
     typeof options.infuraAPIKey === 'string' && options.infuraAPIKey
@@ -213,25 +237,42 @@ function mapLegacyOptions({
       : {}
 
   const fromChains = chainsToRpcMap(chains)
+  const fromReadonly = normalizeReadonlyRPCMap(options.readonlyRPCMap)
 
   const supportedNetworks: Record<string, string> = {
     ...fromInfura,
     ...fromChains,
-    ...(options.readonlyRPCMap ?? {})
+    ...fromReadonly
   }
 
   if (Object.keys(supportedNetworks).length === 0) {
     supportedNetworks['0x1'] = FALLBACK_MAINNET_RPC
   }
 
+  // Resolve dapp icon metadata. Connect EVM accepts either `iconUrl` (an
+  // http(s) URL) or `base64Icon` (a base64-encoded string up to ~163KB).
+  // The dapp metadata is embedded in mobile connection requests and
+  // compressed into the QR/deeplink payload, so inlining a large SVG via
+  // `base64Icon` can overflow the QR capacity. We therefore only pass an
+  // explicit icon when the integrator supplies one through
+  // `options.dappMetadata`, or when web3-onboard's `appMetadata.icon` is
+  // already an http(s) URL (forwarded via `iconUrl`). Raw SVG strings from
+  // `appMetadata.icon` are intentionally dropped — Connect EVM falls back
+  // to the page favicon in that case.
+  const iconField: { iconUrl?: string } | { base64Icon?: string } =
+    typeof options.dappMetadata?.base64Icon === 'string'
+      ? { base64Icon: options.dappMetadata.base64Icon }
+      : isHttpUrl(options.dappMetadata?.iconUrl)
+      ? { iconUrl: options.dappMetadata!.iconUrl }
+      : fallbackIconUrl
+      ? { iconUrl: fallbackIconUrl }
+      : {}
+
   const evmOptions: EvmClientOptions = {
     dapp: {
       name: options.dappMetadata?.name || fallbackName || '',
       url: options.dappMetadata?.url || window.location.origin,
-      // Mirror the legacy module's behavior: the rendered web3-onboard logo
-      // (`appLogoUrl`) is always used as the dapp icon, just like the old
-      // `MetaMaskSDK` integration that always set `base64Icon: appLogoUrl`.
-      base64Icon: fallbackBase64Icon
+      ...iconField
     },
     api: {
       supportedNetworks: supportedNetworks as Record<`0x${string}`, string>
