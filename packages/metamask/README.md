@@ -1,8 +1,10 @@
 # @web3-onboard/metamask
 
-## Wallet module for connecting MetaMask Wallet SDK to web3-onboard
+## Wallet module for connecting MetaMask Connect EVM to web3-onboard
+
 The MetaMask Web3-Onboard module provides a reliable, secure, and seamless connection from your dapp to the MetaMask browser extension and MetaMask Mobile.
-See [MetaMask SDK Developer Docs](https://docs.metamask.io/wallet/how-to/connect/set-up-sdk/)
+
+This module uses [MetaMask Connect EVM](https://docs.metamask.io/metamask-connect/evm/) (`@metamask/connect-evm`) under the hood — the successor to the legacy `@metamask/sdk`. The integration surface for `@web3-onboard/metamask` is unchanged: the legacy options below are mapped to their MetaMask Connect EVM equivalents internally so existing dapps keep working without code changes.
 
 ![MetaMask SDK ConnectionFlow](https://github.com/blocknative/web3-onboard/blob/develop/assets/metaMaskSDK-connect.gif?raw=true 'MetaMask SDK ConnectionFlow')
 
@@ -11,23 +13,51 @@ See [MetaMask SDK Developer Docs](https://docs.metamask.io/wallet/how-to/connect
 `npm i @web3-onboard/metamask`
 
 ### If using this package with the `@web3-onboard/injected-wallets` module
-_When utilizing this package alongside the `@web3-onboard/injected-wallets` module, ensure to list this package prior to the initialized injected-wallets module within the wallets list of the Web3-Onboard init._ 
-_This order prioritizes the SDK when a MetaMask browser wallet is detected, allowing the SDK to take precedence._
+
+_When utilizing this package alongside the `@web3-onboard/injected-wallets` module, ensure to list this package prior to the initialized injected-wallets module within the wallets list of the Web3-Onboard init._
+_This order prioritizes the MetaMask Connect EVM client when a MetaMask browser wallet is detected, allowing it to take precedence._
 
 ## Options
 
 ```typescript
-// For a complete list of options check https://docs.metamask.io/wallet/how-to/connect/set-up-sdk/
+// All fields are optional. Legacy MetaMaskSDK option names are accepted for
+// backwards compatibility and mapped to MetaMask Connect EVM internally.
 interface MetaMaskSDKOptions {
-  dappMetadata: {
-    url?: string;
-    name?: string;
-    base64Icon?: string;
-  },
   /**
-   * If MetaMask browser extension is detected, directly use it without prompting the user.
+   * Dapp identity forwarded to MetaMask Connect EVM (used for the mobile
+   * connection prompt). Only the values you supply here are passed through.
+   * web3-onboard's `appMetadata.icon` is NOT automatically base64-encoded into
+   * `base64Icon`, because inline SVGs can overflow the QR/deeplink payload —
+   * prefer `iconUrl` for the MetaMask-side icon.
    */
-  extensionOnly?: boolean;
+  dappMetadata?: {
+    url?: string
+    name?: string
+    iconUrl?: string
+    base64Icon?: string
+  }
+  /**
+   * If `true`, prefer the MetaMask browser extension over the mobile flow.
+   * Mapped to `ui.preferExtension`. The legacy default of `false` is a no-op
+   * because Connect EVM already prefers the extension when it is installed.
+   */
+  extensionOnly?: boolean
+  /** Mapped to `ui.headless`. */
+  headless?: boolean
+  /**
+   * Whether to let Connect EVM render its own install/QR modal. Mapped to
+   * `ui.showInstallModal`. Defaults to `false` because web3-onboard already
+   * provides the surrounding wallet-selection UI.
+   */
+  showInstallModal?: boolean
+  /** Used to populate `api.supportedNetworks` via `getInfuraRpcUrls`. */
+  infuraAPIKey?: string
+  /** Merged into `api.supportedNetworks` (keys are normalized to hex). */
+  readonlyRPCMap?: Record<string, string>
+  /** Mapped to `mobile.preferredOpenLink`. */
+  openDeeplink?: (deeplink: string) => void
+  /** Mapped to `mobile.useDeeplink`. */
+  useDeeplink?: boolean
 }
 ```
 
@@ -38,12 +68,13 @@ import Onboard from '@web3-onboard/core'
 import metamaskSDK from '@web3-onboard/metamask'
 
 // initialize the module with options
-const metamaskSDKWallet = metamaskSDK({options: {
-  extensionOnly: false,
-  dappMetadata: {
-    name: 'Demo Web3Onboard'
+const metamaskSDKWallet = metamaskSDK({
+  options: {
+    dappMetadata: {
+      name: 'Demo Web3Onboard'
+    }
   }
-}})
+})
 
 const onboard = Onboard({
   // ... other Onboard options
