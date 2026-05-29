@@ -41,22 +41,28 @@ export const viemProviders: {
   [key: string]: PublicClient
 } = {}
 
+function getProviderCacheKey(chain: Chain): string {
+  return chain.rpcUrl || chain.publicRpcUrl || chain.id
+}
+
 async function getProvider(chain: Chain): Promise<PublicClient | null> {
   if (!chain) return null
 
-  if (!viemProviders[chain.rpcUrl as string]) {
+  const cacheKey = getProviderCacheKey(chain)
+
+  if (!viemProviders[cacheKey]) {
     const viemChain = await chainIdToViemENSImport(chain.id)
     if (!viemChain) return null
 
     const { createPublicClient, http } = await import('viem')
     const publicProvider = createPublicClient({
       chain: viemChain,
-      transport: http()
+      transport: http(chain.rpcUrl || chain.publicRpcUrl)
     })
-    viemProviders[chain.rpcUrl as string] = publicProvider as PublicClient
+    viemProviders[cacheKey] = publicProvider as PublicClient
   }
 
-  return viemProviders[chain.rpcUrl as string]
+  return viemProviders[cacheKey]
 }
 
 export function requestAccounts(
