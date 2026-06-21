@@ -1,8 +1,10 @@
-import type {
-  Chain,
-  EIP1193Provider,
-  ProviderAccounts,
-  WalletInit
+import {
+  isHex,
+  toHex,
+  type Chain,
+  type EIP1193Provider,
+  type ProviderAccounts,
+  type WalletInit
 } from '@web3-onboard/common'
 
 import type { Web3AuthOptions, ModalConfig } from '@web3auth/modal'
@@ -104,6 +106,7 @@ function web3auth(options: Web3AuthModuleOptions): WalletInit {
           },
 
           wallet_switchEthereumChain: async ({ params }) => {
+            console.log('entereing wallet_switchEthereumChain')
             const chain = chains.find(({ id }) => id === params[0].chainId)
             if (!chain) throw new Error('Chain must be set before switching')
             currentChain = chain
@@ -117,7 +120,8 @@ function web3auth(options: Web3AuthModuleOptions): WalletInit {
             await web3auth.initModal(modalConfig)
 
             web3AuthProvider = await web3auth.connect()
-
+            
+            console.log("emitting chainChanged", currentChain.id)
             emitter.emit('chainChanged', currentChain.id)
 
             patchProvider()
@@ -127,10 +131,36 @@ function web3auth(options: Web3AuthModuleOptions): WalletInit {
         })
 
         if (!provider) {
-          patchedProvider.on = emitter.on.bind(emitter)
-          patchedProvider.disconnect = () => web3auth.logout()
+          const on = emitter.on.bind(emitter);
+          patchedProvider.disconnect = () => web3auth.logout();
 
-          return patchedProvider
+          emitter.on = (event, listener) => {
+              console.log('emitter on', event);
+              // @ts-ignore
+              on(event, val => {
+                console.log('patched provider on', event, val);
+                if (event === 'chainChanged') {
+                  let hexVal;
+                  if (isHex(val)) {
+                    hexVal = val
+                  } else {
+                    hexVal = toHex(val)
+                  }
+    
+                  // @ts-ignore
+                  listener(hexVal)
+                  return
+                }
+    
+                listener(val)
+              });
+    
+              return emitter;
+            }
+
+          patchedProvider.on = emitter.on.bind(emitter);
+
+          return patchedProvider;
         } else {
           provider.request = patchedProvider.request.bind(patchedProvider)
 
