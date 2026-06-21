@@ -473,7 +473,9 @@ const tokenpocket: InjectedWalletModule = {
     !!provider[ProviderIdentityFlag.TokenPocket] &&
     !provider[ProviderIdentityFlag.TP],
   getIcon: async () => (await import('./icons/tokenpocket.js')).default,
-  getInterface: getInjectedInterface(ProviderIdentityFlag.TokenPocket),
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.tokenpocket.ethereum)
+  }),
   platforms: ['all']
 }
 

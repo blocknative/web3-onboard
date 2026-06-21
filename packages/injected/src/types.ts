@@ -256,6 +256,9 @@ export interface CustomWindow extends Window {
   kayros: InjectedProvider
   foxwallet: InjectedProvider
   echooo: {
+   ethereum: InjectedProvider
+  },
+  tokenpocket: {
     ethereum: InjectedProvider
   }
 }
