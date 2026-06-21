@@ -385,6 +385,7 @@ const injected = injectedModule({
 - Lif3Wallet - _Mobile_
 - StableWallet - _Mobile_
 - Echooo - _Desktop & Mobile_
+- Kaia Wallet - _Desktop & Mobile_
 
 ## Build Environments
 

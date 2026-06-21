@@ -72,7 +72,8 @@ export enum ProviderIdentityFlag {
   ZodiacPilot = 'isZodiacPilot',
   StableWallet = 'isStableWallet',
   Echooo = 'isEchooo',
-  Keplr = 'keplr'
+  Keplr = 'keplr',
+  KaiaWallet = 'isKaikas'
 }
 
 /**
@@ -103,7 +104,8 @@ export enum ProviderExternalUrl {
   Rabby = 'https://rabby.io',
   ZodiacPilot = 'https://pilot.gnosisguild.org/',
   Echooo = 'https://www.echooo.xyz',
-  Keplr = 'https://www.keplr.app/download'
+  Keplr = 'https://www.keplr.app/download',
+  KaiaWallet = 'https://www.kaiawallet.io'
 }
 
 export enum ProviderLabel {
@@ -167,7 +169,8 @@ export enum ProviderLabel {
   ZodiacPilot = 'Zodiac Pilot',
   StableWallet = 'StableWallet',
   Echooo = 'Echooo',
-  Keplr = 'Keplr'
+  Keplr = 'Keplr',
+  KaiaWallet = 'Kaia Wallet'
 }
 
 export interface MeetOneProvider extends ExternalProvider {
@@ -205,7 +208,8 @@ export enum InjectedNameSpace {
   SubWallet = 'SubWallet',
   Kayros = 'kayros',
   FoxWallet = 'foxwallet',
-  Echooo = 'echooo'
+  Echooo = 'echooo',
+  KaiaWallet = 'klaytn'
 }
 
 export interface CustomWindow extends Window {
@@ -258,6 +262,7 @@ export interface CustomWindow extends Window {
   echooo: {
     ethereum: InjectedProvider
   }
+  klaytn: InjectedProvider
 }
 
 export type InjectedProvider = ExternalProvider &

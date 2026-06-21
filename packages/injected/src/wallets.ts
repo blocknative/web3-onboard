@@ -931,6 +931,19 @@ const keplr: InjectedWalletModule = {
   externalUrl: ProviderExternalUrl.Keplr
 }
 
+const kaiaWallet: InjectedWalletModule = {
+  label: ProviderLabel.KaiaWallet,
+  injectedNamespace: InjectedNameSpace.KaiaWallet,
+  checkProviderIdentity: ({ provider }) => 
+    !!provider && !!provider[ProviderIdentityFlag.KaiaWallet],
+  getIcon: async () => (await import('./icons/kaiawallet.js')).default,
+  getInterface: async () => ({
+    provider: createEIP1193Provider(window.klaytn)
+  }),
+  platforms: ['all'],
+  externalUrl: ProviderExternalUrl.KaiaWallet
+}
+
 const wallets = [
   zeal,
   exodus,
@@ -990,7 +1003,8 @@ const wallets = [
   zodiacPilot,
   stablewallet,
   echooo,
-  keplr
+  keplr,
+  kaiaWallet
 ]
 
 export default wallets
